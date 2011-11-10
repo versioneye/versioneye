@@ -13,11 +13,11 @@
 ActiveRecord::Schema.define(:version => 20110423215318) do
 
   create_table "products", :force => true do |t|
-      t.string "name"
-      t.string "prod_key"
+      t.string "name",          :null => false
+      t.string "prod_key",      :null => false, :unique => true
       t.string "artifact_id"
       t.string "group_id"
-      t.string "link"
+      t.string "link",          :null => false
       t.string "src"
       t.string "type"
       t.datetime "created_at"
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(:version => 20110423215318) do
 
   create_table "versions", :force => true do |t|
     t.string   "version",        :limit => 50, :null => false
-    t.string  "link"
-    t.integer  "product_id"
+    t.string   "link",           :null => false
+    t.integer  "product_id",     
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -53,5 +53,28 @@ ActiveRecord::Schema.define(:version => 20110423215318) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["fb_id"], :name => "index_users_on_fb_id"
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
-
+  
+  create_table "followers", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  
+  add_index "followers", ["user_id"], :name => "index_followers_on_user_id"
+  add_index "followers", ["user_id", "product_id"], :name => "index_followers_on_user_id_and_product_id", :unique => true
+  add_index "followers", ["product_id"], :name => "index_followers_on_product_id"
+  
+  create_table "notifications", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "version_id"
+    t.boolean  "read"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  
+  add_index "notifications", ["user_id"], :name => "index_notifications_on_user_id"
+  add_index "notifications", ["version_id"], :name => "index_notifications_on_version_id"
+  add_index "notifications", ["read"], :name => "index_notifications_on_read"
+  
 end

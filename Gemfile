@@ -1,13 +1,8 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.0'
-
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
-
+gem 'jquery-rails'
 gem 'pg', '0.11.0'
-# gem 'mysql', '2.8.# 1'
-# gem 'activerecord-mysql-adapter-flags', '0.0.3'
 
 
 # Gems used only for assets and not required
@@ -18,7 +13,6 @@ group :assets do
   gem 'uglifier'
 end
 
-gem 'jquery-rails'
 
 # Use unicorn as the web server
 # gem 'unicorn'
