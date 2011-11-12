@@ -13,10 +13,10 @@
 ActiveRecord::Schema.define(:version => 20110423215318) do
 
   create_table "products", :force => true do |t|
-      t.string "name",          :null => false
-      t.string "prod_key",      :null => false, :unique => true
-      t.string "artifact_id"
+      t.string "name",     :null => false
+      t.string "key",      :null => false, :unique => true
       t.string "group_id"
+      t.string "artifact_id"      
       t.string "link",          :null => false
       t.string "src"
       t.string "type"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20110423215318) do
   end
   
   add_index "products", ["name"], :name => "index_products_on_name", :unique => true
-  add_index "products", ["prod_key"], :name => "index_products_on_prod_key", :unique => true
+  add_index "products", ["key"], :name => "index_products_on_key", :unique => true
 
   create_table "versions", :force => true do |t|
     t.string   "version",        :limit => 50, :null => false
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20110423215318) do
     t.datetime "updated_at"
   end
   
-  add_index "versions", ["version"], :name => "index_versions_on_version", :unique => true
+  add_index "versions", ["version", "product_id"], :name => "index_versions_on_version_and_product_id", :unique => true
   
   create_table "users", :force => true do |t|
     t.string   "username",           :limit => 50,                     :null => false
