@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(:version => 20110423215318) do
       t.datetime "updated_at"
   end
   
-  add_index "products", ["name"], :name => "index_products_on_name", :unique => true
   add_index "products", ["key"], :name => "index_products_on_key", :unique => true
 
   create_table "versions", :force => true do |t|
