@@ -30,6 +30,10 @@ GEM
       activesupport (= 3.1.0)
     activesupport (3.1.0)
       multi_json (~> 1.0)
+    annotated_models (3.0.2)
+      activesupport
+      annotated_models
+      i18n
     ansi (1.4.0)
     arel (2.2.1)
     bcrypt-ruby (3.0.1)
@@ -112,6 +116,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  annotated_models (= 3.0.2)
   coffee-rails (~> 3.1.0)
   jquery-rails
   pg (= 0.11.0)

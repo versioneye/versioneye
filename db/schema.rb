@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20110423215318) do
   create_table "versions", :force => true do |t|
     t.string   "version",        :limit => 50, :null => false
     t.string   "link",           :null => false
-    t.integer  "product_id",     
+    t.integer  "product_id"     
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,20 +1,3 @@
-# == Schema Information
-# Schema version: 20110406010754
-#
-# Table name: users
-#
-#  id                 :integer         not null, primary key
-#  username           :string(50)      not null
-#  fullname           :string(50)      not null
-#  email              :string(254)     not null
-#  created_at         :datetime
-#  updated_at         :datetime
-#  encrypted_password :string(255)     not null
-#  salt               :string(255)     not null
-#  admin              :boolean
-#  fb_id              :string(100)
-#  fb_token           :string(255)
-#
 
 class User < ActiveRecord::Base
 
@@ -40,20 +23,9 @@ class User < ActiveRecord::Base
   validates_acceptance_of  :terms, :message => " - Accepting the Privacy Policy / Terms is mandatory for the registration!"
 
 
-  has_many :measurements, :dependent => :destroy
-
-  has_many :relationships, :foreign_key => "follower_id", :dependent => :destroy
-
-  has_many :reverse_relationships, :foreign_key => "followed_id",
-                                   :class_name => "Relationship",
-                                   :dependent => :destroy
-
-  has_many :following, :through => :relationships, :source => :followed
-
-  has_many :followers, :through => :reverse_relationships, :source => :follower
-
-  has_one :geigercounter
-
+  has_many :notifications, :dependent => :destroy
+  
+  has_many :products, :through => :followers, :source => :product
 
   before_save :encrypt_password
 
@@ -84,22 +56,6 @@ class User < ActiveRecord::Base
   def self.authenticate_with_salt(id, coockie_salt)
     user = find_by_id(id)
     ( user && user.salt == coockie_salt ) ? user : nil
-  end
-
-  def following?(followed)
-    relationships.find_by_followed_id(followed)
-  end
-
-  def follow!(followed)
-    relationships.create!(:followed_id => followed.id)
-  end
-
-  def unfollow!(followed)
-    relationships.find_by_followed_id(followed).destroy
-  end
-
-  def feed
-    Measurement.from_users_followed_by(self)
   end
 
   def update_from_fb_json (json_user)
