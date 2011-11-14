@@ -7,12 +7,7 @@ class PageController < ApplicationController
   end
 
   def home
-    if signed_in?
-      
-    else
-#      @forShow = Measurement.all
-#      @akws = Akw.all
-    end
+    
   end
 
   def terms

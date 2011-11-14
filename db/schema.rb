@@ -13,8 +13,8 @@
 ActiveRecord::Schema.define(:version => 20110423215318) do
 
   create_table "products", :force => true do |t|
-      t.string "name",     :null => false
-      t.string "key",      :null => false, :unique => true
+      t.string "name",          :null => false
+      t.string "key",           :null => false, :unique => true
       t.string "group_id"
       t.string "artifact_id"      
       t.string "link",          :null => false
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(:version => 20110423215318) do
   add_index "products", ["key"], :name => "index_products_on_key", :unique => true
 
   create_table "versions", :force => true do |t|
-    t.string   "version",        :limit => 50, :null => false
-    t.string   "link",           :null => false
+    t.string   "version",       :limit => 50, :null => false
+    t.string   "link",          :null => false
     t.integer  "product_id"     
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -37,14 +37,14 @@ ActiveRecord::Schema.define(:version => 20110423215318) do
   add_index "versions", ["version", "product_id"], :name => "index_versions_on_version_and_product_id", :unique => true
   
   create_table "users", :force => true do |t|
-    t.string   "username",           :limit => 50,                     :null => false
-    t.string   "fullname",           :limit => 50,                     :null => false
-    t.string   "email",              :limit => 254,                    :null => false
+    t.string   "username",           :limit => 50,   :null => false
+    t.string   "fullname",           :limit => 50,   :null => false
+    t.string   "email",              :limit => 254,  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "encrypted_password",                                   :null => false
-    t.string   "salt",                                                 :null => false
-    t.boolean  "admin",                             :default => false
+    t.string   "encrypted_password",                 :null => false
+    t.string   "salt",                               :null => false
+    t.boolean  "admin",                              :default => false
     t.string   "fb_id",              :limit => 100
     t.string   "fb_token"
   end
@@ -52,6 +52,12 @@ ActiveRecord::Schema.define(:version => 20110423215318) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["fb_id"], :name => "index_users_on_fb_id"
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+  
+  create_table "unsigendusers", :force => true do |t|
+    t.string   "email",              :limit => 254,  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
   
   create_table "followers", :force => true do |t|
     t.integer  "user_id"
@@ -64,6 +70,17 @@ ActiveRecord::Schema.define(:version => 20110423215318) do
   add_index "followers", ["user_id", "product_id"], :name => "index_followers_on_user_id_and_product_id", :unique => true
   add_index "followers", ["product_id"], :name => "index_followers_on_product_id"
   
+  create_table "unsignedfollowers", :force => true do |t|
+    t.integer  "unsigneduser_id"
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  
+  add_index "unsignedfollowers", ["unsigenduser_id"], :name => "index_unsignedfollowers_on_unsigenduser_id"
+  add_index "unsignedfollowers", ["unsigenduser_id",  "product_id"], :name => "index_unsignedfollowers_on_unsigenduser_id_and_product_id", :unique => true
+  add_index "unsignedfollowers", ["unsigenduser_id"], :name => "index_unsignedfollowers_on_product_id"
+  
   create_table "notifications", :force => true do |t|
     t.integer  "user_id"
     t.integer  "version_id"
@@ -75,5 +92,24 @@ ActiveRecord::Schema.define(:version => 20110423215318) do
   add_index "notifications", ["user_id"], :name => "index_notifications_on_user_id"
   add_index "notifications", ["version_id"], :name => "index_notifications_on_version_id"
   add_index "notifications", ["read"], :name => "index_notifications_on_read"
+  
+  create_table "crawles", :force => true do |t|
+    t.integer  "name"
+    t.integer  "src"
+    t.boolean  "type"
+    t.datetime "finished_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  
+  add_index "crawles", ["name"], :name => "index_crawles_on_name"
+  
+  create_table "errors", :force => true do |t|
+    t.integer  "subject"
+    t.integer  "exception"
+    t.boolean  "crawles_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
   
 end

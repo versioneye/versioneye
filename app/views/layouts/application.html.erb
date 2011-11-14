@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Versioneye</title>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+  <title>Version Eye</title>
+  <%= csrf_meta_tag %>
+  <%= render 'layouts/stylesheets' %>
+  <%= javascript_include_tag :defaults %>
 </head>
-<body>
 
-<%= yield %>
-
+<body >
+	<div class="container">
+		<%= render 'layouts/header' %>
+		<section class="round" >
+			<% flash.each do |key, value| %>
+				<div class="flash <%= key %>"><%= value %></div>
+			<% end %>
+			<%= yield %>
+		</section>
+		<%= render 'layouts/footer' %>
+		<%= debug(params) if Rails.env.development? %>
+        <br/>
+        <br/>
+	</div>
 </body>
+
 </html>
