@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110423215318) do
+ActiveRecord::Schema.define(:version => 20111115015318) do
 
   create_table "products", :force => true do |t|
       t.string "name",          :null => false
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(:version => 20110423215318) do
   add_index "users", ["fb_id"], :name => "index_users_on_fb_id"
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
   
-  create_table "unsigendusers", :force => true do |t|
+  create_table "unsignedusers", :force => true do |t|
     t.string   "email",              :limit => 254,  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -77,9 +77,9 @@ ActiveRecord::Schema.define(:version => 20110423215318) do
     t.datetime "updated_at"
   end
   
-  add_index "unsignedfollowers", ["unsigenduser_id"], :name => "index_unsignedfollowers_on_unsigenduser_id"
-  add_index "unsignedfollowers", ["unsigenduser_id",  "product_id"], :name => "index_unsignedfollowers_on_unsigenduser_id_and_product_id", :unique => true
-  add_index "unsignedfollowers", ["unsigenduser_id"], :name => "index_unsignedfollowers_on_product_id"
+  add_index "unsignedfollowers", ["unsigneduser_id"], :name => "index_unsignedfollowers_on_unsigneduser_id"
+  add_index "unsignedfollowers", ["unsigneduser_id",  "product_id"], :name => "index_unsignedfollowers_on_unsigneduser_id_and_product_id", :unique => true
+  add_index "unsignedfollowers", ["unsigneduser_id"], :name => "index_unsignedfollowers_on_product_id"
   
   create_table "notifications", :force => true do |t|
     t.integer  "user_id"
@@ -94,20 +94,22 @@ ActiveRecord::Schema.define(:version => 20110423215318) do
   add_index "notifications", ["read"], :name => "index_notifications_on_read"
   
   create_table "crawles", :force => true do |t|
-    t.integer  "name"
-    t.integer  "src"
-    t.boolean  "type"
-    t.datetime "finished_at"
+    t.string  "name"
+    t.string  "src"
+    t.string  "type"
+    t.string  "version"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "finished_at"
+    t.datetime "duration"
   end
   
   add_index "crawles", ["name"], :name => "index_crawles_on_name"
   
   create_table "errors", :force => true do |t|
-    t.integer  "subject"
-    t.integer  "exception"
-    t.boolean  "crawles_id"
+    t.string  "subject"
+    t.string  "errormessage"
+    t.boolean  "crawle_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
