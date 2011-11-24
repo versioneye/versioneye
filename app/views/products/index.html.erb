@@ -1,0 +1,17 @@
+	<div align="center">
+		<div id="name">
+			<%= form_tag("/search", :method => "get") do %>
+			    <div style="display:table-row;">
+			      <div class="labelCel">
+			        <%= label_tag(:q, "Product:") %>
+			      </div>
+			      <div class="inputCel">
+			        <%= text_field_tag :q, nil, :class => "round" %>
+			      </div>
+				  <div >
+					<%= submit_tag "Search", :class => "button" %>
+				  </div>
+			    </div>
+			<% end %>
+		</div>
+	</div>

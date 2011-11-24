@@ -1,0 +1,230 @@
+
+/******** LAYOUT **********/
+
+.container {
+    width: 710px;
+}
+
+body {
+    background: black;
+    background-image: url("/images/background.png")  ;
+    /*background-attachment: fixed;*/
+    background-repeat: repeat-x;
+    background-position: top;
+}
+
+header {
+    padding-top: 20px;
+    height: 42px;
+}
+
+header img {
+    padding: 1em;
+    background: #fff;
+}
+
+section {
+    display: inline-block;
+    width: 670px;
+    margin-top: 1em;
+    font-size: 120%;
+    padding: 20px;
+    background: #fff;
+}
+
+.content{
+    border: 0px solid black;
+    float: left;
+    width: 450px;
+    padding: 10px;
+}
+
+.bigcontent{
+    border: 0px solid black;
+    width: 650px;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    text-align: left;
+}
+
+.sidebar{
+    width: 176px;
+    border: 0px solid black;
+    float: left;
+    padding: 10px;
+    vertical-align: top;
+    background: #ffe4c4;
+}
+
+section h1 {
+    font-size: 200%;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 10px;
+    width: 710px;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+}
+
+footer nav {
+    float: none;
+    height: 40px;
+    vertical-align: middle;
+}
+
+
+/******* Basic Elements *********/
+
+input{
+    padding-left: 15px;
+    height: 35px;
+    font-size: 16px;
+}
+
+button {
+    padding-left: 15px;
+    height: 35px;
+    font-size: 12px;
+}
+
+label {
+	color: #666666;
+	font-size: 1.5em;
+}
+
+/******* Links *********/
+
+a {
+    color: #09c;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #069;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #069;
+}
+
+
+/****** Navigation ******/
+
+nav {
+    float: right;
+    background-color: white;
+    padding: 0 0.7em;
+    white-space: nowrap;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 0.2em 0;
+}
+
+nav ul li a {
+    padding: 0 5px;
+    font-weight: bold;
+}
+
+nav ul li a:visited {
+    color: #09c;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+
+
+/***** Round corners ********/
+
+.round {
+    -moz-border-radius:    10px;
+    -webkit-border-radius: 10px;
+    border-radius:         10px;
+}
+
+
+
+/***** 3 Col Form ********/
+
+.labelCel{
+    width: 150px;
+    text-align: right;
+    display: table-cell;
+    padding-right: 5px;
+}
+
+.inputCel{
+    padding-left: 5px;
+    width: 300px;
+    display: table-cell;
+}
+
+.inputShowCel{
+    padding-left: 5px;
+    width: 300px;
+    display: table-cell;
+    font-size: 1.2em;
+}
+
+.inputCel input{
+    width: 270px;
+}
+
+.hintCel{
+    width: 240px;
+    display: table-cell;
+    border: 0px solid black;
+    vertical-align: middle;
+}
+
+
+/******** ERROR STYLES **********/
+
+#error_explanation {
+  display: table;
+  width: 90%;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}

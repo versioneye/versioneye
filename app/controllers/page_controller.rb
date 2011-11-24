@@ -7,7 +7,7 @@ class PageController < ApplicationController
   end
 
   def home
-    
+    @product = Product.new
   end
 
   def terms

@@ -1,6 +1,8 @@
 Versioneye::Application.routes.draw do
   
-  root :to => "page#home"
+  root :to => "products#index"
+  match '/search',    :to => 'products#search'
+  resources :products, :key => :key
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

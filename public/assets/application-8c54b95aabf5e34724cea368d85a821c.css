@@ -1,0 +1,498 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+*/
+
+/******** LAYOUT **********/
+
+
+.container {
+    width: 710px;
+}
+
+body {
+    background: black;
+    background-image: url("/images/background.png")  ;
+    /*background-attachment: fixed;*/
+    background-repeat: repeat-x;
+    background-position: top;
+}
+
+header {
+    padding-top: 20px;
+    height: 172px;
+}
+
+header img {
+    padding: 1em;
+    background: #fff;
+}
+
+section {
+    display: inline-block;
+    width: 670px;
+    margin-top: 1em;
+    font-size: 120%;
+    padding: 20px;
+    background: #fff;
+}
+
+.content{
+    border: 0px solid black;
+    float: left;
+    width: 450px;
+    padding: 10px;
+}
+
+.bigcontent{
+    border: 0px solid black;
+    width: 650px;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    text-align: left;
+}
+
+.sidebar{
+    width: 176px;
+    border: 0px solid black;
+    float: left;
+    padding: 10px;
+    vertical-align: top;
+    background: #ffe4c4;
+}
+
+section h1 {
+    font-size: 200%;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 10px;
+    width: 710px;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+}
+
+footer nav {
+    float: none;
+    height: 40px;
+    vertical-align: middle;
+}
+
+
+
+/******* Links *********/
+
+a {
+    color: #09c;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #069;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #069;
+}
+
+
+/****** Navigation ******/
+
+nav {
+    float: right;
+    background-color: white;
+    padding: 0 0.7em;
+    white-space: nowrap;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 0.2em 0;
+}
+
+nav ul li a {
+    padding: 0 5px;
+    font-weight: bold;
+}
+
+nav ul li a:visited {
+    color: #09c;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+
+
+/***** Sign up button *******/
+
+a.signup_button {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+    width: 190px;
+    color: #fff;
+    background: #006400;
+    font-size: 150%;
+    font-weight: bold;
+    padding: 20px;
+}
+
+
+
+/***** Round corners ********/
+
+.round {
+    -moz-border-radius:    10px;
+    -webkit-border-radius: 10px;
+    border-radius:         10px;
+}
+
+
+
+/***** 3 Col Form ********/
+
+.labelCel{
+    width: 150px;
+    text-align: right;
+    display: table-cell;
+    padding-right: 5px;
+}
+
+.inputCel{
+    padding-left: 5px;
+    width: 300px;
+    display: table-cell;
+}
+
+.inputShowCel{
+    padding-left: 5px;
+    width: 300px;
+    display: table-cell;
+    font-size: 1.2em;
+}
+
+.inputCel input{
+    width: 270px;
+}
+
+.hintCel{
+    width: 240px;
+    display: table-cell;
+    border: 0px solid black;
+    vertical-align: middle;
+}
+
+
+/******** ERROR STYLES **********/
+
+#error_explanation {
+  display: table;
+  width: 90%;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+
+/******* PROFILE, measurements ******/
+
+
+.measurements {
+  margin-top: 1em;
+  width: 100%;
+}
+
+.posting{
+    display: table-row;
+    width: 100%;
+    height: 90px;
+    padding-bottom: 50px;
+}
+
+.posting .gravatar{
+    display: table-cell;
+    width: 50px;
+}
+
+.measurement {
+  vertical-align: top;
+  padding: 0px;
+}
+
+.posting .measurement{
+    display: table-cell;
+    border-top: 1px solid #ccc;
+    vertical-align: top;
+    padding-left: 7px;
+}
+
+.userBold{
+    font-size: 1.1em;
+    font-weight: bold;
+    color: black;
+}
+.userBold:visited{
+    font-size: 1.1em;
+    font-weight: bold;
+    color: black;
+}
+
+
+.feed_measurement{
+    font-size: 0.8em;
+    color: gray;
+}
+
+.timestamp{
+    font-size: 0.8em;
+    color: gray;
+}
+
+div.user_info img {
+  padding-right: 0.1em;
+}
+
+div.user_info a {
+  text-decoration: none;
+}
+
+div.user_info span.user_name {
+  position: absolute;
+}
+
+div.user_info span.measurements {
+  font-size: 80%;
+}
+
+form.new_measurements {
+  margin-bottom: 2em;
+}
+
+form.new_measurements textarea {
+  height: 4em;
+  margin-bottom: 0;
+}
+
+.measure_content{
+    padding: 10px;
+    border: 2px solid gray;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.measure_share_area{
+    padding-bottom: 10px;
+}
+
+.measure_comment{
+    display: table-row;
+    width: 100%;
+    padding-bottom: 50px;
+}
+.measure_comment_gravatar{
+    display: table-cell;
+    width: 50px;
+}
+.measure_comment_content{
+    display: table-cell;
+    border-top: 1px solid #CCCCCC;
+    vertical-align: top;
+    padding: 5px;
+}
+
+.measure_comment_area{
+    margin-top: 10px;
+}
+
+.measure_comment_txtarea{
+    width: 630px;
+    height: 40px;
+}
+
+/**** USER LIST *********/
+
+ul.users {
+  margin-top: 1em;
+}
+
+.users li {
+  list-style: none;
+}
+
+
+/**** GEIGER COUNTER *********/
+
+.geiger{
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.geigerImage{
+    float: left;
+    padding: 5px;
+}
+
+.geigerInfo{
+    float: left;
+    padding: 5px;
+}
+
+.geigerAction{
+    clear: both;
+    padding: 5px;
+}
+
+
+/****** MAP **********/
+
+.mapOnStartPage{
+    width: 650px;
+    height: 500px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mapForPost{
+    width: 440px;
+    height: 170px;
+    margin-bottom: 2px;
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+}
+
+.map_for_measurement_page{
+    width: 650px;
+    height: 300px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/****** miscellaneous  ****/
+
+.field_with_errors input {
+  border: 2px solid red;
+}
+
+.postField{
+    width: 430px;
+    height: 80px;
+    margin: 0;
+}
+
+.msph{
+    width: 100px;
+}
+
+.msphFeedLink{
+   font-weight: bold;
+   color: #ff4500;
+}
+
+.msphFeedLink:after{
+   font-weight: bold;
+   color: #ff4500;
+}
+
+.msphFeedLink:active{
+   font-weight: bold;
+   color: #ff4500;
+}
+
+.msphFeedLink:visited{
+   font-weight: bold;
+   color: #ff4500;
+}
+
+.msphFeedLink:hover{
+   font-weight: bold;
+   color: #ff4500;
+}
+
+.latlonInput{
+    border: 0px solid white;
+    padding: 0;
+    margin: 0;
+    width: 120px;
+}
+
+label{
+    font-size: 1.5em;
+    color: #666666;
+}
+
+input{
+    padding-left: 15px;
+    height: 2.5em;
+    font-size: 1.0em;
+}
+
+.checkbox{
+    width: 20px;
+}
+
+input .checkbox{
+    width: 20px;
+}
+
+.logo{
+    /*width: 350px;*/
+    background: transparent;
+}
+
+.smallHint{
+    color: gray;
+    font-size: 0.7em;
+}
+
+.stat{
+
+}
+
+.button{
+    width: 150px;
+    height: 50px;
+}
