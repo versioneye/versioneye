@@ -1,13 +1,11 @@
 class ProductsController < ApplicationController
 
   def index
-    @product = Product.new
-    @messageout = "home"
+    
   end
   
   def search    
-    @procuts = Product.where("name = ?", params[:q])
-    @messageout = "search "
+    @products = Product.find_by_name(params[:q])
   end
 
 end

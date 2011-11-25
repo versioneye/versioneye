@@ -1,8 +1,15 @@
-<div align="center">
-	
-	
-	<div>
-		<%= @products %>
-		<%= @messageout %>
+<div align="center">	
+	<div id="search">
+		<%= render 'shared/search' %>
+	</div>
+	<div align="left" style="padding-top: 20px;">
+		<% if !@products.nil? %>
+			<% @products.each do |product| %>
+				<div style="border: 1px solid grey; padding: 5px; margin: 5px;">
+					<a href="<%= product.link %>" target="_NEW"><%= product.name %></a> - 
+					<a href="<%= product.version_link %>" target="_NEW"><%= product.version %></a></br>
+				</div>				
+			<% end %>
+		<% end %>
 	</div>
 </div>

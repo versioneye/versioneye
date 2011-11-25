@@ -13,13 +13,15 @@
 ActiveRecord::Schema.define(:version => 20111115015318) do
 
   create_table "products", :force => true do |t|
-      t.string "name",          :null => false
-      t.string "key",           :null => false, :unique => true
-      t.string "group_id"
-      t.string "artifact_id"      
-      t.string "link",          :null => false
-      t.string "src"
-      t.string "type"
+      t.string   "name",          :null => false
+      t.string   "key",           :null => false, :unique => true
+      t.string   "group_id"
+      t.string   "artifact_id"      
+      t.string   "link",          :null => false
+      t.string   "src"
+      t.string   "prod_type"
+      t.string   "version",       :limit => 50
+      t.string   "version_link"
       t.datetime "created_at"
       t.datetime "updated_at"
   end
