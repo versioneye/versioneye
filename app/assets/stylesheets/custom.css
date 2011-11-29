@@ -161,7 +161,6 @@ nav ul li a:hover {
 }
 
 
-
 /***** 3 Col Form ********/
 
 .labelCel{
@@ -228,3 +227,12 @@ nav ul li a:hover {
   font-size: 12px;
   list-style: square;
 }
+
+/****** ELSE ****************/
+
+.searchResult{
+	border: 1px solid gray; 
+	padding: 5px; 
+	margin: 5px;
+}
+

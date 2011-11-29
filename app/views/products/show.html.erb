@@ -1,0 +1,19 @@
+<h1 ><%= @product.name_and_version %></h1>
+<div>
+	Link to version: <a href="<%= @product.version_link %>" target="_NEW"><%= @product.version_link %></a><br/>
+	Link to product: <a href="<%= @product.link %>" target="_NEW"><%= @product.link %></a><br/>
+</div>
+<br/>
+<div>
+	Type: Maven2 Repository
+</div>
+<br/>
+<div class="round" style="border: 1px solid gray; padding: 10px;">
+<pre>
+<<span>dependency</span>>
+	<<span>groupId</span>><b><%= @product.group_id %></b><<span>/groupId</span>>
+	<<span>artifactId</span>><b><%= @product.artifact_id %></b><<span>/artifactId</span>>
+	<<span>version</span>><b><%= @product.version %></b><span>/version</span>>
+<<span>/dependency</span>>
+</pre>
+</div>

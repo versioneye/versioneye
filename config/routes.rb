@@ -2,7 +2,7 @@ Versioneye::Application.routes.draw do
   
   root :to => "products#index"
   match '/search',    :to => 'products#search'
-  resources :products, :key => :key
+  resources :products
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

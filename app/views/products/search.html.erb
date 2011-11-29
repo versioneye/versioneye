@@ -5,9 +5,8 @@
 	<div align="left" style="padding-top: 20px;">
 		<% if !@products.nil? %>
 			<% @products.each do |product| %>
-				<div style="border: 1px solid grey; padding: 5px; margin: 5px;">
-					<a href="<%= product.link %>" target="_NEW"><%= product.name %></a> - 
-					<a href="<%= product.version_link %>" target="_NEW"><%= product.version %></a></br>
+				<div class="searchResult round">
+					<%= link_to product.name_and_version, product_path(product.to_param) %><br/>
 				</div>				
 			<% end %>
 		<% end %>
