@@ -4,6 +4,9 @@ Versioneye::Application.routes.draw do
   match '/search',    :to => 'products#search'
   resources :products
   
+  match '/about',      :to => 'page#about'
+  match '/impressum',  :to => 'page#impressum'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

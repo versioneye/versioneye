@@ -6,8 +6,8 @@
 }
 
 body {
-    background: black;
-    background-image: url("/images/background.png")  ;
+    background: white;
+/*    background-image: url("/images/background.png")  ;*/
     /*background-attachment: fixed;*/
     background-repeat: repeat-x;
     background-position: top;
@@ -33,7 +33,7 @@ section {
 }
 
 .content{
-    border: 0px solid black;
+    border: 1px solid black;
     float: left;
     width: 450px;
     padding: 10px;
@@ -66,8 +66,10 @@ section h1 {
 }
 
 footer {
-    text-align: center;
+    text-align: left;
+	border-top: 1px dotted gray;
     margin-top: 10px;
+	padding-top: 10px;
     width: 710px;
     margin-left: auto;
     margin-right: auto;
@@ -231,8 +233,15 @@ nav ul li a:hover {
 /****** ELSE ****************/
 
 .searchResult{
-	border: 1px solid gray; 
+	border-bottom: 1px dotted gray; 
 	padding: 5px; 
 	margin: 5px;
+}
+
+.searchResult:hover{
+	border-bottom: 1px dotted gray; 
+	padding: 5px; 
+	margin: 5px;
+	background-color: #F5F5F5;
 }
 
