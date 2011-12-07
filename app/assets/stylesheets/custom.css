@@ -19,43 +19,18 @@ header {
 }
 
 header img {
-    padding: 1em;
+    padding: 5px;
     background: #fff;
 }
 
 section {
     display: inline-block;
     width: 670px;
-    margin-top: 1em;
-    font-size: 120%;
-    padding: 20px;
+    margin-top: 10px;
+	padding: 20px;
+    font-size: 14px;    
     background: #fff;
-}
-
-.content{
-    border: 1px solid black;
-    float: left;
-    width: 450px;
-    padding: 10px;
-}
-
-.bigcontent{
-    border: 0px solid black;
-    width: 650px;
-    padding: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    text-align: left;
-}
-
-.sidebar{
-    width: 176px;
-    border: 0px solid black;
-    float: left;
-    padding: 10px;
-    vertical-align: top;
-    background: #ffe4c4;
+	border: 1px solid gray;
 }
 
 section h1 {
@@ -118,6 +93,10 @@ a:visited {
     color: #069;
 }
 
+.followLink {
+	color: green; 
+	font-size: 11px;
+}
 
 /****** Navigation ******/
 
@@ -232,16 +211,41 @@ nav ul li a:hover {
 
 /****** ELSE ****************/
 
+#search{
+	background-color: #F5F5F5;
+}
+
 .searchResult{
 	border-bottom: 1px dotted gray; 
-	padding: 5px; 
-	margin: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px; 
+	padding-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 .searchResult:hover{
 	border-bottom: 1px dotted gray; 
-	padding: 5px; 
-	margin: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px; 
+	margin-top: 5px;
+	margin-bottom: 5px;
 	background-color: #F5F5F5;
 }
 
+.searchResults{
+	text-align: left;
+	padding-top: 20px;
+}
+
+#product_to_follow{
+	font-weight: bold;
+}
+
+.dialog_follow_description{
+	margin-top: 10px;
+}
+
+.dialog_follow_form{
+	margin-top: 10px;
+}

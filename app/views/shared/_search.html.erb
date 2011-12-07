@@ -4,7 +4,7 @@
         <%= label_tag(:q, "Product:") %>
       </div>
       <div class="inputCel">
-        <%= text_field_tag :q, nil, :class => "round" %>
+        <%= text_field_tag :q, @query, :class => "round" %>
       </div>
 	  <div class="labelCel" style="text-align: left">
 		<%= submit_tag "Search", :class => "button" %>

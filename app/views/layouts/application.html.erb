@@ -4,13 +4,16 @@
   <title>Version Eye</title>
   <%= csrf_meta_tag %>
   <%= render 'layouts/stylesheets' %>
-  <%= javascript_include_tag :defaults %>
+  <%= stylesheet_link_tag "application" %>
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <%= javascript_include_tag "application" %>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 </head>
 
 <body >
 	<div class="container">
 		<%= render 'layouts/header' %>
-		<section class="round" >
+		<section class="round"  >
 			<% flash.each do |key, value| %>
 				<div class="flash <%= key %>"><%= value %></div>
 			<% end %>

@@ -1,14 +1,19 @@
 <div align="center">	
 	<div id="search">
 		<%= render 'shared/search' %>
+	<%= render 'shared/dialog_follow' %>
 	</div>
-	<div align="left" style="padding-top: 20px;">
+	<div class="searchResults">
 		<% if !@products.nil? %>
 			<% @products.each do |product| %>
 				<div class="searchResult">
 					<%= link_to product.name_and_version, product_path(product.to_param) %><br/>
+					<a class="followLink" href="#" onclick="follow_link('<%= product.name %>');" >follow</a>
 				</div>				
 			<% end %>
+			<div style="margin-top: 20px;">
+				<%= will_paginate @products %>
+			</div>
 		<% end %>
 	</div>
 </div>

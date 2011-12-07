@@ -1,0 +1,20 @@
+<div id="dialog_follow" title="Follow" style="display: none">
+	<div class="dialog_follow_description">
+		Follow <span id="product_to_follow"></span> and get informed about new versions.
+	</div>
+	<div class="dialog_follow_form">
+		<%= form_tag("/search", :method => "get") do %>
+		    <div style="display:table-row;">
+		      <div class="labelCel">
+		        <%= label_tag(:email, "E-Mail:") %>
+		      </div>
+		      <div class="inputCel" style="font-size: 18px;">
+		        <%= text_field_tag :email, nil, :class => "round" %>
+		      </div>
+			  <div class="labelCel" style="text-align: left">
+				<%= submit_tag "Follow", :class => "button" %>
+			  </div>
+		    </div>
+		<% end %>
+	</div>
+</div>
