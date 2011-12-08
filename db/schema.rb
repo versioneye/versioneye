@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20111115015318) do
   
   create_table "notifications", :force => true do |t|
     t.integer  "user_id"
+    t.integer  "unsigneduser_id"
     t.integer  "version_id"
     t.boolean  "read"
     t.datetime "created_at"

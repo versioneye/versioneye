@@ -2,6 +2,7 @@ Versioneye::Application.routes.draw do
   
   root :to => "products#index"
   match '/search',    :to => 'products#search'
+  match '/follow',    :to => 'products#follow'
   resources :products
   
   match '/about',      :to => 'page#about'

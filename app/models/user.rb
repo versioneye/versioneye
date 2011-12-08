@@ -1,4 +1,3 @@
-
 class User < ActiveRecord::Base
 
   attr_accessor :password, :terms
@@ -15,7 +14,7 @@ class User < ActiveRecord::Base
   validates :email,    :presence    => true,
                        :length      => {:minimum => 5, :maximum => 254},
                        :uniqueness  => true,
-                       :format      => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i}
+                       :format      => {:with => /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/}
 
   validates :password, :presence      => true,
                        :length        => { :within => 5..40 }
