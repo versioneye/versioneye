@@ -77,6 +77,44 @@ label {
 	font-size: 1.5em;
 }
 
+input[type="submit"] {
+  -webkit-user-select:none;
+  background-color:#F5F5F5;
+  border-bottom-color:rgba(0, 0, 0, 0.0976562);
+  border-bottom-left-radius:2px 2px;
+  border-bottom-right-radius:2px 2px;
+  border-bottom-style:solid;
+  border-bottom-width:1px;
+  border-left-color:rgba(0, 0, 0, 0.0976562);
+  border-left-style:solid;
+  border-left-width:1px;
+  border-right-color:rgba(0, 0, 0, 0.0976562);
+  border-right-style:solid;
+  border-right-width:1px;
+  border-top-color:rgba(0, 0, 0, 0.0976562);
+  border-top-left-radius:2px 2px;
+  border-top-right-radius:2px 2px;
+  border-top-style:solid;
+  border-top-width:1px;
+  color:#666666;
+  cursor:default;
+  font-family: arial, sans-serif;
+  font-size:14px;
+  font-weight:bold;
+  height:33px;
+  line-height:27px;
+  margin-bottom:0px;
+  margin-left:5px;
+  margin-right:5px;
+  margin-top:0px;
+  min-width:54px;
+  padding-bottom:0;
+  padding-left:8px;
+  padding-right:8px;
+  padding-top:0;
+  text-align:center;
+}
+
 /******* Links *********/
 
 a {
@@ -147,6 +185,7 @@ nav ul li a:hover {
 .labelCel{
     width: 150px;
     text-align: right;
+	vertical-align: middle;
     display: table-cell;
     padding-right: 5px;
 }
