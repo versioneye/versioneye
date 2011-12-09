@@ -87,7 +87,8 @@ ActiveRecord::Schema.define(:version => 20111115015318) do
     t.integer  "user_id"
     t.integer  "unsigneduser_id"
     t.integer  "version_id"
-    t.boolean  "read"
+    t.boolean  "read",          :default => false
+    t.boolean  "sent_email",    :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
