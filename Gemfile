@@ -5,6 +5,7 @@ gem 'jquery-rails'
 gem 'pg', '0.11.0'
 gem 'will_paginate', '3.0.2'
 gem 'execjs', '1.2.9'
+gem 'therubyracer', '0.9.9'
 
 # Gems used only for assets and not required
 # in production environments by default.
