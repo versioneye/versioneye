@@ -31,12 +31,15 @@ class ProductsController < ApplicationController
     p params[:product_key]
     p @product_key
     
-    product = fetch_product @product_key
+    @product = fetch_product @product_key
     unsigneduser = fetch_unsigneduser @email
-    create_unsignedfollower product, unsigneduser    
+    create_unsignedfollower @product, unsigneduser    
     
     respond_to do |format|
-      format.html { redirect_to :product }
+      format.html {
+        flash[:info] = "Thank you. You are following now #{@product_name} and we will inform you about new versions." 
+        redirect_to @product
+        }
       format.js
     end
   end
@@ -58,6 +61,7 @@ class ProductsController < ApplicationController
       product = Product.find_by_key product_key
       if product.nil?
         @message = "error"
+        flash.now[:error] = "An error occured. Please try again later."
       end
       product
     end
