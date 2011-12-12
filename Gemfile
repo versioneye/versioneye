@@ -2,8 +2,10 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.1.0'
 gem 'jquery-rails'
+gem 'activesupport', '3.1.0'
 gem 'pg', '0.11.0'
 gem 'will_paginate', '3.0.2'
+gem 'unicorn', '4.1.1'
 gem 'execjs', '1.2.9'
 gem 'therubyracer', '0.9.9'
 
@@ -26,9 +28,6 @@ group :test do
   # Pretty printed test output
   gem 'turn', :require => false
 end
-
-# Use unicorn as the web server
-# gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
