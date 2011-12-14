@@ -6,7 +6,8 @@ Versioneye::Application.routes.draw do
   resources :products
   
   match '/about',      :to => 'page#about'
-  match '/impressum',  :to => 'page#impressum'
+  match '/imprint',    :to => 'page#imprint'
+  match '/terms',      :to => 'page#terms'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

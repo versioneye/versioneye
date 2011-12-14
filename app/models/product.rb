@@ -1,11 +1,26 @@
 class Product < ActiveRecord::Base
 
+  require 'will_paginate/array'
+
+  has_many :versions, :dependent => :destroy
+
+
   def self.find_by_name(searched_name)
     if searched_name.nil? || searched_name.strip == ""
       return nil
     end
-    searched_name = "%"+searched_name+"%"
-    Product.where("name ilike ?", searched_name).order("name asc")
+    name1 = searched_name+"%"
+    result1 = Product.where("name ilike ?", name1).order("name asc")    
+    
+    ids = Array.new
+    result1.each do |product|
+      ids.push product.id
+    end
+  
+    name2 = "%" + searched_name + "%"
+    result2 = Product.where("name ilike ? AND id not in (?)", name2, ids).order("name asc")
+    result = result1 + result2
+    result
   end
   
   def self.find_by_key(searched_key)
@@ -26,6 +41,12 @@ class Product < ActiveRecord::Base
   
   def name_and_version    
     nameversion = "#{name} - (#{version})"
+  end
+  
+  def group_id_with_dotts
+    group = String.new(group_id)
+    group.gsub!("/", ".")
+    group
   end
 
 end

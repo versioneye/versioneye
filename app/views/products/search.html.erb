@@ -7,7 +7,8 @@
 		<% if !@products.nil? %>
 			<% @products.each do |product| %>
 				<div class="searchResult">
-					<%= link_to product.name_and_version, product_path(product.to_param) %><br/>
+					<%= link_to product.name_and_version, product_path(product.to_param), :class => "searchResultLink" %><br/>
+					<span class="searchResultMeta">GroupId: <%= product.group_id %></span><br/>
 					<a class="followLink"  onclick="load_dialog_follow('<%= product.name %>', '<%= product.to_param %>');" > --> follow</a>
 				</div>				
 			<% end %>

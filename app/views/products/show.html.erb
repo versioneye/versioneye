@@ -37,9 +37,24 @@
 <div class="round boxContainer">
 <pre>
 <<span>dependency</span>>
-	<<span>groupId</span>><b><%= @product.group_id %></b><<span>/groupId</span>>
+	<<span>groupId</span>><b><%= @product.group_id_with_dotts %></b><<span>/groupId</span>>
 	<<span>artifactId</span>><b><%= @product.artifact_id %></b><<span>/artifactId</span>>
 	<<span>version</span>><b><%= @product.version %></b><span>/version</span>>
 <<span>/dependency</span>>
 </pre>
 </div>
+<% if !@product.versions.nil? && @product.versions.length > 1 %>
+	<div class="boxHeader">
+		Other Versions
+	</div>
+	<div class="boxContainer round" >
+		<table>
+		<% @product.versions.each do |version|  %>
+			<tr>
+				<td><%= version.version %></td>
+				<td><a href="<%= version.link %>"><%= version.link %></a></td>
+			</tr>
+		<% end %>
+		</table>
+	</div>
+<% end %>
