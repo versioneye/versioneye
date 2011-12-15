@@ -51,7 +51,7 @@ class Product < ActiveRecord::Base
   
   def self.send_notifications
     Notification.find_each do |notification|
-      user = get_user notification
+      user = fetch_user notification
       version = notification.version
       product = version.product
       ProductMailer.new_version_email(user, version, product).deliver
@@ -74,12 +74,13 @@ class Product < ActiveRecord::Base
   
   private 
   
-    def get_user notification
+    def self.fetch_user notification
       user = notification.user
       if user.nil? 
         user = User.new
         unsigenduser = notification.unsigneduser
-        user.name = unsigneduser.email
+        user.email = unsigenduser.email
+        user.fullname = unsigenduser.email
       end
       user
     end
