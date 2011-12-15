@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	</head>
+	<body>
+		<p>Hello <%= @user.fullname %></p>
+		<p>
+			Version <b><%= @version.version %></b> of Product <b><%= @product.name %></b> is out: <br/>
+			Just follow this link: <%= @version.link %>
+		</p>
+		<p>
+			Thanks for joining and have a great day!
+		</p>
+	</body>
+</html>

@@ -1,13 +1,15 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.0'
-gem 'jquery-rails'
-gem 'activesupport', '3.1.0'
-gem 'pg', '0.11.0'
-gem 'will_paginate', '3.0.2'
-gem 'unicorn', '4.1.1'
+gem 'jquery-rails', '1.0.19'
 gem 'execjs', '1.2.9'
 gem 'therubyracer', '0.9.9'
+gem 'activesupport', '3.1.0'
+gem 'actionmailer', '3.1.0'
+gem 'will_paginate', '3.0.2'
+gem 'whenever', '0.7.0'
+gem 'pg', '0.11.0'
+gem 'unicorn', '4.1.1'
 
 # Gems used only for assets and not required
 # in production environments by default.
