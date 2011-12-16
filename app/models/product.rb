@@ -32,6 +32,17 @@ class Product < ActiveRecord::Base
     return nil
   end
   
+  def self.send_notifications
+    Notification.find_each(:conditions => "sent_email is false") do |notification|
+      user = fetch_user notification
+      version = notification.version
+      product = version.product
+      ProductMailer.new_version_email(user, version, product).deliver
+      notification.sent_email = true
+      notification.save
+    end
+  end
+  
   def to_param
     url_key = String.new(key)
     url_key.gsub!("/","--")
@@ -47,29 +58,6 @@ class Product < ActiveRecord::Base
     group = String.new(group_id)
     group.gsub!("/", ".")
     group
-  end
-  
-  def self.send_notifications
-    Notification.find_each do |notification|
-      user = fetch_user notification
-      version = notification.version
-      product = version.product
-      ProductMailer.new_version_email(user, version, product).deliver
-      notification.sent_email = true
-      notification.save
-    end
-  end
-  
-  def self.send_notifications_test
-      user = User.new
-      user.fullname = "Robert Reiz"
-      user.email = "robert.reiz.81@gmail.com"
-      version = Version.new
-      version.version = "1.0"
-      version.link = "http://superlink.de"
-      product = Product.new
-      product.name = "Spring-Framework"
-      ProductMailer.new_version_email(user, version, product).deliver      
   end
   
   private 

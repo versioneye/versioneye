@@ -19,6 +19,12 @@
 
 # Learn more: http://github.com/javan/whenever
 
+# whenever --update-crontab
+
+every :day do
+  command "crawle.sh"
+end
+
 every 4.hours do
-   runner "MyModel.some_method"
+   runner "Product.send_notifications"
 end
