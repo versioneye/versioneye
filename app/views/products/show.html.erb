@@ -10,7 +10,8 @@
 </div>
 <div class="boxContainer round">
 	<div class="dialog_follow_description">
-		Follow <span id="product_to_follow"><%= @product.name %></span> and get informed about new versions.
+		Follow <span id="product_to_follow"><%= @product.name %></span> and get informed about new versions.<br/>
+		By submitting this Form you are acepting the <%= link_to "Privacy Policy / Terms", terms_path  %> of this page.
 	</div>
 	<div class="dialog_follow_form">
 		<%= form_tag("/follow") do  %>

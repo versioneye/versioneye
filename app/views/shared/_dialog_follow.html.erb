@@ -4,7 +4,8 @@
 	</div>
 	<div id="dialog_follow_form" >
 		<div class="dialog_follow_description">
-			Follow <span id="product_to_follow"></span> and get informed about new versions.
+			Follow <span id="product_to_follow"></span> and get informed about new versions.<br/>
+			By submitting this Form you are acepting the <%= link_to "Privacy Policy / Terms", terms_path  %> of this page.
 		</div>
 		<div class="dialog_follow_form">
 			<%= form_tag("/follow", :remote => true) do  %>
