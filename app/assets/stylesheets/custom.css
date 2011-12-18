@@ -283,4 +283,5 @@ a:visited {
 
 .searchResultMeta{
 	font-size: 11px;
+	word-wrap:break-word;
 }
