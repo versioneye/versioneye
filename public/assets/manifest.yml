@@ -1,5 +1,7 @@
 ---
 rails.png: rails-e4b51606cd77fda2615e7439907bfc92.png
+worldmap_sf_b.jpg: worldmap_sf_b-a303981b6b30930a941767f9483594e1.jpg
+worldmap_sf_ma.jpg: worldmap_sf_ma-68f407fca411671c17e2d727ed9a6ead.jpg
 blueprint/plugins/buttons/icons/cross.png: blueprint/plugins/buttons/icons/cross-1f87fac86c438386527b5e7d5ceecb0e.png
 blueprint/plugins/buttons/icons/key.png: blueprint/plugins/buttons/icons/key-5f38d0204e83d3d83585a62ff993342b.png
 blueprint/plugins/buttons/icons/tick.png: blueprint/plugins/buttons/icons/tick-09de3f730b3b6ef960450a506b0916a9.png
@@ -17,10 +19,10 @@ blueprint/plugins/link-icons/readme.txt: blueprint/plugins/link-icons/readme-c05
 blueprint/plugins/rtl/readme.txt: blueprint/plugins/rtl/readme-31ae4365e62f271c051768772ef80983.txt
 blueprint/src/grid.png: blueprint/src/grid-183be7c72c28b409928e72f5a10086c8.png
 jquery-ui.min.js: jquery-ui.min-2b432ef5545e6620f94e7638b7574058.js
-jquery.min.js: jquery.min-ac6382033c1c5e27ebbc5a5a0597ccb9.js
-application.js: application-4a67e9614016fefce6c2be9b392abb24.js
-application.css: application-ca9f22a4eef4d9938c4c7030a3253317.css
-custom.css: custom-ca9f22a4eef4d9938c4c7030a3253317.css
+jquery.min.js: jquery.min-460459a37590253002f65e6137a90b87.js
+application.js: application-00d96047930a99367455f407f0a1660d.js
+application.css: application-7284c5bb2d6e0d2a9a652f1c4dd60dc7.css
+custom.css: custom-7284c5bb2d6e0d2a9a652f1c4dd60dc7.css
 blueprint/ie.css: blueprint/ie-e74efa906a10b340155784d2bad8c799.css
 blueprint/plugins/buttons/screen.css: blueprint/plugins/buttons/screen-55609f73ba47ce22694be969d6a7289b.css
 blueprint/plugins/fancy-type/screen.css: blueprint/plugins/fancy-type/screen-c2594c6f8602c900395935f2236c8d33.css
@@ -36,5 +38,5 @@ blueprint/src/reset.css: blueprint/src/reset-434db7c841bedea14b105a1904e8bbb4.cs
 blueprint/src/typography.css: blueprint/src/typography-544b6bc564a0c5017811730d78a071d0.css
 custom.js: custom-7dd8c1ed5ffcf72d9b7b530201b9c845.js
 jquery-ui.js: jquery-ui-1257779252765a9d537d315acc189907.js
-jquery.js: jquery-01fddb45025ffecad3854b6a7d317645.js
-jquery_ujs.js: jquery_ujs-aa3c87a5f0c056d36cba14209b705209.js
+jquery.js: jquery-c9f2cc56be2e499dbdfe526aeb78b74c.js
+jquery_ujs.js: jquery_ujs-5ac455321f59b229cedb6f2fe5e7eb8d.js

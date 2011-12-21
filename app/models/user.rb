@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
 
   validates_acceptance_of  :terms, :message => " - Accepting the Privacy Policy / Terms is mandatory for the registration!"
 
+  has_many :followers, :foreign_key => "user_id", :dependent => :destroy
 
   has_many :notifications, :dependent => :destroy
   
@@ -47,13 +48,14 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(email, submitted_password)
-    user = find_by_email(email)
+    users = User.where("email = ?", email)
+    user = users[0] unless users.nil? || users.empty?
     return nil  if user.nil?
     return user if user.has_password?(submitted_password)
   end
 
   def self.authenticate_with_salt(id, coockie_salt)
-    user = find_by_id(id)
+    user = User.find(:first, :conditions => ["id = ?", id])
     ( user && user.salt == coockie_salt ) ? user : nil
   end
 

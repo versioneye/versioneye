@@ -8,7 +8,7 @@
 			By submitting this Form you are acepting the <%= link_to "Privacy Policy / Terms", terms_path  %> of this page.
 		</div>
 		<div class="dialog_follow_form">
-			<%= form_tag("/follow", :remote => true) do  %>
+			<%= form_tag("/follow_for_guest", :remote => true) do  %>
 			    <div style="display:table-row;">
 			      <div class="labelCel">
 			        <%= label_tag(:email, "E-Mail:") %>

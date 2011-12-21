@@ -1,5 +1,12 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *
+*/
 
 /******** LAYOUT **********/
+
 
 .container {
     width: 710px;
@@ -84,8 +91,7 @@ label {
 
 input[type="submit"] {
   -webkit-user-select:none;
-/*  background-color:#F5F5F5;*/
-  background-color: #CDD419;
+  background-color:#F5F5F5;
   border-bottom-color:rgba(0, 0, 0, 0.0976562);
   border-bottom-left-radius:2px 2px;
   border-bottom-right-radius:2px 2px;
@@ -102,8 +108,7 @@ input[type="submit"] {
   border-top-right-radius:2px 2px;
   border-top-style:solid;
   border-top-width:1px;
-/*  color:#666666;*/
-  color: black;
+  color:#666666;
   cursor:default;
   font-family: arial, sans-serif;
   font-size:14px;
@@ -146,84 +151,6 @@ a:visited {
 	color: green; 
 	font-size: 11px;
 	cursor: pointer;
-}
-
-/****** FOLLOW BUTTON **********/
-
-.followButton[type="submit"]{
-	-webkit-user-select:none;
-	  background-color:#2FC2EF;
-	  border-bottom-color:rgba(0, 0, 0, 0.0976562);
-	  border-bottom-left-radius:2px 2px;
-	  border-bottom-right-radius:2px 2px;
-	  border-bottom-style:solid;
-	  border-bottom-width:1px;
-	  border-left-color:rgba(0, 0, 0, 0.0976562);
-	  border-left-style:solid;
-	  border-left-width:1px;
-	  border-right-color:rgba(0, 0, 0, 0.0976562);
-	  border-right-style:solid;
-	  border-right-width:1px;
-	  border-top-color:rgba(0, 0, 0, 0.0976562);
-	  border-top-left-radius:2px 2px;
-	  border-top-right-radius:2px 2px;
-	  border-top-style:solid;
-	  border-top-width:1px;
-	  color:white;
-	  cursor:default;
-	  font-family: arial, sans-serif;
-	  font-size:10px;
-	  font-weight:bold;
-	  height:20px;
-	  line-height:20px;
-	  margin-bottom:0px;
-	  margin-left:5px;
-	  margin-right:5px;
-	  margin-top:0px;
-	  min-width:54px;
-	  padding-bottom:0;
-	  padding-left:8px;
-	  padding-right:8px;
-	  padding-top:0;
-	  text-align:center;
-}
-
-.unfollowButton[type="submit"]{
-	-webkit-user-select:none;
-	  background-color:#FF8040;
-	  border-bottom-color:rgba(0, 0, 0, 0.0976562);
-	  border-bottom-left-radius:2px 2px;
-	  border-bottom-right-radius:2px 2px;
-	  border-bottom-style:solid;
-	  border-bottom-width:1px;
-	  border-left-color:rgba(0, 0, 0, 0.0976562);
-	  border-left-style:solid;
-	  border-left-width:1px;
-	  border-right-color:rgba(0, 0, 0, 0.0976562);
-	  border-right-style:solid;
-	  border-right-width:1px;
-	  border-top-color:rgba(0, 0, 0, 0.0976562);
-	  border-top-left-radius:2px 2px;
-	  border-top-right-radius:2px 2px;
-	  border-top-style:solid;
-	  border-top-width:1px;
-	  color:white;
-	  cursor:default;
-	  font-family: arial, sans-serif;
-	  font-size:10px;
-	  font-weight:bold;
-	  height:20px;
-	  line-height:20px;
-	  margin-bottom:0px;
-	  margin-left:5px;
-	  margin-right:5px;
-	  margin-top:0px;
-	  min-width:54px;
-	  padding-bottom:0;
-	  padding-left:8px;
-	  padding-right:8px;
-	  padding-top:0;
-	  text-align:center;
 }
 
 

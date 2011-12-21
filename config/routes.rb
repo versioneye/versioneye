@@ -1,10 +1,20 @@
 Versioneye::Application.routes.draw do
   
   root :to => "products#index"
-  match '/search',    :to => 'products#search'
-  match '/follow',    :to => 'products#follow'
+
   resources :products
+  match '/search',            :to => 'products#search'
+  match '/follow_for_guest',  :to => 'products#follow_for_guest'
+  match '/follow',            :to => 'products#follow'
+  match '/unfollow',            :to => 'products#unfollow'
   
+  resources :users,   :key => :username
+  match '/signup',    :to => 'users#new'
+  
+  resources :sessions,        :only => [:new, :create, :destroy]
+  match '/signin',    :to => 'sessions#new'
+  match '/signout',   :to => 'sessions#destroy'
+    
   match '/about',      :to => 'page#about'
   match '/imprint',    :to => 'page#imprint'
   match '/terms',      :to => 'page#terms'

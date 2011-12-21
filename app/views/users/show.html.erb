@@ -1,0 +1,19 @@
+<div align="center">	
+	<div class="productCountInfo" >
+		You are following <%= pluralize(@products.count, "product") %>
+	</div>
+	<div class="searchResults">
+		<% if !@products.nil? %>
+			<% @products.each do |product| %>
+				<div class="searchResult">
+					<%= link_to product.name_and_version, product_path(product.to_param), :class => "searchResultLink" %><br/>
+					<span class="searchResultMeta">GroupId: <%= product.group_id_with_dotts %></span><br/>
+					<%= form_tag("/unfollow") do  %>
+						<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
+						<%= submit_tag "Unfollow", :class => "unfollowButton" %>
+					<% end %>
+				</div>				
+			<% end %>			
+		<% end %>
+	</div>
+</div>

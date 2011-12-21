@@ -3,6 +3,7 @@ $(document).ready(function() {
 	
 });
 
+
 function load_dialog_follow(product_name, product_key){
 	document.getElementById('dialog_follow_success').style.display = 'none'
 	document.getElementById('dialog_follow_form').style.display = 'block'

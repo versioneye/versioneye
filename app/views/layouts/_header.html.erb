@@ -1,5 +1,19 @@
 <header>
 	<div>
-		<span style="color: white; font-weight:bold; font-size: 22px;" ><%= link_to 'VersionEye', root_url %></span>
+		<span style="color: white; font-weight:bold; font-size: 22px;" ><%= link_to 'VersionEye', root_path %></span>
 	</div>	
+	<div style="float:right;">
+		<nav class="round">
+			<ul>
+				<li><%= link_to "Search", root_path %></li>
+				<% if signed_in? %>
+					<li><%= link_to "My Products", user_path(current_user) %></li>
+					<li><%= link_to "Sign out", signout_path, :method => :delete %></li>
+				<% else %>
+					<li><%= link_to "Sign Up", signup_path %></li>
+					<li><%= link_to "Sign In", signin_path %></li>
+				<% end %>						
+			</ul>
+		</nav>
+	</div>
 </header>

@@ -1,7 +1,7 @@
 <div align="center">	
 	<div id="search">
 		<%= render 'shared/search' %>
-	<%= render 'shared/dialog_follow' %>
+		<%= render 'shared/dialog_follow' %>
 	</div>
 	<div class="searchResults">
 		<% if !@products.nil? %>
@@ -9,7 +9,14 @@
 				<div class="searchResult">
 					<%= link_to product.name_and_version, product_path(product.to_param), :class => "searchResultLink" %><br/>
 					<span class="searchResultMeta">GroupId: <%= product.group_id_with_dotts %></span><br/>
-					<a class="followLink"  onclick="load_dialog_follow('<%= product.name %>', '<%= product.to_param %>');" > --> follow</a>
+					<% if signed_in? %>
+						<%= form_tag("/follow", :remote => true) do  %>
+							<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
+							<%= submit_tag "Follow", :class => "followButton", :id => "#{product.to_param}" %>
+						<% end %>
+					<% else %>
+						<a class="followLink"  onclick="load_dialog_follow('<%= product.name %>', '<%= product.to_param %>');" > --> follow</a>
+					<% end %>					
 				</div>				
 			<% end %>
 			<div style="margin-top: 20px;">

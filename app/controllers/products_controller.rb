@@ -16,7 +16,12 @@ class ProductsController < ApplicationController
       if @products.nil? || @products.length == 0
         flash.now[:notice] = "Sorry. No Results found."
       end
-    end        
+    end
+    
+    respond_to do |format|
+      format.html 
+      format.json { render :json => @products }
+    end
   end
   
   def show
@@ -24,12 +29,11 @@ class ProductsController < ApplicationController
     @product = Product.find_by_key( key )
   end
   
-  def follow
+  # Used in the guest area. without login.
+  def follow_for_guest
     @product_name = params[:product_name]
     @product_key = get_product_key params[:product_key]
     @email = params[:email]
-    p params[:product_key]
-    p @product_key
     
     @product = fetch_product @product_key
     unsigneduser = fetch_unsigneduser @email
@@ -42,6 +46,27 @@ class ProductsController < ApplicationController
         }
       format.js
     end
+  end
+  
+  # Used in the login area. With login.
+  def follow
+    product_key = get_product_key params[:product_key]
+    
+    @product = fetch_product product_key
+    create_follower @product, current_user
+    
+    respond_to do |format|
+      format.js
+    end
+  end
+  
+  def unfollow
+    product_key = get_product_key params[:product_key]
+    
+    @product = fetch_product product_key
+    destroy_follower @product, current_user
+    
+    redirect_to user_path(current_user)
   end
   
   private
@@ -86,6 +111,30 @@ class ProductsController < ApplicationController
         unsignedfollower.unsigneduser = unsigneduser
         unsignedfollower.product = product 
         unsignedfollower.save
+      end
+    end
+    
+    def create_follower(product, user)
+      if product.nil? || user.nil?
+        return nil
+      end
+      follower = Follower.find_by_user_id_and_product user.id, product.id
+      if follower.nil?
+        p "create new follower"
+        follower = Follower.new
+        follower.user = user
+        follower.product = product 
+        follower.save
+      end
+    end
+    
+    def destroy_follower(product, user)
+      if product.nil? || user.nil?
+        return nil
+      end
+      follower = Follower.find_by_user_id_and_product user.id, product.id
+      if !follower.nil?
+        follower.delete
       end
     end
 
