@@ -45,7 +45,6 @@ class Product < ActiveRecord::Base
   
   def self.send_notifications
     Notification.find_each(:conditions => "sent_email is false") do |notification|
-      p notification 
       user = fetch_user notification
       version = notification.version
       product = version.product
@@ -80,7 +79,7 @@ class Product < ActiveRecord::Base
         user = User.new
         unsigenduser = notification.unsigneduser
         user.email = unsigenduser.email
-        user.fullname = unsigenduser.email
+        user.fullname = user.email
       end
       user
     end
