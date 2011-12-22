@@ -2,7 +2,7 @@
 <div class="boxHeader">
 	Link to product
 </div>
-<div class="boxContainer round" >
+<div class="boxContainer" >
 	<a href="<%= @product.version_link %>" target="_NEW"><%= @product.version_link %></a>
 </div>
 <% if !signed_in? %>
@@ -37,7 +37,7 @@
 <div class="boxHeader">
 	Maven2 pom.xml snippet
 </div>
-<div class="round boxContainer">
+<div class="boxContainer">
 <pre>
 <<span>dependency</span>>
 	<<span>groupId</span>><b><%= @product.group_id_with_dotts %></b><<span>/groupId</span>>

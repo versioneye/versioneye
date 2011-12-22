@@ -335,9 +335,8 @@ nav ul li a:hover {
 }
 
 .boxContainer{
-	border: 1px solid gray; 
 	padding: 10px;
-	background-color: #F5F1E7;
+	background-color: #F5F5F5;
 }
 
 /******** USER DETAIL PAGE **********/
