@@ -32,8 +32,20 @@ class Product < ActiveRecord::Base
     return nil
   end
   
+  def self.send_notifications_job
+    one_min = 60
+    one_hour = one_min * 60
+    while true do
+      send_notifications
+      p "start to make a nap"
+      sleep one_hour
+      p "wake up"
+    end
+  end
+  
   def self.send_notifications
     Notification.find_each(:conditions => "sent_email is false") do |notification|
+      p notification 
       user = fetch_user notification
       version = notification.version
       product = version.product
