@@ -14,8 +14,10 @@ body {
 }
 
 header {
-    padding-top: 20px;
-    height: 42px;
+    padding-top: 10px;
+	padding-bottom: 10px;
+	height: 55px;
+	vertical-align: middle;
 }
 
 header img {
@@ -26,7 +28,6 @@ header img {
 section {
     display: inline-block;
     width: 670px;
-    margin-top: 10px;
 	padding: 20px;
     font-size: 14px;    
     background: #fff;
@@ -59,6 +60,11 @@ footer nav {
 
 
 /******* Basic Elements *********/
+
+form{
+	padding: 0px;
+	margin: 0px;
+}
 
 input{
     padding-left: 15px;
@@ -140,6 +146,11 @@ a:visited {
 
 .searchResultLink{
 	font-size: 16px;
+}
+
+.miniSearchField{
+	height: 20px;
+	width: 100px;
 }
 
 .followLink {
@@ -273,24 +284,29 @@ a:visited {
 nav {
     float: right;
     background-color: white;
-    padding: 0 0.7em;
+    padding: 0 5px;
     white-space: nowrap;
+	height: 55px;
 }
 
 nav ul {
     margin: 0;
     padding: 0;
+	display: table-row;
 }
 
 nav ul li {
     list-style-type: none;
-    display: inline-block;
-    padding: 0.2em 0;
+    display: table-cell;
+    padding: 0;
+	height: 55px;
+	vertical-align: middle;
 }
 
 nav ul li a {
     padding: 0 5px;
     font-weight: bold;
+	vertical-align: middle;
 }
 
 nav ul li a:visited {
