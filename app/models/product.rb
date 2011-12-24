@@ -12,15 +12,21 @@ class Product < ActiveRecord::Base
     name1 = searched_name+"%"
     result1 = Product.where("name ilike ?", name1).order("name asc")    
     
-    ids = Array.new
-    result1.each do |product|
-      ids.push product.id
+    if (result1.nil? || result1.empty?)
+      name1 = "%" + name1
+      result1 = Product.where("name ilike ?", name1).order("name asc")
+      result1
+    elsif
+      ids = Array.new
+      result1.each do |product|
+        ids.push product.id
+      end
+
+      name2 = "%" + searched_name + "%"
+      result2 = Product.where("name ilike ? AND id not in (?)", name2, ids).order("name asc")
+      result = result1 + result2
+      result
     end
-  
-    name2 = "%" + searched_name + "%"
-    result2 = Product.where("name ilike ? AND id not in (?)", name2, ids).order("name asc")
-    result = result1 + result2
-    result
   end
   
   def self.find_by_key(searched_key)
