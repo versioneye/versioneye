@@ -27,6 +27,12 @@ class ProductsController < ApplicationController
   def show
     key = get_product_key params[:id]
     @product = Product.find_by_key( key )
+    respond_to do |format|
+      format.html 
+      format.json { 
+        render :json => @product.as_json
+        }
+    end
   end
   
   # Used in the guest area. without login.

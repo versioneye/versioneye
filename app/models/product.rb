@@ -77,6 +77,23 @@ class Product < ActiveRecord::Base
     group
   end
   
+  def as_json
+    {
+      :src => self.src,
+      :prod_type => self.prod_type,
+      :group_id => self.group_id,
+      :artifact_id => self.artifact_id,
+      :key => self.key,
+      :name => self.name,
+      :link => self.link,
+      :version => self.version,
+      :version_link => self.version_link,
+      :created_at => self.created_at,
+      :updated_at => self.updated_at,
+      :versions => self.versions.as_json
+    }
+  end
+  
   private 
   
     def self.fetch_user notification

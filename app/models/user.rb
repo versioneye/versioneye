@@ -66,6 +66,14 @@ class User < ActiveRecord::Base
     self.fb_id = json_user['id']
     self.password = create_random_value
   end
+  
+  def as_json 
+    {
+      :email => self.email,
+      :fullname => self.fullname,
+      :username => self.username
+    }
+  end
 
   private
 

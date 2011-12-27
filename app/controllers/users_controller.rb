@@ -31,9 +31,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    p params[:id]
     @user = User.find_by_username(params[:id])
-    p @user
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated."
       redirect_to @user
@@ -44,14 +42,14 @@ class UsersController < ApplicationController
   end
 
   def show
-    p "show"
     @user = User.find(:first, :conditions => ['username = ?', params[:id] ] )
-    #@user = User.find_by_username(params[:id])
-    if @user.nil?
-      redirect_to "/"
-    else
-      @products = @user.products
-    end
+    @products = Array.new
+    @products = @user.products unless @user.nil?
+    
+    respond_to do |format|
+      format.html { @products }
+      format.json { render :json => @products }
+    end        
   end
 
   def destroy
