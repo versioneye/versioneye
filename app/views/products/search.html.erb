@@ -15,8 +15,8 @@
 							<%= submit_tag "Follow", :class => "followButton", :id => "#{product.to_param}" %>
 						<% end %>
 					<% else %>
-						<a class="followLink"  onclick="load_dialog_follow('<%= product.name %>', '<%= product.to_param %>');" > --> follow</a>
-					<% end %>					
+						<input type="submit" value="Follow" class="followButton" onclick="load_dialog_follow('<%= product.name %>', '<%= product.to_param %>');" ></input>
+					<% end %>
 				</div>				
 			<% end %>
 			<div style="margin-top: 20px;">

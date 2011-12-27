@@ -37,7 +37,7 @@ section {
 section h1 {
     font-size: 200%;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
     margin-bottom: 30px;
 }
 
@@ -56,6 +56,10 @@ footer nav {
     float: none;
     height: 40px;
     vertical-align: middle;
+}
+
+pre {
+	margin: 5px;
 }
 
 

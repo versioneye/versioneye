@@ -27,6 +27,9 @@ class ProductsController < ApplicationController
   def show
     key = get_product_key params[:id]
     @product = Product.find_by_key( key )
+    if (signed_in?)
+      @follower = Follower.find_by_user_id_and_product(current_user.id, @product.id)
+    end
     respond_to do |format|
       format.html 
       format.json { 
@@ -57,22 +60,25 @@ class ProductsController < ApplicationController
   # Used in the login area. With login.
   def follow
     product_key = get_product_key params[:product_key]
-    
     @product = fetch_product product_key
-    create_follower @product, current_user
-    
+    create_follower @product, current_user    
     respond_to do |format|
       format.js
+      format.html { redirect_to product_path(@product) }
     end
   end
   
   def unfollow
-    product_key = get_product_key params[:product_key]
-    
+    src_hidden = params[:src_hidden]
+    product_key = get_product_key params[:product_key]    
     @product = fetch_product product_key
     destroy_follower @product, current_user
+    if src_hidden.eql? "detail"
+      redirect_to product_path(@product)
+    else
+      redirect_to user_path(current_user)
+    end
     
-    redirect_to user_path(current_user)
   end
   
   private
