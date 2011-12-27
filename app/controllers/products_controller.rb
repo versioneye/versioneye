@@ -61,27 +61,42 @@ class ProductsController < ApplicationController
   def follow
     product_key = get_product_key params[:product_key]
     @product = fetch_product product_key
-    create_follower @product, current_user    
+    respond = create_follower @product, get_user(params)
     respond_to do |format|
       format.js
       format.html { redirect_to product_path(@product) }
+      format.json { render :json => "[#{respond}]" }
     end
   end
   
-  def unfollow
+  def unfollow    
     src_hidden = params[:src_hidden]
     product_key = get_product_key params[:product_key]    
     @product = fetch_product product_key
-    destroy_follower @product, current_user
-    if src_hidden.eql? "detail"
-      redirect_to product_path(@product)
-    else
-      redirect_to user_path(current_user)
+    respond = destroy_follower @product, get_user(params)
+    respond_to do |format|
+      format.json { render :json => "[#{respond}]" }
+      format.html { 
+          if src_hidden.eql? "detail"
+            redirect_to product_path(@product)
+          else
+            redirect_to user_path(current_user)
+          end
+        }
     end
-    
   end
   
   private
+  
+    def get_user(params)
+      email = params[:email]
+      password = params[:password]
+      user = User.authenticate(email, password)
+      if (user.nil?)
+        user = current_user
+      end
+      user
+    end
   
     def get_product_key(param)
       p param
@@ -138,6 +153,7 @@ class ProductsController < ApplicationController
         follower.product = product 
         follower.save
       end
+      return "success"
     end
     
     def destroy_follower(product, user)
@@ -148,6 +164,7 @@ class ProductsController < ApplicationController
       if !follower.nil?
         follower.delete
       end
+      return "success"
     end
 
 end
