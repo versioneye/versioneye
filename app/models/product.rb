@@ -77,7 +77,7 @@ class Product < ActiveRecord::Base
     group
   end
   
-  def as_json
+  def as_json param
     {
       :src => self.src,
       :prod_type => self.prod_type,
