@@ -27,13 +27,15 @@ class ProductsController < ApplicationController
   def show
     key = get_product_key params[:id]
     @product = Product.find_by_key( key )
-    if (signed_in?)
+    following = false
+    if (!get_user(params).nil?)
       @follower = Follower.find_by_user_id_and_product(current_user.id, @product.id)
     end
+    following = !@follower.nil?
     respond_to do |format|
       format.html 
       format.json { 
-        render :json => @product.as_json
+        render :json => @product.as_json({:following => following})
         }
     end
   end

@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
     user = User.authenticate(params[:email],
                              params[:password]);
     respond_to do |format|
-      format.json { render :json => user.as_json }
+      format.json { render :json => user.as_json("") }
     end
   end
   

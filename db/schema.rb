@@ -18,8 +18,6 @@ ActiveRecord::Schema.define(:version => 20111115015318) do
       t.string   "group_id"
       t.string   "artifact_id"      
       t.string   "link",          :null => false
-      t.string   "src"
-      t.string   "prod_type"
       t.string   "version",       :limit => 50
       t.string   "version_link"
       t.datetime "created_at"
@@ -37,6 +35,31 @@ ActiveRecord::Schema.define(:version => 20111115015318) do
   end
   
   add_index "versions", ["version", "product_id"], :name => "index_versions_on_version_and_product_id", :unique => true
+  
+  create_table "repositories", :force => true do |t|    
+    t.string   "name",         :null => false, :unique => true
+    t.string   "src",          :null => false, :unique => true
+    t.integer  "repotype_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  
+  add_index "repositories", ["src"], :name => "index_repositories_on_src", :unique => true
+  
+  create_table "repotypes", :force => true do |t|    
+    t.string   "name",      :null => false, :unique => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  
+  create_table "productrepos", :force => true do |t|
+    t.integer  "product_id"
+    t.integer  "repository_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  
+  add_index "productrepos", ["product_id", "repository_id"], :name => "index_productrepos_on_product_id_and_repository_id", :unique => true
   
   create_table "users", :force => true do |t|
     t.string   "username",           :limit => 50,   :null => false
@@ -98,10 +121,9 @@ ActiveRecord::Schema.define(:version => 20111115015318) do
   add_index "notifications", ["read"], :name => "index_notifications_on_read"
   
   create_table "crawles", :force => true do |t|
-    t.string  "name"
-    t.string  "src"
-    t.string  "type"
-    t.string  "version"
+    t.integer  "repository_id"
+    t.string   "crawler_name"
+    t.string   "crawler_version"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "finished_at"
@@ -111,8 +133,8 @@ ActiveRecord::Schema.define(:version => 20111115015318) do
   add_index "crawles", ["name"], :name => "index_crawles_on_name"
   
   create_table "errors", :force => true do |t|
-    t.string  "subject"
-    t.string  "errormessage"
+    t.string   "subject"
+    t.string   "errormessage"
     t.boolean  "crawle_id"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -3,6 +3,10 @@ class Product < ActiveRecord::Base
   require 'will_paginate/array'
 
   has_many :versions, :dependent => :destroy
+  
+  has_many :productrepos, :foreign_key => "product_id", :dependent => :destroy
+  
+  has_many :repositories, :through => :productrepos, :source => :repository
 
 
   def self.find_by_name(searched_name)
@@ -79,18 +83,19 @@ class Product < ActiveRecord::Base
   
   def as_json param
     {
-      :src => self.src,
-      :prod_type => self.prod_type,
-      :group_id => self.group_id,
-      :artifact_id => self.artifact_id,
-      :key => self.key,
+      :following => param[:following],
       :name => self.name,
+      :key => self.key,
+      :group_id => self.group_id,
+      :artifact_id => self.artifact_id,      
       :link => self.link,
       :version => self.version,
       :version_link => self.version_link,
+      :src => self.repositories,
+      :prod_type => self.repositories[0].repotype.name,
       :created_at => self.created_at,
       :updated_at => self.updated_at,
-      :versions => self.versions.as_json
+      :versions => self.versions.as_json      
     }
   end
   

@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
     self.password = create_random_value
   end
   
-  def as_json 
+  def as_json param
     {
       :email => self.email,
       :fullname => self.fullname,
