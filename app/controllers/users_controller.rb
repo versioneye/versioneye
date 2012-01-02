@@ -44,7 +44,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(:first, :conditions => ['username = ?', params[:id] ] )
     @products = Array.new
-    @products = @user.products unless @user.nil?
+    @products = @user.fetch_my_products unless @user.nil?
     
     respond_to do |format|
       format.html { @products }

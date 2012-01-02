@@ -1,33 +1,32 @@
-class Product < ActiveRecord::Base
+class Product
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  field :name, type: String
+  field :prod_key, type: String
+  field :group_id, type: String
+  field :artifact_id, type: String
+  field :link, type: String
+  field :version, type: String
+  field :version_link, type: String
+  embeds_many :versions
+  embeds_many :repositories
 
   require 'will_paginate/array'
-
-  has_many :versions, :dependent => :destroy
-  
-  has_many :productrepos, :foreign_key => "product_id", :dependent => :destroy
-  
-  has_many :repositories, :through => :productrepos, :source => :repository
-
 
   def self.find_by_name(searched_name)
     if searched_name.nil? || searched_name.strip == ""
       return nil
     end
-    name1 = searched_name+"%"
-    result1 = Product.where("name ilike ?", name1).order("name asc")    
-    
+    result1 = Product.all(conditions: { name: /^#{searched_name}/i })
     if (result1.nil? || result1.empty?)
-      name1 = "%" + name1
-      result1 = Product.where("name ilike ?", name1).order("name asc")
+      result1 = Product.all(conditions: { name: /#{searched_name}/i })    
       result1
-    elsif
+    elsif 
       ids = Array.new
       result1.each do |product|
-        ids.push product.id
-      end
-
-      name2 = "%" + searched_name + "%"
-      result2 = Product.where("name ilike ? AND id not in (?)", name2, ids).order("name asc")
+        ids.push product.prod_key
+      end 
+      result2 = Product.all(conditions: { name: /#{searched_name}/i, prod_key: "{$nin: #{ids} }" })
       result = result1 + result2
       result
     end
@@ -37,9 +36,7 @@ class Product < ActiveRecord::Base
     if searched_key.nil? || searched_key.strip == ""
       return nil
     end
-    products = Product.where("key ilike ?", searched_key)
-    return products[0] unless products.nil?
-    return nil
+    Product.first(conditions: { prod_key: /^#{searched_key}/i })    
   end
   
   def self.send_notifications_job
@@ -65,7 +62,7 @@ class Product < ActiveRecord::Base
   end
   
   def to_param
-    url_key = String.new(key)
+    url_key = String.new(prod_key)
     url_key.gsub!("/","--")
     url_key.gsub!(".","~")
     "#{url_key}"
@@ -85,14 +82,14 @@ class Product < ActiveRecord::Base
     {
       :following => param[:following],
       :name => self.name,
-      :key => self.key,
+      :key => self.prod_key,
       :group_id => self.group_id,
       :artifact_id => self.artifact_id,      
       :link => self.link,
       :version => self.version,
       :version_link => self.version_link,
       :src => self.repositories,
-      :prod_type => self.repositories[0].repotype.name,
+      :prod_type => self.repositories[0].repotype,
       :created_at => self.created_at,
       :updated_at => self.updated_at,
       :versions => self.versions.as_json      

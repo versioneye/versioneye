@@ -1,12 +1,15 @@
-class Repository < ActiveRecord::Base
-
-  belongs_to :repotype
+class Repository
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  field :src, type: String
+  field :repotype, type: String  
   
+  embedded_in :product
+    
   def as_json param
     {
-      :name => self.name,
       :src => self.src,
-      :repotype => self.repotype.name
+      :repotype => self.repotype
     }
   end
   

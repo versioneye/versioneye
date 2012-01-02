@@ -24,8 +24,6 @@ class User < ActiveRecord::Base
   has_many :followers, :foreign_key => "user_id", :dependent => :destroy
 
   has_many :notifications, :dependent => :destroy
-  
-  has_many :products, :through => :followers, :source => :product
 
   before_save :encrypt_password
 
@@ -35,6 +33,14 @@ class User < ActiveRecord::Base
 
   def to_param
     username
+  end
+  
+  def fetch_my_products
+    ids = Array.new
+    followers.each do |follower|
+      ids.push follower.product_id
+    end 
+    result = Product.find(ids)
   end
 
   def image_url

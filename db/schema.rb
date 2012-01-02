@@ -11,55 +11,6 @@
 # It's strongly recommended to check this file into your version control system.
 
 ActiveRecord::Schema.define(:version => 20111115015318) do
-
-  create_table "products", :force => true do |t|
-      t.string   "name",          :null => false
-      t.string   "key",           :null => false, :unique => true
-      t.string   "group_id"
-      t.string   "artifact_id"      
-      t.string   "link",          :null => false
-      t.string   "version",       :limit => 50
-      t.string   "version_link"
-      t.datetime "created_at"
-      t.datetime "updated_at"
-  end
-  
-  add_index "products", ["key"], :name => "index_products_on_key", :unique => true
-
-  create_table "versions", :force => true do |t|
-    t.string   "version",       :limit => 50, :null => false
-    t.string   "link",          :null => false
-    t.integer  "product_id"     
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-  
-  add_index "versions", ["version", "product_id"], :name => "index_versions_on_version_and_product_id", :unique => true
-  
-  create_table "repositories", :force => true do |t|    
-    t.string   "name",         :null => false, :unique => true
-    t.string   "src",          :null => false, :unique => true
-    t.integer  "repotype_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-  
-  add_index "repositories", ["src"], :name => "index_repositories_on_src", :unique => true
-  
-  create_table "repotypes", :force => true do |t|    
-    t.string   "name",      :null => false, :unique => true
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-  
-  create_table "productrepos", :force => true do |t|
-    t.integer  "product_id"
-    t.integer  "repository_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-  
-  add_index "productrepos", ["product_id", "repository_id"], :name => "index_productrepos_on_product_id_and_repository_id", :unique => true
   
   create_table "users", :force => true do |t|
     t.string   "username",           :limit => 50,   :null => false
@@ -86,7 +37,7 @@ ActiveRecord::Schema.define(:version => 20111115015318) do
   
   create_table "followers", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "product_id"
+    t.string   "product_id",   :limit => 50,  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -97,7 +48,7 @@ ActiveRecord::Schema.define(:version => 20111115015318) do
   
   create_table "unsignedfollowers", :force => true do |t|
     t.integer  "unsigneduser_id"
-    t.integer  "product_id"
+    t.string   "product_id",   :limit => 50,  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -109,7 +60,8 @@ ActiveRecord::Schema.define(:version => 20111115015318) do
   create_table "notifications", :force => true do |t|
     t.integer  "user_id"
     t.integer  "unsigneduser_id"
-    t.integer  "version_id"
+    t.string   "product_id",    :limit => 50,  :null => false
+    t.string   "version_id",    :limit => 50,  :null => false
     t.boolean  "read",          :default => false
     t.boolean  "sent_email",    :default => false
     t.datetime "created_at"
@@ -119,25 +71,5 @@ ActiveRecord::Schema.define(:version => 20111115015318) do
   add_index "notifications", ["user_id"], :name => "index_notifications_on_user_id"
   add_index "notifications", ["version_id"], :name => "index_notifications_on_version_id"
   add_index "notifications", ["read"], :name => "index_notifications_on_read"
-  
-  create_table "crawles", :force => true do |t|
-    t.integer  "repository_id"
-    t.string   "crawler_name"
-    t.string   "crawler_version"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "finished_at"
-    t.datetime "duration"
-  end
-  
-  add_index "crawles", ["name"], :name => "index_crawles_on_name"
-  
-  create_table "errors", :force => true do |t|
-    t.string   "subject"
-    t.string   "errormessage"
-    t.boolean  "crawle_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
   
 end

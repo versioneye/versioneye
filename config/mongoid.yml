@@ -1,0 +1,12 @@
+
+development:
+    host: localhost
+    database: veye_dev
+
+test:
+    host: localhost
+    database: veye_test
+
+production:
+    host: localhost
+    database: veye_test

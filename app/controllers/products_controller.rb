@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
     elsif @query.include?("%")
       flash.now[:error] = "the character % is not allowed"
     else  
-      @products = Product.find_by_name(@query).paginate(:page => params[:page], :per_page => 30)
+      @products = Product.find_by_name(@query).paginate(:page => params[:page])
       if @products.nil? || @products.length == 0
         flash.now[:notice] = "Sorry. No Results found."
       end
@@ -28,8 +28,8 @@ class ProductsController < ApplicationController
     key = get_product_key params[:id]
     @product = Product.find_by_key( key )
     following = false
-    if (!get_user(params).nil?)
-      @follower = Follower.find_by_user_id_and_product(current_user.id, @product.id)
+    if (!current_user.nil?)
+      @follower = Follower.find_by_user_id_and_product(current_user.id, @product._id.to_s)
     end
     following = !@follower.nil?
     respond_to do |format|
@@ -63,7 +63,7 @@ class ProductsController < ApplicationController
   def follow
     product_key = get_product_key params[:product_key]
     @product = fetch_product product_key
-    respond = create_follower @product, get_user(params)
+    respond = create_follower @product, current_user
     respond_to do |format|
       format.js
       format.html { redirect_to product_path(@product) }
@@ -75,7 +75,7 @@ class ProductsController < ApplicationController
     src_hidden = params[:src_hidden]
     product_key = get_product_key params[:product_key]    
     @product = fetch_product product_key
-    respond = destroy_follower @product, get_user(params)
+    respond = destroy_follower @product, current_user
     respond_to do |format|
       format.json { render :json => "[#{respond}]" }
       format.html { 
@@ -89,16 +89,6 @@ class ProductsController < ApplicationController
   end
   
   private
-  
-    def get_user(params)
-      email = params[:email]
-      password = params[:password]
-      user = User.authenticate(email, password)
-      if (user.nil?)
-        user = current_user
-      end
-      user
-    end
   
     def get_product_key(param)
       p param
@@ -147,12 +137,11 @@ class ProductsController < ApplicationController
       if product.nil? || user.nil?
         return nil
       end
-      follower = Follower.find_by_user_id_and_product user.id, product.id
+      follower = Follower.find_by_user_id_and_product user.id, product._id.to_s
       if follower.nil?
-        p "create new follower"
         follower = Follower.new
         follower.user = user
-        follower.product = product 
+        follower.product_id = product._id.to_s
         follower.save
       end
       return "success"
@@ -162,7 +151,7 @@ class ProductsController < ApplicationController
       if product.nil? || user.nil?
         return nil
       end
-      follower = Follower.find_by_user_id_and_product user.id, product.id
+      follower = Follower.find_by_user_id_and_product user.id, product._id.to_s
       if !follower.nil?
         follower.delete
       end
