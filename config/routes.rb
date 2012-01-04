@@ -14,7 +14,9 @@ Versioneye::Application.routes.draw do
   resources :sessions,        :only => [:new, :create, :destroy]
   match '/signin',    :to => 'sessions#new'
   match '/signout',   :to => 'sessions#destroy'
-  match '/testlogin', :to => 'sessions#test_login'
+  
+  resources :crawles
+  match '/crawles',   :to => 'crawles#index'  
     
   match '/about',      :to => 'page#about'
   match '/imprint',    :to => 'page#imprint'

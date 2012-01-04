@@ -69,7 +69,7 @@ class Product
   end
   
   def name_and_version    
-    nameversion = "#{name} - (#{version})"
+    nameversion = "#{name} (#{version})"
   end
   
   def group_id_with_dotts

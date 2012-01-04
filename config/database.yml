@@ -25,7 +25,7 @@ production:
   adapter: postgresql
   encoding: unicode
   database: veye_prod
-  pool: 5
+  pool: 50
   host: localhost
   username: postgres
   password: abcdef

@@ -1,0 +1,39 @@
+<% if @crawle.nil? %>
+	Crawle not found!
+<% else %>
+	<h1 ><%= @crawle.crawler_name %> - <%= @crawle.crawler_version %></h1>
+	<div class="boxHeader">
+		Repository
+	</div>
+	<div class="boxContainer" >
+		<a href="<%= @crawle.repository_src %>" target="_NEW"><%= @crawle.repository_src %></a>
+	</div>
+	<div class="boxHeader">
+		Times
+	</div>
+	<div class="boxContainer">
+		Start: <%= @crawle.created_at.strftime("%d.%m.%Y %H:%M ") %> <br/> 
+		<% if !@crawle.updated_at.nil? %>
+			Stop: <%= @crawle.updated_at.strftime("%d.%m.%Y %H:%M ") %><br/>
+		<% end %>
+		<% if !@crawle.duration.nil? %>
+			Duration: <%= @crawle.duration.strftime("%H:%M ") %>
+		<% end %>		
+	</div>
+	<% if !@crawle.errors.nil? && @crawle.errors.count() > 0 %>
+		<div class="boxHeader">
+			Errors
+		</div>
+		<div class="boxContainer" >			
+			<table>
+			<% @crawle.errors.each do |error|  %>
+				<tr>
+					<td><%= error.created_at.strftime("%H:%M") %></td>
+					<td><b><%= error.subject %></b></br>
+					<%= error.errormessage %><br/></td>
+				</tr>
+			<% end %>
+			</table>			
+		</div>
+	<% end %>
+<% end %>

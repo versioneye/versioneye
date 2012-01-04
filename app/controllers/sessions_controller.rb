@@ -29,14 +29,6 @@ class SessionsController < ApplicationController
     end    
   end
   
-  def test_login()
-    user = User.authenticate(params[:email],
-                             params[:password]);
-    respond_to do |format|
-      format.json { render :json => user.as_json("") }
-    end
-  end
-  
   def destroy
     sign_out
     redirect_to root_path

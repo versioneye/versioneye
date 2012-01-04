@@ -9,4 +9,4 @@ test:
 
 production:
     host: localhost
-    database: veye_test
+    database: veye_prod
