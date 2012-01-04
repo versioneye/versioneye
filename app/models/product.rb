@@ -36,7 +36,11 @@ class Product
     if searched_key.nil? || searched_key.strip == ""
       return nil
     end
-    Product.first(conditions: { prod_key: /^#{searched_key}/i })    
+    result = Product.where(prod_key: searched_key )
+    if (result.nil? || result.empty?)
+      return nil
+    end
+    return result[0]    
   end
   
   def self.send_notifications_job
