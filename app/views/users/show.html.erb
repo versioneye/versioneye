@@ -1,6 +1,10 @@
 <div align="center">	
 	<div class="productCountInfo" >
-		You are following <%= pluralize(@products.count, "product") %>
+		<% if current_user == @user %>
+			<%= @user.fullname %>. You are following <%= pluralize(@products.count, "product") %>
+		<% elsif %>	
+			<%= @user.fullname %> is following <%= pluralize(@products.count, "product") %>
+		<% end %>		
 	</div>
 	<div class="searchResults">
 		<% if !@products.nil? %>
@@ -8,9 +12,11 @@
 				<div class="searchResult">
 					<%= link_to product.name_and_version, product_path(product.to_param), :class => "searchResultLink" %><br/>
 					<span class="searchResultMeta">GroupId: <%= product.group_id_with_dotts %></span><br/>
-					<%= form_tag("/unfollow") do  %>
-						<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
-						<%= submit_tag "Unfollow", :class => "unfollowButton" %>
+					<% if current_user == @user %>
+						<%= form_tag("/unfollow") do  %>
+							<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
+							<%= submit_tag "Unfollow", :class => "unfollowButton" %>
+						<% end %>
 					<% end %>
 				</div>				
 			<% end %>			

@@ -7,6 +7,7 @@
 			<ul>
 				<% if signed_in? %>
 					<li><%= link_to "My Products", user_path(current_user) %></li>
+					<li><%= link_to "Settings", edit_user_path(current_user) %></li>
 					<li><%= link_to "Sign out", signout_path, :method => :delete %></li>
 				<% else %>
 					<li><%= link_to "Sign Up", signup_path %></li>

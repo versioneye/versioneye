@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
-  attr_accessor :password, :terms
-  attr_accessible :fullname, :username, :email, :fb_id, :password, :terms
+  attr_accessor :password, :terms, :new_username
+  attr_accessible :fullname, :username, :new_username, :email, :fb_id, :password, :terms
 
 
   validates :fullname, :presence      => true,
@@ -25,11 +25,10 @@ class User < ActiveRecord::Base
 
   has_many :notifications, :dependent => :destroy
 
-  before_save :encrypt_password
+  before_save :encrypt_password, :except => [:update_password]
 
 
   scope :admin, where(:admin => true)
-
 
   def to_param
     username
@@ -63,6 +62,20 @@ class User < ActiveRecord::Base
   def self.authenticate_with_salt(id, coockie_salt)
     user = User.find(:first, :conditions => ["id = ?", id])
     ( user && user.salt == coockie_salt ) ? user : nil
+  end
+  
+  def self.username_valid?(username)
+    user = User.find(:first, :conditions => ["username = ?", username])
+    return user.nil?
+  end
+  
+  def update_password(email, password, new_password)
+    user = User.authenticate(email, password)
+    if user.nil?
+      return false
+    end
+    user.password = new_password
+    return user.save
   end
 
   def update_from_fb_json (json_user)

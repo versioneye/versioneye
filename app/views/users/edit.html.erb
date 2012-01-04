@@ -1,0 +1,103 @@
+<div class="boxHeader">
+	Name Settings
+</div>
+<div class="boxContainer">
+<%= form_tag("/users/#{@user.username}/updatenames", :method => "post") do  %>    
+    <div style="display:table-row;">
+      <div class="labelCel">
+		<%= label_tag(:fullname, "Full Name") %>
+      </div>
+      <div class="inputCel">
+		<%= text_field_tag :fullname, @user.fullname, :class => "round" %>
+      </div>
+      <div class="hintCel smallHint">
+        This is visible on your posts.
+      </div>
+    </div>
+
+    <div style="display:table-row;">
+      <div class="labelCel">
+		<%= label_tag(:username) %>
+      </div>
+      <div class="inputCel">
+		<%= text_field_tag :new_username, @user.new_username, :class => "round" %>
+      </div>
+      <div class="hintCel smallHint" >
+        Your public profile:<br/>
+        http://versioneye.com/users/ <b>USERNAME</b>
+      </div>
+    </div>
+
+	<div style="display:table-row;">
+      <div class="labelCel">
+		<%= label_tag(:password) %>
+      </div>
+      <div class="inputCel">
+		<%= password_field_tag :password, "", :class => "round" %>
+      </div>
+      <div class="hintCel smallHint" >
+        Your secret
+      </div>
+    </div>
+
+    <div style="display:table-row;">
+      <div class="labelCel"></div>
+      <div class="inputCel">
+		<%= submit_tag "Save", :class => "button" %>
+      </div>
+      <div class="hintCel smallHint"></div>
+    </div>
+<% end %>
+</div>
+
+<div class="boxHeader">
+	Password Settings
+</div>
+<div class="boxContainer">
+<%= form_tag("/users/#{@user.username}/updatepassword", :method => "post") do  %>    
+
+	<div style="display:table-row;">
+      <div class="labelCel">
+		<%= label_tag("Cur. Password") %>
+      </div>
+      <div class="inputCel">
+		<%= password_field_tag :password, "", :class => "round" %>
+      </div>
+      <div class="hintCel smallHint" >
+        Your current secret
+      </div>
+    </div>	
+
+	<div style="display:table-row;">
+      <div class="labelCel">
+		<%= label_tag("New password") %>
+      </div>
+      <div class="inputCel">
+		<%= password_field_tag :new_password, "", :class => "round" %>
+      </div>
+      <div class="hintCel smallHint" >
+        Your new secret
+      </div>
+    </div>
+
+	<div style="display:table-row;">
+      <div class="labelCel">
+		<%= label_tag("Repeat New pas.") %>
+      </div>
+      <div class="inputCel">
+		<%= password_field_tag :repeat_new_password, "", :class => "round" %>
+      </div>
+      <div class="hintCel smallHint" >
+        Your new secret
+      </div>
+    </div>
+
+    <div style="display:table-row;">
+      <div class="labelCel"></div>
+      <div class="inputCel">
+		<%= submit_tag "Save", :class => "button" %>
+      </div>
+      <div class="hintCel smallHint"></div>
+    </div>
+<% end %>
+</div>

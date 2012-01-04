@@ -254,7 +254,7 @@ a:visited {
 /***** 3 Col Form ********/
 
 .labelCel{
-    width: 150px;
+    width: 170px;
     text-align: right;
 	vertical-align: middle;
     display: table-cell;
@@ -272,7 +272,7 @@ a:visited {
 }
 
 .hintCel{
-    width: 240px;
+    width: 220px;
     display: table-cell;
     border: 0px solid black;
     vertical-align: middle;
@@ -281,6 +281,11 @@ a:visited {
 .smallHint{
     color: gray;
     font-size: 0.7em;
+}
+
+.formDiv{
+	padding-bottom: 15px;
+	border-bottom: 1px dotted gray;
 }
 
 /****** Navigation ******/
@@ -346,8 +351,8 @@ nav ul li a:hover {
 /******** USER DETAIL PAGE **********/
 
 .productCountInfo{
-	margin-top: 15px;
-	margin-bottom: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	text-align: left;
 }
 
@@ -412,7 +417,7 @@ nav ul li a:hover {
 
 .searchResults{
 	text-align: left;
-	padding-top: 20px;
+	padding-top: 15px;
 }
 
 #product_to_follow{
