@@ -22,7 +22,7 @@
 	</div>
 	<% if !@crawle.errors.nil? && @crawle.errors.count() > 0 %>
 		<div class="boxHeader">
-			Errors
+			Errors - <%= @crawle.errors.count() %>
 		</div>
 		<div class="boxContainer" >			
 			<table>

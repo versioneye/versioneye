@@ -6,10 +6,13 @@
 		<% if !@crawles.nil? %>
 			<% @crawles.each do |crawle| %>
 				<div class="searchResult">
-					<%= link_to crawle.crawler_name_and_version, crawle_path(crawle.to_param), :class => "searchResultLink" %><br/>
-					<span class="searchResultMeta">Repository: <%= crawle.repository_src %></span><br/>
+					<%= link_to crawle.repository_src, crawle_path(crawle.to_param), :class => "searchResultLink" %><br/>
+					<span class="searchResultMeta">Crawler: <%= crawle.crawler_name_and_version %></span><br/>
 					<% if crawle.errors.count() > 0 %>
-						<span class="searchResultMeta" style="color: red; font-weight:bold">Errors: <%= crawle.errors.count() %></span><br/>	
+						<span class="searchResultMeta" style="color: red; font-weight:bold">Errors: <%= crawle.errors.count() %></span>
+					<% end %>
+					<% if !crawle.duration.nil? %>
+						<span class="searchResultMeta" style="color: green; font-weight:bold"> Duration: <%= crawle.duration.strftime("%H:%M ") %></span>
 					<% end %>
 				</div>				
 			<% end %>
