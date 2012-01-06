@@ -4,6 +4,11 @@ class PageController < ApplicationController
   end
 
   def about
+    
+  end
+  
+  def impressum
+    
   end
 
   def home    

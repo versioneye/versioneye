@@ -21,7 +21,8 @@ header {
 }
 
 header img {
-    padding: 5px;
+    padding-bottom: 0px;
+	padding-top: 0px;
     background: #fff;
 }
 
@@ -35,7 +36,7 @@ section {
 }
 
 section h1 {
-    font-size: 200%;
+    font-size: 22px;
     font-weight: bold;
     text-align: left;
     margin-bottom: 30px;
@@ -250,6 +251,44 @@ a:visited {
     border-radius:         10px;
 }
 
+/***** About Page ********/
+
+.aboutCell{
+	padding: 5px; 
+	margin: 5px; 
+	border: 1px dotted gray; 
+	text-align: center;
+	height: 255px;	
+}
+
+.aboutName{
+	font-size: 14px;
+	color: gray;
+}
+
+.aboutTitle{
+	font-size: 12px;
+	color: gray;
+	font-weight: bold;
+}
+
+.aboutDescription{
+	font-size: 12px;
+	color: gray;
+}
+
+/***** Impressum Page ********/
+
+.imprintText{
+	font-size: 12px;
+	color: gray;
+}
+
+.imprintHeader{
+	font-size: 14px;
+	color: gray;
+	font-weight: bold;
+}
 
 /***** 3 Col Form ********/
 
@@ -326,6 +365,30 @@ nav ul li a:hover {
     text-decoration: underline;
 }
 
+/****** Navigation ******/
+
+.footerHeader{
+	color: gray;
+	font-size: 14px;
+}
+
+.footerLink{
+	padding-left: 5px;
+	color: gray;
+	fotn-size: 11px;
+}
+
+.footerLink:visited{
+	padding-left: 5px;
+	color: gray;
+	fotn-size: 11px;
+}
+
+.footerLink:hover{
+	padding-left: 5px;
+	color: gray;
+	fotn-size: 11px;
+}
 
 /******** PRODUCT DETAIL PAGE **********/
 

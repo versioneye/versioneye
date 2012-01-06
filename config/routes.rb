@@ -22,6 +22,7 @@ Versioneye::Application.routes.draw do
   match '/crawles',           :to => 'crawles#index'  
     
   match '/about',             :to => 'page#about'
+  match '/impressum',         :to => 'page#impressum'
   match '/imprint',           :to => 'page#imprint'
   match '/terms',             :to => 'page#terms'
   
