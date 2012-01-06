@@ -8,6 +8,7 @@ class Product
   field :link, type: String
   field :version, type: String
   field :version_link, type: String
+  field :rate, type: Integer
   embeds_many :versions
   embeds_many :repositories
 
@@ -43,6 +44,15 @@ class Product
     return result[0]    
   end
   
+  def get_version(searched_version)
+    versions.each do |version|
+      if version.version.eql?(searched_version)
+        return version
+      end
+    end
+    return nil
+  end
+  
   def self.send_notifications_job
     one_min = 60
     one_hour = one_min * 60
@@ -66,10 +76,18 @@ class Product
   end
   
   def to_param
-    url_key = String.new(prod_key)
-    url_key.gsub!("/","--")
-    url_key.gsub!(".","~")
-    "#{url_key}"
+    Product.to_url_param prod_key    
+  end
+  
+  def version_to_url_param
+    Product.to_url_param version    
+  end
+  
+  def self.to_url_param val
+    url_param = String.new(val)
+    url_param.gsub!("/","--")
+    url_param.gsub!(".","~")
+    "#{url_param}"    
   end
   
   def name_and_version    

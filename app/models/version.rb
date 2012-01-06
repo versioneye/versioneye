@@ -7,8 +7,6 @@ class Version
   
   embedded_in :product
   
-  validates :product_id, :presence => true
-  
   def as_json parameter
     {
       :version => self.version,
@@ -16,6 +14,6 @@ class Version
       :created_at => self.created_at,
       :updated_at => self.updated_at
     }
-  end
+  end  
 
 end

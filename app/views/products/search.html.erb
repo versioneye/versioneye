@@ -3,16 +3,27 @@
 		<% if !@products.nil? %>
 			<% @products.each do |product| %>
 				<div class="searchResult">
-					<%= link_to product.name_and_version, product_path(product.to_param), :class => "searchResultLink" %><br/>
+					<a href="/product/<%=product.to_param%>/version/<%=product.version_to_url_param%>" class="searchResultLink"><%=product.name_and_version%></a><br/>	
 					<span class="searchResultMeta">GroupId: <%= product.group_id_with_dotts %></span><br/>
-					<% if signed_in? %>
-						<%= form_tag("/follow", :remote => true) do  %>
-							<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
-							<%= submit_tag "Follow", :class => "followButton", :id => "#{product.to_param}" %>
-						<% end %>
-					<% else %>
-						<input type="submit" value="Follow" class="followButton" onclick="load_dialog_follow('<%= product.name %>', '<%= product.to_param %>');" ></input>
-					<% end %>
+					<table style="margin:0" >
+						<tr>
+							<td width="60" >
+								<% if signed_in? %>
+									<%= form_tag("/follow", :remote => true) do  %>
+										<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
+										<%= submit_tag "Follow", :class => "followButton", :id => "#{product.to_param}" %>
+									<% end %>
+								<% else %>
+									<input type="submit" value="Follow" class="followButton" onclick="load_dialog_follow('<%= product.name %>', '<%= product.to_param %>');" ></input>
+								<% end %>
+							</td>
+							<td>
+								<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
+							</td>
+						</tr>
+					</table>
+					
+					 
 				</div>				
 			<% end %>
 			<div style="margin-top: 20px;">

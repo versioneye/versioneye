@@ -7,12 +7,15 @@ Versioneye::Application.routes.draw do
   match '/follow_for_guest',  :to => 'products#follow_for_guest'
   match '/follow',            :to => 'products#follow'
   match '/unfollow',          :to => 'products#unfollow'
+  match '/product/:id',       :to => 'products#show'
+  match '/product/:id/version/:version', :to => 'products#show'
   
   resources :users,           :key => :username
   match '/signup',            :to => 'users#new'
   match '/users/:id/updatenames',    :to => 'users#updatenames'
   match '/users/:id/updatepassword', :to => 'users#updatepassword'
-  
+
+  resources :versioncomments
   
   resources :sessions,        :only => [:new, :create, :destroy]
   match '/signin',            :to => 'sessions#new'

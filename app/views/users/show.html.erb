@@ -10,7 +10,7 @@
 		<% if !@products.nil? %>
 			<% @products.each do |product| %>
 				<div class="searchResult">
-					<%= link_to product.name_and_version, product_path(product.to_param), :class => "searchResultLink" %><br/>
+					<a href="/product/<%=product.to_param%>/version/<%=product.version_to_url_param%>" class="searchResultLink"><%=product.name_and_version%></a><br/>
 					<span class="searchResultMeta">GroupId: <%= product.group_id_with_dotts %></span><br/>
 					<% if current_user == @user %>
 						<%= form_tag("/unfollow") do  %>

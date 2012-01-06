@@ -25,15 +25,19 @@ class ProductsController < ApplicationController
   end
   
   def show
-    key = get_product_key params[:id]
+    key = url_param_to_origin params[:id]
     @product = Product.find_by_key( key )
     following = false
     if (!current_user.nil?)
       @follower = Follower.find_by_user_id_and_product(current_user.id, @product._id.to_s)
+      following = !@follower.nil?
     end
-    following = !@follower.nil?
+    attach_version @product, params[:version]    
+    @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
     respond_to do |format|
-      format.html 
+      format.html {
+        @versioncomment = Versioncomment.new
+      }
       format.json { 
         render :json => @product.as_json({:following => following})
         }
@@ -43,7 +47,7 @@ class ProductsController < ApplicationController
   # Used in the guest area. without login.
   def follow_for_guest
     @product_name = params[:product_name]
-    @product_key = get_product_key params[:product_key]
+    @product_key = url_param_to_origin params[:product_key]
     @email = params[:email]
     
     @product = fetch_product @product_key
@@ -61,7 +65,7 @@ class ProductsController < ApplicationController
   
   # Used in the login area. With login.
   def follow
-    product_key = get_product_key params[:product_key]
+    product_key = url_param_to_origin params[:product_key]
     @product = fetch_product product_key
     respond = create_follower @product, current_user
     respond_to do |format|
@@ -73,7 +77,7 @@ class ProductsController < ApplicationController
   
   def unfollow    
     src_hidden = params[:src_hidden]
-    product_key = get_product_key params[:product_key]    
+    product_key = url_param_to_origin params[:product_key]    
     @product = fetch_product product_key
     respond = destroy_follower @product, current_user
     respond_to do |format|
@@ -90,7 +94,7 @@ class ProductsController < ApplicationController
   
   private
   
-    def get_product_key(param)
+    def url_param_to_origin(param)
       p param
       if (param.nil? || param.empty?)
         return ""
@@ -156,6 +160,18 @@ class ProductsController < ApplicationController
         follower.delete
       end
       return "success"
+    end
+    
+    def attach_version(product, version_param)
+      if version_param.nil? || version_param.empty? 
+        return nil
+      end
+      version = url_param_to_origin version_param
+      versionObj = product.get_version(version)
+      if !versionObj.nil?
+        product.version = versionObj.version
+        product.version_link = versionObj.link
+      end
     end
 
 end

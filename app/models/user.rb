@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
   attr_accessor :password, :terms, :new_username
   attr_accessible :fullname, :username, :new_username, :email, :fb_id, :password, :terms
 
-
   validates :fullname, :presence      => true,
                        :length        => { :within => 2..50 }
 
@@ -22,11 +21,10 @@ class User < ActiveRecord::Base
   validates_acceptance_of  :terms, :message => " - Accepting the Privacy Policy / Terms is mandatory for the registration!"
 
   has_many :followers, :foreign_key => "user_id", :dependent => :destroy
-
   has_many :notifications, :dependent => :destroy
+  has_many :versioncomments, :dependent => :destroy
 
   before_save :encrypt_password, :except => [:update_password]
-
 
   scope :admin, where(:admin => true)
 

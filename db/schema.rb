@@ -35,6 +35,18 @@ ActiveRecord::Schema.define(:version => 20111115015318) do
     t.datetime "updated_at"
   end
   
+  create_table "versioncomments", :force => true do |t|
+    t.integer  "user_id",          :null => false
+    t.string   "product_key",      :null => false
+    t.string   "version",          :null => false
+    t.integer  "rate"             
+    t.string   "comment",          :null => false, :limit => 254
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  
+  add_index "versioncomments", ["product_key", "version"], :name => "index_versioncomments_on_product_and_version", :unique => false
+  
   create_table "followers", :force => true do |t|
     t.integer  "user_id"
     t.string   "product_id",   :limit => 50,  :null => false

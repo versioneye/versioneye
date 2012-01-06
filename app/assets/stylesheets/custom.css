@@ -88,6 +88,12 @@ label {
 	font-size: 18px;
 }
 
+textarea{
+	font-size: 16px;
+	width: 640px;
+	height: 100px;
+}
+
 .labelSpan {
 	color: #666666;
 	font-size: 18px;
@@ -411,6 +417,11 @@ nav ul li a:hover {
 	background-color: #F5F5F5;
 }
 
+.commentHead{
+	color: gray;
+	font-size: 12px;
+}
+
 /******** USER DETAIL PAGE **********/
 
 .productCountInfo{
@@ -418,7 +429,6 @@ nav ul li a:hover {
 	margin-bottom: 10px;
 	text-align: left;
 }
-
 
 /******** ERROR STYLES **********/
 
