@@ -44,7 +44,7 @@
 			<div><a href="<%= repo.src %>" target="_NEW" ><%= repo.src %></a> </div>
 		<% end %>		
 	</div>
-	<% if !@product.versions.nil? && @product.versions.length > 1 %>
+	<% if !@product.get_natural_sorted_versions.nil? && @product.get_natural_sorted_versions.length > 1 %>
 		<div class="boxHeader">
 			Other Versions
 		</div>

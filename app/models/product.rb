@@ -44,6 +44,10 @@ class Product
     return result[0]    
   end
   
+  def get_natural_sorted_versions
+    Naturalsorter::Sorter.sort_by_method(versions, "version", true)
+  end
+  
   def get_version(searched_version)
     versions.each do |version|
       if version.version.eql?(searched_version)
@@ -114,7 +118,7 @@ class Product
       :prod_type => self.repositories[0].repotype,
       :created_at => self.created_at,
       :updated_at => self.updated_at,
-      :versions => self.versions.as_json      
+      :versions => self.get_natural_sorted_versions.as_json      
     }
   end
   
