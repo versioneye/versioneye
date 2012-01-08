@@ -68,6 +68,24 @@ class Product
     end
   end
   
+  def self.update_versions
+    products = Product.all()
+    max = products.count() - 1
+    (0..max).each do |i|
+      product = products[i]
+      product.update_version            
+    end
+  end
+  
+  def update_version
+    versions = get_natural_sorted_versions
+    version = versions[versions.count() - 1]
+    product.version = version.version
+    product.version_link = version.link
+    product.save
+    p "update product #{prod_key} with version: #{version.link}"
+  end
+  
   def self.send_notifications
     Notification.find_each(:conditions => "sent_email is false") do |notification|
       user = fetch_user notification
