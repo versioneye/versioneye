@@ -69,20 +69,24 @@ class Product
   end
   
   def self.update_versions
-    products = Product.all()
-    max = products.count() - 1
+    count = Product.count()
+    pack = 100
+    max = count / pack 
     (0..max).each do |i|
-      product = products[i]
-      product.update_version            
+      skip = i * pack
+      products = Product.all().skip(skip).limit(pack)
+      products.each do |product|
+        product.update_version
+      end
     end
   end
   
   def update_version
     versions = get_natural_sorted_versions
     version = versions[versions.count() - 1]
-    product.version = version.version
-    product.version_link = version.link
-    product.save
+    self.version = version.version
+    self.version_link = version.link
+    self.save
     p "update product #{prod_key} with version: #{version.link}"
   end
   
