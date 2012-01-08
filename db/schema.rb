@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20111115015318) do
     t.string   "product_key",      :null => false
     t.string   "version",          :null => false
     t.integer  "rate"             
-    t.string   "comment",          :null => false, :limit => 254
+    t.text     "comment",          :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -509,3 +509,7 @@ nav ul li a:hover {
 	font-size: 11px;
 	word-wrap:break-word;
 }
+
+.grayText{
+	color: gray;
+}

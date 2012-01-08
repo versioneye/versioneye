@@ -3,7 +3,7 @@ class Versioncomment < ActiveRecord::Base
   belongs_to :user,           :class_name => "User"
     
   validates :comment,  :presence      => true,
-                       :length        => { :within => 2..254 }
+                       :length        => { :within => 2..1000 }
   
   def as_json parameter
     {
@@ -30,9 +30,12 @@ class Versioncomment < ActiveRecord::Base
   end
   
   def self.get_average_rate_by_prod_key_and_version(prod_key, version)
+    avg = 0
     sum = Versioncomment.get_sum_by_prod_key_and_version(prod_key, version)
     count = Versioncomment.get_count_by_prod_key_and_version(prod_key, version)
-    avg = sum / count
+    if count > 0
+      avg = sum / count
+    end
     avg
   end
 
