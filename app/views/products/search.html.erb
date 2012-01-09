@@ -4,7 +4,7 @@
 			<% @products.each do |product| %>
 				<div class="searchResult">
 					<a href="/product/<%=product.to_param%>/version/<%=product.version_to_url_param%>" class="searchResultLink"><%=product.name_and_version%></a><br/>	
-					<span class="searchResultMeta">GroupId: <%= product.group_id_with_dotts %></span><br/>
+					<span class="searchResultMeta">GroupId: <%= product.group_id %></span><br/>
 					<table style="margin:0" >
 						<tr>
 							<td width="60" >
