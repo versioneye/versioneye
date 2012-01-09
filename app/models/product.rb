@@ -71,7 +71,7 @@ class Product
   def self.update_versions
     count = Product.count()
     pack = 100
-    max = count / pack 
+    max = count / pack     
     (0..max).each do |i|
       skip = i * pack
       products = Product.all().skip(skip).limit(pack)
