@@ -127,6 +127,7 @@ class Product
   end
   
   def as_json param
+    comments = Versioncomment.find_by_prod_key_and_version(self.prod_key, self.version)
     {
       :following => param[:following],
       :name => self.name,
@@ -140,7 +141,8 @@ class Product
       :prod_type => self.repositories[0].repotype,
       :created_at => self.created_at,
       :updated_at => self.updated_at,
-      :versions => self.get_natural_sorted_versions.as_json      
+      :versions => self.get_natural_sorted_versions.as_json, 
+      :comments => comments.as_json
     }
   end
   
