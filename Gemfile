@@ -13,6 +13,7 @@ gem 'whenever', '0.7.0'
 gem 'pg', '0.11.0'
 gem 'unicorn', '4.1.1'
 gem 'naturalsorter', '0.1.0'
+gem 'postmark-rails', '0.4.1'
 
 # Gems used only for assets and not required
 # in production environments by default.

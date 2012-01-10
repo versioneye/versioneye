@@ -19,6 +19,9 @@ module Versioneye
     
     Mongoid.load!("config/mongoid.yml")
     
+    config.action_mailer.delivery_method   = :postmark
+    config.action_mailer.postmark_settings = { :api_key => "f6312dfd-6ef7-406c-9a7b-748586a43371" }
+    
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -54,6 +57,7 @@ module Versioneye
     config.assets.version = '1.0'
     
     # http://www.edgerails.info/articles/what-s-new-in-edge-rails/2011/04/21/activerecord-identity-map/index.html
-    config.active_record.identity_map = true
+    config.active_record.identity_map = true    
+    
   end
 end

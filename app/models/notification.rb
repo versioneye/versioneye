@@ -15,17 +15,28 @@ class Notification < ActiveRecord::Base
       sleep one_hour
       p "wake up"
     end
-  end
+  end  
   
   def self.send_notifications
     Notification.find_each(:conditions => "sent_email is false") do |notification|
       user = fetch_user notification
       version = notification.version
       product = version.product
-      ProductMailer.new_version_email(user, version, product).deliver
+      NotificationMailer.new_version_email(user, version, product).deliver
       notification.sent_email = true
       notification.save
     end
+  end
+  
+  def self.send_test_notification    
+      user = User.new
+      user.fullname = "Robert Reiz"
+      user.email = "robert.reiz.81@gmail.com"
+      version = Version.new
+      version.version = "1.0"
+      product = Product.new
+      product.name = "VersionEyeProduct"
+      NotificationMailer.new_version_email(user, version, product).deliver          
   end
   
   private 

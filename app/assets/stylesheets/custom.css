@@ -14,10 +14,14 @@ body {
 }
 
 header {
-    padding-top: 10px;
+	position: fixed;
+	top: 0;
+    padding-top: 0px;
 	padding-bottom: 10px;
 	height: 55px;
+	width: 710px;
 	vertical-align: middle;
+	background-color: white;
 }
 
 header img {
@@ -468,6 +472,7 @@ nav ul li a:hover {
 #search{
 	background-color: #F5F5F5;
 	margin-bottom: 7px;
+	margin-top: 70px;
 }
 
 .searchResult{
