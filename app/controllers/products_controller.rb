@@ -44,25 +44,6 @@ class ProductsController < ApplicationController
     end
   end
   
-  # Used in the guest area. without login.
-  def follow_for_guest
-    @product_name = params[:product_name]
-    @product_key = url_param_to_origin params[:product_key]
-    @email = params[:email]
-    
-    @product = fetch_product @product_key
-    unsigneduser = fetch_unsigneduser @email
-    create_unsignedfollower @product, unsigneduser    
-    
-    respond_to do |format|
-      format.html {
-        flash[:info] = "Thank you. You are following now #{@product_name} and we will inform you about new versions." 
-        redirect_to @product
-        }
-      format.js
-    end
-  end
-  
   # Used in the login area. With login.
   def follow
     product_key = url_param_to_origin params[:product_key]
@@ -114,29 +95,6 @@ class ProductsController < ApplicationController
       product
     end
     
-    def fetch_unsigneduser(email)
-      unsigneduser = Unsigneduser.find_by_email email
-      if unsigneduser.nil?
-        unsigneduser = Unsigneduser.new
-        unsigneduser.email = email
-        unsigneduser.save
-      end
-      unsigneduser
-    end
-    
-    def create_unsignedfollower(product, unsigneduser)
-      if product.nil? || unsigneduser.nil?
-        return nil
-      end
-      unsignedfollower = Unsignedfollower.find_by_unsigneduser_id_and_product unsigneduser.id, product.id
-      if unsignedfollower.nil?
-        unsignedfollower = Unsignedfollower.new
-        unsignedfollower.unsigneduser = unsigneduser
-        unsignedfollower.product = product 
-        unsignedfollower.save
-      end
-    end
-    
     def create_follower(product, user)
       if product.nil? || user.nil?
         return nil
@@ -171,6 +129,7 @@ class ProductsController < ApplicationController
       if !versionObj.nil?
         product.version = versionObj.version
         product.version_link = versionObj.link
+        product.version_rate = versionObj.rate
       end
     end
 

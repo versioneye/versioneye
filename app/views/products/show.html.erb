@@ -3,23 +3,27 @@
 <% else %>
 	<h1 ><%= @product.name_and_version %></h1>
 	<div>
-		<% if @follower.nil? %>
+		<div style="float:right">
+			<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate, :id => @product.prod_key} %>
+		</div>
+		<div style="width: 150px;">
 			<% if signed_in? %>
-				<%= form_tag("/follow") do  %>
-					<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
-					<%= submit_tag "Follow", :class => "followButton", :id => "#{@product.to_param}" %>
+				<% if @follower.nil? %>			
+					<%= form_tag("/follow") do  %>
+						<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
+						<%= submit_tag "Follow", :class => "followButton", :id => "#{@product.to_param}" %>
+					<% end %>
+				<% else %>
+					<%= form_tag("/unfollow") do  %>
+						<input id="src_hidden"  name="src_hidden" type="hidden" value="detail"/>
+						<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
+						<%= submit_tag "Unfollow", :class => "unfollowButton" %>
+					<% end %>
 				<% end %>
-			<% end %>
-		<% else %>
-			<% if signed_in? %>
-				<%= form_tag("/unfollow") do  %>
-					<input id="src_hidden"  name="src_hidden" type="hidden" value="detail"/>
-					<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
-					<%= submit_tag "Unfollow", :class => "unfollowButton" %>
-				<% end %>
-			<% end %>			
-		<% end %>
-	</div>
+			<% else %>
+				<input type="submit" value="Follow" class="followButton" onclick="load_dialog_follow('<%= @product.name %>');" ></input>
+			<% end %>				
+		</div>	
 	<div class="boxHeader">
 		Link to product
 	</div>
@@ -52,7 +56,9 @@
 			<table>
 			<% @product.get_natural_sorted_versions.each do |version|  %>
 				<tr>
-					<td><%= version.version %></td>
+					<td>
+						<a href="/product/<%=@product.to_param%>/version/<%=version.to_url_param%>"><%=version.version%></a>
+					</td>
 					<td><a href="<%= version.link %>"><%= version.link %></a></td>
 				</tr>
 			<% end %>
@@ -62,7 +68,7 @@
 
 	<% if signed_in? %>
 		<div class="boxHeader">
-			Leave rating & comment
+			Leave rating &amp; comment
 		</div>
 		<div class="boxContainer">
 			<%= form_for @versioncomment do |f| %>
@@ -91,7 +97,14 @@
 				</div>
 			<% end %>
 		</div>
-	<% end %>		
+	<% elsif %>
+		<div class="boxHeader">
+			Leave rating &amp; comment
+		</div>
+		<div class="boxContainer">
+			<%= link_to "Sign Up", signup_path %> or <%= link_to "Sign In", signin_path %> to leave rating and comment. 
+		</div>
+	<% end %>
 	
 	<% if !@comments.nil? && @comments.length > 0 %>
 		<div class="boxHeader">

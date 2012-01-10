@@ -14,16 +14,14 @@
 										<%= submit_tag "Follow", :class => "followButton", :id => "#{product.to_param}" %>
 									<% end %>
 								<% else %>
-									<input type="submit" value="Follow" class="followButton" onclick="load_dialog_follow('<%= product.name %>', '<%= product.to_param %>');" ></input>
+									<input type="submit" value="Follow" class="followButton" onclick="load_dialog_follow('<%= product.name %>');" ></input>
 								<% end %>
 							</td>
 							<td>
 								<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
 							</td>
 						</tr>
-					</table>
-					
-					 
+					</table> 
 				</div>				
 			<% end %>
 			<div style="margin-top: 20px;">

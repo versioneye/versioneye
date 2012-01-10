@@ -1,7 +1,6 @@
 class Notification < ActiveRecord::Base
 
   belongs_to :user,           :class_name => "User"
-  belongs_to :unsigneduser,   :class_name => "Unsigneduser"  
 
   validates :product_id, :presence => true
   validates :version_id, :presence => true
@@ -19,7 +18,7 @@ class Notification < ActiveRecord::Base
   
   def self.send_notifications
     Notification.find_each(:conditions => "sent_email is false") do |notification|
-      user = fetch_user notification
+      user = notification.user
       version = notification.version
       product = version.product
       NotificationMailer.new_version_email(user, version, product).deliver
@@ -38,18 +37,5 @@ class Notification < ActiveRecord::Base
       product.name = "VersionEyeProduct"
       NotificationMailer.new_version_email(user, version, product).deliver          
   end
-  
-  private 
-  
-    def self.fetch_user notification
-      user = notification.user
-      if user.nil? 
-        user = User.new
-        unsigenduser = notification.unsigneduser
-        user.email = unsigenduser.email
-        user.fullname = user.email
-      end
-      user
-    end
 
 end

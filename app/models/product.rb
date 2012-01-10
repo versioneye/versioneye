@@ -8,6 +8,7 @@ class Product
   field :link, type: String
   field :version, type: String
   field :version_link, type: String
+  field :version_rate, type: Integer
   field :rate, type: Integer
   embeds_many :versions
   embeds_many :repositories
@@ -56,6 +57,20 @@ class Product
     end
     return nil
   end  
+  
+  def update_rate
+    sum = 0
+    count = 0
+    versions.each do |version|
+      if !version.rate.nil? 
+        count += 1
+        sum += version.rate
+      end
+    end
+    if count > 0
+      self.rate = sum / count    
+    end    
+  end
   
   def self.update_versions
     count = Product.count()

@@ -1,29 +1,6 @@
-<div id="dialog_follow" title="Follow" style="display: none">	
-	<div id="dialog_follow_success" class="flash success" style='margin-top: 30px'>
-		You are following now <span id="product_to_follow_success"></span>.
+<div id="dialog_follow" title="Follow" style="display: none">			
+	<div class="dialog_follow_description">
+		<%= link_to "Sign Up", signup_path %> or <%= link_to "Sign In", signin_path %> 
+		and Follow <span id="product_to_follow"></span> to get informed about new versions.<br/>
 	</div>
-	<div id="dialog_follow_form" >
-		<div class="dialog_follow_description">
-			Follow <span id="product_to_follow"></span> and get informed about new versions.<br/>
-			By submitting this Form you are accepting the <%= link_to "Privacy Policy / Terms", terms_path  %> of this page.
-		</div>
-		<div class="dialog_follow_form">
-			<%= form_tag("/follow_for_guest", :remote => true) do  %>
-			    <div style="display:table-row;">
-			      <div class="labelCel">
-			        <%= label_tag(:email, "E-Mail:") %>
-			      </div>
-			      <div class="inputCel" style="font-size: 18px;">
-			        <%= text_field_tag :email, nil, :class => "round" %>
-					<input id="product_key_hidden"  name="product_key" type="hidden" value=""/>
-					<input id="product_name_hidden" name="product_name" type="hidden" value=""/>
-			      </div>
-				  <div class="labelCel" style="text-align: left">
-					<%= submit_tag "Follow", :class => "button", :onclick => "return validateEmail(document.getElementById('email').value);" %>
-				  </div>
-			    </div>
-				<div id="resp"></div>
-			<% end %>
-		</div>	
-	</div>	
 </div>

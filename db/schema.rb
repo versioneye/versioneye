@@ -29,12 +29,6 @@ ActiveRecord::Schema.define(:version => 20111115015318) do
   add_index "users", ["fb_id"], :name => "index_users_on_fb_id"
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
   
-  create_table "unsignedusers", :force => true do |t|
-    t.string   "email",              :limit => 254,  :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-  
   create_table "versioncomments", :force => true do |t|
     t.integer  "user_id",          :null => false
     t.string   "product_key",      :null => false
@@ -58,20 +52,8 @@ ActiveRecord::Schema.define(:version => 20111115015318) do
   add_index "followers", ["user_id", "product_id"], :name => "index_followers_on_user_id_and_product_id", :unique => true
   add_index "followers", ["product_id"], :name => "index_followers_on_product_id"
   
-  create_table "unsignedfollowers", :force => true do |t|
-    t.integer  "unsigneduser_id"
-    t.string   "product_id",   :limit => 50,  :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-  
-  add_index "unsignedfollowers", ["unsigneduser_id"], :name => "index_unsignedfollowers_on_unsigneduser_id"
-  add_index "unsignedfollowers", ["unsigneduser_id",  "product_id"], :name => "index_unsignedfollowers_on_unsigneduser_id_and_product_id", :unique => true
-  add_index "unsignedfollowers", ["unsigneduser_id"], :name => "index_unsignedfollowers_on_product_id"
-  
   create_table "notifications", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "unsigneduser_id"
     t.string   "product_id",    :limit => 50,  :null => false
     t.string   "version_id",    :limit => 50,  :null => false
     t.boolean  "read",          :default => false

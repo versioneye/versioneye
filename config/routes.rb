@@ -4,7 +4,6 @@ Versioneye::Application.routes.draw do
 
   resources :products
   match '/search',            :to => 'products#search'
-  match '/follow_for_guest',  :to => 'products#follow_for_guest'
   match '/follow',            :to => 'products#follow'
   match '/unfollow',          :to => 'products#unfollow'
   match '/product/:id',       :to => 'products#show'
