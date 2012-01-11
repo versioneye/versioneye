@@ -45,6 +45,14 @@ class Product
     return result[0]    
   end
   
+  def self.find_by_id(id)
+    if id.nil? || id.strip == ""
+      return nil
+    end
+    result = Product.find(id)
+    result
+  end
+  
   def get_natural_sorted_versions
     Naturalsorter::Sorter.sort_by_method(versions, "version", true)
   end
