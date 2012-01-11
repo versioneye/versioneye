@@ -10,7 +10,7 @@
       <div class="inputCel">
 		<%= text_field_tag :fullname, @user.fullname, :class => "round" %>
       </div>
-      <div class="hintCel smallHint">
+      <div class="hintCel meta-text-small">
         This is visible on your posts.
       </div>
     </div>
@@ -22,7 +22,7 @@
       <div class="inputCel">
 		<%= text_field_tag :new_username, @user.new_username, :class => "round" %>
       </div>
-      <div class="hintCel smallHint" >
+      <div class="hintCel meta-text-small" >
         Your public profile:<br/>
         http://versioneye.com/users/ <b>USERNAME</b>
       </div>
@@ -35,17 +35,17 @@
       <div class="inputCel">
 		<%= password_field_tag :password, "", :class => "round" %>
       </div>
-      <div class="hintCel smallHint" >
+      <div class="hintCel meta-text-small" >
         Your secret
       </div>
     </div>
 
     <div style="display:table-row;">
       <div class="labelCel"></div>
-      <div class="inputCel">
+      <div class="submitCel">
 		<%= submit_tag "Save", :class => "button" %>
       </div>
-      <div class="hintCel smallHint"></div>
+      <div class="hintCel meta-text-small"></div>
     </div>
 <% end %>
 </div>
@@ -63,7 +63,7 @@
       <div class="inputCel">
 		<%= password_field_tag :password, "", :class => "round" %>
       </div>
-      <div class="hintCel smallHint" >
+      <div class="hintCel meta-text-small" >
         Your current secret
       </div>
     </div>	
@@ -75,7 +75,7 @@
       <div class="inputCel">
 		<%= password_field_tag :new_password, "", :class => "round" %>
       </div>
-      <div class="hintCel smallHint" >
+      <div class="hintCel meta-text-small" >
         Your new secret
       </div>
     </div>
@@ -87,17 +87,17 @@
       <div class="inputCel">
 		<%= password_field_tag :repeat_new_password, "", :class => "round" %>
       </div>
-      <div class="hintCel smallHint" >
+      <div class="hintCel meta-text-small" >
         Your new secret
       </div>
     </div>
 
     <div style="display:table-row;">
       <div class="labelCel"></div>
-      <div class="inputCel">
+      <div class="submitCel">
 		<%= submit_tag "Save", :class => "button" %>
       </div>
-      <div class="hintCel smallHint"></div>
+      <div class="hintCel meta-text-small"></div>
     </div>
 <% end %>
 </div>

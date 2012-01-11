@@ -2,6 +2,9 @@
 	Product not found!
 <% else %>
 	<h1 ><%= @product.name_and_version %></h1>
+	<% if !signed_in? %>
+		<%= render 'shared/dialog_follow' %>	
+	<% end %>
 	<div>
 		<div style="float:right">
 			<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate, :id => @product.prod_key} %>
@@ -82,17 +85,17 @@
 					<input name="versioncomment[rate]" type="radio" value="40" class="star"/>
 					<input name="versioncomment[rate]" type="radio" value="50" class="star"/>					
 				</div>
-				<div >
+				<div>
 					<%= f.text_area :comment, :class => "round", :maxlength => "1000", :onKeyUp => "textCounter(this, document.getElementById('counter'), 1000)"  %>
 					<%= f.hidden_field :product_key, :value => @product.prod_key %>
 					<%= f.hidden_field :version, :value => @product.version %>
 				</div>
-				<div style="display: inline-block; width: 640px;">
+				<div style="display: inline-block; width: 777px;">
 					<div style="float: left">
 						<%= f.submit "Save", :class => "button" %>
 					</div>						
-					<div style="float: right" class="grayText">
-						Characters left: <span class="grayText" id="counter">1000</span>
+					<div style="float: right" class="meta-text-small">
+						Characters left: <span id="counter">1000</span>
 					</div>
 				</div>
 			<% end %>
@@ -119,7 +122,7 @@
 							<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate, :id => comment.id} %>
 							<br/>
 						<div>
-						<div class="commentHead">
+						<div class="meta-text-small">
 							<%= comment.user.fullname %> on <%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %>							
 						</div>
 						<div>

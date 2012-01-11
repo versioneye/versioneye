@@ -1,13 +1,18 @@
 class ProductsController < ApplicationController
 
-  def index  
+  def index
+    respond_to do |format|
+      format.html { render :layout => "application_lean" }
+    end
   end
   
   def search
     @query = params[:q]
     if @query.nil? || @query.empty?
-      flash.now[:error] = "Search field is empty. Please type in a search term."
-    elsif @query.length == 1
+      @query = "junit"
+      # flash.now[:error] = "Search field is empty. Please type in a search term."
+    end
+    if @query.length == 1
       flash.now[:error] = "Search term is to short. Please type in at least 2 characters."
     elsif @query.include?("%")
       flash.now[:error] = "the character % is not allowed"

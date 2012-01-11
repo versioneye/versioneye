@@ -1,33 +1,36 @@
-<h1>Sign In</h1>
+<div class="boxHeader">
+	Sign In
+</div>
+<div class="boxContainer">
+	<%= form_for(:session, :url => sessions_path) do |f|  %>
+	    <div style="display:table-row;">
+	      <div class="labelCel">
+	        <%= f.label :email %>
+	      </div>
+	      <div class="inputCel">
+	        <%= f.text_field :email, :class => "round" %>
+	      </div>
+	      <div class="hintCel"></div>
+	    </div>
+	    <div style="display:table-row;">
+	      <div class="labelCel">
+	        <%= f.label :password %>
+	      </div>
+	      <div class="inputCel">
+	        <%= f.password_field :password, :class => "round" %>
+	      </div>
+	      <div class="hintCel meta-text-small">
+	        Your secret.
+	      </div>
+	    </div>
+	    <div style="display:table-row;">
+	      <div class="labelCel"></div>
+	      <div class="submitCel">
+	        <%= f.submit "Sign in", :class => "button  " %>
+	      </div>
+	      <div class="hintCel">
 
-<%= form_for(:session, :url => sessions_path) do |f|  %>
-    <div style="display:table-row;">
-      <div class="labelCel">
-        <%= f.label :email %>
-      </div>
-      <div class="inputCel">
-        <%= f.text_field :email, :class => "round" %>
-      </div>
-      <div class="hintCel"></div>
-    </div>
-    <div style="display:table-row;">
-      <div class="labelCel">
-        <%= f.label :password %>
-      </div>
-      <div class="inputCel">
-        <%= f.password_field :password, :class => "round" %>
-      </div>
-      <div class="hintCel smallHint">
-        Your secret.
-      </div>
-    </div>
-    <div style="display:table-row;">
-      <div class="labelCel"></div>
-      <div class="inputCel">
-        <%= f.submit "Sign in", :class => "button  " %>
-      </div>
-      <div class="hintCel">
-
-      </div>
-    </div>
-<% end %>
+	      </div>
+	    </div>
+	<% end %>
+</div>
