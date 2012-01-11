@@ -7,7 +7,7 @@
 		<p>Hello <%= @user.fullname %></p>
 		<p>
 			Version <b><%= @version.version %></b> of Product <b><%= @product.name %></b> is out: <br/>
-			Just follow this link: <a href="http://versioneye-beta.com/product/<%=@product.to_param%>/version/<%=version.to_url_param%>"><%=version.version%></a>
+			Just follow this link: <a href="http://versioneye-beta.com/product/<%= @product.to_param %>/version/<%= @version.to_url_param %>"><%= @product.name %> - <%= @version.version %></a>
 		</p>
 		<p>
 			Thanks for joining and have a great day!

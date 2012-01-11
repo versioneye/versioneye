@@ -29,7 +29,7 @@ class Notification < ActiveRecord::Base
     p "send notifications end"
   end
   
-  def self.send_test_notification    
+  def self.send_test_notification
     user = User.new
     user.fullname = "Robert Reiz"
     user.email = "robert.reiz.81@gmail.com"
@@ -37,6 +37,7 @@ class Notification < ActiveRecord::Base
     version.version = "1.0"
     product = Product.new
     product.name = "VersionEyeProduct"
+    product.prod_key = "org.spring/spring-core"
     NotificationMailer.new_version_email(user, version, product).deliver          
   end
 
