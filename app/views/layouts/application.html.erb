@@ -5,9 +5,7 @@
   <%= csrf_meta_tag %>
   <%= render 'layouts/stylesheets' %>
   <%= stylesheet_link_tag "application" %>
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
   <%= javascript_include_tag "application" %>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
   <script type="text/javascript">
 	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', 'UA-27806979-1']);
@@ -23,9 +21,6 @@
 <body>	
 	<%= render 'layouts/header' %>
 	<div class="container">
-		<div id="slogan">
-			<%= image_tag("slogan1.png") %>
-		</div>
 		<section class="round" >
 			<% flash.each do |key, value| %>
 				<div class="flash <%= key %>"><%= value %></div>

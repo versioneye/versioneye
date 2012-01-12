@@ -1,7 +1,22 @@
 
 $(document).ready(function() {
 	
+	$('#q').tbHinter({
+		text: 'Be up-to-date',
+		class: 'searchfield_hint'
+	});
+	
+	// if ($('#q')[0].value == "Be up-to-date"){
+	// 				$('#searchfield_div')[0].style.marginTop = "0px";
+	// 			} else {
+	// 				$('#searchfield_div')[0].style.marginTop = "5px";
+	// 			}
+	
 });
+
+
+
+
 
 function load_dialog_follow(product_name){	
 	document.getElementById('product_to_follow').innerHTML = product_name;	

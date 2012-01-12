@@ -1,10 +1,12 @@
-
-@font-face { 
- font-family: duturner; 
- src: url(http://localhost:3000/fonts/DuTurner.otf); 
-}
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *
+*/
 
 /******* Basic Elements *********/
+
 
 body {
 	color: #22211f;
@@ -221,11 +223,15 @@ header {
 	vertical-align: middle;	
 }
 
+#slogan{
+	margin-top: 55px;
+	padding: 10px;
+}
+
 section {
     display: inline-block;
     width: 810px;
 	padding: 20px;
-	margin-top: 65px;
 	-moz-box-shadow:    0px 0px 2px 2px #888888;
 	-webkit-box-shadow: 0px 0px 2px 2px #888888;
 	box-shadow:         0px 0px 2px 2px #888888;
@@ -287,8 +293,6 @@ footer nav {
 }
 
 .searchfield{
-/*	font-family: duturner;*/
-	font-size: 14px;
 	height: 23px; 
 	width: 162px;  
 	margin: 0;	 
@@ -298,21 +302,6 @@ footer nav {
 	border-top-left-radius:5px 5px;
 	border-bottom-right-radius:5px 5px; 
 	border-top-right-radius:5px 5px;
-}
-
-.searchfield_hint{
-	color: #808080;
-/*	font-family: duturner;*/
-	font-size: 14px;
-	height: 23px; 
-	width: 137px;  
-	margin: 0;	 
-	padding:0; 
-	padding-left: 30px; 
-	border-bottom-left-radius:5px 5px; 
-	border-top-left-radius:5px 5px;
-	border-bottom-right-radius:5px 5px; 
-	border-top-right-radius:5px 5px;	
 }
 
 .searchlink_div{
