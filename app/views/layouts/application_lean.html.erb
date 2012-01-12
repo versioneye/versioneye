@@ -23,6 +23,9 @@
 <body>	
 	<%= render 'layouts/header' %>
 	<div class="container">						
+		<div id="slogan">
+			<%= image_tag("slogan1.png") %>
+		</div>
 		<section class="round section_lean" >
 			<% flash.each do |key, value| %>
 				<div class="flash <%= key %>"><%= value %></div>

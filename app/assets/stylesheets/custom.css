@@ -88,18 +88,12 @@ pre {
 
 a {
 	color: #22211f;
-    text-decoration: none;
-}
-
-a:hover {
-/*	color: #f9b323;*/
-	color: blue;
     text-decoration: underline;
 }
 
-header a:hover{
-	color: #f9b323;
-	text-decoration: underline;
+a:hover {
+	color: #fe9933;
+    text-decoration: underline;
 }
 
 a:visited {
@@ -107,13 +101,28 @@ a:visited {
 }
 
 a:visited:hover {
-	color: blue;
+	color: #fe9933;
     text-decoration: underline;
+}
+
+header a {
+	color: white;
+	text-decoration: none;
+}
+
+header a:visited {
+	color: white;
+	text-decoration: none;
+}
+
+header a:hover{
+	color: #f9b323;
+	text-decoration: none;
 }
 
 header a:visited:hover {
 	color: #f9b323;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .searchResultLink{
@@ -192,7 +201,7 @@ header a:visited:hover {
 }
 
 header {
-	background-image: url("headerbackground.png")  ;
+	background-image: url("header.png")  ;
 	background-repeat: repeat-x;
     background-position: top;
 	position: fixed;
@@ -207,11 +216,15 @@ header {
 	vertical-align: middle;	
 }
 
+#slogan{
+	margin-top: 55px;
+	padding: 10px;
+}
+
 section {
     display: inline-block;
     width: 810px;
 	padding: 20px;
-	margin-top: 65px;
 	-moz-box-shadow:    0px 0px 2px 2px #888888;
 	-webkit-box-shadow: 0px 0px 2px 2px #888888;
 	box-shadow:         0px 0px 2px 2px #888888;
@@ -221,7 +234,6 @@ section {
     display: inline-block;
     width: 810px;
 	padding: 20px;
-	margin-top: 65px;
 	-moz-box-shadow:    0px 0px 0px 0px #888888;
 	-webkit-box-shadow: 0px 0px 0px 0px #888888;
 	box-shadow:         0px 0px 0px 0px #888888;
@@ -259,6 +271,8 @@ footer nav {
 
 .logo_div{
 	float: left;
+	margin: 0;
+	padding: 0;
 }
 
 .searchfield_div{
