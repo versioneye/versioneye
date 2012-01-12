@@ -27,7 +27,13 @@
 							</tr>
 						</table>
 					<% elsif %>	
-						<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
+						<table style="margin:0" >
+							<tr>
+								<td>
+									<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
+								</td>
+							</tr>
+						</table>
 					<% end %>
 				</div>				
 			<% end %>			
