@@ -13,8 +13,8 @@ class Version
       :version => self.version,
       :link => self.link,
       :rate => self.rate,
-      :created_at => self.created_at,
-      :updated_at => self.updated_at
+      :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
+      :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
     }
   end  
   

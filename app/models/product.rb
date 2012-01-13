@@ -134,8 +134,8 @@ class Product
       :version_link => self.version_link,
       :src => self.repositories,
       :prod_type => self.repositories[0].repotype,
-      :created_at => self.created_at,
-      :updated_at => self.updated_at,
+      :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
+      :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p"),
       :versions => self.get_natural_sorted_versions.as_json, 
       :comments => comments.as_json
     }
