@@ -13,6 +13,7 @@ Versioneye::Application.routes.draw do
   match '/signup',            :to => 'users#new'
   match '/users/:id/updatenames',    :to => 'users#updatenames'
   match '/users/:id/updatepassword', :to => 'users#updatepassword'
+  match '/users/activate/:verification', :to => 'users#activate'
 
   resources :versioncomments
   

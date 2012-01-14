@@ -10,9 +10,12 @@ class SessionsController < ApplicationController
     respond_to do |format|
       format.html {
         if user.nil?
-          flash.now[:error] = "Invalid email/password combination."
+          flash[:error] = "Invalid email/password combination."
           @title = "Sign in"
-          render "new"
+          redirect_to "/signin"
+        elsif !user.activated?
+          flash[:error] = "Your Account is not active. Please validate your E-Mail address by clicking the verification link in the verification E-Mail."
+          redirect_to "/signin"
         else
           sign_in user
           redirect_back_or( user_path(user) ) 

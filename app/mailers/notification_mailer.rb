@@ -5,12 +5,10 @@ class NotificationMailer < ActionMailer::Base
     @user = user
     @version = version
     @product = product
-    p @product.to_param
-    p @version.to_url_param
     mail(
       :to => @user.email, 
       :subject => "Notification",
-      :tag => "my-tag"
+      :tag => "notification_new_version"
       )
   end
   

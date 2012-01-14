@@ -17,6 +17,11 @@ end
 module Versioneye
   class Application < Rails::Application
     
+    # http://groups.google.com/group/mongoid/browse_thread/thread/df278a11dba4d331?pli=1
+    config.generators do |g| 
+      g.orm :active_record 
+    end
+    
     Mongoid.load!("config/mongoid.yml")
     
     config.action_mailer.delivery_method   = :postmark

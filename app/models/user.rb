@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
   attr_accessor :password, :terms, :new_username
-  attr_accessible :fullname, :username, :new_username, :email, :fb_id, :password, :terms
+  attr_accessible :fullname, :username, :email, :fb_id, :password, :new_username, :terms, :verification
 
   validates :fullname, :presence      => true,
                        :length        => { :within => 2..50 }
@@ -24,12 +24,32 @@ class User < ActiveRecord::Base
   has_many :notifications, :dependent => :destroy
   has_many :versioncomments, :dependent => :destroy
 
-  before_save :encrypt_password, :except => [:update_password]
+  before_save :encrypt_password
 
   scope :admin, where(:admin => true)
 
   def to_param
     username
+  end
+  
+  def create_verification
+    random = create_random_value
+    self.verification = secure_hash("#{random}--#{username}")
+  end
+  
+  def send_verification_email
+    UserMailer.verification_email(self).deliver
+  end
+  
+  def self.activate!(verification)
+    user = User.find(:first, :conditions => ["verification = ?", verification])
+    return false if user.nil?
+    # this method call skipps the callbacks. The filters are not called by this method call! 
+    return user.update_column(:verification, nil)
+  end
+  
+  def activated?
+    return verification.nil?
   end
   
   def fetch_my_products
@@ -51,8 +71,7 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(email, submitted_password)
-    users = User.where("email = ?", email)
-    user = users[0] unless users.nil? || users.empty?
+    user = User.find(:first, :conditions => ["email = ?", email])
     return nil  if user.nil?
     return user if user.has_password?(submitted_password)
   end
@@ -69,12 +88,10 @@ class User < ActiveRecord::Base
   
   def update_password(email, password, new_password)
     user = User.authenticate(email, password)
-    if user.nil?
-      return false
-    end
+    return false if user.nil?
     user.password = new_password
     return user.save
-  end
+  end  
 
   def update_from_fb_json (json_user)
     self.fullname = json_user['name']
@@ -86,7 +103,6 @@ class User < ActiveRecord::Base
   
   def as_json param
     {
-      :email => self.email,
       :fullname => self.fullname,
       :username => self.username
     }
@@ -102,6 +118,7 @@ class User < ActiveRecord::Base
     end
 
     def encrypt_password
+      p "encrypt password"
       self.salt = make_salt if new_record?
       self.encrypted_password = encrypt(password)
     end
@@ -111,7 +128,6 @@ class User < ActiveRecord::Base
     end
 
     def encrypt(string)
-      p "#{salt}--#{string}"
       secure_hash("#{salt}--#{string}")
     end
 

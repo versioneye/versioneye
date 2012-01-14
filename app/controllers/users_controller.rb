@@ -1,24 +1,32 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate, :except => [:show, :new, :create]
-  before_filter :correct_user, :only   => [:edit, :update]
+  before_filter :authenticate, :except => [:show, :new, :create, :activate]
+  before_filter :correct_user, :only   => [:edit, :update, :activate]
   before_filter :admin_user,   :only   => :destroy
 
   def new
     @user = User.new
-    @title = "sign up"
   end
 
   def create
     @user = User.new(params[:user])
+    @user.create_verification
     if @user.save
-      sign_in @user
-      flash[:success] = "Welcome to VersionEye"
-      redirect_to @user
+      @user.send_verification_email
     else 
-      @title = "Sign up"
-      render 'new'
+      flash[:error] = "An error occured. Please try again later."
+      redirect_to '/signup'
     end
+  end
+  
+  def activate
+    verification = params[:verification]
+    if User.activate!(verification)
+      flash[:success] = "Congratulation. Your Account is activated. Please Sign In."
+    else
+      flash[:error] = "The activation code could not be found. Maybe your Account is already activated."
+    end
+    redirect_to '/signin'
   end
 
   def edit

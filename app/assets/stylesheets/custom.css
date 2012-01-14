@@ -1,8 +1,8 @@
 
-@font-face { 
+/*@font-face { 
  font-family: duturner; 
  src: url(http://localhost:3000/fonts/DuTurner.otf); 
-}
+}*/
 
 /******* Basic Elements *********/
 
@@ -300,8 +300,7 @@ footer nav {
 }
 
 .searchfield_hint{
-	color: #808080;
-/*	font-family: duturner;*/
+	color: #D3D3D3;
 	font-size: 14px;
 	height: 23px; 
 	width: 137px;  
