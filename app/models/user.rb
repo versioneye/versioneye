@@ -38,8 +38,9 @@ class User < ActiveRecord::Base
   end
   
   def send_verification_email
-    UserMailer.verification_email(self).deliver
-  end
+    # UserMailer.verification_email(self).deliver
+    UserMailer.delay.verification_email(self) # use delayed_job to do it later
+  end  
   
   def self.activate!(verification)
     user = User.find(:first, :conditions => ["verification = ?", verification])
