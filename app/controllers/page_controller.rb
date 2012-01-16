@@ -21,6 +21,6 @@ class PageController < ApplicationController
   end
 
   def signup
-  end
+  end  
 
 end

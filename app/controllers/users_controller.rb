@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate, :except => [:show, :new, :create, :activate]
+  before_filter :authenticate, :except => [:show, :new, :create, :activate, :iforgotmypassword, :resetpassword]
   before_filter :correct_user, :only   => [:edit, :update, :activate]
   before_filter :admin_user,   :only   => :destroy
 
@@ -78,6 +78,21 @@ class UsersController < ApplicationController
     end         
     redirect_to edit_user_path( @user )
   end
+  
+  def iforgotmypassword
+  end
+  
+  def resetpassword
+    email = params[:email]
+    user = User.find_by_email(email)
+    if user.nil? 
+      flash[:error] = "A user with the given E-Mail address could not be found."      
+    else
+      user.reset_password
+      flash[:success] = "Please check your E-Mails. You should receive an E-Mail with a new password."
+    end    
+    redirect_to iforgotmypassword_path
+  end
 
   def show
     @user = User.find(:first, :conditions => ['username = ?', params[:id] ] )
@@ -95,10 +110,6 @@ class UsersController < ApplicationController
     flash[:success] = "User destroyed"
     redirect_to users_path
   end
-  
-  # def recover
-  #     
-  #   end
 
   private
 

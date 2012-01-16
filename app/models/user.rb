@@ -70,6 +70,18 @@ class User < ActiveRecord::Base
   def has_password?(submitted_password)
     self.encrypted_password == encrypt(submitted_password)
   end
+  
+  def self.find_by_email(email)
+    user = User.find(:first, :conditions => ["email = ?", email])
+    user
+  end
+  
+  def reset_password
+    self.password = create_random_value
+    encrypt_password
+    update_column(:encrypted_password, self.encrypted_password)
+    UserMailer.delay.reset_password(self) # use delayed_job to do it later
+  end
 
   def self.authenticate(email, submitted_password)
     user = User.find(:first, :conditions => ["email = ?", email])
