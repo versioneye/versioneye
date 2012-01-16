@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
     self.password = create_random_value
     encrypt_password
     update_column(:encrypted_password, self.encrypted_password)
-    UserMailer.delay.reset_password(self) # use delayed_job to do it later
+    UserMailer.delay.reset_password(self).deliver
   end
 
   def self.authenticate(email, submitted_password)
