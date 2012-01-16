@@ -1,0 +1,42 @@
+
+<div class="boxHeader">
+	Link to product
+</div>
+<div class="boxContainer" >
+	<a href="<%= @product.version_link %>" target="_NEW"><%= @product.version_link %></a>
+</div>
+<div class="boxHeader">
+	Maven2 pom.xml snippet
+</div>
+<div class="boxContainer"><pre>
+<<span>dependency</span>>
+<<span>groupId</span>><b><%= @product.group_id %></b><<span>/groupId</span>>
+<<span>artifactId</span>><b><%= @product.artifact_id %></b><<span>/artifactId</span>>
+<<span>version</span>><b><%= @product.version %></b><<span>/version</span>>
+<<span>/dependency</span>></pre>
+</div>
+<div class="boxHeader">
+	Repository
+</div>
+<div class="boxContainer">
+	<% @product.repositories.each do |repo| %>
+		<div><a href="<%= repo.src %>" target="_NEW" ><%= repo.src %></a> </div>
+	<% end %>		
+</div>
+<% if !@product.versions.nil? && @product.versions.length > 1 %>
+	<div class="boxHeader">
+		Other Versions
+	</div>
+	<div class="boxContainer" >
+		<table>
+		<% @product.get_natural_sorted_versions.each do |version|  %>
+			<tr>
+				<td>
+					<a href="/product/<%=@product.to_param%>/version/<%=version.to_url_param%>"><%=version.version%></a>
+				</td>
+				<td><a href="<%= version.link %>"><%= version.link %></a></td>
+			</tr>
+		<% end %>
+		</table>
+	</div>
+<% end %>

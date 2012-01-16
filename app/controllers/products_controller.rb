@@ -34,6 +34,7 @@ class ProductsController < ApplicationController
   end
   
   def show
+    mobile = params[:mobile]
     key = url_param_to_origin params[:id]
     @product = Product.find_by_key( key )
     following = false
@@ -44,12 +45,14 @@ class ProductsController < ApplicationController
     attach_version @product, params[:version]    
     @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
     respond_to do |format|
-      format.html {
-        @versioncomment = Versioncomment.new
-      }
-      format.json { 
-        render :json => @product.as_json({:following => following})
+      format.html { 
+        if mobile == false || mobile.nil?
+          @versioncomment = Versioncomment.new 
+        else
+          render "show_mobile", :layout => "application_mobile"
+        end          
         }
+      format.json { render :json => @product.as_json( {:following => following} ) }
     end
   end
   
