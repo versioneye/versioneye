@@ -77,11 +77,12 @@ class User < ActiveRecord::Base
   end
   
   def reset_password
-    self.password = create_random_value
+    random_value = create_random_value
+    self.password = random_value
     encrypt_password
     update_column(:encrypted_password, self.encrypted_password)
     # UserMailer.reset_password(self).deliver
-    UserMailer.delay.reset_password(self)
+    UserMailer.delay.reset_password(self, random_value)
   end
 
   def self.authenticate(email, submitted_password)
