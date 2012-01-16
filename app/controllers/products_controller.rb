@@ -46,10 +46,10 @@ class ProductsController < ApplicationController
     @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
     respond_to do |format|
       format.html { 
-        if mobile == false || mobile.nil?
-          @versioncomment = Versioncomment.new 
-        else
+        if !mobile.nil? && mobile.eql?('true')
           render "show_mobile", :layout => "application_mobile"
+        else
+          @versioncomment = Versioncomment.new 
         end          
         }
       format.json { render :json => @product.as_json( {:following => following} ) }
