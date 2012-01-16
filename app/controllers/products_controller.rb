@@ -20,8 +20,10 @@ class ProductsController < ApplicationController
       @products = Product.find_by_name(@query).paginate(:page => params[:page])
       if @products.nil? || @products.length == 0
         flash.now[:notice] = "Sorry. No Results found."
-      else        
-        @my_product_ids = current_user.fetch_my_product_ids
+      else
+        if signed_in?
+          @my_product_ids = current_user.fetch_my_product_ids
+        end
       end
     end
     

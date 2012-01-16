@@ -5,7 +5,9 @@
 	<div class="searchResults">
 		<% if !@products.nil? %>
 			<% @products.each do |product| %>
-				<% product.update_in_my_products(@my_product_ids) %>
+				<% if signed_in? %>
+					<% product.update_in_my_products(@my_product_ids) %>
+				<% end %>
 				<div class="searchResult">
 					<a href="<%= product_version_path(product) %>" class="searchResultLink"><%=product.name_and_version%></a><br/>	
 					<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
