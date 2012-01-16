@@ -12,7 +12,7 @@ class Notification < ActiveRecord::Base
       send_notifications
       p "start to make a nap"
       sleep one_hour
-      p "wake up"
+      p "wake up and work a little bit"
     end
   end  
   

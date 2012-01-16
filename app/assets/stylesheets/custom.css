@@ -39,6 +39,7 @@ input{
     padding-left: 15px;
     height: 35px;
     font-size: 16px;
+	line-height: 35px;
 }
 
 input[type="submit"] {
@@ -225,9 +226,10 @@ section {
     width: 810px;
 	padding: 20px;
 	margin-top: 65px;
+	background-color: white;
 	-moz-box-shadow:    0px 0px 2px 2px #888888;
 	-webkit-box-shadow: 0px 0px 2px 2px #888888;
-	box-shadow:         0px 0px 2px 2px #888888;
+	box-shadow:         0px 0px 2px 2px #888888;	
 }
 
 .section_lean {
@@ -289,6 +291,7 @@ footer nav {
 /*	font-family: duturner;*/
 	font-size: 14px;
 	height: 23px; 
+	line-height: 23px;
 	width: 162px;  
 	margin: 0;	 
 	padding:0; 

@@ -10,7 +10,7 @@
 
 	var defaults = {
 		text: 'Enter a text ...',
-   		class: ''
+   		styleclass: ''
 	};
 	
 	var options = $.extend(defaults, options);
@@ -20,14 +20,14 @@
 		$(this).focus(function(){
 			if($(this).val() == options.text){
 				$(this).val('');
-				$(this).removeClass(options.class);
+				$(this).removeClass(options.styleclass);
 			}
 		});
 		
 		$(this).blur(function(){
 			if($(this).val() == ''){
 				$(this).val(options.text);
-				$(this).addClass(options.class);
+				$(this).addClass(options.styleclass);
 			}
 		});
 		
