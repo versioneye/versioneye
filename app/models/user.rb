@@ -106,6 +106,11 @@ class User < ActiveRecord::Base
     return user.nil?
   end
   
+  def self.email_vaild?(email)
+    user = find_by_email(email)
+    return user.nil?
+  end
+  
   def update_password(email, password, new_password)
     user = User.authenticate(email, password)
     return false if user.nil?

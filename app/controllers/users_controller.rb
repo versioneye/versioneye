@@ -10,13 +10,21 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    @user.create_verification
-    if @user.save
-      @user.send_verification_email
+    if !User.username_valid?(@user.username)
+      flash.now[:error] = "The username is already taken. Please choose another username."
+      render 'new'
+    elsif !User.email_vaild?(@user.email)
+      flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
+      render 'new'
     else 
-      flash[:error] = "An error occured. Please try again later."
-      redirect_to '/signup'
-    end
+      @user = User.new(params[:user])
+      @user.create_verification
+      if @user.save
+        @user.send_verification_email
+      else 
+        render 'new'
+      end
+    end    
   end
   
   def activate
