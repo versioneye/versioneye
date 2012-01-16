@@ -20,6 +20,8 @@ class ProductsController < ApplicationController
       @products = Product.find_by_name(@query).paginate(:page => params[:page])
       if @products.nil? || @products.length == 0
         flash.now[:notice] = "Sorry. No Results found."
+      else        
+        @my_product_ids = current_user.fetch_my_product_ids
       end
     end
     
@@ -49,14 +51,15 @@ class ProductsController < ApplicationController
     end
   end
   
-  # Used in the login area. With login.
   def follow
     product_key = url_param_to_origin params[:product_key]
     @product = fetch_product product_key
     respond = create_follower @product, current_user
     respond_to do |format|
       format.js
-      format.html { redirect_to product_path(@product) }
+      format.html { 
+          redirect_to product_version_path(@product)
+        }
       format.json { render :json => "[#{respond}]" }
     end
   end
@@ -67,10 +70,11 @@ class ProductsController < ApplicationController
     @product = fetch_product product_key
     respond = destroy_follower @product, current_user
     respond_to do |format|
+      format.js 
       format.json { render :json => "[#{respond}]" }
       format.html { 
           if src_hidden.eql? "detail"
-            redirect_to product_path(@product)
+            redirect_to product_version_path(@product)
           else
             redirect_to user_path(current_user)
           end
@@ -90,7 +94,7 @@ class ProductsController < ApplicationController
       key.gsub!("~",".")
       key
     end
-  
+
     def fetch_product(product_key)
       product = Product.find_by_key product_key
       if product.nil?

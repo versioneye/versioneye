@@ -1,1 +1,2 @@
-document.getElementById('<%= @product.to_param %>').style.display = 'none';
+document.getElementById('follow_<%= @product.to_param %>').style.display = 'none';
+document.getElementById('unfollow_<%= @product.to_param %>').style.display = 'block';

@@ -13,6 +13,8 @@ class Product
   embeds_many :versions
   embeds_many :repositories
 
+  attr_accessor :in_my_products
+
   require 'will_paginate/array'
 
   def self.find_by_name(searched_name)
@@ -100,6 +102,26 @@ class Product
     self.version_link = version.link
     self.save
     p "update product #{prod_key} with version: #{version.link}"
+  end
+  
+  def update_in_my_products(array_of_product_ids)
+    self.in_my_products = array_of_product_ids.include?(_id.to_s)
+  end
+  
+  def display_follow
+    if self.in_my_products
+      "none"
+    else
+      "block"
+    end
+  end
+  
+  def display_unfollow
+    if self.in_my_products
+      "block"
+    else
+      "none"
+    end
   end
   
   def to_param

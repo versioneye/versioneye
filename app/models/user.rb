@@ -54,11 +54,16 @@ class User < ActiveRecord::Base
   end
   
   def fetch_my_products
+    ids = fetch_my_product_ids
+    result = Product.find(ids)
+  end
+  
+  def fetch_my_product_ids
     ids = Array.new
     followers.each do |follower|
       ids.push follower.product_id
     end 
-    result = Product.find(ids)
+    ids
   end
 
   def image_url
