@@ -526,6 +526,21 @@ nav ul li a:hover {
 
 /****** ELSE ****************/
 
+.ultablerow{
+	margin: 0;
+    padding: 0;
+	display: table-row;
+}
+
+.litablecell{
+	list-style-type: none;
+    display: table-cell;
+    padding: 0;
+/*	height: 37px;*/
+	vertical-align: middle;
+	padding-right: 10px;
+}
+
 .searchResults{
 	text-align: left;
 	padding-top: 0px;

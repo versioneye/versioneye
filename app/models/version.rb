@@ -5,6 +5,7 @@ class Version
   field :version, type: String
   field :link, type: String
   field :rate, type: Integer
+  field :ratecount, type: Integer
   
   embedded_in :product
   

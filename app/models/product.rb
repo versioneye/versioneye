@@ -10,6 +10,7 @@ class Product
   field :version_link, type: String
   field :version_rate, type: Integer
   field :rate, type: Integer
+  field :ratecount, type: Integer
   embeds_many :versions
   embeds_many :repositories
 

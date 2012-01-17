@@ -10,9 +10,9 @@
 </div>
 <div class="boxContainer"><pre>
 <<span>dependency</span>>
-<<span>groupId</span>><b><%= @product.group_id %></b><<span>/groupId</span>>
-<<span>artifactId</span>><b><%= @product.artifact_id %></b><<span>/artifactId</span>>
-<<span>version</span>><b><%= @product.version %></b><<span>/version</span>>
+    <<span>groupId</span>><b><%= @product.group_id %></b><<span>/groupId</span>>
+    <<span>artifactId</span>><b><%= @product.artifact_id %></b><<span>/artifactId</span>>
+    <<span>version</span>><b><%= @product.version %></b><<span>/version</span>>
 <<span>/dependency</span>></pre>
 </div>
 <div class="boxHeader">
@@ -32,9 +32,16 @@
 		<% @product.get_natural_sorted_versions.each do |version|  %>
 			<tr>
 				<td>
-					<a href="/product/<%=@product.to_param%>/version/<%=version.to_url_param%>"><%=version.version%></a>
+					<div >
+						<ul class="ultablerow">
+							<li class="litablecell"><a href="/product/<%=@product.to_param%>/version/<%=version.to_url_param%>"><%=version.version%></a></li>
+							<li class="litablecell"><%= render :partial => 'shared/show_rate', :locals => {:rate => version.rate, :id => version.version} %></li>
+						</ul>
+					</div>
+					<div>
+						<a href="<%= version.link %>"><%= version.link %></a>
+					</div>
 				</td>
-				<td><a href="<%= version.link %>"><%= version.link %></a></td>
 			</tr>
 		<% end %>
 		</table>
