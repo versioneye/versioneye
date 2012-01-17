@@ -101,21 +101,6 @@ class Product
     self.save    
   end
   
-  def self.update_versions_ratecount
-    count = Product.count()
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.all().skip(skip).limit(pack)
-      products.each do |product|
-        product.update_version_rates
-        product.update_rate
-        product.save
-      end
-    end
-  end
-  
   def self.update_versions
     count = Product.count()
     pack = 100
@@ -129,6 +114,21 @@ class Product
     end
   end
   
+  def self.update_rates_global
+    count = Product.count()
+    pack = 100
+    max = count / pack     
+    (0..max).each do |i|
+      skip = i * pack
+      products = Product.all().skip(skip).limit(pack)
+      products.each do |product|
+        product.update_version_rates
+        product.update_rate
+        product.save
+      end
+    end
+  end
+    
   def update_in_my_products(array_of_product_ids)
     self.in_my_products = array_of_product_ids.include?(_id.to_s)
   end

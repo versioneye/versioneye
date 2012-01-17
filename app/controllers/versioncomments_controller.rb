@@ -18,10 +18,8 @@ class VersioncommentsController < ApplicationController
   private 
   
     def update_product_rate(product, ver)
-      avg = Versioncomment.get_average_rate_by_prod_key_and_version(product.prod_key, ver)      
       version = product.get_version(ver)
-      version.rate = Versioncomment.get_flatted_average(avg)
-      version.ratecount = Versioncomment.get_count_by_prod_key_and_version(product.prod_key, ver)
+      version.update_rate      
       version.save      
       product.update_rate
       product.save
