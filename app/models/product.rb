@@ -70,17 +70,39 @@ class Product
   end  
   
   def update_rate
-    sum = 0
-    count = 0
+    rate_sum = 0
+    rate_count = 0
+    ratecount_sum = 0
     versions.each do |version|
-      if !version.rate.nil? 
-        count += 1
-        sum += version.rate
+      if !version.rate.nil? && version.rate > 9 
+        rate_count += 1
+        rate_sum += version.rate
+        ratecount_sum += version.ratecount
       end
     end
-    if count > 0
-      self.rate = sum / count    
+    if rate_count > 0
+      p "rate_sum: #{rate_sum} rate_count: #{rate_count}"
+      self.rate = rate_sum / rate_count
+      self.ratecount = ratecount_sum    
     end    
+  end
+  
+  def self.update_versions_ratecount
+    count = Product.count()
+    pack = 100
+    max = count / pack     
+    (0..max).each do |i|
+      skip = i * pack
+      products = Product.all().skip(skip).limit(pack)
+      products.each do |product|
+        product.versions.each do |version|
+          version.update_rate
+          version.save
+        end
+        product.update_rate
+        product.save
+      end
+    end
   end
   
   def self.update_versions

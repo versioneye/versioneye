@@ -21,7 +21,10 @@ class Version
   
   def update_rate
     prod_key = product.prod_key
-    self.rate = Versioncomment.get_average_rate_by_prod_key_and_version(prod_key, version)
+    avg = Versioncomment.get_average_rate_by_prod_key_and_version(prod_key, version)
+    avg_flat = Versioncomment.get_flatted_average(avg)
+    self.rate = avg_flat
+    self.ratecount = Versioncomment.get_count_by_prod_key_and_version(product.prod_key, version)    
   end
   
   def to_url_param
@@ -29,6 +32,13 @@ class Version
     url_param.gsub!("/","--")
     url_param.gsub!(".","~")
     "#{url_param}"    
+  end
+  
+  def get_ratecount
+    if self.ratecount.nil?
+      self.ratecount = 0
+    end
+    self.ratecount
   end
 
 end

@@ -39,5 +39,15 @@ class Versioncomment < ActiveRecord::Base
     end
     avg
   end
+  
+  def self.get_flatted_average(avg)
+    avg = 10 if avg < 15 && avg > 0
+    avg = 20 if avg < 25 && avg >= 15
+    avg = 30 if avg < 35 && avg >= 25
+    avg = 40 if avg < 45 && avg >= 35
+    avg = 50 if avg >= 45
+    p "get_flatted_average #{avg}"
+    avg
+  end
 
 end
