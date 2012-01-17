@@ -77,7 +77,7 @@ class Product
       if !version.rate.nil? && version.rate > 9 
         rate_count += 1
         rate_sum += version.rate
-        ratecount_sum += version.ratecount
+        ratecount_sum += version.get_ratecount
       end
     end
     if rate_count > 0
