@@ -67,7 +67,14 @@ class Product
       end
     end
     return nil
-  end  
+  end 
+  
+  def update_version_rates
+    versions.each do |version|
+      version.update_rate
+      version.save
+    end
+  end 
   
   def update_rate
     rate_sum = 0
@@ -81,10 +88,17 @@ class Product
       end
     end
     if rate_count > 0
-      p "rate_sum: #{rate_sum} rate_count: #{rate_count}"
       self.rate = rate_sum / rate_count
       self.ratecount = ratecount_sum    
     end    
+  end
+  
+  def update_version_link
+    versions = get_natural_sorted_versions
+    version = versions[versions.count() - 1]
+    self.version = version.version
+    self.version_link = version.link
+    self.save    
   end
   
   def self.update_versions_ratecount
@@ -95,10 +109,7 @@ class Product
       skip = i * pack
       products = Product.all().skip(skip).limit(pack)
       products.each do |product|
-        product.versions.each do |version|
-          version.update_rate
-          version.save
-        end
+        product.update_version_rates
         product.update_rate
         product.save
       end
@@ -113,18 +124,9 @@ class Product
       skip = i * pack
       products = Product.all().skip(skip).limit(pack)
       products.each do |product|
-        product.update_version
+        product.update_version_link
       end
     end
-  end
-  
-  def update_version
-    versions = get_natural_sorted_versions
-    version = versions[versions.count() - 1]
-    self.version = version.version
-    self.version_link = version.link
-    self.save
-    p "update product #{prod_key} with version: #{version.link}"
   end
   
   def update_in_my_products(array_of_product_ids)
