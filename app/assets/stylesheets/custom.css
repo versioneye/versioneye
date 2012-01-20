@@ -256,8 +256,8 @@ section h1 {
 footer {
     text-align: left;
 	border-top: 1px dotted gray;
-    margin-top: 10px;
-	padding-top: 10px;
+    margin-top: 15px;
+	padding-top: 5px;
     width: 850px;
     margin-left: auto;
     margin-right: auto;
@@ -266,8 +266,10 @@ footer {
 
 footer nav {
     float: none;
-    height: 40px;
+    height: 135px;
     vertical-align: middle;
+	padding: 0;
+	margin: 0;
 }
 
 /******* Header *****************/
