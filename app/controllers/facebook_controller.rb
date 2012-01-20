@@ -33,12 +33,13 @@ class FacebookController < ApplicationController
         user = User.find_by_email(json_user['email'])
         if user.nil?
           user = User.new
-          user.update_from_fb_json json_user
+          user.update_from_fb_json(json_user, token)
+          user.save
+        else
+          user.update_column(:fb_id, json_user['id'])
         end
-      end
-      user.fb_id = json_user['id']
-      user.fb_token = token
-      user.save
+      end      
+      user.update_column(:fb_token, token)
       user
     end
 

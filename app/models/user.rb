@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
   attr_accessor :password, :terms, :new_username
-  attr_accessible :fullname, :username, :email, :fb_id, :password, :new_username, :terms, :verification
+  attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :verification
 
   validates :fullname, :presence      => true,
                        :length        => { :within => 2..50 }
@@ -123,11 +123,12 @@ class User < ActiveRecord::Base
     return user.save
   end  
 
-  def update_from_fb_json(json_user)
+  def update_from_fb_json(json_user, token)
     self.fullname = json_user['name']
     self.username = json_user['username']
     self.email = json_user['email']
     self.fb_id = json_user['id']
+    self.fb_token = token
     self.password = create_random_value
   end
   
