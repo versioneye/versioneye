@@ -18,6 +18,27 @@ $(document).ready(function() {
 		styleclass: "searchfield_hint"
 	});	
 	
+	$('#fullname').tbHinter({
+		text: "This is visible on your posts.",
+		styleclass: "inputCelHint"
+	});
+
+	$('#username').tbHinter({
+		text: "/users/USERNAME",
+		styleclass: "inputCelHint"
+	});
+	
+	$('#email').tbHinter({
+		text: "Invisible for other users.",
+		styleclass: "inputCelHint"
+	});
+	
+	$('#password').tbHinter({
+		text: "Your secret.",
+		styleclass: "inputCelHint"
+	});
+	
+	
 });
 
 function load_dialog_follow(product_name){	

@@ -432,22 +432,41 @@ nav ul li a:hover {
 
 /***** 3 Col Form ********/
 
+.formCel{
+	float:left; 
+	display: block; 
+	width: 460px;
+}
+
+.alternativeCel{
+	float:left; 
+	width: 250px; 
+	padding-left: 58px; 
+	border-left: 1px solid #888888; 
+	color: #666666
+}
+
 .labelCel{
-    width: 170px;
-    text-align: right;
-	vertical-align: middle;
-    display: table-cell;
+    width: 110px;
     padding-right: 5px;
+	display: table-cell;
+	text-align: right;
+	vertical-align: middle;
 }
 
 .inputCel{
+	width: 300px;
     padding-left: 5px;
-    width: 300px;
     display: table-cell;
 }
 
 .inputCel input{
     width: 270px;
+}
+
+.inputCelHint{
+	color: #D3D3D3;
+	width: 270px;
 }
 
 .hintCel{
@@ -522,6 +541,20 @@ nav ul li a:hover {
 #error_explanation ul li {
   font-size: 12px;
   list-style: square;
+}
+
+/****** Other Versions Table ****/
+
+.otherVersionOne{
+	text-align: right;
+}
+
+.otherVersionTwo{
+	text-align: center;
+}
+
+.otherVersionThree{
+	text-align: left;
 }
 
 /****** ELSE ****************/

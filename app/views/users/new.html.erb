@@ -1,80 +1,71 @@
 <div class="boxHeader">
 	Sign Up
 </div>
-<div class="boxContainer">
-	<%= form_for @user do |f| %>
-	    <div class="messages">
-	        <%= render 'shared/error_messages', :object => f.object %>
-	    </div>
+<div class="boxContainer" style="height: 380px;">
+	<div class="formCel">
+		<%= form_for @user do |f| %>
+		    <div class="messages">
+		        <%= render 'shared/error_messages', :object => f.object %>
+		    </div>
 
-	    <div style="display:table-row;">
-	      <div class="labelCel">
-	        <%= f.label :fullname, "Full Name" %>
-	      </div>
-	      <div class="inputCel">
-	        <%= f.text_field :fullname, :class => "round" %>
-	      </div>
-	      <div class="hintCel meta-text-small">
-	        This is visible on your posts.
-	      </div>
-	    </div>
+		    <div style="display:table-row;">
+		      <div class="labelCel">
+		        <%= f.label :fullname, "Full Name" %>
+		      </div>
+		      <div class="inputCel">
+		        <%= f.text_field :fullname, :class => "round", :id => "fullname" %>
+		      </div>
+		    </div>
 
-	    <div style="display:table-row;">
-	      <div class="labelCel">
-	        <%= f.label :username %>
-	      </div>
-	      <div class="inputCel">
-	        <%= f.text_field :username, :class => "round" %>
-	      </div>
-	      <div class="hintCel meta-text-small" >
-	        Your public profile:<br/>
-	        http://versioneye.com/users/ <b>USERNAME</b>
-	      </div>
-	    </div>
+		    <div style="display:table-row;">
+		      <div class="labelCel">
+		        <%= f.label :username %>
+		      </div>
+		      <div class="inputCel">
+		        <%= f.text_field :username, :class => "round", :id => "username" %>
+		      </div>
+		    </div>
 
-	    <div style="display:table-row;">
-	      <div class="labelCel">
-	        <%= f.label :email %>
-	      </div>
-	      <div class="inputCel">
-	        <%= f.text_field :email, :class => "round" %>
-	      </div>
-	      <div class="hintCel meta-text-small">
-	        Invisible for other users. We take care of it.
-	      </div>
-	    </div>
+		    <div style="display:table-row;">
+		      <div class="labelCel">
+		        <%= f.label :email %>
+		      </div>
+		      <div class="inputCel">
+		        <%= f.text_field :email, :class => "round", :id => "email" %>
+		      </div>
+		    </div>
 
-	    <div style="display:table-row;">
-	      <div class="labelCel">
-	        <%= f.label :password %>
-	      </div>
-	      <div class="inputCel">
-	        <%= f.password_field :password, :class => "round" %>
-	      </div>
-	      <div class="hintCel meta-text-small">
-	        Your secret.
-	      </div>
-	    </div>
+		    <div style="display:table-row;">
+		      <div class="labelCel">
+		        <%= f.label :password %>
+		      </div>
+		      <div class="inputCel">
+		        <%= f.password_field :password, :class => "round", :id => "password" %>
+		      </div>
+		    </div>
 
-	    <div style="display:table-row;">
-	      <div class="labelCel">
-	        <%= f.check_box :terms, :style => "width:20px;" %>
-	      </div>
-	      <div class="inputCel">
-	        <label for="user_terms">By clicking on "Sign up" below, you are agreeing to the <%= link_to "Privacy Policy / Terms", terms_path %>.</label><br/><br/>
-	      </div>
-	      <div class="hintCel meta-text-small">
+		    <div style="display:table-row;">
+		      <div class="labelCel" >
+		        <%= f.check_box :terms %>
+		      </div>
+		      <div class="inputCel">
+		        <label for="user_terms">By clicking on "Sign up" below, you are agreeing to the <%= link_to "Privacy Policy / Terms", terms_path %>.</label><br/><br/>
+		      </div>
+		    </div>
 
-	      </div>
-	    </div>
+		    <div style="display:table-row;">
+		      <div class="labelCel"></div>
+		      <div class="submitCel">
+		        <%= f.submit "Sign up", :class => "button" %>
+		      </div>
+		    </div>
 
-	    <div style="display:table-row;">
-	      <div class="labelCel"></div>
-	      <div class="submitCel">
-	        <%= f.submit "Sign up", :class => "button" %>
-	      </div>
-	      <div class="hintCel meta-text-small"></div>
-	    </div>
-
-	<% end %>
+		<% end %>
+	</div>
+	<div class="alternativeCel" style="height: 380px;">
+		<b>OR</b><br/>
+		<br/>
+		<br/>
+		<%= render 'shared/login_with_facebook' %>
+	</div>	
 </div>

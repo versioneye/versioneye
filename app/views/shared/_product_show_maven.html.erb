@@ -30,19 +30,19 @@
 	<div class="boxContainer" >
 		<table>
 			<colgroup>
-				<col width="10%">
-				<col width="15%">
-				<col width="75%">
+				<col width="100px" >
+				<col width="100px">
+				<col width="*">
 			</colgroup>
 		<% @product.get_natural_sorted_versions.each do |version|  %>
 			<tr>
-				<td >
+				<td class="otherVersionOne">
 					<a href="/product/<%=@product.to_param%>/version/<%=version.to_url_param%>"><%=version.version%></a>
 				</td>
-				<td>
+				<td class="otherVersionTwo">
 					<%= render :partial => 'shared/show_rate', :locals => {:rate => version.rate, :id => version.version} %>
 				</td>
-				<td>
+				<td class="otherVersionThree">
 					<%= pluralize(version.ratecount, "rating")  %>
 				</td>
 			</tr>
