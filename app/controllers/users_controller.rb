@@ -7,6 +7,14 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
+  
+  def home
+    if signed_in?
+      redirect_to user_path current_user
+    else  
+      redirect_to root_path
+    end
+  end
 
   def create
     @user = User.new(params[:user])

@@ -1,6 +1,6 @@
 <% if signed_in? %>
 	<script type="text/javascript" language="javascript">
-	    opener.document.location = "/users/<%=#{current_user.username}%>";
+	    opener.document.location = "/home";
 	    self.close();
 	</script>
 <% else %>	
