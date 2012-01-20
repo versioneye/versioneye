@@ -14,8 +14,9 @@ Versioneye::Application.routes.draw do
   match '/users/:id/updatenames',    :to => 'users#updatenames'
   match '/users/:id/updatepassword', :to => 'users#updatepassword'
   match '/users/activate/:verification', :to => 'users#activate'
-  match '/iforgotmypassword',:to => 'users#iforgotmypassword'
+  match '/iforgotmypassword', :to => 'users#iforgotmypassword'
   match '/resetpassword',     :to => 'users#resetpassword'
+  match '/home',              :to => 'users#home'
 
   resources :versioncomments
   
