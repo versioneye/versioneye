@@ -11,7 +11,8 @@ class VersioncommentsController < ApplicationController
     prod_key = @versioncomment.product_key
     ver = @versioncomment.version
     product = Product.find_by_key(prod_key)    
-    update_product_rate(product, ver)    
+    update_product_rate(product, ver) 
+    product.version = ver   
     redirect_to product_version_path(product)
   end
   

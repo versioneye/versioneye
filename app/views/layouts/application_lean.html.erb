@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Version Eye</title>
-  <%= csrf_meta_tag %>
-  <%= render 'layouts/stylesheets' %>
-  <%= stylesheet_link_tag "application" %>
-  <%= javascript_include_tag "application" %>
-  <script type="text/javascript">
-	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-27806979-1']);
-	_gaq.push(['_trackPageview']);
-	(function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		})();
-  </script>
-</head>
-
-<body>	
-	<%= render 'layouts/header' %>
-	<div class="container">						
-		<section class="section_lean" >
-			<% flash.each do |key, value| %>
-				<div class="flash <%= key %>"><%= value %></div>
-			<% end %>
-			<%= yield %>
-		</section>
-		<%= render 'layouts/footer' %>
-		<%= debug(params) if Rails.env.development? %>
-        <br/>
-        <br/>
-	</div>
-</body>
-
+	<head>
+		<title>Version Eye</title>
+		<%= csrf_meta_tag %>
+		<%= render 'layouts/stylesheets' %>
+		<%= stylesheet_link_tag "application" %>
+		<%= javascript_include_tag "application" %>
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-27806979-1']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+	</head>
+	<body>	
+		<%= render 'layouts/header' %>
+		<div class="container">						
+			<section class="section_lean" >
+				<% flash.each do |key, value| %>
+					<div class="flash <%= key %>"><%= value %></div>
+				<% end %>
+				<%= yield %>
+			</section>
+			<%= render 'layouts/footer' %>
+			<%= debug(params) if Rails.env.development? %>
+	        <br/>
+	        <br/>
+		</div>
+	</body>
 </html>

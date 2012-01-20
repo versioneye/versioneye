@@ -81,6 +81,11 @@ class User < ActiveRecord::Base
     user
   end
   
+  def self.find_by_fb_id(fb_id)
+    user = User.find(:first, :conditions => ["fb_id = ?", fb_id])
+    user
+  end
+  
   def reset_password
     random_value = create_random_value
     self.password = random_value
@@ -118,7 +123,7 @@ class User < ActiveRecord::Base
     return user.save
   end  
 
-  def update_from_fb_json (json_user)
+  def update_from_fb_json(json_user)
     self.fullname = json_user['name']
     self.username = json_user['username']
     self.email = json_user['email']

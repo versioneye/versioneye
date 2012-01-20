@@ -1,4 +1,16 @@
 
+var winWidth = 950;
+var winHeigh = 550;
+var left = (screen.width/2)-(winWidth/2);
+var top = (screen.height/2)-(winHeigh/2);
+
+var domainlink = "https://graph.facebook.com/oauth/authorize?";
+var req_perms = "req_perms=email&";
+var clientid = "client_id=230574627021570&";
+var scope = "scope=email,offline_access&";
+var redirect = "redirect_uri=http://versioneye-beta.com/facebook/start";
+var link = domainlink + req_perms + clientid + scope + redirect;
+
 $(document).ready(function() {
 	
 	$('#q').tbHinter({
