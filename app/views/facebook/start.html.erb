@@ -1,4 +1,8 @@
-<script type="text/javascript" language="javascript">
-    opener.document.location = "/users/#{current_user.username}";
-    self.close();
-</script>
+<% if signed_in? %>
+	<script type="text/javascript" language="javascript">
+	    opener.document.location = "/users/#{current_user.username}";
+	    self.close();
+	</script>
+<% else %>	
+	<h1>An error occured. Please try again later.</h1>
+<% end %>
