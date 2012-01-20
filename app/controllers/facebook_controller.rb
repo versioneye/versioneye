@@ -28,7 +28,7 @@ class FacebookController < ApplicationController
 
     def get_user_for_token(token)
       json_user = JSON.parse HTTParty.get('https://graph.facebook.com/me?access_token=' + URI.escape(token)).response.body
-      user = User.find_by_fb_id json_user['id']
+      user = User.find_by_fb_id( json_user['id'] )
       if user.nil?
         user = User.find_by_email(json_user['email'])
         if user.nil?
@@ -36,6 +36,7 @@ class FacebookController < ApplicationController
           user.update_from_fb_json json_user
         end
       end
+      user.fb_id = json_user['id']
       user.fb_token = token
       user.save
       user
