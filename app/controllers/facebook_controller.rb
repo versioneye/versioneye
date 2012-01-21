@@ -2,7 +2,7 @@ class FacebookController < ApplicationController
 
   layout "plain"
 
-  def start
+  def callback
     code = params['code']
 
     domain = 'https://graph.facebook.com'
