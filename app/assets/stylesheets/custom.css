@@ -548,11 +548,11 @@ nav ul li a:hover {
 /****** Other Versions Table ****/
 
 .otherVersionOne{
-	text-align: right;
+	text-align: left;
 }
 
 .otherVersionTwo{
-	text-align: center;
+	text-align: left;
 }
 
 .otherVersionThree{
