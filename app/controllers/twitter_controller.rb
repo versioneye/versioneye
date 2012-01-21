@@ -1,14 +1,14 @@
-class FacebookController < ApplicationController
+class TwitterController < ApplicationController
 
   layout "plain"
 
-  def start
+  def callback
     code = params['code']
 
     domain = 'https://graph.facebook.com'
     uri = '/oauth/access_token'
     query = 'client_id=230574627021570&'
-    query += 'redirect_uri=http://versioneye-beta.com/facebook/callback&'
+    query += 'redirect_uri=http://versioneye-beta.com/twitter/start&'
     query += 'client_secret=d27fb4a5d443f29cfdbddd79638c91a8&'
     query += 'code=' + code
     link = domain + uri + '?' + query

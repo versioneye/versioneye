@@ -31,7 +31,8 @@ Versioneye::Application.routes.draw do
   match '/impressum',         :to => 'page#impressum'
   match '/imprint',           :to => 'page#imprint'
   match '/terms',             :to => 'page#terms'
-  match '/facebook/start',    :to => 'facebook#start'
+  match '/facebook/callback', :to => 'facebook#callback'
+  match '/twitter/callback',  :to => 'twitter#callback'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
