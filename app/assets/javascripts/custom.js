@@ -8,7 +8,7 @@ var fb_domainlink = "https://graph.facebook.com/oauth/authorize?";
 var fb_req_perms = "req_perms=email&";
 var fb_clientid = "client_id=230574627021570&";
 var fb_scope = "scope=email,offline_access&";
-var fb_redirect = "redirect_uri=http://versioneye-beta.com/facebook/callback";
+var fb_redirect = "redirect_uri=http://versioneye-beta.com/auth/facebook/callback";
 var oauth_facebook_link = fb_domainlink + fb_req_perms + fb_clientid + fb_scope + fb_redirect;
 
 $(document).ready(function() {
