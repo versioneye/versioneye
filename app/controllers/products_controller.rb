@@ -8,6 +8,7 @@ class ProductsController < ApplicationController
   
   def search
     @query = params[:q]
+    @query = @query.strip unless @query.nil?
     if @query.nil? || @query.empty? || @query.eql?("Be up-to-date")
       @query = "junit"
       # flash.now[:error] = "Search field is empty. Please type in a search term."
