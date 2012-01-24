@@ -191,6 +191,7 @@ class Product
     comments = Versioncomment.find_by_prod_key_and_version(self.prod_key, self.version)
     {
       :following => param[:following],
+      :id => self.get_decimal_id,
       :name => self.name,
       :key => self.prod_key,
       :group_id => self.group_id,
