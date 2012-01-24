@@ -35,7 +35,7 @@
 				<col width="100px" >
 				<col width="*">
 			</colgroup>
-		<% @product.get_natural_sorted_versions.each do |version|  %>
+		<% @product.get_natural_sorted_versions.reverse!.each do |version|  %>
 			<tr>
 				<td class="otherVersionOne">
 					<%= render :partial => 'shared/show_rate', :locals => {:rate => version.rate, :id => version.version} %>
