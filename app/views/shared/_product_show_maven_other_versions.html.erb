@@ -1,0 +1,20 @@
+<% if !@product.versions.nil? && @product.versions.length > 1 %>
+	<div class="boxHeader">
+		Other Versions
+	</div>
+	<div class="boxContainer" >
+		<table>
+			<colgroup>
+				<col width="100px" >
+				<col width="*">
+			</colgroup>
+		<% @product.get_natural_sorted_versions.reverse!.each do |version|  %>
+			<tr>
+				<td class="otherVersionThree">
+					<a href="/product/<%=@product.to_param%>/version/<%=version.to_url_param%>"><%=version.version%></a><br/>
+				</td>
+			</tr>
+		<% end %>
+		</table>
+	</div>
+<% end %>

@@ -5,6 +5,7 @@ class Product
   field :prod_key, type: String
   field :group_id, type: String
   field :artifact_id, type: String
+  field :prod_type, type: String
   field :link, type: String
   field :version, type: String
   field :version_link, type: String
@@ -166,6 +167,14 @@ class Product
   
   def name_and_version    
     nameversion = "#{name} (#{version})"
+  end
+  
+  def get_type
+    if prod_type.nil? || prod_type.empty? 
+      "Maven2"
+    else
+      prod_type
+    end
   end
     
   def as_json param

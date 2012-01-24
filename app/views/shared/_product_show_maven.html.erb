@@ -1,18 +1,23 @@
-<div class="boxHeader">
-	Maven2 pom.xml snippet
-</div>
-<div class="boxContainer"><pre>
-<<span>dependency</span>>
-    <<span>groupId</span>><b><%= @product.group_id %></b><<span>/groupId</span>>
-    <<span>artifactId</span>><b><%= @product.artifact_id %></b><<span>/artifactId</span>>
-    <<span>version</span>><b><%= @product.version %></b><<span>/version</span>>
-<<span>/dependency</span>></pre>
-</div>
-<div class="boxHeader">
-	Repository
-</div>
-<div class="boxContainer">
-	<% @product.repositories.each do |repo| %>
-		<div><a href="<%= repo.src %>" target="_NEW" ><%= repo.src %></a> </div>
-	<% end %>		
+<div style="width: 200px; display: block; float: left; border: 0px solid black; margin-right: 10px;">
+	
+	<%= render 'shared/product_show_maven_bigfollow' %>
+
+	<%= render 'shared/product_show_maven_average_ratting' %>
+
+	<%= render 'shared/product_show_maven_links' %>
+
+	<%= render 'shared/product_show_maven_other_versions' %>
+	
+</div>	
+<div style="width: 590px; display: block; float: left; border: 0px solid black; margin-left: 5px;">
+	
+	<h1 ><%= @product.name_and_version %></h1>		
+
+	<%= render 'shared/product_show_maven_code_snippet' %>
+	
+	<%= render 'shared/product_show_maven_repositories' %>
+
+	<%= render 'shared/product_show_comment' %>
+
+	<%= render 'shared/product_show_comments' %>
 </div>
