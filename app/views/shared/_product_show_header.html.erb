@@ -1,27 +1,50 @@
-<div>
-	<div >
-		<ul class="ultablerow">
-			<li class="litablecell">
-				<% if signed_in? %>
-					<% if @follower.nil? %>			
-						<%= form_tag("/follow") do  %>
-							<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
-							<%= submit_tag "Follow", :class => "followButton", :id => "#{@product.to_param}" %>
-						<% end %>
-					<% else %>
-						<%= form_tag("/unfollow") do  %>
-							<input id="src_hidden"  name="src_hidden" type="hidden" value="detail"/>
-							<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
-							<%= submit_tag "Unfollow", :class => "unfollowButton" %>
-						<% end %>
-					<% end %>
-				<% else %>
-					<input type="submit" value="Follow" class="followButton" onclick="load_dialog_follow('<%= @product.name %>');" ></input>
-				<% end %>
-			</li>
-			<li class="litablecell">
-				<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate, :id => @product.prod_key} %>
-			</li>
-		</ul>
-	</div>
+<div style="text-align: left; margin-bottom: 10px;">
+	<% if signed_in? %>
+		<% if @follower.nil? %>			
+			<%= form_tag("/follow") do  %>
+				<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
+				<%= submit_tag "Follow", :class => "followButton", :id => "#{@product.to_param}" %>
+			<% end %>
+		<% else %>
+			<%= form_tag("/unfollow") do  %>
+				<input id="src_hidden"  name="src_hidden" type="hidden" value="detail"/>
+				<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
+				<%= submit_tag "Unfollow", :class => "unfollowButton" %>
+			<% end %>
+		<% end %>
+	<% else %>
+		<input type="submit" value="Follow" class="followButton" onclick="load_dialog_follow('<%= @product.name %>');" ></input>
+	<% end %>	
 </div>
+<div class="boxHeader">
+	Average Rating
+</div>
+<div class="boxContainer" style="height: 17px; margin-bottom: 10px">
+	<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate, :id => @product.prod_key} %>
+</div>
+<div class="boxContainer" >
+	<a href="<%= @product.version_link %>" target="_NEW">Link to product</a>
+</div>
+<% if !@product.versions.nil? && @product.versions.length > 1 %>
+	<div class="boxHeader">
+		Other Versions
+	</div>
+	<div class="boxContainer" >
+		<table>
+			<colgroup>
+				<col width="100px" >
+				<col width="*">
+			</colgroup>
+		<% @product.get_natural_sorted_versions.each do |version|  %>
+			<tr>
+				<td class="otherVersionOne">
+					<%= render :partial => 'shared/show_rate', :locals => {:rate => version.rate, :id => version.version} %>
+				</td>				
+				<td class="otherVersionThree">
+					<a href="/product/<%=@product.to_param%>/version/<%=version.to_url_param%>"><%=version.version%></a>
+				</td>
+			</tr>
+		<% end %>
+		</table>
+	</div>
+<% end %>

@@ -1,16 +1,19 @@
 <% if @product.nil? %>
 	Product not found!
 <% else %>
-	<h1 ><%= @product.name_and_version %></h1>
-	<% if !signed_in? %>
-		<%= render 'shared/dialog_follow' %>	
-	<% end %>
-	
-	<%= render 'shared/product_show_header' %>
-	
-	<%= render 'shared/product_show_maven' %>
+	<div style="width: 200px; display: block; float: left; border: 0px solid black; margin-right: 10px;">
+		<% if !signed_in? %>
+			<%= render 'shared/dialog_follow' %>	
+		<% end %>
+		<%= render 'shared/product_show_header' %>
+	</div>	
+	<div style="width: 590px; display: block; float: left; border: 0px solid black; margin-left: 5px;">
+		<h1 ><%= @product.name_and_version %></h1>		
 
-	<%= render 'shared/product_show_comment' %>
-	
-	<%= render 'shared/product_show_comments' %>	
+		<%= render 'shared/product_show_maven' %>
+
+		<%= render 'shared/product_show_comment' %>
+
+		<%= render 'shared/product_show_comments' %>
+	</div>
 <% end %>

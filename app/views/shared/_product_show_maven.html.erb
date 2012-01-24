@@ -1,10 +1,4 @@
 <div class="boxHeader">
-	Link to product
-</div>
-<div class="boxContainer" >
-	<a href="<%= @product.version_link %>" target="_NEW"><%= @product.version_link %></a>
-</div>
-<div class="boxHeader">
 	Maven2 pom.xml snippet
 </div>
 <div class="boxContainer"><pre>
@@ -22,30 +16,3 @@
 		<div><a href="<%= repo.src %>" target="_NEW" ><%= repo.src %></a> </div>
 	<% end %>		
 </div>
-<% if !@product.versions.nil? && @product.versions.length > 1 %>
-	<div class="boxHeader">
-		Other Versions
-	</div>
-	<div class="boxContainer" >
-		<table>
-			<colgroup>
-				<col width="100px" >
-				<col width="80px">
-				<col width="*">
-			</colgroup>
-		<% @product.get_natural_sorted_versions.each do |version|  %>
-			<tr>
-				<td class="otherVersionOne">
-					<%= render :partial => 'shared/show_rate', :locals => {:rate => version.rate, :id => version.version} %>
-				</td>
-				<td class="otherVersionTwo">
-					<%= pluralize(version.ratecount, "rating")  %>
-				</td>
-				<td class="otherVersionThree">
-					<a href="/product/<%=@product.to_param%>/version/<%=version.to_url_param%>"><%=version.version%></a>
-				</td>
-			</tr>
-		<% end %>
-		</table>
-	</div>
-<% end %>
