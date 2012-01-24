@@ -137,15 +137,71 @@ header a:visited:hover {
 
 /****** Buttons **********/
 
-.followButton[type="submit"]{
+.followButtonBig[type="submit"]{
 	-webkit-user-select:none;
 	  background-color: #f9b323;
+	  color:black;
 	  border: 2px solid gray;
       border-bottom-left-radius:8px 8px;
 	  border-bottom-right-radius:8px 8px;
- 	  border-top-left-radius:8px 8px;
-	  border-top-right-radius:8px 8px;
+  	  border-top-left-radius:8px 8px;
+ 	  border-top-right-radius:8px 8px;	  
+	  cursor:pointer;
+	  font-family: arial, sans-serif;
+	  font-size:17px;
+	  font-weight:bold;
+	  width: 100px;
+	  height:35px;
+	  line-height:32px;
+	  margin-bottom:0px;
+	  margin-left:5px;
+	  margin-right:5px;
+	  margin-top:0px;
+	  min-width:54px;
+	  padding-bottom:0;
+	  padding-left:8px;
+	  padding-right:8px;
+	  padding-top:0;
+	  text-align:center;
+}
+
+.unfollowButtonBig[type="submit"]{
+	-webkit-user-select:none;
+	 background-color:white;
+	 border: 2px solid #f9b323;
+     border-bottom-left-radius:8px 8px;
+	 border-bottom-right-radius:8px 8px;
+ 	 border-top-left-radius:8px 8px;
+	 border-top-right-radius:8px 8px;
+	 color:#22211f;
+	 cursor:pointer;
+	 font-family: arial, sans-serif;
+	 font-size:17px;
+	 font-weight:bold;
+     width: 100px;
+	 height:35px;
+	 line-height:32px;
+	 margin-bottom:0px;
+	 margin-left:5px;
+	 margin-right:5px;
+	 margin-top:0px;
+	 min-width:54px;
+	 padding-bottom:0;
+	 padding-left:8px;
+	 padding-right:8px;
+	 padding-top:0;
+	 text-align:center; 
+}
+
+.followButton[type="submit"]{
+	-webkit-user-select:none;
+	  background-color: #f9b323; 
 	  color:black;
+	  border: 2px solid gray;
+      border-bottom-left-radius:8px 8px;
+	  border-bottom-right-radius:8px 8px;
+  	  border-top-left-radius:8px 8px;
+ 	  border-top-right-radius:8px 8px;	  
 	  cursor:pointer;
 	  font-family: arial, sans-serif;
 	  font-size:11px;

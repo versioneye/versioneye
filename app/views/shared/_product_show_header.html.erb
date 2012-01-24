@@ -3,17 +3,17 @@
 		<% if @follower.nil? %>			
 			<%= form_tag("/follow") do  %>
 				<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
-				<%= submit_tag "Follow", :class => "followButton", :id => "#{@product.to_param}" %>
+				<%= submit_tag "Follow", :class => "followButtonBig", :id => "#{@product.to_param}" %>
 			<% end %>
 		<% else %>
 			<%= form_tag("/unfollow") do  %>
 				<input id="src_hidden"  name="src_hidden" type="hidden" value="detail"/>
 				<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
-				<%= submit_tag "Unfollow", :class => "unfollowButton" %>
+				<%= submit_tag "Unfollow", :class => "unfollowButtonBig" %>
 			<% end %>
 		<% end %>
 	<% else %>
-		<input type="submit" value="Follow" class="followButton" onclick="load_dialog_follow('<%= @product.name %>');" ></input>
+		<input type="submit" value="Follow" class="followButtonBig" onclick="load_dialog_follow('<%= @product.name %>');" ></input>
 	<% end %>	
 </div>
 <div class="boxHeader">
