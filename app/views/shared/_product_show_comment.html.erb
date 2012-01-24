@@ -34,6 +34,11 @@
 		Leave rating &amp; comment
 	</div>
 	<div class="boxContainer">
-		<%= link_to "Sign Up", signup_path %> or <%= link_to "Sign In", signin_path %> to leave rating and comment. 
+		<p>
+			<%= link_to "Sign Up", signup_path %> or <%= link_to "Sign In", signin_path %> to leave rating and comment. 
+		</p>
+		<p>
+			<%= render 'shared/login_with_facebook' %>
+		</p>		
 	</div>
 <% end %>
