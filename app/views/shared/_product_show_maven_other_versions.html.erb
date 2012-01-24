@@ -3,18 +3,8 @@
 		Other Versions
 	</div>
 	<div class="boxContainer" >
-		<table>
-			<colgroup>
-				<col width="100px" >
-				<col width="*">
-			</colgroup>
 		<% @product.get_natural_sorted_versions.reverse!.each do |version|  %>
-			<tr>
-				<td class="otherVersionThree">
-					<a href="/product/<%=@product.to_param%>/version/<%=version.to_url_param%>"><%=version.version%></a><br/>
-				</td>
-			</tr>
+			<div><a href="/product/<%=@product.to_param%>/version/<%=version.to_url_param%>/<%=@product.get_decimal_id%>"><%=version.version%></a></div>
 		<% end %>
-		</table>
 	</div>
 <% end %>

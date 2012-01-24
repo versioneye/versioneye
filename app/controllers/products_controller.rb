@@ -11,7 +11,6 @@ class ProductsController < ApplicationController
     @query = @query.strip unless @query.nil?
     if @query.nil? || @query.empty? || @query.eql?("Be up-to-date")
       @query = "junit"
-      # flash.now[:error] = "Search field is empty. Please type in a search term."
     end
     if @query.length == 1
       flash.now[:error] = "Search term is to short. Please type in at least 2 characters."
@@ -36,8 +35,13 @@ class ProductsController < ApplicationController
   
   def show
     mobile = params[:mobile]
-    key = url_param_to_origin params[:id]
-    @product = Product.find_by_key( key )
+    key = url_param_to_origin params[:key]
+    prod_id = params[:id]
+    prod_id_hex = Product.decimal_to_hex( prod_id )
+    @product = Product.find_by_id( prod_id_hex )
+    if @product.nil? 
+      @product = Product.find_by_key( key )
+    end    
     following = false
     if (!current_user.nil?)
       @follower = Follower.find_by_user_id_and_product(current_user.id, @product._id.to_s)

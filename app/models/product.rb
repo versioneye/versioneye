@@ -55,6 +55,8 @@ class Product
     end
     result = Product.find(id)
     result
+  rescue
+    nil
   end
   
   def get_natural_sorted_versions
@@ -175,6 +177,14 @@ class Product
     else
       prod_type
     end
+  end
+  
+  def get_decimal_id
+    _id.to_s.to_i(16).to_s(10)
+  end
+  
+  def self.decimal_to_hex( decimal )
+    decimal.to_i(10).to_s(16)
   end
     
   def as_json param
