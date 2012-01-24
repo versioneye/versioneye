@@ -39,7 +39,6 @@
 			<tr>
 				<td class="otherVersionThree">
 					<a href="/product/<%=@product.to_param%>/version/<%=version.to_url_param%>"><%=version.version%></a><br/>
-					<%= render :partial => 'shared/show_rate', :locals => {:rate => version.rate, :id => version.version} %>
 				</td>
 			</tr>
 		<% end %>
