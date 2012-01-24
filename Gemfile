@@ -19,6 +19,10 @@ gem 'naturalsorter', '0.1.0'
 gem 'postmark-rails', '0.4.1'
 gem 'httparty', '0.8.1'
 gem 'oauth', '0.4.5'
+gem 'omniauth', '1.0.2'
+gem 'omniauth-twitter', '0.0.7'
+gem 'twitter', '2.0.2'
+gem 'twitter-text', '1.4.15'
 
 # Gems used only for assets and not required
 # in production environments by default.
