@@ -3,7 +3,7 @@ Versioneye::Application.routes.draw do
   root :to => "products#index"
   
   match '/auth/facebook/callback', :to => 'facebook#callback'
-  match '/auth/twitter/callback',  :to => 'twitter#callback'
+  get '/auth/twitter/callback', :to => 'twitter#callback', :as => 'callback'
 
   resources :products
   match '/search',            :to => 'products#search'
