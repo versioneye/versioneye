@@ -4,7 +4,7 @@
 <div class="boxContainer">
 <%= form_tag("/users/#{@user.username}/updatenames", :method => "post") do  %>    
     <div style="display:table-row;">
-      <div class="labelCel">
+      <div class="labelCelBig">
 		<%= label_tag(:fullname, "Full Name") %>
       </div>
       <div class="inputCel">
@@ -16,7 +16,7 @@
     </div>
 
     <div style="display:table-row;">
-      <div class="labelCel">
+      <div class="labelCelBig">
 		<%= label_tag(:username) %>
       </div>
       <div class="inputCel">
@@ -29,7 +29,7 @@
     </div>
 
 	<div style="display:table-row;">
-      <div class="labelCel">
+      <div class="labelCelBig">
 		<%= label_tag(:password) %>
       </div>
       <div class="inputCel">
@@ -41,7 +41,7 @@
     </div>
 
     <div style="display:table-row;">
-      <div class="labelCel"></div>
+      <div class="labelCelBig"></div>
       <div class="submitCel">
 		<%= submit_tag "Save", :class => "button" %>
       </div>
@@ -57,7 +57,7 @@
 <%= form_tag("/users/#{@user.username}/updatepassword", :method => "post") do  %>    
 
 	<div style="display:table-row;">
-      <div class="labelCel">
+      <div class="labelCelBig">
 		<%= label_tag("Cur. Password") %>
       </div>
       <div class="inputCel">
@@ -69,7 +69,7 @@
     </div>	
 
 	<div style="display:table-row;">
-      <div class="labelCel">
+      <div class="labelCelBig">
 		<%= label_tag("New password") %>
       </div>
       <div class="inputCel">
@@ -81,7 +81,7 @@
     </div>
 
 	<div style="display:table-row;">
-      <div class="labelCel">
+      <div class="labelCelBig">
 		<%= label_tag("Repeat New pas.") %>
       </div>
       <div class="inputCel">
@@ -93,7 +93,7 @@
     </div>
 
     <div style="display:table-row;">
-      <div class="labelCel"></div>
+      <div class="labelCelBig"></div>
       <div class="submitCel">
 		<%= submit_tag "Save", :class => "button" %>
       </div>

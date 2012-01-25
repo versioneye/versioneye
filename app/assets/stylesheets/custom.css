@@ -606,6 +606,14 @@ nav ul li a:hover {
 	vertical-align: middle;
 }
 
+.labelCelBig{
+	width: 210px;
+    padding-right: 5px;
+	display: table-cell;
+	text-align: right;
+	vertical-align: middle;
+}
+
 .inputCel{
 	width: 300px;
     padding-left: 5px;
