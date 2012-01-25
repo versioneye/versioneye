@@ -73,6 +73,12 @@ pre {
 	margin: 5px;
 }
 
+img {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
 /********* Fonts ***********/
 
 .meta-text{
@@ -139,20 +145,20 @@ header a:visited:hover {
 
 .followButtonBig[type="submit"]{
 	-webkit-user-select:none;
-	  background-color: #f9b323;
-	  color:black;
-	  border: 2px solid gray;
-      border-bottom-left-radius:8px 8px;
-	  border-bottom-right-radius:8px 8px;
-  	  border-top-left-radius:8px 8px;
- 	  border-top-right-radius:8px 8px;	  
+	  background-color: #3BB8E6;
+	  color:white;
+	  border: 0px solid gray;
+      border-bottom-left-radius:0px 0px;
+	  border-bottom-right-radius:0px 0px;
+  	  border-top-left-radius:0px 0px;
+ 	  border-top-right-radius:0px 0px;	  
 	  cursor:pointer;
 	  font-family: arial, sans-serif;
 	  font-size:17px;
 	  font-weight:bold;
 	  width: 100px;
 	  height:35px;
-	  line-height:32px;
+	  line-height:35px;
 	  margin-bottom:0px;
 	  margin-left:5px;
 	  margin-right:5px;
@@ -247,6 +253,22 @@ header a:visited:hover {
 	 text-align:center; 
 }
 
+/***** Lists *****************/
+
+.list-row {
+    margin: 0;
+    padding: 0;
+	display: table-row;
+	height: 20px;
+}
+
+.list-cell {
+    list-style-type: none;
+    display: table-cell;
+    padding-right: 5px;
+	height: 20px;
+	vertical-align: middle;
+}
 
 /***** Round corners ********/
 
@@ -344,6 +366,10 @@ footer nav {
 	padding: 0px;
 	width: 170px; 
 	height: 45px
+}
+
+.search-form{
+	vertical-align:top;
 }
 
 .searchfield{
@@ -476,6 +502,59 @@ nav ul li a:hover {
 	padding-left: 5px;
 }
 
+.footer-box{
+	padding: 10px; 
+	margin-bottom: 10px;
+	height: 120px;
+}
+
+/***** Landing Page *****/
+
+.slogan{
+	text-align: center;
+	padding-bottom: 30px;
+}
+
+.intro{
+	height: 420px;
+}
+
+.phone-box{
+	float: right; 
+	width: 256px
+}
+
+.movie-box{
+	width: 512px; 
+	padding-top: 40px;
+}
+
+.login-area{
+	padding-top: 5px;
+	text-align: center;
+}
+
+/***** Impressum *****/
+
+.impressum-container{
+	text-align: center; 
+	width: 666px; 
+	height: 670px; 
+	margin-left: auto; 
+	margin-right: auto
+}
+
+.impressum-right{
+	float:right; 
+	text-align:left
+}
+
+.impressum-left{
+	text-align:left; 
+	width: 300px
+}
+
+
 /***** Social Buttons *****/
 
 .socialbuttons{
@@ -483,6 +562,14 @@ nav ul li a:hover {
 	top: 177px;
 	left: 0;
 }
+
+.feedback{
+	position: fixed;
+	top: 177px;
+	right: 0;
+}
+
+
 
 /***** About Page ********/
 
@@ -624,19 +711,12 @@ nav ul li a:hover {
 
 /****** ELSE ****************/
 
-.ultablerow{
-	margin: 0;
-    padding: 0;
-	display: table-row;
+.share-on{
+	padding-bottom: 1px;
 }
 
-.litablecell{
-	list-style-type: none;
-    display: table-cell;
-    padding: 0;
-/*	height: 37px;*/
-	vertical-align: middle;
-	padding-right: 10px;
+.share-on-icon{
+	cursor: pointer
 }
 
 .searchResults{

@@ -37,7 +37,11 @@ $(document).ready(function() {
 		text: "Your secret.",
 		styleclass: "inputCelHint"
 	});
-	
+
+	FB.init({
+        appId:'230574627021570', cookie:true,
+        status:true, xfbml:true
+    });
 	
 });
 
@@ -66,4 +70,13 @@ function textCounter(field, cntfield, maxlimit) {
 		field.value = field.value.substring(0, maxlimit);
 	else
 		cntfield.innerHTML = maxlimit - field.value.length;
+}
+
+function shareOnFacebook(message){
+	var picture = 'http://versioneye-beta.com/assets/icon_114.png'
+	var link = document.URL    
+	FB.ui({ method: 'feed',
+        link: link,
+        picture: picture,
+        description: message});
 }

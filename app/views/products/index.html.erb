@@ -1,16 +1,16 @@
-<div style="text-align: center">
+<div class="slogan">
 	<%= image_tag "slogan.png" %>
 </div>
-<div style="height: 420px;">		
-	<div style="float: right; width: 256px">
+<div class="intro">		
+	<div class="phone-box">
 		<%= image_tag "phone.png" %>
 	</div>
-	<div style="width: 512px; padding-top: 40px;">
+	<div class="movie-box">
 		<iframe width="512" height="315" src="http://www.youtube.com/embed/z-rp2TT4aXQ?wmode=opaque" frameborder="0" allowfullscreen></iframe>
 	</div>	
 </div>
 <% if !signed_in? %>
-<div style="text-align: center">
+<div class="login-area">
 	<%= render 'shared/login_with_facebook' %>
 </div>
 <% end %>
