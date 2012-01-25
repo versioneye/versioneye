@@ -4,6 +4,7 @@ class TwitterController < ApplicationController
 
   def callback
     code = params['code']
+    p "twitter callback. code: #{code}"
 
     domain = 'https://graph.facebook.com'
     uri = '/oauth/access_token'
