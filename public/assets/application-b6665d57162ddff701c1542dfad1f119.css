@@ -1,3 +1,9 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *
+*/
 
 /*@font-face { 
  font-family: duturner; 
@@ -5,6 +11,7 @@
 }*/
 
 /******* Basic Elements *********/
+
 
 body {
 	color: #22211f;
@@ -273,20 +280,6 @@ header a:visited:hover {
     padding-right: 5px;
 	height: 20px;
 	vertical-align: middle;
-}
-
-/***** div tables ********/
-
-.div-row{
-	margin: 0;
-    padding: 0;
-	display: table-row;
-}
-
-.div-cell{
-	margin: 0;
-    padding: 0;
-	display: table-cell;
 }
 
 /***** Round corners ********/
@@ -562,84 +555,8 @@ nav ul li a:hover {
 	padding-top: 40px;
 }
 
-.lp_login_area{
-	text-align: center;
-}
-
-.lp_box{
-	border-top: 1px dashed black;
-	padding-top: 20px;
-	padding-bottom: 20px;	
-}
-
-.lp_b1_left_top{
-	background-image: url("frame_corner_left_top.png");
-	width: 8px;
-	height: 8px;
-}
-
-.lp_b1_middle_top{
-	width: 400px;
-	background-image: url("frame_top.png");
-	background-repeat: repeat-x;	
-}
-
-.lp_b1_right_top{
-	background-image: url("frame_corner_right_top.png");
-	width: 8px;
-	height: 8px;
-}
-
-.lp_b1_left_middle{
-	background-image: url("frame_left.png");
-	background-repeat: repeat-y;
-}
-
-.lp_b1_middle_middle{
-	
-}
-
-.lp_b1_right_middle{
-	background-image: url("frame_right.png");
-	background-repeat: repeat-y;
-	height: 300px;
-	width: 8px;
-}
-
-.lp_b1_left_bottom{
-	background-image: url("frame_corner_left_bottom.png");
-}
-
-.lp_b1_middle_bottom{
-	background-image: url("frame_bottom.png");
-	background-repeat: repeat-x;
-	height: 8px;
-}
-
-.lp_b1_right_bottom{
-	background-image: url("frame_corner_right_bottom.png");
-	width: 8px;
-	height: 8px;
-}
-
-.lp_phone_small{
-	padding: 10px;
-	width: 125px;
-	text-align: center;
-}
-
-.lp_phone_store{
-	padding: 10px;
-	width: 125px;
-}
-
-.lp_phone_content{
-	width: 200px;
-	vertical-align: top;
-	padding: 10px;
-}
-
-.lp_sign_up{
+.login-area{
+	padding-top: 5px;
 	text-align: center;
 }
 
@@ -778,8 +695,6 @@ nav ul li a:hover {
 	margin-bottom: 10px;
 	text-align: left;
 }
-
-/******** ERROR STYLES **********/
 
 /******** ERROR STYLES **********/
 

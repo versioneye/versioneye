@@ -3,14 +3,28 @@
 </div>
 <div class="intro">		
 	<div class="phone-box">
-		<%= image_tag "phone.png" %>
+		<a href="#smartphones"><%= image_tag "phone.png" %></a>
 	</div>
 	<div class="movie-box">
 		<iframe width="512" height="315" src="http://www.youtube.com/embed/z-rp2TT4aXQ?wmode=opaque" frameborder="0" allowfullscreen></iframe>
 	</div>	
 </div>
 <% if !signed_in? %>
-<div class="login-area">
+<div class="lp_box lp_login_area">
 	<%= render 'shared/login_with_facebook' %>
 </div>
 <% end %>
+<div class="lp_box">
+	<%= render 'shared/about' %>
+</div>
+<div class="lp_box">
+	<%= render 'shared/numbers' %>
+</div>
+<div class="lp_box">
+	<%= render 'shared/phone_boxes' %>
+</div>
+<div class="lp_box lp_sign_up">
+	<%= form_tag("/signup", :method => "post") do  %>    
+		<%= submit_tag "Sign Up For Free", :class => "button" %>
+	<% end %>
+</div>
