@@ -33,9 +33,12 @@ Versioneye::Application.routes.draw do
   match '/about',             :to => 'page#about'
   match '/impressum',         :to => 'page#impressum'
   match '/imprint',           :to => 'page#imprint'
+  match '/nutzungsbedingungen', :to => 'page#nutzungsbedingungen'  
   match '/terms',             :to => 'page#terms'
-  
-  
+  match '/datenschutz',       :to => 'page#datenschutz'
+  match '/dataprivacy',       :to => 'page#dataprivacy'
+  match '/datenerhebung',     :to => 'page#datenerhebung'
+  match '/datacollection',    :to => 'page#datacollection'  
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

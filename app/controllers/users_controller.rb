@@ -3,9 +3,10 @@ class UsersController < ApplicationController
   before_filter :authenticate, :except => [:show, :new, :create, :activate, :iforgotmypassword, :resetpassword]
   before_filter :correct_user, :only   => [:edit, :update, :activate]
   before_filter :admin_user,   :only   => :destroy
+  before_filter :set_locale
 
   def new
-    @user = User.new
+    @user = User.new    
   end
   
   def home
@@ -135,6 +136,15 @@ class UsersController < ApplicationController
 
     def admin_user
       redirect_to(root_path) unless current_user.admin?
+    end
+    
+    def set_locale
+      locale = params[:locale]
+      if (locale.nil? || locale.empty?)
+        I18n.locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+      else
+        I18n.locale = locale
+      end
     end
 
 end

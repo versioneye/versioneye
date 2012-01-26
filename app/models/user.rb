@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
-  attr_accessor :password, :terms, :new_username
-  attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :verification
+  attr_accessor :password, :terms, :datenerhebung, :new_username
+  attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :datenerhebung, :verification
 
   validates :fullname, :presence      => true,
                        :length        => { :within => 2..50 }
@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
                        :length        => { :within => 5..40 }
 
   validates_acceptance_of  :terms, :message => " - Accepting the Privacy Policy / Terms is mandatory for the registration!"
+  validates_acceptance_of  :datenerhebung, :message => " - Accepting the Datenerhebung is mandatory for the registration!"
 
   has_many :followers, :foreign_key => "user_id", :dependent => :destroy
   has_many :notifications, :dependent => :destroy

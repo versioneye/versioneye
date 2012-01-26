@@ -2,4 +2,15 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+    terms_part_1: "I have read the"
+    terms_part_2: "and agree to their validity."
+    daten_part_1: "I have read the"
+    daten_part_2: "and agree to their validity."
+    helpers:
+        label:
+            user:  
+                fullname: "Full Name"
+                username: "Username"
+                email: "E-Mail"
+                password: "Password"
+                

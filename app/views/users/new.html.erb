@@ -1,7 +1,13 @@
 <div class="boxHeader">
-	Sign Up
+	<span>
+		Sign Up
+	</span>
+	<span style="padding-left: 666px;">
+		<%= link_to image_tag("flag_en.jpg", :class=>"flag"), signup_path(:locale => :en)  %>
+		<%= link_to image_tag("flag_de.jpg", :class=>"flag"), signup_path(:locale => :de) %>
+	<span>	
 </div>
-<div class="boxContainer" style="height: 380px;">
+<div class="boxContainer" style="height: 440px;">
 	<div class="formCel">
 		<%= form_for @user do |f| %>
 		    <div class="messages">
@@ -10,7 +16,7 @@
 
 		    <div style="display:table-row;">
 		      <div class="labelCel">
-		        <%= f.label :fullname, "Full Name" %>
+		        <%= f.label :fullname %> 
 		      </div>
 		      <div class="inputCel">
 		        <%= f.text_field :fullname, :class => "round", :id => "fullname" %>
@@ -45,11 +51,36 @@
 		    </div>
 
 		    <div style="display:table-row;">
-		      <div class="labelCel" >
+		      <div class="labelCel" style="vertical-align: top">
 		        <%= f.check_box :terms %>
 		      </div>
 		      <div class="inputCel">
-		        <label for="user_terms">By clicking on "Sign up" below, you are agreeing to the <%= link_to "Privacy Policy / Terms", terms_path %>.</label><br/><br/>
+		        <label for="user_terms" class="label-small">
+					<%= t(:terms_part_1) %>
+					<% if I18n.locale == :de %>
+						<%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path %> 
+					<% else %>
+						<%= link_to "Terms of Use", terms_path %> 
+					<% end %>					 
+					<%= t(:terms_part_2) %>
+				</label><br/><br/>
+		      </div>
+		    </div>
+		
+			<div style="display:table-row;">
+		      <div class="labelCel" style="vertical-align: top">
+		        <%= f.check_box :datenerhebung %>
+		      </div>
+		      <div class="inputCel">
+		        <label for="user_datenerhebung" class="label-small">
+					<%= t(:daten_part_1) %> 
+					<% if I18n.locale == :de %>
+						<%= link_to "Datenerhebung", datenerhebung_path %>
+					<% else %>
+						<%= link_to "Data Collection", datacollection_path %>
+					<% end %>
+					<%= t(:daten_part_2) %> 
+				</label><br/><br/>
 		      </div>
 		    </div>
 
@@ -62,7 +93,7 @@
 
 		<% end %>
 	</div>
-	<div class="alternativeCel" style="height: 380px;">
+	<div class="alternativeCel" style="height: 440px;">
 		<b>OR</b><br/>
 		<br/>
 		<br/>

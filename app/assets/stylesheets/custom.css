@@ -23,6 +23,11 @@ label {
 	font-weight: bold;
 }
 
+.label-small{
+	font-size: 14px;
+	font-weight: none;
+}
+
 textarea{
 	font-size: 16px;
 	width: 550px;
@@ -329,6 +334,20 @@ section h1 {
     font-weight: bold;
     text-align: left;
     margin-bottom: 30px;
+}
+
+section h2{
+	font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+section h3{
+	font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 5px;
 }
 
 footer {
@@ -756,4 +775,18 @@ nav ul li a:hover {
 
 .dialog_description{
 	margin-top: 10px;
+}
+
+.version{
+	font-weight:bold;
+}
+
+.subtitle{
+	font-weight: bold;
+}
+
+.flag{
+	width: 25px;
+	height: 25px;
+	padding-right: 2px;
 }
