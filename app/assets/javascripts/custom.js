@@ -56,6 +56,16 @@ function load_dialog_follow(product_name){
 		});	
 }
 
+function load_dialog_feedback(){	
+	$('#dialog_feedback').dialog(
+		{
+		resizable: false, 
+		modal: true, 
+		draggable: false, 
+		minWidth: 700, 
+		});	
+}
+
 function validateEmail(elementValue){  
 	var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;  
 	var result = emailPattern.test(elementValue);  
@@ -63,6 +73,22 @@ function validateEmail(elementValue){
 		alert('The E-Mail Address is not valid! Please type in a valid E-Mail Address');
 	}
 	return result;
+}
+
+function validateFeedbackForm(){	
+	var result = true
+	var fullname = document.getElementById('fb_fullname').value;	
+	if (fullname == "" || fullname == null){
+		alert('Please type in your Name.')
+		result = false
+	}
+	var email = document.getElementById('fb_email').value;	
+	result = validateEmail(email)
+	var feedback = document.getElementById('feedback').value;	
+	if (feedback == "" || feedback == null){
+		alert('Please type in your Feedback.')
+		result = false
+	}
 }
 
 function textCounter(field, cntfield, maxlimit) {

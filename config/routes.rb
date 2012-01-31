@@ -29,6 +29,8 @@ Versioneye::Application.routes.draw do
   
   resources :crawles
   match '/crawles',           :to => 'crawles#index'  
+  
+  match '/feedback',          :to => 'feedback#feedback'
     
   match '/about',             :to => 'page#about'
   match '/impressum',         :to => 'page#impressum'

@@ -1,0 +1,41 @@
+<div id="dialog_feedback" title="Feedback" style="display: none">			
+	<div class="dialog_description">
+		<p>
+			<%= form_tag("/feedback", :method => "post", :remote => true) do  %>    
+			    <div style="display:table-row;">
+			      <div class="labelCelBig">
+					<%= label_tag(:fb_fullname, "Full Name") %>
+			      </div>
+			      <div class="inputCel">
+					<%= text_field_tag :fb_fullname, @user.fullname, :class => "round" %>
+			      </div>
+			    </div>
+
+			    <div style="display:table-row;">
+			      <div class="labelCelBig">
+					<%= label_tag(:fb_email, "E-Mail") %>
+			      </div>
+			      <div class="inputCel">
+					<%= text_field_tag :fb_email, @user.email, :class => "round" %>
+			      </div>
+			    </div>
+			
+				<div style="display:table-row;">
+			      <div class="labelCelBig labelCelBigTop">
+					<%= label_tag(:feedback) %>
+			      </div>
+			      <div class="inputCel">
+					<%= text_area_tag :feedback, nil, :class => "round", :maxlength => "1000", :onKeyUp => "textCounter(this, document.getElementById('counter'), 1000)"  %>
+			      </div>
+			    </div>
+			
+			    <div style="display:table-row;">
+			      <div class="labelCelBig"></div>
+			      <div class="submitCel">
+					<%= submit_tag "Send", :onclick => "return validateFeedbackForm()" %>
+			      </div>
+			    </div>
+			<% end %>
+		</p>
+	</div>
+</div>

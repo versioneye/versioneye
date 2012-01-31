@@ -733,6 +733,11 @@ nav ul li a:hover {
 	vertical-align: middle;
 }
 
+.labelCelBigTop{
+	padding-top: 10px;
+	vertical-align: top;
+}
+
 .inputCel{
 	width: 300px;
     padding-left: 5px;
@@ -888,7 +893,7 @@ nav ul li a:hover {
 }
 
 .flag{
-	width: 25px;
-	height: 25px;
+	width: 51px;
+	height: 26px;
 	padding-right: 2px;
 }
