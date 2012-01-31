@@ -3,7 +3,7 @@ class UserMailer < ActionMailer::Base
   
   def verification_email(user)
     @user = user
-    @verificationlink = "http://versioneye-beta.com/users/activate/#{@user.verification}"
+    @verificationlink = "http://versioneye.com/users/activate/#{@user.verification}"
     mail(
       :to => @user.email, 
       :subject => "Verification",

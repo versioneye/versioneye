@@ -8,7 +8,7 @@ var fb_domainlink = "https://graph.facebook.com/oauth/authorize?";
 var fb_req_perms = "req_perms=email&";
 var fb_clientid = "client_id=230574627021570&";
 var fb_scope = "scope=email,offline_access&";
-var fb_redirect = "redirect_uri=http://versioneye-beta.com/auth/facebook/callback";
+var fb_redirect = "redirect_uri=http://versioneye.com/auth/facebook/callback";
 var oauth_facebook_link = fb_domainlink + fb_req_perms + fb_clientid + fb_scope + fb_redirect;
 
 $(document).ready(function() {
@@ -99,7 +99,7 @@ function textCounter(field, cntfield, maxlimit) {
 }
 
 function shareOnFacebook(message){
-	var picture = 'http://versioneye-beta.com/assets/icon_114.png'
+	var picture = 'http://versioneye.com/assets/icon_114.png'
 	var link = document.URL    
 	FB.ui({ method: 'feed',
         link: link,

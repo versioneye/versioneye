@@ -6,4 +6,4 @@ Versioneye::Application.initialize!
 
 #ENV['RAILS_ENV'] = 'development'
 
-# ENV["RAILS_RELATIVE_URL_ROOT"] = "versioneye-beta.com"
+# ENV["RAILS_RELATIVE_URL_ROOT"] = "versioneye.com"
