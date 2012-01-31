@@ -226,7 +226,7 @@ input[type="submit"]:hover {
 
 .followButton[type="submit"]{
 	-webkit-user-select:none;
-	background-color: #f9b323;
+	background-color: white;
 	background-image: url("button_100_off.png");
 	background-repeat: no-repeat;
     background-position: top;
