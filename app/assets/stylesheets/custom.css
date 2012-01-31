@@ -186,7 +186,7 @@ input[type="submit"]:hover {
 	padding-top:0;
 }
 
-.followButtonBig[type="submit"]:hover;{
+.followButtonBig[type="submit"]:hover {
 	-webkit-user-select:none;
 	background-image: url("button_bg_100_on.gif");
 }
