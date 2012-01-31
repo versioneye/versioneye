@@ -4,8 +4,8 @@
 de:
     terms_part_1: "Ich habe die"
     terms_part_2: "gelesen und bin mit deren Geltung einverstanden."
-    daten_part_1: "Ich habe die Bestimmungen zur"
-    daten_part_2: "gelesen und bin mit deren Geltung einverstanden."
+    daten_part_1: "Ich willige in die Erhebung und Verwendung meiner Daten nach den Bestimmungen über die"
+    daten_part_2: "ein."
     helpers:
         label:
             user:  

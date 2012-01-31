@@ -686,6 +686,17 @@ nav ul li a:hover {
 	text-align: center;
 }
 
+.lp_sign_up_button[type="submit"]{
+	width: 200px;
+	background-image: url("button_bg_200_off.gif");
+	background-repeat: no-repeat;
+    background-position: top;
+}
+
+.lp_sign_up_button[type="submit"]:hover{
+	background-image: url("button_bg_200_on.gif");
+}
+
 /***** Impressum *****/
 
 .impressum-container{
