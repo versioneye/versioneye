@@ -220,6 +220,10 @@ input[type="submit"]:hover {
 	 text-align:center; 
 }
 
+.unfollowButtonBig[type="submit"]:hover{
+	 background-image: none;
+}
+
 .followButton[type="submit"]{
 	-webkit-user-select:none;
 	background-color: #f9b323;
@@ -282,6 +286,10 @@ input[type="submit"]:hover {
 	padding-right:8px;
 	padding-top:0;
 	text-align:center; 
+}
+
+.unfollowButton[type="submit"]:hover{
+	background-image: none;
 }
 
 /***** Lists *****************/
