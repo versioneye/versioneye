@@ -121,7 +121,7 @@ header a:visited:hover {
 
 input[type="submit"] {
 	-webkit-user-select:none;
-	background-color: #f9b323;
+/*	background-color: #f9b323;*/
 	background-image: url("button_bg_100_off.gif");
 	background-repeat: no-repeat;
     background-position: top;
@@ -157,7 +157,7 @@ input[type="submit"]:hover {
 
 .followButtonBig[type="submit"]{
 	-webkit-user-select:none;
-	background-color: #f9b323;
+/*	background-color: #f9b323;*/
 	background-image: url("button_bg_100_off.gif");
 	background-repeat: no-repeat;
     background-position: top;
