@@ -14,17 +14,35 @@
 	<%= render 'shared/login_with_facebook' %>
 </div>
 <% end %>
+<h1 class="lp_head">
+	About
+</h1>
 <div class="lp_box">
 	<%= render 'shared/about' %>
 </div>
+<h1 class="lp_head">
+	Community
+</h1>
+<div class="lp_box">
+	<%= render 'shared/community' %>
+</div>
+<h1 class="lp_head">
+	Numbers
+</h1>
 <div class="lp_box">
 	<%= render 'shared/numbers' %>
+</div>
+<h1 class="lp_head">
+	Mobile
+</h1>
+<div class="lp_box">
+	<%= render 'shared/mobile' %>
 </div>
 <div class="lp_box">
 	<%= render 'shared/phone_boxes' %>
 </div>
 <div class="lp_box lp_sign_up">
 	<%= form_tag("/signup", :method => "post") do  %>    
-		<%= submit_tag "Sign Up For Free", :class => "button" %>
+		<%= submit_tag "Sign Up For Free", :style => "width: 200px;" %>
 	<% end %>
 </div>

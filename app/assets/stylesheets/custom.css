@@ -1,8 +1,8 @@
 
-/*@font-face { 
+@font-face { 
  font-family: duturner; 
  src: url(http://localhost:3000/fonts/DuTurner.otf); 
-}*/
+}
 
 /******* Basic Elements *********/
 
@@ -34,45 +34,11 @@ textarea{
 	height: 100px;
 }
 
-button {
-    padding-left: 15px;
-    height: 35px;
-    font-size: 12px;
-	cursor:pointer;
-}
-
 input{
     padding-left: 15px;
     height: 35px;
 	line-height: 35px;
     font-size: 16px;	
-}
-
-input[type="submit"] {
-	-webkit-user-select:none;
-	background-color: #f9b323;
-	border: 2px solid gray;
-    border-bottom-left-radius:8px 8px;
-	border-bottom-right-radius:8px 8px;
- 	border-top-left-radius:8px 8px;
-	border-top-right-radius:8px 8px;
-	color:black;
-	font-family: arial, sans-serif;
-	font-size: 14px;
-	font-weight: bold;
-	text-align:center;
-	vertical-align: middle;
-	height: 35px;
-	line-height: 32px;
-	margin-bottom:0px;
-	margin-left:5px;
-	margin-right:5px;
-	margin-top:0px;
-	min-width:54px;
-	padding-bottom:0px;
-	padding-left:8px;
-	padding-right:8px;
-	padding-top:0px;	
 }
 
 pre {
@@ -149,32 +115,66 @@ header a:visited:hover {
 
 /****** Buttons **********/
 
-.followButtonBig[type="submit"]{
+.lp_button{
+	width: 200px;
+}
+
+input[type="submit"] {
 	-webkit-user-select:none;
-	  background-color: #3BB8E6;
-	  color:white;
-	  border: 0px solid gray;
-      border-bottom-left-radius:0px 0px;
-	  border-bottom-right-radius:0px 0px;
-  	  border-top-left-radius:0px 0px;
- 	  border-top-right-radius:0px 0px;	  
+	  background-color: #f9b323;
+	  color: black;	  
 	  cursor:pointer;
 	  font-family: arial, sans-serif;
 	  font-size:17px;
 	  font-weight:bold;
+	  text-align:center;
 	  width: 100px;
+	  min-width:54px;
 	  height:35px;
 	  line-height:35px;
+	  border: 0px solid gray;
+      border-bottom-left-radius:8px 8px;
+	  border-bottom-right-radius:8px 8px;
+  	  border-top-left-radius:8px 8px;
+ 	  border-top-right-radius:8px 8px;
 	  margin-bottom:0px;
 	  margin-left:5px;
 	  margin-right:5px;
 	  margin-top:0px;
-	  min-width:54px;
 	  padding-bottom:0;
 	  padding-left:8px;
 	  padding-right:8px;
 	  padding-top:0;
+} 
+
+.followButtonBig[type="submit"]{
+	-webkit-user-select:none;
+	  background-color: #f9b323;
+	  color: black;
+/*	  background-color: #3BB8E6;*/
+/*	  color:white;	  */
+	  cursor:pointer;
+	  font-family: arial, sans-serif;
+	  font-size:17px;
+	  font-weight:bold;
 	  text-align:center;
+	  width: 100px;
+	  min-width:54px;
+	  height:35px;
+	  line-height:35px;
+	  border: 0px solid gray;
+      border-bottom-left-radius:8px 8px;
+	  border-bottom-right-radius:8px 8px;
+  	  border-top-left-radius:8px 8px;
+ 	  border-top-right-radius:8px 8px;
+	  margin-bottom:0px;
+	  margin-left:5px;
+	  margin-right:5px;
+	  margin-top:0px;
+	  padding-bottom:0;
+	  padding-left:8px;
+	  padding-right:8px;
+	  padding-top:0;
 }
 
 .unfollowButtonBig[type="submit"]{
@@ -567,8 +567,19 @@ nav ul li a:hover {
 	text-align: center;
 }
 
+.lp_head{
+/*	font-family: duturner; */
+/*	font-size: px;*/
+	font-family: times;
+	padding-top: 0px;
+	padding-bottom: 0px;	
+	margin: 0;
+}
+
 .lp_box{
-	padding-top: 20px;
+/*	font-family: times;*/
+/*	font-size: 16px;*/
+	padding-top: 15px;
 	padding-bottom: 20px;	
 }
 
@@ -602,7 +613,6 @@ nav ul li a:hover {
 .lp_b1_right_middle{
 	background-image: url("frame_right.png");
 	background-repeat: repeat-y;
-	height: 300px;
 	width: 8px;
 }
 
