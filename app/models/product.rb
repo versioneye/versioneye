@@ -15,7 +15,7 @@ class Product
   embeds_many :versions
   embeds_many :repositories
 
-  attr_accessor :in_my_products
+  attr_accessor :in_my_products, :version_uid
 
   require 'will_paginate/array'
 
@@ -32,7 +32,7 @@ class Product
       result1.each do |product|
         ids.push product.prod_key
       end 
-      result2 = Product.all(conditions: { name: /#{searched_name}/i, prod_key: "{$nin: #{ids} }" }).asc(:name)
+      result2 = Product.all(conditions: { name: /#{searched_name}/i, prod_key: "{$nin: #{ids} }" }).desc(:rate).asc(:name)
       result = result1 + result2
       result
     end
@@ -71,6 +71,15 @@ class Product
     end
     return nil
   end 
+  
+  def get_version_by_uid(uid)
+    versions.each do |version|
+      if version.uid.eql?(uid)
+        return version
+      end
+    end
+    return nil
+  end
   
   def update_version_rates
     versions.each do |version|
@@ -201,6 +210,11 @@ class Product
     _id.to_s.to_i(16).to_s(10)
   end
   
+  def get_decimal_version_uid
+    version = get_version(self.version)
+    version.uid.to_s.to_i(16).to_s(10)
+  end
+  
   def self.decimal_to_hex( decimal )
     decimal.to_i(10).to_s(16)
   end
@@ -210,6 +224,7 @@ class Product
     {
       :following => param[:following],
       :id => self.get_decimal_id,
+      :version_uid => self.get_decimal_version_uid,
       :name => self.name,
       :key => self.prod_key,
       :group_id => self.group_id,

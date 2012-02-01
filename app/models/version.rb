@@ -12,6 +12,7 @@ class Version
   def as_json parameter
     {
       :version => self.version,
+      :uid => self.get_decimal_uid,
       :link => self.link,
       :rate => self.rate,
       :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
@@ -39,6 +40,10 @@ class Version
       self.ratecount = 0
     end
     self.ratecount
+  end
+  
+  def get_decimal_uid
+    uid.to_s.to_i(16).to_s(10)
   end
 
 end

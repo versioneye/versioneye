@@ -10,7 +10,7 @@ Versioneye::Application.routes.draw do
   match '/follow',            :to => 'products#follow'
   match '/unfollow',          :to => 'products#unfollow'
   match '/product/:id',       :to => 'products#show'
-  match '/product/:key/version/:version/:id', :to => 'products#show'
+  match '/product/:key/version/:version/:uid', :to => 'products#show'
   
   resources :users,           :key => :username
   match '/signup',            :to => 'users#new'

@@ -36,18 +36,14 @@ class ProductsController < ApplicationController
   def show
     mobile = params[:mobile]
     key = url_param_to_origin params[:key]
-    prod_id = params[:id]
-    prod_id_hex = Product.decimal_to_hex( prod_id )
-    @product = Product.find_by_id( prod_id_hex )
-    if @product.nil? 
-      @product = Product.find_by_key( key )
-    end    
+    @product = Product.find_by_key( key )
     following = false
     if (!current_user.nil?)
       @follower = Follower.find_by_user_id_and_product(current_user.id, @product._id.to_s)
       following = !@follower.nil?
     end
-    attach_version @product, params[:version]    
+    version_uid = Product.decimal_to_hex( params[:uid] )
+    attach_version @product, params[:version], version_uid
     @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
     respond_to do |format|
       format.html { 
@@ -139,12 +135,15 @@ class ProductsController < ApplicationController
       return "success"
     end
     
-    def attach_version(product, version_param)
+    def attach_version(product, version_param, version_uid)
       if version_param.nil? || version_param.empty? 
         return nil
       end
       version = url_param_to_origin version_param
       versionObj = product.get_version(version)
+      if versionObj.nil?
+        versionObj = product.get_version_by_uid(version_uid)
+      end
       if !versionObj.nil?
         product.version = versionObj.version
         product.version_link = versionObj.link

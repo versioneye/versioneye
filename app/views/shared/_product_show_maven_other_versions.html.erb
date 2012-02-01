@@ -4,7 +4,7 @@
 	</div>
 	<div class="boxContainer" >
 		<% @product.get_natural_sorted_versions.reverse!.each do |version|  %>
-			<div><a href="/product/<%=@product.to_param%>/version/<%=version.to_url_param%>/<%=@product.get_decimal_id%>"><%=version.version%></a></div>
+			<div><a href="/product/<%=@product.to_param%>/version/<%=version.to_url_param%>/<%=@product.get_decimal_version_uid%>"><%=version.version%></a></div>
 		<% end %>
 	</div>
 <% end %>
