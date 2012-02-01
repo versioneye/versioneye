@@ -141,7 +141,7 @@ class Product
     end
   end
   
-  def self.generate_version_uids
+  def self.update_prod_types
     count = Product.count()
     pack = 100
     max = count / pack     
@@ -149,11 +149,7 @@ class Product
       skip = i * pack
       products = Product.all().skip(skip).limit(pack)
       products.each do |product|
-        product.versions.each do |version|
-          version.uid = BSON::ObjectId.new
-          p "#{version.uid}"
-          version.save
-        end
+        product.prod_type = "Maven2"
         product.save
       end
     end
@@ -233,7 +229,7 @@ class Product
       :version => self.version,
       :version_link => self.version_link,
       :src => self.repositories,
-      :prod_type => self.repositories[0].repotype,
+      :prod_type => self.get_type,
       :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
       :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p"),
       :versions => self.get_natural_sorted_versions.as_json, 
