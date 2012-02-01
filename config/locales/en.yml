@@ -4,8 +4,8 @@
 en:
     terms_part_1: "I have read the"
     terms_part_2: "and agree to their validity."
-    daten_part_1: "I have read the"
-    daten_part_2: "and agree to their validity."
+    daten_part_1: "I consent to the collection and use of my data in accordance with the provisions of"
+    daten_part_2: "."
     helpers:
         label:
             user:  

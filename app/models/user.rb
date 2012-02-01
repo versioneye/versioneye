@@ -134,6 +134,7 @@ class User < ActiveRecord::Base
     if self.username.nil? || self.username.empty?
       self.username = create_random_value
     end
+    self.username = self.username.gsub(".", "")
   end
   
   def as_json param
