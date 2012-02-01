@@ -48,7 +48,7 @@ class FacebookController < ApplicationController
       user = User.new
       user.update_from_fb_json(json_user, token)
       user.save
-      p "#{user}"
+      p "#{user.id}"
       return user
     end
 
