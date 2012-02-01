@@ -125,12 +125,14 @@ class User < ActiveRecord::Base
   end  
 
   def update_from_fb_json(json_user, token)
+    p "start update_from_fb_json. #{json_user}, token: #{token}"
     self.fullname = json_user['name']
     self.username = json_user['username']
     self.email = json_user['email']
     self.fb_id = json_user['id']
     self.fb_token = token
     self.password = create_random_value
+    p "end update_from_fb_json"
   end
   
   def as_json param
