@@ -77,7 +77,7 @@ class Product
       version.update_rate
       version.save
     end
-  end 
+  end
   
   def update_rate
     rate_sum = 0
@@ -127,6 +127,24 @@ class Product
       products.each do |product|
         product.update_version_rates
         product.update_rate
+        product.save
+      end
+    end
+  end
+  
+  def self.generate_version_uids
+    count = Product.count()
+    pack = 100
+    max = count / pack     
+    (0..max).each do |i|
+      skip = i * pack
+      products = Product.all().skip(skip).limit(pack)
+      products.each do |product|
+        product.versions.each do |version|
+          version.uid = BSON::ObjectId.new
+          p "#{version.uid}"
+          version.save
+        end
         product.save
       end
     end

@@ -1,7 +1,7 @@
 class Version
   include Mongoid::Document
   include Mongoid::Timestamps
-  field :_id, type: String
+  field :uid, type: String
   field :version, type: String
   field :link, type: String
   field :rate, type: Integer

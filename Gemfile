@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.0'
-gem 'haml', '3.1.4'
 gem 'jquery-rails', '1.0.19'
 gem 'execjs', '1.2.9'
 gem 'therubyracer', '0.9.9'
