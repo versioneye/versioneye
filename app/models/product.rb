@@ -23,9 +23,9 @@ class Product
     if searched_name.nil? || searched_name.strip == ""
       return nil
     end
-    result1 = Product.all(conditions: { name: /^#{searched_name}/i }).asc(:name)
+    result1 = Product.all(conditions: { name: /^#{searched_name}/i }).desc(:rate).asc(:name)
     if (result1.nil? || result1.empty?)
-      result1 = Product.all(conditions: { name: /#{searched_name}/i }).asc(:name)    
+      result1 = Product.all(conditions: { name: /#{searched_name}/i }).desc(:rate).asc(:name)    
       result1
     elsif 
       ids = Array.new
