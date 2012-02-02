@@ -1,11 +1,12 @@
-<div align="center">	
-	<div class="productCountInfo" >
-		<% if current_user == @user %>
-			<%= @user.fullname %>. You are following <%= pluralize(@products.count, "product") %>
-		<% elsif %>	
-			<%= @user.fullname %> is following <%= pluralize(@products.count, "product") %>
-		<% end %>		
-	</div>
+<div class="sidebar" >
+	
+	<h1><%= @user.fullname %></h1>
+	
+	Follows <%= pluralize(@products.count, "product") %>
+	
+</div>	
+<div class="content">
+	
 	<div class="searchResults">
 		<% if !@products.empty? %>
 			<% @products.each do |product| %>
@@ -35,25 +36,13 @@
 							</tr>
 						</table>
 					<% end %>
-				</div>				
-			<% end %>			
+				</div>
+			<% end %>
 		<% elsif current_user == @user %>
 			<div>
 				Right now you are not following any product. Make a search and follow a product to get notified about updates. 
 			</div>
-			<!-- <div>
-							<div class="logo_div">
-								<%= link_to image_tag("header_logo2.png"), root_path %>
-							</div>
-							<div id="searchfield_div" class="searchfield_div">			
-								<form id="searchform" action="/search" method="GET" class="search-form" >				
-									<input id="q" name="q" class="searchfield" type="text" value="<%= @query %>" />
-								</form>
-							</div>
-							<div class="searchlink_div">
-								<a href="#" class="searchlink" title="Search" onclick="document.forms['searchform'].submit();">&nbsp;</a>
-							</div>
-						</div> -->
 		<% end %>
 	</div>
+	
 </div>

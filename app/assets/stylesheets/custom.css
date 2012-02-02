@@ -732,8 +732,6 @@ nav ul li a:hover {
 	right: 0;
 }
 
-
-
 /***** About Page ********/
 
 .aboutCell{
@@ -840,8 +838,6 @@ nav ul li a:hover {
 
 /******** ERROR STYLES **********/
 
-/******** ERROR STYLES **********/
-
 #error_explanation {
   display: table;
   width: 90%;
@@ -885,6 +881,22 @@ nav ul li a:hover {
 
 .otherVersionThree{
 	text-align: left;
+}
+
+/****** 2 Col Content *******/ 
+
+.sidebar{
+	width: 200px; 
+	display: block; 
+	float: left; 
+	margin-right: 10px;
+}
+
+.content{
+	width: 590px; 
+	display: block; 
+	float: left; 
+	margin-left: 5px;
 }
 
 /****** ELSE ****************/

@@ -1,19 +1,24 @@
 class VersioncommentsController < ApplicationController
   
   def create
+    user = current_user
     @versioncomment = Versioncomment.new(params[:versioncomment])
-    @versioncomment.user = current_user
-    if @versioncomment.save      
-      flash[:success] = "Comment saved!"
-    else 
-      flash[:error] = "Something went wrong"
-    end    
+    @versioncomment.user = user
+    @versioncomment.rate = 0 if @versioncomment.rate.nil?
     prod_key = @versioncomment.product_key
     ver = @versioncomment.version
-    product = Product.find_by_key(prod_key)    
-    update_product_rate(product, ver) 
-    product.version = ver   
-    redirect_to product_version_path(product)
+    @product = Product.find_by_key(prod_key)
+    attach_version(@product, ver, nil)
+    
+    if @versioncomment.save      
+      flash[:success] = "Comment saved!"
+      send_comment_mails(@product, user, @versioncomment)
+    else 
+      flash[:error] = "Something went wrong"
+    end        
+    
+    update_product_rate(@product, ver)     
+    redirect_to product_version_path(@product)
   end
   
   def show 
@@ -21,6 +26,7 @@ class VersioncommentsController < ApplicationController
     @comment = Versioncomment.find_by_id(id)
     if !@comment.nil?
       @product = Product.find_by_key(@comment.product_key)
+      attach_version(@product, @comment.version, nil)
     end
   end
   
@@ -32,6 +38,21 @@ class VersioncommentsController < ApplicationController
       version.save      
       product.update_rate
       product.save
+    end
+    
+    def send_comment_mails(product, user, comment)
+      followers = Follower.find_by_product(product)
+      
+      if followers.nil? || followers.empty?
+        return nil
+      end
+      
+      followers.each do |follower|
+        follower_user = follower.user
+        if follower_user.id != user.id
+          VersioncommentsMailer.delay.versioncomment_email(product, follower_user, user, comment)
+        end
+      end
     end
   
 end

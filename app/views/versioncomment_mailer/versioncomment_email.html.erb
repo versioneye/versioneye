@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	</head>
+	<body>
+		<p>Hello <%= @follower.fullname %></p>
+		<p>
+			<%= @user.fullname %> wrote a comment on <%= @product.name %> <br/>
+			You can see the comment here:
+		</p>
+		<p>
+			Comment: <a href="<%= @commentlink %>"><%= @commentlink %></a></br>
+		</p>
+		<p>
+			Have a great day!
+		</p>
+	</body>
+</html>

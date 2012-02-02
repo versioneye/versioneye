@@ -43,7 +43,8 @@ class ProductsController < ApplicationController
       following = !@follower.nil?
     end
     version_uid = Product.decimal_to_hex( params[:uid] )
-    attach_version @product, params[:version], version_uid
+    ver = url_param_to_origin params[:version]
+    attach_version @product, ver, version_uid
     @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
     respond_to do |format|
       format.html { 
@@ -133,22 +134,6 @@ class ProductsController < ApplicationController
         follower.delete
       end
       return "success"
-    end
-    
-    def attach_version(product, version_param, version_uid)
-      if version_param.nil? || version_param.empty? 
-        return nil
-      end
-      version = url_param_to_origin version_param
-      versionObj = product.get_version(version)
-      if versionObj.nil?
-        versionObj = product.get_version_by_uid(version_uid)
-      end
-      if !versionObj.nil?
-        product.version = versionObj.version
-        product.version_link = versionObj.link
-        product.version_rate = versionObj.rate
-      end
     end
 
 end
