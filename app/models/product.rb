@@ -107,10 +107,12 @@ class Product
   
   def update_version_link
     versions = get_natural_sorted_versions
-    version = versions[versions.count() - 1]
-    self.version = version.version
-    self.version_link = version.link
-    self.save    
+    if !versions.nil?
+      version = versions[versions.count() - 1]
+      self.version = version.version
+      self.version_link = version.link
+      self.save
+    end    
   end
   
   def self.update_versions
@@ -136,20 +138,6 @@ class Product
       products.each do |product|
         product.update_version_rates
         product.update_rate
-        product.save
-      end
-    end
-  end
-  
-  def self.update_prod_types
-    count = Product.count()
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.all().skip(skip).limit(pack)
-      products.each do |product|
-        product.prod_type = "Maven2"
         product.save
       end
     end
