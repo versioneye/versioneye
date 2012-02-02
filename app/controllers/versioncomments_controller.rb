@@ -41,7 +41,7 @@ class VersioncommentsController < ApplicationController
     end
     
     def send_comment_mails(product, user, comment)
-      followers = Follower.find_by_product(product)
+      followers = Follower.find_by_product(product.id.to_s)
       
       if followers.nil? || followers.empty?
         return nil
@@ -50,7 +50,7 @@ class VersioncommentsController < ApplicationController
       followers.each do |follower|
         follower_user = follower.user
         if follower_user.id != user.id
-          VersioncommentsMailer.delay.versioncomment_email(product, follower_user, user, comment)
+          VersioncommentMailer.delay.versioncomment_email(product, follower_user, user, comment)
         end
       end
     end

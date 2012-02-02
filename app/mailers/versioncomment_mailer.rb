@@ -1,4 +1,4 @@
-class UserMailer < ActionMailer::Base
+class VersioncommentMailer < ActionMailer::Base
   default from: "\"VersionEye\" <notify@versioneye.com>"
   
   def versioncomment_email(product, follower, user, comment)
