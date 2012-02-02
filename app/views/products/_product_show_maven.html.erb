@@ -1,0 +1,24 @@
+<div style="width: 200px; display: block; float: left; border: 0px solid black; margin-right: 10px;">
+	
+	<%= render 'products/product_show_maven_bigfollow' %>
+
+	<%= render 'products/product_show_maven_average_ratting' %>
+
+	<%= render 'products/product_show_maven_links' %>
+
+	<%= render 'products/product_show_maven_other_versions' %>
+	
+</div>	
+<div style="width: 590px; display: block; float: left; border: 0px solid black; margin-left: 5px;">
+	
+	<h1 ><%= @product.name_and_version %></h1>		
+
+	<%= render 'products/product_show_maven_code_snippet' %>
+	
+	<%= render 'products/product_show_maven_repositories' %>
+
+	<%= render 'products/product_show_comment' %>
+
+	<%= render 'products/product_show_comments' %>
+
+</div>

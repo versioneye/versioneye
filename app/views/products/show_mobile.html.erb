@@ -1,12 +1,14 @@
 <% if @product.nil? %>
+
 	Product not found!
+
 <% else %>
 	
 	<% if @product.get_type.eql? "Maven2" %>
 
-		<%= render 'shared/product_show_maven_code_snippet' %>
+		<%= render 'products/product_show_maven_code_snippet' %>
 
-		<%= render 'shared/product_show_maven_repositories' %>
+		<%= render 'products/product_show_maven_repositories' %>
 
 	<% end %>
 	

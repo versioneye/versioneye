@@ -16,6 +16,14 @@ class VersioncommentsController < ApplicationController
     redirect_to product_version_path(product)
   end
   
+  def show 
+    id = params[:id]
+    @comment = Versioncomment.find_by_id(id)
+    if !@comment.nil?
+      @product = Product.find_by_key(@comment.product_key)
+    end
+  end
+  
   private 
   
     def update_product_rate(product, ver)

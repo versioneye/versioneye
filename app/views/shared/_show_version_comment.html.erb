@@ -1,0 +1,25 @@
+<div>
+	<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate, :id => comment.id} %>
+	<br/>
+<div>
+<div class="meta-text-small">
+	<%= comment.user.fullname %> on <%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %>							
+</div>
+<div>
+	<%= comment.comment %>
+</div>
+<div class="meta-text-small" >
+	<ul class="list-row">
+		<li class="list-cell share-on">Share on</li>
+		<li class="list-cell share-on-icon">
+			<%= image_tag "facebook_icon.png", :onclick=>"shareOnFacebook('http://versioneye.com/vc/#{comment.id}', '#{comment.user.fullname} on #{@product.name_and_version} @VersionEye');", :alt=>"Facebook", :title=>"Facebook" %>
+		</li>
+		<li class="list-cell share-on-icon">
+			<a href="http://twitter.com/share" 
+			   class="twitter-share-button" 
+			   data-url="http://versioneye.com/vc/<%=comment.id%>" 
+			   data-text="<%= comment.user.fullname %> on <%= @product.name_and_version %> @VersionEye" 
+			   data-count="horizontal" >Tweeter</a>
+		</li>
+	</ul>
+</div>

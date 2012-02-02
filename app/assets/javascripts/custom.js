@@ -98,9 +98,8 @@ function textCounter(field, cntfield, maxlimit) {
 		cntfield.innerHTML = maxlimit - field.value.length;
 }
 
-function shareOnFacebook(message){
+function shareOnFacebook(link, message){
 	var picture = 'http://versioneye.com/assets/icon_114.png'
-	var link = document.URL    
 	FB.ui({ method: 'feed',
         link: link,
         picture: picture,

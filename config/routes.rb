@@ -22,6 +22,7 @@ Versioneye::Application.routes.draw do
   match '/home',              :to => 'users#home'
 
   resources :versioncomments
+  match '/vc/:id',              :to => 'versioncomments#show'
   
   resources :sessions,        :only => [:new, :create, :destroy]
   match '/signin',            :to => 'sessions#new'

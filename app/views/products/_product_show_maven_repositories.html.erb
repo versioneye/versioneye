@@ -1,0 +1,8 @@
+<div class="boxHeader">
+	Repository
+</div>
+<div class="boxContainer">
+	<% @product.repositories.each do |repo| %>
+		<div><a href="<%= repo.src %>" target="_NEW" ><%= repo.src %></a> </div>
+	<% end %>		
+</div>

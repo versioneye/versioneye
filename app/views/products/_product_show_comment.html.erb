@@ -1,0 +1,42 @@
+<% if signed_in? %>
+	<div class="boxHeader">
+		Leave rating &amp; comment
+	</div>
+	<div class="boxContainer">
+		<%= form_for @versioncomment do |f| %>
+		    <div class="messages">
+		        <%= render 'shared/error_messages', :object => f.object %>
+		    </div>				
+			<div >
+				<input name="versioncomment[rate]" type="radio" value="10" class="star"/>
+				<input name="versioncomment[rate]" type="radio" value="20" class="star"/>
+				<input name="versioncomment[rate]" type="radio" value="30" class="star"/>
+				<input name="versioncomment[rate]" type="radio" value="40" class="star"/>
+				<input name="versioncomment[rate]" type="radio" value="50" class="star"/>					
+			</div>
+			<div>
+				<%= f.text_area :comment, :class => "round", :maxlength => "1000", :onKeyUp => "textCounter(this, document.getElementById('counter'), 1000)"  %>
+				<%= f.hidden_field :product_key, :value => @product.prod_key %>
+				<%= f.hidden_field :version, :value => @product.version %>
+			</div>
+			<div style="display: inline-block; width: 550px;">
+				<div style="float: left">
+					<%= f.submit "Save", :class => "button" %>
+				</div>						
+				<div style="float: right" class="meta-text-small">
+					Characters left: <span id="counter">1000</span>
+				</div>
+			</div>
+		<% end %>
+	</div>
+<% elsif %>
+	<div class="boxHeader">
+		Leave rating &amp; comment
+	</div>
+	<div class="boxContainer">
+		<p>
+			<%= link_to "Sign Up", signup_path %> or <%= link_to "Sign In", signin_path %> to leave rating and comment. 
+		</p>
+		<%= render 'shared/login_with_facebook' %>		
+	</div>
+<% end %>
