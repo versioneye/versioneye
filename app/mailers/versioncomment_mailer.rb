@@ -2,7 +2,7 @@ class VersioncommentMailer < ActionMailer::Base
   default from: "\"VersionEye\" <notify@versioneye.com>"
   
   def versioncomment_email(product, follower, user, comment)
-    @product = product
+    @prod = product
     @follower = follower
     @user = user
     @commentlink = "http://versioneye.com/vc/#{comment.id}"
