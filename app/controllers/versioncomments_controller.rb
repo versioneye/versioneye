@@ -50,7 +50,8 @@ class VersioncommentsController < ApplicationController
       followers.each do |follower|
         follower_user = follower.user
         if follower_user.id != user.id
-          VersioncommentMailer.delay.versioncomment_email(product, follower_user, user, comment)
+          # VersioncommentMailer.delay.versioncomment_email(product, follower_user, user, comment)
+          VersioncommentMailer.versioncomment_email(product, follower_user, user, comment).deliver
         end
       end
     end

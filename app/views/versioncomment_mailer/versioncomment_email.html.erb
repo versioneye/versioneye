@@ -6,11 +6,8 @@
 	<body>
 		<p>Hello <%= @follower.fullname %></p>
 		<p>
-			<%= @user.fullname %> wrote a comment on <%= @prod.name %> <br/>
-			You can see the comment here:
-		</p>
-		<p>
-			Comment: <a href="<%= @commentlink %>"><%= @commentlink %></a></br>
+			<b><%= @user.fullname %></b> wrote a comment on <b><%= @prod.name %></b><br/>
+			You can see the comment here: <a href="<%= @commentlink %>"><%= @commentlink %></a>
 		</p>
 		<p>
 			Have a great day!
