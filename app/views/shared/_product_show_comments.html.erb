@@ -1,4 +1,5 @@
 <% if !@comments.nil? && @comments.length > 0 %>
+	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
 	<div class="boxHeader">
 		Comments
 	</div>
@@ -21,7 +22,13 @@
 						<ul class="list-row">
 							<li class="list-cell share-on">Share on</li>
 							<li class="list-cell share-on-icon"><%= image_tag "facebook_icon.png", :onclick => "shareOnFacebook('#{comment.comment}');", :alt=>"Facebook", :title=>"Facebook"  %></li>
-							<li class="list-cell share-on-icon"><%= image_tag "twitter_icon.png", :onclick => "alert('coming soon');", :alt=>"Twitter", :title=>"Twitter"  %></li>
+							<li class="list-cell share-on-icon">
+								<a href="http://twitter.com/share" 
+								   class="twitter-share-button" 
+								   data-url="versioneye.com" 
+								   data-text="" 
+								   data-count="horizontal" >Tweet</a>
+							</li>
 						</ul>
 			        </div>						
 				</td>

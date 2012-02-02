@@ -37,4 +37,12 @@ class SessionsController < ApplicationController
     redirect_to root_path
   end
   
+  def android_registrationid
+    registration_id = params[:registration_id]
+    user = current_user
+    if !user.nil?
+      user.update_column(:registrationid, registration_id)
+    end
+  end
+  
 end

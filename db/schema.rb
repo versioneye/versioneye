@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120114133207) do
+ActiveRecord::Schema.define(:version => 20120202133924) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(:version => 20120114133207) do
 
   create_table "users", :force => true do |t|
     t.string   "username",           :limit => 50,                     :null => false
-    t.text     "fullname",                                             :null => false
+    t.string   "fullname",           :limit => 50,                     :null => false
     t.string   "email",              :limit => 254,                    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20120114133207) do
     t.string   "fb_id",              :limit => 100
     t.string   "fb_token"
     t.string   "verification"
+    t.string   "registrationid"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -76,12 +77,10 @@ ActiveRecord::Schema.define(:version => 20120114133207) do
     t.integer  "user_id",     :null => false
     t.string   "product_key", :null => false
     t.string   "version",     :null => false
-    t.integer  "rate"
+    t.integer  "rate",        :null => false
     t.text     "comment",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "versioncomments", ["product_key", "version"], :name => "index_versioncomments_on_product_and_version"
 
 end
