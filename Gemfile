@@ -2,14 +2,13 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.1.0'
 gem 'jquery-rails', '1.0.19'
+gem 'configatron', '2.9.0'
 gem 'execjs', '1.2.9'
 gem 'therubyracer', '0.9.9'
 gem 'activesupport', '3.1.0'
 gem 'mongoid', '2.3.4'
 gem 'delayed_job', '3.0.0'
 gem 'delayed_job_active_record', '0.3.1'
-gem 'whenever', '0.7.0'
-gem 'daemons', '1.1.5'
 gem 'bson_ext', '1.5.2'
 gem 'actionmailer', '3.1.0'
 gem 'will_paginate', '3.0.2'
@@ -23,7 +22,9 @@ gem 'omniauth', '1.0.2'
 gem 'omniauth-twitter', '0.0.7'
 gem 'twitter', '2.0.2'
 gem 'twitter-text', '1.4.15'
-gem 'configatron', '2.9.0'
+
+# gem 'whenever', '0.7.0'
+# gem 'daemons', '1.1.5'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -42,7 +42,6 @@ GEM
     bson_ext (1.5.2)
       bson (= 1.5.2)
     builder (3.0.0)
-    chronic (0.6.6)
     coffee-rails (3.1.1)
       coffee-script (>= 2.2.0)
       railties (~> 3.1.0)
@@ -52,7 +51,6 @@ GEM
     coffee-script-source (1.2.0)
     configatron (2.9.0)
       yamler (>= 0.1.0)
-    daemons (1.1.5)
     delayed_job (3.0.0)
       activesupport (~> 3.0)
     delayed_job_active_record (0.3.1)
@@ -171,9 +169,6 @@ GEM
       kgio (~> 2.4)
       rack
       raindrops (~> 0.6)
-    whenever (0.7.0)
-      activesupport (>= 2.3.4)
-      chronic (~> 0.6.3)
     will_paginate (3.0.2)
     yamler (0.1.0)
 
@@ -187,7 +182,6 @@ DEPENDENCIES
   bson_ext (= 1.5.2)
   coffee-rails (~> 3.1.0)
   configatron (= 2.9.0)
-  daemons (= 1.1.5)
   delayed_job (= 3.0.0)
   delayed_job_active_record (= 0.3.1)
   execjs (= 1.2.9)
@@ -208,5 +202,4 @@ DEPENDENCIES
   twitter-text (= 1.4.15)
   uglifier
   unicorn (= 4.1.1)
-  whenever (= 0.7.0)
   will_paginate (= 3.0.2)
