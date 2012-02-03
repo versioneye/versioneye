@@ -4,11 +4,12 @@ class User < ActiveRecord::Base
   attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :datenerhebung, :verification
 
   validates :fullname, :presence      => true,
-                       :length        => { :within => 2..50 }
+                       :length        => {:within => 2..50}
 
   validates :username, :presence      => true,
                        :uniqueness    => true,
-                       :length        => { :within => 2..50 }
+                       :length        => {:within => 2..50},
+                       :format        => {:with => /^[a-zA-Z0-9]+$/}
 
   validates :email,    :presence    => true,
                        :length      => {:minimum => 5, :maximum => 254},
@@ -25,7 +26,9 @@ class User < ActiveRecord::Base
   has_many :notifications, :dependent => :destroy
   has_many :versioncomments, :dependent => :destroy
 
+  before_validation :downcase_email
   before_save :encrypt_password
+  
 
   scope :admin, where(:admin => true)
 
@@ -97,7 +100,7 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(email, submitted_password)
-    user = User.find(:first, :conditions => ["email = ?", email])
+    user = User.find(:first, :conditions => ["email = ?", email.downcase])
     return nil  if user.nil?
     return user if user.has_password?(submitted_password)
   end
@@ -154,9 +157,12 @@ class User < ActiveRecord::Base
     end
 
     def encrypt_password
-      p "encrypt password"
       self.salt = make_salt if new_record?
       self.encrypted_password = encrypt(password)
+    end
+    
+    def downcase_email
+      self.email = self.email.downcase if self.email.present?
     end
 
     def make_salt

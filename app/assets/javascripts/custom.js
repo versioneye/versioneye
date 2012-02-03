@@ -32,11 +32,6 @@ $(document).ready(function() {
 		text: "Invisible for other users.",
 		styleclass: "inputCelHint"
 	});
-	
-	$('#password').tbHinter({
-		text: "Your secret.",
-		styleclass: "inputCelHint"
-	});
 
 	FB.init({
         appId:'230574627021570', cookie:true,
