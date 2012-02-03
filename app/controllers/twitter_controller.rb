@@ -9,7 +9,9 @@ class TwitterController < ApplicationController
     domain = 'https://graph.facebook.com'
     uri = '/oauth/access_token'
     query = 'client_id=230574627021570&'
-    query += 'redirect_uri=http://versioneye.com/twitter/start&'
+    query += 'redirect_uri='
+    query += configatron.server_url 
+    query += '/twitter/start&'
     query += 'client_secret=d27fb4a5d443f29cfdbddd79638c91a8&'
     query += 'code=' + code
     link = domain + uri + '?' + query

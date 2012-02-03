@@ -50,6 +50,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.2.0)
+    configatron (2.9.0)
+      yamler (>= 0.1.0)
     daemons (1.1.5)
     delayed_job (3.0.0)
       activesupport (~> 3.0)
@@ -173,6 +175,7 @@ GEM
       activesupport (>= 2.3.4)
       chronic (~> 0.6.3)
     will_paginate (3.0.2)
+    yamler (0.1.0)
 
 PLATFORMS
   ruby
@@ -183,6 +186,7 @@ DEPENDENCIES
   annotated_models (= 3.0.2)
   bson_ext (= 1.5.2)
   coffee-rails (~> 3.1.0)
+  configatron (= 2.9.0)
   daemons (= 1.1.5)
   delayed_job (= 3.0.0)
   delayed_job_active_record (= 0.3.1)

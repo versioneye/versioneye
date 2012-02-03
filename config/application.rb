@@ -17,6 +17,14 @@ end
 module Versioneye
   class Application < Rails::Application
     
+    if Rails.env == 'development'
+      configatron.server_url = 'http://localhost:3000'
+    elsif Rails.env == 'test'
+      configatron.server_url = 'http://versioneye-beta.com'
+    elsif Rails.env == 'production'
+      configatron.server_url = 'http://versioneye.com'
+    end
+    
     # http://groups.google.com/group/mongoid/browse_thread/thread/df278a11dba4d331?pli=1
     config.generators do |g| 
       g.orm :active_record 

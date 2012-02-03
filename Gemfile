@@ -23,6 +23,7 @@ gem 'omniauth', '1.0.2'
 gem 'omniauth-twitter', '0.0.7'
 gem 'twitter', '2.0.2'
 gem 'twitter-text', '1.4.15'
+gem 'configatron', '2.9.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
