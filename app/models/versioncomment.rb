@@ -21,7 +21,7 @@ class Versioncomment < ActiveRecord::Base
   end
   
   def self.find_by_prod_key_and_version(prod_key, version)
-    comments = Versioncomment.where("product_key = ? AND version = ?", prod_key, version).order("created_at desc")
+    comments = Versioncomment.where("product_key = ? AND version = ?", prod_key, version).order("created_at asc")
     comments
   end
   
