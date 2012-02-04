@@ -81,7 +81,7 @@ class Product
     return nil
   end
   
-  def update_version_rates
+  def update_version_rates    
     versions.each do |version|
       version.update_rate
       version.save
@@ -100,7 +100,8 @@ class Product
       end
     end
     if rate_count > 0
-      self.rate = rate_sum / rate_count
+      avg = rate_sum / rate_count 
+      self.rate = Versioncomment.get_flatted_average(avg)
       self.ratecount = ratecount_sum    
     end    
   end
