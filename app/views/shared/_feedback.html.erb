@@ -1,10 +1,11 @@
 <div class="feedback">
 	<div>
-		<a href="javascript: load_dialog_feedback();"
-		   target="_NEW_FB"
-		   onmouseover="document.getElementById('feedback_img').src='/assets/feedback_on.png';"
-		   onmouseout="document.getElementById('feedback_img').src='/assets/feedback_off.png';" >
-			<%= image_tag("feedback_off.png", :title => "Feedback", :alt => "Feedback", :id => "feedback_img") %>
-		</a>
+		<input type="submit" 
+			   value="" 
+			   class="feedbackButton" 
+			   onclick="load_dialog_feedback();"
+			   title="Feedback" 
+			   alt="Feedback" 
+			   id="feedback_img" />
 	</div>
 </div>

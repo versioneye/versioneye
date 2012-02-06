@@ -292,6 +292,22 @@ input[type="submit"]:hover {
 	background-image: none;
 }
 
+.feedbackButton[type="submit"] {
+	-webkit-user-select:none;
+	background-image: url("feedback_off.png");
+	width: 51px;
+	height: 165px;
+	background-color: white;
+}
+
+.feedbackButton[type="submit"]:hover {
+	-webkit-user-select:none;
+	background-image: url("feedback_on.png");
+	width: 51px;
+	height: 165px;
+	background-color: white;
+}
+
 /***** Lists *****************/
 
 .list-row {
