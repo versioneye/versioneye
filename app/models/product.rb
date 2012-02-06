@@ -1,6 +1,7 @@
 class Product
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::MultiParameterAttributes
   field :name, type: String
   field :prod_key, type: String
   field :group_id, type: String
@@ -9,7 +10,8 @@ class Product
   field :link, type: String
   field :version, type: String
   field :version_link, type: String
-  field :version_rate, type: Integer
+  field :version_date, type: DateTime
+  field :version_rate, type: Integer  
   field :rate, type: Integer
   field :ratecount, type: Integer
   embeds_many :versions
@@ -81,13 +83,6 @@ class Product
     return nil
   end
   
-  def update_version_rates    
-    versions.each do |version|
-      version.update_rate
-      version.save
-    end
-  end
-  
   def update_rate
     rate_sum = 0
     rate_count = 0
@@ -106,30 +101,26 @@ class Product
     end    
   end
   
-  def update_version_link
+  def update_version_rates    
+    versions.each do |version|
+      version.update_rate
+      version.save
+    end
+  end
+  
+  def update_version_data
     versions = get_natural_sorted_versions
     if !versions.nil?
       version = versions[versions.count() - 1]
       self.version = version.version
       self.version_link = version.link
-      self.save
-    end    
-  end
-  
-  def self.update_versions
-    count = Product.count()
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.all().skip(skip).limit(pack)
-      products.each do |product|
-        product.update_version_link
-      end
+      self.version_date = version.created_at
+      self.update_rate
+      self.save      
     end
   end
   
-  def self.update_rates_global
+  def self.update_version_data_global
     count = Product.count()
     pack = 100
     max = count / pack     
@@ -138,8 +129,7 @@ class Product
       products = Product.all().skip(skip).limit(pack)
       products.each do |product|
         product.update_version_rates
-        product.update_rate
-        product.save
+        product.update_version_data
       end
     end
   end
