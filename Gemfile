@@ -9,6 +9,7 @@ gem 'activesupport', '3.1.0'
 gem 'mongoid', '2.3.4'
 gem 'delayed_job', '3.0.0'
 gem 'delayed_job_active_record', '0.3.1'
+gem 'daemons', '1.1.5'                         # mandatory for delayed_job
 gem 'bson_ext', '1.5.2'
 gem 'actionmailer', '3.1.0'
 gem 'will_paginate', '3.0.2'
@@ -24,7 +25,6 @@ gem 'twitter', '2.0.2'
 gem 'twitter-text', '1.4.15'
 
 # gem 'whenever', '0.7.0'
-# gem 'daemons', '1.1.5'
 
 # Gems used only for assets and not required
 # in production environments by default.
