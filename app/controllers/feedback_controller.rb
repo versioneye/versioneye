@@ -7,7 +7,8 @@ class FeedbackController < ApplicationController
     p "#{name}, #{email}, #{feedback}"
     if !name.nil? && !name.empty? && !email.nil? && !email.empty? && !feedback.nil? && !feedback.empty?
       p "feedback email " 
-      FeedbackMailer.delay.feedback_email(name, email, feedback)
+      #FeedbackMailer.delay.feedback_email(name, email, feedback)
+      FeedbackMailer.feedback_email(name, email, feedback).deliver
     end    
     respond_to do |format|
       format.js

@@ -42,8 +42,8 @@ class User < ActiveRecord::Base
   end
   
   def send_verification_email
-    # UserMailer.verification_email(self).deliver
-    UserMailer.delay.verification_email(self) # use delayed_job to do it later
+    UserMailer.verification_email(self).deliver
+    # UserMailer.delay.verification_email(self) # use delayed_job to do it later
   end  
   
   def self.activate!(verification)
@@ -95,8 +95,8 @@ class User < ActiveRecord::Base
     self.password = random_value
     encrypt_password
     update_column(:encrypted_password, self.encrypted_password)
-    # UserMailer.reset_password(self).deliver
-    UserMailer.delay.reset_password(self, random_value)
+    UserMailer.reset_password(self, random_value).deliver
+    #UserMailer.delay.reset_password(self, random_value)
   end
 
   def self.authenticate(email, submitted_password)
