@@ -1,0 +1,16 @@
+<% if !@version.archive.nil? && @version.archive.length > 0 %>
+	<div class="boxHeader">
+		Downloads
+	</div>
+	<div class="boxContainer" >
+		<table>				
+		<% @version.archive.each do |download|  %>
+			<tr>
+				<td>
+					<a href="<%= download.link %>"><%= download.name %></a>
+				</td>
+			</tr>
+		<% end %>
+		</table>
+	</div>
+<% end %>

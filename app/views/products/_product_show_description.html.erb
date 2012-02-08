@@ -1,0 +1,8 @@
+<% if !@product.description.nil? && !@product.description.empty? %>
+	<div class="boxHeader">
+		Description
+	</div>
+	<div class="boxContainer" >
+		<%= @product.description %>
+	</div>
+<% end %>

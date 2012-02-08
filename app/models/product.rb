@@ -8,6 +8,7 @@ class Product
   field :artifact_id, type: String
   field :prod_type, type: String
   field :link, type: String
+  field :description, type: String
   field :version, type: String
   field :version_link, type: String
   field :version_date, type: DateTime
@@ -163,6 +164,9 @@ class Product
   end
   
   def self.to_url_param val
+    if val.nil?
+      return "0"
+    end
     url_param = String.new(val)
     url_param.gsub!("/","--")
     url_param.gsub!(".","~")
@@ -187,7 +191,11 @@ class Product
   
   def get_decimal_version_uid
     version = get_version(self.version)
-    version.uid.to_s.to_i(16).to_s(10)
+    if !version.nil? && !version.uid.nil?
+      version.uid.to_s.to_i(16).to_s(10)
+    else  
+      "0"
+    end
   end
   
   def self.decimal_to_hex( decimal )

@@ -1,0 +1,8 @@
+<% if !@version.changelog.nil? && !@version.changelog.empty? %>
+	<div class="boxHeader">
+		Change Log
+	</div>
+	<div class="boxContainer" >
+		<%= @version.changelog.html_safe %>
+	</div>
+<% end %>

@@ -7,7 +7,11 @@
 					<%= label_tag(:fb_fullname, "Full Name") %>
 			      </div>
 			      <div class="inputCel">
-					<%= text_field_tag :fb_fullname, nil, :class => "round" %>
+					<% if signed_in? %>
+						<%= text_field_tag :fb_fullname, current_user.fullname, :class => "round" %>
+					<% else %>
+						<%= text_field_tag :fb_fullname, nil, :class => "round" %>
+					<% end %>
 			      </div>
 			    </div>
 
@@ -16,7 +20,12 @@
 					<%= label_tag(:fb_email, "E-Mail") %>
 			      </div>
 			      <div class="inputCel">
-					<%= text_field_tag :fb_email, nil, :class => "round" %>
+					<% if signed_in? %>
+						<%= text_field_tag :fb_email, current_user.email, :class => "round" %>
+					<% else %>
+						<%= text_field_tag :fb_email, nil, :class => "round" %>
+					<% end %>
+					
 			      </div>
 			    </div>
 			

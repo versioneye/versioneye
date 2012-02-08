@@ -1,10 +1,16 @@
 <% if @product.nil? %>
+
 	Product not found!
+
 <% else %>
 	
 	<% if @product.get_type.eql? "Maven2" %>
 
 		<%= render 'products/product_show_maven' %>
+
+	<% elsif @product.get_type.eql? "PHP" %>
+	
+		<%= render 'products/product_show_php' %>
 
 	<% end %>
 	

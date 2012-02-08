@@ -10,7 +10,10 @@
 				<% end %>
 				<div class="searchResult">
 					<a href="<%= product_version_path(product) %>" class="searchResultLink"><%= product.name_and_version %></a><br/>	
-					<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
+					<% if product.prod_type == "Maven2" %>
+						<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
+					<% end %>
+					
 					<table style="margin:0" >
 						<tr>
 							<td width="80" >

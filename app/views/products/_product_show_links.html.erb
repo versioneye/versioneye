@@ -1,0 +1,11 @@
+<div class="boxHeader">
+	Links
+</div>
+<div class="boxContainer" >
+	<a href="<%= @product.version_link %>" target="_NEW">Link to product</a><br/>
+	<% if !@version.versionlink.nil? && !@version.versionlink.empty? %>
+		<% @version.versionlink.each do |link| %>
+			<a href="<%= link.link %>" target="_NEW"><%= link.name %></a><br/>
+		<% end %>	
+	<% end %>
+</div>

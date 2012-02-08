@@ -6,7 +6,9 @@ class Version
   field :link, type: String
   field :rate, type: Integer
   field :ratecount, type: Integer
-  
+  field :changelog, type: String 
+  embeds_many :versionlink
+  embeds_many :archive
   embedded_in :product
   
   def as_json parameter
