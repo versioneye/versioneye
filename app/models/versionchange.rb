@@ -1,11 +1,9 @@
-class Archive
+class Versionchange
   include Mongoid::Document
   include Mongoid::Timestamps
-  field :uid, type: String
-  field :link, type: String
-  field :name, type: String
-  
-  embedded_in :version
+  field :prod_key, type: String
+  field :version_id, type: String  
+  field :change, type: String
   
   def as_json parameter
     {

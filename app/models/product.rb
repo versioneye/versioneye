@@ -9,6 +9,10 @@ class Product
   field :prod_type, type: String
   field :link, type: String
   field :description, type: String
+  field :icon, type: String
+  field :logo, type: String
+  field :facebook, type: String
+  field :twitter, type: String
   field :version, type: String
   field :version_link, type: String
   field :version_date, type: DateTime

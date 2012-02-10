@@ -3,12 +3,19 @@
 
 body {
 	color: #22211f;
+	background-color: #EEEEDD;
+	background-repeat: no-repeat;
+	background-position: 50px 30px;
 	font-size: 14px;
 	font-family: sans-serif, arial, verdana, tahoma, 'lucida grande', 'Segoe UI', 'lucida sans unicode';
 }
 
 form{
 	padding: 0px;
+	margin: 0px;
+}
+
+table{
 	margin: 0px;
 }
 
@@ -292,7 +299,7 @@ input[type="submit"]:hover {
 	background-image: url("feedback_off.png");
 	width: 51px;
 	height: 165px;
-	background-color: white;
+	background-color: transparent;
 }
 
 .feedbackButton[type="submit"]:hover {
@@ -300,7 +307,7 @@ input[type="submit"]:hover {
 	background-image: url("feedback_on.png");
 	width: 51px;
 	height: 165px;
-	background-color: white;
+	background-color: transparent;
 }
 
 /***** Lists *****************/
@@ -349,7 +356,7 @@ input[type="submit"]:hover {
 }
 
 header {
-	background-image: url("header.png")  ;
+	background-image: url("header_os.png")  ;
 	background-repeat: repeat-x;
     background-position: top;
 	position: fixed;
@@ -369,10 +376,11 @@ section {
     width: 810px;
 	padding: 20px;
 	margin-top: 65px;
+/*	opacity:0.5;*/
 	background-color: white;
-	-moz-box-shadow:    0px 0px 2px 2px #888888;
-	-webkit-box-shadow: 0px 0px 2px 2px #888888;
-	box-shadow:         0px 0px 2px 2px #888888;	
+	/*-moz-box-shadow:    0px 0px 2px 2px #888888;
+		-webkit-box-shadow: 0px 0px 2px 2px #888888;
+		box-shadow:         0px 0px 2px 2px #888888;	*/
 }
 
 .section_lean {
@@ -411,13 +419,14 @@ section h3{
 
 footer {
     text-align: left;
-	border-top: 1px dotted gray;
+	border-top: 0px dotted gray;
     margin-top: 15px;
 	padding-top: 5px;
     width: 850px;
     margin-left: auto;
     margin-right: auto;
     clear: both;
+	background-color: white;
 }
 
 footer nav {
@@ -514,7 +523,7 @@ nav a img{
 
 nav {
     float: right;
-	margin: 8px 0px;
+	margin: 6px 0px;
     white-space: nowrap;
 	height: 37px;	
 }
@@ -961,4 +970,8 @@ nav ul li a:hover {
 	width: 66px;
 	height: 48px;
 	padding-right: 2px;
+}
+
+.show_image{
+	text-align: center;
 }

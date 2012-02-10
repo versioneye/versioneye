@@ -6,9 +6,6 @@ class Version
   field :link, type: String
   field :rate, type: Integer
   field :ratecount, type: Integer
-  field :changelog, type: String 
-  embeds_many :versionlink
-  embeds_many :archive
   embedded_in :product
   
   def as_json parameter
@@ -46,6 +43,18 @@ class Version
   
   def get_decimal_uid
     uid.to_s.to_i(16).to_s(10)
+  end
+  
+  def versionlink
+    Versionlink.all(conditions: { prod_key: self.product.prod_key, version_id: self.version}).asc(:name)
+  end
+  
+  def versionchange
+    Versionchange.all(conditions: { prod_key: self.product.prod_key, version_id: self.version})
+  end
+  
+  def versionarchive
+    Versionarchive.all(conditions: { prod_key: self.product.prod_key, version_id: self.version}).asc(:name)
   end
 
 end

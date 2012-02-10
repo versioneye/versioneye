@@ -1,8 +1,16 @@
-<% if !@version.changelog.nil? && !@version.changelog.empty? %>
+<% if !@version.versionchange.nil? && !@version.versionchange.empty? %>
 	<div class="boxHeader">
 		Change Log
 	</div>
 	<div class="boxContainer" >
-		<%= @version.changelog.html_safe %>
+		<table>				
+		<% @version.versionchange.each do |change|  %>
+			<tr>
+				<td>
+					<%= change.change %></a>
+				</td>
+			</tr>
+		<% end %>
+		</table>
 	</div>
 <% end %>

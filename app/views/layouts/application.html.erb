@@ -18,6 +18,14 @@
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	})();
   </script>
+<style type="text/css">
+	<% if !@product.nil? && @product.prod_type == "Printer" %>
+		body{
+			background-color: <%= @product.backgroundcolor %>;
+			background-image: url("<%= @product.backgroundimage %>");
+		}		
+	<% end %>
+</style>
 </head>
 
 <body>	

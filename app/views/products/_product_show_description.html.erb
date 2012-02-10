@@ -3,6 +3,6 @@
 		Description
 	</div>
 	<div class="boxContainer" >
-		<%= @product.description %>
+		<%= @product.description.gsub!("\n", "<br/>").html_safe %>
 	</div>
 <% end %>

@@ -1,0 +1,29 @@
+<product key="Symfony" name="Symfonie" type="PHP" >
+	
+	<description>
+		Best PHP Framework ever!
+	</description>
+	
+	<icon>http://symfony.com/icon.jpg</icon>
+	
+	<facebook></facebook>
+	<twitter></twitter>
+	<rss></rss>
+	
+	<version version="2.0.9" >
+		<archives>
+			<a href="http://symfony.com/download?v=Symfony_Standard_Vendors_2.0.9.zip">Symfony_Standard_Vendors_2.0.9.zip</a>
+			<a href="http://symfony.com/download?v=Symfony_Standard_Vendors_2.0.9.tgz">Symfony_Standard_Vendors_2.0.9.tgz</a>
+		</archives>
+		<links>
+			<a href="http://symfony.com/download">Download</a> 
+			<a href="https://github.com/fabpot/symfony/commits/master">GitHub</a>
+			<a href="http://symfony.com/doc/current/">Documentation</a>		
+		</links>
+		<changelog>
+			<change>Change 1 Everything will be better</change>
+			<change>Change 2 BugFree!</change>
+		</changelog>	
+	</version>
+
+</product>

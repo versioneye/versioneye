@@ -5,13 +5,11 @@
 <% else %>
 	
 	<% if @product.get_type.eql? "Maven2" %>
-
 		<%= render 'products/product_show_maven' %>
-
 	<% elsif @product.get_type.eql? "PHP" %>
-	
 		<%= render 'products/product_show_php' %>
-
+	<% elsif @product.get_type.eql? "Printer" %>
+		<%= render 'products/product_show_printer' %>	
 	<% end %>
 	
 <% end %>

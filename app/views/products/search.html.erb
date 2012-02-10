@@ -9,11 +9,11 @@
 					<% product.update_in_my_products(@my_product_ids) %>
 				<% end %>
 				<div class="searchResult">
+					
 					<a href="<%= product_version_path(product) %>" class="searchResultLink"><%= product.name_and_version %></a><br/>	
 					<% if product.prod_type == "Maven2" %>
 						<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
-					<% end %>
-					
+					<% end %>					
 					<table style="margin:0" >
 						<tr>
 							<td width="80" >
@@ -21,7 +21,7 @@
 									<span id="follow_<%=product.to_param%>" style="display: <%= product.display_follow %>">
 										<%= form_tag("/follow", :remote => true) do  %>
 											<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
-											<%= submit_tag "Follow", :class => "followButton", :id => "#{product.to_param}" %>
+						 					<%= submit_tag "Follow", :class => "followButton", :id => "#{product.to_param}" %>
 										<% end %>
 									</span>
 									<span id="unfollow_<%=product.to_param%>" style="display: <%= product.display_unfollow %>">
@@ -38,7 +38,8 @@
 								<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
 							</td>
 						</tr>
-					</table> 
+					</table>
+					
 				</div>				
 			<% end %>
 			<div style="margin-top: 20px;">
