@@ -1,4 +1,4 @@
-<product key="DL750+-Windows" name="Fujitsu DL3750+ Windows" type="Printer" >
+<product key="DL750+-Windows" name="Fujitsu DL3750+" type="Printer" >
 	
 	<description>
 		Fujitsu DL3750+ Parallel &amp; USB Dot Matrix Printer<br/><br/>
@@ -16,7 +16,7 @@
 	
 	<version version="1.0" >
 		<archives>
-			<a href="http://www.fujitsu.com/downloads/COMP/fel/support/printer/software/pp10v14v_win31.zip">pp10v14v_win31.zip</a>
+			<a href="http://www.fujitsu.com/downloads/COMP/fel/support/printer/software/pp10v14v_win31.zip">pp10v14v_win31_en_driver.zip</a>
 		</archives>
 		<links>
 			<a href="http://www.fujitsu.com/emea/products/printers/tmpl_printers_DL3750plus.html">Original Page</a>

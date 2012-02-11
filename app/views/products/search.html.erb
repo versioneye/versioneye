@@ -9,36 +9,47 @@
 					<% product.update_in_my_products(@my_product_ids) %>
 				<% end %>
 				<div class="searchResult">
+					<ul class="list-row">
+						<li class="list-cell" style="vertical-align: top; padding-top: 7px;">
+							<% if product.icon.nil? %>
+								<%= image_tag "eye_off.png" %>
+							<% else %>
+								<img src="<%= product.icon %>" width="57" height="57"></img>
+							<% end %>
+						</li>
+						<li class="list-cell">
+							<a href="<%= product_version_path(product) %>" class="searchResultLink"><%= product.name_and_version %></a><br/>
+							<% if product.prod_type == "Maven2" %>
+								<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
+							<% end %>
+							<ul class="list-row">
+								<li class="list-cell">
+									<% if signed_in? %>
+										<span id="follow_<%=product.to_param%>" style="display: <%= product.display_follow %>">
+											<%= form_tag("/follow", :remote => true) do  %>
+												<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
+							 					<%= submit_tag "Follow", :class => "followButton", :id => "#{product.to_param}" %>
+											<% end %>
+										</span>
+										<span id="unfollow_<%=product.to_param%>" style="display: <%= product.display_unfollow %>">
+											<%= form_tag("/unfollow", :remote => true) do  %>
+												<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
+												<%= submit_tag "Unfollow", :class => "unfollowButton", :id => "#{product.to_param}" %>
+											<% end %>
+										</span>
+									<% else %>
+										<input type="submit" value="FOLLOW" class="followButton" onclick="load_dialog_follow('<%= product.name %>');" ></input>
+									<% end %>
+								</li>
+								<li class="list-cell">
+									<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
+								</li>
+							</ul>
+						</li>
+					</ul>
+						
 					
-					<a href="<%= product_version_path(product) %>" class="searchResultLink"><%= product.name_and_version %></a><br/>	
-					<% if product.prod_type == "Maven2" %>
-						<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
-					<% end %>					
-					<table style="margin:0" >
-						<tr>
-							<td width="80" >
-								<% if signed_in? %>
-									<span id="follow_<%=product.to_param%>" style="display: <%= product.display_follow %>">
-										<%= form_tag("/follow", :remote => true) do  %>
-											<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
-						 					<%= submit_tag "Follow", :class => "followButton", :id => "#{product.to_param}" %>
-										<% end %>
-									</span>
-									<span id="unfollow_<%=product.to_param%>" style="display: <%= product.display_unfollow %>">
-										<%= form_tag("/unfollow", :remote => true) do  %>
-											<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
-											<%= submit_tag "Unfollow", :class => "unfollowButton", :id => "#{product.to_param}" %>
-										<% end %>
-									</span>
-								<% else %>
-									<input type="submit" value="FOLLOW" class="followButton" onclick="load_dialog_follow('<%= product.name %>');" ></input>
-								<% end %>
-							</td>
-							<td>
-								<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
-							</td>
-						</tr>
-					</table>
+					
 					
 				</div>				
 			<% end %>
