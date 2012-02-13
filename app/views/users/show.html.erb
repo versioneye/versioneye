@@ -10,7 +10,11 @@
 	<div class="searchResults">
 		<% if !@products.empty? %>
 			<% @products.each do |product| %>
-				<div class="searchResult">
+				<% if product.notification == true %>
+					<div class="searchResult" style="background-color: beige">
+				<% else %>
+					<div class="searchResult" >
+				<% end %>
 					<a href="<%= product_version_path(product) %>" class="searchResultLink"><%=product.name_and_version%></a><br/>
 					<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
 					<% if current_user == @user %>

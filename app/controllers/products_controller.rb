@@ -39,8 +39,12 @@ class ProductsController < ApplicationController
     @product = Product.find_by_key( key )
     following = false
     if (!current_user.nil?)
-      @follower = Follower.find_by_user_id_and_product(current_user.id, @product._id.to_s)
-      following = !@follower.nil?
+      follower = Follower.find_by_user_id_and_product(current_user.id, @product._id.to_s)
+      if follower.notification == true
+        follower.notification = false
+        follower.save
+      end
+      following = !follower.nil?
     end
     version_uid = Product.decimal_to_hex( params[:uid] )
     ver = url_param_to_origin params[:version]

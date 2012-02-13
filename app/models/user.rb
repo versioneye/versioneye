@@ -29,7 +29,6 @@ class User < ActiveRecord::Base
   before_validation :downcase_email
   before_save :encrypt_password
   
-
   scope :admin, where(:admin => true)
 
   def to_param
@@ -58,16 +57,23 @@ class User < ActiveRecord::Base
   end
   
   def fetch_my_products
-    ids = fetch_my_product_ids
-    Product.any_in(_id: ids).desc(:updated_at)
-  end
-  
-  def fetch_my_product_ids
+    notification_ids = Array.new
     ids = Array.new
     followers.each do |follower|
       ids.push follower.product_id
-    end 
-    ids
+      if follower.notification == true
+        notification_ids.push follower.product_id 
+      end      
+    end  
+    result = Array.new
+    my_products = Product.any_in(_id: ids).desc(:updated_at)
+    my_products.each do |product|
+      if notification_ids.include?(product._id.to_s)
+        product.notification = true
+      end
+      result.push product
+    end
+    result
   end
 
   def image_url

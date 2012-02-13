@@ -24,7 +24,7 @@ class Product
   # versionlinks
   # versionchanges
 
-  attr_accessor :in_my_products, :version_uid
+  attr_accessor :in_my_products, :version_uid, :notification
 
   require 'will_paginate/array'
 
@@ -211,6 +211,7 @@ class Product
     comments = Versioncomment.find_by_prod_key_and_version(self.prod_key, self.version)
     {
       :following => param[:following],
+      :notification => self.notification,
       :id => self.get_decimal_id,
       :version_uid => self.get_decimal_version_uid,
       :name => self.name,

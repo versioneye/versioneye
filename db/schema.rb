@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120202181303) do
+ActiveRecord::Schema.define(:version => 20120213131106) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -31,9 +31,10 @@ ActiveRecord::Schema.define(:version => 20120202181303) do
 
   create_table "followers", :force => true do |t|
     t.integer  "user_id"
-    t.string   "product_id", :limit => 50, :null => false
+    t.string   "product_id",   :limit => 50, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "notification"
   end
 
   add_index "followers", ["product_id"], :name => "index_followers_on_product_id"
