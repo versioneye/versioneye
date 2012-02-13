@@ -75,6 +75,14 @@ class User < ActiveRecord::Base
     end
     result
   end
+  
+  def fetch_my_product_ids
+    ids = Array.new
+    followers.each do |follower|
+      ids.push follower.product_id
+    end
+    ids
+  end
 
   def image_url
     url = 'http://www.gravatar.com/avatar/'
