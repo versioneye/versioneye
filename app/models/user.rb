@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
   
   def fetch_my_products
     ids = fetch_my_product_ids
-    result = Product.find(ids)
+    Product.any_in(_id: ids).asc(:updated_at)
   end
   
   def fetch_my_product_ids

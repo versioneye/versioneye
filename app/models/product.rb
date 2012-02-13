@@ -1,7 +1,7 @@
 class Product
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::MultiParameterAttributes
+  include Mongoid::MultiParameterAttributes # Need for type: DateTime 
   field :name, type: String
   field :prod_key, type: String
   field :group_id, type: String
@@ -15,12 +15,14 @@ class Product
   field :twitter, type: String
   field :version, type: String
   field :version_link, type: String
-  field :version_date, type: DateTime
   field :version_rate, type: Integer  
   field :rate, type: Integer
   field :ratecount, type: Integer
   embeds_many :versions
   embeds_many :repositories
+  # versionarchives
+  # versionlinks
+  # versionchanges
 
   attr_accessor :in_my_products, :version_uid
 
@@ -119,7 +121,6 @@ class Product
       version = versions[versions.count() - 1]
       self.version = version.version
       self.version_link = version.link
-      self.version_date = version.created_at
       self.update_rate
       self.save      
     end
