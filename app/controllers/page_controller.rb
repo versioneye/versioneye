@@ -20,5 +20,8 @@ class PageController < ApplicationController
 
   def signup
   end  
+  
+  def apijson
+  end
 
 end

@@ -1,0 +1,177 @@
+<div class="sidebar" >
+	
+	<a href="#search">Search</a><br/>
+	<a href="#productdetails">Product Details</a><br/>
+	<a href="#profiledetails">Profile Details</a><br/>
+	<a href="#signin">Sign In</a><br/>
+	<a href="#signout">Sign Out</a><br/>
+	<a href="#follow">Follow</a><br/>
+	<a href="#unfollow">Unfollow</a><br/>
+		
+</div>	
+<div class="content">
+<docu>	
+	<h1>JSON API</h1>
+	<p class="docu">
+		This document describes the JSON API for VersionEey. 
+	</p>
+	
+	
+	<h2 class="docu_h2">Search</h2><a name="search"></a>
+	<p class="docu">
+		This is how you can use the search in your application. 
+	</p>
+	<pre class="code">http://versioneye.com/search.json?q=<<span>SEARCH TERM</span>></pre>
+	<p class="docu">
+		Here is an example. 
+	</p>
+	<pre class="code">http://versioneye.com/search.json?q=junit</pre>
+	<p class="docu">
+		The result is the same as in the web application. But you get it as JSON objects. 
+	</p>
+	<p class="docu">
+		The search term must contain at least 2 characters. Otherwise you get null back. 
+		If there are no results you get an empty array [ ] back. 
+	</p>
+	
+	
+	<h2 class="docu_h2">Product Details</h2><a name="productdetails"></a>
+	<p class="docu">
+		If you want have details to a special product/version you can use this request here. 
+	</p>
+	<pre class="code">http://versioneye.com/product/<<span>PROD_KEY</span>>/version/<<span>VERSION_ID</span>/0.json</pre>
+	<p class="docu">
+		Here is an example for JUnit.
+	</p>
+	<pre class="code">http://versioneye.com/product/junit--junit/version/4~10/0.json</pre>
+	<p class="docu">
+		If there are some special characters in the key you must replace it to make it 
+		URL ready! Here is the table with the replacements. 
+	</p>
+	<p class="docu">
+		<table style="width:400px;" class="docu_table">
+			<tr>
+				<th>PROD_KEY VALUE</th>
+				<th>URL VALUE</th>
+			</tr>
+			<tr>
+				<td style="width: 150px;">/</td>
+				<td>__</td>
+			</tr>
+			<tr>
+				<td>.</td>
+				<td>~</td>
+			</tr>
+		</table>
+	</p>	
+	
+	
+	<h2 class="docu_h2">Profile Details / My Products</h2><a name="profiledetails"></a>
+	<p class="docu">
+		If you want have details to a special profile you can use this request here. 
+	</p>
+	<pre class="code">http://versioneye.com/users/<<span>USERNAME</span>>.json</pre>
+	<p class="docu">
+		Here is an example for with the profile of Robert Reiz.
+	</p>
+	<pre class="code">http://versioneye.com/users/reiz.json</pre>
+	<p class="docu">
+		The result contains all favorite products of the given user. The products are desc 
+		sorted by the date. That means the newest product is on the top. the oldest is 
+		on the bottom.
+	</p>
+	<p class="docu">
+		If you are logged in, the result is a little bit different. If you are logged in 
+		the "notification" attribut in the JSON object is filled with true/false or nil. 
+		If it is true that means that there is a new version to the product. At the 
+		first time you are calling the product detail page the flag "notification" for 
+		this product will set to false for you. This behavior is similar to the notification 
+		system in facebook. 
+	</p>		
+	
+	
+	<h2 class="docu_h2">Sign In</h2><a name="signin"></a>
+	<p class="docu">
+		If you want to write an application where the user can sign in into VersionEye, you 
+		can do it with a simple post request. Just send a post request to this address.
+	</p>
+	<pre class="code">http://versioneye.com/sessions.json</pre>
+	<p class="docu">
+		This table below shows what your post form must contain. 
+	</p>
+	<p class="docu">
+		<table style="width:400px;" class="docu_table">
+			<tr>
+				<th>NAME</th>
+				<th>EXAMPLE VALUE</th>
+			</tr>
+			<tr>
+				<td style="width: 150px;">session[email]</td>
+				<td>your.email@gmail.com</td>
+			</tr>
+			<tr>
+				<td>session[password]</td>
+				<td>yourpassword</td>
+			</tr>
+		</table>
+	</p>
+	<p class="docu">
+		If the sign in procedure is not successfull you will get back an empty string. 
+	</p>
+	<p class="docu">
+		If the sign in procedure is successfull you will get back the user as JSON object. 
+		That contains the username and the fullname of the user.  
+	</p>
+	<p class="docu">
+		If the sign in procedure is successfull the server will set a cookie on your system. 
+		This is for storing the session. It is absolut important that your system is 
+		supporting cookies!
+	</p>
+	
+	
+	<h2 class="docu_h2">Sign Out</h2><a name="signout"></a>
+	<p class="docu">
+		If you want to sign out, just send a request to this URL
+	</p>
+	<pre class="code">http://versioneye.com/signout.json</pre>
+	<p class="docu">
+		After the request the server will destroy the cookie and the corresponding session. 
+	</p>
+	
+	
+	<h2 class="docu_h2">Follow</h2><a name="follow"></a>
+	<p class="docu">
+		The follow feature is just working when the user is signed in! In that case you 
+		just have to send a post request to this URL.
+	</p>
+	<pre class="code">http://versioneye.com/follow.json</pre>
+	<p class="docu">
+		This table below shows what your post form must contain. 
+	</p>
+	<p class="docu">
+		<table style="width:500px;" class="docu_table">
+			<tr>
+				<th>NAME</th>
+				<th>EXAMPLE VALUE</th>
+			</tr>
+			<tr>
+				<td style="width: 150px;">product_key</td>
+				<td>pl~pragmatists--JUnitParams</td>
+			</tr>
+		</table>
+	</p>
+	<p class="docu">
+		If something went wrong you will get back nil or an empty string. If everything 
+		worked out perfectly you will get back the string "success". 
+	</p>
+	
+	
+	<h2 class="docu_h2">Unfollow</h2><a name="unfollow"></a>
+	<p class="docu">
+		The unfollow feature is working in the same fashion like the follow feature. 
+		But you have to use this URL.
+	</p>
+	<pre class="code">http://versioneye.com/unfollow.json</pre>
+	
+</docu>
+</div>

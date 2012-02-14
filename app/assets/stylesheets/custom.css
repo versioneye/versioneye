@@ -975,3 +975,32 @@ nav ul li a:hover {
 .show_image{
 	text-align: center;
 }
+
+.code{
+	background-color: #F5F5F5;
+	padding: 10px;
+	vertical-align: middle;
+}
+
+.docu{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.docu_h2{
+	margin-top: 30px;
+}
+
+.docu_table{
+	font-family: courier;
+}
+
+.docu_table th{
+	background-color: #F5F5F5;
+	font-family: courier;
+}
+
+.docu_table td{
+	border-bottom: 1px solid #F5F5F5;
+	font-family: courier;
+}
