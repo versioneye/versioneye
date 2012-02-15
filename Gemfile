@@ -21,12 +21,6 @@ gem 'omniauth-twitter', '0.0.7'
 gem 'twitter', '2.0.2'
 gem 'twitter-text', '1.4.15'
 
-# gem 'whenever', '0.7.0'
-
-# gem 'delayed_job', '3.0.0'
-# gem 'delayed_job_active_record', '0.3.1'
-# gem 'daemons', '1.1.5'
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -36,10 +30,11 @@ group :assets do
 end
 
 group :development do
-#  gem 'ruby-debug19', :require => 'ruby-debug'
-#  gem 'rspec-rails', '2.5.0'
+#  gem 'ruby-debug19', :require => 'ruby-debug'  
 #  gem 'faker', '0.3.1'
   gem "annotated_models", "3.0.2"
+  gem 'rspec-rails', '2.8.0'
+  gem 'webrat', '0.7.3'
 end
 
 group :test do
@@ -49,3 +44,9 @@ end
 
 # Deploy with Capistrano
 # gem 'capistrano'
+
+# gem 'whenever', '0.7.0'
+
+# gem 'delayed_job', '3.0.0'
+# gem 'delayed_job_active_record', '0.3.1'
+# gem 'daemons', '1.1.5'
