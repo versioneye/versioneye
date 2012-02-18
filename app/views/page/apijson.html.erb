@@ -16,8 +16,10 @@
 		This document describes the JSON API for VersionEey. 
 	</p>
 	<p class="docu">
-		An API is an "Application Programming Interface". You can use the API to 
-		write an iPhone App or Android App for VersionEye. But you can also use 
+		An API is an "Application Programming Interface". 
+		You can use the API to write mobile Apps for VersionEye. 
+		The iPhone App and Android App we are working on is using 
+		the same API. But you can also use 
 		it to write an Desktop Application, Gadget or Widget. 
 	</p>
 	
@@ -42,7 +44,7 @@
 	
 	<h2 class="docu_h2">Product Details</h2><a name="productdetails"></a>
 	<p class="docu">
-		If you want have details to a special product/version you can use this request here. 
+		If you want to have details to a special product/version you can use this request here. 
 	</p>
 	<pre class="code">http://versioneye.com/product/<<span>PROD_KEY</span>>/version/<<span>VERSION_ID</span>/0.json</pre>
 	<p class="docu">
@@ -50,8 +52,8 @@
 	</p>
 	<pre class="code">http://versioneye.com/product/junit--junit/version/4~10/0.json</pre>
 	<p class="docu">
-		If there are some special characters in the key you must replace it to make it 
-		URL ready! Here is the table with the replacements. 
+		If there are some special characters in "PROD_KEY" or "VERSION_ID" you must 
+		replace it to make it URL ready! Here is the table with the replacements.
 	</p>
 	<p class="docu">
 		<table style="width:400px;" class="docu_table">
@@ -70,10 +72,10 @@
 		</table>
 	</p>	
 	
-	
+
 	<h2 class="docu_h2">Profile Details / My Products</h2><a name="profiledetails"></a>
 	<p class="docu">
-		If you want have details to a special profile you can use this request here. 
+		If you want to have details to a special profile you can use this request here. 
 	</p>
 	<pre class="code">http://versioneye.com/users/<<span>USERNAME</span>>.json</pre>
 	<p class="docu">
@@ -81,17 +83,17 @@
 	</p>
 	<pre class="code">http://versioneye.com/users/reiz.json</pre>
 	<p class="docu">
-		The result contains all favorite products of the given user. The products are desc 
-		sorted by the date. That means the newest product is on the top. the oldest is 
-		on the bottom.
+		The result contains all favorite products of the given user. 
+		The products are sorted by the date in a descending order. 
+		That means the newest product is on the top, the oldest is on the bottom. 
 	</p>
 	<p class="docu">
 		If you are logged in, the result is a little bit different. If you are logged in 
 		the "notification" attribut in the JSON object is filled with true/false or nil. 
-		If it is true that means that there is a new version to the product. At the 
+		If it is true that means that there is a new version of the product. At the 
 		first time you are calling the product detail page the flag "notification" for 
 		this product will set to false for you. This behavior is similar to the notification 
-		system in facebook. 
+		system in Facebook. 
 	</p>		
 	
 	
