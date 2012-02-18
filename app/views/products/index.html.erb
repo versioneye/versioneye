@@ -10,9 +10,9 @@
 	</div>	
 </div>
 <% if !signed_in? %>
-<div class="lp_box lp_login_area">
-	<%= render 'shared/login_with_facebook' %> 
-</div>
+	<div class="lp_box lp_login_area">
+		<%= render 'shared/login_with_facebook' %> 
+	</div>
 <% end %>
 <h1 class="lp_head">
 	About
@@ -20,18 +20,13 @@
 <div class="lp_box">
 	<%= render 'shared/about' %>
 </div>
-<h1 class="lp_head">
-	Community
-</h1>
-<div class="lp_box">
-	<%= render 'shared/community' %>
-</div>
-<h1 class="lp_head">
-	Numbers
-</h1>
-<div class="lp_box">
-	<%= render 'shared/numbers' %>
-</div>
+<% if !signed_in? %>
+	<div class="lp_box lp_sign_up">
+		<%= form_tag("/signup", :method => "post") do  %>    
+			<%= submit_tag "Sign Up For Free", :class => "lp_sign_up_button" %>
+		<% end %>
+	</div>
+<% end %>
 <h1 class="lp_head">
 	Mobile
 </h1>
@@ -41,8 +36,10 @@
 <div class="lp_box">
 	<%= render 'shared/phone_boxes' %>
 </div>
-<div class="lp_box lp_sign_up">
-	<%= form_tag("/signup", :method => "post") do  %>    
-		<%= submit_tag "Sign Up For Free", :class => "lp_sign_up_button" %>
-	<% end %>
-</div>
+<% if !signed_in? %>
+	<div class="lp_box lp_sign_up">
+		<%= form_tag("/signup", :method => "post") do  %>    
+			<%= submit_tag "Sign Up For Free", :class => "lp_sign_up_button" %>
+		<% end %>
+	</div>
+<% end %>
