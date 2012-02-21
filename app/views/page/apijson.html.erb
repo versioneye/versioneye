@@ -13,17 +13,17 @@
 <docu>	
 	<h1>JSON API</h1>
 	<p class="docu">
-		This document describes the JSON API for VersionEey. 
+		This document describes the JSON API for VersionEye. 
 	</p>
 	<p class="docu">
 		An API is an "Application Programming Interface". 
 		You can use the API to write mobile Apps for VersionEye. 
 		The iPhone App and Android App we are working on is using 
-		the same API. But you can also use 
-		it to write an Desktop Application, Gadget or Widget. 
-	</p>
+		the same API. But you can also use it to write an Desktop 
+		Application, Gadget or Widget. 
+	</p>	
 	
-	
+
 	<h2 class="docu_h2">Search</h2><a name="search"></a>
 	<p class="docu">
 		This is how you can use the search in your application. 
@@ -38,13 +38,13 @@
 	</p>
 	<p class="docu">
 		The search term must contain at least 2 characters. Otherwise you get null back. 
-		If there are no results you get an empty array [ ] back. 
+		If there are no results you get an empty array [ ] back.
 	</p>
 	
 	
 	<h2 class="docu_h2">Product Details</h2><a name="productdetails"></a>
 	<p class="docu">
-		If you want to have details to a special product/version you can use this request here. 
+		If you want to have details to a special product/version you can use this request here.
 	</p>
 	<pre class="code">http://versioneye.com/product/<<span>PROD_KEY</span>>/version/<<span>VERSION_ID</span>/0.json</pre>
 	<p class="docu">
@@ -75,11 +75,11 @@
 
 	<h2 class="docu_h2">Profile Details / My Products</h2><a name="profiledetails"></a>
 	<p class="docu">
-		If you want to have details to a special profile you can use this request here. 
+		If you want to have details to a special profile you can use this request here.
 	</p>
 	<pre class="code">http://versioneye.com/users/<<span>USERNAME</span>>.json</pre>
 	<p class="docu">
-		Here is an example for with the profile of Robert Reiz.
+		Here is an example with the profile of Robert Reiz.
 	</p>
 	<pre class="code">http://versioneye.com/users/reiz.json</pre>
 	<p class="docu">
@@ -88,23 +88,23 @@
 		That means the newest product is on the top, the oldest is on the bottom. 
 	</p>
 	<p class="docu">
-		If you are logged in, the result is a little bit different. If you are logged in 
-		the "notification" attribut in the JSON object is filled with true/false or nil. 
-		If it is true that means that there is a new version of the product. At the 
-		first time you are calling the product detail page the flag "notification" for 
-		this product will set to false for you. This behavior is similar to the notification 
-		system in Facebook. 
+		If you are logged in, the result is a little bit different. If you are logged 
+		in the "notification" attribute in the JSON object is filled with true/false or 
+		nil. If it is true that means that there is a new version of the product. 
+		At the first time you are calling the product detail page the flag "notification" 
+		for this product will set to false for you. This behavior is similar to the 
+		notification system in Facebook. 
 	</p>		
 	
 	
 	<h2 class="docu_h2">Sign In</h2><a name="signin"></a>
 	<p class="docu">
-		If you want to write an application where the user can sign in into VersionEye, you 
-		can do it with a simple post request. Just send a post request to this address.
+		If you want to write an application where the user can sign in into VersionEye, 
+		you can do it with a simple post request. Just send a post request to this address.
 	</p>
 	<pre class="code">http://versioneye.com/sessions.json</pre>
 	<p class="docu">
-		This table below shows what your post form must contain. 
+		This table below shows what your post form must contain.
 	</p>
 	<p class="docu">
 		<table style="width:400px;" class="docu_table">
@@ -123,15 +123,15 @@
 		</table>
 	</p>
 	<p class="docu">
-		If the sign in procedure is not successfull you will get back an empty string. 
+		If the sign in procedure is not successful you will get back an empty string. 
 	</p>
 	<p class="docu">
-		If the sign in procedure is successfull you will get back the user as JSON object. 
-		That contains the username and the fullname of the user.  
+		If the sign in procedure is successful you will get back the user as JSON object. 
+		That contains the username and the full name of the user.  
 	</p>
 	<p class="docu">
-		If the sign in procedure is successfull the server will set a cookie on your system. 
-		This is for storing the session. It is absolut important that your system is 
+		If the sign in procedure is successful the server will set a cookie on your system. 
+		This is for storing the session. It is absolute important that your system is 
 		supporting cookies!
 	</p>
 	
