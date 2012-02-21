@@ -32,14 +32,19 @@ end
 group :development do
 #  gem 'ruby-debug19', :require => 'ruby-debug'  
 #  gem 'faker', '0.3.1'
+#  gem 'webrat', '0.7.3'
   gem "annotated_models", "3.0.2"
   gem 'rspec-rails', '2.8.0'
   gem 'webrat', '0.7.3'
+# gem 'capybara', '1.1.2'
 end
 
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
+  gem 'rspec-rails', '2.8.0'
+  gem 'webrat', '0.7.3'
+#  gem 'capybara', '1.1.2'
 end
 
 # Deploy with Capistrano
