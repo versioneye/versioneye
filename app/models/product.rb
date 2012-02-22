@@ -29,13 +29,10 @@ class Product
   require 'will_paginate/array'
 
   def self.find_by_name(searched_name)
-    if searched_name.nil? || searched_name.strip == ""
-      return nil
-    end
+    return Array.new if searched_name.nil? || searched_name.strip == ""  
     result1 = Product.all(conditions: { name: /^#{searched_name}/i }).desc(:rate).asc(:name)
     if (result1.nil? || result1.empty?)
-      result1 = Product.all(conditions: { name: /#{searched_name}/i }).desc(:rate).asc(:name)    
-      result1
+      Product.all(conditions: { name: /#{searched_name}/i }).desc(:rate).asc(:name)
     elsif 
       ids = Array.new
       result1.each do |product|
@@ -48,20 +45,14 @@ class Product
   end
   
   def self.find_by_key(searched_key)
-    if searched_key.nil? || searched_key.strip == ""
-      return nil
-    end
+    return Array.new if searched_key.nil? || searched_key.strip == ""
     result = Product.where(prod_key: searched_key )
-    if (result.nil? || result.empty?)
-      return nil
-    end
+    return Array new if (result.nil? || result.empty?)
     return result[0]    
   end
   
   def self.find_by_id(id)
-    if id.nil? || id.strip == ""
-      return nil
-    end
+    return nil if id.nil? || id.strip == ""
     result = Product.find(id)
     result
   rescue
@@ -74,18 +65,14 @@ class Product
   
   def get_version(searched_version)
     versions.each do |version|
-      if version.version.eql?(searched_version)
-        return version
-      end
+      return version if version.version.eql?(searched_version)
     end
     return nil
   end 
   
   def get_version_by_uid(uid)
     versions.each do |version|
-      if version.uid.eql?(uid)
-        return version
-      end
+      return version if version.uid.eql?(uid)
     end
     return nil
   end
