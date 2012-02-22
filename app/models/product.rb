@@ -30,15 +30,15 @@ class Product
 
   def self.find_by_name(searched_name)
     return Array.new if searched_name.nil? || searched_name.strip == ""  
-    result1 = Product.all(conditions: { name: /^#{searched_name}/i }).desc(:rate).asc(:name)
+    result1 = Product.all(conditions: { name: /^#{searched_name}/i }).desc(:rate).asc(:name).limit(300)
     if (result1.nil? || result1.empty?)
-      Product.all(conditions: { name: /#{searched_name}/i }).desc(:rate).asc(:name)
+      Product.all(conditions: { name: /#{searched_name}/i }).desc(:rate).asc(:name).limit(300)
     elsif 
       ids = Array.new
       result1.each do |product|
         ids.push product.prod_key
       end 
-      result2 = Product.all(conditions: { name: /#{searched_name}/i, prod_key: "{$nin: #{ids} }" }).desc(:rate).asc(:name)
+      result2 = Product.all(conditions: { name: /#{searched_name}/i, prod_key: "{$nin: #{ids} }" }).desc(:rate).asc(:name).limit(300)
       result = result1 + result2
       result
     end
