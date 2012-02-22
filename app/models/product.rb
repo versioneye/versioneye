@@ -42,6 +42,8 @@ class Product
       result = result1 + result2
       result
     end
+  rescue
+    Array.new
   end
   
   def self.find_by_key(searched_key)
