@@ -995,6 +995,10 @@ nav ul li a:hover {
 	font-family: courier;
 }
 
+.docu_table td{
+	vertical-align: top;
+}
+
 .docu_table th{
 	background-color: #F5F5F5;
 	font-family: courier;

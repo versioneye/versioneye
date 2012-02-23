@@ -1,16 +1,11 @@
 <div class="sidebar" >
 	
-	<a href="#search">Search</a><br/>
-	<a href="#productdetails">Product Details</a><br/>
-	<a href="#profiledetails">Profile Details</a><br/>
-	<a href="#signin">Sign In</a><br/>
-	<a href="#signout">Sign Out</a><br/>
-	<a href="#follow">Follow</a><br/>
-	<a href="#unfollow">Unfollow</a><br/>
+	<%= render 'page/apijson_navi' %>
 		
-</div>	
+</div>
 <div class="content">
 <docu>	
+	<a name="api"></a>
 	<h1>JSON API</h1>
 	<p class="docu">
 		This document describes the JSON API for VersionEye. 
@@ -34,14 +29,182 @@
 	</p>
 	<pre class="code">http://versioneye.com/search.json?q=junit</pre>
 	<p class="docu">
-		The result is the same as in the web application. But you get it as JSON objects. 
+		The result is the same as in the web application. But you get it as JSON objects. The result is an array of product objects.
 	</p>
 	<p class="docu">
 		The search term must contain at least 2 characters. Otherwise you get null back. 
 		If there are no results you get an empty array [ ] back.
 	</p>
-	
-	
+	<p>
+		Here is the description for the json product object. 
+	</p>
+	<p class="docu">
+		<table style="width:570px;" class="docu_table">
+			<tr>
+				<th>ATTRIBUTE</th>
+				<th>DESCRIPTION</th>
+			</tr>
+			<tr>
+				<td style="width: 150px;">following</td>
+				<td>true/false/null. If you are not logged in this is always null. 
+					If you are logged in an you are already following this product this is true.
+					Otherwise it is false.</td>
+			</tr>
+			<tr>
+				<td>notification</td>
+				<td>true/false/null. If you are not logged in this is always null. 
+					If you are logged in AND you are already following this product AND 
+					there is a new version or major change you didn't saw yet, this is true.
+					Otherwise it is false.</td>
+			</tr>
+			<tr>
+				<td>id</td>
+				<td>The ID of the product</td>
+			</tr>
+			<tr>
+				<td>version_uid</td>
+				<td>The ID of the newest version of this product.</td>
+			</tr>
+			<tr>
+				<td>name</td>
+				<td>Name of the product.</td>
+			</tr>
+			<tr>
+				<td>key</td>
+				<td>Unique key of the product.</td>
+			</tr>
+			<tr>
+				<td>group_id</td>
+				<td>GroupID of the product. This is important for Maven2 products.</td>
+			</tr>
+			<tr>
+				<td>artifact_id</td>
+				<td>ArtifactID of the product. This is important for Maven2 products.</td>
+			</tr>
+			<tr>
+				<td>link</td>
+				<td>Major link to the product.</td>
+			</tr>
+			<tr>
+				<td>version</td>
+				<td>Newest version of the product</td>
+			</tr>
+			<tr>
+				<td>version_link</td>
+				<td>Major link to the newest version of the product</td>
+			</tr>
+			<tr>
+				<td>prod_type</td>
+				<td>The type of the Product. For example "Maven2"</td>
+			</tr>
+			<tr>
+				<td>created_at</td>
+				<td>The create date of this product at versioneye.com</td>
+			</tr>
+			<tr>
+				<td>updated_at</td>
+				<td>Last update date of this product at versioneye.com</td>
+			</tr>
+			<tr>
+				<td>src</td>
+				<td>A list of the sources there this product was crawled</td>
+			</tr>
+			<tr>
+				<td>versions</td>
+				<td>A list of all versions</td>
+			</tr>
+			<tr>
+				<td>comments</td>
+				<td>A list of all comments</td>
+			</tr>
+		</table>
+	</p>
+	<p>
+		Here is the description for the json src object. 
+	</p>
+	<p class="docu">
+		<table style="width:570px;" class="docu_table">
+			<tr>
+				<th>ATTRIBUTE</th>
+				<th>DESCRIPTION</th>
+			</tr>
+			<tr>
+				<td style="width: 150px;">src</td>
+				<td>The source where this product was found</td>
+			</tr>
+			<tr>
+				<td style="width: 150px;">repotype</td>
+				<td>The type of the repository. For example Maven2.</td>
+			</tr>
+		</table>
+	</p>
+	<p>
+		Here is the description for the json version object. 
+	</p>
+	<p class="docu">
+		<table style="width:570px;" class="docu_table">
+			<tr>
+				<th>ATTRIBUTE</th>
+				<th>DESCRIPTION</th>
+			</tr>
+			<tr>
+				<td style="width: 150px;">version</td>
+				<td>The version of the product</td>
+			</tr>
+			<tr>
+				<td style="width: 150px;">uid</td>
+				<td>Unified ID over the whole database</td>
+			</tr>
+			<tr>
+				<td style="width: 150px;">link</td>
+				<td>Link to this special version of the product.</td>
+			</tr>
+			<tr>
+				<td style="width: 150px;">rate</td>
+				<td>The average rage of this version. Number between 10 and 50.</td>
+			</tr>
+			<tr>
+				<td>created_at</td>
+				<td>The create date of this version at versioneye.com</td>
+			</tr>
+			<tr>
+				<td>updated_at</td>
+				<td>Last update date of this version at versioneye.com</td>
+			</tr>
+		</table>
+	</p>
+	<p>
+		Here is the description for the json comment object. 
+	</p>
+	<p class="docu">
+		<table style="width:570px;" class="docu_table">
+			<tr>
+				<th>ATTRIBUTE</th>
+				<th>DESCRIPTION</th>
+			</tr>
+			<tr>
+				<td style="width: 150px;">rate</td>
+				<td>The average rage of this version. Number between 10 and 50.</td>
+			</tr>
+			<tr>
+				<td style="width: 150px;">comment</td>
+				<td>An user comment.</td>
+			</tr>
+			<tr>
+				<td style="width: 150px;">from</td>
+				<td>Name of the User</td>
+			</tr>
+			<tr>
+				<td>created_at</td>
+				<td>The create date of this version at versioneye.com</td>
+			</tr>
+			<tr>
+				<td>updated_at</td>
+				<td>Last update date of this version at versioneye.com</td>
+			</tr>
+		</table>
+	</p>
+
 	<h2 class="docu_h2">Product Details</h2><a name="productdetails"></a>
 	<p class="docu">
 		If you want to have details to a special product/version you can use this request here.
@@ -71,7 +234,11 @@
 			</tr>
 		</table>
 	</p>	
-	
+	<p>
+		The json product object in the result is the same as in the search. But here you 
+		just get one single object. In the search you get an array of objects. 
+	</p>
+
 
 	<h2 class="docu_h2">Profile Details / My Products</h2><a name="profiledetails"></a>
 	<p class="docu">

@@ -44,6 +44,7 @@ Versioneye::Application.routes.draw do
   match '/datenerhebung',     :to => 'page#datenerhebung'
   match '/datacollection',    :to => 'page#datacollection'  
   match '/apijson',           :to => 'page#apijson'  
+  match '/apijson_tools',     :to => 'page#apijson_tools'  
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
