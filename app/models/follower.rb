@@ -12,5 +12,9 @@ class Follower < ActiveRecord::Base
   def self.find_by_product(product_id)
     Follower.find(:all, :conditions => ["product_id = ?", product_id])
   end
+  
+  def self.find_notifications_by_user_id(user_id)    
+    Follower.find(:all, :conditions => ["user_id = ? AND notification is true", user_id])
+  end
 
 end

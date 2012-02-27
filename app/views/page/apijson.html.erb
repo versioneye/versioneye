@@ -195,6 +195,14 @@
 				<td>Name of the User</td>
 			</tr>
 			<tr>
+				<td style="width: 150px;">prod_name</td>
+				<td>Name of the Product</td>
+			</tr>
+			<tr>
+				<td style="width: 150px;">prod_key</td>
+				<td>Key of the Product</td>
+			</tr>
+			<tr>
 				<td>created_at</td>
 				<td>The create date of this version at versioneye.com</td>
 			</tr>
@@ -240,7 +248,7 @@
 	</p>
 
 
-	<h2 class="docu_h2">Profile Details / My Products</h2><a name="profiledetails"></a>
+	<h2 class="docu_h2">User Profile</h2><a name="userprofile"></a>
 	<p class="docu">
 		If you want to have details to a special profile you can use this request here.
 	</p>
@@ -250,7 +258,41 @@
 	</p>
 	<pre class="code">http://versioneye.com/users/reiz.json</pre>
 	<p class="docu">
-		The result contains all favorite products of the given user. 
+		The result contains username und fullname.
+	</p>
+	<p class="docu">
+		<table style="width:570px;" class="docu_table">
+			<tr>
+				<th>ATTRIBUTE</th>
+				<th>DESCRIPTION</th>
+			</tr>
+			<tr>
+				<td style="width: 150px;">fullname</td>
+				<td>Fullname of the user</td>
+			</tr>
+			<tr>
+				<td style="width: 150px;">username</td>
+				<td>Username of the user</td>
+			</tr>
+		</table>
+	</p>
+	
+	<h2 class="docu_h2">User Favorite Products</h2><a name="userfavproducts"></a>
+	<p class="docu">
+		If you want to have the favorite products to a special user profile you can use this request here.
+	</p>
+	<pre class="code">http://versioneye.com/users/<<span>USERNAME</span>>/favoriteproducts.json</pre>
+	<p class="docu">
+		Here is an example with the profile of Robert Reiz.
+	</p>
+	<pre class="code">http://versioneye.com/users/reiz/favoriteproducts.json</pre>
+	<p class="docu">
+		Every user can control the result for this request in the privacy settings. 
+		If a user decided that nobody can see his favorite products, this request 
+		will just return an empty array! 
+	</p>
+	<p class="docu">
+		Otherwise the result contains all favorite products of the given user. 
 		The products are sorted by the date in a descending order. 
 		That means the newest product is on the top, the oldest is on the bottom. 
 	</p>
@@ -261,7 +303,42 @@
 		At the first time you are calling the product detail page the flag "notification" 
 		for this product will set to false for you. This behavior is similar to the 
 		notification system in Facebook. 
-	</p>		
+	</p>
+	<p class="docu">
+		Check out the table for the product object in the top of the page. 
+	</p>
+	
+	
+	<h2 class="docu_h2">User Comments</h2><a name="usercomments"></a>
+	<p class="docu">
+		If you want to have all user comments to a special user profile you can use this request here.
+	</p>
+	<pre class="code">http://versioneye.com/users/<<span>USERNAME</span>>/comments.json</pre>
+	<p class="docu">
+		Here is an example with the profile of Robert Reiz.
+	</p>
+	<pre class="code">http://versioneye.com/users/reiz/comments.json</pre>
+	<p class="docu">
+		Every user can control the result for this request in the privacy settings. 
+		If a user decided that nobody can see his comments on his profile, this request 
+		will just return an empty array! 
+	</p>
+	<p class="docu">
+		Otherwise the result contains all comments of the given user. 
+	</p>
+	<p class="docu">
+		Check out the table for the comment object in the top of the page. 
+	</p>
+	
+	
+	<h2 class="docu_h2">User Notifications</h2><a name="usernotifications"></a>
+	<p class="docu">
+		This request makes just sense if you are logged in / signed in! 
+	</p>
+	<pre class="code">http://versioneye.com/users/<<span>USERNAME</span>>/notifications.json</pre>
+	<p class="docu">
+		It returns the number of the unread notifications. 
+	</p>
 	
 	
 	<h2 class="docu_h2">Sign In</h2><a name="signin"></a>

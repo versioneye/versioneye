@@ -6,10 +6,15 @@ class Versioncomment < ActiveRecord::Base
                        :length        => { :within => 2..1000 }
   
   def as_json parameter
+    product = get_product
+    prod_name = product.name unless product.nil?
+    prod_key = product.prod_key unless product.nil?
     {
       :rate => self.rate,
       :comment => self.comment,
       :from => user.fullname,
+      :product_name => prod_name,
+      :product_key => prod_key,
       :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
       :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
     }

@@ -19,6 +19,7 @@ Versioneye::Application.routes.draw do
   match '/users/:id/updateprivacy',      :to => 'users#updateprivacy'
   match '/users/:id/favoriteproducts',   :to => 'users#showfavoriteproducts'
   match '/users/:id/comments',           :to => 'users#showcomments'
+  match '/users/:id/notifications',      :to => 'users#notifications'
   match '/users/activate/:verification', :to => 'users#activate'
   match '/iforgotmypassword', :to => 'users#iforgotmypassword'
   match '/resetpassword',     :to => 'users#resetpassword'
