@@ -1,7 +1,7 @@
 <div>
 	<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate, :id => comment.id} %>
 	<br/>
-<div>
+</div>
 <div class="meta-text-small">
 	<%= link_to comment.user.fullname, user_path(comment.user) %> on <%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %>							
 </div>

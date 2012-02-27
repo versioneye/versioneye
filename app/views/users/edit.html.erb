@@ -101,3 +101,76 @@
     </div>
 <% end %>
 </div>
+
+<div class="boxHeader">
+	Privacy Settings
+</div>
+<div class="boxContainer">
+<%= form_tag("/users/#{@user.username}/updateprivacy", :method => "post") do  %>    
+
+	<div class="div-row">
+      <div class="labelCelBig">
+
+      </div>
+      <div class="div-cell privacy-option-a">
+		<label>Nobody</label>
+      </div>
+      <div class="div-cell privacy-option-b" >
+		<label>Registered Users<label>
+      </div>
+	  <div class="div-cell privacy-option-c" >
+		<label>Everybody</label>
+      </div>
+    </div>	
+
+	<div class="div-row">
+      <div class="labelCelBig">
+		<label>Who can see the products I'm following?</label>
+      </div>
+      <div class="div-cell privacy-option-a" >
+		<input type="radio" name="following_products" value="nobody" <%= "checked" if @user.privacy_products == 'nobody' %>/>
+      </div>
+      <div class="div-cell privacy-option-b">
+		<input type="radio" name="following_products" value="ru" <%= "checked" if @user.privacy_products == 'ru' %>/>
+      </div>
+	  <div class="div-cell privacy-option-c">
+		<input type="radio" name="following_products" value="everybody" <%= "checked" if @user.privacy_products == 'everybody' %> />
+      </div>
+    </div>
+
+	<div class="div-row" >
+      <div class="labelCelBig privacy-seperator">
+		<label>Who can see my comments on my profile?</label>
+      </div>
+      <div class="div-cell privacy-option-a privacy-seperator" >
+		<input type="radio" name="comments" value="nobody" <%= "checked" if @user.privacy_comments == 'nobody' %> />
+      </div>
+      <div class="div-cell privacy-option-b privacy-seperator">
+		<input type="radio" name="comments" value="ru" <%= "checked" if @user.privacy_comments == 'ru' %> />
+      </div>
+	  <div class="div-cell privacy-option-c privacy-seperator">
+		<input type="radio" name="comments" value="everybody" <%= "checked" if @user.privacy_comments == 'everybody' %> />
+      </div>
+    </div>
+
+	<div style="display:table-row;">
+      <div class="labelCelBig">
+		<%= label_tag(:password) %>
+      </div>
+      <div class="div-cell privacy-option-b">
+		<%= password_field_tag :password, "", :class => "round", :style => "width: 140px;" %>
+      </div>
+      <div class="div-cell" style="vertical-align:middle">For security reasons please type in your password.</div>
+	   <div class="div-cell"></div>
+    </div>
+
+    <div style="display:table-row;">
+		<div class="labelCelBig"></div>
+		<div class="div-cell privacy-option-b" >
+			<%= submit_tag "Save", :class => "button" %>
+		</div>
+       <div class="div-cell"></div>
+	   <div class="div-cell"></div>
+	</div>
+<% end %>
+</div>

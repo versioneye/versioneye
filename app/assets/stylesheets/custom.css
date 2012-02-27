@@ -1,4 +1,6 @@
 
+/* kind of gray = #F5F5F5 */
+
 /******* Basic Elements *********/
 
 body {
@@ -575,6 +577,23 @@ nav ul li a:hover {
 	width: 2px;
 }
 
+.side-navi-head{
+	border-top: 1px dotted gray;
+}
+
+.side-navi{
+	height: 25px;
+	line-height: 28px;
+	background-color: white;
+	border-bottom: 1px dotted gray;
+	padding-left: 10px;
+}
+
+.side-navi-selected{
+	background-color: #F5F5F5;
+	padding-left: 20px;
+}
+
 /****** Footer ******/
 
 .footerLink{
@@ -1008,3 +1027,29 @@ nav ul li a:hover {
 	border-bottom: 1px solid #F5F5F5;
 	font-family: courier;
 }
+
+.privacy-option-a{
+	width: 150px; 
+	text-align: center;
+/*	padding-left: 10px*/
+}
+
+.privacy-option-b{
+	width: 200px;
+	text-align: center;
+}
+
+.privacy-option-c{
+	width: 150px; 
+	text-align: center;
+}
+
+.privacy-seperator{
+	border-top: 1px solid gray;
+}
+
+.profile-head{
+	padding-bottom: 20px;
+	border-bottom: 1px dotted gray;
+}
+

@@ -1,0 +1,13 @@
+<div class="searchResults">
+	<% if !@comments.empty? %>
+		<% @comments.each do |comment| %>
+			<% @product = comment.get_product %>
+			<% if !@product.nil? %>
+				<div class="searchResult" >
+					<a href="<%= product_version_path(@product) %>" class="searchResultLink"><%=comment.get_product.name_and_version%></a><br/>
+					<%= render :partial => 'shared/show_version_comment', :locals => {:comment => comment} %>
+				</div>
+			<% end %>
+		<% end %>
+	<% end %>
+</div>

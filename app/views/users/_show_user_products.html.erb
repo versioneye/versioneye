@@ -1,0 +1,41 @@
+<div class="searchResults">
+	<% if !@products.empty? %>
+		<% @products.each do |product| %>
+			<% if product.notification == true %>
+				<div class="searchResult" style="background-color: beige">
+			<% else %>
+				<div class="searchResult" >
+			<% end %>
+				<a href="<%= product_version_path(product) %>" class="searchResultLink"><%=product.name_and_version%></a><br/>
+				<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
+				<% if current_user == @user %>
+					<table style="margin:0" >
+						<tr>
+							<td width="60" >								
+								<%= form_tag("/unfollow") do  %>
+									<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
+									<%= submit_tag "Unfollow", :class => "unfollowButton" %>
+								<% end %>								
+							</td>
+							<td>
+								<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
+							</td>
+						</tr>
+					</table>
+				<% elsif %>	
+					<table style="margin:0" >
+						<tr>
+							<td>
+								<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
+							</td>
+						</tr>
+					</table>
+				<% end %>
+			</div>
+		<% end %>
+	<% elsif current_user == @user %>
+		<div>
+			Right now you are not following any product. Make a search and follow a product to get notified about updates. 
+		</div>
+	<% end %>
+</div>

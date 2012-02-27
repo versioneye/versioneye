@@ -101,5 +101,24 @@ describe Product do
     end
     
   end
+  
+  describe "find_by_key" do
+    
+    it "return nil. Because input is nil" do 
+      result = Product.find_by_key(nil)
+      result.should be_nil
+    end
+    
+    it "return nil. Because input is empty" do 
+      result = Product.find_by_key("  ")
+      result.should be_nil
+    end
+    
+    it "return nil. Because there are no results." do 
+      result = Product.find_by_key("gasflasjgfaskjgas848asjgfasgfasgf")
+      result.should be_nil
+    end
+    
+  end
 
 end

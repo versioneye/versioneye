@@ -2,51 +2,40 @@
 	
 	<h1><%= @user.fullname %></h1>
 	
-	Follows <%= pluralize(@products.count, "product") %>
+	<% if !@products.nil? %>
+		<div class="side-navi side-navi-selected side-navi-head">
+			<a href="/users/<%=@user.username%>/favoriteproducts">Favorite Products</a>
+		</div>
+	<% else %>	
+		<div class="side-navi side-navi-head">
+			<a href="/users/<%=@user.username%>/favoriteproducts">Favorite Products</a>
+		</div>
+	<% end %>	
 	
+	<% if !@comments.nil? %>
+		<div class="side-navi side-navi-selected">
+			<a href="/users/<%=@user.username%>/comments">Comments</a>
+		</div>
+	<% else %>	
+		<div class="side-navi">
+			<a href="/users/<%=@user.username%>/comments">Comments</a>
+		</div>
+	<% end %>	
+		
 </div>	
 <div class="content">
-	
-	<div class="searchResults">
-		<% if !@products.empty? %>
-			<% @products.each do |product| %>
-				<% if product.notification == true %>
-					<div class="searchResult" style="background-color: beige">
-				<% else %>
-					<div class="searchResult" >
-				<% end %>
-					<a href="<%= product_version_path(product) %>" class="searchResultLink"><%=product.name_and_version%></a><br/>
-					<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
-					<% if current_user == @user %>
-						<table style="margin:0" >
-							<tr>
-								<td width="60" >								
-									<%= form_tag("/unfollow") do  %>
-										<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
-										<%= submit_tag "Unfollow", :class => "unfollowButton" %>
-									<% end %>								
-								</td>
-								<td>
-									<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
-								</td>
-							</tr>
-						</table>
-					<% elsif %>	
-						<table style="margin:0" >
-							<tr>
-								<td>
-									<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
-								</td>
-							</tr>
-						</table>
-					<% end %>
-				</div>
-			<% end %>
-		<% elsif current_user == @user %>
-			<div>
-				Right now you are not following any product. Make a search and follow a product to get notified about updates. 
-			</div>
-		<% end %>
-	</div>
+		
+	<% if !@products.nil? %>	
+		<div class="profile-head">
+			<h2 ><%= pluralize(@products.count, "Favorite Product") %> </h2>
+		</div>
+		<%= render "users/show_user_products" %>
+	<% end %>	
+	<% if !@comments.nil? %>	
+		<div class="profile-head">
+			<h2 ><%= pluralize(@comments.count, "Comment") %> </h2>
+		</div>
+		<%= render "users/show_user_comments" %>
+	<% end %>
 	
 </div>

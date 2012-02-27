@@ -47,9 +47,9 @@ class Product
   end
   
   def self.find_by_key(searched_key)
-    return Array.new if searched_key.nil? || searched_key.strip == ""
+    return nil if searched_key.nil? || searched_key.strip == ""
     result = Product.where(prod_key: searched_key )
-    return Array new if (result.nil? || result.empty?)
+    return nil if (result.nil? || result.empty?)
     return result[0]    
   end
   

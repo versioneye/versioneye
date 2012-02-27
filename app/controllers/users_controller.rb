@@ -1,14 +1,10 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate, :except => [:show, :new, :create, :activate, :iforgotmypassword, :resetpassword]
+  before_filter :authenticate, :except => [:show, :showfavoriteproducts, :showcomments, :new, :create, :activate, :iforgotmypassword, :resetpassword]
   before_filter :correct_user, :only   => [:edit, :update, :activate]
   before_filter :admin_user,   :only   => :destroy
   before_filter :set_locale
 
-  def new
-    @user = User.new    
-  end
-  
   def home
     if signed_in?
       redirect_to user_path current_user
@@ -16,7 +12,11 @@ class UsersController < ApplicationController
       redirect_to root_path
     end
   end
-
+  
+  def new
+    @user = User.new    
+  end
+  
   def create
     @user = User.new(params[:user])
     if !User.username_valid?(@user.username)
@@ -36,6 +36,43 @@ class UsersController < ApplicationController
     end    
   end
   
+  def show
+    @user = User.find(:first, :conditions => ['username = ?', params[:id] ] )
+    respond_to do |format|
+      format.html { @user }
+      format.json { render :json => @user }
+    end        
+  end
+  
+  def showfavoriteproducts
+    @user = User.find(:first, :conditions => ['username = ?', params[:id] ] )
+    @products = Array.new
+    if has_permission_to_see_products( @user, current_user )
+      @products = @user.fetch_my_products unless @user.nil?    
+    end    
+    respond_to do |format|
+      format.html { render 'show' }
+      format.json { render :json => @products }
+    end
+  end
+  
+  def showcomments
+    @user = User.find(:first, :conditions => ['username = ?', params[:id] ] )
+    @comments = Array.new
+    if has_permission_to_see_comments( @user, current_user )
+      @comments = @user.versioncomments unless @user.nil?    
+    end
+    respond_to do |format|
+      format.html { render 'show' }
+      format.json { render :json => @comments }
+    end        
+  end
+  
+  def edit
+    @user = User.find(:first, :conditions => ['username = ?', params[:id] ] )
+    @user.new_username = @user.username
+  end  
+  
   def activate
     verification = params[:verification]
     if User.activate!(verification)
@@ -44,11 +81,6 @@ class UsersController < ApplicationController
       flash[:error] = "The activation code could not be found. Maybe your Account is already activated."
     end
     redirect_to '/signin'
-  end
-
-  def edit
-    @user = User.find(:first, :conditions => ['username = ?', params[:id] ] )
-    @user.new_username = @user.username
   end
 
   def updatenames
@@ -96,6 +128,22 @@ class UsersController < ApplicationController
     redirect_to edit_user_path( @user )
   end
   
+  def updateprivacy
+    privacy_products = validates_privacy_value params[:following_products]
+    privacy_comments = validates_privacy_value params[:comments]
+    password = params[:password]
+    user = current_user
+    user.privacy_products = privacy_products
+    user.privacy_comments = privacy_comments
+    user.password = password
+    if user.save
+      flash[:success] = "Profile updated."
+    else
+      flash[:error] = "Something went wrong. Please try again later."
+    end
+    redirect_to edit_user_path( @user )
+  end
+  
   def iforgotmypassword
   end
   
@@ -109,16 +157,6 @@ class UsersController < ApplicationController
       flash[:success] = "Please check your E-Mails. You should receive an E-Mail with a new password."
     end    
     redirect_to iforgotmypassword_path
-  end
-
-  def show
-    @user = User.find(:first, :conditions => ['username = ?', params[:id] ] )
-    @products = Array.new
-    @products = @user.fetch_my_products unless @user.nil?    
-    respond_to do |format|
-      format.html { @products }
-      format.json { render :json => @products }
-    end        
   end
 
   def destroy
@@ -148,5 +186,13 @@ class UsersController < ApplicationController
     rescue
       nil
     end
+    
+    def validates_privacy_value value
+      return "everybody" if value.nil? || value.empty?
+      return value if value.eql?("everybody") || value.eql?("nobody") || value.eql?("ru")
+      return "everybody"
+    end
+    
+    
 
 end

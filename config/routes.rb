@@ -14,8 +14,11 @@ Versioneye::Application.routes.draw do
   
   resources :users,           :key => :username
   match '/signup',            :to => 'users#new'
-  match '/users/:id/updatenames',    :to => 'users#updatenames'
-  match '/users/:id/updatepassword', :to => 'users#updatepassword'
+  match '/users/:id/updatenames',        :to => 'users#updatenames'
+  match '/users/:id/updatepassword',     :to => 'users#updatepassword'
+  match '/users/:id/updateprivacy',      :to => 'users#updateprivacy'
+  match '/users/:id/favoriteproducts',   :to => 'users#showfavoriteproducts'
+  match '/users/:id/comments',           :to => 'users#showcomments'
   match '/users/activate/:verification', :to => 'users#activate'
   match '/iforgotmypassword', :to => 'users#iforgotmypassword'
   match '/resetpassword',     :to => 'users#resetpassword'
@@ -45,6 +48,7 @@ Versioneye::Application.routes.draw do
   match '/datacollection',    :to => 'page#datacollection'  
   match '/apijson',           :to => 'page#apijson'  
   match '/apijson_tools',     :to => 'page#apijson_tools'  
+  match '/apijson_libs',      :to => 'page#apijson_libs'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -45,6 +45,14 @@ class Versioncomment < ActiveRecord::Base
     avg
   end
   
+  def get_product
+    product = Product.find_by_key(self.product_key)
+    if !product.nil?
+      product.version = self.version
+    end
+    product
+  end
+  
   def self.get_flatted_average(avg)
     avg = 10 if avg < 15 && avg > 0
     avg = 20 if avg < 25 && avg >= 15

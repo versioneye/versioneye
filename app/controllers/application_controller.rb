@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
   include ProductsHelper
+  include UsersHelper
   
   def client
     Twitter.configure do |config|
