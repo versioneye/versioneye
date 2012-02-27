@@ -120,5 +120,73 @@ describe Product do
     end
     
   end
+  
+  describe "get_newest_version_by_natural_order" do 
+    
+    it "returns the newest version correct." do
+      @product.versions = Array.new
+      ver = 1
+      5.times{
+        version = Version.new
+        version.version = ver.to_s
+        ver += 1
+        @product.versions.push(version)
+      }
+      version = @product.get_newest_version_by_natural_order
+      version.should eql("5")
+    end
+    
+    it "returns the newest version correct. With decimal numbers." do
+      @product.versions = Array.new
+      ver = 1
+      5.times{
+        version = Version.new
+        version.version = "1." + ver.to_s
+        ver += 1
+        @product.versions.push(version)
+      }
+      version = @product.get_newest_version_by_natural_order
+      version.should eql("1.5")
+    end
+    
+    it "returns the newest version correct. With long numbers." do
+      @product.versions = Array.new
+      
+      version1 = Version.new
+      version1.version = "1.2.2"
+      @product.versions.push(version1)
+      
+      version2 = Version.new
+      version2.version = "1.2.29"
+      @product.versions.push(version2)
+      
+      version3 = Version.new
+      version3.version = "1.3"
+      @product.versions.push(version3)
+      
+      version = @product.get_newest_version_by_natural_order
+      version.should eql("1.3")
+    end
+    
+    it "returns the newest version correct. With long numbers. Wariant 2." do
+      @product.versions = Array.new
+      
+      version1 = Version.new
+      version1.version = "1.22"
+      @product.versions.push(version1)
+      
+      version2 = Version.new
+      version2.version = "1.229"
+      @product.versions.push(version2)
+      
+      version3 = Version.new
+      version3.version = "1.30"
+      @product.versions.push(version3)
+      
+      version = @product.get_newest_version_by_natural_order
+      version.should eql("1.229")
+    end
+    
+  end
 
 end

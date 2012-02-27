@@ -65,6 +65,11 @@ class Product
     Naturalsorter::Sorter.sort_by_method(versions, "version", true)
   end
   
+  def get_newest_version_by_natural_order
+    versions = get_natural_sorted_versions
+    versions.last.version
+  end
+  
   def get_version(searched_version)
     versions.each do |version|
       return version if version.version.eql?(searched_version)

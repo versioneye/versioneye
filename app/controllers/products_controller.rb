@@ -76,7 +76,7 @@ class ProductsController < ApplicationController
     end
   end
   
-  def unfollow    
+  def unfollow
     src_hidden = params[:src_hidden]
     product_key = url_param_to_origin params[:product_key]    
     @product = fetch_product product_key
@@ -93,6 +93,49 @@ class ProductsController < ApplicationController
         }
     end
   end
+  
+  def newest 
+    key = url_param_to_origin params[:key]
+    type = params[:type]
+    version = "0"
+    product = Product.find_by_key(key)
+    if !type.nil? && !type.empty?
+      if type.eql?("natural")
+        version = product.get_newest_version_by_natural_order
+      end
+    end
+    respond_to do |format|
+      format.json { render :json => version.to_json }
+    end
+  end
+
+  def newest_version
+    key = url_param_to_origin params[:key]
+    ver = url_param_to_origin params[:version]
+    result = true
+    product = Product.find_by_key(key)
+    if !product.nil? 
+      version = product.get_newest_version_by_natural_order
+      newest_version = newest(version, ver)
+      if newest_version.eql?(ver)
+        result = true
+      else 
+        result = false
+      end
+    end
+    respond_to do |format|
+      format.json { render :json => result.to_json }
+    end
+  end
+  
+  def biggest
+    vers1 = params[:version1]
+    vers2 = params[:version2]    
+    version = newest(vers1, vers2)
+    respond_to do |format|
+      format.json { render :json => version.to_json }
+    end
+  end  
   
   private
   
@@ -139,6 +182,21 @@ class ProductsController < ApplicationController
         follower.delete
       end
       return "success"
+    end
+    
+    def newest(vers1, vers2)
+      product = Product.new
+      product.versions = Array.new
+
+      version1 = Version.new
+      version1.version = vers1
+      product.versions.push(version1)
+
+      version2 = Version.new
+      version2.version = vers2
+      product.versions.push(version2)
+
+      product.get_newest_version_by_natural_order
     end
 
 end

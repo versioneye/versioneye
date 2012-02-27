@@ -11,6 +11,9 @@ Versioneye::Application.routes.draw do
   match '/unfollow',          :to => 'products#unfollow'
   match '/product/:id',       :to => 'products#show'
   match '/product/:key/version/:version/:uid', :to => 'products#show'
+  match '/product/newest/:key/:type', :to => 'products#newest'
+  match '/product/newest/:key/version/:version', :to => 'products#newest_version'
+  match '/biggest/:version1/:version2', :to => 'products#biggest'
   
   resources :users,           :key => :username
   match '/signup',            :to => 'users#new'
