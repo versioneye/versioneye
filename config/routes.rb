@@ -12,7 +12,7 @@ Versioneye::Application.routes.draw do
   match '/product/:id',       :to => 'products#show'
   match '/product/:key/version/:version/:uid', :to => 'products#show'
   match '/product/newest/:key/:type', :to => 'products#newest'
-  match '/product/newest/:key/version/:version', :to => 'products#newest_version'
+  match '/product/wouldbenewest/:key/version/:version', :to => 'products#wouldbenewest'
   match '/biggest/:version1/:version2', :to => 'products#biggest'
   
   resources :users,           :key => :username

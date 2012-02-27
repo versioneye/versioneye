@@ -94,7 +94,7 @@ class ProductsController < ApplicationController
     end
   end
   
-  def newest 
+  def newest
     key = url_param_to_origin params[:key]
     type = params[:type]
     version = "0"
@@ -109,14 +109,14 @@ class ProductsController < ApplicationController
     end
   end
 
-  def newest_version
+  def wouldbenewest
     key = url_param_to_origin params[:key]
     ver = url_param_to_origin params[:version]
     result = true
     product = Product.find_by_key(key)
     if !product.nil? 
       version = product.get_newest_version_by_natural_order
-      newest_version = newest(version, ver)
+      newest_version = get_newest(version, ver)
       if newest_version.eql?(ver)
         result = true
       else 
@@ -131,7 +131,7 @@ class ProductsController < ApplicationController
   def biggest
     vers1 = params[:version1]
     vers2 = params[:version2]    
-    version = newest(vers1, vers2)
+    version = get_newest(vers1, vers2)
     respond_to do |format|
       format.json { render :json => version.to_json }
     end
@@ -184,7 +184,7 @@ class ProductsController < ApplicationController
       return "success"
     end
     
-    def newest(vers1, vers2)
+    def get_newest(vers1, vers2)
       product = Product.new
       product.versions = Array.new
 
