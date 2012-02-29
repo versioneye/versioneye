@@ -4,6 +4,7 @@ class Crawle
   field :crawler_name, type: String
   field :crawler_version, type: String
   field :repository_src, type: String
+  field :exec_group, type: String
   embeds_many :errors
   
   def crawler_name_and_version

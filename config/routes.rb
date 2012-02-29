@@ -3,20 +3,20 @@ Versioneye::Application.routes.draw do
   root :to => "products#index"
   
   match '/auth/facebook/callback', :to => 'facebook#callback'
-  get '/auth/twitter/callback', :to => 'twitter#callback', :as => 'callback'
+  get   '/auth/twitter/callback',  :to => 'twitter#callback', :as => 'callback'
 
   resources :products
-  match '/search',            :to => 'products#search'
-  match '/follow',            :to => 'products#follow'
-  match '/unfollow',          :to => 'products#unfollow'
-  match '/product/:id',       :to => 'products#show'
-  match '/product/:key/version/:version/:uid', :to => 'products#show'
-  match '/product/newest/:key/:type', :to => 'products#newest'
+  match '/search',                                      :to => 'products#search'
+  match '/follow',                                      :to => 'products#follow'
+  match '/unfollow',                                    :to => 'products#unfollow'
+  match '/product/:id',                                 :to => 'products#show'
+  match '/product/:key/version/:version/:uid',          :to => 'products#show'
+  match '/product/newest/:key/:type',                   :to => 'products#newest'
   match '/product/wouldbenewest/:key/version/:version', :to => 'products#wouldbenewest'
-  match '/biggest/:version1/:version2', :to => 'products#biggest'
+  match '/biggest/:version1/:version2',                 :to => 'products#biggest'
   
-  resources :users,           :key => :username
-  match '/signup',            :to => 'users#new'
+  resources :users, :key => :username
+  match '/signup',                       :to => 'users#new'
   match '/users/:id/updatenames',        :to => 'users#updatenames'
   match '/users/:id/updatepassword',     :to => 'users#updatepassword'
   match '/users/:id/updateprivacy',      :to => 'users#updateprivacy'
@@ -24,35 +24,36 @@ Versioneye::Application.routes.draw do
   match '/users/:id/comments',           :to => 'users#showcomments'
   match '/users/:id/notifications',      :to => 'users#notifications'
   match '/users/activate/:verification', :to => 'users#activate'
-  match '/iforgotmypassword', :to => 'users#iforgotmypassword'
-  match '/resetpassword',     :to => 'users#resetpassword'
-  match '/home',              :to => 'users#home'
+  match '/iforgotmypassword',            :to => 'users#iforgotmypassword'
+  match '/resetpassword',                :to => 'users#resetpassword'
+  match '/home',                         :to => 'users#home'
 
   resources :versioncomments
   match '/vc/:id',              :to => 'versioncomments#show'
   
-  resources :sessions,        :only => [:new, :create, :destroy]
-  match '/signin',            :to => 'sessions#new'
-  match '/signout',           :to => 'sessions#destroy'
+  resources :sessions, :only => [:new, :create, :destroy]
+  match '/signin',                :to => 'sessions#new'
+  match '/signout',               :to => 'sessions#destroy'
   match '/androidregistrationid', :to => 'sessions#android_registrationid'
   
   resources :crawles
-  match '/crawles',           :to => 'crawles#index'  
-  
-  match '/feedback',          :to => 'feedback#feedback'
-    
-  match '/about',             :to => 'page#about'
-  match '/impressum',         :to => 'page#impressum'
-  match '/imprint',           :to => 'page#imprint'
+  match '/crawles',             :to => 'crawles#index'
+  match '/group/:group',        :to => 'crawles#group'
+
+  match '/feedback',            :to => 'feedback#feedback'    
+
+  match '/about',               :to => 'page#about'
+  match '/impressum',           :to => 'page#impressum'
+  match '/imprint',             :to => 'page#imprint'
   match '/nutzungsbedingungen', :to => 'page#nutzungsbedingungen'  
-  match '/terms',             :to => 'page#terms'
-  match '/datenschutz',       :to => 'page#datenschutz'
-  match '/dataprivacy',       :to => 'page#dataprivacy'
-  match '/datenerhebung',     :to => 'page#datenerhebung'
-  match '/datacollection',    :to => 'page#datacollection'  
-  match '/apijson',           :to => 'page#apijson'  
-  match '/apijson_tools',     :to => 'page#apijson_tools'  
-  match '/apijson_libs',      :to => 'page#apijson_libs'
+  match '/terms',               :to => 'page#terms'
+  match '/datenschutz',         :to => 'page#datenschutz'
+  match '/dataprivacy',         :to => 'page#dataprivacy'
+  match '/datenerhebung',       :to => 'page#datenerhebung'
+  match '/datacollection',      :to => 'page#datacollection'  
+  match '/apijson',             :to => 'page#apijson'  
+  match '/apijson_tools',       :to => 'page#apijson_tools'  
+  match '/apijson_libs',        :to => 'page#apijson_libs'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

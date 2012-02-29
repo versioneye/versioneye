@@ -7,25 +7,14 @@
   <%= stylesheet_link_tag "application" %>
   <%= javascript_include_tag "application" %>
   <script src="http://connect.facebook.net/en_US/all.js"></script>
-  <script type="text/javascript">
-	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-28855249-1']);
-	_gaq.push(['_gat._anonymizeIp']);
-	_gaq.push(['_trackPageview']);
-	(function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	})();
-  </script>
-<style type="text/css">
+  <style type="text/css">
 	<% if !@product.nil? && @product.prod_type == "Printer" %>
 		body{
 			background-color: <%= @product.backgroundcolor %>;
 			background-image: url("<%= @product.backgroundimage %>");
 		}		
 	<% end %>
-</style>
+  </style>
 </head>
 
 <body>	

@@ -1,9 +1,6 @@
 class ProductsController < ApplicationController
 
   def index
-    respond_to do |format|
-      format.html { render :layout => "application_lean" }
-    end
   end
   
   def search
@@ -112,6 +109,7 @@ class ProductsController < ApplicationController
   def wouldbenewest
     key = url_param_to_origin params[:key]
     ver = url_param_to_origin params[:version]
+    p "key: #{key}"
     result = true
     product = Product.find_by_key(key)
     if !product.nil? 
@@ -123,6 +121,7 @@ class ProductsController < ApplicationController
         result = false
       end
     end
+    p "result: #{result}"
     respond_to do |format|
       format.json { render :json => result.to_json }
     end

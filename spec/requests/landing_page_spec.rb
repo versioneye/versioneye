@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "landing page" do
+  
   it "diplays the landing page" do
     get "/"
     assert_response :success
@@ -9,4 +10,5 @@ describe "landing page" do
     assert_select "body div.container section"
     assert_select "h1", 2
   end
+
 end

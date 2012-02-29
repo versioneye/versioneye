@@ -4,6 +4,7 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
+//= require google
 //= require jquery
 //= require jquery_ujs
 //= require jquery_ui_1_8_17_custom_min
