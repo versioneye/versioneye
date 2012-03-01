@@ -1,8 +1,5 @@
 #!/bin/bash
 
-UNICORN=/var/lib/gems/1.9.1/bin/unicorn_rails
-KILLALL=/usr/bin/killall
-
 case "$1" in
         deploy)
                 git checkout Gemfile
