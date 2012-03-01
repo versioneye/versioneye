@@ -12,7 +12,8 @@ case "$1" in
                 bundle install
                 rake db:migrate
                 rake assets:precompile
-                unicorn_rails -p8080 -D
+				/etc/init.d/app1.sh stop
+				/etc/init.d/app1.sh start
                 ;;
         *)
                 echo "Usage: $0 {deploy}"

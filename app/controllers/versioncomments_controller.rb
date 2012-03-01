@@ -8,6 +8,7 @@ class VersioncommentsController < ApplicationController
     prod_key = @versioncomment.product_key
     ver = @versioncomment.version
     @product = Product.find_by_key(prod_key)
+    @versioncomment.prod_name = @product.name
     attach_version(@product, ver, nil)
     
     if @versioncomment.save      

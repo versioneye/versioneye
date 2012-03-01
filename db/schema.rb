@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120225230630) do
+ActiveRecord::Schema.define(:version => 20120301021814) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -76,13 +76,14 @@ ActiveRecord::Schema.define(:version => 20120225230630) do
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
   create_table "versioncomments", :force => true do |t|
-    t.integer  "user_id",     :null => false
-    t.string   "product_key", :null => false
-    t.string   "version",     :null => false
-    t.integer  "rate",        :null => false
-    t.text     "comment",     :null => false
+    t.integer  "user_id",                                 :null => false
+    t.string   "product_key",                             :null => false
+    t.string   "version",                                 :null => false
+    t.integer  "rate",                                    :null => false
+    t.text     "comment",                                 :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "prod_name",   :default => "product name"
   end
 
 end

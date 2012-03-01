@@ -20,6 +20,10 @@ class Versioncomment < ActiveRecord::Base
     }
   end
   
+  def self.find_by_user_id(user_id)
+    Versioncomment.where("user_id = ? ", user_id).order("created_at desc")
+  end
+  
   def self.find_by_id(id)
     comment = Versioncomment.find(:first, :conditions => ["id = ?", id])
     comment
@@ -48,6 +52,29 @@ class Versioncomment < ActiveRecord::Base
       avg = sum / count
     end
     avg
+  end
+  
+  def prod_key_url
+    Product.to_url_param(self.product_key)
+  end
+  
+  def version_url
+    Product.to_url_param(self.version)
+  end
+  
+  def name_and_version
+    "#{self.prod_name} (#{self.version})" 
+  end
+  
+  def self.update_product_names
+    comments = Versioncomment.all
+    comments.each do |comment|
+      product = comment.get_product
+      if !product.nil?
+        comment.prod_name = product.name
+        comment.save
+      end      
+    end
   end
   
   def get_product

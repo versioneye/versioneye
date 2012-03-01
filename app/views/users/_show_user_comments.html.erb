@@ -1,13 +1,40 @@
 <div class="searchResults">
 	<% if !@comments.empty? %>
 		<% @comments.each do |comment| %>
-			<% @product = comment.get_product %>
-			<% if !@product.nil? %>
+
 				<div class="searchResult" >
-					<a href="<%= product_version_path(@product) %>" class="searchResultLink"><%=comment.get_product.name_and_version%></a><br/>
-					<%= render :partial => 'shared/show_version_comment', :locals => {:comment => comment} %>
+
+					<a href="/product/<%= comment.prod_key_url %>/version/<%= comment.version_url %>/0"
+					   class="searchResultLink"><%=comment.name_and_version%></a><br/>
+					
+					<div>
+						<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate, :id => comment.id} %>
+						<br/>
+					</div>
+					<div class="meta-text-small">
+						<%= link_to @user.fullname, user_path(@user) %> on <%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %>							
+					</div>
+					<div>
+						<%= comment.comment %>
+					</div>
+					<div class="meta-text-small" >
+						<ul class="list-row">
+							<li class="list-cell share-on">Share on</li>
+							<li class="list-cell share-on-icon">
+								<%= image_tag "facebook_icon.png", :onclick=>"shareOnFacebook('#{configatron.server_url}/vc/#{comment.id}', '#{@user.fullname} on #{comment.name_and_version} @VersionEye');", :alt=>"Facebook", :title=>"Facebook" %>
+							</li>
+							<li class="list-cell share-on-icon">
+								<a href="http://twitter.com/share" 
+								   class="twitter-share-button" 
+								   data-url="<%= configatron.server_url %>/vc/<%= comment.id %>" 
+								   data-text="<%= @user.fullname %> on <%= comment.name_and_version %> @VersionEye" 
+								   data-count="horizontal" >Tweeter</a>
+							</li>
+						</ul>
+					</div>
+					
 				</div>
-			<% end %>
+
 		<% end %>
 	<% end %>
 </div>

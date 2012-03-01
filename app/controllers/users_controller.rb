@@ -60,7 +60,7 @@ class UsersController < ApplicationController
     @user = User.find(:first, :conditions => ['username = ?', params[:id] ] )
     @comments = Array.new
     if has_permission_to_see_comments( @user, current_user )
-      @comments = @user.versioncomments unless @user.nil?    
+      @comments = Versioncomment.find_by_user_id( @user.id ) unless @user.nil?
     end
     respond_to do |format|
       format.html { render 'show' }
