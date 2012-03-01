@@ -1,7 +1,7 @@
 #!/bin/bash
 
 case "$1" in
-        deploy)
+        update)
                 git checkout Gemfile
                 git checkout Gemfile.lock
                 git checkout config/database.yml
@@ -12,10 +12,8 @@ case "$1" in
                 bundle install
                 rake db:migrate
                 rake assets:precompile
-				/etc/init.d/app1.sh stop
-				/etc/init.d/app1.sh start
                 ;;
         *)
-                echo "Usage: $0 {deploy}"
+                echo "Usage: $0 {update}"
                 ;;
 esac
