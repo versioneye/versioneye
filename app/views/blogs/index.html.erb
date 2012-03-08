@@ -1,0 +1,18 @@
+<div class="sidebar" >
+	
+	<%= render "blogs/navi" %>
+	
+</div>	
+<div class="content">
+	
+	<% @blogs.each do |blog| %>
+		<div class="blogpost">
+			<div class="blog-subject"><%= blog.subject %></div>
+			<div class="meta-text-small">
+				<%= link_to blog.get_user.fullname, user_path(blog.get_user) %> on <%= blog.created_at.strftime("%b %d, %Y - %I:%m %p") %>
+			</div>
+			<div class="blog-post"><%= blog.post_html %></div>	
+		</div>
+	<% end %>
+	
+</div>

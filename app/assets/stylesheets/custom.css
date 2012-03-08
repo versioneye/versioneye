@@ -936,6 +936,52 @@ nav ul li a:hover {
 	margin-left: 5px;
 }
 
+/****** BLOG ****************/
+
+.blogpost{
+	padding-bottom: 20px;
+}
+
+.blog-subject{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.blog-post{
+	padding-top: 10px;
+}
+
+.blog-labelCel{
+    padding-left: 5px;
+	display: table-cell;
+	text-align: left;
+	vertical-align: middle;
+	height: 35px;
+	padding-top: 10px;
+}
+
+.blog-inputCel{
+	width: 570px;
+    padding-left: 5px;
+    display: table-cell;
+}
+
+.blog-submitCel{
+	padding-left: 0px;
+    width: 570px;
+    display: table-cell;
+	text-align: left;
+}
+
+.blog-input{
+	width: 560px;
+}
+
+.blog-textarea{
+	width: 563px;
+	height: 300px;
+}
+
 /****** ELSE ****************/
 
 .share-on{

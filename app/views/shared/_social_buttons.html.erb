@@ -1,5 +1,12 @@
 <div class="socialbuttons">
 	<div>
+		<a href="/blogs" 
+		   onmouseover="document.getElementById('blog_img').src='/assets/blog_on.png';"
+		   onmouseout="document.getElementById('blog_img').src='/assets/blog_off.png';" >
+			<%= image_tag("blog_off.png", :title => "VersionEye Blog", :alt => "VersionEye Blog", :id => "blog_img") %>
+		</a>
+	</div>
+	<div>
 		<a href="https://www.facebook.com/pages/VersionEye/295350293845442" 
 		   target="_NEW_FB"
 		   onmouseover="document.getElementById('facebook_img').src='/assets/facebook_on.png';"

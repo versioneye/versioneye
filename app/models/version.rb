@@ -1,11 +1,14 @@
 class Version
+
   include Mongoid::Document
   include Mongoid::Timestamps
+
   field :uid, type: String
   field :version, type: String
   field :link, type: String
   field :rate, type: Integer
   field :ratecount, type: Integer
+
   embedded_in :product
   
   def as_json parameter

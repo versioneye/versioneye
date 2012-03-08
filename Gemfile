@@ -6,8 +6,12 @@ gem 'configatron', '2.9.0'
 gem 'execjs', '1.2.9'
 gem 'therubyracer', '0.9.9'
 gem 'activesupport', '3.1.0'
-gem 'mongoid', '2.3.4'
-gem 'bson_ext', '1.5.2'
+
+# For optimum performance, bson_ext, for the mongo driver
+gem 'bson_ext', '1.6.0'  
+gem 'mongo', '1.6.0'
+gem 'mongoid', '2.4.6'
+
 gem 'actionmailer', '3.1.0'
 gem 'will_paginate', '3.0.2'
 gem 'pg', '0.11.0'

@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "active_resource/railtie"
@@ -31,6 +32,9 @@ module Versioneye
     end
     
     Mongoid.load!("config/mongoid.yml")
+    #Mongoid.configure do |config|
+    #  config.master = Mongo::ReplSetConnection.new(['Debian-60-squeeze-64-minimal:5444'], ['d.s4y:5444'], :read => :secondary, :name => "veye").db("veye_prod")
+    #end
     
     config.action_mailer.delivery_method   = :postmark
     config.action_mailer.postmark_settings = { :api_key => "f6312dfd-6ef7-406c-9a7b-748586a43371" }

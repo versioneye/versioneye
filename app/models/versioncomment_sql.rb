@@ -1,20 +1,14 @@
-class Versioncomment
-
-  include Mongoid::Document
-  include Mongoid::Timestamps
-
-  field :user_id, type: String
-  field :product_key, type: String  
-  field :version, type: String
-  field :rate, type: Integer
-  field :comment, type: String
-  field :prod_name, type: String
+class VersioncommentSql < ActiveRecord::Base
   
-  validates_presence_of :user_id,     :message => "User is mandatory!"
-  validates_presence_of :product_key, :message => "Product is mandatory!"
-  validates_presence_of :version,     :message => "Version is mandatory!"
-  validates_presence_of :rate,        :message => "Rate is mandatory!"
-  validates_presence_of :comment,     :message => "Comment is mandatory!"  
+  set_table_name "versioncomments"
+  
+  belongs_to :user,           :class_name => "UserSql"
+    
+  validates :comment,  :presence      => true,
+                       :length        => { :within => 2..1000 }  
+  validates :rate,     :presence      => true
+  validates :version,  :presence      => true  
+  
   
   def as_json parameter
     product = get_product
@@ -32,28 +26,23 @@ class Versioncomment
   end
   
   def self.find_by_id(id)
-    Versioncomment.first(conditions: { id: id} )
+    Versioncomment.find(:first, :conditions => ["id = ?", id])
   end
   
   def self.find_by_user_id(user_id)
-    Versioncomment.where(user_id: user_id).desc(:created_at)
+    Versioncomment.where("user_id = ? ", user_id).order("created_at desc")
   end
   
   def self.find_by_prod_key_and_version(prod_key, version)
-    Versioncomment.all( conditions: {product_key: prod_key, version: version} ).asc(:created_at)
+    Versioncomment.where("product_key = ? AND version = ?", prod_key, version).order("created_at asc")
   end
   
   def self.get_sum_by_prod_key_and_version(prod_key, version)
-    comments = Versioncomment.all( conditions: {product_key: prod_key, version: version} )
-    sum = 0
-    comments.each do |comment|
-      sum = sum + comment.rate
-    end
-    sum
+    Versioncomment.where("product_key = ? AND version = ?", prod_key, version).sum("rate")
   end
   
   def self.get_count_by_prod_key_and_version(prod_key, version)
-    Versioncomment.all( conditions: {product_key: prod_key, version: version} ).count()
+    Versioncomment.where("product_key = ? AND version = ?", prod_key, version).count()
   end
   
   def self.get_average_rate_by_prod_key_and_version(prod_key, version)
@@ -64,14 +53,6 @@ class Versioncomment
       avg = sum / count
     end
     avg
-  end
-  
-  def user
-    if self.user_id.size < 3
-      User.find( self.user_id.to_i )
-    else
-      User.find( self.user_id )
-    end
   end
   
   def prod_key_url
@@ -87,13 +68,28 @@ class Versioncomment
   end
   
   def self.update_product_names
-    comments = Versioncomment.all
+    comments = VersioncommentSql.all
     comments.each do |comment|
       product = comment.get_product
       if !product.nil?
         comment.prod_name = product.name
         comment.save
       end      
+    end
+  end
+  
+  def self.migrate_to_mongo
+    comments = VersioncommentSql.all
+    comments.each do |comment|
+      p "comment: #{comment.id}"
+      vc = Versioncomment.new
+      vc.user_id = comment.user_id
+      vc.product_key = comment.product_key
+      vc.prod_name = comment.prod_name
+      vc.version = comment.version
+      vc.rate = comment.rate
+      vc.comment = comment.comment
+      vc.save
     end
   end
   
@@ -111,7 +107,6 @@ class Versioncomment
     avg = 30 if avg < 35 && avg >= 25
     avg = 40 if avg < 45 && avg >= 35
     avg = 50 if avg >= 45
-    p "get_flatted_average #{avg}"
     avg
   end
 

@@ -3,7 +3,7 @@ class VersioncommentsController < ApplicationController
   def create
     user = current_user
     @versioncomment = Versioncomment.new(params[:versioncomment])
-    @versioncomment.user = user
+    @versioncomment.user_id = user.id
     @versioncomment.rate = 0 if @versioncomment.rate.nil?
     prod_key = @versioncomment.product_key
     ver = @versioncomment.version
@@ -49,10 +49,9 @@ class VersioncommentsController < ApplicationController
       end
       
       followers.each do |follower|
-        follower_user = follower.user
-        if follower_user.id != user.id
-          # VersioncommentMailer.delay.versioncomment_email(product, follower_user, user, comment)
-          VersioncommentMailer.versioncomment_email(product, follower_user, user, comment).deliver
+        if follower.user_id != user.id
+          
+          VersioncommentMailer.versioncomment_email(product, follower.user, user, comment).deliver
         end
       end
     end

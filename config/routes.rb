@@ -36,6 +36,11 @@ Versioneye::Application.routes.draw do
   match '/signout',               :to => 'sessions#destroy'
   match '/androidregistrationid', :to => 'sessions#android_registrationid'
   
+  resources :blogs
+  match '/userblogposts',        :to => 'blogs#show_user_posts'
+  match '/unapprovedblogposts',  :to => 'blogs#show_unapproved_posts'
+  match '/blogpostapproval/:id', :to => 'blogs#blogpostapproval'
+  
   resources :crawles
   match '/crawles',             :to => 'crawles#index'
   match '/group/:group',        :to => 'crawles#group'

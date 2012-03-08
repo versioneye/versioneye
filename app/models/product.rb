@@ -1,7 +1,11 @@
 class Product
+
+  require 'will_paginate/array'
+
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes # Need for type: DateTime 
+
   field :name, type: String
   field :prod_key, type: String
   field :group_id, type: String
@@ -18,16 +22,21 @@ class Product
   field :version_rate, type: Integer  
   field :rate, type: Integer
   field :ratecount, type: Integer
+
   embeds_many :versions
   embeds_many :repositories
   # versionarchives
   # versionlinks
   # versionchanges
+  # versioncomments
 
   attr_accessor :in_my_products, :version_uid, :notification
 
-  require 'will_paginate/array'
-
+  
+  def delete
+    false
+  end
+  
   def self.find_by_name(searched_name)
     return Array.new if searched_name.nil? || searched_name.strip == ""  
     result1 = Product.all(conditions: { name: /^#{searched_name}/i }).desc(:rate).asc(:name).limit(300)

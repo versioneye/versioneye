@@ -10,4 +10,3 @@ describe "search" do
     assert_select "div#searchresults"
   end
 end
-

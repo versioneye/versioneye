@@ -1,6 +1,8 @@
 class Versionchange
+  
   include Mongoid::Document
   include Mongoid::Timestamps
+  
   field :prod_key, type: String
   field :version_id, type: String  
   field :change, type: String

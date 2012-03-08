@@ -22,8 +22,7 @@ class ProductsController < ApplicationController
           @my_product_ids = current_user.fetch_my_product_ids
         end
       end
-    end
-    
+    end    
     respond_to do |format|
       format.html 
       format.json { render :json => @products }
@@ -109,7 +108,6 @@ class ProductsController < ApplicationController
   def wouldbenewest
     key = url_param_to_origin params[:key]
     ver = url_param_to_origin params[:version]
-    p "key: #{key}"
     result = true
     product = Product.find_by_key(key)
     if !product.nil? 
@@ -121,7 +119,6 @@ class ProductsController < ApplicationController
         result = false
       end
     end
-    p "result: #{result}"
     respond_to do |format|
       format.json { render :json => result.to_json }
     end
@@ -165,7 +162,7 @@ class ProductsController < ApplicationController
       follower = Follower.find_by_user_id_and_product user.id, product._id.to_s
       if follower.nil?
         follower = Follower.new
-        follower.user = user
+        follower.user_id = user._id.to_s
         follower.product_id = product._id.to_s
         follower.save
       end
@@ -176,9 +173,9 @@ class ProductsController < ApplicationController
       if product.nil? || user.nil?
         return nil
       end
-      follower = Follower.find_by_user_id_and_product user.id, product._id.to_s
+      follower = Follower.find_by_user_id_and_product user._id.to_s, product._id.to_s
       if !follower.nil?
-        follower.delete
+        follower.remove
       end
       return "success"
     end

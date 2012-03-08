@@ -1,6 +1,8 @@
 class Repository
+
   include Mongoid::Document
   include Mongoid::Timestamps
+
   field :src, type: String
   field :repotype, type: String  
   

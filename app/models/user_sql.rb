@@ -1,65 +1,40 @@
-class User 
-  
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  include Mongoid::MultiParameterAttributes
+class UserSql < ActiveRecord::Base
 
-  field :username, type: String
-  field :fullname, type: String  
-  field :email, type: String
-  field :encrypted_password, type: String
-  field :salt, type: String
-  field :admin, type: Boolean, default: false
-  field :fb_id, type: String 
-  field :fb_token, type: String
-  field :verification, type: String
-  field :terms, type: Boolean
-  field :datenerhebung, type: Boolean
-  field :privacy_products, type: String, default: "everybody"
-  field :privacy_comments, type: String, default: "everybody"
-  
-  validates_presence_of :username, :message => "Username is mandatory!"
-  validates_presence_of :fullname, :message => "Fullname is mandatory!"
-  validates_presence_of :email, :message => "E-Mail is mandatory!"
-  validates_presence_of :encrypted_password, :message => "Encrypted_password is mandatory!"
-  validates_presence_of :salt, :message => "Salt is mandatory!"
-   
-  validates_uniqueness_of :username, :message => "Username exist already."
-  validates_uniqueness_of :email, :message => "E-Mail exist already."
-   
-  validates_length_of :username, minimum: 2, maximum: 50, :message => "username length is not ok"
-  validates_length_of :fullname, minimum: 2, maximum: 50, :message => "fullname length is not ok"
-  #validates_length_of :password, minimum: 5, maximum: 40, :message => "password length is not ok"
-   
-  validates_format_of :username, with: /^[a-zA-Z0-9]+$/
-  validates_format_of :email,    with: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-  
-  attr_accessor :password, :new_username
-  attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :datenerhebung, :verification, :terms, :datenerhebung
+  set_table_name "users"
+
+  attr_accessor :password, :terms, :datenerhebung, :new_username
+  attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :datenerhebung, :verification
+
+  validates :fullname, :presence      => true,
+                       :length        => {:within => 2..50}
+
+  validates :username, :presence      => true,
+                       :uniqueness    => true,
+                       :length        => {:within => 2..50},
+                       :format        => {:with => /^[a-zA-Z0-9]+$/}
+
+  validates :email,    :presence    => true,
+                       :length      => {:minimum => 5, :maximum => 254},
+                       :uniqueness  => true,
+                       :format      => {:with => /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/}
+
+  validates :password, :presence      => true,
+                       :length        => { :within => 5..40 }
+
+  validates_acceptance_of  :terms, :message => " - Accepting the Privacy Policy / Terms is mandatory for the registration!"
+  validates_acceptance_of  :datenerhebung, :message => " - Accepting the Datenerhebung is mandatory for the registration!"
+
+  has_many :followers, :foreign_key => "user_id", :dependent => :destroy
+  has_many :notifications, :dependent => :destroy
+  has_many :versioncomments, :dependent => :destroy
 
   before_validation :downcase_email
+  before_save :encrypt_password
   
-  def save
-    encrypt_password if new_record?
-    return false if self.terms == false || self.terms == nil
-    return false if self.datenerhebung == false || self.datenerhebung == nil
-    super
-  end
-  
+  scope :admin, where(:admin => true)
+
   def to_param
     username
-  end
-  
-  def self.default
-    user = User.new
-    user.fullname = "Hans Tanz"
-    user.username = "hanstanz"
-    user.email = "hans@tanz.de"
-    user.password = "password"
-    user.salt = "salt"
-    user.terms = true
-    user.datenerhebung = true
-    user
   end
   
   def create_verification
@@ -72,22 +47,13 @@ class User
   end  
   
   def self.activate!(verification)
-    user = User.first(conditions: {verification: verification})
+    user = User.find(:first, :conditions => ["verification = ?", verification])
     return false if user.nil?
-    user.verification = nil
-    user.save
+    return user.update_column(:verification, nil)
   end
   
   def activated?
     return verification.nil?
-  end
-  
-  def self.find_by_username( username )
-    User.first(conditions: {username: username} )
-  end
-  
-  def followers
-    Follower.find_by_user(self.id)
   end
   
   def fetch_my_products
@@ -109,7 +75,7 @@ class User
     end
     result
   end
-      
+  
   def fetch_my_product_ids
     ids = Array.new
     followers.each do |follower|
@@ -129,34 +95,36 @@ class User
   end
   
   def self.find_by_email(email)
-    User.first(conditions: {email: email})
+    user = User.find(:first, :conditions => ["email = ?", email])
+    user
   end
   
   def self.find_by_fb_id(fb_id)
-    User.first(conditions: {fb_id: fb_id})
+    user = User.find(:first, :conditions => ["fb_id = ?", fb_id])
+    user
   end
   
   def reset_password
     random_value = create_random_value
     self.password = random_value
     encrypt_password
-    save
+    update_column(:encrypted_password, self.encrypted_password)
     UserMailer.reset_password(self, random_value).deliver
   end
 
   def self.authenticate(email, submitted_password)
-    user = User.first(conditions: {email: email.downcase} )
+    user = User.find(:first, :conditions => ["email = ?", email.downcase])
     return nil  if user.nil?
     return user if user.has_password?(submitted_password)
   end
 
   def self.authenticate_with_salt(id, coockie_salt)
-    user = User.first( conditions: { id: id } )
+    user = User.find(:first, :conditions => ["id = ?", id])
     ( user && user.salt == coockie_salt ) ? user : nil
   end
   
   def self.username_valid?(username)
-    user = User.first(conditions: { username: username } )
+    user = User.find(:first, :conditions => ["username = ?", username])
     return user.nil?
   end
   
@@ -168,9 +136,8 @@ class User
   def update_password(email, password, new_password)
     user = User.authenticate(email, password)
     return false if user.nil?
-    self.password = new_password
-    encrypt_password
-    return save
+    user.password = new_password
+    return user.save
   end  
 
   def update_from_fb_json(json_user, token)
@@ -192,7 +159,30 @@ class User
       :username => self.username
     }
   end
-    
+  
+  def self.migrate_to_mongo
+    users = UserSql.all
+    users.each do |user|
+      p "user: #{user.id}"
+      us = User.new
+      us.id = user.id
+      us.username = user.username
+      us.fullname = user.fullname
+      us.email = user.email
+      us.encrypted_password = user.encrypted_password
+      us.salt = user.salt
+      us.admin = user.admin
+      us.fb_id = user.fb_id
+      us.fb_token = user.fb_token
+      us.verification = user.verification
+      us.terms = true
+      us.datenerhebung = true
+      us.privacy_products = user.privacy_products
+      us.privacy_comments = user.privacy_comments
+      us.save
+    end
+  end
+
   private
 
     def create_random_value
@@ -200,8 +190,8 @@ class User
       value = ""
       10.times { value << chars[rand(chars.size)] }
       value
-    end    
-    
+    end
+
     def encrypt_password
       self.salt = make_salt if new_record?
       self.encrypted_password = encrypt(password)

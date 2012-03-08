@@ -1,16 +1,11 @@
-class Notification
-  
-  include Mongoid::Document
-  include Mongoid::Timestamps
+class NotificationSql < ActiveRecord::Base
 
-  field :user_id, type: String
-  field :product_id, type: String  
-  field :version_id, type: String
-  field :read, type: Boolean, default: false
-  field :sent_email, type: Boolean, default: false
-  
-  validates_presence_of :user_id,    :message => "User is mandatory!"
-  validates_presence_of :product_id, :message => "Product is mandatory!"
+  set_table_name "notifications"
+
+  belongs_to :user,           :class_name => "UserSql"
+
+  validates :product_id, :presence => true
+  validates :version_id, :presence => true
   
   def self.send_notifications_job
     one_min = 60
@@ -46,6 +41,20 @@ class Notification
     product.name = "VersionEyeProduct"
     product.prod_key = "org.spring/spring-core"
     NotificationMailer.new_version_email(user, version, product).deliver          
+  end
+  
+  def self.migrate_to_mongo
+    notifications = NotificationSql.all
+    notifications.each do |notification|
+      p "notification: #{notification.id}"
+      noti = Notification.new
+      noti.user_id = notification.user_id
+      noti.product_id = notification.product_id
+      noti.version_id = notification.version_id
+      noti.read = notification.read
+      noti.sent_email = notification.sent_email
+      noti.save
+    end
   end
 
 end

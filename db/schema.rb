@@ -13,22 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20120301021814) do
 
-  create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :default => 0
-    t.integer  "attempts",   :default => 0
-    t.text     "handler"
-    t.text     "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
-
   create_table "followers", :force => true do |t|
     t.integer  "user_id"
     t.string   "product_id",   :limit => 50, :null => false
@@ -43,10 +27,11 @@ ActiveRecord::Schema.define(:version => 20120301021814) do
 
   create_table "notifications", :force => true do |t|
     t.integer  "user_id"
-    t.string   "product_id", :limit => 50,                    :null => false
-    t.string   "version_id", :limit => 50,                    :null => false
-    t.boolean  "read",                     :default => false
-    t.boolean  "sent_email",               :default => false
+    t.integer  "unsigneduser_id"
+    t.string   "product_id",      :limit => 50,                    :null => false
+    t.string   "version_id",      :limit => 50,                    :null => false
+    t.boolean  "read",                          :default => false
+    t.boolean  "sent_email",                    :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -79,11 +64,13 @@ ActiveRecord::Schema.define(:version => 20120301021814) do
     t.integer  "user_id",                                 :null => false
     t.string   "product_key",                             :null => false
     t.string   "version",                                 :null => false
-    t.integer  "rate",                                    :null => false
+    t.integer  "rate"
     t.text     "comment",                                 :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "prod_name",   :default => "product name"
   end
+
+  add_index "versioncomments", ["product_key", "version"], :name => "index_versioncomments_on_product_and_version"
 
 end
