@@ -10,7 +10,6 @@ case "$1" in
                 cp ../database.yml config/database.yml
                 cp ../mongoid.yml config/mongoid.yml
                 bundle install
-                rake db:migrate
                 rake assets:precompile
                 ;;
         *)
