@@ -11,13 +11,6 @@ test:
     persist_in_safe_mode: true
 
 production:
-#    host: localhost
+    host: localhost
     database: veye_prod
-    username: mongoVeye
-    password: verWinoEye45ha
-    persist_in_safe_mode: true   
-    read: :secondary
-    hosts:
-        - - 176.9.137.147:5444
-        - - 85.25.152.60:5444
-        - - 78.46.186.184:5444
+    persist_in_safe_mode: true
