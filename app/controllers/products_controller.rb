@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
   
   def search
     @query = params[:q]
-    @query = @query.strip unless @query.nil?
+    @query = do_replacements ( @query ) 
     if @query.nil? || @query.empty? || @query.eql?("Be up-to-date")
       @query = "junit"
     end
@@ -193,6 +193,13 @@ class ProductsController < ApplicationController
       product.versions.push(version2)
 
       product.get_newest_version_by_natural_order
+    end
+    
+    def do_replacements ( query )
+      query.strip unless query.nil?
+      q = query.gsub!(" ", "-")
+      return q unless q.nil?
+      return query if q.nil?
     end
 
 end

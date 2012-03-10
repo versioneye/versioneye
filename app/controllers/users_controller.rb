@@ -33,6 +33,7 @@ class UsersController < ApplicationController
       @user.create_verification
       if @user.save
         @user.send_verification_email
+        User.new_user_email(@user)
       else 
         render 'new'
       end

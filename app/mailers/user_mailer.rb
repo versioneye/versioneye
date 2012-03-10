@@ -21,4 +21,14 @@ class UserMailer < ActionMailer::Base
       )
   end
   
+  def new_user_email(user)
+    @fullname = user.fullname
+    @username = user.username
+    mail(
+      :to => "robert.reiz.81@gmail.com", 
+      :subject => "New User",
+      :tag => "new_user"
+      )
+  end
+  
 end

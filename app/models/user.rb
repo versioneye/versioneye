@@ -71,6 +71,10 @@ class User
     UserMailer.verification_email(self).deliver
   end  
   
+  def self.new_user_email(user)
+    UserMailer.new_user_email(user).deliver
+  end
+  
   def self.activate!(verification)
     user = User.first(conditions: {verification: verification})
     return false if user.nil?
