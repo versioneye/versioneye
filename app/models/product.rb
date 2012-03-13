@@ -86,6 +86,10 @@ class Product
     return nil
   end 
   
+  def versions_empty?
+    versions.nil? || versions.size == 0 ? true : false
+  end
+  
   def get_version_by_uid(uid)
     versions.each do |version|
       return version if version.uid.eql?(uid)

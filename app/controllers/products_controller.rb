@@ -110,7 +110,7 @@ class ProductsController < ApplicationController
     ver = url_param_to_origin params[:version]
     result = true
     product = Product.find_by_key(key)
-    if !product.nil? 
+    if !product.nil? && !product.versions_empty?
       version = product.get_newest_version_by_natural_order
       newest_version = get_newest(version, ver)
       if newest_version.eql?(ver)
