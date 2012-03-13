@@ -2,9 +2,9 @@ module ProductsHelper
   
   def product_version_path(product)
     if product.nil? 
-      "/product/0/version/0/0"
+      "/product/0/version/0"
     else 
-      "/product/#{product.to_param}/version/#{product.version_to_url_param}/#{product.get_decimal_version_uid}"
+      "/product/#{product.to_param}/version/#{product.version_to_url_param}"
     end
   end
   
@@ -12,7 +12,7 @@ module ProductsHelper
     if product.nil?
       "/product/0/version/0/1"
     else
-      "/product/#{product.to_param}/version/#{product.version_to_url_param}/1"
+      "/product/#{product.to_param}/version/#{product.version_to_url_param}"
     end    
   end
   

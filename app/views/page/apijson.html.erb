@@ -217,11 +217,11 @@
 	<p class="docu">
 		If you want to have details to a special product/version you can use this request here.
 	</p>
-	<pre class="code">http://versioneye.com/product/<<span>PROD_KEY</span>>/version/<<span>VERSION_ID</span>/0.json</pre>
+	<pre class="code">http://versioneye.com/product/<<span>PROD_KEY</span>>/version/<<span>VERSION_ID</span>>.json</pre>
 	<p class="docu">
 		Here is an example for JUnit.
 	</p>
-	<pre class="code">http://versioneye.com/product/junit--junit/version/4~10/0.json</pre>
+	<pre class="code">http://versioneye.com/product/junit--junit/version/4~10.json</pre>
 	<p class="docu">
 		If there are some special characters in "PROD_KEY" or "VERSION_ID" you must 
 		replace it to make it URL ready! Here is the table with the replacements.
@@ -427,15 +427,15 @@
 	
 	<h2 class="docu_h2">Newest</h2><a name="newest"></a>
 	<p class="docu">
-		This interface is telling you the newest version of a given product, by natural order. 
+		This interface gives you the newest version of a given product. 
 	</p>
 	<pre class="code">http://versioneye.com/product/newest/PRODUCT_KEY/natural.json</pre>
 	<p class="docu">
-		Here is an example. 
+		Here is an example for JUnit. 
 	</p>
 	<pre class="code">http://versioneye.com/product/newest/junit--junit/natural.json</pre>
 	<p class="docu">
-		The result is a simple string, the newest version of JUnit. For example: "4.10".
+		The result is a simple string showing the newest version of JUnit.
 	</p>	
 	
 </docu>

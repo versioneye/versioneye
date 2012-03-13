@@ -136,7 +136,6 @@ class ProductsController < ApplicationController
   private
   
     def url_param_to_origin(param)
-      p param
       if (param.nil? || param.empty?)
         return ""
       end

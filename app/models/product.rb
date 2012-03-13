@@ -207,6 +207,7 @@ class Product
   end
   
   def self.decimal_to_hex( decimal )
+    return nil if decimal.nil? 
     decimal.to_i(10).to_s(16)
   end
     
