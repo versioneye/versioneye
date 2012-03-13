@@ -1,39 +1,34 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Version Eye</title>
-  <%= csrf_meta_tag %>
-  <%= render 'layouts/stylesheets' %>
-  <%= stylesheet_link_tag "application" %>
-  <%= javascript_include_tag "application" %>
-  <script src="http://connect.facebook.net/en_US/all.js"></script>
-  <style type="text/css">
-	<% if !@product.nil? && @product.prod_type == "Printer" %>
-		body{
-			background-color: <%= @product.backgroundcolor %>;
-			background-image: url("<%= @product.backgroundimage %>");
-		}		
-	<% end %>
-  </style>
-</head>
 
-<body>	
-	<%= render 'layouts/header' %>
-	<div class="container">
-		<section class="round" >
-			<% flash.each do |key, value| %>
-				<div class="flash <%= key %>"><%= value %></div>
-			<% end %>
-			<%= yield %>
-		</section>
-		<%= render 'layouts/footer' %>
-		<%= debug(params) if Rails.env.development? %>
-        <br/>
-        <br/>		
-	</div>
-	<%= render 'shared/social_buttons' %>
-	<%= render 'shared/feedback' %>
-	<%= render 'feedback/dialog_feedback' %>	
-</body>
+	<head >
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<title>VersionEye</title>
+		<%= csrf_meta_tag %>
+		<%= render 'layouts/stylesheets' %>
+		<%= stylesheet_link_tag "application" %>
+		<%= javascript_include_tag "application" %>
+		<script src="http://connect.facebook.net/en_US/all.js"></script>
+		<%= render 'layouts/custom_style' %>
+	</head>
+
+	<body>
+		<%= render 'layouts/header' %>
+		<div class="container">
+			<section class="round" >
+				<% flash.each do |key, value| %>
+					<div class="flash <%= key %>"><%= value %></div>
+				<% end %>
+				<%= yield %>
+			</section>
+			<%= render 'layouts/footer' %>
+			<%= debug(params) if Rails.env.development? %>
+        	<br/>
+        	<br/>
+		</div>
+		<%= render 'shared/social_buttons' %>
+		<%= render 'shared/feedback' %>
+		<%= render 'feedback/dialog_feedback' %>
+	</body>
 
 </html>

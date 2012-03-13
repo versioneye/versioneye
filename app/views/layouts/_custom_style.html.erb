@@ -1,0 +1,8 @@
+  <style type="text/css">
+	<% if !@product.nil? && @product.prod_type == "Printer" %>
+		body{
+			background-color: <%= @product.backgroundcolor %>;
+			background-image: url("<%= @product.backgroundimage %>");
+		}		
+	<% end %>
+  </style>
