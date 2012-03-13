@@ -5,7 +5,7 @@
 	<% if !@product.version_link.nil? && !@product.version_link.empty? %>
 		<a href="<%= @product.version_link %>" target="_NEW">Link to product</a><br/>
 	<% end %>	
-	<% if !@version.versionlink.nil? && !@version.versionlink.empty? %>
+	<% if @version && @version.versionlink && !@version.versionlink.empty? %>
 		<% @version.versionlink.each do |link| %>
 			<a href="<%= link.link %>" target="_NEW"><%= link.name %></a><br/>
 		<% end %>	
