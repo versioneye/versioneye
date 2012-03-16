@@ -2,18 +2,17 @@
 	Links
 </div>
 <div class="boxContainer" >
-	<% if !@product.version_link.nil? && !@product.version_link.empty? %>
-		<a href="<%= @product.version_link %>" target="_NEW">Link to product</a><br/>
-	<% end %>	
+		
+	<% if @product.version_link && !@product.version_link.empty? && @product.prod_type.eql?("Maven2") %>	
+		<a href="<%= @product.version_link %>" target="_NEW">Link to project</a><br/>
+	<% end %>
+	<% if !@product.link.nil? && !@product.link.empty? && @product.prod_type.eql?("RubyGem") %>
+		<a href="<%= @product.link %>" target="_NEW">RubyGems</a><br/>
+	<% end %>
 	<% if @version && @version.versionlink && !@version.versionlink.empty? %>
 		<% @version.versionlink.each do |link| %>
 			<a href="<%= link.link %>" target="_NEW"><%= link.name %></a><br/>
 		<% end %>	
 	<% end %>
-	<% if !@product.facebook.nil? && !@product.facebook.empty? %>
-		<a href="<%= @product.facebook  %>" ><%= image_tag "facebook_icon.png" %></a>
-	<% end %>
-	<% if !@product.twitter.nil? && !@product.twitter.empty? %>
-		<a href="<%= @product.twitter  %>" ><%= image_tag "twitter_icon.png" %></a>
-	<% end %>
+	
 </div>

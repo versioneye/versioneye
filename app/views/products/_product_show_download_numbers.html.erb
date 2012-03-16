@@ -1,0 +1,9 @@
+<% if @product.downloads %>
+	<div class="boxHeader">
+		Downloads
+	</div>
+	<div class="boxContainer" >
+		All: <%= @product.downloads %><br/>
+		This Version: <%= @version.downloads %>
+	</div>
+<% end %>

@@ -8,20 +8,24 @@ class Product
 
   field :name, type: String
   field :prod_key, type: String
+  field :prod_type, type: String
+  
   field :group_id, type: String
   field :artifact_id, type: String
-  field :prod_type, type: String
-  field :link, type: String
+  
+  field :authors, type: String
   field :description, type: String
-  field :icon, type: String
-  field :logo, type: String
-  field :facebook, type: String
-  field :twitter, type: String
+  field :link, type: String
+  field :downloads, type: Integer  
+  
   field :version, type: String
   field :version_link, type: String
   field :version_rate, type: Integer  
+  
   field :rate, type: Integer
   field :ratecount, type: Integer
+  
+  field :icon, type: String
 
   embeds_many :versions
   embeds_many :repositories

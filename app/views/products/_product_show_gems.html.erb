@@ -1,0 +1,31 @@
+<div class="sidebar" >
+	
+	<%= render 'products/product_show_bigfollow' %>
+
+	<%= render 'products/product_show_average_ratting' %>
+	
+	<%= render 'products/product_show_download_numbers' %>
+
+	<%= render 'products/product_show_links' %>
+
+	<%= render 'products/product_show_other_versions' %>
+	
+</div>	
+<div class="content">
+	
+	<h1 ><%= @product.name_and_version %></h1>
+	<div class="meta-text-small">Last update at: <%= @product.updated_at.strftime("%b %d, %Y - %I:%m %p") %></div>
+	
+	<%= render 'products/product_show_description' %>
+	
+	<%= render 'products/product_show_authors' %>
+	
+	<%= render 'products/product_show_gem_install' %>
+	
+	<%= render 'products/product_show_gemfile' %>
+	
+	<%= render 'products/product_show_comments' %>
+	
+	<%= render 'products/product_show_comment' %>
+
+</div>

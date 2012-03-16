@@ -25,7 +25,7 @@
 							<span class="meta-text-small" style="color: red; font-weight:bold">Errors: <%= crawle.errors.count() %></span>
 						<% end %>
 						<% if !crawle.duration.nil? %>
-							<span class="meta-text-small" style="color: green; font-weight:bold"> Duration: <%= crawle.duration.strftime("%H:%M ") %></span>
+							<span class="meta-text-small" style="color: green; font-weight:bold"> Duration: <%= crawle.duration.strftime("%H:%M:%S") %></span>
 						<% end %>
 					</div>				
 				<% end %>

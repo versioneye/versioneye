@@ -10,6 +10,8 @@
 		<%= render 'products/product_show_php' %>
 	<% elsif @product.get_type.eql? "Printer" %>
 		<%= render 'products/product_show_printer' %>	
+	<% elsif @product.get_type.eql? "RubyGem" %>
+		<%= render 'products/product_show_gems' %>	
 	<% end %>
 	
 <% end %>

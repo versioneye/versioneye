@@ -8,6 +8,11 @@ class Version
   field :link, type: String
   field :rate, type: Integer
   field :ratecount, type: Integer
+  field :downloads, type: Integer
+  field :authors, type: String
+  field :description, type: String
+  field :summary, type: String
+  field :prerelease, type: Boolean
 
   embedded_in :product
   
