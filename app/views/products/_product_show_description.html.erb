@@ -3,6 +3,10 @@
 		Description
 	</div>
 	<div class="boxContainer" >
-		<%= @product.description.gsub!("\n", "<br/>") != nil ? @product.description.gsub!("\n", "<br/>").html_safe : @product.description %>
+		<% if @product.description.include? "\n" %>
+			<%= @product.description.gsub!("\n", "<br/>").html_safe %>
+		<% else %>
+			<%= @product.description %>
+		<% end %>
 	</div>
 <% end %>
