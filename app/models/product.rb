@@ -102,6 +102,10 @@ class Product
     return nil
   end
   
+  def get_links
+    Versionlink.all(conditions: { prod_key: self.prod_key}).asc(:name)
+  end
+  
   def update_rate
     rate_sum = 0
     rate_count = 0

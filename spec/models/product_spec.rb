@@ -217,5 +217,13 @@ describe Product do
     end
     
   end
+  
+  describe "get_links" do
+    
+    it "returns an empty array" do
+      @product.get_links.size.should eq(0)
+    end
+    
+  end
 
 end

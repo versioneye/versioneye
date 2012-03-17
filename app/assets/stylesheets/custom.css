@@ -1099,3 +1099,8 @@ nav ul li a:hover {
 	border-bottom: 1px dotted gray;
 }
 
+.icon-cell{
+	vertical-align: top; 
+	text-align:center; 
+	width: 56px
+}

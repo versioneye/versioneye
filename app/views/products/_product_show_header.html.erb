@@ -1,0 +1,11 @@
+<ul class="list-row">
+	<li class="list-cell icon-cell">
+		<%= render :partial => "/products/search_icons", :locals => {:product => @product} %>
+	</li>
+	<li class="list-cell" style="vertical-align: middle; ">
+		<h1 style="margin-bottom: 10px;"><%= @product.name_and_version %></h1>
+		<div class="meta-text-small">
+			Last update at: <%= @product.updated_at.strftime("%b %d, %Y - %I:%m %p") %>
+		</div>
+	</li>
+</ul>

@@ -23,20 +23,7 @@
 					<div class="searchResult" >
 						<ul class="list-row">
 							<li class="list-cell" style="vertical-align: top; text-align:center; padding-top: 7px; width: 56px">
-								<% if product.icon.nil? %>									
-									<% if product.prod_type.eql? "RubyGem" %>
-										<%= image_tag "prod_type/RubyGem.png" %>
-									<% elsif product.prod_type.eql? "Maven2" %>
-										<%= image_tag "prod_type/Maven2.jpg" %>
-									<% elsif product.prod_type.eql? "PIP" %>
-										<%= image_tag "prod_type/Python.png" %>
-									<% else %>
-										<%= image_tag "eye_off.png" %>
-									<% end %>									
-									
-								<% else %>
-									<img src="<%= product.icon %>" width="57" height="57"></img>
-								<% end %>
+								<%= render :partial => "/products/search_icons", :locals => {:product => product} %>
 							</li>
 							<li class="list-cell">
 								<a href="<%= product_version_path(product) %>" class="searchResultLink"><%= product.name_and_version %></a><br/>
@@ -44,7 +31,7 @@
 									<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
 								<% end %>
 								<ul class="list-row">
-									<li class="list-cell">
+									<li class="list-cell" style="padding-top: 5px">
 										<% if signed_in? %>
 											<span id="follow_<%=product.to_param%>" style="display: <%= product.display_follow %>">
 												<%= form_tag("/follow", :remote => true) do  %>

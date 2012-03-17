@@ -7,10 +7,13 @@
 		<a href="<%= @product.version_link %>" target="_NEW">Link to project</a><br/>
 	<% end %>
 	<% if !@product.link.nil? && !@product.link.empty? && @product.prod_type.eql?("RubyGem") %>
-		<a href="<%= @product.link %>" target="_NEW">RubyGems</a><br/>
+		<a href="<%= @product.link %>" target="_NEW">RubyGem Page</a><br/>
 	<% end %>
-	<% if @version && @version.versionlink && !@version.versionlink.empty? %>
-		<% @version.versionlink.each do |link| %>
+	<% if !@product.link.nil? && !@product.link.empty? && @product.prod_type.eql?("PIP") %>
+		<a href="<%= @product.link %>" target="_NEW">PIP Page</a><br/>
+	<% end %>
+	<% if !@product.get_links.empty? %>
+		<% @product.get_links.each do |link| %>
 			<a href="<%= link.link %>" target="_NEW"><%= link.name %></a><br/>
 		<% end %>	
 	<% end %>
