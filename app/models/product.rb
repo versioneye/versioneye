@@ -17,6 +17,7 @@ class Product
   field :description, type: String
   field :link, type: String
   field :downloads, type: Integer  
+  field :license, type: String 
   
   field :version, type: String
   field :version_link, type: String

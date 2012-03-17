@@ -49,8 +49,7 @@ class VersioncommentsController < ApplicationController
       end
       
       followers.each do |follower|
-        if follower.user_id != user.id
-          
+        if !follower.user_id.eql?(user.id.to_s)
           VersioncommentMailer.versioncomment_email(product, follower.user, user, comment).deliver
         end
       end

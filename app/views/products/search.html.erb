@@ -24,7 +24,17 @@
 						<ul class="list-row">
 							<li class="list-cell" style="vertical-align: top; padding-top: 7px;">
 								<% if product.icon.nil? %>
-									<%= image_tag "eye_off.png" %>
+									
+									<% if product.prod_type.eql? "RubyGem" %>
+										<%= image_tag "prod_type/RubyGem.jpg", :width => 30 %>
+									<% elsif product.prod_type.eql? "Maven2" %>
+										<%= image_tag "prod_type/Maven2.jpg", :width => 30 %>
+									<% elsif product.prod_type.eql? "PIP" %>
+										<%= image_tag "prod_type/Python.png" %>
+									<% else %>
+										<%= image_tag "eye_off.png" %>
+									<% end %>									
+									
 								<% else %>
 									<img src="<%= product.icon %>" width="57" height="57"></img>
 								<% end %>

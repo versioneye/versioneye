@@ -1,0 +1,10 @@
+<div class="boxHeader">
+	License
+</div>
+<div class="boxContainer" >
+	<% if !@product.license.nil? && !@product.license.empty? %>
+		<%= @product.license %>
+	<% else %>
+		UNKNOWN
+	<% end %>
+</div>

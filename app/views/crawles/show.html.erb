@@ -17,7 +17,7 @@
 			Stop: <%= @crawle.updated_at.strftime("%d.%m.%Y %H:%M ") %><br/>
 		<% end %>
 		<% if !@crawle.duration.nil? %>
-			Duration: <%= @crawle.duration.strftime("%H:%M ") %>
+			Duration: <%= @crawle.duration.strftime("%H:%M:%S") %>
 		<% end %>		
 	</div>
 	<% if !@crawle.errors.nil? && @crawle.errors.count() > 0 %>
