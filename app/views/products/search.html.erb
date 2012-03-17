@@ -22,13 +22,12 @@
 					<% end %>
 					<div class="searchResult" >
 						<ul class="list-row">
-							<li class="list-cell" style="vertical-align: top; padding-top: 7px;">
-								<% if product.icon.nil? %>
-									
+							<li class="list-cell" style="vertical-align: top; text-align:center; padding-top: 7px; width: 56px">
+								<% if product.icon.nil? %>									
 									<% if product.prod_type.eql? "RubyGem" %>
-										<%= image_tag "prod_type/RubyGem.jpg", :width => 30 %>
+										<%= image_tag "prod_type/icon-ruby.png" %>
 									<% elsif product.prod_type.eql? "Maven2" %>
-										<%= image_tag "prod_type/Maven2.jpg", :width => 30 %>
+										<%= image_tag "prod_type/Maven2.jpg" %>
 									<% elsif product.prod_type.eql? "PIP" %>
 										<%= image_tag "prod_type/Python.png" %>
 									<% else %>
