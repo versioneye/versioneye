@@ -6,31 +6,33 @@
 			<% else %>
 				<div class="searchResult" >
 			<% end %>
-				<a href="<%= product_version_path(product) %>" class="searchResultLink"><%=product.name_and_version%></a><br/>
-				<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
-				<% if current_user == @user %>
-					<table style="margin:0" >
-						<tr>
-							<td width="60" >								
-								<%= form_tag("/unfollow") do  %>
-									<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
-									<%= submit_tag "Unfollow", :class => "unfollowButton" %>
-								<% end %>								
-							</td>
-							<td>
+				
+				<ul class="list-row">
+					<li class="list-cell icon-cell" >
+						<%= render :partial => "/products/search_icons", :locals => {:product => product} %>
+					</li>
+					<li class="list-cell">
+						<a href="<%= product_version_path(product) %>" class="searchResultLink"><%= product.name_and_version %></a><br/>
+						<% if product.prod_type == "Maven2" %>
+							<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
+						<% end %>
+						<ul class="list-row">
+							<li class="list-cell" style="padding-top: 5px">
+								<% if signed_in? && current_user.username.eql?(@user.username) %>
+									<span id="unfollow_<%=product.to_param%>">
+										<%= form_tag("/unfollow") do  %>
+											<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
+											<%= submit_tag "Unfollow", :class => "unfollowButton" %>
+										<% end %>
+									</span>
+								<% end %>
+							</li>
+							<li class="list-cell">
 								<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
-							</td>
-						</tr>
-					</table>
-				<% elsif %>	
-					<table style="margin:0" >
-						<tr>
-							<td>
-								<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
-							</td>
-						</tr>
-					</table>
-				<% end %>
+							</li>
+						</ul>
+					</li>
+				</ul>
 			</div>
 		<% end %>
 	<% elsif current_user == @user %>
