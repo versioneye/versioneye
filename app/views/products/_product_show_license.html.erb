@@ -3,7 +3,11 @@
 </div>
 <div class="boxContainer" >
 	<% if !@product.license.nil? && !@product.license.empty? %>
-		<%= @product.license %>
+		<% if !@product.licenseLink.nil? && !@product.licenseLink.empty? %>
+			<a href="<%= @product.licenseLink %>" target="_LICENSE"><%= @product.license %></a>
+		<% else %>
+			<%= @product.license %>
+		<% end %>
 	<% else %>
 		UNKNOWN
 	<% end %>
