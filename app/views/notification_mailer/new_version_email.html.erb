@@ -6,11 +6,15 @@
 	<body>
 		<p>Hello <%= @user.fullname %></p>
 		<p>
-			Version <b><%= @version.version %></b> of Product <b><%= @product.name %></b> is out: <br/>
+			Version <b><%= @version.version %></b> of Project <b><%= @product.name %></b> is out: <br/>
 			Just follow this link: <a href="<%= @link %>"><%= @product.name %> - <%= @version.version %></a>
 		</p>
 		<p>
-			Thanks for joining and have a great day!
+			We keep you informed. <br/>
+			Have a great day!
+		</p>
+		<p>
+			Your VersionEye Team
 		</p>
 	</body>
 </html>

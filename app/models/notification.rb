@@ -12,6 +12,14 @@ class Notification
   validates_presence_of :user_id,    :message => "User is mandatory!"
   validates_presence_of :product_id, :message => "Product is mandatory!"
   
+  def user
+    if self.user_id.size < 3
+      User.find( self.user_id.to_i )
+    else
+      User.find( self.user_id )
+    end
+  end
+  
   def self.send_notifications_job
     one_min = 60
     one_hour = one_min * 60
@@ -25,7 +33,8 @@ class Notification
   
   def self.send_notifications
     p "send notifications start"
-    Notification.find_each(:conditions => "sent_email is false") do |notification|
+    notifications = Notification.all( conditions: {sent_email: "false"} )
+    notifications.each do |notification|
       user = notification.user
       product = Product.find_by_id(notification.product_id)
       version = product.get_version(notification.version_id)
@@ -34,6 +43,19 @@ class Notification
       notification.save
     end
     p "send notifications end"
+  end
+  
+  def self.send_notifications_for_user(user)
+    p "send notifications for user start"
+    notifications = Notification.all( conditions: {sent_email: "false", user_id: user.id.to_s} )
+    notifications.each do |notification|
+      product = Product.find_by_id(notification.product_id)
+      version = product.get_version(notification.version_id)
+      NotificationMailer.new_version_email(user, version, product).deliver
+      notification.sent_email = true
+      notification.save
+    end
+    p "send notifications for user end"
   end
   
   def self.send_test_notification
