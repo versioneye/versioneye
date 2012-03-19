@@ -1,10 +1,10 @@
 <% if product.icon.nil? %>									
 	<% if product.prod_type.eql? "RubyGem" %>
-		<%= image_tag "prod_type/RubyGem.png" %>
+		<%= image_tag "prod_type/logo_ruby.png" %>
 	<% elsif product.prod_type.eql? "Maven2" %>
-		<%= image_tag "prod_type/Maven2.jpg" %>
+		<%= image_tag "prod_type/logo_java.png" %>
 	<% elsif product.prod_type.eql? "PIP" %>
-		<%= image_tag "prod_type/Python.png" %>
+		<%= image_tag "prod_type/logo_python.png" %>
 	<% else %>
 		<%= image_tag "eye_off.png" %>
 	<% end %>									
