@@ -156,30 +156,7 @@ class Product
       end
     end
   end
-  
-  def self.show_doublets
-    count = Product.count()
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.all().skip(skip).limit(pack)
-      products.each do |product|
-        numbers = Array.new
-        # new_versions = Array.new
-        product.versions.each do |version|
-          if !numbers.include? version.version 
-            numbers << version.version
-            # new_versions << version
-          end
-        end
-        if numbers.size != product.versions.size
-          p "dubletten! #{product.prod_key}"
-        end
-      end
-    end
-  end
-  
+   
   def self.remove_doublets
     count = Product.count()
     pack = 100
@@ -214,7 +191,11 @@ class Product
       products = Product.all().skip(skip).limit(pack)
       products.each do |product|
         if product.versions.nil? || product.versions.empty?
-          p "empty! #{product.prod_key}"
+          p "no versions! #{product.prod_key}"
+          if product.prod_type.eql?("RubyGem")
+            p " -> remove #{product.prod_key}"
+            product.remove
+          end
         end
       end
     end
@@ -257,7 +238,7 @@ class Product
     url_param.gsub!(".","~")
     "#{url_param}"    
   end
-  
+
   def name_and_version    
     nameversion = "#{name} (#{version})"
   end

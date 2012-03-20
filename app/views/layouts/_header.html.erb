@@ -16,7 +16,9 @@
 				<ul>
 					<li class="nav-begin" >&nbsp;</li>
 					<% if signed_in? %>
-						<li><a href="/users/<%= current_user.username %>/favoriteproducts">My Profile</a></li>
+						<li><a href="/users/<%= current_user.username %>/favoriteproducts" 
+							   onmouseover="document.getElementById('myprofile_img').src='/assets/myprofile_on.png';",
+				 			   onmouseout="document.getElementById('myprofile_img').src='/assets/myprofile_off.png';" ><%= image_tag("myprofile_off.png", :title => "My Profile", :alt => "My Profile", :id => "myprofile_img") %></a></li>
 						<li class="nav-line" ></li>	
 						<li><%= link_to image_tag("settings_off.png", :title => "Settings", :alt => "Settings", :id => "settings_img"), 
 						                edit_user_path(current_user), 
