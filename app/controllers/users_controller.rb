@@ -19,10 +19,7 @@ class UsersController < ApplicationController
   
   def create
     @user = User.new(params[:user])
-    if !User.username_valid?(@user.username)
-      flash.now[:error] = "The username is already taken. Please choose another username."
-      render 'new'
-    elsif !User.email_valid?(@user.email)
+    if !User.email_valid?(@user.email)
       flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
       render 'new'
     elsif @user.terms != true || @user.datenerhebung != true
@@ -30,6 +27,7 @@ class UsersController < ApplicationController
       render 'new'
     else 
       @user = User.new(params[:user])
+      @user.create_username
       @user.create_verification
       if @user.save
         @user.send_verification_email

@@ -10,6 +10,7 @@
 <div class="boxContainer" style="height: 440px;">
 	<div class="formCel">
 		<%= form_for @user do |f| %>
+			<input id="username" name="user[username]" type="hidden" value="username" />
 		    <div class="messages">
 		        <%= render 'shared/error_messages', :object => f.object %>
 		    </div>
@@ -20,15 +21,6 @@
 		      </div>
 		      <div class="inputCel">
 		        <%= f.text_field :fullname, :class => "round", :id => "fullname" %>
-		      </div>
-		    </div>
-
-		    <div style="display:table-row;">
-		      <div class="labelCel">
-		        <%= f.label :username %>
-		      </div>
-		      <div class="inputCel">
-		        <%= f.text_field :username, :class => "round", :id => "username" %>
 		      </div>
 		    </div>
 

@@ -343,5 +343,33 @@ describe User do
       us.should_not be_nil
     end
   end
+  
+  describe "create_username" do
+    
+    it "does create a username" do 
+      @user.fullname = "Robert Reiz"
+      @user.create_username
+      @user.username.should eql("RobertReiz")
+    end
+    
+    it "does create a username and replace -" do 
+      @user.fullname = "Hans -Reiz"
+      @user.create_username
+      @user.username.should eql("HansReiz")
+    end
+    
+    it "does create a username with a randomValue" do 
+      @user.fullname = "Robert Reiz"
+      @user.create_username
+      @user.username.should eql("RobertReiz")
+      @user.save
+      
+      user = User.new
+      user.fullname = "Robert Reiz"
+      user.create_username
+      user.username.size.should > 12
+    end
+    
+  end
     
 end

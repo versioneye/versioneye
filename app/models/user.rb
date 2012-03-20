@@ -71,6 +71,21 @@ class User
     UserMailer.verification_email(self).deliver
   end  
   
+  def create_username
+    name = fullname.strip
+    if name.include?(" ")
+      name = name.gsub!(" ", "")
+    end
+    if name.include?("-")
+      name = name.gsub!("-", "")
+    end
+    user = User.find_by_username(name)
+    if user
+      name = name + create_random_value
+    end
+    self.username = name
+  end
+  
   def self.new_user_email(user)
     UserMailer.new_user_email(user).deliver
   end
