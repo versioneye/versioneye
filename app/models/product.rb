@@ -156,6 +156,69 @@ class Product
       end
     end
   end
+  
+  def self.show_doublets
+    count = Product.count()
+    pack = 100
+    max = count / pack     
+    (0..max).each do |i|
+      skip = i * pack
+      products = Product.all().skip(skip).limit(pack)
+      products.each do |product|
+        numbers = Array.new
+        # new_versions = Array.new
+        product.versions.each do |version|
+          if !numbers.include? version.version 
+            numbers << version.version
+            # new_versions << version
+          end
+        end
+        if numbers.size != product.versions.size
+          p "dubletten! #{product.prod_key}"
+        end
+      end
+    end
+  end
+  
+  def self.remove_doublets
+    count = Product.count()
+    pack = 100
+    max = count / pack     
+    (0..max).each do |i|
+      skip = i * pack
+      products = Product.all().skip(skip).limit(pack)
+      products.each do |product|
+        numbers = Array.new
+        new_versions = Array.new
+        product.versions.each do |version|
+          if !numbers.include? version.version 
+            numbers << version.version
+            new_versions << version
+          end
+        end
+        if numbers.size != product.versions.size
+          p "dubletten! #{product.prod_key}"
+          product.versions = new_versions
+          product.save
+        end
+      end
+    end
+  end
+  
+  def self.show_products_with_no_versions
+    count = Product.count()
+    pack = 100
+    max = count / pack     
+    (0..max).each do |i|
+      skip = i * pack
+      products = Product.all().skip(skip).limit(pack)
+      products.each do |product|
+        if product.versions.nil? || product.versions.empty?
+          p "empty! #{product.prod_key}"
+        end
+      end
+    end
+  end
     
   def update_in_my_products(array_of_product_ids)
     self.in_my_products = array_of_product_ids.include?(_id.to_s)
