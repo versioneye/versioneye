@@ -35,8 +35,8 @@ class VersioncommentsController < ApplicationController
   
     def update_product_rate(product, ver)
       version = product.get_version(ver)
-      version.update_rate      
-      version.save      
+      version.update_rate
+      version.save
       product.update_rate
       product.save
     end

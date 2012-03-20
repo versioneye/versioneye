@@ -5,7 +5,7 @@ class NotificationMailer < ActionMailer::Base
     @user = user
     @version = version
     @product = product
-    @link = "#{configatron.server_url}/product/#{@product.to_param}/version/#{@version.to_url_param}/#{@product.get_decimal_version_uid}"
+    @link = "#{configatron.server_url}/product/#{@product.to_param}/version/#{@version.to_url_param}"
     mail(
       :to => @user.email, 
       :subject => "Notification",
