@@ -5,6 +5,8 @@
 		<%= image_tag "prod_type/logo_java.png" %>
 	<% elsif product.prod_type.eql? "PIP" %>
 		<%= image_tag "prod_type/logo_python.png" %>
+	<% elsif product.prod_type.eql? "npm" %>
+		<%= image_tag "prod_type/logo_npm.png" %>
 	<% else %>
 		<%= image_tag "eye_off.png" %>
 	<% end %>									

@@ -14,6 +14,8 @@
 		<%= render 'products/product_show_pip' %>
 	<% elsif @product.get_type.eql? "opa" %>
 		<%= render 'products/product_show_opa' %>
+	<% elsif @product.get_type.eql? "npm" %>
+		<%= render 'products/product_show_npm' %>
 	<% elsif @product.get_type.eql? "PHP" %>
 		<%= render 'products/product_show_php' %>
 	<% elsif @product.get_type.eql? "Printer" %>
