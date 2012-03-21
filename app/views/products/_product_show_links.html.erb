@@ -14,7 +14,16 @@
 	<% end %>
 	<% if !@product.get_links.empty? %>
 		<% @product.get_links.each do |link| %>
-			<a href="<%= link.link %>" target="_NEW"><%= link.name %></a><br/>
+			<% if link.name != "Facebook" && link.name != "Twitter" %>
+				<a href="<%= link.link %>" target="_NEW"><%= link.name %></a><br/>
+			<% end %>			
+		<% end %>
+		<% @product.get_links.each do |link| %>
+			<% if link.name == "Facebook" %>
+				<a href="<%= link.link %>" target="_NEW"><%= image_tag "facebook_icon.png" %></a>
+			<% elsif link.name == "Twitter" %>	
+				<a href="<%= link.link %>" target="_NEW"><%= image_tag "twitter_icon.png" %></a>
+			<% end %>			
 		<% end %>	
 	<% end %>
 	

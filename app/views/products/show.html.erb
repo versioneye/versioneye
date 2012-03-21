@@ -4,12 +4,16 @@
 
 <% else %>
 	
+	<%= render 'layouts/custom_style' %>
+	
 	<% if @product.get_type.eql? "Maven2" %>
 		<%= render 'products/product_show_maven' %>
 	<% elsif @product.get_type.eql? "RubyGem" %>
 		<%= render 'products/product_show_gems' %>	
 	<% elsif @product.get_type.eql? "PIP" %>
 		<%= render 'products/product_show_pip' %>
+	<% elsif @product.get_type.eql? "opa" %>
+		<%= render 'products/product_show_opa' %>
 	<% elsif @product.get_type.eql? "PHP" %>
 		<%= render 'products/product_show_php' %>
 	<% elsif @product.get_type.eql? "Printer" %>

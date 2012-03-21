@@ -47,6 +47,7 @@ class ProductsController < ApplicationController
     attach_version @product, ver, version_uid
     @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
     @version = @product.get_version(@product.version)
+    @productlook = Productlook.find_by_key(key)
     respond_to do |format|
       format.html { 
         if !mobile.nil? && mobile.eql?('true')

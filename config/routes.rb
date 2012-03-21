@@ -16,6 +16,8 @@ Versioneye::Application.routes.draw do
   match '/product/wouldbenewest/:key/version/:version', :to => 'products#wouldbenewest'
   match '/biggest/:version1/:version2',                 :to => 'products#biggest'
   
+  match '/users/news',               :to => 'news#index'
+  
   resources :users, :key => :username
   match '/signup',                       :to => 'users#new'
   match '/users/:id/updatenames',        :to => 'users#updatenames'
@@ -60,6 +62,8 @@ Versioneye::Application.routes.draw do
   match '/apijson',             :to => 'page#apijson'  
   match '/apijson_tools',       :to => 'page#apijson_tools'  
   match '/apijson_libs',        :to => 'page#apijson_libs'
+  
+  
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
