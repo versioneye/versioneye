@@ -76,6 +76,10 @@ class Product
     nil
   end
   
+  def self.find_by_group_and_artifact(group, artifact)
+    Product.first(conditions: { group_id: group, artifact_id: artifact } )
+  end
+  
   def get_natural_sorted_versions
     Naturalsorter::Sorter.sort_by_method(versions, "version", true)
   end
@@ -203,22 +207,6 @@ class Product
     
   def update_in_my_products(array_of_product_ids)
     self.in_my_products = array_of_product_ids.include?(_id.to_s)
-  end
-  
-  def display_follow
-    if self.in_my_products
-      "none"
-    else
-      "block"
-    end
-  end
-  
-  def display_unfollow
-    if self.in_my_products
-      "block"
-    else
-      "none"
-    end
   end
   
   def to_param

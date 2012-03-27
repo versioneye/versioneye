@@ -1104,3 +1104,8 @@ nav ul li a:hover {
 	text-align:center; 
 	width: 56px
 }
+
+.unknown{
+	color: red;
+	font-weight: bold;
+}

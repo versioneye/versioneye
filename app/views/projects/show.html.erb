@@ -1,0 +1,42 @@
+<div class="sidebar" >
+	
+	<%= render "/projects/navi" %>
+	
+</div>	
+<div class="content">	
+	
+	<h1><%= @project.name %></h1>
+	
+	<div class="searchResults" id="searchresults" >
+		<% if !@project.fetch_dependencies.nil? %>
+			<% @project.fetch_dependencies.each do |dep| %>
+				<% product = dep.get_product %>
+				<div class="searchResult" >
+					<ul class="list-row">
+						<li class="list-cell icon-cell">
+							<%= render :partial => "/products/search_icons", :locals => {:product => product } %>
+						</li>
+						<li class="list-cell">
+							<% if !dep.prod_key.nil? %>
+								<a href="<%= product_url(product) %>" class="searchResultLink"><%= product.name %></a><br/>
+								<% if product.prod_type == "Maven2" %>
+									<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
+								<% end %>
+								<span class="meta-text-small">Your Version: <span style="color: <%= version_color(dep.version, product.version) %>"><%= dep.version %></span> --> Current Version: <%= product.version %></span><br/>
+								<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
+							<% else %>
+
+									<span class="searchResultLink"><%= product.name %></span><br/>
+									<% if product.prod_type == "Maven2" %>
+										<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
+									<% end %>
+									<span class="meta-text-small">Version: <%= dep.version %>, Current Version: </span><span class="unknown">UNKNOWN</span><br/>
+
+							<% end %>
+						</li>
+					</ul>
+				</div>
+			<% end %>
+		<% end %>
+	</div>
+</div>

@@ -225,5 +225,30 @@ describe Product do
     end
     
   end
+  
+  describe "find_by_group_and_artifact" do
+    
+    it "returns nil because of wrong parameters" do
+      Product.find_by_group_and_artifact("bullshit", "bingo").should be_nil
+    end
+    
+    it "returns the correct product" do
+      group = "junit56"
+      artifact = "junit23"
+      @product.versions = Array.new
+      @product.name = "test"
+      @product.prod_key = "#{group}/#{artifact}"
+      @product.group_id = group
+      @product.artifact_id = artifact
+      @product.rate = 50
+      @product.save
+      version = Version.new
+      prod = Product.find_by_group_and_artifact(group, artifact)
+      prod.should_not be_nil
+      prod.group_id.should eql(group)
+      prod.artifact_id.should eql(artifact)
+    end
+    
+  end
 
 end

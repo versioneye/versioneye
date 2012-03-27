@@ -39,6 +39,11 @@ module Versioneye
     config.action_mailer.delivery_method   = :postmark
     config.action_mailer.postmark_settings = { :api_key => "f6312dfd-6ef7-406c-9a7b-748586a43371" }
     
+    AWS::S3::Base.establish_connection!(
+          :access_key_id     => 'AKIAJJVCE2X6JF4UGT3Q',
+          :secret_access_key => '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'
+        )
+    
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

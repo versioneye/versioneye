@@ -1,0 +1,28 @@
+<h1>New Project</h1>
+
+<div class="formCel">
+	<%= form_for @project, :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
+	    <div class="div-row">
+	      <div class="labelCel">
+	        <%= f.label :name %>
+	      </div>
+	      <div class="inputCel">
+	        <%= f.text_field :name, :class => "round" %>
+	      </div>
+	    </div>
+		<div class="div-row">
+	      <div class="labelCel">
+	        <label>pom.xml</label>
+	      </div>
+	      <div class="inputCel">
+			<%= file_field 'upload', 'datafile', :class => "round" %>
+	      </div>
+	    </div>
+		<div class="div-row">
+	      <div class="labelCel"></div>
+	      <div class="submitCel">
+	        <%= f.submit "Create", :class => "button" %>
+	      </div>
+	    </div>
+	<% end %>
+</div>

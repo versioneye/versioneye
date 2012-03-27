@@ -4,7 +4,7 @@
 <div class="boxContainer" style="height: 200px;">
 	<div class="formCel">
 		<%= form_for(:session, :url => sessions_path) do |f|  %>
-		    <div style="display:table-row;">
+		    <div class="div-row">
 		      <div class="labelCel">
 		        <%= f.label :email %>
 		      </div>
@@ -12,7 +12,7 @@
 		        <%= f.text_field :email, :class => "round" %>
 		      </div>
 		    </div>
-		    <div style="display:table-row;">
+		    <div class="div-row">
 		      <div class="labelCel">
 		        <%= f.label :password %>
 		      </div>
@@ -20,13 +20,13 @@
 		        <%= f.password_field :password, :class => "round" %><br/>
 		      </div>
 		    </div>
-			<div style="display:table-row;">
+			<div class="div-row">
 		      <div class="labelCel"></div>
 		      <div class="inputCel" style="padding-bottom: 10px">
 		        <%= link_to "I forgot my password", iforgotmypassword_path %>
 		      </div>
 		    </div>
-		    <div style="display:table-row;">
+		    <div class="div-row">
 		      <div class="labelCel"></div>
 		      <div class="submitCel">
 		        <%= f.submit "Sign in", :class => "button  " %>

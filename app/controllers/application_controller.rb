@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include ProductsHelper
   include UsersHelper
+  include ProjectsHelper
   
   def client
     Twitter.configure do |config|

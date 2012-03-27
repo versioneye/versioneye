@@ -36,6 +36,9 @@ Versioneye::Application.routes.draw do
   resources :versioncomments
   match '/vc/:id',              :to => 'versioncomments#show'
   
+  resources :projects
+  
+  
   resources :sessions, :only => [:new, :create, :destroy]
   match '/signin',                :to => 'sessions#new'
   match '/signout',               :to => 'sessions#destroy'

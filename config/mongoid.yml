@@ -4,7 +4,7 @@ development:
     database: veye_dev
     persist_in_safe_mode: true
     raise_not_found_error: false    
-        
+    
 test:
     host: localhost
     database: veye_test

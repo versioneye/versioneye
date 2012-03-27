@@ -2,17 +2,41 @@ module ProductsHelper
   
   def product_version_path(product)
     if product.nil? 
-      "/product/0/version/0"
+      "/package/0/version/0"
     else 
-      "/product/#{product.to_param}/version/#{product.version_to_url_param}"
+      "/package/#{product.to_param}/version/#{product.version_to_url_param}"
+    end
+  end
+  
+  def product_url(product)
+    if product.nil? 
+      "/package/0/"
+    else 
+      "/package/#{product.to_param}"
+    end
+  end
+  
+  def display_follow(product)
+    if product.in_my_products
+      "none"
+    else
+      "block"
+    end
+  end
+  
+  def display_unfollow(product)
+    if product.in_my_products
+      "block"
+    else
+      "none"
     end
   end
   
   def product_version_path_short(product)
     if product.nil?
-      "/product/0/version/0/1"
+      "/package/0/version/0/1"
     else
-      "/product/#{product.to_param}/version/#{product.version_to_url_param}"
+      "/package/#{product.to_param}/version/#{product.version_to_url_param}"
     end    
   end
   
