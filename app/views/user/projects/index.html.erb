@@ -1,11 +1,11 @@
 <div class="sidebar" >
 	
-	<%= render "/projects/navi" %>
+	<%= render "/user/projects/navi" %>
 	
 </div>	
 <div class="content">	
 	<% if @projects.nil? || @projects.empty? %>
-		<%= render "/projects/create" %>
+		<%= render "/user/projects/create" %>
 	<% else %>		
 		<div class="searchResults" id="searchresults" >			
 			<% @projects.each do |project| %>
