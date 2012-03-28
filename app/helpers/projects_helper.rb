@@ -1,11 +1,8 @@
 module ProjectsHelper
   
-  def version_color(version, current_version)
-    if (version.eql? current_version)
-      return "green"
-    else
-      return "red"
-    end
+  def outdated_color(project)
+    return "red" if project.out_number > 0 
+    return "green"
   end
   
 end

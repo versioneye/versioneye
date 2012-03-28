@@ -25,7 +25,8 @@ Versioneye::Application.routes.draw do
   match '/users/:id/updatenames',        :to => 'users#updatenames'
   match '/users/:id/updatepassword',     :to => 'users#updatepassword'
   match '/users/:id/updateprivacy',      :to => 'users#updateprivacy'
-  match '/users/:id/favoriteproducts',   :to => 'users#showfavoriteproducts'
+  match '/users/:id/favoriteproducts',   :to => 'users#showfavoritepackages'
+  match '/users/:id/favoritepackages',   :to => 'users#showfavoritepackages'
   match '/users/:id/comments',           :to => 'users#showcomments'
   match '/users/:id/notifications',      :to => 'users#notifications'
   match '/users/activate/:verification', :to => 'users#activate'
@@ -36,8 +37,14 @@ Versioneye::Application.routes.draw do
   resources :versioncomments
   match '/vc/:id',              :to => 'versioncomments#show'
   
-  resources :projects
-  
+  namespace :user do 
+    resources :projects do
+      member do
+        get 'follow'
+        get 'unfollow'
+      end
+    end
+  end
   
   resources :sessions, :only => [:new, :create, :destroy]
   match '/signin',                :to => 'sessions#new'

@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
         else
           sign_in user
           # redirect_back_or( user_path(user) ) 
-          redirect_back_or( "/users/#{user.username}/favoriteproducts" )
+          redirect_back_or( "/users/#{user.username}/favoritepackages" )
         end
       }
       format.json { 

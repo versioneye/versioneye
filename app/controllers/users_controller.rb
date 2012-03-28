@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate, :except => [:show, :showfavoriteproducts, :showcomments, :new, :create, :activate, :iforgotmypassword, :resetpassword]
+  before_filter :authenticate, :except => [:show, :showfavoritepackages, :showcomments, :new, :create, :activate, :iforgotmypassword, :resetpassword]
   before_filter :correct_user, :only   => [:edit, :update, :activate]
   before_filter :admin_user,   :only   => :destroy
   before_filter :set_locale
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     end        
   end
   
-  def showfavoriteproducts
+  def showfavoritepackages
     @user = User.find_by_username(params[:id])
     @products = Array.new
     if has_permission_to_see_products( @user, current_user )

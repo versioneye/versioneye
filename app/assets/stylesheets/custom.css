@@ -1109,3 +1109,27 @@ nav ul li a:hover {
 	color: red;
 	font-weight: bold;
 }
+
+.unknown-row{
+	background-color: beige;
+	padding: 5px;
+}
+
+.outdated-row{
+	background-color: #FFD5D5;
+	padding: 5px;
+}
+
+.outdated-text{
+	color: red;
+	font-weight: bold;
+}
+
+.current-version-text{
+	color: green;
+	font-weight: bold;
+}
+
+.info-text{
+	padding-bottom: 25px;
+}

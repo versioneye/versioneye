@@ -1,0 +1,14 @@
+<div class="unknown-row" >
+	<ul class="list-row" >
+		<li class="list-cell icon-cell">
+			<%= render :partial => "/products/search_icons", :locals => {:product => product } %>
+		</li>
+		<li class="list-cell">
+			<span class="searchResultLink"><%= product.name %></span><br/>
+			<% if !dep.group_id.nil? %>
+				<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
+			<% end %>
+			<span class="meta-text-small">Version: <%= dep.version %>, Current Version: </span><span class="unknown">UNKNOWN</span><br/>
+		</li>
+	</ul>
+</div>

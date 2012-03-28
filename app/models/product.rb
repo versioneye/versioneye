@@ -89,6 +89,24 @@ class Product
     versions.last.version
   end
   
+  # TODO Move to NaturalSorter
+  def self.get_newest(a, b)
+    array = [a, b]
+    sorted = Naturalsorter::Sorter.sort(array, true)
+    sorted.last
+  end
+  
+  def wouldbenewest?(version)
+    current = get_newest_version_by_natural_order
+    return false if current.eql? version
+    newest = Product.get_newest(current, version)
+    if newest.eql? version
+      true
+    else
+      false
+    end
+  end
+  
   def get_version(searched_version)
     versions.each do |version|
       return version if version.version.eql?(searched_version)

@@ -250,5 +250,45 @@ describe Product do
     end
     
   end
+  
+  describe "get_newest" do
+    
+    it "returns 1.0 from 1.0 and 0.1" do
+      Product.get_newest("1.0", "0.1").should eql("1.0")
+    end
+    it "returns 1.10 from 1.10 and 1.9" do
+      Product.get_newest("1.10", "1.9").should eql("1.10")
+    end
+    
+  end
+  
+  describe "wouldbenewest" do
+    
+    it "returns false" do
+      version = Version.new
+      version.version = "1.0"
+      @product.versions.push(version)
+      @product.wouldbenewest?("1.0").should be_false 
+    end
+    it "returns false for smaller version" do
+      version = Version.new
+      version.version = "1.0"
+      @product.versions.push(version)
+      @product.wouldbenewest?("0.9").should be_false 
+    end
+    it "returns true for bigger version" do
+      version = Version.new
+      version.version = "1.0"
+      @product.versions.push(version)
+      @product.wouldbenewest?("1.1").should be_true
+    end
+    it "returns true for much bigger version" do
+      version = Version.new
+      version.version = "1.9"
+      @product.versions.push(version)
+      @product.wouldbenewest?("1.10").should be_true
+    end
+    
+  end
 
 end

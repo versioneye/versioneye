@@ -12,6 +12,7 @@ class Projectdependency
   field :version, type: String
   field :prod_key, type: String
   field :prod_type, type: String
+  field :outdated, type: Boolean
   
   def get_product
     if !self.prod_key.nil?
@@ -24,6 +25,23 @@ class Projectdependency
       product.artifact_id = self.artifact_id
     end
     product
+  end
+  
+  def is_outdated?
+    return false if self.prod_key.nil?     
+    product = get_product
+    current_version = product.version
+    return false if product.wouldbenewest?(version)
+    return false if current_version.eql? version
+    return true
+  end
+  
+  def update_outdated
+    if is_outdated? 
+      self.outdated = true
+    else 
+      self.outdated = false
+    end
   end
   
 end

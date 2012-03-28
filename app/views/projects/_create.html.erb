@@ -1,7 +1,13 @@
 <h1>New Project</h1>
 
+<div class="info-text">
+	Create a new project, by uploading a project file (pom.xml, Gemfile, pip). VersionEye 
+	will show you which of your dependencies is outdated. You can follow all your 
+	project dependencies with 1 click!
+</div>
+
 <div class="formCel">
-	<%= form_for @project, :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
+	<%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
 	    <div class="div-row">
 	      <div class="labelCel">
 	        <%= f.label :name %>

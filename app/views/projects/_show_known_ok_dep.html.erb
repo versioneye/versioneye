@@ -1,0 +1,13 @@
+<ul class="list-row" >
+	<li class="list-cell icon-cell">
+		<%= render :partial => "/products/search_icons", :locals => {:product => product } %>
+	</li>
+	<li class="list-cell">		
+		<a href="<%= product_url(product) %>" class="searchResultLink"><%= product.name %></a><br/>
+		<% if product.prod_type == "Maven2" %>
+			<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
+		<% end %>
+		<span class="meta-text-small">Your Version: <span class="current-version-text"><%= dep.version %></span> --> Current Version: <span class="current-version-text"><%= product.version %></span></span><br/>
+		<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
+	</li>
+</ul>

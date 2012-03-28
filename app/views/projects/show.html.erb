@@ -7,34 +7,24 @@
 	
 	<h1><%= @project.name %></h1>
 	
+	<div style="padding-bottom: 10px;">
+		<%= link_to "Delete this project", user_project_path(@project),   :confirm => "Are you sure?", :method=>:delete %> | 
+		<%= link_to "Follow all", follow_user_project_path(@project),     :confirm => "Are you sure?" %> | 
+		<%= link_to "Unfollow all", unfollow_user_project_path(@project), :confirm => "Are you sure?" %>
+	</div>
+	
 	<div class="searchResults" id="searchresults" >
 		<% if !@project.fetch_dependencies.nil? %>
-			<% @project.fetch_dependencies.each do |dep| %>
+			<% @project.dependencies.each do |dep| %>
 				<% product = dep.get_product %>
 				<div class="searchResult" >
-					<ul class="list-row">
-						<li class="list-cell icon-cell">
-							<%= render :partial => "/products/search_icons", :locals => {:product => product } %>
-						</li>
-						<li class="list-cell">
-							<% if !dep.prod_key.nil? %>
-								<a href="<%= product_url(product) %>" class="searchResultLink"><%= product.name %></a><br/>
-								<% if product.prod_type == "Maven2" %>
-									<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
-								<% end %>
-								<span class="meta-text-small">Your Version: <span style="color: <%= version_color(dep.version, product.version) %>"><%= dep.version %></span> --> Current Version: <%= product.version %></span><br/>
-								<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
-							<% else %>
-
-									<span class="searchResultLink"><%= product.name %></span><br/>
-									<% if product.prod_type == "Maven2" %>
-										<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
-									<% end %>
-									<span class="meta-text-small">Version: <%= dep.version %>, Current Version: </span><span class="unknown">UNKNOWN</span><br/>
-
-							<% end %>
-						</li>
-					</ul>
+					<% if dep.prod_key.nil? %>
+						<%= render :partial => "/projects/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
+					<% elsif dep.outdated %>
+						<%= render :partial => "/projects/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
+					<% else %>	
+						<%= render :partial => "/projects/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
+					<% end %>					
 				</div>
 			<% end %>
 		<% end %>

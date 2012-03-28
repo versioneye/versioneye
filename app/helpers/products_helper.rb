@@ -1,49 +1,48 @@
 module ProductsHelper
   
   def product_version_path(product)
-    if product.nil? 
-      "/package/0/version/0"
-    else 
-      "/package/#{product.to_param}/version/#{product.version_to_url_param}"
-    end
+    return "/package/0/version/0" if product.nil? 
+    return "/package/#{product.to_param}/version/#{product.version_to_url_param}"
   end
   
   def product_url(product)
-    if product.nil? 
-      "/package/0/"
-    else 
-      "/package/#{product.to_param}"
-    end
+    return "/package/0/" if product.nil? 
+    return "/package/#{product.to_param}"
   end
   
   def display_follow(product)
-    if product.in_my_products
-      "none"
-    else
-      "block"
-    end
+    return "none" if product.in_my_products
+    return "block"
   end
   
   def display_unfollow(product)
-    if product.in_my_products
-      "block"
-    else
-      "none"
-    end
+    return "block" if product.in_my_products
+    return "none"
   end
   
-  def product_version_path_short(product)
-    if product.nil?
-      "/package/0/version/0/1"
-    else
-      "/package/#{product.to_param}/version/#{product.version_to_url_param}"
-    end    
+  def create_follower(product, user)
+    return nil if product.nil? || user.nil?
+    follower = Follower.find_by_user_id_and_product user.id, product._id.to_s
+    if follower.nil?
+      follower = Follower.new
+      follower.user_id = user._id.to_s
+      follower.product_id = product._id.to_s
+      follower.save
+    end
+    return "success"
+  end
+  
+  def destroy_follower(product, user)
+    return nil if product.nil? || user.nil?
+    follower = Follower.find_by_user_id_and_product user._id.to_s, product._id.to_s
+    if !follower.nil?
+      follower.remove
+    end
+    return "success"
   end
   
   def attach_version(product, version, version_uid)
-    if version.nil? || version.empty? 
-      return nil
-    end
+    return nil if version.nil? || version.empty? 
     versionObj = product.get_version(version)
     if versionObj.nil?
       versionObj = product.get_version_by_uid(version_uid)

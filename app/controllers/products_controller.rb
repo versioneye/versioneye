@@ -108,17 +108,11 @@ class ProductsController < ApplicationController
 
   def wouldbenewest
     key = url_param_to_origin params[:key]
-    ver = url_param_to_origin params[:version]
-    result = true
+    version = url_param_to_origin params[:version]
     product = Product.find_by_key(key)
+    result = true    
     if !product.nil? && !product.versions_empty?
-      version = product.get_newest_version_by_natural_order
-      newest_version = get_newest(version, ver)
-      if newest_version.eql?(ver)
-        result = true
-      else 
-        result = false
-      end
+      result = product.wouldbenewest?(version)
     end
     respond_to do |format|
       format.json { render :json => result.to_json }
@@ -128,7 +122,7 @@ class ProductsController < ApplicationController
   def biggest
     vers1 = params[:version1]
     vers2 = params[:version2]    
-    version = get_newest(vers1, vers2)
+    version = Product.get_newest(vers1, vers2)
     respond_to do |format|
       format.json { render :json => version.to_json }
     end
@@ -153,46 +147,6 @@ class ProductsController < ApplicationController
         flash.now[:error] = "An error occured. Please try again later."
       end
       product
-    end
-    
-    def create_follower(product, user)
-      if product.nil? || user.nil?
-        return nil
-      end
-      follower = Follower.find_by_user_id_and_product user.id, product._id.to_s
-      if follower.nil?
-        follower = Follower.new
-        follower.user_id = user._id.to_s
-        follower.product_id = product._id.to_s
-        follower.save
-      end
-      return "success"
-    end
-    
-    def destroy_follower(product, user)
-      if product.nil? || user.nil?
-        return nil
-      end
-      follower = Follower.find_by_user_id_and_product user._id.to_s, product._id.to_s
-      if !follower.nil?
-        follower.remove
-      end
-      return "success"
-    end
-    
-    def get_newest(vers1, vers2)
-      product = Product.new
-      product.versions = Array.new
-
-      version1 = Version.new
-      version1.version = vers1
-      product.versions.push(version1)
-
-      version2 = Version.new
-      version2.version = vers2
-      product.versions.push(version2)
-
-      product.get_newest_version_by_natural_order
     end
     
     def do_replacements ( query )

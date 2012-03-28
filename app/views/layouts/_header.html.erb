@@ -16,11 +16,16 @@
 				<ul>
 					<li class="nav-begin" >&nbsp;</li>
 					<% if signed_in? %>
-						<li><a href="/users/news" 
-							   onmouseover="document.getElementById('news_img').src='/assets/news_on.png';",
-				 			   onmouseout="document.getElementById('news_img').src='/assets/news_off.png';" ><%= image_tag("news_off.png", :title => "News", :alt => "News", :id => "news_img") %></a></li>
-						<li class="nav-line" ></li>
-						<li><a href="/users/<%= current_user.username %>/favoriteproducts" 
+						<!-- <li><a href="/users/news" 
+													   onmouseover="document.getElementById('news_img').src='/assets/news_on.png';",
+										 			   onmouseout="document.getElementById('news_img').src='/assets/news_off.png';" ><%= image_tag("news_off.png", :title => "News", :alt => "News", :id => "news_img") %></a></li>
+												<li class="nav-line" ></li> -->
+						<!-- <li><%= link_to image_tag("project_off.png", :title => "Projects", :alt => "Prjects", :id => "projects_img"), 
+												                user_projects_path, 
+												 				:onmouseover => "document.getElementById('projects_img').src='/assets/project_on.png';",
+												 				:onmouseout => "document.getElementById('projects_img').src='/assets/project_off.png';" %></li>
+												<li class="nav-line" ></li> -->
+						<li><a href="/users/<%= current_user.username %>/favoritepackages" 
 							   onmouseover="document.getElementById('myprofile_img').src='/assets/myprofile_on.png';",
 				 			   onmouseout="document.getElementById('myprofile_img').src='/assets/myprofile_off.png';" ><%= image_tag("myprofile_off.png", :title => "My Profile", :alt => "My Profile", :id => "myprofile_img") %></a></li>
 						<li class="nav-line" ></li>	
