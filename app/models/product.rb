@@ -212,20 +212,22 @@ class Product
       skip = i * pack
       products = Product.all().skip(skip).limit(pack)
       products.each do |product|
-        new_versions = Array.new
-        product.versions.each do |version|
-          if !version.version.include? "SNAPSHOT"
-            new_versions << version
-          else 
-            p "remove version #{version.version}"
+        if product.prod_type.eql?("Maven2")
+          new_versions = Array.new
+          product.versions.each do |version|
+            if !version.version.include? "SNAPSHOT"
+              new_versions << version
+            else 
+              p "remove version #{version.version}"
+            end
           end
-        end
-        product.versions = new_versions
-        if product.versions.empty? 
-          p "delete product! #{product.prod_key}"
-          product.remove
-        else 
-          product.save
+          product.versions = new_versions
+          if product.versions.empty? 
+            p "delete product! #{product.prod_key}"
+            product.remove
+          else 
+            product.save
+          end
         end
       end
     end
