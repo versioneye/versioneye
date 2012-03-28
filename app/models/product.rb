@@ -204,6 +204,33 @@ class Product
     end
   end
   
+  def self.remove_snapshots
+    count = Product.count()
+    pack = 100
+    max = count / pack     
+    (0..max).each do |i|
+      skip = i * pack
+      products = Product.all().skip(skip).limit(pack)
+      products.each do |product|
+        new_versions = Array.new
+        product.versions.each do |version|
+          if !version.version.include? "SNAPSHOT"
+            new_versions << version
+          else 
+            p "remove version #{version.version}"
+          end
+        end
+        product.versions = new_versions
+        if product.versions.empty? 
+          p "delete product! #{product.prod_key}"
+          product.remove
+        else 
+          product.save
+        end
+      end
+    end
+  end
+  
   def self.show_products_with_no_versions
     count = Product.count()
     pack = 100
