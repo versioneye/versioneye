@@ -173,7 +173,7 @@ class Product
       skip = i * pack
       products = Product.all().skip(skip).limit(pack)
       products.each do |product|
-        product.update_version_rates
+        # product.update_version_rates
         product.update_version_data
       end
     end
