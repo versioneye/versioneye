@@ -105,6 +105,10 @@ class User
     User.first(conditions: {username: username} )
   end
   
+  def self.find_by_id( id )
+    User.first(conditions: { id: id })
+  end
+  
   def followers
     Follower.find_by_user(self.id)
   end

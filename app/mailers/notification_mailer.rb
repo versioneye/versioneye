@@ -1,11 +1,10 @@
 class NotificationMailer < ActionMailer::Base
   default from: "\"VersionEye\" <notify@versioneye.com>"
   
-  def new_version_email(user, version, product)
+  def new_version_email(user, notifications)
     @user = user
-    @version = version
-    @product = product
-    @link = "#{configatron.server_url}/product/#{@product.to_param}/version/#{@version.to_url_param}"
+    @notifications = notifications
+    @link = "#{configatron.server_url}/package/"
     mail(
       :to => @user.email, 
       :subject => "Notification",

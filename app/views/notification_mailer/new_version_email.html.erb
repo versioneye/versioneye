@@ -6,8 +6,25 @@
 	<body>
 		<p>Hello <%= @user.fullname %></p>
 		<p>
-			Version <b><%= @version.version %></b> of Project <b><%= @product.name %></b> is out: <br/>
-			Just follow this link: <a href="<%= @link %>"><%= @product.name %> - <%= @version.version %></a>
+			There are new releases out there. 
+		</p>
+		<p>
+			<% count = 0 %>
+			<table>				
+				<% @notifications.each do |notification| %>
+					<% product = Product.find_by_id(notification.product_id) %>
+		      		<% version = product.get_version(notification.version_id) %>
+					<tr style="background-color: <%= count % 2 == 0 ? 'beige' : 'white' %>">
+						<td style="border-bottom: 1px dotted gray; padding: 5px;" >
+							<a href="<%=@link%><%=product.to_param%>/version/<%=version.to_url_param%>"><%=product.name%></a>
+						</td>
+						<td style="border-bottom: 1px dotted gray; padding: 5px;" ><%= version.version %></td>
+					</tr>
+					<% notification.sent_email = true %>
+					<% notification.save %>
+					<% count = count + 1 %>
+				<% end %>
+			</table>
 		</p>
 		<p>
 			We keep you informed. <br/>

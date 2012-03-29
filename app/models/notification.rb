@@ -29,45 +29,26 @@ class Notification
       sleep one_hour
       p "wake up and work a little bit"
     end
-  end  
+  end
+  
+  def self.send_to_rob
+    user = User.find_by_id( 1 )
+    send_notifications_for_user( user )
+  end
   
   def self.send_notifications
-    p "send notifications start"
-    notifications = Notification.all( conditions: {sent_email: "false"} )
-    notifications.each do |notification|
-      user = notification.user
-      product = Product.find_by_id(notification.product_id)
-      version = product.get_version(notification.version_id)
-      NotificationMailer.new_version_email(user, version, product).deliver
-      notification.sent_email = true
-      notification.save
-    end
-    p "send notifications end"
-  end
+    user_ids = Notification.all.distinct(:user_id)
+    user_ids.each do |id|
+      user = User.find_by_id( id )
+      send_notifications_for_user( user )
+    end    
+  end      
   
   def self.send_notifications_for_user(user)
-    p "send notifications for user start"
+    p "send notifications for user #{user.fullname} start"
     notifications = Notification.all( conditions: {sent_email: "false", user_id: user.id.to_s} )
-    notifications.each do |notification|
-      product = Product.find_by_id(notification.product_id)
-      version = product.get_version(notification.version_id)
-      NotificationMailer.new_version_email(user, version, product).deliver
-      notification.sent_email = true
-      notification.save
-    end
+    NotificationMailer.new_version_email(user, notifications).deliver
     p "send notifications for user end"
-  end
-  
-  def self.send_test_notification
-    user = User.new
-    user.fullname = "Robert Reiz"
-    user.email = "robert.reiz.81@gmail.com"
-    version = Version.new
-    version.version = "1.0"
-    product = Product.new
-    product.name = "VersionEyeProduct"
-    product.prod_key = "org.spring/spring-core"
-    NotificationMailer.new_version_email(user, version, product).deliver          
   end
 
 end
