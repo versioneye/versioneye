@@ -106,7 +106,11 @@ class User
   end
   
   def self.find_by_id( id )
-    User.first(conditions: { id: id })
+    if id.size < 3
+      User.find( id.to_i )
+    else
+      User.find( id )
+    end
   end
   
   def followers
