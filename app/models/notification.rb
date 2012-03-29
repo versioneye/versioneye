@@ -39,7 +39,12 @@ class Notification
       if !user.nil?
         send_notifications_for_user( user )
       else
-        p " -- no user found for id: #{id}"
+        p " -- no user found for id: #{id} "
+        notifications = Notification.all( conditions: {user_id: id} )
+        notifications.each do |noti|
+          p " ---- remove notification for user id: #{id} "
+          noti.remove
+        end        
       end
     end    
   end      
