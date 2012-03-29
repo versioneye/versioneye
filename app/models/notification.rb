@@ -40,11 +40,13 @@ class Notification
     end    
   end      
   
-  def self.send_notifications_for_user(user)
-    p "send notifications for user #{user.fullname} start"
+  def self.send_notifications_for_user(user)    
     notifications = Notification.all( conditions: {sent_email: "false", user_id: user.id.to_s} )
-    NotificationMailer.new_version_email(user, notifications).deliver
-    p "send notifications for user end"
+    if !notifications.nil? && !notifications.empty?
+      p "send notifications for user #{user.fullname} start"
+      NotificationMailer.new_version_email(user, notifications).deliver
+      p "send notifications for user end"
+    end
   end
 
 end
