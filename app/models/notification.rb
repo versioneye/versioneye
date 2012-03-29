@@ -13,11 +13,7 @@ class Notification
   validates_presence_of :product_id, :message => "Product is mandatory!"
   
   def user
-    if self.user_id.size < 3
-      User.find( self.user_id.to_i )
-    else
-      User.find( self.user_id )
-    end
+    User.find_by_id( self.user_id )
   end
   
   def self.send_notifications_job
