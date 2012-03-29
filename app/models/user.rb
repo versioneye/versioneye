@@ -111,6 +111,9 @@ class User
     else
       User.find( id )
     end
+  rescue
+    p "-- ERROR user with id #{id} not found! --"
+    nil
   end
   
   def followers
