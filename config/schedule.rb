@@ -22,9 +22,5 @@
 # whenever --update-crontab
 
 every :day do
-  command "crawle.sh"
-end
-
-every 4.hours do
-   runner "Product.send_notifications"
+  runner "Notification.send_notifications"
 end

@@ -57,7 +57,7 @@ end
 # Deploy with Capistrano
 # gem 'capistrano'
 
-# gem 'whenever', '0.7.0'
+gem 'whenever', '0.7.3'
 
 # gem 'delayed_job', '3.0.0'
 # gem 'delayed_job_active_record', '0.3.1'
