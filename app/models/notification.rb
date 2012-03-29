@@ -36,7 +36,11 @@ class Notification
     user_ids = Notification.all.distinct(:user_id)
     user_ids.each do |id|
       user = User.find_by_id( id )
-      send_notifications_for_user( user )
+      if !user.nil?
+        send_notifications_for_user( user )
+      else
+        p " -- no user found for id: #{id}"
+      end
     end    
   end      
   
