@@ -15,6 +15,8 @@
 			<nav >
 				<ul>
 					<li class="nav-begin" >&nbsp;</li>
+					<li><%= link_to "Newest", newest_version_path %></li>
+					<li class="nav-line" ></li>
 					<% if signed_in? %>
 						<!-- <li><a href="/users/news" 
 													   onmouseover="document.getElementById('news_img').src='/assets/news_on.png';",
