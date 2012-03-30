@@ -48,6 +48,8 @@ class FacebookController < ApplicationController
       
       user = User.new
       user.update_from_fb_json(json_user, token)
+      user.terms = true
+      user.datenerhebung = true
       user.save
       return user
     end

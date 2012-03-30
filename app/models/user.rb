@@ -207,6 +207,7 @@ class User
     self.fullname = json_user['name']
     self.username = json_user['username']
     self.email = json_user['email']
+    self.verification = nil
     self.fb_id = json_user['id']
     self.fb_token = token
     self.password = create_random_value

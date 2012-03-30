@@ -371,5 +371,22 @@ describe User do
     end
     
   end
+  
+  describe "update_from_fb_json" do
+    
+    it "updates and saves" do 
+      json_user = Hash.new
+      json_user["name"] = "hans super tanz"
+      json_user["username"] = "hanzpanztanz"
+      json_user["email"] = "hans@panz.de"
+      json_user["id"] = "asgasgasgasg"
+      user = User.new
+      user.update_from_fb_json(json_user, "token_asgasg")
+      user.terms = true
+      user.datenerhebung = true
+      user.save.should be_true
+    end
+    
+  end
     
 end
