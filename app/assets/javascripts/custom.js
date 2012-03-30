@@ -22,11 +22,6 @@ $(document).ready(function() {
 		text: "This is visible on your posts.",
 		styleclass: "inputCelHint"
 	});
-
-	$('#username').tbHinter({
-		text: "/users/USERNAME",
-		styleclass: "inputCelHint"
-	});
 	
 	$('#email').tbHinter({
 		text: "Invisible for other users.",

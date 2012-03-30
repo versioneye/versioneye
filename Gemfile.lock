@@ -46,6 +46,7 @@ GEM
     bson_ext (1.6.0)
       bson (= 1.6.0)
     builder (3.0.0)
+    chronic (0.6.7)
     coffee-rails (3.1.1)
       coffee-script (>= 2.2.0)
       railties (~> 3.1.0)
@@ -187,6 +188,9 @@ GEM
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
       rack-test (>= 0.5.3)
+    whenever (0.7.3)
+      activesupport (>= 2.3.4)
+      chronic (~> 0.6.3)
     will_paginate (3.0.2)
     xml-simple (1.1.1)
     yamler (0.1.0)
@@ -224,4 +228,5 @@ DEPENDENCIES
   uglifier
   unicorn (= 4.1.1)
   webrat (= 0.7.3)
+  whenever (= 0.7.3)
   will_paginate (= 3.0.2)

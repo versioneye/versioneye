@@ -74,6 +74,7 @@ Versioneye::Application.routes.draw do
   match '/apijson',             :to => 'page#apijson'  
   match '/apijson_tools',       :to => 'page#apijson_tools'  
   match '/apijson_libs',        :to => 'page#apijson_libs'
+  match '/newest/version',      :to => 'page#newest'
   
   
   

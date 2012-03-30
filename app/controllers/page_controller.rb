@@ -23,5 +23,8 @@ class PageController < ApplicationController
   
   def apijson
   end
+  
+  def newest
+  end
 
 end

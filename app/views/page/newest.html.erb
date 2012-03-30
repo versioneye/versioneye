@@ -1,0 +1,33 @@
+<script type='text/javascript' src='http://static.firebase.com/v0/firebase.js'></script>
+<script>
+	var messageListRef = new Firebase('http://gamma.firebase.com/_versioneye');
+	messageListRef.limit(50).on('child_added', function(snapshot, prevName) {
+		var messageInfo = snapshot.val();
+		if (messageInfo && messageInfo.package && messageInfo.version && messageInfo.url){
+			var product = messageInfo.package;
+			var version = messageInfo.version;
+			var url = messageInfo.url;
+			var content = "<div class='searchResult' >"
+			content += "<a class='searchResultLink' href='"+url+"'>"+product+" - (" + version + ")</a>"
+			content += "</div>"
+			$('#searchresults').prepend(content)
+		}	  
+	});
+</script>
+
+
+<div class="sidebar">
+	
+	:-)
+	
+</div>
+<div class="content" >
+	<h1>Newest Versions / Latest Versions!</h1>
+	
+	<div class="info-text">
+		Check out the newest versions. This is a live stream to our Backend System! This live stream is based on <a href="http://www.firebase.com">Firebase</a>!
+	</div>
+	
+	<div class="searchResults" id="searchresults" ></div>
+
+</div>
