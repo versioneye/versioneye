@@ -160,7 +160,6 @@ class Product
       version = versions[versions.count() - 1]
       self.version = version.version
       self.version_link = version.link
-      self.update_rate
       self.save      
     end
   end

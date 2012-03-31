@@ -23,4 +23,5 @@
 
 every :day do
   runner "Notification.send_notifications"
+  runner "Product.update_version_data_global"
 end
