@@ -158,9 +158,11 @@ class Product
     versions = get_natural_sorted_versions
     if !versions.nil?
       version = versions[versions.count() - 1]
-      self.version = version.version
-      self.version_link = version.link
-      self.save      
+      if !versions.eql?(self.versions)
+        self.version = version.version
+        self.version_link = version.link
+        self.save
+      end
     end
   end
   
