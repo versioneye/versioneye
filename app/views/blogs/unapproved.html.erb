@@ -5,20 +5,20 @@
 </div>	
 <div class="content">
 	
-	<h1>Unapproved Posts</h1>
+	<h1>Unapproved Stories</h1>
 	
 	<% @blogs.each do |blog| %>
 	
 		<div class="blogpost">
 			<div class="blog-subject"><%= blog.subject %></div>
 			<div class="meta-text-small">
-				user: <%= link_to blog.get_user.fullname, user_path(blog.get_user) %><br/>
+				user: <%= link_to blog.user.fullname, user_path(blog.user) %><br/>
 				created at: <%= blog.created_at.strftime("%b %d, %Y - %I:%m %p") %><br/> 
 				last change: <%= blog.updated_at.strftime("%b %d, %Y - %I:%m %p") %><br/>
 			</div>
 			<div class="blog-post round" ><%= blog.post_html %></div>
 			<div>
-				<%= form_tag("/blogpostapproval/#{blog.id}", :method => "post") do  %>    
+				<%= form_tag("/blogs/#{blog.id}/approval", :method => "post") do  %>    
 
 					<div style="display:table-row;">
 				      <div class="blog-labelCel">

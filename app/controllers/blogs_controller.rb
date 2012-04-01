@@ -30,7 +30,7 @@ class BlogsController < ApplicationController
     @blog = Blog.find(params[:id])
     if @blog.update_attributes(params[:blog])
       flash[:success] = "Blog post was updated successfully."
-      redirect_to userblogposts_path
+      redirect_to myposts_blogs_path
     else
       flash.now[:error] = "Something went wrong. Please try again later."
       render edit_blog_path(@blog)
@@ -38,18 +38,20 @@ class BlogsController < ApplicationController
   end
   
   def show
-    
+    @blog = Blog.find(params[:id])
+    @comments = @blog.comments
+    @blogcomment = Blogcomment.new
   end
   
-  def show_user_posts
+  def myposts
     @blogs = Blog.find_user_posts current_user.id
-  end  
+  end
   
-  def show_unapproved_posts
+  def unapproved
     @blogs = Blog.find_unapproved_posts
   end
   
-  def blogpostapproval    
+  def approval    
     post = Blog.find(params[:id])
     commit = params[:commit]
     p "commit: #{commit}"
@@ -60,7 +62,7 @@ class BlogsController < ApplicationController
     end
     post.reason = params[:reason]
     post.save
-    redirect_to unapprovedblogposts_path
+    redirect_to unapproved_blogs_path
   end
   
 end

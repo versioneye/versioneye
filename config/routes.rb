@@ -51,10 +51,17 @@ Versioneye::Application.routes.draw do
   match '/signout',               :to => 'sessions#destroy'
   match '/androidregistrationid', :to => 'sessions#android_registrationid'
   
-  resources :blogs
-  match '/userblogposts',        :to => 'blogs#show_user_posts'
-  match '/unapprovedblogposts',  :to => 'blogs#show_unapproved_posts'
-  match '/blogpostapproval/:id', :to => 'blogs#blogpostapproval'
+  match '/blogs/show/:key/:id',        :to => 'blogs#show', :as => :showblog
+  resources :blogs do
+    collection do
+      get 'myposts'
+      get 'unapproved'
+    end
+    member do 
+      post 'approval'
+    end
+    resources :blogcomments
+  end
   
   resources :crawles
   match '/crawles',             :to => 'crawles#index'

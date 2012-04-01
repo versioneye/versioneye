@@ -7,9 +7,9 @@
 	
 	<% @blogs.each do |blog| %>
 		<div class="blogpost">
-			<div class="blog-subject"><%= blog.subject %></div>
+			<div class="blog-subject"><a href="/blogs/show/<%= blog.title %>/<%= blog.id %>"><%= blog.subject %></a></div>
 			<div class="meta-text-small">
-				<%= link_to blog.get_user.fullname, user_path(blog.get_user) %> on <%= blog.created_at.strftime("%b %d, %Y - %I:%m %p") %>
+				<%= link_to blog.user.fullname, user_path(blog.user) %> on <%= blog.created_at.strftime("%b %d, %Y - %I:%m %p") %>
 			</div>
 			<div class="blog-post"><%= blog.post_html %></div>	
 		</div>

@@ -1,0 +1,22 @@
+<% if !@comments.nil? && @comments.length > 0 %>
+	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
+	<div class="boxHeader">
+		Comments
+	</div>
+	<div class="boxContainer" >
+		<table>				
+		<% @comments.each do |comment|  %>
+			<tr>
+				<td>
+					<div class="meta-text-small">
+						<%= link_to comment.user.fullname, user_path(comment.user) %> on <%= comment.created_at.strftime("%b %d, %Y - %I:%M %p") %>							
+					</div>
+					<div>
+						<%= comment.comment_html %>
+					</div>
+				</td>
+			</tr>
+		<% end %>
+		</table>
+	</div>
+<% end %>

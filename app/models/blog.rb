@@ -15,6 +15,14 @@ class Blog
   validates_presence_of :subject, :message => "You have to type in a subject!"
   validates_presence_of :post, :message =>  "You have to type in a post message!"
   
+  def title
+    date = created_at.strftime("%Y-%m-%d")
+    title = subject.gsub(" ", "")
+    title = title.gsub(".", "-")
+    title = title.gsub("?", "-") 
+    "#{date}-#{title}"
+  end
+    
   def self.find_approved_posts
     Blog.where(approved: true ).desc(:created_at).limit(30)
   end
@@ -27,6 +35,14 @@ class Blog
     Blog.where( user_id: user_id).desc(:created_at)
   end
   
+  def comments
+    Blogcomment.all(conditions: {blog_id: self.id.to_s})
+  end
+  
+  def user
+    User.find(self.user_id)
+  end
+  
   def post_html
     if !self.post.nil? && !self.post.empty?
       result = self.post.gsub!("\n", "<br/>")
@@ -34,10 +50,6 @@ class Blog
       return result.html_safe unless result.nil?
     end
     ""
-  end
-  
-  def get_user
-    User.find(self.user_id)
   end
   
 end

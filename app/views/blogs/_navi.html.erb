@@ -1,9 +1,8 @@
-
-<a href="/blogs" id="blog_home">Home</a><br/>
+<a href="/blogs" id="blog_home">Stories</a><br/>
 <% if signed_in? %>
-	<%= link_to "Write a new post", new_blog_path %><br/>
-	<%= link_to "My posts", userblogposts_path %><br/>	
+	<%= link_to "Write a new story", new_blog_path %><br/>
+	<%= link_to "My stories", myposts_blogs_path %><br/>	
 	<% if signed_in_admin? %>
-		<%= link_to "Unapproved posts", unapprovedblogposts_path %><br/>			
+		<%= link_to "Unapproved stories", unapproved_blogs_path %><br/>			
 	<% end %>
 <% end %>

@@ -4,9 +4,16 @@
 	
 </div>	
 <div class="content">
+	<div class="blogpost">
+		<div class="blog-subject"><%= @blog.subject %></div>
+		<div class="meta-text-small">
+			<%= link_to @blog.user.fullname, user_path(@blog.user) %> on <%= @blog.created_at.strftime("%b %d, %Y - %I:%m %p") %>
+		</div>
+		<div class="blog-post"><%= @blog.post_html %></div>	
+	</div>
 	
-	<h1>Show</h1>
+	<%= render "/blogs/show_comments" %>
+	<%= render "/blogs/show_comment" %>
+		
 	
-	
-
 </div>

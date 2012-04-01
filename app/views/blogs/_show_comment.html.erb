@@ -1,0 +1,33 @@
+<% if signed_in? %>
+	<div class="boxHeader">
+		Leave a comment
+	</div>
+	<div class="boxContainer">
+		<%= form_for ([@blog, @blogcomment]) do |f| %>
+		    <div class="messages">
+		        <%= render 'shared/error_messages', :object => f.object %>
+		    </div>				
+			<div>
+				<%= f.text_area :comment, :class => "round", :maxlength => "1000", :onKeyUp => "textCounter(this, document.getElementById('counter'), 1000)"  %>
+			</div>
+			<div style="display: inline-block; width: 550px;">
+				<div style="float: left">
+					<%= f.submit "Save", :class => "button" %>
+				</div>						
+				<div style="float: right" class="meta-text-small">
+					Characters left: <span id="counter">1000</span>
+				</div>
+			</div>
+		<% end %>
+	</div>
+<% elsif %>
+	<div class="boxHeader">
+		Leave a comment
+	</div>
+	<div class="boxContainer">
+		<p>
+			<%= link_to "Sign Up", signup_path %> or <%= link_to "Sign In", signin_path %> to leave a comment. 
+		</p>
+		<%= render 'shared/login_with_facebook' %>		
+	</div>
+<% end %>
