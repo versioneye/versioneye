@@ -26,11 +26,11 @@ class Project
   def self.create_from_file(project_type, url)
     project = nil
     if project_type.eql?("Maven2")
-      project = Project.create_from_pom_url(url)
+      project = Project.create_from_pom_url ( url )
     elsif project_type.eql?("RubyGems")
-      
+      project = Project.create_from_gemfile_url ( url )
     elsif project_type.eql?("PIP")
-      project = Project.create_from_pip_url(url)
+      project = Project.create_from_pip_url ( url )
     end
     project
   end
@@ -124,6 +124,49 @@ class Project
       project.dependencies << dependency
     end
     project.dep_number = project.dependencies.count
+    project
+  end
+  
+  def self.create_from_gemfile_url ( url )
+    return nil if url.nil?
+    uri = URI(url)
+    gemfile = Net::HTTP.get(uri)
+    return nil if gemfile.nil?
+    
+    project = Project.new
+    project.dependencies = Array.new
+    
+    gemfile.each_line do |line|
+      # if it starts not with gem skip the line
+      line = line.strip
+      if line.match(/^gem/).nil?
+        next
+      end
+      line = line.gsub("gem ", "")
+      elements = line.split(",")
+      package = elements[0]
+      package = package.gsub('"', '')
+      package = package.gsub("'", "")
+      
+      version = elements[1]
+      version = version.gsub('"', '')
+      version = version.gsub("'", "")
+      
+      dependency = Projectdependency.new
+      dependency.name = package
+      dependency.version = version
+      
+      product = Product.find_by_key(package)
+      if !product.nil?
+        dependency.prod_key = product.prod_key
+      end
+      
+      dependency.update_outdated
+      if dependency.outdated?
+        project.out_number = project.out_number + 1
+      end      
+      project.dependencies << dependency
+    end
     project
   end
   
