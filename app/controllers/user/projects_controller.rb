@@ -12,6 +12,14 @@ class User::ProjectsController < ApplicationController
   end
   
   def create
+    
+    file = params[:upload]
+    if file.nil? || file.empty?
+      flash[:error] = "You have to select a file."
+      redirect_to new_user_project_path
+      return nil
+    end
+    
     project_name = params[:project][:name]
     project_type = params[:project][:project_type]
     
