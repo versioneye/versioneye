@@ -9,6 +9,7 @@ class Project
   field :project_type, type: String, :default => "Maven2"
   field :url, type: String
   field :s3, type: Boolean
+  field :s3_filename, type: String
   field :dep_number, type: Integer
   field :out_number, type: Integer, default: 0
   
