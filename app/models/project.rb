@@ -6,7 +6,7 @@ class Project
   field :user_id, type: String
   field :name, type: String
     
-  field :project_type, type: String
+  field :project_type, type: String, :default => "Maven2"
   field :url, type: String
   field :s3, type: Boolean
   field :dep_number, type: Integer
@@ -22,7 +22,20 @@ class Project
     Project.all(conditions: { user_id: user_id } )
   end
   
+  def self.create_from_file(project_type, url)
+    project = nil
+    if project_type.eql?("Maven2")
+      project = Project.create_from_pom_url(url)
+    elsif project_type.eql?("RubyGems")
+      
+    elsif project_type.eql?("PIP")
+      project = Project.create_from_pip_url(url)
+    end
+    project
+  end
+  
   def self.create_from_pom_url url
+    return nil if url.nil?
     doc = Nokogiri::HTML(open(url))
     return nil if doc.nil?
       
@@ -63,6 +76,40 @@ class Project
       project.dependencies << dependency
     end
     
+    project.dep_number = project.dependencies.count
+    project
+  end
+  
+  def self.create_from_pip_url(url)
+    return nil if url.nil?
+    uri = URI(url)
+    txt = Net::HTTP.get(uri)
+    return nil if txt.nil?
+    
+    project = Project.new
+    project.dependencies = Array.new
+    
+    txt.each_line do |line|
+      requirement = line.split("==")
+      if (requirement == nil || requirement.size != 2)
+        next
+      end
+      dependency = Projectdependency.new
+      package = requirement[0]
+      version = requirement[1]
+      p "package: #{package} - version: #{version}"
+      dependency.name = package
+      dependency.version = version
+      product = Product.find_by_key("pip/#{package}")
+      if !product.nil?
+        dependency.prod_key = product.prod_key
+      end
+      dependency.update_outdated
+      if dependency.outdated?
+        project.out_number = project.out_number + 1
+      end      
+      project.dependencies << dependency
+    end
     project.dep_number = project.dependencies.count
     project
   end

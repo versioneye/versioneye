@@ -2,8 +2,6 @@ class User::ProjectsController < ApplicationController
   
   before_filter :authenticate
   
-  @@BUCKET = "veye_prod_projects"
-  
   def index
     @project = Project.new
     @projects = Project.find_by_user(current_user.id.to_s)
@@ -14,24 +12,25 @@ class User::ProjectsController < ApplicationController
   end
   
   def create
-    fileUp = params[:upload]
-    orig_filename =  fileUp['datafile'].original_filename
-    fname = sanitize_filename(orig_filename)
-    random = create_random_value
-    filename = "#{random}_#{fname}"
-    AWS::S3::S3Object.store(filename, fileUp['datafile'].read, @@BUCKET, :access => :public_read)
-    url = AWS::S3::S3Object.url_for(filename, @@BUCKET, :authenticated => false)
+    project_name = params[:project][:name]
+    project_type = params[:project][:project_type]
     
-    project = Project.create_from_pom_url(url)
+    url = upload_to_s3 params
+    project = Project.create_from_file(project_type, url)
+        
     project.user_id = current_user.id.to_s
-    project.name = params[:project][:name]
+    project.name = project_name
+    project.project_type = project_type
     project.url = url
-    if project.save
+    if !project.dependencies.nil? && !project.dependencies.empty? && project.save
       project.dependencies.each do |dep|
         dep.project_id = project.id.to_s
         dep.user_id = current_user.id.to_s
         dep.save
       end
+      flash[:info] = "Project was created successfully."
+    else
+      flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."
     end
     redirect_to user_projects_path
   end
@@ -83,6 +82,18 @@ class User::ProjectsController < ApplicationController
   end
   
   private 
+  
+    def upload_to_s3 ( params )
+      fileUp = params[:upload]
+      orig_filename =  fileUp['datafile'].original_filename
+      fname = sanitize_filename(orig_filename)
+      random = create_random_value
+      filename = "#{random}_#{fname}"
+      bucket = "#{configatron.s3_projects_bucket}"
+      AWS::S3::S3Object.store(filename, fileUp['datafile'].read, bucket, :access => :public_read)
+      url = AWS::S3::S3Object.url_for(filename, bucket, :authenticated => false)
+      url
+    end
   
     def sanitize_filename(file_name)
       just_filename = File.basename(file_name)

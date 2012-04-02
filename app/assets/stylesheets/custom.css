@@ -312,6 +312,15 @@ input[type="submit"]:hover {
 	background-color: transparent;
 }
 
+.radio[type="radio"] {
+	width: 20px;
+}
+
+.radio-label{
+	font-weight: normal;
+	font-size: 14px;
+}
+
 /***** Lists *****************/
 
 .list-row {
