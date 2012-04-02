@@ -91,15 +91,27 @@ class Project
     
     txt.each_line do |line|
       requirement = line.split("==")
-      if (requirement == nil || requirement.size != 2)
+      
+      if requirement.empty?
         next
       end
-      dependency = Projectdependency.new
+      
       package = requirement[0]
-      version = requirement[1]
-      p "package: #{package} - version: #{version}"
+      
+      if package.strip.empty? 
+        next
+      end
+      
+      dependency = Projectdependency.new
       dependency.name = package
-      dependency.version = version
+      
+      if requirement.size == 2 
+        version = requirement[1]
+        dependency.version = version
+      else
+        dependency.version = "UNKNOWN"
+      end
+      
       product = Product.find_by_key("pip/#{package}")
       if !product.nil?
         dependency.prod_key = product.prod_key
