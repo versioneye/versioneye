@@ -38,6 +38,7 @@ class User::ProjectsController < ApplicationController
   def destroy
     id = params[:id]
     project = Project.find_by_id(id)
+    AWS::S3::S3Object.delete project.url, configatron.s3_projects_bucket
     project.fetch_dependencies
     project.dependencies.each do |dep|
       dep.remove
