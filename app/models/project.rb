@@ -144,21 +144,34 @@ class Project
       end
       line = line.gsub("gem ", "")
       elements = line.split(",")
-      package = elements[0]
+      package = elements[0].strip
       package = package.gsub('"', '')
       package = package.gsub("'", "")
       
-      version = elements[1]
-      version = version.gsub('"', '')
-      version = version.gsub("'", "")
-      
       dependency = Projectdependency.new
       dependency.name = package
-      dependency.version = version
       
       product = Product.find_by_key(package)
       if !product.nil?
         dependency.prod_key = product.prod_key
+      end
+      
+      version = elements[1]
+      if (!version.nil?)
+        version = version.strip
+        version = version.gsub('"', '')
+        version = version.gsub("'", "")
+        if version.match(/^:require/)
+          update_dep_version_with_product(dependency, product)
+        elsif version.match(/^http/)
+          dependency.version = "UNKNOWN"
+        elsif version.match(/^>/)
+          update_dep_version_with_product(dependency, product)
+        else
+          dependency.version = version
+        end
+      else 
+        update_dep_version_with_product(dependency, product)
       end
       
       dependency.update_outdated
@@ -167,6 +180,7 @@ class Project
       end      
       project.dependencies << dependency
     end
+    project.dep_number = project.dependencies.count
     project
   end
   
@@ -188,5 +202,16 @@ class Project
       return val  
     end
   end
+  
+  private 
+  
+    def self.update_dep_version_with_product( dependency, product )
+      if !product.nil?
+        dependency.version = product.version
+      else
+        dependency.version = "UNKNOWN"
+      end
+      dependency
+    end
   
 end

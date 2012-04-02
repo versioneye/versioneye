@@ -1,7 +1,7 @@
 <h1>New Project</h1>
 
 <div class="info-text">
-	Create a new project, by uploading a project file (pom.xml, pip requirements file). VersionEye 
+	Create a new project, by uploading a project file (pom.xml, Gemfile, pip requirements file). VersionEye 
 	will show you which of your dependencies are outdated. <br/>
 	<br/>
 	<b>The file upload can take a couple of seconds! Please be patient.</b>
@@ -26,6 +26,12 @@
 				<ul class="list-row">
 					<li class="list-cell"><%= f.radio_button :project_type, "Maven2", :class => "radio" %></li>
 					<li class="list-cell"><%= f.label :project_type_maven2, "Java Maven2 (pom.xml)", :class => "radio-label" %></li>
+				</ul>
+			</div>
+			<div>
+				<ul class="list-row">
+					<li class="list-cell"><%= f.radio_button :project_type, "RubyGems", :class => "radio" %></li>
+					<li class="list-cell"><%= f.label :project_type_rubygems, "Ruby (Gemfile)", :class => "radio-label" %></li>
 				</ul>
 			</div>
 			<div>
