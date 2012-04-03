@@ -82,7 +82,8 @@ Versioneye::Application.routes.draw do
   match '/apijson_tools',       :to => 'page#apijson_tools'  
   match '/apijson_libs',        :to => 'page#apijson_libs'
   match '/newest/version',      :to => 'page#newest'
-  
+  match '/current/version',     :to => 'page#newest'
+  match '/latest/version',      :to => 'page#newest'
   
   
   # The priority is based upon order of creation:
