@@ -28,7 +28,8 @@
 			content += "<li class='list-cell'><a class='searchResultLink' href='"+url+"'>"+product+" - (" + version + ")</a></li>"
 			content += "</ul>"
 			content += "</div>"
-			$('#searchresults').prepend(content);
+			$('#loadingbar').remove()
+			$('#searchresults').prepend(content).slideDown("slow");
 		}	  
 	});
 </script>
@@ -47,6 +48,10 @@
 		You don't need to reload this page! Every time a new version is detected it will be added to the top of this list. 
 	</div>
 	
-	<div class="searchResults" id="searchresults" ></div>
+	<div class="searchResults" id="searchresults" >
+		<div id="loadingbar" style="text-align: center">
+			<%= image_tag "loadingbar.gif" %>
+		</div>
+	</div>
 
 </div>
