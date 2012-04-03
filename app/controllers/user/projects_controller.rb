@@ -11,28 +11,35 @@ class User::ProjectsController < ApplicationController
     @project = Project.new
   end
   
-  def create
-    
+  def create    
+    project_url = params[:project][:url]
     file = params[:upload]
-    if file.nil? || file.empty?
-      flash[:error] = "You have to select a file."
+    
+    if (file.nil? || file.empty?) && (project_url.nil? || project_url.empty?)
+      flash[:error] = "Please put in a URL OR select a file from your computer."
       redirect_to new_user_project_path
       return nil
     end
     
-    project_name = params[:project][:name]
+    filename = nil
+    url = project_url
+    if url.nil? || url.empty?
+      filename = upload_to_s3 params
+      url = get_s3_url filename
+    end
     project_type = params[:project][:project_type]
-    
-    filename = upload_to_s3 params
-    url = get_s3_url filename
-    project = Project.create_from_file(project_type, url)
-        
+    project = Project.create_from_file(project_type, url)    
     project.user_id = current_user.id.to_s
-    project.name = project_name
+    project.name = params[:project][:name]
     project.project_type = project_type
     project.url = url
-    project.s3_filename = filename
-    project.s3 = true
+    
+    if (project_url.nil? || project_url.empty?)
+      project.s3_filename = filename
+      project.s3 = true
+    else 
+      project.s3 = false
+    end
     if !project.dependencies.nil? && !project.dependencies.empty? && project.save
       project.dependencies.each do |dep|
         dep.project_id = project.id.to_s

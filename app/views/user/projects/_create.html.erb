@@ -1,3 +1,4 @@
+
 <h1>New Project</h1>
 
 <div class="info-text">
@@ -43,18 +44,33 @@
 	      </div>
 	    </div>
 		<div class="div-row">
-	      <div class="labelCel">
+	      <div class="labelCel" style="vertical-align: top; padding-top: 5px;">
 	        <label>File</label>
 	      </div>
 	      <div class="inputCel">
-			<%= file_field 'upload', 'datafile', :class => "round" %>
+			<div style="padding-top:10px; padding-bottom: 10px;">Put in a link to your project file <b>OR</b> upload your project file.</div>
+			<div id="tabs" style="width: 490px;">
+				<ul>
+					<li><a href="#tabs-url">URL</a></li>
+					<li><a href="#tabs-upload">Uplaod</a></li>
+				</ul>
+				<div id="tabs-url">
+					<%= f.text_field :url, :class => "round", :style => "width: 430px;" %>
+				</div>
+				<div id="tabs-upload">
+					<%= file_field 'upload', 'datafile', :class => "round" %>
+				</div>
+			</div>			
 	      </div>
 	    </div>
 		<div class="div-row">
 	      <div class="labelCel"></div>
-	      <div class="submitCel">
+	      <div class="submitCel" style="padding-top: 20px;">
 	        <%= f.submit "Create", :class => "button" %>
 	      </div>
 	    </div>
 	<% end %>
 </div>
+<script>
+	$( "#tabs" ).tabs();
+</script>

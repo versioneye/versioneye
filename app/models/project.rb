@@ -128,9 +128,19 @@ class Project
   end
   
   def self.create_from_gemfile_url ( url )
-    return nil if url.nil?
-    uri = URI(url)
-    gemfile = Net::HTTP.get(uri)
+    return nil if url.nil?    
+    if url.match(/^https:\/\/github.com\//)
+      url = url.gsub("https://github.com", "https://raw.github.com")
+      url = url.gsub("/blob/", "/")
+    end
+    uri = URI.parse( url )
+    http = Net::HTTP.new(uri.host, uri.port)
+    if uri.port == 443
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end        
+    request = Net::HTTP::Get.new(uri.request_uri)
+    gemfile = http.request(request).body
     return nil if gemfile.nil?
     
     project = Project.new
