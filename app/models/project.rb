@@ -156,23 +156,7 @@ class Project
         dependency.prod_key = product.prod_key
       end
       
-      version = elements[1]
-      if (!version.nil?)
-        version = version.strip
-        version = version.gsub('"', '')
-        version = version.gsub("'", "")
-        if version.match(/^:require/)
-          update_dep_version_with_product(dependency, product)
-        elsif version.match(/^http/)
-          dependency.version = "UNKNOWN"
-        elsif version.match(/^>/)
-          update_dep_version_with_product(dependency, product)
-        else
-          dependency.version = version
-        end
-      else 
-        update_dep_version_with_product(dependency, product)
-      end
+      update_version_from_gemfile(elements, dependency, product)
       
       dependency.update_outdated
       if dependency.outdated?
@@ -201,6 +185,62 @@ class Project
     else 
       return val  
     end
+  end
+  
+  def self.update_version_from_gemfile(elements, dependency, product)
+    version = elements[1]
+    if (!version.nil?)
+      version = version.strip
+      version = version.gsub('"', '')
+      version = version.gsub("'", "")
+      if version.match(/^:require/)
+        update_dep_version_with_product(dependency, product)
+      elsif version.match(/^>/)
+        update_dep_version_with_product(dependency, product)
+      elsif version.match(/^~>/)
+        ver = version.gsub("~>", "")
+        if !product.nil? && Project.is_version_current?(ver, product.version)
+          dependency.version = product.version
+        else 
+          dependency.version = ver
+        end
+      elsif version.match(/^http/)
+        dependency.version = "UNKNOWN"
+      else
+        dependency.version = version
+      end
+    else 
+      update_dep_version_with_product(dependency, product)
+    end
+  end
+  
+  # TODO move this to external lib
+  def self.is_version_current?(version, current_version)
+    versions = version.split(".")
+    currents = current_version.split(".")
+    min_length = versions.size
+    if currents.size < min_length
+      min_length = currents.size
+    end
+    min_length = min_length - 2
+    if min_length < 0
+      min_length = 0
+    end      
+    (0..min_length).each do |z|
+      ver = versions[z]
+      cur = currents[z]
+      if (cur > ver)
+        return false
+      end
+    end
+    if currents.size < versions.size
+      ver = versions[min_length + 1]
+      cur = currents[min_length + 1]
+      if cur > ver
+        return false
+      end
+    end
+    true
   end
   
   private 
