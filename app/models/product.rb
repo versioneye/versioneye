@@ -150,7 +150,7 @@ class Product
   def update_version_data
     versions = get_natural_sorted_versions
     if !versions.nil?
-      version = versions[versions.count() - 1]
+      version = versions[0]
       if !versions.eql?(self.versions)
         self.version = version.version
         self.version_link = version.link
