@@ -37,6 +37,17 @@
 					<%= text_area_tag :feedback, nil, :class => "round", :maxlength => "1000", :onKeyUp => "textCounter(this, document.getElementById('counter'), 1000)"  %>
 			      </div>
 			    </div>
+				
+				<% if !signed_in? %>
+					<div style="display:table-row;">
+				      <div class="labelCelBig labelCelBigTop">
+						<%= label_tag(:feedback, "2 + 2 =") %>
+				      </div>
+				      <div class="inputCel">
+						<%= text_field_tag :fb_math, nil, :class => "round" %>
+				      </div>
+				    </div>
+				<% end %>
 			
 			    <div style="display:table-row;">
 			      <div class="labelCelBig"></div>
