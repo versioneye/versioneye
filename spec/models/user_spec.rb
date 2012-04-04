@@ -385,6 +385,7 @@ describe User do
       user.terms = true
       user.datenerhebung = true
       user.save.should be_true
+      user.remove
     end
     
   end

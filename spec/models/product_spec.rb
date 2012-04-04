@@ -254,10 +254,10 @@ describe Product do
   describe "get_newest" do
     
     it "returns 1.0 from 1.0 and 0.1" do
-      Product.get_newest("1.0", "0.1").should eql("1.0")
+      Naturalsorter::Sorter.get_newest_version("1.0", "0.1").should eql("1.0")
     end
     it "returns 1.10 from 1.10 and 1.9" do
-      Product.get_newest("1.10", "1.9").should eql("1.10")
+      Naturalsorter::Sorter.get_newest_version("1.10", "1.9").should eql("1.10")
     end
     
   end

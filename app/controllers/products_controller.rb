@@ -122,7 +122,7 @@ class ProductsController < ApplicationController
   def biggest
     vers1 = params[:version1]
     vers2 = params[:version2]    
-    version = Product.get_newest(vers1, vers2)
+    version = Naturalsorter::Sorter.get_newest_version(vers1, vers2)
     respond_to do |format|
       format.json { render :json => version.to_json }
     end

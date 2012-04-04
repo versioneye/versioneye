@@ -33,24 +33,4 @@ describe Project do
 
   end
   
-  describe "is_version_current?" do 
-    
-    it "returns true" do 
-      Project.is_version_current?("1.1.1", "1.1.9").should be_true
-    end
-    it "returns false" do 
-      Project.is_version_current?("1.1.1", "1.2.0").should be_false
-    end
-    it "returns false" do 
-      Project.is_version_current?("1.1.1", "1.2").should be_false
-    end
-    it "returns false" do 
-      Project.is_version_current?("1.1.1", "2.0").should be_false
-    end
-    it "returns false" do 
-      Project.is_version_current?("1.1.1", "2").should be_false
-    end
-    
-  end
-  
 end

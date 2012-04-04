@@ -3,7 +3,7 @@
 		Other Versions
 	</div>
 	<div class="boxContainer" >
-		<% @product.get_natural_sorted_versions.reverse!.each do |version|  %>
+		<% @product.get_natural_sorted_versions.each do |version|  %>
 			<div><a href="/product/<%=@product.to_param%>/version/<%=version.to_url_param%>"><%=version.version%></a></div>
 		<% end %>
 	</div>

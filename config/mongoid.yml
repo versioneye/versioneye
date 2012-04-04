@@ -1,5 +1,5 @@
 
-development:
+development:    
     host: localhost
     database: veye_dev
     persist_in_safe_mode: true

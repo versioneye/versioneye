@@ -81,25 +81,18 @@ class Product
   end
   
   def get_natural_sorted_versions
-    Naturalsorter::Sorter.sort_by_method(versions, "version", true)
+    Naturalsorter::Sorter.sort_version_by_method_desc(versions, "version")
   end
   
   def get_newest_version_by_natural_order
     versions = get_natural_sorted_versions
-    versions.last.version
-  end
-  
-  # TODO Move to NaturalSorter
-  def self.get_newest(a, b)
-    array = [a, b]
-    sorted = Naturalsorter::Sorter.sort(array, true)
-    sorted.last
+    versions.first.version
   end
   
   def wouldbenewest?(version)
     current = get_newest_version_by_natural_order
     return false if current.eql? version
-    newest = Product.get_newest(current, version)
+    newest = Naturalsorter::Sorter.get_newest_version(current, version) 
     if newest.eql? version
       true
     else
