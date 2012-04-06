@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
     @query = params[:q]
     @query = do_replacements ( @query ) 
     if @query.nil? || @query.empty? || @query.eql?("Be up-to-date")
-      @query = "xpath"
+      @query = "json"
     end
     if @query.length == 1
       flash.now[:error] = "Search term is to short. Please type in at least 2 characters."

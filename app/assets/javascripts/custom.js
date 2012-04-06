@@ -14,7 +14,7 @@ var oauth_facebook_link = fb_domainlink + fb_req_perms + fb_clientid + fb_scope 
 $(document).ready(function() {
 	
 	$('#q').tbHinter({
-		text: "xpath",
+		text: "json",
 		styleclass: "lp_searchfield_hint"
 	});	
 	
