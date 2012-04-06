@@ -29,6 +29,10 @@ function start_firebase(limit_size){
 			content += "</div>"
 			$('#loadingbar').remove()
 			$('#newest').prepend(content).slideDown("slow");
+			var result_count =  $('.searchResult').length; 
+			if (result_count > limit_size){
+				$('#newest div:last-child').remove()
+			}
 		}	  
 	});
 }

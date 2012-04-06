@@ -150,11 +150,13 @@ class Product
   def update_version_data
     versions = get_natural_sorted_versions
     if !versions.nil?
-      version = versions[0]
-      if !versions.eql?(self.versions)
-        self.version = version.version
-        self.version_link = version.link
-        self.save
+      versions.each do |version|
+        if version.mistake != true && !versions.eql?(self.versions)
+          self.version = version.version
+          self.version_link = version.link
+          self.save
+          break
+        end
       end
     end
   end

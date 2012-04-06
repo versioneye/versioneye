@@ -13,6 +13,7 @@ class Version
   field :description, type: String
   field :summary, type: String
   field :prerelease, type: Boolean
+  field :mistake, type: Boolean
 
   embedded_in :product
   

@@ -666,6 +666,15 @@ nav ul li a:hover {
 	text-align: center;
 }
 
+.lp_half_box{
+	border: 1px solid #BBBBBB;
+	width: 390px;
+	border-bottom-left-radius:10px 10px; 
+	border-top-left-radius:10px 10px;
+	border-bottom-right-radius:10px 10px; 
+	border-top-right-radius:10px 10px;
+}
+
 .lp_box{
 	padding-top: 15px;
 	padding-bottom: 20px;	
