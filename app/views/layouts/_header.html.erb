@@ -3,11 +3,13 @@
 		<div class="logo_div">
 			<%= link_to image_tag("header_logo_os.png"), root_path %>
 		</div>
-		<div id="searchfield_div" class="searchfield_div">			
-			<form id="searchform" action="/search" method="GET" class="search-form" >				
-				<input id="q" name="q" class="searchfield" type="text" value="<%= @query %>" />
-			</form>
-		</div>
+		<% if @hide.nil? %>
+			<div id="searchfield_div" class="searchfield_div">			
+				<form id="searchform" action="/search" method="GET" class="search-form" >				
+					<input id="q" name="q" class="searchfield" type="text" value="<%= @query %>" />
+				</form>
+			</div>
+		<% end %>
 		<div class="searchlink_div">
 			<a href="#" class="searchlink" title="Search" onclick="document.forms['searchform'].submit();">&nbsp;</a>
 		</div>

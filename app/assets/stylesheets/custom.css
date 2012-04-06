@@ -470,8 +470,25 @@ footer nav {
 	vertical-align:top;
 }
 
+.lp_searchfield{
+	font-size: 20px;
+	height: 43px; 
+	line-height: 43px;
+	width: 377px;
+	margin: 0;
+	padding:0;
+	padding-left: 10px; 
+	border-bottom-left-radius:10px 10px; 
+	border-top-left-radius:10px 10px;
+	border-bottom-right-radius:10px 10px; 
+	border-top-right-radius:10px 10px;
+}
+
+.lp_searchfield_hint{
+	color: gray;
+}
+
 .searchfield{
-/*	font-family: duturner;*/
 	font-size: 14px;
 	height: 23px; 
 	line-height: 23px;
@@ -485,23 +502,10 @@ footer nav {
 	border-top-right-radius:5px 5px;
 }
 
-.searchfield_hint{
-	color: #D3D3D3;
-	font-size: 14px;
-	height: 23px; 
-	width: 137px;  
-	margin: 0;	 
-	padding:0; 
-	padding-left: 30px; 
-	border-bottom-left-radius:5px 5px; 
-	border-top-left-radius:5px 5px;
-	border-bottom-right-radius:5px 5px; 
-	border-top-right-radius:5px 5px;	
-}
-
 .searchlink_div{
 	float:left; 
-	margin-top: 13px
+	margin-top: 13px;
+	margin-left: 5px;
 }
 
 .searchlink{
@@ -632,6 +636,8 @@ nav ul li a:hover {
 
 .intro{
 	height: 420px;
+	text-align: center;
+	padding-top: 10px;
 }
 
 .phone-box{
@@ -649,16 +655,18 @@ nav ul li a:hover {
 }
 
 .lp_head{
-/*	font-family: duturner; */
-/*	font-size: px;*/
 	padding-top: 0px;
 	padding-bottom: 0px;	
 	margin: 0;
 }
 
+.lp_search_div{
+	padding-top: 10px;
+	padding-bottom: 50px;
+	text-align: center;
+}
+
 .lp_box{
-/*	font-family: times;*/
-/*	font-size: 16px;*/
 	padding-top: 15px;
 	padding-bottom: 20px;	
 }

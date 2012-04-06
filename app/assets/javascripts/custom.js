@@ -14,8 +14,8 @@ var oauth_facebook_link = fb_domainlink + fb_req_perms + fb_clientid + fb_scope 
 $(document).ready(function() {
 	
 	$('#q').tbHinter({
-		text: "Be up-to-date",
-		styleclass: "searchfield_hint"
+		text: "xpath",
+		styleclass: "lp_searchfield_hint"
 	});	
 	
 	$('#fullname').tbHinter({

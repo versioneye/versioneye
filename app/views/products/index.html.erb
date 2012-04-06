@@ -1,13 +1,16 @@
 <div class="slogan">
 	<%= image_tag "slogan5.png", :alt => "Follow your libraries and get notified about new versions", :title => "Follow your libraries and get notified about new versions" %>
 </div>
+
+<div id="lp_search_div" class="lp_search_div">			
+	<form id="searchform" action="/search" method="GET" class="search-form" >				
+		<input id="q" name="q" class="lp_searchfield" type="text" value="<%= @query %>" /><br/>
+		<%= submit_tag "Search", :class => "button" %>
+	</form>
+</div>
+
 <div class="intro">		
-	<div class="phone-box">
-		<a href="#smartphones"><%= image_tag "phone.png" %></a>
-	</div>
-	<div class="movie-box">
-		<iframe src="http://player.vimeo.com/video/37203548" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-	</div>	
+		<iframe src="http://player.vimeo.com/video/37203548" width="700" height="393" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 </div>
 <% if !signed_in? %>
 	<div class="lp_box lp_login_area">

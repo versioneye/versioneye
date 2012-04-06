@@ -1,13 +1,14 @@
 class ProductsController < ApplicationController
 
   def index
+    @hide = "hide"
   end
   
   def search
     @query = params[:q]
     @query = do_replacements ( @query ) 
     if @query.nil? || @query.empty? || @query.eql?("Be up-to-date")
-      @query = "junit"
+      @query = "xpath"
     end
     if @query.length == 1
       flash.now[:error] = "Search term is to short. Please type in at least 2 characters."
@@ -150,7 +151,8 @@ class ProductsController < ApplicationController
     end
     
     def do_replacements ( query )
-      query.strip unless query.nil?
+      return query if query.nil?
+      query.strip
       q = query.gsub!(" ", "-")
       return q unless q.nil?
       return query if q.nil?
