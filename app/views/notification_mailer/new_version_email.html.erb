@@ -14,7 +14,7 @@
 					<% product = Product.find_by_id(notification.product_id) %>
 		      		<% version = product.get_version(notification.version_id) %>
 					<div style="border-bottom: 1px dotted gray; padding: 5px;"> 
-						<a href="<%=@link%><%=product.to_param%>/version/<%=version.to_url_param%>"><%=product.name%></a> - <%= version.version %>
+						<a href="<%=@link%><%=product.to_param%>/version/<%=version.to_url_param%>"><%=product.name%> (<%= version.version %>)</a>
 					</div>
 					<% notification.sent_email = true %>
 					<% notification.save %>
@@ -26,7 +26,8 @@
 			Have a great day!
 		</p>
 		<p>
-			Your VersionEye Team
+			Your VersionEye Team<br/>
+			<a href="http://versioneye.com">http://versioneye.com</a>
 		</p>
 	</body>
 </html>
