@@ -2,7 +2,7 @@
 	<% if !@comments.empty? %>
 		<% @comments.each do |comment| %>
 
-				<div class="searchResult" >
+				<div class="comment" >
 
 					<a href="/product/<%= comment.prod_key_url %>/version/<%= comment.version_url %>/0"
 					   class="searchResultLink"><%=comment.name_and_version%></a><br/>
@@ -18,12 +18,12 @@
 						<%= comment.comment %>
 					</div>
 					<div class="meta-text-small" >
-						<ul class="list-row">
-							<li class="list-cell share-on">Share on</li>
-							<li class="list-cell share-on-icon">
+						<ul class="searchResult-inner-list-row">
+							<li class="searchResult-inner-list-cell share-on">Share on</li>
+							<li class="searchResult-inner-list-cell share-on-icon">
 								<%= image_tag "facebook_icon.png", :onclick=>"shareOnFacebook('#{configatron.server_url}/vc/#{comment.id}', '#{@user.fullname} on #{comment.name_and_version} @VersionEye');", :alt=>"Facebook", :title=>"Facebook" %>
 							</li>
-							<li class="list-cell share-on-icon">
+							<li class="searchResult-inner-list-cell share-on-icon">
 								<a href="http://twitter.com/share" 
 								   class="twitter-share-button" 
 								   data-url="<%= configatron.server_url %>/vc/<%= comment.id %>" 

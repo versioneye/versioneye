@@ -6,7 +6,6 @@
 			<% else %>
 				<div class="searchResult" >
 			<% end %>
-				
 				<ul class="list-row">
 					<li class="list-cell icon-cell" >
 						<%= render :partial => "/products/search_icons", :locals => {:product => product} %>
@@ -16,8 +15,8 @@
 						<% if product.prod_type == "Maven2" %>
 							<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
 						<% end %>
-						<ul class="list-row">
-							<li class="list-cell" style="padding-top: 5px">
+						<ul class="searchResult-inner-list-row">
+							<li class="searchResult-inner-list-cell" style="padding-top: 5px">
 								<% if signed_in? && current_user.username.eql?(@user.username) %>
 									<span id="unfollow_<%=product.to_param%>">
 										<%= form_tag("/unfollow") do  %>
@@ -27,7 +26,7 @@
 									</span>
 								<% end %>
 							</li>
-							<li class="list-cell">
+							<li class="searchResult-inner-list-cell">
 								<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
 							</li>
 						</ul>

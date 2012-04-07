@@ -24,7 +24,7 @@ function start_firebase(limit_size){
 			else 
 				content += "<img src='/assets/eye_off.png' alt='Software'></img>";						
 			content += "</li>"
-			content += "<li class='list-cell'><a class='searchResultLink' href='"+url+"'>"+product+" - (" + version + ")</a></li>"
+			content += "<li class='list-cell'><a class='searchResultLink' href='"+url+"'>"+product+" (" + version + ")</a></li>"
 			content += "</ul>"
 			content += "</div>"
 			$('#loadingbar').remove()

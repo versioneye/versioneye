@@ -1009,12 +1009,24 @@ nav ul li a:hover {
 
 /****** ELSE ****************/
 
+.comment{
+	border-bottom: 1px dotted gray; 
+	padding-top: 5px;
+	padding-bottom: 5px; 
+	padding-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	vertical-align: middle;
+}
+
 .share-on{
 	padding-bottom: 1px;
+	padding-right: 5px;
 }
 
 .share-on-icon{
-	cursor: pointer
+	cursor: pointer;
+	padding-right: 5px;
 }
 
 .searchResults{
