@@ -1,4 +1,6 @@
 <script type='text/javascript' src='http://static.firebase.com/v0/firebase.js'></script>
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 <script>
 	start_firebase(10);
 </script>
@@ -17,11 +19,16 @@
 <div class="intro">		
 		<iframe src="http://player.vimeo.com/video/37203548" width="700" height="393" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 </div>
-<% if !signed_in? %>
-	<div class="lp_box lp_login_area">
-		<%= render 'shared/login_with_facebook' %> 
-	</div>
-<% end %>
+
+<div class="lp_box lp_sign_up" style="vertical-align:top">
+	<a href="http://twitter.com/share" 
+	   class="twitter-share-button" 
+	   data-url="http://versioneye.com" 
+	   data-text="Follow your Libraries @VersionEye and get notified about new versions." 
+	   data-count="horizontal" >Tweeter</a>
+	<g:plusone></g:plusone>
+	<iframe src="http://www.facebook.com/plugins/like.php?href=https://www.facebook.com/pages/VersionEye/295350293845442" scrolling="no" frameborder="0" style="border:none; width:200px; height:25px"></iframe>
+</div>
 
 <div class="lp_box">
 	<%= render 'shared/hotest_boxes' %>
@@ -36,13 +43,13 @@
 <div class="lp_box">
 	<%= render 'shared/phone_boxes' %>
 </div>
+
 <% if !signed_in? %>
-	<div class="lp_box lp_sign_up">
-		<%= form_tag("/signup", :method => "post") do  %>    
-			<%= submit_tag "Sign Up For Free", :class => "lp_sign_up_button" %>
-		<% end %>
+	<div class="lp_box lp_login_area">
+		<%= render 'shared/login_with_facebook' %> 
 	</div>
 <% end %>
+
 <h1 class="lp_head" id="h1_about">
 	About
 </h1>

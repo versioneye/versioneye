@@ -30,8 +30,8 @@
 								<% if product.prod_type == "Maven2" %>
 									<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
 								<% end %>
-								<ul class="list-row">
-									<li class="list-cell" style="padding-top: 5px">
+								<ul class="searchResult-inner-list-row">
+									<li class="searchResult-inner-list-cell" style="padding-top: 5px">
 										<% if signed_in? %>
 											<span id="follow_<%=product.to_param%>" style="display: <%= display_follow(product) %>">
 												<%= form_tag("/follow", :remote => true) do  %>
@@ -49,7 +49,7 @@
 											<input type="submit" value="FOLLOW" class="followButton" onclick="load_dialog_follow('<%= product.name %>');" ></input>
 										<% end %>
 									</li>
-									<li class="list-cell">
+									<li class="searchResult-inner-list-cell">
 										<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
 									</li>
 								</ul>

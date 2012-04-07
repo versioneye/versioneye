@@ -334,7 +334,6 @@ input[type="submit"]:hover {
     list-style-type: none;
     display: table-cell;
     padding-right: 5px;
-	height: 20px;
 	vertical-align: middle;
 }
 
@@ -1030,6 +1029,8 @@ nav ul li a:hover {
 	padding-left: 5px;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	height: 75px;
+	vertical-align: middle;
 }
 
 .searchResult:hover{
@@ -1039,6 +1040,37 @@ nav ul li a:hover {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	background-color: #F5F5F5;
+}
+
+.searchResult .list-row {
+	margin: 0;
+	padding: 0;
+	display: table-row;
+	height: 70px;
+}
+
+.searchResult .list-row .list-cell {
+    list-style-type: none;
+    display: table-cell;
+    padding-left: 5px;
+	height: 50px;
+	vertical-align: middle;
+}
+
+.searchResult-inner-list-row {
+    list-style-type: none;
+    display: table-cell;
+    padding: 0px;
+	margin: 0px;
+	vertical-align: middle;
+}
+
+.searchResult-inner-list-cell {
+    list-style-type: none;
+    display: table-cell;
+    padding-left: 0px;
+	height: 20px;
+	vertical-align: middle;
 }
 
 #product_to_follow{
@@ -1126,9 +1158,10 @@ nav ul li a:hover {
 }
 
 .icon-cell{
-	vertical-align: top; 
+	vertical-align: middle; 
 	text-align:center; 
-	width: 56px
+	width: 56px;
+	height: 50px;
 }
 
 .unknown{
