@@ -3,10 +3,16 @@ class ProductsController < ApplicationController
   def index
     @hide = "hide"
     @newest = Array.new
+    newest_ids = Array.new
     @hotest = Product.get_hotest(10)
-    new_stuff = Newest.get_newest(10)
+    new_stuff = Newest.get_newest(20)
     new_stuff.each do |entry|
-      @newest << entry.product
+      product = entry.product
+      if !newest_ids.include? product.id
+        @newest << product
+        newest_ids << product.id
+      end  
+      break if @newest.size == 10    
     end
     if signed_in?
       @my_product_ids = current_user.fetch_my_product_ids
