@@ -16,11 +16,11 @@
 		<%= link_to "Unfollow all", unfollow_user_project_path(@project), :confirm => "Are you sure?" %>
 	</div>
 	
-	<div class="searchResults" id="searchresults" >
+	<div class="dependencies" id="dependencies" >
 		<% if !@project.fetch_dependencies.nil? %>
 			<% @project.dependencies.each do |dep| %>
 				<% product = dep.get_product %>
-				<div class="searchResult" >
+				<div class="dependency" >
 					<% if dep.prod_key.nil? %>
 						<%= render :partial => "/user/projects/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
 					<% elsif dep.outdated %>

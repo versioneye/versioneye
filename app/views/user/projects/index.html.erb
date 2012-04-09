@@ -7,9 +7,9 @@
 	<% if @projects.nil? || @projects.empty? %>
 		<%= render "/user/projects/create" %>
 	<% else %>		
-		<div class="searchResults" id="searchresults" >			
+		<div class="projects" id="projects" >			
 			<% @projects.each do |project| %>
-				<div class="searchResult" >
+				<div class="project" >
 					<%= link_to project.name, user_project_path(project), :class => "searchResultLink" %><br/>
 					<span class="meta-text-small">Dependencies: <%= project.dep_number %>, Outdated: <span style="color: <%= outdated_color(project) %>" ><%= project.out_number %></span></span>
 				</div>

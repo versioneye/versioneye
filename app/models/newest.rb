@@ -14,7 +14,7 @@ class Newest
   end
   
   def self.get_newest(count)
-    Newest.all().desc(:created_at).limit( count )
+    Newest.all().desc( :created_at ).limit( count )
   end
 
 end

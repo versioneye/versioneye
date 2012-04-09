@@ -1009,6 +1009,52 @@ nav ul li a:hover {
 
 /****** ELSE ****************/
 
+.dependencies{
+	text-align: left;
+}
+
+.dependency{
+	border-bottom: 1px dotted gray; 
+	padding-top: 5px;
+	padding-bottom: 5px; 
+	padding-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	vertical-align: middle;
+}
+
+.dependency:hover{
+	border-bottom: 1px dotted gray; 
+	padding-top: 5px;
+	padding-bottom: 5px; 
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: #F5F5F5;
+}
+
+.projects{
+	text-align: left;
+}
+
+.project{
+	border-bottom: 1px dotted gray; 
+	padding-top: 5px;
+	padding-bottom: 5px; 
+	padding-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	vertical-align: middle;
+}
+
+.project:hover{
+	border-bottom: 1px dotted gray; 
+	padding-top: 5px;
+	padding-bottom: 5px; 
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: #F5F5F5;
+}
+
 .comment{
 	border-bottom: 1px dotted gray; 
 	padding-top: 5px;
@@ -1031,7 +1077,6 @@ nav ul li a:hover {
 
 .searchResults{
 	text-align: left;
-	padding-top: 0px;
 }
 
 .searchResult{
