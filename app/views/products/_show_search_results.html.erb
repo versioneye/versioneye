@@ -10,7 +10,7 @@
 						<%= render :partial => "/products/search_icons", :locals => {:product => product} %>
 					</li>
 					<li class="list-cell">
-						<a href="<%= product_version_path(product) %>" class="searchResultLink"><%= product.name_and_version %></a><br/>
+						<a href="<%= product_version_path(product) %>" class="searchResultLink"><%= product.name_version(name_limit) %></a><br/>
 						<% if product.prod_type == "Maven2" %>
 							<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
 						<% end %>

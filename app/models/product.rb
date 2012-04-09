@@ -287,7 +287,16 @@ class Product
   end
 
   def name_and_version    
+    "#{name} (#{version})"
+  end
+  
+  def name_version(limit)    
     nameversion = "#{name} (#{version})"
+    if nameversion.length > limit
+      return "#{nameversion[0, limit]}.." 
+    else
+      return nameversion
+    end
   end
   
   def get_type
