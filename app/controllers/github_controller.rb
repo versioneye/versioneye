@@ -1,7 +1,5 @@
 class GithubController < ApplicationController
 
-  layout "plain"
-
   def callback
     code = params['code']
 

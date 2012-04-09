@@ -2,6 +2,7 @@ Versioneye::Application.routes.draw do
   
   root :to => "products#index"
   
+  match '/auth/github/callback',   :to => 'github#callback'
   match '/auth/facebook/callback', :to => 'facebook#callback'
   get   '/auth/twitter/callback',  :to => 'twitter#callback', :as => 'callback'
 
