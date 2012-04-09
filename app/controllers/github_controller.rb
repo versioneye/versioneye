@@ -20,7 +20,8 @@ class GithubController < ApplicationController
     token = pips[0].split("=")[1]
     type  = pips[1].split("=")[1]
     
-    user = get_user_for_token( token )
+    json_user = get_json_user( token )
+    user = get_user_for_token( json_user, token )
     if !user.nil?
       sign_in user
       redirect_back_or( "/users/#{user.username}/favoritepackages" )
