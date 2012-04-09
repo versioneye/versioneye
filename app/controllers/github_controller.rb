@@ -13,6 +13,7 @@ class GithubController < ApplicationController
     token_type = ""
     access_token = ""
     doc = Nokogiri::HTML( open( URI.encode(link) ) )
+    p "doc: #{doc}"
     doc.xpath('//OAuth/token_type').each do |t_type|
       token_type = t_type
       break
@@ -22,7 +23,7 @@ class GithubController < ApplicationController
       break
     end
     p "token_type: #{token_type} - access_token: #{access_token}"
-    @result = "token_type: #{token_type} - access_token: #{access_token}"
+    @result = "token_type: #{token_type} - access_token: #{access_token} - doc: #{doc}"
     
     # user = get_user_for_token( access_token )
     #     if !user.nil?
