@@ -29,7 +29,7 @@ class VersioncommentsController < ApplicationController
       @product = Product.find_by_key(@comment.product_key)
       attach_version(@product, @comment.version, nil)
     else
-      flash[:error] = "Sorry. We are not able to find the requested comment. Maybe it was deleted."
+      flash.now[:error] = "Sorry. We are not able to find the requested comment. Maybe it was deleted."
     end
   end
   

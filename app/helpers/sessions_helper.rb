@@ -44,6 +44,17 @@ module SessionsHelper
     clear_return_to
   end
 
+  def set_locale
+    locale = params[:locale]
+    if (!locale.nil? && !locale.empty?)
+      I18n.locale = locale
+    else  
+      I18n.locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+    end
+  rescue
+    nil
+  end
+
   private
 
     def user_from_remember_token

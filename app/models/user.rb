@@ -12,6 +12,8 @@ class User
   field :admin, type: Boolean, default: false
   field :fb_id, type: String 
   field :fb_token, type: String
+  field :github_id, type: String 
+  field :github_token, type: String
   field :verification, type: String
   field :terms, type: Boolean
   field :datenerhebung, type: Boolean
@@ -166,6 +168,10 @@ class User
     User.first(conditions: {fb_id: fb_id})
   end
   
+  def self.find_by_github_id(github_id)
+    User.first(conditions: {github_id: github_id})
+  end
+  
   def reset_password
     random_value = create_random_value
     self.password = random_value
@@ -210,6 +216,18 @@ class User
     self.verification = nil
     self.fb_id = json_user['id']
     self.fb_token = token
+    self.password = create_random_value
+    if self.username.nil? || self.username.empty?
+      self.username = create_random_value
+    end
+    self.username = self.username.gsub(".", "")
+  end
+  
+  def update_from_github_json(json_user, token)
+    self.fullname = json_user['name']
+    self.username = json_user['login']
+    self.github_id = json_user['id']
+    self.github_token = token
     self.password = create_random_value
     if self.username.nil? || self.username.empty?
       self.username = create_random_value

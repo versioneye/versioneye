@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   end
   
   def new
-    @user = User.new    
+    @user = User.new
   end
   
   def create
@@ -196,17 +196,6 @@ class UsersController < ApplicationController
 
     def admin_user
       redirect_to(root_path) unless current_user.admin?
-    end
-    
-    def set_locale
-      locale = params[:locale]
-      if (!locale.nil? && !locale.empty?)
-        I18n.locale = locale
-      else  
-        I18n.locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
-      end
-    rescue
-      nil
     end
     
     def validates_privacy_value value
