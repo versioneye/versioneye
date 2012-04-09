@@ -25,13 +25,9 @@ class Follower
   def self.find_by_user(user_id)
     Follower.all(conditions: { user_id: user_id } )
   end
-  
+    
   def user
-    if self.user_id.size < 3
-      User.find( self.user_id.to_i )
-    else
-      User.find( self.user_id )
-    end
+    User.find_by_id( self.user_id )
   end
 
 end

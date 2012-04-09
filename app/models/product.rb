@@ -16,7 +16,8 @@ class Product
   field :authors, type: String
   field :description, type: String
   field :link, type: String
-  field :downloads, type: Integer  
+  field :downloads, type: Integer
+  field :followers, type: Integer, default: 0
   field :license, type: String 
   field :licenseLink, type: String 
   
@@ -122,6 +123,10 @@ class Product
     Versionlink.all(conditions: { prod_key: self.prod_key}).asc(:name)
   end
   
+  def self.get_hotest( count )
+    Product.all().desc(:followers).limit( count )
+  end
+  
   def update_rate
     rate_sum = 0
     rate_count = 0
@@ -172,6 +177,17 @@ class Product
         # product.update_version_rates
         product.update_version_data
       end
+    end
+  end
+  
+  def self.update_followers
+    ids = Follower.all.distinct( :product_id )
+    ids.each do |id|
+      count = Follower.all(conditions: {product_id: id}).count
+      product = Product.find(id)
+      product.followers = count
+      product.save
+      p "#{id} - #{product.name} - #{count}"
     end
   end
    

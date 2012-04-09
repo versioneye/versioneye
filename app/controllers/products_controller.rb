@@ -2,6 +2,15 @@ class ProductsController < ApplicationController
 
   def index
     @hide = "hide"
+    @newest = Array.new
+    @hotest = Product.get_hotest(10)
+    new_stuff = Newest.get_newest(10)
+    new_stuff.each do |entry|
+      @newest << entry.product
+    end
+    if signed_in?
+      @my_product_ids = current_user.fetch_my_product_ids
+    end    
   end
   
   def search
@@ -64,6 +73,8 @@ class ProductsController < ApplicationController
   def follow
     product_key = url_param_to_origin params[:product_key]
     @product = fetch_product product_key
+    @product.followers = @product.followers + 1
+    @product.save
     respond = create_follower @product, current_user
     respond_to do |format|
       format.js
@@ -78,6 +89,8 @@ class ProductsController < ApplicationController
     src_hidden = params[:src_hidden]
     product_key = url_param_to_origin params[:product_key]    
     @product = fetch_product product_key
+    @product.followers = @product.followers - 1
+    @product.save
     respond = destroy_follower @product, current_user
     respond_to do |format|
       format.js 
