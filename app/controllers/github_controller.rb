@@ -10,19 +10,14 @@ class GithubController < ApplicationController
     query += 'code=' + code
     link = "#{domain}#{uri}?#{query}"
 
-    token_type = ""
-    access_token = ""
-    p_string = ""
     doc = Nokogiri::HTML( open( URI.encode(link) ) )
-    doc.xpath('//body/p').each do |val|
-      p_string = val.text
-      break
-    end
-    pps = p_string.split("&amp;")
-    token = pps[0].split("=")[1]
-    type  = pps[1].split("=")[1]
+    p_element = doc.xpath('//body/p')
+    p_string = p_element.text
+    pips = p_string.split("&")
+    token = pips[0].split("=")[1]
+    type  = pips[1].split("=")[1]
     
-    p "token_type: #{type} - access_token: #{token}"
+    p "token_type: #{type} - access_token: #{token} - doc: #{doc}"
     @result = "token_type: #{type} - access_token: #{token} - doc: #{doc}"
     
     # user = get_user_for_token( access_token )
@@ -34,7 +29,7 @@ class GithubController < ApplicationController
   private
 
     def get_user_for_token(token)
-      json_user = JSON.parse HTTParty.get('https://graph.facebook.com/me?access_token=' + URI.escape(token)).response.body
+      json_user = JSON.parse HTTParty.get('https://api.github.com/users/reiz?access_token=' + URI.escape(token)).response.body
       
       user = User.find_by_fb_id( json_user['id'] )
       if !user.nil?
