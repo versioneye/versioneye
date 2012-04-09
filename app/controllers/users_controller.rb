@@ -52,6 +52,10 @@ class UsersController < ApplicationController
     if has_permission_to_see_products( @user, current_user )
       @products = @user.fetch_my_products unless @user.nil?    
     end    
+    @my_product_ids = Array.new
+    if signed_in?
+      @my_product_ids = current_user.fetch_my_product_ids
+    end
     respond_to do |format|
       format.html { render 'show' }
       format.json { render :json => @products }

@@ -30,7 +30,10 @@
 		<div class="profile-head">
 			<h2 ><%= pluralize(@products.count, "Favorite Product") %> </h2>
 		</div>
-		<%= render "users/show_user_products" %>
+		<% if !signed_in? %>
+			<%= render 'shared/dialog_follow' %>	
+		<% end %>
+		<%= render :partial => "products/show_search_results", :locals => { :products => @products, :paginate => false, :prefix => "user" }  %>
 	<% end %>	
 	<% if !@comments.nil? %>	
 		<div class="profile-head">
