@@ -15,7 +15,7 @@ class GithubController < ApplicationController
     p_string = ""
     doc = Nokogiri::HTML( open( URI.encode(link) ) )
     doc.xpath('//body/p').each do |val|
-      p_string = val
+      p_string = val.text
       break
     end
     pps = p_string.split("&amp;")
