@@ -40,7 +40,7 @@ class GithubController < ApplicationController
   
   def create    
     @email = params[:email]
-    @terms = paramse[:terms]
+    @terms = params[:terms]
     @datenerhebung = params[:datenerhebung]
     
     if !User.email_valid?(@email)
