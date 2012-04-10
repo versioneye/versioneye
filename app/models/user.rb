@@ -161,7 +161,7 @@ class User
   end
   
   def self.find_by_email(email)
-    User.first(conditions: {email: email})
+    User.first(conditions: {email: /^#{email}$/i})
   end
   
   def self.find_by_fb_id(fb_id)

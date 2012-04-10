@@ -93,7 +93,7 @@ describe User do
       user.terms = true
       user.datenerhebung = true
       user.save
-      db_user = User.find_by_email( email )
+      db_user = User.find_by_email( "hans2@TANZ.de" )
       db_user.should_not be_nil
       user.remove
     end
@@ -135,7 +135,9 @@ describe User do
       user.salt = "salt"
       user.terms = true
       user.datenerhebung = true
-      user.save.should be_false
+      save = user.save
+      p "save is #{save}"
+      save.should be_false
       db_user = User.find_by_email( email )
       db_user.should be_nil
       user.remove
