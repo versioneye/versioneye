@@ -51,6 +51,7 @@ class FacebookController < ApplicationController
       user.terms = true
       user.datenerhebung = true
       user.save
+      User.new_user_email(user)
       return user
     end
 
