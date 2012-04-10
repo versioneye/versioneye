@@ -47,13 +47,18 @@ class GithubController < ApplicationController
       p "ERROR --- The E-Mail address is already taken. Please choose another E-Mail."
       flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
       render 'new'
-    elsif @terms != 1 || @datenerhebung != 1
+    elsif !@terms.eql?("1") || !@datenerhebung.eql?("1")
       p "ERROR --- You have to accept the Conditions of Use AND the Data Aquisition."
       flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
       render 'new'
     else    
       token = cookies.signed[:github_token]
       p "token: #{token}"
+      if token == nil || token.empty?
+        flash.now[:error] = "An error occured. Your GitHub token is not anymore available. Please try again later."
+        render 'new'
+        return
+      end
       json_user = get_json_user( token )
       user = User.new
       user.update_from_github_json(json_user, token)
