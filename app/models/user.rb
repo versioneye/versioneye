@@ -232,7 +232,14 @@ class User
     if self.username.nil? || self.username.empty?
       self.username = create_random_value
     end
+    user = User.find_by_username(self.username)
+    if !user.nil?
+      random_value = create_random_value
+      self.username = "#{self.username}#{random_value}"
+    end
     self.username = self.username.gsub(".", "")
+    self.username = self.username.gsub("-", "")
+    self.username = self.username.gsub("_", "")
   end
   
   def as_json param
