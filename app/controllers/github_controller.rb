@@ -44,9 +44,11 @@ class GithubController < ApplicationController
     @datenerhebung = params[:datenerhebung]
     
     if !User.email_valid?(@email)
+      p "ERROR --- The E-Mail address is already taken. Please choose another E-Mail."
       flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
       render 'new'
     elsif @terms != true || @datenerhebung != true
+      p "ERROR --- You have to accept the Conditions of Use AND the Data Aquisition."
       flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
       render 'new'
     else    
@@ -62,7 +64,9 @@ class GithubController < ApplicationController
         user.send_verification_email
         User.new_user_email(user)
         cookies.delete(:github_token)
+        render 'create'
       else 
+        p "ERROR ---- An error occured. Please contact the VersionEye Team."
         flash.now[:error] = "An error occured. Please contact the VersionEye Team."
         render 'new'
       end
