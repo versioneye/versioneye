@@ -47,7 +47,7 @@ class GithubController < ApplicationController
       p "ERROR --- The E-Mail address is already taken. Please choose another E-Mail."
       flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
       render 'new'
-    elsif @terms != true || @datenerhebung != true
+    elsif @terms != 1 || @datenerhebung != 1
       p "ERROR --- You have to accept the Conditions of Use AND the Data Aquisition."
       flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
       render 'new'
