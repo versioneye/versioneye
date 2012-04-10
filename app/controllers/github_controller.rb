@@ -62,6 +62,7 @@ class GithubController < ApplicationController
       json_user = get_json_user( token )
       user = User.new
       user.update_from_github_json(json_user, token)
+      user.email = @email
       user.terms = true
       user.datenerhebung = true
       user.create_verification
