@@ -2,9 +2,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
   include ProductsHelper
-  include UsersHelper
+  include UsersHelper  
   include ProjectsHelper
-  
+
   def client
     Twitter.configure do |config|
       config.consumer_key = ENV['XCXPzp6GGZcFfCw2UhxocA']
