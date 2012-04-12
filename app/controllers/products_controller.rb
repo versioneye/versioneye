@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
     @newest = Array.new
     newest_ids = Array.new
     @hotest = Product.get_hotest(10)
-    new_stuff = Newest.get_newest(20)
+    new_stuff = Newest.get_newest(200)
     new_stuff.each do |entry|
       product = entry.product
       if !newest_ids.include? product.id

@@ -9,6 +9,7 @@ class Product
   field :name, type: String
   field :prod_key, type: String
   field :prod_type, type: String
+  field :language, type: String
   
   field :group_id, type: String
   field :artifact_id, type: String
@@ -176,8 +177,25 @@ class Product
       products.each do |product|
         # product.update_version_rates
         product.update_version_data
+        product.update_language
       end
     end
+  end
+  
+  def update_language
+    if self.prod_type.eql?("Maven2") || self.prod_type.nil?
+      self.language = "Java" 
+    end
+    if self.prod_type.eql?("RubyGems")
+      self.language = "Ruby" 
+    end
+    if self.prod_type.eql?("PIP")
+      self.language = "Python" 
+    end
+    if self.prod_type.eql?("npm")
+      self.language = "Node.JS" 
+    end  
+    self.save  
   end
   
   def self.update_followers
