@@ -12,6 +12,8 @@
 		<%= render 'products/product_show_gems' %>	
 	<% elsif @product.get_type.eql? "PIP" %>
 		<%= render 'products/product_show_pip' %>
+	<% elsif @product.get_type.eql? "GitHub" %>
+		<%= render 'products/product_show_github' %>
 	<% elsif @product.get_type.eql? "opa" %>
 		<%= render 'products/product_show_opa' %>
 	<% elsif @product.get_type.eql? "npm" %>

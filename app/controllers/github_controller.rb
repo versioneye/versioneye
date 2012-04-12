@@ -5,9 +5,7 @@ class GithubController < ApplicationController
   def callback
     code = params['code']
     token = get_token( code )
-    p "token: #{token}"
     json_user = get_json_user( token )
-    p "json_user: #{json_user}"
     user = get_user_for_token( json_user, token )
     if !user.nil?
       sign_in user
@@ -32,37 +30,31 @@ class GithubController < ApplicationController
     @datenerhebung = params[:datenerhebung]
     
     if !User.email_valid?(@email)
-      p "ERROR --- The E-Mail address is already taken. Please choose another E-Mail."
       flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
       render 'new'
     elsif !@terms.eql?("1") || !@datenerhebung.eql?("1")
-      p "ERROR --- You have to accept the Conditions of Use AND the Data Aquisition."
       flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
       render 'new'
     else    
       token = cookies.signed[:github_token]
-      p "token: #{token}"
       if token == nil || token.empty?
         flash.now[:error] = "An error occured. Your GitHub token is not anymore available. Please try again later."
         render 'new'
         return
       end
       json_user = get_json_user( token )
-      p "json_user: #{json_user}"
       user = User.new
       user.update_from_github_json(json_user, token)
       user.email = @email
       user.terms = true
       user.datenerhebung = true
       user.create_verification
-      p "user before save!: #{user}"
       if user.save
         user.send_verification_email
         User.new_user_email(user)
         cookies.delete(:github_token)
         render 'create'
       else 
-        p "ERROR ---- An error occured. Please contact the VersionEye Team."
         flash.now[:error] = "An error occured. Please contact the VersionEye Team."
         render 'new'
       end
