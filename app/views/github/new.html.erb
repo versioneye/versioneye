@@ -25,7 +25,7 @@
 		        <%= check_box_tag :terms %>
 		      </div>
 		      <div class="inputCel">
-		        <label for="terms" class="label-small">
+		        <label for="terms" class="label-smaller">
 					<%= t(:terms_part_1) %>
 					<% if I18n.locale == :de %>
 						<%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "_NEW_terms" %> 
@@ -42,7 +42,7 @@
 		        <%= check_box_tag :datenerhebung %>
 		      </div>
 		      <div class="inputCel">
-		        <label for="datenerhebung" class="label-small">
+		        <label for="datenerhebung" class="label-smaller">
 					<%= t(:daten_part_1) %> 
 					<% if I18n.locale == :de %>
 						<%= link_to "Datenerhebung", datenerhebung_path, :target => "_NEW_data" %>
@@ -63,4 +63,7 @@
 
 		<% end %>
 	</div>
+</div>
+<div class="boxContainer" style="text-align: center; font-size: 28px;">
+	<%= render "users/signup_info" %>
 </div>
