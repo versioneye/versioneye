@@ -53,6 +53,7 @@ class GithubController < ApplicationController
         user.send_verification_email
         User.new_user_email(user)
         cookies.delete(:github_token)
+        sign_in user
         render 'create'
       else 
         flash.now[:error] = "An error occured. Please contact the VersionEye Team."
