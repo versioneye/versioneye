@@ -77,8 +77,6 @@ class GithubController < ApplicationController
     token
   end
 
-
-
     def get_json_user( token )
       json_user = JSON.parse HTTParty.get('https://api.github.com/user?access_token=' + URI.escape(token) ).response.body
     end

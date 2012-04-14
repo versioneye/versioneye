@@ -240,6 +240,9 @@ class User
     self.username = self.username.gsub(".", "")
     self.username = self.username.gsub("-", "")
     self.username = self.username.gsub("_", "")
+    if self.fullname.nil? || self.fullname.empty?
+      self.fullname = self.username
+    end
   end
   
   def as_json param
