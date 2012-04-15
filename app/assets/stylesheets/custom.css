@@ -1015,6 +1015,14 @@ nav ul li a:hover {
 
 /****** ELSE ****************/
 
+.avatar-comment{
+	padding-right: 5px;
+}
+
+.comment-meta-box{
+	vertical-align: top
+}
+
 .dependencies{
 	text-align: left;
 }

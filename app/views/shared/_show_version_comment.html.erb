@@ -1,8 +1,8 @@
 <div class="div-row">
-	<div class="div-cell" style="padding-right: 5px;">
+	<div class="div-cell avatar-comment" >
 		<%= gravatar_image_tag( comment.user.email, :alt => comment.user.fullname, :gravatar => { :size => 40 }) %>
 	</div>
-	<div class="div-cell" style="vertical-align: top">
+	<div class="div-cell comment-meta-box">
 		<div>
 			<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate, :id => comment.id} %>
 			<br/>
