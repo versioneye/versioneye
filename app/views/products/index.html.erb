@@ -14,9 +14,11 @@
 	</form>
 </div>
 
-<div class="intro">		
-		<iframe src="http://player.vimeo.com/video/37203548" width="700" height="393" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-</div>
+<% if !signed_in? %>
+	<div class="intro">		
+			<iframe src="http://player.vimeo.com/video/37203548" width="700" height="393" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+	</div>
+<% end %> 
 
 <div class="lp_box lp_sign_up" style="vertical-align:top">
 	<a href="http://twitter.com/share" 
