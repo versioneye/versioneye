@@ -85,6 +85,10 @@ class Versioncomment
   def name_and_version
     "#{self.prod_name} (#{self.version})" 
   end
+
+  def rating
+    self.rate / 10
+  end
   
   def self.update_product_names
     comments = Versioncomment.all

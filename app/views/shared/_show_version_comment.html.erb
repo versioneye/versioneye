@@ -3,7 +3,7 @@
 	<br/>
 </div>
 <div class="meta-text-small">
-	<%= link_to comment.user.fullname, user_path(comment.user) %> on <%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %>							
+	<%= link_to comment.user.fullname, user_path(comment.user) %> on <%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %>
 </div>
 <div>
 	<%= comment.comment %>
@@ -18,7 +18,7 @@
 			<a href="http://twitter.com/share" 
 			   class="twitter-share-button" 
 			   data-url="<%= configatron.server_url %>/vc/<%= comment.id %>" 
-			   data-text="<%= comment.user.fullname %> on <%= @product.name_and_version %> @VersionEye" 
+			   data-text="<%= comment.user.fullname %> rated <%= @product.name_and_version %> with <%= comment.rating %> stars @VersionEye read his comment here " 
 			   data-count="horizontal" >Tweeter</a>
 		</li>
 	</ul>
