@@ -52,15 +52,40 @@ class Versioncomment
     end
     sum
   end
+
+  def self.get_docu_sum_by_prod_key_and_version(prod_key, version)
+    comments = Versioncomment.all( conditions: {product_key: prod_key, version: version} )
+    sum = 0
+    comments.each do |comment|
+      if !comment.rate_docu.nil?
+        sum = sum + comment.rate_docu
+      end
+    end
+    sum
+  end
   
   def self.get_count_by_prod_key_and_version(prod_key, version)
-    Versioncomment.all( conditions: {product_key: prod_key, version: version} ).count()
+    Versioncomment.where(product_key: prod_key).and(version: version).and(:rate.gt => 9).count()
+  end
+
+  def self.get_docu_count_by_prod_key_and_version(prod_key, version)
+    Versioncomment.all( conditions: {product_key: prod_key, version: version, :rate_docu.gt => 9} ).count()
   end
   
   def self.get_average_rate_by_prod_key_and_version(prod_key, version)
     avg = 0
     sum = Versioncomment.get_sum_by_prod_key_and_version(prod_key, version)
     count = Versioncomment.get_count_by_prod_key_and_version(prod_key, version)
+    if count > 0
+      avg = sum / count
+    end
+    avg
+  end
+
+  def self.get_average_rate_docu_by_prod_key_and_version(prod_key, version)
+    avg = 0
+    sum = Versioncomment.get_docu_sum_by_prod_key_and_version(prod_key, version)
+    count = Versioncomment.get_docu_count_by_prod_key_and_version(prod_key, version)
     if count > 0
       avg = sum / count
     end

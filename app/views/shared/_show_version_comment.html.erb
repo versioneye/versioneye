@@ -4,8 +4,14 @@
 	</div>
 	<div class="div-cell comment-meta-box">
 		<div>
-			<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate, :id => comment.id} %>
-			<br/>
+			<ul class="list-row">
+				<li class="list-cell" style="padding-right: 15px;">
+					<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate, :id => comment.id} %>
+				</li>
+				<li class="list-cell">
+					<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate_docu, :id => "#{comment.id}_2"} %>
+				</li>
+			</ul>
 		</div>
 		<div class="meta-text-small">
 			<%= link_to comment.user.fullname, favoritepackages_user_path(comment.user) %> on <%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %>

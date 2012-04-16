@@ -24,7 +24,8 @@ class Product
   
   field :version, type: String
   field :version_link, type: String
-  field :version_rate, type: Integer  
+  field :version_rate, type: Integer
+  field :version_rate_docu, type: Integer
   
   field :rate, type: Integer
   field :rate_docu, type: Integer
@@ -133,24 +134,32 @@ class Product
   def update_rate
     rate_sum = 0
     rate_count = 0
-    ratecount_sum = 0
+    rate_docu_sum = 0
+    rate_docu_count = 0
     versions.each do |version|
       if !version.rate.nil? && version.rate > 9 
         rate_count += 1
         rate_sum += version.rate
-        ratecount_sum += version.get_ratecount
+      end
+      if !version.rate_docu.nil? && version.rate_docu > 9
+        rate_docu_count += 1
+        rate_docu_sum += version.rate_docu
       end
     end
     if rate_count > 0
       avg = rate_sum / rate_count 
       self.rate = Versioncomment.get_flatted_average(avg)
-      self.ratecount = ratecount_sum    
     end    
+    if rate_docu_count > 0 
+      avg = rate_docu_sum / rate_docu_count
+      self.rate_docu = Versioncomment.get_flatted_average(avg)
+    end
   end
   
   def update_version_rates    
     versions.each do |version|
       version.update_rate
+      version.update_rate_docu
       version.save
     end
   end

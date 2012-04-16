@@ -1,0 +1,24 @@
+
+<div class="boxHeader">
+	Ratings
+</div>
+<div class="boxContainer" >
+	<div class="div-row">
+		<div class="div-cell rating_cell">
+			<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate, :id => @product.prod_key} %>
+		</div>
+		<div class="div-cell rating_description_cell">
+			<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate_docu, :id => "#{@product.prod_key}_2"} %>
+		</div>
+	</div>
+	<div class="div-row">
+		<div class="div-cell rating_cell">
+			<label class="label-small" >Overall</label>
+		</div>
+		<div class="div-cell rating_description_cell">
+			<label class="label-small" >Documentation</label>
+		</div>
+	</div>
+</div>
+
+
