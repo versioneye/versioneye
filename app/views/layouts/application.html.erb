@@ -4,12 +4,14 @@
 	<head >
 		<link href="http://versioneye.com/favicon.ico" rel="shortcut icon"  />
 		<title>VersionEye</title>
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<!--[if lt IE 8]><%= stylesheet_link_tag 'blueprint/ie' %><![endif]-->
 		<%= csrf_meta_tag %>
-		<%= render 'layouts/stylesheets' %>
 		<%= stylesheet_link_tag "application" %>
 		<%= javascript_include_tag "application" %>
 		<script src="http://connect.facebook.net/en_US/all.js"></script>
-		<%= render 'layouts/custom_style' %>
 	</head>
 
 	<body>

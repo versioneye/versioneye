@@ -1,0 +1,7 @@
+<% if !@productlook.nil? %>
+	body{
+		background-color: <%= @productlook.backgroundcolor %>;
+		background-image: url("<%= @productlook.backgroundimage %>");
+		background-repeat: repeat;
+	}		
+<% end %>
