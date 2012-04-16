@@ -11,7 +11,7 @@ class FeedbackController < ApplicationController
     end
     
     if !name.nil? && !name.empty? && !email.nil? && !email.empty? && !feedback.nil? && !feedback.empty?
-      if signed_in? || math.eql?("4")
+      if signed_in? || math.eql?("9")
         FeedbackMailer.feedback_email(name, email, feedback).deliver
       end
     end    

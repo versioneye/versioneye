@@ -4,8 +4,6 @@
 
 <% else %>
 	
-	<%= render 'layouts/custom_style' %>
-	
 	<% if @product.get_type.eql? "Maven2" %>
 		<%= render 'products/product_show_maven' %>
 	<% elsif @product.get_type.eql? "RubyGem" %>
