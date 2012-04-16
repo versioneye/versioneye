@@ -5,13 +5,13 @@
 <div class="boxContainer" >
 	<div class="div-row">
 		<div class="div-cell rating_cell">
-			<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate, :id => @product.prod_key} %>
+			<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate, :id => "#{@product.prod_key}_head"} %>
 		</div>
 		<div class="div-cell rating_description_cell">
-			<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate_docu, :id => "#{@product.prod_key}_docu"} %>
+			<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate_docu, :id => "#{@product.prod_key}_docu_head"} %>
 		</div>
 		<div class="div-cell rating_description_cell">
-			<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate_support, :id => "#{@product.prod_key}_support"} %>
+			<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate_support, :id => "#{@product.prod_key}_support_head"} %>
 		</div>
 	</div>
 	<div class="div-row">

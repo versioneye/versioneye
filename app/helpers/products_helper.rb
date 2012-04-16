@@ -42,9 +42,15 @@ module ProductsHelper
   end
   
   def attach_version(product, version)
-    return nil if version.nil? || version.empty? 
+    p "attach_version version: #{version}"
+    if version.nil? || version.empty?
+      version = product.version
+    end
+    p " -- attach_version version: #{version}"
     versionObj = product.get_version(version)
+    p " -- attach_version versionObj: #{versionObj}"
     if !versionObj.nil?
+      p " -- attach_version versionObj: #{versionObj.rate} - #{versionObj.rate_docu} - #{versionObj.rate_support}"
       product.version = versionObj.version
       product.version_link = versionObj.link
       product.version_rate = versionObj.rate
