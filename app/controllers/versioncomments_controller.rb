@@ -6,6 +6,7 @@ class VersioncommentsController < ApplicationController
     @versioncomment.user_id = user.id
     @versioncomment.rate = 0 if @versioncomment.rate.nil?
     @versioncomment.rate_docu = 0 if @versioncomment.rate_docu.nil?
+    @versioncomment.rate_support = 0 if @versioncomment.rate_support.nil?
     prod_key = @versioncomment.product_key
     ver = @versioncomment.version
     @product = Product.find_by_key(prod_key)
@@ -40,6 +41,7 @@ class VersioncommentsController < ApplicationController
       version = product.get_version(ver)
       version.update_rate
       version.update_rate_docu
+      version.update_rate_support
       version.save
       product.update_rate
       product.save

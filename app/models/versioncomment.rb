@@ -7,7 +7,8 @@ class Versioncomment
   field :product_key, type: String  
   field :version, type: String
   field :rate, type: Integer
-  field :rate_docu, type: Integer
+  field :rate_docu, type: Integer, :default => 0
+  field :rate_support, type: Integer, :default => 0
   field :comment, type: String
   field :prod_name, type: String
   
@@ -23,6 +24,7 @@ class Versioncomment
     prod_key = product.prod_key unless product.nil?
     {
       :rate => self.rate,
+      :rate_docu => self.rate_docu,
       :comment => self.comment,
       :from => user.fullname,
       :product_name => prod_name,
@@ -57,9 +59,16 @@ class Versioncomment
     comments = Versioncomment.all( conditions: {product_key: prod_key, version: version} )
     sum = 0
     comments.each do |comment|
-      if !comment.rate_docu.nil?
-        sum = sum + comment.rate_docu
-      end
+      sum = sum + comment.rate_docu
+    end
+    sum
+  end
+
+  def self.get_support_sum_by_prod_key_and_version(prod_key, version)
+    comments = Versioncomment.all( conditions: {product_key: prod_key, version: version} )
+    sum = 0
+    comments.each do |comment|
+      sum = sum + comment.rate_support
     end
     sum
   end
@@ -70,6 +79,10 @@ class Versioncomment
 
   def self.get_docu_count_by_prod_key_and_version(prod_key, version)
     Versioncomment.all( conditions: {product_key: prod_key, version: version, :rate_docu.gt => 9} ).count()
+  end
+
+  def self.get_support_count_by_prod_key_and_version(prod_key, version)
+    Versioncomment.all( conditions: {product_key: prod_key, version: version, :rate_support.gt => 9} ).count()
   end
   
   def self.get_average_rate_by_prod_key_and_version(prod_key, version)
@@ -86,6 +99,16 @@ class Versioncomment
     avg = 0
     sum = Versioncomment.get_docu_sum_by_prod_key_and_version(prod_key, version)
     count = Versioncomment.get_docu_count_by_prod_key_and_version(prod_key, version)
+    if count > 0
+      avg = sum / count
+    end
+    avg
+  end
+
+  def self.get_average_rate_support_by_prod_key_and_version(prod_key, version)
+    avg = 0
+    sum = Versioncomment.get_support_sum_by_prod_key_and_version(prod_key, version)
+    count = Versioncomment.get_support_count_by_prod_key_and_version(prod_key, version)
     if count > 0
       avg = sum / count
     end
@@ -119,6 +142,14 @@ class Versioncomment
   def self.update_product_names
     comments = Versioncomment.all
     comments.each do |comment|
+      if comment.rate_docu.nil?
+        comment.rate_docu = 0
+        comment.save
+      end
+      if comment.rate_support.nil?
+        comment.rate_support = 0
+        comment.save
+      end
       product = comment.get_product
       if !product.nil?
         comment.prod_name = product.name

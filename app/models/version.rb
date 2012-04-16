@@ -8,8 +8,10 @@ class Version
   field :link, type: String
   field :rate, type: Integer
   field :rate_docu, type: Integer
+  field :rate_support, type: Integer
   field :ratecount, type: Integer
   field :rate_docu_count, type: Integer
+  field :rate_support_count, type: Integer
   field :downloads, type: Integer
   field :authors, type: String
   field :description, type: String
@@ -44,6 +46,14 @@ class Version
     avg_flat = Versioncomment.get_flatted_average(avg)
     self.rate_docu = avg_flat
     self.rate_docu_count = Versioncomment.get_docu_count_by_prod_key_and_version(product.prod_key, version)    
+  end
+
+  def update_rate_support
+    prod_key = product.prod_key
+    avg = Versioncomment.get_average_rate_support_by_prod_key_and_version(prod_key, version)
+    avg_flat = Versioncomment.get_flatted_average(avg)
+    self.rate_support = avg_flat
+    self.rate_support_count = Versioncomment.get_docu_count_by_prod_key_and_version(product.prod_key, version)    
   end
   
   def to_url_param

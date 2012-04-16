@@ -8,8 +8,11 @@
 				<li class="list-cell" style="padding-right: 15px;">
 					<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate, :id => comment.id} %>
 				</li>
+				<li class="list-cell" style="padding-right: 15px;">
+					<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate_docu, :id => "#{comment.id}_docu"} %>
+				</li>
 				<li class="list-cell">
-					<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate_docu, :id => "#{comment.id}_2"} %>
+					<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate_support, :id => "#{comment.id}_support"} %>
 				</li>
 			</ul>
 		</div>
