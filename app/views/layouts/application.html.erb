@@ -29,8 +29,10 @@
         	<br/>
 		</div>
 		<%= render 'shared/social_buttons' %>
-		<%= render 'shared/feedback' %>
-		<%= render 'feedback/dialog_feedback' %>
+		<% if signed_in? %>
+			<%= render 'shared/feedback' %>
+			<%= render 'feedback/dialog_feedback' %>
+		<% end %>
 	</body>
 
 </html>
