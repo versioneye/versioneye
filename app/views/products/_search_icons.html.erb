@@ -1,18 +1,6 @@
-<% if product.icon.nil? %>									
-	<% if product.prod_type.eql? "RubyGem" %>
-		<%= image_tag "prod_type/logo_ruby.png" %>
-	<% elsif product.prod_type.eql? "Maven2" %>
-		<%= image_tag "prod_type/logo_java.png" %>
-	<% elsif product.prod_type.eql? "PIP" %>
-		<%= image_tag "prod_type/logo_python.png" %>
-	<% elsif product.prod_type.eql? "npm" %>
-		<%= image_tag "prod_type/logo_npm.png" %>
-	<% elsif product.prod_type.eql?("GitHub") && product.language.eql?("Clojure") %>
-		<%= image_tag "prod_type/logo_clojure.png" %>
-	<% elsif product.prod_type.eql?("GitHub") && product.language.eql?("PHP") %>
-		<%= image_tag "prod_type/logo_php.png" %>
-	<% elsif product.prod_type.eql?("GitHub") && product.language.eql?("JavaScript") %>
-		<%= image_tag "prod_type/logo_javascript.png" %>
+<% if product.icon.nil? %>
+	<% if !product.language.nil? && !product.language.empty? %>
+		<%= image_tag "language/#{product.language.downcase}.png" %>
 	<% else %>
 		<%= image_tag "eye_off.png" %>
 	<% end %>									

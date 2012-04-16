@@ -14,13 +14,13 @@ function start_firebase(limit_size){
 			content += "<ul class='list-row'>"
 			content += "<li class='list-cell icon-cell'>"
 			if (type && type == "RubyGem" )
-				content += "<img src='/assets/prod_type/logo_ruby.png' alt='Ruby'></img>";
+				content += "<img src='/assets/language/ruby.png' alt='Ruby'></img>";
 			else if (type && type == "PIP")
-				content += "<img src='/assets/prod_type/logo_python.png' alt='Python'></img>";
+				content += "<img src='/assets/language/python.png' alt='Python'></img>";
 			else if (type && type == "npm")
-				content += "<img src='/assets/prod_type/logo_npm.png' alt='Node.js'></img>";
+				content += "<img src='/assets/language/npm.png' alt='Node.js'></img>";
 			else if (type && type == "Maven2")
-				content += "<img src='/assets/prod_type/logo_java.png' alt='Java'></img>";
+				content += "<img src='/assets/language/java.png' alt='Java'></img>";
 			else 
 				content += "<img src='/assets/eye_off.png' alt='Software'></img>";						
 			content += "</li>"
