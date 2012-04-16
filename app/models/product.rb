@@ -27,6 +27,7 @@ class Product
   field :version_rate, type: Integer  
   
   field :rate, type: Integer
+  field :rate_docu, type: Integer
   field :ratecount, type: Integer
   
   field :icon, type: String

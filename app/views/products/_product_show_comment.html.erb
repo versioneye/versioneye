@@ -8,11 +8,24 @@
 		        <%= render 'shared/error_messages', :object => f.object %>
 		    </div>				
 			<div >
-				<input name="versioncomment[rate]" type="radio" value="10" class="star"/>
-				<input name="versioncomment[rate]" type="radio" value="20" class="star"/>
-				<input name="versioncomment[rate]" type="radio" value="30" class="star"/>
-				<input name="versioncomment[rate]" type="radio" value="40" class="star"/>
-				<input name="versioncomment[rate]" type="radio" value="50" class="star"/>					
+				<ul class="list-row">
+					<il class="list-cell" style="padding-top: 5px;" ><label class="label-small">Overall</label></il>
+					<il class="list-cell" >
+						<input name="versioncomment[rate]" type="radio" value="10" class="star"/>
+						<input name="versioncomment[rate]" type="radio" value="20" class="star"/>
+						<input name="versioncomment[rate]" type="radio" value="30" class="star"/>
+						<input name="versioncomment[rate]" type="radio" value="40" class="star"/>
+						<input name="versioncomment[rate]" type="radio" value="50" class="star"/>
+					</il>
+					<il class="list-cell" style="padding-top: 5px;" ><label class="label-small">Documentaiton</label></il>
+					<il class="list-cell" >
+						<input name="versioncomment[rate_docu]" type="radio" value="10" class="star"/>
+						<input name="versioncomment[rate_docu]" type="radio" value="20" class="star"/>
+						<input name="versioncomment[rate_docu]" type="radio" value="30" class="star"/>
+						<input name="versioncomment[rate_docu]" type="radio" value="40" class="star"/>
+						<input name="versioncomment[rate_docu]" type="radio" value="50" class="star"/>
+					</il>
+				</ul>
 			</div>
 			<div>
 				<%= f.text_area :comment, :class => "round", :maxlength => "1000", :onKeyUp => "textCounter(this, document.getElementById('counter'), 1000)"  %>

@@ -7,6 +7,7 @@ class Version
   field :version, type: String
   field :link, type: String
   field :rate, type: Integer
+  field :rate_docu, type: Integer
   field :ratecount, type: Integer
   field :downloads, type: Integer
   field :authors, type: String

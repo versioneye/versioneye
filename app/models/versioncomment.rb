@@ -7,6 +7,7 @@ class Versioncomment
   field :product_key, type: String  
   field :version, type: String
   field :rate, type: Integer
+  field :rate_docu, type: Integer
   field :comment, type: String
   field :prod_name, type: String
   

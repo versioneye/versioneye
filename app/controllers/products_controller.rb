@@ -68,6 +68,11 @@ class ProductsController < ApplicationController
         if !mobile.nil? && mobile.eql?('true')
           render "show_mobile", :layout => "application_mobile"
         else
+          @users = Array.new
+          user_ids = Follower.find_followers_for_product( @product.id )
+          user_ids.each do |user_id|
+            @users << User.find_by_id(user_id)
+          end
           @versioncomment = Versioncomment.new 
         end          
         }

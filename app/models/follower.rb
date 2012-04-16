@@ -25,6 +25,10 @@ class Follower
   def self.find_by_user(user_id)
     Follower.all(conditions: { user_id: user_id } )
   end
+
+  def self.find_followers_for_product(product_id)
+    Follower.all(conditions: { product_id: product_id } ).distinct(:user_id)
+  end
     
   def user
     User.find_by_id( self.user_id )

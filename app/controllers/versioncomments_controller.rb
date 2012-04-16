@@ -5,6 +5,7 @@ class VersioncommentsController < ApplicationController
     @versioncomment = Versioncomment.new(params[:versioncomment])
     @versioncomment.user_id = user.id
     @versioncomment.rate = 0 if @versioncomment.rate.nil?
+    @versioncomment.rate_docu = 0 if @versioncomment.rate_docu.nil?
     prod_key = @versioncomment.product_key
     ver = @versioncomment.version
     @product = Product.find_by_key(prod_key)
