@@ -186,7 +186,7 @@ class Product
     if self.prod_type.eql?("Maven2") || self.prod_type.nil?
       self.language = "Java" 
     end
-    if self.prod_type.eql?("RubyGems")
+    if self.prod_type.eql?("RubyGems") || self.prod_type.eql?("RubyGem")
       self.language = "Ruby" 
     end
     if self.prod_type.eql?("PIP")
@@ -259,6 +259,23 @@ class Product
             product.save
           end
         end
+      end
+    end
+  end
+
+  def self.set_languages
+    count = Product.count()
+    pack = 100
+    max = count / pack     
+    (0..max).each do |i|
+      skip = i * pack
+      products = Product.all().skip(skip).limit(pack)
+      products.each do |product|
+        if product.prod_type.nil?
+          product.prod_type = "Maven2"
+          product.save
+        end
+        product.update_language
       end
     end
   end
