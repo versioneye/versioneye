@@ -223,6 +223,39 @@ describe Product do
     it "returns an empty array" do
       @product.get_links.size.should eq(0)
     end
+
+    it "returns one link" do
+      link = Versionlink.new
+      link.prod_key = @product.prod_key
+      link.link = "http://link.de"
+      link.name = "Name"
+      link.save
+      @product.get_links.size.should eq(1)
+      link.remove
+    end
+
+    it "returns an empty array" do
+      link = Versionlink.new
+      link.prod_key = @product.prod_key
+      link.link = "http://link.de"
+      link.version_id = "nope"
+      link.name = "Name"
+      link.save
+      @product.get_links.size.should eq(0)
+      link.remove
+    end
+
+    it "returns 1 link" do
+      link = Versionlink.new
+      link.prod_key = @product.prod_key
+      link.link = "http://link.de"
+      link.version_id = "1.1"
+      link.name = "Name"
+      link.save
+      @product.version = "1.1"
+      @product.get_version_links.size.should eq(1)
+      link.remove
+    end
     
   end
   

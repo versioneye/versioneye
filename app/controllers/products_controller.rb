@@ -58,9 +58,8 @@ class ProductsController < ApplicationController
         @follower.save
       end      
     end
-    version_uid = Product.decimal_to_hex( params[:uid] )
     ver = url_param_to_origin params[:version]
-    attach_version @product, ver, version_uid
+    attach_version @product, ver
     @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
     @version = @product.get_version(@product.version)
     @productlook = Productlook.find_by_key(key)

@@ -90,29 +90,7 @@ class Product
     versions = get_natural_sorted_versions
     versions.first.version
   end
-  
-  def wouldbenewest?(version)
-    current = get_newest_version_by_natural_order
-    return false if current.eql? version
-    newest = Naturalsorter::Sorter.get_newest_version(current, version) 
-    if newest.eql? version
-      true
-    else
-      false
-    end
-  end
-  
-  def get_version(searched_version)
-    versions.each do |version|
-      return version if version.version.eql?(searched_version)
-    end
-    return nil
-  end 
-  
-  def versions_empty?
-    versions.nil? || versions.size == 0 ? true : false
-  end
-  
+
   def get_version_by_uid(uid)
     versions.each do |version|
       return version if version.uid.eql?(uid)
@@ -120,8 +98,31 @@ class Product
     return nil
   end
   
+  def wouldbenewest?(version)
+    current = get_newest_version_by_natural_order
+    return false if current.eql? version
+    newest = Naturalsorter::Sorter.get_newest_version(current, version) 
+    return true if newest.eql? version
+    return false
+  end
+  
+  def get_version(searched_version)
+    versions.each do |version|
+      return version if version.version.eql?(searched_version)
+    end
+    nil
+  end 
+  
+  def versions_empty?
+    versions.nil? || versions.size == 0 ? true : false
+  end
+  
   def get_links
-    Versionlink.all(conditions: { prod_key: self.prod_key}).asc(:name)
+    Versionlink.all(conditions: { prod_key: self.prod_key, version_id: nil}).asc(:name)
+  end
+  
+  def get_version_links()
+    Versionlink.all(conditions: { prod_key: self.prod_key, version_id: self.version}).asc(:name)
   end
   
   def self.get_hotest( count )
@@ -175,27 +176,10 @@ class Product
       skip = i * pack
       products = Product.all().skip(skip).limit(pack)
       products.each do |product|
-        # product.update_version_rates
+        product.update_version_rates
         product.update_version_data
-        product.update_language
       end
     end
-  end
-  
-  def update_language
-    if self.prod_type.eql?("Maven2") || self.prod_type.nil?
-      self.language = "Java" 
-    end
-    if self.prod_type.eql?("RubyGems") || self.prod_type.eql?("RubyGem")
-      self.language = "Ruby" 
-    end
-    if self.prod_type.eql?("PIP")
-      self.language = "Python" 
-    end
-    if self.prod_type.eql?("npm")
-      self.language = "Node.JS" 
-    end  
-    self.save  
   end
   
   def self.update_followers
@@ -206,96 +190,6 @@ class Product
       product.followers = count
       product.save
       p "#{id} - #{product.name} - #{count}"
-    end
-  end
-   
-  def self.remove_doublets
-    count = Product.count()
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.all().skip(skip).limit(pack)
-      products.each do |product|
-        numbers = Array.new
-        new_versions = Array.new
-        product.versions.each do |version|
-          if !numbers.include? version.version 
-            numbers << version.version
-            new_versions << version
-          end
-        end
-        if numbers.size != product.versions.size
-          p "dubletten! #{product.prod_key}"
-          product.versions = new_versions
-          product.save
-        end
-      end
-    end
-  end
-  
-  def self.remove_snapshots
-    count = Product.count()
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.all().skip(skip).limit(pack)
-      products.each do |product|
-        if product.prod_type.eql?("Maven2")
-          new_versions = Array.new
-          product.versions.each do |version|
-            if !version.version.include? "SNAPSHOT"
-              new_versions << version
-            else 
-              p "remove version #{version.version}"
-            end
-          end
-          product.versions = new_versions
-          if product.versions.empty? 
-            p "delete product! #{product.prod_key}"
-            product.remove
-          else 
-            product.save
-          end
-        end
-      end
-    end
-  end
-
-  def self.set_languages
-    count = Product.count()
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.all().skip(skip).limit(pack)
-      products.each do |product|
-        if product.prod_type.nil?
-          product.prod_type = "Maven2"
-          product.save
-        end
-        product.update_language
-      end
-    end
-  end
-  
-  def self.show_products_with_no_versions
-    count = Product.count()
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.all().skip(skip).limit(pack)
-      products.each do |product|
-        if product.versions.nil? || product.versions.empty?
-          p "no versions! #{product.prod_key}"
-          if product.prod_type.eql?("RubyGem")
-            p " -> remove #{product.prod_key}"
-            product.remove
-          end
-        end
-      end
     end
   end
     
@@ -332,32 +226,6 @@ class Product
     else
       return nameversion
     end
-  end
-  
-  def get_type
-    if prod_type.nil? || prod_type.empty? 
-      "Maven2"
-    else
-      prod_type
-    end
-  end
-  
-  def get_decimal_id
-    _id.to_s.to_i(16).to_s(10)
-  end
-  
-  def get_decimal_version_uid
-    version = get_version(self.version)
-    if !version.nil? && !version.uid.nil?
-      version.uid.to_s.to_i(16).to_s(10)
-    else  
-      "0"
-    end
-  end
-  
-  def self.decimal_to_hex( decimal )
-    return nil if decimal.nil? 
-    decimal.to_i(10).to_s(16)
   end
     
   def as_json param

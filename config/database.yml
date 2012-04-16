@@ -16,7 +16,7 @@ test:
   encoding: unicode
   database: veye_test
   pool: 5
-  host: localhosthost
+  host: localhost
   username: postgres
   password: abcdef
   timeout: 5000

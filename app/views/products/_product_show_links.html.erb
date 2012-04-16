@@ -29,5 +29,10 @@
 			<% end %>			
 		<% end %>	
 	<% end %>
+	<% if !@product.get_version_links.empty? %>
+		<% @product.get_version_links.each do |link| %>
+			<a href="<%= link.link %>" target="_NEW"><%= link.name %></a><br/>
+		<% end %>
+	<% end %>
 	
 </div>

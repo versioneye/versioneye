@@ -4,21 +4,21 @@
 
 <% else %>
 	
-	<% if @product.get_type.eql? "Maven2" %>
+	<% if @product.prod_type.eql? "Maven2" %>
 		<%= render 'products/product_show_maven' %>
-	<% elsif @product.get_type.eql? "RubyGem" %>
+	<% elsif @product.prod_type.eql? "RubyGem" %>
 		<%= render 'products/product_show_gems' %>	
-	<% elsif @product.get_type.eql? "PIP" %>
+	<% elsif @product.prod_type.eql? "PIP" %>
 		<%= render 'products/product_show_pip' %>
-	<% elsif @product.get_type.eql? "GitHub" %>
+	<% elsif @product.prod_type.eql? "GitHub" %>
 		<%= render 'products/product_show_github' %>
-	<% elsif @product.get_type.eql? "opa" %>
+	<% elsif @product.prod_type.eql? "opa" %>
 		<%= render 'products/product_show_opa' %>
-	<% elsif @product.get_type.eql? "npm" %>
+	<% elsif @product.prod_type.eql? "npm" %>
 		<%= render 'products/product_show_npm' %>
-	<% elsif @product.get_type.eql? "PHP" %>
+	<% elsif @product.prod_type.eql? "PHP" %>
 		<%= render 'products/product_show_php' %>
-	<% elsif @product.get_type.eql? "Printer" %>
+	<% elsif @product.prod_type.eql? "Printer" %>
 		<%= render 'products/product_show_printer' %>
 	<% end %>
 	

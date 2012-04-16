@@ -4,7 +4,7 @@
 
 <% else %>
 	
-	<% if @product.get_type.eql? "Maven2" %>
+	<% if @product.prod_type.eql? "Maven2" %>
 
 		<%= render 'products/product_show_maven_code_snippet' %>
 

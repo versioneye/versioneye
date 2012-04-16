@@ -41,12 +41,9 @@ module ProductsHelper
     return "success"
   end
   
-  def attach_version(product, version, version_uid)
+  def attach_version(product, version)
     return nil if version.nil? || version.empty? 
     versionObj = product.get_version(version)
-    if versionObj.nil?
-      versionObj = product.get_version_by_uid(version_uid)
-    end
     if !versionObj.nil?
       product.version = versionObj.version
       product.version_link = versionObj.link
