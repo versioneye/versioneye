@@ -9,7 +9,7 @@ class VersioncommentsController < ApplicationController
     ver = @versioncomment.version
     @product = Product.find_by_key(prod_key)
     @versioncomment.prod_name = @product.name
-    attach_version(@product, ver, nil)
+    attach_version(@product, ver)
     
     if @versioncomment.save      
       flash[:success] = "Comment saved!"
@@ -27,7 +27,7 @@ class VersioncommentsController < ApplicationController
     @comment = Versioncomment.find_by_id(id)
     if !@comment.nil?
       @product = Product.find_by_key(@comment.product_key)
-      attach_version(@product, @comment.version, nil)
+      attach_version(@product, @comment.version)
     else
       flash.now[:error] = "Sorry. We are not able to find the requested comment. Maybe it was deleted."
     end
