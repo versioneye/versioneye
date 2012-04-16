@@ -1,46 +1,6 @@
 <div class="searchResults" id="searchresults" >
 	<% if !products.nil? %>
-		<% products.each do |product| %>
-			<% if signed_in? %>
-				<% product.update_in_my_products(@my_product_ids) %>
-			<% end %>
-			<div class="searchResult" >
-				<ul class="list-row">
-					<li class="list-cell icon-cell">
-						<%= render :partial => "/products/search_icons", :locals => {:product => product} %>
-					</li>
-					<li class="list-cell">
-						<a href="<%= product_url(product) %>" class="searchResultLink"><%= product.name_version(name_limit) %></a><br/>
-						<% if product.prod_type == "Maven2" %>
-							<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
-						<% end %>
-						<ul class="searchResult-inner-list-row">
-							<li class="searchResult-inner-list-cell" style="padding-top: 5px">
-								<% if signed_in? %>
-									<span id="follow_<%=product.to_param%>" style="display: <%= display_follow(product) %>">
-										<%= form_tag("/follow", :remote => true) do  %>
-											<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
-						 					<%= submit_tag "Follow", :class => "followButton", :id => "#{product.to_param}" %>
-										<% end %>
-									</span>
-									<span id="unfollow_<%=product.to_param%>" style="display: <%= display_unfollow(product) %>">
-										<%= form_tag("/unfollow", :remote => true) do  %>
-											<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"/>
-											<%= submit_tag "Unfollow", :class => "unfollowButton", :id => "#{product.to_param}" %>
-										<% end %>
-									</span>
-								<% else %>
-									<input type="submit" value="FOLLOW" class="followButton" onclick="load_dialog_follow('<%= product.name %>');" ></input>
-								<% end %>
-							</li>
-							<li class="searchResult-inner-list-cell">
-								<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => "#{prefix}_#{product.prod_key}"} %>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>				
-		<% end %>
+		<%= render :partial => "products/show_search_results_iterator", :locals => { :products => products, :prefix => "search", :name_limit => 70 } %>
 		<% if paginate == true %>
 			<div style="margin-top: 20px;">
 				<%= will_paginate products %>

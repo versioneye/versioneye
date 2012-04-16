@@ -50,14 +50,17 @@ class UsersController < ApplicationController
     @user = User.find_by_username(params[:id])
     @products = Array.new
     if has_permission_to_see_products( @user, current_user )
-      @products = @user.fetch_my_products unless @user.nil?    
+      if !@user.nil?
+        @products = @user.fetch_my_products.paginate(:page => params[:page]) 
+        @count = @user.fetch_my_products_count
+      end
     end    
     @my_product_ids = Array.new
     if signed_in?
       @my_product_ids = current_user.fetch_my_product_ids
     end
     respond_to do |format|
-      format.html { render 'show' }
+      format.html {  }
       format.json { render :json => @products }
     end
   end
@@ -66,10 +69,13 @@ class UsersController < ApplicationController
     @user = User.find_by_username(params[:id])
     @comments = Array.new
     if has_permission_to_see_comments( @user, current_user )
-      @comments = Versioncomment.find_by_user_id( @user.id ) unless @user.nil?
+      if !@user.nil?
+        @comments = Versioncomment.find_by_user_id( @user.id ).paginate(:page => params[:page])
+        @count = Versioncomment.count_by_user_id( @user.id )
+      end
     end
     respond_to do |format|
-      format.html { render 'show' }
+      format.html {  }
       format.json { render :json => @comments }
     end        
   end
