@@ -2,6 +2,13 @@
 <div class="sidebar" >
 	
 	<h1><%= @user.fullname %></h1>
+
+	<%= gravatar_image_tag( @user.email, :alt => @user.fullname, :gravatar => { :size => 200 }) %>
+	<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
+		<a href="http://gravatar.com/emails">Change Profile Picture</a>
+	<% end %>
+	<br/>
+	<br/>
 	
 	<% if !@products.nil? %>
 		<div class="side-navi side-navi-selected side-navi-head">
