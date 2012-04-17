@@ -1,52 +1,8 @@
-<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
 <div class="sidebar" >
-	
-	<h1><%= @user.fullname %></h1>
 
-	<%= gravatar_image_tag( @user.email, :alt => @user.fullname, :gravatar => { :size => 200 }) %>
-	<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
-		<a href="http://gravatar.com/emails">Change Profile Picture</a>
-	<% end %>
-	<br/>
-	<br/>
-	
-	<% if !@products.nil? %>
-		<div class="side-navi side-navi-selected side-navi-head">
-			<a href="/users/<%=@user.username%>/favoritepackages">Favorite Packages</a>
-		</div>
-	<% else %>	
-		<div class="side-navi side-navi-head">
-			<a href="/users/<%=@user.username%>/favoritepackages">Favorite Packages</a>
-		</div>
-	<% end %>	
-	
-	<% if !@comments.nil? %>
-		<div class="side-navi side-navi-selected">
-			<a href="/users/<%=@user.username%>/comments">Comments</a>
-		</div>
-	<% else %>	
-		<div class="side-navi">
-			<a href="/users/<%=@user.username%>/comments">Comments</a>
-		</div>
-	<% end %>	
-		
+	<%= render "users/navi" %>	
+
 </div>	
 <div class="content">
-		
-	<% if !@products.nil? %>	
-		<div class="profile-head">
-			<h2 ><%= pluralize(@products.count, "Favorite Product") %> </h2>
-		</div>
-		<% if !signed_in? %>
-			<%= render 'shared/dialog_follow' %>	
-		<% end %>
-		<%= render :partial => "products/show_search_results", :locals => { :products => @products, :paginate => false, :prefix => "user", :name_limit => 70 }  %>
-	<% end %>	
-	<% if !@comments.nil? %>	
-		<div class="profile-head">
-			<h2 ><%= pluralize(@comments.count, "Comment") %> </h2>
-		</div>
-		<%= render "users/show_user_comments" %>
-	<% end %>
-	
+
 </div>
