@@ -43,8 +43,16 @@ class Versioncomment
     Versioncomment.where(user_id: user_id).desc(:created_at)
   end
 
+  def self.get_prod_keys_for_user(user_id)
+    Versioncomment.where(user_id: user_id).distinct(:product_key)
+  end
+
   def self.count_by_user_id(user_id)
     Versioncomment.where(user_id: user_id).count()
+  end
+
+  def self.find_by_prod_keys(prod_keys)
+    Versioncomment.all( conditions: {:product_key.in => prod_keys}).desc(:created_at)
   end
   
   def self.find_by_prod_key_and_version(prod_key, version)
