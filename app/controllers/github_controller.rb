@@ -5,6 +5,16 @@ class GithubController < ApplicationController
   def callback
     code = params['code']
     token = get_token( code )
+    
+    if signed_in?
+      user = current_user
+      user.github_token = token
+      user.github_scope = "repo"
+      user.save
+      redirect_to "/user/projects"
+      return
+    end
+    
     json_user = get_json_user( token )
     user = get_user_for_token( json_user, token )
     if !user.nil?

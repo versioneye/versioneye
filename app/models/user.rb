@@ -12,15 +12,18 @@ class User
   field :encrypted_password, type: String
   field :salt, type: String
   field :admin, type: Boolean, default: false
-  field :fb_id, type: String 
-  field :fb_token, type: String
-  field :github_id, type: String 
-  field :github_token, type: String
   field :verification, type: String
   field :terms, type: Boolean
   field :datenerhebung, type: Boolean
   field :privacy_products, type: String, default: "everybody"
   field :privacy_comments, type: String, default: "everybody"
+
+  field :fb_id, type: String 
+  field :fb_token, type: String
+  
+  field :github_id, type: String 
+  field :github_token, type: String
+  field :github_scope, type: String
   
   validates_presence_of :username, :message => "Username is mandatory!"
   validates_presence_of :fullname, :message => "Fullname is mandatory!"
