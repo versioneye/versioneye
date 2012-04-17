@@ -5,13 +5,13 @@
 	<div class="div-cell comment-meta-box">
 		<div>
 			<ul class="list-row">
-				<li class="list-cell" style="padding-right: 15px;">
+				<li class="list-cell rating-cell">
 					<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate, :id => comment.id} %>
 				</li>
-				<li class="list-cell" style="padding-right: 15px;">
+				<li class="list-cell rating-cell" >
 					<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate_docu, :id => "#{comment.id}_docu"} %>
 				</li>
-				<li class="list-cell">
+				<li class="list-cell rating-cell">
 					<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate_support, :id => "#{comment.id}_support"} %>
 				</li>
 			</ul>
@@ -21,21 +21,26 @@
 		</div>
 	</div>
 </div>
-<div>
-	<%= comment.comment %>
-</div>
-<div class="meta-text-small" >
-	<ul class="list-row">
-		<li class="list-cell share-on">Share on</li>
-		<li class="list-cell share-on-icon">
-			<%= image_tag "facebook_icon.png", :onclick=>"shareOnFacebook('#{configatron.server_url}/vc/#{comment.id}', '#{comment.user.fullname} on #{@product.name_and_version} @VersionEye');", :alt=>"Facebook", :title=>"Facebook" %>
-		</li>
-		<li class="list-cell share-on-icon">
-			<a href="http://twitter.com/share" 
-			   class="twitter-share-button" 
-			   data-url="<%= configatron.server_url %>/vc/<%= comment.id %>" 
-			   data-text="<%= comment.user.fullname %> rated <%= @product.name_and_version %> with <%= comment.rating %> stars @VersionEye read the #review here:" 
-			   data-count="horizontal" >Tweeter</a>
-		</li>
-	</ul>
+<div class="div-row">
+	<div class="div-cell" ></div>
+	<div class="div-cell">
+		<div>
+			<%= comment.comment %>
+		</div>
+		<div class="meta-text-small share-cell" >
+			<ul class="list-row">
+				<li class="list-cell share-on">Share on</li>
+				<li class="list-cell share-on-icon">
+					<%= image_tag "facebook_icon.png", :onclick=>"shareOnFacebook('#{configatron.server_url}/vc/#{comment.id}', '#{comment.user.fullname} on #{@product.name_and_version} @VersionEye');", :alt=>"Facebook", :title=>"Facebook" %>
+				</li>
+				<li class="list-cell share-on-icon">
+					<a href="http://twitter.com/share" 
+					   class="twitter-share-button" 
+					   data-url="<%= configatron.server_url %>/vc/<%= comment.id %>" 
+					   data-text="<%= comment.user.fullname %> rated <%= @product.name_and_version %> with <%= comment.rating %> stars @VersionEye read the #review here:" 
+					   data-count="horizontal" >Tweeter</a>
+				</li>
+			</ul>
+		</div>
+	</div>
 </div>

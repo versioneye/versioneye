@@ -5,7 +5,7 @@
 	<div class="searchResult" >
 		<ul class="list-row">
 			<li class="list-cell icon-cell">
-				<%= render :partial => "/products/search_icons", :locals => {:product => product} %>
+				<%= render :partial => "/products/search_icons", :locals => {:language => product.language, :icon => product.icon} %>
 			</li>
 			<li class="list-cell">
 				<a href="<%= product_url(product) %>" class="searchResultLink"><%= product.name_version(name_limit) %></a><br/>
@@ -31,7 +31,7 @@
 							<input type="submit" value="FOLLOW" class="followButton" onclick="load_dialog_follow('<%= product.name %>');" ></input>
 						<% end %>
 					</li>
-					<li class="searchResult-inner-list-cell">
+					<li class="searchResult-inner-list-cell rating-cell">
 						<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => "#{prefix}_#{product.prod_key}"} %>
 					</li>
 				</ul>

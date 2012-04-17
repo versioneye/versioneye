@@ -4,7 +4,8 @@ class Versioncomment
   include Mongoid::Timestamps
 
   field :user_id, type: String
-  field :product_key, type: String  
+  field :product_key, type: String
+  field :language, type: String
   field :version, type: String
   field :rate, type: Integer
   field :rate_docu, type: Integer, :default => 0
@@ -157,6 +158,7 @@ class Versioncomment
       product = comment.get_product
       if !product.nil?
         comment.prod_name = product.name
+        comment.language = product.language
         comment.save
       end      
     end

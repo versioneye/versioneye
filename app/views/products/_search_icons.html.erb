@@ -1,9 +1,9 @@
-<% if product.icon.nil? %>
-	<% if !product.language.nil? && !product.language.empty? %>
-		<%= image_tag "language/#{product.language.downcase}.png" %>
+<% if icon.nil? %>
+	<% if !language.nil? && !language.empty? %>
+		<%= image_tag "language/#{language.downcase}.png" %>
 	<% else %>
 		<%= image_tag "eye_off.png" %>
 	<% end %>									
 <% else %>
-	<img src="<%= product.icon %>" width="57" height="57"></img>
+	<img src="<%= icon %>" width="57" height="57"></img>
 <% end %>

@@ -11,6 +11,7 @@ class VersioncommentsController < ApplicationController
     ver = @versioncomment.version
     @product = Product.find_by_key(prod_key)
     @versioncomment.prod_name = @product.name
+    @versioncomment.language = @product.language
     attach_version(@product, ver)
     
     if @versioncomment.save      
