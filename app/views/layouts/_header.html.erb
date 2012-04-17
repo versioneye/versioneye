@@ -30,7 +30,7 @@
 						<li><%= link_to image_tag("myprofile_off.png", :title => "My Profile", :alt => "My Profile", :id => "myprofile_img"), favoritepackages_user_path(current_user),  :onmouseover => "document.getElementById('myprofile_img').src='/assets/myprofile_on.png';", :onmouseout => "document.getElementById('myprofile_img').src='/assets/myprofile_off.png';" %></li>
 						<li class="nav-line" ></li>	
 						<li><%= link_to image_tag("settings_off.png", :title => "Settings", :alt => "Settings", :id => "settings_img"), 
-						                edit_user_path(current_user), 
+						                settings_name_path, 
 						 				:onmouseover => "document.getElementById('settings_img').src='/assets/settings_on.png';",
 						 				:onmouseout => "document.getElementById('settings_img').src='/assets/settings_off.png';" %></li>
 						<li class="nav-line" ></li>	

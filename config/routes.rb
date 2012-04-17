@@ -27,17 +27,22 @@ Versioneye::Application.routes.draw do
     member do 
       get 'favoritepackages'
       get 'comments'
+      match 'name'
     end
   end
   match '/signup',                       :to => 'users#new'
-  match '/users/:id/updatenames',        :to => 'users#updatenames'
-  match '/users/:id/updatepassword',     :to => 'users#updatepassword'
-  match '/users/:id/updateprivacy',      :to => 'users#updateprivacy'
   match '/users/:id/notifications',      :to => 'users#notifications'
   match '/users/activate/:verification', :to => 'users#activate'
   match '/iforgotmypassword',            :to => 'users#iforgotmypassword'
   match '/resetpassword',                :to => 'users#resetpassword'
   match '/home',                         :to => 'users#home'
+    
+  get  '/settings/name',               :to => 'settings#name'
+  get  '/settings/password',           :to => 'settings#password'
+  get  '/settings/privacy',            :to => 'settings#privacy'
+  post '/settings/updatenames',        :to => 'settings#updatenames'
+  post '/settings/updatepassword',     :to => 'settings#updatepassword'
+  post '/settings/updateprivacy',      :to => 'settings#updateprivacy'
 
   resources :versioncomments
   match '/vc/:id',              :to => 'versioncomments#show'

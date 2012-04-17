@@ -1,0 +1,49 @@
+<div class="sidebar" >
+
+	<%= render "settings/navi" %>	
+
+</div>
+<div class="content">
+
+  <div class="boxHeader">
+    Name Settings
+  </div>
+
+	<div class="boxContainer">
+	<%= form_tag("/settings/updatenames", :method => "post") do  %>    
+    <div style="display:table-row;">
+      <div class="labelCelBig">
+		    <%= label_tag(:fullname, "Full Name") %>
+      </div>
+      <div class="inputCel">
+		    <%= text_field_tag :fullname, @user.fullname, :class => "round" %>
+      </div>
+    </div>
+
+    <div style="display:table-row;">
+      <div class="labelCelBig">
+		    <%= label_tag(:username) %>
+      </div>
+      <div class="inputCel">
+		    <%= text_field_tag :new_username, @user.new_username, :class => "round" %>
+      </div>
+    </div>
+
+	<div style="display:table-row;">
+      <div class="labelCelBig">
+		    <%= label_tag(:password) %>
+      </div>
+      <div class="inputCel">
+		    <%= password_field_tag :password, "", :class => "round" %>
+      </div>
+    </div>
+
+    <div style="display:table-row;">
+      <div class="labelCelBig"></div>
+      <div class="submitCel">
+		    <%= submit_tag "Save", :class => "button" %>
+      </div>
+    </div>
+	<% end %>
+
+</div>

@@ -18,8 +18,7 @@ class SessionsController < ApplicationController
           redirect_to "/signin"
         else
           sign_in user
-          # redirect_back_or( user_path(user) ) 
-          redirect_back_or( "/users/#{user.username}/favoritepackages" )
+          redirect_back_or( "/users/news" )
         end
       }
       format.json { 
