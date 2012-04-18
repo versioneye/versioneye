@@ -43,7 +43,6 @@ class Product
   # versioncomments
 
   attr_accessor :in_my_products, :version_uid, :notification
-
   
   def delete
     false

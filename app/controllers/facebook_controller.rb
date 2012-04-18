@@ -24,6 +24,9 @@ class FacebookController < ApplicationController
     if !user.nil?
       sign_in user
     end
+  rescue => e
+    logger.debug "ERROR FACEBOOK CALLBACK Message:   #{e.message}"
+    logger.debug "ERROR FACEBOOK CALLBACK backtrace: #{e.backtrace}"
   end
 
   private
