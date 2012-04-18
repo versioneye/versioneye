@@ -1,6 +1,6 @@
 <div class="searchResults" id="searchresults" >
 	<% if !products.nil? %>
-		<%= render :partial => "products/show_search_results_iterator", :locals => { :products => products, :prefix => "search", :name_limit => 70 } %>
+		<%= render :partial => "products/show_search_results_iterator", :locals => { :products => products, :prefix => "search", :name_limit => name_limit } %>
 		<% if paginate == true %>
 			<div style="margin-top: 20px;">
 				<%= will_paginate products %>
