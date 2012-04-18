@@ -21,7 +21,9 @@ Versioneye::Application.routes.draw do
   match '/product/wouldbenewest/:key/version/:version', :to => 'products#wouldbenewest'
   match '/biggest/:version1/:version2',                 :to => 'products#biggest'
   
-  match '/users/news',               :to => 'news#index'
+  match '/users/news',               :to => 'news#news'
+  match '/users/mynews',             :to => 'news#mynews'
+  match '/users/hotnews',            :to => 'news#hotnews'
   
   resources :users, :key => :username do 
     member do 

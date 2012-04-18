@@ -1,0 +1,60 @@
+
+
+<div class="searchResults">
+	<% @comments.each do |comment| %>
+		<div class="comment" >
+			<ul class="list-row">
+				<li class="list-cell icon-cell">
+					<%= render :partial => "/products/search_icons", :locals => {:language => comment.language, :icon => nil} %>
+				</li>
+				<li class="list-cell">
+					<a href="/product/<%= comment.prod_key_url %>/version/<%= comment.version_url %>/0"
+					   class="searchResultLink"><%=comment.name_and_version%></a><br/>
+					<div>
+						<ul class="list-row">
+							<li class="list-cell rating-cell">
+								<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate, :id => comment.id} %>
+							</li>
+							<li class="list-cell rating-cell" >
+								<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate_docu, :id => "#{comment.id}_docu"} %>
+							</li>
+							<li class="list-cell rating-cell">
+								<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate_support, :id => "#{comment.id}_support"} %>
+							</li>
+						</ul>
+					</div>
+					<div class="meta-text-small">
+						<%= link_to comment.user.fullname, user_path(comment.user) %> on <%= comment.created_at.strftime("%b %d, %Y - %I:%M %p") %>			
+					</div>
+				</li>
+			</ul>
+			<ul class="list-row">
+				<li class="list-cell icon-cell" style="vertical-align: top">
+					<% if show_gravatar %>
+						<%= gravatar_image_tag( comment.user.email, :alt => comment.user.fullname, :gravatar => { :size => 40 }) %>
+					<% end %>
+				</li>
+				<li class="list-cell">
+					<div>
+						<%= comment.comment %>
+					</div>
+					<div class="meta-text-small" >
+						<ul class="searchResult-inner-list-row">
+							<li class="searchResult-inner-list-cell share-on">Share on</li>
+							<li class="searchResult-inner-list-cell share-on-icon">
+								<%= image_tag "facebook_icon.png", :onclick=>"shareOnFacebook('#{configatron.server_url}/vc/#{comment.id}', '#{comment.user.fullname} on #{comment.name_and_version} @VersionEye');", :alt=>"Facebook", :title=>"Facebook" %>
+							</li>
+							<li class="searchResult-inner-list-cell share-on-icon">
+								<a href="http://twitter.com/share" 
+								   class="twitter-share-button" 
+								   data-url="<%= configatron.server_url %>/vc/<%= comment.id %>" 
+								   data-text="<%= comment.user.fullname %> on <%= comment.name_and_version %> @VersionEye" 
+								   data-count="horizontal" >Tweeter</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+	<% end %>
+</div>
