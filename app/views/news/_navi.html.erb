@@ -3,7 +3,9 @@
 		Filter
 	</div>
 	<div class="boxContainer" >
-		<%= link_to "News", users_news_path %><br/>
-		<%= link_to "My News", users_mynews_path %><br/>
-		<%= link_to "Hot News", users_hotnews_path %><br/>
+		<%= link_to "News", news_path %><br/>
+		<% if signed_in? %>
+			<%= link_to "My News", mynews_path %><br/>
+		<% end %>
+		<%= link_to "Hot News", hotnews_path %><br/>
 	</div>

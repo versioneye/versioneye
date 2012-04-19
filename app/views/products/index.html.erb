@@ -35,6 +35,14 @@
 </div>
 
 <h1 class="lp_head">
+	Newest Comments and Ratings 
+</h1>
+<div class="lp_box">
+	<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => true } %> 	
+	<%= link_to "Read more here", news_path %><br/>
+</div>
+
+<h1 class="lp_head">
 	Mobile
 </h1>
 <div class="lp_box">

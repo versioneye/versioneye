@@ -19,9 +19,9 @@
 					<li class="nav-begin" >&nbsp;</li>
 					<li><%= link_to "Newest", newest_version_path %></li>
 					<li class="nav-line" ></li>
-					<% if signed_in? %>
-						<li><%= link_to image_tag("news_off.png", :title => "News", :alt => "News", :id => "news_img"), users_news_path, :onmouseover => "document.getElementById('news_img').src='/assets/news_on.png';", :onmouseout => "document.getElementById('news_img').src='/assets/news_off.png';" %></li>
+					<li><%= link_to image_tag("news_off.png", :title => "News", :alt => "News", :id => "news_img"), news_path, :onmouseover => "document.getElementById('news_img').src='/assets/news_on.png';", :onmouseout => "document.getElementById('news_img').src='/assets/news_off.png';" %></li>
 						<li class="nav-line" ></li>
+					<% if signed_in? %>
 						<li><%= link_to image_tag("project_off.png", :title => "Projects", :alt => "Prjects", :id => "projects_img"), 
 																		                user_projects_path, 
 																		 				:onmouseover => "document.getElementById('projects_img').src='/assets/project_on.png';",

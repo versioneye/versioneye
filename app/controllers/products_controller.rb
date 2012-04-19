@@ -2,6 +2,7 @@ class ProductsController < ApplicationController
 
   def index
     @hide = "hide"
+    @comments = Versioncomment.all().desc(:created_at).limit(10) 
     @newest = Array.new
     newest_ids = Array.new
     @hotest = Product.get_hotest(10)

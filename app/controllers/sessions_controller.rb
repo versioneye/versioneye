@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
           redirect_to "/signin"
         else
           sign_in user
-          redirect_back_or( "/users/news" )
+          redirect_back_or( "/news" )
         end
       }
       format.json { 
