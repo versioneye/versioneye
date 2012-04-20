@@ -1,7 +1,7 @@
 module ProductsHelper
   
   def product_version_path(product)
-    return "/package/0/version/0" if product.nil? 
+    return "/package/0/version" if product.nil? 
     return "/package/#{product.to_param}/version/#{product.version_to_url_param}"
   end
   

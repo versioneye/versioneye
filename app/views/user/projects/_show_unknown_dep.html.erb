@@ -1,7 +1,7 @@
 <div class="unknown-row" >
 	<ul class="list-row" >
 		<li class="list-cell icon-cell">
-			<%= render :partial => "/products/search_icons", :locals => {:language => product.language, :icon => product.icon} %>
+			<%= render :partial => "/products/search_icons", :locals => {:language => product.language, :icon => product.icon, :link => nil} %>
 		</li>
 		<li class="list-cell">
 			<span class="searchResultLink"><%= product.name %></span><br/>

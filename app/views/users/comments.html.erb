@@ -10,12 +10,12 @@
 		<div class="profile-head">
 			<h2 ><%= pluralize(@count, "Comment") %> </h2>
 		</div>
-		<% if !@comments.empty? %>
+		<% if !@comments.nil? && !@comments.empty? %>
 			<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %> 
+			<div style="margin-top: 20px;">
+				<%= will_paginate @comments %>
+			</div>	
 		<% end %>
-		<div style="margin-top: 20px;">
-			<%= will_paginate @comments %>
-		</div>
 	<% end %>
 	
 </div>

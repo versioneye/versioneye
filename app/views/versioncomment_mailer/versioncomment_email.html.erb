@@ -6,11 +6,16 @@
 	<body>
 		<p>Hello <%= @follower.fullname %></p>
 		<p>
-			<b><%= @user.fullname %></b> wrote a comment on <b><%= @prod.name %></b><br/>
+			<a href="http://versioneye.com/users/<%@user.username%>"><%= @user.fullname %></a> wrote a comment on 
+			<a href="http://versioneye.com/package/<%= @prod.prod_key %>"><%= @prod.name %></a><br/>
 			You can see the comment here: <a href="<%= @commentlink %>"><%= @commentlink %></a>
 		</p>
 		<p>
 			Have a great day!
+		</p>
+		<p>
+			Your VersionEye Team<br/>
+			<a href="http://versioneye.com">http://versioneye.com</a>
 		</p>
 	</body>
 </html>

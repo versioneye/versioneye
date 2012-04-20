@@ -5,7 +5,7 @@
 	<div class="searchResult" >
 		<ul class="list-row">
 			<li class="list-cell icon-cell">
-				<%= render :partial => "/products/search_icons", :locals => {:language => product.language, :icon => product.icon} %>
+				<%= render :partial => "/products/search_icons", :locals => {:language => product.language, :icon => product.icon, :link => product_url(product) } %>
 			</li>
 			<li class="list-cell">
 				<a href="<%= product_url(product) %>" class="searchResultLink"><%= product.name_version(name_limit) %></a><br/>

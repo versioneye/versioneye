@@ -11,9 +11,11 @@
 	
 	<% if !@comments.nil? && !@comments.empty? %>
 		<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => true } %> 
-		<div style="margin-top: 20px;">
-			<%= will_paginate @comments %>
-		</div>
+		<% if !@comments.nil? && !@comments.empty? %> 
+			<div style="margin-top: 20px;">
+				<%= will_paginate @comments %>
+			</div>	
+		<% end %>
 	<% end %>
 
 </div>

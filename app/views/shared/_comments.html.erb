@@ -5,10 +5,10 @@
 		<div class="comment" >
 			<ul class="list-row">
 				<li class="list-cell icon-cell">
-					<%= render :partial => "/products/search_icons", :locals => {:language => comment.language, :icon => nil} %>
+					<%= render :partial => "/products/search_icons", :locals => {:language => comment.language, :icon => nil, :link => "/package/#{comment.prod_key_url}/version/#{comment.version_url}" } %>
 				</li>
 				<li class="list-cell">
-					<a href="/product/<%= comment.prod_key_url %>/version/<%= comment.version_url %>/0"
+					<a href="/package/<%= comment.prod_key_url %>/version/<%= comment.version_url %>"
 					   class="searchResultLink"><%=comment.name_and_version%></a><br/>
 					<div>
 						<ul class="list-row">
@@ -31,7 +31,7 @@
 			<ul class="list-row">
 				<li class="list-cell icon-cell" style="vertical-align: top">
 					<% if show_gravatar %>
-						<%= gravatar_image_tag( comment.user.email, :alt => comment.user.fullname, :gravatar => { :size => 40 }) %>
+						<%= link_to gravatar_image_tag( comment.user.email, :alt => comment.user.fullname, :gravatar => { :size => 40 }), user_path(comment.user) %>
 					<% end %>
 				</li>
 				<li class="list-cell">

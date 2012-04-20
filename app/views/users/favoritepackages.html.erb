@@ -14,9 +14,11 @@
 			<%= render 'shared/dialog_follow' %>	
 		<% end %>
 		<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
-		<div style="margin-top: 20px;">
-			<%= will_paginate @products %>
-		</div>
+		<% if !@products.nil? && !@products.empty? %> 
+			<div style="margin-top: 20px;">
+				<%= will_paginate @products %>
+			</div>
+		<% end %>
 	<% end %>	
 	
 </div>
