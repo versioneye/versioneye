@@ -6,7 +6,8 @@ Versioneye::Application.routes.draw do
   match '/auth/github/new',        :to => 'github#new'
   match '/auth/github/create',     :to => 'github#create'
   match '/auth/facebook/callback', :to => 'facebook#callback'
-  get   '/auth/twitter/callback',  :to => 'twitter#callback', :as => 'callback'
+  get   '/auth/twitter/forward',   :to => 'twitter#forward'
+  get   '/auth/twitter/callback',  :to => 'twitter#callback'
 
   resources :products
   match '/search',                                      :to => 'products#search'
