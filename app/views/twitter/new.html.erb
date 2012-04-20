@@ -1,0 +1,69 @@
+<div class="boxHeader">
+	<span>
+		Sign Up
+	</span>
+	<span style="padding-left: 560px;">
+		<%= link_to image_tag("flaggs_germany_off.png", :class => "flag", :title => "Germany", :alt=>"Germany", :onmouseover => "document.getElementById('flag_de').src='/assets/flaggs_germany_on.png';", :onmouseout => "document.getElementById('flag_de').src='/assets/flaggs_germany_off.png';", :id => "flag_de"), "/auth/github/new?locale=de" %>
+		<%= link_to image_tag("flaggs_gb_off.png", :class=>"flag", :title => "GB", :alt=>"GB", :onmouseover => "document.getElementById('flag_en').src='/assets/flaggs_gb_on.png';", :onmouseout => "document.getElementById('flag_en').src='/assets/flaggs_gb_off.png';", :id => "flag_en"), "/auth/github/new?locale=en" %>
+	<span>	
+</div>
+<div class="boxContainer" style="height: 250px;">
+	<div class="formCel">		
+		<%= form_tag("/auth/twitter/create", :method => "post") do  %>    
+
+		    <div class="div-row">
+		      <div class="labelCel">
+				<%= label_tag(:email, "E-Mail") %>
+		      </div>
+		      <div class="inputCel">
+				<%= text_field_tag :email, @email, :class => "round", :id => "email"  %>
+		      </div>
+		    </div>
+
+		    <div class="div-row">
+		      <div class="labelCel" style="vertical-align: top">
+		        <%= check_box_tag :terms %>
+		      </div>
+		      <div class="inputCel">
+		        <label for="terms" class="label-smaller">
+					<%= t(:terms_part_1) %>
+					<% if I18n.locale == :de %>
+						<%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "_NEW_terms" %> 
+					<% else %>
+						<%= link_to "Conditions of Use", terms_path, :target => "_NEW_terms" %> 
+					<% end %>					 
+					<%= t(:terms_part_2) %>
+				</label><br/><br/>
+		      </div>
+		    </div>
+		
+			<div class="div-row">
+		      <div class="labelCel" style="vertical-align: top">
+		        <%= check_box_tag :datenerhebung %>
+		      </div>
+		      <div class="inputCel">
+		        <label for="datenerhebung" class="label-smaller">
+					<%= t(:daten_part_1) %> 
+					<% if I18n.locale == :de %>
+						<%= link_to "Datenerhebung", datenerhebung_path, :target => "_NEW_data" %>
+					<% else %>
+						<%= link_to "Data Acquisition", datacollection_path, :target => "_NEW_data" %>
+					<% end %>
+					<%= t(:daten_part_2) %> 
+				</label><br/><br/>
+		      </div>
+		    </div>
+
+		    <div class="div-row">
+		      <div class="labelCel"></div>
+		      <div class="submitCel">
+				<%= submit_tag "Save", :class => "button", :onclick => "return validateEmail( document.getElementById('email').value )" %>
+		      </div>
+		    </div>
+
+		<% end %>
+	</div>
+</div>
+<div class="boxContainer" style="text-align: center; font-size: 28px;">
+	<%= render "users/signup_info" %>
+</div>

@@ -18,8 +18,14 @@ class User
   field :privacy_products, type: String, default: "everybody"
   field :privacy_comments, type: String, default: "everybody"
 
+  field :description, type: String
+  field :background_color, type: String
+
   field :fb_id, type: String 
   field :fb_token, type: String
+
+  field :twitter_id, type: String
+  field :twitter_token, type: String
   
   field :github_id, type: String 
   field :github_token, type: String
@@ -176,6 +182,10 @@ class User
   def self.find_by_fb_id(fb_id)
     User.first(conditions: {fb_id: fb_id})
   end
+
+  def self.find_by_twitter_id(twitter_id)
+    User.first(conditions: {twitter_id: twitter_id})
+  end
   
   def self.find_by_github_id(github_id)
     User.first(conditions: {github_id: github_id})
@@ -229,7 +239,27 @@ class User
     if self.username.nil? || self.username.empty?
       self.username = create_random_value
     end
-    self.username = self.username.gsub(".", "")
+    self.username = replacements_for_username( self.username )
+    if self.fullname.nil? || self.fullname.empty?
+      self.fullname = self.username
+    end
+  end
+
+  def update_from_twitter_json(json_user, token)
+    self.fullname = json_user['name']
+    self.username = json_user['screen_name']
+    self.description = json_user['description']
+    self.background_color = json_user['profile_background_color']
+    self.twitter_id = json_user['id']
+    self.twitter_token = token
+    self.password = create_random_value
+    if self.username.nil? || self.username.empty?
+      self.username = create_random_value
+    end
+    self.username = replacements_for_username( self.username )
+    if self.fullname.nil? || self.fullname.empty?
+      self.fullname = self.username
+    end
   end
   
   def update_from_github_json(json_user, token)
@@ -246,12 +276,17 @@ class User
       random_value = create_random_value
       self.username = "#{self.username}#{random_value}"
     end
-    self.username = self.username.gsub(".", "")
-    self.username = self.username.gsub("-", "")
-    self.username = self.username.gsub("_", "")
+    self.username = replacements_for_username( self.username )
     if self.fullname.nil? || self.fullname.empty?
       self.fullname = self.username
     end
+  end
+
+  def replacements_for_username( username )
+    username = username.gsub(".", "")
+    username = username.gsub("-", "")
+    username = username.gsub("_", "")
+    username
   end
   
   def as_json param
