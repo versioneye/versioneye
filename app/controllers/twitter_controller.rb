@@ -18,7 +18,11 @@ class TwitterController < ApplicationController
   def callback
     logger.info "twitter callback"
     session[:verifier] = params[:oauth_verifier]
-    json_user = fetch_json_user(session[:token], session[:secret], session[:verifier] )
+    
+    oauth = oauth_consumer    
+    access_token = fetch_access_token( oauth, session[:token], session[:secret], session[:verifier] )
+    session[:access_token] = access_token
+    json_user = fetch_json_user( oauth, access_token )
 
     logger.info "user_info: #{json_user}"
 
@@ -55,7 +59,8 @@ class TwitterController < ApplicationController
       flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
       render 'new'
     else    
-      user_info = fetch_json_user(session[:token], session[:secret], session[:verifier] )
+      oauth = oauth_consumer    
+      user_info = fetch_json_user( oauth, session[:access_token] )
       if user_info == nil || user_info.empty?
         flash.now[:error] = "An error occured. Your Twitter token is not anymore available. Please try again later."
         logger.error "An error occured. Your Twitter token is not anymore available. Please try again later."
@@ -87,10 +92,12 @@ class TwitterController < ApplicationController
       OAuth::Consumer.new(@@consumer_key, @@consumer_secret, { :site => "http://twitter.com" })
     end
 
-    def fetch_json_user(token, secret, verifier )
-      oauth = oauth_consumer
+    def fetch_access_token( oauth, token, secret, verifier )
       request_token = OAuth::RequestToken.new( oauth, token, secret )
-      access_token = request_token.get_access_token(:oauth_verifier => verifier)
+      request_token.get_access_token(:oauth_verifier => verifier)
+    end
+
+    def fetch_json_user( oauth, access_token )
       response = oauth.request(:get, '/account/verify_credentials.json', access_token, { :scheme => :query_string })
       json_user = JSON.parse(response.body)
     end
