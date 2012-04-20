@@ -36,7 +36,7 @@ class TwitterController < ApplicationController
     else
       session[:twitter_user] = json_user
       session[:access_token] = access_token
-      redirect_to auth_twitter_new_path
+      redirect_to "http://versioneye.com/auth/twitter/new"
     end
   end
 
