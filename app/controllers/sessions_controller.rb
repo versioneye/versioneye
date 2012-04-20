@@ -41,7 +41,8 @@ class SessionsController < ApplicationController
     registration_id = params[:registration_id]
     user = current_user
     if !user.nil?
-      user.update_column(:registrationid, registration_id)
+      user.registrationid = registration_id
+      user.save
     end
   end
   

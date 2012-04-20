@@ -29,7 +29,7 @@ class TwitterController < ApplicationController
 
     user = User.find_by_twitter_id( json_user['id'] )
     if !user.nil?
-      user.update_column(:twitter_token, access_token)
+      user.twitter_token = access_token
       user.save
       sign_in user
       redirect_back_or( "/news" )
