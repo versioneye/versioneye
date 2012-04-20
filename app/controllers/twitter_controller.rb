@@ -25,8 +25,8 @@ class TwitterController < ApplicationController
 
     response = oauth.request(:get, '/account/verify_credentials.json', access_token, { :scheme => :query_string })
 
-    @user_info = JSON.parse(response.body)
-    logger.info "user_info: #{@user_info}"
+    json_user = JSON.parse(response.body)
+    logger.info "user_info: #{json_user}"
 
     user = User.find_by_twitter_id( json_user['id'] )
     if !user.nil?
@@ -36,7 +36,7 @@ class TwitterController < ApplicationController
       redirect_back_or( "/news" )
       return 
     else
-      session[:twitter_user] = @user_info
+      session[:twitter_user] = json_user
       session[:access_token] = access_token
       @user = User.new
       render "new"
