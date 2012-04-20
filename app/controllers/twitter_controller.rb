@@ -18,7 +18,7 @@ class TwitterController < ApplicationController
   def callback
     logger.info "twitter callback"
     session[:verifier] = params[:oauth_verifier]
-    json_user = fetch_json_user(session[:token], session[:secret], verifier )
+    json_user = fetch_json_user(session[:token], session[:secret], session[:verifier] )
 
     logger.info "user_info: #{json_user}"
 
