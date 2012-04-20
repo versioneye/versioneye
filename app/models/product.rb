@@ -119,6 +119,11 @@ class Product
   def versions_empty?
     versions.nil? || versions.size == 0 ? true : false
   end
+
+  def self.random_product
+    size = Product.count - 7
+    Product.skip(rand( size )).first 
+  end
   
   def get_links
     Versionlink.all(conditions: { prod_key: self.prod_key, version_id: nil}).asc(:name)

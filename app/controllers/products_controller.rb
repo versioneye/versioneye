@@ -22,6 +22,11 @@ class ProductsController < ApplicationController
   
   def search
     @query = params[:q]
+    commit = params[:commit]
+    if commit.eql?("Lucky")
+      product = Product.random_product
+      @query = product.name
+    end
     @query = do_replacements ( @query ) 
     if @query.nil? || @query.empty? || @query.eql?("Be up-to-date")
       @query = "json"
