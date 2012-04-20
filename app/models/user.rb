@@ -26,6 +26,7 @@ class User
 
   field :twitter_id, type: String
   field :twitter_token, type: String
+  field :twitter_secret, type: String
   
   field :github_id, type: String 
   field :github_token, type: String
@@ -245,13 +246,14 @@ class User
     end
   end
 
-  def update_from_twitter_json(json_user, token)
+  def update_from_twitter_json(json_user, token, secret)
     self.fullname = json_user['name']
     self.username = json_user['screen_name']
     self.description = json_user['description']
     self.background_color = json_user['profile_background_color']
     self.twitter_id = json_user['id']
     self.twitter_token = token
+    self.twitter_secret = secret
     self.password = create_random_value
     if self.username.nil? || self.username.empty?
       self.username = create_random_value

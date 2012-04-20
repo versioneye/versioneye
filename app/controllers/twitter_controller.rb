@@ -16,22 +16,17 @@ class TwitterController < ApplicationController
   end
 
   def callback
-    logger.info "twitter callback"
-    
     oauth = oauth_consumer    
     access_token = fetch_access_token( oauth, session[:token], session[:secret], params[:oauth_verifier] )
-    logger.info "access_token.token: #{access_token.token}"
-    logger.info "access_token.token: #{access_token.secret}"
     session[:token] = nil
     session[:secret] = nil
     session[:access_token] = access_token
     json_user = fetch_json_user( oauth, access_token )
 
-    logger.info "user_info: #{json_user}"
-
     user = User.find_by_twitter_id( json_user['id'] )
     if !user.nil?
-      user.twitter_token = access_token
+      user.twitter_token = access_token.token
+      user.twitter_secret = access_token.secret
       user.save
       sign_in user
       redirect_back_or( "/news" )
@@ -68,13 +63,13 @@ class TwitterController < ApplicationController
         return
       end
       user = User.new
-      user.update_from_twitter_json(user_info, access_token)
+      user.update_from_twitter_json(user_info, access_token.token, access_token.secret)
       user.email = @email
       user.terms = true
       user.datenerhebung = true
       user.create_verification
       if user.save
-        update_twitter_status( access_token )
+        update_twitter_status( access_token.token, access_token.secret )
         user.send_verification_email
         User.new_user_email(user)
         sign_in user
@@ -104,12 +99,12 @@ class TwitterController < ApplicationController
       json_user = JSON.parse(response.body)
     end
 
-    def update_twitter_status(access_token)
+    def update_twitter_status(token, secret)
       client = TwitterOAuth::Client.new(
           :consumer_key => @@consumer_key,
           :consumer_secret => @@consumer_key,
-          :token => access_token.token, 
-          :secret => access_token.secret
+          :token => token, 
+          :secret => secret
       )
       if client.authorized?
         client.update('Great weather today in SF.')
