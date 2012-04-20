@@ -33,12 +33,10 @@ class TwitterController < ApplicationController
       user.save
       sign_in user
       redirect_back_or( "/news" )
-      return 
     else
       session[:twitter_user] = json_user
       session[:access_token] = access_token
-      @user = User.new
-      render "new"
+      redirect_to auth_twitter_new
     end
   end
 
