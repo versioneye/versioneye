@@ -17,10 +17,11 @@ class TwitterController < ApplicationController
 
   def callback
     logger.info "twitter callback"
-    session[:verifier] = params[:oauth_verifier]
     
     oauth = oauth_consumer    
-    access_token = fetch_access_token( oauth, session[:token], session[:secret], session[:verifier] )
+    access_token = fetch_access_token( oauth, session[:token], session[:secret], params[:oauth_verifier] )
+    session[:token] = nil
+    session[:secret] = nil
     session[:access_token] = access_token
     json_user = fetch_json_user( oauth, access_token )
 
