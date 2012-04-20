@@ -20,6 +20,8 @@ class TwitterController < ApplicationController
     
     oauth = oauth_consumer    
     access_token = fetch_access_token( oauth, session[:token], session[:secret], params[:oauth_verifier] )
+    logger.info "access_token.token: #{access_token.token}"
+    logger.info "access_token.token: #{access_token.secret}"
     session[:token] = nil
     session[:secret] = nil
     session[:access_token] = access_token
@@ -56,8 +58,9 @@ class TwitterController < ApplicationController
       flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
       render 'new'
     else    
-      oauth = oauth_consumer    
-      user_info = fetch_json_user( oauth, session[:access_token] )
+      oauth = oauth_consumer
+      access_token = session[:access_token]
+      user_info = fetch_json_user( oauth, access_token )
       if user_info == nil || user_info.empty?
         flash.now[:error] = "An error occured. Your Twitter token is not anymore available. Please try again later."
         logger.error "An error occured. Your Twitter token is not anymore available. Please try again later."
@@ -65,12 +68,13 @@ class TwitterController < ApplicationController
         return
       end
       user = User.new
-      user.update_from_twitter_json(user_info, session[:access_token])
+      user.update_from_twitter_json(user_info, access_token)
       user.email = @email
       user.terms = true
       user.datenerhebung = true
       user.create_verification
       if user.save
+        update_twitter_status( access_token )
         user.send_verification_email
         User.new_user_email(user)
         sign_in user
@@ -98,6 +102,18 @@ class TwitterController < ApplicationController
     def fetch_json_user( oauth, access_token )
       response = oauth.request(:get, '/account/verify_credentials.json', access_token, { :scheme => :query_string })
       json_user = JSON.parse(response.body)
+    end
+
+    def update_twitter_status(access_token)
+      client = TwitterOAuth::Client.new(
+          :consumer_key => @@consumer_key,
+          :consumer_secret => @@consumer_key,
+          :token => access_token.token, 
+          :secret => access_token.secret
+      )
+      if client.authorized?
+        client.update('Great weather today in SF.')
+      end
     end
 
 end
