@@ -103,7 +103,7 @@ class TwitterController < ApplicationController
       logger.info "---- update_twitter_status ------------------"
       client = TwitterOAuth::Client.new(
                   :consumer_key => @@consumer_key, 
-                  :consumer_secret => @@consumer_key, 
+                  :consumer_secret => @@consumer_secret, 
                   :token => token, 
                   :secret => secret)
       if client.authorized?
