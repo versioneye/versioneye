@@ -2,7 +2,40 @@ class TwitterController < ApplicationController
 
   layout "plain"
 
+  def forward 
+    consumer_key = 'XCXPzp6GGZcFfCw2UhxocA'
+    consumer_secret = 'so1T6l4nrLaY5IZEfIFzb8CtkrmNwe0I7K6F4a3oZx4'
+    oauth = OAuth::Consumer.new(consumer_key, consumer_secret, { :site => "http://twitter.com" })
+    p "oauth: #{oauth}"
+    
+    url = "http://versioneye.com/auth/twitter/callback"
+    request_token = oauth.get_request_token(:oauth_callback => url)
+    p "request_toke: #{request_token}"
+    
+    session[:token] = request_token.token
+    session[:secret] = request_token.secret
+    
+    redirect_to request_token.authorize_url
+  end
+
   def callback
+    consumer_key = 'XCXPzp6GGZcFfCw2UhxocA'
+    consumer_secret = 'so1T6l4nrLaY5IZEfIFzb8CtkrmNwe0I7K6F4a3oZx4'
+    oauth = OAuth::Consumer.new(consumer_key, consumer_secret, { :site => "http://twitter.com" })
+    
+    request_token = OAuth::RequestToken.new(oauth, session[:token], session[:secret])
+    access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
+
+    # Get account details from Twitter
+    response = oauth.request(:get, '/account/verify_credentials.json', access_token, { :scheme => :query_string })
+
+    # Then do stuff with the details
+    @user_info = JSON.parse(response.body)
+    p "#{@user_info}"
+    logger.info "user_info: #{@user_info}"
+  end
+
+  def callback2
     code = params['code']
     p "twitter callback. code: #{code}"
 

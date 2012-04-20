@@ -52,7 +52,6 @@ group :test do
   gem 'turn', :require => false
   gem 'rspec-rails', '2.8.0'
   gem 'webrat', '0.7.3'
-#  gem 'capybara', '1.1.2'
 end
 
 # Deploy with Capistrano
