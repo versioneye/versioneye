@@ -1,5 +1,1 @@
-<div >
-<%= form_tag "/auth/twitter", :method => 'get' do %>
-	<%= image_submit_tag "login_twitter.png" %>
-<% end %>
-</div>
+<%= link_to image_tag("login_twitter.png"), auth_twitter_forward_path %>

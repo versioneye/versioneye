@@ -3,6 +3,9 @@
 
 <%= render 'shared/dialog_follow' %>
 
+<div style="text-align:right">
+	<%= render "shared/login_with_twitter" %>
+</div>
 <div class="slogan">
 	<%= image_tag "slogan5.png", :alt => "Follow your libraries and get notified about new versions", :title => "Follow your libraries and get notified about new versions" %>
 </div>
@@ -54,8 +57,7 @@
 
 <% if !signed_in? %>
 	<div class="lp_box lp_login_area">
-		<%= render 'shared/login_with_github' %> 
-		<%= render 'shared/login_with_facebook' %> 
+		<%= render 'shared/login_options_vertical' %>
 	</div>
 <% end %>
 

@@ -154,6 +154,10 @@ GEM
       polyglot (>= 0.3.1)
     turn (0.8.3)
       ansi
+    twitter_oauth (0.4.3)
+      json (>= 1.1.9)
+      mime-types (>= 1.16)
+      oauth (>= 0.4.1)
     tzinfo (0.3.31)
     uglifier (1.2.1)
       execjs (>= 0.3.0)
@@ -200,6 +204,7 @@ DEPENDENCIES
   sass-rails (~> 3.1.0)
   therubyracer (= 0.9.9)
   turn
+  twitter_oauth (= 0.4.3)
   uglifier
   unicorn (= 4.3.0)
   webrat (= 0.7.3)

@@ -107,10 +107,7 @@ class TwitterController < ApplicationController
                   :token => token, 
                   :secret => secret)
       if client.authorized?
-        logger.info "authoriezed"
-        client.update("Great weather today in SF.")
-      else
-        logger.info "not authoriezed"
+        client.update("I just signed up @VersionEye to keep track of my software libraries.")
       end
     end
 
