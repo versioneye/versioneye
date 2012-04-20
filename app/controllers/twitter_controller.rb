@@ -100,14 +100,17 @@ class TwitterController < ApplicationController
     end
 
     def update_twitter_status(token, secret)
+      logger.info "---- update_twitter_status ------------------"
       client = TwitterOAuth::Client.new(
-          :consumer_key => @@consumer_key,
-          :consumer_secret => @@consumer_key,
-          :token => token, 
-          :secret => secret
-      )
+                  :consumer_key => @@consumer_key, 
+                  :consumer_secret => @@consumer_key, 
+                  :token => token, 
+                  :secret => secret)
       if client.authorized?
-        client.update('Great weather today in SF.')
+        logger.info "authoriezed"
+        client.update("Great weather today in SF.")
+      else
+        logger.info "not authoriezed"
       end
     end
 
