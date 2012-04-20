@@ -34,8 +34,6 @@ class TwitterController < ApplicationController
       sign_in user
       redirect_back_or( "/news" )
     else
-      session[:twitter_user] = json_user
-      session[:access_token] = access_token
       redirect_to "http://versioneye.com/auth/twitter/new"
     end
   end
@@ -76,6 +74,7 @@ class TwitterController < ApplicationController
         user.send_verification_email
         User.new_user_email(user)
         sign_in user
+        session[:access_token] = nil
         render 'create'
       else 
         flash.now[:error] = "An error occured. Please contact the VersionEye Team."
