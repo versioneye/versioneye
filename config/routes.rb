@@ -8,6 +8,8 @@ Versioneye::Application.routes.draw do
   match '/auth/facebook/callback', :to => 'facebook#callback'
   get   '/auth/twitter/forward',   :to => 'twitter#forward'
   get   '/auth/twitter/callback',  :to => 'twitter#callback'
+  match '/auth/twitter/new',       :to => 'twitter#new'
+  match '/auth/twitter/create',    :to => 'twitter#create'
 
   resources :products
   match '/search',                                      :to => 'products#search'
