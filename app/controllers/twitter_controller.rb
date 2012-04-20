@@ -4,7 +4,7 @@ class TwitterController < ApplicationController
   @@consumer_secret = '5hI3nV0KLCXsT96gdTV6ntQ76wss76l9yXI4lKmNrCI'
 
   def forward 
-    oauth = OAuth::Consumer.new(@@consumer_key, @@consumer_secret, { :site => "http://twitter.com" })
+    oauth = oauth_consumer
     
     url = "http://versioneye.com/auth/twitter/callback"
     request_token = oauth.get_request_token(:oauth_callback => url)
@@ -17,15 +17,9 @@ class TwitterController < ApplicationController
 
   def callback
     logger.info "twitter callback"
-    oauth = OAuth::Consumer.new(@@consumer_key, @@consumer_secret, { :site => "http://twitter.com" })
-    
-    request_token = OAuth::RequestToken.new(oauth, session[:token], session[:secret])
-    access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
-    logger.info "twitter access_token #{access_token}"
+    session[:verifier] = params[:oauth_verifier]
+    json_user = fetch_json_user(session[:token], session[:secret], verifier )
 
-    response = oauth.request(:get, '/account/verify_credentials.json', access_token, { :scheme => :query_string })
-
-    json_user = JSON.parse(response.body)
     logger.info "user_info: #{json_user}"
 
     user = User.find_by_twitter_id( json_user['id'] )
@@ -61,7 +55,7 @@ class TwitterController < ApplicationController
       flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
       render 'new'
     else    
-      user_info = session[:twitter_user]
+      user_info = fetch_json_user(session[:token], session[:secret], session[:verifier] )
       if user_info == nil || user_info.empty?
         flash.now[:error] = "An error occured. Your Twitter token is not anymore available. Please try again later."
         logger.error "An error occured. Your Twitter token is not anymore available. Please try again later."
@@ -86,5 +80,19 @@ class TwitterController < ApplicationController
       end
     end
   end
+
+  private 
+
+    def oauth_consumer
+      OAuth::Consumer.new(@@consumer_key, @@consumer_secret, { :site => "http://twitter.com" })
+    end
+
+    def fetch_json_user(token, secret, verifier )
+      oauth = oauth_consumer
+      request_token = OAuth::RequestToken.new( oauth, token, secret )
+      access_token = request_token.get_access_token(:oauth_verifier => verifier)
+      response = oauth.request(:get, '/account/verify_credentials.json', access_token, { :scheme => :query_string })
+      json_user = JSON.parse(response.body)
+    end
 
 end
