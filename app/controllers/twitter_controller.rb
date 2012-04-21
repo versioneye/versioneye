@@ -69,7 +69,6 @@ class TwitterController < ApplicationController
       user.datenerhebung = true
       user.create_verification
       if user.save
-        update_twitter_status( access_token.token, access_token.secret )
         user.send_verification_email
         User.new_user_email(user)
         sign_in user
