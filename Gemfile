@@ -9,9 +9,9 @@ gem 'activesupport', '3.1.0'
 gem 'gravatar_image_tag', '1.0.0'
 
 # For optimum performance, bson_ext, for the mongo driver
-gem 'bson_ext', '1.6.0'  
-gem 'mongo', '1.6.0'
-gem 'mongoid', '2.4.6'
+gem 'bson_ext', '1.6.2'  
+gem 'mongo', '1.6.2'
+gem 'mongoid', '2.4.8'
 
 gem 'actionmailer', '3.1.0'
 gem 'will_paginate', '3.0.2'
