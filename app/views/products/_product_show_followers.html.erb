@@ -3,7 +3,8 @@
 </div>
 <div class="boxContainer" >
 	<% @users.each do |user| %>
-		<%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :gravatar => { :size => 40 }), user_path(user) %>
-		<%=  %>
+		<% if !user.nil? && !user.email.nil? %>
+			<%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :gravatar => { :size => 40 }), user_path(user) %>
+		<% end %>
 	<% end %>
 </div>
