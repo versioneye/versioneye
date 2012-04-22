@@ -1,6 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+# require 'rails/all'
 
 require "action_controller/railtie"
 require "action_mailer/railtie"
@@ -31,9 +31,9 @@ module Versioneye
     end
     
     # http://groups.google.com/group/mongoid/browse_thread/thread/df278a11dba4d331?pli=1
-    config.generators do |g| 
-      g.orm :active_record 
-    end
+    # config.generators do |g| 
+    #   g.orm :active_record 
+    # end
     
     Mongoid.load!("config/mongoid.yml")
     
@@ -80,7 +80,7 @@ module Versioneye
     config.assets.version = '1.0'
     
     # http://www.edgerails.info/articles/what-s-new-in-edge-rails/2011/04/21/activerecord-identity-map/index.html
-    config.active_record.identity_map = true    
+    # config.active_record.identity_map = true    
     
   end
 end
