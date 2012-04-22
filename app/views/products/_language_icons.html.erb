@@ -1,9 +1,9 @@
 <% if icon.nil? %>
 	<% if !language.nil? && !language.empty? %>
 		<% if !link.nil? %>
-			<a href="<%= link %>"><%= image_tag "language/#{language.downcase}.png" %></a>
+			<a href="<%= link %>"><%= image_tag "language/#{language.downcase}.png", :title => title %></a>
 		<% else %>
-			<%= image_tag "language/#{language.downcase}.png" %>
+			<%= image_tag "language/#{language.downcase}.png", :title => title %>
 		<% end %>
 	<% else %>
 		<%= image_tag "eye_off.png" %>

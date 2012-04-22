@@ -1,8 +1,41 @@
 <div class="sidebar" >
 
-	<%= render "users/navi" %>	
+	<%= render "users/navi" %>
 
 </div>	
 <div class="content">
+
+	<div class="boxHeader" style="padding-top: 25px;">
+		Knows
+	</div>
+	<div class="boxContainer">
+		<% @languages.each do |language| %>
+			<%= render :partial => "/products/language_icons", :locals => {:language => language, :icon => nil, :link=>nil, :title=>language} %>
+		<% end %>
+	</div>
+
+	<div class="boxHeader">
+		Follows <%= pluralize(@prod_count, "Package") %>
+	</div>
+	<div class="boxContainer">
+		<% @products.each do |product| %>
+			<%= render :partial => "/products/language_icons", :locals => {:language => product.language, :icon => product.icon, :link => product_url(product), :title => product.name } %>
+		<% end %>
+		<div style="padding-top: 10px;">
+			<a href="/users/<%=@user.username%>/favoritepackages" style="padding-left: 10px;">See all</a>
+		</div>
+	</div>
+	
+	<div class="boxHeader">
+		Commented on <%= pluralize(@comments_count, "Package") %>
+	</div>
+	<div class="boxContainer">
+		<% @comments.each do |comment| %>
+			<%= render :partial => "/products/language_icons", :locals => {:language => comment.language, :icon => comment.get_product.icon, :link => product_url(comment.get_product), :title => comment.prod_name } %>
+		<% end %>
+		<div style="padding-top: 10px;">
+			<a href="/users/<%=@user.username%>/comments" style="padding-left: 10px;">See all</a>
+		</div>
+	</div>
 
 </div>

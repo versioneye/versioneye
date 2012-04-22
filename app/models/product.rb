@@ -219,6 +219,10 @@ class Product
       p "#{id} - #{product.name} - #{count}"
     end
   end
+
+  def self.get_unique_languages_for_product_ids(product_ids)
+    Product.where(:_id.in => product_ids).distinct(:language)
+  end
     
   def update_in_my_products(array_of_product_ids)
     self.in_my_products = array_of_product_ids.include?(_id.to_s)
