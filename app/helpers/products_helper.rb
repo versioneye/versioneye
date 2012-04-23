@@ -43,6 +43,7 @@ module ProductsHelper
   
   def attach_version(product, version)
     p "attach_version version: #{version}"
+    return nil if product.nil?
     if version.nil? || version.empty?
       version = product.version
     end

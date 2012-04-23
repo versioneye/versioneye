@@ -8,6 +8,8 @@ case "$1" in
                 git pull
                 cp ../mongoid.yml config/mongoid.yml
                 bundle install
+                rake assets:clean
+                rake assets:precompile
                 ;;
         *)
                 echo "Usage: $0 {update}"
