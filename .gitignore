@@ -4,4 +4,3 @@ log/*.log
 tmp/
 .sass-cache/
 .idea/
-public/assets/
