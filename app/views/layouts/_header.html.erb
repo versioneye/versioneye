@@ -7,6 +7,7 @@
 			<div id="searchfield_div" class="searchfield_div">			
 				<form id="searchform" action="/search" method="GET" class="search-form" >				
 					<input id="q" name="q" class="searchfield" type="text" value="<%= @query %>" />
+					<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
 				</form>
 			</div>
 		<% end %>

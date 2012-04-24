@@ -48,17 +48,17 @@ class Product
     false
   end
   
-  def self.find_by_name(searched_name)
-    return Array.new if searched_name.nil? || searched_name.strip == ""  
-    result1 = Product.all(conditions: { name: /^#{searched_name}/i }).desc(:rate).asc(:name).limit(300)
+  def self.find_by_name(searched_name, languages)
+    return Array.new if searched_name.nil? || searched_name.strip == "" 
+    result1 = find_by_name_start_with(searched_name, languages)
     if (result1.nil? || result1.empty?)
-      Product.all(conditions: { name: /#{searched_name}/i }).desc(:rate).asc(:name).limit(300)
+      return find_by_name_simple(searched_name, languages)
     elsif 
       ids = Array.new
       result1.each do |product|
         ids.push product.prod_key
       end 
-      result2 = Product.all(conditions: { name: /#{searched_name}/i, prod_key: "{$nin: #{ids} }" }).desc(:rate).asc(:name).limit(300)
+      result2 = find_by_name_exclusion(searched_name, languages, ids)      
       result = result1 + result2
       result
     end
@@ -223,7 +223,11 @@ class Product
   def self.get_unique_languages_for_product_ids(product_ids)
     Product.where(:_id.in => product_ids).distinct(:language)
   end
-    
+
+  def self.get_unique_languages
+    Product.all().distinct(:language)
+  end
+
   def update_in_my_products(array_of_product_ids)
     self.in_my_products = array_of_product_ids.include?(_id.to_s)
   end
@@ -281,5 +285,31 @@ class Product
       :comments => comments.as_json
     }
   end
+
+  private 
+
+    def self.find_by_name_start_with(searched_name, languages)
+      if languages.nil? || languages.empty?
+        Product.all(conditions: { name: /^#{searched_name}/i }).desc(:rate).asc(:name).limit(300)
+      else
+        Product.all(conditions: { name: /^#{searched_name}/i, :language.in => languages }).desc(:rate).asc(:name).limit(300)
+      end
+    end
+
+    def self.find_by_name_simple(searched_name, languages)
+      if languages.nil? || languages.empty?
+        Product.all(conditions: { name: /#{searched_name}/i }).desc(:rate).asc(:name).limit(300)
+      else
+        Product.all(conditions: { name: /#{searched_name}/i, :language.in => languages}).desc(:rate).asc(:name).limit(300)
+      end
+    end
+
+    def self.find_by_name_exclusion(searched_name, languages, ids)
+      if languages.nil? || languages.empty?
+        Product.all(conditions: { name: /#{searched_name}/i, prod_key: "{$nin: #{ids} }" }).desc(:rate).asc(:name).limit(300)
+      else
+        Product.all(conditions: { name: /#{searched_name}/i, prod_key: "{$nin: #{ids} }", :language.in => languages}).desc(:rate).asc(:name).limit(300)
+      end
+    end
 
 end

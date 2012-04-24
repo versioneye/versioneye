@@ -95,3 +95,19 @@ function shareOnFacebook(link, message){
         picture: picture,
         description: message});
 }
+
+function update_lang(language){
+	lang = document.getElementById("lang").value
+	var rg = new RegExp(language,'i');
+	if (lang.search(rg) == -1){
+		if (lang.length == 0){
+			lang = language
+		} else { 
+			lang = lang + "," + language
+		}
+	} else {
+		lang = lang.replace(language, "")
+	}
+	lang = lang.replace(",,", ",") 
+	document.getElementById("lang").value = lang
+}

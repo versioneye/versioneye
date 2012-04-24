@@ -6,7 +6,7 @@ class Blogcomment
 
   field :blog_id, type: String
   field :comment, type: String
-  field :user_id, type: Integer
+  field :user_id, type: String
   field :username, type: String
   field :approved, type: Boolean
   

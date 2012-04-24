@@ -6,7 +6,7 @@ class Blog
 
   field :subject, type: String
   field :post, type: String
-  field :user_id, type: Integer
+  field :user_id, type: String
   field :approved, type: Boolean
   field :reason, type: String 
   

@@ -1,20 +1,21 @@
 <div class="sidebar">
-	
 	<div class="boxHeader">
 		Filter
 	</div>
 	<div class="boxContainer" >
-		Coming soon!
-	</div>
-	
+		<% @languages.each do |language| %>
+			<div>
+				<input id="<%= language %>" type="checkbox" name="lang" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if !@lang.match(/#{language}/i).nil? %> /><label for="<%= language %>"><%= language %></label>
+			</div>	
+		<% end %>
+		<input id="refresh" class="followButton" type="submit" value="Refresh" name="commit" onclick="document.forms['searchform'].submit();" >
+	</div>	
 </div>
-<div class="content" >
-	
+<div class="content" >	
 	<div align="center">
 		<% if !signed_in? %>
 			<%= render 'shared/dialog_follow' %>	
 		<% end %>
 		<%= render :partial => "products/show_search_results", :locals => { :products => @products, :paginate => true, :prefix => "search", :name_limit => 70 }  %>
 	</div>
-	
 </div>

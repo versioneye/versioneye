@@ -4,7 +4,7 @@ class Versioneyexml
   include Mongoid::Timestamps
   
   field :prod_key, type: String
-  field :user_id, type: Integer
+  field :user_id, type: String
   field :url, type: String
   
   

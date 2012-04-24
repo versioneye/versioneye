@@ -22,31 +22,24 @@ class ProductsController < ApplicationController
   
   def search
     @query = params[:q]
+    @lang = params[:lang]
     commit = params[:commit]
-    if commit.eql?("Lucky")
-      product = Product.random_product
-      @query = product.name
-    end
-    @query = do_replacements ( @query ) 
-    if @query.nil? || @query.empty? || @query.eql?("Be up-to-date")
-      @query = "json"
-    end
+    @query = do_replacements(@query, commit)     
     if @query.length == 1
       flash.now[:error] = "Search term is to short. Please type in at least 2 characters."
     elsif @query.include?("%")
       flash.now[:error] = "the character % is not allowed"
-    else  
-      @products = Product.find_by_name(@query).paginate(:page => params[:page])
+    else
+      languages = @lang.split(",")
+      @products = Product.find_by_name(@query, languages).paginate(:page => params[:page])
       if @products.nil? || @products.length == 0
         flash.now[:notice] = "Sorry. No Results found."
       else
-        if signed_in?
-          @my_product_ids = current_user.fetch_my_product_ids
-        end
+        @my_product_ids = current_user.fetch_my_product_ids if signed_in?
       end
     end    
     respond_to do |format|
-      format.html 
+      format.html { @languages = Product.get_unique_languages }
       format.json { render :json => @products }
     end
   end
@@ -185,12 +178,19 @@ class ProductsController < ApplicationController
       product
     end
     
-    def do_replacements ( query )
-      return query if query.nil?
-      query.strip
-      q = query.gsub!(" ", "-")
-      return q unless q.nil?
-      return query if q.nil?
+    def do_replacements( query , commit )
+      if query.nil? || @query.empty? || @query.eql?("Be up-to-date")
+        return "json"
+      end
+      if commit.eql?("Lucky")
+        product = Product.random_product
+        return product.name
+      else
+        query.strip
+        q = query.gsub!(" ", "-")
+        return q unless q.nil?
+        return query if q.nil?
+      end      
     end
 
 end
