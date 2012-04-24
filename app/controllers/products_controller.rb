@@ -25,6 +25,9 @@ class ProductsController < ApplicationController
     @lang = params[:lang]
     commit = params[:commit]
     @query = do_replacements(@query, commit)     
+    if @lang.nil? || @lang.empty? 
+      @lang = ""
+    end
     if @query.length == 1
       flash.now[:error] = "Search term is to short. Please type in at least 2 characters."
     elsif @query.include?("%")
