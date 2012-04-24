@@ -16,5 +16,13 @@ class Versionlink
       :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
     }
   end
+
+  def link
+    if self.link.match(/^www.*/) != nil 
+      return "http://#{self.link}"
+    else 
+      return self.link
+    end
+  end
   
 end
