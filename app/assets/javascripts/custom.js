@@ -98,13 +98,10 @@ function shareOnFacebook(link, message){
 
 function update_lang(language){
 	lang = document.getElementById("lang").value
+	language = language + ","
 	var rg = new RegExp(language,'i');
 	if (lang.search(rg) == -1){
-		if (lang.length == 0){
-			lang = language
-		} else { 
-			lang = lang + "," + language
-		}
+		lang = lang + "," + language
 	} else {
 		lang = lang.replace(language, "")
 	}

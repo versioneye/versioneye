@@ -3,10 +3,13 @@
 		Filter
 	</div>
 	<div class="boxContainer" >
-		<% @languages.each do |language| %>
-			<div>
-				<input id="<%= language %>" type="checkbox" name="lang" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if !@lang.match(/#{language}/i).nil? %> /><label for="<%= language %>"><%= language %></label>
-			</div>	
+		<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
+			<% @langs = @lang.split(",") %>
+			<% @languages.each do |language| %>
+				<div>
+					<input id="<%= language %>" type="checkbox" name="lang" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.include?(language) %> /><label for="<%= language %>"><%= language %></label>
+				</div>	
+			<% end %>
 		<% end %>
 		<input id="refresh" class="followButton" type="submit" value="Refresh" name="commit" onclick="document.forms['searchform'].submit();" >
 	</div>	

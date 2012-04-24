@@ -15,6 +15,7 @@
 <div id="lp_search_div" class="lp_search_div">			
 	<form id="searchform" action="/search" method="GET" class="search-form" >				
 		<input id="q" name="q" class="lp_searchfield" type="text" value="<%= @query %>" /><br/>
+		<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
 		<%= submit_tag "Search", :class => "button" %> <%= submit_tag "Lucky", :class => "button" %>
 	</form>
 </div>
