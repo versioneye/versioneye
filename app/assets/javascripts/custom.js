@@ -97,13 +97,16 @@ function shareOnFacebook(link, message){
 }
 
 function update_lang(language){
+	orig_param = language;
 	lang = document.getElementById("lang").value
 	language = language + ","
 	var rg = new RegExp(language,'i');
 	if (lang.search(rg) == -1){
 		lang = lang + "," + language
+		document.getElementById(orig_param).style.backgroundColor = "lightBlue"
 	} else {
 		lang = lang.replace(language, "")
+		document.getElementById(orig_param).style.backgroundColor = "white"
 	}
 	lang = lang.replace(",,", ",") 
 	document.getElementById("lang").value = lang

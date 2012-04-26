@@ -2,7 +2,11 @@ class ProductsController < ApplicationController
 
   def index
     @hide = "hide"
-    @lang = ""
+    @lang = session[:lang]
+    if @lang.nil?
+      @lang = ""
+      session[:lang] = ""
+    end
     @comments = Versioncomment.all().desc(:created_at).limit(10) 
     @newest = Array.new
     newest_ids = Array.new
@@ -30,6 +34,7 @@ class ProductsController < ApplicationController
     if @lang.nil? || @lang.empty? 
       @lang = ""
     end
+    session[:lang] = @lang
     if @query.length == 1
       flash.now[:error] = "Search term is to short. Please type in at least 2 characters."
     elsif @query.include?("%")
