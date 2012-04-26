@@ -16,6 +16,7 @@ class ProductsController < ApplicationController
       end  
       break if @newest.size == 10    
     end
+    @languages = Product.get_unique_languages
     if signed_in?
       @my_product_ids = current_user.fetch_my_product_ids
     end    
