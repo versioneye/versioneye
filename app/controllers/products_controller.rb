@@ -84,10 +84,7 @@ class ProductsController < ApplicationController
         else
           @users = Array.new
           user_ids = Follower.find_followers_for_product( @product.id )
-          user_ids.each do |user_id|
-            # TODO refactor this with one query
-            @users << User.find_by_id(user_id)
-          end
+          @users = User.find_by_ids(user_ids)
           @versioncomment = Versioncomment.new 
         end          
         }

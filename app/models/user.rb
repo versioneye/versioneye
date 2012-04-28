@@ -121,11 +121,14 @@ class User
   end
   
   def self.find_by_id( id )
-    # if id.size < 3
-    #   User.find( id.to_i )
-    # else
-      User.find( id )
-    # end
+    User.find( id )
+  rescue
+    p "-- ERROR user with id #{id} not found! --"
+    nil
+  end
+
+  def self.find_by_ids( ids )
+    User.all(conditions: {:_id.in => ids})
   rescue
     p "-- ERROR user with id #{id} not found! --"
     nil
@@ -290,51 +293,6 @@ class User
     username = username.gsub("-", "")
     username = username.gsub("_", "")
     username
-  end
-
-  def self.new_ids
-    users = User.all 
-    users.each do |user|
-      if user.id.to_s.size < 3
-        new_user = user.clone
-        new_user.old_id = user.id
-        new_user.id = BSON::ObjectId.new
-        p "old id: #{new_user.old_id}, new user id: #{new_user._id.to_s}"
-        user.remove
-        new_user.save
-        blogs = Blog.find_user_posts new_user.old_id
-        p "blog posts: #{blogs.count}"
-        blogs.each do |post| 
-          post.user_id = new_user._id.to_s
-          post.save
-        end
-        followers = Follower.find_by_user(new_user.old_id)
-        followers.each do |follower|
-          follower.user_id = new_user.id.to_s
-          follower.save
-        end
-        notifications = Notification.all( conditions: {user_id: new_user.old_id.to_s} )
-        notifications.each do |notification|
-          notification.user_id = new_user.id.to_s
-          notification.save
-        end
-        projects = Project.find_by_user ( new_user.old_id )
-        projects.each do |project|
-          project.user_id = new_user.id.to_s
-          deps = project.fetch_dependencies
-          deps.each do |dep|
-            dep.user_id = new_user.id.to_s
-            dep.save
-          end
-          project.save
-        end
-        comments = Versioncomment.find_by_user_id(new_user.old_id)
-        comments.each do |comment|
-          comment.user_id = new_user.id.to_s
-          comment.save
-        end
-      end
-    end
   end
   
   def as_json param
