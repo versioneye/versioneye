@@ -44,7 +44,7 @@ class User
    
   validates_length_of :username, minimum: 2, maximum: 50, :message => "username length is not ok"
   validates_length_of :fullname, minimum: 2, maximum: 50, :message => "fullname length is not ok"
-  #validates_length_of :password, minimum: 5, maximum: 40, :message => "password length is not ok"
+  validates_length_of :password, minimum: 4, maximum: 40, :message => "password length is not ok"
    
   validates_format_of :username, with: /^[a-zA-Z0-9]+$/
   validates_format_of :email,    with: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
@@ -55,7 +55,7 @@ class User
   before_validation :downcase_email
   
   def save
-    # encrypt_password if new_record?
+    encrypt_password if new_record?
     return false if self.terms == false || self.terms == nil
     return false if self.datenerhebung == false || self.datenerhebung == nil
     super
