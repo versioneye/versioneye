@@ -1,6 +1,7 @@
 	<h1><%= @user.fullname %></h1>
 
 	<%= link_to gravatar_image_tag( @user.email, :alt => @user.fullname, :gravatar => { :size => 200 }), user_path(@user) %>
+	
 	<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
 		<a href="http://gravatar.com/emails">Change Profile Picture</a>
 	<% end %>

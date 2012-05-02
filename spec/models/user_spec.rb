@@ -145,8 +145,7 @@ describe User do
   end
   
   describe "fetch_my_products" do
-    it "fetches one product with notification false" do 
-      
+    it "fetches one product" do 
       product = Product.new
       product.name = "name"
       product.prod_key = "gasgagasgj8623_junit/junit"
@@ -162,36 +161,9 @@ describe User do
       products = @user.fetch_my_products
       products.count.should eql(1)
       
-      product = products[0]
-      product.notification.should be_false
-      
       product.remove
       follower.remove
-    end
-    
-    it "fetches one product with notification true" do 
-      
-      product = Product.new
-      product.name = "name"
-      product.prod_key = "gasgagasgj8623_junit/junit"
-      product.rate = 50
-      product.save
-      
-      follower = Follower.new
-      follower.user_id = @user.id
-      follower.product_id = product.id.to_s
-      follower.notification = true
-      follower.save
-      
-      products = @user.fetch_my_products
-      products.count.should eql(1)
-      
-      product = products[0]
-      product.notification.should be_true
-      
-      product.remove
-      follower.remove
-    end
+    end    
   end
   
   describe "fetch_my_product_ids" do

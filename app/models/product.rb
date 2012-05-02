@@ -42,13 +42,13 @@ class Product
   # versionchanges
   # versioncomments
 
-  attr_accessor :in_my_products, :version_uid, :notification
+  attr_accessor :in_my_products, :version_uid
   
   def delete
     false
   end
   
-  def self.find_by_name(searched_name, languages)
+  def self.find_by_name(searched_name, languages=nil)
     return Array.new if searched_name.nil? || searched_name.strip == "" 
     result1 = find_by_name_start_with(searched_name, languages)
     if (result1.nil? || result1.empty?)
@@ -267,7 +267,6 @@ class Product
     comments = Versioncomment.find_by_prod_key_and_version(self.prod_key, self.version)
     {
       :following => param[:following],
-      :notification => self.notification,
       :id => self.get_decimal_id,
       :version_uid => self.get_decimal_version_uid,
       :name => self.name,

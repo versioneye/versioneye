@@ -8,7 +8,6 @@ describe "landing page" do
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"
     assert_select "body div.container section"
-    assert_select "h1", 2
   end
 
 end

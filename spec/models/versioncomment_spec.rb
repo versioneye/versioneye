@@ -124,6 +124,7 @@ describe Versioncomment do
       comment.save
       sum = Versioncomment.get_sum_by_prod_key_and_version(@product.id, "1.0")
       sum.should eql(60)
+      comment.remove()
     end
     
     it "returns 90" do
@@ -140,6 +141,7 @@ describe Versioncomment do
       comment.save
       sum = Versioncomment.get_sum_by_prod_key_and_version(@product.id, "1.0")
       sum.should eql(90)
+      comment.remove()
     end
     
   end
@@ -165,6 +167,7 @@ describe Versioncomment do
       comment.save
       count = Versioncomment.get_count_by_prod_key_and_version(@product.id, "1.0")
       count.should eql(2)
+      comment.remove()
     end
     
   end
@@ -190,6 +193,7 @@ describe Versioncomment do
       comment.save
       avg = Versioncomment.get_average_rate_by_prod_key_and_version(@product.id, "1.0")
       avg.should eql(30)
+      comment.remove()
     end
     
     it "returns 50" do
@@ -206,6 +210,7 @@ describe Versioncomment do
       comment.save
       avg = Versioncomment.get_average_rate_by_prod_key_and_version(@product.id, "1.0")
       avg.should eql(50)
+      comment.remove()
     end
     
     it "returns 26" do
@@ -231,6 +236,8 @@ describe Versioncomment do
       
       avg = Versioncomment.get_average_rate_by_prod_key_and_version(@product.id, "1.0")
       avg.should eql(26)
+      comment.remove()
+      comment2.remove()
     end
     
   end
