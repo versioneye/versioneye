@@ -1,5 +1,10 @@
 class PageController < ApplicationController
 
+  def routing_error
+    p "routing error path: #{params[:path]}"
+    redirect_to "/"
+  end
+
   def contact
   end
 

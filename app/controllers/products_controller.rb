@@ -23,7 +23,8 @@ class ProductsController < ApplicationController
     @languages = Product.get_unique_languages
     if signed_in?
       @my_product_ids = current_user.fetch_my_product_ids
-    end    
+    end
+    render :layout => 'application_lp'
   end
   
   def search

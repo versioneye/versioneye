@@ -396,6 +396,14 @@ section {
 	background-color: white;
 }
 
+.section-lp{
+	display: inline-block;
+    width: 810px;
+	padding: 20px;
+	margin-top: 17px;
+	background-color: white;
+}
+
 section .container{
 	width: 810px;
 }
@@ -659,7 +667,7 @@ nav ul li a:hover {
 }
 
 .lp_half_box{
-	border: 1px solid $box_border_color;
+	border: 0px solid $box_border_color;
 	width: 390px;
 	border-bottom-left-radius:10px 10px; 
 	border-top-left-radius:10px 10px;

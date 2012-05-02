@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+
+	<head >
+		<link href="http://versioneye.com/favicon.ico" rel="shortcut icon"  />
+		<title>VersionEye</title>
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<!--[if lt IE 8]><%= stylesheet_link_tag 'blueprint/ie' %><![endif]-->
+		<%= csrf_meta_tag %>
+		<%= stylesheet_link_tag "application" %>
+		<%= javascript_include_tag "application" %>
+		<script src="http://connect.facebook.net/en_US/all.js"></script>
+		<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script> 
+	</head>
+
+	<body>
+		<%= render 'layouts/header' %>
+		<div class="container">
+			<section class="round" >
+				<% flash.each do |key, value| %>
+					<div class="flash <%= key %>"><%= value %></div>
+				<% end %>
+				<% if !signed_in? %>
+					<div style="text-align:right">
+						<%= render "shared/login_with_twitter" %>
+					</div>
+				<% end %>
+				<div class="slogan">
+					<%= image_tag "slogan5.png", :alt => "Follow your libraries and get notified about new versions", :title => "Follow your libraries and get notified about new versions" %>
+				</div>
+
+				<div id="lp_search_div" class="lp_search_div">
+					<form id="searchform" action="/search" method="GET" class="search-form" >				
+						<input id="q" name="q" class="lp_searchfield" type="text" value="<%= @query %>" />
+						<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
+						<br/>
+						<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
+							<% @langs = @lang.split(",") %>
+							<div style="padding-left:155px;">
+								<ol class="list-row" >
+									<% @languages.each do |language| %>
+										<li class="list-cell round pad-right" id="<%=language%>" <%= "style='background-color:lightblue;'" if @langs.include?(language) %> ><label for="<%= language %>" onclick="update_lang('<%=language%>')"><%= render :partial => "/products/language_icons", :locals => {:language => language, :icon => nil, :link => nil, :title => language} %></label></li>
+									<% end %>
+								</ol>
+							</div>
+						<% end %>
+						<br/>
+						<%= submit_tag "Search", :class => "button" %> <%= submit_tag "Lucky", :class => "button" %>
+					</form>
+				</div>
+			</section>
+			<%= yield %>
+			<%= render 'layouts/footer' %>
+			<%= debug(params) if Rails.env.development? %>
+        	<br/>
+        	<br/>
+		</div>
+		<%= render 'shared/social_buttons' %>
+		<% if signed_in? %>
+			<%= render 'shared/feedback' %>
+			<%= render 'feedback/dialog_feedback' %>
+		<% end %>
+	</body>
+
+</html>

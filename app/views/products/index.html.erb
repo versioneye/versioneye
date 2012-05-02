@@ -1,97 +1,57 @@
-<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 
 <%= render 'shared/dialog_follow' %>
 
-<% if !signed_in? %>
-	<div style="text-align:right">
-		<%= render "shared/login_with_twitter" %>
+<section class="section-lp round">
+	<div class="lp_box lp_sign_up" style="vertical-align:top">
+		<span style="padding-right: 20px;">
+			<%= render "shared/follow_versioneye" %>
+		</span>	
+		<a href="http://twitter.com/share" 
+		   class="twitter-share-button" 
+		   data-url="http://versioneye.com" 
+		   data-text="Follow your Libraries @VersionEye and get notified about new versions." 
+		   data-count="horizontal" >Twitter</a>
+		<g:plusone></g:plusone>
+		<iframe src="http://www.facebook.com/plugins/like.php?href=https://www.facebook.com/pages/VersionEye/295350293845442" scrolling="no" frameborder="0" style="border:none; width:200px; height:25px"></iframe>
 	</div>
-<% end %>
-<div class="slogan">
-	<%= image_tag "slogan5.png", :alt => "Follow your libraries and get notified about new versions", :title => "Follow your libraries and get notified about new versions" %>
-</div>
+</section>
 
-<div id="lp_search_div" class="lp_search_div">			
-	<form id="searchform" action="/search" method="GET" class="search-form" >				
-		<input id="q" name="q" class="lp_searchfield" type="text" value="<%= @query %>" />
-		<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
-		<br/>
-		<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
-			<% @langs = @lang.split(",") %>
-			<div style="padding-left:155px;">
-				<ol class="list-row" >
-					<% @languages.each do |language| %>
-						<li class="list-cell round pad-right" id="<%=language%>" <%= "style='background-color:lightblue;'" if @langs.include?(language) %> ><label for="<%= language %>" onclick="update_lang('<%=language%>')"><%= render :partial => "/products/language_icons", :locals => {:language => language, :icon => nil, :link => nil, :title => language} %></label></li>
-					<% end %>
-				</ol>
-			</div>
-		<% end %>
-		<br/>
-		<%= submit_tag "Search", :class => "button" %> <%= submit_tag "Lucky", :class => "button" %>
-	</form>
-</div>
-
-<% if true == false %>
-	<div class="intro">		
-			<iframe src="http://player.vimeo.com/video/37203548" width="700" height="393" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+<section class="section-lp round">
+	<div class="lp_box">
+		<%= render 'shared/hotest_boxes' %>
 	</div>
-<% end %> 
+</section>
 
-<div class="lp_box lp_sign_up" style="vertical-align:top">
-	<span style="padding-right: 20px;">
-		<%= render "shared/follow_versioneye" %>
-	</span>	
-	<a href="http://twitter.com/share" 
-	   class="twitter-share-button" 
-	   data-url="http://versioneye.com" 
-	   data-text="Follow your Libraries @VersionEye and get notified about new versions." 
-	   data-count="horizontal" >Twitter</a>
-	<g:plusone></g:plusone>
-	<iframe src="http://www.facebook.com/plugins/like.php?href=https://www.facebook.com/pages/VersionEye/295350293845442" scrolling="no" frameborder="0" style="border:none; width:200px; height:25px"></iframe>
-</div>
-
-<div class="lp_box">
-	<%= render 'shared/hotest_boxes' %>
-</div>
-
-<h1 class="lp_head">
-	Newest Comments and Ratings 
-</h1>
-<div class="lp_box">
-	<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => true } %> 	
-	<%= link_to "Read more here", news_path %><br/>
-</div>
-
-<% if !signed_in? %>
-	<div class="lp_box lp_login_area">
-		<%= render 'shared/login_options_vertical' %>
+<section class="section-lp round">
+	<h1 class="lp_head">
+		Newest Comments and Ratings 
+	</h1>
+	<div class="lp_box">
+		<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => true } %> 	
+		<%= link_to "Read more here", news_path %><br/>
 	</div>
-<% end %>
+	<% if !signed_in? %>
+		<div class="lp_box lp_login_area">
+			<%= render 'shared/login_options_vertical' %>
+		</div>
+	<% end %>
+</section>
 
-<h1 class="lp_head">
-	Mobile
-</h1>
-<div class="lp_box">
-	<%= render 'shared/mobile' %>
-</div>
-<div class="lp_box">
-	<%= render 'shared/phone_boxes' %>
-</div>
-
-<h1 class="lp_head" id="h1_about">
-	About
-</h1>
-<div class="lp_box" id="about">
-	<%= render 'shared/about' %>
-	<span>
-		Sign Up for Free! Or login with your <a href="http://github.com">GitHub</a> Account. 
-	</span>
-</div>
-<% if !signed_in? %>
-	<div class="lp_box lp_sign_up">
-		<%= form_tag("/signup", :method => "post") do  %>    
-			<%= submit_tag "Sign Up For Free", :class => "lp_sign_up_button" %>
-		<% end %>
+<section class="section-lp round">
+	<h1 class="lp_head" id="h1_about">
+		About
+	</h1>
+	<div class="lp_box" id="about">
+		<%= render 'shared/about' %>
+		<span>
+			Sign Up for Free! Or login with your <a href="http://github.com">GitHub</a> Account. 
+		</span>
 	</div>
-<% end %>
+	<% if !signed_in? %>
+		<div class="lp_box lp_sign_up">
+			<%= form_tag("/signup", :method => "post") do  %>    
+				<%= submit_tag "Sign Up For Free", :class => "lp_sign_up_button" %>
+			<% end %>
+		</div>
+	<% end %>
+</section>
