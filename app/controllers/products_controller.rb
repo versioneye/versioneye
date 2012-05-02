@@ -186,7 +186,7 @@ class ProductsController < ApplicationController
       product
     end
     
-    def do_replacements( query , commit )
+    def do_replacements( query , commit="Commit" )
       if query.nil? || @query.empty? || @query.eql?("Be up-to-date")
         return "json"
       end

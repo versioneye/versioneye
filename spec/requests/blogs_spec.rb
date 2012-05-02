@@ -8,4 +8,5 @@ describe "blogs" do
     assert_select "input[name=?]", "q"
     assert_select "a#blog_home"
   end
+
 end
