@@ -1,4 +1,4 @@
-
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
 <% if !@user.nil? %>
 	<div class="sidebar" >
 
@@ -19,26 +19,31 @@
 		<div class="boxHeader">
 			Follows <%= pluralize(@prod_count, "Package") %>
 		</div>
-		<div class="boxContainer">
-			<% @products.each do |product| %>
-				<%= render :partial => "/products/language_icons", :locals => {:language => product.language, :icon => product.icon, :link => product_url(product), :title => product.name } %>
+		<div>
+			<% if @prod_count > 0 %>
+			<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
 			<% end %>
-			<div style="padding-top: 10px;">
-				<a href="/users/<%=@user.username%>/favoritepackages" style="padding-left: 10px;">See all</a>
-			</div>
+			<% if @prod_count > 3 %>
+				<div style="padding-top: 10px;">
+					<a href="/users/<%=@user.username%>/favoritepackages" style="padding-left: 10px; font-size: 18px;">See all</a>
+				</div>
+			<% end %>
 		</div>
 		
 		<div class="boxHeader">
 			Commented on <%= pluralize(@comments_count, "Package") %>
 		</div>
-		<div class="boxContainer">
-			<% @comments.each do |comment| %>
-				<%= render :partial => "/products/language_icons", :locals => {:language => comment.language, :icon => comment.get_product.icon, :link => product_url(comment.get_product), :title => comment.prod_name } %>
+		<div >
+			<% if @comments_count > 0 %>
+				<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %> 
 			<% end %>
-			<div style="padding-top: 10px;">
-				<a href="/users/<%=@user.username%>/comments" style="padding-left: 10px;">See all</a>
-			</div>
+			<% if @comments_count > 3 %>
+				<div style="padding-top: 10px;">
+					<a href="/users/<%=@user.username%>/comments" style="padding-left: 10px; font-size: 18px;">See all</a>
+				</div>
+			<% end %>
 		</div>
 
 	</div>
 <% end %>
+<%= render 'shared/dialog_follow' %>

@@ -47,13 +47,13 @@ class UsersController < ApplicationController
 
       @products = Array.new
       if has_permission_to_see_products( @user, current_user ) && !@user.nil?
-        @products = @user.fetch_my_products.paginate(:page => params[:page]) 
+        @products = @user.fetch_my_products.paginate(:page => params[:page], :per_page => 3)
         @prod_count = @user.fetch_my_products_count
       end
       
       @comments = Array.new
       if has_permission_to_see_comments( @user, current_user ) && !@user.nil?
-        @comments = Versioncomment.find_by_user_id( @user.id ).paginate(:page => params[:page])
+        @comments = Versioncomment.find_by_user_id( @user.id ).paginate(:page => params[:page], :per_page => 3)
         @comments_count = Versioncomment.count_by_user_id( @user.id )
       end
     else 

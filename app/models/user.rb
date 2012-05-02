@@ -138,13 +138,9 @@ class User
   end
   
   def fetch_my_products
-    notification_ids = Array.new
     ids = Array.new
     followers.each do |follower|
       ids.push follower.product_id
-      if follower.notification == true
-        notification_ids.push follower.product_id 
-      end      
     end  
     Product.any_in(_id: ids).desc(:updated_at)
   end
