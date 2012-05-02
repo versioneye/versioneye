@@ -54,11 +54,8 @@ class Product
     if (result1.nil? || result1.empty?)
       return find_by_name_simple(searched_name, languages)
     elsif 
-      ids = Array.new
-      result1.each do |product|
-        ids.push product.prod_key
-      end 
-      result2 = find_by_name_exclusion(searched_name, languages, ids)      
+      prod_keys = result1.map{|w| "#{w.prod_key}"}
+      result2 = find_by_name_exclusion(searched_name, languages, prod_keys)      
       result = result1 + result2
       result
     end
@@ -241,9 +238,7 @@ class Product
   end
   
   def self.to_url_param val
-    if val.nil?
-      return "0"
-    end
+    return "0" if val.nil?
     url_param = String.new(val)
     url_param.gsub!("/","--")
     url_param.gsub!(".","~")
@@ -303,11 +298,11 @@ class Product
       end
     end
 
-    def self.find_by_name_exclusion(searched_name, languages, ids)
+    def self.find_by_name_exclusion(searched_name, languages, prod_keys)
       if languages.nil? || languages.empty?
-        Product.all(conditions: { name: /#{searched_name}/i, prod_key: "{$nin: #{ids} }" }).desc(:rate).asc(:name).limit(300)
+        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys }).desc(:rate).asc(:name).limit(300)
       else
-        Product.all(conditions: { name: /#{searched_name}/i, prod_key: "{$nin: #{ids} }", :language.in => languages}).desc(:rate).asc(:name).limit(300)
+        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys, :language.in => languages}).desc(:rate).asc(:name).limit(300)
       end
     end
 

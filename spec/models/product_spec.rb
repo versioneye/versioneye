@@ -128,6 +128,27 @@ describe Product do
       results.should_not be_nil
       results.size.should eq(1)
     end
+
+    it "returns searhced products. Combination of start and simple" do
+      name = "start_not_apple"
+      @product.name = name
+      @product.prod_key = "apple_bike_pie/unit"
+      @product.rate = 50
+      @product.save
+
+      product = Product.new
+      product.versions = Array.new
+      product.name = "apple_start_with"
+      product.prod_key = "apple_bike_pie12/unit"
+      product.rate = 50
+      product.save
+
+      results = Product.find_by_name( "apple" )
+      results.should_not be_nil
+      results.size.should eq(2)
+
+      product.remove
+    end
     
   end
   
