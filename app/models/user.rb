@@ -116,20 +116,20 @@ class User
   end
   
   def self.find_by_username( username )
-    User.first(conditions: {username: username} )
+    User.first(conditions: {username: /^#{username}$/i} )
   end
   
   def self.find_by_id( id )
     User.find( id )
   rescue
-    p "-- ERROR user with id #{id} not found! --"
+    logger.error "-- ERROR user with id #{id} not found! --"
     nil
   end
 
   def self.find_by_ids( ids )
     User.all(conditions: {:_id.in => ids})
   rescue
-    p "-- ERROR user with id #{id} not found! --"
+    logger.error "-- ERROR user with id #{id} not found! --"
     nil
   end
   
@@ -215,7 +215,7 @@ class User
   end
   
   def self.username_valid?(username)
-    user = User.first(conditions: { username: username } )
+    user = User.find_by_username(username)
     return user.nil?
   end
   
