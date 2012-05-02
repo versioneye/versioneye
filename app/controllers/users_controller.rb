@@ -41,21 +41,25 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by_username(params[:id])
     
-    product_ids = Follower.find_product_ids_for_user( @user.id )
-    @languages = Product.get_unique_languages_for_product_ids(product_ids)
+    if ( !@user.nil? )
+      product_ids = Follower.find_product_ids_for_user( @user.id )
+      @languages = Product.get_unique_languages_for_product_ids(product_ids)
 
-    @products = Array.new
-    if has_permission_to_see_products( @user, current_user ) && !@user.nil?
-      @products = @user.fetch_my_products.paginate(:page => params[:page]) 
-      @prod_count = @user.fetch_my_products_count
+      @products = Array.new
+      if has_permission_to_see_products( @user, current_user ) && !@user.nil?
+        @products = @user.fetch_my_products.paginate(:page => params[:page]) 
+        @prod_count = @user.fetch_my_products_count
+      end
+      
+      @comments = Array.new
+      if has_permission_to_see_comments( @user, current_user ) && !@user.nil?
+        @comments = Versioncomment.find_by_user_id( @user.id ).paginate(:page => params[:page])
+        @comments_count = Versioncomment.count_by_user_id( @user.id )
+      end
+    else 
+      flash.now[:error] = "There is no user with the given username"
     end
     
-    @comments = Array.new
-    if has_permission_to_see_comments( @user, current_user ) && !@user.nil?
-      @comments = Versioncomment.find_by_user_id( @user.id ).paginate(:page => params[:page])
-      @comments_count = Versioncomment.count_by_user_id( @user.id )
-    end
-
     respond_to do |format|
       format.html {  }
       format.json { render :json => @user }
