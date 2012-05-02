@@ -56,6 +56,10 @@ class UsersController < ApplicationController
         @comments = Versioncomment.find_by_user_id( @user.id ).paginate(:page => params[:page], :per_page => 3)
         @comments_count = Versioncomment.count_by_user_id( @user.id )
       end
+
+      if signed_in?
+        @my_product_ids = current_user.fetch_my_product_ids
+      end
     else 
       flash.now[:error] = "There is no user with the given username"
     end
