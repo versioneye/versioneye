@@ -16,6 +16,8 @@
 		<%= render 'products/product_show_opa' %>
 	<% elsif @product.prod_type.eql? "npm" %>
 		<%= render 'products/product_show_npm' %>
+	<% elsif @product.prod_type.eql? "R" %>
+		<%= render 'products/product_show_r' %>
 	<% elsif @product.prod_type.eql? "PHP" %>
 		<%= render 'products/product_show_php' %>
 	<% elsif @product.prod_type.eql? "Printer" %>
