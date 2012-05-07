@@ -1,6 +1,6 @@
 <div class="div-row boxContainer round" style="width: 100%;" >
 	<div class="div-cell" style="padding: 10px;">
-		<%= link_to gravatar_image_tag( @user.email, :alt => @user.fullname, :gravatar => { :size => 180, :default => "#{configatron.server_url}/assets/profile_icon.png" }), user_path(@user) %><br/>
+		<%= link_to gravatar_image_tag( @user.email, :alt => @user.fullname, :gravatar => { :size => 180, :default => "#{configatron.server_url}/profile_icon.png" }), user_path(@user) %><br/>
 		<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
 			<a href="http://gravatar.com/emails">Change Profile Picture</a>
 		<% end %>
