@@ -11,10 +11,10 @@
 			Follows <%= pluralize(@prod_count, "Package") %>
 		</div>
 		<div>
-			<% if @prod_count > 0 %>
+			<% if !@prod_count.nil? && @prod_count > 0 %>
 			<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
 			<% end %>
-			<% if @prod_count > 3 %>
+			<% if !@prod_count.nil? && @prod_count > 3 %>
 				<div style="padding-top: 10px;">
 					<a href="/users/<%=@user.username%>/favoritepackages" style="padding-left: 10px; font-size: 18px;">See all</a>
 				</div>
@@ -25,10 +25,10 @@
 			Commented on <%= pluralize(@comments_count, "Package") %>
 		</div>
 		<div >
-			<% if @comments_count > 0 %>
+			<% if !@comments_count.nil? && @comments_count > 0 %>
 				<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %> 
 			<% end %>
-			<% if @comments_count > 3 %>
+			<% if !@comments_count.nil? && @comments_count > 3 %>
 				<div style="padding-top: 10px;">
 					<a href="/users/<%=@user.username%>/comments" style="padding-left: 10px; font-size: 18px;">See all</a>
 				</div>
