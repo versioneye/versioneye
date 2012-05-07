@@ -345,6 +345,22 @@ input[type="submit"]:hover {
 	vertical-align: middle;
 }
 
+.small-heart {
+	line-height: 0.7em;
+	display: inline;
+	padding-top: 0px;
+    padding-right: 5px;
+    padding-left: 10px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.small-heart-img {
+	height: 20px; 
+	align: middle; 
+	padding-left: 15px;
+}
+
 /***** div tables ********/
 
 .div-row{
@@ -371,6 +387,7 @@ input[type="submit"]:hover {
 
 .container {
 	width: 850px;
+	z-index: 100
 }
 
 header {
@@ -1132,6 +1149,7 @@ nav ul li a:hover {
     list-style-type: none;
     display: table-cell;
     padding: 0px;
+    padding-top: 5px;
 	margin: 0px;
 	vertical-align: middle;
 }
@@ -1265,4 +1283,14 @@ nav ul li a:hover {
 
 .rating-cell{
 	padding-right: 15px;
+}
+
+.map_for_user_profile{
+	z-index: 1;
+	border: 1px solid black;
+	width: 180px;
+    height: 180px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
 }

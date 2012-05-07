@@ -13,26 +13,29 @@
 					<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
 				<% end %>
 				<ul class="searchResult-inner-list-row">
-					<li class="searchResult-inner-list-cell" style="padding-top: 5px">
+					<li class="searchResult-inner-list-cell">
 						<% if signed_in? %>
 							<span id="follow_<%=product.to_param%>" style="display: <%= display_follow(product) %>">
 								<%= form_tag("/follow", :remote => true) do  %>
-									<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"></input>
+									<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>" />
 				 					<%= submit_tag "Follow", :class => "followButton", :id => "#{product.to_param}" %>
 								<% end %>
 							</span>
 							<span id="unfollow_<%=product.to_param%>" style="display: <%= display_unfollow(product) %>">
 								<%= form_tag("/unfollow", :remote => true) do  %>
-									<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>"></input>
+									<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>" />
 									<%= submit_tag "Unfollow", :class => "unfollowButton", :id => "#{product.to_param}" %>
 								<% end %>
 							</span>
 						<% else %>
-							<input type="submit" value="FOLLOW" class="followButton" onclick="load_dialog_follow('<%= product.name %>');" ></input>
+							<input type="submit" value="FOLLOW" class="followButton" onclick="load_dialog_follow('<%= product.name %>');" />
 						<% end %>
 					</li>
-					<li class="searchResult-inner-list-cell rating-cell">
-						<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => "#{prefix}_#{product.prod_key}"} %>
+					<li class="searchResult-inner-list-cell small-heart">
+						<%= image_tag("heart.png", :class => "small-heart-img") %>
+					</li>
+					<li class="searchResult-inner-list-cell ">
+						<label id="overall_likes"><%=product.like_overall%></label>
 					</li>
 				</ul>
 			</li>

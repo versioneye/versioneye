@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController
 
+  @@languages = ["Java", "Ruby", "Python", "Node.JS", "JavaScript", "PHP", "Clojure", "R", "opa"]
+
   def index
     @hide = "hide"
     @lang = session[:lang]
@@ -20,7 +22,7 @@ class ProductsController < ApplicationController
       end  
       break if @newest.size == 10    
     end
-    @languages = Product.get_unique_languages
+    @languages = @@languages # Product.get_unique_languages
     if signed_in?
       @my_product_ids = current_user.fetch_my_product_ids
     end
@@ -50,7 +52,9 @@ class ProductsController < ApplicationController
       end
     end    
     respond_to do |format|
-      format.html { @languages = Product.get_unique_languages }
+      format.html { 
+        @languages = @@languages # Product.get_unique_languages 
+      }
       format.json { render :json => @products }
     end
   end
@@ -63,6 +67,9 @@ class ProductsController < ApplicationController
       flash[:error] = "The requested package is not available."
       redirect_to products_path
       return 
+    end
+    if signed_in? 
+      @productlike = fetch_productlike(current_user, @product)
     end
     following = false
     if (!current_user.nil?)
@@ -100,7 +107,7 @@ class ProductsController < ApplicationController
     @product.save
     respond = create_follower @product, current_user
     respond_to do |format|
-      format.js
+      format.js 
       format.html { 
           redirect_to product_version_path(@product)
         }
@@ -166,25 +173,6 @@ class ProductsController < ApplicationController
   end  
   
   private
-  
-    def url_param_to_origin(param)
-      if (param.nil? || param.empty?)
-        return ""
-      end
-      key = String.new(param)
-      key.gsub!("--","/")
-      key.gsub!("~",".")
-      key
-    end
-
-    def fetch_product(product_key)
-      product = Product.find_by_key product_key
-      if product.nil?
-        @message = "error"
-        flash.now[:error] = "An error occured. Please try again later."
-      end
-      product
-    end
     
     def do_replacements( query , commit="Commit" )
       if query.nil? || @query.empty? || @query.eql?("Be up-to-date")

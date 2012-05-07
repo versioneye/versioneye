@@ -20,6 +20,8 @@ class User
   field :privacy_comments, type: String, default: "everybody"
 
   field :description, type: String
+  field :location, type: String
+  field :blog, type: String
   field :background_color, type: String
 
   field :fb_id, type: String 

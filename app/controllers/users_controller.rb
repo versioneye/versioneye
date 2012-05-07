@@ -49,12 +49,14 @@ class UsersController < ApplicationController
       if has_permission_to_see_products( @user, current_user ) && !@user.nil?
         @products = @user.fetch_my_products.paginate(:page => params[:page], :per_page => 3)
         @prod_count = @user.fetch_my_products_count
+        @prod_count = 0 if @prod_count.nil?
       end
       
       @comments = Array.new
       if has_permission_to_see_comments( @user, current_user ) && !@user.nil?
         @comments = Versioncomment.find_by_user_id( @user.id ).paginate(:page => params[:page], :per_page => 3)
         @comments_count = Versioncomment.count_by_user_id( @user.id )
+        @comments_count = 0 if @comments_count.nil?
       end
 
       if signed_in?
@@ -72,6 +74,8 @@ class UsersController < ApplicationController
   
   def favoritepackages
     @user = User.find_by_username(params[:id])
+    product_ids = Follower.find_product_ids_for_user( @user.id )
+    @languages = Product.get_unique_languages_for_product_ids(product_ids)
     @products = Array.new
     if has_permission_to_see_products( @user, current_user ) && !@user.nil?
       @products = @user.fetch_my_products.paginate(:page => params[:page]) 
@@ -89,6 +93,8 @@ class UsersController < ApplicationController
   
   def comments
     @user = User.find_by_username(params[:id])
+    product_ids = Follower.find_product_ids_for_user( @user.id )
+    @languages = Product.get_unique_languages_for_product_ids(product_ids)
     @comments = Array.new
     if has_permission_to_see_comments( @user, current_user ) && !@user.nil?
       @comments = Versioncomment.find_by_user_id( @user.id ).paginate(:page => params[:page])

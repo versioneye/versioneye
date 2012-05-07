@@ -4,3 +4,5 @@ log/*.log
 tmp/
 .sass-cache/
 .idea/
+app/assets/.DS_Store
+app/assets/images/.DS_Store

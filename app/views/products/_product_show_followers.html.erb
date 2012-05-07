@@ -4,7 +4,7 @@
 <div class="boxContainer" >
 	<% @users.each do |user| %>
 		<% if !user.nil? && !user.email.nil? %>
-			<%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :gravatar => { :size => 40 }), user_path(user) %>
+			<%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :style => "width: 40px;", :gravatar => { :size => 40, :default => "#{configatron.server_url}/assets/profile_icon.png" } ), user_path(user) %>
 		<% end %>
 	<% end %>
 </div>

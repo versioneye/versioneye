@@ -17,6 +17,10 @@ class SettingsController < ApplicationController
     @user.new_username = @user.username
   end
 
+  def profile
+    @user = current_user
+  end
+
   def updatenames
     fullname = params[:fullname]
     new_username = params[:new_username] 
@@ -80,6 +84,26 @@ class SettingsController < ApplicationController
       flash[:error] = "Something went wrong. Please try again later."
     end
     redirect_to settings_privacy_path()
+  end
+
+  def updateprofile
+    location = params[:location]
+    description = params[:description]
+    blog = params[:blog]
+    password = params[:password]
+    p "#{location} - #{description} - #{blog}"
+
+    user = current_user
+    user.description = description
+    user.location = location
+    user.blog = blog
+    user.password = password
+    if user.save
+      flash[:success] = "Profile updated."
+    else
+      flash[:error] = "Something went wrong. Please try again later."
+    end
+    redirect_to settings_profile_path()
   end
 
   private 

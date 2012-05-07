@@ -7,7 +7,7 @@ class Versioncomment
   field :product_key, type: String
   field :language, type: String
   field :version, type: String
-  field :rate, type: Integer
+  field :rate, type: Integer, :default => 0
   field :rate_docu, type: Integer, :default => 0
   field :rate_support, type: Integer, :default => 0
   field :comment, type: String
@@ -84,6 +84,33 @@ class Versioncomment
       sum = sum + comment.rate_support
     end
     sum
+  end
+
+  def self.migrate_to_likes()
+    comments = Versioncomment.all()
+    comments.each do |comment|
+      like = Productlike.find_by_user_id_and_product(comment.user_id, comment.product_key)
+      if like.nil? 
+        like = Productlike.new
+        like.user_id = comment.user_id
+        like.prod_key = comment.product_key
+      end
+      product = Product.find_by_key(comment.product_key)
+      if comment.rate > 0 && like.overall == 0
+        like.overall = 1
+        product.like_overall = product.like_overall + 1 
+      end
+      if comment.rate_docu > 0 && like.documentation == 0
+        like.documentation = 1 
+        product.like_docu = product.like_docu + 1 
+      end
+      if comment.rate_support > 0 && like.support == 0
+        like.support = 1 
+        product.like_support = product.like_support + 1 
+      end
+      product.save
+      like.save
+    end
   end
   
   def self.get_count_by_prod_key_and_version(prod_key, version)

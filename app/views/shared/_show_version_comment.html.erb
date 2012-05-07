@@ -1,23 +1,11 @@
 <div class="div-row">
 	<div class="div-cell avatar-comment" >
-		<%= gravatar_image_tag( comment.user.email, :alt => comment.user.fullname, :gravatar => { :size => 40 }) %>
+		<%= gravatar_image_tag( comment.user.email, :style => "width: 40px;", :alt => comment.user.fullname, :gravatar => { :size => 40, :default => "#{configatron.server_url}/assets/profile_icon.png" }) %>
 	</div>
 	<div class="div-cell comment-meta-box">
-		<div>
-			<ul class="list-row">
-				<li class="list-cell rating-cell">
-					<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate, :id => comment.id} %>
-				</li>
-				<li class="list-cell rating-cell" >
-					<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate_docu, :id => "#{comment.id}_docu"} %>
-				</li>
-				<li class="list-cell rating-cell">
-					<%= render :partial => 'shared/show_rate', :locals => {:rate => comment.rate_support, :id => "#{comment.id}_support"} %>
-				</li>
-			</ul>
-		</div>
 		<div class="meta-text-small">
-			<%= link_to comment.user.fullname, user_path(comment.user) %> on <%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %>
+			<%= link_to comment.user.fullname, user_path(comment.user) %> <br/>
+			<%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %>
 		</div>
 	</div>
 </div>

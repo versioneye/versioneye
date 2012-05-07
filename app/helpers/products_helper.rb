@@ -42,22 +42,48 @@ module ProductsHelper
   end
   
   def attach_version(product, version)
-    p "attach_version version: #{version}"
     return nil if product.nil?
     if version.nil? || version.empty?
       version = product.version
     end
-    p " -- attach_version version: #{version}"
     versionObj = product.get_version(version)
-    p " -- attach_version versionObj: #{versionObj}"
     if !versionObj.nil?
-      p " -- attach_version versionObj: #{versionObj.rate} - #{versionObj.rate_docu} - #{versionObj.rate_support}"
       product.version = versionObj.version
       product.version_link = versionObj.link
       product.version_rate = versionObj.rate
       product.version_rate_docu = versionObj.rate_docu
       product.version_rate_support = versionObj.rate_support
     end
+  end
+
+  def fetch_productlike(user, product)
+    productlike = Productlike.find_by_user_id_and_product(user.id, product.prod_key)
+    if productlike.nil?
+      productlike = Productlike.new
+      productlike.user_id = user.id.to_s 
+      productlike.prod_key = product.prod_key
+      productlike.save
+    end
+    productlike
+  end
+
+  def fetch_product(product_key)
+    product = Product.find_by_key product_key
+    if product.nil?
+      @message = "error"
+      flash.now[:error] = "An error occured. Please try again later."
+    end
+    product
+  end
+
+  def url_param_to_origin(param)
+    if (param.nil? || param.empty?)
+      return ""
+    end
+    key = String.new(param)
+    key.gsub!("--","/")
+    key.gsub!("~",".")
+    key
   end
   
 end

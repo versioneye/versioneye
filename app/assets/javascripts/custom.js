@@ -88,6 +88,11 @@ function textCounter(field, cntfield, maxlimit) {
 		cntfield.innerHTML = maxlimit - field.value.length;
 }
 
+function exchangeImage(id, image){
+	image_path = "/assets/" + image
+	document.getElementById(id).src=image_path;
+}
+
 function shareOnFacebook(link, message){
 	var picture = 'http://versioneye.com/assets/icon_114.png'
 	FB.ui({ method: 'feed',
@@ -98,15 +103,20 @@ function shareOnFacebook(link, message){
 
 function update_lang(language){
 	orig_param = language;
+	icon_id = orig_param.toLowerCase() + "_icon"
 	lang = document.getElementById("lang").value
 	language = language + ","
 	var rg = new RegExp(language,'i');
 	if (lang.search(rg) == -1){
 		lang = lang + "," + language
-		document.getElementById(orig_param).style.backgroundColor = "lightBlue"
+		if (document.getElementById(icon_id) != null){
+			document.getElementById(icon_id).src = "/assets/language/" + orig_param.toLowerCase() + ".png"	
+		}
 	} else {
 		lang = lang.replace(language, "")
-		document.getElementById(orig_param).style.backgroundColor = "white"
+		if (document.getElementById(icon_id) != null){
+			document.getElementById(icon_id).src = "/assets/language/" + orig_param.toLowerCase() + "_bw.png"
+		}		
 	}
 	lang = lang.replace(",,", ",") 
 	document.getElementById("lang").value = lang

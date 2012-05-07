@@ -1,0 +1,56 @@
+<div class="sidebar" >
+	<%= render "settings/navi" %>	
+</div>
+<div class="content">
+
+  <div class="boxHeader">
+    Profile Settings
+  </div>
+
+	<div class="boxContainer">
+	<%= form_tag("/settings/updateprofile", :method => "post") do  %>    
+    <div style="display:table-row;">
+      <div class="labelCelBig">
+		    <%= label_tag(:location, "Location") %>
+      </div>
+      <div class="inputCel">
+		    <%= text_field_tag :location, @user.location, :class => "round" %>
+      </div>
+    </div>
+
+    <div style="display:table-row;">
+      <div class="labelCelBig" style="vertical-align: top; padding-top: 7px;">
+		    <%= label_tag(:description) %>
+      </div>
+      <div class="inputCel">
+        <%= text_area_tag :description, @user.description, :class => "round", :style => "width: 275px; height: 170px;", :maxlength => "500"  %>
+      </div>
+    </div>
+
+    <div style="display:table-row;">
+      <div class="labelCelBig">
+        <%= label_tag(:blog, "Blog") %>
+      </div>
+      <div class="inputCel">
+        <%= text_field_tag :blog, @user.blog, :class => "round" %>
+      </div>
+    </div>
+
+	  <div style="display:table-row;">
+      <div class="labelCelBig">
+		    <%= label_tag(:password) %>
+      </div>
+      <div class="inputCel">
+		    <%= password_field_tag :password, "", :class => "round" %>
+      </div>
+    </div>
+
+    <div style="display:table-row;">
+      <div class="labelCelBig"></div>
+      <div class="submitCel">
+		    <%= submit_tag "Save", :class => "button" %>
+      </div>
+    </div>
+	<% end %>
+
+</div>

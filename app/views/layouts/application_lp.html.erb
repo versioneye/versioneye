@@ -42,7 +42,15 @@
 							<div style="padding-left:130px;">
 								<ol class="list-row" >
 									<% @languages.each do |language| %>
-										<li class="list-cell round pad-right" id="<%=language%>" <%= "style='background-color:lightblue;'" if @langs.include?(language) %> ><label for="<%= language %>" onclick="update_lang('<%=language%>')"><%= render :partial => "/products/language_icons", :locals => {:language => language, :icon => nil, :link => nil, :title => language} %></label></li>
+										<li class="list-cell round pad-right" id="<%=language%>" >
+										<label for="<%= language %>" onclick="update_lang('<%=language%>')">
+											<% if @langs.include?(language) %>
+												<%= image_tag "language/#{language.downcase}.png", :title => language, :id => "#{language.downcase}_icon" %>
+											<% else %>
+												<%= image_tag "language/#{language.downcase}_bw.png", :title => language, :id => "#{language.downcase}_icon" %>
+											<% end %>
+										</label>
+										</li>
 									<% end %>
 								</ol>
 							</div>

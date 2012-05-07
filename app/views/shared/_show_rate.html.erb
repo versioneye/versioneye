@@ -1,25 +1,7 @@
-<% if rate == 10 %>
-	<input name="star3<%=id%>" type="radio" class="star" disabled="disabled" checked="checked" ></input>
-<% else %>	
-	<input name="star3<%=id%>" type="radio" class="star" disabled="disabled"></input>
-<% end %>
-<% if rate == 20 %>
-	<input name="star3<%=id%>" type="radio" class="star" disabled="disabled" checked="checked" ></input>
-<% else %>	
-	<input name="star3<%=id%>" type="radio" class="star" disabled="disabled"></input>
-<% end %>
-<% if rate == 30 %>
-	<input name="star3<%=id%>" type="radio" class="star" disabled="disabled" checked="checked" ></input>
-<% else %>	
-	<input name="star3<%=id%>" type="radio" class="star" disabled="disabled"></input>
-<% end %>
-<% if rate == 40 %>
-	<input name="star3<%=id%>" type="radio" class="star" disabled="disabled" checked="checked" ></input>
-<% else %>	
-	<input name="star3<%=id%>" type="radio" class="star" disabled="disabled"></input>
-<% end %>
-<% if rate == 50 %>
-	<input name="star3<%=id%>" type="radio" class="star" disabled="disabled" checked="checked" ></input>
-<% else %>	
-	<input name="star3<%=id%>" type="radio" class="star" disabled="disabled"></input>
-<% end %>
+
+	<li class="small-heart searchResult-inner-list-cell ">
+		<%= image_tag("heart.png", :class => "small-heart-img", :id => "#{id}") %>
+	</li>
+	<li class="searchResult-inner-list-cell ">
+		<label id="overall_likes"><%=product.like_overall%></label>
+	</li>

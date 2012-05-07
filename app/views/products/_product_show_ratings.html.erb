@@ -1,30 +1,69 @@
-
 <div class="boxHeader">
-	Ratings
+	Likes
 </div>
 <div class="boxContainer" >
 	<div class="div-row">
 		<div class="div-cell rating_cell">
-			<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate, :id => "#{@product.prod_key}_head"} %>
+			<ul class="list-row">
+				<li class="list-cell">
+					<% if signed_in? %>
+						<span id="like_overall" style="display: <%= @productlike.overall_like_display %> ">
+							<%= link_to image_tag("heart.png", :id => "like_overall_icon", :onmouseover => "exchangeImage('like_overall_icon', 'heart_red.png')", :onmouseout => "exchangeImage('like_overall_icon', 'heart.png')"), "/packagelike/like_overall?product_key=#{@product.to_param}", :remote => true %>
+						</span> 
+						<span id="dislike_overall" style="display: <%= @productlike.overall_dislike_display %> ">
+							<%= link_to image_tag("heart.png", :id => "dislike_overall_icon", :title => "dislike", :onmouseover => "exchangeImage('dislike_overall_icon', 'heart_black.png')", :onmouseout => "exchangeImage('dislike_overall_icon', 'heart.png')"), "/packagelike/dislike_overall?product_key=#{@product.to_param}", :remote => true %>
+						</span>
+					<% else %> 
+						<%= image_tag("heart.png") %>
+					<% end %>
+				</li>
+				<li class="list-cell"><label id="overall_likes"><%=@product.like_overall%></label></li>
+			</ul>
 		</div>
 		<div class="div-cell rating_description_cell">
-			<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate_docu, :id => "#{@product.prod_key}_docu_head"} %>
+			<ul class="list-row">
+				<li class="list-cell">
+					<% if signed_in? %>
+						<span id="like_docu" style="display: <%= @productlike.docu_like_display %> ">
+							<%= link_to image_tag("heart.png", :id => "like_docu_icon", :onmouseover => "exchangeImage('like_docu_icon', 'heart_red.png')", :onmouseout => "exchangeImage('like_docu_icon', 'heart.png')"), "/packagelike/like_docu?product_key=#{@product.to_param}", :remote => true %>
+						</span> 
+						<span id="dislike_docu" style="display: <%= @productlike.docu_dislike_display %> ">
+							<%= link_to image_tag("heart.png", :id => "dislike_docu_icon", :title => "dislike", :onmouseover => "exchangeImage('dislike_docu_icon', 'heart_black.png')", :onmouseout => "exchangeImage('dislike_docu_icon', 'heart.png')"), "/packagelike/dislike_docu?product_key=#{@product.to_param}", :remote => true %>
+						</span>
+					<% else %> 
+						<%= image_tag("heart.png") %>
+					<% end %>
+				</li>
+				<li class="list-cell"><label id="docu_likes"><%=@product.like_docu%></label></li>
+			</ul>
 		</div>
 		<div class="div-cell rating_description_cell">
-			<%= render :partial => 'shared/show_rate', :locals => {:rate => @product.version_rate_support, :id => "#{@product.prod_key}_support_head"} %>
+			<ul class="list-row">
+				<li class="list-cell">
+					<% if signed_in? %>
+						<span id="like_support" style="display: <%= @productlike.support_like_display %> ">
+							<%= link_to image_tag("heart.png", :id => "like_support_icon", :onmouseover => "exchangeImage('like_support_icon', 'heart_red.png')", :onmouseout => "exchangeImage('like_support_icon', 'heart.png')"), "/packagelike/like_support?product_key=#{@product.to_param}", :remote => true %>
+						</span> 
+						<span id="dislike_support" style="display: <%= @productlike.support_dislike_display %> ">
+							<%= link_to image_tag("heart.png", :id => "dislike_support_icon", :title => "dislike", :onmouseover => "exchangeImage('dislike_support_icon', 'heart_black.png')", :onmouseout => "exchangeImage('dislike_support_icon', 'heart.png')"), "/packagelike/dislike_support?product_key=#{@product.to_param}", :remote => true %>
+						</span>
+					<% else %> 
+						<%= image_tag("heart.png") %>
+					<% end %>
+				</li>
+				<li class="list-cell"><label id="support_likes"><%=@product.like_support%></label></li>
+			</ul>
 		</div>
 	</div>
 	<div class="div-row">
 		<div class="div-cell rating_cell">
-			<label class="label-small" >Overall</label>
+			<label  >Overall</label>
 		</div>
 		<div class="div-cell rating_description_cell">
-			<label class="label-small" >Documentation</label>
+			<label  >Docu.</label>
 		</div>
 		<div class="div-cell rating_description_cell">
-			<label class="label-small" >Support</label>
+			<label  >Support</label>
 		</div>
 	</div>
 </div>
-
-

@@ -11,6 +11,13 @@ Versioneye::Application.routes.draw do
   match '/auth/twitter/new',       :to => 'twitter#new'
   match '/auth/twitter/create',    :to => 'twitter#create'
 
+  match '/packagelike/like_overall',    :to => 'productlikes#like_overall'
+  match '/packagelike/dislike_overall', :to => 'productlikes#dislike_overall'
+  match '/packagelike/like_docu',       :to => 'productlikes#like_docu'
+  match '/packagelike/dislike_docu',    :to => 'productlikes#dislike_docu'
+  match '/packagelike/like_support',    :to => 'productlikes#like_support'
+  match '/packagelike/dislike_support', :to => 'productlikes#dislike_support'
+
   resources :products
   match '/search',                                      :to => 'products#search'
   match '/follow',                                      :to => 'products#follow'
@@ -23,7 +30,7 @@ Versioneye::Application.routes.draw do
   match '/product/newest/:key/:type',                   :to => 'products#newest'
   match '/product/wouldbenewest/:key/version/:version', :to => 'products#wouldbenewest'
   match '/biggest/:version1/:version2',                 :to => 'products#biggest'
-  
+
   match '/news',               :to => 'news#news'
   match '/mynews',             :to => 'news#mynews'
   match '/hotnews',            :to => 'news#hotnews'
@@ -42,12 +49,14 @@ Versioneye::Application.routes.draw do
   match '/resetpassword',                :to => 'users#resetpassword'
   match '/home',                         :to => 'users#home'
     
+  get  '/settings/profile',            :to => 'settings#profile'
   get  '/settings/name',               :to => 'settings#name'
   get  '/settings/password',           :to => 'settings#password'
   get  '/settings/privacy',            :to => 'settings#privacy'
   post '/settings/updatenames',        :to => 'settings#updatenames'
   post '/settings/updatepassword',     :to => 'settings#updatepassword'
   post '/settings/updateprivacy',      :to => 'settings#updateprivacy'
+  post '/settings/updateprofile',      :to => 'settings#updateprofile'
 
   resources :versioncomments
   match '/vc/:id',              :to => 'versioncomments#show'

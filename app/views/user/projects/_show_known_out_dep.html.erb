@@ -1,15 +1,21 @@
 <div class="outdated-row" >
 	<ul class="list-row" >
 		<li class="list-cell icon-cell">
-			<%= render :partial => "/products/language_icons", :locals => {:language => product.language, :icon => product.icon, :link => product_url(product), :title => product.name } %>
+			<%= render :partial => "/products/language_icons", :locals => {:language => product.language, :icon => product.icon, :link => product_url(product), :title => product.name } %> 
 		</li>
 		<li class="list-cell">		
 			<a href="<%= product_url(product) %>" class="searchResultLink"><%= product.name %></a><br/>
-			<% if product.prod_type == "Maven2" %>
-				<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
-			<% end %>
-			<span class="meta-text-small">Your Version: <span class="outdated-text"><%= dep.version %></span> --> Current Version: <span class="current-version-text"><%= product.version %></span></span><br/>
-			<%= render :partial => 'shared/show_rate', :locals => {:rate => product.rate, :id => product.prod_key} %>
+			<ul class="list-row">
+				<il class="list-cell">
+					<span class="meta-text">Your Version: <span class="outdated-text"><%= dep.version %></span> --> Current Version: <span class="current-version-text"><%= product.version %></span></span>
+				</il>
+				<il class="list-cell" style="padding-top: 3px;">
+					<%= image_tag("heart.png", :class => "small-heart-img") %> 
+				</il>
+				<il class="list-cell">
+					<label id="overall_likes"><%=product.like_overall%></label>
+				</il>
+			</ul>
 		</li>
 	</ul>
 </div>

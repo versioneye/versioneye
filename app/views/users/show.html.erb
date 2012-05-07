@@ -1,21 +1,12 @@
-<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
-<% if !@user.nil? %>
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+
+<% if !@user.nil? %>	
+	<%= render "header" %>
 	<div class="sidebar" >
-
 		<%= render "users/navi" %>
-
 	</div>	
 	<div class="content">
-
-		<div class="boxHeader" style="padding-top: 25px;">
-			Knows
-		</div>
-		<div class="boxContainer">
-			<% @languages.each do |language| %>
-				<%= render :partial => "/products/language_icons", :locals => {:language => language, :icon => nil, :link=>nil, :title=>language} %>
-			<% end %>
-		</div>
-
 		<div class="boxHeader">
 			Follows <%= pluralize(@prod_count, "Package") %>
 		</div>

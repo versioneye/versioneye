@@ -32,6 +32,10 @@ class Product
   field :rate_docu, type: Integer
   field :rate_support, type: Integer
   field :ratecount, type: Integer
+
+  field :like_overall, type: Integer, default: 0
+  field :like_docu, type: Integer, default: 0
+  field :like_support, type: Integer, default: 0
   
   field :icon, type: String
 
@@ -284,25 +288,25 @@ class Product
 
     def self.find_by_name_start_with(searched_name, languages)
       if languages.nil? || languages.empty?
-        Product.all(conditions: { name: /^#{searched_name}/i }).desc(:rate).asc(:name).limit(300)
+        Product.all(conditions: { name: /^#{searched_name}/i }).desc(:like_overall).asc(:name).limit(300)
       else
-        Product.all(conditions: { name: /^#{searched_name}/i, :language.in => languages }).desc(:rate).asc(:name).limit(300)
+        Product.all(conditions: { name: /^#{searched_name}/i, :language.in => languages }).desc(:like_overall).asc(:name).limit(300)
       end
     end
 
     def self.find_by_name_simple(searched_name, languages)
       if languages.nil? || languages.empty?
-        Product.all(conditions: { name: /#{searched_name}/i }).desc(:rate).asc(:name).limit(300)
+        Product.all(conditions: { name: /#{searched_name}/i }).desc(:like_overall).asc(:name).limit(300)
       else
-        Product.all(conditions: { name: /#{searched_name}/i, :language.in => languages}).desc(:rate).asc(:name).limit(300)
+        Product.all(conditions: { name: /#{searched_name}/i, :language.in => languages}).desc(:like_overall).asc(:name).limit(300)
       end
     end
 
     def self.find_by_name_exclusion(searched_name, languages, prod_keys)
       if languages.nil? || languages.empty?
-        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys }).desc(:rate).asc(:name).limit(300)
+        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys }).desc(:like_overall).asc(:name).limit(300)
       else
-        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys, :language.in => languages}).desc(:rate).asc(:name).limit(300)
+        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys, :language.in => languages}).desc(:like_overall).asc(:name).limit(300)
       end
     end
 

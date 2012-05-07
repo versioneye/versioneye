@@ -1,14 +1,12 @@
 <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
-<div class="sidebar" >
-	
+<%= render "header" %>
+<div class="sidebar" >	
 	<%= render "users/navi" %>
-		
 </div>	
 <div class="content">
-		
 	<% if !@comments.nil? %>	
-		<div class="profile-head">
-			<h2 ><%= pluralize(@count, "Comment") %> </h2>
+		<div class="boxHeader" >
+			<%= pluralize(@count, "Comment") %>
 		</div>
 		<% if !@comments.nil? && !@comments.empty? %>
 			<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %> 
@@ -17,5 +15,4 @@
 			</div>	
 		<% end %>
 	<% end %>
-	
 </div>
