@@ -21,6 +21,7 @@ class User
 
   field :description, type: String
   field :location, type: String
+  field :time_zone, type: String
   field :blog, type: String
   field :background_color, type: String
 
@@ -251,6 +252,9 @@ class User
     self.fullname = json_user['name']
     self.username = json_user['screen_name']
     self.description = json_user['description']
+    self.location = json_user['location']
+    self.time_zone = json_user['time_zone']
+    self.blog = json_user['url']
     self.background_color = json_user['profile_background_color']
     self.twitter_id = json_user['id']
     self.twitter_token = token
