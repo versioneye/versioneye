@@ -28,7 +28,7 @@
 		        <label for="terms" class="label-smaller">
 					<%= t(:terms_part_1) %>
 					<% if I18n.locale == :de %>
-						<%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "_NEW_terms" %> 
+						<%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "new_terms" %> 
 					<% else %>
 						<%= link_to "Conditions of Use", terms_path, :target => "_NEW_terms" %> 
 					<% end %>					 

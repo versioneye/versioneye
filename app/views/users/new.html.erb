@@ -50,9 +50,9 @@
 		        <label for="user_terms" class="label-smaller">
 					<%= t(:terms_part_1) %>
 					<% if I18n.locale == :de %>
-						<%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "_NEW_terms" %> 
+						<%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "new_terms" %> 
 					<% else %>
-						<%= link_to "Conditions of Use", terms_path, :target => "_NEW_terms" %> 
+						<%= link_to "Conditions of Use", terms_path, :target => "new_terms" %> 
 					<% end %>					 
 					<%= t(:terms_part_2) %>
 				</label><br/><br/>
@@ -67,9 +67,9 @@
 		        <label for="user_datenerhebung" class="label-smaller">
 					<%= t(:daten_part_1) %> 
 					<% if I18n.locale == :de %>
-						<%= link_to "Datenerhebung", datenerhebung_path, :target => "_NEW_data" %>
+						<%= link_to "Datenerhebung", datenerhebung_path, :target => "new_data" %>
 					<% else %>
-						<%= link_to "Data Acquisition", datacollection_path, :target => "_NEW_data" %>
+						<%= link_to "Data Acquisition", datacollection_path, :target => "new_data" %>
 					<% end %>
 					<%= t(:daten_part_2) %> 
 				</label><br/><br/>
