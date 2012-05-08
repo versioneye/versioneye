@@ -43,7 +43,7 @@
 								<ol class="list-row" >
 									<% @languages.each do |language| %>
 										<li class="list-cell round pad-right" id="<%=language%>" >
-										<label for="<%= language %>" onclick="update_lang('<%=language%>')">
+										<label onclick="update_lang('<%=language%>')">
 											<% if @langs.include?(language) %>
 												<%= image_tag "language/#{language.downcase}.png", :title => language, :id => "#{language.downcase}_icon" %>
 											<% else %>
