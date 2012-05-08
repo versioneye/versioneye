@@ -35,7 +35,7 @@
 						<%= image_tag("heart.png", :class => "small-heart-img" ) %>
 					</li>
 					<li class="searchResult-inner-list-cell ">
-						<label id="overall_likes"><%=product.like_overall%></label>
+						<label id="<%=product.to_param%>overall_likes"><%=product.like_overall%></label>
 					</li>
 				</ul>
 			</li>

@@ -1,31 +1,32 @@
-<div class="div-row boxContainer round" style="width: 100%;" >
-	<div class="div-cell" style="padding: 10px;">
-		<%= link_to gravatar_image_tag( @user.email, :alt => @user.fullname, :gravatar => { :size => 180, :default => "#{configatron.server_url}/profile_icon.png" }), user_path(@user) %><br/>
+<div class="div-row profile_header"  >
+	<div class="div-cell profile_image-cell" >
+		<%= link_to gravatar_image_tag( @user.email, :alt => @user.fullname, :class => "round", :gravatar => { :size => 195, :default => "#{configatron.server_url}/profile_icon.png" }), user_path(@user) %><br/>
 		<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
-			<a href="http://gravatar.com/emails">Change Profile Picture</a>
+			<a href="http://gravatar.com/emails">Change Profile Picture</a><br/>
 		<% end %>
+		<a href="<%= @user.blog %>"><%= @user.blog %></a> 
 	</div>
-	<div class="div-cell" style="vertical-align: top; padding: 10px; width: 385px;">
-		<ul>
-			<li style="list-style-type: none;">
-				<h1> <%= @user.fullname %> (@<%= @user.username %>) </h1>
+	<div class="div-cell profile_summary_cell" >
+		<ul >
+			<li >
+				<h1 ><%= @user.fullname %></h1>
 			</li>
-			<li style="list-style-type: none;">
+			<li >
+				<h2 >@<%= @user.username %></h2>
+			</li>
+			<li >
 				<%= @user.description %>
 			</li>
-			<li style="list-style-type: none; padding-top: 10px;">
-				<a href="<%= @user.blog %>"><%= @user.blog %></a> 
-			</li>
 			<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
-				<li style="list-style-type: none;">
+				<li >
 					<a href="/settings/profile">Edit your profile</a>
 				</li>
 			<% end %>
 		</ul>
 	</div>
-	<div class="div-cell" style="width: 200px; vertical-align: top; text-align: center; padding: 10px;">
-		<div align="center" style="border: 1px">
-			<div id="map_for_user_profile" class="map_for_user_profile" ></div>
+	<div class="div-cell profile_map_cell" >
+		<div align="right">
+			<div id="map_for_user_profile" class="map_for_user_profile round" ></div>
 		</div>
 		<% if @user.location && !@user.location.eql?("") %>
 			<%= @user.location %>
