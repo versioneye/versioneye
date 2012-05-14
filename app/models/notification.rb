@@ -58,4 +58,17 @@ class Notification
     end
   end
 
+  def self.send_newsletters
+    users = User.all()
+    users.each do |user|
+      Notification.send_newsletter_for_user(user)
+    end
+  end
+
+  def self.send_newsletter_for_user(user)
+    p "send notifications for user #{user.fullname} start"
+    NewsletterMailer.newsletter_email(user).deliver
+    p "send notifications for user #{user.fullname} end"
+  end
+
 end

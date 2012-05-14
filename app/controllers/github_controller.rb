@@ -4,6 +4,12 @@ class GithubController < ApplicationController
 
   def callback
     code = params['code']
+
+    if code.nil? 
+      redirect_to "/signup"
+      return
+    end
+
     token = get_token( code )
     
     if signed_in?

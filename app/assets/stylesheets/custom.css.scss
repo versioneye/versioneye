@@ -345,6 +345,14 @@ input[type="submit"]:hover {
 	vertical-align: middle;
 }
 
+.list-cell-lang-icons {
+    list-style-type: none;
+    display: table-cell;
+    padding-right: 0px;
+	vertical-align: middle;
+	text-align: center;
+}
+
 .small-heart {
 	line-height: 0.7em;
 	display: inline;
@@ -396,6 +404,7 @@ header {
     background-position: top;
 	position: fixed;
 	top: 0;
+	left: 0;
 	margin: 0px;
     padding-top: 0px;
 	padding-bottom: 10px;

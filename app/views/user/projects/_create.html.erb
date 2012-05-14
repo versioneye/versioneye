@@ -51,14 +51,14 @@
 			<div style="padding-top:10px; padding-bottom: 10px;">Put in a link to your project file <b>OR</b> upload your project file.</div>
 			<div id="tabs" style="width: 490px;">
 				<ul>
-					<li><a href="#tabs-url">URL</a></li>
 					<li><a href="#tabs-upload">Upload</a></li>
+					<li><a href="#tabs-url">URL</a></li>
 				</ul>
-				<div id="tabs-url">
-					<%= f.text_field :url, :class => "round", :style => "width: 430px;" %>
-				</div>
 				<div id="tabs-upload">
 					<%= file_field 'upload', 'datafile', :class => "round" %>
+				</div>
+				<div id="tabs-url">
+					<%= f.text_field :url, :class => "round", :style => "width: 430px;" %>
 				</div>
 			</div>			
 	      </div>
