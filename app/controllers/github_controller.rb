@@ -5,7 +5,7 @@ class GithubController < ApplicationController
   def callback
     code = params['code']
 
-    if code.nil? 
+    if code.nil? || code.empty?
       redirect_to "/signup"
       return
     end
