@@ -5,6 +5,11 @@ class FacebookController < ApplicationController
   def callback
     code = params['code']
 
+    if code.nil? || code.empty?
+      redirect_to "/signup"
+      return
+    end
+
     domain = 'https://graph.facebook.com'
     uri = '/oauth/access_token'
     query = 'client_id=230574627021570&'

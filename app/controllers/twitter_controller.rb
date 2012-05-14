@@ -16,8 +16,14 @@ class TwitterController < ApplicationController
   end
 
   def callback
+    oauth_verifier = params[:oauth_verifier]
+    if oauth_verifier.nil? || oauth_verifier.empty?
+      redirect_to "/signup"
+      return
+    end
+
     oauth = oauth_consumer    
-    access_token = fetch_access_token( oauth, session[:token], session[:secret], params[:oauth_verifier] )
+    access_token = fetch_access_token( oauth, session[:token], session[:secret], oauth_verifier)
     session[:token] = nil
     session[:secret] = nil
     session[:access_token] = access_token
