@@ -10,7 +10,7 @@
 	<div class="boxContainer">
 	<%= form_tag("/settings/updateprofile", :method => "post") do  %>    
     <div style="display:table-row;">
-      <div class="labelCelBig">
+      <div class="labelCelMiddle">
 		    <%= label_tag(:location, "Location") %>
       </div>
       <div class="inputCel">
@@ -19,16 +19,25 @@
     </div>
 
     <div style="display:table-row;">
-      <div class="labelCelBig" style="vertical-align: top; padding-top: 7px;">
+      <div class="labelCelMiddle" style="vertical-align: top; padding-top: 7px;">
 		    <%= label_tag(:description) %>
       </div>
       <div class="inputCel">
-        <%= text_area_tag :description, @user.description, :class => "round", :style => "width: 275px; height: 170px;", :maxlength => "500"  %>
+        <%= text_area_tag :description, @user.description, :class => "round", :style => "width: 275px; height: 170px;", :maxlength => "177", :onKeyUp => "textCounter(this, document.getElementById('counter'), 177)", :id => "description"  %>
       </div>
     </div>
 
     <div style="display:table-row;">
-      <div class="labelCelBig">
+      <div class="labelCelMiddle" style="vertical-align: top; padding-top: 7px;">
+        
+      </div>
+      <div class="inputCel meta-text-small" style="float: right">
+        Characters left: <span id="counter">177</span>
+      </div>
+    </div>
+
+    <div style="display:table-row;">
+      <div class="labelCelMiddle">
         <%= label_tag(:blog, "Blog") %>
       </div>
       <div class="inputCel">
@@ -37,7 +46,7 @@
     </div>
 
 	  <div style="display:table-row;">
-      <div class="labelCelBig">
+      <div class="labelCelMiddle">
 		    <%= label_tag(:password) %>
       </div>
       <div class="inputCel">
@@ -46,7 +55,7 @@
     </div>
 
     <div style="display:table-row;">
-      <div class="labelCelBig"></div>
+      <div class="labelCelMiddle"></div>
       <div class="submitCel">
 		    <%= submit_tag "Save", :class => "button" %>
       </div>
@@ -54,3 +63,6 @@
 	<% end %>
 
 </div>
+<script type="text/javascript">
+  textCounter(document.getElementById('description'), document.getElementById('counter'), 177);
+</script>

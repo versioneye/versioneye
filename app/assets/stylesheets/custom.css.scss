@@ -346,10 +346,10 @@ input[type="submit"]:hover {
 }
 
 .list-cell-lang-icons {
-    list-style-type: none;
-    display: table-cell;
-    padding-right: 0px;
-	vertical-align: middle;
+	list-style-type: none; 
+	display: table-cell; 
+	padding-right: 0px; 
+	vertical-align: middle; 
 	text-align: center;
 }
 
@@ -852,6 +852,14 @@ nav ul li a:hover {
 
 .labelCel{
     width: 110px;
+    padding-right: 5px;
+	display: table-cell;
+	text-align: right;
+	vertical-align: middle;
+}
+
+.labelCelMiddle{
+    width: 150px;
     padding-right: 5px;
 	display: table-cell;
 	text-align: right;

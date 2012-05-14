@@ -67,8 +67,10 @@ class Notification
 
   def self.send_newsletter_for_user(user)
     p "send notifications for user #{user.fullname} start"
-    NewsletterMailer.newsletter_email(user).deliver
+    NewsletterMailer.NewsletterMailer(user).deliver
     p "send notifications for user #{user.fullname} end"
+  rescue
+    logger.error "An error occured. E-Mail inactive: #{user.fullname} - #{user.email}"
   end
 
 end
