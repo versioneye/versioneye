@@ -45,9 +45,9 @@
 										<li class="list-cell-lang-icons " id="<%=language%>" >
 										<label onclick="update_lang('<%=language%>')">
 											<% if @langs.include?(language) %>
-												<%= image_tag "language/#{language.downcase}.png", :title => language, :id => "#{language.downcase}_icon" %>
+												<%= image_tag "language/#{language.downcase}.png", :title => language, :id => "#{language.downcase}_icon", :style => "border-bottom: 2px solid #f9b323" %>
 											<% else %>
-												<%= image_tag "language/#{language.downcase}_bw.png", :title => language, :id => "#{language.downcase}_icon" %>
+												<%= image_tag "language/#{language.downcase}_bw.png", :title => language, :id => "#{language.downcase}_icon", :style => "border-bottom: 0px solid #f9b323" %>
 											<% end %>
 										</label>
 										</li>

@@ -112,13 +112,13 @@ function update_lang(language){
 		lang = lang + "," + language
 		if (document.getElementById(icon_id) != null){
 			document.getElementById(icon_id).src = "/assets/language/" + orig_param.toLowerCase() + ".png"	
-			document.getElementById(language_orig).style.borderBottom = "2px solid #f9b323";
+			document.getElementById(icon_id).style.borderBottom = "2px solid #f9b323";
 		}
 	} else {
 		lang = lang.replace(language, "")
 		if (document.getElementById(icon_id) != null){
 			document.getElementById(icon_id).src = "/assets/language/" + orig_param.toLowerCase() + "_bw.png"
-			document.getElementById(language_orig).style.borderBottom = "0px solid #f9b323";
+			document.getElementById(icon_id).style.borderBottom = "0px solid #f9b323";
 		}		
 	}
 	lang = lang.replace(",,", ",") 
