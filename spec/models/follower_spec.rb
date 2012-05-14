@@ -87,6 +87,22 @@ describe Follower do
     end
     
   end
+
+  describe "unfollow_all_by_user" do
+    
+    it "unfollows all" do
+      followers = Follower.find_by_user( @user.id )
+      followers.should_not be_nil
+      followers.count.should eql(1)
+
+      Follower.unfollow_all_by_user(@user.id)
+
+      followers = Follower.find_by_user( @user.id )
+      followers.should_not be_nil
+      followers.count.should eql(0)
+    end
+    
+  end
   
   describe "user" do
     

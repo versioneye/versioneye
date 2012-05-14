@@ -1,18 +1,20 @@
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-<%= render "header" %>
-<div class="sidebar" >	
-	<%= render "users/navi" %>
-</div>	
-<div class="content">
-	<% if !@comments.nil? %>	
-		<div class="boxHeader" >
-			<%= pluralize(@count, "Comment") %>
-		</div>
-		<% if !@comments.nil? && !@comments.empty? %>
-			<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %> 
-			<div style="margin-top: 20px;">
-				<%= will_paginate @comments %>
-			</div>	
+<% if !@user.nil? && !@user.deleted %>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<%= render "header" %>
+	<div class="sidebar" >	
+		<%= render "users/navi" %>
+	</div>	
+	<div class="content">
+		<% if !@comments.nil? %>	
+			<div class="boxHeader" >
+				<%= pluralize(@count, "Comment") %>
+			</div>
+			<% if !@comments.nil? && !@comments.empty? %>
+				<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %> 
+				<div style="margin-top: 20px;">
+					<%= will_paginate @comments %>
+				</div>	
+			<% end %>
 		<% end %>
-	<% end %>
-</div>
+	</div>
+<% end %>

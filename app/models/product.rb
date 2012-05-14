@@ -38,6 +38,8 @@ class Product
   field :like_support, type: Integer, default: 0
   
   field :icon, type: String
+  field :twitter_name, type: String 
+  field :twitter_hash, type: String
 
   embeds_many :versions
   embeds_many :repositories

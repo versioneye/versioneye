@@ -1,21 +1,26 @@
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-<%= render "header" %>
-<div class="sidebar" >	
-	<%= render "users/navi" %>
-</div>	
-<div class="content">		
-	<% if !@products.nil? %>	
-		<div class="boxHeader" >
-			<%= pluralize(@count, "Favorite Package") %>
-		</div>
-		<% if !signed_in? %>
-			<%= render 'shared/dialog_follow' %>	
-		<% end %>
-		<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
-		<% if !@products.nil? && !@products.empty? %> 
-			<div style="margin-top: 20px;">
-				<%= will_paginate @products %>
+<% if !@user.nil? && !@user.deleted %>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<%= render "header" %>
+	<div class="sidebar" >	
+		<%= render "users/navi" %>
+	</div>	
+	<div class="content">		
+		<% if !@products.nil? %>	
+			<div class="boxHeader" >
+				<%= pluralize(@count, "Favorite Package") %>
 			</div>
+			<% if !signed_in? %>
+				<%= render 'shared/dialog_follow' %>	
+			<% end %>
+			<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
+			<% if !@products.nil? && !@products.empty? %> 
+				<div style="margin-top: 20px;">
+					<%= will_paginate @products %>
+				</div>
+			<% end %>
 		<% end %>
-	<% end %>
-</div>
+	</div>
+<% end %>
+<% if !@user.nil? && @user.deleted %>
+	This Account does not exist anymore.
+<% end %>

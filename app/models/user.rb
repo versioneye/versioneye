@@ -8,11 +8,13 @@ class User
 
   field :old_id, type: String 
   field :username, type: String
-  field :fullname, type: String  
+  field :fullname, type: String
+  field :prev_fullname, type: String
   field :email, type: String
   field :encrypted_password, type: String
   field :salt, type: String
   field :admin, type: Boolean, default: false
+  field :deleted, type: Boolean, default: false
   field :verification, type: String
   field :terms, type: Boolean
   field :datenerhebung, type: Boolean
@@ -204,7 +206,7 @@ class User
 
   def self.authenticate(email, submitted_password)
     user = User.first(conditions: {email: email.downcase} )
-    return nil  if user.nil?
+    return nil  if user.nil? || user.deleted
     return user if user.has_password?(submitted_password)
   end
 
@@ -221,6 +223,11 @@ class User
   def self.email_valid?(email)
     user = find_by_email(email)
     return user.nil?
+  end
+
+  def password_valid?(password)
+    enc_password = encrypt(password)
+    enc_password.eql?(encrypted_password)
   end
   
   def update_password(email, password, new_password)
@@ -301,6 +308,15 @@ class User
       :fullname => self.fullname,
       :username => self.username
     }
+  end
+
+  def delete_user
+    random = create_random_value
+    self.deleted = true
+    self.email = "#{random}_#{self.email}"
+    self.prev_fullname = self.fullname
+    self.fullname = "Deleted"
+    self.save
   end
     
   private

@@ -7,6 +7,4 @@ class Versioneyexml
   field :user_id, type: String
   field :url, type: String
   
-  
-  
 end

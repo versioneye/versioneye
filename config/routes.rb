@@ -53,10 +53,12 @@ Versioneye::Application.routes.draw do
   get  '/settings/name',               :to => 'settings#name'
   get  '/settings/password',           :to => 'settings#password'
   get  '/settings/privacy',            :to => 'settings#privacy'
+  get  '/settings/delete',             :to => 'settings#delete'
   post '/settings/updatenames',        :to => 'settings#updatenames'
   post '/settings/updatepassword',     :to => 'settings#updatepassword'
   post '/settings/updateprivacy',      :to => 'settings#updateprivacy'
   post '/settings/updateprofile',      :to => 'settings#updateprofile'
+  post '/settings/destroy',            :to => 'settings#destroy'
 
   resources :versioncomments
   match '/vc/:id',              :to => 'versioncomments#show'

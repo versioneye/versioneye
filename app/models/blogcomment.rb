@@ -14,6 +14,16 @@ class Blogcomment
   
   attr_accessor :user_obj
   
+  def self.anonym_user(user_id)
+    comments = Blogcomment.all(conditions: { user_id: user_id } )
+    if !comments.nil? && !comments.empty? 
+      comments.each do |comment|
+        comment.username = "Deleted"
+        comment.save
+      end
+    end
+  end
+
   def comment_html
     if !self.comment.nil? && !self.comment.empty?
       result = self.comment.gsub!("\n", "<br/>")

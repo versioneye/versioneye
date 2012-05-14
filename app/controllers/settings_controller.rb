@@ -106,6 +106,23 @@ class SettingsController < ApplicationController
     redirect_to settings_profile_path()
   end
 
+  def destroy
+    password = params[:password]
+    user = current_user
+    if !user.password_valid?(password)
+      flash[:error] = "The password is wrong. Please try again."
+      redirect_to settings_delete_path()
+      return 
+    end
+    user.password = password
+    Follower.unfollow_all_by_user(user.id)
+    Notification.disable_all_for_user(user.id)
+    Blogcomment.anonym_user(user.id)
+    user.delete_user
+    sign_out
+    redirect_to "/"
+  end
+
   private 
 
   	def validates_privacy_value value

@@ -14,13 +14,15 @@ class ProductsController < ApplicationController
     newest_ids = Array.new
     @hotest = Product.get_hotest(10)
     new_stuff = Newest.get_newest(200)
-    new_stuff.each do |entry|
-      product = entry.product
-      if !newest_ids.include? product.id
-        @newest << product
-        newest_ids << product.id
-      end  
-      break if @newest.size == 10    
+    if !new_stuff.nil? && !new_stuff.empty?
+      new_stuff.each do |entry|
+        product = entry.product
+        if !product.nil? && !newest_ids.include?(product.id)
+          @newest << product
+          newest_ids << product.id
+        end  
+        break if @newest.size == 10    
+      end
     end
     @languages = @@languages # Product.get_unique_languages
     if signed_in?

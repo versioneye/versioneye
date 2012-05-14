@@ -7,11 +7,12 @@ class Versioncomment
   field :product_key, type: String
   field :language, type: String
   field :version, type: String
+  field :comment, type: String
+  field :prod_name, type: String
+
   field :rate, type: Integer, :default => 0
   field :rate_docu, type: Integer, :default => 0
   field :rate_support, type: Integer, :default => 0
-  field :comment, type: String
-  field :prod_name, type: String
   
   validates_presence_of :user_id,     :message => "User is mandatory!"
   validates_presence_of :product_key, :message => "Product is mandatory!"

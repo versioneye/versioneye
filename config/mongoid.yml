@@ -1,7 +1,7 @@
 
 development:    
     host: localhost
-    database: veye_dev
+    database: veye_test
     persist_in_safe_mode: true
 
 test:

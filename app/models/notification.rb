@@ -15,15 +15,25 @@ class Notification
   def user
     User.find_by_id( self.user_id )
   end
+
+  def self.disable_all_for_user(user_id)
+    notifications = Notification.all( conditions: {user_id: user_id} )
+    if !notifications.nil? && !notifications.empty?
+      notifications.each do |notification|
+        notification.sent_email = true;
+        notification.save
+      end
+    end
+  end
   
   def self.send_notifications_job
     one_min = 60
     one_hour = one_min * 60
     while true do
       send_notifications
-      p "start to make a nap"
+      logger.info "start to make a nap"
       sleep one_hour
-      p "wake up and work a little bit"
+      logger.info "wake up and work a little bit"
     end
   end
   
@@ -39,10 +49,10 @@ class Notification
       if !user.nil?
         send_notifications_for_user( user )
       else
-        p " -- no user found for id: #{id} "
+        logger.error " -- no user found for id: #{id} "
         notifications = Notification.all( conditions: {user_id: id} )
         notifications.each do |noti|
-          p " ---- remove notification for user id: #{id} "
+          logger.error " ---- remove notification for user id: #{id} "
           noti.remove
         end        
       end
@@ -52,9 +62,9 @@ class Notification
   def self.send_notifications_for_user(user)    
     notifications = Notification.all( conditions: {sent_email: "false", user_id: user.id.to_s} )
     if !notifications.nil? && !notifications.empty?
-      p "send notifications for user #{user.fullname} start"
+      logger.info "send notifications for user #{user.fullname} start"
       NotificationMailer.new_version_email(user, notifications).deliver
-      p "send notifications for user end"
+      logger.info "send notifications for user end"
     end
   end
 

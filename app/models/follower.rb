@@ -33,6 +33,15 @@ class Follower
   def self.find_product_ids_for_user(user_id)
     Follower.all(conditions: { user_id: user_id } ).distinct(:product_id)
   end
+
+  def self.unfollow_all_by_user(user_id)
+    followers = Follower.all(conditions: { user_id: user_id } )
+    if !followers.nil? && !followers.empty?
+      followers.each do |follower|
+        follower.remove
+      end
+    end
+  end
     
   def user
     User.find_by_id( self.user_id )
