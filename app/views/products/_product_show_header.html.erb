@@ -8,9 +8,9 @@
 			Last update at: <%= @product.updated_at.strftime("%b %d, %Y - %I:%m %p") %>
 		</div>
 		<ul class="list-row">
-			<li class="list-cell share-on">Share on</li>
+			<li class="list-cell share-on meta-text-small">Share on</li>
 			<li class="list-cell share-on-icon">
-				<%= image_tag "facebook_icon.png", :onclick=>"shareOnFacebook('Check out #{@product.name} @VersionEye #{configatron.server_url}/package/#{@product.to_param}');", :alt=>"Facebook", :title=>"Facebook" %>
+				<%= image_tag "facebook_icon.png", :onclick=>"shareOnFacebook('Check out <%= @product.name %> @VersionEye <%= configatron.server_url %>/package/<%= @product.to_param %>');", :alt=>"Facebook", :title=>"Facebook" %>
 			</li>
 			<li class="list-cell share-on-icon">
 				<a href="http://twitter.com/share" 
