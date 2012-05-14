@@ -25,6 +25,9 @@ class UsersController < ApplicationController
     elsif @user.terms != true || @user.datenerhebung != true
       flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
       render 'new'
+    elsif @user.password.nil? || @user.password.empty? || @user.password.size < 5
+      flash.now[:error] = "Please choose a password with at least 5 characters."
+      render 'new'
     else 
       @user = User.new(params[:user])
       @user.create_username
