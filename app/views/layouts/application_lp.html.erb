@@ -42,7 +42,7 @@
 							<div style="padding-left:145px;">
 								<ol class="list-row" >
 									<% @languages.each do |language| %>
-										<li class="list-cell-lang-icons " id="<%=language%>" >
+										<li class="list-cell-lang-icons" style="list-style-type: none; display: table-cell; padding-right: 0px; vertical-align: middle; text-align: center;" id="<%=language%>" >
 										<label onclick="update_lang('<%=language%>')">
 											<% if @langs.include?(language) %>
 												<%= image_tag "language/#{language.downcase}.png", :title => language, :id => "#{language.downcase}_icon", :style => "border-bottom: 2px solid #f9b323" %>
