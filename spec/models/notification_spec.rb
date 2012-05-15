@@ -6,7 +6,6 @@ describe Notification do
     @product = Product.new
     @product.name = "name"
     @product.prod_key = "gasgagasgj8623_junit/junit"
-    @product.rate = 50
     @product.save
     
     @user = User.new

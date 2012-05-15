@@ -149,7 +149,6 @@ describe User do
       product = Product.new
       product.name = "name"
       product.prod_key = "gasgagasgj8623_junit/junit"
-      product.rate = 50
       product.save
       
       follower = Follower.new
@@ -171,19 +170,16 @@ describe User do
       product = Product.new
       product.name = "name"
       product.prod_key = "gasgagasgj8623_junit/junit"
-      product.rate = 50
       product.save
       
       product2 = Product.new
       product2.name = "name2"
       product2.prod_key = "2gasgagasgj8623_junit/junit"
-      product2.rate = 50
       product2.save
       
       product3 = Product.new
       product3.name = "name3"
       product3.prod_key = "32gasgagasgj8623_junit/junit"
-      product3.rate = 50
       product3.save
       
       follower = Follower.new

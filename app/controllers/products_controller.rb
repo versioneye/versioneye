@@ -33,12 +33,9 @@ class ProductsController < ApplicationController
   
   def search
     @query = params[:q]
-    @lang = params[:lang]
+    @lang = get_lang_value( params )
     commit = params[:commit]
     @query = do_replacements(@query, commit)     
-    if @lang.nil? || @lang.empty? 
-      @lang = ""
-    end
     session[:lang] = @lang
     if @query.length == 1
       flash.now[:error] = "Search term is to short. Please type in at least 2 characters."
@@ -46,7 +43,7 @@ class ProductsController < ApplicationController
       flash.now[:error] = "the character % is not allowed"
     else
       languages = @lang.split(",")
-      @products = Product.find_by_name(@query, languages).paginate(:page => params[:page])
+      @products = Product.find_by_name(@query, languages, 300).paginate(:page => params[:page])
       if @products.nil? || @products.length == 0
         flash.now[:notice] = "Sorry. No Results found."
       else
@@ -58,6 +55,15 @@ class ProductsController < ApplicationController
         @languages = @@languages # Product.get_unique_languages 
       }
       format.json { render :json => @products }
+    end
+  end
+
+  def autocomplete_product_name
+    lang = get_lang_value( params )
+    languages = lang.split(",")
+    @products = Product.find_by_name(params[:term], languages, 10).paginate(:page => 1)
+    respond_to do |format|
+      format.json { render :json => @products.as_json(:only => [:name]) }
     end
   end
   
@@ -189,6 +195,14 @@ class ProductsController < ApplicationController
         return q unless q.nil?
         return query if q.nil?
       end      
+    end
+
+    def get_lang_value( params )
+      lang = params[:lang]
+      if lang.nil? || lang.empty? 
+        lang = ""
+      end
+      lang
     end
 
 end

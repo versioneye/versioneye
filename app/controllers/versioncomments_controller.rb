@@ -4,9 +4,6 @@ class VersioncommentsController < ApplicationController
     user = current_user
     @versioncomment = Versioncomment.new(params[:versioncomment])
     @versioncomment.user_id = user.id
-    @versioncomment.rate = 0 if @versioncomment.rate.nil?
-    @versioncomment.rate_docu = 0 if @versioncomment.rate_docu.nil?
-    @versioncomment.rate_support = 0 if @versioncomment.rate_support.nil?
     prod_key = @versioncomment.product_key
     ver = @versioncomment.version
     @product = Product.find_by_key(prod_key)
@@ -21,7 +18,6 @@ class VersioncommentsController < ApplicationController
       flash[:error] = "Something went wrong"
     end        
     
-    update_product_rate(@product, ver)     
     redirect_to product_version_path(@product)
   end
   
@@ -37,17 +33,7 @@ class VersioncommentsController < ApplicationController
   end
   
   private 
-  
-    def update_product_rate(product, ver)
-      version = product.get_version(ver)
-      version.update_rate
-      version.update_rate_docu
-      version.update_rate_support
-      version.save
-      product.update_rate
-      product.save
-    end
-    
+      
     def send_comment_mails(product, user, comment)
       followers = Follower.find_by_product(product.id.to_s)
       

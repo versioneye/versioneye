@@ -17,7 +17,6 @@
 		</div>
 		<div class="meta-text-small share-cell" >
 			<ul class="list-row">
-				<li class="list-cell share-on">Share on</li>
 				<li class="list-cell share-on-icon">
 					<%= image_tag "facebook_icon.png", :onclick=>"shareOnFacebook('#{configatron.server_url}/vc/#{comment.id}', '#{comment.user.fullname} on #{@product.name_and_version} @VersionEye');", :alt=>"Facebook", :title=>"Facebook" %>
 				</li>
@@ -25,7 +24,7 @@
 					<a href="http://twitter.com/share" 
 					   class="twitter-share-button" 
 					   data-url="<%= configatron.server_url %>/vc/<%= comment.id %>" 
-					   data-text="<%= comment.user.fullname %> rated <%= @product.name_and_version %> with <%= comment.rating %> stars @VersionEye read the #review here:" 
+					   data-text="<%= comment.user.fullname %> commented <%= @product.name_and_version %> @VersionEye read the #review here:" 
 					   data-count="horizontal" >Twitter</a>
 				</li>
 			</ul>

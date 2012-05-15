@@ -6,12 +6,6 @@ class Version
   field :uid, type: String
   field :version, type: String
   field :link, type: String
-  field :rate, type: Integer
-  field :rate_docu, type: Integer
-  field :rate_support, type: Integer
-  field :ratecount, type: Integer
-  field :rate_docu_count, type: Integer
-  field :rate_support_count, type: Integer
   field :downloads, type: Integer
   field :authors, type: String
   field :description, type: String
@@ -21,39 +15,14 @@ class Version
 
   embedded_in :product
   
-  def as_json parameter
+  def as_json(parameter=nil)
     {
       :version => self.version,
       :uid => self.get_decimal_uid,
       :link => self.link,
-      :rate => self.rate,
       :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
       :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
     }
-  end  
-  
-  def update_rate
-    prod_key = product.prod_key
-    avg = Versioncomment.get_average_rate_by_prod_key_and_version(prod_key, version)
-    avg_flat = Versioncomment.get_flatted_average(avg)
-    self.rate = avg_flat
-    self.ratecount = Versioncomment.get_count_by_prod_key_and_version(product.prod_key, version)    
-  end
-
-  def update_rate_docu
-    prod_key = product.prod_key
-    avg = Versioncomment.get_average_rate_docu_by_prod_key_and_version(prod_key, version)
-    avg_flat = Versioncomment.get_flatted_average(avg)
-    self.rate_docu = avg_flat
-    self.rate_docu_count = Versioncomment.get_docu_count_by_prod_key_and_version(product.prod_key, version)    
-  end
-
-  def update_rate_support
-    prod_key = product.prod_key
-    avg = Versioncomment.get_average_rate_support_by_prod_key_and_version(prod_key, version)
-    avg_flat = Versioncomment.get_flatted_average(avg)
-    self.rate_support = avg_flat
-    self.rate_support_count = Versioncomment.get_docu_count_by_prod_key_and_version(product.prod_key, version)    
   end
   
   def to_url_param
@@ -61,13 +30,6 @@ class Version
     url_param.gsub!("/","--")
     url_param.gsub!(".","~")
     "#{url_param}"    
-  end
-  
-  def get_ratecount
-    if self.ratecount.nil?
-      self.ratecount = 0
-    end
-    self.ratecount
   end
   
   def get_decimal_uid

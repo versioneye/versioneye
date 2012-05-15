@@ -10,6 +10,7 @@ var fb_clientid = "client_id=230574627021570&";
 var fb_scope = "scope=email,offline_access&";
 var fb_redirect = "redirect_uri=http://versioneye.com/auth/facebook/callback";
 var oauth_facebook_link = fb_domainlink + fb_req_perms + fb_clientid + fb_scope + fb_redirect;
+var values = [{ label: "Choice1", va: "value1" }, { label: "Choice2", va: "value2" }]
 
 $(document).ready(function() {
 	

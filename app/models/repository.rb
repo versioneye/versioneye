@@ -8,7 +8,7 @@ class Repository
   
   embedded_in :product
     
-  def as_json param
+  def as_json
     {
       :src => self.src,
       :repotype => self.repotype

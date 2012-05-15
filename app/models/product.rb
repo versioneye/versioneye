@@ -24,14 +24,6 @@ class Product
   
   field :version, type: String
   field :version_link, type: String
-  field :version_rate, type: Integer
-  field :version_rate_docu, type: Integer
-  field :version_rate_support, type: Integer
-  
-  field :rate, type: Integer
-  field :rate_docu, type: Integer
-  field :rate_support, type: Integer
-  field :ratecount, type: Integer
 
   field :like_overall, type: Integer, default: 0
   field :like_docu, type: Integer, default: 0
@@ -54,14 +46,14 @@ class Product
     false
   end
   
-  def self.find_by_name(searched_name, languages=nil)
+  def self.find_by_name(searched_name, languages=nil, limit=300)
     return Array.new if searched_name.nil? || searched_name.strip == "" 
-    result1 = find_by_name_start_with(searched_name, languages)
+    result1 = find_by_name_start_with(searched_name, languages, limit)
     if (result1.nil? || result1.empty?)
-      return find_by_name_simple(searched_name, languages)
+      return find_by_name_simple(searched_name, languages, limit)
     elsif 
       prod_keys = result1.map{|w| "#{w.prod_key}"}
-      result2 = find_by_name_exclusion(searched_name, languages, prod_keys)      
+      result2 = find_by_name_exclusion(searched_name, languages, prod_keys, limit)
       result = result1 + result2
       result
     end
@@ -140,50 +132,6 @@ class Product
     Product.all().desc(:followers).limit( count )
   end
   
-  def update_rate
-    rate_sum = 0
-    rate_count = 0
-    rate_docu_sum = 0
-    rate_docu_count = 0
-    rate_support_sum = 0
-    rate_support_count = 0
-    versions.each do |version|
-      if !version.rate.nil? && version.rate > 9 
-        rate_count += 1
-        rate_sum += version.rate
-      end
-      if !version.rate_docu.nil? && version.rate_docu > 9
-        rate_docu_count += 1
-        rate_docu_sum += version.rate_docu
-      end
-      if !version.rate_support.nil? && version.rate_support > 9
-        rate_support_count += 1
-        rate_support_sum += version.rate_support
-      end
-    end
-    if rate_count > 0
-      avg = rate_sum / rate_count 
-      self.rate = Versioncomment.get_flatted_average(avg)
-    end    
-    if rate_docu_count > 0 
-      avg = rate_docu_sum / rate_docu_count
-      self.rate_docu = Versioncomment.get_flatted_average(avg)
-    end
-    if rate_support_count > 0 
-      avg = rate_support_sum / rate_support_count
-      self.rate_support = Versioncomment.get_flatted_average(avg)
-    end
-  end
-  
-  def update_version_rates    
-    versions.each do |version|
-      version.update_rate
-      version.update_rate_docu
-      version.update_rate_support
-      version.save
-    end
-  end
-  
   def update_version_data
     versions = get_natural_sorted_versions
     if !versions.nil?
@@ -206,7 +154,6 @@ class Product
       skip = i * pack
       products = Product.all().skip(skip).limit(pack)
       products.each do |product|
-        product.update_version_rates
         product.update_version_data
       end
     end
@@ -263,52 +210,53 @@ class Product
       return nameversion
     end
   end
-    
+  
   def as_json param
-    comments = Versioncomment.find_by_prod_key_and_version(self.prod_key, self.version)
-    {
-      :following => param[:following],
-      :id => self.get_decimal_id,
-      :version_uid => self.get_decimal_version_uid,
-      :name => self.name,
-      :key => self.prod_key,
-      :group_id => self.group_id,
-      :artifact_id => self.artifact_id,      
-      :link => self.link,
-      :version => self.version,
-      :version_link => self.version_link,
-      :src => self.repositories,
-      :prod_type => self.get_type,
-      :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
-      :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p"),
-      :versions => self.get_natural_sorted_versions.as_json, 
-      :comments => comments.as_json
-    }
+    if !param[:only].nil?
+      {:value => self.name}
+    else
+      comments = Versioncomment.find_by_prod_key_and_version(self.prod_key, self.version)
+      {
+        :following => param[:following],
+        :name => self.name,
+        :key => self.prod_key,
+        :group_id => self.group_id,
+        :artifact_id => self.artifact_id,      
+        :link => self.link,
+        :version => self.version,
+        :version_link => self.version_link,
+        # :src => self.repositories,
+        :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
+        :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
+        # :versions => self.get_natural_sorted_versions.as_json(nil), 
+        # :comments => comments.as_json
+      }  
+    end
   end
 
   private 
 
-    def self.find_by_name_start_with(searched_name, languages)
+    def self.find_by_name_start_with(searched_name, languages, limit)
       if languages.nil? || languages.empty?
-        Product.all(conditions: { name: /^#{searched_name}/i }).desc(:like_overall).asc(:name).limit(300)
+        Product.all(conditions: { name: /^#{searched_name}/i }).desc(:like_overall).asc(:name).limit(limit)
       else
-        Product.all(conditions: { name: /^#{searched_name}/i, :language.in => languages }).desc(:like_overall).asc(:name).limit(300)
+        Product.all(conditions: { name: /^#{searched_name}/i, :language.in => languages }).desc(:like_overall).asc(:name).limit(limit)
       end
     end
 
-    def self.find_by_name_simple(searched_name, languages)
+    def self.find_by_name_simple(searched_name, languages, limit)
       if languages.nil? || languages.empty?
-        Product.all(conditions: { name: /#{searched_name}/i }).desc(:like_overall).asc(:name).limit(300)
+        Product.all(conditions: { name: /#{searched_name}/i }).desc(:like_overall).asc(:name).limit(limit)
       else
-        Product.all(conditions: { name: /#{searched_name}/i, :language.in => languages}).desc(:like_overall).asc(:name).limit(300)
+        Product.all(conditions: { name: /#{searched_name}/i, :language.in => languages}).desc(:like_overall).asc(:name).limit(limit)
       end
     end
 
-    def self.find_by_name_exclusion(searched_name, languages, prod_keys)
+    def self.find_by_name_exclusion(searched_name, languages, prod_keys, limit)
       if languages.nil? || languages.empty?
-        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys }).desc(:like_overall).asc(:name).limit(300)
+        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys }).desc(:like_overall).asc(:name).limit(limit)
       else
-        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys, :language.in => languages}).desc(:like_overall).asc(:name).limit(300)
+        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys, :language.in => languages}).desc(:like_overall).asc(:name).limit(limit)
       end
     end
 

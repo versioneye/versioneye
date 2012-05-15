@@ -18,3 +18,6 @@
 		<% end %>
 	</div>
 <% end %>
+<% if !@user.nil? && @user.deleted %>
+	This Account does not exist anymore.
+<% end %>

@@ -28,7 +28,6 @@ describe Product do
       @product.versions = Array.new
       @product.name = "test"
       @product.prod_key = "gasgagasgj8623_junit/junit23"
-      @product.rate = 50
       @product.save
       version = Version.new
       version.version = "1.0"
@@ -45,7 +44,6 @@ describe Product do
       name = "junitggasgagasgj8623"
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
-      @product.rate = 50
       @product.save
       results = Product.find_by_name( "sgj8623agajklnb8738gas" )
       results.should_not be_nil
@@ -56,7 +54,6 @@ describe Product do
       name = "junitggasgagasgj8623"
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
-      @product.rate = 50
       @product.save
       results = Product.find_by_name( "" )
       results.should_not be_nil
@@ -67,7 +64,6 @@ describe Product do
       name = "junitggasgagasgj8623"
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
-      @product.rate = 50
       @product.save
       results = Product.find_by_name( nil )
       results.should_not be_nil
@@ -78,7 +74,6 @@ describe Product do
       name = "junitggasgagasgj8623"
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
-      @product.rate = 50
       @product.save
       results = Product.find_by_name( name )
       results.should_not be_nil
@@ -89,7 +84,6 @@ describe Product do
       name = "junitggasgagasgj8623"
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
-      @product.rate = 50
       @product.save
       results = Product.find_by_name( "JUNITggasGagasgj8623" )
       results.should_not be_nil
@@ -100,7 +94,6 @@ describe Product do
       name = "junitggasgagasgj8623"
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
-      @product.rate = 50
       @product.save
       results = Product.find_by_name( "junitggasg" )
       results.should_not be_nil
@@ -111,7 +104,6 @@ describe Product do
       name = "junitggasgagasgj8623"
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
-      @product.rate = 50
       @product.save
       results = Product.find_by_name( "sgj8623" )
       results.should_not be_nil
@@ -122,7 +114,6 @@ describe Product do
       name = "junitggasgagasgj8623"
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
-      @product.rate = 50
       @product.save
       results = Product.find_by_name( "tggasgagasgj86" )
       results.should_not be_nil
@@ -133,14 +124,12 @@ describe Product do
       name = "start_not_apple"
       @product.name = name
       @product.prod_key = "apple_bike_pie/unit"
-      @product.rate = 50
       @product.save
 
       product = Product.new
       product.versions = Array.new
       product.name = "apple_start_with"
       product.prod_key = "apple_bike_pie12/unit"
-      product.rate = 50
       product.save
 
       results = Product.find_by_name( "apple" )
@@ -294,7 +283,6 @@ describe Product do
       @product.prod_key = "#{group}/#{artifact}"
       @product.group_id = group
       @product.artifact_id = artifact
-      @product.rate = 50
       @product.save
       version = Version.new
       prod = Product.find_by_group_and_artifact(group, artifact)

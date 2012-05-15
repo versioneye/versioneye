@@ -7,3 +7,32 @@
 			<%= render :partial => "/products/language_icons", :locals => {:language => language, :icon => nil, :link=>nil, :title=>language} %>
 		<% end %>
 	</div>
+
+<% if @userlinkcollection && !@userlinkcollection.empty? %> 
+	<div class="boxHeader" >
+		Is on
+	</div>
+	<div >
+		<% if !@userlinkcollection.github.nil? && !@userlinkcollection.github.empty? %>
+			<%= link_to image_tag("socialnetworks/github.png"), @userlinkcollection.github, :target => "github" %>
+		<% end %>
+		<% if !@userlinkcollection.stackoverflow.nil? && !@userlinkcollection.stackoverflow.empty? %>
+			<%= link_to image_tag("socialnetworks/stackoverflow.png"), @userlinkcollection.stackoverflow, :target => "stackoverflow" %>
+		<% end %>
+		<% if !@userlinkcollection.twitter.nil? && !@userlinkcollection.twitter.empty? %>
+			<%= link_to image_tag("socialnetworks/twitter-bird.png"), @userlinkcollection.twitter, :target => "twitter" %>
+		<% end %>
+		<% if !@userlinkcollection.facebook.nil? && !@userlinkcollection.facebook.empty? %>
+			<%= link_to image_tag("socialnetworks/facebook.png"), @userlinkcollection.facebook, :target => "facebook" %>
+		<% end %>
+		<% if !@userlinkcollection.linkedin.nil? && !@userlinkcollection.linkedin.empty? %>
+			<%= link_to image_tag("socialnetworks/linkedin.png"), @userlinkcollection.linkedin, :target => "linkedin" %>
+		<% end %>
+		<% if !@userlinkcollection.xing.nil? && !@userlinkcollection.xing.empty? %>
+			<%= link_to image_tag("socialnetworks/xing.png"), @userlinkcollection.xing, :target => "xing" %>
+		<% end %>
+		<% if !@userlinkcollection.gulp.nil? && !@userlinkcollection.gulp.empty? %>
+			<%= link_to image_tag("socialnetworks/gulp.png"), @userlinkcollection.gulp, :target => "gulp" %>
+		<% end %>
+	</div>
+<% end %>

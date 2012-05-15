@@ -21,6 +21,13 @@ class SettingsController < ApplicationController
     @user = current_user
   end
 
+  def links
+    @userlinkcollection = Userlinkcollection.find_all_by_user( current_user.id )
+    if @userlinkcollection.nil?
+      @userlinkcollection = Userlinkcollection.new
+    end
+  end
+
   def updatenames
     fullname = params[:fullname]
     new_username = params[:new_username] 
@@ -104,6 +111,27 @@ class SettingsController < ApplicationController
       flash[:error] = "Something went wrong. Please try again later."
     end
     redirect_to settings_profile_path()
+  end
+
+  def updatelinks
+    @userlinkcollection = Userlinkcollection.find_all_by_user( current_user.id )
+    if @userlinkcollection.nil?
+      @userlinkcollection = Userlinkcollection.new
+    end
+    @userlinkcollection.github = params[:github]
+    @userlinkcollection.stackoverflow = params[:stackoverflow]
+    @userlinkcollection.linkedin = params[:linkedin]
+    @userlinkcollection.xing = params[:xing]
+    @userlinkcollection.twitter = params[:twitter]
+    @userlinkcollection.facebook = params[:facebook]
+    @userlinkcollection.gulp = params[:gulp]
+    @userlinkcollection.user_id = current_user.id
+    if @userlinkcollection.save
+      flash[:success] = "Profile updated."
+    else
+      flash[:error] = "Something went wrong. Please try again later."
+    end
+    redirect_to settings_links_path()
   end
 
   def destroy

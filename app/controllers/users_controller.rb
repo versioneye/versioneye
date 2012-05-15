@@ -47,6 +47,7 @@ class UsersController < ApplicationController
     if ( !@user.nil? )
       product_ids = Follower.find_product_ids_for_user( @user.id )
       @languages = Product.get_unique_languages_for_product_ids(product_ids)
+      @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
 
       @products = Array.new
       if has_permission_to_see_products( @user, current_user ) && !@user.nil?
@@ -79,6 +80,7 @@ class UsersController < ApplicationController
     @user = User.find_by_username(params[:id])
     product_ids = Follower.find_product_ids_for_user( @user.id )
     @languages = Product.get_unique_languages_for_product_ids(product_ids)
+    @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
     @products = Array.new
     if has_permission_to_see_products( @user, current_user ) && !@user.nil?
       @products = @user.fetch_my_products.paginate(:page => params[:page]) 
@@ -98,6 +100,7 @@ class UsersController < ApplicationController
     @user = User.find_by_username(params[:id])
     product_ids = Follower.find_product_ids_for_user( @user.id )
     @languages = Product.get_unique_languages_for_product_ids(product_ids)
+    @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
     @comments = Array.new
     if has_permission_to_see_comments( @user, current_user ) && !@user.nil?
       @comments = Versioncomment.find_by_user_id( @user.id ).paginate(:page => params[:page])

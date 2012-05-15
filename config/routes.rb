@@ -18,7 +18,8 @@ Versioneye::Application.routes.draw do
   match '/packagelike/like_support',    :to => 'productlikes#like_support'
   match '/packagelike/dislike_support', :to => 'productlikes#dislike_support'
 
-  resources :products
+  resources :products 
+  match '/autocomplete_product_name',                   :to => 'products#autocomplete_product_name'
   match '/search',                                      :to => 'products#search'
   match '/follow',                                      :to => 'products#follow'
   match '/unfollow',                                    :to => 'products#unfollow'
@@ -30,6 +31,7 @@ Versioneye::Application.routes.draw do
   match '/product/newest/:key/:type',                   :to => 'products#newest'
   match '/product/wouldbenewest/:key/version/:version', :to => 'products#wouldbenewest'
   match '/biggest/:version1/:version2',                 :to => 'products#biggest'
+
 
   match '/news',               :to => 'news#news'
   match '/mynews',             :to => 'news#mynews'
@@ -54,10 +56,12 @@ Versioneye::Application.routes.draw do
   get  '/settings/password',           :to => 'settings#password'
   get  '/settings/privacy',            :to => 'settings#privacy'
   get  '/settings/delete',             :to => 'settings#delete'
+  get  '/settings/links',              :to => 'settings#links'
   post '/settings/updatenames',        :to => 'settings#updatenames'
   post '/settings/updatepassword',     :to => 'settings#updatepassword'
   post '/settings/updateprivacy',      :to => 'settings#updateprivacy'
   post '/settings/updateprofile',      :to => 'settings#updateprofile'
+  post '/settings/updatelinks',        :to => 'settings#updatelinks'
   post '/settings/destroy',            :to => 'settings#destroy'
 
   resources :versioncomments

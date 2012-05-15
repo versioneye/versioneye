@@ -10,7 +10,6 @@ describe "search" do
     product.prod_type = "RubyGem"
     product.language = "Ruby"
     product.version = "1.0"
-    product.rate = 50
     version = Version.new
     version.version = "1.0"
     product.versions.push(version)

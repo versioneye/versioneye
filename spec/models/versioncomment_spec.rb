@@ -6,7 +6,6 @@ describe Versioncomment do
     @product = Product.new
     @product.name = "name"
     @product.prod_key = "gasgagasgj8623_junit/junit"
-    @product.rate = 50
     @product.save
     
     @user = User.new
@@ -38,7 +37,6 @@ describe Versioncomment do
     
     it "does save. Because mandatory fields are not empty" do
       @vc.comment = "Jo. Voll geil eh!"
-      @vc.rate = 40
       @vc.version = "1.0"
       @vc.save.should be_true
     end
@@ -54,7 +52,6 @@ describe Versioncomment do
     
     it "returns the versioncomment" do
       @vc.comment = "Jo. Voll geil eh!"
-      @vc.rate = 40
       @vc.version = "1.0"
       @vc.save
       vc = Versioncomment.find_by_id(@vc.id)
@@ -72,7 +69,6 @@ describe Versioncomment do
     
     it "returns the versioncomment" do
       @vc.comment = "Jo. Voll geil eh!"
-      @vc.rate = 40
       @vc.version = "1.0"
       @vc.save
       vc = Versioncomment.find_by_user_id(@user.id)
@@ -92,7 +88,6 @@ describe Versioncomment do
     
     it "returns the versioncomments" do
       @vc.comment = "Jo. Voll geil eh!"
-      @vc.rate = 40
       @vc.version = "1.0"
       @vc.save
       vcs = Versioncomment.find_by_prod_key_and_version(@product.id, "1.0")
@@ -102,145 +97,7 @@ describe Versioncomment do
     end
     
   end
-  
-  describe "get_sum_by_prod_key_and_version" do
-    
-    it "returns 0" do
-      sum = Versioncomment.get_sum_by_prod_key_and_version("asfgasg", "a")
-      sum.should eql(0)
-    end
-    
-    it "returns 60" do
-      @vc.comment = "Jo. Voll geil eh!"
-      @vc.rate = 40
-      @vc.version = "1.0"
-      @vc.save
-      comment = Versioncomment.new
-      comment.comment = "afgasfga"
-      comment.rate = 20
-      comment.version = "1.0"
-      comment.user_id = @user.id
-      comment.product_key = @product.id
-      comment.save
-      sum = Versioncomment.get_sum_by_prod_key_and_version(@product.id, "1.0")
-      sum.should eql(60)
-      comment.remove()
-    end
-    
-    it "returns 90" do
-      @vc.comment = "Jo. Voll geil eh!"
-      @vc.rate = 40
-      @vc.version = "1.0"
-      @vc.save
-      comment = Versioncomment.new
-      comment.comment = "afgasfga"
-      comment.rate = 50
-      comment.version = "1.0"
-      comment.user_id = @user.id
-      comment.product_key = @product.id
-      comment.save
-      sum = Versioncomment.get_sum_by_prod_key_and_version(@product.id, "1.0")
-      sum.should eql(90)
-      comment.remove()
-    end
-    
-  end
-  
-  describe "get_count_by_prod_key_and_version" do
-    
-    it "returns 0" do
-      count = Versioncomment.get_count_by_prod_key_and_version("asfgasg", "a")
-      count.should eql(0)
-    end
-    
-    it "returns 2" do
-      @vc.comment = "Jo. Voll geil eh!"
-      @vc.rate = 40
-      @vc.version = "1.0"
-      @vc.save
-      comment = Versioncomment.new
-      comment.comment = "afgasfga"
-      comment.rate = 20
-      comment.version = "1.0"
-      comment.user_id = @user.id
-      comment.product_key = @product.id
-      comment.save
-      count = Versioncomment.get_count_by_prod_key_and_version(@product.id, "1.0")
-      count.should eql(2)
-      comment.remove()
-    end
-    
-  end
-  
-  describe "get_average_rate_by_prod_key_and_version" do
-    
-    it "returns 0" do
-      avg = Versioncomment.get_average_rate_by_prod_key_and_version("asfgasg", "a")
-      avg.should eql(0)
-    end
-    
-    it "returns 30" do
-      @vc.comment = "Jo. Voll geil eh!"
-      @vc.rate = 40
-      @vc.version = "1.0"
-      @vc.save
-      comment = Versioncomment.new
-      comment.comment = "afgasfga"
-      comment.rate = 20
-      comment.version = "1.0"
-      comment.user_id = @user.id
-      comment.product_key = @product.id
-      comment.save
-      avg = Versioncomment.get_average_rate_by_prod_key_and_version(@product.id, "1.0")
-      avg.should eql(30)
-      comment.remove()
-    end
-    
-    it "returns 50" do
-      @vc.comment = "Jo. Voll geil eh!"
-      @vc.rate = 50
-      @vc.version = "1.0"
-      @vc.save
-      comment = Versioncomment.new
-      comment.comment = "afgasfga"
-      comment.rate = 50
-      comment.version = "1.0"
-      comment.user_id = @user.id
-      comment.product_key = @product.id
-      comment.save
-      avg = Versioncomment.get_average_rate_by_prod_key_and_version(@product.id, "1.0")
-      avg.should eql(50)
-      comment.remove()
-    end
-    
-    it "returns 26" do
-      @vc.comment = "Jo. Voll geil eh!"
-      @vc.rate = 10
-      @vc.version = "1.0"
-      @vc.save
-      comment = Versioncomment.new
-      comment.comment = "afgasfga"
-      comment.rate = 30
-      comment.version = "1.0"
-      comment.user_id = @user.id
-      comment.product_key = @product.id
-      comment.save
-      
-      comment2 = Versioncomment.new
-      comment2.comment = "afgasfga"
-      comment2.rate = 40
-      comment2.version = "1.0"
-      comment2.user_id = @user.id
-      comment2.product_key = @product.id
-      comment2.save
-      
-      avg = Versioncomment.get_average_rate_by_prod_key_and_version(@product.id, "1.0")
-      avg.should eql(26)
-      comment.remove()
-      comment2.remove()
-    end
-    
-  end
+
   
   describe "user" do
     

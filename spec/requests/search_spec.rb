@@ -15,7 +15,6 @@ describe "search" do
   	product.versions = Array.new
     product.name = "json"
     product.prod_key = "json/json"
-    product.rate = 50
     product.save
     version = Version.new
     version.version = "1.0"

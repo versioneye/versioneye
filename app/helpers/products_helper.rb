@@ -50,9 +50,6 @@ module ProductsHelper
     if !versionObj.nil?
       product.version = versionObj.version
       product.version_link = versionObj.link
-      product.version_rate = versionObj.rate
-      product.version_rate_docu = versionObj.rate_docu
-      product.version_rate_support = versionObj.rate_support
     end
   end
 
