@@ -1,4 +1,6 @@
 class VersioncommentsController < ApplicationController
+
+  before_filter :authenticate, :except => [:show]
   
   def create
     user = current_user
@@ -10,19 +12,18 @@ class VersioncommentsController < ApplicationController
     @versioncomment.prod_name = @product.name
     @versioncomment.language = @product.language
     attach_version(@product, ver)
-    
     if @versioncomment.save      
       flash[:success] = "Comment saved!"
       send_comment_mails(@product, user, @versioncomment)
     else 
       flash[:error] = "Something went wrong"
     end        
-    
     redirect_to product_version_path(@product)
   end
   
   def show 
     id = params[:id]
+    @versioncommentreply = Versioncommentreply.new()
     @comment = Versioncomment.find_by_id(id)
     if !@comment.nil?
       @product = Product.find_by_key(@comment.product_key)

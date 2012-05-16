@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	</head>
+	<body>
+		<p>Hello <%= @comment_user.fullname %></p>
+		<p>
+			<a href="http://versioneye.com/users/<%= @reply_user.username %>"><%= @reply_user.fullname %></a> replied to your comment on 
+			<a href="http://versioneye.com/package/<%= @prod.to_param %>"><%= @prod.name %></a><br/>
+			You can see the comment here: <a href="<%= @commentlink %>"><%= @commentlink %></a>
+		</p>
+		<p>
+			Have a great day!
+		</p>
+		<p>
+			Your VersionEye Team<br/>
+			<a href="http://versioneye.com">http://versioneye.com</a>
+		</p>
+	</body>
+</html>

@@ -66,6 +66,8 @@ Versioneye::Application.routes.draw do
 
   resources :versioncomments
   match '/vc/:id',              :to => 'versioncomments#show'
+
+  resources :versioncommentreplies
   
   namespace :user do 
     resources :projects do

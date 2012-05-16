@@ -30,4 +30,5 @@ describe "search" do
 
     product.remove
   end
+
 end

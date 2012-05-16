@@ -94,6 +94,26 @@ function exchangeImage(id, image){
 	document.getElementById(id).src=image_path;
 }
 
+function show_versioncomment_reply(id){
+	var form_id = "#" + id + "_reply_form";
+	var display_link = "#" + id + "_reply_link";
+	var hide_link = "#" + id + "_hide_link";
+	$(form_id).css('display', 'block'); 
+	$(display_link).css('display', 'none'); 
+	$(hide_link).css('display', 'block'); 
+	return false;
+}
+
+function hide_versioncomment_reply(id){
+	var form_id = "#" + id + "_reply_form";
+	var display_link = "#" + id + "_reply_link";
+	var hide_link = "#" + id + "_hide_link";
+	$(form_id).css('display', 'none'); 
+	$(display_link).css('display', 'block'); 
+	$(hide_link).css('display', 'none'); 
+	return false;
+}
+
 function shareOnFacebook(link, message){
 	var picture = 'http://versioneye.com/assets/icon_114.png'
 	FB.ui({ method: 'feed',

@@ -10,7 +10,7 @@ class Versioncomment
   field :comment, type: String
   field :prod_name, type: String
 
-  # embeds_many :versioncommentreplies
+  embeds_many :versioncommentreplys
   
   validates_presence_of :user_id,     :message => "User is mandatory!"
   validates_presence_of :product_key, :message => "Product is mandatory!"
@@ -56,11 +56,7 @@ class Versioncomment
   end
   
   def user
-    if self.user_id.size < 3
-      User.find( self.user_id.to_i )
-    else
-      User.find( self.user_id )
-    end
+    User.find( self.user_id )
   end
   
   def prod_key_url

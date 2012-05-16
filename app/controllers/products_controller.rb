@@ -102,6 +102,7 @@ class ProductsController < ApplicationController
           user_ids = Follower.find_followers_for_product( @product.id )
           @users = User.find_by_ids(user_ids)
           @versioncomment = Versioncomment.new 
+          @versioncommentreply = Versioncommentreply.new
         end          
         }
       format.json { render :json => @product.as_json( {:following => following} ) }

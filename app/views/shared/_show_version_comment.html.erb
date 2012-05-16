@@ -27,7 +27,9 @@
 					   data-text="<%= comment.user.fullname %> commented <%= @product.name_and_version %> @VersionEye read the #review here:" 
 					   data-count="horizontal" >Twitter</a>
 				</li>
+				<%= render :partial => "shared/list_reply_link", :locals => { :comment => comment } %>
 			</ul>
+			<%= render :partial => "shared/version_comment_replies", :locals => { :comment => comment } %>
 		</div>
 	</div>
 </div>

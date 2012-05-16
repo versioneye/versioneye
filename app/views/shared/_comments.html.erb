@@ -1,5 +1,3 @@
-
-
 <div class="searchResults">
 	<% @comments.each do |comment| %>
 		<div class="comment" >
@@ -38,8 +36,10 @@
 								   data-text="<%= comment.user.fullname %> on <%= comment.name_and_version %> @VersionEye" 
 								   data-count="horizontal" >Twitter</a>
 							</li>
+							<%= render :partial => "shared/list_reply_link", :locals => { :comment => comment } %>
 						</ul>
 					</div>
+					<%= render :partial => "shared/version_comment_replies", :locals => { :comment => comment } %>
 				</li>
 			</ul>
 		</div>

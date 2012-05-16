@@ -1,0 +1,13 @@
+var content = "<div class='meta-text-small' >";
+content += " <a href='/users/" ;
+content += "<%= @versioncommentreply.username %>";
+content += "' >";
+content += "<%= @versioncommentreply.fullname %>";
+content += "</a>";
+content += " at <%= @versioncommentreply.created_at.strftime('%b %d, %Y - %I:%m %p') %>";
+content += " </div> ";
+content += "<div class='reply'>";
+content += "<%= @versioncommentreply.comment %>";
+content += "</div>";
+$("#<%= @versioncomment.id %>_reply_section").append(content);
+$("#<%= @versioncomment.id %>_textarea").val("");
