@@ -34,7 +34,6 @@ gem 'nokogiri', '1.5.2'
 # in production environments by default.
 group :assets do
   gem 'sass-rails', "3.2.5"
-  # gem 'sass-rails', "3.2.2"
   gem 'coffee-rails', "3.2.2"
   gem 'uglifier'
 end
