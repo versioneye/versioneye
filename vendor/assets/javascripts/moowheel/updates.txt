@@ -1,0 +1,24 @@
+MooWheel
+version 0.2
+Copyright (c) 2008 unwieldy studios
+http://www.unwieldy.net/moowheel/
+
+This library is licensed under an MIT-style license.
+
+Contributions by:
+   - Augusto Becciu (http://www.tweetwheel.com)
+=====================================================
+
+version 0.2
+-----------
+   * New data format
+   * Text can now be hovered over, in addition to the dot
+   * Images can be added for each item
+
+version 0.2 beta
+----------------
+   * Hot/cold wheels
+
+version 0.1
+-----------
+   * Initial version

@@ -79,7 +79,7 @@ class Product
   def self.find_by_group_and_artifact(group, artifact)
     Product.first(conditions: { group_id: group, artifact_id: artifact } )
   end
-  
+
   def get_natural_sorted_versions
     Naturalsorter::Sorter.sort_version_by_method_desc(versions, "version")
   end
@@ -94,6 +94,49 @@ class Product
       return version if version.uid.eql?(uid)
     end
     return nil
+  end
+
+  def dependencies(scope)
+    scope = main_scope if scope == nil 
+    Dependency.find_by_key_version_scope(prod_key, version, scope)
+  end
+
+  def dependency_circle(scope)
+    scope = main_scope if scope == nil 
+    hash = Hash.new
+    dependencies = Dependency.find_by_key_version_scope(prod_key, version, scope)
+    dependencies.each do |dep|      
+      element = CircleElement.new
+      element.id = dep.dep_prod_key
+      element.text = "#{dep.name} (#{dep.version_for_label})"
+      hash[dep.dep_prod_key] = element
+    end
+    return fetch_deps(hash)
+  end
+
+  def fetch_deps(hash)
+    if hash.empty? 
+      return hash
+    end
+    p "hash size: #{hash.count}"
+    new_hash = Hash.new
+    hash.each do |prod_key, element|
+      product = Product.find_by_key(element.id)
+      dependencies = product.dependencies("runtime")
+      dependencies.each do |dep|
+        element.connections << "#{dep.dep_prod_key}"
+        if hash[dep.dep_prod_key].nil? && new_hash[dep.dep_prod_key].nil?
+          new_element = CircleElement.new
+          new_element.id = dep.dep_prod_key
+          new_element.text = "#{dep.name} (#{dep.version_for_label})"
+          new_element.connections << "#{element.id}"
+          new_hash[dep.dep_prod_key] = new_element    
+        end
+      end
+    end
+    new_merged = fetch_deps(new_hash)
+    merged_hash = hash.merge(new_merged)
+    return merged_hash
   end
   
   def wouldbenewest?(version)
@@ -211,7 +254,7 @@ class Product
     end
   end
   
-  def as_json param
+  def as_json(param = {})
     if !param[:only].nil?
       {:value => self.name}
     else
@@ -231,6 +274,14 @@ class Product
         # :versions => self.get_natural_sorted_versions.as_json(nil), 
         # :comments => comments.as_json
       }  
+    end
+  end
+
+  def main_scope
+    if self.language.eql?("Ruby")
+      return "runtime"
+    elsif self.language.eql?("Java")
+      return "compile"
     end
   end
 

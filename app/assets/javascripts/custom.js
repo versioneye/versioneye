@@ -12,22 +12,25 @@ var fb_redirect = "redirect_uri=http://versioneye.com/auth/facebook/callback";
 var oauth_facebook_link = fb_domainlink + fb_req_perms + fb_clientid + fb_scope + fb_redirect;
 var values = [{ label: "Choice1", va: "value1" }, { label: "Choice2", va: "value2" }]
 
-$(document).ready(function() {
+jQuery.noConflict();
+jQuery(document).ready(function() {
 	
-	$('#q').tbHinter({
+	jQuery('#q').tbHinter({
 		text: "json",
 		styleclass: "lp_searchfield_hint"
 	});	
 	
-	$('#fullname').tbHinter({
+	jQuery('#fullname').tbHinter({
 		text: "This is visible on your posts.",
 		styleclass: "inputCelHint"
 	});
 	
-	$('#email').tbHinter({
+	jQuery('#email').tbHinter({
 		text: "Invisible for other users.",
 		styleclass: "inputCelHint"
 	});
+
+	jQuery( "#tabs" ).tabs();
 
 	FB.init({
         appId:'230574627021570', cookie:true,
@@ -38,7 +41,7 @@ $(document).ready(function() {
 
 function load_dialog_follow(product_name){	
 	document.getElementById('product_to_follow').innerHTML = product_name;	
-	$('#dialog_follow').dialog(
+	jQuery('#dialog_follow').dialog(
 		{
 		resizable: false, 
 		modal: true, 
@@ -48,7 +51,7 @@ function load_dialog_follow(product_name){
 }
 
 function load_dialog_feedback(){	
-	$('#dialog_feedback').dialog(
+	jQuery('#dialog_feedback').dialog(
 		{
 		resizable: false, 
 		modal: true, 
@@ -98,9 +101,9 @@ function show_versioncomment_reply(id){
 	var form_id = "#" + id + "_reply_form";
 	var display_link = "#" + id + "_reply_link";
 	var hide_link = "#" + id + "_hide_link";
-	$(form_id).css('display', 'block'); 
-	$(display_link).css('display', 'none'); 
-	$(hide_link).css('display', 'block'); 
+	jQuery(form_id).css('display', 'block'); 
+	jQuery(display_link).css('display', 'none'); 
+	jQuery(hide_link).css('display', 'block'); 
 	return false;
 }
 
@@ -108,9 +111,9 @@ function hide_versioncomment_reply(id){
 	var form_id = "#" + id + "_reply_form";
 	var display_link = "#" + id + "_reply_link";
 	var hide_link = "#" + id + "_hide_link";
-	$(form_id).css('display', 'none'); 
-	$(display_link).css('display', 'block'); 
-	$(hide_link).css('display', 'none'); 
+	jQuery(form_id).css('display', 'none'); 
+	jQuery(display_link).css('display', 'block'); 
+	jQuery(hide_link).css('display', 'none'); 
 	return false;
 }
 
@@ -144,4 +147,13 @@ function update_lang(language){
 	}
 	lang = lang.replace(",,", ",") 
 	document.getElementById("lang").value = lang
+}
+
+function correct_top_canvas(){
+	if (document.getElementById("canvas_hover") != null){
+    	document.getElementById("canvas_hover").style.top = document.getElementById("canvas").getCoordinates().top + "px";
+    } else {
+    	alert("hallo");
+    	setTimeout(correct_top_canvas(), 10000);
+    }
 }

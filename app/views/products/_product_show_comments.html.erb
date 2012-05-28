@@ -1,6 +1,6 @@
 <% if !@comments.nil? && @comments.length > 0 %>
 	<div class="boxHeader">
-		Comments
+		<%= pluralize(@comments.count, "Comments") %>
 	</div>
 	<div class="boxContainer" >
 		<table>				

@@ -18,7 +18,7 @@ Versioneye::Application.routes.draw do
   match '/packagelike/like_support',    :to => 'productlikes#like_support'
   match '/packagelike/dislike_support', :to => 'productlikes#dislike_support'
 
-  resources :products 
+  resources :products
   match '/autocomplete_product_name',                   :to => 'products#autocomplete_product_name'
   match '/search',                                      :to => 'products#search'
   match '/follow',                                      :to => 'products#follow'
@@ -27,11 +27,11 @@ Versioneye::Application.routes.draw do
   match '/package/:key',                                :to => 'products#show'
   match '/product/:key/version/:version',               :to => 'products#show'
   match '/package/:key/version/:version',               :to => 'products#show'
-  match '/product/:key/version/:version/:uid',          :to => 'products#show'
+  match '/package/:key/version/:version/circle_dependencies', :to => 'products#circle_dependencies'
+  match '/product/:key/version/:version/circle_dependencies', :to => 'products#circle_dependencies'
   match '/product/newest/:key/:type',                   :to => 'products#newest'
   match '/product/wouldbenewest/:key/version/:version', :to => 'products#wouldbenewest'
   match '/biggest/:version1/:version2',                 :to => 'products#biggest'
-
 
   match '/news',               :to => 'news#news'
   match '/mynews',             :to => 'news#mynews'

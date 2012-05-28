@@ -15,6 +15,12 @@
 				   data-text="Check out #<%= @product.name %> @VersionEye" 
 				   data-count="horizontal" >Twitter</a>
 			</li>
+			<li class="list-cell share-on-icon">
+				<g:plusone></g:plusone>
+			</li>
+			<li class="list-cell share-on-icon">
+				<%= image_tag "facebook_icon.png", :onclick=>"shareOnFacebook('Check out #{@product.name} @VersionEye - #{configatron.server_url}/package/#{@product.to_param}');", :alt=>"Share on Facebook", :title=>"Share on Facebook" %>
+			</li>
 		</ul>
 	</li>
 </ul>

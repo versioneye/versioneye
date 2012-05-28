@@ -93,6 +93,8 @@ class ProductsController < ApplicationController
     @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
     @version = @product.get_version(@product.version)
     @productlook = Productlook.find_by_key(key)
+    @dependencies = @product.dependencies(nil)
+    @dev_dependencies = @product.dependencies("development")
     respond_to do |format|
       format.html { 
         if !mobile.nil? && mobile.eql?('true')
@@ -141,6 +143,31 @@ class ProductsController < ApplicationController
             redirect_to user_path(current_user)
           end
         }
+    end
+  end
+
+  def circle_dependencies
+    key = url_param_to_origin params[:key]
+    version = url_param_to_origin params[:version]
+    product = Product.find_by_key( key )
+    if !version.nil? && !version.empty?
+      product.version = version  
+    end
+    @circle = product.dependency_circle(nil)
+    respond_to do |format|
+      format.json { 
+        resp = ""
+        @circle.each do |key, dep| 
+          resp += "{"
+          resp += "\"connections\": [#{dep.connections_as_string}],"
+          resp += "\"text\": \"#{dep.text}\","
+          resp += "\"id\": \"#{dep.id}\"" 
+          resp += "},"
+        end
+        end_point = resp.length - 2
+        resp = resp[0..end_point]
+        render :json => "[#{resp}]"
+      }
     end
   end
   

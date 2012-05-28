@@ -108,7 +108,7 @@ img {
 
 a {
 	color: $text_color;
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 a:hover {
@@ -124,6 +124,28 @@ a:visited:hover {
 	color: #fe9933;
     text-decoration: underline;
 }
+
+
+.ui-widget-content a {
+	color: $text_color;
+	text-decoration: underline;
+}
+
+.ui-widget-content a:hover {
+	color: #fe9933;
+    text-decoration: underline;
+}
+
+.ui-widget-content a:visited {
+	color: $meta_text_color;
+}
+
+.ui-widget-content a:visited:hover {
+	color: #fe9933;
+    text-decoration: underline;
+}
+
+
 
 header a {
 	color: white;
@@ -454,6 +476,7 @@ section h3{
     font-weight: bold;
     text-align: left;
     margin-bottom: 5px;
+    color: gray;
 }
 
 footer {

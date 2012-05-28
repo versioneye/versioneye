@@ -1,0 +1,37 @@
+<% if !@dependencies.nil? && !@dependencies.empty? %>
+	<div class="boxHeader">
+		<%= pluralize(@dependencies.count, "Dependency") %>
+	</div>
+	<div class="boxContainer" >
+		<% @dependencies.each do |dep| %> 
+			<span style="padding-right: 10px; ">
+				<a class="#a" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" ><%= dep.name %> (<%= dep.version_for_label %>)</a>
+			</span>
+		<% end %>
+		<% if !@dev_dependencies.nil? && @dev_dependencies.count > 0 %>
+			<h3 style="padding-top: 20px;"><%= pluralize(@dev_dependencies.count, "Development Dependency") %></h3>
+			<% @dev_dependencies.each do |dep| %> 
+				<span style="padding-right: 10px; ">
+					<a href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" ><%= dep.name %> (<%= dep.version_for_label %>)</a>
+				</span>
+			<% end %>
+		<% end %>
+	</div>
+	<div class="boxContainer" >
+		<div id="canvas-container"></div>
+	</div>	
+<% end %>
+
+<script type="text/javascript">
+
+	jQuery.noConflict();
+	var wheel = new MooWheel.Remote(false, document.getElementById("canvas-container"), { 
+		url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/circle_dependencies.json',
+		width: "562", 
+		height: "562",
+		onItemClick: function(item, event){
+			window.location.href = "/package/" + item.id;
+		}
+	} );
+
+</script>

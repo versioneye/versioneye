@@ -1,6 +1,6 @@
 <% if !@product.versions.nil? && @product.versions.length > 1 %>
 	<div class="boxHeader">
-		Other Versions
+		<%= pluralize(@product.versions.count, "Versions") %>
 	</div>
 	<div class="boxContainer" >
 		<% @product.get_natural_sorted_versions.each do |version|  %>

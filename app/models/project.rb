@@ -153,8 +153,8 @@ class Project
         next
       end
       line = line.gsub("gem ", "")
-      elements = line.split(",")
-      package = elements[0].strip
+      line_elements = line.split(",")
+      package = line_elements[0].strip
       package = package.gsub('"', '')
       package = package.gsub("'", "")
       
@@ -166,7 +166,7 @@ class Project
         dependency.prod_key = product.prod_key
       end
       
-      update_version_from_gemfile(elements, dependency, product)
+      update_version_from_gemfile(line_elements, dependency, product)
       
       dependency.update_outdated
       if dependency.outdated?
@@ -197,30 +197,31 @@ class Project
     end
   end
   
-  def self.update_version_from_gemfile(elements, dependency, product)
-    version = elements[1]
-    if (!version.nil?)
-      version = version.strip
-      version = version.gsub('"', '')
-      version = version.gsub("'", "")
-      if version.match(/^:require/)
-        update_dep_version_with_product(dependency, product)
-      elsif version.match(/^>/)
-        update_dep_version_with_product(dependency, product)
-      elsif version.match(/^~>/)
-        ver = version.gsub("~>", "")
-        if !product.nil? && Project.is_version_current?(ver, product.version)
-          dependency.version = product.version
-        else 
-          dependency.version = ver
-        end
-      elsif version.match(/^http/)
-        dependency.version = "UNKNOWN"
-      else
-        dependency.version = version
-      end
-    else 
+  def self.update_version_from_gemfile(line_elements, dependency, product)
+    version = line_elements[1]
+    if (version.nil?)
       update_dep_version_with_product(dependency, product)
+      return 
+    end
+    version = version.strip
+    version = version.gsub('"', '')
+    version = version.gsub("'", "")
+    if version.match(/^:require/)
+      update_dep_version_with_product(dependency, product)
+    elsif version.match(/^>/)
+      update_dep_version_with_product(dependency, product)
+    elsif version.match(/^http/)
+      dependency.version = "UNKNOWN"
+    elsif version.match(/^~>/)
+      ver = version.gsub("~>", "")
+      ver = ver.gsub(" ", "")
+      if !product.nil? && Project.is_version_current?(ver, product.version)
+        dependency.version = product.version
+      else 
+        dependency.version = ver
+      end
+    else
+      dependency.version = version
     end
   end
   

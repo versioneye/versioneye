@@ -9,5 +9,5 @@ content += " </div> ";
 content += "<div class='reply'>";
 content += "<%= @versioncommentreply.comment %>";
 content += "</div>";
-$("#<%= @versioncomment.id %>_reply_section").append(content);
-$("#<%= @versioncomment.id %>_textarea").val("");
+jQuery("#<%= @versioncomment.id %>_reply_section").append(content);
+jQuery("#<%= @versioncomment.id %>_textarea").val("");
