@@ -1,5 +1,5 @@
 <div class="boxHeader">
-	Repository
+	<%= pluralize(@product.repositories.count, "Repository") %>
 </div>
 <div class="boxContainer">
 	<% @product.repositories.each do |repo| %>

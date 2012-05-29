@@ -7,6 +7,7 @@ class Versionlink
   field :version_id, type: String  
   field :link, type: String
   field :name, type: String
+  field :updt, type: String
   
   def as_json parameter
     {

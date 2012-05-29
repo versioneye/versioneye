@@ -12,6 +12,7 @@ class Version
   field :summary, type: String
   field :prerelease, type: Boolean
   field :mistake, type: Boolean
+  field :pom, type: String
 
   embedded_in :product
   
