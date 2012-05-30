@@ -5,7 +5,7 @@ case "$1" in
                 git checkout Gemfile
                 git checkout Gemfile.lock
                 git checkout config/mongoid.yml
-                git pull
+                git pull origin master
                 cp ../mongoid.yml config/mongoid.yml
                 bundle install
                 bundle exec rake assets:clean
