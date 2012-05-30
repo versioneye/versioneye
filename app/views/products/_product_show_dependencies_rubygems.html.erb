@@ -1,13 +1,12 @@
-
 <h3><%= pluralize(@main_dependencies.count, "Runtime Dependencies") %></h3>
 <% @main_dependencies.each do |dep| %> 
-	<a class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" ><%= dep.name %> (<%= dep.version_for_label %>)</a><br/>
+	<a itemprop="itemListElement url" itemtype="http://schema.org/SoftwareApplication" itemscope="" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" ><%= dep.name %> (<%= dep.version_for_label %>)</a><br/>
 <% end %>
 
 <% dev_deps = @product.dependencies("development") %> 
 <% if dev_deps.count > 0 %>
 	<h3 style="padding-top: 20px;"><%= pluralize(dev_deps.count, "Development Dependency") %></h3>
 	<% dev_deps.each do |dep| %> 
-		<a class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" ><%= dep.name %> (<%= dep.version_for_label %>)</a>
+		<a itemprop="itemListElement url" itemtype="http://schema.org/SoftwareApplication" itemscope="" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" ><%= dep.name %> (<%= dep.version_for_label %>)</a>
 	<% end %>
 <% end %>

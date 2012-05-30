@@ -2,11 +2,11 @@
 	<div class="boxHeader">
 		<%= pluralize(@comments.count, "Comments") %>
 	</div>
-	<div class="boxContainer" >
+	<div class="boxContainer" itemprop="comments" itemscope="" itemtype="http://schema.org/ItemList" >
 		<table>				
 		<% @comments.each do |comment|  %>
 			<tr>
-				<td>
+				<td itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ItemListElement">
 					<%= render :partial => 'shared/show_version_comment', :locals => {:comment => comment} %>						
 				</td>
 			</tr>
