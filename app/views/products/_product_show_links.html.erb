@@ -1,32 +1,18 @@
+<% links = @product.get_links %>
+<% version_links = @product.get_version_links %>
+<% count = links.count + version_links.count %>
 <div class="boxHeader">
-	Links
+	<%= pluralize(count, "Link") %>
 </div>
 <div class="boxContainer" >
-		
-	<% if @product.version_link && !@product.version_link.empty? && @product.prod_type.eql?("Maven2") %>	
-		<a href="<%= @product.version_link %>" target="new">Link to project</a><br/>
-	<% end %>
-	<% if !@product.link.nil? && !@product.link.empty? && @product.prod_type.eql?("RubyGem") %>
-		<a href="<%= @product.link %>" target="new">RubyGem Page</a><br/>
-	<% end %>
-	<% if !@product.link.nil? && !@product.link.empty? && @product.prod_type.eql?("PIP") %>
-		<a href="<%= @product.link %>" target="new">PIP Page</a><br/>
-	<% end %>
-	<% if !@product.link.nil? && !@product.link.empty? && @product.prod_type.eql?("GitHub") %>
-		<a href="<%= @product.link %>" target="new">GitHub</a><br/>
-	<% end %>
-	<% if !@product.link.nil? && !@product.link.empty? && @product.prod_type.eql?("R") %>
-		<a href="<%= @product.link %>" target="new">R Package</a><br/>
-	<% end %>
-	<% if !@product.get_links.empty? %>
-		<% @product.get_links.each do |link| %>
+	<% if !links.empty? %>
+		<% links.each do |link| %>
 			<a href="<%= link.get_link %>" target="new"><%= link.name %></a><br/>
 		<% end %>
 	<% end %>
-	<% if !@product.get_version_links.empty? %>
-		<% @product.get_version_links.each do |link| %>
+	<% if !version_links.empty? %>
+		<% version_links.each do |link| %>
 			<a href="<%= link.get_link %>" target="new"><%= link.name %></a><br/>
 		<% end %>
 	<% end %>
-	
 </div>
