@@ -292,28 +292,6 @@ describe Product do
     end
     
   end
-
-  describe "find_by_fuzzy_version" do 
-
-    it "returns all 1.X series" do
-      version1 = Version.new
-      version1.version = "1.2.2"
-      @product.versions.push(version1)
-      
-      version2 = Version.new
-      version2.version = "1.2.29"
-      @product.versions.push(version2)
-      
-      version3 = Version.new
-      version3.version = "2.0"
-      @product.versions.push(version3)
-      @product.save
-
-      products = Product.find_by_fuzzy_version(@product.prod_key, "1")
-      products.count.should eq(2)
-    end 
-
-  end
   
   describe "get_newest" do
     

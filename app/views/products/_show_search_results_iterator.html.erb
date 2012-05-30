@@ -2,13 +2,15 @@
 	<% if signed_in? %>
 		<% product.update_in_my_products(@my_product_ids) %>
 	<% end %>
-	<div class="searchResult" >
+	<div class="searchResult" itemscope itemtype="http://schema.org/SoftwareApplication" >
 		<ul class="list-row">
 			<li class="list-cell icon-cell">
 				<%= render :partial => "/products/language_icons", :locals => {:language => product.language, :icon => product.icon, :link => product_url(product), :title => product.name } %>
 			</li>
 			<li class="list-cell">
-				<a href="<%= product_url(product) %>" class="searchResultLink"><%= product.name_version(name_limit) %></a><br/>
+				<a itemprop="url" href="<%= product_url(product) %>" class="searchResultLink">
+					<span itemprop="name" ><%= product.name_version(name_limit) %></span>
+				</a><br/>
 				<% if product.prod_type == "Maven2" %>
 					<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
 				<% end %>
