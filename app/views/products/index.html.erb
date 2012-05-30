@@ -2,17 +2,17 @@
 <%= render 'shared/dialog_follow' %>
 
 <section class="section-lp round">
-	<div class="lp_box lp_sign_up" style="vertical-align:top">
-		<span style="padding-right: 20px;">
-			<%= render "shared/follow_versioneye" %>
-		</span>	
+	<div class="lp_box lp_sign_up" style="vertical-align:bottom">
 		<a href="http://twitter.com/share" 
 		   class="twitter-share-button" 
 		   data-url="http://versioneye.com" 
 		   data-text="Follow your Libraries @VersionEye and get notified about new versions." 
 		   data-count="horizontal" >Twitter</a>
-		<div class="g-plusone" data-annotation="inline" data-href="<%= configatron.server_url %>" style="width: 90px;"></div>
 		<iframe src="http://www.facebook.com/plugins/like.php?href=https://www.facebook.com/pages/VersionEye/295350293845442" style="border:none; width:200px; height:25px"></iframe>
+		<div class="g-plusone" data-annotation="inline" data-href="<%= configatron.server_url %>/package/<%= @product.to_param %>" style="width: 90px;"></div>
+	</div>
+	<div style="text-align: center;">
+		<%= render "shared/follow_versioneye" %>
 	</div>
 </section>
 

@@ -9,7 +9,9 @@
 			</li>
 			<li class="list-cell">
 				<a itemprop="url" href="<%= product_url(product) %>" class="searchResultLink">
-					<span itemprop="name" ><%= product.name_version(name_limit) %></span>
+					<meta itemprop="name" content="<%= product.name %>" />
+					<meta itemprop="softwareVersion" content="<%= product.version %>" />
+					<span ><%= product.name_version(name_limit) %></span>
 				</a><br/>
 				<% if product.prod_type == "Maven2" %>
 					<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
