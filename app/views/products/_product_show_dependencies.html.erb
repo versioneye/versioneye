@@ -1,7 +1,7 @@
 <div class="boxHeader">
 	Dependencies
 </div>
-<div class="boxContainer" itemprop="requirements" >
+<div class="boxContainer" id="dependencies" itemprop="requirements" >
 	<% if @product.prod_type.eql?("Maven2") %>
 		<%= render "product_show_dependencies_maven2" %>
 	<% else %>
