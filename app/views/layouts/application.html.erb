@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <% if @product %>
-	<html xmlns:fb="http://ogp.me/ns/fb#" itemscope itemtype="http://schema.org/SoftwareApplication" itemref="dependencies relatedLinks updated" >
+	<html xmlns:fb="http://ogp.me/ns/fb#" itemscope itemtype="http://schema.org/SoftwareApplication" itemref="relatedLinks" >
 <% else %> 
 	<html xmlns:fb="http://ogp.me/ns/fb#">
 <% end %>
@@ -8,8 +8,9 @@
 <head >
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <% if @product %> 
-	<meta name="productID" itemprop="productID" content="<%= @product.prod_key %>" />
 	<meta name="name"     itemprop="name"     content="<%= @product.name %>">
+	<meta name="softwareversion" itemprop="softwareversion"  content="<%= @product.version %>">
+	<meta name="version" itemprop="version"  content="<%= @product.version %>">
 	<meta name="keywords" itemprop="keywords" content="<%= @product.name %>, <%= @product.language %>, <%= @product.prod_type %>" />
 	<meta name="url" itemprop="url" content="<%= configatron.server_url %>/package/<%= @product.to_param %>" />
 	<% if !@product.description.nil? && !@product.description.empty? %> 

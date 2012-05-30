@@ -1,5 +1,5 @@
-<div class="searchResults">
-	<meta itemprop="name" content="Newest Comments" itemprop="itemList" itemscope="" itemtype="http://schema.org/ItemList" />
+<div class="searchResults" itemprop="itemList" itemscope="" itemtype="http://schema.org/ItemList">
+	<meta itemprop="name" content="Newest Comments"  />
 	<% @comments.each do |comment| %>
 		<div class="comment" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Comment" >
 			<ul class="list-row">
@@ -11,7 +11,7 @@
 					   class="searchResultLink"><%=comment.name_and_version%></a><br/>
 					<div class="meta-text-small">
 						<%= link_to comment.user.fullname, user_path(comment.user) %> <br/> 
-						<%= comment.created_at.strftime("%b %d, %Y - %I:%M %p") %>			
+						<time itemprop="created" datetime="<%= comment.created_at.strftime("%Y-%m-%dT%H:%M") %>"><%= comment.created_at.strftime("%b %d, %Y - %I:%M %p") %></time>
 					</div>
 				</li>
 			</ul>
@@ -22,7 +22,7 @@
 					<% end %>
 				</li>
 				<li class="list-cell">
-					<div>
+					<div itemprop="comment">
 						<%= comment.comment %>
 					</div>
 					<div class="meta-text-small" >
