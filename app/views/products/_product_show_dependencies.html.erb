@@ -2,7 +2,7 @@
 	Dependencies
 </div>
 <div class="boxContainer" id="dependencies" itemprop="requirements" itemscope="" itemtype="http://schema.org/ItemList">
-	<meta name="name" content="Requirements"  />
+	<meta name="name" content="Requirements" itemprop="name" />
 	<% if @product.prod_type.eql?("Maven2") %>
 		<%= render "product_show_dependencies_maven2" %>
 	<% else %>

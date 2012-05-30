@@ -1,13 +1,21 @@
 	<h3><%= pluralize(@main_dependencies.count, "Compile Dependencies") %></h3>
 	<% @main_dependencies.each do |dep| %> 
-		<a class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" ><%= dep.name %> (<%= dep.version_for_label %>)</a><br/>
+		<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
+			<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
+				<span itemprop="name" ><%= dep.name %></span> (<span itemprop="softwareVersion"><%= dep.version_for_label %></span>)
+			</a><br/>
+		</span>
 	<% end %>
 
 	<% test_deps = @product.dependencies("test") %> 
 	<% if test_deps.count > 0 %>
 		<h3><%= pluralize(test_deps.count, "Test Dependencies") %></h3>
 		<% test_deps.each do |dep| %> 
-			<a class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" ><%= dep.name %> (<%= dep.version_for_label %>)</a><br/>
+			<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
+				<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
+					<span itemprop="name" ><%= dep.name %></span> (<span itemprop="softwareVersion"><%= dep.version_for_label %></span>)
+				</a><br/>
+			</span>
 		<% end %>
 	<% end %>
 
@@ -15,6 +23,10 @@
 	<% if provided_deps.count > 0 %>
 		<h3><%= pluralize(provided_deps.count, "Provided Dependencies") %></h3>
 		<% provided_deps.each do |dep| %> 
-			<a class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" ><%= dep.name %> (<%= dep.version_for_label %>)</a><br/>
+			<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
+				<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
+					<span itemprop="name" ><%= dep.name %></span> (<span itemprop="softwareVersion"><%= dep.version_for_label %></span>)
+				</a><br/>
+			</span>
 		<% end %>
 	<% end %>
