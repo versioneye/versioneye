@@ -1,15 +1,13 @@
-<% if (!@version.nil? && !@version.versionarchive.nil? && @version.versionarchive.length > 0) || @product.prod_type == "RubyGem" %>
-	<div class="boxHeader">
-		Download
-	</div>
-	<div class="boxContainer" >
-		<% if @product.prod_type == "RubyGem" %>
-			<div><a itemprop="downloadUrl" href="http://rubygems.org/gems/<%= @product.name %>-<%= @product.version %>.gem"><%= @product.name %>-<%= @product.version %>.gem</a></div>
-		<% end %>
-		<% if !@version.nil? && !@version.versionarchive.nil? && @version.versionarchive.length > 0 %>
-			<% @version.versionarchive.each do |download|  %>
+<% if !@version.nil? %>
+	<% downloads = @version.versionarchive %>
+	<% if !downloads.nil? && !downloads.empty? %>
+		<div class="boxHeader">
+			Download
+		</div>
+		<div class="boxContainer" >
+			<% downloads.each do |download|  %>
 				<div><a itemprop="downloadUrl" href="<%= download.link %>"><%= download.name %></a></div>
 			<% end %>
-		<% end %>
-	</div>
+		</div>
+	<% end %>
 <% end %>

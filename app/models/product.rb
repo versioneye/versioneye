@@ -238,37 +238,38 @@ class Product
     end
   end
 
-  # def self.update_versionarchives_global
-  #   count = Product.count()
-  #   pack = 100
-  #   max = count / pack     
-  #   (0..max).each do |i|
-  #     skip = i * pack
-  #     products = Product.all().skip(skip).limit(pack)
-  #     products.each do |product|
-  #       versions = product.versions
-  #       if !versions.nil?
-  #         versions.each do |version|
-  #           if !version.nil?
-  #             pom = version.pom
-  #             archive_name = "#{product.name}-#{version.version}.pom"
-  #             archives = Versionarchive.all(conditions: { prod_key: product.prod_key, version_id: version.version, name: archive_name})
-  #             if (archives.nil? || archives.empty?) && !pom.nil? && !pom.empty? && pom.match(/\$\{/).nil?
-  #               archive_name = "#{product.name}-#{version.version}.pom"
-  #               archive = Versionarchive.new
-  #               archive.prod_key = product.prod_key
-  #               archive.version_id = version.version
-  #               archive.link = pom
-  #               archive.name = archive_name
-  #               archive.save
-  #               p "add archive for #{product.prod_key} -> #{archive_name}"
-  #             end
-  #           end
-  #         end
-  #       end
-  #     end
-  #   end
-  # end
+  def self.update_versionarchives_global
+    count = Product.count()
+    pack = 100
+    max = count / pack     
+    (0..max).each do |i|
+      skip = i * pack
+      products = Product.all().skip(skip).limit(pack)
+      products.each do |product|
+        if !product.language.eql?("Ruby")
+          next
+        end
+        versions = product.versions
+        if !versions.nil?
+          versions.each do |version|
+            if !version.nil?
+              archive_name = "#{product.name}-#{version.version}.gem"
+              archives = Versionarchive.all(conditions: { prod_key: product.prod_key, version_id: version.version, name: archive_name})
+              if (archives.nil? || archives.empty?)
+                archive = Versionarchive.new
+                archive.prod_key = product.prod_key
+                archive.version_id = version.version
+                archive.link = "http://rubygems.org/gems/#{archive_name}"
+                archive.name = archive_name
+                archive.save
+                p "add archive for #{product.prod_key} -> #{archive_name}"
+              end
+            end
+          end
+        end
+      end
+    end
+  end
   
   def self.update_followers
     ids = Follower.all.distinct( :product_id )
