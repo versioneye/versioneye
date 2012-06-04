@@ -1,8 +1,7 @@
-<% if !@version.versionarchive.nil? && !@version.versionarchive.empty? %>
-<div class="boxHeader">
-Install with PIP
-</div>
-<div class="boxContainer"><pre>
-pip install <%= @version.versionarchive[0].link %>
-</pre></div>
+<% if !@downloads.nil? && !@downloads.empty? %>
+	<div class="boxHeader">
+		Install with PIP
+	</div>
+	<div class="boxContainer" style="overflow:scroll;"><pre>
+pip install <%= @downloads[0].link %></pre></div>
 <% end %>

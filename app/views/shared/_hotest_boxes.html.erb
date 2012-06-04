@@ -24,7 +24,7 @@
 		<div class="searchResults" id="newest" style="padding: 10px; vertical-align: top;" itemprop="itemList" itemscope="" itemtype="http://schema.org/ItemList" >
 			<meta itemprop="name" content="Newest Versions"  />
 			<% if !@newest.nil? %>
-				<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @newest, :prefix => "newest", :name_limit => 37 } %>
+				<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @newest, :prefix => "newest", :name_limit => 33 } %>
 			<% end %>
 		</div>
 	</div>
@@ -35,7 +35,7 @@
 		<div class="searchResults" id="hottest" style="padding: 10px;" itemprop="itemList" itemscope="" itemtype="http://schema.org/ItemList" >
 			<meta itemprop="name" content="Hottest Libraries"  />
 			<% if !@hotest.nil? %>
-				<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @hotest, :prefix => "hottest", :name_limit => 37 } %>
+				<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @hotest, :prefix => "hottest", :name_limit => 33 } %>
 			<% end %>
 		</div>
 	</div>

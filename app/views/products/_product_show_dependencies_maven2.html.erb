@@ -2,7 +2,10 @@
 	<% @main_dependencies.each do |dep| %> 
 		<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
 			<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
-				<span itemprop="name" ><%= dep.name %></span> (<span itemprop="softwareVersion"><%= dep.version_for_label %></span>)
+				<span itemprop="name" ><%= dep.name %></span> 
+				<% if !dep.version_for_label.nil? && !dep.version_for_label.empty? %>
+					(<span itemprop="softwareVersion"><%= dep.version_for_label %></span>)
+				<% end %> 
 			</a><br/>
 		</span>
 	<% end %>
@@ -13,7 +16,10 @@
 		<% test_deps.each do |dep| %> 
 			<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
 				<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
-					<span itemprop="name" ><%= dep.name %></span> (<span itemprop="softwareVersion"><%= dep.version_for_label %></span>)
+					<span itemprop="name" ><%= dep.name %></span> 
+					<% if !dep.version_for_label.nil? && !dep.version_for_label.empty? %>
+						(<span itemprop="softwareVersion"><%= dep.version_for_label %></span>)
+					<% end %> 
 				</a><br/>
 			</span>
 		<% end %>
@@ -25,7 +31,10 @@
 		<% provided_deps.each do |dep| %> 
 			<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
 				<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
-					<span itemprop="name" ><%= dep.name %></span> (<span itemprop="softwareVersion"><%= dep.version_for_label %></span>)
+					<span itemprop="name" ><%= dep.name %></span> 
+					<% if !dep.version_for_label.nil? && !dep.version_for_label.empty? %>
+						(<span itemprop="softwareVersion"><%= dep.version_for_label %></span>)
+					<% end %> 
 				</a><br/>
 			</span>
 		<% end %>

@@ -13,7 +13,7 @@
 	<div id="canvas-container"></div>
 </div>	
 
-<% if @main_dependencies.count > 3 && @product.prod_type.eql?("RubyGem") %>
+<% if @main_dependencies.count > 3 %>
 	<script type="text/javascript">
 		jQuery.noConflict();
 		var wheel = new MooWheel.Remote(false, document.getElementById("canvas-container"), { 

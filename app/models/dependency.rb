@@ -9,6 +9,7 @@ class Dependency
   field :group_id, type: String
   field :artifact_id, type: String
   field :dep_prod_key, type: String     # this is the prod_key of the dependency
+  field :scope, type: String
 
   field :prod_key, type: String         # This dependency belongs to this prod_key
   field :prod_version, type: String     # This dependency belongs to this version of prod_key

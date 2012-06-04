@@ -102,7 +102,11 @@ class Product
   end
 
   def dependency_circle(scope)
-    scope = main_scope if scope == nil 
+    p "Dependency Circle"
+    if scope == nil 
+      scope = main_scope
+    end
+    
     hash = Hash.new
     dependencies = Dependency.find_by_key_version_scope(prod_key, version, scope)
     dependencies.each do |dep|      
@@ -111,31 +115,43 @@ class Product
       element.text = "#{dep.name} (#{dep.version_for_label})"
       hash[dep.dep_prod_key] = element
     end
-    return fetch_deps(hash)
+    return fetch_deps(1, hash, Hash.new)
   end
 
-  def fetch_deps(hash)
-    if hash.empty? 
-      return hash
-    end
-    p "hash size: #{hash.count}"
+  def fetch_deps(deep, hash, parent_hash)
+    return hash if hash.empty? 
+    # deep_space = ""
+    # deep.times{
+    #   deep_space = "#{deep_space}  "
+    # }
+    deep = deep + 1
+    # p "#{deep_space} hash size: #{hash.count} parent_hash size: #{parent_hash.count}"
     new_hash = Hash.new
     hash.each do |prod_key, element|
       product = Product.find_by_key(element.id)
-      dependencies = product.dependencies("runtime")
+      dependencies = product.dependencies(nil)
+      # p "#{deep_space} #{dependencies.count} deps for #{product.name}"
       dependencies.each do |dep|
-        element.connections << "#{dep.dep_prod_key}"
-        if hash[dep.dep_prod_key].nil? && new_hash[dep.dep_prod_key].nil?
+        key = dep.dep_prod_key
+        ele = get_element_from_hash(new_hash, hash, parent_hash, key)
+        if ele.nil?
+          # p "#{deep_space}  create new element #{dep.name}"
           new_element = CircleElement.new
           new_element.id = dep.dep_prod_key
           new_element.text = "#{dep.name} (#{dep.version_for_label})"
           new_element.connections << "#{element.id}"
-          new_hash[dep.dep_prod_key] = new_element    
+          new_hash[dep.dep_prod_key] = new_element
+        else 
+          # p "#{deep_space}  element #{dep.name} already fetched"
+          ele.connections << "#{element.id}"
         end
+        element.connections << "#{key}"
       end
     end
-    new_merged = fetch_deps(new_hash)
-    merged_hash = hash.merge(new_merged)
+    # p "#{deep_space} new hash element #{new_hash.count}"
+    parent_merged = hash.merge(parent_hash)
+    rec_hash = fetch_deps(deep, new_hash, parent_merged)
+    merged_hash = parent_merged.merge(rec_hash)
     return merged_hash
   end
   
@@ -198,75 +214,6 @@ class Product
       products = Product.all().skip(skip).limit(pack)
       products.each do |product|
         product.update_version_data
-      end
-    end
-  end
-
-  def self.update_versionlinks_global
-    count = Product.count()
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.all().skip(skip).limit(pack)
-      products.each do |product|
-        if !product.link.nil? && !product.link.empty? 
-          if product.prod_type.eql?("RubyGem")
-            link_name = "RubyGem Page"  
-          elsif product.prod_type.eql?("PIP")
-            link_name = "PIP Page"
-          elsif product.prod_type.eql?("GitHub")
-            link_name = "GitHub"
-          elsif product.prod_type.eql?("R")
-            link_name = "R Page"  
-          elsif product.prod_type.eql?("Maven2")
-            link_name = "Link to Repo"    
-          else 
-            next
-          end
-          links = Versionlink.all(conditions: { prod_key: product.prod_key, version_id: nil, link: product.link})
-          if links.nil? || links.empty?
-            vlink = Versionlink.new
-            vlink.prod_key = product.prod_key
-            vlink.link = product.link 
-            vlink.name = link_name
-            vlink.updt = "product_links"
-            vlink.save
-          end
-        end
-      end
-    end
-  end
-
-  def self.update_versionarchives_global
-    count = Product.count()
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.all().skip(skip).limit(pack)
-      products.each do |product|
-        if !product.language.eql?("Ruby")
-          next
-        end
-        versions = product.versions
-        if !versions.nil?
-          versions.each do |version|
-            if !version.nil?
-              archive_name = "#{product.name}-#{version.version}.gem"
-              archives = Versionarchive.all(conditions: { prod_key: product.prod_key, version_id: version.version, name: archive_name})
-              if (archives.nil? || archives.empty?)
-                archive = Versionarchive.new
-                archive.prod_key = product.prod_key
-                archive.version_id = version.version
-                archive.link = "http://rubygems.org/gems/#{archive_name}"
-                archive.name = archive_name
-                archive.save
-                p "add archive for #{product.prod_key} -> #{archive_name}"
-              end
-            end
-          end
-        end
       end
     end
   end
@@ -378,6 +325,15 @@ class Product
       else
         Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys, :language.in => languages}).desc(:like_overall).asc(:name).limit(limit)
       end
+    end
+
+    def get_element_from_hash(new_hash, hash, parent_hash, key)
+      element = new_hash[key]
+      return element if !element.nil?
+      element = hash[key]
+      return element if !element.nil?
+      element = parent_hash[key]
+      return element
     end
 
 end

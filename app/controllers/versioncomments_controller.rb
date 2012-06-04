@@ -44,6 +44,8 @@ class VersioncommentsController < ApplicationController
       
       followers.each do |follower|
         if !follower.user_id.eql?(user.id.to_s)
+          follower_user = follower.user
+          next if follower_user.deleted
           VersioncommentMailer.versioncomment_email(product, follower.user, user, comment).deliver
         end
       end
