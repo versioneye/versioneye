@@ -55,18 +55,24 @@ class Dependency
   end
 
   def self.data_correction
-    dependencies = Dependency.all(conditions: {version: "${version}"})
+    dependencies = Dependency.all(conditions: {group_id: /^\$/i})
     dependencies.each do |dep|
-      dep.version = dep.prod_version
+      p "before #{dep.dep_prod_key}"
+      product = Product.find_by_key(dep.prod_key)
+      dep.group_id = product.group_id
+      dep.dep_prod_key = "#{dep.group_id}/#{dep.artifact_id}"
       dep.save
-      p "#{dep.dep_prod_key} version #{dep.version}"
+      p "after #{dep.dep_prod_key}"
     end
-    dependencies = Dependency.all(conditions: {version: "${project.version}"})
-    dependencies.each do |dep|
-      dep.version = dep.prod_version
-      dep.save
-      p "#{dep.dep_prod_key} version #{dep.version}"
-    end
+    # dependencies = Dependency.all(conditions: {artifact_id: /^\$/i})
+    # dependencies.each do |dep|
+    #   p "before #{dep.dep_prod_key}"
+    #   product = Product.find_by_key(dep.prod_key)
+    #   dep.artifact_id = product.artifact_id
+    #   dep.dep_prod_key = "#{dep.group_id}/#{dep.artifact_id}"
+    #   dep.save
+    #   p "after #{dep.dep_prod_key}"
+    # end
   end
 
   def gem_version_abs
