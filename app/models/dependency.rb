@@ -54,6 +54,21 @@ class Dependency
     ver
   end
 
+  def self.data_correction
+    dependencies = Dependency.all(conditions: {version: "${version}"})
+    dependencies.each do |dep|
+      dep.version = dep.prod_version
+      dep.save
+      p "#{dep.dep_prod_key} version #{dep.version}"
+    end
+    dependencies = Dependency.all(conditions: {version: "${project.version}"})
+    dependencies.each do |dep|
+      dep.version = dep.prod_version
+      dep.save
+      p "#{dep.dep_prod_key} version #{dep.version}"
+    end
+  end
+
   def gem_version_abs
     ver = String.new(version)
     ver = ver.gsub(" ", "")

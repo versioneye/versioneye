@@ -41,26 +41,25 @@ var MooWheel = new Class({
          color: 'rgba(255,255,255,255)',
          lineWidth: 5
       },
-      onItemClick: $empty
+      onItemClick: $empty,
+      infoBox: 'mooinfo', 
+      infoNumber: 'moonumber'
    },
    
    initialize: function(data, ct, options) {
       this.data = data;
-
       this.radius = Math.round(this.options.radialMultiplier * this.data.length);
-
       this.setOptions(options);
 
       // calculate canvas height/width if necessary
       var hw;
       if (!(this.options.width && this.options.height)) {
-        var l = 0;
+        var length = 0;
         for (var i = 0; i < data.length; i++) {
-          if (data[i]['text'].length > l)
-            l = data[i]['text'].length;
+          if (data[i]['text'].length > length)
+            length = data[i]['text'].length;
         }
-      
-        hw = 2 * ((this.radius + (l * 8)) + this.options.imageSize[0]) + 12;
+        hw = 2 * ((this.radius + (length * 8)) + this.options.imageSize[0]) + 12;
       }
      
       ct.empty();
@@ -111,14 +110,14 @@ var MooWheel = new Class({
             this.hoverCanvas.height = canvasPos.height;
          }.bind(this));
   
-         if(typeof(G_vmlCanvasManager) != 'undefined') {
+         if (typeof(G_vmlCanvasManager) != 'undefined') {
              this.hoverCanvas = $(G_vmlCanvasManager.initElement(this.hoverCanvas));
          }
       }
       
       this.data.each(function(item) {
         item['connections'].each(function(subitem) {
-            if($type(subitem) == 'array' && subitem[1] > this.maxCount)
+            if ($type(subitem) == 'array' && subitem[1] > this.maxCount)
               this.maxCount = subitem[1];
         }, this);
       }, this);
@@ -169,19 +168,19 @@ var MooWheel = new Class({
         x: px - Math.cos((i+90)*(Math.PI/180))*5,
         y: py - Math.sin((i+90)*(Math.PI/180))*5
       };
-      var b3 = pr3.y - m0*pr3.x;
+      var b3 = pr3.y - m0 * pr3.x;
       var dr3;
       if (m0 == Infinity || m0 == -Infinity)
-        dr3 = function(x,y) { return Math.abs((x-pr3.x)); };
+        dr3 = function(x,y) { return Math.abs((x - pr3.x)); };
       else
-        dr3 = function(x,y) { return Math.abs(m0*x-y+b3)/Math.sqrt(Math.pow(m0,2)+1); };
+        dr3 = function(x,y) { return Math.abs(m0 * x - y + b3) / Math.sqrt(Math.pow(m0,2) + 1); };
 
       var txtlen = this.cx.measureText('sans','10',this.data[j]['text']);
       txtlen = Number(txtlen.toFixed(2));
 
       var pr4 = {
-        x: px + Math.cos((i+90)*(Math.PI/180))*5,
-        y: py + Math.sin((i+90)*(Math.PI/180))*5
+        x: px + Math.cos((i + 90) * (Math.PI / 180)) * 5,
+        y: py + Math.sin((i + 90) * (Math.PI / 180)) * 5
       };
       var b4 = pr4.y - m0*pr4.x;
       var dr4;
@@ -266,6 +265,15 @@ var MooWheel = new Class({
 
             this.cx.restore();
       }
+      info_box = document.getElementById(this.options.infoBox);
+      info_number = document.getElementById(this.options.infoNumber);
+      if (info_box){
+        info_box.style.display = "block";
+      }
+      if (info_number){
+        var txt = document.createTextNode(this.data.length);
+        info_number.appendChild(txt); 
+      }
    },
 
    // calculate a radian angle
@@ -286,7 +294,7 @@ var MooWheel = new Class({
    // draw the connection lines for a particular item
    drawConnection: function(i, hover) {
       if (hover){
-        // alert(hover);
+        // BugFix for overlay bug in Safari & Chrome
         document.getElementById("canvas_hover").style.top = document.getElementById("canvas").getCoordinates().top + "px";
       }
       var cx = hover ? this.hoverCanvas.getContext('2d') : this.cx;
@@ -322,9 +330,11 @@ var MooWheel = new Class({
          cx.closePath();
       }
       
-      if(hover) return;
+      if (hover) {
+        return;
+      }
       
-      if(this.data[i+1]) {
+      if (this.data[i+1]) {
          var self = this;
          setTimeout(function() { self.drawConnection(i+1); }, 25);
       } else {
@@ -339,7 +349,7 @@ var MooWheel = new Class({
          this.drawConnection(0);
       }
 
-      if(this.options.hover) {
+      if (this.options.hover) {
          $(this.hoverCanvas).addEvent('mousemove', function(e) {
             e = new Event(e);
             
@@ -376,7 +386,7 @@ var MooWheel = new Class({
 
                this.canvas.setStyle('opacity', '0.5');
                this.hoverCanvas.setStyle('cursor', 'pointer');
-            } else if($defined(this.lastMouseOver)) {
+            } else if ($defined(this.lastMouseOver)) {
                var cx = this.hoverCanvas.getContext('2d');
                cx.clearRect(0, 0, pos.width, pos.height);
                cx.save();
@@ -467,6 +477,5 @@ MooWheel.Remote = new Class({
         } else if (!preloadImages(data, ct, options)) {
           this.parent(data, ct, options);
         }
-
     }
 });

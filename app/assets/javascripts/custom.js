@@ -148,12 +148,3 @@ function update_lang(language){
 	lang = lang.replace(",,", ",") 
 	document.getElementById("lang").value = lang
 }
-
-function correct_top_canvas(){
-	if (document.getElementById("canvas_hover") != null){
-    	document.getElementById("canvas_hover").style.top = document.getElementById("canvas").getCoordinates().top + "px";
-    } else {
-    	alert("hallo");
-    	setTimeout(correct_top_canvas(), 10000);
-    }
-}

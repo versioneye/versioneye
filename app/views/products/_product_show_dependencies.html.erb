@@ -11,6 +11,9 @@
 </div>
 <div class="boxContainer" >
 	<div id="canvas-container"></div>
+	<h3 style="text-align: center; display: none" id="infoBox" >
+		<%= @product.name %> has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive <%= @product.main_scope %> dependencies
+	</h3>
 </div>	
 
 <% if @main_dependencies.count > 3 %>
@@ -20,6 +23,8 @@
 			url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/circle_dependencies.json',
 			width: "562", 
 			height: "562",
+			infoBox: "infoBox",
+			infoNumber: "runtime_recursive_number",
 			onItemClick: function(item, event){
 				key = item.id; 
 				key = key.replace(/\//g, "--");
