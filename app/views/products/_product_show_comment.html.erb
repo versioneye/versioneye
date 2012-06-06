@@ -1,6 +1,6 @@
 <% if signed_in? %>
 	<div class="boxHeader">
-		Leave rating &amp; comment
+		Leave a comment
 	</div>
 	<div class="boxContainer">
 		<%= form_for @versioncomment do |f| %>
@@ -24,11 +24,11 @@
 	</div>
 <% elsif %>
 	<div class="boxHeader">
-		Leave rating &amp; comment
+		Leave a comment
 	</div>
 	<div class="boxContainer">
 		<p>
-			<%= link_to "Sign Up", signup_path %> or <%= link_to "Sign In", signin_path %> to leave rating and comment. 
+			<%= link_to "Sign Up", signup_path %> or <%= link_to "Sign In", signin_path %> to leave a comment.
 		</p>
 		<div>
 			<%= render 'shared/login_options_vertical' %>

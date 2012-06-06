@@ -1,0 +1,48 @@
+<% if @product.nil? %>
+
+	Product not found!
+
+<% else %>
+
+	<div>
+
+		<div style="text-align: center; margin: 0 auto; width: 50%;">
+			<%= render 'products/product_show_header' %>
+		</div>
+
+		<div id="canvas-container" style="margin-top: 20px;"></div>
+		<div>
+			<h3 style="text-align: center; display: none" id="infoBox" >
+				<%= @product.name %> has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive <%= @product.main_scope %> dependencies
+			</h3>
+		</div>
+		<br/>
+		<div style="text-align: center;">
+			<a href="/package/<%=@product.to_param%>/version/<%=@version.to_url_param%>">See more details</a>
+		</div>
+		<br/>
+		<br/>
+
+		<% if @main_dependencies.count > 3 %>
+			<script type="text/javascript">
+				jQuery.noConflict();
+				var wheel = new MooWheel.Remote(false, document.getElementById("canvas-container"), { 
+					url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/circle_dependencies.json',
+					width: "750", 
+					height: "750",
+					data_border: 70,
+					infoBox: "infoBox",
+					infoNumber: "runtime_recursive_number",
+					onItemClick: function(item, event){
+						key = item.id; 
+						key = key.replace(/\//g, "--");
+						key = key.replace(/\./g, "~" );
+						window.location.href = "/package/" + key;
+					}
+				} );
+			</script>
+		<% end %>
+
+	</div>
+	
+<% end %>

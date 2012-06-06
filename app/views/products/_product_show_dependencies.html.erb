@@ -11,9 +11,14 @@
 </div>
 <div class="boxContainer" >
 	<div id="canvas-container"></div>
-	<h3 style="text-align: center; display: none" id="infoBox" >
-		<%= @product.name %> has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive <%= @product.main_scope %> dependencies
-	</h3>
+	<div style="text-align: center; display: none" id="infoBox">
+		<h3 style="text-align: center;" >
+			<%= @product.name %> has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive <%= @product.main_scope %> dependencies
+		</h3>
+		<a href="/package_visual/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>">
+			See visual page
+		</a>
+	</div>
 </div>	
 
 <% if @main_dependencies.count > 3 %>

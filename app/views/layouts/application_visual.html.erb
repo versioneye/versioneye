@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<% if @product %>
+	<html xmlns:fb="http://ogp.me/ns/fb#" itemscope itemtype="http://schema.org/SoftwareApplication"  >
+<% else %> 
+	<html xmlns:fb="http://ogp.me/ns/fb#">
+<% end %>
+
+<head >
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<% if @product %> 
+	<meta name="name"     itemprop="name"     content="<%= @product.name %>">
+	<meta name="softwareversion" itemprop="softwareversion"  content="<%= @product.version %>">
+	<meta name="version" itemprop="version"  content="<%= @product.version %>">
+	<meta name="keywords" itemprop="keywords" content="<%= @product.name %>, <%= @product.language %>, <%= @product.prod_type %>" />
+	<meta name="url" itemprop="url" content="<%= configatron.server_url %>/package/<%= @product.to_param %>" />
+	<% if !@product.description.nil? && !@product.description.empty? %> 
+	<meta name="description" itemprop="description" content="<%= @product.description %>" />
+	<% end %>	
+<% end %>
+
+	<link href="http://versioneye.com/favicon.ico" rel="shortcut icon"  />
+	<title>VersionEye</title>
+	<!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<!--[if lt IE 8]><%= stylesheet_link_tag 'blueprint/ie' %><![endif]-->
+	<%= csrf_meta_tag %>
+	<%= stylesheet_link_tag "application" %>
+	<%= javascript_include_tag "application" %>
+	<script src="http://platform.twitter.com/widgets.js" ></script>
+	<script src="http://connect.facebook.net/en_US/all.js" ></script>
+	<script src="https://apis.google.com/js/plusone.js"></script> 
+</head>
+
+<body>
+	<%= render 'layouts/header' %>
+	<div class="container" style="text-align: center;" id="container">
+		<section class="round" id="section" >
+			<% flash.each do |key, value| %>
+				<div class="flash <%= key %>"><%= value %></div>
+			<% end %>
+			<%= yield %>
+		</section>
+		<%= render 'layouts/footer' %>
+		<%= debug(params) if Rails.env.development? %>
+		<br/>
+		<br/>
+	</div>
+	<%= render 'shared/social_buttons' %>
+	<% if signed_in? %>
+		<%= render 'shared/feedback' %>
+		<%= render 'feedback/dialog_feedback' %>
+	<% end %>
+</body>
+
+</html>

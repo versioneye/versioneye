@@ -43,14 +43,24 @@ var MooWheel = new Class({
       },
       onItemClick: $empty,
       infoBox: 'mooinfo', 
-      infoNumber: 'moonumber'
+      infoNumber: 'moonumber', 
+      data_border: 70
    },
    
    initialize: function(data, ct, options) {
       this.data = data;
-      this.radius = Math.round(this.options.radialMultiplier * this.data.length);
+      data_length = data.length;
+      this.radius = Math.round(this.options.radialMultiplier * data_length);
       this.setOptions(options);
 
+      border = this.options.data_border;
+      container = document.getElementById("container");
+      section = document.getElementById("section");
+      if (data_length > border && container == null && section == null ){
+        show_info_box(this.options.infoBox, this.options.infoNumber, data_length);
+        return false;
+      }
+      
       // calculate canvas height/width if necessary
       var hw;
       if (!(this.options.width && this.options.height)) {
@@ -61,9 +71,8 @@ var MooWheel = new Class({
         }
         hw = 2 * ((this.radius + (length * 8)) + this.options.imageSize[0]) + 12;
       }
-     
-      ct.empty();
       
+      ct.empty();      
       ct = $(ct);
       var canvas = new Element('canvas', {
         width:  (this.options.width ? this.options.width : hw) + 'px',
@@ -72,7 +81,7 @@ var MooWheel = new Class({
       });
       ct.adopt(canvas);
       
-      if(typeof(G_vmlCanvasManager) != 'undefined') {
+      if ( typeof (G_vmlCanvasManager) != 'undefined') {
         canvas = $(G_vmlCanvasManager.initElement(canvas));
       }
 
@@ -265,15 +274,7 @@ var MooWheel = new Class({
 
             this.cx.restore();
       }
-      info_box = document.getElementById(this.options.infoBox);
-      info_number = document.getElementById(this.options.infoNumber);
-      if (info_box){
-        info_box.style.display = "block";
-      }
-      if (info_number){
-        var txt = document.createTextNode(this.data.length);
-        info_number.appendChild(txt); 
-      }
+      show_info_box(this.options.infoBox, this.options.infoNumber, this.data.length);
    },
 
    // calculate a radian angle
@@ -344,7 +345,7 @@ var MooWheel = new Class({
    
    // draw the entire MooWheel
    draw: function() {
-      if(this.data) {
+      if (this.data) {
          this.setPoints();
          this.drawConnection(0);
       }
@@ -433,7 +434,20 @@ MooWheel.Remote = new Class({
     initialize: function(data, ct, options) {
         var preloadImages = function(wheelData) {
             var imageUrls = [], map = {};
-
+            
+            container = document.getElementById("container");
+            section = document.getElementById("section");
+            border = options.data_border;
+            if (data.length > border && container && section){
+              // alert("big data in the house")
+              options.width = data.length * 11;
+              options.height = data.length * 11;
+              container_width = options.width + 40;
+              section_width = options.width + 10;
+              document.getElementById("container").style.width = container_width + "px";
+              document.getElementById("section").style.width = section_width + "px";
+            }
+            
             for (var i = 0, l = wheelData.length; i < l; i++) {
                 if (wheelData[i]['imageUrl']) {
                     imageUrls.push(wheelData[i]['imageUrl']);
@@ -479,3 +493,15 @@ MooWheel.Remote = new Class({
         }
     }
 });
+
+function show_info_box(box_name, number_name, recursive_deps){
+  info_box = document.getElementById(box_name);
+  info_number = document.getElementById(number_name);
+  if (info_box){
+    info_box.style.display = "block";
+  }
+  if (info_number){
+    var txt = document.createTextNode(recursive_deps);
+    info_number.appendChild(txt); 
+  }
+}

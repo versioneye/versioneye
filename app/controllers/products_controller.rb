@@ -111,6 +111,21 @@ class ProductsController < ApplicationController
       format.json { render :json => @product.as_json( {:following => following} ) }
     end
   end
+
+  def show_visual
+    key = url_param_to_origin params[:key]
+    @product = Product.find_by_key( key )
+    if @product.nil? 
+      flash[:error] = "The requested package is not available."
+      redirect_to products_path
+      return 
+    end
+    ver = url_param_to_origin params[:version]
+    attach_version @product, ver
+    @version = @product.get_version(@product.version)
+    @main_dependencies = @product.dependencies(nil)
+    render :layout => 'application_visual'
+  end
   
   def follow
     product_key = url_param_to_origin params[:product_key]

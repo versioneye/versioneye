@@ -27,6 +27,7 @@ Versioneye::Application.routes.draw do
   match '/package/:key',                                :to => 'products#show'
   match '/product/:key/version/:version',               :to => 'products#show'
   match '/package/:key/version/:version',               :to => 'products#show'
+  match '/package_visual/:key/version/:version',        :to => 'products#show_visual'
   match '/package/:key/version/:version/circle_dependencies', :to => 'products#circle_dependencies'
   match '/product/:key/version/:version/circle_dependencies', :to => 'products#circle_dependencies'
   match '/product/newest/:key/:type',                   :to => 'products#newest'
