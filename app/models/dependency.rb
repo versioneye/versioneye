@@ -32,6 +32,15 @@ class Dependency
     "#{url_param}"    
   end
 
+  def version_abs
+    return "0" if version.nil?
+    abs_version = String.new(version)
+    if prod_type.eql?("RubyGem")
+      abs_version = String.new(gem_version_abs)
+    end
+    abs_version
+  end
+
   def version_for_label
     return gem_version if prod_type.eql?("RubyGem")
     return version

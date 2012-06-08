@@ -112,7 +112,8 @@ class Product
     dependencies.each do |dep|      
       element = CircleElement.new
       element.id = dep.dep_prod_key
-      element.text = "#{dep.name} (#{dep.version_for_label})"
+      attach_label_to_element(element, dep)
+      element.version = dep.version_abs
       hash[dep.dep_prod_key] = element
     end
     return fetch_deps(1, hash, Hash.new)
@@ -124,22 +125,28 @@ class Product
     # deep.times{
     #   deep_space = "#{deep_space}  "
     # }
-    deep = deep + 1
+    # deep = deep + 1
     # p "#{deep_space} hash size: #{hash.count} parent_hash size: #{parent_hash.count}"
     new_hash = Hash.new
     hash.each do |prod_key, element|
       product = Product.find_by_key(element.id)
+      if product.nil?
+        p "#{element.id} #{element.version} not found!"
+        next
+      end
+      product.version = element.version
       dependencies = product.dependencies(nil)
-      # p "#{deep_space} #{dependencies.count} deps for #{product.name}"
+      # p "#{deep_space} #{dependencies.count} deps for #{product.name} #{product.version}"
       dependencies.each do |dep|
         key = dep.dep_prod_key
         ele = get_element_from_hash(new_hash, hash, parent_hash, key)
         if ele.nil?
           # p "#{deep_space}  create new element #{dep.name}"
           new_element = CircleElement.new
-          new_element.id = dep.dep_prod_key
-          new_element.text = "#{dep.name} (#{dep.version_for_label})"
+          new_element.id = dep.dep_prod_key          
+          attach_label_to_element(new_element, dep)
           new_element.connections << "#{element.id}"
+          new_element.version = dep.version_abs
           new_hash[dep.dep_prod_key] = new_element
         else 
           # p "#{deep_space}  element #{dep.name} already fetched"
@@ -334,6 +341,13 @@ class Product
       return element if !element.nil?
       element = parent_hash[key]
       return element
+    end
+
+    def attach_label_to_element(element, dep)
+      element.text = dep.name
+      if dep.version_for_label && !dep.version_for_label.empty? 
+        element.text += "(#{dep.version_for_label})"
+      end
     end
 
 end

@@ -1,6 +1,6 @@
 class CircleElement
 
-	attr_accessor :id, :text, :connections
+	attr_accessor :id, :text, :connections, :version
 
 	def initialize
 		self.connections = Array.new

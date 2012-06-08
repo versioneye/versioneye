@@ -23,10 +23,10 @@ module Versioneye
       configatron.server_url = 'http://localhost:3000'
       configatron.s3_projects_bucket = 'veye_dev_projects'
     elsif Rails.env == 'test'
-      configatron.server_url = 'http://versioneye-beta.com'
+      configatron.server_url = 'http://www.versioneye-beta.com'
       configatron.s3_projects_bucket = 'veye_test_projects'
     elsif Rails.env == 'production'
-      configatron.server_url = 'http://versioneye.com'
+      configatron.server_url = 'http://www.versioneye.com'
       configatron.s3_projects_bucket = 'veye_prod_projects'
     end
     

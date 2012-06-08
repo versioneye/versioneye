@@ -400,7 +400,8 @@ var MooWheel = new Class({
          }.bind(this));
 
          $(this.hoverCanvas).addEvent('click', function(e) {
-            if (! this.lastMouseOver) return false;
+            // alert("event");
+            // if (!this.lastMouseOver) return false;
             this.options.onItemClick(this.data[this.lastMouseOver], e);
          }.bind(this));
       }
