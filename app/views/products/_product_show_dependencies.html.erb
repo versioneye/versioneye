@@ -34,7 +34,10 @@
 				key = item.id; 
 				key = key.replace(/\//g, "--");
 				key = key.replace(/\./g, "~" );
-				window.location.href = "/package/" + key;
+				version = item.version;
+				version = version.replace(/\//g, "--");
+				version = version.replace(/\./g, "~" );
+				window.location.href = "/package/" + key + "/version/" + version;
 			}
 		} );
 	</script>

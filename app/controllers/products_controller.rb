@@ -177,7 +177,8 @@ class ProductsController < ApplicationController
           resp += "{"
           resp += "\"connections\": [#{dep.connections_as_string}],"
           resp += "\"text\": \"#{dep.text}\","
-          resp += "\"id\": \"#{dep.id}\"" 
+          resp += "\"id\": \"#{dep.id}\"," 
+          resp += "\"version\": \"#{dep.version}\"" 
           resp += "},"
         end
         end_point = resp.length - 2
