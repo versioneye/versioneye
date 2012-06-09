@@ -436,13 +436,16 @@ MooWheel.Remote = new Class({
         var preloadImages = function(wheelData) {
             var imageUrls = [], map = {};
             
+            if (!wheelData){
+              return false;
+            }
+
             container = document.getElementById("container");
             section = document.getElementById("section");
             border = options.data_border;
-            if (data.length > border && container && section){
-              // alert("big data in the house")
-              options.width = data.length * 11;
-              options.height = data.length * 11;
+            if (wheelData.length > border && container && section){
+              options.width = wheelData.length * 11;
+              options.height = wheelData.length * 11;
               container_width = options.width + 40;
               section_width = options.width + 10;
               document.getElementById("container").style.width = container_width + "px";
@@ -476,8 +479,14 @@ MooWheel.Remote = new Class({
         }.bind(this);
 
         if (options && options.url) {
+
+            // Get token and param from the meta tags
+            // var token = jQuery('meta[name="csrf-token"]').attr('content');
+            // var param = jQuery('meta[name="csrf-param"]').attr('content');
+            json_url = options.url; // + "?_method=POST&" + param + "=" + token;
+
             new Request.JSON({
-              url: options.url,
+              url: json_url,
               onComplete: function(wheelData) {
                   data = wheelData;
 
