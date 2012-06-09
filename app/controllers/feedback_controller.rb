@@ -6,10 +6,6 @@ class FeedbackController < ApplicationController
     feedback = params[:feedback]
     math = params[:fb_math]
     
-    if !signed_in?
-      
-    end
-    
     if !name.nil? && !name.empty? && !email.nil? && !email.empty? && !feedback.nil? && !feedback.empty?
       if signed_in? || math.eql?("9")
         FeedbackMailer.feedback_email(name, email, feedback).deliver
