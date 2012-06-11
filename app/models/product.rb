@@ -215,6 +215,8 @@ class Product
     self.version_link = version.link
     self.save
     p " udpate #{self.name} with version #{self.version}"
+  rescue
+    p " -- ERROR -- something went wrong --- "
   end
   
   def self.update_version_data_global
