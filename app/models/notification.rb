@@ -52,7 +52,7 @@ class Notification
         logger.error " -- no user found for id: #{id} "
         notifications = Notification.all( conditions: {user_id: id} )
         notifications.each do |noti|
-          logger.error " ---- remove notification for user id: #{id} "
+          p " ---- remove notification for user id: #{id} "
           noti.remove
         end        
       end
@@ -62,9 +62,12 @@ class Notification
   def self.send_notifications_for_user(user)    
     notifications = Notification.all( conditions: {sent_email: "false", user_id: user.id.to_s} )
     if !notifications.nil? && !notifications.empty?
-      logger.info "send notifications for user #{user.fullname} start"
+      p "send notifications for user #{user.fullname} start"
+      notifications.each do |noti|
+        product = Product.find(noti.product_id)
+      end
       NotificationMailer.new_version_email(user, notifications).deliver
-      logger.info "send notifications for user end"
+      p "send notifications for user end"
     end
   end
 
@@ -78,9 +81,8 @@ class Notification
   def self.send_newsletter_for_user(user)
     p "send notifications for user #{user.fullname} start"
     NewsletterMailer.NewsletterMailer(user).deliver
-    p "send notifications for user #{user.fullname} end"
   rescue
-    logger.error "An error occured. E-Mail inactive: #{user.fullname} - #{user.email}"
+    p "An error occured. E-Mail inactive: #{user.fullname} - #{user.email}"
   end
 
 end

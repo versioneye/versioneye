@@ -5,6 +5,10 @@ class PageController < ApplicationController
     redirect_to "/"
   end
 
+  def disclaimer
+    redirect_to "http://www.disclaimer.de/disclaimer.htm?farbe=FFFFFF/000000/000000/000000"
+  end
+
   def contact
   end
 

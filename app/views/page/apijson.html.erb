@@ -23,11 +23,11 @@
 	<p class="docu">
 		This is how you can use the search in your application. 
 	</p>
-	<pre class="code">http://versioneye.com/search.json?q=<<span>SEARCH TERM</span>></pre>
+	<pre class="code">https://www.versioneye.com/search.json?q=<<span>SEARCH TERM</span>></pre>
 	<p class="docu">
 		Here is an example. 
 	</p>
-	<pre class="code">http://versioneye.com/search.json?q=junit</pre>
+	<pre class="code">https://www.versioneye.com/search.json?q=junit</pre>
 	<p class="docu">
 		The result is the same as in the web application. But you get it as JSON objects. The result is an array of product objects.
 	</p>
@@ -217,11 +217,11 @@
 	<p class="docu">
 		If you want to have details to a special product/version you can use this request here.
 	</p>
-	<pre class="code">http://versioneye.com/product/<<span>PROD_KEY</span>>/version/<<span>VERSION_ID</span>>.json</pre>
+	<pre class="code">https://www.versioneye.com/product/<<span>PROD_KEY</span>>/version/<<span>VERSION_ID</span>>.json</pre>
 	<p class="docu">
 		Here is an example for JUnit.
 	</p>
-	<pre class="code">http://versioneye.com/product/junit--junit/version/4~10.json</pre>
+	<pre class="code">https://www.versioneye.com/product/junit--junit/version/4~10.json</pre>
 	<p class="docu">
 		If there are some special characters in "PROD_KEY" or "VERSION_ID" you must 
 		replace it to make it URL ready! Here is the table with the replacements.
@@ -252,11 +252,11 @@
 	<p class="docu">
 		If you want to have details to a special profile you can use this request here.
 	</p>
-	<pre class="code">http://versioneye.com/users/<<span>USERNAME</span>>.json</pre>
+	<pre class="code">https://www.versioneye.com/users/<<span>USERNAME</span>>.json</pre>
 	<p class="docu">
 		Here is an example with the profile of Robert Reiz.
 	</p>
-	<pre class="code">http://versioneye.com/users/reiz.json</pre>
+	<pre class="code">https://www.versioneye.com/users/reiz.json</pre>
 	<p class="docu">
 		The result contains username und fullname.
 	</p>
@@ -281,11 +281,11 @@
 	<p class="docu">
 		If you want to have the favorite products to a special user profile you can use this request here.
 	</p>
-	<pre class="code">http://versioneye.com/users/<<span>USERNAME</span>>/favoritepackages.json</pre>
+	<pre class="code">https://www.versioneye.com/users/<<span>USERNAME</span>>/favoritepackages.json</pre>
 	<p class="docu">
 		Here is an example with the profile of Robert Reiz.
 	</p>
-	<pre class="code">http://versioneye.com/users/reiz/favoritepackages.json</pre>
+	<pre class="code">https://www.versioneye.com/users/reiz/favoritepackages.json</pre>
 	<p class="docu">
 		Every user can control the result for this request in the privacy settings. 
 		If a user decided that nobody can see his favorite products, this request 
@@ -313,11 +313,11 @@
 	<p class="docu">
 		If you want to have all user comments to a special user profile you can use this request here.
 	</p>
-	<pre class="code">http://versioneye.com/users/<<span>USERNAME</span>>/comments.json</pre>
+	<pre class="code">https://www.versioneye.com/users/<<span>USERNAME</span>>/comments.json</pre>
 	<p class="docu">
 		Here is an example with the profile of Robert Reiz.
 	</p>
-	<pre class="code">http://versioneye.com/users/reiz/comments.json</pre>
+	<pre class="code">https://www.versioneye.com/users/reiz/comments.json</pre>
 	<p class="docu">
 		Every user can control the result for this request in the privacy settings. 
 		If a user decided that nobody can see his comments on his profile, this request 
@@ -335,7 +335,7 @@
 	<p class="docu">
 		This request makes just sense if you are logged in / signed in! 
 	</p>
-	<pre class="code">http://versioneye.com/users/<<span>USERNAME</span>>/notifications.json</pre>
+	<pre class="code">https://www.versioneye.com/users/<<span>USERNAME</span>>/notifications.json</pre>
 	<p class="docu">
 		It returns the number of the unread notifications. 
 	</p>
@@ -346,7 +346,7 @@
 		If you want to write an application where the user can sign in into VersionEye, 
 		you can do it with a simple post request. Just send a post request to this address.
 	</p>
-	<pre class="code">http://versioneye.com/sessions.json</pre>
+	<pre class="code">https://www.versioneye.com/sessions.json</pre>
 	<p class="docu">
 		This table below shows what your post form must contain.
 	</p>
@@ -384,7 +384,7 @@
 	<p class="docu">
 		If you want to sign out, just send a request to this URL
 	</p>
-	<pre class="code">http://versioneye.com/signout.json</pre>
+	<pre class="code">https://www.versioneye.com/signout.json</pre>
 	<p class="docu">
 		After the request the server will destroy the cookie and the corresponding session. 
 	</p>
@@ -395,7 +395,7 @@
 		The follow feature is just working when the user is signed in! In that case you 
 		just have to send a post request to this URL.
 	</p>
-	<pre class="code">http://versioneye.com/follow.json</pre>
+	<pre class="code">https://www.versioneye.com/follow.json</pre>
 	<p class="docu">
 		This table below shows what your post form must contain. 
 	</p>
@@ -422,18 +422,18 @@
 		The unfollow feature is working in the same fashion like the follow feature. 
 		But you have to use this URL.
 	</p>
-	<pre class="code">http://versioneye.com/unfollow.json</pre>
+	<pre class="code">https://www.versioneye.com/unfollow.json</pre>
 	
 	
 	<h2 class="docu_h2">Newest</h2><a name="newest"></a>
 	<p class="docu">
 		This interface gives you the newest version of a given product. 
 	</p>
-	<pre class="code">http://versioneye.com/product/newest/PRODUCT_KEY/natural.json</pre>
+	<pre class="code">https://www.versioneye.com/product/newest/PRODUCT_KEY/natural.json</pre>
 	<p class="docu">
 		Here is an example for JUnit. 
 	</p>
-	<pre class="code">http://versioneye.com/product/newest/junit--junit/natural.json</pre>
+	<pre class="code">https://www.versioneye.com/product/newest/junit--junit/natural.json</pre>
 	<p class="docu">
 		The result is a simple string showing the newest version of JUnit.
 	</p>	

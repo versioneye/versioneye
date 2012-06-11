@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <% if @product %>
-	<html xmlns:fb="http://ogp.me/ns/fb#" itemscope itemtype="http://schema.org/SoftwareApplication"  >
+	<html xmlns:fb="https://graph.facebook.com/schema/og/" itemscope itemtype="http://schema.org/SoftwareApplication"  >
 <% else %> 
-	<html xmlns:fb="http://ogp.me/ns/fb#">
+	<html xmlns:fb="https://graph.facebook.com/schema/og/">
 <% end %>
 
 <head >
@@ -18,18 +18,8 @@
 	<% end %>	
 <% end %>
 
-	<link href="http://versioneye.com/favicon.ico" rel="shortcut icon"  />
-	<title>VersionEye</title>
-	<!--[if lt IE 9]>
-	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-	<!--[if lt IE 8]><%= stylesheet_link_tag 'blueprint/ie' %><![endif]-->
-	<%= csrf_meta_tag %>
-	<%= stylesheet_link_tag "application" %>
-	<%= javascript_include_tag "application" %>
-	<script src="http://platform.twitter.com/widgets.js" ></script>
-	<script src="http://connect.facebook.net/en_US/all.js" ></script>
-	<script src="https://apis.google.com/js/plusone.js"></script> 
+	<%= render 'layouts/html_head' %>
+
 </head>
 
 <body>

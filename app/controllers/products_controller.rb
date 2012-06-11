@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
 
-  @@languages = ["Java", "Ruby", "Python", "Node.JS", "JavaScript", "PHP", "Clojure", "R", "opa"]
+  @@languages = ["Java", "Ruby", "Python", "Node.JS", "R", "JavaScript", "PHP", "Clojure"]
 
   def index
     @hide = "hide"
