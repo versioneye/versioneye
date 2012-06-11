@@ -16,16 +16,11 @@ gem 'mongoid', '2.4.8'
 gem 'actionmailer', '3.2.3'
 gem 'will_paginate', '3.0.3'
 gem 'unicorn', '4.3.0'
-gem 'naturalsorter', '0.3.4'
+gem 'naturalsorter', '0.3.5'
 gem 'postmark-rails', '0.4.1'
 gem 'httparty', '0.8.3'
 gem 'oauth', '0.4.6'
 gem 'twitter_oauth', '0.4.3'
-# gem 'omniauth', '1.0.2'
-# gem 'omniauth-twitter', '0.0.7'
-# gem 'twitter', '2.0.2'
-# gem 'twitter-text', '1.4.15'
-# gem 'pg', '0.11.0'
 
 gem 'aws-s3', '0.6.2', :require => 'aws/s3'
 gem 'nokogiri', '1.5.2'
@@ -57,7 +52,3 @@ end
 
 # Deploy with Capistrano
 # gem 'capistrano'
-
-gem 'whenever', '0.7.3'
-
-# gem 'daemons', '1.1.5'

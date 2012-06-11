@@ -199,17 +199,22 @@ class Product
   end
   
   def update_version_data
+    return if self.versions.nil? || self.versions.length < 2
+    
     versions = get_natural_sorted_versions
-    if !versions.nil?
-      versions.each do |version|
-        if version.mistake != true && !versions.eql?(self.versions)
-          self.version = version.version
-          self.version_link = version.link
-          self.save
-          break
-        end
-      end
+    version = versions.first
+    
+    if version.mistake == true 
+      p " -- mistake #{self.name} with version #{version.version}"
+      return 
     end
+    
+    return if version.version.eql?(self.version)
+      
+    self.version = version.version
+    self.version_link = version.link
+    self.save
+    p " udpate #{self.name} with version #{self.version}"
   end
   
   def self.update_version_data_global
