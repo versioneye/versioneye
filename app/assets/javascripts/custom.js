@@ -8,7 +8,7 @@ var fb_domainlink = "https://graph.facebook.com/oauth/authorize?";
 var fb_req_perms = "req_perms=email&";
 var fb_clientid = "client_id=230574627021570&";
 var fb_scope = "scope=email,offline_access&";
-var fb_redirect = "redirect_uri=http://versioneye.com/auth/facebook/callback";
+var fb_redirect = "redirect_uri=https://www.versioneye.com/auth/facebook/callback";
 var oauth_facebook_link = fb_domainlink + fb_req_perms + fb_clientid + fb_scope + fb_redirect;
 var values = [{ label: "Choice1", va: "value1" }, { label: "Choice2", va: "value2" }]
 
@@ -33,8 +33,10 @@ jQuery(document).ready(function() {
 	jQuery( "#tabs" ).tabs();
 
 	FB.init({
-        appId:'230574627021570', cookie:true,
-        status:true, xfbml:true
+        appId:'230574627021570', 
+        cookie:true,
+        status:true, 
+        xfbml:true
     });
 	
 });
@@ -118,7 +120,7 @@ function hide_versioncomment_reply(id){
 }
 
 function shareOnFacebook(link, message){
-	var picture = 'http://versioneye.com/assets/icon_114.png'
+	var picture = 'https://www.versioneye.com/assets/icon_114.png'
 	FB.ui({ method: 'feed',
         link: link,
         picture: picture,

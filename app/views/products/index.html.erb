@@ -1,6 +1,12 @@
 
 <%= render 'shared/dialog_follow' %>
 
+<% if 1 == 2 %>
+	<section class="section-lp round" style="text-align: center;">
+		<div id="canvas-container" style="margin-top: 20px;"></div>
+	</section>
+<% end %>
+
 <section class="section-lp round">
 	<div class="lp_box lp_sign_up" style="vertical-align:bottom; text-align: center;">
 		<a href="https://twitter.com/share" 
@@ -55,3 +61,26 @@
 		</div>
 	<% end %>
 </section>
+
+<% if 1 == 2 %>
+<script type="text/javascript">
+		jQuery.noConflict();
+		var wheel = new MooWheel.Remote(false, document.getElementById("canvas-container"), { 
+			url: '/package/rails/version/3~2~3/circle_dependencies.json',
+			width: "500", 
+			height: "450",
+			data_border: 70,
+			infoBox: "infoBox",
+			infoNumber: "runtime_recursive_number",
+			onItemClick: function(item, event){
+				key = item.id; 
+				key = key.replace(/\//g, "--");
+				key = key.replace(/\./g, "~" );
+				version = item.version;
+				version = version.replace(/\//g, "--");
+				version = version.replace(/\./g, "~" );
+				window.location.href = "/package/" + key + "/version/" + version;
+			}
+		} );
+	</script>
+<% end %> 

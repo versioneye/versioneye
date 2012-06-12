@@ -8,18 +8,14 @@
 	<% if !links.empty? %>
 		<% links.each do |link| %>
 			<span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/WebPage" >
-				<a itemprop="url" href="<%= link.get_link %>" target="new">
-					<span itemprop="name"><%= link.name %></span>
-				</a>
+				<a itemprop="url" href="<%= link.get_link %>" target="new"><span itemprop="name"><%= link.name %></span></a>
 			</span><br/>
 		<% end %>
 	<% end %>
 	<% if !version_links.empty? %>
 		<% version_links.each do |link| %>
 			<span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/WebPage" >
-				<a itemprop="url" href="<%= link.get_link %>" target="new">
-					<span itemprop="name"><%= link.name %></span>
-				</a>
+				<a itemprop="url" href="<%= link.get_link %>" target="new"><span itemprop="name"><%= link.name %></span></a>
 			</span><br/>
 		<% end %>
 	<% end %>
