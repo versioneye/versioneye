@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "search" do
   it "shows the default search" do
-    post "/search", :q => ""
+    get "/search", :q => ""
     assert_response :success
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"
@@ -25,7 +25,7 @@ describe "search" do
     results.should_not be_nil
     results.size.should eq(1)
 
-    post "/search", :q => "json"
+    get "/search", :q => "json"
     assert_response :success
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"

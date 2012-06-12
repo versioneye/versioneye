@@ -43,6 +43,8 @@
 						 				:onmouseout => "document.getElementById('logout_img').src='/assets/logout_off.png';",
 										:method => :delete %></li>
 					<% else %>
+						<li><%= link_to "Pricing", pricing_path %></li>
+						<li class="nav-line" ></li>	
 						<li><%= link_to "Sign Up", signup_path %></li>
 						<li class="nav-line" ></li>	
 						<li><%= link_to "Sign In", signin_path %></li>

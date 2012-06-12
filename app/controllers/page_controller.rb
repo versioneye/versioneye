@@ -9,6 +9,9 @@ class PageController < ApplicationController
     redirect_to "http://www.disclaimer.de/disclaimer.htm?farbe=FFFFFF/000000/000000/000000"
   end
 
+  def pricing
+  end
+
   def contact
   end
 

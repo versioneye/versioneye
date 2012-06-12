@@ -10,7 +10,6 @@ class FacebookController < ApplicationController
       return
     end
 
-    link2 = "https://graph.facebook.com/oauth/access_token?client_id=230574627021570&redirect_uri=https://www.versioneye.com//auth/facebook/callback&client_secret=d27fb4a5d443f29cfdbddd79638c91a8&code="
     domain = 'https://graph.facebook.com'
     uri = '/oauth/access_token'
     query = 'client_id=230574627021570&'
@@ -24,9 +23,7 @@ class FacebookController < ApplicationController
     response = HTTParty.get(URI.encode(link))
 
     data = response.body
-    p "facebook response.body: #{data}"
     access_token = data.split("=")[1]
-    p "facebook access_token: #{access_token}"
 
     user = get_user_for_token( access_token )
     if !user.nil?
@@ -41,7 +38,6 @@ class FacebookController < ApplicationController
 
     def get_user_for_token(token)
       json_user = JSON.parse HTTParty.get('https://graph.facebook.com/me?access_token=' + URI.escape(token)).response.body
-      p "facebook json_user: #{json_user}"
 
       user = User.find_by_fb_id( json_user['id'] )
       if !user.nil?
