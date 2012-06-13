@@ -134,7 +134,9 @@ class Product
         p "#{element.id} #{element.version} not found!"
         next
       end
-      product.version = element.version
+      if (element.version && !element.version.eql?("") && !element.version.eql?("0"))
+        product.version = element.version
+      end
       dependencies = product.dependencies(nil)
       # p "#{deep_space} #{dependencies.count} deps for #{product.name} #{product.version}"
       dependencies.each do |dep|

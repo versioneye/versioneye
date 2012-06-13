@@ -11,5 +11,14 @@ class NotificationMailer < ActionMailer::Base
       :tag => "notification_new_version"
       )
   end
+
+  def status(count)
+    @count = count
+    mail(
+      :to => "reiz@versioneye.com",
+      :subject => "#{count} notifications",
+      :tag => "notification_status"
+      )
+  end
   
 end

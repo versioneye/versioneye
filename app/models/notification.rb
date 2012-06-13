@@ -26,28 +26,19 @@ class Notification
     end
   end
   
-  def self.send_notifications_job
-    one_min = 60
-    one_hour = one_min * 60
-    while true do
-      send_notifications
-      logger.info "start to make a nap"
-      sleep one_hour
-      logger.info "wake up and work a little bit"
-    end
-  end
-  
   def self.send_to_rob
-    user = User.find_by_id( 1 )
+    user = User.find_by_email( "robert.reiz.81@gmail.com" )
     send_notifications_for_user( user )
   end
   
   def self.send_notifications
+    count = 0
     user_ids = Notification.all.distinct(:user_id)
     user_ids.each do |id|
       user = User.find_by_id( id )
       if !user.nil?
         send_notifications_for_user( user )
+        count = count + 1
       else
         logger.error " -- no user found for id: #{id} "
         notifications = Notification.all( conditions: {user_id: id} )
@@ -56,16 +47,15 @@ class Notification
           noti.remove
         end        
       end
-    end    
+    end
+    NotificationMailer.status(count).deliver
   end      
   
   def self.send_notifications_for_user(user)    
     notifications = Notification.all( conditions: {sent_email: "false", user_id: user.id.to_s} )
+    notifications.sort! { |a,b| a.product_id <=> b.product_id }
     if !notifications.nil? && !notifications.empty?
       p "send notifications for user #{user.fullname} start"
-      notifications.each do |noti|
-        product = Product.find(noti.product_id)
-      end
       NotificationMailer.new_version_email(user, notifications).deliver
       p "send notifications for user end"
     end
@@ -80,7 +70,7 @@ class Notification
 
   def self.send_newsletter_for_user(user)
     p "send notifications for user #{user.fullname} start"
-    NewsletterMailer.NewsletterMailer(user).deliver
+    NewsletterMailer.newsletter_email(user).deliver
   rescue
     p "An error occured. E-Mail inactive: #{user.fullname} - #{user.email}"
   end
