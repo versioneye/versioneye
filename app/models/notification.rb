@@ -36,11 +36,11 @@ class Notification
     user_ids = Notification.all.distinct(:user_id)
     user_ids.each do |id|
       user = User.find_by_id( id )
-      if !user.nil?
+      if !user.nil? && user.deleted != true
         send_notifications_for_user( user )
         count = count + 1
       else
-        logger.error " -- no user found for id: #{id} "
+        p " -- no user found for id: #{id} "
         notifications = Notification.all( conditions: {user_id: id} )
         notifications.each do |noti|
           p " ---- remove notification for user id: #{id} "
@@ -64,7 +64,9 @@ class Notification
   def self.send_newsletters
     users = User.all()
     users.each do |user|
-      Notification.send_newsletter_for_user(user)
+      if user.deleted != true
+        Notification.send_newsletter_for_user(user)
+      end
     end
   end
 
