@@ -274,7 +274,7 @@ class Product
   end
 
   def name_and_version    
-    "#{name} (#{version})"
+    "#{name} : #{version}"
   end
   
   def name_version(limit)    
@@ -355,7 +355,7 @@ class Product
     def attach_label_to_element(element, dep)
       element.text = dep.name
       if dep.version_for_label && !dep.version_for_label.empty? 
-        element.text += "(#{dep.version_for_label})"
+        element.text += ":#{dep.version_for_label}"
       end
     end
 

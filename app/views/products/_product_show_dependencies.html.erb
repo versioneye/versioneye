@@ -1,14 +1,6 @@
 <div class="boxHeader">
 	Dependencies
 </div>
-<div class="boxContainer" id="dependencies" itemprop="requirements" itemscope="" itemtype="http://schema.org/ItemList">
-	<meta name="name" content="Requirements" itemprop="name" />
-	<% if @product.prod_type.eql?("Maven2") %>
-		<%= render "product_show_dependencies_maven2" %>
-	<% else %>
-		<%= render "product_show_dependencies_rubygems" %>
-	<% end %>
-</div>
 <div class="boxContainer" >
 	<div id="canvas-container"></div>
 	<div style="text-align: center; display: none" id="infoBox">
@@ -19,7 +11,15 @@
 			See visual page
 		</a>
 	</div>
-</div>	
+</div>
+<div class="boxContainer" id="dependencies" itemprop="requirements" itemscope="" itemtype="http://schema.org/ItemList">
+	<meta name="name" content="Requirements" itemprop="name" />
+	<% if @product.prod_type.eql?("Maven2") %>
+		<%= render "product_show_dependencies_maven2" %>
+	<% else %>
+		<%= render "product_show_dependencies_rubygems" %>
+	<% end %>
+</div>
 
 <% if @main_dependencies.count > 3 %>
 	<script type="text/javascript">

@@ -8,17 +8,26 @@
 <% end %>
 
 <section class="section-lp round">
-	<div class="lp_box lp_sign_up" style="vertical-align:bottom; text-align: center;">
-		<a href="https://twitter.com/share" 
-		   class="twitter-share-button" 
-		   data-url="http://versioneye.com" 
-		   data-text="Follow your Libraries @VersionEye and get notified about new versions." 
-		   data-count="horizontal" >Twitter</a>
-		<iframe src="https://www.facebook.com/plugins/like.php?href=https://www.facebook.com/pages/VersionEye/295350293845442" style="border:none; width:200px; height:25px"></iframe>
-		<div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="http://versioneye.com" style="width: 90px;"></div>
-	</div>
-	<div style="text-align: center;">
-		<%= render "shared/follow_versioneye" %>
+	
+	<div class="lp_box lp_sign_up" style="text-align: center;">
+		<ul class="list-row" style="display: block; width: 70%; margin: auto;">
+			<li class="list-cell share-on-icon" style="width: 214px;">
+				<%= render "shared/follow_versioneye" %>
+			</li>
+			<li class="list-cell share-on-icon">
+				<a href="https://twitter.com/share" 
+				   class="twitter-share-button" 
+				   data-url="http://versioneye.com" 
+				   data-text="Follow your Libraries @VersionEye and get notified about new versions." 
+				   data-count="horizontal" >Twitter</a>
+			</li>
+			<li class="list-cell share-on-icon">
+				<iframe src="https://www.facebook.com/plugins/like.php?href=https://www.facebook.com/pages/VersionEye/295350293845442&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=25" style="border:none; width:107px; height:25px"></iframe>
+			</li>
+			<li class="list-cell share-on-icon" >
+				<div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="http://versioneye.com" style="width: 100px;"></div>
+			</li>
+		</ul>
 	</div>
 </section>
 
