@@ -37,8 +37,9 @@ class Notification
     user_ids.each do |id|
       user = User.find_by_id( id )
       if !user.nil? && user.deleted != true
-        send_notifications_for_user( user )
-        count = count + 1
+          if send_notifications_for_user( user )
+            count = count + 1
+          end
       else
         p " -- no user found for id: #{id} "
         notifications = Notification.all( conditions: {user_id: id} )
@@ -53,12 +54,13 @@ class Notification
   
   def self.send_notifications_for_user(user)    
     notifications = Notification.all( conditions: {sent_email: "false", user_id: user.id.to_s} )
-    notifications.sort! { |a,b| a.product_id <=> b.product_id }
     if !notifications.nil? && !notifications.empty?
-      p "send notifications for user #{user.fullname} start"
+      notifications.sort! { |a,b| a.product_id <=> b.product_id }
       NotificationMailer.new_version_email(user, notifications).deliver
-      p "send notifications for user end"
+      p "send notifications for user #{user.fullname} start"
+      return true
     end
+    return false
   end
 
   def self.send_newsletters
