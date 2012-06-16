@@ -1,8 +1,5 @@
 class TwitterController < ApplicationController
 
-  @@consumer_key = 'QUC41adGEitJRMMyBJ7w'
-  @@consumer_secret = '5hI3nV0KLCXsT96gdTV6ntQ76wss76l9yXI4lKmNrCI'
-
   def forward 
     oauth = oauth_consumer
     
@@ -91,7 +88,9 @@ class TwitterController < ApplicationController
   private 
 
     def oauth_consumer
-      OAuth::Consumer.new(@@consumer_key, @@consumer_secret, { :site => "http://twitter.com" })
+      OAuth::Consumer.new(Settings.twitter_consumer_key, 
+                          Settings.twitter_consumer_secret, 
+                          { :site => "http://twitter.com" })
     end
 
     def fetch_access_token( oauth, token, secret, verifier )
@@ -107,8 +106,8 @@ class TwitterController < ApplicationController
     def update_twitter_status(token, secret)
       logger.info "---- update_twitter_status ------------------"
       client = TwitterOAuth::Client.new(
-                  :consumer_key => @@consumer_key, 
-                  :consumer_secret => @@consumer_secret, 
+                  :consumer_key => Settings.twitter_consumer_key, 
+                  :consumer_secret => Settings.twitter_consumer_secret, 
                   :token => token, 
                   :secret => secret)
       if client.authorized?

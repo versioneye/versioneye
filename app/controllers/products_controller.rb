@@ -187,6 +187,22 @@ class ProductsController < ApplicationController
       }
     end
   end
+
+  def imagebin
+    image_bin = params[:image]
+    image_bin.gsub!(/data:image\/png;base64,/, "")
+    bucket = 
+    AWS::S3::S3Object.store("filename.png", 
+      Base64.decode64(image_bin), 
+      Settings.s3_infographics_bucket, 
+      :access => "public-read")
+    respond_to do |format|
+      format.json { 
+        resp = "ok"
+        render :json => "[#{resp}]"
+      }
+    end
+  end
   
   def newest
     key = url_param_to_origin params[:key]

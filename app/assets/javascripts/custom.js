@@ -41,6 +41,14 @@ jQuery(document).ready(function() {
 	
 });
 
+function upload_image(){
+	jQuery.post("/imagebin.json", { 'image': document.getElementById("canvas").toDataURL() }, 
+		function(data) {
+    		alert("Data Loaded: " + data);
+   		} 
+   		);
+}
+
 function load_dialog_follow(product_name){	
 	document.getElementById('product_to_follow').innerHTML = product_name;	
 	jQuery('#dialog_follow').dialog(

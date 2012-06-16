@@ -8,15 +8,15 @@
 			<li class="list-cell share-on-icon">
 				<a href="https://twitter.com/share" 
 				   class="twitter-share-button" 
-				   data-url="<%= configatron.server_url %>/package/<%= @product.to_param %>" 
+				   data-url="<%= Settings.server_url %>/package/<%= @product.to_param %>" 
 				   data-text="Check out #<%= @product.name %> @VersionEye" 
 				   data-count="horizontal" >Twitter</a>
 			</li>
 			<li class="list-cell share-on-icon">
-				<iframe src="https://www.facebook.com/plugins/like.php?href=<%=configatron.server_url%>/package/<%=@product.to_param%>&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=25" style="border:none; width:100px; height:25px"></iframe>
+				<iframe src="https://www.facebook.com/plugins/like.php?href=<%=Settings.server_url%>/package/<%=@product.to_param%>&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=25" style="border:none; width:100px; height:25px"></iframe>
 			</li>
 			<li class="list-cell share-on-icon" >
-				<div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="<%= configatron.server_url %>/package/<%= @product.to_param %>" style="width: 90px;"></div>
+				<div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="<%= Settings.server_url %>/package/<%= @product.to_param %>" style="width: 90px;"></div>
 			</li>
 		</ul>
 	</li>

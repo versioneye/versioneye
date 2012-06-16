@@ -24,7 +24,7 @@ class User::ProjectsController < ApplicationController
     filename = nil
     url = project_url
     if url.nil? || url.empty?
-      filename = upload_to_s3 params
+      filename = upload_to_s3( params )
       url = get_s3_url filename
     end
     project_type = params[:project][:project_type]
@@ -110,19 +110,20 @@ class User::ProjectsController < ApplicationController
       fname = sanitize_filename(orig_filename)
       random = create_random_value
       filename = "#{random}_#{fname}"
-      bucket = configatron.s3_projects_bucket
-      AWS::S3::S3Object.store(filename, fileUp['datafile'].read, bucket, :access => :private)
+      AWS::S3::S3Object.store(filename, 
+        fileUp['datafile'].read, 
+        Settings.s3_projects_bucket, 
+        :access => :private)
       filename
     end
     
     def get_s3_url filename
-      bucket = configatron.s3_projects_bucket
-      url = AWS::S3::S3Object.url_for(filename, bucket, :authenticated => true)
+      url = AWS::S3::S3Object.url_for(filename, Settings.s3_projects_bucket, :authenticated => true)
       url
     end
     
     def delete_from_s3 filename
-      AWS::S3::S3Object.delete filename, configatron.s3_projects_bucket
+      AWS::S3::S3Object.delete filename, Settings.s3_projects_bucket
     end
   
     def sanitize_filename(file_name)

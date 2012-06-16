@@ -81,9 +81,11 @@ class GithubController < ApplicationController
   def get_token( code )
     domain = 'https://github.com/'
     uri = 'login/oauth/access_token'
-    query = 'client_id=50fb47103b8a3f03b2cd&'
-    query += 'client_secret=621051dd2033682449f62a5452a0e54b6c432907&'
-    query += 'code=' + code
+    query = 'client_id='
+    query += Settings.github_client_id
+    query += '&client_secret='
+    query += Settings.github_client_secret
+    query += '&code=' + code
     link = "#{domain}#{uri}?#{query}"
 
     doc = Nokogiri::HTML( open( URI.encode(link) ) )

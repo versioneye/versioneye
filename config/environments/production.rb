@@ -57,15 +57,18 @@ Versioneye::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  config.action_mailer.delivery_method   = :postmark
+  config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
   
   # config.action_mailer.delivery_method = :smtp  
   # config.action_mailer.smtp_settings = {
-  #    :address              => "smtp.gmail.com",
+  #    :address              => ",
   #    :port                 => 587,
-  #    :domain               => 'versioneye.com',
-  #    :user_name            => 'notify@versioneye.com',
-  #    :password             => 'gogoNoto1!',
-  #    :authentication       => 'plain',
+  #    :domain               => '',
+  #    :user_name            => '',
+  #    :password             => '',
+  #    :authentication       => '',
   #    :enable_starttls_auto => true  }
   
 end

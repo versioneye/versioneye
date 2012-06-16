@@ -5,7 +5,7 @@ class VersioncommentMailer < ActionMailer::Base
     @prod = product
     @follower = follower
     @user = user
-    @commentlink = "#{configatron.server_url}/vc/#{comment.id}"
+    @commentlink = "#{Settings.server_url}/vc/#{comment.id}"
     mail(
       :to => @follower.email, 
       :subject => "Comment on Package",

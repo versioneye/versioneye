@@ -35,6 +35,7 @@ Versioneye::Application.routes.draw do
   get   '/product/newest/:key/:type',                   :to => 'products#newest'
   get   '/product/wouldbenewest/:key/version/:version', :to => 'products#wouldbenewest'
   get   '/biggest/:version1/:version2',                 :to => 'products#biggest'
+  post  '/imagebin',                                    :to => 'products#imagebin'
 
   get   '/news',               :to => 'news#news'
   get   '/mynews',             :to => 'news#mynews'

@@ -18,7 +18,7 @@
 			<ul class="list-row">
 				<li class="list-cell icon-cell" style="vertical-align: top">
 					<% if show_gravatar %>
-						<%= link_to gravatar_image_tag( comment.user.email, :style => "width: 40px;", :alt => comment.user.fullname, :gravatar => { :size => 40, :default => "#{configatron.server_url}/profile_icon.png" }), user_path(comment.user) %>
+						<%= link_to gravatar_image_tag( comment.user.email, :style => "width: 40px;", :alt => comment.user.fullname, :gravatar => { :size => 40, :default => "#{Settings.server_url}/profile_icon.png" }), user_path(comment.user) %>
 					<% end %>
 				</li>
 				<li class="list-cell">
@@ -28,12 +28,12 @@
 					<div class="meta-text-small" >
 						<ul class="searchResult-inner-list-row">
 							<li class="searchResult-inner-list-cell share-on-icon">
-								<%= image_tag "facebook_icon.png", :onclick=>"shareOnFacebook('#{configatron.server_url}/vc/#{comment.id}', '#{comment.user.fullname} on #{comment.name_and_version} @VersionEye');", :alt=>"Facebook", :title=>"Facebook" %>
+								<%= image_tag "facebook_icon.png", :onclick=>"shareOnFacebook('#{Settings.server_url}/vc/#{comment.id}', '#{comment.user.fullname} on #{comment.name_and_version} @VersionEye');", :alt=>"Facebook", :title=>"Facebook" %>
 							</li>
 							<li class="searchResult-inner-list-cell share-on-icon">
 								<a href="https://twitter.com/share" 
 								   class="twitter-share-button" 
-								   data-url="<%= configatron.server_url %>/vc/<%= comment.id %>" 
+								   data-url="<%= Settings.server_url %>/vc/<%= comment.id %>" 
 								   data-text="<%= comment.user.fullname %> on <%= comment.name_and_version %> @VersionEye" 
 								   data-count="horizontal" >Twitter</a>
 							</li>

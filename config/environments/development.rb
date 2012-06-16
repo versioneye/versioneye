@@ -1,6 +1,6 @@
 Versioneye::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
-
+  
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
@@ -29,5 +29,8 @@ Versioneye::Application.configure do
   config.assets.debug = true
 
   config.log_level = :debug
+  
+  config.action_mailer.delivery_method   = :postmark
+  config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
 
 end

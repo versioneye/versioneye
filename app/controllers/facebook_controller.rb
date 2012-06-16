@@ -12,12 +12,14 @@ class FacebookController < ApplicationController
 
     domain = 'https://graph.facebook.com'
     uri = '/oauth/access_token'
-    query = 'client_id=230574627021570&'
-    query += 'redirect_uri='
-    query += configatron.server_url
+    query = 'client_id='
+    query += Settings.facebook_client_id
+    query += '&redirect_uri='
+    query += Settings.server_url
     query += '/auth/facebook/callback&'
-    query += 'client_secret=d27fb4a5d443f29cfdbddd79638c91a8&'
-    query += 'code=' + code
+    query += 'client_secret='
+    query += Settings.facebook_client_secret
+    query += '&code=' + code
     link = domain + uri + '?' + query
 
     response = HTTParty.get(URI.encode(link))
