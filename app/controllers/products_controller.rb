@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
     @comments = Versioncomment.all().desc(:created_at).limit(10) 
     @newest = Array.new
     newest_ids = Array.new
-    @hotest = Product.get_hotest(10)
+    @hotest = Product.get_hotest(7)
     new_stuff = Newest.get_newest(200)
     if !new_stuff.nil? && !new_stuff.empty?
       new_stuff.each do |entry|
@@ -21,7 +21,7 @@ class ProductsController < ApplicationController
           @newest << product
           newest_ids << product.id
         end  
-        break if @newest.size == 10    
+        break if @newest.size == 7
       end
     end
     @languages = @@languages # Product.get_unique_languages
@@ -190,16 +190,20 @@ class ProductsController < ApplicationController
 
   def imagebin
     image_bin = params[:image]
+    image_key = params[:key]
+    image_version = params[:version]
+    filename = "#{image_key}:#{image_version}.png"
     image_bin.gsub!(/data:image\/png;base64,/, "")
     bucket = 
-    AWS::S3::S3Object.store("filename.png", 
+    AWS::S3::S3Object.store(
+      filename, 
       Base64.decode64(image_bin), 
       Settings.s3_infographics_bucket, 
       :access => "public-read")
+    url = get_s3_url(filename)
     respond_to do |format|
       format.json { 
-        resp = "ok"
-        render :json => "[#{resp}]"
+        render :json => "#{url}"
       }
     end
   end
@@ -264,6 +268,11 @@ class ProductsController < ApplicationController
         lang = ""
       end
       lang
+    end
+
+    def get_s3_url filename
+      url = AWS::S3::S3Object.url_for(filename, Settings.s3_infographics_bucket, :authenticated => false)
+      url
     end
 
 end

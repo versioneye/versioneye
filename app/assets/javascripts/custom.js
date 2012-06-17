@@ -12,7 +12,7 @@ var fb_redirect = "redirect_uri=https://www.versioneye.com/auth/facebook/callbac
 var oauth_facebook_link = fb_domainlink + fb_req_perms + fb_clientid + fb_scope + fb_redirect;
 var values = [{ label: "Choice1", va: "value1" }, { label: "Choice2", va: "value2" }]
 
-jQuery.noConflict();
+
 jQuery(document).ready(function() {
 	
 	jQuery('#q').tbHinter({
@@ -42,12 +42,22 @@ jQuery(document).ready(function() {
 });
 
 function upload_image(){
-	jQuery.post("/imagebin.json", { 'image': document.getElementById("canvas").toDataURL() }, 
-		function(data) {
-    		alert("Data Loaded: " + data);
-   		} 
-   		);
+	jQuery.ajax({
+        type: 'POST',
+        url: "/imagebin.json",
+        data: { 'image': document.getElementById("canvas").toDataURL(), 'key': 'hibernate', 'version': "1.0" },
+        dataType: 'text',
+        success: function(data) {
+            alert(data);
+        }, 
+        error: function(xhr, ajaxOptions, thrownError) {
+			alert('failed....' + thrownError);
+		}
+        
+    });
 }
+
+
 
 function load_dialog_follow(product_name){	
 	document.getElementById('product_to_follow').innerHTML = product_name;	
