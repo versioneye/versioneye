@@ -2,7 +2,6 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.3'
 gem 'jquery-rails', '2.0.2'
-gem 'configatron', '2.9.1'
 gem 'execjs', '1.3.0'
 gem 'therubyracer', '0.10.1'
 gem 'activesupport', '3.2.3'
@@ -35,12 +34,9 @@ end
 
 group :development do
 #  gem 'ruby-debug19', :require => 'ruby-debug'  
-#  gem 'faker', '0.3.1'
-#  gem 'webrat', '0.7.3'
   gem "annotated_models", "3.0.2"
   gem 'rspec-rails', '2.9.0'
   gem 'webrat', '0.7.3'
-# gem 'capybara', '1.1.2'
 end
 
 group :test do
@@ -49,6 +45,3 @@ group :test do
   gem 'rspec-rails', '2.9.0'
   gem 'webrat', '0.7.3'
 end
-
-# Deploy with Capistrano
-# gem 'capistrano'
