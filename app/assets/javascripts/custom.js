@@ -41,22 +41,51 @@ jQuery(document).ready(function() {
 	
 });
 
-function upload_image(){
+function handle_path(canvas_id, product_key, product_version, name, version){
 	jQuery.ajax({
         type: 'POST',
-        url: "/imagebin.json",
-        data: { 'image': document.getElementById("canvas").toDataURL(), 'key': 'hibernate', 'version': "1.0" },
+        url: "/get_image_path.json",
+        data: { 'key': product_key, 'version': product_version },
         dataType: 'text',
         success: function(data) {
-            alert(data);
-        }, 
-        error: function(xhr, ajaxOptions, thrownError) {
-			alert('failed....' + thrownError);
-		}
-        
+        	if (data == "nil" ){
+        		upload_file(canvas_id, product_key, product_version, name, version)
+        	} else {
+        		show_pinit_button(product_key, product_version, data, name, version)
+        	}
+        }
     });
 }
 
+function upload_file(canvas_id, product_key, product_version, name, version){
+	canvas = document.getElementById(canvas_id)
+	if (canvas){
+		jQuery.ajax({
+	        type: 'POST',
+	        url: "/upload_image.json",
+	        data: { 'image': document.getElementById(canvas_id).toDataURL(), 'key': product_key, 'version': product_version },
+	        dataType: 'text',
+	        success: function(data) {
+	            show_pinit_button(product_key, product_version, data, name, version)
+	        }
+	    });	
+	}
+}
+
+function show_pinit_button(product_key, product_version, picture_url, name, version){
+	container = document.getElementById("container");
+	section = document.getElementById("section");
+	if (recursive_deps > 70 && container == null && section == null){ 
+		canvas_container = document.getElementById("canvas-container");
+	    var img = document.createElement("IMG");
+	    img.src = picture_url;
+	    img.style.width = "600px"
+	    canvas_container.appendChild(img);
+	}
+	pin_button = document.getElementById("pinit_compile");
+	pin_button.href = "http://pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.versioneye.com/package/"+product_key+"/version/"+product_version+"&media="+picture_url+"&description=" + name + " : " + version;
+	pin_button.style.display = "block";
+}
 
 
 function load_dialog_follow(product_name){	

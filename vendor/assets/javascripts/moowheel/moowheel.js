@@ -44,7 +44,13 @@ var MooWheel = new Class({
       onItemClick: $empty,
       infoBox: 'mooinfo', 
       infoNumber: 'moonumber', 
-      data_border: 70
+      data_border: 70, 
+      canvas_id: 'canvas', 
+      canvas_hover_id: 'canvas_hover', 
+      product_key: "product_key", 
+      product_version: "product_version", 
+      product_name: "product_name", 
+      version: "version"
    },
    
    initialize: function(data, ct, options) {
@@ -57,7 +63,7 @@ var MooWheel = new Class({
       container = document.getElementById("container");
       section = document.getElementById("section");
       if (data_length > border && container == null && section == null ){
-        show_info_box(this.options.infoBox, this.options.infoNumber, data_length);
+        show_info_box(data, options);
         return false;
       }
       
@@ -77,7 +83,7 @@ var MooWheel = new Class({
       var canvas = new Element('canvas', {
         width:  (this.options.width ? this.options.width : hw) + 'px',
         height: (this.options.height ? this.options.height : hw) + 'px',
-        id: "canvas"
+        id: this.options.canvas_id
       });
       ct.adopt(canvas);
       
@@ -104,7 +110,7 @@ var MooWheel = new Class({
                top:  canvasPos.top + 'px',
                zIndex: 9
             },
-            id: "canvas_hover",
+            id: this.options.canvas_hover_id,
             width: canvasPos.width + 'px',
             height: canvasPos.height + 'px'
          });
@@ -274,7 +280,6 @@ var MooWheel = new Class({
 
             this.cx.restore();
       }
-      show_info_box(this.options.infoBox, this.options.infoNumber, this.data.length);
    },
 
    // calculate a radian angle
@@ -308,7 +313,7 @@ var MooWheel = new Class({
       var y = this.options.center.y + Math.sin(angle * (Math.PI / 180)) * this.radius;
       
       cx.lineWidth = hover ? this.options.hoverLines.lineWidth : 2;
-      
+
       // draw the bezier curve
       // note: the control points of the curve are the radius / 2
       for(var j = 0; j < connections.length; j++) {
@@ -339,15 +344,19 @@ var MooWheel = new Class({
          var self = this;
          setTimeout(function() { self.drawConnection(i+1); }, 25);
       } else {
-         this.drawPoints();
+        this.drawPoints();
+        cx.fillStyle = "lightgray";
+        cx.font = "14px Arial";
+        cx.fillText("www.VersionEye.com", this.options.center.x - 70, 30);
+        show_info_box(this.data, this.options);
       }
    },
    
    // draw the entire MooWheel
    draw: function() {
       if (this.data) {
-         this.setPoints();
-         this.drawConnection(0);
+        this.setPoints();
+        this.drawConnection(0);
       }
 
       if (this.options.hover) {
@@ -504,7 +513,10 @@ MooWheel.Remote = new Class({
     }
 });
 
-function show_info_box(box_name, number_name, recursive_deps){
+function show_info_box(data, options){
+  box_name = options.infoBox
+  number_name = options.infoNumber
+  recursive_deps = data.length
   info_box = document.getElementById(box_name);
   info_number = document.getElementById(number_name);
   if (info_box){
@@ -514,4 +526,5 @@ function show_info_box(box_name, number_name, recursive_deps){
     var txt = document.createTextNode(recursive_deps);
     info_number.appendChild(txt); 
   }
+  handle_path(options.canvas_id, options.product_key, options.product_version, options.product_name, options.version);
 }

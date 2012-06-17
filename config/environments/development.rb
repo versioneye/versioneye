@@ -29,8 +29,5 @@ Versioneye::Application.configure do
   config.assets.debug = true
 
   config.log_level = :debug
-  
-  config.action_mailer.delivery_method   = :postmark
-  config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
 
 end

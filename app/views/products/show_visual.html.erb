@@ -32,13 +32,16 @@
 			</ul>
 		</div>
 
-		<div id="canvas-container" style="margin-top: 20px;"></div>
+		<div id="canvas-container" ></div>
 		<div>
 			<h3 style="text-align: center; display: none" id="infoBox" >
+				<span >
+					<a id="pinit_compile" style="display: none;" href="" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+				</span><br/>
+				<br/>
 				<%= @product.name %> has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive <%= @product.main_scope %> dependencies
 			</h3>
 		</div>
-		<br/>
 		<div style="text-align: center;">
 			<a href="/package/<%=@product.to_param%>/version/<%=@version.to_url_param%>">See more details</a>
 		</div>
@@ -49,12 +52,18 @@
 			<script type="text/javascript">
 				jQuery.noConflict();
 				var wheel = new MooWheel.Remote(false, document.getElementById("canvas-container"), { 
-					url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/circle_dependencies.json',
+					url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/recursive_dependencies.json',
 					width: "750", 
 					height: "750",
 					data_border: 70,
 					infoBox: "infoBox",
 					infoNumber: "runtime_recursive_number",
+					canvas_id: "canvas",
+					canvas_hover_id: "canvas_hover",
+					product_key: "<%= @product.to_param%>", 
+					product_version: "<%= @product.version_to_url_param%>",
+					product_name: "<%= @product.name%>", 
+					version: "<%= @product.version%>",
 					onItemClick: function(item, event){
 						key = item.id; 
 						key = key.replace(/\//g, "--");

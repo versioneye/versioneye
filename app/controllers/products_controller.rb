@@ -162,7 +162,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  def circle_dependencies
+  def recursive_dependencies
     key = url_param_to_origin params[:key]
     version = url_param_to_origin params[:version]
     product = Product.find_by_key( key )
@@ -188,14 +188,28 @@ class ProductsController < ApplicationController
     end
   end
 
-  def imagebin
+  def get_image_path
+    image_key = params[:key]
+    image_version = params[:version]
+    url = get_s3_url("#{image_key}:#{image_version}.png")
+    respond_to do |format|
+      format.json { 
+        if url_exist?(url)
+          render :json => "#{url}"
+        else
+          render :json => "nil"
+        end
+      }
+    end
+  end
+
+  def upload_image
     image_bin = params[:image]
     image_key = params[:key]
     image_version = params[:version]
     filename = "#{image_key}:#{image_version}.png"
     image_bin.gsub!(/data:image\/png;base64,/, "")
-    bucket = 
-    AWS::S3::S3Object.store(
+      AWS::S3::S3Object.store(
       filename, 
       Base64.decode64(image_bin), 
       Settings.s3_infographics_bucket, 
@@ -207,43 +221,6 @@ class ProductsController < ApplicationController
       }
     end
   end
-  
-  def newest
-    key = url_param_to_origin params[:key]
-    type = params[:type]
-    version = "0"
-    product = Product.find_by_key(key)
-    if !type.nil? && !type.empty?
-      if type.eql?("natural")
-        version = product.get_newest_version_by_natural_order
-      end
-    end
-    respond_to do |format|
-      format.json { render :json => version.to_json }
-    end
-  end
-
-  def wouldbenewest
-    key = url_param_to_origin params[:key]
-    version = url_param_to_origin params[:version]
-    product = Product.find_by_key(key)
-    result = true    
-    if !product.nil? && !product.versions_empty?
-      result = product.wouldbenewest?(version)
-    end
-    respond_to do |format|
-      format.json { render :json => result.to_json }
-    end
-  end
-  
-  def biggest
-    vers1 = params[:version1]
-    vers2 = params[:version2]    
-    version = Naturalsorter::Sorter.get_newest_version(vers1, vers2)
-    respond_to do |format|
-      format.json { render :json => version.to_json }
-    end
-  end  
   
   private
     
@@ -273,6 +250,18 @@ class ProductsController < ApplicationController
     def get_s3_url filename
       url = AWS::S3::S3Object.url_for(filename, Settings.s3_infographics_bucket, :authenticated => false)
       url
+    end
+
+    def url_exist?(url_path)
+      url = URI.parse(url_path)
+      req = Net::HTTP.new(url.host, url.port)
+      res = req.request_head(url.path)
+      p "#{res.code}"
+      if res.code == "200"
+        return true
+      else
+        return false
+      end
     end
 
 end

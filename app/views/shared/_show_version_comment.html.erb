@@ -4,15 +4,17 @@
 	</div>
 	<div class="div-cell comment-meta-box">
 		<div class="meta-text-small">
-			<%= link_to comment.user.fullname, user_path(comment.user) %> <br/>
-			<time itemprop="created" datetime="<%= comment.created_at.strftime("%Y-%m-%dT%H:%M") %>"><%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %></time>
+			<a itemprop="creator" href="/users/<%= comment.user.username %>">
+				<span itemprop="name"><%= comment.user.fullname %></span>
+			</a><br/>
+			<time itemprop="commentTime" date="<%= comment.created_at.strftime("%Y-%m-%dT%") %>"><%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %></time>
 		</div>
 	</div>
 </div>
 <div class="div-row">
 	<div class="div-cell" ></div>
 	<div class="div-cell">
-		<div itemprop="comment">
+		<div itemprop="commentText">
 			<%= comment.comment %>
 		</div>
 		<div class="meta-text-small share-cell" >

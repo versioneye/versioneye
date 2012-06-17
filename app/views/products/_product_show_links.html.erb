@@ -4,19 +4,15 @@
 <div class="boxHeader">
 	<%= pluralize(count, "Link") %>
 </div>
-<div class="boxContainer" id="relatedLinks" itemprop="relatedLinks" itemscope="" itemtype="http://schema.org/ItemList" >
+<div class="boxContainer" id="relatedLinks" >
 	<% if !links.empty? %>
 		<% links.each do |link| %>
-			<span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/WebPage" >
-				<a itemprop="url" href="<%= link.get_link %>" target="new"><span itemprop="name"><%= link.name %></span></a>
-			</span><br/>
+			<a itemprop="publishingPrinciples" href="<%= link.get_link %>" target="new"><%= link.name %></a><br/>
 		<% end %>
 	<% end %>
 	<% if !version_links.empty? %>
 		<% version_links.each do |link| %>
-			<span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/WebPage" >
-				<a itemprop="url" href="<%= link.get_link %>" target="new"><span itemprop="name"><%= link.name %></span></a>
-			</span><br/>
+			<a itemprop="publishingPrinciples" href="<%= link.get_link %>" target="new"><%= link.name %></a><br/>
 		<% end %>
 	<% end %>
 </div>

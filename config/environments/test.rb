@@ -39,8 +39,5 @@ Versioneye::Application.configure do
 
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
   config.assets.allow_debugging = true
-
-  config.action_mailer.delivery_method   = :postmark
-  config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
   
 end

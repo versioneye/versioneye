@@ -12,7 +12,7 @@
 	<meta name="softwareversion" itemprop="softwareversion"  content="<%= @product.version %>">
 	<meta name="version" itemprop="version"  content="<%= @product.version %>">
 	<meta name="keywords" itemprop="keywords" content="<%= @product.name %>, <%= @product.language %>, <%= @product.prod_type %>" />
-	<meta name="url" itemprop="url" content="<%= Settings.server_url %>/package/<%= @product.to_param %>" />
+	<meta name="url" itemprop="url" content="<%= Settings.server_url %>/package/<%= @product.to_param %>/version/<%= @product.version %>" />
 	<% if !@product.description.nil? && !@product.description.empty? %> 
 	<meta name="description" itemprop="description" content="<%= @product.description %>" />
 	<% end %>	

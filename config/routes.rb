@@ -30,12 +30,14 @@ Versioneye::Application.routes.draw do
   get   '/product/:key/version/:version',               :to => 'products#show'
   get   '/package/:key/version/:version',               :to => 'products#show'
   get   '/package_visual/:key/version/:version',        :to => 'products#show_visual'
-  post  '/package/:key/version/:version/circle_dependencies', :to => 'products#circle_dependencies'
-  post  '/product/:key/version/:version/circle_dependencies', :to => 'products#circle_dependencies'
+  post  '/package/:key/version/:version/recursive_dependencies', :to => 'products#recursive_dependencies'
+  post  '/product/:key/version/:version/recursive_dependencies', :to => 'products#recursive_dependencies'
   get   '/product/newest/:key/:type',                   :to => 'products#newest'
   get   '/product/wouldbenewest/:key/version/:version', :to => 'products#wouldbenewest'
   get   '/biggest/:version1/:version2',                 :to => 'products#biggest'
-  post  '/imagebin',                                    :to => 'products#imagebin'
+  post  '/get_image_path',                              :to => 'products#get_image_path'
+  post  '/upload_image',                                :to => 'products#upload_image'
+
 
   get   '/news',               :to => 'news#news'
   get   '/mynews',             :to => 'news#mynews'
