@@ -64,6 +64,7 @@
 					product_version: "<%= @product.version_to_url_param%>",
 					product_name: "<%= @product.name%>", 
 					version: "<%= @product.version%>",
+					show_label: true,
 					onItemClick: function(item, event){
 						key = item.id; 
 						key = key.replace(/\//g, "--");

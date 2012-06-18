@@ -1,14 +1,19 @@
 
 <%= render 'shared/dialog_follow' %>
 
-<% if 1 == 2 %>
-	<section class="section-lp round" style="text-align: center;">
-		<div id="canvas-container" style="margin-top: 20px;"></div>
-	</section>
-<% end %>
+<section class="section-lp round" style="text-align: center;">
+	<div id="canvas-container" style="margin-top: 20px;"></div>
+	<div style="text-align: center; display: none" id="infoBox">
+		<span >
+			<a id="pinit_compile" style="display: none;" href="" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" target="new_pinterest" /></a>
+		</span>
+		<h3 style="text-align: center;" >
+			Ruby on Rails has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive runtime dependencies
+		</h3>
+	</div>
+</section>
 
-<section class="section-lp round">
-	
+<section class="section-lp round">	
 	<div class="lp_box lp_sign_up" style="text-align: center;">
 		<ul class="list-row" style="display: block; width: 70%; margin: auto;">
 			<li class="list-cell share-on-icon" style="width: 214px;">
@@ -38,21 +43,6 @@
 </section>
 
 <section class="section-lp round">
-	<h1 class="lp_head">
-		Newest Comments and Ratings 
-	</h1>
-	<div class="lp_box">
-		<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => true } %> 	
-		<%= link_to "Read more here", news_path %><br/>
-	</div>
-	<% if !signed_in? %>
-		<div class="lp_box lp_login_area">
-			<%= render 'shared/login_options_vertical' %>
-		</div>
-	<% end %>
-</section>
-
-<section class="section-lp round">
 	<h1 class="lp_head" id="h1_about">
 		About
 	</h1>
@@ -64,32 +54,36 @@
 	</div>
 	<% if !signed_in? %>
 		<div class="lp_box lp_sign_up">
-			<%= form_tag("/signup", :method => "post") do  %>    
+			<%= form_tag("/signup", :method => "get") do  %>    
 				<%= submit_tag "Sign Up For Free", :class => "lp_sign_up_button" %>
 			<% end %>
 		</div>
 	<% end %>
 </section>
 
-<% if 1 == 2 %>
 <script type="text/javascript">
-		jQuery.noConflict();
-		var wheel = new MooWheel.Remote(false, document.getElementById("canvas-container"), { 
-			url: '/package/rails/version/3~2~3/recursive_dependencies.json',
-			width: "500", 
-			height: "450",
-			data_border: 70,
-			infoBox: "infoBox",
-			infoNumber: "runtime_recursive_number",
-			onItemClick: function(item, event){
-				key = item.id; 
-				key = key.replace(/\//g, "--");
-				key = key.replace(/\./g, "~" );
-				version = item.version;
-				version = version.replace(/\//g, "--");
-				version = version.replace(/\./g, "~" );
-				window.location.href = "/package/" + key + "/version/" + version;
-			}
-		} );
-	</script>
-<% end %> 
+	jQuery.noConflict();
+	var wheel = new MooWheel.Remote(false, document.getElementById("canvas-container"), { 
+		url: '/package/rails/version/3~2~3/recursive_dependencies.json',
+		width: "500", 
+		height: "450",
+		data_border: 70,
+		infoBox: "infoBox",
+		infoNumber: "runtime_recursive_number",
+		canvas_id: "canvas",
+		canvas_hover_id: "canvas_hover",
+		product_key: "rails", 
+		product_version: "3~2~6",
+		product_name: "rails", 
+		version: "3.2.6",
+		onItemClick: function(item, event){
+			key = item.id; 
+			key = key.replace(/\//g, "--");
+			key = key.replace(/\./g, "~" );
+			version = item.version;
+			version = version.replace(/\//g, "--");
+			version = version.replace(/\./g, "~" );
+			window.location.href = "/package/" + key + "/version/" + version;
+		}
+	} );
+</script>

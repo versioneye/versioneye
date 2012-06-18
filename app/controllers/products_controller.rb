@@ -88,8 +88,9 @@ class ProductsController < ApplicationController
         @follower.save
       end      
     end
-    ver = url_param_to_origin params[:version]
-    attach_version @product, ver
+    version_param = params[:version]
+    ver = url_param_to_origin(version_param)
+    attach_version( @product, ver )
     @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
     @version = @product.get_version(@product.version)
     @downloads = @version.versionarchive

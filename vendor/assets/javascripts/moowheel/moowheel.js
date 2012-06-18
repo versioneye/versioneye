@@ -50,7 +50,8 @@ var MooWheel = new Class({
       product_key: "product_key", 
       product_version: "product_version", 
       product_name: "product_name", 
-      version: "version"
+      version: "version", 
+      show_label: false
    },
    
    initialize: function(data, ct, options) {
@@ -345,9 +346,11 @@ var MooWheel = new Class({
          setTimeout(function() { self.drawConnection(i+1); }, 25);
       } else {
         this.drawPoints();
-        cx.fillStyle = "lightgray";
-        cx.font = "14px Arial";
-        cx.fillText("www.VersionEye.com", this.options.center.x - 70, 30);
+        if (this.options.show_label){
+          cx.fillStyle = "lightgray";
+          cx.font = "14px Arial";
+          cx.fillText("www.VersionEye.com", this.options.center.x - 70, 30);  
+        }
         show_info_box(this.data, this.options);
       }
    },
