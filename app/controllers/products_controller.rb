@@ -4,10 +4,10 @@ class ProductsController < ApplicationController
 
   def index
     @hide = "hide"
-    @lang = session[:lang]
+    @lang = cookies[:veye_lang]
     if @lang.nil?
       @lang = ""
-      session[:lang] = ""
+      cookies[:veye_lang] = ""
     end
     @comments = Versioncomment.all().desc(:created_at).limit(10) 
     @newest = Array.new
@@ -33,10 +33,9 @@ class ProductsController < ApplicationController
   
   def search
     @query = params[:q]
-    @lang = get_lang_value( params )
+    @lang = get_lang_value( params, cookies )
     commit = params[:commit]
-    @query = do_replacements(@query, commit)     
-    session[:lang] = @lang
+    @query = do_replacements(@query, commit)
     if @query.length == 1
       flash.now[:error] = "Search term is to short. Please type in at least 2 characters."
     elsif @query.include?("%")
@@ -59,7 +58,7 @@ class ProductsController < ApplicationController
   end
 
   def autocomplete_product_name
-    lang = get_lang_value( params )
+    lang = get_lang_value( params, cookies )
     languages = lang.split(",")
     @products = Product.find_by_name(params[:term], languages, 10).paginate(:page => 1)
     respond_to do |format|
@@ -240,10 +239,12 @@ class ProductsController < ApplicationController
       end      
     end
 
-    def get_lang_value( params )
+    def get_lang_value( params, cookies )
       lang = params[:lang]
       if lang.nil? || lang.empty? 
-        lang = ""
+        lang = cookies[:veye_lang]
+      else 
+        cookies[:veye_lang] = { :value => lang, :expires => 24.hour.from_now }
       end
       lang
     end
