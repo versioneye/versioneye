@@ -12,11 +12,18 @@ class User::ProjectsController < ApplicationController
   end
   
   def create    
+    project_name = params[:project][:name]
     project_url = params[:project][:url]
     file = params[:upload]
     
     if (file.nil? || file.empty?) && (project_url.nil? || project_url.empty?)
       flash[:error] = "Please put in a URL OR select a file from your computer."
+      redirect_to new_user_project_path
+      return nil
+    end
+
+    if project_name.nil? || project_name.empty? 
+      flash[:error] = "The Name is mandatory. Please choose a name."
       redirect_to new_user_project_path
       return nil
     end
@@ -30,7 +37,7 @@ class User::ProjectsController < ApplicationController
     project_type = params[:project][:project_type]
     project = Project.create_from_file(project_type, url)    
     project.user_id = current_user.id.to_s
-    project.name = params[:project][:name]
+    project.name = project_name
     project.project_type = project_type
     project.url = url
     
