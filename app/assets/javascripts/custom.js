@@ -79,7 +79,7 @@ function show_pinit_button(product_key, product_version, picture_url, name, vers
 		canvas_container = document.getElementById("canvas-container");
 	    var img = document.createElement("IMG");
 	    img.src = picture_url;
-	    img.style.width = "600px"
+	    img.style.width = "562px"
 	    canvas_container.appendChild(img);
 	}
 	pin_button = document.getElementById("pinit_compile");
