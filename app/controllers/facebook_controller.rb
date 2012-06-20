@@ -22,10 +22,13 @@ class FacebookController < ApplicationController
     query += '&code=' + code
     link = domain + uri + '?' + query
 
+    p "link: #{link}"
     response = HTTParty.get(URI.encode(link))
 
     data = response.body
+    p "response date: #{data}"
     access_token = data.split("=")[1]
+    p "access token: #{access_token}"
 
     user = get_user_for_token( access_token )
     if !user.nil?
@@ -40,6 +43,7 @@ class FacebookController < ApplicationController
 
     def get_user_for_token(token)
       json_user = JSON.parse HTTParty.get('https://graph.facebook.com/me?access_token=' + URI.escape(token)).response.body
+      p "json_user: #{json_user}"
 
       user = User.find_by_fb_id( json_user['id'] )
       if !user.nil?
