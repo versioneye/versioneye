@@ -10,25 +10,13 @@ class FacebookController < ApplicationController
       return
     end
 
-    domain = 'https://graph.facebook.com'
-    uri = '/oauth/access_token'
-    query = 'client_id='
-    query += Settings.facebook_client_id
-    query += '&redirect_uri='
-    query += Settings.server_url
-    query += '/auth/facebook/callback&'
-    query += 'client_secret='
-    query += Settings.facebook_client_secret
-    query += '&code=' + code
-    link = domain + uri + '?' + query
+    link = get_link(code)
 
     p "link: #{link}"
     response = HTTParty.get(URI.encode(link))
 
     data = response.body
-    p "response date: #{data}"
     access_token = data.split("=")[1]
-    p "access token: #{access_token}"
 
     user = get_user_for_token( access_token )
     if !user.nil?
@@ -71,6 +59,21 @@ class FacebookController < ApplicationController
       end
       User.new_user_email(user)
       return user
+    end
+
+    def get_link(code)
+      domain = 'https://graph.facebook.com'
+      uri = '/oauth/access_token'
+      query = 'client_id='
+      query += Settings.facebook_client_id.to_s
+      query += '&redirect_uri='
+      query += Settings.server_url
+      query += '/auth/facebook/callback&'
+      query += 'client_secret='
+      query += Settings.facebook_client_secret
+      query += '&code=' + code
+      link = domain + uri + '?' + query
+      link
     end
 
 end
