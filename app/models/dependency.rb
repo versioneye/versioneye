@@ -87,7 +87,11 @@ class Dependency
       return versions.first.version
     elsif ver.match(/^>=/) || ver.match(/^>/)
       product = Product.find_by_key(dep_prod_key)
-      return product.get_newest_version_by_natural_order
+      if product.nil?
+        return "NA" 
+      else 
+        return product.get_newest_version_by_natural_order
+      end
     end
     ver
   end
