@@ -96,6 +96,12 @@ class ProductsController < ApplicationController
     @productlook = Productlook.find_by_key(key)
     @main_dependencies = @product.dependencies(nil)
 
+    format = params[:format]
+    if format && !format.eql?("html") && !format.eql?("json")
+      redirect_to "/package/#{@product.to_param}/version/#{@version.to_url_param}"
+      return 
+    end
+
     respond_to do |format|
       format.html { 
         if !mobile.nil? && mobile.eql?('true')
@@ -108,9 +114,8 @@ class ProductsController < ApplicationController
           @versioncommentreply = Versioncommentreply.new
         end          
         }
-      format.json { render :json => @product.as_json( {:following => following} ) }
-      format.text { 
-        redirect_to "/package/#{@product.to_param}/version/#{@version.to_url_param}"
+      format.json { 
+        render :json => @product.as_json( {:following => following} ) 
       }
     end
   end
