@@ -125,6 +125,20 @@ Versioneye::Application.routes.draw do
   get   '/latest/version',      :to => 'page#newest'
 
   get   'sitemap_2.xml',        :to => 'page#sitemap_2'
+  get   'sitemap_3.xml',        :to => 'page#sitemap_3'
+  get   'sitemap_4.xml',        :to => 'page#sitemap_4'
+  get   'sitemap_5.xml',        :to => 'page#sitemap_5'
+  get   'sitemap_6.xml',        :to => 'page#sitemap_6'
+  get   'sitemap_7.xml',        :to => 'page#sitemap_7'
+  get   'sitemap_8.xml',        :to => 'page#sitemap_8'
+  get   'sitemap_9.xml',        :to => 'page#sitemap_9'
+  get   'sitemap_10.xml',        :to => 'page#sitemap_10'
+  get   'sitemap_11.xml',        :to => 'page#sitemap_11'
+  get   'sitemap_12.xml',        :to => 'page#sitemap_12'
+  get   'sitemap_13.xml',        :to => 'page#sitemap_13'
+  get   'sitemap_14.xml',        :to => 'page#sitemap_14'
+  get   'sitemap_15.xml',        :to => 'page#sitemap_15'
+  get   'sitemap_16.xml',        :to => 'page#sitemap_16'
 
   get   '*path', :to => 'page#routing_error'
   
