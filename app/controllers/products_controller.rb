@@ -87,7 +87,7 @@ class ProductsController < ApplicationController
         @follower.save
       end      
     end
-    version_param = params[:version]
+    version_param = URI.encode(params[:version]) 
     ver = url_param_to_origin(version_param)
     attach_version( @product, ver )
     @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
@@ -109,6 +109,9 @@ class ProductsController < ApplicationController
         end          
         }
       format.json { render :json => @product.as_json( {:following => following} ) }
+      format.text { 
+        redirect_to "/package/#{@product.to_param}/version/#{@version.to_url_param}"
+      }
     end
   end
 
