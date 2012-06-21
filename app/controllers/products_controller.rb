@@ -87,7 +87,7 @@ class ProductsController < ApplicationController
         @follower.save
       end      
     end
-    version_param = URI.encode(params[:version]) 
+    version_param = params[:version]
     ver = url_param_to_origin(version_param)
     attach_version( @product, ver )
     @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
