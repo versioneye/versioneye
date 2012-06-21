@@ -124,6 +124,8 @@ Versioneye::Application.routes.draw do
   get   '/current/version',     :to => 'page#newest'
   get   '/latest/version',      :to => 'page#newest'
 
+  get   'sitemap_2.xml',        :to => 'page#sitemap_2'
+
   get   '*path', :to => 'page#routing_error'
   
 end

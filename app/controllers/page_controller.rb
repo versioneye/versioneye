@@ -39,4 +39,8 @@ class PageController < ApplicationController
   def newest
   end
 
+  def sitemap_2
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_2.xml'
+  end
+
 end
