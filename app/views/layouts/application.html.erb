@@ -16,7 +16,7 @@
 	<meta name="keywords" itemprop="keywords" content="<%= @product.name %>, <%= @product.language %>, <%= @product.prod_type %>" />
 	<meta name="url" itemprop="url" content="<%= Settings.server_url %>/package/<%= @product.to_param %>/version/<%= @product.version %>" />
 	<% if !@product.description.nil? && !@product.description.empty? %> 
-	<meta name="description" itemprop="description" content="<%= @product.description %>" />
+	<meta name="description" itemprop="description" content="<%= @product.description[0, 145] %>..." />
 	<% end %>	
 <% end %>
 
