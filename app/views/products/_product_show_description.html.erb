@@ -3,6 +3,7 @@
 		Description
 	</div>
 	<div class="boxContainer" >
+		<meta name="description" itemprop="description" content="<%= @product.description %>" />
 		<% if @product.description.include? "\n" %>
 			<%= @product.description.gsub!("\n", "<br/>").html_safe %>
 		<% else %>

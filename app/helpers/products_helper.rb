@@ -82,5 +82,48 @@ module ProductsHelper
     key.gsub!("~",".")
     key
   end
+
+  def self.xml_site_map
+    p "xml_site_map"
+    uris = Array.new
+    sitemap_count = 1
+    count = Product.count()
+    pack = 100
+    max = count / pack
+    (0..max).each do |i|
+      skip = i * pack
+      products = Product.all().skip(skip).limit(pack)
+      products.each do |product|
+        product.versions.each do |version|
+          uri = "package/#{product.to_param}/version/#{version.to_url_param}"
+          uris << uri
+        end
+      end
+      if uris.count > 45000 
+        p "#{uris.count}"
+        p "sitemap count: #{sitemap_count}"
+        write_to_xml(uris, "sitemap_#{sitemap_count}.xml")
+        uris = Array.new
+        sitemap_count += 1
+      end
+    end
+  end
+
+  def self.write_to_xml(uris, name)
+    p "write to xml"
+    xml = Builder::XmlMarkup.new( :indent => 2 )
+    xml.instruct!(:xml, :encoding => "UTF8", :version => "1.0")
+    xml.urlset(:xmlns => "http://www.sitemaps.org/schemas/sitemap/0.9") do |urlset|
+      uris.each do |uri|
+        urlset.url do |url|
+          url.loc "https://www.versioneye.com/#{uri}"
+        end
+      end
+    end
+    xml_data = xml.target!
+    xml_file = File.open(name, "w")
+    xml_file.write(xml_data)
+    xml_file.close
+  end
   
 end
