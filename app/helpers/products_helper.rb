@@ -99,7 +99,7 @@ module ProductsHelper
           uris << uri
         end
       end
-      if uris.count > 45000 
+      if uris.count > 47000 
         p "#{uris.count}"
         p "sitemap count: #{sitemap_count}"
         write_to_xml(uris, "sitemap_#{sitemap_count}.xml")
