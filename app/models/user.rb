@@ -89,6 +89,21 @@ class User
   def send_verification_email
     UserMailer.verification_email(self).deliver
   end  
+
+  def self.send_verification_reminders
+    users = User.all(conditions: {verification: {"$ne" => nil}})
+    users.each do |user|
+      user.send_verification_reminder  
+    end
+  end 
+
+  def send_verification_reminder 
+    if !self.verification.nil?
+      UserMailer.verification_email_reminder(self).deliver
+    end
+  rescue 
+    p "ups. Something went wrong for #{self.fullname}"
+  end
   
   def create_username
     name = fullname.strip

@@ -10,6 +10,16 @@ class UserMailer < ActionMailer::Base
       :tag => "verification"
       )
   end
+
+  def verification_email_reminder(user)
+    @user = user
+    @verificationlink = "#{Settings.server_url}/users/activate/#{@user.verification}"
+    mail(
+      :to => @user.email, 
+      :subject => "Verification Reminder",
+      :tag => "verification_reminder"
+      )
+  end
   
   def reset_password(user, new_password)
     @user = user

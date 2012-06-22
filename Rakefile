@@ -22,6 +22,10 @@ task :do_work => :environment do
 		    Product.update_version_data_global
 		    puts "STOP update the version numbers on products."
 
+		    puts "START to send out the verification reminder E-Mails."
+		    User.send_verification_reminders
+		    puts "STOP to send out the verification reminder E-Mails."
+
 		    puts "START to send out the notification E-Mails."
 		    Notification.send_notifications
 		    puts "STOP to send out the notification E-Mails."
@@ -34,14 +38,19 @@ task :do_work => :environment do
 end
 
 task :update_version_data_global => :environment do
-	puts "START"
 	puts "START update the version numbers on products."
-    #Product.update_version_data_global
+    Product.update_version_data_global
     puts "STOP update the version numbers on products."
 end
 
 task :send_notifications => :environment do
     puts "START to send out the notification E-Mails."
-    #Notification.send_notifications
+    Notification.send_notifications
     puts "STOP to send out the notification E-Mails."
+end
+
+task :send_verification_reminders => :environment do
+    puts "START to send out verification reminder E-Mails."
+    User.send_verification_reminders
+    puts "STOP to send out verification reminder E-Mails."
 end
