@@ -321,25 +321,25 @@ class Product
 
     def self.find_by_name_start_with(searched_name, languages, limit)
       if languages.nil? || languages.empty?
-        Product.all(conditions: { name: /^#{searched_name}/i }).desc(:like_overall).asc(:name).limit(limit)
+        Product.all(conditions: { name: /^#{searched_name}/i }).desc(:followers).asc(:name).limit(limit)
       else
-        Product.all(conditions: { name: /^#{searched_name}/i, :language.in => languages }).desc(:like_overall).asc(:name).limit(limit)
+        Product.all(conditions: { name: /^#{searched_name}/i, :language.in => languages }).desc(:followers).asc(:name).limit(limit)
       end
     end
 
     def self.find_by_name_simple(searched_name, languages, limit)
       if languages.nil? || languages.empty?
-        Product.all(conditions: { name: /#{searched_name}/i }).desc(:like_overall).asc(:name).limit(limit)
+        Product.all(conditions: { name: /#{searched_name}/i }).desc(:followers).asc(:name).limit(limit)
       else
-        Product.all(conditions: { name: /#{searched_name}/i, :language.in => languages}).desc(:like_overall).asc(:name).limit(limit)
+        Product.all(conditions: { name: /#{searched_name}/i, :language.in => languages}).desc(:followers).asc(:name).limit(limit)
       end
     end
 
     def self.find_by_name_exclusion(searched_name, languages, prod_keys, limit)
       if languages.nil? || languages.empty?
-        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys }).desc(:like_overall).asc(:name).limit(limit)
+        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys }).desc(:followers).asc(:name).limit(limit)
       else
-        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys, :language.in => languages}).desc(:like_overall).asc(:name).limit(limit)
+        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys, :language.in => languages}).desc(:followers).asc(:name).limit(limit)
       end
     end
 
