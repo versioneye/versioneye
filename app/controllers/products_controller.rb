@@ -79,7 +79,7 @@ class ProductsController < ApplicationController
       @productlike = fetch_productlike(current_user, @product)
     end
     following = false
-    if (!current_user.nil?)
+    if !current_user.nil?
       @follower = Follower.find_by_user_id_and_product(current_user.id, @product._id.to_s)
       following = true if !@follower.nil?
       if !@follower.nil? && @follower.notification == true
