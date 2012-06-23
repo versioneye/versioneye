@@ -43,7 +43,7 @@ var DependencyWheel = new Class({
       version: "version", 
       show_label: false, 
       resize: false,
-      resize_ids: "container,section", 
+      resize_ids: "section,container", 
       resize_factor: 11, 
       scope: "compile", 
       container_id: "canvas-container"
@@ -464,10 +464,12 @@ DependencyWheel.Remote = new Class({
               options.width = wheelData.length * options.resize_factor;
               options.height = wheelData.length * options.resize_factor;
               element_ids = options.resize_ids.split(",");
-              for (z = 0; z < element_ids.length; z++){
-                element = document.getElementById(element_ids[z]);
-                new_width = options.width + (z * 20);
-                element.style.width = new_width + "px";
+              for (ele_count = 0; ele_count < element_ids.length; ele_count++){
+                element = document.getElementById(element_ids[ele_count]);
+                new_width = options.width + (ele_count * 20);
+                if (element.offsetWidth < new_width){
+                  element.style.width = new_width + "px";
+                }
               }
             }
             
