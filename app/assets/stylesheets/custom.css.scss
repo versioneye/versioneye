@@ -56,12 +56,10 @@ label {
 
 .label-small{
 	font-size: 14px;
-	font-weight: none;
 }
 
 .label-smaller{
 	font-size: 12px;
-	font-weight: none;
 }
 
 textarea{
@@ -178,7 +176,6 @@ header a:visited:hover {
 }
 
 @mixin button_off_snippet{
-	-webkit-user-select:none;
 	background-image: url("button_bg_100_off.gif");
 	background-repeat: no-repeat;
     background-position: top;
@@ -212,7 +209,6 @@ input[type="submit"] {
 } 
 
 input[type="submit"]:hover {
-	-webkit-user-select:none;
 	background-image: url("button_bg_100_on.gif");
 }
 
@@ -221,12 +217,10 @@ input[type="submit"]:hover {
 }
 
 .followButtonBig[type="submit"]:hover {
-	-webkit-user-select:none;
 	background-image: url("button_bg_100_on.gif");
 }
 
 .unfollowButtonBig[type="submit"]{
-	-webkit-user-select:none;
 	 background-color:white;
 	 background-image: none;
 	 border: 2px solid $orange;
@@ -259,7 +253,6 @@ input[type="submit"]:hover {
 }
 
 .followButton[type="submit"]{
-	-webkit-user-select:none;
 	background-color: white;
 	background-image: url("button_100_off.png");
 	background-repeat: no-repeat;
@@ -290,12 +283,10 @@ input[type="submit"]:hover {
 }
 
 .followButton[type="submit"]:hover {
-	-webkit-user-select:none;
 	background-image: url("button_100_on.png");
 }
 
 .unfollowButton[type="submit"]{
-	-webkit-user-select:none;
 	background-color:white;
 	background-image: none;
 	border: 2px solid $orange;
@@ -327,7 +318,6 @@ input[type="submit"]:hover {
 }
 
 .feedbackButton[type="submit"] {
-	-webkit-user-select:none;
 	background-image: url("feedback_off.png");
 	width: 51px;
 	height: 165px;
@@ -335,7 +325,6 @@ input[type="submit"]:hover {
 }
 
 .feedbackButton[type="submit"]:hover {
-	-webkit-user-select:none;
 	background-image: url("feedback_on.png");
 	width: 51px;
 	height: 165px;
@@ -387,7 +376,6 @@ input[type="submit"]:hover {
 
 .small-heart-img {
 	height: 20px; 
-	align: middle; 
 	padding-left: 15px;
 }
 
@@ -497,7 +485,7 @@ footer {
 
 footer nav {
     float: none;
-    height: 155px;
+    height: 175px;
     vertical-align: middle;
 	padding: 0;
 	margin: 0;
@@ -616,19 +604,16 @@ nav ul li {
 
 nav ul li a {
     padding: 0 10px;
-    font-weight: none;
 	vertical-align: middle;
 	color: white;
 }
 
 nav ul li a:visited {
 	color: white;
-	font-weight: none;
 }
 
 nav ul li a:hover {
     text-decoration: none;
-	font-weight: none;
 	color: $orange;
 }
 
