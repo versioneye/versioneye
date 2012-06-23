@@ -91,9 +91,20 @@ class Project
     project.dependencies = Array.new
     
     txt.each_line do |line|
-      requirement = line.split("==")
+
+      if !line.match(/^#/).nil?
+        next
+      end
+
+      splitter = "=="
+      if !line.match(/>=/).nil?
+        splitter = ">="
+      elsif !line.match(/>/).nil?
+        splitter = ">"  
+      end
+      requirement = line.split(splitter)
       
-      if requirement.empty?
+      if requirement.empty? || requirement.count != 2
         next
       end
       
@@ -105,13 +116,10 @@ class Project
       
       dependency = Projectdependency.new
       dependency.name = package
+      dependency.comperator = splitter
       
-      if requirement.size == 2 
-        version = requirement[1]
-        dependency.version = version
-      else
-        dependency.version = "UNKNOWN"
-      end
+      version = requirement[1]
+      dependency.version = version.strip
       
       product = Product.find_by_key("pip/#{package}")
       if !product.nil?

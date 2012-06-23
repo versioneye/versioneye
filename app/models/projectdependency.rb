@@ -13,6 +13,7 @@ class Projectdependency
   field :prod_key, type: String
   field :prod_type, type: String
   field :outdated, type: Boolean
+  field :comperator, type: String, :default => "="
   
   def get_product
     if !self.prod_key.nil?
@@ -31,8 +32,27 @@ class Projectdependency
     return false if self.prod_key.nil?     
     product = get_product
     current_version = product.version
-    return false if product.wouldbenewest?(version)
-    return false if current_version.eql? version
+
+    if self.comperator.nil? 
+      self.comperator = "="
+    end
+    
+    if self.comperator.eql?("=") || self.comperator.eql?("==")
+      if current_version.strip.eql?(version.strip) || product.wouldbenewest?(version.strip)
+        return false
+      end
+    elsif self.comperator.eql?(">=")
+      newest = Naturalsorter::Sorter.sort_version([version, product.version]).last
+      if current_version.eql?(version) || product.wouldbenewest?(version) || newest.eql?(product.version)
+        return false
+      end
+    elsif self.comperator.eql?(">")
+      newest = Naturalsorter::Sorter.sort_version([version, product.version]).last
+      if newest.eql?(product.version)
+        return false
+      end
+    end
+    
     return true
   end
   

@@ -6,9 +6,9 @@
 <div class="content">	
 	
 	<h1><%= @project.name %></h1>
-	<div style="padding-bottom: 20px;">
-		<span class="meta-text-small">Dependencies: <%= @project.dep_number %>, Outdated: <span style="color: <%= outdated_color(@project) %>" ><%= @project.out_number %></span></span>
-	</div>
+	<h2 style="padding-bottom: 10px;">
+		<span class=""><%= @project.dep_number %> Dependencies, <span style="color: <%= outdated_color(@project) %>" ><%= @project.out_number %></span> Outdated</span>
+	</h2>
 	
 	<div style="padding-bottom: 10px;">
 		<%= link_to "Delete this project", user_project_path(@project),   :confirm => "Are you sure?", :method=>:delete %> | 
