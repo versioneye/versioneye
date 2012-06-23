@@ -98,7 +98,7 @@ class User
   end 
 
   def send_verification_reminder 
-    if !self.verification.nil?
+    if !self.verification.nil? && self.deleted != true
       UserMailer.verification_email_reminder(self).deliver
     end
   rescue 
