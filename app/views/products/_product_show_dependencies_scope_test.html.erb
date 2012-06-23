@@ -1,0 +1,48 @@
+<div id="canvas-container-test" ></div>
+<div>
+	<h3 style="text-align: center; display: none" id="infoBoxTest" >
+		<span >
+			<a id="pinit_test" style="display: none;" href="" class="pin-it-button" count-layout="horizontal"><img border="0" alt="pint_it_on_pinterest" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+		</span><br/>
+		<br/>
+		<%= @product.name %> has <span style="font-weight: bold;" id="test_recursive_number"></span> recursive test dependencies
+	</h3>
+</div>
+<div style="text-align: center;">
+	<a href="/package/<%=@product.to_param%>/version/<%=@version.to_url_param%>">See more details</a>
+</div>
+<br/>
+<br/>
+
+<script type="text/javascript">
+	jQuery.noConflict();
+	var wheel = new DependencyWheel.Remote(false, document.getElementById("canvas-container-test"), { 
+		url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/recursive_dependencies.json?scope=test',
+		width: "750", 
+		height: "750",
+		data_border: 70,
+		infoBox: "infoBoxTest",
+		infoNumber: "test_recursive_number",
+		canvas_id: "canvas_test",
+		canvas_hover_id: "canvas_hover_test",
+		product_key: "<%= @product.to_param%>", 
+		product_version: "<%= @product.version_to_url_param%>",
+		product_name: "<%= @product.name%>", 
+		version: "<%= @product.version%>",
+		show_label: false,
+		resize: true,
+		resize_factor: 11,
+		resize_ids: "section,container",
+		container_id: "canvas-container-test",
+		scope: "test",
+		onItemClick: function(item, event){
+			key = item.id; 
+			key = key.replace(/\//g, "--");
+			key = key.replace(/\./g, "~" );
+			version = item.version;
+			version = version.replace(/\//g, "--");
+			version = version.replace(/\./g, "~" );
+			window.location.href = "/package/" + key + "/version/" + version;
+		}
+	} );
+</script>

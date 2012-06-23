@@ -5,7 +5,7 @@
 	<div id="canvas-container" style="margin-top: 20px;"></div>
 	<div style="text-align: center; display: none" id="infoBox">
 		<span >
-			<a id="pinit_compile" style="display: none;" href="" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" alt="Pin_it_on_pinterest" title="Pin It" target="new_pinterest" /></a>
+			<a id="pinit_runtime" style="display: none;" href="" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" alt="Pin_it_on_pinterest" title="Pin It" target="new_pinterest" /></a>
 		</span>
 		<h3 style="text-align: center;" >
 			Ruby on Rails has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive runtime dependencies
@@ -63,7 +63,7 @@
 
 <script type="text/javascript">
 	jQuery.noConflict();
-	var wheel = new MooWheel.Remote(false, document.getElementById("canvas-container"), { 
+	var wheel = new DependencyWheel.Remote(false, document.getElementById("canvas-container"), { 
 		url: '/package/rails/version/3~2~3/recursive_dependencies.json',
 		width: "500", 
 		height: "450",
@@ -76,6 +76,10 @@
 		product_version: "3~2~6",
 		product_name: "rails", 
 		version: "3.2.6",
+		scope: "runtime",
+		container_id: "canvas-container",
+		resize: false,
+		show_label: false,
 		onItemClick: function(item, event){
 			key = item.id; 
 			key = key.replace(/\//g, "--");

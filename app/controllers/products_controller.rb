@@ -173,11 +173,12 @@ class ProductsController < ApplicationController
   def recursive_dependencies
     key = url_param_to_origin params[:key]
     version = url_param_to_origin params[:version]
+    scope = params[:scope]
     product = Product.find_by_key( key )
     if !version.nil? && !version.empty?
       product.version = version  
     end
-    @circle = product.dependency_circle(nil)
+    @circle = product.dependency_circle(scope)
     respond_to do |format|
       format.json { 
         resp = ""
@@ -199,7 +200,8 @@ class ProductsController < ApplicationController
   def get_image_path
     image_key = params[:key]
     image_version = params[:version]
-    url = get_s3_url("#{image_key}:#{image_version}.png")
+    scope = params[:scope]
+    url = get_s3_url("#{image_key}:#{image_version}:#{scope}.png")  
     respond_to do |format|
       format.json { 
         if url_exist?(url)
@@ -215,7 +217,8 @@ class ProductsController < ApplicationController
     image_bin = params[:image]
     image_key = params[:key]
     image_version = params[:version]
-    filename = "#{image_key}:#{image_version}.png"
+    scope = params[:scope]
+    filename = "#{image_key}:#{image_version}:#{scope}.png"
     image_bin.gsub!(/data:image\/png;base64,/, "")
       AWS::S3::S3Object.store(
       filename, 

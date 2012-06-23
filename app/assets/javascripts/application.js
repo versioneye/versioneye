@@ -12,7 +12,7 @@
 //= require moowheel/mootools-1.2-more
 //= require moowheel/canvastext
 //= require moowheel/excanvas
-//= require moowheel/moowheel
+//= require moowheel/dependencywheel
 //= require google
 //= require gmap
 //= require custom

@@ -1,28 +1,18 @@
 /*
-   MooWheel Class
-   version 0.2
-   Copyright (c) 2008 unwieldy studios
-   http://www.unwieldy.net/moowheel/
+    Class: DependencyWheel
+    Version: 0.1
+    License: MIT
+    Author: Robert Reiz (VersionEye GmbH)
+
+    This is a fork from the MooWheel Class version 0.2 from unwieldy studios. 
+    Written by Augusto Becciu (http://www.tweetwheel.com)
    
-   This library is licensed under an MIT-style license.
-   
-   Contributions by:
-      - Augusto Becciu (http://www.tweetwheel.com)
+    This fork is customized to visualize dependencies for software libraries. 
+    It is used on https://www.versioneye.com
 */
 
-
-/*
- * Data:
- * var data = [
- *  { 'id': 1, 'text': "My name", 'imageUrl': "http://domain.com/image.jpg", 'connections': [1, 3, 5] },
- *  { .... },
- *  ....
- * ];
- *
- */
-
-var MooWheel = new Class({
-   options: {
+var DependencyWheel = new Class({
+    options: {
       type: 'default',
       center: {
          x: 100,
@@ -44,26 +34,36 @@ var MooWheel = new Class({
       onItemClick: $empty,
       infoBox: 'mooinfo', 
       infoNumber: 'moonumber', 
-      data_border: 70, 
+      data_border: 70,
       canvas_id: 'canvas', 
       canvas_hover_id: 'canvas_hover', 
       product_key: "product_key", 
       product_version: "product_version", 
       product_name: "product_name", 
       version: "version", 
-      show_label: false
-   },
+      show_label: false, 
+      resize: false,
+      resize_ids: "container,section", 
+      resize_factor: 11, 
+      scope: "compile", 
+      container_id: "canvas-container"
+    },
    
-   initialize: function(data, ct, options) {
+    initialize: function(data, ct, options) {
       this.data = data;
       data_length = data.length;
       this.radius = Math.round(this.options.radialMultiplier * data_length);
       this.setOptions(options);
 
+      if (data_length < 3){
+        options.height = "77";
+        this.options.height = "77";
+        options.show_label = false;
+        this.options.show_label = false;
+      }
+
       border = this.options.data_border;
-      container = document.getElementById("container");
-      section = document.getElementById("section");
-      if (data_length > border && container == null && section == null ){
+      if (data_length > border && this.options.resize == false ){
         show_info_box(data, options);
         return false;
       }
@@ -102,6 +102,14 @@ var MooWheel = new Class({
       this.options.center = {x: canvasPos.width / 2, y: canvasPos.height / 2};
  
       CanvasTextFunctions.enable(this.cx);
+
+      if (data_length == 0){
+        this.cx.fillStyle = "green";
+        this.cx.font = "42px Arial";
+        this.cx.fillText("0", this.options.center.x - 10, 45);
+        show_info_box(this.data, this.options);
+        return ;
+      }
             
       if(this.options.hover) {
          this.hoverCanvas = new Element('canvas', {
@@ -139,7 +147,7 @@ var MooWheel = new Class({
       }, this);
          
       this.draw();
-   },
+    },
    
    // define each point on the wheel, including it's position and color
    setPoints: function() {
@@ -302,7 +310,7 @@ var MooWheel = new Class({
    drawConnection: function(i, hover) {
       if (hover){
         // BugFix for overlay bug in Safari & Chrome
-        document.getElementById("canvas_hover").style.top = document.getElementById("canvas").getCoordinates().top + "px";
+        document.getElementById(this.options.canvas_hover_id).style.top = document.getElementById(this.options.canvas_id).getCoordinates().top + "px";
       }
       var cx = hover ? this.hoverCanvas.getContext('2d') : this.cx;
       var item = this.data[i];
@@ -349,13 +357,13 @@ var MooWheel = new Class({
         if (this.options.show_label){
           cx.fillStyle = "lightgray";
           cx.font = "14px Arial";
-          cx.fillText("www.VersionEye.com", this.options.center.x - 70, 30);  
+          cx.fillText("www.VersionEye.com", this.options.center.x - 70, 30);
         }
         show_info_box(this.data, this.options);
       }
    },
    
-   // draw the entire MooWheel
+   // draw the entire DependencyWheel
    draw: function() {
       if (this.data) {
         this.setPoints();
@@ -412,7 +420,6 @@ var MooWheel = new Class({
          }.bind(this));
 
          $(this.hoverCanvas).addEvent('click', function(e) {
-            // alert("event");
             // if (!this.lastMouseOver) return false;
             this.options.onItemClick(this.data[this.lastMouseOver], e);
          }.bind(this));
@@ -437,12 +444,12 @@ var MooWheel = new Class({
       }
    }
 });
-MooWheel.implement(new Options);
+DependencyWheel.implement(new Options);
 
 // helper class for AJAX/JSON-based wheel information retrieval
-MooWheel.Remote = new Class({
+DependencyWheel.Remote = new Class({
     
-    Extends: MooWheel,
+    Extends: DependencyWheel,
 
     initialize: function(data, ct, options) {
         var preloadImages = function(wheelData) {
@@ -452,16 +459,16 @@ MooWheel.Remote = new Class({
               return false;
             }
 
-            container = document.getElementById("container");
-            section = document.getElementById("section");
             border = options.data_border;
-            if (wheelData.length > border && container && section){
-              options.width = wheelData.length * 11;
-              options.height = wheelData.length * 11;
-              container_width = options.width + 40;
-              section_width = options.width + 10;
-              document.getElementById("container").style.width = container_width + "px";
-              document.getElementById("section").style.width = section_width + "px";
+            if (wheelData.length > border && options.resize == true){
+              options.width = wheelData.length * options.resize_factor;
+              options.height = wheelData.length * options.resize_factor;
+              element_ids = options.resize_ids.split(",");
+              for (z = 0; z < element_ids.length; z++){
+                element = document.getElementById(element_ids[z]);
+                new_width = options.width + (z * 20);
+                element.style.width = new_width + "px";
+              }
             }
             
             for (var i = 0, l = wheelData.length; i < l; i++) {
@@ -517,9 +524,10 @@ MooWheel.Remote = new Class({
 });
 
 function show_info_box(data, options){
-  box_name = options.infoBox
-  number_name = options.infoNumber
-  recursive_deps = data.length
+  box_name = options.infoBox;
+  number_name = options.infoNumber;
+  recursive_deps = data.length;
+  options.data_length = data.length;
   info_box = document.getElementById(box_name);
   info_number = document.getElementById(number_name);
   if (info_box){
@@ -529,5 +537,5 @@ function show_info_box(data, options){
     var txt = document.createTextNode(recursive_deps);
     info_number.appendChild(txt); 
   }
-  handle_path(options.canvas_id, options.product_key, options.product_version, options.product_name, options.version);
+  handle_path(options);
 }
