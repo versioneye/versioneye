@@ -19,6 +19,9 @@
 		<% if !signed_in? %>
 			<%= render 'shared/dialog_follow' %>	
 		<% end %>
+
+		<%= render "extended_search" %>
+
 		<%= render :partial => "products/show_search_results", :locals => { :products => @products, :paginate => true, :prefix => "search", :name_limit => 70 }  %>
 	</div>
 </div>

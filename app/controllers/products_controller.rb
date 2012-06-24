@@ -33,16 +33,20 @@ class ProductsController < ApplicationController
   
   def search
     @query = params[:q]
+    @groupid = params[:g]
+    @description = params[:d]
     @lang = get_lang_value( params, cookies )
     commit = params[:commit]
     @query = do_replacements(@query, commit)
-    if @query.length == 1
+    if ( (@query.nil? || @query.empty?) && (@description.nil? || @description.empty?))
+      flash.now[:error] = "Please give us some input. Type in a value for name or description."
+    elsif @query.length == 1
       flash.now[:error] = "Search term is to short. Please type in at least 2 characters."
     elsif @query.include?("%")
       flash.now[:error] = "the character % is not allowed"
     else
       languages = @lang.split(",")
-      @products = Product.find_by_name(@query, languages, 300).paginate(:page => params[:page])
+      @products = Product.find_by(@query, @groupid, @description, languages, 300).paginate(:page => params[:page])
       if @products.nil? || @products.length == 0
         flash.now[:notice] = "Sorry. No Results found."
       else
@@ -235,9 +239,11 @@ class ProductsController < ApplicationController
   
   private
     
-    def do_replacements( query , commit="Commit" )
+    def do_replacements( query , description, commit="Commit" )
       if query.nil? || @query.empty? || @query.eql?("Be up-to-date")
-        return "json"
+        if description.nil? || description.empty? || description.length < 2
+          return "json"
+        end
       end
       if commit.eql?("Lucky")
         product = Product.random_product

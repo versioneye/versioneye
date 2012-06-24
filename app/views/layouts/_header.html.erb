@@ -25,7 +25,7 @@
 					<li><%= link_to image_tag("news_off.png", :title => "News", :alt => "News", :id => "news_img"), news_path, :onmouseover => "document.getElementById('news_img').src='/assets/news_on.png';", :onmouseout => "document.getElementById('news_img').src='/assets/news_off.png';" %></li>
 						<li class="nav-line" ></li>
 					<% if signed_in? %>
-						<li><%= link_to image_tag("project_off.png", :title => "Projects", :alt => "Prjects", :id => "projects_img"), 
+						<li><%= link_to image_tag("project_off.png", :title => "Projects", :alt => "Projects", :id => "projects_img"), 
 																		                user_projects_path, 
 																		 				:onmouseover => "document.getElementById('projects_img').src='/assets/project_on.png';",
 																		 				:onmouseout => "document.getElementById('projects_img').src='/assets/project_off.png';" %></li>

@@ -1,0 +1,38 @@
+<div class="boxHeader" style="text-align: left;" id="ext_search_head">
+	Extended Search <a href="javascript: void(0);" id="ext_search_link" >></a>
+</div>
+<div class="boxContainer" id="extended_search_container" style="display: <%= @products.nil? || @products.empty? ? 'block' : 'none' %> ;">
+	<form id="searchform" action="/search" method="GET" class="search-form" >
+		<input id="ext_lang" name="lang" type="hidden" value="<%= @lang %>" />
+		<div style="display:table-row;">
+			<div class="labelCel">
+				<%= label_tag(:name, "Name") %>
+			</div>
+			<div class="inputCel">
+				<%= text_field_tag :q, @query, :class => "round" %>
+			</div>
+		</div>
+		<div style="display:table-row;">
+			<div class="labelCel">
+				<%= label_tag(:groupid, "GroupId") %>
+			</div>
+			<div class="inputCel">
+				<%= text_field_tag :g, @groupid, :class => "round" %>
+			</div>
+		</div>
+		<div style="display:table-row;">
+			<div class="labelCel">
+				<%= label_tag(:description, "Description") %>
+			</div>
+			<div class="inputCel">
+				<%= text_field_tag :d, @description, :class => "round" %>
+			</div>
+		</div>
+		<div style="display:table-row;">
+			<div class="labelCel"></div>
+			<div class="submitCel" style="text-align: left; padding-left: 7px;">
+				<%= submit_tag "Search", :class => "button" %>
+			</div>
+		</div>
+	</form>
+</div>

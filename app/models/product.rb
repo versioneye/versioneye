@@ -47,17 +47,24 @@ class Product
   end
   
   def self.find_by_name(searched_name, languages=nil, limit=300)
-    return Array.new if searched_name.nil? || searched_name.strip == "" 
-    result1 = find_by_name_start_with(searched_name, languages, limit)
+    Product.find_by(searched_name, nil, nil, languages, limit)
+  end
+
+  def self.find_by(searched_name, group_id, description, languages=nil, limit=300)
+    if (searched_name.nil? || searched_name.strip == "") && (description.nil? || description.strip == "") 
+      return Array.new 
+    end
+    result1 = find_by_name_start_with(searched_name, group_id, description, languages, limit)
     if (result1.nil? || result1.empty?)
-      return find_by_name_simple(searched_name, languages, limit)
-    elsif 
+      return find_by_name_simple(searched_name, group_id, description, languages, limit)
+    else
       prod_keys = result1.map{|w| "#{w.prod_key}"}
-      result2 = find_by_name_exclusion(searched_name, languages, prod_keys, limit)
+      result2 = find_by_name_exclusion(searched_name, group_id, description, languages, prod_keys, limit)
       result = result1 + result2
       result
     end
-  rescue
+  rescue => e
+    p "rescue #{e}"
     Array.new
   end
   
@@ -319,28 +326,35 @@ class Product
 
   private 
 
-    def self.find_by_name_start_with(searched_name, languages, limit)
-      if languages.nil? || languages.empty?
-        Product.all(conditions: { name: /^#{searched_name}/i }).desc(:followers).asc(:name).limit(limit)
-      else
-        Product.all(conditions: { name: /^#{searched_name}/i, :language.in => languages }).desc(:followers).asc(:name).limit(limit)
-      end
+    def self.find_by_name_start_with(searched_name, group_id, description, languages, limit)
+      query = Product.where(name: /^#{searched_name}/i)
+      query = add_to_query(query, group_id, description, languages)
+      query.desc(:followers).asc(:name).limit(limit)
     end
 
-    def self.find_by_name_simple(searched_name, languages, limit)
-      if languages.nil? || languages.empty?
-        Product.all(conditions: { name: /#{searched_name}/i }).desc(:followers).asc(:name).limit(limit)
-      else
-        Product.all(conditions: { name: /#{searched_name}/i, :language.in => languages}).desc(:followers).asc(:name).limit(limit)
-      end
+    def self.find_by_name_simple(searched_name, group_id, description, languages, limit)
+      query = Product.where(name: /#{searched_name}/i)
+      query = add_to_query(query, group_id, description, languages)
+      query.desc(:followers).asc(:name).limit(limit)
     end
 
-    def self.find_by_name_exclusion(searched_name, languages, prod_keys, limit)
-      if languages.nil? || languages.empty?
-        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys }).desc(:followers).asc(:name).limit(limit)
-      else
-        Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys, :language.in => languages}).desc(:followers).asc(:name).limit(limit)
+    def self.find_by_name_exclusion(searched_name, group_id, description, languages, prod_keys, limit)
+      query = Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys})
+      query = add_to_query(query, group_id, description, languages)
+      query.desc(:followers).asc(:name).limit(limit)
+    end
+
+    def self.add_to_query(query, group_id, description, languages)
+      if (group_id && !group_id.empty?)
+        query = query.where(group_id: /^#{group_id}/i)
       end
+      if (description && !description.empty?)
+        query = query.where(description: /#{description}/i)
+      end
+      if languages && !languages.empty?
+        query = query.in(language: languages)
+      end
+      query
     end
 
     def get_element_from_hash(new_hash, hash, parent_hash, key)
