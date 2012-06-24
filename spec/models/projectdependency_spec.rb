@@ -68,6 +68,25 @@ describe Projectdependency do
       dep.is_outdated?.should be_false
     end
 
+    it "is up to date" do       
+      @product.version = "1.4"
+      dep = Projectdependency.new
+      dep.prod_key = "gomezify"
+      dep.version = "1.1"
+      dep.comperator = "~>"
+      dep.is_outdated?.should be_false
+    end
+
+    it "is outdated" do       
+      @product.version = "2.0"
+      @product.save
+      dep = Projectdependency.new
+      dep.prod_key = "gomezify"
+      dep.version = "1.1"
+      dep.comperator = "~>"
+      dep.is_outdated?.should be_true
+    end
+
     it "is outdated" do       
       dep = Projectdependency.new
       dep.prod_key = "gomezify"

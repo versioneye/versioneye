@@ -14,6 +14,7 @@ class Projectdependency
   field :prod_type, type: String
   field :outdated, type: Boolean
   field :comperator, type: String, :default => "="
+  field :scope, type: String, :default => "compile"
   
   def get_product
     if !self.prod_key.nil?
@@ -49,6 +50,10 @@ class Projectdependency
     elsif self.comperator.eql?(">")
       newest = Naturalsorter::Sorter.sort_version([version, product.version]).last
       if newest.eql?(product.version)
+        return false
+      end
+    elsif self.comperator.eql?("~>")
+      if Naturalsorter::Sorter.is_version_current?(version, product.version)
         return false
       end
     end

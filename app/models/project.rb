@@ -22,6 +22,11 @@ class Project
   def self.find_by_user user_id
     Project.all(conditions: { user_id: user_id } )
   end
+
+  def fetch_dependencies
+    self.dependencies = Projectdependency.all(conditions: {project_id: self.id} ).desc(:outdated).asc(:prod_key)
+    self.dependencies
+  end
   
   def self.create_from_file(project_type, url)
     project = nil
@@ -60,9 +65,14 @@ class Project
           dependency.artifact_id = child.text.strip
         elsif child.name.casecmp("version") == 0
           dependency.version = Project.get_variable_value_from_pom properties, child.text.strip 
+        elsif child.name.casecmp("scope") == 0
+          dependency.scope = child.text.strip
         end
       end
       dependency.name = dependency.artifact_id
+      if dependency.scope.nil? 
+        dependency.scope = "compile"
+      end
       
       product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
       if !product.nil?
@@ -117,6 +127,7 @@ class Project
       dependency = Projectdependency.new
       dependency.name = package
       dependency.comperator = splitter
+      dependency.scope = "compile"
       
       version = requirement[1]
       dependency.version = version.strip
@@ -186,11 +197,6 @@ class Project
     project
   end
   
-  def fetch_dependencies
-    self.dependencies = Projectdependency.all(conditions: {project_id: self.id} ).desc(:outdated).asc(:prod_key)
-    self.dependencies
-  end
-  
   def self.get_variable_value_from_pom( properties, val )
     if val.include?("${") && val.include?("}")
       new_val = String.new(val)
@@ -223,43 +229,12 @@ class Project
     elsif version.match(/^~>/)
       ver = version.gsub("~>", "")
       ver = ver.gsub(" ", "")
-      if !product.nil? && Project.is_version_current?(ver, product.version)
-        dependency.version = product.version
-      else 
-        dependency.version = ver
-      end
+      dependency.version = ver
+      dependency.comperator = "~>"
     else
       dependency.version = version
+      dependency.comperator = "="
     end
-  end
-  
-  # TODO move this to external lib
-  def self.is_version_current?(version, current_version)
-    versions = version.split(".")
-    currents = current_version.split(".")
-    min_length = versions.size
-    if currents.size < min_length
-      min_length = currents.size
-    end
-    min_length = min_length - 2
-    if min_length < 0
-      min_length = 0
-    end      
-    (0..min_length).each do |z|
-      ver = versions[z]
-      cur = currents[z]
-      if (cur > ver)
-        return false
-      end
-    end
-    if currents.size < versions.size
-      ver = versions[min_length + 1]
-      cur = currents[min_length + 1]
-      if cur > ver
-        return false
-      end
-    end
-    true
   end
   
   private 
