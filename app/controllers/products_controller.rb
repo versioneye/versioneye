@@ -37,7 +37,7 @@ class ProductsController < ApplicationController
     @description = params[:d]
     @lang = get_lang_value( params, cookies )
     commit = params[:commit]
-    @query = do_replacements(@query, commit)
+    @query = do_replacements(@query, @description, commit)
     if ( (@query.nil? || @query.empty?) && (@description.nil? || @description.empty?))
       flash.now[:error] = "Please give us some input. Type in a value for name or description."
     elsif @query.length == 1

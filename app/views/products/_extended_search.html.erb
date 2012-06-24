@@ -2,7 +2,7 @@
 	Extended Search <a href="javascript: void(0);" id="ext_search_link" >></a>
 </div>
 <div class="boxContainer" id="extended_search_container" style="display: <%= @products.nil? || @products.empty? ? 'block' : 'none' %> ;">
-	<form id="searchform" action="/search" method="GET" class="search-form" >
+	<form id="ext_searchform" action="/search" method="GET" class="search-form" >
 		<input id="ext_lang" name="lang" type="hidden" value="<%= @lang %>" />
 		<div style="display:table-row;">
 			<div class="labelCel">
