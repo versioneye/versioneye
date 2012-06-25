@@ -321,6 +321,8 @@ class Product
       return "runtime"
     elsif self.language.eql?("Java")
       return "compile"
+    elsif self.language.eql?("Node.JS")
+      return "compile"
     end
   end
 

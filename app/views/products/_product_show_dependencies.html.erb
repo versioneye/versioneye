@@ -19,8 +19,10 @@
 	<meta name="name" content="Requirements" itemprop="name" />
 	<% if @product.prod_type.eql?("Maven2") %>
 		<%= render "product_show_dependencies_maven2" %>
-	<% else %>
+	<% elsif @product.prod_type.eql?("RubyGem")  %>
 		<%= render "product_show_dependencies_rubygems" %>
+	<% elsif @product.prod_type.eql?("npm")  %>
+		<%= render "product_show_dependencies_npm" %>
 	<% end %>
 </div>
 

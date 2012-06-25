@@ -35,10 +35,14 @@
 		<% if @product.prod_type.eql?("RubyGem") %> 
 			<%= render "product_show_dependencies_scope_main" %>
 			<%= render "product_show_dependencies_scope_test" %>
+			<%= render "product_show_dependencies_scope_development" %>
 		<% elsif @product.prod_type.eql?("Maven2") %>
 			<%= render "product_show_dependencies_scope_main" %>
 			<%= render "product_show_dependencies_scope_test" %>
 			<%= render "product_show_dependencies_scope_provided" %>
+		<% elsif @product.prod_type.eql?("npm") %>
+			<%= render "product_show_dependencies_scope_main" %>
+			<%= render "product_show_dependencies_scope_development" %>
 		<% end %>
 
 	</div>
