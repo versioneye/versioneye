@@ -37,7 +37,12 @@ class ProductsController < ApplicationController
     @description = params[:d]
     @lang = get_lang_value( params, cookies )
     commit = params[:commit]
-    @query = do_replacements(@query, @description, commit)
+    
+    hash = do_parse(@query, @description)
+    @query = hash['query'] if !hash['query'].nil?
+    @groupid = hash['group'] if !hash['group'].nil?
+    @description = hash['description'] if !hash['description'].nil?
+
     if ( (@query.nil? || @query.empty?) && (@description.nil? || @description.empty?))
       flash.now[:error] = "Please give us some input. Type in a value for name or description."
     elsif @query.length == 1
@@ -239,21 +244,34 @@ class ProductsController < ApplicationController
   
   private
     
-    def do_replacements( query , description, commit="Commit" )
-      if query.nil? || @query.empty? || @query.eql?("Be up-to-date")
-        if description.nil? || description.empty? || description.length < 2
-          return "json"
-        end
+    def do_parse( query , description)
+      hash = Hash.new 
+      query_empty = query.nil? || @query.empty? || @query.eql?("Be up-to-date")
+      description_empty = description.nil? || description.empty? || description.length < 2
+      if query_empty && description_empty
+        hash['query'] = "json"
+        return hash
       end
-      if commit.eql?("Lucky")
-        product = Product.random_product
-        return product.name
-      else
-        query.strip
-        q = query.gsub!(" ", "-")
-        return q unless q.nil?
-        return query if q.nil?
-      end      
+      
+      if (!query_empty)
+        hash = Hash.new 
+        hash['query'] = ""
+        parts = query.split(" ")
+        parts.each do |part| 
+          if !part.match(/^g:/i).nil?
+            hash['group'] = part.gsub("g:", "")
+          elsif !part.match(/^d:/i).nil?
+            hash['description'] = part.gsub("d:", "")
+          else 
+            hash['query'] += part
+          end
+        end
+        return hash
+      end
+
+      query.strip
+      hash['query'] = query.gsub(" ", "-")
+      return hash
     end
 
     def get_lang_value( params, cookies )
