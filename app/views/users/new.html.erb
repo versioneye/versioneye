@@ -7,7 +7,7 @@
 		<%= link_to image_tag("flaggs_gb_off.png", :class=>"flag", :title => "GB", :alt=>"GB", :onmouseover => "document.getElementById('flag_en').src='/assets/flaggs_gb_on.png';", :onmouseout => "document.getElementById('flag_en').src='/assets/flaggs_gb_off.png';", :id => "flag_en"), signup_path(:locale => :en) %>
 	<span>	
 </div>
-<div class="boxContainer" style="height: 350px;">
+<div class="boxContainer" style="height: 280px;">
 	<div class="formCel">
 		<%= form_for @user do |f| %>
 			<input id="username" name="user[username]" type="hidden" value="username" />
@@ -55,23 +55,12 @@
 						<%= link_to "Conditions of Use", terms_path, :target => "new_terms" %> 
 					<% end %>					 
 					<%= t(:terms_part_2) %>
-				</label><br/><br/>
-		      </div>
-		    </div>
-		
-			<div class="div-row">
-		      <div class="labelCel" style="vertical-align: top">
-		        <%= f.check_box :datenerhebung %>
-		      </div>
-		      <div class="inputCel">
-		        <label for="user_datenerhebung" class="label-smaller">
-					<%= t(:daten_part_1) %> 
 					<% if I18n.locale == :de %>
 						<%= link_to "Datenerhebung", datenerhebung_path, :target => "new_data" %>
 					<% else %>
 						<%= link_to "Data Acquisition", datacollection_path, :target => "new_data" %>
 					<% end %>
-					<%= t(:daten_part_2) %> 
+					<%= t(:terms_part_3) %>
 				</label><br/><br/>
 		      </div>
 		    </div>
@@ -85,7 +74,7 @@
 
 		<% end %>
 	</div>
-	<div class="alternative_signin_options_cel" style="height: 350px;">
+	<div class="alternative_signin_options_cel" style="height: 280px;">
 		<b>OR</b><br/>
 		<br/>
 		<br/>

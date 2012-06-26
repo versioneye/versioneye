@@ -7,7 +7,8 @@ en:
           user:
             username: "Special characters like '.', '@' or '*' are not allowed."
     terms_part_1: "I have read the"
-    terms_part_2: "and agree to their validity."
+    terms_part_2: "and the"
+    terms_part_3: "and agree to their validity."
     daten_part_1: "I consent to the collection and use of my data in accordance with the provisions of"
     daten_part_2: "."
     helpers:

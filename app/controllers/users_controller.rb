@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     if !User.email_valid?(@user.email)
       flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
       render 'new'
-    elsif @user.terms != true || @user.datenerhebung != true
+    elsif @user.terms != true
       flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
       render 'new'
     elsif @user.password.nil? || @user.password.empty? || @user.password.size < 5
@@ -30,6 +30,7 @@ class UsersController < ApplicationController
       render 'new'
     else 
       @user = User.new(params[:user])
+      @user.datenerhebung = true
       @user.create_username
       @user.create_verification
       if @user.save

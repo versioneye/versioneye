@@ -7,7 +7,7 @@
 		<%= link_to image_tag("flaggs_gb_off.png", :class=>"flag", :title => "GB", :alt=>"GB", :onmouseover => "document.getElementById('flag_en').src='/assets/flaggs_gb_on.png';", :onmouseout => "document.getElementById('flag_en').src='/assets/flaggs_gb_off.png';", :id => "flag_en"), "/auth/github/new?locale=en" %>
 	<span>	
 </div>
-<div class="boxContainer" style="height: 250px;">
+<div class="boxContainer" style="height: 177px;">
 	<div class="formCel">		
 		<%= form_tag("/auth/twitter/create", :method => "post") do  %>    
 
@@ -30,26 +30,15 @@
 					<% if I18n.locale == :de %>
 						<%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "new_terms" %> 
 					<% else %>
-						<%= link_to "Conditions of Use", terms_path, :target => "_NEW_terms" %> 
+						<%= link_to "Conditions of Use", terms_path, :target => "new_terms" %> 
 					<% end %>					 
 					<%= t(:terms_part_2) %>
-				</label><br/><br/>
-		      </div>
-		    </div>
-		
-			<div class="div-row">
-		      <div class="labelCel" style="vertical-align: top">
-		        <%= check_box_tag :datenerhebung %>
-		      </div>
-		      <div class="inputCel">
-		        <label for="datenerhebung" class="label-smaller">
-					<%= t(:daten_part_1) %> 
 					<% if I18n.locale == :de %>
-						<%= link_to "Datenerhebung", datenerhebung_path, :target => "_NEW_data" %>
+						<%= link_to "Datenerhebung", datenerhebung_path, :target => "new_data" %>
 					<% else %>
-						<%= link_to "Data Acquisition", datacollection_path, :target => "_NEW_data" %>
+						<%= link_to "Data Acquisition", datacollection_path, :target => "new_data" %>
 					<% end %>
-					<%= t(:daten_part_2) %> 
+					<%= t(:terms_part_3) %>
 				</label><br/><br/>
 		      </div>
 		    </div>

@@ -52,7 +52,7 @@ class TwitterController < ApplicationController
     if !User.email_valid?(@email)
       flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
       render 'new'
-    elsif !@terms.eql?("1") || !@datenerhebung.eql?("1")
+    elsif !@terms.eql?("1")
       flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
       render 'new'
     else    
@@ -67,6 +67,7 @@ class TwitterController < ApplicationController
       end
       user = User.new
       user.update_from_twitter_json(user_info, access_token.token, access_token.secret)
+      user.datenerhebung = true
       user.email = @email
       user.terms = true
       user.datenerhebung = true

@@ -48,7 +48,7 @@ class GithubController < ApplicationController
     if !User.email_valid?(@email)
       flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
       render 'new'
-    elsif !@terms.eql?("1") || !@datenerhebung.eql?("1")
+    elsif !@terms.eql?("1")
       flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
       render 'new'
     else    
@@ -61,6 +61,7 @@ class GithubController < ApplicationController
       json_user = get_json_user( token )
       user = User.new
       user.update_from_github_json(json_user, token)
+      user.datenerhebung = true
       user.email = @email
       user.terms = true
       user.datenerhebung = true
