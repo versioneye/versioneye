@@ -20,23 +20,22 @@ Versioneye::Application.routes.draw do
   get   '/packagelike/like_support',    :to => 'productlikes#like_support'
   get   '/packagelike/dislike_support', :to => 'productlikes#dislike_support'
 
-  resources :products
+  
   get   '/autocomplete_product_name',                   :to => 'products#autocomplete_product_name'
   get   '/search',                                      :to => 'products#search'
-  post  '/follow',                                      :to => 'products#follow'
-  post  '/unfollow',                                    :to => 'products#unfollow'
-  get   '/product/:key',                                :to => 'products#show'
+  post  '/package/follow',                              :to => 'products#follow'
+  post  '/package/unfollow',                            :to => 'products#unfollow'
+  post  '/package/image_path',                          :to => 'products#image_path'
+  post  '/package/upload_image',                        :to => 'products#upload_image'
+  post  '/package/update_description',                  :to => 'products#update_description'
   get   '/package/:key',                                :to => 'products#show'
-  get   '/product/:key/version/:version',               :to => 'products#show'
   get   '/package/:key/version/:version',               :to => 'products#show'
+  post  '/package/:key/version/:version/dependencies',  :to => 'products#recursive_dependencies'
+
+  get   '/product/:key',                                :to => 'products#show'
+  get   '/product/:key/version/:version',               :to => 'products#show'
+
   get   '/package_visual/:key/version/:version',        :to => 'products#show_visual'
-  post  '/package/:key/version/:version/recursive_dependencies', :to => 'products#recursive_dependencies'
-  post  '/product/:key/version/:version/recursive_dependencies', :to => 'products#recursive_dependencies'
-  get   '/product/newest/:key/:type',                   :to => 'products#newest'
-  get   '/product/wouldbenewest/:key/version/:version', :to => 'products#wouldbenewest'
-  get   '/biggest/:version1/:version2',                 :to => 'products#biggest'
-  post  '/get_image_path',                              :to => 'products#get_image_path'
-  post  '/upload_image',                                :to => 'products#upload_image'
 
 
   get   '/news',               :to => 'news#news'

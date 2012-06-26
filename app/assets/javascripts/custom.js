@@ -49,7 +49,7 @@ jQuery(document).ready(function() {
 function handle_path(options){
 	jQuery.ajax({
         type: 'POST',
-        url: "/get_image_path.json",
+        url: "/package/image_path.json",
         data: { 'key': options.product_key, 'version': options.product_version, 'scope': options.scope },
         dataType: 'text',
         success: function(data) {
@@ -67,7 +67,7 @@ function upload_file(options){
 	if (canvas){
 		jQuery.ajax({
 	        type: 'POST',
-	        url: "/upload_image.json",
+	        url: "/package/upload_image.json",
 	        data: { 'image': document.getElementById(options.canvas_id).toDataURL(), 'key': options.product_key, 'version': options.product_version, 'scope': options.scope },
 	        dataType: 'text',
 	        success: function(data) {

@@ -17,7 +17,7 @@
 <script type="text/javascript">
 	jQuery.noConflict();
 	var wheel = new DependencyWheel.Remote(false, document.getElementById("canvas-container-development"), { 
-		url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/recursive_dependencies.json?scope=development',
+		url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/dependencies.json?scope=development',
 		width: "562", 
 		height: "562",
 		data_border: 70,

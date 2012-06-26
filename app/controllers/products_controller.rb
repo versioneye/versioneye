@@ -143,6 +143,30 @@ class ProductsController < ApplicationController
     @main_dependencies = @product.dependencies(nil)
     render :layout => 'application_visual'
   end
+
+  def update_description
+
+  end
+
+  def update_license
+
+  end
+
+  def add_link
+
+  end
+
+  def remove_link
+
+  end
+
+  def add_twitter
+
+  end
+
+  def remove_twitter
+
+  end
   
   def follow
     product_key = url_param_to_origin params[:product_key]
@@ -206,7 +230,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  def get_image_path
+  def image_path
     image_key = params[:key]
     image_version = params[:version]
     scope = params[:scope]

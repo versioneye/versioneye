@@ -1,0 +1,26 @@
+<div class="sidebar" >
+	
+	<%= render "products/navi" %>
+	
+</div>	
+<div class="content">
+	
+	<h1>Edit <%= @product.name %></h1>
+	
+	<div class="boxHeader">
+		Links
+	</div>
+
+	<div class="boxContainer">
+		<%= form_tag("/products/update_description", :method => "post") do  %>    
+		<div style="display:table-row;">
+			<div class="labelCelMiddle">
+				<%= label_tag(:description, "Description") %>
+			</div>
+			<div class="inputCel">
+				<%= text_area_tag :description, @user.description, :class => "round", :style => "width: 275px; height: 170px;", :maxlength => "177", :onKeyUp => "textCounter(this, document.getElementById('counter'), 177)", :id => "description"  %>
+			</div>
+		</div>
+	</div>
+
+</div>

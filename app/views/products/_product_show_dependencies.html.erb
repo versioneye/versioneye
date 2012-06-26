@@ -30,7 +30,7 @@
 <script type="text/javascript">
 	jQuery.noConflict();
 	var wheel = new DependencyWheel.Remote(false, document.getElementById("canvas-container"), { 
-		url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/recursive_dependencies.json?scope=<%= @product.main_scope %>',
+		url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/dependencies.json?scope=<%= @product.main_scope %>',
 		width: "562", 
 		height: "562",
 		infoBox: "infoBox",

@@ -4,12 +4,15 @@ class Versioncomment
   include Mongoid::Timestamps
 
   field :user_id, type: String
+  
   field :product_key, type: String
+  field :prod_name, type: String
   field :language, type: String
   field :version, type: String
+  
   field :comment, type: String
-  field :prod_name, type: String
-
+  field :update_type, type: String
+  
   embeds_many :versioncommentreplys
   
   validates_presence_of :user_id,     :message => "User is mandatory!"

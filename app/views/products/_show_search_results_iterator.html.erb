@@ -20,13 +20,13 @@
 					<li class="searchResult-inner-list-cell">
 						<% if signed_in? %>
 							<span id="follow_<%=product.to_param%>" style="display: <%= display_follow(product) %>">
-								<%= form_tag("/follow", :remote => true) do  %>
+								<%= form_tag("/package/follow", :remote => true) do  %>
 									<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>" />
 				 					<%= submit_tag "Follow", :class => "followButton", :id => "#{product.to_param}" %>
 								<% end %>
 							</span>
 							<span id="unfollow_<%=product.to_param%>" style="display: <%= display_unfollow(product) %>">
-								<%= form_tag("/unfollow", :remote => true) do  %>
+								<%= form_tag("/package/unfollow", :remote => true) do  %>
 									<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>" />
 									<%= submit_tag "Unfollow", :class => "unfollowButton", :id => "#{product.to_param}" %>
 								<% end %>
