@@ -15,5 +15,8 @@
 //= require moowheel/dependencywheel
 //= require google
 //= require gmap
+//= require gplus
+//= require twitter
+//= require facebook
 //= require custom
 //= require_tree .
