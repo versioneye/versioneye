@@ -16,11 +16,15 @@ class Product
   
   field :authors, type: String
   field :description, type: String
+  field :description_manual, type: String
   field :link, type: String
   field :downloads, type: Integer
   field :followers, type: Integer, default: 0
+  
   field :license, type: String 
   field :licenseLink, type: String 
+  field :license_manual, type: String 
+  field :licenseLink_manual, type: String
   
   field :version, type: String
   field :version_link, type: String
@@ -31,7 +35,6 @@ class Product
   
   field :icon, type: String
   field :twitter_name, type: String 
-  field :twitter_hash, type: String
 
   embeds_many :versions
   embeds_many :repositories

@@ -53,8 +53,9 @@ Versioneye::Application.routes.draw do
   post  '/package/unfollow',                            :to => 'products#unfollow'
   post  '/package/image_path',                          :to => 'products#image_path'
   post  '/package/upload_image',                        :to => 'products#upload_image'
-  post  '/package/update_description',                  :to => 'products#update_description'
-  get   '/package/:key',                                :to => 'products#show'
+  get   '/package/:key',                                :to => 'products#show', :as => 'products'
+  get   '/package/:key/edit',                           :to => 'products#edit'
+  post  '/package/:key/update',                         :to => 'products#update'
   get   '/package/:key/version/:version',               :to => 'products#show'
   post  '/package/:key/version/:version/dependencies',  :to => 'products#recursive_dependencies'
 

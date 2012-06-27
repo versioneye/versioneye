@@ -7,7 +7,7 @@ class Versionlink
   field :version_id, type: String  
   field :link, type: String
   field :name, type: String
-  field :updt, type: String
+  field :manual, type: Boolean, :default => false
   
   def as_json parameter
     {

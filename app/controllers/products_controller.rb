@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController
 
+  before_filter :authenticate, :only   => [:edit, :update]
+
   @@languages = ["Java", "Ruby", "Python", "Node.JS", "R", "JavaScript", "PHP", "Clojure"]
 
   def index
@@ -144,12 +146,41 @@ class ProductsController < ApplicationController
     render :layout => 'application_visual'
   end
 
-  def update_description
-
+  def edit
+    key = url_param_to_origin params[:key]
+    @product = Product.find_by_key( key )
   end
 
-  def update_license
-
+  def update
+    description = params[:description_manual]
+    license = params[:license]
+    licenseLink = params[:licenseLink]
+    twitter_name = params[:twitter_name]
+    key = url_param_to_origin params[:key]
+    @product = Product.find_by_key( key )
+    if @product.nil? || !current_user.admin 
+      flash[:success] = "An error occured. Please try again later."
+      redirect_to products_path(@product)
+      return       
+    end
+    if description && !description.empty?
+      @product.description_manual = description
+      @product.save
+      add_status_comment(@product, current_user, "description")
+      flash[:success] = "Description updated."
+    elsif license && !license.empty?
+      @product.license_manual = license
+      @product.licenseLink_manual = licenseLink
+      @product.save
+      add_status_comment(@product, current_user, "license")
+      flash[:success] = "License updated."
+    elsif twitter_name && !twitter_name.empty?
+      @product.twitter_name = twitter_name
+      @product.save
+      add_status_comment(@product, current_user, "twitter")
+      flash[:success] = "Twitter name updated."
+    end
+    redirect_to products_path(@product)
   end
 
   def add_link
@@ -326,6 +357,26 @@ class ProductsController < ApplicationController
       else
         return false
       end
+    end
+
+    def add_status_comment(product, user, type)
+      comment = Versioncomment.new
+      comment.user_id = user.id
+      comment.product_key = product.prod_key
+      comment.prod_name = product.name
+      comment.language = product.language
+      comment.version = product.version 
+      if type.eql?("description")
+        comment.comment = "UPDATE: #{user.fullname} updated the description"
+        comment.update_type = type
+      elsif type.eql?("license")
+        comment.comment = "UPDATE: #{user.fullname} updated the license to #{@product.license_manual}"
+        comment.update_type = type
+      elsif type.eql?("twitter")
+        comment.comment = "UPDATE: #{user.fullname} updated the Twitter name to #{@product.twitter_name}"
+        comment.update_type = type
+      end
+      comment.save
     end
 
 end

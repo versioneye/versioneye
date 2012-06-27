@@ -4,11 +4,20 @@
 <div class="boxContainer" >
 	<% if !@product.license.nil? && !@product.license.empty? %>
 		<% if !@product.licenseLink.nil? && !@product.licenseLink.empty? %>
-			<a href="<%= @product.licenseLink %>" target="_LICENSE"><%= @product.license %></a>
+			<a href="<%= @product.licenseLink %>" target="_LICENSE"><%= @product.license %></a> - <span class="meta-text-small">[ crawled data ]</span>
 		<% else %>
-			<%= @product.license %>
+			<%= @product.license %> - <span class="meta-text-small">[ crawled data ]</span>
 		<% end %>
 	<% else %>
-		UNKNOWN
+		UNKNOWN - <span class="meta-text-small">[ crawled data ]</span>
 	<% end %>
 </div>
+<% if @product.license_manual && !@product.license_manual.empty? %>
+	<div class="boxContainer" >
+		<% if !@product.licenseLink_manual.nil? && !@product.licenseLink_manual.empty? %>
+			<a href="<%= @product.licenseLink_manual %>" target="_LICENSE"><%= @product.license_manual %></a> <span class="meta-text-small"> - [ manual entry ]</span>
+		<% else %>
+			<%= @product.license_manual %> - <span class="meta-text-small">[ manual entry ]</span>
+		<% end %>
+	</div>	
+<% end %>

@@ -1,26 +1,81 @@
 <div class="sidebar" >
 	
-	<%= render "products/navi" %>
+	:-)
 	
 </div>	
 <div class="content">
 	
 	<h1>Edit <%= @product.name %></h1>
 	
+	<div>
+		You are not allowed to edit crawled data. But you can add additional data. 
+	</div>
 	<div class="boxHeader">
-		Links
+		Description
+	</div>
+	<% if (@product.description && !@product.description.empty?) %>
+		<div class="boxContainer" >
+			<div class="meta-text-small">[ crawled data ]</div>
+			<% if @product.description.include? "\n" %>
+				<%= @product.description.gsub!("\n", "<br/>").html_safe %>
+			<% else %>
+				<%= @product.description %>
+			<% end %>
+		</div>
+	<% end %>
+	<br/>
+	<div class="boxContainer">
+		<%= form_tag("/package/#{@product.to_param}/update", :method => "post") do  %>    
+			<%= text_area_tag :description_manual, @product.description_manual, :class => "round", :style => "width: 546px; height: 170px; margin-left: 5px;", :maxlength => "1000", :onKeyUp => "textCounter(this, document.getElementById('counter'), 1000)", :id => "description"  %>
+			<br/>
+			<%= submit_tag "Save", :class => "button" %>
+		<% end %>
 	</div>
 
+	<div class="boxHeader">
+		License
+	</div>
 	<div class="boxContainer">
-		<%= form_tag("/products/update_description", :method => "post") do  %>    
-		<div style="display:table-row;">
-			<div class="labelCelMiddle">
-				<%= label_tag(:description, "Description") %>
-			</div>
-			<div class="inputCel">
-				<%= text_area_tag :description, @user.description, :class => "round", :style => "width: 275px; height: 170px;", :maxlength => "177", :onKeyUp => "textCounter(this, document.getElementById('counter'), 177)", :id => "description"  %>
-			</div>
-		</div>
+		<%= form_tag("/package/#{@product.to_param}/update", :method => "post") do  %>    
+
+			<div style="display:table-row;">
+				<div class="labelCelMiddle" style="width: 80px;">
+					<%= label_tag(:license, "Name") %>
+				</div>
+				<div class="inputCel" style="width: 450px;">
+					<%= text_field_tag :license, @product.license_manual, :class => "round", :style=>"width: 420px;" %>
+				</div>
+		    </div>
+		    <div style="display:table-row;">
+				<div class="labelCelMiddle" style="width: 80px;">
+					<%= label_tag(:licenseLink, "Link") %>
+				</div>
+				<div class="inputCel" style="width: 450px;">
+					<%= text_field_tag :licenseLink, @product.licenseLink_manual, :class => "round", :style=>"width: 420px;" %>
+				</div>
+		    </div>
+			<br/>
+			<%= submit_tag "Save", :class => "button" %>
+		<% end %>
+	</div>
+
+	<div class="boxHeader">
+		Twitter
+	</div>
+	<div class="boxContainer">
+		<%= form_tag("/package/#{@product.to_param}/update", :method => "post") do  %>    
+
+			<div style="display:table-row;">
+				<div class="labelCelMiddle" style="width: 80px;">
+					<%= label_tag(:twitter_name, "ID") %>
+				</div>
+				<div class="inputCel" style="width: 450px;">
+					<%= text_field_tag :twitter_name, @product.twitter_name, :class => "round", :style=>"width: 420px;" %>
+				</div>
+		    </div>
+			<br/>
+			<%= submit_tag "Save", :class => "button" %>
+		<% end %>
 	</div>
 
 </div>
