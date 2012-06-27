@@ -133,6 +133,9 @@ class Project
       dependency.version = version.strip
       
       product = Product.find_by_key("pip/#{package}")
+      if product.nil? 
+        product = Product.find_by_key_case_insensitiv("pip/#{package}")
+      end
       if !product.nil?
         dependency.prod_key = product.prod_key
       end

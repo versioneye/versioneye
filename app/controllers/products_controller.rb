@@ -11,21 +11,15 @@ class ProductsController < ApplicationController
       @lang = ""
       cookies[:veye_lang] = ""
     end
-    @comments = Versioncomment.all().desc(:created_at).limit(10) 
-    @newest = Array.new
-    newest_ids = Array.new
     @hotest = Product.get_hotest(7)
-    new_stuff = Newest.get_newest(200)
+    new_stuff = Newest.get_newest(7)
+    prod_keys = Array.new
     if !new_stuff.nil? && !new_stuff.empty?
       new_stuff.each do |entry|
-        product = entry.product
-        if !product.nil? && !newest_ids.include?(product.id)
-          @newest << product
-          newest_ids << product.id
-        end  
-        break if @newest.size == 7
+        prod_keys << entry.prod_key
       end
     end
+    @newest = Product.find_by_keys(prod_keys)
     @languages = @@languages # Product.get_unique_languages
     if signed_in?
       @my_product_ids = current_user.fetch_my_product_ids

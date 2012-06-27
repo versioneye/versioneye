@@ -73,9 +73,21 @@ class Product
   
   def self.find_by_key(searched_key)
     return nil if searched_key.nil? || searched_key.strip == ""
-    result = Product.where(prod_key: searched_key )
+    result = Product.where(prod_key: searched_key)
     return nil if (result.nil? || result.empty?)
     return result[0]    
+  end
+
+  # This is slow !! Searches by regex are always slower than exact searches!
+  def self.find_by_key_case_insensitiv(searched_key)
+    return nil if searched_key.nil? || searched_key.strip == ""
+    result = Product.all(conditions: {prod_key: /^#{searched_key}$/i})
+    return nil if (result.nil? || result.empty?)
+    return result[0]    
+  end
+
+  def self.find_by_keys(product_keys)
+    Product.where(:prod_key.in => product_keys)
   end
   
   def self.find_by_id(id)
