@@ -48,27 +48,58 @@ class Product
   def delete
     false
   end
-  
-  def self.find_by_name(searched_name, languages=nil, limit=300)
-    Product.find_by(searched_name, nil, nil, languages, limit)
+
+  def self.find_by(searched_name, description, group_id, languages=nil, limit=300)
+    query = Mongoid::Criteria.new(Product)
+    if searched_name && !searched_name.empty?
+      query = Product.find_by_name(searched_name)
+      if query.nil?
+        query = Product.find_by_description(searched_name)
+      else 
+        query = add_description_to_query(query, description)  
+      end  
+    elsif description && !description.empty?
+      query = Product.find_by_description(description)
+    else
+      return Mongoid::Criteria.new(Product, {_id: -1})
+    end
+    query = add_to_query(query, group_id, languages)
+    query = query.desc(:followers).asc(:name).limit(limit)
+    return query
+  rescue => e
+    p "#{e}" 
+    Mongoid::Criteria.new(Product, {_id: -1})
   end
 
-  def self.find_by(searched_name, group_id, description, languages=nil, limit=300)
-    if (searched_name.nil? || searched_name.strip == "") && (description.nil? || description.strip == "") 
-      return Array.new 
+  def self.find_by_name(searched_name)
+    if (searched_name.nil? || searched_name.strip == "")
+      return nil
     end
-    result1 = find_by_name_start_with(searched_name, group_id, description, languages, limit)
-    if (result1.nil? || result1.empty?)
-      return find_by_name_simple(searched_name, group_id, description, languages, limit)
+    query = Product.where(name: /^#{searched_name}/i)
+    if (query.nil? || query.empty?)
+      return query = Product.where(name: /#{searched_name}/i)
     else
-      prod_keys = result1.map{|w| "#{w.prod_key}"}
-      result2 = find_by_name_exclusion(searched_name, group_id, description, languages, prod_keys, limit)
-      result = result1 + result2
-      result
+      prod_keys = query.map{|w| "#{w.prod_key}"}
+      result2 = Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys})
+      result = query + result2
+      prod_keys = result.map{|w| "#{w.prod_key}"}
+      end_result = Product.all(conditions: { :prod_key.in => prod_keys})
+      end_result
     end
   rescue => e
     p "rescue #{e}"
-    Array.new
+    Mongoid::Criteria.new(Product, {_id: -1})
+  end
+
+  def self.find_by_description(description)
+    if (description.nil? || description.strip == "")
+      return Mongoid::Criteria.new(Product, {_id: -1})
+    end
+    query = Product.all(conditions: {"$or" => [ {"description" => /#{description}/i}, {"description_manual" => /#{description}/i} ] })
+    query
+  rescue => e
+    p "rescue #{e}"
+    Mongoid::Criteria.new(Product, {_id: -1})
   end
   
   def self.find_by_key(searched_key)
@@ -343,30 +374,16 @@ class Product
 
   private 
 
-    def self.find_by_name_start_with(searched_name, group_id, description, languages, limit)
-      query = Product.where(name: /^#{searched_name}/i)
-      query = add_to_query(query, group_id, description, languages)
-      query.desc(:followers).asc(:name).limit(limit)
+    def self.add_description_to_query(query, description)
+      if (description && !description.empty?)
+        query = query.where("$or" => [ {"description" => /#{description}/i}, {"description_manual" => /#{description}/i} ] )
+      end
+      query
     end
 
-    def self.find_by_name_simple(searched_name, group_id, description, languages, limit)
-      query = Product.where(name: /#{searched_name}/i)
-      query = add_to_query(query, group_id, description, languages)
-      query.desc(:followers).asc(:name).limit(limit)
-    end
-
-    def self.find_by_name_exclusion(searched_name, group_id, description, languages, prod_keys, limit)
-      query = Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys})
-      query = add_to_query(query, group_id, description, languages)
-      query.desc(:followers).asc(:name).limit(limit)
-    end
-
-    def self.add_to_query(query, group_id, description, languages)
+    def self.add_to_query(query, group_id, languages)
       if (group_id && !group_id.empty?)
         query = query.where(group_id: /^#{group_id}/i)
-      end
-      if (description && !description.empty?)
-        query = query.where(description: /#{description}/i)
       end
       if languages && !languages.empty?
         query = query.in(language: languages)

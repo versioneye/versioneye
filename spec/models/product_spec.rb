@@ -55,7 +55,7 @@ describe Product do
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
-      results = Product.find_by_name( "" )
+      results = Product.find_by( "", nil, nil, nil, 300 )
       results.should_not be_nil
       results.size.should eq(0)
     end
@@ -65,7 +65,7 @@ describe Product do
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
-      results = Product.find_by_name( nil )
+      results = Product.find_by( nil, nil, nil, nil, 300 )
       results.should_not be_nil
       results.size.should eq(0)
     end

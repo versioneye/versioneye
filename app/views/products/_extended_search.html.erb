@@ -14,6 +14,14 @@
 		</div>
 		<div style="display:table-row;">
 			<div class="labelCel">
+				<%= label_tag(:description, "Description") %>
+			</div>
+			<div class="inputCel">
+				<%= text_field_tag :d, @description, :class => "round" %>
+			</div>
+		</div>
+		<div style="display:table-row;">
+			<div class="labelCel">
 				<%= label_tag(:groupid, "GroupId") %>
 			</div>
 			<div class="inputCel">
@@ -22,10 +30,9 @@
 		</div>
 		<div style="display:table-row;">
 			<div class="labelCel">
-				<%= label_tag(:description, "Description") %>
 			</div>
-			<div class="inputCel">
-				<%= text_field_tag :d, @description, :class => "round" %>
+			<div class="meta-text-small" style="text-align: left; padding-bottom: 15px; padding-left: 15px;">
+				GroupId is (Java) Maven2 specific
 			</div>
 		</div>
 		<div style="display:table-row;">
