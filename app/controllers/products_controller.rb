@@ -76,8 +76,11 @@ class ProductsController < ApplicationController
     key = url_param_to_origin params[:key]
     @product = Product.find_by_key( key )
     if @product.nil? 
+      @product = Product.find_by_key_case_insensitiv( key )  
+    end
+    if @product.nil? 
       flash[:error] = "The requested package is not available."
-      redirect_to products_path
+      redirect_to "/"
       return 
     end
     if signed_in? 
