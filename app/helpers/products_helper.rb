@@ -125,5 +125,38 @@ module ProductsHelper
     xml_file.write(xml_data)
     xml_file.close
   end
+
+  def do_parse_search_input( query , description)
+    hash = Hash.new 
+    query_empty = query.nil? || query.empty? || query.eql?("Be up-to-date")
+    description_empty = description.nil? || description.empty? || description.length < 2
+    if query_empty && description_empty
+      hash['query'] = "json"
+      return hash
+    end
+    
+    if (!query_empty)
+      hash = Hash.new 
+      hash['query'] = ""
+      parts = query.split(" ")
+      parts.each do |part| 
+        if !part.match(/^g:/i).nil?
+          hash['group'] = part.gsub("g:", "")
+        elsif !part.match(/^d:/i).nil?
+          hash['description'] = part.gsub("d:", "")
+        else 
+          hash['query'] += part + " "
+        end
+      end
+      new_query = hash['query']
+      new_query = new_query.strip()
+      hash['query'] = new_query.gsub(" ", "-")  
+      return hash
+    end
+
+    query = query.strip()
+    hash['query'] = query.gsub(" ", "-")
+    return hash
+  end
   
 end

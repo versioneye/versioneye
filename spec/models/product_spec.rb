@@ -38,14 +38,14 @@ describe Product do
     
   end
   
-  describe "find_by_name" do
+  describe "find_by" do
     
     it "returns an empty list. Search term is not in the DB" do
       name = "junitggasgagasgj8623"
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
-      results = Product.find_by_name( "sgj8623agajklnb8738gas" )
+      results = Product.find_by( "sgj8623agajklnb8738gas", nil, nil, nil, 300  )
       results.should_not be_nil
       results.size.should eq(0)
     end
@@ -75,7 +75,7 @@ describe Product do
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
-      results = Product.find_by_name( name )
+      results = Product.find_by( name, nil, nil, nil, 300  )
       results.should_not be_nil
       results.size.should eq(1)
     end
@@ -85,7 +85,7 @@ describe Product do
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
-      results = Product.find_by_name( "JUNITggasGagasgj8623" )
+      results = Product.find_by( name, nil, nil, nil, 300  )
       results.should_not be_nil
       results.size.should eq(1)
     end
@@ -95,7 +95,7 @@ describe Product do
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
-      results = Product.find_by_name( "junitggasg" )
+      results = Product.find_by( "junitggasg", nil, nil, nil, 300  )
       results.should_not be_nil
       results.size.should eq(1)
     end
@@ -105,7 +105,7 @@ describe Product do
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
-      results = Product.find_by_name( "sgj8623" )
+      results = Product.find_by( "sgj8623", nil, nil, nil, 300  )
       results.should_not be_nil
       results.size.should eq(1)
     end
@@ -115,7 +115,27 @@ describe Product do
       @product.name = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
-      results = Product.find_by_name( "tggasgagasgj86" )
+      results = Product.find_by( "tggasgagasgj86", nil, nil, nil, 300 )
+      results.should_not be_nil
+      results.size.should eq(1)
+    end
+
+    it "returns the searhced product because searched_name is in description" do
+      @product.name = "asgfasfgasgasfgs"
+      @product.prod_key = "gasgagasgj8623_junit/junitagasfgas"
+      @product.description = "this is BuBuBo. OK?"
+      @product.save
+      results = Product.find_by( "BuBuBo", nil, nil, nil, 300 )
+      results.should_not be_nil
+      results.size.should eq(1)
+    end
+
+    it "returns the searhced product because searched_name is in description_manual" do
+      @product.name = "asgfasfgasgasfgs"
+      @product.prod_key = "gasgagasgj8623_junit/junitagasfgas"
+      @product.description_manual = "this is BuBuBoHapo gasgfs"
+      @product.save
+      results = Product.find_by( "BuBuBoHapo", nil, nil, nil, 300 )
       results.should_not be_nil
       results.size.should eq(1)
     end
@@ -132,7 +152,7 @@ describe Product do
       product.prod_key = "apple_bike_pie12/unit"
       product.save
 
-      results = Product.find_by_name( "apple" )
+      results = Product.find_by( "apple", nil, nil, nil, 300  )
       results.should_not be_nil
       results.size.should eq(2)
 

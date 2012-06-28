@@ -53,7 +53,7 @@ class Product
     query = Mongoid::Criteria.new(Product)
     if searched_name && !searched_name.empty?
       query = Product.find_by_name(searched_name)
-      if query.nil?
+      if query.nil? || query.count == 0
         query = Product.find_by_description(searched_name)
       else 
         query = add_description_to_query(query, description)  
