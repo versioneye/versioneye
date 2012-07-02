@@ -240,6 +240,7 @@ class ProductsController < ApplicationController
       product.version = version  
     end
     @circle = product.dependency_circle(scope)
+
     respond_to do |format|
       format.json { 
         resp = ""
@@ -257,6 +258,15 @@ class ProductsController < ApplicationController
       }
     end
   end
+
+  def lp_dependencies
+    respond_to do |format|
+      format.json { 
+        render :json => "[{\"connections\": [\"actionpack\",\"mail\"],\"text\": \"actionmailer:3.2.3\",\"id\": \"actionmailer\",\"version\": \"3.2.3\"},{\"connections\": [\"actionmailer\",\"activemodel\",\"activesupport\",\"builder\",\"erubis\",\"journey\",\"rack\",\"rack-cache\",\"rack-test\",\"sprockets\",\"railties\"],\"text\": \"actionpack:3.2.3\",\"id\": \"actionpack\",\"version\": \"3.2.3\"},{\"connections\": [\"activemodel\",\"activesupport\",\"arel\",\"tzinfo\"],\"text\": \"activerecord:3.2.3\",\"id\": \"activerecord\",\"version\": \"3.2.3\"},{\"connections\": [\"activemodel\",\"activesupport\"],\"text\": \"activeresource:3.2.3\",\"id\": \"activeresource\",\"version\": \"3.2.3\"},{\"connections\": [\"actionpack\",\"activerecord\",\"activeresource\",\"i18n\",\"multi_json\",\"railties\",\"activemodel\"],\"text\": \"activesupport:3.2.3\",\"id\": \"activesupport\",\"version\": \"3.2.3\"},{\"connections\": [],\"text\": \"bundler:~>1.0\",\"id\": \"bundler\",\"version\": \"1.2.0.pre\"},{\"connections\": [\"actionpack\",\"activesupport\",\"rack-ssl\",\"rake\",\"rdoc\",\"thor\"],\"text\": \"railties:3.2.3\",\"id\": \"railties\",\"version\": \"3.2.3\"},{\"connections\": [\"actionmailer\",\"i18n\",\"mime-types\",\"treetop\"],\"text\": \"mail:~>2.4.4\",\"id\": \"mail\",\"version\": \"2.4.4\"},{\"connections\": [\"actionpack\",\"activerecord\",\"activeresource\",\"activesupport\",\"builder\"],\"text\": \"activemodel:3.2.3\",\"id\": \"activemodel\",\"version\": \"3.2.3\"},{\"connections\": [\"actionpack\",\"activemodel\"],\"text\": \"builder:~>3.0.0\",\"id\": \"builder\",\"version\": \"3.0.0\"},{\"connections\": [\"actionpack\"],\"text\": \"erubis:~>2.7.0\",\"id\": \"erubis\",\"version\": \"2.7.0\"},{\"connections\": [\"actionpack\"],\"text\": \"journey:~>1.0.1\",\"id\": \"journey\",\"version\": \"1.0.3\"},{\"connections\": [\"actionpack\",\"rack-cache\",\"rack-test\",\"rack-ssl\"],\"text\": \"rack:~>1.4.0\",\"id\": \"rack\",\"version\": \"1.4.1\"},{\"connections\": [\"actionpack\",\"rack\"],\"text\": \"rack-cache:~>1.2\",\"id\": \"rack-cache\",\"version\": \"1.2\"},{\"connections\": [\"actionpack\",\"rack\"],\"text\": \"rack-test:~>0.6.1\",\"id\": \"rack-test\",\"version\": \"0.6.1\"},{\"connections\": [\"actionpack\"],\"text\": \"sprockets:~>2.1.2\",\"id\": \"sprockets\",\"version\": \"2.1.3\"},{\"connections\": [\"activerecord\"],\"text\": \"arel:~>3.0.2\",\"id\": \"arel\",\"version\": \"3.0.2\"},{\"connections\": [\"activerecord\"],\"text\": \"tzinfo:~>0.3.29\",\"id\": \"tzinfo\",\"version\": \"0.3.33\"},{\"connections\": [\"activesupport\",\"mail\"],\"text\": \"i18n:~>0.6\",\"id\": \"i18n\",\"version\": \"0.6.0\"},{\"connections\": [\"activesupport\"],\"text\": \"multi_json:~>1.0\",\"id\": \"multi_json\",\"version\": \"1.3.5\"},{\"connections\": [\"railties\",\"rack\"],\"text\": \"rack-ssl:~>1.3.2\",\"id\": \"rack-ssl\",\"version\": \"1.3.2\"},{\"connections\": [\"railties\"],\"text\": \"rake:>=0.8.7\",\"id\": \"rake\",\"version\": \"0.9.3.beta.1\"},{\"connections\": [\"railties\",\"json\"],\"text\": \"rdoc:~>3.4\",\"id\": \"rdoc\",\"version\": \"3.12\"},{\"connections\": [\"railties\"],\"text\": \"thor:~>0.14.6\",\"id\": \"thor\",\"version\": \"0.14.6\"},{\"connections\": [\"mail\"],\"text\": \"mime-types:~>1.16\",\"id\": \"mime-types\",\"version\": \"1.18\"},{\"connections\": [\"mail\",\"polyglot\"],\"text\": \"treetop:~>1.4.8\",\"id\": \"treetop\",\"version\": \"1.4.10\"},{\"connections\": [\"rdoc\"],\"text\": \"json:~>1.4\",\"id\": \"json\",\"version\": \"1.7.3\"},{\"connections\": [\"treetop\"],\"text\": \"polyglot:>=0.3.1\",\"id\": \"polyglot\",\"version\": \"0.3.3\"}]"
+      }
+    end
+  end
+
 
   def image_path
     image_key = params[:key]
