@@ -29,7 +29,7 @@ $horizontal_separater_line: #888888;
 
 /******* Sprites *****************/
 
-.blog_button, .facebook_button, .twitter_button, .youtube_button, .feedback_button, .searchlink, .beta, .button_bg_200_off, .button_bg_200_on, .followButton, .logo_div, .logout, .myprofile, .news, .profile_off, .profile_on, .project_icon, .settings, .c_bw, .c, .clojure_bw, .clojure, .java_bw, .java, .javascript_bw, .javascript, .node_js_bw, .node_js, .opa_bw, .opa, .php_bw, .php, .python_bw, .python, .r_bw, .r, .ruby_bw, .ruby{
+.blog_button, .facebook_button, .twitter_button, .youtube_button, .feedback_button, .searchlink, .beta, .button_bg_200_off, .button_bg_200_on, .followButton, .logo_div, .logout, .myprofile, .news, .profile_off, .profile_on, .project_icon, .settings, .c_bw, .c, .clojure_bw, .clojure, .java_bw, .java, .javascript_bw, .javascript, .node_js_bw, .node_js, .opa_bw, .opa, .php_bw, .php, .python_bw, .python, .r_bw, .r, .ruby_bw, .ruby, .eye_off{
 	background: url(sprites.png) no-repeat;
 }
 
@@ -190,7 +190,7 @@ $horizontal_separater_line: #888888;
 }
 
 .c_bw{
-	background-position: -2px -226px ;
+	background-position: -8px -226px ;
 	width: 56px;
 	height: 56px;
 }
@@ -357,6 +357,12 @@ $horizontal_separater_line: #888888;
 	height: 56px;
 }
 
+.eye_off {
+	background-position: -122px -105px ;
+	width: 56px;
+	height: 26px;
+}
+
 /******* Basic Elements *********/
 
 body {
@@ -506,18 +512,17 @@ header a:visited:hover {
 }
 
 @mixin button_off_snippet{
-	background-image: url("button_bg_100_off.gif");
-	background-repeat: no-repeat;
-    background-position: top;
+	background: url(sprites.png) no-repeat;
+	background-position: -114px -289px ;
+	width: 100px;
+	height: 35px;
 	color: black;	  
 	cursor:pointer;
 	font-family: arial, sans-serif;
 	font-size:17px;
 	font-weight:bold;
 	text-align:center;
-	width: 100px;
 	min-width:54px;
-	height:35px;
 	line-height:35px;
 	border: 0px solid $border_color;
 	border-bottom-left-radius:8px 8px;
@@ -539,7 +544,7 @@ input[type="submit"] {
 } 
 
 input[type="submit"]:hover {
-	background-image: url("button_bg_100_on.gif");
+	background-position: -10px -288px ;
 }
 
 .followButtonBig[type="submit"]{
@@ -547,7 +552,7 @@ input[type="submit"]:hover {
 }
 
 .followButtonBig[type="submit"]:hover {
-	background-image: url("button_bg_100_on.gif");
+	background-position: -10px -288px ;
 }
 
 .unfollowButtonBig[type="submit"]{
@@ -584,9 +589,8 @@ input[type="submit"]:hover {
 
 .followButton[type="submit"]{
 	background-color: white;
-	background-image: url("button_100_off.png");
-	background-repeat: no-repeat;
-    background-position: top;
+	background: url(sprites.png) no-repeat;
+	background-position: -299px -162px ;
 	color: black;	  
 	cursor:pointer;
 	font-family: arial, sans-serif;
@@ -613,7 +617,8 @@ input[type="submit"]:hover {
 }
 
 .followButton[type="submit"]:hover {
-	background-image: url("button_100_on.png");
+	background: url(sprites.png) no-repeat;
+	background-position: -188px -162px ;
 }
 
 .unfollowButton[type="submit"]{
@@ -1120,14 +1125,17 @@ nav ul li a:hover {
 }
 
 .lp_sign_up_button[type="submit"]{
+	background: url(sprites.png) no-repeat;
+	background-position: -202px -110px ;
 	width: 200px;
-	background-image: url("button_bg_200_off.gif");
-	background-repeat: no-repeat;
-    background-position: top;
+	height: 35px;
 }
 
 .lp_sign_up_button[type="submit"]:hover{
-	background-image: url("button_bg_200_on.gif");
+	background: url(sprites.png) no-repeat;
+	background-position: -203px -65px ;
+	width: 200px;
+	height: 35px;
 }
 
 /***** Impressum *****/

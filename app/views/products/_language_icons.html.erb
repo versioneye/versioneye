@@ -1,12 +1,18 @@
 <% if icon.nil? %>
 	<% if !language.nil? && !language.empty? %>
 		<% if !link.nil? %>
-			<a href="<%= link %>"><%= image_tag "language/#{language.downcase}.png", :title => title, :itemprop => "image" %></a>
+			<a href="<%= link %>">
+				<div class="<%= language.gsub(".", "_").downcase %>" 
+					 id="<%= language.downcase %>_icon" 
+					 title = "<%= title %>" itemprop = "image" ></div>
+			</a>
 		<% else %>
-			<%= image_tag "language/#{language.downcase}.png", :title => title, :itemprop => "image" %>
+			<div class="<%= language.gsub(".", "_").downcase %>" 
+					 id="<%= language.downcase %>_icon" 
+					 title = "<%= title %>" itemprop = "image" ></div>
 		<% end %>
 	<% else %>
-		<%= image_tag "eye_off.png" %>
+		<div class="eye_off"></div>
 	<% end %>									
 <% else %>
 	<img itemprop="image" src="<%= icon %>" width="57" height="57" />
