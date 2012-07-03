@@ -21,6 +21,7 @@ group :assets do
   gem 'sass-rails', "3.2.5"
   gem 'coffee-rails', "3.2.2"
   gem 'uglifier'
+  gem 'yui-compressor', '0.9.6'
 end
 
 group :test do

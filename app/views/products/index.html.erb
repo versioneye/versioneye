@@ -2,7 +2,7 @@
 <%= render 'shared/dialog_follow' %>
 
 <section class="section-lp round" style="text-align: center;">
-	<div id="canvas-container" style="margin-top: 20px;"></div>
+	<div id="canvas-container-lp" style="margin-top: 20px;"></div>
 	<div style="text-align: center; display: none" id="infoBox">
 		<span >
 			<a id="pinit_runtime" style="display: none;" href="" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" alt="Pin_it_on_pinterest" title="Pin It" target="new_pinterest" /></a>
@@ -37,34 +37,3 @@
 		</div>
 	<% end %>
 </section>
-
-<script type="text/javascript">
-	jQuery.noConflict();
-	var wheel = new DependencyWheel.Remote(false, document.getElementById("canvas-container"), { 
-		url: '/package/rails/version/3~2~3/lp_dependencies.json',
-		width: "500", 
-		height: "450",
-		data_border: 70,
-		infoBox: "infoBox",
-		infoNumber: "runtime_recursive_number",
-		canvas_id: "canvas",
-		canvas_hover_id: "canvas_hover",
-		product_key: "rails", 
-		product_version: "3~2~6",
-		product_name: "rails", 
-		version: "3.2.6",
-		scope: "runtime",
-		container_id: "canvas-container",
-		resize: false,
-		show_label: false,
-		onItemClick: function(item, event){
-			key = item.id; 
-			key = key.replace(/\//g, "--");
-			key = key.replace(/\./g, "~" );
-			version = item.version;
-			version = version.replace(/\//g, "--");
-			version = version.replace(/\./g, "~" );
-			window.location.href = "/package/" + key + "/version/" + version;
-		}
-	} );
-</script>
