@@ -44,7 +44,6 @@ describe "registration" do
 
     get "/news"
     assert_response :success
-    assert_tag :tag => "img", :attributes => { :id => "myprofile_img"}
   end
 
   it "login not successfully, because password is wrong" do 

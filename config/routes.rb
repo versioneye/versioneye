@@ -16,7 +16,7 @@ Versioneye::Application.routes.draw do
   
   resources :sessions, :only => [:new, :create, :destroy]
   get    '/signin',                :to => 'sessions#new'
-  delete '/signout',               :to => 'sessions#destroy'
+  get    '/signout',               :to => 'sessions#destroy'
   post   '/androidregistrationid', :to => 'sessions#android_registrationid'
 
 

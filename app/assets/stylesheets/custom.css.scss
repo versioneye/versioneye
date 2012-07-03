@@ -27,6 +27,336 @@ $outdated_color: red;
 $horizontal_separater_line: #888888;
 
 
+/******* Sprites *****************/
+
+.blog_button, .facebook_button, .twitter_button, .youtube_button, .feedback_button, .searchlink, .beta, .button_bg_200_off, .button_bg_200_on, .followButton, .logo_div, .logout, .myprofile, .news, .profile_off, .profile_on, .project_icon, .settings, .c_bw, .c, .clojure_bw, .clojure, .java_bw, .java, .javascript_bw, .javascript, .node_js_bw, .node_js, .opa_bw, .opa, .php_bw, .php, .python_bw, .python, .r_bw, .r, .ruby_bw, .ruby{
+	background: url(sprites.png) no-repeat;
+}
+
+.socialbuttons{
+	position: fixed;
+	top: 177px;
+	left: 0;
+}
+
+.blog_button{
+	background-position: 0 0;
+	width: 51px;
+	height: 51px;
+}
+
+.blog_button:hover{
+	background-position: -47px 0;
+	width: 51px;
+	height: 51px;
+}
+
+.facebook_button{
+	background-position: -97px 0;
+	width: 51px;
+	height: 51px;
+}
+
+.facebook_button:hover{
+	background-position: -147px 0;
+	width: 51px;
+	height: 51px;
+}
+
+.twitter_button{
+	background-position: -196px 0;
+	width: 51px;
+	height: 51px;
+}
+
+.twitter_button:hover{
+	background-position: -249px 0;
+	width: 51px;
+	height: 51px;
+}
+
+.youtube_button{
+	background-position: -304px 0;
+	width: 51px;
+	height: 51px;
+}
+
+.youtube_button:hover{
+	background-position: -355px 0;
+	width: 51px;
+	height: 51px;
+}
+
+.feedback{
+	position: fixed;
+	top: 177px;
+	right: 0;
+}
+
+.feedback_button {
+	background-position: 0 -54px ;
+	width: 51px;
+	height: 165px;
+	background-color: transparent;
+	cursor:pointer;
+}
+
+.feedback_button:hover {
+	background-position: -56px -54px ;
+	width: 51px;
+	height: 165px;
+	background-color: transparent;
+	cursor:pointer;
+}
+
+.beta{
+	background-position: -126px -157px ;
+	width: 41px;
+	height: 43px;
+	float: left; 
+	margin-left: 20px;
+}
+
+.news{
+	background-position: -549px -39px ;
+	width: 30px;
+	height: 25px;
+}
+
+.news:hover{
+	background-position: -550px 0;
+	width: 30px;
+	height: 25px;
+}
+
+.myprofile{
+	background-position: -598px -38px ;
+	width: 18px;
+	height: 25px;
+}
+
+.myprofile:hover{
+	background-position: -601px 0;
+	width: 18px;
+	height: 25px;
+}
+
+.profile{
+	background-position: -422px -35px ;
+	width: 18px;
+	height: 25px;
+}
+
+.profile:hover{
+	background-position: -423px 0;
+	width: 18px;
+	height: 25px;
+}
+
+.settings{
+	background-position: -459px -38px ;
+	width: 26px;
+	height: 25px;
+}
+
+.settings:hover{
+	background-position: -459px 0;
+	width: 26px;
+	height: 25px;
+}
+
+.project_icon{
+	background-position: -503px -38px ;
+	width: 29px;
+	height: 25px;
+}
+
+.project_icon:hover{
+	background-position: -500px 0;
+	width: 29px;
+	height: 25px;
+}
+
+.logout{
+	background-position: -636px -44px ;
+	width: 22px;
+	height: 24px;
+}
+
+.logout:hover{
+	background-position: -637px -1px ;
+	width: 22px;
+	height: 24px;
+}
+
+.c_bw{
+	background-position: -2px -226px ;
+	width: 56px;
+	height: 56px;
+}
+
+.c{
+	background-position: -65px -226px ;
+	width: 56px;
+	height: 56px;
+}
+
+.clojure_bw{
+	background-position: -135px -227px ;
+	width: 56px;
+	height: 56px;
+}
+
+.clojure_bw:hover{
+	background-position: -205px -226px ;
+	width: 56px;
+	height: 56px;
+}
+
+.clojure{
+	background-position: -205px -226px ;
+	width: 56px;
+	height: 56px;
+}
+
+.java_bw{
+	background-position: -634px -221px ;
+	width: 56px;
+	height: 56px;
+}
+
+.java_bw:hover{
+	background-position: -574px -221px ;
+	width: 56px;
+	height: 56px;
+}
+
+.java{
+	background-position: -574px -221px ;
+	width: 56px;
+	height: 56px;
+}
+
+.javascript_bw{
+	background-position: -510px -224px ;
+	width: 56px;
+	height: 56px;
+}
+
+.javascript_bw:hover{
+	background-position: -446px -223px ;
+	width: 56px;
+	height: 56px;
+}
+
+.javascript{
+	background-position: -446px -223px ;
+	width: 56px;
+	height: 56px;
+}
+
+.node_js_bw{
+	background-position: -367px -222px ;
+	width: 56px;
+	height: 56px;
+}
+
+.node_js_bw:hover{
+	background-position: -283px -222px ;
+	width: 56px;
+	height: 56px;
+}
+
+.node_js{
+	background-position: -283px -222px ;
+	width: 56px;
+	height: 56px;
+}
+
+.opa_bw{
+	background-position: -421px -68px ;
+	width: 56px;
+	height: 36px;
+}
+
+.opa{
+	background-position: -423px -116px ;
+	width: 56px;
+	height: 36px;
+}
+
+.php_bw{
+	background-position: -697px 0;
+	width: 56px;
+	height: 56px;
+}
+
+.php_bw:hover{
+	background-position: -695px -72px ;
+	width: 56px;
+	height: 56px;
+}
+
+.php{
+	background-position: -695px -72px ;
+	width: 56px;
+	height: 56px;
+}
+
+.python_bw{
+	background-position: -704px -154px ;
+	width: 56px;
+	height: 56px;
+}
+
+.python_bw:hover{
+	background-position: -701px -225px ;
+	width: 56px;
+	height: 56px;
+}
+
+.python{
+	background-position: -701px -225px ;
+	width: 56px;
+	height: 56px;
+}
+
+.r_bw{
+	background-position: -636px -155px ;
+	width: 56px;
+	height: 56px;
+}
+
+.r_bw:hover{
+	background-position: -563px -154px ;
+	width: 56px;
+	height: 56px;
+}
+
+.r{
+	background-position: -563px -154px ;
+	width: 56px;
+	height: 56px;
+}
+
+.ruby_bw{
+	background-position: -480px -158px ;
+	width: 56px;
+	height: 56px;
+}
+
+.ruby{
+	background-position: -410px -160px ;
+	width: 56px;
+	height: 56px;
+}
+
+.ruby_bw:hover{
+	background-position: -410px -160px ;
+	width: 56px;
+	height: 56px;
+}
+
 /******* Basic Elements *********/
 
 body {
@@ -317,20 +647,6 @@ input[type="submit"]:hover {
 	background-image: none;
 }
 
-.feedbackButton[type="submit"] {
-	background-image: url("feedback_off.png");
-	width: 51px;
-	height: 165px;
-	background-color: transparent;
-}
-
-.feedbackButton[type="submit"]:hover {
-	background-image: url("feedback_on.png");
-	width: 51px;
-	height: 165px;
-	background-color: transparent;
-}
-
 .radio[type="radio"] {
 	width: 20px;
 }
@@ -357,6 +673,11 @@ input[type="submit"]:hover {
 }
 
 .list-cell-lang-icons {
+	list-style-type: none; 
+	display: table-cell; 
+	padding-right: 0px; 
+	vertical-align: middle; 
+	text-align: center;
 	list-style-type: none; 
 	display: table-cell; 
 	padding-right: 0px; 
@@ -491,12 +812,16 @@ footer nav {
 	margin: 0;
 }
 
+
 /******* Header *****************/
 
 .logo_div{
 	float: left;
 	margin: 0;
 	padding: 0;
+	background-position: -514px -80px ;
+	width: 148px;
+	height: 49px;
 }
 
 .searchfield_div{
@@ -552,23 +877,23 @@ footer nav {
 }
 
 .searchlink{
-	background: url("eye_off.png");
+	background-position: -122px -105px ;
+	width: 56px;
+	height: 26px;
 	margin-top: 0px;
 	margin-left: 0;
 	padding-left: 0;
 	display:block; 
-	width:56px; 
-	height:26px;
 }
 
 .searchlink:hover{
-	background: url("eye_on.png");
+	background-position: -124px -66px ;
+	width:56px; 
+	height:26px;
 	margin-top: 0px;
 	margin-left: 0;
 	padding-left: 0;
 	display:block; 
-	width:56px; 
-	height:26px;
 	text-decoration: none;
 }
 
@@ -627,6 +952,11 @@ nav ul li a:hover {
 .nav-line{
 	background-image: url("sign_line.png");
 	width: 2px;
+}
+
+.nav-cell{
+	padding-right: 7px;
+	padding-left: 7px;
 }
 
 .side-navi-head{
@@ -818,21 +1148,6 @@ nav ul li a:hover {
 .impressum-left{
 	text-align:left; 
 	width: 300px
-}
-
-
-/***** Social Buttons *****/
-
-.socialbuttons{
-	position: fixed;
-	top: 177px;
-	left: 0;
-}
-
-.feedback{
-	position: fixed;
-	top: 177px;
-	right: 0;
 }
 
 /***** About Page ********/

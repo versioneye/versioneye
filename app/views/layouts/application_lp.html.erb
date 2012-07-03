@@ -22,31 +22,30 @@
 				<% flash.each do |key, value| %>
 					<div class="flash <%= key %>"><%= value %></div>
 				<% end %>
-				<% if !signed_in? %>
-					<div style="text-align:right">
-						<%= render "shared/login_with_twitter" %>
-					</div>
-				<% end %>
-
+				<div style="text-align: center;">
+					<div style="font-size: 32px; font-weight: bold" >Find &amp; Follow</div>
+					<div style="font-size: 26px;">Your Software Libraries</div>
+				</div>
 				<div id="lp_search_div" class="lp_search_div">
 					<form id="searchform" action="/search" method="GET" class="search-form" >				
 						<input id="q" name="q" class="lp_searchfield" type="text" value="<%= @query %>" />
 						<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
 						<br/>
 						<span style="position: relative; top: 50px; left: -300px;" class="meta-text-small" >click to select --> </span>
+
 						<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
 							<% @langs = @lang.split(",") %>
-							<div style="padding-left:177px;">
+							<div style="padding-left:177px;"> 
 								<ol class="list-row" >
 									<% @languages.each do |language| %>
-										<li class="list-cell-lang-icons" style="list-style-type: none; display: table-cell; padding-right: 0px; vertical-align: middle; text-align: center;" id="<%=language%>" >
-										<label onclick="update_lang('<%=language%>')">
-											<% if @langs.include?(language) %>
-												<%= image_tag "language/#{language.downcase}.png", :title => language, :id => "#{language.downcase}_icon", :style => "border-bottom: 2px solid #f9b323" %>
-											<% else %>
-												<%= image_tag "language/#{language.downcase}_bw.png", :title => language, :id => "#{language.downcase}_icon", :style => "border-bottom: 0px solid #f9b323" %>
-											<% end %>
-										</label>
+										<li class="list-cell-lang-icons" id="<%=language%>" >
+											<label onclick="update_lang('<%=language%>')" >
+												<% if @langs.include?(language) %>
+													<div class="<%= language.gsub(".", "_").downcase %>" id="<%= language.downcase %>_icon" style="border-bottom: 2px solid #f9b323"></div>	
+												<% else %>
+													<div class="<%= language.gsub(".", "_").downcase %>_bw" id="<%= language.downcase %>_icon" style="border-bottom: 0px solid #f9b323"></div>
+												<% end %>
+											</label>
 										</li>
 									<% end %>
 								</ol>

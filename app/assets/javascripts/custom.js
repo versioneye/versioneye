@@ -197,8 +197,24 @@ function update_lang(language){
 			ext_lang = ext_lang + "," + language	
 		}
 		if (document.getElementById(icon_id) != null){
-			document.getElementById(icon_id).src = "/assets/language/" + orig_param.toLowerCase() + ".png"	
 			document.getElementById(icon_id).style.borderBottom = "2px solid #f9b323";
+			// if (orig_param == "Clojure"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-205px -226px";
+			// } else if (orig_param == "Ruby"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-410px -160px";
+			// } else if (orig_param == "Java"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-574px -221px";
+			// } else if (orig_param == "Python"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-701px -225px";
+			// } else if (orig_param == "Node.JS"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-283px -222px";
+			// } else if (orig_param == "R"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-563px -154px";
+			// } else if (orig_param == "PHP"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-695px -72px";
+			// } else if (orig_param == "JavaScript"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-446px -223px";
+			// }
 		}
 	} else {
 		lang = lang.replace(language, "")
@@ -206,8 +222,24 @@ function update_lang(language){
 			ext_lang = ext_lang.replace(language, "")
 		}
 		if (document.getElementById(icon_id) != null){
-			document.getElementById(icon_id).src = "/assets/language/" + orig_param.toLowerCase() + "_bw.png"
 			document.getElementById(icon_id).style.borderBottom = "0px solid #f9b323";
+			// if (orig_param == "Clojure"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-135px -227px";
+			// } else if (orig_param == "Ruby"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-480px -158px";
+			// } else if (orig_param == "Java"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-634px -221px";
+			// } else if (orig_param == "Python"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-701px -225px";
+			// } else if (orig_param == "Node.JS"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-367px -222px";
+			// } else if (orig_param == "R"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-636px -155px";
+			// } else if (orig_param == "PHP"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-704px -154px";
+			// } else if (orig_param == "JavaScript"){
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-510px -224px";
+			// }
 		}		
 	}
 	lang = lang.replace(",,", ",") 
