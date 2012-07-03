@@ -4,9 +4,12 @@
 	</div>
 	<div >
 		<% @languages.each do |language| %>
-			<%= render :partial => "/products/language_icons", :locals => {:language => language, :icon => nil, :link=>nil, :title=>language} %>
+			<div style="float: left; width: 60px; height: 60px;" >
+				<%= render :partial => "/products/language_icons", :locals => {:language => language, :icon => nil, :link=>nil, :title=>language} %>
+			</div>
 		<% end %>
 	</div>
+	<div style="clear: both;"></div>
 
 <% if @userlinkcollection && !@userlinkcollection.empty? %> 
 	<div class="boxHeader" >
