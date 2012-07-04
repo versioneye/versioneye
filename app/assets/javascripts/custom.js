@@ -250,7 +250,7 @@ function update_lang(language){
 			// } else if (orig_param == "Ruby"){
 			// 	document.getElementById(icon_id).style.backgroundPosition = "-410px -160px";
 			// } else if (orig_param == "Java"){
-			// 	document.getElementById(icon_id).style.backgroundPosition = "-574px -221px";
+			// 	document.getElementById(icon_id).style.backgroundPosition = "-614px -57px";
 			// } else if (orig_param == "Python"){
 			// 	document.getElementById(icon_id).style.backgroundPosition = "-701px -225px";
 			// } else if (orig_param == "Node.JS"){
@@ -289,6 +289,7 @@ function update_lang(language){
 			// }
 		}		
 	}
+	lang = lang.replace(",,,", ",") 
 	lang = lang.replace(",,", ",") 
 	document.getElementById("lang").value = lang
 	if (ext_lang){

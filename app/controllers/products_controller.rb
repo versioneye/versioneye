@@ -314,7 +314,7 @@ class ProductsController < ApplicationController
         cookies[:veye_lang] = { :value => lang, :expires => 24.hour.from_now }
       end
       if lang.nil?
-        lang = ""
+        lang = ","
       end
       lang
     end
