@@ -3,12 +3,11 @@
 		<% if !link.nil? %>
 			<a href="<%= link %>">
 				<div class="<%= language.gsub(".", "_").downcase %>" 
-					 id="<%= language.downcase %>_icon" 
+					 id="<%= link %>_<%= language.downcase %>_icon" 
 					 title = "<%= title %>" itemprop = "image" ></div>
 			</a>
 		<% else %>
 			<div class="<%= language.gsub(".", "_").downcase %>" 
-					 id="<%= language.downcase %>_icon" 
 					 title = "<%= title %>" itemprop = "image" ></div>
 		<% end %>
 	<% else %>
