@@ -32,12 +32,14 @@ jQuery(document).ready(function() {
 
 	jQuery( "#tabs" ).tabs();
 
-	FB.init({
-        appId:'230574627021570', 
-        cookie:true,
-        status:true, 
-        xfbml:true
-    });
+	if (window.FB){
+		FB.init({
+	        appId:'230574627021570', 
+	        cookie:true,
+	        status:true, 
+	        xfbml:true
+	    });	
+	}
 
     jQuery("#ext_search_link").click(function() {
 		jQuery("#extended_search_container").fadeToggle("slow", "linear");

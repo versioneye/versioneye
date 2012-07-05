@@ -78,4 +78,58 @@
 		<% end %>
 	</div>
 
+	<div class="boxHeader">
+		Link
+	</div>
+	<div class="boxContainer">
+		<%= form_tag("/package/#{@product.to_param}/update", :method => "post") do  %>    
+
+			<div style="display:table-row;">
+				<div class="labelCelMiddle" style="width: 80px;">
+					<%= label_tag(:link, "URL") %>
+				</div>
+				<div class="inputCel" style="width: 450px;">
+					<%= text_field_tag :link_url, "", :class => "round", :style=>"width: 420px;" %>
+				</div>
+		    </div>
+		    <div style="display:table-row;">
+				<div class="labelCelMiddle" style="width: 80px;">
+					<%= label_tag(:label, "Label") %>
+				</div>
+				<div class="inputCel" style="width: 450px;">
+					<%= text_field_tag :link_name, "", :class => "round", :style=>"width: 420px;" %>
+				</div>
+		    </div>
+			<br/>
+			<%= submit_tag "Save", :class => "button" %>
+		<% end %>
+		<br/>
+		<br/>
+		<% version_links = @product.get_links %>
+		<% if !version_links.empty? %>
+			<table>
+				<colgroup>
+					<col width="120px;"></col>
+					<col width="*"></col>
+				</colgroup>
+			<% version_links.each do |link| %>
+				<% if link.manual  %>
+					<%= form_tag("/package/#{@product.to_param}/delete_link", :method => "post") do  %>
+					<tr>
+						<td>
+							<%= submit_tag "Delete", :class => "followButton" %>
+						</td>
+						<td>
+							<input id="link_url" name="link_url" type="hidden" value="<%= link.get_link %>" />
+							<a href="<%= link.get_link %>" target="new"><%= link.name %></a>
+						</td>
+					</tr>
+					<% end %>
+				<% end %>
+			<% end %>
+			</table>
+		<% end %>
+	</div>
+
+
 </div>

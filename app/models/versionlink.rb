@@ -18,6 +18,10 @@ class Versionlink
     }
   end
 
+  def self.find_by(prod_key, link)
+    Versionlink.first(conditions: { prod_key: prod_key, link: link } )
+  end
+
   def get_link
     if self.link.match(/^www.*/) != nil 
       return "http://#{self.link}"

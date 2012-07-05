@@ -11,19 +11,7 @@ class ProductsController < ApplicationController
       @lang = ""
       cookies[:veye_lang] = ""
     end
-    @hotest = Product.get_hotest(7)
-    new_stuff = Newest.get_newest(7)
-    prod_keys = Array.new
-    if !new_stuff.nil? && !new_stuff.empty?
-      new_stuff.each do |entry|
-        prod_keys << entry.prod_key
-      end
-    end
-    @newest = Product.find_by_keys(prod_keys)
     @languages = @@languages # Product.get_unique_languages
-    if signed_in?
-      @my_product_ids = current_user.fetch_my_product_ids
-    end
     render :layout => 'application_lp'
   end
   
@@ -53,6 +41,7 @@ class ProductsController < ApplicationController
       elsif signed_in?
         @my_product_ids = current_user.fetch_my_product_ids 
       end
+      save_search_log(@query, @products)
     end    
     respond_to do |format|
       format.html { 
@@ -148,11 +137,25 @@ class ProductsController < ApplicationController
     @product = Product.find_by_key( key )
   end
 
+  def delete_link
+    link_url = params[:link_url]
+    key = url_param_to_origin params[:key]
+    @product = Product.find_by_key( key )
+    versionlink = Versionlink.find_by(key, link_url)
+    if versionlink && versionlink.manual
+      versionlink.remove
+      flash[:success] = "Link removed."
+    end
+    redirect_to products_path(@product)
+  end
+
   def update
     description = params[:description_manual]
     license = params[:license]
     licenseLink = params[:licenseLink]
     twitter_name = params[:twitter_name]
+    link_url = params[:link_url]
+    link_name = params[:link_name]
     key = url_param_to_origin params[:key]
     @product = Product.find_by_key( key )
     if @product.nil? || !current_user.admin 
@@ -176,6 +179,14 @@ class ProductsController < ApplicationController
       @product.save
       add_status_comment(@product, current_user, "twitter")
       flash[:success] = "Twitter name updated."
+    elsif link_url && !link_url.empty?
+      versionlink = Versionlink.new
+      versionlink.prod_key = @product.prod_key
+      versionlink.link = link_url
+      versionlink.name = link_name
+      versionlink.manual = true
+      versionlink.save
+      flash[:success] = "New link added."
     end
     redirect_to products_path(@product)
   end
@@ -354,6 +365,17 @@ class ProductsController < ApplicationController
         comment.update_type = type
       end
       comment.save
+    end
+
+    def save_search_log(query, products)
+      searchlog = Searchlog.new
+      searchlog.search = query
+      if products.nil? || products.count == 0
+        searchlog.results = 0  
+      else
+        searchlog.results = products.count
+      end
+      searchlog.save
     end
 
 end
