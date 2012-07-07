@@ -7,4 +7,8 @@
 	<![endif]-->
 	<%= csrf_meta_tag %>
 	<%= stylesheet_link_tag "application" %>
-	<%= javascript_include_tag "application", :defer => true, :async => true %>
+	<% if @product %> 
+		<%= javascript_include_tag "application", :defer => true, :async => true %>
+	<% else %>
+		<%= javascript_include_tag "application_lp", :defer => true, :async => true %>
+	<% end %>
