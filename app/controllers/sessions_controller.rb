@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 
+  force_ssl :only => [:new, :create]
+
   def new
     @title = "Sign in"
   end

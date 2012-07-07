@@ -5,6 +5,8 @@ class UsersController < ApplicationController
   before_filter :admin_user,   :only   => :destroy
   before_filter :set_locale
 
+  force_ssl :only => [:new, :create, :activate]
+
   def home
     if signed_in?
       redirect_to user_path current_user

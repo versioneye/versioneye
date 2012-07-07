@@ -2,6 +2,8 @@ class SettingsController < ApplicationController
 
   before_filter :authenticate
 
+  force_ssl
+
   def name
     @user = current_user
     @user.new_username = @user.username
