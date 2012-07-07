@@ -6,78 +6,52 @@
 <div class="content">
 
   <div class="boxHeader">
-	Privacy Settings
+    Privacy Settings
   </div>
   <%= form_tag("/settings/updateprivacy", :method => "post") do  %>	    
   <div class="boxContainer">
-	
-	<div class="div-row">
-      <div class="labelCelBig">
+  	<div class="div-row">
+      <div class="labelCelPrivacy">
+  		  <label>Who can see the packages I'm following?</label>
+      </div>
+      <div class="div-cell privacy-option-a" >
+        <select name="following_products" >
+          <option value="nobody" <%= "selected" if @user.privacy_products == 'nobody' %> >Nobody</option>
+          <option value="ru" <%= "selected" if @user.privacy_products == 'ru' %> >Registered Users</option>
+          <option value="everybody" <%= "selected" if @user.privacy_products == 'everybody' %> >Everybody</option>
+        </select>
+      </div>
+    </div>
 
-      </div>
-      <div class="div-cell privacy-option-a">
-		<label>Nobody</label>
-      </div>
-      <div class="div-cell privacy-option-b" >
-		<label>Registered Users<label>
-      </div>
-	  <div class="div-cell privacy-option-c" >
-		<label>Everybody</label>
-      </div>
-    </div>	
-
-	<div class="div-row">
-    <div class="labelCelBig">
-		  <label>Who can see the packages I'm following?</label>
-    </div>
-    <div class="div-cell privacy-option-a" >
-		  <input type="radio" name="following_products" value="nobody" <%= "checked" if @user.privacy_products == 'nobody' %>/>
-    </div>
-    <div class="div-cell privacy-option-b">
-		  <input type="radio" name="following_products" value="ru" <%= "checked" if @user.privacy_products == 'ru' %>/>
-    </div>
-	  <div class="div-cell privacy-option-c">
-		  <input type="radio" name="following_products" value="everybody" <%= "checked" if @user.privacy_products == 'everybody' %> />
-    </div>
-  </div>
-
-	<div class="div-row" >
-      <div class="labelCelBig privacy-seperator">
-		<label>Who can see my comments on my profile?</label>
+  	<div class="div-row" >
+      <div class="labelCelPrivacy privacy-seperator">
+  		  <label>Who can see my comments on my profile?</label>
       </div>
       <div class="div-cell privacy-option-a privacy-seperator" >
-		<input type="radio" name="comments" value="nobody" <%= "checked" if @user.privacy_comments == 'nobody' %> />
+        <select name="comments" >
+          <option value="nobody" <%= "selected" if @user.privacy_comments == 'nobody' %> >Nobody</option>
+          <option value="ru" <%= "selected" if @user.privacy_comments == 'ru' %> >Registered Users</option>
+          <option value="everybody" <%= "selected" if @user.privacy_comments == 'everybody' %> >Everybody</option>
+        </select>
       </div>
-      <div class="div-cell privacy-option-b privacy-seperator">
-		<input type="radio" name="comments" value="ru" <%= "checked" if @user.privacy_comments == 'ru' %> />
-      </div>
-	  <div class="div-cell privacy-option-c privacy-seperator">
-		<input type="radio" name="comments" value="everybody" <%= "checked" if @user.privacy_comments == 'everybody' %> />
-      </div>
-    </div>
+    </div>  
   
-  </div>
-  <div class="boxContainer">
   	<div class="div-row">
-      <div class="labelCelBig">
-		<%= label_tag(:password) %>
+      <div class="labelCelPrivacy">
+		    <%= label_tag(:password) %>
       </div>
       <div class="div-cell privacy-option-b">
-		<%= password_field_tag :password, "", :class => "round", :style => "width: 140px; padding-right: 5px;" %>
+		    <%= password_field_tag :password, "", :class => "round", :style => "width: 140px; padding-right: 5px;" %>
       </div>
-      <div class="div-cell" style="vertical-align:middle">For security reasons please type in your password.</div>
     </div>
 
     <div class="div-row">
-		<div class="labelCelBig"></div>
-		<div class="div-cell privacy-option-b" >
-			<%= submit_tag "Save", :class => "button" %>
-		</div>
-       <div class="div-cell"></div>
-	   <div class="div-cell"></div>
-	</div>
+		  <div class="labelCelPrivacy"></div>
+		  <div class="div-cell privacy-option-b" >
+        <%= submit_tag "Save", :class => "button" %>
+      </div>
+    </div>
   </div>
   <% end %>
 
 </div>
-
