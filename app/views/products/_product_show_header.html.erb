@@ -1,6 +1,6 @@
 <ul class="list-row product_header">
 	<li class="list-cell icon-cell">
-		<%= render :partial => "/products/language_icons", :locals => {:language => @product.language, :icon => @product.icon, :link => nil, :title => @product.name} %>
+		<%= render :partial => "/shared/language_icons", :locals => {:language => @product.language, :icon => @product.icon, :link => nil, :title => @product.name} %>
 	</li>
 	<li class="list-cell" style="vertical-align: middle; ">
 		<h1 style="margin-bottom: 5px;"><%= @product.name_and_version %></h1>

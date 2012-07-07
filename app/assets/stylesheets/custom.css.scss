@@ -333,6 +333,26 @@ $horizontal_separater_line: #888888;
 	height: 31px;
 }
 
+
+
+.icon-circle-arrow-up {
+	background-image: url("glyphicons-halflings.png");
+	background-position: 14px 14px;
+	background-repeat: no-repeat;
+	background-position: -288px -144px;
+	width: 14px;
+	height: 14px;
+}
+
+.icon-circle-arrow-down {
+	background-image: url("glyphicons-halflings.png");
+	background-position: 14px 14px;
+	background-repeat: no-repeat;
+  	background-position: -312px -144px;
+  	width: 14px;
+	height: 14px;
+}  
+
 /******* Basic Elements *********/
 
 body {

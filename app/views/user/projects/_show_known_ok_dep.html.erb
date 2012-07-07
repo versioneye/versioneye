@@ -1,6 +1,6 @@
 <ul class="list-row" >
 	<li class="list-cell icon-cell">
-		<%= render :partial => "/products/language_icons", :locals => {:language => product.language, :icon => product.icon, :link => product_url(product), :title => product.name } %>
+		<%= render :partial => "/shared/language_icons", :locals => {:language => product.language, :icon => product.icon, :link => product_url(product), :title => product.name } %>
 	</li>
 	<li class="list-cell">		
 		<a href="<%= product_url(product) %>" class="searchResultLink"><%= product.name %></a><br/>
