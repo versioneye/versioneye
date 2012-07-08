@@ -7,6 +7,7 @@ class Product
   include Mongoid::MultiParameterAttributes # Need for type: DateTime 
 
   field :name, type: String
+  field :name_downcase, type: String
   field :prod_key, type: String
   field :prod_type, type: String
   field :language, type: String
@@ -75,12 +76,12 @@ class Product
     if (searched_name.nil? || searched_name.strip == "")
       return nil
     end
-    query = Product.where(name: /^#{searched_name}/i)
+    query = Product.where(name_downcase: /^#{searched_name}/)
     if (query.nil? || query.empty?)
-      return query = Product.where(name: /#{searched_name}/i)
+      return query = Product.where(name_downcase: /#{searched_name}/)
     else
       prod_keys = query.map{|w| "#{w.prod_key}"}
-      result2 = Product.all(conditions: { name: /#{searched_name}/i, :prod_key.nin => prod_keys})
+      result2 = Product.all(conditions: { name_downcase: /#{searched_name}/, :prod_key.nin => prod_keys})
       result = query + result2
       prod_keys = result.map{|w| "#{w.prod_key}"}
       end_result = Product.all(conditions: { :prod_key.in => prod_keys})
@@ -283,6 +284,20 @@ class Product
       products = Product.all().skip(skip).limit(pack)
       products.each do |product|
         product.update_version_data
+      end
+    end
+  end
+
+  def self.update_name_downcase_global
+    count = Product.count()
+    pack = 100
+    max = count / pack     
+    (0..max).each do |i|
+      skip = i * pack
+      products = Product.all().skip(skip).limit(pack)
+      products.each do |product|
+        product.name_downcase = String.new(product.name.downcase)
+        product.save
       end
     end
   end

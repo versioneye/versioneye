@@ -10,4 +10,4 @@ test:
     persist_in_safe_mode: true
 
 production:
-    uri: <%= ENV['MONGOLAB_URI'] %>
+    uri: <%= ENV['MONGOHQ_URL'] %>

@@ -1,6 +1,7 @@
 class NewsController < ApplicationController
   
   before_filter :authenticate, :only => :mynews
+  before_filter :force_http
 
   def news
     @comments = Versioncomment.all().desc(:created_at).paginate(:page => params[:page]) 

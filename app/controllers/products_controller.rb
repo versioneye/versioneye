@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
 
   before_filter :authenticate, :only   => [:edit, :update]
+  before_filter :force_http
 
   @@languages = ["Java", "Ruby", "Python", "Node.JS", "R", "JavaScript", "PHP", "Clojure"]
 
@@ -314,7 +315,6 @@ class ProductsController < ApplicationController
       url = URI.parse(url_path)
       req = Net::HTTP.new(url.host, url.port)
       res = req.request_head(url.path)
-      p "#{res.code}"
       if res.code == "200"
         return true
       else
