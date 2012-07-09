@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
 
   before_filter :authenticate, :only   => [:edit, :update]
-  before_filter :force_http
+  #before_filter :force_http
 
   @@languages = ["Java", "Ruby", "Python", "Node.JS", "R", "JavaScript", "PHP", "Clojure"]
 
