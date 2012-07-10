@@ -6,8 +6,8 @@
 	<body>
 		<p>Hello <%= @comment_user.fullname %></p>
 		<p>
-			<a href="https://www.versioneye.com/users/<%= @reply_user.username %>"><%= @reply_user.fullname %></a> replied to your comment on 
-			<a href="https://www.versioneye.com/package/<%= @prod.to_param %>"><%= @prod.name %></a><br/>
+			<a href="http://www.versioneye.com/users/<%= @reply_user.username %>"><%= @reply_user.fullname %></a> replied to your comment on 
+			<a href="http://www.versioneye.com/package/<%= @prod.to_param %>"><%= @prod.name %></a><br/>
 			You can see the comment here: <a href="<%= @commentlink %>"><%= @commentlink %></a>
 		</p>
 		<p>
@@ -15,7 +15,7 @@
 		</p>
 		<p>
 			Your VersionEye Team<br/>
-			<a href="https://www.versioneye.com">https://www.versioneye.com</a>
+			<a href="http://www.versioneye.com">http://www.versioneye.com</a>
 		</p>
 	</body>
 </html>

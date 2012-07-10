@@ -27,7 +27,7 @@ test:
   twitter_consumer_secret: 5hI3nV0KLCXsT96gdTV6ntQ76wss76l9yXI4lKmNrCI
 
 production:
-  server_url: https://www.versioneye.com
+  server_url: http://www.versioneye.com
   s3_projects_bucket: veye_prod_projects
   s3_infographics_bucket: veye_prod_infographics
   aws_s3_access_key_id: AKIAJJVCE2X6JF4UGT3Q
