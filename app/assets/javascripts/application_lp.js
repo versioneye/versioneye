@@ -7,4 +7,5 @@
 //= require jquery
 //= require jquery_textbox_hinter
 //= require google
-//= require custom
+//= require custom_lp
+//= require custom_update_language

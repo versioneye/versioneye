@@ -13,3 +13,4 @@
 //= require gplus
 //= require twitter
 //= require custom
+//= require custom_update_language
