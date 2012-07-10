@@ -5,8 +5,6 @@
 // the compiled file.
 //
 //= require jquery
-//= require jquery_ujs
-//= require jquery_ui_1_8_17_custom_min
 //= require jquery_textbox_hinter
 //= require google
 //= require custom
