@@ -289,16 +289,10 @@ class Product
   end
 
   def self.update_name_downcase_global
-    count = Product.count()
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.all().skip(skip).limit(pack)
-      products.each do |product|
-        product.name_downcase = String.new(product.name.downcase)
-        product.save
-      end
+    products = Product.where(name_downcase: nil)
+    products.each do |product|
+      product.name_downcase = String.new(product.name.downcase)
+      product.save
     end
   end
   

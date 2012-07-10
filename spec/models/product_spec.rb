@@ -43,6 +43,7 @@ describe Product do
     it "returns an empty list. Search term is not in the DB" do
       name = "junitggasgagasgj8623"
       @product.name = name
+      @product.name_downcase = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
       results = Product.find_by( "sgj8623agajklnb8738gas", nil, nil, nil, 300  )
@@ -53,6 +54,7 @@ describe Product do
     it "returns an empty list. Search term is an empty string" do
       name = "junitggasgagasgj8623"
       @product.name = name
+      @product.name_downcase = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
       results = Product.find_by( "", nil, nil, nil, 300 )
@@ -63,6 +65,7 @@ describe Product do
     it "returns an empty list. Search term is nil" do
       name = "junitggasgagasgj8623"
       @product.name = name
+      @product.name_downcase = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
       results = Product.find_by( nil, nil, nil, nil, 300 )
@@ -73,6 +76,7 @@ describe Product do
     it "returns the searhced product. Simple case. Exact macht!" do
       name = "junitggasgagasgj8623"
       @product.name = name
+      @product.name_downcase = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
       results = Product.find_by( name, nil, nil, nil, 300  )
@@ -83,6 +87,7 @@ describe Product do
     it "returns the searhced product. Upper Case. Exact macht with caseinsensitive!" do
       name = "junitggasgagasgj8623"
       @product.name = name
+      @product.name_downcase = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
       results = Product.find_by( name, nil, nil, nil, 300  )
@@ -93,6 +98,7 @@ describe Product do
     it "returns the searhced product. Part of the Name - first digits." do
       name = "junitggasgagasgj8623"
       @product.name = name
+      @product.name_downcase = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
       results = Product.find_by( "junitggasg", nil, nil, nil, 300  )
@@ -103,9 +109,21 @@ describe Product do
     it "returns the searhced product. Part of the Name - last digits." do
       name = "junitggasgagasgj8623"
       @product.name = name
+      @product.name_downcase = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
       results = Product.find_by( "sgj8623", nil, nil, nil, 300  )
+      results.should_not be_nil
+      results.size.should eq(1)
+    end
+
+    it "returns the searhced product. Part of the Name - last digits." do
+      name = "hiberante-core"
+      @product.name = name
+      @product.name_downcase = name
+      @product.prod_key = "org/hibernate-core"
+      @product.save
+      results = Product.find_by( "hiberante-core", nil, nil, nil, 300  )
       results.should_not be_nil
       results.size.should eq(1)
     end
@@ -113,6 +131,7 @@ describe Product do
     it "returns the searhced product. Part of the Name - middle digits." do
       name = "junitggasgagasgj8623"
       @product.name = name
+      @product.name_downcase = name
       @product.prod_key = "gasgagasgj8623_junit/junit"
       @product.save
       results = Product.find_by( "tggasgagasgj86", nil, nil, nil, 300 )
@@ -122,6 +141,7 @@ describe Product do
 
     it "returns the searhced product because searched_name is in description" do
       @product.name = "asgfasfgasgasfgs"
+      @product.name_downcase = "asgfasfgasgasfgs"
       @product.prod_key = "gasgagasgj8623_junit/junitagasfgas"
       @product.description = "this is BuBuBo. OK?"
       @product.save
@@ -132,6 +152,7 @@ describe Product do
 
     it "returns the searhced product because searched_name is in description_manual" do
       @product.name = "asgfasfgasgasfgs"
+      @product.name_downcase = "asgfasfgasgasfgs"
       @product.prod_key = "gasgagasgj8623_junit/junitagasfgas"
       @product.description_manual = "this is BuBuBoHapo gasgfs"
       @product.save
@@ -143,12 +164,14 @@ describe Product do
     it "returns searhced products. Combination of start and simple" do
       name = "start_not_apple"
       @product.name = name
+      @product.name_downcase = name
       @product.prod_key = "apple_bike_pie/unit"
       @product.save
 
       product = Product.new
       product.versions = Array.new
       product.name = "apple_start_with"
+      product.name_downcase = "apple_start_with"
       product.prod_key = "apple_bike_pie12/unit"
       product.save
 
