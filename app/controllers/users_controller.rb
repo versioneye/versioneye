@@ -17,6 +17,7 @@ class UsersController < ApplicationController
   end
   
   def new
+    @page = "SignIn"
     @user = User.new
   end
   
