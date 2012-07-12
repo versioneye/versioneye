@@ -1,5 +1,11 @@
 class PageController < ApplicationController
 
+  def index
+    p "index page for VersionEye.it"
+    @project = Project.new
+    render :layout => 'application_lp'
+  end
+
   def routing_error
     p "routing error path: #{params[:path]}"
     redirect_to "/"
@@ -9,34 +15,40 @@ class PageController < ApplicationController
     redirect_to "http://www.disclaimer.de/disclaimer.htm?farbe=FFFFFF/000000/000000/000000"
   end
 
-  def pricing
-  end
-
   def contact
+    @page = "Contact"
   end
 
   def about
+    @page = "About"
   end
   
-  def impressum    
+  def impressum
+    @page = "Impressum"
   end
 
-  def home    
+  def home
+    @page = "Home"
   end
 
   def terms
+    @page = "Terms"
   end
 
   def signin
+    @page = "SignIn"
   end
 
   def signup
+    @page = "SignUp"
   end  
   
   def apijson
+    @page = "API"
   end
   
   def newest
+    @page = "Newest"
   end
 
   def site_map_01

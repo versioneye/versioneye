@@ -17,6 +17,5 @@
 //= require gmap
 //= require gplus
 //= require twitter
-//= require facebook
 //= require custom
 //= require custom_update_language

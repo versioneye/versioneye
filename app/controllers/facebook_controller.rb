@@ -23,8 +23,8 @@ class FacebookController < ApplicationController
       sign_in user
     end
   rescue => e
-    logger.debug "ERROR FACEBOOK CALLBACK Message:   #{e.message}"
-    logger.debug "ERROR FACEBOOK CALLBACK backtrace: #{e.backtrace}"
+    p "ERROR FACEBOOK CALLBACK Message:   #{e.message}"
+    p "ERROR FACEBOOK CALLBACK backtrace: #{e.backtrace}"
   end
 
   private
@@ -67,7 +67,7 @@ class FacebookController < ApplicationController
       query = 'client_id='
       query += Settings.facebook_client_id.to_s
       query += '&redirect_uri='
-      query += Settings.server_url
+      query += Settings.server_url_https
       query += '/auth/facebook/callback&'
       query += 'client_secret='
       query += Settings.facebook_client_secret

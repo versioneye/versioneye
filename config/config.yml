@@ -1,5 +1,6 @@
 development:
   server_url: http://localhost:3000
+  server_url_https: https://www.versioneye.com
   s3_projects_bucket: veye_dev_projects
   s3_infographics_bucket: veye_dev_infographics
   aws_s3_access_key_id: AKIAJJVCE2X6JF4UGT3Q
@@ -14,6 +15,7 @@ development:
 
 test:
   server_url: http://www.versioneye-beta.com
+  server_url_https: https://www.versioneye-beta.com
   s3_projects_bucket: veye_test_projects
   s3_infographics_bucket: veye_test_infographics
   aws_s3_access_key_id: AKIAJJVCE2X6JF4UGT3Q
@@ -28,6 +30,7 @@ test:
 
 production:
   server_url: http://www.versioneye.com
+  server_url_https: https://www.versioneye.com
   s3_projects_bucket: veye_prod_projects
   s3_infographics_bucket: veye_prod_infographics
   aws_s3_access_key_id: AKIAJJVCE2X6JF4UGT3Q
