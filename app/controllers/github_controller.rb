@@ -11,18 +11,19 @@ class GithubController < ApplicationController
     end
 
     token = get_token( code )
+    json_user = get_json_user( token )
     
     if signed_in?
+      p "signed in as #{user.username}"
       user = current_user
       user.github_id = json_user['id']
       user.github_token = token
       user.github_scope = "repo"
       user.save
-      redirect_to "/user/projects"
+      redirect_to settings_connect_path
       return
     end
     
-    json_user = get_json_user( token )
     user = get_user_for_token( json_user, token )
     if !user.nil?
       sign_in user

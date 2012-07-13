@@ -34,7 +34,7 @@ class TwitterController < ApplicationController
 
     user = User.find_by_twitter_id( json_user['id'] )
     if !user.nil?
-      update_current_user(current_user, json_user, access_token)
+      update_current_user(user, json_user, access_token)
       sign_in user
       redirect_back_or( "/news" )
     else
