@@ -1583,3 +1583,34 @@ nav ul li a:hover {
 .rating-cell{
 	padding-right: 15px;
 }
+
+/******* Projects *****************/
+
+.project-types-cell{
+	width: 180px;
+	padding: 7px; 
+	border: 0px solid gray;
+	text-align: center;
+}
+
+.project-types-header{
+	font-weight: bold;
+	font-size: 16px;
+	text-align: center;
+}
+
+.project-integration-cell{
+	width: 180px;
+	padding: 7px; 
+	border: 0px solid gray;
+	text-align: center;
+}
+
+.project-pricing-cell{
+	width: 180px;
+	padding: 7px; 
+	border: 0px solid gray;
+	text-align: center;
+	font-weight: bold; 
+	font-size: 16px;
+}

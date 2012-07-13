@@ -156,7 +156,6 @@ class Product
   end
 
   def dependency_circle(scope)
-    p "Dependency Circle"
     if scope == nil 
       scope = main_scope
     end

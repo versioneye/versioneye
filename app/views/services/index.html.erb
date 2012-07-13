@@ -1,0 +1,150 @@
+
+<section class="round" >
+	<div style="text-align: center; font-size: 28px; padding: 0px 0px;">
+		VersionEye helps you to keep your Software Projects up-to-date
+	</div>
+</section>
+
+<section class="section-lp round">
+	<div class="lp_box"  >
+		<div class="div-row">
+			<div class="div-cell project-types-cell project-types-header">
+				<div class="java" style="margin-left: 62px;" 
+					 id="java_icon" 
+					 title = "Java" itemprop = "image" ></div>
+			</div>
+			<div class="div-cell project-types-cell project-types-header">
+				<div class="ruby"  style="margin-left: 62px;"
+					 id="ruby_icon" 
+					 title = "Ruby" itemprop = "image" ></div>
+			</div>
+			<div class="div-cell project-types-cell project-types-header">
+				<div class="python"  style="margin-left: 62px;"
+					 id="python_icon" 
+					 title = "Python" itemprop = "image" ></div>
+			</div>
+			<div class="div-cell project-types-cell project-types-header">
+				<div class="node_js" style="margin-left: 62px;"
+					 id="node_js_icon"
+					 title = "Node.JS" itemprop = "image" ></div>
+			</div>
+		</div>	
+		<div class="div-row">
+			<div class="div-cell project-types-cell project-types-header">
+				Java
+			</div>
+			<div class="div-cell project-types-cell project-types-header">
+				Ruby
+			</div>
+			<div class="div-cell project-types-cell project-types-header">
+				Python
+			</div>
+			<div class="div-cell project-types-cell project-types-header">
+				Node.JS
+			</div>
+		</div>	
+		<div class="div-row">
+			<div class="div-cell project-types-cell">
+				Maven2 and Maven3 pom.xml files are supported.
+			</div>
+			<div class="div-cell project-types-cell">
+				Ruby Gemfiles are supported. 
+			</div>
+			<div class="div-cell project-types-cell">
+				PIP requirements.txt files are supported.
+			</div>
+			<div class="div-cell project-types-cell">
+				Support for Node.JS is comming soon. 
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="section-lp round">
+	<div class="lp_box" id="about">
+		<div class="div-row">
+			<div class="div-cell project-types-cell project-types-header">
+				<%= image_tag ("integration/upload.png") %>
+			</div>
+			<div class="div-cell project-types-cell project-types-header">
+				<%= image_tag ("integration/url.png") %>
+			</div>
+			<div class="div-cell project-types-cell project-types-header">
+				<%= image_tag ("integration/github.png") %>
+			</div>
+			<div class="div-cell project-types-cell project-types-header">
+				<%= image_tag ("integration/enterprise.png") %>
+			</div>
+		</div>	
+		<div class="div-row">
+			<div class="div-cell project-integration-cell project-types-header">
+				Upload
+			</div>
+			<div class="div-cell project-integration-cell project-types-header">
+				URL
+			</div>
+			<div class="div-cell project-integration-cell project-types-header">
+				GitHub
+			</div>
+			<div class="div-cell project-integration-cell project-types-header">
+				Enterprise
+			</div>
+		</div>	
+		<div class="div-row">
+			<div class="div-cell project-integration-cell">
+				Just upload your project file and VersionEye 
+				will show you the outdated dependencies. 
+			</div>
+			<div class="div-cell project-integration-cell">
+				Put in the URL to your project file and 
+				VersionEye will show you the outdated dependencies. 
+			</div>
+			<div class="div-cell project-integration-cell">
+				Coming soon.
+				<% if 1 ==2 %>
+					Give VersionEye access to your private GitHub repositories and 
+					it will check your project files every day 
+					and inform you about outdated dependencies.
+				<% end %>
+			</div>
+			<div class="div-cell project-integration-cell">
+				Coming soon.
+			</div>
+		</div>
+		<% if 1 ==2 %>
+		<div class="div-row">
+			<div class="div-cell project-pricing-cell" style="color: green;">
+				For Free
+			</div>
+			<div class="div-cell project-pricing-cell" style="color: green;">
+				For Free
+			</div>
+			<div class="div-cell project-pricing-cell">
+				1.99 € / Project / Month
+			</div>
+			<div class="div-cell project-pricing-cell">
+				Custom Offers
+			</div>
+		</div>
+		<% end %>
+	</div>
+</section>
+
+<section class="section-lp round" style="text-align: center;">
+	<h1 class="lp_head" style="text-align: center;">
+		Try it!
+	</h1>
+	<div class="lp_box" style="text-align: center;" >
+		Upload your file (pom.xml, requirements.txt, Gemfile)
+	</div>
+	<div  style="text-align: center;">
+		<%= form_for services_path, :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
+			<div style="padding-bottom: 20px;">
+				<%= file_field 'upload', 'datafile', :class => "round" %>
+			</div>
+			<div>
+		        <%= f.submit "Upload", :class => "button" %>
+		    </div>
+		<% end %>
+	</div>
+</section>

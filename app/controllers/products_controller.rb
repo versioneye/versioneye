@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
   @@languages = ["Java", "Ruby", "Python", "Node.JS", "R", "JavaScript", "PHP", "Clojure"]
 
   def index
-    @hide = "hide"
+    @lp = "LandingPage"
     @lang = cookies[:veye_lang]
     if @lang.nil?
       @lang = ""

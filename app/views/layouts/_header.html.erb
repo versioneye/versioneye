@@ -16,17 +16,16 @@
 		</div>
 		<div class="beta" ></div>
 		<div>
-
 			<nav >
 				<ul>
 					<li class="nav-begin" >&nbsp;</li>
-					<li class="nav-cell">
-						<a href="/news" style="padding: 0">
-							<div class="news"></div>
-						</a>
-					</li>
-					<li class="nav-line" ></li>
 					<% if signed_in? %>
+						<li class="nav-cell">
+							<a href="/news" style="padding: 0">
+								<div class="news"></div>
+							</a>
+						</li>
+						<li class="nav-line" ></li>
 						<li class="nav-cell">
 							<a href="/user/projects" style="padding: 0">
 								<div class="project_icon"></div>
@@ -51,7 +50,7 @@
 							</a>
 						</li>
 					<% else %>
-						<li><%= link_to "Pricing", pricing_path %></li>
+						<li><%= link_to "Services", services_path %></li>
 						<li class="nav-line" ></li>	
 						<li><%= link_to "Sign Up", signup_path %></li>
 						<li class="nav-line" ></li>	

@@ -3,7 +3,6 @@ class SessionsController < ApplicationController
   force_ssl :only => [:new, :create]
 
   def new
-    @page = "SignIn"
   end
   
   def create

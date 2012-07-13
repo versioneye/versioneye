@@ -73,7 +73,7 @@ class User::ProjectsController < ApplicationController
     project.remove
     redirect_to user_projects_path
   end
-  
+
   def show
     id = params[:id]
     @project = Project.find_by_id(id)
@@ -107,42 +107,6 @@ class User::ProjectsController < ApplicationController
     end
     flash[:success] = "We removed all known packages from this project from your fav. packages."
     redirect_to user_project_path(@project)
-  end
-  
-  private 
-  
-    def upload_to_s3 ( params )
-      fileUp = params[:upload]
-      orig_filename =  fileUp['datafile'].original_filename
-      fname = sanitize_filename(orig_filename)
-      random = create_random_value
-      filename = "#{random}_#{fname}"
-      AWS::S3::S3Object.store(filename, 
-        fileUp['datafile'].read, 
-        Settings.s3_projects_bucket, 
-        :access => :private)
-      filename
-    end
-    
-    def get_s3_url filename
-      url = AWS::S3::S3Object.url_for(filename, Settings.s3_projects_bucket, :authenticated => true)
-      url
-    end
-    
-    def delete_from_s3 filename
-      AWS::S3::S3Object.delete filename, Settings.s3_projects_bucket
-    end
-  
-    def sanitize_filename(file_name)
-      just_filename = File.basename(file_name)
-      just_filename.sub(/[^\w\.\-]/,'_')
-    end
-    
-    def create_random_value
-      chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-      value = ""
-      20.times { value << chars[rand(chars.size)] }
-      value
-    end
+  end  
   
 end

@@ -7,12 +7,10 @@
 	<![endif]-->
 	<%= csrf_meta_tag %>
 	<%= stylesheet_link_tag "application" %>
-	<% if @product %> 
+	<% if @product || @project %> 
 		<%= javascript_include_tag "application",    :defer => true, :async => true %>
-	<% elsif @page && !@page.empty? %> 
-		<%= javascript_include_tag "application_md", :defer => true, :async => true %>
-	<% elsif @comments || @products %>
-		<%= javascript_include_tag "application_md", :defer => true, :async => true %>
-	<% else %>
+	<% elsif @lp %>
 		<%= javascript_include_tag "application_lp", :defer => true, :async => true %>
+	<% else %> 
+		<%= javascript_include_tag "application_md", :defer => true, :async => true %>
 	<% end %>
