@@ -83,8 +83,12 @@ class Dependency
           versions << p_version
         end
       end
-      versions = Naturalsorter::Sorter.sort_version_by_method_desc(versions, "version")
-      return versions.first.version
+      if versions && !versions.empty? 
+        versions = Naturalsorter::Sorter.sort_version_by_method_desc(versions, "version")
+        return versions.first.version
+      else
+        return product.version
+      end
     elsif ver.match(/^>=/) || ver.match(/^>/)
       product = Product.find_by_key(dep_prod_key)
       if product.nil?
