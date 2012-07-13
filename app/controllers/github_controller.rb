@@ -14,7 +14,6 @@ class GithubController < ApplicationController
     json_user = get_json_user( token )
     
     if signed_in?
-      p "signed in as #{user.username}"
       user = current_user
       user.github_id = json_user['id']
       user.github_token = token
