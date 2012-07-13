@@ -39,6 +39,7 @@ Versioneye::Application.routes.draw do
   get  '/settings/privacy',              :to => 'settings#privacy'
   get  '/settings/delete',               :to => 'settings#delete'
   get  '/settings/links',                :to => 'settings#links'
+  get  '/settings/connect',              :to => 'settings#connect'
   post '/settings/updatenames',          :to => 'settings#updatenames'
   post '/settings/updatepassword',       :to => 'settings#updatepassword'
   post '/settings/updateprivacy',        :to => 'settings#updateprivacy'
@@ -115,6 +116,7 @@ Versioneye::Application.routes.draw do
   get   '/newest/version',      :to => 'page#newest'
   get   '/current/version',     :to => 'page#newest'
   get   '/latest/version',      :to => 'page#newest'
+  get   '/projects',            :to => 'page#index'
 
   get   'site_map_01.xml',        :to => 'page#site_map_01'
   get   'site_map_02.xml',        :to => 'page#site_map_02'
