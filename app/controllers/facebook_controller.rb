@@ -11,12 +11,15 @@ class FacebookController < ApplicationController
     end
 
     link = get_link(code)
-
-    p "link: #{link}"
     response = HTTParty.get(URI.encode(link))
-
     data = response.body
     access_token = data.split("=")[1]
+
+    if signed_in? 
+      update_user_with_token(current_user, json_user, token)
+      redirect_to settings_connect_path
+      return 
+    end
 
     user = get_user_for_token( access_token )
     if !user.nil?
@@ -42,9 +45,7 @@ class FacebookController < ApplicationController
       
       user = User.find_by_email(json_user['email'])
       if !user.nil?
-        user.fb_id = json_user['id']
-        user.fb_token = token
-        user.save
+        update_user_with_token(user, json_user, token)
         return user
       end
       
@@ -74,6 +75,12 @@ class FacebookController < ApplicationController
       query += '&code=' + code
       link = domain + uri + '?' + query
       link
+    end
+
+    def update_user_with_token(user, json_user, token )
+      user.fb_id = json_user['id']
+      user.fb_token = token
+      user.save
     end
 
 end

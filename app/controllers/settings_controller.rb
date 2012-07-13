@@ -30,6 +30,10 @@ class SettingsController < ApplicationController
     end
   end
 
+  def connect
+    @user = current_user
+  end
+
   def updatenames
     fullname = params[:fullname]
     new_username = params[:new_username] 

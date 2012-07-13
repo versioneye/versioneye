@@ -14,6 +14,7 @@ class GithubController < ApplicationController
     
     if signed_in?
       user = current_user
+      user.github_id = json_user['id']
       user.github_token = token
       user.github_scope = "repo"
       user.save
