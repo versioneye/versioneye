@@ -18,7 +18,8 @@
 			<div class="labelCelBig"><label>Twitter</label></div>
 			<div class="inputCel" style="padding-top: 3px;">
 				<% if @user.twitter_token && @user.twitter_secret %>
-					<span style="color: green">Connected</span>
+					<span style="color: green">Connected</span> 
+					<%= link_to "[ disconnect ]", settings_disconnect_path(:service => "twitter"), :confirm => "Are you sure?", :class => "meta-text-small" %>
 				<% else %> 
 					<a href="/auth/twitter/forward" >
 						Connect with Twitter
@@ -32,6 +33,7 @@
 			<div class="inputCel" style="padding-top: 3px;">
 				<% if @user.github_token %>
 					<span style="color: green">Connected</span>
+					<%= link_to "[ disconnect ]", settings_disconnect_path(:service => "github"), :confirm => "Are you sure?", :class => "meta-text-small" %>
 				<% else %> 
 					<a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd'  >
 						Connect with GitHub
@@ -45,6 +47,7 @@
 			<div class="inputCel" style="padding-top: 3px;">
 				<% if @user.fb_token %>
 					<span style="color: green">Connected</span>
+					<%= link_to "[ disconnect ]", settings_disconnect_path(:service => "facebook"), :confirm => "Are you sure?", :class => "meta-text-small" %>
 				<% else %> 
 					<a href='javascript:var popupWindow = window.open(oauth_facebook_link, "popupWindow", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, menubar=1, resizable=1, width="+winWidth+",height="+winHeigh+"top="+top+", left="+left);' style="margin-right: 5px;" >
 						Connect with Facebook
@@ -52,8 +55,6 @@
 				<% end %>
 			</div>
 		</div>
-
-		
 
 	</div>
 
