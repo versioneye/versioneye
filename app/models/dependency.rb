@@ -78,6 +78,9 @@ class Dependency
       fuzzy = shrinked_elements.join(".")
       versions = Array.new
       product = Product.find_by_key(dep_prod_key)
+      if product.nil? 
+        return ver
+      end
       product.versions.each do |p_version|
         if p_version.version.match(/^#{fuzzy}/)
           versions << p_version
