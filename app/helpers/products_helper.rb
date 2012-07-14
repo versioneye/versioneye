@@ -150,6 +150,7 @@ module ProductsHelper
       end
       new_query = hash['query']
       new_query = new_query.strip()
+      new_query.downcase!
       hash['query'] = new_query.gsub(" ", "-")  
       return hash
     end
