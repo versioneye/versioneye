@@ -1,15 +1,15 @@
 <div class="product_header">
 	<% if signed_in? %>
-		<% if @follower.nil? %>			
-			<%= form_tag("/package/follow") do  %>
-				<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
-				<%= submit_tag "Follow", :class => "followButtonBig", :id => "#{@product.to_param}" %>
-			<% end %>
-		<% else %>
+		<% if @following %>			
 			<%= form_tag("/package/unfollow") do  %>
 				<input id="src_hidden"  name="src_hidden" type="hidden" value="detail"/>
 				<input id="product_key_hidden" name="product_key" type="hidden" value="<%= @product.to_param %>"/>
 				<%= submit_tag "Unfollow", :class => "unfollowButtonBig" %>
+			<% end %>
+		<% else %>
+			<%= form_tag("/package/follow") do  %>
+				<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
+				<%= submit_tag "Follow", :class => "followButtonBig", :id => "#{@product.to_param}" %>
 			<% end %>
 		<% end %>
 		<% if signed_in_admin? %>
@@ -18,5 +18,5 @@
 	<% else %>
 		<%= render 'shared/dialog_follow' %>
 		<input type="submit" value="Follow" class="followButtonBig" onclick="load_dialog_follow('<%= @product.name %>');" />
-	<% end %>	
+	<% end %>
 </div>
