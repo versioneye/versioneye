@@ -2,7 +2,12 @@ require 'spec_helper'
 
 describe "registration" do
 
+  # before(:each) do
+  #   request.env["rack.url_scheme"] = "https"
+  # end
+
   it "signs_up successfully" do
+    # request.env['HTTPS'] = 'on'
     get "/signup"
     assert_response :success
 
@@ -35,6 +40,7 @@ describe "registration" do
   end
 
   it "login successfully" do 
+    # request.env['HTTPS'] = 'on'
     get "/signin"
     assert_response :success
 
@@ -47,6 +53,7 @@ describe "registration" do
   end
 
   it "login not successfully, because password is wrong" do 
+    # request.env['HTTPS'] = 'on'
     get "/signin"
     assert_response :success
 
@@ -58,6 +65,7 @@ describe "registration" do
   end
 
   it "don't sign_up because something is missing" do
+    # request.env['HTTPS'] = 'on'
     get "/signup"
     assert_response :success
 
@@ -69,6 +77,7 @@ describe "registration" do
   end
 
   it "don't sign_up because email is not valid" do
+    # request.env['HTTPS'] = 'on'
     get "/signup"
     assert_response :success
 

@@ -42,7 +42,8 @@ class Project
   
   def self.create_from_pom_url url
     return nil if url.nil?
-    doc = Nokogiri::HTML(open(url))
+    doc = Nokogiri::XML(open(url))
+    doc.remove_namespaces!
     return nil if doc.nil?
       
     project = Project.new
@@ -51,40 +52,17 @@ class Project
     properties = Hash.new
     doc.xpath('//project/properties').each do |node|
       node.children.each do |child|
-          properties[child.name] = child.text.strip
+          if !child.text.strip.empty?
+            properties[child.name] = child.text.strip
+          end
       end  
     end
     
     doc.xpath('//project/dependencies/dependency').each do |node|
-      dependency = Projectdependency.new
-      
-      node.children.each do |child|  
-        if child.name.casecmp("groupId") == 0
-          dependency.group_id = child.text.strip 
-        elsif child.name.casecmp("artifactId") == 0
-          dependency.artifact_id = child.text.strip
-        elsif child.name.casecmp("version") == 0
-          dependency.version = Project.get_variable_value_from_pom properties, child.text.strip 
-        elsif child.name.casecmp("scope") == 0
-          dependency.scope = child.text.strip
-        end
-      end
-      dependency.name = dependency.artifact_id
-      if dependency.scope.nil? 
-        dependency.scope = "compile"
-      end
-      
-      product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
-      if !product.nil?
-        dependency.prod_key = product.prod_key
-      end
-      
-      dependency.update_outdated
-      if dependency.outdated?
-        project.out_number = project.out_number + 1
-      end
-      
-      project.dependencies << dependency
+      project.dependencies << fetch_dependency(node, properties, project)
+    end
+    doc.xpath('//project/dependencyManagement/dependencies/dependency').each do |node|
+      project.dependencies << fetch_dependency(node, properties, project)
     end
     
     project.dep_number = project.dependencies.count
@@ -247,6 +225,36 @@ class Project
         dependency.version = product.version
       else
         dependency.version = "UNKNOWN"
+      end
+      dependency
+    end
+
+    def self.fetch_dependency(node, properties, project)
+      dependency = Projectdependency.new
+      node.children.each do |child|  
+        if child.name.casecmp("groupId") == 0
+          dependency.group_id = child.text.strip 
+        elsif child.name.casecmp("artifactId") == 0
+          dependency.artifact_id = child.text.strip
+        elsif child.name.casecmp("version") == 0
+          dependency.version = Project.get_variable_value_from_pom(properties, child.text.strip)
+        elsif child.name.casecmp("scope") == 0
+          dependency.scope = child.text.strip
+        end
+      end
+      dependency.name = dependency.artifact_id
+      if dependency.scope.nil? 
+        dependency.scope = "compile"
+      end
+      
+      product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
+      if !product.nil?
+        dependency.prod_key = product.prod_key
+      end
+      
+      dependency.update_outdated
+      if dependency.outdated?
+        project.out_number = project.out_number + 1
       end
       dependency
     end

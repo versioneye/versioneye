@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "search" do
+  
   it "shows the default search" do
     get "/search", :q => ""
     assert_response :success
@@ -14,6 +15,7 @@ describe "search" do
   	product = Product.new
   	product.versions = Array.new
     product.name = "json"
+    product.name_downcase = "json"
     product.prod_key = "json/json"
     product.save
     version = Version.new
@@ -37,4 +39,5 @@ describe "search" do
 
     product.remove
   end
+
 end

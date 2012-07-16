@@ -26,6 +26,6 @@ end
 
 group :test do
   gem 'turn', :require => false
-  gem 'rspec-rails', '2.10.1'
+  gem 'rspec-rails', '2.11.0'
   gem 'webrat', '0.7.3'
 end

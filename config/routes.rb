@@ -48,6 +48,7 @@ Versioneye::Application.routes.draw do
   post '/settings/updatelinks',          :to => 'settings#updatelinks'
   post '/settings/destroy',              :to => 'settings#destroy'
 
+  get  '/jobs',          :to => 'jobs#index'
   
   get   '/search',                                      :to => 'products#search'
   get   '/package/name',                                :to => 'products#autocomplete_product_name'
@@ -81,7 +82,6 @@ Versioneye::Application.routes.draw do
 
   resources :versioncommentreplies
   
-
   namespace :user do 
     resources :projects do
       member do
@@ -92,6 +92,7 @@ Versioneye::Application.routes.draw do
   end
 
   resources :services
+  get   '/pricing',             :to => 'services#index'
 
   get   '/news',               :to => 'news#news'
   get   '/mynews',             :to => 'news#mynews'
@@ -113,7 +114,6 @@ Versioneye::Application.routes.draw do
   get   '/datenerhebung',       :to => 'page#datenerhebung'
   get   '/datacollection',      :to => 'page#datacollection'
   get   '/disclaimer',          :to => 'page#disclaimer'
-  get   '/pricing',             :to => 'page#pricing'
   get   '/apijson',             :to => 'page#apijson'  
   get   '/apijson_tools',       :to => 'page#apijson_tools'  
   get   '/apijson_libs',        :to => 'page#apijson_libs'

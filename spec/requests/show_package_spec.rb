@@ -6,6 +6,7 @@ describe "search" do
   	product = Product.new
   	product.versions = Array.new
     product.name = "json"
+    product.name_downcase = "json"
     product.prod_key = "json"
     product.prod_type = "RubyGem"
     product.language = "Ruby"
