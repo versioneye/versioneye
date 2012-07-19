@@ -18,15 +18,9 @@ class ServicesController < ApplicationController
 		filename = nil
 		filename = upload_to_s3( params )
 		url = get_s3_url( filename )
-
-		project_type = "Maven2"
-		if orig_filename.eql?("Gemfile")
-		  project_type = "RubyGems"
-		elsif orig_filename.eql?("requirements.txt")
-		  project_type = "PIP"
-		end
-
-		p "project type: #{project_type} - #{url}"
+		
+		project_type = get_project_type( url )
+		
 		project = Project.create_from_file(project_type, url)
 		project.name = create_random_value
 		project.project_type = project_type

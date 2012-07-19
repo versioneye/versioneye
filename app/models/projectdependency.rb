@@ -10,6 +10,7 @@ class Projectdependency
   field :group_id, type: String
   field :artifact_id, type: String
   field :version, type: String
+  field :version_label, type: String
   field :prod_key, type: String
   field :prod_type, type: String
   field :outdated, type: Boolean
@@ -52,7 +53,7 @@ class Projectdependency
       if newest.eql?(product.version)
         return false
       end
-    elsif self.comperator.eql?("~>")
+    elsif self.comperator.eql?("~>") || self.comperator.eql?("~")
       if Naturalsorter::Sorter.is_version_current?(version, product.version)
         return false
       end
@@ -66,6 +67,22 @@ class Projectdependency
       self.outdated = true
     else 
       self.outdated = false
+    end
+  end
+
+  def version_lbl
+    if version_label
+      version_label
+    else
+      version
+    end
+  end
+
+  def comperator_lbl
+    if version_label && version_label.match(/.x$/)
+      "="
+    else
+      comperator
     end
   end
   

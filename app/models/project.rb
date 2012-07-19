@@ -36,13 +36,18 @@ class Project
       project = Project.create_from_gemfile_url ( url )
     elsif project_type.eql?("PIP")
       project = Project.create_from_pip_url ( url )
+    elsif project_type.eql?("npm")
+      project = Project.create_from_npm_url ( url )
     end
     project
+  rescue => e 
+    p "exception: #{e}"
   end
   
-  def self.create_from_pom_url url
+  def self.create_from_pom_url( url )
     return nil if url.nil?
-    doc = Nokogiri::XML(open(url))
+    url = do_replacements_for_github( url )
+    doc = Nokogiri::XML( open( url ) )
     doc.remove_namespaces!
     return nil if doc.nil?
       
@@ -71,6 +76,7 @@ class Project
   
   def self.create_from_pip_url(url)
     return nil if url.nil?
+    url = do_replacements_for_github( url )
     uri = URI(url)
     txt = Net::HTTP.get(uri)
     return nil if txt.nil?
@@ -129,10 +135,7 @@ class Project
   
   def self.create_from_gemfile_url ( url )
     return nil if url.nil?    
-    if url.match(/^https:\/\/github.com\//)
-      url = url.gsub("https://github.com", "https://raw.github.com")
-      url = url.gsub("/blob/", "/")
-    end
+    url = do_replacements_for_github( url )
     uri = URI.parse( url )
     http = Net::HTTP.new(uri.host, uri.port)
     if uri.port == 443
@@ -166,7 +169,7 @@ class Project
         dependency.prod_key = product.prod_key
       end
       
-      update_version_from_gemfile(line_elements, dependency, product)
+      update_version_from_file(line_elements[1], dependency, product)
       
       dependency.update_outdated
       if dependency.outdated?
@@ -174,6 +177,38 @@ class Project
       end      
       project.dependencies << dependency
     end
+    project.dep_number = project.dependencies.count
+    project
+  end
+
+  def self.create_from_npm_url ( url )
+    return nil if url.nil?
+    resp = Net::HTTP.get_response(URI.parse(url))
+    data = JSON.parse( resp.body )
+    dependencies = data['dependencies']
+    return nil if dependencies.nil?
+
+    project = Project.new
+    project.dependencies = Array.new    
+
+    dependencies.each do |key, value|
+      dependency = Projectdependency.new
+      dependency.name = key
+      
+      product = Product.find_by_key("npm/#{key}")
+      if product
+        dependency.prod_key = product.prod_key
+      end
+      
+      update_version_from_file(value, dependency, product)
+      
+      dependency.update_outdated
+      if dependency.outdated?
+        project.out_number = project.out_number + 1
+      end      
+      project.dependencies << dependency
+    end
+
     project.dep_number = project.dependencies.count
     project
   end
@@ -192,8 +227,7 @@ class Project
     end
   end
   
-  def self.update_version_from_gemfile(line_elements, dependency, product)
-    version = line_elements[1]
+  def self.update_version_from_file(version, dependency, product)
     if (version.nil?)
       update_dep_version_with_product(dependency, product)
       return 
@@ -201,17 +235,35 @@ class Project
     version = version.strip
     version = version.gsub('"', '')
     version = version.gsub("'", "")
-    if version.match(/^:require/)
+    if version.match(/^http/)
+      dependency.version = "UNKNOWN"
+    elsif version.match(/^:require/)
       update_dep_version_with_product(dependency, product)
+    elsif version.match(/^\*/)
+      update_dep_version_with_product(dependency, product)
+      dependency.version_label = "*"
+      dependency.comperator = "="
+    elsif version.match(/.x$/) || version.match(/.X$/)
+      dependency.version_label = version
+      dependency.version = version.gsub(".x", ".0")
+      dependency.version = dependency.version.gsub(".X", ".0")
+      dependency.comperator = "~"
     elsif version.match(/^>/)
       update_dep_version_with_product(dependency, product)
-    elsif version.match(/^http/)
-      dependency.version = "UNKNOWN"
+      dependency.comperator = ">"
+    elsif version.match(/^>=/)
+      update_dep_version_with_product(dependency, product)
+      dependency.comperator = ">="
     elsif version.match(/^~>/)
       ver = version.gsub("~>", "")
       ver = ver.gsub(" ", "")
       dependency.version = ver
       dependency.comperator = "~>"
+    elsif version.match(/^~/)
+      ver = version.gsub("~", "")
+      ver = ver.gsub(" ", "")
+      dependency.version = ver
+      dependency.comperator = "~"
     else
       dependency.version = version
       dependency.comperator = "="
@@ -221,7 +273,7 @@ class Project
   private 
   
     def self.update_dep_version_with_product( dependency, product )
-      if !product.nil?
+      if product && product.version
         dependency.version = product.version
       else
         dependency.version = "UNKNOWN"
@@ -257,6 +309,14 @@ class Project
         project.out_number = project.out_number + 1
       end
       dependency
+    end
+
+    def self.do_replacements_for_github(url)
+      if url.match(/^https:\/\/github.com\//)
+        url = url.gsub("https://github.com", "https://raw.github.com")
+        url = url.gsub("/blob/", "/")
+      end
+      url
     end
   
 end

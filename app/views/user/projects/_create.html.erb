@@ -2,7 +2,7 @@
 <h1>New Project</h1>
 
 <div class="info-text">
-	Create a new project, by uploading a project file (pom.xml, Gemfile, pip requirements file). VersionEye 
+	Create a new project, by uploading a project file. VersionEye 
 	will show you which of your dependencies are outdated. <br/>
 	<br/>
 	<b>The file upload can take a couple of seconds! Please be patient.</b>
@@ -20,35 +20,10 @@
 	    </div>
 		<div class="div-row">
 	      <div class="labelCel" style="vertical-align: top; padding-top: 5px;">
-	        <label>Project Type</label>
-	      </div>
-	      <div class="inputCel">
-			<div style="vertical-align: top">
-				<ul class="list-row">
-					<li class="list-cell"><%= f.radio_button :project_type, "Maven2", :class => "radio" %></li>
-					<li class="list-cell"><%= f.label :project_type_maven2, "Java Maven2 (pom.xml)", :class => "radio-label" %></li>
-				</ul>
-			</div>
-			<div>
-				<ul class="list-row">
-					<li class="list-cell"><%= f.radio_button :project_type, "RubyGems", :class => "radio" %></li>
-					<li class="list-cell"><%= f.label :project_type_rubygems, "Ruby (Gemfile)", :class => "radio-label" %></li>
-				</ul>
-			</div>
-			<div>
-				<ul class="list-row">
-					<li class="list-cell"><%= f.radio_button :project_type, "PIP", :class => "radio" %></li>
-					<li class="list-cell"><%= f.label :project_type_pip, "Python PIP (requirements.txt)", :class => "radio-label" %></li>
-				</ul>
-			</div>
-	      </div>
-	    </div>
-		<div class="div-row">
-	      <div class="labelCel" style="vertical-align: top; padding-top: 5px;">
 	        <label>File</label>
 	      </div>
 	      <div class="inputCel">
-			<div style="padding-top:10px; padding-bottom: 10px;">Put in a link to your project file <b>OR</b> upload your project file.</div>
+			<div style="padding-top:10px; padding-bottom: 10px;">Supported files are pom.xml, Gemfile, requirements.txt and package.json.</div>
 			<div id="tabs" style="width: 490px;">
 				<ul>
 					<li><a href="#tabs-upload">Upload</a></li>

@@ -34,8 +34,10 @@ class User::ProjectsController < ApplicationController
       filename = upload_to_s3( params )
       url = get_s3_url filename
     end
-    project_type = params[:project][:project_type]
-    project = Project.create_from_file(project_type, url)    
+    
+    project_type = get_project_type( url )
+    
+    project = Project.create_from_file(project_type, url)
     project.user_id = current_user.id.to_s
     project.name = project_name
     project.project_type = project_type
