@@ -44,7 +44,7 @@ class Product
   # versionchanges
   # versioncomments
 
-  attr_accessor :in_my_products, :version_uid
+  attr_accessor :in_my_products, :version_uid, :last_crawle_date
 
   def delete
     false

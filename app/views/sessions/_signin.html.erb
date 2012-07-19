@@ -1,0 +1,43 @@
+<div class="boxHeader">
+	Sign In
+</div>
+<div class="boxContainer" style="height: 200px;">
+	<div class="formCel">
+		<%= form_for(:session, :url => sessions_path) do |f|  %>
+		    <div class="div-row">
+		      <div class="labelCel">
+		        <%= f.label :email %>
+		      </div>
+		      <div class="inputCel">
+		        <%= f.text_field :email, :class => "round" %>
+		      </div>
+		    </div>
+		    <div class="div-row">
+		      <div class="labelCel">
+		        <%= f.label :password %>
+		      </div>
+		      <div class="inputCel">
+		        <%= f.password_field :password, :class => "round" %><br/>
+		      </div>
+		    </div>
+			<div class="div-row">
+		      <div class="labelCel"></div>
+		      <div class="inputCel" style="padding-bottom: 10px">
+		        <%= link_to "I forgot my password", iforgotmypassword_path %>
+		      </div>
+		    </div>
+		    <div class="div-row">
+		      <div class="labelCel"></div>
+		      <div class="submitCel">
+		        <%= f.submit "Sign in", :class => "button  " %>
+		      </div>
+		    </div>
+		<% end %>
+	</div>
+	<div class="alternative_signin_options_cel" style="height: 180px;">
+		<b>OR</b><br/>
+		<br/>
+		<br/>
+		<%= render 'shared/login_options_vertical' %>
+	</div>
+</div>

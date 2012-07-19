@@ -41,15 +41,21 @@ module ProductsHelper
     return "success"
   end
   
-  def attach_version(product, version)
+  def attach_version(product, params)
     return nil if product.nil?
+    version = url_param_to_origin( params[:version] )
     if version.nil? || version.empty?
       version = product.version
     end
     versionObj = product.get_version(version)
-    if !versionObj.nil?
+    if versionObj
       product.version = versionObj.version
       product.version_link = versionObj.link
+      if versionObj.created_at
+        today = DateTime.now.to_date
+        diff = today - versionObj.created_at.to_date
+        product.last_crawle_date = diff.to_i
+      end
     end
   end
 

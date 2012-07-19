@@ -33,8 +33,7 @@ describe "registration" do
     user = User.find_by_email("test@test.de")
     user.should_not be_nil
     get "/users/activate/#{user.verification}"
-    assert_response 302
-    response.should redirect_to("/signin")
+    assert_response 200
     user = User.find_by_email("test@test.de")
     user.verification.should be_nil
   end

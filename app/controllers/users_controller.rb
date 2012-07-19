@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_filter :authenticate, :except => [:show, :favoritepackages, :comments, :new, :create, :activate, :iforgotmypassword, :resetpassword]
-  before_filter :correct_user, :only   => [:edit, :update, :activate]
+  before_filter :correct_user, :only   => [:edit, :update]
   before_filter :admin_user,   :only   => :destroy
   before_filter :set_locale
 
@@ -47,6 +47,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find_by_username(params[:id])
+    @page = "profile"
     
     if ( !@user.nil? )
       product_ids = Follower.find_product_ids_for_user( @user.id )
@@ -81,6 +82,7 @@ class UsersController < ApplicationController
   end
   
   def favoritepackages
+    @page = "profile"
     @user = User.find_by_username(params[:id])
     product_ids = Follower.find_product_ids_for_user( @user.id )
     @languages = Product.get_unique_languages_for_product_ids(product_ids)
@@ -101,6 +103,7 @@ class UsersController < ApplicationController
   end
   
   def comments
+    @page = "profile"
     @user = User.find_by_username(params[:id])
     product_ids = Follower.find_product_ids_for_user( @user.id )
     @languages = Product.get_unique_languages_for_product_ids(product_ids)
@@ -113,7 +116,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html {  }
       format.json { render :json => @comments }
-    end        
+    end
   end
   
   def notifications
@@ -135,7 +138,19 @@ class UsersController < ApplicationController
     else
       flash[:error] = "The activation code could not be found. Maybe your Account is already activated."
     end
-    redirect_to '/signin'
+  end
+
+  def location
+    user = current_user
+    location = "Berlin"
+    if user 
+      location = user.location
+    end
+    respond_to do |format|
+      format.json { 
+        render :json => "{\"location\": \"#{location}\"}"
+      }
+    end
   end
   
   def iforgotmypassword

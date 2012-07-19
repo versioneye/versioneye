@@ -1,9 +1,10 @@
 class UserMailer < ActionMailer::Base
+  
   default from: "\"VersionEye\" <notify@versioneye.com>"
   
   def verification_email(user)
     @user = user
-    @verificationlink = "#{Settings.server_url}/users/activate/#{@user.verification}"
+    @verificationlink = "#{Settings.server_url_https}/users/activate/#{@user.verification}"
     mail(
       :to => @user.email, 
       :subject => "Verification",
@@ -13,7 +14,7 @@ class UserMailer < ActionMailer::Base
 
   def verification_email_reminder(user)
     @user = user
-    @verificationlink = "#{Settings.server_url}/users/activate/#{@user.verification}"
+    @verificationlink = "#{Settings.server_url_https}/users/activate/#{@user.verification}"
     mail(
       :to => @user.email, 
       :subject => "Verification Reminder",

@@ -45,36 +45,20 @@ jQuery(document).ready(function() {
 		jQuery("#extended_search_container").fadeToggle("slow", "linear");
 	});
 
+    map_for_jobs = document.getElementById("map_for_jobs")
+    if (map_for_jobs){
+    	initialize_jobs()	
+    }
 
-    canvas_lp = document.getElementById("canvas-container-lp")
-    if (canvas_lp){
-    	var wheel = new DependencyWheel.Remote(false, canvas_lp, { 
-			url: '/package/rails/version/3~2~3/lp_dependencies.json',
-			width: "500", 
-			height: "450",
-			data_border: 70,
-			infoBox: "infoBox",
-			infoNumber: "runtime_recursive_number",
-			canvas_id: "canvas",
-			canvas_hover_id: "canvas_hover",
-			product_key: "rails", 
-			product_version: "3~2~6",
-			product_name: "rails", 
-			version: "3.2.6",
-			scope: "runtime",
-			container_id: "canvas-container",
-			resize: false,
-			show_label: false,
-			onItemClick: function(item, event){
-				key = item.id; 
-				key = key.replace(/\//g, "--");
-				key = key.replace(/\./g, "~" );
-				version = item.version;
-				version = version.replace(/\//g, "--");
-				version = version.replace(/\./g, "~" );
-				window.location.href = "/package/" + key + "/version/" + version;
-			}
-		} );	
+    map_for_profile = document.getElementById("map_for_user_profile")
+    if (map_for_profile){
+    	jQuery.ajax({
+	        url: "/user_location.json"
+	    }).done(function (data){
+            if (data){
+                initialize_profile(data.location);
+            }
+	    } );
     }
 
     if (window.render_wheel) {

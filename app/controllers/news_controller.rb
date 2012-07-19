@@ -5,11 +5,13 @@ class NewsController < ApplicationController
 
   def news
     @comments = Versioncomment.all().desc(:created_at).paginate(:page => params[:page]) 
+    @page = "news"
   end
 
   def mynews
     prod_keys = Versioncomment.get_prod_keys_for_user(current_user.id)
     @comments = Versioncomment.find_by_prod_keys(prod_keys).paginate(:page => params[:page]) 
+    @page = "news"
   end
 
   def hotnews
@@ -19,6 +21,7 @@ class NewsController < ApplicationController
       keys << pack.prod_key
     end
     @comments = Versioncomment.find_by_prod_keys( keys ) 
+    @page = "news"
   end
   
 end

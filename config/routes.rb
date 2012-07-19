@@ -26,6 +26,7 @@ Versioneye::Application.routes.draw do
       get 'comments'
     end
   end
+  get   '/user_location',                :to => 'users#location'
   get   '/signup',                       :to => 'users#new'
   get   '/users/:id/notifications',      :to => 'users#notifications'
   get   '/users/activate/:verification', :to => 'users#activate'

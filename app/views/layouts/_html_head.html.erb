@@ -7,10 +7,19 @@
 	<![endif]-->
 	<%= csrf_meta_tag %>
 	<%= stylesheet_link_tag "application" %>
+
 	<% if @product || @project %> 
 		<%= javascript_include_tag "application",    :defer => true, :async => true %>
-	<% elsif @lp %>
+	<% elsif @page.eql?("LandingPage") %>
 		<%= javascript_include_tag "application_lp", :defer => true, :async => true %>
+	<% elsif @page.eql?("profile") %>
+		<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+		<%= javascript_include_tag "application_profile", :defer => true, :async => true %>
+	<% elsif @page.eql?("jobs") %>
+		<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+		<%= javascript_include_tag "application_jobs", :defer => true, :async => true %>
+	<% elsif @page.eql?("news") %>
+		<%= javascript_include_tag "application_news", :defer => true, :async => true %>
 	<% else %> 
-		<%= javascript_include_tag "application_md", :defer => true, :async => true %>
+		<%= javascript_include_tag "application_default", :defer => true, :async => true %>
 	<% end %>

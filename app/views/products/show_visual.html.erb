@@ -8,11 +8,12 @@
 
 		<div  >
 			<ul class="list-row product_header" style="display: block; width: 50%; margin: auto;" >
-				<li class="list-cell icon-cell">
+				<li class="list-cell icon-cell" style="vertical-align: top;">
 					<%= render :partial => "/shared/language_icons", :locals => {:language => @product.language, :icon => @product.icon, :link => nil, :title => @product.name} %>
 				</li>
 				<li class="list-cell" style="vertical-align: middle; ">
 					<h1 style="margin-bottom: 5px;"><%= @product.name_and_version %></h1>
+					<%= render "/products/product_show_detected" %>
 					<ul class="list-row">
 						<li class="list-cell share-on-icon">
 							<a href="https://twitter.com/share" 

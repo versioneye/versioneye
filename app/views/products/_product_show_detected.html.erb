@@ -1,0 +1,13 @@
+<% if @product.last_crawle_date %>
+	<span class="meta-text-small" title="This is mostly equal with the release date.">
+		This version was detected
+		<% if @product.last_crawle_date > 182 %>
+			<span style="color: orange; font-weight: bold;"><%= @product.last_crawle_date %></span>
+		<% elsif @product.last_crawle_date > 365 %> 
+			<span style="color: red; font-weight: bold;"><%= @product.last_crawle_date %></span>
+		<% else %>
+			<%= @product.last_crawle_date %> 
+		<% end %>
+		days ago
+	</span>
+<% end %>

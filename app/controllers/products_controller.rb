@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
   @@languages = ["Java", "Ruby", "Python", "Node.JS", "R", "JavaScript", "PHP", "Clojure"]
 
   def index
-    @lp = "LandingPage"
+    @page = "LandingPage"
     @lang = cookies[:veye_lang]
     if @lang.nil?
       @lang = ""
@@ -76,9 +76,7 @@ class ProductsController < ApplicationController
     
     @following = is_following?(current_user, @product)
     
-    version_param = params[:version]
-    ver = url_param_to_origin(version_param)
-    attach_version( @product, ver )
+    attach_version( @product, params )
     @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
     @version = @product.get_version(@product.version)
     @downloads = @version.versionarchive
@@ -117,8 +115,7 @@ class ProductsController < ApplicationController
       redirect_to products_path
       return 
     end
-    ver = url_param_to_origin params[:version]
-    attach_version @product, ver
+    attach_version( @product, params )
     @version = @product.get_version(@product.version)
     @main_dependencies = @product.dependencies(nil)
     render :layout => 'application_visual'
