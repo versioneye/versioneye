@@ -28,28 +28,19 @@ class User::ProjectsController < ApplicationController
       return nil
     end
     
-    filename = nil
-    url = project_url
-    if url.nil? || url.empty?
-      filename = upload_to_s3( params )
-      url = get_s3_url filename
-    end
-    
+    filename = get_filename( params )
+    url = get_url( project_url, filename )
     project_type = get_project_type( url )
     
-    project = Project.create_from_file(project_type, url)
+    project = Project.create_from_file( project_type, url )
     project.user_id = current_user.id.to_s
     project.name = project_name
     project.project_type = project_type
     project.url = url
     
-    if (project_url.nil? || project_url.empty?)
-      project.s3_filename = filename
-      project.s3 = true
-    else 
-      project.s3 = false
-    end
-    if !project.dependencies.nil? && !project.dependencies.empty? && project.save
+    add_s3_attributes( project, project_url, filename )
+    
+    if project.dependencies && !project.dependencies.empty? && project.save
       project.dependencies.each do |dep|
         dep.project_id = project.id.to_s
         dep.user_id = current_user.id.to_s
@@ -110,5 +101,38 @@ class User::ProjectsController < ApplicationController
     flash[:success] = "We removed all known packages from this project from your fav. packages."
     redirect_to user_project_path(@project)
   end  
+
+  private 
+
+    def get_filename(params)
+      project_url = params[:project][:url]
+      file = params[:upload]
+      filename = ""
+      if project_url.nil? || project_url.empty?
+        filename = upload_to_s3( params )
+      else 
+        filename = file['datafile'].original_filename
+      end
+      return filename
+    end
+
+    def get_url(project_url, filename)
+      url = ""
+      if project_url.nil? || project_url.empty?
+        url = get_s3_url filename
+      else 
+        url = project_url  
+      end
+      return url
+    end
+
+    def add_s3_attributes(project, project_url, filename)
+      if (project_url.nil? || project_url.empty?)
+        project.s3_filename = filename
+        project.s3 = true
+      else 
+        project.s3 = false
+      end
+    end
   
 end

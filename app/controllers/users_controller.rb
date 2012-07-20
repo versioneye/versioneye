@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate, :except => [:show, :favoritepackages, :comments, :new, :create, :activate, :iforgotmypassword, :resetpassword]
-  before_filter :correct_user, :only   => [:edit, :update]
-  before_filter :admin_user,   :only   => :destroy
+  before_filter :authenticate, :only => [:edit, :update, :destroy]
+  before_filter :correct_user, :only => [:edit, :update]
+  before_filter :admin_user,   :only => [:destroy]
   before_filter :set_locale
 
   force_ssl :only => [:new, :create, :activate]
-  #before_filter :force_http, :only => [:show, :favoritepackages, :comments]
+  #before_filter :force_http , :only => [:show, :favoritepackages, :comments]
 
   def home
     if signed_in?
@@ -140,8 +140,8 @@ class UsersController < ApplicationController
     end
   end
 
-  def location
-    user = current_user
+  def users_location
+    user = User.find_by_username(params[:id])
     location = "Berlin"
     if user 
       location = user.location

@@ -27,6 +27,15 @@ class Project
     self.dependencies = Projectdependency.all(conditions: {project_id: self.id} ).desc(:outdated).asc(:prod_key)
     self.dependencies
   end
+
+  def self.update_dependencies
+    projects = Project.all()
+    projects.each do |project|
+      update_url( project )
+      new_project = Project.create_from_file( project.project_type, project.url )
+      p "new_project.dependencies #{new_project.dependencies.count}"
+    end
+  end
   
   def self.create_from_file(project_type, url)
     project = nil
@@ -74,7 +83,7 @@ class Project
     project
   end
   
-  def self.create_from_pip_url(url)
+  def self.create_from_pip_url( url )
     return nil if url.nil?
     url = do_replacements_for_github( url )
     uri = URI(url)
@@ -316,6 +325,17 @@ class Project
         url = url.gsub("https://github.com", "https://raw.github.com")
         url = url.gsub("/blob/", "/")
       end
+      url
+    end
+
+    def self.update_url(project)
+      if project.s3 
+        project.url = get_s3_url( project.s3_filename )
+      end
+    end
+
+    def get_s3_url filename
+      url = AWS::S3::S3Object.url_for(filename, Settings.s3_projects_bucket, :authenticated => true)
       url
     end
   

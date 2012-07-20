@@ -24,9 +24,9 @@ Versioneye::Application.routes.draw do
     member do 
       get 'favoritepackages'
       get 'comments'
+      get 'users_location'
     end
   end
-  get   '/user_location',                :to => 'users#location'
   get   '/signup',                       :to => 'users#new'
   get   '/users/:id/notifications',      :to => 'users#notifications'
   get   '/users/activate/:verification', :to => 'users#activate'

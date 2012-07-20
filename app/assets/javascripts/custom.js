@@ -53,7 +53,7 @@ jQuery(document).ready(function() {
     map_for_profile = document.getElementById("map_for_user_profile")
     if (map_for_profile){
     	jQuery.ajax({
-	        url: "/user_location.json"
+	        url: window.location.pathname + "/users_location.json"
 	    }).done(function (data){
             if (data){
                 initialize_profile(data.location);
