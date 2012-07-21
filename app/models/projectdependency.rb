@@ -11,6 +11,7 @@ class Projectdependency
   field :artifact_id, type: String
   field :version, type: String
   field :version_label, type: String
+  field :current_version, type: String
   field :prod_key, type: String
   field :prod_type, type: String
   field :outdated, type: Boolean
@@ -33,19 +34,20 @@ class Projectdependency
   def is_outdated?
     return false if self.prod_key.nil?     
     product = get_product
-    current_version = product.version
+    self.current_version = product.version
+    self.save()
 
     if self.comperator.nil? 
       self.comperator = "="
     end
     
     if self.comperator.eql?("=") || self.comperator.eql?("==")
-      if current_version.strip.eql?(version.strip) || product.wouldbenewest?(version.strip)
+      if self.current_version.strip.eql?(version.strip) || product.wouldbenewest?(version.strip)
         return false
       end
     elsif self.comperator.eql?(">=")
       newest = Naturalsorter::Sorter.sort_version([version, product.version]).last
-      if current_version.eql?(version) || product.wouldbenewest?(version) || newest.eql?(product.version)
+      if self.current_version.eql?(version) || product.wouldbenewest?(version) || newest.eql?(product.version)
         return false
       end
     elsif self.comperator.eql?(">")

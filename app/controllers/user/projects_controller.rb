@@ -41,11 +41,8 @@ class User::ProjectsController < ApplicationController
     add_s3_attributes( project, project_url, filename )
     
     if project.dependencies && !project.dependencies.empty? && project.save
-      project.dependencies.each do |dep|
-        dep.project_id = project.id.to_s
-        dep.user_id = current_user.id.to_s
-        dep.save
-      end
+      dependencies = Array.new(project.dependencies)
+      Project.save_dependencies(project, dependencies)
       flash[:info] = "Project was created successfully."
     else
       flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."

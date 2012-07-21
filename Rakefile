@@ -41,6 +41,9 @@ task :do_work => :environment do
 			puts "START to send out the verification reminder E-Mails."
 		    User.send_verification_reminders
 		    puts "STOP to send out the verification reminder E-Mails."
+		    puts "START to send out project notification E-Mails."
+		    Project.update_dependencies
+		    puts "STOP to send out project notification E-Mails."
 		    if Time.now.hour == weekly_hour && Time.now.min == weekly_minute
 				sleep(60)
 			end

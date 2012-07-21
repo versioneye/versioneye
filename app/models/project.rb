@@ -28,12 +28,67 @@ class Project
     self.dependencies
   end
 
+  def user
+    if user_id
+      return User.find_by_id(user_id)
+    end
+    return nil
+  end
+
+  def get_outdated_dependencies
+    fetch_dependencies
+    outdated_dependencies = Array.new
+    self.dependencies.each do |dep|
+      outdated_dependencies << dep if dep.outdated
+    end
+    outdated_dependencies
+  end
+
   def self.update_dependencies
     projects = Project.all()
     projects.each do |project|
-      update_url( project )
-      new_project = Project.create_from_file( project.project_type, project.url )
-      p "new_project.dependencies #{new_project.dependencies.count}"
+      Project.process_project ( project )  
+    end
+  end
+
+  def self.process_project( project )
+    if project.user_id.nil?
+      return nil
+    end
+    update_url( project )
+    p "user: #{project.user.username}  #{project.name} url: #{project.url}"
+    p " - old: deps: #{project.dep_number} - out: #{project.out_number}"
+    new_project = Project.create_from_file( project.project_type, project.url )
+    p " - new: deps: #{new_project.dep_number} - out: #{new_project.out_number}"
+    if new_project.dependencies && !new_project.dependencies.empty? 
+      Project.remove_dependencies(project)
+      Project.save_dependencies(project, new_project.dependencies)
+      project.out_number = new_project.out_number
+      project.dep_number = new_project.dep_number
+      project.save
+      if project.out_number > 0
+        ProjectMailer.projectnotification_email(project).deliver
+      end
+    end
+  rescue => e
+    p "ERROR in proccess_project #{e}"
+    nil
+  end
+
+  def self.remove_dependencies(project)
+    project.fetch_dependencies
+    project.dependencies.each do |dep|
+      dep.remove
+    end
+  end
+
+  def self.save_dependencies(project, dependencies)
+    project.dependencies = Array.new
+    dependencies.each do |dep|
+      project.dependencies << dep
+      dep.project_id = project.id.to_s
+      dep.user_id = project.user_id
+      dep.save
     end
   end
   
@@ -66,9 +121,9 @@ class Project
     properties = Hash.new
     doc.xpath('//project/properties').each do |node|
       node.children.each do |child|
-          if !child.text.strip.empty?
-            properties[child.name] = child.text.strip
-          end
+        if !child.text.strip.empty?
+          properties[child.name.downcase] = child.text.strip
+        end
       end  
     end
     
@@ -334,9 +389,11 @@ class Project
       end
     end
 
-    def get_s3_url filename
+    def self.get_s3_url filename
       url = AWS::S3::S3Object.url_for(filename, Settings.s3_projects_bucket, :authenticated => true)
       url
+    rescue
+      nil
     end
   
 end
