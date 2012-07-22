@@ -21,4 +21,49 @@
 			<% end %>
 		</div>
 	</div>
+	<% if !@project.project_type.eql?("PIP") %>
+		<div id="canvas-demo-container"></div>
+		<div style="text-align: center; display: none" id="infoBox">
+			<span >
+				<a id="pinit_runtime" style="display: none;" href="" class="pin-it-button" count-layout="horizontal"><img border="0" alt="pint_it_on_pinterest" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+			</span>
+			<h3 style="text-align: center;" >
+				This project has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive dependencies
+			</h3>
+		</div>
+		<script type="text/javascript">
+			function render_wheel_demo(){
+				canvas_container = document.getElementById("canvas-demo-container")
+				if (canvas_container){
+					var wheel = new DependencyWheel.Remote(false, canvas_container, { 
+						url: '/services/<%= @project.id %>/recursive_dependencies.json',
+						width: "800", 
+						height: "800",
+						infoBox: "infoBox",
+						infoNumber: "runtime_recursive_number",
+						canvas_id: "canvas",
+						canvas_hover_id: "canvas_hover",
+						product_key: "UNKNOWN", 
+						product_version: "UNKNOWN",
+						product_name: "demo", 
+						version: "UNKNOWN",
+						data_border: 70,
+						show_label: false,
+						resize: false,
+						scope: "runtime",
+						container_id: "canvas-demo-container",
+						onItemClick: function(item, event){
+							key = item.id; 
+							key = key.replace(/\//g, "--");
+							key = key.replace(/\./g, "~" );
+							version = item.version;
+							version = version.replace(/\//g, "--");
+							version = version.replace(/\./g, "~" );
+							window.location.href = "/package/" + key + "/version/" + version;
+						}
+					} );	
+				}
+			}	
+		</script>
+	<% end %>
 <% end %>

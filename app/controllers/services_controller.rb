@@ -33,9 +33,8 @@ class ServicesController < ApplicationController
 		    dep.project_id = project.id.to_s
 		    dep.save
 		  end
-		  flash[:info] = "File parsed successfull."
 		else
-		  flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."
+		  flash[:error] = "Ups. An error occured. Something is wrong with your file."
 		end
 		redirect_to service_path(project.id)
 	rescue => e
@@ -46,6 +45,30 @@ class ServicesController < ApplicationController
 	def show
 		id = params[:id]
 		@project = Project.find_by_id(id)
+	end
+
+	def recursive_dependencies
+		id = params[:id]
+		project = Project.find_by_id(id)
+		dependencies = project.get_known_dependencies
+		hash = Hash.new
+		dependencies.each do |dep|      
+			element = CircleElement.new
+			element.id = dep.prod_key
+			element.text = dep.name
+			if dep.version_lbl && !dep.version_lbl.empty? 
+				element.text += ":#{dep.version_lbl}"
+			end
+			element.version = dep.version
+			hash[dep.prod_key] = element
+		end
+		circle = Product.fetch_deps(1, hash, Hash.new)
+		respond_to do |format|
+			format.json { 
+				resp = generate_json_for_circle(circle)
+				render :json => "[#{resp}]"
+			}
+		end
 	end
 
 end

@@ -164,14 +164,14 @@ class Product
     dependencies.each do |dep|      
       element = CircleElement.new
       element.id = dep.dep_prod_key
-      attach_label_to_element(element, dep)
+      Product.attach_label_to_element(element, dep)
       element.version = dep.version_abs
       hash[dep.dep_prod_key] = element
     end
-    return fetch_deps(1, hash, Hash.new)
+    return Product.fetch_deps(1, hash, Hash.new)
   end
 
-  def fetch_deps(deep, hash, parent_hash)
+  def self.fetch_deps(deep, hash, parent_hash)
     return hash if hash.empty? 
     # deep_space = ""
     # deep.times{
@@ -193,7 +193,7 @@ class Product
       # p "#{deep_space} #{dependencies.count} deps for #{product.name} #{product.version}"
       dependencies.each do |dep|
         key = dep.dep_prod_key
-        ele = get_element_from_hash(new_hash, hash, parent_hash, key)
+        ele = Product.get_element_from_hash(new_hash, hash, parent_hash, key)
         if ele.nil?
           # p "#{deep_space}  create new element #{dep.name}"
           new_element = CircleElement.new
@@ -211,7 +211,7 @@ class Product
     end
     # p "#{deep_space} new hash element #{new_hash.count}"
     parent_merged = hash.merge(parent_hash)
-    rec_hash = fetch_deps(deep, new_hash, parent_merged)
+    rec_hash = Product.fetch_deps(deep, new_hash, parent_merged)
     merged_hash = parent_merged.merge(rec_hash)
     return merged_hash
   end
@@ -379,7 +379,7 @@ class Product
     end
   end
 
-  private 
+  private
 
     def self.add_description_to_query(query, description)
       if (description && !description.empty?)
@@ -398,7 +398,7 @@ class Product
       query
     end
 
-    def get_element_from_hash(new_hash, hash, parent_hash, key)
+    def self.get_element_from_hash(new_hash, hash, parent_hash, key)
       element = new_hash[key]
       return element if !element.nil?
       element = hash[key]
@@ -407,7 +407,7 @@ class Product
       return element
     end
 
-    def attach_label_to_element(element, dep)
+    def self.attach_label_to_element(element, dep)
       element.text = dep.name
       if dep.version_for_label && !dep.version_for_label.empty? 
         element.text += ":#{dep.version_for_label}"

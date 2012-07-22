@@ -30,8 +30,8 @@
 <script type="text/javascript">
 	function render_wheel(){
 		canvas_container = document.getElementById("canvas-container")
-	    if (canvas_container){
-	    	var wheel = new DependencyWheel.Remote(false, canvas_container, { 
+		if (canvas_container){
+			var wheel = new DependencyWheel.Remote(false, canvas_container, { 
 				url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/dependencies.json?scope=<%= @product.main_scope %>',
 				width: "562", 
 				height: "562",
@@ -58,6 +58,6 @@
 					window.location.href = "/package/" + key + "/version/" + version;
 				}
 			} );	
-	    }
+		}
 	}	
 </script>

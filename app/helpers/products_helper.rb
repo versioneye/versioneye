@@ -165,5 +165,20 @@ module ProductsHelper
     hash['query'] = query.gsub(" ", "-")
     return hash
   end
+
+  def generate_json_for_circle(circle)
+    resp = ""
+    circle.each do |key, dep| 
+      resp += "{"
+      resp += "\"connections\": [#{dep.connections_as_string}],"
+      resp += "\"text\": \"#{dep.text}\","
+      resp += "\"id\": \"#{dep.id}\"," 
+      resp += "\"version\": \"#{dep.version}\"" 
+      resp += "},"
+    end
+    end_point = resp.length - 2
+    resp = resp[0..end_point]
+    resp
+  end
   
 end

@@ -64,6 +64,9 @@ jQuery(document).ready(function() {
     if (window.render_wheel) {
     	render_wheel();
     }
+    if (window.render_wheel_demo) {
+    	render_wheel_demo();
+    }
     if (window.render_wheel_main) {
     	render_wheel_main();
     }

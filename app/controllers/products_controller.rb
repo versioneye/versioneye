@@ -224,20 +224,9 @@ class ProductsController < ApplicationController
       product.version = version  
     end
     @circle = product.dependency_circle(scope)
-
     respond_to do |format|
       format.json { 
-        resp = ""
-        @circle.each do |key, dep| 
-          resp += "{"
-          resp += "\"connections\": [#{dep.connections_as_string}],"
-          resp += "\"text\": \"#{dep.text}\","
-          resp += "\"id\": \"#{dep.id}\"," 
-          resp += "\"version\": \"#{dep.version}\"" 
-          resp += "},"
-        end
-        end_point = resp.length - 2
-        resp = resp[0..end_point]
+        resp = generate_json_for_circle(@circle)
         render :json => "[#{resp}]"
       }
     end

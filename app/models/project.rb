@@ -340,22 +340,6 @@ class Project
       dependency.comperator = "="
     end
   end
-
-  def dependency_circle(scope)
-    if scope == nil 
-      scope = main_scope
-    end
-    hash = Hash.new
-    dependencies = get_known_dependencies
-    dependencies.each do |dep|      
-      element = CircleElement.new
-      element.id = dep.dep_prod_key
-      attach_label_to_element( element, dep )
-      element.version = dep.version_abs
-      hash[dep.dep_prod_key] = element
-    end
-    return fetch_deps(1, hash, Hash.new)
-  end
   
   private 
   
