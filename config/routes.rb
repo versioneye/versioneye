@@ -63,7 +63,7 @@ Versioneye::Application.routes.draw do
   post  '/package/:key/delete_link',                    :to => 'products#delete_link'
   get   '/package/:key/version/:version',               :to => 'products#show'
   post  '/package/:key/version/:version/dependencies',  :to => 'products#recursive_dependencies'
-  post  '/package/:key/version/:version/lp_dependencies',  :to => 'products#lp_dependencies'
+  get   '/package/:key/version/:version/dependencies',  :to => 'products#recursive_dependencies'
 
   get   '/product/:key',                                :to => 'products#show'
   get   '/product/:key/version/:version',               :to => 'products#show'

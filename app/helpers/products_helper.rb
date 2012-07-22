@@ -41,9 +41,9 @@ module ProductsHelper
     return "success"
   end
   
-  def attach_version(product, params)
+  def attach_version(product, version_from_url)
     return nil if product.nil?
-    version = url_param_to_origin( params[:version] )
+    version = url_param_to_origin( version_from_url )
     if version.nil? || version.empty?
       version = product.version
     end

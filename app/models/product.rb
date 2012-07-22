@@ -159,7 +159,6 @@ class Product
     if scope == nil 
       scope = main_scope
     end
-    
     hash = Hash.new
     dependencies = Dependency.find_by_key_version_scope(prod_key, version, scope)
     dependencies.each do |dep|      

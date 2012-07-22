@@ -76,7 +76,7 @@ class ProductsController < ApplicationController
     
     @following = is_following?(current_user, @product)
     
-    attach_version( @product, params )
+    attach_version( @product, params[:version] )
     @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
     @version = @product.get_version(@product.version)
     @downloads = @version.versionarchive
@@ -115,7 +115,7 @@ class ProductsController < ApplicationController
       redirect_to products_path
       return 
     end
-    attach_version( @product, params )
+    attach_version( @product, params[:version] )
     @version = @product.get_version(@product.version)
     @main_dependencies = @product.dependencies(nil)
     render :layout => 'application_visual'

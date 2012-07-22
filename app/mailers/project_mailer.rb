@@ -5,7 +5,6 @@ class ProjectMailer < ActionMailer::Base
   def projectnotification_email(project)
     @user = project.user
     @dependencies = project.get_outdated_dependencies
-    p "outdated dependencies: #{@dependencies.count}"
     @project_name = project.name
     @link = "#{Settings.server_url}/package/"
     @projectlink = "#{Settings.server_url}/user/projects/#{project.id}"

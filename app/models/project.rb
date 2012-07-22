@@ -29,9 +29,7 @@ class Project
   end
 
   def user
-    if user_id
-      return User.find_by_id(user_id)
-    end
+    return User.find_by_id(user_id) if user_id
     return nil
   end
 
@@ -42,6 +40,32 @@ class Project
       outdated_dependencies << dep if dep.outdated
     end
     outdated_dependencies
+  end
+
+  def get_known_dependencies
+    fetch_dependencies
+    known_dependencies = Array.new
+    self.dependencies.each do |dep|
+      known_dependencies << dep if dep.prod_key
+    end
+    known_dependencies
+  end  
+
+  def self.remove_dependencies(project)
+    project.fetch_dependencies
+    project.dependencies.each do |dep|
+      dep.remove
+    end
+  end
+
+  def self.save_dependencies(project, dependencies)
+    project.dependencies = Array.new
+    dependencies.each do |dep|
+      project.dependencies << dep
+      dep.project_id = project.id.to_s
+      dep.user_id = project.user_id
+      dep.save
+    end
   end
 
   def self.update_dependencies
@@ -73,23 +97,6 @@ class Project
   rescue => e
     p "ERROR in proccess_project #{e}"
     nil
-  end
-
-  def self.remove_dependencies(project)
-    project.fetch_dependencies
-    project.dependencies.each do |dep|
-      dep.remove
-    end
-  end
-
-  def self.save_dependencies(project, dependencies)
-    project.dependencies = Array.new
-    dependencies.each do |dep|
-      project.dependencies << dep
-      dep.project_id = project.id.to_s
-      dep.user_id = project.user_id
-      dep.save
-    end
   end
   
   def self.create_from_file(project_type, url)
@@ -333,6 +340,22 @@ class Project
       dependency.comperator = "="
     end
   end
+
+  def dependency_circle(scope)
+    if scope == nil 
+      scope = main_scope
+    end
+    hash = Hash.new
+    dependencies = get_known_dependencies
+    dependencies.each do |dep|      
+      element = CircleElement.new
+      element.id = dep.dep_prod_key
+      attach_label_to_element( element, dep )
+      element.version = dep.version_abs
+      hash[dep.dep_prod_key] = element
+    end
+    return fetch_deps(1, hash, Hash.new)
+  end
   
   private 
   
@@ -392,8 +415,6 @@ class Project
     def self.get_s3_url filename
       url = AWS::S3::S3Object.url_for(filename, Settings.s3_projects_bucket, :authenticated => true)
       url
-    rescue
-      nil
     end
   
 end
