@@ -24,9 +24,6 @@
 	<% if !@project.project_type.eql?("PIP") %>
 		<div id="canvas-demo-container"></div>
 		<div style="text-align: center; display: none" id="infoBox">
-			<span >
-				<a id="pinit_runtime" style="display: none;" href="" class="pin-it-button" count-layout="horizontal"><img border="0" alt="pint_it_on_pinterest" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
-			</span>
 			<h3 style="text-align: center;" >
 				This project has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive dependencies
 			</h3>
@@ -52,6 +49,7 @@
 						resize: false,
 						scope: "runtime",
 						container_id: "canvas-demo-container",
+						pinit: false,
 						onItemClick: function(item, event){
 							key = item.id; 
 							key = key.replace(/\//g, "--");

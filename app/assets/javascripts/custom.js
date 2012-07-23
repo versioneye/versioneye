@@ -100,7 +100,8 @@ function handle_path(options){
 
 function upload_file(options){
 	canvas = document.getElementById(options.canvas_id)
-	if (canvas){
+	alert(options.pinit)
+	if (canvas && options.pinit){
 		jQuery.ajax({
 	        type: 'POST',
 	        url: "/package/upload_image.json",
@@ -114,6 +115,9 @@ function upload_file(options){
 }
 
 function show_pinit_button(picture_url, options){
+	if (options.pinit == false){
+		return ;
+	}
 	if (options.resize == false && options.data_length > options.data_border){ 
 		canvas_container = document.getElementById(options.container_id);
 		var img = document.createElement("IMG");

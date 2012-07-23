@@ -46,7 +46,8 @@ var DependencyWheel = new Class({
       resize_ids: "section,container", 
       resize_factor: 11, 
       scope: "compile", 
-      container_id: "canvas-container"
+      container_id: "canvas-container", 
+      pinit: true
     },
    
     initialize: function(data, ct, options) {
