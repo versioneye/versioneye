@@ -100,7 +100,6 @@ function handle_path(options){
 
 function upload_file(options){
 	canvas = document.getElementById(options.canvas_id)
-	alert(options.pinit)
 	if (canvas && options.pinit){
 		jQuery.ajax({
 	        type: 'POST',
