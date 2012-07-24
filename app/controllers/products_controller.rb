@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
   before_filter :authenticate, :only   => [:edit, :update]
   #before_filter :force_http
 
-  @@languages = ["Java", "Ruby", "Python", "Node.JS", "R", "JavaScript", "PHP", "Clojure"]
+  @@languages = ["Java", "Ruby", "Python", "Node.JS", "PHP", "R", "JavaScript", "Clojure"]
 
   def index
     @page = "LandingPage"
