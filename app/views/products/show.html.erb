@@ -10,16 +10,16 @@
 		<%= render 'products/product_show_gems' %>	
 	<% elsif @product.prod_type.eql? "PIP" %>
 		<%= render 'products/product_show_pip' %>
+	<% elsif @product.prod_type.eql? "npm" %>
+		<%= render 'products/product_show_npm' %>
+	<% elsif @product.prod_type.eql? "Packagist" %>
+		<%= render 'products/product_show_packagist' %>
+	<% elsif @product.prod_type.eql? "R" %>
+		<%= render 'products/product_show_r' %>
 	<% elsif @product.prod_type.eql? "GitHub" %>
 		<%= render 'products/product_show_github' %>
 	<% elsif @product.prod_type.eql? "opa" %>
 		<%= render 'products/product_show_opa' %>
-	<% elsif @product.prod_type.eql? "npm" %>
-		<%= render 'products/product_show_npm' %>
-	<% elsif @product.prod_type.eql? "R" %>
-		<%= render 'products/product_show_r' %>
-	<% elsif @product.prod_type.eql? "PHP" %>
-		<%= render 'products/product_show_php' %>
 	<% elsif @product.prod_type.eql? "Printer" %>
 		<%= render 'products/product_show_printer' %>
 	<% end %>

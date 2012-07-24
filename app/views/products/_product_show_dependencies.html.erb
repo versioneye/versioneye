@@ -23,6 +23,8 @@
 		<%= render "product_show_dependencies_rubygems" %>
 	<% elsif @product.prod_type.eql?("npm")  %>
 		<%= render "product_show_dependencies_npm" %>
+	<% elsif @product.prod_type.eql?("Packagist")  %>
+		<%= render "product_show_dependencies_packagist" %>	
 	<% end %>
 </div>
 

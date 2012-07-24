@@ -376,6 +376,8 @@ class Product
       return "compile"
     elsif self.language.eql?("Node.JS")
       return "compile"
+    elsif self.language.eql?("PHP")
+      return "require"
     end
   end
 
