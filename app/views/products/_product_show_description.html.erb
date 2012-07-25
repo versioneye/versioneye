@@ -6,7 +6,7 @@
 		<% if @product.description_manual && !@product.description_manual.empty? %>
 			<div class="meta-text-small">[ crawled data ]</div>
 		<% end %>
-		<% if @product.description.include? "\n" %>
+		<% if @product.description && @product.description.include?("\n") %>
 			<%= @product.description.gsub!("\n", "<br/>").html_safe %>
 		<% else %>
 			<%= @product.description %>

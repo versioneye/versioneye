@@ -3,7 +3,7 @@
 		<a href="/" alt="VersionEye">
 			<div class="logo_div"></div>
 		</a>
-		<% if @hide.nil? %>
+		<% if !@page.eql?("LandingPage") %>
 			<div id="searchfield_div" class="searchfield_div">			
 				<form id="searchform" action="/search" method="GET" class="search-form" >				
 					<input id="q" name="q" class="searchfield" type="text" value="<%= @query %>" />
