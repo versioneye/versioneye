@@ -44,6 +44,10 @@
 		<% elsif @product.prod_type.eql?("npm") %>
 			<%= render "product_show_dependencies_scope_main" %>
 			<%= render "product_show_dependencies_scope_development" %>
+		<% elsif @product.prod_type.eql?("Packagist") %>
+			<%= render "product_show_dependencies_scope_main" %>
+			<%= render "product_show_dependencies_scope_require_dev" %>
+			<%= render "product_show_dependencies_scope_replace" %>
 		<% end %>
 
 	</div>

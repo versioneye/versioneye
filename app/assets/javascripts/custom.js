@@ -79,7 +79,12 @@ jQuery(document).ready(function() {
     if (window.render_wheel_provided) {
     	render_wheel_provided();
     }
-	
+    if (window.render_wheel_replace) {
+    	render_wheel_replace();
+    }
+    if (window.render_wheel_require_dev) {
+    	render_wheel_require_dev();
+    }
 });
 
 function handle_path(options){
@@ -216,4 +221,29 @@ function shareOnFacebook(link, message){
         description: message});
 }
 
+function fetchGitHubProjects(){
+	fetchLinkArea = document.getElementById("fetchLinkArea");
+	fetchLinkArea.style.display = "none";
+	loadingbarArea = document.getElementById("loadingbarArea");
+	loadingbarArea.style.display = "block";
+	jQuery.ajax({
+		url: "/user/projects/github_projects.json"
+	}).done(function (data){
+		if (data){
+			addGitHubProjects(data)			
+		}
+	} );	
+}
 
+function addGitHubProjects(data){
+	for (i = 0; i < data[0].projects.length; i++ ){
+		project = data[0].projects[i];
+		var o = new Option(project, project);
+		jQuery(o).html(project);
+		jQuery("#github_projects").append(o);
+	}
+	loadingbarArea = document.getElementById("loadingbarArea");
+	loadingbarArea.style.display = "none";
+	projectListArea = document.getElementById("projectListArea");
+	projectListArea.style.display = "block";
+}

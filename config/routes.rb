@@ -51,6 +51,7 @@ Versioneye::Application.routes.draw do
 
   get  '/jobs',          :to => 'jobs#index'
   
+  get   '/package/symfony--symfony' => redirect("/package/php--symfony--symfony")
   get   '/search',                                      :to => 'products#search'
   get   '/package/name',                                :to => 'products#autocomplete_product_name'
   post  '/package/follow',                              :to => 'products#follow'
@@ -83,6 +84,7 @@ Versioneye::Application.routes.draw do
 
   resources :versioncommentreplies
   
+  #get '/user/projects/github_projects', :to => 'user/projects#github_projects'
   namespace :user do 
     resources :projects do
       member do
