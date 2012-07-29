@@ -18,7 +18,7 @@
 	function render_wheel_replace(){
 		var wheel = new DependencyWheel.Remote(false, document.getElementById("canvas-container-replace"), { 
 			url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/dependencies.json?scope=replace',
-			width: "562", 
+			width: "762", 
 			height: "562",
 			data_border: 70,
 			infoBox: "infoBoxReplace",

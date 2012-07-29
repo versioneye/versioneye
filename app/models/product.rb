@@ -308,39 +308,16 @@ class Product
   def self.correct_namespace
     products = Product.where(:prod_type => "Packagist" )
     products.each do |product|
-      if product.prod_key.match(/^php/).nil?
-        deps = Dependency.all(conditions: { prod_key: product.prod_key } )
-        deps.each do |dep|
-          dep.prod_key = "php/" + dep.prod_key
-          dep.dep_prod_key = "php/" + dep.dep_prod_key
-          if !dep.name.match(/\//).nil?
-            names = dep.name.split("/")
-            dep.name = names[names.length - 1]
-          end
-          dep.save
-        end
-        links = Versionlink.all(conditions: { prod_key: product.prod_key } )
-        links.each do |link| 
-          if link.link.match(/^http/).nil? && link.link.match(/^git/).nil?
-            link.link = "http://" + link.link 
-          end
-          link.prod_key = "php/" + link.prod_key
-          link.save
-        end
-        comments = Versioncomment.all( conditions: {product_key: product.prod_key } )
-        comments.each do |comment| 
-          comment.product_key = "php/" + product.prod_key
-          comment.save
-        end
-        archives = Versionarchive.all(conditions: { prod_key: product.prod_key } )
-        archives.each do |archive|
-          archive.prod_key = "php/" + product.prod_key
-          archive.save
-        end
-        product.prod_key = "php/" + product.prod_key
-        product.save
-        p "#{product.name}"
+
+      product.name = product.prod_key.gsub("php/", "")
+      product.save
+
+      deps = Dependency.all(conditions: { prod_key: product.prod_key } )
+      deps.each do |dep|
+        dep.name = dep.dep_prod_key.gsub("php/", "")
+        dep.save
       end
+      
     end
   end
 
