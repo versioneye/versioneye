@@ -16,15 +16,6 @@ module ProjectsHelper
 			:access => "private")
 		filename
 	end
-    
-	def get_s3_url filename
-		url = AWS::S3::S3Object.url_for(filename, Settings.s3_projects_bucket, :authenticated => true)
-		url
-	end
-
-	def delete_from_s3 filename
-		AWS::S3::S3Object.delete filename, Settings.s3_projects_bucket
-	end
 
 	def sanitize_filename(file_name)
 		just_filename = File.basename(file_name)

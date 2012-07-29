@@ -17,7 +17,7 @@ class ServicesController < ApplicationController
 		orig_filename =  file['datafile'].original_filename
 		filename = nil
 		filename = upload_to_s3( params )
-		url = get_s3_url( filename )
+		url = Project.get_project_url_from_s3( filename )
 		
 		project_type = get_project_type( url )
 		

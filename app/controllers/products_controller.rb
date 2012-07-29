@@ -236,7 +236,7 @@ class ProductsController < ApplicationController
     image_key = params[:key]
     image_version = params[:version]
     scope = params[:scope]
-    url = get_s3_url("#{image_key}:#{image_version}:#{scope}.png")  
+    url = Product.get_infographic_url_from_s3("#{image_key}:#{image_version}:#{scope}.png")  
     respond_to do |format|
       format.json { 
         if url_exist?(url)
@@ -260,7 +260,7 @@ class ProductsController < ApplicationController
       Base64.decode64(image_bin), 
       Settings.s3_infographics_bucket, 
       :access => "public-read")
-    url = get_s3_url(filename)
+    url = Product.get_infographic_url_from_s3(filename)
     respond_to do |format|
       format.json { 
         render :json => "#{url}"
@@ -281,11 +281,6 @@ class ProductsController < ApplicationController
         lang = ","
       end
       lang
-    end
-
-    def get_s3_url filename
-      url = AWS::S3::S3Object.url_for(filename, Settings.s3_infographics_bucket, :authenticated => false)
-      url
     end
 
     def url_exist?(url_path)

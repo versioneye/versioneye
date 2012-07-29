@@ -397,6 +397,10 @@ class Product
     end
   end
 
+  def self.get_infographic_url_from_s3 filename
+    AWS::S3::S3Object.url_for(filename, Settings.s3_infographics_bucket, :authenticated => false)
+  end
+
   private
 
     def self.add_description_to_query(query, description)

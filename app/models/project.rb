@@ -341,6 +341,14 @@ class Project
       dependency.comperator = "="
     end
   end
+
+  def self.get_project_url_from_s3 filename
+    AWS::S3::S3Object.url_for(filename, Settings.s3_projects_bucket, :authenticated => true)
+  end
+
+  def self.delete_project_from_s3 filename
+    AWS::S3::S3Object.delete filename, Settings.s3_projects_bucket
+  end
   
   private 
   
@@ -393,13 +401,8 @@ class Project
 
     def self.update_url(project)
       if project.s3 
-        project.url = get_s3_url( project.s3_filename )
+        project.url = Project.get_project_url_from_s3( project.s3_filename )
       end
-    end
-
-    def self.get_s3_url filename
-      url = AWS::S3::S3Object.url_for(filename, Settings.s3_projects_bucket, :authenticated => true)
-      url
     end
   
 end

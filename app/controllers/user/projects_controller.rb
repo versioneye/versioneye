@@ -25,7 +25,7 @@ class User::ProjectsController < ApplicationController
     
     if file && !file.empty?
       filename = upload_to_s3( file )
-      url = get_s3_url( filename )
+      url = Project.get_project_url_from_s3( filename )
       project_type = get_project_type( url )
       project_type = "Maven2" if project_type.nil?
       project = create_project(project_type, url, project_name)
@@ -65,7 +65,7 @@ class User::ProjectsController < ApplicationController
     id = params[:id]
     project = Project.find_by_id(id)
     if project.s3 
-      delete_from_s3 project.s3_filename
+      Project.delete_project_from_s3( project.s3_filename )
     end
     project.fetch_dependencies
     project.dependencies.each do |dep|
@@ -190,7 +190,7 @@ class User::ProjectsController < ApplicationController
         Base64.decode64(file_bin), 
         Settings.s3_projects_bucket,
         :access => "private")
-      url = get_s3_url(new_filename)
+      url = Project.get_project_url_from_s3(new_filename)
       result = Hash.new
       result['filename'] = new_filename
       result['s3_url'] = url
