@@ -10,6 +10,7 @@ class Project
   field :url, type: String
   field :s3, type: Boolean
   field :s3_filename, type: String
+  field :github, type: Boolean
   field :dep_number, type: Integer
   field :out_number, type: Integer, default: 0
   

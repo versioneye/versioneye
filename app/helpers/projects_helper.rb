@@ -5,8 +5,7 @@ module ProjectsHelper
 		return "green"
 	end
 
-	def upload_to_s3 ( params )
-		fileUp = params[:upload]
+	def upload_to_s3( fileUp )
 		orig_filename =  fileUp['datafile'].original_filename
 		fname = sanitize_filename(orig_filename)
 		random = create_random_value
@@ -14,7 +13,7 @@ module ProjectsHelper
 		AWS::S3::S3Object.store(filename, 
 			fileUp['datafile'].read, 
 			Settings.s3_projects_bucket, 
-			:access => :private)
+			:access => "private")
 		filename
 	end
     
@@ -40,8 +39,7 @@ module ProjectsHelper
 	end
 
 	def get_project_type(orig_filename)
-		p "get project type: filename: #{orig_filename}"
-		project_type = "Maven2"
+		project_type = nil
 		if orig_filename.match(/Gemfile/)
 		  project_type = "RubyGems"
 		elsif orig_filename.match(/requirements.txt/)

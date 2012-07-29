@@ -84,7 +84,7 @@ Versioneye::Application.routes.draw do
 
   resources :versioncommentreplies
   
-  #get '/user/projects/github_projects', :to => 'user/projects#github_projects'
+  get '/user/projects/github_projects', :to => 'user/projects#github_projects'
   namespace :user do 
     resources :projects do
       member do

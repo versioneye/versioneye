@@ -255,7 +255,7 @@ class ProductsController < ApplicationController
     scope = params[:scope]
     filename = "#{image_key}:#{image_version}:#{scope}.png"
     image_bin.gsub!(/data:image\/png;base64,/, "")
-      AWS::S3::S3Object.store(
+    AWS::S3::S3Object.store(
       filename, 
       Base64.decode64(image_bin), 
       Settings.s3_infographics_bucket, 
