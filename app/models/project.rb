@@ -11,6 +11,7 @@ class Project
   field :s3, type: Boolean
   field :s3_filename, type: String
   field :github, type: Boolean
+  field :github_project, type: String
   field :dep_number, type: Integer
   field :out_number, type: Integer, default: 0
   
@@ -80,7 +81,11 @@ class Project
     if project.user_id.nil?
       return nil
     end
-    update_url( project )
+    if project.github
+      Project.update_from_github( project )
+    elsif project.s3 
+      project.url = Project.get_project_url_from_s3( project.s3_filename )
+    end
     p "user: #{project.user.username}  #{project.name} url: #{project.url}"
     p " - old: deps: #{project.dep_number} - out: #{project.out_number}"
     new_project = Project.create_from_file( project.project_type, project.url )
@@ -98,6 +103,23 @@ class Project
   rescue => e
     p "ERROR in proccess_project #{e}"
     nil
+  end
+
+  def self.update_from_github( project )
+    github_project = project.github_project
+    current_user = project.user
+    sha = Project.get_repo_sha_from_github( github_project, current_user.github_token )
+    project_info = Project.get_project_info_from_github( github_project, sha, current_user.github_token )
+    if project_info.empty?
+      return nil
+    end
+    s3_infos = Project.fetch_file_from_github(project_info['url'], current_user.github_token, project_info['name'])
+    if s3_infos['filename'] && s3_infos['s3_url']
+      delete_project_from_s3( project.s3_filename )
+      project.s3_filename = s3_infos['filename']
+      project.url = s3_infos['s3_url']
+      project.save
+    end
   end
   
   def self.create_from_file(project_type, url)
@@ -349,6 +371,61 @@ class Project
   def self.delete_project_from_s3 filename
     AWS::S3::S3Object.delete filename, Settings.s3_projects_bucket
   end
+
+  def self.get_repo_sha_from_github(git_project, token)
+    heads = JSON.parse HTTParty.get("https://api.github.com/repos/#{git_project}/git/refs/heads?access_token=" + URI.escape(token) ).response.body
+    heads[0]['object']['sha']
+  end
+
+  def self.get_project_info_from_github(git_project, sha, token)
+    result = Hash.new
+    tree = JSON.parse HTTParty.get("https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token) ).response.body
+    tree['tree'].each do |file|
+      name = file['path']
+      if name.eql?("Gemfile")
+        result['url'] = file['url']
+        result['name'] = name
+        result['type'] = "RubyGems"
+      elsif name.eql?("pom.xml")
+        result['url'] = file['url']
+        result['name'] = name
+        result['type'] = "Maven2"
+      elsif name.eql?("requirements.txt")
+        result['url'] = file['url']
+        result['name'] = name
+        result['type'] = "PIP"
+      elsif name.eql?("package.json")
+        result['url'] = file['url']
+        result['name'] = name
+        result['type'] = "npm"
+      end 
+    end
+    result
+  end
+
+  def self.fetch_file_from_github(url, token, filename)
+    file = JSON.parse HTTParty.get( "#{url}?access_token=" + URI.escape(token) ).response.body
+    file_bin = file['content']
+    random_value = Project.create_random_value
+    new_filename = "#{random_value}_#{filename}"
+    AWS::S3::S3Object.store(
+      new_filename, 
+      Base64.decode64(file_bin), 
+      Settings.s3_projects_bucket,
+      :access => "private")
+    url = Project.get_project_url_from_s3(new_filename)
+    result = Hash.new
+    result['filename'] = new_filename
+    result['s3_url'] = url
+    result
+  end
+
+  def self.create_random_value
+    chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    value = ""
+    20.times { value << chars[rand(chars.size)] }
+    value
+  end
   
   private 
   
@@ -397,12 +474,6 @@ class Project
         url = url.gsub("/blob/", "/")
       end
       url
-    end
-
-    def self.update_url(project)
-      if project.s3 
-        project.url = Project.get_project_url_from_s3( project.s3_filename )
-      end
     end
   
 end

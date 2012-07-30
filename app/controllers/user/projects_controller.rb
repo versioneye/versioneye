@@ -39,18 +39,19 @@ class User::ProjectsController < ApplicationController
       project.s3 = false
       store_project(project)
     elsif github_project && !github_project.empty?
-      sha = get_sha( github_project, current_user.github_token )
-      hash = get_url_from_tree( github_project, sha, current_user.github_token )
-      if hash.empty?
+      sha = Project.get_repo_sha_from_github( github_project, current_user.github_token )
+      project_info = Project.get_project_info_from_github( github_project, sha, current_user.github_token )
+      if project_info.empty?
         flash[:error] = "We couldn't fine any project file in the selected project. Please choose another project."
         redirect_to new_user_project_path
         return nil    
       end
-      s3_infos = fetch_file_from_github(hash['url'], current_user.github_token, hash['name'])
-      project = create_project(hash['type'], s3_infos['s3_url'], project_name)
-      project.s3_filename = s3_infos['filename']
+      s3_infos = Project.fetch_file_from_github(project_info['url'], current_user.github_token, project_info['name'])
+      project = create_project(project_info['type'], s3_infos['s3_url'], project_name)
       project.s3 = true
+      project.s3_filename = s3_infos['filename']
       project.github = true
+      project.github_project = github_project
       store_project(project)
     else
       flash[:error] = "Please put in a URL OR select a file from your computer. Or select a GitHub project."
@@ -146,55 +147,6 @@ class User::ProjectsController < ApplicationController
       else
         flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."
       end
-    end
-
-    def get_sha(git_project, token)
-      heads = JSON.parse HTTParty.get("https://api.github.com/repos/#{git_project}/git/refs/heads?access_token=" + URI.escape(token) ).response.body
-      sha = heads[0]['object']['sha']
-      sha
-    end
-
-    def get_url_from_tree(git_project, sha, token)
-      result = Hash.new
-      tree = JSON.parse HTTParty.get("https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token) ).response.body
-      tree['tree'].each do |file|
-        name = file['path']
-        if name.eql?("Gemfile")
-          result['url'] = file['url']
-          result['name'] = name
-          result['type'] = "RubyGems"
-        elsif name.eql?("pom.xml")
-          result['url'] = file['url']
-          result['name'] = name
-          result['type'] = "Maven2"
-        elsif name.eql?("requirements.txt")
-          result['url'] = file['url']
-          result['name'] = name
-          result['type'] = "PIP"
-        elsif name.eql?("package.json")
-          result['url'] = file['url']
-          result['name'] = name
-          result['type'] = "npm"
-        end 
-      end
-      result
-    end
-
-    def fetch_file_from_github(url, token, filename)
-      file = JSON.parse HTTParty.get( "#{url}?access_token=" + URI.escape(token) ).response.body
-      file_bin = file['content']
-      random_value = create_random_value
-      new_filename = "#{random_value}_#{filename}"
-      AWS::S3::S3Object.store(
-        new_filename, 
-        Base64.decode64(file_bin), 
-        Settings.s3_projects_bucket,
-        :access => "private")
-      url = Project.get_project_url_from_s3(new_filename)
-      result = Hash.new
-      result['filename'] = new_filename
-      result['s3_url'] = url
-      result
     end
   
 end
