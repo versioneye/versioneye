@@ -24,7 +24,7 @@ class User::ProjectsController < ApplicationController
     github_project = params[:github_project]
     
     if file && !file.empty?
-      filename = upload_to_s3( file )
+      filename = Project.upload_to_s3( file )
       url = Project.get_project_url_from_s3( filename )
       project_type = get_project_type( url )
       project_type = "Maven2" if project_type.nil?

@@ -364,6 +364,23 @@ class Project
     end
   end
 
+  def self.sanitize_filename(file_name)
+    just_filename = File.basename(file_name)
+    just_filename.sub(/[^\w\.\-]/,'_')
+  end
+
+  def self.upload_to_s3( fileUp )
+    orig_filename =  fileUp['datafile'].original_filename
+    fname = Project.sanitize_filename(orig_filename)
+    random = Project.create_random_value
+    filename = "#{random}_#{fname}"
+    AWS::S3::S3Object.store(filename, 
+      fileUp['datafile'].read, 
+      Settings.s3_projects_bucket, 
+      :access => "private")
+    filename
+  end
+
   def self.get_project_url_from_s3 filename
     AWS::S3::S3Object.url_for(filename, Settings.s3_projects_bucket, :authenticated => true)
   end

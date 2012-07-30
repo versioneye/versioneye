@@ -16,13 +16,13 @@ class ServicesController < ApplicationController
 
 		orig_filename =  file['datafile'].original_filename
 		filename = nil
-		filename = upload_to_s3( params )
+		filename = Project.upload_to_s3( file )
 		url = Project.get_project_url_from_s3( filename )
 		
 		project_type = get_project_type( url )
 		
 		project = Project.create_from_file(project_type, url)
-		project.name = create_random_value
+		project.name = Project.create_random_value
 		project.project_type = project_type
 		project.url = url
 		project.s3_filename = filename
