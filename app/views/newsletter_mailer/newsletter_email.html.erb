@@ -49,30 +49,24 @@
 			    border-radius:         10px;" >
 Hey <%= @user.fullname %>,<br/>
 <br/>
-Once again, we have finished quite some work. Please take a look at the
-most important changes we would like to share with you: 
+Once again, we have finished quite some work. Here are the most important changes: 
 <br/>
 <br/>
 <ul>
 	<li>
-		<b>Project based notifications</b>: Up to now, we have only notified you about
-individual packages you are following. From now on, we will notify you about any outdated dependencies in a
-project. Thus, you can uplaod a project file (pom.xml, Gemfile, requirements.txt,
-package.json) to create a project, and VersionEye will notify you once a week about the outdated dependencies in
-this project. 
+		<b>PHP</b>: We are now collaborating with <a href="http://packagist.org/">packagist.org</a>, a package manager for PHP. 
+   There are 2386 PHP packages on VersionEye and you can now follow any of them to get notified 
+   about new versions.
 	</li>
 	<li>
-		<b>Support of Node.JS projects</b>: We now support NPM package.json
-files as well. Simply upload your package.json file and VersionEye will
-show you any outdated dependencies. 
+		<b>PHP interpreter</b>: You can even follow the PHP interpreter itself to get notified about 
+  new versions: <a href="http://www.versioneye.com/package/php--php">http://www.versioneye.com/package/php--php</a><br/>
+  		<img src="http://versioneye.files.wordpress.com/2012/07/php-logo.jpeg" width="200px" />
 	</li>
 	<li>
-		<b>Release dates</b>: The header of package pages now includes information on
-the time when our crawlers detected the selected version. In most cases, this is identical to the release date of the package. 
-	</li>
-	<li>
-		<b>Internet Explorer</b>: We no longer support any versions of Internet Explorer prior to IE 8.
-If you use IE 7 to visit our website, you will be redirected to this page:	<a href="http://www.versioneye.com/oldbrowser.html">http://www.versioneye.com/oldbrowser.html</a>	
+		<b>GitHub Scope</b>: For the login, we changed the GitHub scope to "repo". The reason for this is that
+  we will finish the GitHub integration pretty soon and to monitor private GitHub repositories,
+  we will have to use the "repo" scope.
 	</li>
 </ul>
 <br/>
