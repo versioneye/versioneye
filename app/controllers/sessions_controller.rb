@@ -19,13 +19,7 @@ class SessionsController < ApplicationController
           redirect_to "/signin"
         else
           sign_in user
-          @project = Project.new
-          @projects = Project.find_by_user(user.id.to_s)
-          if @projects 
-            redirect_back_or( "/user/projects" )
-          else
-            redirect_back_or( "/user/projects/new" )
-          end
+          redirect_back_or( "/user/projects" )
         end
       }
       format.json { 

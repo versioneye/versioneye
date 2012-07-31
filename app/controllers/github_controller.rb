@@ -26,7 +26,7 @@ class GithubController < ApplicationController
     user = get_user_for_token( json_user, token )
     if !user.nil?
       sign_in user
-      redirect_back_or( "/news" )
+      redirect_back_or( "/user/projects" )
       return 
     else
       cookies.permanent.signed[:github_token] = token

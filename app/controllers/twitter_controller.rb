@@ -36,7 +36,7 @@ class TwitterController < ApplicationController
     if user
       update_current_user(user, json_user, access_token)
       sign_in user
-      redirect_back_or( "/news" )
+      redirect_back_or( "/user/projects" )
     else
       redirect_to "http://versioneye.com/auth/twitter/new"
     end
