@@ -26,7 +26,7 @@ class ServicesController < ApplicationController
 		project.project_type = project_type
 		project.url = url
 		project.s3_filename = filename
-		project.s3 = true
+		project.source = "upload"
 
 		if !project.dependencies.nil? && !project.dependencies.empty? && project.save
 		  project.dependencies.each do |dep|

@@ -8,12 +8,14 @@ class Project
     
   field :project_type, type: String, :default => "Maven2"
   field :url, type: String
-  field :s3, type: Boolean, :default => false
+  field :source, type: String, :default => "upload"  # possible values => [upload, url, github]
   field :s3_filename, type: String
-  field :github, type: Boolean, :default => false
   field :github_project, type: String
   field :dep_number, type: Integer
   field :out_number, type: Integer, default: 0
+
+  field :s3, type: Boolean, :default => false
+  field :github, type: Boolean, :default => false
   
   attr_accessor :dependencies
   
@@ -81,9 +83,10 @@ class Project
     if project.user_id.nil?
       return nil
     end
-    if project.github
+    if project.source.eql?("github")
       Project.update_from_github( project )
-    elsif project.s3 
+    end
+    if project.s3_filename && !project.s3_filename.empty?
       project.url = Project.get_project_url_from_s3( project.s3_filename )
     end
     p "user: #{project.user.username}  #{project.name} url: #{project.url}"
@@ -442,6 +445,21 @@ class Project
     value = ""
     20.times { value << chars[rand(chars.size)] }
     value
+  end
+
+  def self.migrate_booleans
+    projects = Project.all()
+    projects.each do |project|
+      if project.github 
+        project.source = "github"
+      elsif project.s3 
+        project.source = "upload"
+      else 
+        project.source = "url"
+      end
+      project.save
+      p "#{project.name}"
+    end
   end
   
   private 
