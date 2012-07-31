@@ -361,29 +361,6 @@ class Product
       return nameversion
     end
   end
-  
-  def as_json(param = {})
-    if !param[:only].nil?
-      {:value => self.name}
-    else
-      comments = Versioncomment.find_by_prod_key_and_version(self.prod_key, self.version)
-      {
-        :following => param[:following],
-        :name => self.name,
-        :key => self.prod_key,
-        :group_id => self.group_id,
-        :artifact_id => self.artifact_id,      
-        :link => self.link,
-        :version => self.version,
-        :version_link => self.version_link,
-        # :src => self.repositories,
-        :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
-        :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
-        # :versions => self.get_natural_sorted_versions.as_json(nil), 
-        # :comments => comments.as_json
-      }  
-    end
-  end
 
   def main_scope
     if self.language.eql?("Ruby")

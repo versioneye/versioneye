@@ -45,32 +45,11 @@
 				<th>DESCRIPTION</th>
 			</tr>
 			<tr>
-				<td style="width: 150px;">following</td>
-				<td>true/false/null. If you are not logged in this is always null. 
-					If you are logged in an you are already following this product this is true.
-					Otherwise it is false.</td>
-			</tr>
-			<tr>
-				<td>notification</td>
-				<td>true/false/null. If you are not logged in this is always null. 
-					If you are logged in AND you are already following this product AND 
-					there is a new version or major change you didn't saw yet, this is true.
-					Otherwise it is false.</td>
-			</tr>
-			<tr>
-				<td>id</td>
-				<td>The ID of the product</td>
-			</tr>
-			<tr>
-				<td>version_uid</td>
-				<td>The ID of the newest version of this product.</td>
-			</tr>
-			<tr>
 				<td>name</td>
 				<td>Name of the product.</td>
 			</tr>
 			<tr>
-				<td>key</td>
+				<td>prod_key</td>
 				<td>Unique key of the product.</td>
 			</tr>
 			<tr>
@@ -82,138 +61,17 @@
 				<td>ArtifactID of the product. This is important for Maven2 products.</td>
 			</tr>
 			<tr>
-				<td>link</td>
-				<td>Major link to the product.</td>
-			</tr>
-			<tr>
 				<td>version</td>
 				<td>Newest version of the product</td>
 			</tr>
 			<tr>
-				<td>version_link</td>
-				<td>Major link to the newest version of the product</td>
-			</tr>
-			<tr>
-				<td>prod_type</td>
-				<td>The type of the Product. For example "Maven2"</td>
-			</tr>
-			<tr>
-				<td>created_at</td>
-				<td>The create date of this product at versioneye.com</td>
-			</tr>
-			<tr>
-				<td>updated_at</td>
-				<td>Last update date of this product at versioneye.com</td>
-			</tr>
-			<tr>
-				<td>src</td>
-				<td>A list of the sources there this product was crawled</td>
-			</tr>
-			<tr>
-				<td>versions</td>
-				<td>A list of all versions</td>
-			</tr>
-			<tr>
-				<td>comments</td>
-				<td>A list of all comments</td>
-			</tr>
-		</table>
-	</p>
-	<p>
-		Here is the description for the json src object. 
-	</p>
-	<p class="docu">
-		<table style="width:570px;" class="docu_table">
-			<tr>
-				<th>ATTRIBUTE</th>
-				<th>DESCRIPTION</th>
-			</tr>
-			<tr>
-				<td style="width: 150px;">src</td>
-				<td>The source where this product was found</td>
-			</tr>
-			<tr>
-				<td style="width: 150px;">repotype</td>
-				<td>The type of the repository. For example Maven2.</td>
-			</tr>
-		</table>
-	</p>
-	<p>
-		Here is the description for the json version object. 
-	</p>
-	<p class="docu">
-		<table style="width:570px;" class="docu_table">
-			<tr>
-				<th>ATTRIBUTE</th>
-				<th>DESCRIPTION</th>
-			</tr>
-			<tr>
-				<td style="width: 150px;">version</td>
-				<td>The version of the product</td>
-			</tr>
-			<tr>
-				<td style="width: 150px;">uid</td>
-				<td>Unified ID over the whole database</td>
-			</tr>
-			<tr>
-				<td style="width: 150px;">link</td>
-				<td>Link to this special version of the product.</td>
-			</tr>
-			<tr>
-				<td style="width: 150px;">rate</td>
-				<td>The average rage of this version. Number between 10 and 50.</td>
-			</tr>
-			<tr>
-				<td>created_at</td>
-				<td>The create date of this version at versioneye.com</td>
-			</tr>
-			<tr>
-				<td>updated_at</td>
-				<td>Last update date of this version at versioneye.com</td>
-			</tr>
-		</table>
-	</p>
-	<p>
-		Here is the description for the json comment object. 
-	</p>
-	<p class="docu">
-		<table style="width:570px;" class="docu_table">
-			<tr>
-				<th>ATTRIBUTE</th>
-				<th>DESCRIPTION</th>
-			</tr>
-			<tr>
-				<td style="width: 150px;">rate</td>
-				<td>The average rage of this version. Number between 10 and 50.</td>
-			</tr>
-			<tr>
-				<td style="width: 150px;">comment</td>
-				<td>An user comment.</td>
-			</tr>
-			<tr>
-				<td style="width: 150px;">from</td>
-				<td>Name of the User</td>
-			</tr>
-			<tr>
-				<td style="width: 150px;">prod_name</td>
-				<td>Name of the Product</td>
-			</tr>
-			<tr>
-				<td style="width: 150px;">prod_key</td>
-				<td>Key of the Product</td>
-			</tr>
-			<tr>
-				<td>created_at</td>
-				<td>The create date of this version at versioneye.com</td>
-			</tr>
-			<tr>
-				<td>updated_at</td>
-				<td>Last update date of this version at versioneye.com</td>
+				<td>language</td>
+				<td>Programming language</td>
 			</tr>
 		</table>
 	</p>
 
-	<h2 class="docu_h2">Product Details</h2><a name="productdetails"></a>
+	<h2 class="docu_h2">Package Details</h2><a name="productdetails"></a>
 	<p class="docu">
 		If you want to have details to a special product/version you can use this request here.
 	</p>
@@ -243,8 +101,55 @@
 		</table>
 	</p>	
 	<p>
-		The json product object in the result is the same as in the search. But here you 
-		just get one single object. In the search you get an array of objects. 
+		Here is the description of the JSON object for a package detail page. 
+	</p>
+	<p class="docu">
+		<table style="width:570px;" class="docu_table">
+			<tr>
+				<th>ATTRIBUTE</th>
+				<th>DESCRIPTION</th>
+			</tr>
+			<tr>
+				<td>name</td>
+				<td>Name of the product.</td>
+			</tr>
+			<tr>
+				<td>prod_key</td>
+				<td>Unique key of the product.</td>
+			</tr>
+			<tr>
+				<td>group_id</td>
+				<td>GroupID of the product. This is important for Maven2 products.</td>
+			</tr>
+			<tr>
+				<td>artifact_id</td>
+				<td>ArtifactID of the product. This is important for Maven2 products.</td>
+			</tr>
+			<tr>
+				<td>version</td>
+				<td>Newest version of the product</td>
+			</tr>
+			<tr>
+				<td>language</td>
+				<td>Programming language</td>
+			</tr>
+			<tr>
+				<td>prod_type</td>
+				<td>Type of the package. Repository name.</td>
+			</tr>
+			<tr>
+				<td>description</td>
+				<td>Description of the package.</td>
+			</tr>
+			<tr>
+				<td>link</td>
+				<td>Link to the Homepage.</td>
+			</tr>
+			<tr>
+				<td>license</td>
+				<td>License information.</td>
+			</tr>
+		</table>
 	</p>
 
 
@@ -297,14 +202,6 @@
 		That means the newest product is on the top, the oldest is on the bottom. 
 	</p>
 	<p class="docu">
-		If you are logged in, the result is a little bit different. If you are logged 
-		in the "notification" attribute in the JSON object is filled with true/false or 
-		nil. If it is true that means that there is a new version of the product. 
-		At the first time you are calling the product detail page the flag "notification" 
-		for this product will set to false for you. This behavior is similar to the 
-		notification system in Facebook. 
-	</p>
-	<p class="docu">
 		Check out the table for the product object in the top of the page. 
 	</p>
 	
@@ -326,8 +223,36 @@
 	<p class="docu">
 		Otherwise the result contains all comments of the given user. 
 	</p>
+	<p>
+		Here is the description for the json comment object. 
+	</p>
 	<p class="docu">
-		Check out the table for the comment object in the top of the page. 
+		<table style="width:570px;" class="docu_table">
+			<tr>
+				<th>ATTRIBUTE</th>
+				<th>DESCRIPTION</th>
+			</tr>
+			<tr>
+				<td style="width: 150px;">comment</td>
+				<td>An user comment.</td>
+			</tr>
+			<tr>
+				<td style="width: 150px;">from</td>
+				<td>Name of the User</td>
+			</tr>
+			<tr>
+				<td style="width: 150px;">prod_name</td>
+				<td>Name of the Product</td>
+			</tr>
+			<tr>
+				<td style="width: 150px;">prod_key</td>
+				<td>Key of the Product</td>
+			</tr>
+			<tr>
+				<td>created_at</td>
+				<td>Creation Date</td>
+			</tr>
+		</table>
 	</p>
 	
 	

@@ -46,9 +46,9 @@ class ProductsController < ApplicationController
     end    
     respond_to do |format|
       format.html { 
-        @languages = @@languages # Product.get_unique_languages 
+        @languages = @@languages
       }
-      format.json { render :json => @products }
+      format.json { render :json => @products.to_json(:only => [:name, :version, :prod_key, :group_id, :artifact_id, :language] ) }
     end
   end
 
@@ -102,7 +102,7 @@ class ProductsController < ApplicationController
         end          
         }
       format.json { 
-        render :json => @product.as_json( {:following => following} ) 
+        render :json => @product.to_json(:only => [:name, :version, :prod_key, :group_id, :artifact_id, :language, :prod_type, :description, :link, :license ] )
       }
     end
   end

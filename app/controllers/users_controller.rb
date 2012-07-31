@@ -77,7 +77,7 @@ class UsersController < ApplicationController
     
     respond_to do |format|
       format.html {  }
-      format.json { render :json => @user }
+      format.json { render :json => @user.to_json(:only => [:fullname, :username ] ) }
     end        
   end
   
@@ -98,7 +98,7 @@ class UsersController < ApplicationController
     end
     respond_to do |format|
       format.html {  }
-      format.json { render :json => @products }
+      format.json { render :json => @products.to_json(:only => [:name, :version, :prod_key, :group_id, :artifact_id, :language] ) }
     end
   end
   
