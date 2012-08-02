@@ -61,6 +61,8 @@ class Product
       end  
     elsif description && !description.empty?
       query = Product.find_by_description(description)
+    elsif group_id && !group_id.empty?
+      return Product.where(group_id: /^#{group_id}/)
     else
       return Mongoid::Criteria.new(Product, {_id: -1})
     end

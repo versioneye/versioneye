@@ -23,12 +23,12 @@ class ProductsController < ApplicationController
     @lang = get_lang_value( params, cookies )
     commit = params[:commit]
     
-    hash = do_parse_search_input(@query, @description)
+    hash = do_parse_search_input(@query, @description, @groupid)
     @query = hash['query'] if !hash['query'].nil?
     @groupid = hash['group'] if !hash['group'].nil?
     @description = hash['description'] if !hash['description'].nil?
 
-    if ( (@query.nil? || @query.empty?) && (@description.nil? || @description.empty?))
+    if ( (@query.nil? || @query.empty?) && (@description.nil? || @description.empty?) && (@groupid.nil? || @groupid.empty?) )
       flash.now[:error] = "Please give us some input. Type in a value for name or description."
     elsif @query.length == 1
       flash.now[:error] = "Search term is to short. Please type in at least 2 characters."

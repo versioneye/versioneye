@@ -132,11 +132,12 @@ module ProductsHelper
     xml_file.close
   end
 
-  def do_parse_search_input( query , description)
+  def do_parse_search_input( query , description, group_id)
     hash = Hash.new 
     query_empty = query.nil? || query.empty? || query.eql?("Be up-to-date")
     description_empty = description.nil? || description.empty? || description.length < 2
-    if query_empty && description_empty
+    group_id_empty = group_id.nil? || group_id.empty?
+    if query_empty && description_empty && group_id_empty
       hash['query'] = "json"
       return hash
     end
