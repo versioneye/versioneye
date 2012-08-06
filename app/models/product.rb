@@ -51,12 +51,24 @@ class Product
   end
 
   def self.find_by(searched_name, description, group_id, languages=nil, limit=300)
+    result1 = Product.find_all(searched_name, description, group_id, languages, limit, nil)
+    prod_keys = nil
+    if result1 && !result1.empty?
+      prod_keys = result1.map{|w| "#{w.prod_key}"}
+    end
+    result2 = Product.find_all(searched_name, description, group_id, languages, limit, prod_keys)  
+    result = result1 + result2
+    return result
+  end
+
+  def self.find_all(searched_name, description, group_id, languages=nil, limit=300, exclude_keys)
     query = Mongoid::Criteria.new(Product)
     if searched_name && !searched_name.empty?
-      query = Product.find_by_name(searched_name)
-      if query.nil? || query.count == 0
-        query = Product.find_by_description(searched_name)
-      end  
+      if exclude_keys 
+        query = Product.find_by_name_exclude(searched_name, exclude_keys)
+      else 
+        query = Product.find_by_name(searched_name)  
+      end
     elsif description && !description.empty?
       query = Product.find_by_description(description)
     elsif group_id && !group_id.empty?
@@ -76,21 +88,17 @@ class Product
     if (searched_name.nil? || searched_name.strip == "")
       return nil
     end
-    query = Product.where(name_downcase: /^#{searched_name}/)
-    if (query.nil? || query.empty?)
-      return query = Product.where(name_downcase: /#{searched_name}/)
-    else
-      prod_keys = query.map{|w| "#{w.prod_key}"}
-      result2 = Product.all(conditions: { name_downcase: /#{searched_name}/, :prod_key.nin => prod_keys})
-      result = query + result2
-      prod_keys = result.map{|w| "#{w.prod_key}"}
-      end_result = Product.all(conditions: { :prod_key.in => prod_keys})
-      return end_result
-    end
-    query
+    Product.where(name_downcase: /^#{searched_name}/)
   rescue => e
     p "rescue #{e}"
     Mongoid::Criteria.new(Product, {_id: -1})
+  end
+
+  def self.find_by_name_exclude(searched_name, prod_keys)
+    if (searched_name.nil? || searched_name.strip == "")
+      return nil
+    end
+    Product.all(conditions: { name_downcase: /#{searched_name}/, :prod_key.nin => prod_keys})
   end
 
   def self.find_by_description(description)
