@@ -21,8 +21,8 @@
       </div>
       <div style="display:table-row;">
         <div class="labelCelBig"></div>
-        <div class="submitCel">
-  		    <%= submit_tag "Delete", :class => "button", :confirm => "Are you sure?" %>
+        <div class="inputCel">
+          <button type="submit" class="btn btn-large btn-danger" onClick="return confirmAction()" >Delete</button>
         </div>
       </div>
   	<% end %>

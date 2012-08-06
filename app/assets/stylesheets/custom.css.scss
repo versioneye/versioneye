@@ -358,9 +358,9 @@ $horizontal_separater_line: #888888;
 body {
 	color: $text_color;
 	background-color: $bg_color;
-	background-repeat: no-repeat;
+	background-repeat: repeat;
 	background-position: 50px 30px;
-	/* background-image: url("background.jpg"); */
+	background-image: url("subtle-pattern.jpeg");
 	font-size: 14px;
 	font-family: sans-serif, arial, verdana, tahoma, 'lucida grande', 'Segoe UI', 'lucida sans unicode';
 }
@@ -378,6 +378,7 @@ label {
 	color: $label_color;
 	font-size: 18px;
 	font-weight: bold;
+	display: inline;
 }
 
 .label-small{
@@ -501,145 +502,6 @@ header a:visited:hover {
 	width: 200px;
 }
 
-@mixin button_off_snippet{
-	background: url(sprites.optimized.png) no-repeat;
-	background-position: -278px -118px ;
-	width: 100px;
-	height: 35px;
-	color: black;	  
-	cursor:pointer;
-	font-family: arial, sans-serif;
-	font-size:17px;
-	font-weight:bold;
-	text-align:center;
-	min-width:54px;
-	line-height:35px;
-	border: 0px solid $border_color;
-	border-bottom-left-radius:8px 8px;
-	border-bottom-right-radius:8px 8px;
-	border-top-left-radius:8px 8px;
-	border-top-right-radius:8px 8px;
-	margin-bottom:0px;
-	margin-left:5px;
-	margin-right:5px;
-	margin-top:0px;
-	padding-bottom:0;
-	padding-left:8px;
-	padding-right:8px;
-	padding-top:0;
-}
-
-input[type="submit"] {
-	@include button_off_snippet
-} 
-
-input[type="submit"]:hover {
-	background-position: -278px -82px ;
-}
-
-.followButtonBig[type="submit"]{
-	@include button_off_snippet
-}
-
-.followButtonBig[type="submit"]:hover {
-	background-position: -278px -82px ;
-}
-
-.unfollowButtonBig[type="submit"]{
-	 background-color:white;
-	 background-image: none;
-	 border: 2px solid $orange;
-     border-bottom-left-radius:8px 8px;
-	 border-bottom-right-radius:8px 8px;
- 	 border-top-left-radius:8px 8px;
-	 border-top-right-radius:8px 8px;
-	 color:$text_color;
-	 cursor:pointer;
-	 font-family: arial, sans-serif;
-	 font-size:17px;
-	 font-weight:bold;
-     width: 100px;
-	 height:35px;
-	 line-height:32px;
-	 margin-bottom:0px;
-	 margin-left:5px;
-	 margin-right:5px;
-	 margin-top:0px;
-	 min-width:54px;
-	 padding-bottom:0;
-	 padding-left:8px;
-	 padding-right:8px;
-	 padding-top:0;
-	 text-align:center; 
-}
-
-.unfollowButtonBig[type="submit"]:hover{
-	 background-image: none;
-}
-
-.followButton[type="submit"]{
-	background-color: white;
-	background-position: -52px -135px;
-	color: black;	  
-	cursor:pointer;
-	font-family: arial, sans-serif;
-	font-size:13px;
-	font-weight:bold;
-	text-align:center;
-	width: 100px;
-	min-width:54px;
-	height:25px;
-	line-height:25px;
-	border: 0px solid $border_color;
-	border-bottom-left-radius:8px 8px;
-	border-bottom-right-radius:8px 8px;
-	border-top-left-radius:8px 8px;
-	border-top-right-radius:8px 8px;
-	margin-bottom:0px;
-	margin-left:5px;
-	margin-right:5px;
-	margin-top:0px;
-	padding-bottom:0;
-	padding-left:8px;
-	padding-right:8px;
-	padding-top:0;
-}
-
-.followButton[type="submit"]:hover {
-	background-position: -153px -135px ;
-}
-
-.unfollowButton[type="submit"]{
-	background-color:white;
-	background-image: none;
-	border: 2px solid $orange;
-    border-bottom-left-radius:8px 8px;
-	border-bottom-right-radius:8px 8px;
- 	border-top-left-radius:8px 8px;
-	border-top-right-radius:8px 8px;
-	color:$text_color;
-	cursor:pointer;
-	font-family: arial, sans-serif;
-	font-size:11px;
-	font-weight:bold;
-	height:25px;
-	line-height:22px;
-	margin-bottom:0px;
-	margin-left:5px;
-	margin-right:5px;
-	margin-top:0px;
-	min-width:54px;
-	padding-bottom:0;
-	padding-left:8px;
-	padding-right:8px;
-	padding-top:0;
-	text-align:center; 
-}
-
-.unfollowButton[type="submit"]:hover{
-	background-image: none;
-}
-
 .radio[type="radio"] {
 	width: 20px;
 }
@@ -751,7 +613,7 @@ section {
 	display: inline-block;
     width: 810px;
 	padding: 20px;
-	margin-top: 17px;
+	margin-top: 15px;
 	background-color: white;
 }
 
@@ -823,26 +685,12 @@ footer nav {
 	margin-right: 10px;
 	margin-top: 5px;
 	padding: 0px;
-	width: 170px; 
-	height: 45px
+	width: 172px; 
+	height: 44px
 }
 
 .search-form{
 	vertical-align:top;
-}
-
-.lp_searchfield{
-	font-size: 20px;
-	height: 43px; 
-	line-height: 43px;
-	width: 377px;
-	margin: 0;
-	padding:0;
-	padding-left: 10px; 
-	border-bottom-left-radius:10px 10px; 
-	border-top-left-radius:10px 10px;
-	border-bottom-right-radius:10px 10px; 
-	border-top-right-radius:10px 10px;
 }
 
 .lp_searchfield_hint{
@@ -855,12 +703,7 @@ footer nav {
 	line-height: 23px;
 	width: 162px;  
 	margin: 0;	 
-	padding:0; 
-	padding-left: 5px; 
-	border-bottom-left-radius:5px 5px; 
-	border-top-left-radius:5px 5px;
-	border-bottom-right-radius:5px 5px; 
-	border-top-right-radius:5px 5px;
+	padding:0;
 }
 
 .searchlink_div{
@@ -1026,7 +869,7 @@ nav ul li a:hover {
 }
 
 .lp_search_div{
-	padding-top: 10px;
+	padding-top: 30px;
 	padding-bottom: 10px;
 	text-align: center;
 }
@@ -1164,6 +1007,7 @@ nav ul li a:hover {
 	float:left; 
 	display: block; 
 	width: 460px;
+	padding-top: 20px;
 }
 
 .alternative_signin_options_cel{
@@ -1215,10 +1059,13 @@ nav ul li a:hover {
 	width: 300px;
     padding-left: 5px;
     display: table-cell;
+    text-align: left;
 }
 
 .inputCel input{
     width: 270px;
+    font-size: 16px;
+    height: 30px;
 }
 
 .inputCelHint{
@@ -1230,12 +1077,6 @@ nav ul li a:hover {
     width: 300px;
     display: table-cell;
     vertical-align: middle;
-}
-
-.submitCel{
-	padding-left: 0px;
-    width: 300px;
-    display: table-cell;
 }
 
 .formDiv{
@@ -1256,6 +1097,18 @@ nav ul li a:hover {
 .boxContainer{
 	padding: 10px;
 	background-color: $box_container_bg_color;
+	-moz-border-radius:    10px;
+    -webkit-border-radius: 10px;
+    border-radius:         10px;
+}
+
+.navi{
+	margin-top: 43px;
+	padding: 10px;
+	background-color: $box_container_bg_color;
+	-moz-border-radius:    10px;
+    -webkit-border-radius: 10px;
+    border-radius:         10px;
 }
 
 
@@ -1371,6 +1224,29 @@ nav ul li a:hover {
 }
 
 .project:hover{
+	border-bottom: 1px dotted $border_color; 
+	padding-top: 5px;
+	padding-bottom: 5px; 
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: $element_highlight_color;
+}
+
+.plans{
+	text-align: left;
+}
+
+.plan{
+	border-bottom: 1px dotted $border_color; 
+	padding-top: 5px;
+	padding-bottom: 5px; 
+	padding-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	vertical-align: middle;
+}
+
+.plan:hover{
 	border-bottom: 1px dotted $border_color; 
 	padding-top: 5px;
 	padding-bottom: 5px; 
@@ -1530,18 +1406,8 @@ nav ul li a:hover {
 	text-align: center;
 }
 
-.privacy-option-c{
-	width: 100px; 
-	text-align: center;
-}
-
 .privacy-seperator{
 	border-top: 1px solid $border_color;
-}
-
-.profile-head{
-	padding-bottom: 20px;
-	border-bottom: 1px dotted $border_color;
 }
 
 .icon-cell{
@@ -1580,9 +1446,6 @@ nav ul li a:hover {
 	padding-bottom: 25px;
 }
 
-.rating-cell{
-	padding-right: 15px;
-}
 
 /******* Projects *****************/
 

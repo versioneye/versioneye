@@ -1,10 +1,12 @@
-
-<br/>
-<br/>
-<%= link_to "Profile", settings_profile_path %><br/>
-<%= link_to "Names", settings_name_path %><br/>
-<%= link_to "Links", settings_links_path %><br/>
-<%= link_to "Password", settings_password_path %><br/>
-<%= link_to "Connect", settings_connect_path %><br/>
-<%= link_to "Privacy", settings_privacy_path %><br/>
-<%= link_to "Delete", settings_delete_path %><br/>
+<div class="navi"  >
+	<%= link_to "Profile", settings_profile_path %><br/>
+	<%= link_to "Names", settings_name_path %><br/>
+	<%= link_to "Links", settings_links_path %><br/>
+	<% if 1 == 2 %>
+		<%= link_to "Plans & Pricing", settings_plans_path %><br/>
+	<% end %>
+	<%= link_to "Connect", settings_connect_path %><br/>
+	<%= link_to "Password", settings_password_path %><br/>
+	<%= link_to "Privacy", settings_privacy_path %><br/>
+	<%= link_to "Delete", settings_delete_path %><br/>
+</div>

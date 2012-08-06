@@ -21,13 +21,13 @@ describe "submit a versioncomment" do
 
     post "/sessions", :session => {:email => user.email, :password => user.password}
     assert_response 302
-    response.should redirect_to("/news")
+    response.should redirect_to("/user/projects")
 
     get "/package/json_gobi"
     assert_response :success
     
     assert_tag :tag => "textarea", :attributes => { :class => "round", :id => "versioncomment_comment" }
-    assert_tag :tag => "input", :attributes => { :class => "button"}
+    assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-primary"}
 
     post "/versioncomments", :versioncomment => {:comment => "This is a versioncomment XYZ123", :product_key => product.prod_key, :version => product.version}
     assert_response 302

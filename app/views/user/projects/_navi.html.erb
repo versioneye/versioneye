@@ -1,4 +1,8 @@
-<% if signed_in? %>
-	<%= link_to "My Projects", user_projects_path %><br/>
-	<%= link_to "Add New Project", new_user_project_path %><br/>
-<% end %>
+	
+	<div class="navi"  >
+		<% if signed_in? %>
+			<%= link_to "My Projects", user_projects_path %><br/>
+			<%= link_to "Add New Project", new_user_project_path %><br/>
+		<% end %>		
+	</div>
+

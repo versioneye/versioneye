@@ -72,5 +72,7 @@ Versioneye::Application.configure do
   #    :password             => '',
   #    :authentication       => '',
   #    :enable_starttls_auto => true  }
+
+  Stripe.api_key = Settings.stripe_secret_key
   
 end

@@ -30,6 +30,20 @@ jQuery(document).ready(function() {
 		styleclass: "inputCelHint"
 	});
 
+	jQuery("#payment-form").submit(function(event) {
+	    jQuery('.submit-button').attr("disabled", "disabled");
+
+	    Stripe.createToken({
+	        number: jQuery('.card-number').val(),
+	        cvc: jQuery('.card-cvc').val(),
+	        exp_month: jQuery('.card-expiry-month').val(),
+	        exp_year: jQuery('.card-expiry-year').val()
+	    }, stripeResponseHandler);
+
+	    // prevent the form from submitting with the default action
+	    return false;
+	  });
+
 	jQuery( "#tabs" ).tabs();
 
 	if (window.FB){
@@ -86,6 +100,31 @@ jQuery(document).ready(function() {
     	render_wheel_require_dev();
     }
 });
+
+function stripeResponseHandler(status, response) {
+    if (response.error) {
+        alert(response.error.message)
+        // show the errors on the form
+        $(".payment-errors").text(response.error.message);
+        jQuery(".submit-button").removeAttr("disabled");
+    } else {
+        var form$ = jQuery("#payment-form");
+        // token contains id, last4, and card type
+        var token = response['id'];
+        // insert the token into the form so it gets submitted to the server
+        form$.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+        // and submit
+        form$.get(0).submit();
+    }
+}
+
+function confirmAction(){
+	if (confirm('Are you sure?')){
+		return true;
+	} else {
+		return false;
+	}
+}
 
 function handle_path(options){
 	jQuery.ajax({

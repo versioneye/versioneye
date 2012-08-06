@@ -37,6 +37,10 @@ class User
   field :github_id, type: String 
   field :github_token, type: String
   field :github_scope, type: String
+
+  field :stripe_token, type: String
+  field :stripe_customer_id, type: String
+  field :plan_name_id, type: String, default: "01_free"
   
   validates_presence_of :username, :message => "Username is mandatory!"
   validates_presence_of :fullname, :message => "Fullname is mandatory!"
@@ -103,6 +107,10 @@ class User
     end
   rescue 
     p "ups. Something went wrong for #{self.fullname}"
+  end
+
+  def plan
+    Plan.first(conditions: {name_id: self.plan_name_id})
   end
   
   def create_username

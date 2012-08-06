@@ -22,17 +22,17 @@
 							<span id="follow_<%=product.to_param%>" style="display: <%= display_follow(product) %>">
 								<%= form_tag("/package/follow", :remote => true) do  %>
 									<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>" />
-				 					<%= submit_tag "Follow", :class => "followButton", :id => "#{product.to_param}" %>
+				 					<button type="submit" class="btn btn-success btn-mini" id="#{product.to_param}" >FOLLOW</button>
 								<% end %>
 							</span>
 							<span id="unfollow_<%=product.to_param%>" style="display: <%= display_unfollow(product) %>">
 								<%= form_tag("/package/unfollow", :remote => true) do  %>
 									<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>" />
-									<%= submit_tag "Unfollow", :class => "unfollowButton", :id => "#{product.to_param}" %>
+									<button type="submit" class="btn btn-warning btn-mini" id="#{product.to_param}" >UNFOLLOW</button>
 								<% end %>
 							</span>
 						<% else %>
-							<input type="submit" value="FOLLOW" class="followButton" onclick="load_dialog_follow('<%= product.name %>');" />
+							<button type="submit" class="btn btn-success btn-mini" onclick="load_dialog_follow('<%= product.name %>');" >FOLLOW</button>
 						<% end %>
 					</li>
 					<li class="searchResult-inner-list-cell small-heart">

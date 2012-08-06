@@ -20,6 +20,12 @@
 		<%= javascript_include_tag "application_jobs", :defer => true, :async => true %>
 	<% elsif @page.eql?("news") %>
 		<%= javascript_include_tag "application_news", :defer => true, :async => true %>
+	<% elsif @page.eql?("cc") %>
+		<%= javascript_include_tag "application_default", :defer => true, :async => true %>
+		<script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+		<script type="text/javascript">
+		    Stripe.setPublishableKey('<%= Settings.stripe_public_key %>');
+		</script>
 	<% else %> 
 		<%= javascript_include_tag "application_default", :defer => true, :async => true %>
 	<% end %>

@@ -45,9 +45,9 @@ describe "registration" do
 
     post "/sessions", :session => {:email => "test@test.de", :password => "test123"}
     assert_response 302
-    response.should redirect_to("/news")
+    response.should redirect_to("/user/projects")
 
-    get "/news"
+    get "/user/projects"
     assert_response :success
   end
 

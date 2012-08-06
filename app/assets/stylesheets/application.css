@@ -4,7 +4,9 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require blueprint/screen
+ *= require bootstrap
+ *= require jquery_ui_1_8_17_custom
  *= require custom
- *= require_tree . 
+ *= require product
+ *= require user
 */

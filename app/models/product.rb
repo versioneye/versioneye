@@ -56,8 +56,6 @@ class Product
       query = Product.find_by_name(searched_name)
       if query.nil? || query.count == 0
         query = Product.find_by_description(searched_name)
-      else 
-        query = add_description_to_query(query, description)  
       end  
     elsif description && !description.empty?
       query = Product.find_by_description(description)
@@ -87,8 +85,9 @@ class Product
       result = query + result2
       prod_keys = result.map{|w| "#{w.prod_key}"}
       end_result = Product.all(conditions: { :prod_key.in => prod_keys})
-      end_result
+      return end_result
     end
+    query
   rescue => e
     p "rescue #{e}"
     Mongoid::Criteria.new(Product, {_id: -1})

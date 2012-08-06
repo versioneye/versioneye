@@ -4,12 +4,12 @@
 			<%= form_tag("/package/unfollow") do  %>
 				<input id="src_hidden"  name="src_hidden" type="hidden" value="detail"/>
 				<input id="product_key_hidden" name="product_key" type="hidden" value="<%= @product.to_param %>"/>
-				<%= submit_tag "Unfollow", :class => "unfollowButtonBig" %>
+				<button type="submit" class="btn btn-warning btn-large" >UNFOLLOW</button>
 			<% end %>
 		<% else %>
 			<%= form_tag("/package/follow") do  %>
 				<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
-				<%= submit_tag "Follow", :class => "followButtonBig", :id => "#{@product.to_param}" %>
+				<button type="submit" class="btn btn-success btn-large" >FOLLOW</button>
 			<% end %>
 		<% end %>
 		<% if signed_in_admin? %>
@@ -17,6 +17,6 @@
 		<% end %> 
 	<% else %>
 		<%= render 'shared/dialog_follow' %>
-		<input type="submit" value="Follow" class="followButtonBig" onclick="load_dialog_follow('<%= @product.name %>');" />
+		<button type="submit" class="btn btn-success btn-large" onclick="load_dialog_follow('<%= @product.name %>');">FOLLOW</button>
 	<% end %>
 </div>

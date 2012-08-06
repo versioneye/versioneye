@@ -21,25 +21,25 @@ describe "follow and unfollow" do
 
     post "/sessions", :session => {:email => user.email, :password => user.password}
     assert_response 302
-    response.should redirect_to("/news")
+    response.should redirect_to("/user/projects")
 
     get "/package/json_goba"
     assert_response :success
-    assert_tag :tag => "input", :attributes => { :class => "followButtonBig", :type => "submit", :value => "Follow" }
+    assert_tag :tag => "button", :attributes => { :class => "btn btn-success btn-large", :type => "submit" }
 
     post "/package/follow", :product_key => "json_goba"
     assert_response 302
     response.should redirect_to("/package/json_goba/version/1~0")
 
     get "/package/json_goba/version/1~0"
-    assert_tag :tag => "input", :attributes => { :class => "unfollowButtonBig", :type => "submit", :value => "Unfollow" }
+    assert_tag :tag => "button", :attributes => { :class => "btn btn-warning btn-large", :type => "submit" }
 
     post "/package/unfollow", :product_key => "json_goba", :src_hidden => "detail"
     assert_response 302
     response.should redirect_to("/package/json_goba/version/1~0")
 
     get "/package/json_goba/version/1~0"
-    assert_tag :tag => "input", :attributes => { :class => "followButtonBig", :type => "submit", :value => "Follow" }
+    assert_tag :tag => "button", :attributes => { :class => "btn btn-success btn-large", :type => "submit" }
     
     user.remove
     product.remove

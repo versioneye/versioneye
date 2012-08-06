@@ -6,7 +6,7 @@ class User::ProjectsController < ApplicationController
     @project = Project.new
     @projects = Project.find_by_user(current_user.id.to_s)
   end
-  
+
   def new
     @project = Project.new
   end
@@ -39,6 +39,12 @@ class User::ProjectsController < ApplicationController
       project.source = "url"
       store_project(project)
     elsif github_project && !github_project.empty? && !github_project.eql?("NO_PROJECTS_FOUND")
+      private_project = is_private_project?(github_project)
+      # if private_project && !is_allowed_to_add_private_project?
+      #   flash[:error] = "You selected a private project. Please upgrade your plan to monitor the selected project."
+      #   redirect_to settings_plans_path
+      #   return nil    
+      # end
       sha = Project.get_repo_sha_from_github( github_project, current_user.github_token )
       project_info = Project.get_project_info_from_github( github_project, sha, current_user.github_token )
       if project_info.empty?
@@ -51,13 +57,14 @@ class User::ProjectsController < ApplicationController
       project.source = "github"
       project.s3_filename = s3_infos['filename']
       project.github_project = github_project
+      project.private_project = private_project
       store_project(project)
     else
       flash[:error] = "Please put in a URL OR select a file from your computer. Or select a GitHub project."
       redirect_to new_user_project_path
       return nil  
     end
-    
+
     redirect_to user_projects_path
   end
   
@@ -86,9 +93,11 @@ class User::ProjectsController < ApplicationController
             resp += "\"BAD_CREDENTIALS\","  
           else 
             projects.each do |project|
-              p "project: #{project}"
-              full_name = project['full_name']
-              resp += "\"#{full_name}\","
+              lang = project['language']
+              if language_supported?(lang)
+                full_name = project['full_name']
+                resp += "\"#{full_name}\","
+              end
             end
           end
         else 
@@ -139,6 +148,10 @@ class User::ProjectsController < ApplicationController
 
   private 
 
+    def language_supported?(lang)
+      lang.eql?('Java') || lang.eql?('Ruby') || lang.eql?('Python') || lang.eql?('Node.JS') || lang.eql?("CoffeeScript") || lang.eql?("JavaScript")
+    end
+
     def create_project( project_type, url, project_name )
       project = Project.create_from_file( project_type, url )
       project.user_id = current_user.id.to_s
@@ -162,6 +175,31 @@ class User::ProjectsController < ApplicationController
       projects['message']
     rescue 
       nil
+    end
+
+    def is_private_project?(name)
+      projects = JSON.parse HTTParty.get("https://api.github.com/user/repos?access_token=#{current_user.github_token}").response.body
+      projects.each do |project|
+        full_name = project['full_name']
+        if full_name.eql?(name)
+          return project['private']
+        end
+      end
+      return false
+    rescue 
+      p "ERROR in is_private_project"
+      return false
+    end
+
+    def is_allowed_to_add_private_project?
+      user = current_user
+      private_projects = Project.find_private_projects_by_user(user.id)
+      plan = user.plan
+      if plan.private_projects > private_projects.count
+        return true
+      else
+        return false
+      end
     end
   
 end

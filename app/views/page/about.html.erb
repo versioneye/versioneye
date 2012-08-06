@@ -1,5 +1,5 @@
 <div class="container" >		
-	<div class="span-20" >			
+	<div >
 		<h1>About VersionEye</h1>
 		<%= render 'shared/about' %><br/>
 		<br/>
@@ -7,52 +7,61 @@
 		This is the Team behind VersionEye.<br/>
 		<br/>
 	</div>
-	<div class="span-6 aboutCell">
-		<div><%= image_tag "about/RobertReiz.png" %></div>
-		<div class="meta-text">Robert Reiz</div>
-		<div class="meta-text-bold">CEO &amp; Founder</div>
-		<div class="meta-text-small">VersionEye is Robert's 3rd Start-Up. He likes to explore new ideas, new places and new projects.</div>
+	<div class="row">
+		<div class="span3 aboutCell">
+			<div><%= image_tag "about/RobertReiz.png" %></div>
+			<div class="meta-text">Robert Reiz</div>
+			<div class="meta-text-bold">CEO &amp; Founder</div>
+			<div class="meta-text-small">VersionEye is Robert's 3rd Start-Up. He likes to explore new ideas, new places and new projects.</div>
+		</div>
+		<div class="span3 aboutCell">
+			<div><%= image_tag "about/ErwinWelter.jpg" %></div>
+			<div class="meta-text">Erwin Welter</div>
+			<div class="meta-text-bold">Creative Head</div>
+			<div class="meta-text-small">Co-Founder of <a href="http://www.punktzebra.de/" target="new_Punktzebra">Punktzebra</a>. He enjoys a good meal and is a funny guy.</div>
+		</div>
+		<div class="span3 aboutCell">
+			<div><%= image_tag "about/JanisKrziwanie.jpg" %></div>
+			<div class="meta-text">Janis Krziwanie</div>
+			<div class="meta-text-bold">Creative Head</div>
+			<div class="meta-text-small">Co-Founder of <a href="http://www.punktzebra.de/" target="new_Punktzebra" >Punktzebra</a>. He is a vegetarian, but still a funny guy.</div>
+		</div>
 	</div>
-	<div class="span-6 aboutCell">
-		<div><%= image_tag "about/ErwinWelter.jpg" %></div>
-		<div class="meta-text">Erwin Welter</div>
-		<div class="meta-text-bold">Creative Head</div>
-		<div class="meta-text-small">Co-Founder of <a href="http://www.punktzebra.de/" target="new_Punktzebra">Punktzebra</a>. He enjoys a good meal and is a funny guy.</div>
+	<div class="row">
+		<div class="span3 aboutCell">
+			<div><%= image_tag "about/Ilkay.jpg" %></div>
+			<div class="meta-text">Ilkay Bölek</div>
+			<div class="meta-text-bold">Draughtswoman</div>
+			<div class="meta-text-small">Check out her drawings on Facebook. Ilkay likes to help homeless people.</div>
+		</div>
+		<div class="span3 aboutCell">
+			<div><%= image_tag "about/IngoKoch.jpg" %></div>
+			<div class="meta-text">Ingo Koch</div>
+			<div class="meta-text-bold">iPhone Developer</div>
+			<div class="meta-text-small">Founder of <a href="http://www.appification.de/" target="new_Appification">Appification</a> and Expert for mobile devices. He likes to be challenged.</div>
+		</div>
+		<div class="span3 aboutCell">
+			<div><%= image_tag "about/MartinChristmann.jpg" %></div>
+			<div class="meta-text">Martin Christmann</div>
+			<div class="meta-text-bold">Android Developer</div>
+			<div class="meta-text-small">Expert for mobile devices. He likes sports and travelling.</div>
+		</div>
 	</div>
-	<div class="span-6 aboutCell">
-		<div><%= image_tag "about/JanisKrziwanie.jpg" %></div>
-		<div class="meta-text">Janis Krziwanie</div>
-		<div class="meta-text-bold">Creative Head</div>
-		<div class="meta-text-small">Co-Founder of <a href="http://www.punktzebra.de/" target="new_Punktzebra" >Punktzebra</a>. He is a vegetarian, but still a funny guy.</div>
+	<div class="row">
+		<div class="span3 aboutCell">
+			<div><%= image_tag "about/PepperLuboff.jpg" %></div>
+			<div class="meta-text">Pepper Luboff</div>
+			<div class="meta-text-bold">Content Editor</div>
+			<div class="meta-text-small">Oakland-based writer and artist. You'll find her among crazy poets and the Etsy rabble.</div>
+		</div>
+		<div class="span3 aboutCell">
+			<div><%= image_tag "about/AndreaFrankenbach.jpg" %></div>
+			<div class="meta-text">Andrea Frankenbach</div>
+			<div class="meta-text-bold">Language Consultant</div>
+			<div class="meta-text-small">Co-Founder of <a href="http://www.mot-ma.de">mot</a>. She loves to travel and get to know other cultures.</div>
+		</div>
 	</div>
-	<div class="span-6 aboutCell">
-		<div><%= image_tag "about/Ilkay.jpg" %></div>
-		<div class="meta-text">Ilkay Bölek</div>
-		<div class="meta-text-bold">Draughtswoman</div>
-		<div class="meta-text-small">Check out her drawings on Facebook. Ilkay likes to help homeless people.</div>
-	</div>
-	<div class="span-6 aboutCell">
-		<div><%= image_tag "about/IngoKoch.jpg" %></div>
-		<div class="meta-text">Ingo Koch</div>
-		<div class="meta-text-bold">iPhone Developer</div>
-		<div class="meta-text-small">Founder of <a href="http://www.appification.de/" target="new_Appification">Appification</a> and Expert for mobile devices. He likes to be challenged.</div>
-	</div>
-	<div class="span-6 aboutCell">
-		<div><%= image_tag "about/MartinChristmann.jpg" %></div>
-		<div class="meta-text">Martin Christmann</div>
-		<div class="meta-text-bold">Android Developer</div>
-		<div class="meta-text-small">Expert for mobile devices. He likes sports and travelling.</div>
-	</div>
-	<div class="span-6 aboutCell">
-		<div><%= image_tag "about/PepperLuboff.jpg" %></div>
-		<div class="meta-text">Pepper Luboff</div>
-		<div class="meta-text-bold">Content Editor</div>
-		<div class="meta-text-small">Oakland-based writer and artist. You'll find her among crazy poets and the Etsy rabble.</div>
-	</div>
-	<div class="span-6 aboutCell">
-		<div><%= image_tag "about/AndreaFrankenbach.jpg" %></div>
-		<div class="meta-text">Andrea Frankenbach</div>
-		<div class="meta-text-bold">Language Consultant</div>
-		<div class="meta-text-small">Co-Founder of <a href="http://www.mot-ma.de">mot</a>. She loves to travel and get to know other cultures.</div>
-	</div>
+	
+	
+	
 </div>

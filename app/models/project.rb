@@ -7,6 +7,7 @@ class Project
   field :name, type: String
     
   field :project_type, type: String, :default => "Maven2"
+  field :private_project, type: Boolean, :default => false
   field :url, type: String
   field :source, type: String, :default => "upload"  # possible values => [upload, url, github]
   field :s3_filename, type: String
@@ -24,7 +25,11 @@ class Project
   end
   
   def self.find_by_user user_id
-    Project.all(conditions: { user_id: user_id } )
+    Project.all(conditions: { user_id: user_id } ).desc(:private_project).asc(:name)
+  end
+
+  def self.find_private_projects_by_user user_id
+    Project.all(conditions: { user_id: user_id, private_project: true } )
   end
 
   def fetch_dependencies

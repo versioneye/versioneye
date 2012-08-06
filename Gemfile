@@ -16,6 +16,7 @@ gem 'oauth', '0.4.6'
 gem 'twitter_oauth', '0.4.3'
 gem 'aws-s3', '0.6.3', :require => 'aws/s3'
 gem 'nokogiri', '1.5.4'
+gem 'stripe', '1.7.0'
 
 group :assets do
   gem 'sass-rails', "3.2.5"

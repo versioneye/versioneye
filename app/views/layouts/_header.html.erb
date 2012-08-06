@@ -3,17 +3,17 @@
 		<a href="/" alt="VersionEye">
 			<div class="logo_div"></div>
 		</a>
+		<div class="searchlink_div">
+			<a href="#" class="searchlink" title="Search" onclick="window.location = '/'">&nbsp;</a>
+		</div>
 		<% if !@page.eql?("LandingPage") %>
 			<div id="searchfield_div" class="searchfield_div">			
-				<form id="searchform" action="/search" method="GET" class="search-form" >				
-					<input id="q" name="q" class="searchfield" type="text" value="<%= @query %>" />
+				<form id="searchform" action="/search" method="GET" class="search-form" >
+					<input id="q" name="q" class="searchfield" type="text" value="<%= @query %>" style="margin-top: 6px;" />
 					<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
 				</form>
 			</div>
 		<% end %>
-		<div class="searchlink_div">
-			<a href="#" class="searchlink" title="Search" onclick="document.forms['searchform'].submit();">&nbsp;</a>
-		</div>
 		<div class="beta" ></div>
 		<div>
 			<nav >

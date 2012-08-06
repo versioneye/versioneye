@@ -23,6 +23,14 @@ class SettingsController < ApplicationController
     @user = current_user
   end
 
+  def plans
+    @plan = current_user.plan  
+  end
+
+  def creditcard
+    @page = "cc"
+  end
+
   def links
     @userlinkcollection = Userlinkcollection.find_all_by_user( current_user.id )
     if @userlinkcollection.nil?
@@ -51,6 +59,57 @@ class SettingsController < ApplicationController
     end
     user.save
     redirect_to settings_connect_path
+  end
+
+  def updateplan 
+    @plan_name_id = params[:plan]
+    user = current_user
+    stripe_token = user.stripe_token
+    customer_id = user.stripe_customer_id
+    if stripe_token && customer_id
+      customer = Stripe::Customer.retrieve( customer_id )
+      customer.update_subscription( :plan => @plan_name_id )
+      user.plan_name_id = @plan_name_id
+      user.save
+      flash[:success] = "We updated your plan successfully."
+      redirect_to settings_plans_path
+    else 
+      flash.now[:info] = "Please update your Credit Card information."
+      @page = "cc"
+      render settings_creditcard_path
+    end
+  end
+
+  def updatecreditcard
+    plan_name_id = params[:plan]
+    stripe_token = params[:stripeToken]
+
+    if stripe_token.nil? || stripe_token.empty?
+      flash.now[:success] = "Sorry. But something went wrong. Please try again later."
+      redirect_to settings_plans_path
+      return 
+    end
+    
+    user = current_user
+    customer = nil
+    if user.stripe_customer_id 
+      customer = Stripe::Customer.retrieve( user.stripe_customer_id )
+      customer.card = stripe_token
+      customer.save
+      customer.update_subscription( :plan => plan_name_id )
+    else 
+      customer = Stripe::Customer.create(
+        :card => stripe_token,
+        :plan => plan_name_id,
+        :email => user.email
+      )  
+    end
+    user.stripe_token = stripe_token
+    user.stripe_customer_id = customer.id
+    user.plan_name_id = plan_name_id
+    user.save
+    flash.now[:success] = "Many Thanks. We just updated your plan."
+    redirect_to settings_plans_path
   end
 
   def updatenames

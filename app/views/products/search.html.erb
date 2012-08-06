@@ -7,11 +7,11 @@
 			<% @langs = @lang.split(",") %>
 			<% @languages.each do |language| %>
 				<div>
-					<input id="<%= language %>" type="checkbox" name="lang" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.include?(language) %> /><label for="<%= language %>"><%= language %></label>
+					<input id="<%= language %>" type="checkbox" name="lang" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.include?(language) %> /><label for="<%= language %>" style="padding-left: 5px; margin: 0px; vertical-align: middle;" ><%= language %></label>
 				</div>	
 			<% end %>
 		<% end %>
-		<input id="refresh" class="followButton" type="submit" value="Refresh" name="commit" onclick="document.forms['ext_searchform'].submit();" >
+		<button id="refresh" class="btn btn-primary" type="submit"  name="commit" onClick="document.forms['ext_searchform'].submit();" style="margin-top: 5px;">Refresh</button>
 	</div>	
 </div>
 <div class="content" >	

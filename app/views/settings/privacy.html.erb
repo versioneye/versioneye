@@ -15,7 +15,7 @@
   		  <label>Who can see the packages I'm following?</label>
       </div>
       <div class="div-cell privacy-option-a" >
-        <select name="following_products" >
+        <select name="following_products" style="width: 150px;" >
           <option value="nobody" <%= "selected" if @user.privacy_products == 'nobody' %> >Nobody</option>
           <option value="ru" <%= "selected" if @user.privacy_products == 'ru' %> >Registered Users</option>
           <option value="everybody" <%= "selected" if @user.privacy_products == 'everybody' %> >Everybody</option>
@@ -28,7 +28,7 @@
   		  <label>Who can see my comments on my profile?</label>
       </div>
       <div class="div-cell privacy-option-a privacy-seperator" >
-        <select name="comments" >
+        <select name="comments" style="width: 150px;" >
           <option value="nobody" <%= "selected" if @user.privacy_comments == 'nobody' %> >Nobody</option>
           <option value="ru" <%= "selected" if @user.privacy_comments == 'ru' %> >Registered Users</option>
           <option value="everybody" <%= "selected" if @user.privacy_comments == 'everybody' %> >Everybody</option>
@@ -48,7 +48,7 @@
     <div class="div-row">
 		  <div class="labelCelPrivacy"></div>
 		  <div class="div-cell privacy-option-b" >
-        <%= submit_tag "Save", :class => "button" %>
+        <button type="submit" class="btn btn-large btn-primary" style="margin-left: 0px;">Save</button>
       </div>
     </div>
   </div>

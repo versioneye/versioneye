@@ -1,13 +1,15 @@
-
-<h1>New Project</h1>
-
-<div class="info-text">
-	Create a new project and VersionEye will show you the outdated dependencies.<br/>
-	<br/>
-	<b>The file upload can take a couple of seconds. Please be patient.</b>
+<div class="boxHeader">
+	New Project
+</div>
+<div class="boxContainer" >
+	
+		Create a new project and VersionEye will show you the outdated dependencies.<br/>
+		<br/>
+		<b>The file upload can take a couple of seconds. Please be patient.</b>
+	
 </div>
 
-<div class="formCel">
+<div class="formCel" style="margin-top: 20px;">
 	<%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
 	    <div class="div-row">
 	      <div class="labelCel">
@@ -58,8 +60,8 @@
 	    </div>
 		<div class="div-row">
 	      <div class="labelCel"></div>
-	      <div class="submitCel" style="padding-top: 20px;">
-	        <%= f.submit "Create", :class => "button" %>
+	      <div class="inputCel" style="padding-top: 20px;">
+	        <button type="submit" class="btn btn-large btn-primary" >Create</button>
 	      </div>
 	    </div>
 	<% end %>

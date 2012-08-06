@@ -3,12 +3,12 @@
 
 <section class="round" >
 	<div style="text-align: center;">
-		<div style="font-size: 32px; font-weight: bold" >Find &amp; Follow</div>
-		<div style="font-size: 26px;">Your Software Libraries</div>
+		<div style="font-size: 32px; font-weight: bold; height: 35px;" >Find &amp; Follow</div>
+		<div style="font-size: 26px; height: height: 28px;">Your Software Libraries</div>
 	</div>
 	<div id="lp_search_div" class="lp_search_div">
 		<form id="searchform" action="/search" method="GET" class="search-form" >				
-			<input id="q" name="q" class="lp_searchfield" type="text" value="<%= @query %>" />
+			<input id="q" name="q" type="text" value="<%= @query %>" style="font-size: 20px; height: 43px; line-height: 43px; width: 377px; margin: 0; padding:0; padding-left: 10px; " />
 			<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
 			<br/>
 			<span style="position: relative; top: 50px; left: -300px;" class="meta-text-small" >click to select --> </span>
@@ -31,11 +31,10 @@
 				</div>
 			<% end %>
 			<br/>
-			<%= submit_tag "Search", :class => "button" %>
+			<button type="submit" class="btn btn-primary btn-large" >Search</button>
 		</form>
 	</div>
 </section>
-
 <section class="section-lp round">
 	<h1 class="lp_head" id="h1_about">
 		About VersionEye
@@ -49,7 +48,7 @@
 	<% if !signed_in? %>
 		<div class="lp_box lp_sign_up">
 			<%= form_tag("/signup", :method => "get") do  %>    
-				<%= submit_tag "Sign Up For Free", :class => "lp_sign_up_button" %>
+				<button type="submit" class="btn btn-primary" >Sign Up For Free</button>
 			<% end %>
 		</div>
 	<% end %>

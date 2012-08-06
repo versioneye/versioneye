@@ -12,6 +12,8 @@ development:
   facebook_client_secret: d27fb4a5d443f29cfdbddd79638c91a8
   twitter_consumer_key: QUC41adGEitJRMMyBJ7w
   twitter_consumer_secret: 5hI3nV0KLCXsT96gdTV6ntQ76wss76l9yXI4lKmNrCI
+  stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
+  stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
 
 test:
   server_url: http://www.versioneye-beta.com
@@ -27,6 +29,8 @@ test:
   facebook_client_secret: d27fb4a5d443f29cfdbddd79638c91a8
   twitter_consumer_key: QUC41adGEitJRMMyBJ7w
   twitter_consumer_secret: 5hI3nV0KLCXsT96gdTV6ntQ76wss76l9yXI4lKmNrCI
+  stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
+  stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
 
 production:
   server_url: http://www.versioneye.com
@@ -42,3 +46,5 @@ production:
   facebook_client_secret: d27fb4a5d443f29cfdbddd79638c91a8
   twitter_consumer_key: QUC41adGEitJRMMyBJ7w
   twitter_consumer_secret: 5hI3nV0KLCXsT96gdTV6ntQ76wss76l9yXI4lKmNrCI
+  stripe_public_key: pk_06DKYRakE4fpOZ4EzaThXa3h50sUq
+  stripe_secret_key: sk_06DKLB7PwdzJIwry7eS9vEgO6e4fp

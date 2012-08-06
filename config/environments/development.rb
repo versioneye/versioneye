@@ -33,4 +33,6 @@ Versioneye::Application.configure do
   config.action_mailer.delivery_method   = :postmark
   config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
 
+  Stripe.api_key = Settings.stripe_secret_key
+
 end

@@ -1,0 +1,53 @@
+<div class="sidebar" >
+
+  <%= render "settings/navi" %> 
+
+</div>
+<div class="content">
+
+  <div class="boxHeader">
+    Credit Card
+  </div>
+
+  <div class="boxContainer">
+  <form action="/settings/updatecreditcard" method="POST" id="payment-form">
+    <input type="hidden" name="plan" value="<%= @plan_name_id %>" />
+    <div class="div-row">
+      <div class="labelCelBig">
+        <label>Card Number</label>
+      </div>
+      <div class="inputCel">
+        <input type="text" size="20" autocomplete="off" class="card-number round"/>
+      </div>
+    </div>
+
+    <div style="display:table-row;">
+      <div class="labelCelBig">
+        <label>CVC</label>
+      </div>
+      <div class="inputCel">
+        <input type="text" size="4" autocomplete="off" class="card-cvc round" style="width: 60px;"/>
+      </div>
+    </div>
+
+    <div style="display:table-row;">
+      <div class="labelCelBig">
+        <label>Expiration (MM/YYYY)</label>
+      </div>
+      <div class="inputCel">
+        <input type="text" size="2" class="card-expiry-month round" style="width: 40px;" />
+        <span> / </span>
+        <input type="text" size="4" class="card-expiry-year round" style="width: 60px;" />
+      </div>
+    </div>
+
+    <div style="display:table-row;">
+      <div class="labelCelBig"></div>
+      <div class="inputCel">
+        <button type="submit" class="btn btn-large btn-primary" >Submit</button>
+      </div>
+    </div>
+  </form>
+  </div>
+
+</div>
