@@ -42,6 +42,10 @@ class SettingsController < ApplicationController
     @user = current_user
   end
 
+  def emails
+    @user = current_user
+  end
+
   def disconnect
     user = current_user
     service = params[:service]
@@ -159,6 +163,54 @@ class SettingsController < ApplicationController
       end
     end         
     redirect_to settings_password_path()
+  end
+
+  def add_email
+    email = params[:email]
+
+    user = User.find_by_email(email)
+    user_email = UserEmail.find_by_email(email)
+    if user || user_email
+      flash[:error] = "The E-Mail Address exist already in our system. Please choose another one."
+      redirect_to settings_emails_path()
+      return 
+    end
+
+    user_email = UserEmail.new
+    user_email.email = email 
+    user_email.user_id = current_user.id
+    user_email.create_verification
+    if user_email.save 
+      UserMailer.verification_email_only(current_user, user_email.verification, user_email.email).deliver
+      flash[:success] = "E-Mail Address added."
+    end 
+    redirect_to settings_emails_path()
+  end
+
+  def delete_email
+    email = params[:email]
+    user_email = current_user.get_email(email)
+    if user_email 
+      user_email.remove
+    end
+    redirect_to settings_emails_path()
+  end
+
+  def make_email_default
+    email = params[:email]
+    user = current_user
+    user_email = user.get_email(email)
+    if user_email && user_email.verified? 
+      orig_email = user.email 
+      user.email = user_email.email 
+      user.save 
+      user_email.email = orig_email
+      user_email.save
+      flash[:success] = "Default E-Mail Address changed successfully."
+    else 
+      flash[:error] = "An error occured. Please try again later."
+    end
+    redirect_to settings_emails_path()
   end
   
   def updateprivacy

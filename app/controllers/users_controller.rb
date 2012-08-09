@@ -135,9 +135,14 @@ class UsersController < ApplicationController
     verification = params[:verification]
     if User.activate!(verification)
       flash[:success] = "Congratulation. Your Account is activated. Please Sign In."
-    else
-      flash[:error] = "The activation code could not be found. Maybe your Account is already activated."
+      return 
     end
+    if UserEmail.activate!(verification)
+      flash[:success] = "Congratulation. Your E-Mail Address is now verified."
+      return 
+    end
+      
+    flash[:error] = "The activation code could not be found. Maybe your Account is already activated."
   end
 
   def users_location

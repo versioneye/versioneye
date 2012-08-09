@@ -1,0 +1,79 @@
+<div class="sidebar" >
+
+	<%= render "settings/navi" %>	
+
+</div>
+<div class="content">
+  <div class="boxHeader">
+    E-Mails
+  </div>
+	<div class="boxContainer">
+    Here you can manage your E-Mail Addresses.<br/>
+  </div>
+  <br/>
+
+  <%= form_tag("/settings/add_email", :method => "post") do  %>
+      <div style="display:table-row;">
+        <div class="inputCel" style="width: 400px;">
+          <%= text_field_tag :email, "", :class => "round", :style => "margin: 0px;" %> <button type="submit" class="btn btn-large btn-primary" >Add</button>
+        </div>
+      </div>
+  <% end %>
+  <br/>
+
+  <table>
+    <colgroup>
+      <col width="80px;"></col>
+      <col width="*"></col>
+    </colgroup>
+    <tr>
+      <td style="height: 30px;">
+        <span class="default round">Default</span>
+      </td>
+      <td>
+        <%= current_user.email %> 
+        <% if current_user.verification.nil? %> 
+          <span style="color: #91D473; padding-left: 10px;">[ verified ]</span>
+        <% else %> 
+          <span style="color: red; padding-left: 10px;">[ not verified ]</span>
+        <% end %> 
+      </td>
+    </tr>
+
+    <% emails = current_user.emails %>
+    <% if !emails.empty? %>
+      <% emails.each do |user_email| %>
+        <tr>
+          <td style="height: 30px;">
+            <%= form_tag("/settings/delete_email", :method => "post") do  %>
+              <input type="hidden" name="email" value="<%= user_email.email %>" />
+              <button type="submit" class="btn btn-danger" >Delete</button>
+            <% end %>
+          </td>
+          <td>
+            <ul class="list-row">
+              <il class="list-cell">
+                <%= user_email.email %> 
+              </il>
+              <% if user_email.verified? %>
+                <il class="list-cell">  
+                  <span style="color: #91D473; padding-left: 10px;">[ verified ]</span> 
+                </il>
+                <il class="list-cell" style="padding-left: 7px;">  
+                  <%= form_tag("/settings/make_email_default", :method => "post", :style => "width: 100px;") do  %>
+                    <input type="hidden" name="email" value="<%= user_email.email %>" />
+                    <button type="submit" class="btn btn-primary" >Make Default</button>
+                  <% end %>
+                </il>
+              <% else %> 
+                <il class="list-cell">
+                  <span style="color: red; padding-left: 10px;">[ not verified ]</span>
+                </il>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+</div>

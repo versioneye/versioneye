@@ -9,7 +9,7 @@
 				<% if !@plan.nil? %>
 					<div class="div-cell" style="width: 100px; font-size: 18px;">
 						<% if @plan && @plan.name_id.eql?( plan.name_id ) %> 
-							<span >Current</span>
+							<button class="btn btn-primary btn-success" onClick="alert('This is your current plan')" >Current</button>
 						<% else %> 
 							<form action="/settings/updateplan" method="POST" > 
 								<input type="hidden" name="plan" value="<%= plan.name_id %>" />

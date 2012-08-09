@@ -1244,6 +1244,7 @@ nav ul li a:hover {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	vertical-align: middle;
+	height: 30px;
 }
 
 .plan:hover{
@@ -1476,4 +1477,14 @@ nav ul li a:hover {
 	text-align: center;
 	font-weight: bold; 
 	font-size: 16px;
+}
+
+.default {
+    background-color: #91D473;
+    color: white;
+    padding: 5px 7px;
+    -moz-border-radius:    5px;
+    -webkit-border-radius: 5px;
+    border-radius:         5px;
+
 }

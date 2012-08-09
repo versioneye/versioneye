@@ -91,7 +91,7 @@ class User
   end
   
   def send_verification_email
-    UserMailer.verification_email(self).deliver
+    UserMailer.verification_email(self, self.verification, self.email).deliver
   end  
 
   def self.send_verification_reminders
@@ -103,7 +103,7 @@ class User
 
   def send_verification_reminder 
     if !self.verification.nil? && self.deleted != true
-      UserMailer.verification_email_reminder(self).deliver
+      UserMailer.verification_email_reminder(self, self.verification, self.email).deliver
     end
   rescue 
     p "ups. Something went wrong for #{self.fullname}"
@@ -134,9 +134,12 @@ class User
   
   def self.activate!(verification)
     user = User.first(conditions: {verification: verification})
-    return false if user.nil?
-    user.verification = nil
-    user.save
+    if user 
+      user.verification = nil
+      user.save
+      return true
+    end
+    return false;
   end
   
   def activated?
@@ -159,6 +162,14 @@ class User
   rescue
     logger.error "-- ERROR user with id #{id} not found! --"
     nil
+  end
+
+  def emails
+    UserEmail.all(conditions: {user_id: self._id.to_s})
+  end
+
+  def get_email(email)
+    UserEmail.first(conditions: {user_id: self._id.to_s, email: email})
   end
   
   def followers
