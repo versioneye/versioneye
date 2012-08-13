@@ -8,15 +8,14 @@ class Project
     
   field :project_type, type: String, :default => "Maven2"
   field :private_project, type: Boolean, :default => false
+  field :period, type: String, :default => "weekly"
+  field :email, type: String
   field :url, type: String
   field :source, type: String, :default => "upload"  # possible values => [upload, url, github]
   field :s3_filename, type: String
   field :github_project, type: String
   field :dep_number, type: Integer
   field :out_number, type: Integer, default: 0
-
-  field :s3, type: Boolean, :default => false
-  field :github, type: Boolean, :default => false
   
   attr_accessor :dependencies
   
@@ -77,10 +76,12 @@ class Project
     end
   end
 
-  def self.update_dependencies
+  def self.update_dependencies(period="weekly")
     projects = Project.all()
     projects.each do |project|
-      Project.process_project ( project )  
+      if project.period.eql?( period )
+        Project.process_project ( project )
+      end
     end
   end
 
@@ -465,6 +466,17 @@ class Project
       project.save
       p "#{project.name}"
     end
+  end
+
+  def self.get_email_for(project, user)
+    if project.email.nil? || project.email.empty? 
+      return user.email
+    end
+    user_email = user.get_email( project.email )
+    if user_email && user_email.verified?
+      return user_email.email
+    end
+    return user.email 
   end
   
   private 

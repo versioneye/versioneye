@@ -52,7 +52,12 @@ class Product
 
   def self.find_by(searched_name, description, group_id, languages=nil, limit=300)
     result1 = Product.find_all(searched_name, description, group_id, languages, limit, nil)
-    prod_keys = nil
+
+    if searched_name.nil? || searched_name.empty? 
+      return result1 
+    end
+
+    prod_keys = Array.new
     if result1 && !result1.empty?
       prod_keys = result1.map{|w| "#{w.prod_key}"}
     end
@@ -72,7 +77,12 @@ class Product
     elsif description && !description.empty?
       query = Product.find_by_description(description)
     elsif group_id && !group_id.empty?
-      return Product.where(group_id: /^#{group_id}/)
+      query = Product.where(group_id: /^#{group_id}/)
+      if languages && !languages.empty?
+        query = query.in(language: languages)
+      end
+      query.desc(:followers).asc(:name).limit(limit)
+      return query
     else
       return Mongoid::Criteria.new(Product, {_id: -1})
     end

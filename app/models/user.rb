@@ -168,6 +168,10 @@ class User
     UserEmail.all(conditions: {user_id: self._id.to_s})
   end
 
+  def emails_verified
+    UserEmail.all(conditions: {user_id: self._id.to_s, verification: nil})
+  end
+
   def get_email(email)
     UserEmail.first(conditions: {user_id: self._id.to_s, email: email})
   end

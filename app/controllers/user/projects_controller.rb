@@ -115,36 +115,42 @@ class User::ProjectsController < ApplicationController
     id = params[:id]
     @project = Project.find_by_id(id)
   end
-  
-  def follow
-    user = current_user
+
+  def save_period
     id = params[:id]
+    period = params[:period]
     @project = Project.find_by_id(id)
-    @project.fetch_dependencies
-    @project.dependencies.each do |dep|
-      product = Product.find_by_key(dep.prod_key)
-      if !product.nil? 
-        create_follower(product, user)
-      end
+    @project.period = period
+    if @project.save
+      flash[:success] = "Status saved."
+    else 
+      flash[:error] = "Something went wrong. Please try again later."
     end
-    flash[:success] = "We added all known packages from this project to your fav. packages."
     redirect_to user_project_path(@project)
   end
-  
-  def unfollow
-    user = current_user
+
+  def save_email
     id = params[:id]
+    email = params[:email]
     @project = Project.find_by_id(id)
-    @project.fetch_dependencies
-    @project.dependencies.each do |dep|
-      product = Product.find_by_key(dep.prod_key)
-      if !product.nil? 
-        destroy_follower(product, user)
-      end
+
+    user = current_user
+    user_email = user.get_email(email)
+
+    if user_email.nil?
+      flash[:error] = "Something went wrong. Please try again later."
+      redirect_to user_project_path(@project)
+      return 
     end
-    flash[:success] = "We removed all known packages from this project from your fav. packages."
+
+    @project.email = user_email.email
+    if @project.save
+      flash[:success] = "Status saved."
+    else 
+      flash[:error] = "Something went wrong. Please try again later."
+    end
     redirect_to user_project_path(@project)
-  end  
+  end
 
   private 
 

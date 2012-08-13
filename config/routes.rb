@@ -94,10 +94,10 @@ Versioneye::Application.routes.draw do
   
   get '/user/projects/github_projects', :to => 'user/projects#github_projects'
   namespace :user do 
-    resources :projects do
-      member do
-        get 'follow'
-        get 'unfollow'
+    resources :projects do 
+      member do 
+        post 'save_period'
+        post 'save_email'
       end
     end
   end

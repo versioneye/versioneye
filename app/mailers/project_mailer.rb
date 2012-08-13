@@ -2,14 +2,15 @@ class ProjectMailer < ActionMailer::Base
   
   default from: "\"VersionEye\" <notify@versioneye.com>"
   
-  def projectnotification_email(project)
+  def projectnotification_email( project )
     @user = project.user
     @dependencies = project.get_outdated_dependencies
     @project_name = project.name
     @link = "#{Settings.server_url}/package/"
     @projectlink = "#{Settings.server_url}/user/projects/#{project.id}"
+    email = Project.get_email_for(project, @user)
     mail(
-      :to => @user.email, 
+      :to => email, 
       :subject => "Project Notification",
       :tag => "project_notification"
       )

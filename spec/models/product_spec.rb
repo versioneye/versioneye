@@ -140,23 +140,25 @@ describe Product do
     end
 
     it "returns the searhced product because searched_name is in description" do
-      @product.name = "asgfasfgasgasfgs"
-      @product.name_downcase = "asgfasfgasgasfgs"
+      name = "asgfasfgasgasfgs"
+      @product.name = name
+      @product.name_downcase = name
       @product.prod_key = "gasgagasgj8623_junit/junitagasfgas"
       @product.description = "this is BuBuBo. OK?"
       @product.save
-      results = Product.find_by( "BuBuBo", nil, nil, nil, 300 )
+      results = Product.find_by( nil, "BuBuBo", nil, nil, 300 )
       results.should_not be_nil
       results.size.should eq(1)
     end
 
     it "returns the searhced product because searched_name is in description_manual" do
-      @product.name = "asgfasfgasgasfgs"
-      @product.name_downcase = "asgfasfgasgasfgs"
+      name = "asgfasfgasgasfgs23"
+      @product.name = name 
+      @product.name_downcase = name
       @product.prod_key = "gasgagasgj8623_junit/junitagasfgas"
       @product.description_manual = "this is BuBuBoHapo gasgfs"
       @product.save
-      results = Product.find_by( "BuBuBoHapo", nil, nil, nil, 300 )
+      results = Product.find_by(nil, "BuBuBoHapo", nil, nil, 300 )
       results.should_not be_nil
       results.size.should eq(1)
     end
