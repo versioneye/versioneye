@@ -77,12 +77,7 @@ class Product
     elsif description && !description.empty?
       query = Product.find_by_description(description)
     elsif group_id && !group_id.empty?
-      query = Product.where(group_id: /^#{group_id}/)
-      if languages && !languages.empty?
-        query = query.in(language: languages)
-      end
-      query.desc(:followers).asc(:name).limit(limit)
-      return query
+      return Product.where(group_id: /^#{group_id}/).desc(:followers).asc(:name).limit(limit)
     else
       return Mongoid::Criteria.new(Product, {_id: -1})
     end
