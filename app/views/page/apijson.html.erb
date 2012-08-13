@@ -33,10 +33,38 @@
 	</p>
 	<p class="docu">
 		The search term must contain at least 2 characters. Otherwise you get null back. 
-		If there are no results you get an empty array [ ] back.
+		If there are no results you get an empty array [ ] back. Here are the possible parameters: 
+	</p>
+	<p class="docu">
+		<table style="width:570px;" class="docu_table">
+			<colgroup>
+				<col width="150px;" />
+				<col width="420px;" />
+			</colgroup>
+			<tr>
+				<th style="text-align:left">ATTRIBUTE</th>
+				<th style="text-align:left">DESCRIPTION</th>
+			</tr>
+			<tr>
+				<td>q</td>
+				<td>The search query. This stands for the name of a package.</td>
+			</tr>
+			<tr>
+				<td>d</td>
+				<td>Description of the package</td>
+			</tr>
+			<tr>
+				<td>g</td>
+				<td>GroupId. This is Maven specific</td>
+			</tr>
+			<tr>
+				<td>lang</td>
+				<td>Language of the package</td>
+			</tr>
+		</table>
 	</p>
 	<p>
-		Here is the description for the json product object. 
+		Here is the description for the json result object. 
 	</p>
 	<p class="docu">
 		<table style="width:570px;" class="docu_table">
