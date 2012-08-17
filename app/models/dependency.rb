@@ -2,7 +2,6 @@ class Dependency
 
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::MultiParameterAttributes # Need for type: DateTime 
 
   field :name, type: String
   field :version, type: String  

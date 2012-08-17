@@ -4,7 +4,6 @@ class Product
 
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::MultiParameterAttributes # Need for type: DateTime 
 
   field :name, type: String
   field :name_downcase, type: String

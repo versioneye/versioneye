@@ -4,7 +4,6 @@ class Productlike
 
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::MultiParameterAttributes # Need for type: DateTime 
 
   field :prod_key, type: String
   field :user_id, type: String

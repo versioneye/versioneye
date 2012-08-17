@@ -2,6 +2,7 @@ class Version
 
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::MultiParameterAttributes
 
   field :uid, type: String
   field :version, type: String
@@ -13,6 +14,8 @@ class Version
   field :prerelease, type: Boolean
   field :mistake, type: Boolean
   field :pom, type: String
+  field :released_at, type: DateTime
+  field :released_string, type: String 
 
   embedded_in :product
   
