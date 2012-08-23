@@ -29,62 +29,57 @@ $horizontal_separater_line: #888888;
 
 /******* Sprites *****************/
 
-.blog_button, .facebook_button, .twitter_button, .youtube_button, .feedback_button, .searchlink, .beta, .button_bg_200_off, .button_bg_200_on, .followButton, .logo_div, .logout, .myprofile, .news, .profile_off, .profile_on, .project_icon, .settings, .c_bw, .c, .clojure_bw, .clojure, .java_bw, .java, .javascript_bw, .javascript, .node_js_bw, .node_js, .opa_bw, .opa, .php_bw, .php, .python_bw, .python, .r_bw, .r, .ruby_bw, .ruby, .eye_off, followButton[type="submit"], lp_sign_up_button[type="submit"], .nav-begin, .nav-end, .nav-line, .login_facebook, .login_twitter, .login_github{
-	background: url(sprites.optimized.png) no-repeat;
-}
-
-.socialbuttons{
-	position: fixed;
-	top: 177px;
-	left: 0;
+.facebook_button, .google_button, .pinterest_button, .blog_button, .twitter_button, .youtube_button, .feedback_button, .searchlink, .beta, .button_bg_200_off, .button_bg_200_on, .followButton, .logo_div, .logout, .myprofile, .news, .profile_off, .profile_on, .project_icon, .settings, .c_bw, .c, .clojure_bw, .clojure, .java_bw, .java, .javascript_bw, .javascript, .node_js_bw, .node_js, .opa_bw, .opa, .php_bw, .php, .python_bw, .python, .r_bw, .r, .ruby_bw, .ruby, .eye_off, followButton[type="submit"], lp_sign_up_button[type="submit"], .nav-begin, .nav-end, .nav-line, .login_facebook, .login_twitter, .login_github{
+	background: url(sprites.png) no-repeat;
 }
 
 .blog_button{
-	background-position: -1117px -104px ;
-	width: 51px;
-	height: 51px;
-}
-
-.blog_button:hover{
-	background-position: -1117px -52px ;
-	width: 51px;
-	height: 51px;
-}
-
-.facebook_button{
-	background-position: -1065px 0;
-	width: 51px;
-	height: 51px;
-}
-
-.facebook_button:hover{
-	background-position: -1169px 0;
-	width: 51px;
-	height: 51px;
+	background-position: -782px -110px;
+	width: 36px;
+	height: 36px;
+	margin: 7px;
 }
 
 .twitter_button{
-	background-position: -1169px -52px ;
-	width: 51px;
-	height: 51px;
+	background-position: -868px -61px ;
+	width: 36px;
+	height: 36px;
+	margin: 7px;
 }
 
-.twitter_button:hover{
-	background-position: -1065px -52px ;
-	width: 51px;
-	height: 51px;
+.facebook_button{
+	background-position: -822px -110px;
+	width: 36px;
+	height: 36px;
+	margin: 7px;
+}
+
+.google_button{
+	background-position: -902px -110px ;
+	width: 36px;
+	height: 36px;
+	margin: 7px;
+}
+
+.pinterest_button{
+	background-position: -828px -61px ;
+	width: 36px;
+	height: 36px;
+	margin: 7px;
 }
 
 .youtube_button{
-	background-position: -1117px 0;
-	width: 51px;
-	height: 51px;
+	background-position: -907px -61px ;
+	width: 36px;
+	height: 36px;
+	margin: 7px;
 }
 
-.youtube_button:hover{
-	background-position: -1065px -104px ;
-	width: 51px;
-	height: 51px;
+.feedback_button{
+	background-position: -862px -110px ;
+	width: 36px;
+	height: 36px;
+	margin: 7px;
 }
 
 .feedback{
@@ -93,24 +88,8 @@ $horizontal_separater_line: #888888;
 	right: 0;
 }
 
-.feedback_button {
-	background-position: -1013px 0;
-	width: 51px;
-	height: 165px;
-	background-color: transparent;
-	cursor:pointer;
-}
-
-.feedback_button:hover {
-	background-position: 0 0;
-	width: 51px;
-	height: 165px;
-	background-color: transparent;
-	cursor:pointer;
-}
-
 .beta{
-	background-position: -1179px -122px ;
+	background-position: 0 0;
 	width: 41px;
 	height: 43px;
 	float: left; 
@@ -118,222 +97,226 @@ $horizontal_separater_line: #888888;
 }
 
 .news{
-	background-position: -751px -114px ;
+	background-position: -525px -113px ;
 	width: 30px;
 	height: 25px;
 }
 
 .news:hover{
-	background-position: -717px -115px ;
+	background-position: -490px -113px ;
 	width: 30px;
 	height: 25px;
 }
 
 .myprofile{
-	background-position: -844px -117px ;
+	background-position: -581px -116px ;
 	width: 18px;
 	height: 25px;
 }
 
 .myprofile:hover{
-	background-position: -817px -118px ;
+	background-position: -557px -116px ;
 	width: 18px;
 	height: 25px;
 }
 
 .settings{
-	background-position: -591px -118px ;
+	background-position: -752px -117px ;
 	width: 26px;
 	height: 25px;
 }
 
 .settings:hover{
-	background-position: -621px -118px ;
+	background-position: -720px -117px ;
 	width: 26px;
 	height: 25px;
 }
 
 .project_icon{
-	background-position: -943px -120px ;
+	background-position: -685px -118px ;
 	width: 29px;
 	height: 25px;
 }
 
 .project_icon:hover{
-	background-position: -982px -121px ;
+	background-position: -652px -118px ;
 	width: 29px;
 	height: 25px;
 }
 
 .logout{
-	background-position: -878px -117px ;
+	background-position: -626px -118px ;
 	width: 22px;
 	height: 24px;
 }
 
 .logout:hover{
-	background-position: -907px -117px ;
+	background-position: -599px -117px ;
 	width: 22px;
 	height: 24px;
 }
 
 .c_bw{
-	background-position: -899px 0;
+	background-position: -788px 0;
 	width: 56px;
 	height: 56px;
 }
 
 .c{
-	background-position: -500px 0;
+	background-position: -770px -51px ;
 	width: 56px;
 	height: 56px;
 }
 
 .clojure_bw{
-	background-position: -728px 0;
+	background-position: -712px -58px ;
 	width: 56px;
 	height: 56px;
 }
 
 .clojure{
-	background-position: -443px 0;
+	background-position: -654px -59px ;
 	width: 56px;
 	height: 56px;
 }
 
 .java_bw{
-	background-position: -956px -57px ;
+	background-position: -554px 0;
 	width: 56px;
 	height: 56px;
 }
 
 .java{
-	background-position: -614px -57px ;
+	background-position: -611px 0;
 	width: 56px;
 	height: 56px;
 }
 
 .javascript_bw{
-	background-position: -842px -57px ;
+	background-position: -479px -53px ;
 	width: 56px;
 	height: 56px;
 }
 
 .javascript{
-	background-position: -842px 0;
+	background-position: -420px -53px ;
 	width: 56px;
 	height: 56px;
 }
 
 .node_js_bw{
-	background-position: -500px -57px ;
+	background-position: -361px -53px ;
 	width: 56px;
 	height: 56px;
 }
 
 .node_js{
-	background-position: -557px 0;
+	background-position: -301px -53px ;
 	width: 56px;
 	height: 56px;
 }
 
+.npm_bw{
+	background-position: -240px -81px ;
+	width: 56px;
+	height: 22px;
+}
+
+.npm{
+	background-position: -240px -54px ;
+	width: 56px;
+	height: 22px;
+}
+
 .opa_bw{
-	background-position: -379px -82px ;
+	background-position: -178px -62px ;
 	width: 56px;
 	height: 36px;
 }
 
 .opa{
-	background-position: -379px -119px ;
+	background-position: -119px -62px ;
 	width: 56px;
 	height: 36px;
 }
 
 .perl_bw{
-	background-position: -956px 0;
+	background-position: -59px -53px ;
 	width: 56px;
 	height: 56px;
 }
 
 .perl{
-	background-position: -899px -57px ;
+	background-position: 0 -53px ;
 	width: 56px;
 	height: 56px;
 }
 
 .php_bw{
-	background-position: -671px 0;
+	background-position: -729px 0;
 	width: 56px;
 	height: 56px;
 }
 
 .php{
-	background-position: -443px -57px ;
+	background-position: -671px 0;
 	width: 56px;
 	height: 56px;
 }
 
 .python_bw{
-	background-position: -785px -57px ;
+	background-position: -596px -58px ;
 	width: 56px;
 	height: 56px;
 }
 
 .python{
-	background-position: -728px -57px ;
+	background-position: -538px -57px ;
 	width: 56px;
 	height: 56px;
 }
 
 .r_bw{
-	background-position: -671px -57px ;
+	background-position: -500px 0;
 	width: 56px;
 	height: 56px;
 }
 
 .r{
-	background-position: -614px 0;
+	background-position: -441px 0;
 	width: 56px;
 	height: 56px;
 }
 
 .ruby_bw{
-	background-position: -557px -57px ;
+	background-position: -383px 0;
 	width: 56px;
 	height: 56px;
 }
 
 .ruby{
-	background-position: -785px 0;
+	background-position: -325px 0;
 	width: 56px;
 	height: 56px;
 }
 
-.eye_off {
-	background-position: -443px -114px ;
-	width: 56px;
-	height: 26px;
-}
-
 .login_facebook{
-	background-position: -52px -72px ;
+	background-position: -324px -110px ;
 	width: 160px;
 	height: 30px;
 }
 
 .login_github{
-	background-position: -278px 0;
+	background-position: -162px -110px ;
 	width: 160px;
 	height: 31px;
 }
 
 .login_twitter{
-	background-position: -52px -103px ;
+	background-position: 0 -111px ;
 	width: 160px;
 	height: 31px;
 }
-
-
 
 .icon-circle-arrow-up {
 	background-image: url("glyphicons-halflings.png");
@@ -353,16 +336,28 @@ $horizontal_separater_line: #888888;
 	height: 14px;
 }  
 
+.socialbuttons{
+	position: fixed;
+	background-color: white;
+	top: 177px;
+	left: 0;
+}
+
+.social_feedback{
+	position: fixed;
+	top: 450px;
+	left: 0;
+}
+
 /******* Basic Elements *********/
 
 body {
-	color: $text_color;
-	background-color: $bg_color;
-	background-repeat: repeat;
-	background-position: 50px 30px;
-	background-image: url("subtle-pattern.jpeg");
-	font-size: 14px;
-	font-family: sans-serif, arial, verdana, tahoma, 'lucida grande', 'Segoe UI', 'lucida sans unicode';
+	moz-box-orient: vertical;
+    background-image: url("chrome://browser/content/abouthome/noise.png"), -moz-linear-gradient(rgba(222, 222, 222, 0.7), rgba(222, 222, 222, 0.7));
+    background-repeat: repeat;
+    height: 100%;
+    width: 100%;
+    margin: 0;
 }
 
 form{
@@ -674,7 +669,7 @@ footer nav {
 	float: left;
 	margin: 0;
 	padding: 0;
-	background-position: -278px -32px ;
+	background-position: -175px 0;
 	width: 148px;
 	height: 49px;
 }
@@ -713,7 +708,7 @@ footer nav {
 }
 
 .searchlink{
-	background-position: -443px -114px ;
+	background-position: -104px 0;
 	width: 56px;
 	height: 26px;
 	margin-top: 0px;
@@ -723,7 +718,7 @@ footer nav {
 }
 
 .searchlink:hover{
-	background-position: -500px -114px ;
+	background-position: -44px 0;
 	width:56px; 
 	height:26px;
 	margin-top: 0px;
@@ -778,17 +773,17 @@ nav ul li a:hover {
 }
 
 .nav-begin{
-	background-position: -228px -87px ;
+	background-position: -945px -59px;
 	width: 7px;
 	height: 37px;
 }
 .nav-end{
-	background-position: -239px -87px ;
+	background-position: -942px -109px;
 	width: 7px;
 	height: 37px;
 }
 .nav-line{
-	background-position: -261px -20px ;
+	background-position: -950px -108px;
 	width: 2px;
 	height: 37px;
 }

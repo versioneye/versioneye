@@ -20,21 +20,21 @@ function update_lang(language){
 		if (document.getElementById(icon_id) != null){
 			document.getElementById(icon_id).style.borderBottom = "2px solid #f9b323";
 			if (orig_param == "Java"){
-				document.getElementById(icon_id).style.backgroundPosition = "-614px -57px";
+				document.getElementById(icon_id).style.backgroundPosition = "-611px 0";
 			} else if (orig_param == "Ruby"){
-				document.getElementById(icon_id).style.backgroundPosition = "-785px 0";
+				document.getElementById(icon_id).style.backgroundPosition = "-325px 0";
 			} else if (orig_param == "Python"){
-				document.getElementById(icon_id).style.backgroundPosition = "-728px -57px";
+				document.getElementById(icon_id).style.backgroundPosition = "-538px -57px";
 			} else if (orig_param == "Node.JS"){
-				document.getElementById(icon_id).style.backgroundPosition = "-557px 0";
+				document.getElementById(icon_id).style.backgroundPosition = "-361px -53px";
 			} else if (orig_param == "R"){
-				document.getElementById(icon_id).style.backgroundPosition = "-614px 0";
+				document.getElementById(icon_id).style.backgroundPosition = "--441px 0";
 			} else if (orig_param == "JavaScript"){
-				document.getElementById(icon_id).style.backgroundPosition = "-842px 0";
+				document.getElementById(icon_id).style.backgroundPosition = "-420px -53px";
 			} else if (orig_param == "PHP"){
-				document.getElementById(icon_id).style.backgroundPosition = "-443px -57px";
+				document.getElementById(icon_id).style.backgroundPosition = "-671px 0";
 			} else if (orig_param == "Clojure"){
-				document.getElementById(icon_id).style.backgroundPosition = "-443px 0";
+				document.getElementById(icon_id).style.backgroundPosition = "-654px -59px";
 			}
 		}
 	} else {
@@ -45,21 +45,21 @@ function update_lang(language){
 		if (document.getElementById(icon_id) != null){
 			document.getElementById(icon_id).style.borderBottom = "0px solid #f9b323";
 			if (orig_param == "Java"){
-				document.getElementById(icon_id).style.backgroundPosition = "-956px -57px";
+				document.getElementById(icon_id).style.backgroundPosition = "-554px 0";
 			} else if (orig_param == "Ruby"){
-				document.getElementById(icon_id).style.backgroundPosition = "-557px -57px";
+				document.getElementById(icon_id).style.backgroundPosition = "-383px 0";
 			} else if (orig_param == "Python"){
-				document.getElementById(icon_id).style.backgroundPosition = "-785px -57px";
+				document.getElementById(icon_id).style.backgroundPosition = "-596px -58px";
 			} else if (orig_param == "Node.JS"){
-				document.getElementById(icon_id).style.backgroundPosition = "-500px -57px";
+				document.getElementById(icon_id).style.backgroundPosition = "-361px -53px";
 			} else if (orig_param == "R"){
-				document.getElementById(icon_id).style.backgroundPosition = "-671px -57px";
+				document.getElementById(icon_id).style.backgroundPosition = "-500px 0";
 			} else if (orig_param == "JavaScript"){
-				document.getElementById(icon_id).style.backgroundPosition = "-842px -57px";
+				document.getElementById(icon_id).style.backgroundPosition = "-479px -53px";
 			} else if (orig_param == "PHP"){
-				document.getElementById(icon_id).style.backgroundPosition = "-671px 0";
+				document.getElementById(icon_id).style.backgroundPosition = "-729px 0";
 			} else if (orig_param == "Clojure"){
-				document.getElementById(icon_id).style.backgroundPosition = "-728px 0";
+				document.getElementById(icon_id).style.backgroundPosition = "-712px -58px";
 			}
 		}		
 	}

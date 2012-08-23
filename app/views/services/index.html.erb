@@ -1,10 +1,15 @@
 
 <section class="round" >
 	<div style="text-align: center; font-size: 28px; padding: 0px 0px;">
-		VersionEye helps you to keep your Software Projects up-to-date
+		<div style="height: 30px;"><b>VersionEye</b></div> 
+		<div style="height: 30px;">helps you to keep your Software Projects</div> 
+		<div style="height: 30px;"><b>up-to-date</b></div>
 	</div>
 </section>
 <div class="section-lp round">
+	<div class="boxHeader" style="text-align: center; margin-top: 0px; padding-bottom: 20px;">
+		VersionEye supports various package managers
+	</div>
 	<div class="div-row">
 		<div class="div-cell project-types-cell project-types-header">
 			<div class="java" style="margin-left: 62px;" 
@@ -43,7 +48,7 @@
 	</div>	
 	<div class="div-row">
 		<div class="div-cell project-types-cell">
-			Maven2 and Maven3 pom.xml files are supported.
+			pom.xml files from Maven2 and Maven3 are supported.
 		</div>
 		<div class="div-cell project-types-cell">
 			Ruby Gemfiles are supported. 
@@ -58,7 +63,9 @@
 	<br/>
 </div>
 <div class="section-lp round">
-	
+	<div class="boxHeader" style="text-align: center; margin-top: 0px; padding-bottom: 20px;">
+		VersionEye is very easy to use
+	</div>
 	<div class="div-row">
 		<div class="div-cell project-types-cell project-types-header">
 			<%= image_tag ("integration/upload.png") %>
@@ -122,22 +129,25 @@
 	<% end %>
 	<br/>
 </div>
-<div class="section-lp round" style="text-align: center;">
-	<div class="boxHeader" style="text-align: center;">
-		Try it!
+<div class="section-lp round div-row" style="text-align: center;">
+
+	<div class="div-cell" style="padding-right: 50px; padding-left: 20px; vertical-align: middle;">
+		<%= image_tag "integration/try_small.png" %>
 	</div>
-	<div class="lp_box" style="text-align: center;" >
-		Upload your file (pom.xml, Gemfile, requirements.txt, package.json)
-	</div>
-	<div  style="text-align: center;">
-		<%= form_for services_path, :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
-			<div style="padding-bottom: 20px;">
-				<%= file_field 'upload', 'datafile', :class => "round" %>
-			</div>
-			<div>
-		        <button type="submit" class="btn btn-primary" >Upload</button>
-		    </div>
-		<% end %>
+	<div class="div-cell">
+		<div class="lp_box" style="text-align: left;" >
+			Upload your file (pom.xml, Gemfile, requirements.txt, package.json)
+		</div>
+		<div  style="text-align: left;">
+			<%= form_for services_path, :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
+				<div style="padding-bottom: 20px;">
+					<%= file_field 'upload', 'datafile', :class => "round" %>
+				</div>
+				<div>
+			        <button type="submit" class="btn btn-primary" >Upload</button>
+			    </div>
+			<% end %>
+		</div>
 	</div>
 </div>
 <% if 1 == 2 %>

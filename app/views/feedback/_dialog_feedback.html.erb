@@ -1,7 +1,9 @@
 <div id="dialog_feedback" title="Feedback" style="display: none">			
 	<div class="dialog_description">
 		<p>
-			<%= form_tag("/feedback", :method => "post", :remote => true) do  %>    
+			<%= form_tag("/feedback.js", :method => "post", :remote => true) do  %>    
+				<input type="hidden" name="value_a" value="" id="value_a" />
+				<input type="hidden" name="value_b" value="" id="value_b" />
 			    <div style="display:table-row;">
 			      <div class="labelCelBig">
 					<%= label_tag(:fb_fullname, "Full Name") %>
@@ -41,7 +43,7 @@
 				<% if !signed_in? %>
 					<div style="display:table-row;">
 				      <div class="labelCelBig labelCelBigTop">
-						<%= label_tag(:feedback, "5 + 4 =") %>
+						<%= label_tag(:fb_math, "", :id => "fb_math") %>
 				      </div>
 				      <div class="inputCel">
 						<%= text_field_tag :fb_math, nil, :class => "round" %>
