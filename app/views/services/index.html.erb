@@ -1,11 +1,12 @@
-
 <section class="round" >
-	<div style="text-align: center; font-size: 28px; padding: 0px 0px;">
+	<div style="text-align: center; font-size: 32px; padding: 0px 0px;">
 		<div style="height: 30px;"><b>VersionEye</b></div> 
-		<div style="height: 30px;">helps you to keep your Software Projects</div> 
-		<div style="height: 30px;"><b>up-to-date</b></div>
+		<div style="height: 30px; font-size: 26px; color:#808080; padding: 5px 0px;">helps to keep your software projects up-to-date</div>
 	</div>
 </section>
+<div class="section-lp round" style="text-align: center; font-size: 22px; font-weight: bold; line-height: 30px;">
+	Let VersionEye monitor your repositories to get notified about outdated dependencies in your projects
+</div>
 <div class="section-lp round">
 	<div class="boxHeader" style="text-align: center; margin-top: 0px; padding-bottom: 20px;">
 		VersionEye supports various package managers
@@ -101,11 +102,11 @@
 		</div>
 		<div class="div-cell project-integration-cell">
 			Put in the URL to your project file and 
-			VersionEye will show you the outdated dependencies. 
+			VersionEye will fetch it every day and notify you about outdated dependencies. 
 		</div>
 		<div class="div-cell project-integration-cell">
-			Let VersionEye monitor your private GitHub Repositories 
-			to get notified about outdated dependencies in your projects.
+			Let VersionEye monitor your private GitHub repositories 
+			to get daily E-Mail notifications about outdated dependencies in your projects.
 		</div>
 		<div class="div-cell project-integration-cell">
 			Coming soon.
@@ -150,22 +151,111 @@
 		</div>
 	</div>
 </div>
-<% if 1 == 2 %>
+
 <div class="section-lp round" style="text-align: center;">
-	<div class="boxHeader" style="text-align: center;">
-		Plans & Pricing
+	<div class="boxHeader" style="text-align: center; font-size: 32px;">
+		<a name="pricing"></a>Subscription 
 	</div>
 	<div style="margin: 30px;">
-		<div style="width: 460px; margin-left: auto; margin-right: auto;">
-			<%= render "shared/pricing" %>
+		<br/>
+		<div class="boxContainer" style="text-align: left;">
+			Monitoring open source (OS) projects is free. 
+			You only have to pay for monitoring private GitHub repositories.<br/>
+			<b>You can cancel all subscriptions on a monthly basis.</b>
 		</div>
 		<br/>
-		Sign Up now and set up billing later.
-	</div>
-	<div class="lp_box lp_sign_up">
-		<%= form_tag("/signup", :method => "get") do  %>
-			<button type="submit" class="btn btn-large btn-primary" >Sign Up For Free</button>
-		<% end %>
+		<div class="round boxContainer" >
+			<div class="div-row">
+				<div class="div-cell price_box_head" style="padding-left: 10px; padding-top: 0px; padding-bottom: 0px;">
+					<%= form_tag("/signup", :method => "get") do  %>
+						FREE - 0.00 $ / Month - Unlimited Open Source Projects - <button type="submit" class="btn btn-success" >Sign Up For Free</button>
+					<% end %>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class="div-row">
+			<div class="div-cell" >
+				<div class="round price_box">
+					<div class="price_box_head" >MICRO</div>
+					<div class="price_box_service" >
+						1 Private Project<br/>
+						<b>Unlimited</b> OS Projects<br/>
+						Monthly terminable
+					</div>
+					<div class="price_box_price" >7 $ / Month</div>
+					<div class="price_box_action">
+						<%= form_tag("/services/choose_plan", :method => "post") do  %>
+							<input type="hidden" name="plan" value="01_micro" />
+							<button type="submit" class="btn btn-success" >Select</button>
+						<% end %>
+					</div>
+				</div>
+			</div>
+			<div class="div-cell " style="width: 12px;" >
+
+			</div>
+			<div class="div-cell" >
+				<div class="round price_box">
+					<div class="price_box_head" >SMALL</div>
+					<div class="price_box_service" >
+						2 Private Projects<br/>
+						<b>Unlimited</b> OS Projects<br/>
+						Monthly terminable
+					</div>
+					<div class="price_box_price" >12 $ / Month</div>
+					<div class="price_box_action">
+						<%= form_tag("/services/choose_plan", :method => "post") do  %>
+							<input type="hidden" name="plan" value="01_small" />
+							<button type="submit" class="btn btn-success" >Select</button>
+						<% end %>
+					</div>
+				</div>
+			</div>
+			<div class="div-cell " style="width: 12px;" >
+
+			</div>
+			<div class="div-cell" >
+				<div class="round price_box" style="height: 200px; width: 200px;">
+					<div class="price_box_head" style="font-size: 28px; padding-top: 18px;">MEDIUM</div>
+					<div class="price_box_service" >
+						4 Private Projects<br/>
+						<b>Unlimited</b> OS Projects<br/>
+						Monthly terminable
+					</div>
+					<div class="price_box_price" >20 $ / Month</div>
+					<div class="price_box_action" style="padding-top: 10px;">
+						<%= form_tag("/services/choose_plan", :method => "post") do  %>
+							<input type="hidden" name="plan" value="01_medium" />
+							<button type="submit" class="btn btn-large btn-success" >Select</button>
+						<% end %>
+					</div>
+				</div>
+			</div>
+			<div class="div-cell " style="width: 12px;" >
+
+			</div>
+			<div class="div-cell" >
+				<div class="round price_box">
+					<div class="price_box_head" >LARGE</div>
+					<div class="price_box_service" >
+						10 Private Projects<br/>
+						<b>Unlimited</b> OS Projects<br/>
+						Monthly terminable
+					</div>
+					<div class="price_box_price" >47 $ / Month</div>
+					<div class="price_box_action">
+						<%= form_tag("/services/choose_plan", :method => "post") do  %>
+							<input type="hidden" name="plan" value="01_large" />
+							<button type="submit" class="btn btn-success" >Select</button>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class="boxContainer" style="text-align: left;">
+			You need more than 10 private GitHub repositories? Then pleas send us a <a href="javascript: return false;" onClick="load_dialog_feedback();" >message</a> with your use case and your contact information. 
+		</div>
 	</div>
 </div>
-<% end %>

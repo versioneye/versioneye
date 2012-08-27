@@ -5,6 +5,12 @@ class ServicesController < ApplicationController
 		render :layout => 'application_lp'
 	end
 
+	def choose_plan
+		plan = params[:plan]
+		cookies.permanent.signed[:plan_selected] = plan
+		redirect_to signup_path
+	end
+
 	def create
 		file = params[:upload]
 

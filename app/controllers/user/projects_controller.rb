@@ -40,11 +40,11 @@ class User::ProjectsController < ApplicationController
       store_project(project)
     elsif github_project && !github_project.empty? && !github_project.eql?("NO_PROJECTS_FOUND")
       private_project = is_private_project?(github_project)
-      # if private_project && !is_allowed_to_add_private_project?
-      #   flash[:error] = "You selected a private project. Please upgrade your plan to monitor the selected project."
-      #   redirect_to settings_plans_path
-      #   return nil    
-      # end
+      if private_project && !is_allowed_to_add_private_project?
+        flash[:error] = "You selected a private project. Please upgrade your plan to monitor the selected project."
+        redirect_to settings_plans_path
+        return nil    
+      end
       sha = Project.get_repo_sha_from_github( github_project, current_user.github_token )
       project_info = Project.get_project_info_from_github( github_project, sha, current_user.github_token )
       if project_info.empty?

@@ -80,6 +80,7 @@ $horizontal_separater_line: #888888;
 	width: 36px;
 	height: 36px;
 	margin: 7px;
+	cursor: pointer;
 }
 
 .feedback{
@@ -761,6 +762,7 @@ nav ul li a {
     padding: 0 10px;
 	vertical-align: middle;
 	color: white;
+	font-weight: bold;
 }
 
 nav ul li a:visited {
@@ -1482,4 +1484,44 @@ nav ul li a:hover {
     -webkit-border-radius: 5px;
     border-radius:         5px;
 
+}
+
+.price_box{
+	width: 160px; 
+	height: 175px; 
+	border: 0px solid #34E6FF; 
+	background-color: #0582CD;   
+	 /** background-color: #0ACEDD; **/
+	color: white;
+	margin-right: 10px;
+}
+
+.price_box_free{
+	height: 63px; 
+	background-color: #F5FFFF;
+	margin-bottom: 10px;
+}
+
+.price_box_head{
+	font-size: 20px; 
+	font-weight: bold; 
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+
+.price_box_service{
+	font-weight: bold; 
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+
+.price_box_price{
+	font-weight: bold; 
+	padding-top: 10px;
+	padding-bottom: 5px;
+	font-size: 16px;
+}
+
+.price_box_action{ 
+	padding-top: 5px;
 }

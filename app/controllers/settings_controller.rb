@@ -29,6 +29,11 @@ class SettingsController < ApplicationController
 
   def creditcard
     @page = "cc"
+    plan = cookies.signed[:plan_selected]
+    p "plan: #{@plan_name_id}"
+    if plan 
+      @plan_name_id = plan
+    end
   end
 
   def links
@@ -80,6 +85,7 @@ class SettingsController < ApplicationController
     else 
       flash.now[:info] = "Please update your Credit Card information."
       @page = "cc"
+      cookies.permanent.signed[:plan_selected] = @plan_name_id
       render settings_creditcard_path
     end
   end

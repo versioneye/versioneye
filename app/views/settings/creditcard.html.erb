@@ -10,6 +10,13 @@
   </div>
 
   <div class="boxContainer">
+    <a href="https://strip.com" target="stripe">Stripe.com</a> is our Payment Provider. 
+    <b>VersionEye doesn't store any Credit Card data.</b>
+  </div>
+  <div>
+    <%= image_tag "ccs.png" %>
+  </div>
+  <div class="boxContainer">
   <form action="/settings/updatecreditcard" method="POST" id="payment-form">
     <input type="hidden" name="plan" value="<%= @plan_name_id %>" />
     <div class="div-row">

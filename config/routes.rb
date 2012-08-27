@@ -102,13 +102,14 @@ Versioneye::Application.routes.draw do
     end
   end
 
+  post  '/services/choose_plan',  :to => 'services#choose_plan'
   resources :services do 
     member do 
       get  'recursive_dependencies'
       post 'recursive_dependencies'
     end
   end
-  get   '/pricing',             :to => 'services#index'
+  get   '/pricing',               :to => 'services#index'
 
   get   '/news',               :to => 'news#news'
   get   '/mynews',             :to => 'news#mynews'

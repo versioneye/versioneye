@@ -40,6 +40,7 @@ class UsersController < ApplicationController
         @user.send_verification_email
         User.new_user_email(@user)
       else 
+        flash.now[:error] = "An error occured. Please try again later."
         render 'new'
       end
     end    

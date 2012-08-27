@@ -40,16 +40,14 @@
 			      </div>
 			    </div>
 				
-				<% if !signed_in? %>
-					<div style="display:table-row;">
-				      <div class="labelCelBig labelCelBigTop">
-						<%= label_tag(:fb_math, "", :id => "fb_math") %>
-				      </div>
-				      <div class="inputCel">
-						<%= text_field_tag :fb_math, nil, :class => "round" %>
-				      </div>
-				    </div>
-				<% end %>
+				<div style="display:table-row;">
+			      <div class="labelCelBig labelCelBigTop">
+					<%= label_tag(:fb_math, "", :id => "fb_math") %>
+			      </div>
+			      <div class="inputCel">
+					<%= text_field_tag :fb_math, nil, :class => "round" %>
+			      </div>
+			    </div>
 			
 			    <div style="display:table-row;">
 			      <div class="labelCelBig"></div>

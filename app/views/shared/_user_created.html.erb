@@ -22,3 +22,11 @@
 	   data-text="I just signed up @VersionEye to keep track of my software libraries." 
 	   data-count="horizontal" >Twitter</a>
 </div>
+<br/>
+<div class="boxContainer">
+	Set Up your Credit Card and your Plan.<br/>
+	<br/>
+	<%= form_tag("/settings/creditcard", :method => "get") do  %>
+		<button type="submit" class="btn btn-large btn-primary" >Continue</button>
+	<% end %>
+</div>

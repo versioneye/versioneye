@@ -72,7 +72,7 @@ class User
   def to_param
     username
   end
-  
+
   def self.default
     user = User.new
     user.fullname = "Hans Tanz"
