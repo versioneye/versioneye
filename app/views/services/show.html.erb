@@ -64,4 +64,26 @@
 			}	
 		</script>
 	<% end %>
+	<div style="width: 333px; margin-right: auto; margin-left: auto;">
+		<ul class="list-row" >
+			<li class="list-cell share-on-icon">
+				<a href="https://twitter.com/share" 
+				   class="twitter-share-button" 
+				   data-url="<%= Settings.server_url %>/services/<%= @project_id %>" 
+				   data-text="Check out my project @VersionEye " 
+				   data-count="horizontal" >Twitter</a>
+			</li>
+			<li class="list-cell share-on-icon">
+				<iframe src="https://www.facebook.com/plugins/like.php?href=<%=Settings.server_url%>/services/<%=@project_id%>&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=25" style="border:none; width:100px; height:25px" allowTransparency="true" scrolling="no" frameborder="0"></iframe>
+			</li>
+			<li class="list-cell share-on-icon" >
+				<div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="<%= Settings.server_url %>/services/<%= @project_id %>" style="width: 90px;"></div>
+			</li>
+		</ul>
+	</div>
+
+	<div style="text-align: center; padding-top: 30px;">
+		<%= render 'services/subscription' %>
+	</div>
+
 <% end %>
