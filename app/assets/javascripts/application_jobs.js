@@ -13,7 +13,6 @@
 //= require markerclusterer
 //= require gmap
 
-//= require gplus
 //= require twitter
 
 //= require custom

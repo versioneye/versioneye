@@ -11,7 +11,6 @@
 
 //= require google
 
-//= require gplus
 //= require twitter
 
 //= require custom
