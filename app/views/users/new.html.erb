@@ -1,14 +1,16 @@
 <div class="boxHeader">
-	<span>
-		Register
-	</span>
-	<span style="padding-left: 560px;">
-		<%= link_to image_tag("flaggs_germany_off.png", :class => "flag", :title => "Germany", :alt=>"Germany", :onmouseover => "document.getElementById('flag_de').src='/assets/flaggs_germany_on.png';", :onmouseout => "document.getElementById('flag_de').src='/assets/flaggs_germany_off.png';", :id => "flag_de"), signup_path(:locale => :de) %>
-		<%= link_to image_tag("flaggs_gb_off.png", :class=>"flag", :title => "GB", :alt=>"GB", :onmouseover => "document.getElementById('flag_en').src='/assets/flaggs_gb_on.png';", :onmouseout => "document.getElementById('flag_en').src='/assets/flaggs_gb_off.png';", :id => "flag_en"), signup_path(:locale => :en) %>
-	<span>	
+	<div class="div-row">
+		<div class="div-cell" style="width: 645px;">
+			<%= t(:page_signup_registration) %>
+		</div>
+		<div class="div-cell">
+			<%= link_to image_tag("flaggs_germany_off.png", :class => "flag", :title => "Germany", :alt=>"Germany", :onmouseover => "document.getElementById('flag_de').src='/assets/flaggs_germany_on.png';", :onmouseout => "document.getElementById('flag_de').src='/assets/flaggs_germany_off.png';", :id => "flag_de"), signup_path(:locale => :de) %>
+			<%= link_to image_tag("flaggs_gb_off.png", :class=>"flag", :title => "GB", :alt=>"GB", :onmouseover => "document.getElementById('flag_en').src='/assets/flaggs_gb_on.png';", :onmouseout => "document.getElementById('flag_en').src='/assets/flaggs_gb_off.png';", :id => "flag_en"), signup_path(:locale => :en) %>
+		</div>
+	</div>	
 </div>
-<div class="boxContainer" style="height: 280px;">
-	<div class="formCel">
+<div class="boxContainer" style="display: table;" >
+	<div class="formCel"  >
 		<%= form_for @user do |f| %>
 			<input id="username" name="user[username]" type="hidden" value="username" />
 		    <div class="messages">
@@ -68,7 +70,7 @@
 		    <div class="div-row">
 		      <div class="labelCel"></div>
 		      <div class="inputCel">
-		        <button type="submit" class="btn btn-primary btn-large" style="margin-top: 5px;" >Sign Up</button>
+		        <button type="submit" class="btn btn-primary btn-large" style="margin-top: 5px;" ><%= t(:page_signup_button_signup) %></button>
 		      </div>
 		    </div>
 

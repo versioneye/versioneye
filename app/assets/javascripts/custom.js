@@ -19,16 +19,6 @@ jQuery(document).ready(function() {
 		text: "json",
 		styleclass: "lp_searchfield_hint"
 	});	
-	
-	jQuery('#fullname').tbHinter({
-		text: "This is visible on your posts.",
-		styleclass: "inputCelHint"
-	});
-	
-	jQuery('#email').tbHinter({
-		text: "Invisible for other users.",
-		styleclass: "inputCelHint"
-	});
 
 	jQuery("#payment-form").submit(function(event) {
 	    jQuery('.submit-button').attr("disabled", "disabled");

@@ -11,6 +11,18 @@ de:
     terms_part_3: "gelesen und bin mit deren Geltung einverstanden."
     daten_part_1: "Ich willige in die Erhebung und Verwendung meiner Daten nach den Bestimmungen über die"
     daten_part_2: "ein."
+    general_error: "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später noch einmal."
+    page_signup_registration: "Registrierung"
+    page_signup_button_signup: "Registrieren"
+    page_signup_error_terms: "Sie müssen die Nutzungsbedingungen UND die Datenerhebung akzeptieren."
+    page_signup_error_email: "Die gewählte E-Mail Adresse ist bereits vergeben. Bitte geben Sie eine andere an."
+    page_signup_error_password: "Das Passwort muss mindestens 5 Zeichen lang sein."
+    page_footer_about: "Über"
+    page_footer_team:  "Mitarbeiter"
+    page_header_services: "Leistungen"
+    page_header_pricing: "Preise"
+    page_header_signup: "Registrierung"
+    page_header_signin: "Anmeldung"
     helpers:
         label:
             user:  

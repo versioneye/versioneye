@@ -23,13 +23,13 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if !User.email_valid?(@user.email)
-      flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
+      flash.now[:error] = t(:page_signup_error_email)
       render 'new'
     elsif @user.terms != true
-      flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
+      flash.now[:error] = t(:page_signup_error_terms)
       render 'new'
     elsif @user.password.nil? || @user.password.empty? || @user.password.size < 5
-      flash.now[:error] = "Please choose a password with at least 5 characters."
+      flash.now[:error] = t(:page_signup_error_password)
       render 'new'
     else 
       @user = User.new(params[:user])
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
         @user.send_verification_email
         User.new_user_email(@user)
       else 
-        flash.now[:error] = "An error occured. Please try again later."
+        flash.now[:error] = t(:general_error)
         render 'new'
       end
     end    

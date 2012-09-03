@@ -11,6 +11,18 @@ en:
     terms_part_3: "and agree to their validity."
     daten_part_1: "I consent to the collection and use of my data in accordance with the provisions of"
     daten_part_2: "."
+    general_error: "An error occured. Please try again later."
+    page_signup_registration: "Register"
+    page_signup_button_signup: "Sign Up"
+    page_signup_error_terms: "You have to accept the Conditions of Use AND the Data Aquisition."
+    page_signup_error_email: "The E-Mail address is already taken. Please choose another E-Mail."
+    page_signup_error_password: "Please choose a password with at least 5 characters."
+    page_footer_about: "About"
+    page_footer_team:  "Team"
+    page_header_services: "Services"
+    page_header_pricing: "Pricing"
+    page_header_signup: "Register"
+    page_header_signin: "Login"
     helpers:
         label:
             user:  

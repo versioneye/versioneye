@@ -47,9 +47,9 @@ module SessionsHelper
 
   def set_locale
     locale = params[:locale]
-    if (!locale.nil? && !locale.empty?)
+    if (locale && !locale.empty?)
       I18n.locale = locale
-    else  
+    elsif I18n.locale.nil? 
       I18n.locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
     end
   rescue
