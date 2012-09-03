@@ -260,7 +260,8 @@ class User
   
   def self.email_valid?(email)
     user = find_by_email(email)
-    return user.nil?
+    user_email = UserEmail.find_by_email(email)
+    return user.nil? && user_email.nil?
   end
 
   def password_valid?(password)

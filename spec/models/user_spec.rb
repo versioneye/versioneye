@@ -287,6 +287,14 @@ describe User do
     it "is not" do     
       User.email_valid?("agsasf").should be_true
     end
+    it "is not because it is in email_user" do
+      user_email = UserEmail.new
+      user_email.email = "tada@hoplaho.de"
+      user_email.user_id = @user.id.to_s
+      user_email.save
+      User.email_valid?(user_email.email).should be_false
+      user_email.remove
+    end
     it "is" do     
       User.email_valid?(@user.email).should be_false
     end
