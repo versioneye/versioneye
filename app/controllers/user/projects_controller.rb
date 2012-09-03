@@ -134,16 +134,13 @@ class User::ProjectsController < ApplicationController
     email = params[:email]
     @project = Project.find_by_id(id)
 
+    new_email = nil
     user = current_user
     user_email = user.get_email(email)
+    new_email = user_email.email if user_email
+    new_email = user.email unless user_email
 
-    if user_email.nil?
-      flash[:error] = "Something went wrong. Please try again later."
-      redirect_to user_project_path(@project)
-      return 
-    end
-
-    @project.email = user_email.email
+    @project.email = new_email
     if @project.save
       flash[:success] = "Status saved."
     else 
