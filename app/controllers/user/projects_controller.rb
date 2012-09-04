@@ -87,6 +87,7 @@ class User::ProjectsController < ApplicationController
       format.json { 
         resp = "{\"projects\": ["
         projects = JSON.parse HTTParty.get("https://api.github.com/user/repos?access_token=#{current_user.github_token}").response.body
+        
         if projects && !projects.empty?
           message = get_message(projects)
           if message && message.eql?('Bad credentials')
@@ -103,8 +104,14 @@ class User::ProjectsController < ApplicationController
         else 
           resp += "\"NO_PROJECTS_FOUND\","
         end
-        end_point = resp.length - 2
-        resp = resp[0..end_point]
+        
+        if resp.match(/\[$/)
+          resp += "\"NO_SUPPORTED_PROJECTS_FOUND\","
+        else
+          end_point = resp.length - 2
+          resp = resp[0..end_point]  
+        end
+        
         resp += "]}"
         render :json => "[#{resp}]"
       }

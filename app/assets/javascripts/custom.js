@@ -244,14 +244,19 @@ function addGitHubProjects(data){
 		projectListArea = document.getElementById("gitHubLogin");
 		projectListArea.style.display = "block";
 	} else {
-		for (i = 0; i < data[0].projects.length; i++ ){
-			project = data[0].projects[i];
-			var o = new Option(project, project);
-			jQuery(o).html(project);
-			jQuery("#github_projects").append(o);
+		first_project = data[0].projects[0]
+		if (first_project == "NO_SUPPORTED_PROJECTS_FOUND"){
+			alert("Sorry. But it seems that your projects are not supported.")
+		} else {
+			for (i = 0; i < data[0].projects.length; i++ ){
+				project = data[0].projects[i];
+				var o = new Option(project, project);
+				jQuery(o).html(project);
+				jQuery("#github_projects").append(o);
+			}
+			projectListArea = document.getElementById("projectListArea");
+			projectListArea.style.display = "block";	
 		}
-		projectListArea = document.getElementById("projectListArea");
-		projectListArea.style.display = "block";
 	}
 	loadingbarArea = document.getElementById("loadingbarArea");
 	loadingbarArea.style.display = "none";
