@@ -42,12 +42,12 @@ class Projectdependency
     end
     
     if self.comperator.eql?("=") || self.comperator.eql?("==")
-      if self.current_version.strip.eql?(version.strip) || product.wouldbenewest?(version.strip)
+      if (self.current_version && self.current_version.strip.eql?(version.strip)) || product.wouldbenewest?(version.strip)
         return false
       end
     elsif self.comperator.eql?(">=")
       newest = Naturalsorter::Sorter.sort_version([version, product.version]).last
-      if self.current_version.eql?(version) || product.wouldbenewest?(version) || newest.eql?(product.version)
+      if (self.current_version && self.current_version.eql?(version)) || product.wouldbenewest?(version) || newest.eql?(product.version)
         return false
       end
     elsif self.comperator.eql?(">")

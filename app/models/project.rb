@@ -111,6 +111,9 @@ class Project
     end
   rescue => e
     p "ERROR in proccess_project #{e}"
+    e.backtrace.each do |message|
+      p "#{message}"
+    end
     nil
   end
 
@@ -145,6 +148,10 @@ class Project
     project
   rescue => e 
     p "exception: #{e}"
+    e.backtrace.each do |message|
+      p "#{message}"
+    end
+    project = Project.new
   end
   
   def self.create_from_pom_url( url )
@@ -157,14 +164,7 @@ class Project
     project = Project.new
     project.dependencies = Array.new
     
-    properties = Hash.new
-    doc.xpath('//project/properties').each do |node|
-      node.children.each do |child|
-        if !child.text.strip.empty?
-          properties[child.name.downcase] = child.text.strip
-        end
-      end  
-    end
+    properties = fetch_properties( doc )
     
     doc.xpath('//project/dependencies/dependency').each do |node|
       project.dependencies << fetch_dependency(node, properties, project)
@@ -480,6 +480,22 @@ class Project
   end
   
   private 
+
+    def self.fetch_properties( doc )
+      properties = Hash.new
+      doc.xpath('//project/properties').each do |node|
+        node.children.each do |child|
+          if !child.text.strip.empty?
+            properties[child.name.downcase] = child.text.strip
+          end
+        end  
+      end
+      project_version = doc.xpath('//project/version')
+      if project_version
+        properties['project.version'] = project_version.text.strip
+      end
+      properties
+    end
   
     def self.update_dep_version_with_product( dependency, product )
       if product && product.version
@@ -511,6 +527,9 @@ class Project
       product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
       if !product.nil?
         dependency.prod_key = product.prod_key
+        if dependency.version.nil? 
+          dependency.version = product.version
+        end
       end
       
       dependency.update_outdated
