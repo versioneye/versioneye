@@ -13,7 +13,7 @@ class Userlinkcollection
   field :facebook, type: String
 
   def self.find_all_by_user(user_id)
-  	Userlinkcollection.first( conditions: { user_id: user_id })
+  	Userlinkcollection.where( user_id: user_id )[0]
   end
 
   def empty?

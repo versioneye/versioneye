@@ -13,6 +13,7 @@ class Product
   
   field :group_id, type: String
   field :artifact_id, type: String
+  field :parent_id, type: String
   
   field :authors, type: String
   field :description, type: String
@@ -144,7 +145,7 @@ class Product
   end
   
   def self.find_by_group_and_artifact(group, artifact)
-    Product.first(conditions: { group_id: group, artifact_id: artifact } )
+    Product.where( group_id: group, artifact_id: artifact )[0]
   end
 
   def get_natural_sorted_versions

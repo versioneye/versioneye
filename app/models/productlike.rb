@@ -13,7 +13,7 @@ class Productlike
   field :support, type: Integer, default: 0
 
   def self.find_by_user_id_and_product(user_id, product_key)
-    Productlike.first(conditions: { user_id: user_id, prod_key: product_key } )
+    Productlike.where( user_id: user_id, prod_key: product_key )[0]
   end
 
   def overall_like_display

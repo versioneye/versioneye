@@ -11,7 +11,7 @@ class Follower
   validates_presence_of :product_id, :message => "Product is mandatory!"
   
   def self.find_by_user_id_and_product(user_id, product_id)    
-    Follower.first(conditions: { user_id: user_id, product_id: product_id } )
+    Follower.where( user_id: user_id, product_id: product_id )[0]
   end
   
   def self.find_by_product(product_id)

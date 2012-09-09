@@ -110,7 +110,7 @@ class User
   end
 
   def plan
-    Plan.first(conditions: {name_id: self.plan_name_id})
+    Plan.where(name_id: self.plan_name_id)[0]
   end
   
   def create_username
@@ -133,8 +133,8 @@ class User
   end
   
   def self.activate!(verification)
-    user = User.first(conditions: {verification: verification})
-    if user 
+    user = User.where(verification: verification)[0]
+    if user
       user.verification = nil
       user.save
       return true
@@ -147,13 +147,13 @@ class User
   end
   
   def self.find_by_username( username )
-    User.first(conditions: {username: /^#{username}$/i} )
+    User.where( username: /^#{username}$/i )[0]
   end
   
   def self.find_by_id( id )
     User.find( id )
-  rescue
-    logger.error "-- ERROR user with id #{id} not found! --"
+  rescue => e
+    logger.error "-- ERROR user with id #{id} not found! -- #{e}"
     nil
   end
 
@@ -173,7 +173,7 @@ class User
   end
 
   def get_email(email)
-    UserEmail.first(conditions: {user_id: self._id.to_s, email: email})
+    UserEmail.where( user_id: self._id.to_s, email: email )[0]
   end
   
   def followers
@@ -219,19 +219,19 @@ class User
   end
   
   def self.find_by_email(email)
-    User.first(conditions: {email: /^#{email}$/i})
+    User.where(email: /^#{email}$/i)[0]
   end
   
   def self.find_by_fb_id(fb_id)
-    User.first(conditions: {fb_id: fb_id})
+    User.where(fb_id: fb_id)[0]
   end
 
   def self.find_by_twitter_id(twitter_id)
-    User.first(conditions: {twitter_id: twitter_id})
+    User.where(twitter_id: twitter_id)[0]
   end
   
   def self.find_by_github_id(github_id)
-    User.first(conditions: {github_id: github_id})
+    User.where(github_id: github_id)[0]
   end
   
   def reset_password
@@ -243,14 +243,20 @@ class User
   end
 
   def self.authenticate(email, submitted_password)
-    user = User.first(conditions: {email: email.downcase} )
+    user = User.where( email: email.downcase )[0]
     return nil  if user.nil? || user.deleted
     return user if user.has_password?(submitted_password)
   end
 
   def self.authenticate_with_salt(id, coockie_salt)
-    user = User.first( conditions: { id: id } )
+    user = User.find( "#{id}" )
     ( user && user.salt == coockie_salt ) ? user : nil
+  rescue => ex
+    p "EXCEPTION: #{ex}"
+    ex.backtrace.each do |message|
+      p "#{message}"
+    end
+    nil
   end
   
   def self.username_valid?(username)

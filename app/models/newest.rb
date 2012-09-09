@@ -9,6 +9,7 @@ class Newest
   field :product_id, type: String
   field :version, type: String
   
+  
   def product
     Product.find_by_key(self.prod_key)
   end

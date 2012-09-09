@@ -34,7 +34,10 @@ class Versioncomment
   end
   
   def self.find_by_id(id)
-    Versioncomment.first(conditions: { id: id} )
+    Versioncomment.find( id )
+  rescue => e
+    p "#{e}"
+    nil
   end
   
   def self.find_by_user_id(user_id)

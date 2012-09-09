@@ -17,11 +17,11 @@ class UserEmail
 	end
 
 	def self.find_by_email(email)
-		UserEmail.first(conditions: {email: /^#{email}$/i})
+		UserEmail.where( email: /^#{email}$/i )[0]
 	end
 
 	def self.activate!(verification)
-		user_email = UserEmail.first(conditions: {verification: verification})
+		user_email = UserEmail.where(verification: verification)[0]
 		if user_email 
 			user_email.verification = nil
 			user_email.save

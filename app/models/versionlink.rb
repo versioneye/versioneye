@@ -19,7 +19,7 @@ class Versionlink
   end
 
   def self.find_by(prod_key, link)
-    Versionlink.first(conditions: { prod_key: prod_key, link: link } )
+    Versionlink.where( prod_key: prod_key, link: link )[0]
   end
 
   def get_link

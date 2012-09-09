@@ -12,7 +12,7 @@ class Productlook
   field :backgroundcolor, type: String
 
   def self.find_by_key(prod_key)
-    Productlook.first(conditions: {prod_key: prod_key})
+    Productlook.where( prod_key: prod_key )[0]
   end
 
 end
