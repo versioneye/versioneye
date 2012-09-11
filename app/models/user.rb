@@ -249,7 +249,8 @@ class User
   end
 
   def self.authenticate_with_salt(id, coockie_salt)
-    user = User.find( "#{id}" )
+    return nil if !id || !coockie_salt
+    user = User.find( id )
     ( user && user.salt == coockie_salt ) ? user : nil
   rescue => ex
     p "EXCEPTION: #{ex}"
