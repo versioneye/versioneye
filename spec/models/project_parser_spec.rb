@@ -1,23 +1,6 @@
 require 'spec_helper'
 
 describe ProjectParser do
-
-  before(:each) do
-    @user = User.new
-    @user.fullname = "Hans Tanz"
-    @user.username = "hanstanz"
-    @user.email = "hans@tanz.de"
-    @user.password = "password"
-    @user.salt = "salt"
-    @user.fb_id = "asggffffffff"
-    @user.terms = true
-    @user.datenerhebung = true
-    @user.save
-  end
-  
-  after(:each) do 
-    @user.remove
-  end
   
   before(:each) do
     @properties = Hash.new
