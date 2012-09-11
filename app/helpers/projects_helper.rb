@@ -13,6 +13,8 @@ module ProjectsHelper
 		  project_type = "PIP"
 		elsif orig_filename.match(/package.json/)
 		  project_type = "npm"
+		elsif orig_filename.match(/composer.json/)
+		  project_type = "composer"
 		elsif orig_filename.match(/pom.xml/)
 		  project_type = "Maven2"
 		end

@@ -9,9 +9,9 @@ class Projectdependency
   field :name, type: String
   field :group_id, type: String
   field :artifact_id, type: String
-  field :version, type: String
-  field :version_label, type: String
-  field :current_version, type: String
+  field :version, type: String          # highest parsed version from the uploaded file
+  field :version_label, type: String    # optinal label
+  field :current_version, type: String  # current version from product (database)
   field :prod_key, type: String
   field :prod_type, type: String
   field :outdated, type: Boolean

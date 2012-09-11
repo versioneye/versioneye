@@ -148,7 +148,7 @@ class Project
     elsif project_type.eql?("npm")
       project = ProjectParser.create_from_npm_url ( url )
     elsif project_type.eql?("composer")
-      project = ProjectParser.create_from_npm_url ( url )  
+      project = ProjectParser.create_from_composer_url ( url )  
     end
     project
   rescue => e 
