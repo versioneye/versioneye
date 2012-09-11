@@ -18,11 +18,12 @@ end
 
 Versioneye::Application.initialize!
 
-
-AWS::S3::Base.establish_connection!(
-  :access_key_id     => Settings.aws_s3_access_key_id,
-  :secret_access_key => Settings.aws_s3_secret_access_key
-)
+if Settings.aws_s3_access_key_id && Settings.aws_s3_secret_access_key
+	AWS::S3::Base.establish_connection!(
+	  :access_key_id     => Settings.aws_s3_access_key_id,
+	  :secret_access_key => Settings.aws_s3_secret_access_key
+	)
+end
 
 #ENV['RAILS_ENV'] = 'development'
 
