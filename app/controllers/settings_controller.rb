@@ -287,7 +287,6 @@ class SettingsController < ApplicationController
     user.password = password
     Follower.unfollow_all_by_user(user.id)
     Notification.disable_all_for_user(user.id)
-    Blogcomment.anonym_user(user.id)
     user.delete_user
     sign_out
     redirect_to "/"
