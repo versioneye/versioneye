@@ -14,6 +14,7 @@ development:
   twitter_consumer_secret: 
   stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
+  elasticsearch_url: 
 
 test:
   server_url: http://www.versioneye-beta.com
@@ -31,6 +32,7 @@ test:
   twitter_consumer_secret: so1T6l4nrLaY5IZEfIFzb8CtkrmNwe0I7K6F4a3oZx4
   stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
+  elasticsearch_url: 
 
 production:
   server_url: http://www.versioneye.com
@@ -47,4 +49,5 @@ production:
   twitter_consumer_key: <%= ENV['TWITTER_CONSUMER_KEY'] %>
   twitter_consumer_secret: <%= ENV['TWITTER_CONSUMER_SECRET'] %>
   stripe_public_key: <%= ENV['STRIPE_PUBLIC_KEY'] %>
-  stripe_secret_key: <%= ENV['STRIPE_SCRET_KEY'] %>
+  stripe_secret_key: <%= ENV['STRIPE_SECRET_KEY'] %>
+  elasticsearch_url: <%= ENV['BONSAI_INDEX_URL'] %>
