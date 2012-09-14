@@ -140,15 +140,15 @@ class Project
   def self.create_from_file(project_type, url)
     project = nil
     if project_type.eql?("Maven2")
-      project = ProjectParser.create_from_pom_url ( url )
+      project = PomParser.parse ( url )
     elsif project_type.eql?("RubyGems")
-      project = ProjectParser.create_from_gemfile_url ( url )
+      project = GemfileParser.parse ( url )
     elsif project_type.eql?("PIP")
-      project = ProjectParser.create_from_pip_url ( url )
+      project = RequirementsParser.parse ( url )
     elsif project_type.eql?("npm")
-      project = ProjectParser.create_from_npm_url ( url )
+      project = PackageParser.parse ( url )
     elsif project_type.eql?("composer")
-      project = ProjectParser.create_from_composer_url ( url )  
+      project = ComposerParser.parse ( url )  
     end
     project
   rescue => e 

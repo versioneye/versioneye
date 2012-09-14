@@ -13,7 +13,7 @@
 			<% @dependencies.each do |dep| %>
 				<div style="border-bottom: 1px dotted gray; padding: 5px;"> 
 					<a href="<%=@link%><%= Product.to_url_param(dep.prod_key) %>"><%=dep.name%></a> 
-					- Version in Project: <b><%= dep.version_lbl %></b> - Current Version: <b><%= dep.current_version %></b>
+					- Version in Project: <b><%= dep.version_lbl %></b> - Current Version: <b><%= dep.version_current %></b>
 				</div>
 			<% end %>
 		</p>

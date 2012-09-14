@@ -7,7 +7,7 @@ class Dependency
   field :version, type: String  
   field :group_id, type: String
   field :artifact_id, type: String
-  field :dep_prod_key, type: String     # this is the prod_key of the dependency
+  field :dep_prod_key, type: String     # this is the prod_key of the dependency (Foreign Key)
   field :scope, type: String
 
   field :prod_key, type: String         # This dependency belongs to this prod_key
@@ -64,42 +64,10 @@ class Dependency
 
   def gem_version_abs
     ver = String.new(version)
-    ver = ver.gsub(" ", "")
-    if ver.match(/^=/)
-      ver = ver.gsub("=", "")
-      return ver
-    elsif ver.match(/^~>/)
-      fuzzy = ""
-      ver = ver.gsub("~>", "")
-      version_elements = ver.split(".")
-      shrinked_count = version_elements.count - 2
-      shrinked_elements = version_elements[0..shrinked_count]
-      fuzzy = shrinked_elements.join(".")
-      versions = Array.new
-      product = Product.find_by_key(dep_prod_key)
-      if product.nil? 
-        return ver
-      end
-      product.versions.each do |p_version|
-        if p_version.version.match(/^#{fuzzy}/)
-          versions << p_version
-        end
-      end
-      if versions && !versions.empty? 
-        versions = Naturalsorter::Sorter.sort_version_by_method_desc(versions, "version")
-        return versions.first.version
-      else
-        return product.version
-      end
-    elsif ver.match(/^>=/) || ver.match(/^>/)
-      product = Product.find_by_key(dep_prod_key)
-      if product.nil?
-        return "NA" 
-      else 
-        return product.get_newest_version_by_natural_order
-      end
-    end
-    ver
+    product = Product.find_by_key(self.dep_prod_key)
+    dependency = Projectdependency.new
+    GemfileParser.parse_requested_version(ver, dependency, product)
+    dependency.version_requested
   end
   
 end

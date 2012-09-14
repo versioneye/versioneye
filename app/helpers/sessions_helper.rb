@@ -52,7 +52,11 @@ module SessionsHelper
     elsif I18n.locale.nil? 
       I18n.locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
     end
-  rescue
+  rescue => e
+    p "ERROR #{e}"
+    e.backtrace.each do |message| 
+      p " - #{message}"
+    end
     nil
   end
 

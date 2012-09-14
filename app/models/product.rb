@@ -190,26 +190,6 @@ class Product
   # end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   def delete
     false
   end
@@ -250,6 +230,9 @@ class Product
     return query
   rescue => e
     p "#{e}" 
+    e.backtrace.each do |message|
+      p " - #{message}"
+    end
     Mongoid::Criteria.new(Product, {_id: -1})
   end
 
@@ -304,7 +287,11 @@ class Product
     return nil if id.nil? || id.strip == ""
     result = Product.find(id)
     result
-  rescue
+  rescue => e 
+    p "ERROR #{e}"
+    e.backtrace.each do |message| 
+      p " - #{message}"
+    end
     nil
   end
   
@@ -312,14 +299,33 @@ class Product
     Product.where( group_id: group, artifact_id: artifact )[0]
   end
 
+  
+
+  ########### VERSIONS START ########################
+
   def get_natural_sorted_versions
     Naturalsorter::Sorter.sort_version_by_method_desc(versions, "version")
   end
-  
+
   def get_newest_version_by_natural_order
     versions = get_natural_sorted_versions
     versions.first.version
   end
+
+  def self.get_newest_version_by_natural_order(versions)
+    if !versions || versions.empty?
+      return nil
+    end
+    ordered_versions = Naturalsorter::Sorter.sort_version_by_method_desc(versions, "version")
+    ordered_versions.first
+  end
+
+  def get_version(searched_version)
+    versions.each do |version|
+      return version if version.version.eql?(searched_version)
+    end
+    nil
+  end 
 
   def get_version_by_uid(uid)
     versions.each do |version|
@@ -327,6 +333,183 @@ class Product
     end
     return nil
   end
+
+  def self.get_approximately_greater_than_starter(value)
+    if value.match(/\.0$/)
+      new_end = value.length - 2
+      return value[0..new_end]
+    else 
+      return "#{value}."
+    end
+  end
+
+  def get_tilde_newest(value)
+    
+    new_st = "#{value}"
+    if value.match(/./)
+      splits = value.split(".")
+      new_end = splits.size - 2
+      new_slice = splits[0..new_end]
+      new_st = new_slice.join(".")
+    end
+    starter = "#{new_st}."
+    
+    versions_group1 = self.get_versions_start_with(starter)
+    versions = Array.new
+    versions_group1.each do |version| 
+      if Naturalsorter::Sorter.bigger_or_equal?(version.version, value)
+        versions.push(version)
+      end
+    end
+    Product.get_newest_version_by_natural_order(versions)
+  end
+
+  def get_version_range(start, stop)
+    # get all versions from range ( >=start <=stop )
+    range = Array.new 
+    versions.each do |version|
+      fits_stop  = Naturalsorter::Sorter.smaller_or_equal?(version.version, stop)
+      fits_start = Naturalsorter::Sorter.bigger_or_equal?(version.version, start)
+      if fits_start && fits_stop
+        range.push(version)
+      end
+    end
+    range
+  end
+
+  def get_versions_start_with(val)
+    result = Array.new
+    versions.each do |version|
+      if version.version.match(/^#{val}/)
+        result.push(version)
+      end
+    end
+    result
+  end
+
+  def get_newest_but_not(value)
+    filtered_versions = Array.new
+    versions.each do |version|
+      if !version.version.match(/^#{value}/)
+        filtered_versions.push(version)
+      end
+    end
+    newest = Product.get_newest_version_by_natural_order(filtered_versions)
+    return get_newest_or_value(newest, value)
+  end
+
+  def get_greater_than(value)
+    filtered_versions = Array.new
+    versions.each do |version|
+      if Naturalsorter::Sorter.bigger?(version.version, value)
+        filtered_versions.push(version)
+      end
+    end
+    newest = Product.get_newest_version_by_natural_order(filtered_versions)
+    return get_newest_or_value(newest, value)
+  end
+
+  def get_greater_than_or_equal(value)
+    filtered_versions = Array.new
+    versions.each do |version|
+      if Naturalsorter::Sorter.bigger_or_equal?(version.version, value)
+        filtered_versions.push(version)
+      end
+    end
+    newest = Product.get_newest_version_by_natural_order(filtered_versions)
+    return get_newest_or_value(newest, value)
+  end
+
+  def get_smaller_than(value)
+    filtered_versions = Array.new
+    versions.each do |version|
+      if Naturalsorter::Sorter.smaller?(version.version, value)
+        filtered_versions.push(version)
+      end
+    end
+    newest = Product.get_newest_version_by_natural_order(filtered_versions)
+    return get_newest_or_value(newest, value)
+  end
+
+  def get_smaller_than_or_equal(value)
+    filtered_versions = Array.new
+    versions.each do |version|
+      if Naturalsorter::Sorter.smaller_or_equal?(version.version, value)
+        filtered_versions.push(version)
+      end
+    end
+    newest = Product.get_newest_version_by_natural_order(filtered_versions)
+    return get_newest_or_value(newest, value)
+  end
+
+  def versions_empty?
+    versions.nil? || versions.size == 0 ? true : false
+  end
+
+  def wouldbenewest?(version)
+    current = get_newest_version_by_natural_order
+    return false if current.eql? version
+    newest = Naturalsorter::Sorter.get_newest_version(current, version) 
+    return true if version.eql? newest
+    return false 
+  end
+
+  def update_version_data
+    return if self.versions.nil? || self.versions.length < 2
+    
+    versions = get_natural_sorted_versions
+    version = versions.first
+    
+    if version.mistake == true 
+      p " -- mistake #{self.name} with version #{version.version}"
+      return 
+    end
+    
+    return if version.version.eql?(self.version)
+      
+    self.version = version.version
+    self.version_link = version.link
+    self.save
+    p " udpate #{self.name} with version #{self.version}"
+  rescue => e
+    p " -- ERROR -- something went wrong --- #{e}"
+    e.backtrace.each do |message|
+      p "#{message}"
+    end
+  end
+  
+  def self.update_version_data_global
+    count = Product.count()
+    pack = 100
+    max = count / pack     
+    (0..max).each do |i|
+      skip = i * pack
+      products = Product.all().skip(skip).limit(pack)
+      products.each do |product|
+        product.update_version_data
+      end
+    end
+  end
+
+  def self.count_versions(lang)
+    versions_count = 0 
+    count = Product.where(language: lang).count()
+    p "language: #{lang}, count: #{count}"
+    pack = 100
+    max = count / pack     
+    (0..max).each do |i|
+      skip = i * pack
+      products = Product.where(language: "Java").skip(skip).limit(pack)
+      products.each do |product|
+        versions_count = versions_count + product.versions.count
+        p "#{versions_count}"
+      end
+    end
+    versions_count
+  end
+
+  ########### VERSIONS END ########################
+
 
   def dependencies(scope)
     scope = main_scope if scope == nil 
@@ -394,24 +577,10 @@ class Product
     return merged_hash
   end
   
-  def wouldbenewest?(version)
-    current = get_newest_version_by_natural_order
-    return false if current.eql? version
-    newest = Naturalsorter::Sorter.get_newest_version(current, version) 
-    return true if newest.eql? version
-    return false
-  end
   
-  def get_version(searched_version)
-    versions.each do |version|
-      return version if version.version.eql?(searched_version)
-    end
-    nil
-  end 
   
-  def versions_empty?
-    versions.nil? || versions.size == 0 ? true : false
-  end
+
+
 
   def self.random_product
     size = Product.count - 7
@@ -428,58 +597,7 @@ class Product
   
   def self.get_hotest( count )
     Product.all().desc(:followers).limit( count )
-  end
-  
-  def update_version_data
-    return if self.versions.nil? || self.versions.length < 2
-    
-    versions = get_natural_sorted_versions
-    version = versions.first
-    
-    if version.mistake == true 
-      p " -- mistake #{self.name} with version #{version.version}"
-      return 
-    end
-    
-    return if version.version.eql?(self.version)
-      
-    self.version = version.version
-    self.version_link = version.link
-    self.save
-    p " udpate #{self.name} with version #{self.version}"
-  rescue
-    p " -- ERROR -- something went wrong --- "
-  end
-  
-  def self.update_version_data_global
-    count = Product.count()
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.all().skip(skip).limit(pack)
-      products.each do |product|
-        product.update_version_data
-      end
-    end
-  end
-
-  def self.count_versions(lang)
-    versions_count = 0 
-    count = Product.where(language: lang).count()
-    p "language: #{lang}, count: #{count}"
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.where(language: "Java").skip(skip).limit(pack)
-      products.each do |product|
-        versions_count = versions_count + product.versions.count
-        p "#{versions_count}"
-      end
-    end
-    versions_count
-  end
+  end  
 
   def self.update_name_downcase_global
     products = Product.where(name_downcase: nil)
@@ -605,6 +723,16 @@ class Product
       element.text = dep.name
       if dep.version_for_label && !dep.version_for_label.empty? 
         element.text += ":#{dep.version_for_label}"
+      end
+    end
+
+    def get_newest_or_value(newest, value)
+      if newest.nil?
+        version = Version.new 
+        version.version = value  
+        return version
+      else 
+        return newest  
       end
     end
 

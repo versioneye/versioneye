@@ -105,8 +105,12 @@ class User
     if !self.verification.nil? && self.deleted != true
       UserMailer.verification_email_reminder(self, self.verification, self.email).deliver
     end
-  rescue 
+  rescue => e 
     p "ups. Something went wrong for #{self.fullname}"
+    p "ERROR #{e}"
+    e.backtrace.each do |message| 
+      p " - #{message}"
+    end
   end
 
   def plan
@@ -154,13 +158,21 @@ class User
     User.find( id )
   rescue => e
     logger.error "-- ERROR user with id #{id} not found! -- #{e}"
+    p "ERROR #{e}"
+    e.backtrace.each do |message| 
+      p " - #{message}"
+    end
     nil
   end
 
   def self.find_by_ids( ids )
     User.all(conditions: {:_id.in => ids})
-  rescue
+  rescue => e
     logger.error "-- ERROR user with id #{id} not found! --"
+    p "ERROR #{e}"
+    e.backtrace.each do |message| 
+      p " - #{message}"
+    end
     nil
   end
 

@@ -9,14 +9,17 @@ class Projectdependency
   field :name, type: String
   field :group_id, type: String
   field :artifact_id, type: String
-  field :version, type: String          # highest parsed version from the uploaded file
-  field :version_label, type: String    # optinal label
-  field :current_version, type: String  # current version from product (database)
+  
+  field :version_current, type: String    # the newest version from the database
+  field :version_requested, type: String  # locked version 
+  field :version_label, type: String      # the version number from the Gemfile    
+  field :comperator, type: String, :default => "="
+  field :scope, type: String, :default => "compile"
+  
   field :prod_key, type: String
   field :prod_type, type: String
   field :outdated, type: Boolean
-  field :comperator, type: String, :default => "="
-  field :scope, type: String, :default => "compile"
+  
   
   def get_product
     if !self.prod_key.nil?
@@ -34,49 +37,28 @@ class Projectdependency
   def is_outdated?
     return false if self.prod_key.nil?     
     product = get_product
-    self.current_version = product.version
-    self.save()
-
-    if self.comperator.nil? 
-      self.comperator = "="
+    if !self.version_current.eql?(product.version)
+      self.version_current = product.version
+      self.save()
     end
-    
-    if self.comperator.eql?("=") || self.comperator.eql?("==")
-      if (self.current_version && self.current_version.strip.eql?(version.strip)) || product.wouldbenewest?(version.strip)
-        return false
-      end
-    elsif self.comperator.eql?(">=")
-      newest = Naturalsorter::Sorter.sort_version([version, product.version]).last
-      if (self.current_version && self.current_version.eql?(version)) || product.wouldbenewest?(version) || newest.eql?(product.version)
-        return false
-      end
-    elsif self.comperator.eql?(">")
-      newest = Naturalsorter::Sorter.sort_version([version, product.version]).last
-      if newest.eql?(product.version)
-        return false
-      end
-    elsif self.comperator.eql?("~>") || self.comperator.eql?("~")
-      if Naturalsorter::Sorter.is_version_current?(version, product.version)
-        return false
-      end
+    if self.version_requested.eql?(self.version_current)
+      return false
+    else 
+      newest_version = Naturalsorter::Sorter.sort_version([self.version_current, self.version_requested]).last
+      return false if newest_version.eql?(version_requested)
+      return true
     end
-    
-    return true
   end
   
   def update_outdated
-    if is_outdated? 
-      self.outdated = true
-    else 
-      self.outdated = false
-    end
+    self.outdated = is_outdated? 
   end
 
   def version_lbl
     if version_label
       version_label
     else
-      version
+      version_requested
     end
   end
 

@@ -272,6 +272,27 @@ describe Product do
     end
     
   end
+
+  describe "static get_newest_version_by_natural_order" do 
+
+    it "returns the correct version" do 
+      versions = Array.new 
+      version1 = Version.new
+      version1.version = "1.22"
+      versions.push(version1)
+      
+      version2 = Version.new
+      version2.version = "1.229"
+      versions.push(version2)
+      
+      version3 = Version.new
+      version3.version = "1.30"
+      versions.push(version3)
+
+      Product.get_newest_version_by_natural_order(versions).version.should eql("1.229")
+    end
+
+  end
   
   describe "get_links" do
     
@@ -376,6 +397,45 @@ describe Product do
       @product.wouldbenewest?("1.10").should be_true
     end
     
+  end
+
+  describe "get_versions_start_with" do
+
+    it "returns an empty array" do 
+      @product.versions = nil 
+      @product.get_versions_start_with("1.0").should eql([])
+    end 
+
+    it "returns the correct array" do 
+      version = Version.new 
+      version.version = "1.1"
+      version2 = Version.new 
+      version2.version = "1.2"
+      version3 = Version.new 
+      version3.version = "1.3"
+      version4 = Version.new 
+      version4.version = "2.0"
+      @product.versions.push(version)
+      @product.versions.push(version2)
+      @product.versions.push(version3)
+      @product.versions.push(version4)
+      results = @product.get_versions_start_with("1")
+      results.size.should eql(3)
+      results.first.version.should eql(version.version)
+      results.last.version.should eql(version3.version)
+    end 
+
+  end
+
+  describe "get_approximately_greater_than_starter" do 
+
+    it "returns the given value" do 
+      Product.get_approximately_greater_than_starter("1.0").should eql("1.")
+    end
+    it "returns the given value" do 
+      Product.get_approximately_greater_than_starter("1.2").should eql("1.2.")
+    end
+
   end
 
 end

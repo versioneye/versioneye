@@ -183,7 +183,11 @@ class User::ProjectsController < ApplicationController
 
     def get_message( projects )
       projects['message']
-    rescue 
+    rescue => e
+      p "ERROR #{e}"
+      e.backtrace.each do |message| 
+        p " - #{message}"
+      end
       nil
     end
 
@@ -196,8 +200,11 @@ class User::ProjectsController < ApplicationController
         end
       end
       return false
-    rescue 
-      p "ERROR in is_private_project"
+    rescue => e
+      p "ERROR in is_private_project - #{e}"
+      e.backtrace.each do |message| 
+        p " - #{message}"
+      end
       return false
     end
 

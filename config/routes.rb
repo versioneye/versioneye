@@ -13,6 +13,8 @@ Versioneye::Application.routes.draw do
 
   get   '/auth/facebook/callback', :to => 'facebook#callback'
 
+  get   '/cloudcontrol/resources', :to => 'cloudcontrol#resources'
+
   
   resources :sessions, :only => [:new, :create, :destroy]
   get    '/signin',                :to => 'sessions#new'

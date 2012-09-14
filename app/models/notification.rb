@@ -75,8 +75,12 @@ class Notification
   def self.send_newsletter_for_user(user)
     p "send notifications for user #{user.fullname} start"
     NewsletterMailer.newsletter_email(user).deliver
-  rescue
+  rescue => e
     p "An error occured. E-Mail inactive: #{user.fullname} - #{user.email}"
+    p "ERROR #{e}"
+    e.backtrace.each do |message| 
+      p " - #{message}"
+    end
   end
 
 end
