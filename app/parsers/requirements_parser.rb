@@ -9,7 +9,6 @@ class RequirementsParser
     
     response = CommonParser.fetch_response(url)
     txt = response.body
-    
     return nil if txt.nil?
     
     project = Project.new
@@ -62,6 +61,8 @@ class RequirementsParser
     end
   end
 
+  # It is important that this method is not writing int the database! 
+  #
   def self.parse_requested_version(splitter, version, dependency, product)
     if (version.nil? || version.empty?)
       CommonParser.update_requested_with_current(dependency, product)
@@ -71,35 +72,44 @@ class RequirementsParser
     version = version.gsub('"', '')
     version = version.gsub("'", "")
     dependency.version_label = version
+    
     if product.nil? 
       dependency.version_requested = version
+    
     elsif splitter.match(/^==/)
       # Equals
       dependency.version_requested = version
+    
     elsif splitter.match(/^!=/)
       # Not equal to version
       newest_version = product.get_newest_but_not(version)
       dependency.version_requested = newest_version
+    
     elsif splitter.match(/^>=/)
       # Greater than or equal to
       newest_version = product.get_greater_than_or_equal(version)
       dependency.version_requested = newest_version.version
+    
     elsif splitter.match(/^>/)
       # Greater than version
       newest_version = product.get_greater_than(version)
       dependency.version_requested = newest_version.version
+    
     elsif splitter.match(/^<=/)
       # Less than or equal to
       newest_version = product.get_smaller_than_or_equal(version)
       dependency.version_requested = newest_version.version
+    
     elsif version.match(/^\</)
       # Less than version
       newest_version = product.get_smaller_than(version)
       dependency.version_requested = newest_version.version
+    
     else
       dependency.version_requested = version
       dependency.comperator = "=="
     end
+    
   end
   
   def self.get_splitter line

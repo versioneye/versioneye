@@ -48,6 +48,8 @@ class GemfileParser
     project
   end
 
+  # It is important that this method is not writing into the database! 
+  #
   def self.parse_requested_version(version, dependency, product)
     if (version.nil? || version.empty?)
       CommonParser.update_requested_with_current(dependency, product)
@@ -56,9 +58,11 @@ class GemfileParser
     version = version.strip
     version = version.gsub('"', '')
     version = version.gsub("'", "")
+
     if product.nil? 
       dependency.version_requested = version
       dependency.version_label = version
+    
     elsif version.match(/^=/)
       # Equals
       version.gsub!("=", "")
@@ -66,6 +70,7 @@ class GemfileParser
       dependency.version_requested = version
       dependency.version_label = version
       dependency.comperator = "="
+    
     elsif version.match(/^!=/)
       # Not equal to version
       version.gsub!("!=", "")
@@ -74,6 +79,7 @@ class GemfileParser
       dependency.version_requested = newest_version
       dependency.comperator = "!="
       dependency.version_label = version
+    
     elsif version.match(/^>=/)
       # Greater than or equal to
       version.gsub!(">=", "")
@@ -82,6 +88,7 @@ class GemfileParser
       dependency.version_requested = newest_version.version
       dependency.comperator = ">="
       dependency.version_label = version
+    
     elsif version.match(/^>/)
       # Greater than version
       version.gsub!(">", "")
@@ -90,6 +97,7 @@ class GemfileParser
       dependency.version_requested = newest_version.version
       dependency.comperator = ">"
       dependency.version_label = version
+    
     elsif version.match(/^<=/)
       # Less than or equal to
       version.gsub!("<=", "")
@@ -98,6 +106,7 @@ class GemfileParser
       dependency.version_requested = newest_version.version
       dependency.comperator = "<="
       dependency.version_label = version
+    
     elsif version.match(/^\</)
       # Less than version
       version.gsub!("\<", "")
@@ -106,6 +115,7 @@ class GemfileParser
       dependency.version_requested = newest_version.version
       dependency.comperator = "<"
       dependency.version_label = version
+    
     elsif version.match(/^~>/)
       # Approximately greater than -> Pessimistic Version Constraint
       ver = version.gsub("~>", "")
@@ -120,11 +130,13 @@ class GemfileParser
       end
       dependency.comperator = "~>"
       dependency.version_label = ver
+    
     else
       dependency.version_requested = version
       dependency.comperator = "="
       dependency.version_label = version
     end
+    
   end
   
 end

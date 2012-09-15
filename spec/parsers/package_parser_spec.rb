@@ -320,28 +320,4 @@ describe PackageParser do
     
   end
   
-  describe "get_splitter" do 
-    
-    it "returns the right splitt ==" do 
-      RequirementsParser.get_splitter("django==1.0").should eql("==")
-    end
-    
-    it "returns the right splitt <" do 
-      RequirementsParser.get_splitter("django<1.0").should eql("<")
-    end
-    
-    it "returns the right splitt <=" do 
-      RequirementsParser.get_splitter("django<=1.0").should eql("<=")
-    end
-    
-    it "returns the right splitt >" do 
-      RequirementsParser.get_splitter("django>1.0").should eql(">")
-    end
-    
-    it "returns the right splitt >=" do 
-      RequirementsParser.get_splitter("django>=1.0").should eql(">=")
-    end
-
-  end
-  
 end

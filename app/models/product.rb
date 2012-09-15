@@ -387,57 +387,62 @@ class Product
     result
   end
 
-  def get_newest_but_not(value)
+  def get_newest_but_not(value, range=false)
     filtered_versions = Array.new
     versions.each do |version|
       if !version.version.match(/^#{value}/)
         filtered_versions.push(version)
       end
     end
+    return filtered_versions if range
     newest = Product.get_newest_version_by_natural_order(filtered_versions)
     return get_newest_or_value(newest, value)
   end
 
-  def get_greater_than(value)
+  def get_greater_than(value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.bigger?(version.version, value)
         filtered_versions.push(version)
       end
     end
+    return filtered_versions if range 
     newest = Product.get_newest_version_by_natural_order(filtered_versions)
     return get_newest_or_value(newest, value)
   end
 
-  def get_greater_than_or_equal(value)
+  def get_greater_than_or_equal(value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.bigger_or_equal?(version.version, value)
         filtered_versions.push(version)
       end
     end
+    return filtered_versions if range 
     newest = Product.get_newest_version_by_natural_order(filtered_versions)
     return get_newest_or_value(newest, value)
   end
 
-  def get_smaller_than(value)
+  def get_smaller_than(value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.smaller?(version.version, value)
         filtered_versions.push(version)
       end
     end
+    return filtered_versions if range 
     newest = Product.get_newest_version_by_natural_order(filtered_versions)
     return get_newest_or_value(newest, value)
   end
 
-  def get_smaller_than_or_equal(value)
+  def get_smaller_than_or_equal(value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.smaller_or_equal?(version.version, value)
         filtered_versions.push(version)
       end
     end
+    return filtered_versions if range
     newest = Product.get_newest_version_by_natural_order(filtered_versions)
     return get_newest_or_value(newest, value)
   end

@@ -9,6 +9,8 @@ class PomParser
       
       response = CommonParser.fetch_response(url)
       doc = Nokogiri::XML( response.body )
+      return nil if doc.nil?
+
       doc.remove_namespaces!
       return nil if doc.nil?
 
