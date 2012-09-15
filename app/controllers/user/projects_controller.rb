@@ -12,20 +12,15 @@ class User::ProjectsController < ApplicationController
   end
   
   def create
-    project_name = params[:project][:name]
-    if project_name.nil? || project_name.empty? 
-      flash[:error] = "The Name is mandatory. Please choose a name."
-      redirect_to new_user_project_path
-      return nil
-    end
-
     file = params[:upload]
     project_url = params[:project][:url]
     github_project = params[:github_project]
     
     if file && !file.empty?
+      project_name = file['datafile'].original_filename
       filename = Project.upload_to_s3( file )
       url = Project.get_project_url_from_s3( filename )
+      p "url: #{url}"
       project_type = get_project_type( url )
       project_type = "Maven2" if project_type.nil?
       project = create_project(project_type, url, project_name)
@@ -35,6 +30,7 @@ class User::ProjectsController < ApplicationController
     elsif project_url && !project_url.empty?
       project_type = get_project_type( project_url )
       project_type = "Maven2" if project_type.nil?
+      project_name = project_url.split("/").last
       project = create_project(project_type, project_url, project_name)
       project.source = "url"
       store_project(project)
@@ -53,7 +49,7 @@ class User::ProjectsController < ApplicationController
         return nil    
       end
       s3_infos = Project.fetch_file_from_github(project_info['url'], current_user.github_token, project_info['name'])
-      project = create_project(project_info['type'], s3_infos['s3_url'], project_name)
+      project = create_project(project_info['type'], s3_infos['s3_url'], project_info['name'])
       project.source = "github"
       project.s3_filename = s3_infos['filename']
       project.github_project = github_project

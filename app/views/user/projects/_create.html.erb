@@ -9,22 +9,12 @@
 	
 </div>
 
-<div class="formCel" style="margin-top: 20px;">
+<div class="formCel" style="margin-top: 0px;">
 	<%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
-	    <div class="div-row">
-	      <div class="labelCel">
-	        <%= f.label :name %>
-	      </div>
-	      <div class="inputCel">
-	        <%= f.text_field :name, :class => "round" %>
-	      </div>
-	    </div>
-		<div class="div-row">
-	      <div class="labelCel" style="vertical-align: top; padding-top: 5px;">
-	        <label>File</label>
-	      </div>
-	      <div class="inputCel">
-			<div style="padding-top:10px; padding-bottom: 10px;">Supported files are pom.xml, Gemfile, requirements.txt and package.json.</div>
+		<div class="div-row" >
+			<div style="padding-bottom: 10px;">
+				Supported files are <b>pom.xml</b>, <b>Gemfile</b>, <b>requirements.txt</b>, <b>package.json</b> and <b>composer.json</b>.
+			</div>
 			<div id="tabs" style="width: 490px;">
 				<ul>
 					<li><a href="#tabs-upload">Upload</a></li>
@@ -55,14 +45,12 @@
 						</div>
 					<% end %>
 				</div>
-			</div>			
-	      </div>
+			</div>
 	    </div>
-		<div class="div-row">
-	      <div class="labelCel"></div>
-	      <div class="inputCel" style="padding-top: 20px;">
-	        <button type="submit" class="btn btn-large btn-primary" >Create</button>
-	      </div>
+		<div class="div-row" >
+			<div style="padding-top: 10px;">
+				<button type="submit" class="btn btn-large btn-primary" >Create</button>
+			</div>
 	    </div>
 	<% end %>
 </div>

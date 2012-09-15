@@ -16,7 +16,8 @@ class CommonParser
       end      
     end
     path = uri.path
-    http.get(path)
+    query = uri.query
+    http.get("#{path}?#{query}")
   rescue => e 
     p "#{e}"
     e.backtrace.each do |message|
