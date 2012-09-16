@@ -26,4 +26,16 @@ class ProductFactory
 		product
 	end
 
+	def self.create_for_gemfile(name, version)
+		product = Product.new
+		product.name = name
+		product.name_downcase = name.downcase
+		product.prod_key = name
+		version_obj = Version.new
+		version_obj.version = version
+		product.versions.push(version_obj)
+		product.version = version
+		product
+	end
+
 end
