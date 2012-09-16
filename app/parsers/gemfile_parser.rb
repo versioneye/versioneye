@@ -30,9 +30,14 @@ class GemfileParser
       dependency.name = package
       
       product = Product.find_by_key(package)
+      if product.nil? 
+        product = Product.find_by_key_case_insensitiv(package)
+      end
       if product 
         dependency.prod_key = product.prod_key 
         dependency.version_current = product.version
+      else 
+        project.unknown_number = project.unknown_number + 1
       end
       
       version = line_elements[1]

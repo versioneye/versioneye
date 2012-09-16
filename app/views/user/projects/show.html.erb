@@ -9,18 +9,17 @@
 		<%= @project.name %>
 	</div>
 	<div class="boxContainer" >
+		<div style="font-size: 16px; margin-bottom: 5px;">
+			<%= pluralize(@project.dep_number, "Dependency") %>, 
+			<span style="color: <%= outdated_color(@project)%>; font-weight: bold;" ><%= @project.out_number %> Outdated</span>, 
+			<span style="color: <%= unknown_color(@project)%>; font-weight: bold;" ><%= @project.unknown_number %> Unknown</span>
+		</div>
 		<div style="font-size: 16px; margin-bottom: 30px;">
-			<ul class="list-row">
-				<li class="list-cell">
-					<%= pluralize(@project.dep_number, "Dependency") %>, <span style="color: <%= outdated_color(@project)%>; font-weight: bold;" ><%= @project.out_number %> Outdated</span>
-				</li>
-				<li class="list-cell" style="padding-left: 199px;">
-					<form action="<%= user_project_path(@project) %>" method="post" >
-						<input name="_method" type="hidden" value="delete" />
-						<button class="btn btn-danger btn-mini" onClick="return confirmAction()" >Delete this project</button>
-					</form>
-				</li>
-			</ul>
+			Source: <%= @project.source %> 
+			<% if @project.source.eql?("url") %>
+				<br/>
+				<span style="font-size: 12px;" >(<%= @project.url %>)</span>
+			<% end %>
 		</div>
 		<form action="<%= save_period_user_project_path(@project) %>" method="post" >
 		<div class="div-row" >
@@ -50,6 +49,17 @@
 			</div>
 		</div>
 		</form>
+		<div class="div-row">
+			<div class="div-cell labelCelBig">
+
+			</div>
+			<div class="div-cell inputCel">
+				<form action="<%= user_project_path(@project) %>" method="post" style="padding-top: 5px;">
+					<input name="_method" type="hidden" value="delete" />
+					<button class="btn btn-danger btn-mini" onClick="return confirmAction()" >Delete this project</button>
+				</form>
+			</div>
+		</div>
 	</div>
 	<div class="dependencies" id="dependencies" >
 		<% if !@project.fetch_dependencies.nil? %>

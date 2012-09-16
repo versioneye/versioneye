@@ -5,6 +5,11 @@ module ProjectsHelper
 		return "green"
 	end
 
+	def unknown_color(project)
+		return "orange" if project.unknown_number > 0 
+		return ""
+	end
+
 	def get_project_type(orig_filename)
 		project_type = nil
 		if orig_filename.match(/Gemfile/)

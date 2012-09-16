@@ -17,6 +17,8 @@ class PomParser
       project = Project.new
       project.dependencies = Array.new
 
+      project.name = doc.xpath('//project/name').text
+
       properties = fetch_properties( doc )
 
       doc.xpath('//dependencies/dependency').each do |node|
@@ -53,6 +55,8 @@ class PomParser
         if dependency.version_requested.nil? 
           dependency.version_requested = product.version
         end
+      else 
+        project.unknown_number = project.unknown_number + 1
       end
       
       dependency.update_outdated

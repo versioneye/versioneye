@@ -20,7 +20,6 @@ class User::ProjectsController < ApplicationController
       project_name = file['datafile'].original_filename
       filename = Project.upload_to_s3( file )
       url = Project.get_project_url_from_s3( filename )
-      p "url: #{url}"
       project_type = get_project_type( url )
       project_type = "Maven2" if project_type.nil?
       project = create_project(project_type, url, project_name)
@@ -161,7 +160,9 @@ class User::ProjectsController < ApplicationController
     def create_project( project_type, url, project_name )
       project = Project.create_from_file( project_type, url )
       project.user_id = current_user.id.to_s
-      project.name = project_name
+      if project.name.nil? || project.name.empty?
+        project.name = project_name
+      end
       project.project_type = project_type
       project.url = url
       project

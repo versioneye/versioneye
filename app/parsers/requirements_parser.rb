@@ -42,6 +42,8 @@ class RequirementsParser
       end
       if product
         dependency.prod_key = product.prod_key
+      else 
+        project.unknown_number = project.unknown_number + 1
       end
       
       parse_requested_version(splitter, version, dependency, product)

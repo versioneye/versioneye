@@ -16,6 +16,7 @@ class Project
   field :github_project, type: String
   field :dep_number, type: Integer
   field :out_number, type: Integer, default: 0
+  field :unknown_number, type: Integer, default: 0
   
   attr_accessor :dependencies
   
