@@ -62,6 +62,11 @@ class User::ProjectsController < ApplicationController
 
     redirect_to user_projects_path
   end
+
+  def show
+    id = params[:id]
+    @project = Project.find_by_id(id)
+  end
   
   def destroy
     id = params[:id]
@@ -75,6 +80,14 @@ class User::ProjectsController < ApplicationController
     end
     project.remove
     redirect_to user_projects_path
+  end
+
+  def reparse
+    id = params[:id]
+    @project = Project.find_by_id(id)
+    Project.process_project( @project )
+    flash[:info] = "Project re parse is done."
+    redirect_to user_project_path(@project)
   end
 
   def github_projects
@@ -111,11 +124,6 @@ class User::ProjectsController < ApplicationController
         render :json => "[#{resp}]"
       }
     end
-  end
-
-  def show
-    id = params[:id]
-    @project = Project.find_by_id(id)
   end
 
   def save_period

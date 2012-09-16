@@ -100,6 +100,7 @@ Versioneye::Application.routes.draw do
       member do 
         post 'save_period'
         post 'save_email'
+        post 'reparse'
       end
     end
   end

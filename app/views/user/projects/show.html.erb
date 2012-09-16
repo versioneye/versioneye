@@ -15,11 +15,25 @@
 			<span style="color: <%= unknown_color(@project)%>; font-weight: bold;" ><%= @project.unknown_number %> Unknown</span>
 		</div>
 		<div style="font-size: 16px; margin-bottom: 30px;">
-			Source: <%= @project.source %> 
-			<% if @project.source.eql?("url") %>
-				<br/>
-				<span style="font-size: 12px;" >(<%= @project.url %>)</span>
-			<% end %>
+			<div>
+				Source: <%= @project.source %> 
+				<% if @project.source.eql?("url") %>
+					<span style="font-size: 12px;" >(<%= @project.url %>)</span>
+				<% end %>
+			</div>
+			<div class="div-row">
+				<div class="div-cell">
+					<form action="<%= reparse_user_project_path(@project) %>" method="post" style="padding-top: 5px;">
+						<button class="btn btn-success btn-mini">Re Parse Now</button>
+					</form>
+				</div>
+				<div class="div-cell" style="padding-left: 5px;">
+					<form action="<%= user_project_path(@project) %>" method="post" style="padding-top: 5px;">
+						<input name="_method" type="hidden" value="delete" />
+						<button class="btn btn-danger btn-mini" onClick="return confirmAction()" >Delete this project</button>
+					</form>
+				</div>
+			</div>
 		</div>
 		<form action="<%= save_period_user_project_path(@project) %>" method="post" >
 		<div class="div-row" >
@@ -49,17 +63,6 @@
 			</div>
 		</div>
 		</form>
-		<div class="div-row">
-			<div class="div-cell labelCelBig">
-
-			</div>
-			<div class="div-cell inputCel">
-				<form action="<%= user_project_path(@project) %>" method="post" style="padding-top: 5px;">
-					<input name="_method" type="hidden" value="delete" />
-					<button class="btn btn-danger btn-mini" onClick="return confirmAction()" >Delete this project</button>
-				</form>
-			</div>
-		</div>
 	</div>
 	<div class="dependencies" id="dependencies" >
 		<% if !@project.fetch_dependencies.nil? %>
