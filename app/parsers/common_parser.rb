@@ -7,13 +7,13 @@ class CommonParser
     url = CommonParser.do_replacements_for_github( url )
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
-    if uri.port == 443 
+    if uri.port == 443
       http.use_ssl = true
       if File.exist?(@@curl_ca_bundle)
         http.ca_file = @@curl_ca_bundle
       elsif File.exist?(@@ca_certificates)
         http.ca_file = @@ca_certificates
-      end      
+      end
     end
     path = uri.path
     query = uri.query
