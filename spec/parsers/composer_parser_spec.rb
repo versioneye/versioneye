@@ -144,6 +144,7 @@ describe ComposerParser do
       dep_09.name.should eql("twig/twig")
       dep_09.version_requested.should eql("1.9.9")
       dep_09.version_current.should eql("2.0.0")
+      dep_09.version_label.should eql(">=1.9.1,<2.0.0")
       dep_09.comperator.should eql("=")
 
       dep_10 = project.dependencies[9]

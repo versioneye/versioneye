@@ -55,19 +55,19 @@ class Projectdependency
   end
 
   def version_lbl
-    if version_label
-      version_label
-    else
+    # if version_label
+    #   version_label
+    # else
       version_requested
-    end
+    # end
   end
 
   def comperator_lbl
-    if version_label && version_label.match(/.x$/)
+    # if version_label && version_label.match(/.x$/)
       "="
-    else
-      comperator
-    end
+    # else
+    #   comperator
+    # end
   end
   
 end

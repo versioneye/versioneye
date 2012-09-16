@@ -1,9 +1,11 @@
 
 <% if @project %> 
 	<div class="content" style="margin-left: 115px;">
-		<h2 style="padding-bottom: 10px;">
-			<span class=""><%= @project.dep_number %> Dependencies, <span style="color: <%= outdated_color(@project) %>" ><%= @project.out_number %></span> Outdated</span>
-		</h2>
+		<div style="font-size: 16px; margin-bottom: 20px;">
+			<%= pluralize(@project.dep_number, "Dependency") %>, 
+			<span style="color: <%= outdated_color(@project)%>; font-weight: bold;" ><%= @project.out_number %> Outdated</span>, 
+			<span style="color: <%= unknown_color(@project)%>; font-weight: bold;" ><%= @project.unknown_number %> Unknown</span>
+		</div>
 		<div class="dependencies" id="dependencies" >
 			<% if !@project.fetch_dependencies.nil? %>
 				<% @project.dependencies.each do |dep| %>
