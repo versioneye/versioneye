@@ -130,9 +130,12 @@ describe GemfileParser do
       product8.versions.push(version8_3)
       product8.save
 
+      product9 = ProductFactory.create_for_gemfile("cucumber-rails", "1.0.0")
+      product9.save
+
       project = GemfileParser.parse("http://s3.amazonaws.com/veye_test_env/Gemfile")
       project.should_not be_nil
-      project.dependencies.count.should eql(8)
+      project.dependencies.count.should eql(9)
       
       dep_1 = project.dependencies.first
       dep_1.name.should eql("rails")
@@ -180,11 +183,17 @@ describe GemfileParser do
       dep_7.version_label.should eql("3.2.0")
       dep_7.comperator.should eql("~>")
 
-      dep_last = project.dependencies.last
-      dep_last.name.should eql("sass-rails")
-      dep_last.version_requested.should eql("3.2.9")
-      dep_last.version_current.should eql("3.3.9")
-      dep_last.comperator.should eql("~>")
+      dep_8 = project.dependencies[7]
+      dep_8.name.should eql("sass-rails")
+      dep_8.version_requested.should eql("3.2.9")
+      dep_8.version_current.should eql("3.3.9")
+      dep_8.comperator.should eql("~>")
+
+      dep_9 = project.dependencies[8]
+      dep_9.name.should eql("cucumber-rails")
+      dep_9.version_requested.should eql("1.0.0")
+      dep_9.version_current.should eql("1.0.0")
+      dep_9.comperator.should eql("=")
 
       product.remove
       product2.remove
@@ -194,6 +203,7 @@ describe GemfileParser do
       product6.remove
       product7.remove
       product8.remove
+      product9.remove
     end
     
   end

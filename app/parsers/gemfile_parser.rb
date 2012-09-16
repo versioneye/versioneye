@@ -135,6 +135,11 @@ class GemfileParser
       end
       dependency.comperator = "~>"
       dependency.version_label = ver
+
+    elsif version.match(/^require/)
+      dependency.version_requested = product.version
+      dependency.version_label = product.version
+      dependency.comperator = "="
     
     else
       dependency.version_requested = version
