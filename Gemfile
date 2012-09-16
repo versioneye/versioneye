@@ -17,7 +17,7 @@ gem 'oauth', '0.4.7'
 gem 'twitter_oauth', '0.4.3'
 gem 'aws-s3', '0.6.3', :require => 'aws/s3'
 gem 'nokogiri', '1.5.5'
-gem 'stripe', '1.7.2'
+gem 'stripe', '1.7.3'
 gem 'thin', '1.4.1'
 # gem 'tire'
 
