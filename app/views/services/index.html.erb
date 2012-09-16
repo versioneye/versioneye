@@ -13,24 +13,29 @@
 	</div>
 	<div class="div-row">
 		<div class="div-cell project-types-cell project-types-header">
-			<div class="java" style="margin-left: 62px;" 
+			<div class="java" style="margin-left: 48px;" 
 				 id="java_icon" 
 				 title = "Java" itemprop = "image" ></div>
 		</div>
 		<div class="div-cell project-types-cell project-types-header">
-			<div class="ruby"  style="margin-left: 62px;"
+			<div class="ruby"  style="margin-left: 48px;"
 				 id="ruby_icon" 
 				 title = "Ruby" itemprop = "image" ></div>
 		</div>
 		<div class="div-cell project-types-cell project-types-header">
-			<div class="python"  style="margin-left: 62px;"
+			<div class="python"  style="margin-left: 48px;"
 				 id="python_icon" 
 				 title = "Python" itemprop = "image" ></div>
 		</div>
 		<div class="div-cell project-types-cell project-types-header">
-			<div class="node_js" style="margin-left: 62px;"
+			<div class="node_js" style="margin-left: 48px;"
 				 id="node_js_icon"
 				 title = "Node.JS" itemprop = "image" ></div>
+		</div>
+		<div class="div-cell project-types-cell project-types-header">
+			<div class="php" style="margin-left: 48px;"
+				 id="node_js_icon"
+				 title = "PHP" itemprop = "image" ></div>
 		</div>
 	</div>	
 	<div class="div-row">
@@ -46,6 +51,9 @@
 		<div class="div-cell project-types-cell project-types-header">
 			Node.JS
 		</div>
+		<div class="div-cell project-types-cell project-types-header">
+			PHP
+		</div>
 	</div>	
 	<div class="div-row">
 		<div class="div-cell project-types-cell">
@@ -60,6 +68,9 @@
 		<div class="div-cell project-types-cell">
 			package.json files from NPM are supported.
 		</div>
+		<div class="div-cell project-types-cell">
+			composer.json files from packagist.org are supported.
+		</div>
 	</div>
 	<br/>
 </div>
@@ -68,16 +79,16 @@
 		VersionEye is very easy to use
 	</div>
 	<div class="div-row">
-		<div class="div-cell project-types-cell project-types-header">
+		<div class="div-cell project-integration-cell project-types-header">
 			<%= image_tag ("integration/upload.png") %>
 		</div>
-		<div class="div-cell project-types-cell project-types-header">
+		<div class="div-cell project-integration-cell project-types-header">
 			<%= image_tag ("integration/url.png") %>
 		</div>
-		<div class="div-cell project-types-cell project-types-header">
+		<div class="div-cell project-integration-cell project-types-header">
 			<%= image_tag ("integration/github.png") %>
 		</div>
-		<div class="div-cell project-types-cell project-types-header">
+		<div class="div-cell project-integration-cell project-types-header">
 			<%= image_tag ("integration/enterprise.png") %>
 		</div>
 	</div>	
@@ -121,7 +132,7 @@
 	</div>
 	<div class="div-cell">
 		<div class="lp_box" style="text-align: left;" >
-			Upload your file (pom.xml, Gemfile, requirements.txt, package.json)
+			Upload your file (pom.xml, Gemfile, requirements.txt, package.json, composer.json)
 		</div>
 		<div  style="text-align: left;">
 			<%= form_for services_path, :html => {:multipart => true, :accept => "text/xml" } do |f|  %>

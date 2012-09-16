@@ -154,7 +154,7 @@ class User::ProjectsController < ApplicationController
   private 
 
     def language_supported?(lang)
-      lang.eql?('Java') || lang.eql?('Ruby') || lang.eql?('Python') || lang.eql?('Node.JS') || lang.eql?("CoffeeScript") || lang.eql?("JavaScript")
+      lang.eql?('Java') || lang.eql?('Ruby') || lang.eql?('Python') || lang.eql?('Node.JS') || lang.eql?("CoffeeScript") || lang.eql?("JavaScript") || lang.eql?("PHP")
     end
 
     def create_project( project_type, url, project_name )
