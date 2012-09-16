@@ -48,7 +48,7 @@ class User::ProjectsController < ApplicationController
         return nil    
       end
       s3_infos = Project.fetch_file_from_github(project_info['url'], current_user.github_token, project_info['name'])
-      project = create_project(project_info['type'], s3_infos['s3_url'], project_info['name'])
+      project = create_project(project_info['type'], s3_infos['s3_url'], github_project)
       project.source = "github"
       project.s3_filename = s3_infos['filename']
       project.github_project = github_project
