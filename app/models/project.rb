@@ -108,6 +108,7 @@ class Project
       Project.save_dependencies(project, new_project.dependencies)
       project.out_number = new_project.out_number
       project.dep_number = new_project.dep_number
+      project.unknown_number = new_project.unknown_number
       project.save
       if project.out_number > 0
         ProjectMailer.projectnotification_email(project).deliver
