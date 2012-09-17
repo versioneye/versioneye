@@ -30,7 +30,6 @@ class SettingsController < ApplicationController
   def creditcard
     @page = "cc"
     plan = cookies.signed[:plan_selected]
-    p "plan: #{@plan_name_id}"
     if plan 
       @plan_name_id = plan
     end
@@ -49,6 +48,15 @@ class SettingsController < ApplicationController
 
   def emails
     @user = current_user
+  end
+
+  def notifications
+    @user_notification = current_user.notification_settings
+    if @user_notification.nil?
+      @user_notification = UserNotificationSetting.new 
+      @user_notification.user_id = current_user.id.to_s
+      @user_notification.save
+    end
   end
 
   def disconnect
@@ -200,6 +208,20 @@ class SettingsController < ApplicationController
       user_email.remove
     end
     redirect_to settings_emails_path()
+  end
+
+  def updatenotifications
+    news = params[:general_news]
+    features = params[:new_feature_news]
+    @user_notification = current_user.notification_settings
+    @user_notification.newsletter_news = news 
+    @user_notification.newsletter_features = features
+    if @user_notification.save 
+      flash[:success] = "Your changes have been saved successfully."
+    else 
+      flash[:error] = "An error occured. Please try again later."
+    end
+    redirect_to settings_notifications_path
   end
 
   def make_email_default

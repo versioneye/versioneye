@@ -1,0 +1,46 @@
+<div class="sidebar" >
+
+	<%= render "settings/navi" %>
+
+</div>
+<div class="content">
+
+  <div class="boxHeader">
+	Notification Center
+  </div>
+  <div class="boxContainer">
+	<%= form_tag("/settings/updatenotifications", :method => "post") do  %>    
+
+		<div class="div-row">
+			<div class="labelCel" style="vertical-align: top; width: 40px;">
+				<%= check_box_tag "general_news", true, @user_notification.newsletter_news %>
+			</div>
+			<div class="inputCel" style="vertical-align: middle; width: 550px;" >
+				<label for="general_news" style="vertical-align: middle" >
+					I want to receive the Newsletter about general news. 
+				</label>
+			</div>
+		</div>
+
+		<div class="div-row">
+			<div class="labelCel" style="vertical-align: top; width: 40px;">
+				<%= check_box_tag "new_feature_news", true, @user_notification.newsletter_features %>
+			</div>
+			<div class="inputCel" style="vertical-align: middle; width: 550px;" >
+				<label for="new_feature_news" style="vertical-align: middle" >
+					I want to receive the Newsletter about new Features. 
+				</label>
+			</div>
+		</div>
+
+		<div style="display:table-row;">
+			<div class="labelCelBig" style="vertical-align: top; width: 40px;"></div>
+			<div class="inputCel">
+				<button type="submit" class="btn btn-large btn-primary" >Save</button>
+			</div>
+		</div>
+
+	<% end %>
+	</div>
+
+</div>

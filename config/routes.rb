@@ -47,6 +47,7 @@ Versioneye::Application.routes.draw do
   get  '/settings/connect',              :to => 'settings#connect'
   get  '/settings/disconnect/',          :to => 'settings#disconnect'
   get  '/settings/emails/',              :to => 'settings#emails'
+  get  '/settings/notifications/',       :to => 'settings#notifications'
   post '/settings/updateplan',           :to => 'settings#updateplan'
   post '/settings/delete_email',         :to => 'settings#delete_email'
   post '/settings/make_email_default',   :to => 'settings#make_email_default'
@@ -57,6 +58,7 @@ Versioneye::Application.routes.draw do
   post '/settings/updateprivacy',        :to => 'settings#updateprivacy'
   post '/settings/updateprofile',        :to => 'settings#updateprofile'
   post '/settings/updatelinks',          :to => 'settings#updatelinks'
+  post '/settings/updatenotifications',  :to => 'settings#updatenotifications'
   post '/settings/destroy',              :to => 'settings#destroy'
 
   get  '/jobs',          :to => 'jobs#index'

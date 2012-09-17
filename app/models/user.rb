@@ -220,6 +220,10 @@ class User
     ids
   end
 
+  def notification_settings
+    UserNotificationSetting.get_by_user_id(self.id.to_s)
+  end
+
   def image_url
     url = 'http://www.gravatar.com/avatar/'
     url += Digest::MD5.hexdigest(email.strip.downcase)

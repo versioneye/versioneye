@@ -63,24 +63,4 @@ class Notification
     return false
   end
 
-  def self.send_newsletters
-    users = User.all()
-    users.each do |user|
-      if user.deleted != true
-        Notification.send_newsletter_for_user(user)
-      end
-    end
-  end
-
-  def self.send_newsletter_for_user(user)
-    p "send notifications for user #{user.fullname} start"
-    NewsletterMailer.newsletter_email(user).deliver
-  rescue => e
-    p "An error occured. E-Mail inactive: #{user.fullname} - #{user.email}"
-    p "ERROR #{e}"
-    e.backtrace.each do |message| 
-      p " - #{message}"
-    end
-  end
-
 end
