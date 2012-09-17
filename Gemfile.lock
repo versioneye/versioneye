@@ -56,6 +56,7 @@ GEM
     execjs (1.4.0)
       multi_json (~> 1.0)
     gravatar_image_tag (1.1.3)
+    hashr (0.0.22)
     hike (1.2.1)
     httparty (0.9.0)
       multi_json (~> 1.0)
@@ -152,6 +153,12 @@ GEM
       rack (>= 1.0.0)
     thor (0.16.0)
     tilt (1.3.3)
+    tire (0.4.2)
+      activemodel (>= 3.0)
+      hashr (~> 0.0.19)
+      multi_json (~> 1.0)
+      rake
+      rest-client (~> 1.6)
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
@@ -171,6 +178,7 @@ GEM
       rack-test (>= 0.5.3)
     will_paginate (3.0.3)
     xml-simple (1.1.1)
+    yajl-ruby (1.1.0)
     yui-compressor (0.9.6)
       POpen4 (>= 0.1.4)
 
@@ -187,6 +195,7 @@ DEPENDENCIES
   jquery-rails (= 2.0.2)
   mongo (= 1.7.0)
   mongoid (= 2.5.0)
+  multi_json
   naturalsorter (= 0.4.7)
   nokogiri (= 1.5.5)
   oauth (= 0.4.7)
@@ -197,9 +206,11 @@ DEPENDENCIES
   stripe (= 1.7.3)
   therubyracer (= 0.10.1)
   thin (= 1.4.1)
+  tire
   turn
   twitter_oauth (= 0.4.3)
   uglifier
   webrat (= 0.7.3)
   will_paginate (= 3.0.3)
+  yajl-ruby
   yui-compressor (= 0.9.6)

@@ -19,7 +19,9 @@ gem 'aws-s3', '0.6.3', :require => 'aws/s3'
 gem 'nokogiri', '1.5.5'
 gem 'stripe', '1.7.3'
 gem 'thin', '1.4.1'
-# gem 'tire'
+gem 'tire'
+gem 'multi_json'
+gem 'yajl-ruby'
 
 group :assets do
   gem 'sass-rails', "3.2.5"

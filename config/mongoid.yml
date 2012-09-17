@@ -1,12 +1,12 @@
 
 development:
-    host: localhost
-    database: veye_dev
+    host: 192.168.100.10 #localhost
+    database: test #veye_dev
     persist_in_safe_mode: true
 
 test:
-    host: localhost
-    database: veye_test
+    host: 192.168.100.10 #localhost
+    database: test #veye_test
     persist_in_safe_mode: true
 
 production:
