@@ -77,13 +77,16 @@ describe GradleParser do
 
       dependency_01 = project.dependencies.first 
       dependency_01.name.should eql(@product_1.artifact_id)
+      dependency_01.group_id.should eql(@product_1.group_id)
+      dependency_01.artifact_id.should eql(@product_1.artifact_id)
+      dependency_01.prod_key.should eql(@product_1.prod_key)
       dependency_01.version_requested.should eql("4.1.2")
       dependency_01.version_current.should eql(@product_1.version)
       dependency_01.comperator.should eql("=")
       dependency_01.scope.should eql("compile")
 
       dependency_02 = project.dependencies[1]
-	  dependency_02.name.should eql(@product_2.artifact_id)
+      dependency_02.name.should eql(@product_2.artifact_id)
       dependency_02.version_requested.should eql(@product_2.version)
       dependency_02.version_current.should eql(@product_2.version)
       dependency_02.comperator.should eql("=")
