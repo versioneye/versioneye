@@ -211,10 +211,11 @@ class Product
               :prod_type => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
               :version => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
               :followers => {:type => 'integer', :index => 'not_analyzed', :include_in_all => false},
-              :name => {:type => 'string', :analyzer => 'snowball', :boost => 2.0},
+              :name => {:type => 'string', :analyzer => "simpler", 
+                        :filter => ['standard', 'lowercase', 'stop'], :boost => 4.0},
               :description => {:type => 'string', :analyzer => 'snowball'},
               :description_manual => {:type => 'string', :analyzer => 'snowball'},
-              :language => {:type => 'string', :index => 'not_analyzed', :analyzer => 'snowball'},
+              :language => {:type => 'string', :index => 'not_analyzed', :analyzer => 'simple'},
               :group_id => {:type => 'string', :analyzer => 'snowball'}
             }
           }
@@ -251,7 +252,7 @@ class Product
   end
 
   def self.index_all
-    clean_all
+    self.clean_all
     self.elastic_mapping
     r = Tire.index @@index_name do 
       Product.all.each do |doc|  
@@ -280,6 +281,8 @@ class Product
     s = Tire.search(@@index_name) do |search|
       search.size 100        #  Limit record
       search.from 0          #  start offeset
+      #search.sort.by :_score => 'desc', :followers => 'desc'
+
       search.query do |query|
         if q != '*' and group_id != ''
           query.boolean do
@@ -294,7 +297,7 @@ class Product
 
         if langs.size > 0 then
           search.filter :terms, :language => langs.split(',')
-        end
+        end        
       end
     end
     s.results.each {|item| response << item.to_hash}

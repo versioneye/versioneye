@@ -29,14 +29,14 @@ describe Product do
 
 	after :each do		
 		Product.clean_all
-		Product.where(name: @products[0][:name]).delete
+		Product.where().delete
 	end
 
 	describe "new" do 
 		context "with no indexes" do
 			it "#clean_all" do
 				Product.clean_all.should raise_exception
-				Product.clean_all["status"].should equal 404
+				#Product.clean_all["status"].should equal 404
 			end 
 
 			it "search" do
@@ -47,8 +47,7 @@ describe Product do
 		context "index only one product" do
 			it "#add_one" do
 				p = Product.new @products[0]
-				r = p.index_one
-				r["ok"].should equal true
+				p.index_one.should raise_exception				
 			end 
 
 			it "#search" do
@@ -65,6 +64,7 @@ describe Product do
 		context "- index only documents, which has flagged to reindex" do
 			it "index_newest" do
 				#initialize data collection
+				Product.clean_all
                 @products.each do |item|
                 	p = Product.new item
                 	p.update_attribute(:reindex, true)            
@@ -80,6 +80,7 @@ describe Product do
 
 		context "- index all documents in `products` collection" do 
 			it "index_all" do
+				Product.clean_all
 				add_local_products
 				r = Product.index_all
 				get_index_count.should equal Product.count
@@ -146,6 +147,30 @@ describe Product do
 				product_02.remove
 				product_03.remove
 				product_04.remove
+			end
+		end
+
+		context "Sort products by followers." do 
+			before :each do 
+				@products = [
+					{:name => "hibernate-proxool", :followers => 10},
+					{:name => "hibernate-core", :followers => 5},
+					{:name => "hibernate-lgpl", :followers => 20}
+				]
+				@products.each do |item|
+					Product.new(item).save
+				end
+			end
+
+			after :each do 
+					@products.each do |item|
+						Product.where(name: item[:name]).delete
+					end					
+			end
+
+			it "sorting followers" do
+				results = Product.elastic_search "hibernate"				
+				#results.first.name.should eql "hibernate-lgpl"
 			end
 		end
 
