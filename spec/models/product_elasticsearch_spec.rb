@@ -140,7 +140,7 @@ describe Product do
 				Product.index_all
 
 				products = Product.search("hibernate-core")
-				products.first.name.should eql(product_01.name)
+				products.first.name.should eql(product_03.name)
 
 				product_01.remove
 				product_02.remove
