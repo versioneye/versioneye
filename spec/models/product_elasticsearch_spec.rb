@@ -9,7 +9,7 @@ def add_local_products
 end
 
 def get_index_count
-	response = RestClient.get(Settings.elasticsearch_url + "/products/_count")
+	response = RestClient.get("http://localhost:9200/products/_count")
 	JSON.parse(response)["count"]
 end 
 
@@ -79,6 +79,7 @@ describe Product do
 
 		context "- index all documents in `products` collection" do 
 			it "index_all" do
+				add_local_products
 				r = Product.index_all
 				get_index_count.should equal Product.count
 			end
