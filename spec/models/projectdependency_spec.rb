@@ -18,27 +18,27 @@ describe Projectdependency do
     @product.remove
   end
 
-  describe "is_outdated?" do 
+  describe "outdated?" do 
     
     it "is up to date" do       
       dep = Projectdependency.new
       dep.prod_key = "gomezify"
       dep.version_requested = "1.0"
-      dep.is_outdated?.should be_false
+      dep.outdated?.should be_false
     end
 
     it "is up to date" do       
       dep = Projectdependency.new
       dep.prod_key = "gomezify"
       dep.version_requested = "0.9"
-      dep.is_outdated?.should be_true
+      dep.outdated?.should be_true
     end
 
     it "is up to date" do       
       dep = Projectdependency.new
       dep.prod_key = "gomezify"
       dep.version_requested = "1.9"
-      dep.is_outdated?.should be_false
+      dep.outdated?.should be_false
     end
 
   end
