@@ -97,6 +97,21 @@ describe User do
       db_user.should_not be_nil
       user.remove
     end
+    it "test case for tobias" do 
+      email = "t@blinki.st"
+      user = User.new
+      user.fullname = "Tobias"
+      user.username = "blinki"
+      user.email = email
+      user.password = "password"
+      user.salt = "salt"
+      user.terms = true
+      user.datenerhebung = true
+      user.save
+      db_user = User.find_by_email( email )
+      db_user.should_not be_nil
+      db_user.remove
+    end
     it "dosn't save. Because username is unique" do 
       email = "hans2@tanz.de"
       user = User.new
