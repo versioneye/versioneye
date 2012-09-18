@@ -18,6 +18,15 @@ end
 
 Versioneye::Application.initialize!
 
+begin
+	Tire.configure do
+		reset :url 
+		url Settings.elasticsearch_url
+	end
+rescue => e
+	p "Wrong configuration: #{e}"
+end
+
 if Settings.aws_s3_access_key_id && Settings.aws_s3_secret_access_key
 	AWS::S3::Base.establish_connection!(
 	  :access_key_id     => Settings.aws_s3_access_key_id,
