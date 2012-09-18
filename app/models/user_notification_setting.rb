@@ -15,7 +15,7 @@ class UserNotificationSetting
     users = User.all()
     users.each do |user|
       notification_settings = user.notification_settings
-      if user.deleted != true && notification_settings.newsletter_features
+      if user.deleted != true && ( notification_settings.nil? || notification_settings.newsletter_features )
         UserNotificationSetting.send_newsletter_new_features_for_user( user )
       end
     end
