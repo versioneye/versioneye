@@ -70,7 +70,7 @@ class Product
       product.version = obj[:version]
       product.followers = obj[:followers]
       results.push product
-      p " - #{product.group_id} - #{product.language} - #{product.version}"
+      p " - #{product.group_id} - #{product.language} - #{product.version} - #{product.prod_type}"
     end
     results
   rescue => e 
@@ -190,7 +190,9 @@ class Product
   #include Tire/Elasticsearch helpers
 
   @@index_name = "products"
-  @@search_fields = ["prod_key", "name", "description", "description_manual", "language", "group_id"]
+  @@search_fields = ["prod_key", "name", "description", 
+    "description_manual", "language", "group_id", "prod_type", 
+    "version", "followers"]
               
   def type
     @@index_name
@@ -200,19 +202,19 @@ class Product
     self.as_json
   end
 
-  def elastic_mapping
+  def self.elastic_mapping
     Tire.index @@index_name do
       create :mappings => {
           :article => {
             :properties => {
               :prod_key => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
+              :prod_type => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
+              :version => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
+              :followers => {:type => 'integer', :index => 'not_analyzed', :include_in_all => false},
               :name => {:type => 'string', :analyzer => 'snowball', :boost => 2.0},
               :description => {:type => 'string', :analyzer => 'snowball'},
               :description_manual => {:type => 'string', :analyzer => 'snowball'},
               :language => {:type => 'string', :index => 'not_analyzed', :analyzer => 'snowball'},
-              :prod_type => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
-              :version => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
-              :followers => {:type => 'integer', :index => 'not_analyzed', :include_in_all => false},
               :group_id => {:type => 'string', :analyzer => 'snowball'}
             }
           }
@@ -225,7 +227,7 @@ class Product
 
   def index_one
     # builds search index for current doc
-    elastic_mapping
+    Product.elastic_mapping
     index_vals = self.to_hash.select {|key| key.in? @@search_fields}
     r = Tire.index @@index_name do
       store index_vals
@@ -236,7 +238,7 @@ class Product
 
   def self.index_newest
     # indexest newest and updated products
-    elastic_mapping
+    self.elastic_mapping
     r = Tire.index @@index_name do
       Product.where(reindex: true).each do |doc|
           store doc.to_hash.select {|key| key.in? @@search_fields}
@@ -249,11 +251,9 @@ class Product
   end
 
   def self.index_all
-    # indexes all products on Elasticsearch
     clean_all
-    elastic_mapping
+    self.elastic_mapping
     r = Tire.index @@index_name do 
-      # add search index for every doc
       Product.all.each do |doc|  
         store doc.to_hash.select {|key| key.in? @@search_fields}
         p "index #{doc.name}"
