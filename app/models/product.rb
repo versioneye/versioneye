@@ -1,26 +1,14 @@
-require 'yajl/json_gem'
-require 'tire'
-
 class Product
 
   require 'will_paginate/array'
+  require 'yajl/json_gem'
+  require 'tire'
 
   include Mongoid::Document
   include Mongoid::Timestamps
-  
-  begin
-    Tire.configure do
-        #wrapper Product #search results will be instance of Product class
-        reset :url
-        url Settings.elasticsearch_url #Settings.elasticsearch
-    end
-  rescue => e
-    p "Wrong configuration: #{e}"
-  end
 
-  def to_indexed_json
-    self.as_json
-  end
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
 
   field :name, type: String
   field :name_downcase, type: String
@@ -67,6 +55,16 @@ class Product
 
   def delete
     false
+  end
+
+  def self.search(q, description = nil, group_id = nil, languages = nil)
+    self.elastic_search(q, group_id, languages)
+  rescue => e 
+    p "#{e}"
+    e.backtrace.each do |message|
+      p " - #{message}"
+    end
+    self.find_all(q, description, group_id, languages=nil)
   end
 
   def self.find_by(searched_name, description, group_id, languages=nil, limit=300)
@@ -138,7 +136,7 @@ class Product
     p "rescue #{e}"
     Mongoid::Criteria.new(Product, {_id: -1})
   end
-  
+
   def self.find_by_key(searched_key)
     return nil if searched_key.nil? || searched_key.strip == ""
     result = Product.where(prod_key: searched_key)
@@ -174,45 +172,52 @@ class Product
     Product.where( group_id: group, artifact_id: artifact )[0]
   end
 
-#include Tire/Elasticsearch helpers
-
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  ######## ELASTIC SEARCH START #####################################
+  #include Tire/Elasticsearch helpers
 
   @@index_name = "products"
-  @@search_fields = ["prod_key", "name", "description", "description_manual", 
-    "language", "group_id"]
+  @@search_fields = ["prod_key", "name", "description", "description_manual", "language", "group_id"]
               
   def type
     @@index_name
   end 
 
+  def to_indexed_json
+    self.as_json
+  end
 
+  begin
+    Tire.configure do
+      reset :url 
+      url Settings.elasticsearch_url
+    end
+  rescue => e
+    p "Wrong configuration: #{e}"
+  end
 
   begin 
     Tire.index @@index_name do
-        #add mappings
-        create :mappings => {
-            :article => {
-              :properties => {
-                :prod_key => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
-                :name => {:type => 'string', :analyzer => 'snowball', :boost => 2.0},
-                :description => {:type => 'string', :analyzer => 'snowball'},
-                :description_manual => {:type => 'string', :analyzer => 'snowball'},
-                :language => {:type => 'string', :index => 'not_analyzed', :analyzer => 'snowball'},
-                :group_id => {:type => 'string', :analyzer => 'snowball'}
-              }
+      create :mappings => {
+          :article => {
+            :properties => {
+              :prod_key => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
+              :name => {:type => 'string', :analyzer => 'snowball', :boost => 2.0},
+              :description => {:type => 'string', :analyzer => 'snowball'},
+              :description_manual => {:type => 'string', :analyzer => 'snowball'},
+              :language => {:type => 'string', :index => 'not_analyzed', :analyzer => 'snowball'},
+              :group_id => {:type => 'string', :analyzer => 'snowball'}
             }
           }
-        refresh
+        }
+      refresh
     end
   rescue => e
     puts "Cant add object mappings into elasticsearch. #{e}"
   end
 
   def index_one
-    #builds search index for current doc
-    index_vals = self.to_hash.select {|key| key.in? @@search_fields} #only index specified keys
+    # builds search index for current doc
+    index_vals = self.to_hash.select {|key| key.in? @@search_fields}
     r = Tire.index @@index_name do
       store index_vals
       refresh
@@ -221,111 +226,72 @@ class Product
   end
 
   def self.index_newest
-    #indexest newest and updated products
-    r= Tire.index @@index_name do
-      #TODO: add cistinct products filter
+    # indexest newest and updated products
+    r = Tire.index @@index_name do
+      # TODO: add cistinct products filter
       Product.where(reindex: true).each do |doc|
-          store doc.to_hash.select {|key| key.in? @@search_fields} #only index specified keys
-          #turn reindexing flag off         
-          doc.update_attribute(:reindex, false)#.save!
+          store doc.to_hash.select {|key| key.in? @@search_fields}
+          # turn reindexing flag off         
+          doc.update_attribute(:reindex, false) #.save!
       end
       refresh
     end
-
     JSON.parse(r.response.body)
   end
 
   def self.index_all
-      #indexes all products on Elasticsearch
-      r= Tire.index @@index_name do 
-        delete #remove previous data
-      
-        #add search index for every doc
-        Product.all.each do |doc|  
-            store doc.to_hash.select {|key| key.in? @@search_fields} #only index specified keys
-        end
-
-        refresh
+    # indexes all products on Elasticsearch
+    r = Tire.index @@index_name do 
+      delete # remove previous data
+      # add search index for every doc
+      Product.all.each do |doc|  
+        store doc.to_hash.select {|key| key.in? @@search_fields}
       end
-      JSON.parse(r.response.body)
+      refresh
+    end
+    JSON.parse(r.response.body)
   end
 
   def self.clean_all
-      #remove all indexes on products
-      r= Tire.index @@index_name do
-        delete
-      end
-      JSON.parse(r.response.body)
+    # remove all indexes on products
+    r = Tire.index @@index_name do
+      delete
+    end
+    JSON.parse(r.response.body)
   end
 
   def self.elastic_search(q, group_id = nil, langs = nil)
-    #USAGE:
-    #To search just product with term cool-mate
-    # => Product.search "cool-mate"
-    #To search product with specific language(s)
-    # => Product.search "cool-mate", 'java'
-    # => Product.search "cool-mate", 'java,c' 
-    #To search product with specific group_id
-   
-    #default values
-    if q.nil? or q.strip.size < 2 then q = '*' end  
-    #puts q, langs, group_id
-    if langs.nil? then langs = '' end
+    q = '*' if q.nil? or q.strip.size < 2
+    langs = '' if langs.nil?
     group_id = '' if group_id.nil?
-
     langs.downcase! 
     response = []
+    s = Tire.search(@@index_name) do |search|
+      search.size 100        #  Limit record
+      search.from 0          #  start offeset
+      search.query do |query|
+        if q != '*' and group_id != ''
+          query.boolean do
+            must {string q}                                  
+            must {string 'group_id:' + group_id + "*"}                                                    
+          end
+        elsif q != '*' and group_id == ''
+          query.string q
+        elsif q == '*' and group_id != '' 
+          query.string "group_id:" + group_id + "*"
+          #search.filter :terms, :group_id => [group_id+"*"] 
+        end
 
-    begin
-      s = Tire.search(@@index_name) do |search|
-            search.size 100        #  Limit record
-            #search.from 0          #  start offeset
-
-            search.query do |query|
-                if q != '*' and group_id != ''
-                  query.boolean do
-                    must {string q}                                  
-                    must {string 'group_id:'+group_id + "*"}                                                    
-                  end
-                elsif q != '*' and group_id == ''
-                  query.string q
-
-                elsif q == '*' and group_id != '' 
-                  query.string "group_id:"+group_id+"*"
-                  #search.filter :terms, :group_id => [group_id+"*"] 
-                end
-                
-
-                if langs.size > 0 then
-                  search.filter :terms, :language => langs.split(',')
-                end
-                if q != '*' and group_id != "" then 
-                  #if search query is not empty, then use group_id as filter           
-                  
-                end
-            end
-            #search.filter :language => lang
+        if langs.size > 0 then
+          search.filter :terms, :language => langs.split(',')
+        end
       end
-      
-      s.results.each {|item| response << item.to_hash}    
-
-    #IndexMissingException
-    rescue => e
-       puts "Error!! #{e}"    
     end
-
-    return response
-  end
-
-
-  def self.search(q, description = nil, group_id = nil, languages=nil)
-    self.elastic_search(q, group_id, languages)
-  rescue => e 
-    p "#{e}"
-    e.backtrace.each do |message|
-      p " - #{message}"
-    end
-    self.find_all(q, description, group_id, languages=nil)
+    s.results.each {|item| response << item.to_hash}
+    response
+  rescue => e
+    puts "Error!! #{e}"
+    Array.new
   end
 
   ########### VERSIONS START ########################
