@@ -14,6 +14,7 @@ def get_index_count
 end 
 
 describe Product do
+
 	before :each do
 		@products = [		
 			{:name => "club-mate", :language => "java", :group_id => "org.club.mate"},
@@ -119,6 +120,32 @@ describe Product do
 				r = Product.elastic_search "mate", "org."
 				r.count.should equal 1
 				r[0][:group_id].should eql "org.club.mate"
+			end
+		end
+
+		context "Exact Match context" do 
+			it "elastic_search" do
+				product_01 = ProductFactory.create_for_maven("org.hibernate", "hibernate-proxool", "4.0.1")
+				product_01.save
+
+				product_02 = ProductFactory.create_for_maven("org.hibernate", "hibernate-tools", "4.0.1")
+				product_02.save
+
+				product_03 = ProductFactory.create_for_maven("org.hibernate", "hibernate-core", "4.0.1")
+				product_03.save
+
+				product_04 = ProductFactory.create_for_maven("org.hibernate", "hibernate-lgpl", "4.0.1")
+				product_04.save
+
+				Product.index_all
+
+				products = Product.search("hibernate-core")
+				products.first.name.should eql(product_01.name)
+
+				product_01.remove
+				product_02.remove
+				product_03.remove
+				product_04.remove
 			end
 		end
 
