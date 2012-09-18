@@ -59,7 +59,6 @@ class PomParser
         project.unknown_number = project.unknown_number + 1
       end
       
-      dependency.update_outdated
       if dependency.outdated?
         project.out_number = project.out_number + 1
       end

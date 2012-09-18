@@ -14,6 +14,7 @@ class ProductFactory
 		product
 	end
 
+
 	def self.create_for_composer(name, version)
 		product = Product.new
 		product.name = name
