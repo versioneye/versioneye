@@ -34,7 +34,8 @@ class Projectdependency
     product
   end
   
-  def is_outdated?
+  def outdated?
+    p "is_outdated + #{self.prod_key}"
     return false if self.prod_key.nil?     
     product = get_product
     if !self.version_current.eql?(product.version)
@@ -51,7 +52,7 @@ class Projectdependency
   end
   
   def update_outdated
-    self.outdated = is_outdated? 
+    self.outdated = outdated? 
   end
 
   def version_lbl
