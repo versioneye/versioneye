@@ -37,7 +37,6 @@ class GradleParser < CommonParser
 			if product
         		dependency.prod_key = product.prod_key
         	else
-        		p "unknown #{dependency.group_id} + #{dependency.artifact_id}" 
         		unknowns += 1
       		end
 			if dependency.outdated?
