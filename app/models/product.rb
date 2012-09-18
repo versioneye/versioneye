@@ -200,40 +200,32 @@ class Product
     self.as_json
   end
 
-  # begin
-  #   Tire.configure do
-  #     reset :url 
-  #     url Settings.elasticsearch_url
-  #   end
-  # rescue => e
-  #   p "Wrong configuration: #{e}"
-  # end
-
-  # begin 
-  #   Tire.index @@index_name do
-  #     create :mappings => {
-  #         :article => {
-  #           :properties => {
-  #             :prod_key => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
-  #             :name => {:type => 'string', :analyzer => 'snowball', :boost => 2.0},
-  #             :description => {:type => 'string', :analyzer => 'snowball'},
-  #             :description_manual => {:type => 'string', :analyzer => 'snowball'},
-  #             :language => {:type => 'string', :index => 'not_analyzed', :analyzer => 'snowball'},
-  #             :prod_type => {:type => 'string', :index => 'not_analyzed', :analyzer => 'snowball'},
-  #             :version => {:type => 'string', :index => 'not_analyzed', :analyzer => 'snowball'},
-  #             :followers => {:type => 'integer', :index => 'not_analyzed', :analyzer => 'snowball'},
-  #             :group_id => {:type => 'string', :analyzer => 'snowball'}
-  #           }
-  #         }
-  #       }
-  #     refresh
-  #   end
-  # rescue => e
-  #   puts "Cant add object mappings into elasticsearch. #{e}"
-  # end
+  def elastic_mapping
+    Tire.index @@index_name do
+      create :mappings => {
+          :article => {
+            :properties => {
+              :prod_key => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
+              :name => {:type => 'string', :analyzer => 'snowball', :boost => 2.0},
+              :description => {:type => 'string', :analyzer => 'snowball'},
+              :description_manual => {:type => 'string', :analyzer => 'snowball'},
+              :language => {:type => 'string', :index => 'not_analyzed', :analyzer => 'snowball'},
+              :prod_type => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
+              :version => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
+              :followers => {:type => 'integer', :index => 'not_analyzed', :include_in_all => false},
+              :group_id => {:type => 'string', :analyzer => 'snowball'}
+            }
+          }
+        }
+      refresh
+    end
+  rescue => e
+    puts "Cant add object mappings into elasticsearch. #{e}"
+  end
 
   def index_one
     # builds search index for current doc
+    elastic_mapping
     index_vals = self.to_hash.select {|key| key.in? @@search_fields}
     r = Tire.index @@index_name do
       store index_vals
@@ -244,6 +236,7 @@ class Product
 
   def self.index_newest
     # indexest newest and updated products
+    elastic_mapping
     r = Tire.index @@index_name do
       Product.where(reindex: true).each do |doc|
           store doc.to_hash.select {|key| key.in? @@search_fields}
@@ -257,8 +250,9 @@ class Product
 
   def self.index_all
     # indexes all products on Elasticsearch
+    clean_all
+    elastic_mapping
     r = Tire.index @@index_name do 
-      delete # remove previous data
       # add search index for every doc
       Product.all.each do |doc|  
         store doc.to_hash.select {|key| key.in? @@search_fields}
