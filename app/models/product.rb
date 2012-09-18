@@ -42,7 +42,7 @@ class Product
   field :icon, type: String
   field :twitter_name, type: String 
 
-  field :reindex, type: Boolean, default: false
+  field :reindex, type: Boolean, default: true
 
   embeds_many :versions
   embeds_many :repositories
@@ -58,7 +58,21 @@ class Product
   end
 
   def self.search(q, description = nil, group_id = nil, languages = nil)
-    self.elastic_search(q, group_id, languages)
+    results_json = self.elastic_search(q, group_id, languages)
+    results = Array.new
+    results_json.each do |obj|
+      product = Product.new
+      product.name = obj[:name]
+      product.prod_key = obj[:prod_key]
+      product.group_id = obj[:group_id]
+      product.language = obj[:language]
+      product.prod_type = obj[:prod_type]
+      product.version = obj[:version]
+      product.followers = obj[:followers]
+      results.push product
+      p " - #{product.group_id} - #{product.language} - #{product.version}"
+    end
+    results
   rescue => e 
     p "#{e}"
     e.backtrace.each do |message|
@@ -186,34 +200,37 @@ class Product
     self.as_json
   end
 
-  begin
-    Tire.configure do
-      reset :url 
-      url Settings.elasticsearch_url
-    end
-  rescue => e
-    p "Wrong configuration: #{e}"
-  end
+  # begin
+  #   Tire.configure do
+  #     reset :url 
+  #     url Settings.elasticsearch_url
+  #   end
+  # rescue => e
+  #   p "Wrong configuration: #{e}"
+  # end
 
-  begin 
-    Tire.index @@index_name do
-      create :mappings => {
-          :article => {
-            :properties => {
-              :prod_key => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
-              :name => {:type => 'string', :analyzer => 'snowball', :boost => 2.0},
-              :description => {:type => 'string', :analyzer => 'snowball'},
-              :description_manual => {:type => 'string', :analyzer => 'snowball'},
-              :language => {:type => 'string', :index => 'not_analyzed', :analyzer => 'snowball'},
-              :group_id => {:type => 'string', :analyzer => 'snowball'}
-            }
-          }
-        }
-      refresh
-    end
-  rescue => e
-    puts "Cant add object mappings into elasticsearch. #{e}"
-  end
+  # begin 
+  #   Tire.index @@index_name do
+  #     create :mappings => {
+  #         :article => {
+  #           :properties => {
+  #             :prod_key => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
+  #             :name => {:type => 'string', :analyzer => 'snowball', :boost => 2.0},
+  #             :description => {:type => 'string', :analyzer => 'snowball'},
+  #             :description_manual => {:type => 'string', :analyzer => 'snowball'},
+  #             :language => {:type => 'string', :index => 'not_analyzed', :analyzer => 'snowball'},
+  #             :prod_type => {:type => 'string', :index => 'not_analyzed', :analyzer => 'snowball'},
+  #             :version => {:type => 'string', :index => 'not_analyzed', :analyzer => 'snowball'},
+  #             :followers => {:type => 'integer', :index => 'not_analyzed', :analyzer => 'snowball'},
+  #             :group_id => {:type => 'string', :analyzer => 'snowball'}
+  #           }
+  #         }
+  #       }
+  #     refresh
+  #   end
+  # rescue => e
+  #   puts "Cant add object mappings into elasticsearch. #{e}"
+  # end
 
   def index_one
     # builds search index for current doc
@@ -222,13 +239,12 @@ class Product
       store index_vals
       refresh
     end
-    JSON.parse(r.response.body)
+    # JSON.parse(r.response.body)
   end
 
   def self.index_newest
     # indexest newest and updated products
     r = Tire.index @@index_name do
-      # TODO: add cistinct products filter
       Product.where(reindex: true).each do |doc|
           store doc.to_hash.select {|key| key.in? @@search_fields}
           # turn reindexing flag off         
@@ -236,7 +252,7 @@ class Product
       end
       refresh
     end
-    JSON.parse(r.response.body)
+    # JSON.parse(r.response.body)
   end
 
   def self.index_all
@@ -246,10 +262,11 @@ class Product
       # add search index for every doc
       Product.all.each do |doc|  
         store doc.to_hash.select {|key| key.in? @@search_fields}
+        p "index #{doc.name}"
       end
       refresh
     end
-    JSON.parse(r.response.body)
+    # JSON.parse(r.response.body)
   end
 
   def self.clean_all
@@ -257,12 +274,12 @@ class Product
     r = Tire.index @@index_name do
       delete
     end
-    JSON.parse(r.response.body)
+    # JSON.parse(r.response.body)
   end
 
   def self.elastic_search(q, group_id = nil, langs = nil)
     q = '*' if q.nil? or q.strip.size < 2
-    langs = '' if langs.nil?
+    langs = '' if langs.nil? || langs.match(/^,$/)
     group_id = '' if group_id.nil?
     langs.downcase! 
     response = []
@@ -278,8 +295,7 @@ class Product
         elsif q != '*' and group_id == ''
           query.string q
         elsif q == '*' and group_id != '' 
-          query.string "group_id:" + group_id + "*"
-          #search.filter :terms, :group_id => [group_id+"*"] 
+          query.string "group_id:" + group_id + "*" 
         end
 
         if langs.size > 0 then
