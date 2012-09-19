@@ -187,121 +187,110 @@ class Product
   end
 
   ######## ELASTIC SEARCH START #####################################
-  #include Tire/Elasticsearch helpers
 
-  @@index_name = "products"
-  @@search_fields = ["prod_key", "name", "description", 
-    "description_manual", "language", "group_id", "prod_type", 
-    "version", "followers"]
-              
-  def type
-    @@index_name
-  end 
+  index_name "product-#{Rails.env}"
+
+  def type 
+    "product"
+  end
 
   def to_indexed_json
-    self.as_json
+    {
+      #prod_key: prod_key, 
+      name: name, 
+      description: description
+      # description_manual: description_manual, 
+      # language: language, 
+      # group_id: group_id, 
+      # prod_type: prod_type, 
+      # version: version
+    }.as_json
   end
 
-  def self.elastic_mapping
-    Tire.index @@index_name do
-      create :mappings => {
-          :article => {
-            :properties => {
-              :prod_key => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
-              :prod_type => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
-              :version => {:type => 'string', :index => 'not_analyzed', :include_in_all => false},
-              :followers => {:type => 'integer', :index => 'not_analyzed', :include_in_all => false},
-              :name => {:type => 'string', :analyzer => "simpler", 
-                        :filter => ['standard', 'lowercase', 'stop'], :boost => 4.0},
-              :description => {:type => 'string', :analyzer => 'snowball'},
-              :description_manual => {:type => 'string', :analyzer => 'snowball'},
-              :language => {:type => 'string', :index => 'not_analyzed', :analyzer => 'simple'},
-              :group_id => {:type => 'string', :analyzer => 'snowball'}
-            }
-          }
-        }
-      refresh
-    end
-  rescue => e
-    puts "Cant add object mappings into elasticsearch. #{e}"
-  end
-
-  def index_one
-    # builds search index for current doc
-    Product.elastic_mapping
-    index_vals = self.to_hash.select {|key| key.in? @@search_fields}
-    r = Tire.index @@index_name do
-      store index_vals
-      refresh
-    end
-    # JSON.parse(r.response.body)
-  end
-
-  def self.index_newest
-    # indexest newest and updated products
-    self.elastic_mapping
-    r = Tire.index @@index_name do
-      Product.where(reindex: true).each do |doc|
-          store doc.to_hash.select {|key| key.in? @@search_fields}
-          # turn reindexing flag off         
-          doc.update_attribute(:reindex, false) #.save!
-      end
-      refresh
-    end
-    # JSON.parse(r.response.body)
-  end
-
-  def self.index_all
-    self.clean_all
-    self.elastic_mapping
-    r = Tire.index @@index_name do 
-      Product.all.each do |doc|  
-        store doc.to_hash.select {|key| key.in? @@search_fields}
-        p "index #{doc.name}"
-      end
-      refresh
-    end
-    # JSON.parse(r.response.body)
+  # :name => {:type => 'string', :analyzer => "simpler", 
+  #                       :filter => ['standard', 'lowercase', 'stop'], :boost => 4.0},
+  mapping do
+    indexes :name, analyzer: 'snowball', boost: 100
+    indexes :description, analyzer: 'snowball'
+    # indexes :description_manual, analyzer: 'snowball'
+    # indexes :prod_key, index: :not_analyzed
+    # indexes :prod_type, index: :not_analyzed
+    # indexes :version, index: :not_analyzed
+    # indexes :language, index: :not_analyzed
+    # indexes :group_id, index: :not_analyzed
   end
 
   def self.clean_all
-    # remove all indexes on products
-    r = Tire.index @@index_name do
-      delete
-    end
-    # JSON.parse(r.response.body)
+    Product.tire.index.delete
   end
 
+  def index_one
+    Product.tire.index.store self.to_indexed_json 
+    Product.tire.index.refresh
+  end
+
+  def self.index_all
+    Product.clean_all
+    Product.all.each do |product|  
+      Product.tire.index.store product.to_indexed_json
+      p "index #{product.name}"
+    end
+    Product.tire.index.refresh
+  end
+
+  # def self.index_newest
+  #   # indexest newest and updated products
+  #   self.elastic_mapping
+  #   r = Tire.index @@index_name do
+  #     Product.where(reindex: true).each do |doc|
+  #         store doc.to_hash.select {|key| key.in? @@search_fields}
+  #         # turn reindexing flag off         
+  #         doc.update_attribute(:reindex, false) #.save!
+  #     end
+  #     refresh
+  #   end
+  #   # JSON.parse(r.response.body)
+  # end
+
+  
   def self.elastic_search(q, group_id = nil, langs = nil)
-    q = '*' if q.nil? or q.strip.size < 2
-    langs = '' if langs.nil? || langs.match(/^,$/)
-    group_id = '' if group_id.nil?
-    langs.downcase! 
-    response = []
-    s = Tire.search(@@index_name) do |search|
-      search.size 100        #  Limit record
-      search.from 0          #  start offeset
-      #search.sort.by :_score => 'desc', :followers => 'desc'
 
-      search.query do |query|
-        if q != '*' and group_id != ''
-          query.boolean do
-            must {string q}                                  
-            must {string 'group_id:' + group_id + "*"}                                                    
-          end
-        elsif q != '*' and group_id == ''
-          query.string q
-        elsif q == '*' and group_id != '' 
-          query.string "group_id:" + group_id + "*" 
-        end
-
-        if langs.size > 0 then
-          search.filter :terms, :language => langs.split(',')
-        end        
+    Product.tire.search(load: true, ) do |search|
+      search.sort { by :_score, "desc" }
+      search.query do |query|  
+        query.string q
       end
     end
-    s.results.each {|item| response << item.to_hash}
-    response
+
+    # q = '*' if q.nil? or q.strip.size < 2
+    # langs = '' if langs.nil? || langs.match(/^,$/)
+    # group_id = '' if group_id.nil?
+    # langs.downcase! 
+    # response = []
+    # s = Tire.search(@@index_name) do |search|
+    #   search.size 100        #  Limit record
+    #   search.from 0          #  start offeset
+    #   #search.sort.by :_score => 'desc', :followers => 'desc'
+
+    #   search.query do |query|
+    #     if q != '*' and group_id != ''
+    #       query.boolean do
+    #         must {string q}                                  
+    #         must {string 'group_id:' + group_id + "*"}                                                    
+    #       end
+    #     elsif q != '*' and group_id == ''
+    #       query.string q
+    #     elsif q == '*' and group_id != '' 
+    #       query.string "group_id:" + group_id + "*" 
+    #     end
+
+    #     if langs.size > 0 then
+    #       search.filter :terms, :language => langs.split(',')
+    #     end        
+    #   end
+    # end
+    # s.results.each {|item| response << item.to_hash}
+    # response
   rescue => e
     puts "Error!! #{e}"
     Array.new
