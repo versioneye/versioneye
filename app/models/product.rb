@@ -192,11 +192,41 @@ class Product
     indexes :name, analyzer: 'snowball', boost: 100
     indexes :description, analyzer: 'snowball'
     indexes :description_manual, analyzer: 'snowball'
+    indexes :language, analyzer: "string_lowercase"
+    indexes :group_id, index: :not_analyzed
     indexes :prod_key, index: :not_analyzed
     indexes :prod_type, index: :not_analyzed
     indexes :version, index: :not_analyzed
-    indexes :language, index: :not_analyzed
-    indexes :group_id, index: :not_analyzed
+  end
+
+  def self.elastic_search(q, group_id = nil, langs = nil)
+    group_id = "" if !group_id
+    q = "*" if !q
+    Product.tire.search( load: true, page: 0, per_page: 30 ) do |search|
+      search.sort { by :_score }
+      if langs and !langs.empty? then 
+        langs.downcase!
+        search.filter :terms, :language => langs.split(',') 
+      end
+      search.query do |query|  
+        if q != '*' and !group_id.empty?
+          query.boolean do 
+            must {string q}                                   
+            must {string 'group_id:' + group_id + "*"}                                                     
+          end 
+        elsif q != '*' and group_id.empty?
+          query.string q 
+        elsif q == '*' and !group_id.empty?
+          query.string "group_id:" + group_id + "*"  
+        end 
+      end
+    end
+  rescue => e
+    puts "Error!! #{e}"
+    e.backtrace.each do |message|
+      p " - #{message}"
+    end
+    Array.new
   end
 
   def self.clean_all
@@ -223,21 +253,6 @@ class Product
       product.update_attribute(:reindex, false)
     end
     Product.tire.index.refresh
-  end
-
-  def self.elastic_search(q, group_id = nil, langs = nil)
-    Product.tire.search( load: true, page: 0, per_page: 30 ) do |search|
-      search.sort { by :_score }
-      search.query do |query|  
-        query.string q
-      end
-    end
-  rescue => e
-    puts "Error!! #{e}"
-    e.backtrace.each do |message|
-      p " - #{mesage}"
-    end
-    Array.new
   end
 
   ########### VERSIONS START ########################

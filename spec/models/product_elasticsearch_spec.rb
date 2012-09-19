@@ -97,89 +97,40 @@ describe Product do
 		end
 	end
 
-		# context "- tests search functionalities " do
-		# 	it "search empty string" do
-		# 		Product.index_all 
-		# 		r = Product.elastic_search ""
-		# 		r.count.should equal 0				
-		# 	end
+	context "- tests search functionalities " do
+		it "search empty string" do
+			Product.index_all 
+			results = Product.elastic_search ""
+			results.count.should eql(0)
+		end
 
-		# 	#TODO: c gaves every c language, but c++ and c# dont work at all
-		# 	it "test language filtering"  do 
-		# 		add_local_products
-		# 		Product.elastic_search("club-mate", nil, "java").count.should equal 3
-		# 		#Product.elastic_search("club-mate", "c,c++").count.should equal 2
-		# 		Product.elastic_search("club-mate", nil, "c,c#,c++").count.should equal 3
-		# 	end
+		#TODO: c gaves every c language, but c++ and c# dont work at all
+		it "test language filtering"  do 
+			sleep 4
+			Product.elastic_search("club-mate", nil, "java").count.should eql(3)
+		end
 
-		# 	it "test, does language filtering is case insensitive" do
-		# 		add_local_products
-		# 		r1 = Product.elastic_search "club-mate", nil, "Java"
-		# 		r2 = Product.elastic_search "club-mate", nil, "java"
-		# 		r1[0][:name].should eql r2[0][:name]
-				
-		# 	end
+		it "test, does language filtering is case insensitive" do
+			sleep 4
+			results1 = Product.elastic_search "club-mate", nil, "Java"
+			results2 = Product.elastic_search "club-mate", nil, "java"
+			results1[0][:name].should eql results2[0][:name]
+			results1.count.should eql(results2.count)
+		end
 
-		# 	it "test searching just by group-id" do 
-		# 		add_local_products
-		# 		r = Product.elastic_search nil, "com."
-		# 		r.count.should equal 1
-		# 	end
+		it " - should return 1 result with the right group_id." do 
+			sleep 5
+			results = Product.elastic_search nil, "com."
+			results.count.should eql(1)
+			results[0].group_id.should eql("com.club.mate")
+		end
 
-		# 	it "test filtering by group-id" do
-		# 		add_local_products
-		# 		r = Product.elastic_search "mate", "org."
-		# 		r.count.should equal 1
-		# 		r[0][:group_id].should eql "org.club.mate"
-		# 	end
-		# end
-
-		# 	after :each do 
-		# 		@products.each do |item|
-		# 			prods = Product.where(name: item[:name])
-		# 			prods.each do |product|
-		# 				product.remove
-		# 			end
-		# 		end					
-		# 	end
-
-		# 	it "finds the exact match first" do
-		# 		Product.index_all
-		# 		products = Product.elastic_search("hibernatecore").results
-		# 		p "count #{products.count} products"
-		# 		prod_01 = products.first
-		# 		prod_02 = products[1]
-		# 		prod_01.name.should eql("hibernatecore")
-		# 		prod_02.name.should eql("hibernatecoreparent")
-		# 	end
-		# end
-
-		# context "Sort products by followers." do 
-		# 	before :each do 
-		# 		@products = [
-		# 			{:name => "hibernate-proxool", :followers => 10},
-		# 			{:name => "hibernate-core", :followers => 5},
-		# 			{:name => "hibernate-lgpl", :followers => 20}
-		# 		]
-		# 		@products.each do |item|
-		# 			Product.new(item).save
-		# 		end
-		# 	end
-
-		# 	after :each do 
-		# 		@products.each do |item|
-		# 			prods = Product.where(name: item[:name])
-		# 			prods.each do |product|
-		# 				product.remove
-		# 			end
-		# 		end
-		# 	end
-
-		# 	it "sorting followers" do
-		# 		results = Product.elastic_search "hibernate"				
-		# 		#results.first.name.should eql "hibernate-lgpl"
-		# 	end
-		# end
-
+		it "test filtering by group-id" do
+			sleep 4
+			results = Product.elastic_search "mate", "org."
+			results.count.should eql(1)
+			results[0][:group_id].should eql "org.club.mate"
+		end
+	end
 	
 end
