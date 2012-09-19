@@ -196,28 +196,26 @@ class Product
 
   def to_indexed_json
     {
-      #prod_key: prod_key, 
+      prod_key: prod_key, 
       name: name, 
-      description: description
-      # description_manual: description_manual, 
-      # language: language, 
-      # group_id: group_id, 
-      # prod_type: prod_type, 
-      # version: version
+      description: description,
+      description_manual: description_manual, 
+      language: language, 
+      group_id: group_id, 
+      prod_type: prod_type, 
+      version: version
     }.as_json
   end
 
-  # :name => {:type => 'string', :analyzer => "simpler", 
-  #                       :filter => ['standard', 'lowercase', 'stop'], :boost => 4.0},
   mapping do
     indexes :name, analyzer: 'snowball', boost: 100
     indexes :description, analyzer: 'snowball'
-    # indexes :description_manual, analyzer: 'snowball'
-    # indexes :prod_key, index: :not_analyzed
-    # indexes :prod_type, index: :not_analyzed
-    # indexes :version, index: :not_analyzed
-    # indexes :language, index: :not_analyzed
-    # indexes :group_id, index: :not_analyzed
+    indexes :description_manual, analyzer: 'snowball'
+    indexes :prod_key, index: :not_analyzed
+    indexes :prod_type, index: :not_analyzed
+    indexes :version, index: :not_analyzed
+    indexes :language, index: :not_analyzed
+    indexes :group_id, index: :not_analyzed
   end
 
   def self.clean_all
@@ -238,61 +236,26 @@ class Product
     Product.tire.index.refresh
   end
 
-  # def self.index_newest
-  #   # indexest newest and updated products
-  #   self.elastic_mapping
-  #   r = Tire.index @@index_name do
-  #     Product.where(reindex: true).each do |doc|
-  #         store doc.to_hash.select {|key| key.in? @@search_fields}
-  #         # turn reindexing flag off         
-  #         doc.update_attribute(:reindex, false) #.save!
-  #     end
-  #     refresh
-  #   end
-  #   # JSON.parse(r.response.body)
-  # end
+  def self.index_newest
+    Product.where(reindex: true).each do |product|
+      Product.tire.index.store product.to_indexed_json
+      product.update_attribute(:reindex, false)
+    end
+    Product.tire.index.refresh
+  end
 
-  
   def self.elastic_search(q, group_id = nil, langs = nil)
-
-    Product.tire.search(load: true, ) do |search|
+    Product.tire.search( load: true, page: 0, per_page: 30 ) do |search|
       search.sort { by :_score, "desc" }
       search.query do |query|  
         query.string q
       end
     end
-
-    # q = '*' if q.nil? or q.strip.size < 2
-    # langs = '' if langs.nil? || langs.match(/^,$/)
-    # group_id = '' if group_id.nil?
-    # langs.downcase! 
-    # response = []
-    # s = Tire.search(@@index_name) do |search|
-    #   search.size 100        #  Limit record
-    #   search.from 0          #  start offeset
-    #   #search.sort.by :_score => 'desc', :followers => 'desc'
-
-    #   search.query do |query|
-    #     if q != '*' and group_id != ''
-    #       query.boolean do
-    #         must {string q}                                  
-    #         must {string 'group_id:' + group_id + "*"}                                                    
-    #       end
-    #     elsif q != '*' and group_id == ''
-    #       query.string q
-    #     elsif q == '*' and group_id != '' 
-    #       query.string "group_id:" + group_id + "*" 
-    #     end
-
-    #     if langs.size > 0 then
-    #       search.filter :terms, :language => langs.split(',')
-    #     end        
-    #   end
-    # end
-    # s.results.each {|item| response << item.to_hash}
-    # response
   rescue => e
     puts "Error!! #{e}"
+    e.backtrace.each do |message|
+      p " - #{mesage}"
+    end
     Array.new
   end
 
