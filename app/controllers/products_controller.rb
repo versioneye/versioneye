@@ -36,8 +36,7 @@ class ProductsController < ApplicationController
       flash.now[:error] = "the character % is not allowed"
     else
       languages = @lang.split(",")
-      # @products = Product.find_by(@query, @description, @groupid, languages, 300).paginate(:page => params[:page])
-      @products = Product.search(@query, @description, @groupid, @lang)
+      @products = Product.search(@query, @description, @groupid, @lang, params[:page])
       if @products.nil? || @products.count == 0
         flash.now[:notice] = "Sorry. No Results found."
       elsif signed_in?

@@ -55,8 +55,9 @@ class Product
     false
   end
 
-  def self.search(q, description = nil, group_id = nil, languages = nil)
-    results_json = self.elastic_search(q, group_id, languages)
+  def self.search(q, description = nil, group_id = nil, languages = nil, page_count = 0)
+    results_json = self.elastic_search(q, group_id, languages, page_count)
+    p "#{results_json.count}"
     results = Array.new
     results_json.each do |obj|
       product = Product.new
@@ -76,7 +77,7 @@ class Product
     e.backtrace.each do |message|
       p " - #{message}"
     end
-    self.find_all(q, description, group_id, languages=nil)
+    Product.find_by(q, description, groupid, languages, 300).paginate(:page => page_count)
   end
 
   def self.find_by(searched_name, description, group_id, languages=nil, limit=300)
@@ -197,14 +198,16 @@ class Product
     indexes :prod_key, index: :not_analyzed
     indexes :prod_type, index: :not_analyzed
     indexes :version, index: :not_analyzed
+    indexes :followers, type: "integer", index: :not_analyzed
   end
 
-  def self.elastic_search(q, group_id = nil, langs = nil)
+  def self.elastic_search(q, group_id = nil, langs = nil, page_count = 0)
+    p "#{q} - #{group_id} - #{langs} - #{page_count}"
     group_id = "" if !group_id
     q = "*" if !q
-    Product.tire.search( load: true, page: 0, per_page: 30 ) do |search|
-      search.sort { by :_score }
-      if langs and !langs.empty? then 
+    Product.tire.search( load: true, page: page_count, per_page: 30 ) do |search|
+      search.sort { by [:_score, :followers] }
+      if langs and !langs.empty? and langs.size > 1 then 
         langs.downcase!
         search.filter :terms, :language => langs.split(',') 
       end
