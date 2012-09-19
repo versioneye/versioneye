@@ -178,7 +178,6 @@ GEM
       rack-test (>= 0.5.3)
     will_paginate (3.0.3)
     xml-simple (1.1.1)
-    yajl-ruby (1.1.0)
     yui-compressor (0.9.6)
       POpen4 (>= 0.1.4)
 
@@ -195,7 +194,6 @@ DEPENDENCIES
   jquery-rails (= 2.0.2)
   mongo (= 1.7.0)
   mongoid (= 2.5.0)
-  multi_json
   naturalsorter (= 0.4.7)
   nokogiri (= 1.5.5)
   oauth (= 0.4.7)
@@ -212,5 +210,4 @@ DEPENDENCIES
   uglifier
   webrat (= 0.7.3)
   will_paginate (= 3.0.3)
-  yajl-ruby
   yui-compressor (= 0.9.6)

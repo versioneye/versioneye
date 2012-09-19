@@ -54,9 +54,10 @@ describe Product do
 			response.code.should eql(200)
 		end 
 		it "Finds the only element in the index by name" do
+			Product.clean_all
 			product = Product.new(:name => "rails")
 			product.save
-			product.index_one
+			# product.index_one
 			results = Product.elastic_search "rails"
 			results.count.should eql 1
 		end

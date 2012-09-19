@@ -1,8 +1,6 @@
 class Product
 
   require 'will_paginate/array'
-  require 'yajl/json_gem'
-  require 'tire'
 
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -188,24 +186,7 @@ class Product
 
   ######## ELASTIC SEARCH START #####################################
 
-  index_name "product-#{Rails.env}"
-
-  def type 
-    "product"
-  end
-
-  def to_indexed_json
-    {
-      prod_key: prod_key, 
-      name: name, 
-      description: description,
-      description_manual: description_manual, 
-      language: language, 
-      group_id: group_id, 
-      prod_type: prod_type, 
-      version: version
-    }.as_json
-  end
+  index_name "product_#{Rails.env}"
 
   mapping do
     indexes :name, analyzer: 'snowball', boost: 100
@@ -223,14 +204,14 @@ class Product
   end
 
   def index_one
-    Product.tire.index.store self.to_indexed_json 
+    Product.tire.index.store self
     Product.tire.index.refresh
   end
 
   def self.index_all
     Product.clean_all
     Product.all.each do |product|  
-      Product.tire.index.store product.to_indexed_json
+      Product.tire.index.store product
       p "index #{product.name}"
     end
     Product.tire.index.refresh
