@@ -56,27 +56,9 @@ class Product
   end
 
   def self.search(q, description = nil, group_id = nil, languages = nil, page_count = 0)
-    results_json = self.elastic_search(q, group_id, languages, page_count)
-    p "#{results_json.count}"
-    results = Array.new
-    results_json.each do |obj|
-      product = Product.new
-      product.name = obj[:name]
-      product.prod_key = obj[:prod_key]
-      product.group_id = obj[:group_id]
-      product.language = obj[:language]
-      product.prod_type = obj[:prod_type]
-      product.version = obj[:version]
-      product.followers = obj[:followers]
-      results.push product
-      p " - #{product.group_id} - #{product.language} - #{product.version} - #{product.prod_type}"
-    end
-    results
+    self.elastic_search(q, group_id, languages, page_count)
   rescue => e 
     p "#{e}"
-    e.backtrace.each do |message|
-      p " - #{message}"
-    end
     Product.find_by(q, description, groupid, languages, 300).paginate(:page => page_count)
   end
 
