@@ -219,7 +219,7 @@ class Product
 
   def self.index_newest
     Product.where(reindex: true).each do |product|
-      Product.tire.index.store product.to_indexed_json
+      Product.tire.index.store product
       product.update_attribute(:reindex, false)
     end
     Product.tire.index.refresh
@@ -227,7 +227,7 @@ class Product
 
   def self.elastic_search(q, group_id = nil, langs = nil)
     Product.tire.search( load: true, page: 0, per_page: 30 ) do |search|
-      search.sort { by :_score, "desc" }
+      search.sort { by :_score }
       search.query do |query|  
         query.string q
       end

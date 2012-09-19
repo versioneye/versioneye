@@ -1,11 +1,9 @@
 require 'spec_helper'
 
 def add_local_products
-	@products.each do |item|
-    	p = Product.new item
-    	p.update_attribute(:reindex, true)            
+	@prods.each do |prod|
+    	product = Product.new prod
     end
-    Product.index_newest
 end
 
 def get_index_count
@@ -57,51 +55,47 @@ describe Product do
 			Product.clean_all
 			product = Product.new(:name => "rails")
 			product.save
-			# product.index_one
+			sleep 2 # sleep for 2 seconds until the product gets indexed via REST. 
 			results = Product.elastic_search "rails"
-			results.count.should eql 1
+			results.count.should eql(1)
 		end
 	end
 
-	# context "Club-Mate in the house" do
-	# 	it "adds all to the index" do
-	# 		response = Product.index_all
-	# 		response.code.should eql(200)
-	# 	end 
-	# 	it "Finds the only element in the index by name" do
-	# 		product = Product.new(:name => "rails")
-	# 		product.save
-	# 		product.index_one
-	# 		results = Product.elastic_search "rails"
-	# 		results.count.should equal 1
-	# 	end
-	# end
+	context "Club-Mate in the house" do
+		it "Finds club-mate first!" do
+			sleep 5
+			results = Product.elastic_search "club-mate"
+			results.count.should eql(7)
+			results.each do |result|
+				p "#{result.name}"
+			end
+			results[0].name.should eql("club-mate")
+		end
+	end
 
-		# context "- index only documents, which has flagged to reindex" do
-		# 	it "index_newest" do
-		# 		#initialize data collection
-		# 		Product.clean_all
-  #               @products.each do |item|
-  #               	p = Product.new item
-  #               	p.update_attribute(:reindex, true)            
-  #               end
-  #               r = Product.index_newest
-  #               get_index_count.should equal @products.count 
+	context "- index only documents, which has flagged to reindex" do
+		it "index_newest" do
+			Product.clean_all
+            @products.each do |product|
+            	product.update_attribute(:reindex, true)            
+            end
+            Product.index_newest
+            get_index_count.should equal @products.count 
 
-  #               #test, there's anymore document to reindex
-  #               Product.where(reindex: true).count.should equal 0               
-		# 	end
+            Product.where(reindex: true).count.should equal 0               
+		end
+	end
 
-		# end
-
-		# context "- index all documents in `products` collection" do 
-		# 	it "index_all" do
-		# 		Product.clean_all
-		# 		add_local_products
-		# 		r = Product.index_all
-		# 		get_index_count.should equal Product.count
-		# 	end
-		# end
+	context " - index all documents in `products` collection" do 
+		it "index_all" do
+			Product.clean_all
+			sleep 4
+			add_local_products
+			Product.index_all
+			sleep 4
+			get_index_count.should eql(Product.count) 
+		end
+	end
 
 		# context "- tests search functionalities " do
 		# 	it "search empty string" do
@@ -139,20 +133,6 @@ describe Product do
 		# 		r[0][:group_id].should eql "org.club.mate"
 		# 	end
 		# end
-
-		# context "Exact Match context" do 
-		# 	before :each do 
-		# 		@products = [
-		# 			{:name => "hibernatecoreparent", :followers => 20, :description => "A module of the Hibernate Core project "},
-		# 			{:name => "hibernatecore",        :followers => 20, :description => "A module of the Hibernate Core project "},
-		# 			{:name => "hibernateehcache",     :followers => 20, :description => "A module of the Hibernate Core project "}, 
-		# 			{:name => "hibernateproxool",     :followers => 20, :description => "A module of the Hibernate Core project "}, 
-					
-		# 		]
-		# 		@products.each do |item|
-		# 			Product.new(item).save
-		# 		end
-		# 	end
 
 		# 	after :each do 
 		# 		@products.each do |item|
