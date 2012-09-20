@@ -37,6 +37,7 @@ class ProductsController < ApplicationController
     else
       languages = @lang.split(",")
       @products = Product.search(@query, @description, @groupid, @lang, params[:page])
+      #@products = Product.find_by(@query, @description, @groupid, @lang, 300).paginate(:page => params[:page])
       if @products.nil? || @products.count == 0
         flash.now[:notice] = "Sorry. No Results found."
       elsif signed_in?

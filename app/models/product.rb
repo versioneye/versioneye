@@ -55,16 +55,17 @@ class Product
     false
   end
 
-  def self.search(q, description = nil, group_id = nil, languages = nil, page_count = 0)
+  def self.search(q, description = nil, group_id = nil, languages = nil, page_count = 1)
     self.elastic_search(q, group_id, languages, page_count)
   rescue => e 
-    p "#{e}"
-    Product.find_by(q, description, groupid, languages, 300).paginate(:page => page_count)
+    p "ERROR in search - #{e}"
+    p "Dam. We don't give up. Not yet! Start alternative search on awesome MongoDB."
+    Product.find_by(q, description, group_id, languages, 300).paginate(:page => page_count)
   end
 
-  def self.find_by(searched_name, description, group_id, languages=nil, limit=300)
+  def self.find_by(searched_name, description = nil, group_id = nil, languages=nil, limit=300)
     result1 = Product.find_all(searched_name, description, group_id, languages, limit, nil)
-
+    
     if searched_name.nil? || searched_name.empty? 
       return result1 
     end
@@ -76,6 +77,12 @@ class Product
     result2 = Product.find_all(searched_name, description, group_id, languages, limit, prod_keys)  
     result = result1 + result2
     return result
+  rescue => e 
+    p "ERROR in find_by - #{e}"
+    e.backtrace.each do |message|
+      p " - #{message}"
+    end
+    Mongoid::Criteria.new(Product, {_id: -1})
   end
 
   def self.find_all(searched_name, description, group_id, languages=nil, limit=300, exclude_keys)
@@ -175,7 +182,7 @@ class Product
     indexes :name, analyzer: 'snowball', boost: 100
     indexes :description, analyzer: 'snowball'
     indexes :description_manual, analyzer: 'snowball'
-    indexes :language, analyzer: "string_lowercase"
+    indexes :language, analyzer: "string_lowercase", index: :not_analyzed
     indexes :group_id, index: :not_analyzed
     indexes :prod_key, index: :not_analyzed
     indexes :prod_type, index: :not_analyzed
@@ -185,10 +192,13 @@ class Product
 
   def self.elastic_search(q, group_id = nil, langs = nil, page_count = 0)
     p "#{q} - #{group_id} - #{langs} - #{page_count}"
+    if (q.nil? || q.empty?) && (group_id.nil? || group_id.empty?)
+      raise ArgumentError, "query and gorup_id are both empty! This is not allowed"
+    end
     group_id = "" if !group_id
-    q = "*" if !q
+    q = "*" if !q || q.empty?
     Product.tire.search( load: true, page: page_count, per_page: 30 ) do |search|
-      search.sort { by [:_score, :followers] }
+      search.sort { by [:_score] }
       if langs and !langs.empty? and langs.size > 1 then 
         langs.downcase!
         search.filter :terms, :language => langs.split(',') 
@@ -206,12 +216,6 @@ class Product
         end 
       end
     end
-  rescue => e
-    puts "Error!! #{e}"
-    e.backtrace.each do |message|
-      p " - #{message}"
-    end
-    Array.new
   end
 
   def self.clean_all
@@ -644,7 +648,7 @@ class Product
       if (group_id && !group_id.empty?)
         query = query.where(group_id: /^#{group_id}/i)
       end
-      if languages && !languages.empty?
+      if languages && !languages.empty? && languages.size > 1
         query = query.in(language: languages)
       end
       query

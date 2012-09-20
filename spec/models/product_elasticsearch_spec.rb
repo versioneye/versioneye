@@ -98,10 +98,9 @@ describe Product do
 	end
 
 	context "- tests search functionalities " do
-		it "search empty string" do
+		it "search empty string should rais exception" do
 			Product.index_all 
-			results = Product.elastic_search ""
-			results.count.should eql(0)
+			expect { Product.elastic_search("") }.to raise_error(ArgumentError)
 		end
 
 		#TODO: c gaves every c language, but c++ and c# dont work at all
