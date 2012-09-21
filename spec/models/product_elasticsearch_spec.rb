@@ -21,7 +21,10 @@ describe Product do
 			{:name => "club-mate-c",      :language => "c",    :group_id => ""},
 			{:name => "club-mate-ccc",    :language => "c++",  :group_id => ""},
 			{:name => "club-mate-ruby",   :language => "ruby", :group_id => ""},
-			{:name => "club-mate-cnet",   :language => "c#",   :group_id => "net.microsoft.crap"}
+			{:name => "club-mate-cnet",   :language => "c#",   :group_id => "net.microsoft.crap"},
+			{:name => "bad.mate.jar", 	  :language => "mate", :group_id => "club.mate.org"},
+			{:name => "good.mate.jar",    :language => "mate", :group_id => "club.mate.org"},
+			{:name => "superb_mate.jar",  :language => "mate", :group_id => "club.mate.org"}
 		]
 		@products = Array.new
 		@prods.each do |prod| 
@@ -65,7 +68,7 @@ describe Product do
 		it "Finds club-mate first!" do
 			sleep 5
 			results = Product.elastic_search "club-mate"
-			results.count.should eql(7)
+			results.count.should eql(@prods.count)
 			results.each do |result|
 				p "#{result.name}"
 			end
@@ -129,6 +132,18 @@ describe Product do
 			results = Product.elastic_search "mate", "org."
 			results.count.should eql(1)
 			results[0][:group_id].should eql "org.club.mate"
+		end
+
+		it "test finding names, which includes points" do
+			sleep 4
+			results = Product.elastic_search "bad.mate.jar"
+			results.count.should eql(1)			
+		end 
+
+		it "test finding names, which includes underscores" do 
+			sleep 3
+			results = Product.elastic_search "superb_mate.jar"			
+			results.count.should eql(1)
 		end
 	end
 	

@@ -179,7 +179,7 @@ class Product
   index_name "product_#{Rails.env}"
 
   mapping do
-    indexes :name, analyzer: 'snowball', boost: 100
+    indexes :name, analyzer: 'whitespace', boost: 100
     indexes :description, analyzer: 'snowball'
     indexes :description_manual, analyzer: 'snowball'
     indexes :language, analyzer: "string_lowercase", index: :not_analyzed
@@ -205,11 +205,12 @@ class Product
       end
       search.query do |query|  
         if q != '*' and !group_id.empty?
+          #when user search by name and group_id
           query.boolean do 
             must {string q}                                   
             must {string 'group_id:' + group_id + "*"}                                                     
           end 
-        elsif q != '*' and group_id.empty?
+        elsif q != '*' and group_id.empty?          
           query.string q 
         elsif q == '*' and !group_id.empty?
           query.string "group_id:" + group_id + "*"  
