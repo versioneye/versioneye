@@ -1,0 +1,33 @@
+
+<div class ="container">
+<div id="chart_container">
+	You should enable Javascript to see beautiful graph.
+</div>
+<script type="text/javascript">
+$(function(){
+	//if page is loaded then render plot.
+	var chart_container = "chart_container",
+		chartX = 400,
+		chartY = 300,
+		data = [['java', 30], ['c', 25], ['ruby', 20], 
+		['javascript', 10], ['php', -2]],
+		chart = new JSChart(chart_container, "bar", "domain-code");
+
+	//here i'll ask data asynchronously
+	
+	console.log("Draw graph");
+	//set container
+	$("#"+chart_container)
+		.css("height", chartX + 10)
+		.css("padding", "5 10 5 10");
+	//draw plot
+	chart
+		.setDataArray(data)
+		.setAxisReversed(true)
+		.resize(chartX, chartY)
+		.draw();
+});
+
+</script>
+
+</div>	

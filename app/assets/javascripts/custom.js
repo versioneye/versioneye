@@ -12,7 +12,6 @@ var fb_redirect = "redirect_uri=https://www.versioneye.com/auth/facebook/callbac
 var oauth_facebook_link = fb_domainlink + fb_req_perms + fb_clientid + fb_scope + fb_redirect;
 var values = [{ label: "Choice1", va: "value1" }, { label: "Choice2", va: "value2" }]
 
-
 jQuery(document).ready(function() {
 	
 	jQuery('#q').tbHinter({
