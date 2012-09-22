@@ -190,15 +190,16 @@ class Product
     indexes :followers, type: "integer", index: :not_analyzed
   end
 
+  
   def self.elastic_search(q, group_id = nil, langs = nil, page_count = 0)
     p "#{q} - #{group_id} - #{langs} - #{page_count}"
     if (q.nil? || q.empty?) && (group_id.nil? || group_id.empty?)
-      raise ArgumentError, "query and gorup_id are both empty! This is not allowed"
+      raise ArgumentError, "query and group_id are both empty! This is not allowed"
     end
     group_id = "" if !group_id
     q = "*" if !q || q.empty?
     Product.tire.search( load: true, page: page_count, per_page: 30 ) do |search|
-      search.sort { by [:_score] }
+      search.sort { by [{:_score => 'desc'}] }
       if langs and !langs.empty? and langs.size > 1 then 
         langs.downcase!
         search.filter :terms, :language => langs.split(',') 
@@ -211,13 +212,32 @@ class Product
             must {string 'group_id:' + group_id + "*"}                                                     
           end 
         elsif q != '*' and group_id.empty?          
-          query.string q 
+          query.string q
         elsif q == '*' and !group_id.empty?
           query.string "group_id:" + group_id + "*"  
         end 
       end
     end
   end
+
+  def self.elastic_search_exact(name)
+    Product.tire.search(load: true) do |search|
+        response = search.query do |query|
+          query.boolean do
+            must {string name, default_operator: "AND" }           
+          end 
+        end
+        #filter result by hand
+        result = []
+        response.results.each do |item|        
+          if item.name.eql? name then
+              result << item.to_hash
+          end
+        end
+        
+        return result 
+    end
+  end 
 
   def self.clean_all
     Product.tire.index.delete
