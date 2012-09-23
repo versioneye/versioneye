@@ -178,33 +178,27 @@ class Product
 
   index_name "product_#{Rails.env}"
 
-
-  settings :number_of_shards => 1, :number_of_replicas => 1 do
-    mapping {
-      indexes :name, analyzer: 'snowball' #, boost: 100
-      
-      indexes :description, analyzer: 'snowball'
-      # indexes :description_manual, analyzer: 'snowball'
-      # indexes :language, index: :not_analyzed, include_in_all: false
-      # indexes :group_id, index: :not_analyzed, include_in_all: false
-
-      # indexes :prod_key, index: :not_analyzed
-      # indexes :prod_type, index: :not_analyzed
-      # indexes :version, index: :not_analyzed
-      # indexes :followers, type: "integer", index: :not_analyzed
-    }
+  mapping do
+    indexes :name, analyzer: 'whitespace', boost: 100
+    indexes :description, analyzer: 'snowball'
+    indexes :description_manual, analyzer: 'snowball'
+    indexes :language, analyzer: "string_lowercase", index: :not_analyzed
+    indexes :group_id, index: :not_analyzed
+    indexes :prod_key, index: :not_analyzed
+    indexes :prod_type, index: :not_analyzed
+    indexes :version, index: :not_analyzed
+    indexes :followers, type: "integer", index: :not_analyzed
   end
 
-  # langs have to be an array of string
   def self.elastic_search(q, group_id = nil, langs = nil, page_count = 0)
     p "#{q} - #{group_id} - #{langs} - #{page_count}"
     if (q.nil? || q.empty?) && (group_id.nil? || group_id.empty?)
-      raise ArgumentError, "query and gorup_id are both empty! This is not allowed"
+      raise ArgumentError, "query and group_id are both empty! This is not allowed"
     end
     group_id = "" if !group_id
     q = "*" if !q || q.empty?
     Product.tire.search( load: true, page: page_count, per_page: 30 ) do |search|
-      search.sort { by [:_score] }
+      search.sort { by [{:_score => 'desc'}] }
       if langs and !langs.empty?
         langs_dwoncase = Array.new 
         langs.each do |lang|
@@ -214,18 +208,38 @@ class Product
       end
       search.query do |query|  
         if q != '*' and !group_id.empty?
+          #when user search by name and group_id
           query.boolean do 
             must {string q}                                   
             must {string 'group_id:' + group_id + "*"}                                                     
           end 
-        elsif q != '*' and group_id.empty?
-          query.string q 
+        elsif q != '*' and group_id.empty?          
+          query.string q
         elsif q == '*' and !group_id.empty?
           query.string "group_id:" + group_id + "*"  
         end 
       end
     end
   end
+
+  def self.elastic_search_exact(name)
+    Product.tire.search(load: true) do |search|
+        response = search.query do |query|
+          query.boolean do
+            must {string name, default_operator: "AND" }           
+          end 
+        end
+        #filter result by hand
+        result = []
+        response.results.each do |item|        
+          if item.name.eql? name then
+              result << item.to_hash
+          end
+        end
+        
+        return result 
+    end
+  end 
 
   def self.clean_all
     Product.tire.index.delete

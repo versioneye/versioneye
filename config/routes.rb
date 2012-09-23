@@ -160,6 +160,9 @@ Versioneye::Application.routes.draw do
   get   'site_map_15.xml',        :to => 'page#site_map_15'
   get   'site_map_16.xml',        :to => 'page#site_map_16'
 
-  get   '*path', :to => 'page#routing_error'
+
+  get   '/statistics',  :to => 'statistics#index' 
+  #default action
+  get   '*path',        :to => 'page#routing_error'
   
 end

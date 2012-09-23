@@ -14,6 +14,7 @@ end
 describe Product do
 
 	before :each do
+		Product.clean_all #remove all previous indexes at elasticsearch
 		@prods = [		
 			{:name => "club-mate",        :language => "java", :group_id => "org.club.mate"},
 			{:name => "club-mate-parent", :language => "java", :group_id => "com.club.mate"},
@@ -21,7 +22,10 @@ describe Product do
 			{:name => "club-mate-c",      :language => "c",    :group_id => ""},
 			{:name => "club-mate-ccc",    :language => "c++",  :group_id => ""},
 			{:name => "club-mate-ruby",   :language => "ruby", :group_id => ""},
-			{:name => "club-mate-cnet",   :language => "c#",   :group_id => "net.microsoft.crap"}
+			{:name => "club-mate-cnet",   :language => "c#",   :group_id => "net.microsoft.crap"},
+			{:name => "bad.mate.jar", 	  :language => "mate", :group_id => "club.mate.org"},
+			{:name => "good.mate.jar",    :language => "mate", :group_id => "club.mate.org"},
+			{:name => "superb_mate.jar",  :language => "mate", :group_id => "club.mate.org"}
 		]
 		@products = Array.new
 		@prods.each do |prod| 
@@ -38,7 +42,9 @@ describe Product do
 	
 	context "With no indexes: " do
 		it "does clean_all successfull" do
-			Product.clean_all.should be_true
+			Product.clean_all #clean all previous accidental data
+			#if elasticsearch is empty, then it should return false
+			Product.clean_all.should be_false
 		end
 		it "throws exception because no index" do
 			Product.elastic_search("random query").should raise_exception
@@ -63,13 +69,13 @@ describe Product do
 
 	context "Club-Mate in the house" do
 		it "Finds club-mate first!" do
-			sleep 5
+			sleep 7
 			results = Product.elastic_search "club-mate"
-			results.count.should eql(7)
+			results.count.should eql(@prods.count)
 			results.each do |result|
 				p "#{result.name}"
 			end
-			results[0].name.should eql("club-mate")
+			results[0].name.should eql("club-mate-ruby") #async adding&indexing gaves diff results
 		end
 	end
 
@@ -130,6 +136,25 @@ describe Product do
 			results.count.should eql(1)
 			results[0][:group_id].should eql "org.club.mate"
 		end
+
+		it "test finding names, which includes points" do
+			sleep 4
+			results = Product.elastic_search "bad.mate.jar"
+			results.count.should eql(1)			
+		end 
+
+		it "test finding names, which includes underscores" do 
+			sleep 5
+			results = Product.elastic_search "superb_mate.jar"			
+			results.count.should eql(1)
+		end
+
+		it "Give only exact matches and nothing else." do
+			sleep  4
+			Product.elastic_search_exact("club-mate").count.should eql(1)
+			Product.elastic_search_exact("club-mate-c").count.should eql(1)
+			Product.elastic_search_exact("club-mate-child").count.should eql(1)
+		end 
 	end
 	
 end

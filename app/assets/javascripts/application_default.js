@@ -14,3 +14,4 @@
 //= require custom
 //= require custom_update_language
 //= require custom_feedback
+//= require jscharts
