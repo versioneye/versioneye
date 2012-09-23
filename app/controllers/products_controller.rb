@@ -35,9 +35,9 @@ class ProductsController < ApplicationController
     elsif @query.include?("%")
       flash.now[:error] = "the character % is not allowed"
     else
-      languages = @lang.split(",")
-      @products = Product.search(@query, @description, @groupid, @lang, params[:page])
-      #@products = Product.find_by(@query, @description, @groupid, @lang, 300).paginate(:page => params[:page])
+      languages = get_language_array(@lang)
+      #@products = Product.search( @query, @description, @groupid, languages, params[:page])
+      @products = Product.find_by(@query, @description, @groupid, languages, 300).paginate(:page => params[:page])
       if @products.nil? || @products.count == 0
         flash.now[:notice] = "Sorry. No Results found."
       elsif signed_in?
@@ -271,9 +271,20 @@ class ProductsController < ApplicationController
   
   private
 
+    def get_language_array(lang)
+      langs = lang.split(",")
+      p "langs: #{langs}"
+      languages = Array.new 
+      langs.each do |language|
+        languages.push(language) if !language.strip.empty?
+      end
+      p "languages: #{languages}"
+      languages
+    end
+
     def get_lang_value( params, cookies )
       lang = params[:lang]
-      if lang.nil? || lang.empty? 
+      if lang.nil? || lang.empty?
         lang = cookies[:veye_lang]
       else 
         cookies[:veye_lang] = { :value => lang, :expires => 24.hour.from_now }

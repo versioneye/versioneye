@@ -55,6 +55,7 @@ class Product
     false
   end
 
+  # languages have to be an array of strings. 
   def self.search(q, description = nil, group_id = nil, languages = nil, page_count = 1)
     self.elastic_search(q, group_id, languages, page_count)
   rescue => e 
@@ -63,7 +64,9 @@ class Product
     Product.find_by(q, description, group_id, languages, 300).paginate(:page => page_count)
   end
 
-  def self.find_by(searched_name, description = nil, group_id = nil, languages=nil, limit=300)
+  # languages have to be an array of strings. 
+  def self.find_by(query, description = nil, group_id = nil, languages=nil, limit=300)
+    searched_name = String.new( query.gsub(" ", "-") )
     result1 = Product.find_all(searched_name, description, group_id, languages, limit, nil)
     
     if searched_name.nil? || searched_name.empty? 
@@ -79,9 +82,6 @@ class Product
     return result
   rescue => e 
     p "ERROR in find_by - #{e}"
-    e.backtrace.each do |message|
-      p " - #{message}"
-    end
     Mongoid::Criteria.new(Product, {_id: -1})
   end
 
@@ -178,18 +178,24 @@ class Product
 
   index_name "product_#{Rails.env}"
 
-  mapping do
-    indexes :name, analyzer: 'snowball', boost: 100
-    indexes :description, analyzer: 'snowball'
-    indexes :description_manual, analyzer: 'snowball'
-    indexes :language, analyzer: "string_lowercase", index: :not_analyzed
-    indexes :group_id, index: :not_analyzed
-    indexes :prod_key, index: :not_analyzed
-    indexes :prod_type, index: :not_analyzed
-    indexes :version, index: :not_analyzed
-    indexes :followers, type: "integer", index: :not_analyzed
+
+  settings :number_of_shards => 1, :number_of_replicas => 1 do
+    mapping {
+      indexes :name, analyzer: 'snowball' #, boost: 100
+      
+      indexes :description, analyzer: 'snowball'
+      # indexes :description_manual, analyzer: 'snowball'
+      # indexes :language, index: :not_analyzed, include_in_all: false
+      # indexes :group_id, index: :not_analyzed, include_in_all: false
+
+      # indexes :prod_key, index: :not_analyzed
+      # indexes :prod_type, index: :not_analyzed
+      # indexes :version, index: :not_analyzed
+      # indexes :followers, type: "integer", index: :not_analyzed
+    }
   end
 
+  # langs have to be an array of string
   def self.elastic_search(q, group_id = nil, langs = nil, page_count = 0)
     p "#{q} - #{group_id} - #{langs} - #{page_count}"
     if (q.nil? || q.empty?) && (group_id.nil? || group_id.empty?)
@@ -199,9 +205,12 @@ class Product
     q = "*" if !q || q.empty?
     Product.tire.search( load: true, page: page_count, per_page: 30 ) do |search|
       search.sort { by [:_score] }
-      if langs and !langs.empty? and langs.size > 1 then 
-        langs.downcase!
-        search.filter :terms, :language => langs.split(',') 
+      if langs and !langs.empty?
+        langs_dwoncase = Array.new 
+        langs.each do |lang|
+          langs_dwoncase.push lang.downcase
+        end
+        search.filter :terms, :language => langs_dwoncase
       end
       search.query do |query|  
         if q != '*' and !group_id.empty?
