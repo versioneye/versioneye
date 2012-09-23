@@ -17,12 +17,12 @@ describe ProductsHelper do
       hash['query'].should eql("junit")
     end
 
-    it "returns the given search input binded with -" do 
+    it "returns the given search input binded without -" do 
       query = "spring core"
       description = nil
       hash = @products_controller.do_parse_search_input( query , description, nil)
       hash['description'].should be_nil
-      hash['query'].should eql("spring-core")
+      hash['query'].should eql("spring core")
     end
 
     it "returns the given search input. Parsed the description and the group" do 
