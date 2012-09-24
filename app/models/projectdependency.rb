@@ -35,7 +35,6 @@ class Projectdependency
   end
   
   def outdated?
-    p "is_outdated + #{self.prod_key}"
     if self.prod_key.nil?
       self.outdated = false
       return false 

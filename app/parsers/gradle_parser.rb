@@ -36,12 +36,10 @@ class GradleParser < CommonParser
 				:comperator => "="	
 			})
 			product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
-			p "name #{dependency.name}"
 			if product
         		dependency.prod_key = product.prod_key
         	else
         		unknowns += 1
-        		p "unknowns #{unknowns}"
       		end
 			if dependency.outdated?
 				out_number += 1
