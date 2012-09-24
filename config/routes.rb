@@ -161,7 +161,8 @@ Versioneye::Application.routes.draw do
   get   'site_map_16.xml',        :to => 'page#site_map_16'
 
 
-  get   '/statistics',  :to => 'statistics#index' 
+  get   '/statistics',  :to => 'statistics#index'
+  get   '/statistics/proglangs',  :to => 'statistics#get_proglangs' 
   #default action
   get   '*path',        :to => 'page#routing_error'
   

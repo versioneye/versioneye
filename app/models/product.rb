@@ -612,6 +612,16 @@ class Product
     Product.all().distinct(:language)
   end
 
+  def self.get_language_stat
+    data = []
+    self.get_unique_languages.each do |lang|
+      count = self.where(language: lang).count
+      data << [lang, count]
+    end
+
+    data
+  end
+
   def update_in_my_products(array_of_product_ids)
     self.in_my_products = array_of_product_ids.include?(_id.to_s)
   end

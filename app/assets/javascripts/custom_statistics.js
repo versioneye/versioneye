@@ -5,23 +5,38 @@ jQuery(document).ready(function() {
 		styleclass: "lp_searchfield_hint"
 	});
 
-	render_statistics();
+	//get list of popular languages and draw awesome plots
+	jQuery.get(
+		"/statistics/proglangs.json", null, 
+		function(data, status, jqXHR){ render_statistics(data);},
+		"json"
+	);
 	
 });
 
-function render_statistics(){
-	var chart_container = "chart_container";
-	var chartX = 777;
-	var chartY = 400;
-	var data = [['java', 30], ['c', 25], ['ruby', 20], ['javascript', 10], ['php', -2]];
-	var chart = new JSChart("chart_container", "bar", "domain-code");
-	
+function render_statistics(data){
+	//renders awesome summery plots
+	var chart_container = "chart_container",
+		chartX = 777,
+		chartY = 400,
+		domain_code = "",
+		chart = new JSChart(chart_container, "bar", domain_code);
+	if (data.length == 0 ){
+		console.log("Error:render_statisitics - empty dataset!");
+		return null;
+	}
+
 	container = jQuery("#"+chart_container);
-	container.css("height", chartX + 10);
-	container.css("padding", "5 10 5 10");
+	container.css("padding", "5 15 5 15");
+	container.css("height", chartX + 30);
+	container.css("width", chartY + 10);
 	
 	chart.setDataArray(data);
-	chart.setAxisReversed(true)
-	chart.resize(chartX, chartY)
+	chart.setTitle("Popularity of projects by languages");
+	chart.setTitleFontSize(15);
+	chart.setAxisReversed(true);
+	chart.resize(chartX, chartY);
+	chart.setAxisNameX("", false);
+	chart.setAxisNameY("", false);
 	chart.draw();
 }
