@@ -438,4 +438,15 @@ describe Product do
 
   end
 
+  describe "downcase_array" do 
+    it " - downcases the array" do 
+      elements = Array.new 
+      elements.push "Hallo"
+      elements.push "BamboO"
+      new_elements = Product.downcase_array(elements)
+      new_elements.first.should eql("hallo")
+      new_elements.last.should eql("bamboo")
+    end
+  end
+
 end

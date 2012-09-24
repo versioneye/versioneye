@@ -42,8 +42,8 @@ describe Product do
 	
 	context "With no indexes: " do
 		it "does clean_all successfull" do
-			Product.clean_all #clean all previous accidental data
-			#if elasticsearch is empty, then it should return false
+			Product.clean_all # clean all previous accidental data
+			# if elasticsearch is empty, then it should return false
 			Product.clean_all.should be_false
 		end
 		it "throws exception because no index" do
@@ -109,16 +109,17 @@ describe Product do
 			expect { Product.elastic_search("") }.to raise_error(ArgumentError)
 		end
 
-		#TODO: c gaves every c language, but c++ and c# dont work at all
+		# TODO: c gaves every c language, but c++ and c# dont work at all
+		# Right now this case is not important because we are not tracking c++ or c#
 		it "test language filtering"  do 
 			sleep 4
-			Product.elastic_search("club-mate", nil, "java").count.should eql(3)
+			Product.elastic_search("club-mate", nil, ["Java"]).count.should eql(3)
 		end
 
 		it "test, does language filtering is case insensitive" do
 			sleep 4
-			results1 = Product.elastic_search "club-mate", nil, "Java"
-			results2 = Product.elastic_search "club-mate", nil, "java"
+			results1 = Product.elastic_search "club-mate", nil, ["Java"]
+			results2 = Product.elastic_search "club-mate", nil, ["java"]
 			results1[0][:name].should eql results2[0][:name]
 			results1.count.should eql(results2.count)
 		end
