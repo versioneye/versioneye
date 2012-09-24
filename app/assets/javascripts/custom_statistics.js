@@ -7,11 +7,11 @@ jQuery(document).ready(function() {
 
 	//get list of popular languages and draw awesome plots
 	jQuery.get(
-		"/statistics/proglangs.json", null, 
-		function(data, status, jqXHR){ render_statistics(data);},
-		"json"
+			"/statistics/proglangs.json", null, 
+			function(data, status, jqXHR){ render_statistics(data);},
+			"json"
 	);
-	
+		
 });
 
 function render_statistics(data){
@@ -27,16 +27,21 @@ function render_statistics(data){
 	}
 
 	container = jQuery("#"+chart_container);
-	container.css("padding", "5 15 5 15");
+	container.css("padding", "5 10 5 10");
 	container.css("height", chartX + 30);
 	container.css("width", chartY + 10);
 	
 	chart.setDataArray(data);
-	chart.setTitle("Popularity of projects by languages");
+	chart.setTitle("Projects per Languages");
 	chart.setTitleFontSize(15);
 	chart.setAxisReversed(true);
 	chart.resize(chartX, chartY);
 	chart.setAxisNameX("", false);
 	chart.setAxisNameY("", false);
+	chart.setAxisPaddingLeft(80);
+	chart.setAxisValuesFontSizeX(14);
+	chart.setBarValuesFontSize(14); 
+	//chart.setBarSpacingRatio(5); //change spacing between bars
+	chart.setBarOpacity(0.8);
 	chart.draw();
 }
