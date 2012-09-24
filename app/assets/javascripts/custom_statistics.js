@@ -6,11 +6,15 @@ jQuery(document).ready(function() {
 	});
 
 	//get list of popular languages and draw awesome plots
-	jQuery.get(
-		"/statistics/proglangs.json", null, 
-		function(data, status, jqXHR){ render_statistics(data);},
-		"json"
-	);
+	setTimeout(
+		jQuery.get(
+			"/statistics/proglangs.json", null, 
+			function(data, status, jqXHR){ render_statistics(data);},
+			"json"
+		),
+		3000
+	)
+	
 	
 });
 
