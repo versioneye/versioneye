@@ -20,6 +20,8 @@ module ProjectsHelper
 		  project_type = "npm"
 		elsif orig_filename.match(/composer.json/)
 		  project_type = "composer"
+		elsif orig_filename.match(/dependencies.gradle/) || orig_filename.match(/.gradle$/)
+		  project_type = "gradle"
 		elsif orig_filename.match(/pom.xml/)
 		  project_type = "Maven2"
 		end

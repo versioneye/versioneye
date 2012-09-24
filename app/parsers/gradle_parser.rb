@@ -15,7 +15,9 @@ class GradleParser < CommonParser
 
 		matches = content.scan( dependecies_matcher )
 		deps = self.build_dependencies(matches)
-		return Project.new deps
+		project = Project.new deps
+		project.dep_number = project.dependencies.count
+		project
 	end
 
 	def self.build_dependencies(matches)
@@ -34,10 +36,12 @@ class GradleParser < CommonParser
 				:comperator => "="	
 			})
 			product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
+			p "name #{dependency.name}"
 			if product
         		dependency.prod_key = product.prod_key
         	else
         		unknowns += 1
+        		p "unknowns #{unknowns}"
       		end
 			if dependency.outdated?
 				out_number += 1
@@ -45,7 +49,7 @@ class GradleParser < CommonParser
 			data << dependency
 		end
 
-		return {:unknowns => unknowns, :out_number => out_number, :dependencies => data}
+		return {:unknown_number => unknowns, :out_number => out_number, :dependencies => data}
 	end
 	
 end

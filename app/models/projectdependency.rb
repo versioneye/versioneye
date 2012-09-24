@@ -36,17 +36,25 @@ class Projectdependency
   
   def outdated?
     p "is_outdated + #{self.prod_key}"
-    return false if self.prod_key.nil?     
+    if self.prod_key.nil?
+      self.outdated = false
+      return false 
+    end 
     product = get_product
     if !self.version_current.eql?(product.version)
       self.version_current = product.version
       self.save()
     end
     if self.version_requested.eql?(self.version_current)
+      self.outdated = false
       return false
     else 
       newest_version = Naturalsorter::Sorter.sort_version([self.version_current, self.version_requested]).last
-      return false if newest_version.eql?(version_requested)
+      if newest_version.eql?(version_requested)
+        self.outdated = false
+        return false   
+      end
+      self.outdated = true
       return true
     end
   end

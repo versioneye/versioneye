@@ -150,7 +150,9 @@ class Project
     elsif project_type.eql?("npm")
       project = PackageParser.parse ( url )
     elsif project_type.eql?("composer")
-      project = ComposerParser.parse ( url )  
+      project = ComposerParser.parse ( url )
+    elsif project_type.eql?("gradle")
+      project = GradleParser.parse ( url )
     end
     project
   rescue => e 
