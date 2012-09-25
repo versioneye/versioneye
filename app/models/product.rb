@@ -108,9 +108,6 @@ class Product
     return query
   rescue => e
     p "#{e}" 
-    e.backtrace.each do |message|
-      p " - #{message}"
-    end
     Mongoid::Criteria.new(Product, {_id: -1})
   end
 
@@ -450,19 +447,6 @@ class Product
       p "#{message}"
     end
   end
-  
-  def self.update_version_data_global
-    count = Product.count()
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.all().skip(skip).limit(pack)
-      products.each do |product|
-        product.update_version_data
-      end
-    end
-  end
 
   def self.count_versions(lang)
     versions_count = 0 
@@ -565,14 +549,6 @@ class Product
   
   def self.get_hotest( count )
     Product.all().desc(:followers).limit( count )
-  end  
-
-  def self.update_name_downcase_global
-    products = Product.where(name_downcase: nil)
-    products.each do |product|
-      product.name_downcase = String.new(product.name.downcase)
-      product.save
-    end
   end
   
   def self.update_followers
@@ -583,22 +559,6 @@ class Product
       product.followers = count
       product.save
       p "#{id} - #{product.name} - #{count}"
-    end
-  end
-
-  def self.correct_namespace
-    products = Product.where(:prod_type => "Packagist" )
-    products.each do |product|
-
-      product.name = product.prod_key.gsub("php/", "")
-      product.save
-
-      deps = Dependency.all(conditions: { prod_key: product.prod_key } )
-      deps.each do |dep|
-        dep.name = dep.dep_prod_key.gsub("php/", "")
-        dep.save
-      end
-      
     end
   end
 
@@ -614,7 +574,7 @@ class Product
     data = []
     self.get_unique_languages.each do |lang|
       count = self.where(language: lang).count
-      data << [lang, count] unless lang.in? ["opa", "clojure", "c", "javascript"]
+      data << [lang, count] unless lang.in? ["Opa", "Clojure", "C", "JavaScript"]
     end
 
     data
