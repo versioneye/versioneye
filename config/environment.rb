@@ -18,14 +18,14 @@ end
 
 Versioneye::Application.initialize!
 
-begin
-	Tire.configure do
-		reset :url 
-		url Settings.elasticsearch_url
-	end
-rescue => e
-	p "Wrong configuration: #{e}"
-end
+# begin
+# 	Tire.configure do
+# 		reset :url 
+# 		url Settings.elasticsearch_url
+# 	end
+# rescue => e
+# 	p "Wrong configuration: #{e}"
+# end
 
 if Settings.aws_s3_access_key_id && Settings.aws_s3_secret_access_key
 	AWS::S3::Base.establish_connection!(
@@ -33,7 +33,3 @@ if Settings.aws_s3_access_key_id && Settings.aws_s3_secret_access_key
 	  :secret_access_key => Settings.aws_s3_secret_access_key
 	)
 end
-
-#ENV['RAILS_ENV'] = 'development'
-
-# ENV["RAILS_RELATIVE_URL_ROOT"] = "versioneye.com"
