@@ -611,7 +611,7 @@ class Product
   end
 
   def self.get_language_stat
-    data = [["4321OPA", 3],["12345678901234567890", 4]]
+    data = []
     self.get_unique_languages.each do |lang|
       count = self.where(language: lang).count
       data << [lang, count] unless lang.in? ["opa", "clojure", "c", "javascript"]
