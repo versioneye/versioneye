@@ -3,6 +3,56 @@ require 'spec_helper'
 describe GemfileParser do
   
   describe "parse" do 
+
+    before :each do
+      product1 = ProductFactory.create_for_gemfile("execjs", "1.4.0")
+      product1.versions.push( Version.new({version: "1.3.0"}) )
+      product1.save
+
+      product2 = ProductFactory.create_for_gemfile("jquery-rails", "1.0.0")
+      product2.save
+
+      product3 = ProductFactory.create_for_gemfile("therubyracer", "0.11.3")
+      product3.versions.push( Version.new({version: "0.10.1"}) )
+      product3.save
+
+      product4 = ProductFactory.create_for_gemfile("will_paginate", "4.0.3")
+      product4.versions.push( Version.new({version: "3.0.3"}) )
+      product4.save
+
+      product5 = ProductFactory.create_for_gemfile("gravatar_image_tag", "1.1.6")
+      product5.versions.push( Version.new({version: "1.1.3"}) )
+      product5.save
+
+      product6 = ProductFactory.create_for_gemfile("tire", "3.2.5")
+      product6.save
+
+      product7 = ProductFactory.create_for_gemfile("sass-rails", "3.3.9")
+      product7.versions.push( Version.new({version: "3.2.5"}) )
+      product7.versions.push( Version.new({version: "3.2.9"}) )
+      product7.save
+
+      product8 = ProductFactory.create_for_gemfile("sassy", "3.3.9")
+      product8.versions.push( Version.new({version: "3.2.5"}) )
+      product8.versions.push( Version.new({version: "3.2.9"}) )
+      product8.save
+
+      product9 = ProductFactory.create_for_gemfile("cucumber-rails", "1.0.0")
+      product9.save
+
+      product10 = ProductFactory.create_for_gemfile("fastercsv", "1.0.0")
+      product10.save
+
+      product11 = ProductFactory.create_for_gemfile("guard-livereload", "1.0.0")
+      product11.save
+
+      product12 = ProductFactory.create_for_gemfile("copycopter_client", "1.0.0")
+      product12.save
+    end
+
+    after :each do 
+      Product.where().delete()
+    end
     
     it "parse from https the file correctly" do
       project = GemfileParser.parse("https://s3.amazonaws.com/veye_test_env/Gemfile")
@@ -10,132 +60,9 @@ describe GemfileParser do
     end
     
     it "parse from http the file correctly" do
-      name = "execjs"
-      product = Product.new
-      product.name = name
-      product.name_downcase = name
-      product.prod_key = name
-      product.version = "1.4.0"
-      product.save
-      version1 = Version.new
-      version1.version = "1.4.0"
-      product.versions.push(version1)
-      version2 = Version.new
-      version2.version = "1.3.0"
-      product.versions.push(version2)
-      product.save
-
-      name2 = "jquery-rails"
-      product2 = Product.new
-      product2.name = name2
-      product2.name_downcase = name2
-      product2.prod_key = name2
-      product2.save
-      version2_1 = Version.new
-      version2_1.version = "1.0.0"
-      product2.versions.push(version2_1)
-      product2.version = "1.0.0"
-      product2.save
-
-      name3 = "therubyracer"
-      product3 = Product.new
-      product3.name = name3
-      product3.name_downcase = name3
-      product3.prod_key = "therubyracer"
-      product3.version = "0.11.3"
-      product3.save
-      version3 = Version.new
-      version3.version = "0.10.1"
-      product3.versions.push(version3)
-      version4 = Version.new
-      version4.version = "0.11.3"
-      product3.versions.push(version4)
-      product3.save
-
-      name4 = "will_paginate"
-      product4 = Product.new
-      product4.name = name4
-      product4.name_downcase = name4
-      product4.prod_key = "will_paginate"
-      product4.version = "4.0.3"
-      product4.save
-      version4_1 = Version.new
-      version4_1.version = "3.0.3"
-      product4.versions.push(version4_1)
-      version4_2 = Version.new
-      version4_2.version = "4.0.3"
-      product4.versions.push(version4_2)
-      product4.save
-
-      name5 = "gravatar_image_tag"
-      product5 = Product.new
-      product5.name = name5
-      product5.name_downcase = name5
-      product5.prod_key = "gravatar_image_tag"
-      product5.version = "1.1.6"
-      product5.save
-      version5_1 = Version.new
-      version5_1.version = "1.1.3"
-      product5.versions.push(version5_1)
-      version5_2 = Version.new
-      version5_2.version = "1.1.6"
-      product5.versions.push(version5_2)
-      product5.save
-
-      name6 = "tire"
-      product6 = Product.new
-      product6.name = name6
-      product6.name_downcase = name6
-      product6.prod_key = name6
-      product6.version = "3.2.5"
-      product6.save
-      version6_1 = Version.new
-      version6_1.version = "3.2.5"
-      product6.versions.push(version6_1)
-      product6.save
-
-      name7 = "sass-rails"
-      product7 = Product.new
-      product7.name = name7
-      product7.name_downcase = name7
-      product7.prod_key = "sass-rails"
-      product7.save
-      version7_1 = Version.new
-      version7_1.version = "3.2.5"
-      product7.versions.push(version7_1)
-      version7_2 = Version.new
-      version7_2.version = "3.2.9"
-      product7.versions.push(version7_2)
-      version7_3 = Version.new
-      version7_3.version = "3.3.9"
-      product7.versions.push(version7_3)
-      product7.version = "3.3.9"
-      product7.save
-
-      name8 = "sassy"
-      product8 = Product.new
-      product8.name = name7
-      product8.name_downcase = name8
-      product8.prod_key = "sassy"
-      product8.version = "3.3.9"
-      product8.save
-      version8_1 = Version.new
-      version8_1.version = "3.2.5"
-      product8.versions.push(version8_1)
-      version8_2 = Version.new
-      version8_2.version = "3.2.9"
-      product8.versions.push(version8_2)
-      version8_3 = Version.new
-      version8_3.version = "3.3.9"
-      product8.versions.push(version8_3)
-      product8.save
-
-      product9 = ProductFactory.create_for_gemfile("cucumber-rails", "1.0.0")
-      product9.save
-
       project = GemfileParser.parse("http://s3.amazonaws.com/veye_test_env/Gemfile")
       project.should_not be_nil
-      project.dependencies.count.should eql(9)
+      project.dependencies.count.should eql(12)
       
       dep_1 = project.dependencies.first
       dep_1.name.should eql("rails")
@@ -195,15 +122,23 @@ describe GemfileParser do
       dep_9.version_current.should eql("1.0.0")
       dep_9.comperator.should eql("=")
 
-      product.remove
-      product2.remove
-      product3.remove
-      product4.remove
-      product5.remove
-      product6.remove
-      product7.remove
-      product8.remove
-      product9.remove
+      dep_10 = project.dependencies[9]
+      dep_10.name.should eql("fastercsv")
+      dep_10.version_requested.should eql("1.0.0")
+      dep_10.version_current.should eql("1.0.0")
+      dep_10.comperator.should eql("=")
+
+      dep_11 = project.dependencies[10]
+      dep_11.name.should eql("guard-livereload")
+      dep_11.version_requested.should eql("1.0.0")
+      dep_11.version_current.should eql("1.0.0")
+      dep_11.comperator.should eql("=")
+
+      dep_12 = project.dependencies[11]
+      dep_12.name.should eql("copycopter_client")
+      dep_12.version_requested.should eql("GIT")
+      dep_12.version_current.should eql("1.0.0")
+      dep_12.comperator.should eql("=")
     end
     
   end

@@ -22,7 +22,8 @@ class GemfileParser
       
       line = line.gsub("gem ", "")
       line_elements = line.split(",")
-      package = line_elements[0].strip
+      package = self.replace_comments(line_elements[0])
+      package = package.strip
       package = package.gsub('"', '')
       package = package.gsub("'", "")
       
@@ -60,6 +61,7 @@ class GemfileParser
       CommonParser.update_requested_with_current(dependency, product)
       return 
     end
+    version = self.replace_comments(version)
     version = version.strip
     version = version.gsub('"', '')
     version = version.gsub("'", "")
@@ -136,7 +138,12 @@ class GemfileParser
       dependency.comperator = "~>"
       dependency.version_label = ver
 
-    elsif version.match(/^require/)
+    elsif version.match(/^git:/) or version.match(/^:git/)
+      dependency.version_requested = "GIT"
+      dependency.version_label = "GIT"
+      dependency.comperator = "="
+
+    elsif version.match(/^require:/) or version.match(/^:require/) or version.match(/^:group/) or version.match(/^group:/)
       dependency.version_requested = product.version
       dependency.version_label = product.version
       dependency.comperator = "="
@@ -147,6 +154,15 @@ class GemfileParser
       dependency.version_label = version
     end
     
+  end
+
+  def self.replace_comments(value)
+    return nil unless value
+    comment = value.match(/#.*/)
+    if comment 
+      value.gsub!(comment[0], "")
+    end
+    value
   end
   
 end

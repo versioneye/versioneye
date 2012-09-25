@@ -44,6 +44,10 @@ class Projectdependency
       self.version_current = product.version
       self.save()
     end
+    if self.version_requested.eql?("GIT")
+      self.outdated = false
+      return false
+    end
     if self.version_requested.eql?(self.version_current)
       self.outdated = false
       return false
