@@ -88,6 +88,7 @@ class Product
     Mongoid::Criteria.new(Product, {_id: -1})
   end
 
+  # languages have to be an array of strings. 
   def self.find_all(searched_name, description, group_id, languages=nil, limit=300, exclude_keys)
     query = Mongoid::Criteria.new(Product)
     if searched_name && !searched_name.empty?
@@ -650,7 +651,7 @@ class Product
       if (group_id && !group_id.empty?)
         query = query.where(group_id: /^#{group_id}/i)
       end
-      if languages && !languages.empty? && languages.size > 1
+      if languages && !languages.empty?
         query = query.in(language: languages)
       end
       query
