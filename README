@@ -30,4 +30,9 @@ For uploading files a connection to Amazon S3 is mandatory. You can find the con
 
 VersionEye is using many 3rd part services in the Internet. Services like GitHub, Twitter, Facebook, Amazon, Postmark and so on. All Access Tokens and Access Keys are centralized in "config/config.yml". If some keys are missing just add your own and don't commit it back. Inside the application you can access all values over the "Settings" class like this: "Settings.github_client_id". 
 
- 
+## Tests 
+
+For tests we are using RSpec: <http://rspec.info/> 
+We are using it for all kind of tests! Even for HTML UI Tests. 
+You can run all tests with the "rspec" command. 
+Before you run the tests you should switch to test environment! You can do that by exporting the RAISL_ENV like this: "export RAILS_ENV=test". 
