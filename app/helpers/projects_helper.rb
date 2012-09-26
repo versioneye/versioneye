@@ -12,7 +12,7 @@ module ProjectsHelper
 
 	def get_project_type(orig_filename)
 		project_type = nil
-		if orig_filename.match(/Gemfile/)
+		if orig_filename.match(/Gemfile/) or orig_filename.match(/Gemfile.lock/)
 		  project_type = "RubyGems"
 		elsif orig_filename.match(/requirements.txt/)
 		  project_type = "PIP"

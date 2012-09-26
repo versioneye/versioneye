@@ -144,7 +144,11 @@ class Project
     if project_type.eql?("Maven2")
       project = PomParser.parse ( url )
     elsif project_type.eql?("RubyGems")
-      project = GemfileParser.parse ( url )
+      if url.match(/Gemfile\.lock/)
+        project = GemfilelockParser.parse ( url )
+      else 
+        project = GemfileParser.parse ( url )
+      end
     elsif project_type.eql?("PIP")
       project = RequirementsParser.parse ( url )
     elsif project_type.eql?("npm")
