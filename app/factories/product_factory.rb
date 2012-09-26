@@ -7,6 +7,7 @@ class ProductFactory
 		product.group_id = group_id
 		product.artifact_id = artifact_id
 		product.prod_key = "#{group_id}/#{artifact_id}"
+		product.language = "Java"
 		version_obj = Version.new
 		version_obj.version = version
 		product.versions.push(version_obj)
@@ -20,6 +21,7 @@ class ProductFactory
 		product.name = name
 		product.name_downcase = name.downcase
 		product.prod_key = "php/#{name}"
+		product.language = "PHP"
 		version_obj = Version.new
 		version_obj.version = version
 		product.versions.push(version_obj)
@@ -32,6 +34,7 @@ class ProductFactory
 		product.name = name
 		product.name_downcase = name.downcase
 		product.prod_key = name
+		product.language = "Ruby"
 		version_obj = Version.new
 		version_obj.version = version
 		product.versions.push(version_obj)

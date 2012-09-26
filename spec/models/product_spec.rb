@@ -183,6 +183,59 @@ describe Product do
 
       product.remove
     end
+
+    it "returns just java, because lang filter is on" do
+      product1 = ProductFactory.create_for_gemfile("bee", "1.4.0")
+      product1.versions.push( Version.new({version: "1.3.0"}) )
+      product1.save
+
+      product2 = ProductFactory.create_for_maven("bumble", "bee", "1.4.0")
+      product2.versions.push( Version.new({version: "1.3.0"}) )
+      product2.save
+
+      results = Product.find_by( "bee", nil, nil, ["Java"], 300  )
+      results.should_not be_nil
+      results.size.should eq(1)
+      results[0].language.should eql("Java")
+
+      product1.remove
+      product2.remove
+    end
+
+    it "returns just ruby, because lang filter is on" do
+      product1 = ProductFactory.create_for_gemfile("bee", "1.4.0")
+      product1.versions.push( Version.new({version: "1.3.0"}) )
+      product1.save
+
+      product2 = ProductFactory.create_for_maven("bumble", "bee", "1.4.0")
+      product2.versions.push( Version.new({version: "1.3.0"}) )
+      product2.save
+
+      results = Product.find_by( "bee", nil, nil, ["Ruby"], 300  )
+      results.should_not be_nil
+      results.size.should eq(1)
+      results[0].language.should eql("Ruby")
+
+      product1.remove
+      product2.remove
+    end
+
+    it "returns java and ruby, because lang filter is on" do
+      product1 = ProductFactory.create_for_gemfile("bee", "1.4.0")
+      product1.versions.push( Version.new({version: "1.3.0"}) )
+      product1.save
+
+      product2 = ProductFactory.create_for_maven("bumble", "bee", "1.4.0")
+      product2.versions.push( Version.new({version: "1.3.0"}) )
+      product2.save
+
+      results = Product.find_by( "bee", nil, nil, ["Ruby", "Java"], 300  )
+      results.should_not be_nil
+      results.size.should eq(2)
+
+      product1.remove
+      product2.remove
+    end
     
   end
   
