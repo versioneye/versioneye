@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_filter :set_locale
 
   force_ssl :only => [:new, :create, :activate]
-  #before_filter :force_http , :only => [:show, :favoritepackages, :comments]
+  # before_filter :force_http , :only => [:show, :favoritepackages, :comments]
 
   def home
     if signed_in?
