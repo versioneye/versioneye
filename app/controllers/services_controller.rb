@@ -66,7 +66,7 @@ class ServicesController < ApplicationController
 			if dep.version_lbl && !dep.version_lbl.empty? 
 				element.text += ":#{dep.version_lbl}"
 			end
-			element.version = dep.version
+			element.version = dep.version_requested
 			hash[dep.prod_key] = element
 		end
 		circle = Product.fetch_deps(1, hash, Hash.new)

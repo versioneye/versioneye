@@ -15,7 +15,7 @@
 							<%= render :partial => "/user/projects/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
 						<% elsif dep.outdated %>
 							<%= render :partial => "/user/projects/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
-						<% else %>	
+						<% else %>
 							<%= render :partial => "/user/projects/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
 						<% end %>					
 					</div>
@@ -23,8 +23,9 @@
 			<% end %>
 		</div>
 	</div>
+
 	<% if !@project.project_type.eql?("PIP") %>
-		<div id="canvas-demo-container"></div>
+		<div id="canvas-demo-container">Container</div>
 		<div style="text-align: center; display: none" id="infoBox">
 			<h3 style="text-align: center;" >
 				This project has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive dependencies
@@ -66,6 +67,7 @@
 			}	
 		</script>
 	<% end %>
+
 	<div style="width: 333px; margin-right: auto; margin-left: auto;">
 		<ul class="list-row" >
 			<li class="list-cell share-on-icon">
@@ -83,7 +85,7 @@
 			</li>
 		</ul>
 	</div>
-
+	
 	<div style="text-align: center; padding-top: 30px;">
 		<%= render 'services/subscription' %>
 	</div>
