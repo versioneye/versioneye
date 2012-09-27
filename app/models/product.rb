@@ -5,9 +5,6 @@ class Product
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  #include Tire::Model::Search
-  #include Tire::Model::Callbacks
-
   field :name, type: String
   field :name_downcase, type: String
   field :prod_key, type: String
@@ -176,6 +173,9 @@ class Product
   end
 
   ######## ELASTIC SEARCH START #####################################
+
+  #include Tire::Model::Search
+  #include Tire::Model::Callbacks
 
   # index_name "product_#{Rails.env}"
 
