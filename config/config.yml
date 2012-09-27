@@ -15,6 +15,9 @@ development:
   stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
   elasticsearch_url: localhost:9200
+  memcache_servers: ["127.0.0.1:11211"]
+  memcache_username:
+  memcache_password:
 
 test:
   server_url: http://www.versioneye-beta.com
@@ -33,6 +36,9 @@ test:
   stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
   elasticsearch_url: localhost:9200
+  memcache_servers: ["127.0.0.1:11211"]
+  memcache_username:
+  memcache_password:
 
 production:
   server_url: http://www.versioneye.com
@@ -51,3 +57,6 @@ production:
   stripe_public_key: <%= ENV['STRIPE_PUBLIC_KEY'] %>
   stripe_secret_key: <%= ENV['STRIPE_SECRET_KEY'] %>
   elasticsearch_url: <%= ENV['BONSAI_INDEX_URL'] %>
+  memcache_servers: <%= ENV['MEMCACHE_SERVERS'] %>
+  memcache_username: <%= ENV['MEMCACHE_USERNAME'] %>
+  memcache_password: <%= ENV['MEMCACHE_PASSWORD'] %>

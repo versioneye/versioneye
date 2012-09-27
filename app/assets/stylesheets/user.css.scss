@@ -64,3 +64,22 @@ $label_color: #666666;
 	left: 50%;
 	text-align: center;
 }
+
+.legend-container {
+	top: 50%;
+	left: 50%;
+	text-align: center;
+}
+
+.legend-item {
+	float: left;
+	min-width : 80px;
+}
+
+.legend-key {
+	width : 40px;
+}
+
+.legend-val {
+	margin: 1, 5,1, 10;
+}

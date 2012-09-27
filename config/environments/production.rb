@@ -3,7 +3,8 @@ Versioneye::Application.configure do
 
   # Code is not reloaded between requests
   config.cache_classes = true
-
+  config.cache_store = :dalli_store, Settings.memcache_servers,{ 
+    :namespace => 'veye', :expires_in => 1.day, :compress => true }
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
