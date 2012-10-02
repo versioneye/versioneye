@@ -1,12 +1,13 @@
 require File.expand_path('../boot', __FILE__)
 
-# require 'rails/all'
+# require 'rails/all' # commented out because of mongodb. 
 
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "active_resource/railtie"
 require "rails/test_unit/railtie"
 require "sprockets/railtie"
+require 'dalli'
 
 
 if defined?(Bundler)
@@ -20,8 +21,17 @@ end
 module Versioneye
   class Application < Rails::Application
     
-    
     Mongoid.load!("config/mongoid.yml")
+
+    if defined?(Dalli) and defined?(Settings)
+        memcache = Dalli::Client.new(
+            :expires_in => 1.day,
+            :compress   => true,
+            :servers    => Settings.memcache_servers,
+            :username   => Settings.memcache_username,
+            :password   => Settings.memcache_password
+        )
+    end
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
@@ -67,16 +77,5 @@ module Versioneye
     # http://www.edgerails.info/articles/what-s-new-in-edge-rails/2011/04/21/activerecord-identity-map/index.html
     # config.active_record.identity_map = true    
     
-
-    require 'dalli'
-    if defined?(Dalli) and defined?(Settings)
-        memcache = Dalli::Client.new(
-            :expires_in => 1.day,
-            :compress   => true,
-            :servers    => Settings.memcache_servers,
-            :username   => Settings.memcache_username,
-            :password   => Settings.memcache_password
-        )
-    end
   end
 end

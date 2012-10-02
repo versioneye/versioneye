@@ -60,8 +60,8 @@ function print_legend(selector, color_map){
 // ---------------------------------------------------------------
 function render_statistics(data){
 	//renders awesome summery plots
-	var chart_container = "chart_container",		
-		chart = new JSChart(chart_container, "bar", ChartConfig.domain_code);
+	var chart_container = "chart_container_projects";
+	var chart = new JSChart(chart_container, "bar", ChartConfig.domain_code);
 	if (data.length == 0 ){
 		console.log("Error:render_statisitics - empty dataset!");
 		return null;
@@ -86,10 +86,10 @@ function render_statistics(data){
 }
 
 function render_trends(language_map){
-	var chart_container = "chart_container2",
-		chart_selector = "#" + chart_container,
-		chart = new JSChart(chart_container, "line", ChartConfig.domain_code)
-		color_map = {};
+	var chart_container = "chart_container_trends";
+	var chart_selector = "#" + chart_container;
+	var chart = new JSChart(chart_container, "line", ChartConfig.domain_code);
+	var	color_map = {};
 
 	configure_container(chart_selector, ChartConfig.width, ChartConfig.height);
 	//add data

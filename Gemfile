@@ -20,7 +20,8 @@ gem 'nokogiri', '1.5.5'
 gem 'stripe', '1.7.3'
 gem 'thin', '1.4.1'
 gem 'tire'
-gem 'dalli' #memcache library
+gem 'dalli' # memcache library
+gem 'kgio', '2.7.4' # 20% performance boost for dalli
 
 group :assets do
   gem 'sass-rails', "3.2.5"

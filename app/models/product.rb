@@ -571,46 +571,47 @@ class Product
     Product.all().distinct(:language)
   end
 
+  def self.get_unique_languages_filtered
+    langs = Product.where(:language.in => ["Java", "Ruby", "Python", "PHP", "R", "Node.JS"]).distinct(:language)
+  end
+
   def self.get_language_stat
     data = []
-    self.get_unique_languages.each do |lang|
+    self.get_unique_languages_filtered.each do |lang|
       count = self.where(language: lang).count
-      data << [lang, count] unless lang.downcase.in? ["opa", "clojure", "c", "javascript"]
+      data << [lang, count]
     end
-
     data
   end
 
   def self.get_language_trend(start_date = nil, end_date =  nil)
-      #returns cumulative trend of languages of given period, 
-      #which by default is from 4th april to end of current month
-      #Arguments have to Date object
-     
-      #initialize default values
-      start_date = Date.new(2012, 4) if (start_date.nil? or not start_date.instance_of? Date)
-      end_date = Date.today >> 1 if (end_date.nil? or not end_date.instance_of? Date)
-      results = {}
-      xlabels = []
-      first_run = true
-      self.get_unique_languages.each do |lang|
-          lang_vals = []
-          i = 0
-          start_date.upto(end_date) do |iter_date| 
-              if iter_date.day == 1 
-                ncount = Product.where(
-                  language: lang, 
-                  created_at: {"$gte" => start_date, "$lt" => iter_date}
-                ).count
-
-                xlabels << "#{Date::ABBR_MONTHNAMES[iter_date.month]}/#{iter_date.year}" if first_run
-                lang_vals << [i += 1, ncount]
-              end
-          end
-        results[lang] = lang_vals.clone  unless lang.downcase.in? ["mate","opa", "clojure", "c", "javascript"]
-        first_run = false;
+    # returns cumulative trend of languages of given period, 
+    # which by default is from 4th april to end of current month
+    # Arguments have to Date object
+   
+    start_date = Date.new(2012, 4) if (start_date.nil? or not start_date.instance_of? Date)
+    end_date = Date.today >> 1 if (end_date.nil? or not end_date.instance_of? Date)
+    results = {}
+    xlabels = []
+    first_run = true
+    self.get_unique_languages_filtered.each do |lang|
+      lang_vals = []
+      i = 0
+      iter_date = start_date
+      while iter_date.month < end_date.month 
+        ncount = Product.where(language: lang, created_at: {"$lt" => iter_date}).count
+        xlabels << "#{Date::ABBR_MONTHNAMES[iter_date.month]}/#{iter_date.year}" if first_run
+        lang_vals << [i += 1, ncount]
+        iter_date = iter_date >> 1
       end
+      results[lang] = lang_vals.clone
+      first_run = false;
+    end
+    return {:xlabels => xlabels, :data => results}
+  end
 
-      return {:xlabels => xlabels, :data => results}
+  def self.get_language_trend_cached
+    Rails.cache.fetch('Product.get_language_trend')
   end
 
   def update_in_my_products(array_of_product_ids)

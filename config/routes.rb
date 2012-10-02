@@ -124,7 +124,11 @@ Versioneye::Application.routes.draw do
   get   '/crawles',             :to => 'crawles#index'
   get   '/group/:group',        :to => 'crawles#group'
 
-  post  '/feedback',            :to => 'feedback#feedback'    
+  post  '/feedback',            :to => 'feedback#feedback'
+
+  get   '/statistics',            :to => 'statistics#index'
+  get   '/statistics/proglangs',  :to => 'statistics#proglangs'
+  get   '/statistics/langtrends', :to => 'statistics#langtrends'
 
   get   '/about',               :to => 'page#about'
   get   '/impressum',           :to => 'page#impressum'
@@ -159,11 +163,6 @@ Versioneye::Application.routes.draw do
   get   'site_map_14.xml',        :to => 'page#site_map_14'
   get   'site_map_15.xml',        :to => 'page#site_map_15'
   get   'site_map_16.xml',        :to => 'page#site_map_16'
-
-
-  get   '/statistics',            :to => 'statistics#index'
-  get   '/statistics/proglangs',  :to => 'statistics#get_proglangs'
-  get   '/statistics/langtrends', :to => 'statistics#get_langtrends'
 
   #default action
   get   '*path',        :to => 'page#routing_error'
