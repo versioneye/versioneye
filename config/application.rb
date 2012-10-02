@@ -16,8 +16,10 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+
 module Versioneye
   class Application < Rails::Application
+    
     
     Mongoid.load!("config/mongoid.yml")
 
@@ -65,5 +67,16 @@ module Versioneye
     # http://www.edgerails.info/articles/what-s-new-in-edge-rails/2011/04/21/activerecord-identity-map/index.html
     # config.active_record.identity_map = true    
     
+
+    require 'dalli'
+    if defined?(Dalli) and defined?(Settings)
+        memcache = Dalli::Client.new(
+            :expires_in => 1.day,
+            :compress   => true,
+            :servers    => Settings.memcache_servers,
+            :username   => Settings.memcache_username,
+            :password   => Settings.memcache_password
+        )
+    end
   end
 end
