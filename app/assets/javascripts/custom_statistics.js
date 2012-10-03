@@ -24,15 +24,23 @@ var ChartConfig = {
 	width : 777,
 	height : 400,
 	domain_code : "",
-	left_padding : 80
+	left_padding : 80,
+	color_map : {
+		"default" : "#333333",
+		"java" : "#544FD6",
+		"ruby" : "#DC143C",
+		"c" : "#33A1C9",
+		"c++": "#104E8B",
+		"c#" : "#00BFFF",
+		"groovy": "#006400",
+		"python" : "#EE7600",
+		"r" : "#8B7D6B",
+		"javascript" : "#9ACD32",
+		"node.js" : "#6B8E23",
+		"php" : "#8B6914",
+	}
 }
 
-
-function generate_random_color(){
-	//last zeros are buffer values, because random.gener may generate shorter values sometimes
-	var color_string=  "#" + (Math.random()*0xFFFFFF<<0).toString(16) + "000";
-	return color_string.substring(0,7);
-}
 
 function configure_container(selector, width, height){
 	container = jQuery(selector);
@@ -45,9 +53,10 @@ function print_legend(selector, color_map){
 
 	var legend_html = ['<div class= "legend-container" style = "margin-left:80px; width:100%;">']
 	for (var lang in color_map){
+		lang = lang.toLowercase().trim();
 		//console.log(lang + ": " + color_map[lang]);
 		legend_html.push('<div class=  "legend-item" style="float:left; width: 120px;margin:5px, 10px, 5px, 10px;">');
-		legend_html.push('<div class= "legend-key" style="width:15px;float:left;background-color:'+color_map[lang]+';">&nbsp;&nbsp;</div>');
+		legend_html.push('<div class= "legend-key" style="width:15px;float:left;background-color:' + ChartConfig.color_map[lang]+';">&nbsp;&nbsp;</div>');
 		legend_html.push('<div style "width:107px;float:left;padding-left:5px;">'+ lang +'</div>');
 		legend_html.push('<div style="float:clean;"></div></div>');
 	}
@@ -62,8 +71,8 @@ function render_statistics(data){
 	//renders awesome summery plots
 	var chart_container = "chart_container_projects";
 	var chart = new JSChart(chart_container, "bar", ChartConfig.domain_code);
-	if (data.length == 0 ){
-		console.log("Error:render_statisitics - empty dataset!");
+	if ((data == undefined) || data.length == 0 ){
+		console.log("Error:render_statistics - empty dataset!");
 		return null;
 	}
 
@@ -86,6 +95,12 @@ function render_statistics(data){
 }
 
 function render_trends(language_map){
+	console.log( language_map == undefined);
+	if ((language_map == undefined) || language_map.data.length == 0 ){
+		console.log("Error:render_trends - empty dataset!");
+		return null;
+	}
+
 	var chart_container = "chart_container_trends";
 	var chart_selector = "#" + chart_container;
 	var chart = new JSChart(chart_container, "line", ChartConfig.domain_code);
@@ -100,15 +115,14 @@ function render_trends(language_map){
 	var i = 1;
 	
 	Object.keys(languages).forEach(function(lang){
-		chart.setDataArray(languages[lang], lang);
-		color_map[lang] = generate_random_color();
-		chart.setLineColor(color_map[lang],lang);
-		chart.setLineOpacity(0.8,lang);
+		var lang = lang.toLowercase().trim()
+		chart.setDataArray(languages[lang], lang);		
+		chart.setLineColor(ChartConfig.color_map[lang],lang);
+		chart.setLineOpacity(0.8, lang);
 		//chart.setLabelX([i, lang]);
 		i += 1;
 	});
 	chart.draw();
-	console.log(color_map);
 	chart.setAxisAlignX(true);
 	chart.setAxisNameX("", false);
 	chart.setAxisNameY("", false);
@@ -129,5 +143,5 @@ function render_trends(language_map){
 	chart.draw();
 	chart.resize(ChartConfig.width, ChartConfig.height);
 	//append legend
-	print_legend(chart_selector, color_map);
+	print_legend(chart_selector, ChartConfig.color_map);
 }
