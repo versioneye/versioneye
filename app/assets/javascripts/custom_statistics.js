@@ -54,8 +54,7 @@ function configure_container(selector, width, height){
 function print_legend(selector, color_map){
 	
 	var legend_html = ['<div class= "legend-container" style = "margin-left:80px; width:100%;">']
-	for (var lang in color_map){
-		var lang = lang.toString().toLowerCase().trim(); //normalizing language name 	
+	for (var lang in color_map){		
 		legend_html.push('<div class=  "legend-item" style="float:left; width: 140px; height: 20px; ">');
 		legend_html.push('<div class= "legend-key" style="width: 15px; height: 14px; float:left; background-color:' + color_map[lang]+';">&nbsp;&nbsp;</div>');
 		legend_html.push('<div style= "font-size: '+ChartConfig.font_size+'px; width:117px;float:left;padding-left:5px;">'+ lang +'</div>');
@@ -119,11 +118,11 @@ function render_trends(language_map){
 	var i = 1;
 	
 	Object.keys(languages).forEach(function(lang){
-		lang =  lang.toLowerCase().trim();
-		var line_color = ChartConfig.color_map[lang] || ChartConfig.color_map["default"];
+		
 		chart.setDataArray(languages[lang], lang);	
-
-		chart.setLineColor(line_color,lang);
+		var normalized_lang =  lang.toLowerCase().trim();
+		var line_color = ChartConfig.color_map[normalized_lang] || ChartConfig.color_map["default"];
+		chart.setLineColor(line_color, lang);
 		color_map[lang] = line_color; //save it for legend
 		chart.setLineOpacity(0.8, lang);
 		//chart.setLabelX([i, lang]);
@@ -144,7 +143,7 @@ function render_trends(language_map){
 	chart.setShowXValues(false);
 	var n = 1;
 	for (var i in xlabels){
-		label = "" + xlabels[i];
+		label = xlabels[i].toString();
 		chart.setLabelX([n++, label]);
 	}
 
