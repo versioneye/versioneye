@@ -53,11 +53,11 @@ function configure_container(selector, width, height){
 
 function print_legend(selector, color_map){
 	
-	var legend_html = ['<div class= "legend-container" style = "margin-left:80px; width:100%;">']
+	var legend_html = ['<div class= "legend-container" style = "margin: 5px 20px 5px 80px; width:90%;">']
 	for (var lang in color_map){		
-		legend_html.push('<div class=  "legend-item" style="float:left; width: 140px; height: 20px; ">');
+		legend_html.push('<div class=  "legend-item" style="float: left; line-height: 110%; padding: 5px 15px 5px 5px;">');
 		legend_html.push('<div class= "legend-key" style="width: 15px; height: 14px; float:left; background-color:' + color_map[lang]+';">&nbsp;&nbsp;</div>');
-		legend_html.push('<div style= "font-size: '+ChartConfig.font_size+'px; width:117px;float:left;padding-left:5px;">'+ lang +'</div>');
+		legend_html.push('<div style= "font-size: '+ChartConfig.font_size+'px;float:left;padding-left:5px;">'+ lang +'</div>');
 		legend_html.push('<div style="float:clean;"></div></div>');
 	}
 
