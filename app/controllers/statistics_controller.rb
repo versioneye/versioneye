@@ -14,7 +14,7 @@ class StatisticsController < ApplicationController
 	end 
 
 	def langtrends
-		stats = Product.get_language_trend#_cached
+		stats = Product.get_language_trend_cached
 		respond_to do |format|
 			format.json {
 				render :json => stats

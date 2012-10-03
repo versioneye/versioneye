@@ -577,7 +577,7 @@ class Product
 
   def self.get_language_stat
     data = []
-    self.get_unique_languages.each do |lang|
+    self.get_unique_languages_filtered.each do |lang|
       count = self.where(language: lang).count
       data << [lang, count]
     end
@@ -594,7 +594,7 @@ class Product
     results = {}
     xlabels = []
     first_run = true
-    self.get_unique_languages.each do |lang|
+    self.get_unique_languages_filtered.each do |lang|
       lang_vals = []
       i = 0
       iter_date = start_date
