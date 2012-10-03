@@ -6,6 +6,7 @@ This is the stack in this project:
 
  - Ruby on Rails 
  - MongoDB 
+ - Memcache
  - ElasticSearch 
  - Amazon S3 
  
@@ -25,6 +26,11 @@ If you still have trouble comment out the code in class Product which is respons
 ## Amazon S3 
 
 For uploading files a connection to Amazon S3 is mandatory. You can find the configuration for Amazon S3 in "config/config.yml". Please add here your "aws_s3_access_key_id" and your "aws_s3_secret_access_key" and don't commit it back! With that all file uploads will work fine. 
+
+## Memcache 
+
+For memcache we are using the dalli GEM. It requires at least memcache 1.4. For a little performance boost 
+we are using kgio. You can find a quick tutorial to Rails an Memcache on Heroku: <https://devcenter.heroku.com/articles/building-a-rails-3-application-with-the-memcache-addon>. 
 
 ## Configuration 
 
