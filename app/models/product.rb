@@ -606,12 +606,12 @@ class Product
       end
       results[lang] = lang_vals.clone
       first_run = false;
-    end
+    end    
     return {:xlabels => xlabels, :data => results}
   end
 
   def self.get_language_trend_cached
-    Rails.cache.fetch('Product.get_language_trend')
+    Rails.cache.fetch('Product.get_language_trend')  
   end
 
   def update_in_my_products(array_of_product_ids)

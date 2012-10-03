@@ -25,6 +25,7 @@ var ChartConfig = {
 	height : 400,
 	domain_code : "",
 	left_padding : 80,
+	font_size : 14,
 	color_map : {
 		"default" : "#333333",
 		"java" : "#544FD6",
@@ -57,7 +58,7 @@ function print_legend(selector, color_map){
 		//console.log(lang + ": " + color_map[lang]);
 		legend_html.push('<div class=  "legend-item" style="float:left; width: 120px;margin:5px, 10px, 5px, 10px;">');
 		legend_html.push('<div class= "legend-key" style="width:15px;float:left;background-color:' + ChartConfig.color_map[lang]+';">&nbsp;&nbsp;</div>');
-		legend_html.push('<div style "width:107px;float:left;padding-left:5px;">'+ lang +'</div>');
+		legend_html.push('<div style "font-size:'+ChartConfig.font-size+'px; width:107px;float:left;padding-left:5px;">'+ lang +'</div>');
 		legend_html.push('<div style="float:clean;"></div></div>');
 	}
 
@@ -86,8 +87,8 @@ function render_statistics(data){
 	chart.setAxisNameX("", false);
 	chart.setAxisNameY("", false);
 	chart.setAxisPaddingLeft(ChartConfig.left_padding);
-	chart.setAxisValuesFontSizeX(14);
-	chart.setBarValuesFontSize(14); 
+	chart.setAxisValuesFontSizeX(ChartConfig.font_size);
+	chart.setBarValuesFontSize(ChartConfig.font_size); 
 	//chart.setBarSpacingRatio(5); //change spacing between bars
 	chart.setBarOpacity(0.8);
 	chart.draw();
@@ -126,7 +127,7 @@ function render_trends(language_map){
 	chart.setAxisAlignX(true);
 	chart.setAxisNameX("", false);
 	chart.setAxisNameY("", false);
-	chart.setAxisValuesFontSize(14);
+	chart.setAxisValuesFontSize(ChartConfig.font_size);
 	chart.setAxisPaddingLeft(ChartConfig.left_padding);
 	
 	//chart.setAxisValuesAngle(90);
