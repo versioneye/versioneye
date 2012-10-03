@@ -25,6 +25,7 @@ var ChartConfig = {
 	height : 400,
 	domain_code : "",
 	left_padding : 80,
+	font_family : "Helvetica Neue, Helvetica, sans-serif,  Arial",
 	font_size : 14,
 	color_map : {
 		"default" : "#333333",
@@ -51,14 +52,13 @@ function configure_container(selector, width, height){
 }
 
 function print_legend(selector, color_map){
-
+	
 	var legend_html = ['<div class= "legend-container" style = "margin-left:80px; width:100%;">']
 	for (var lang in color_map){
-		lang = lang.toLowercase().trim();
-		//console.log(lang + ": " + color_map[lang]);
-		legend_html.push('<div class=  "legend-item" style="float:left; width: 120px;margin:5px, 10px, 5px, 10px;">');
-		legend_html.push('<div class= "legend-key" style="width:15px;float:left;background-color:' + ChartConfig.color_map[lang]+';">&nbsp;&nbsp;</div>');
-		legend_html.push('<div style "font-size:'+ChartConfig.font-size+'px; width:107px;float:left;padding-left:5px;">'+ lang +'</div>');
+		var lang = lang.toString().toLowerCase().trim(); //normalizing language name 	
+		legend_html.push('<div class=  "legend-item" style="float:left; width: 140px; height: 20px; ">');
+		legend_html.push('<div class= "legend-key" style="width: 15px; height: 14px; float:left; background-color:' + color_map[lang]+';">&nbsp;&nbsp;</div>');
+		legend_html.push('<div style= "font-size: '+ChartConfig.font_size+'px; width:117px;float:left;padding-left:5px;">'+ lang +'</div>');
 		legend_html.push('<div style="float:clean;"></div></div>');
 	}
 
@@ -88,15 +88,18 @@ function render_statistics(data){
 	chart.setAxisNameY("", false);
 	chart.setAxisPaddingLeft(ChartConfig.left_padding);
 	chart.setAxisValuesFontSizeX(ChartConfig.font_size);
+	chart.setAxisValuesFontFamily(ChartConfig.font_family);
+	chart.setLabelFontFamily(ChartConfig.font_family);
 	chart.setBarValuesFontSize(ChartConfig.font_size); 
 	//chart.setBarSpacingRatio(5); //change spacing between bars
 	chart.setBarOpacity(0.8);
+
 	chart.draw();
 	chart.resize(ChartConfig.width, ChartConfig.height);
 }
 
 function render_trends(language_map){
-	console.log( language_map == undefined);
+	
 	if ((language_map == undefined) || language_map.data.length == 0 ){
 		console.log("Error:render_trends - empty dataset!");
 		return null;
@@ -116,9 +119,12 @@ function render_trends(language_map){
 	var i = 1;
 	
 	Object.keys(languages).forEach(function(lang){
-		var lang = lang.toLowercase().trim()
-		chart.setDataArray(languages[lang], lang);		
-		chart.setLineColor(ChartConfig.color_map[lang],lang);
+		lang =  lang.toLowerCase().trim();
+		var line_color = ChartConfig.color_map[lang] || ChartConfig.color_map["default"];
+		chart.setDataArray(languages[lang], lang);	
+
+		chart.setLineColor(line_color,lang);
+		color_map[lang] = line_color; //save it for legend
 		chart.setLineOpacity(0.8, lang);
 		//chart.setLabelX([i, lang]);
 		i += 1;
@@ -129,7 +135,8 @@ function render_trends(language_map){
 	chart.setAxisNameY("", false);
 	chart.setAxisValuesFontSize(ChartConfig.font_size);
 	chart.setAxisPaddingLeft(ChartConfig.left_padding);
-	
+	chart.setAxisValuesFontFamily(ChartConfig.font_family);
+	chart.setLabelFontFamily(ChartConfig.font_family);
 	//chart.setAxisValuesAngle(90);
 
 	var xlabels = language_map["xlabels"]
@@ -140,9 +147,10 @@ function render_trends(language_map){
 		label = "" + xlabels[i];
 		chart.setLabelX([n++, label]);
 	}
-		
+
+	//chart.setLabelFontSize(ChartConfig.font_size);
 	chart.draw();
 	chart.resize(ChartConfig.width, ChartConfig.height);
 	//append legend
-	print_legend(chart_selector, ChartConfig.color_map);
+	print_legend(chart_selector, color_map);
 }
