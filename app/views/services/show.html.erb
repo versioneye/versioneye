@@ -13,11 +13,13 @@
 					<div class="dependency" >
 						<% if dep.prod_key.nil? %>
 							<%= render :partial => "/user/projects/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
-						<% elsif dep.outdated %>
+						<% elsif dep.outdated and dep.release != false  %>
 							<%= render :partial => "/user/projects/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
-						<% else %>
+						<% elsif dep.outdated and dep.release == false %>
+							<%= render :partial => "/user/projects/show_known_out_pre_dep", :locals => {:product => product, :dep => dep} %>
+						<% else %>	
 							<%= render :partial => "/user/projects/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
-						<% end %>					
+						<% end %>
 					</div>
 				<% end %>
 			<% end %>

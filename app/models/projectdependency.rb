@@ -15,6 +15,7 @@ class Projectdependency
   field :version_label, type: String      # the version number from the Gemfile    
   field :comperator, type: String, :default => "="
   field :scope, type: String, :default => "compile"
+  field :release, type: Boolean
   
   field :prod_key, type: String
   field :prod_type, type: String
@@ -58,6 +59,7 @@ class Projectdependency
         return false   
       end
       self.outdated = true
+      self.release = ReleaseRecognizer.release? self.version_current
       return true
     end
   end

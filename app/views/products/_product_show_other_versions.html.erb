@@ -5,7 +5,11 @@
 	<div class="boxContainer" >
 		<% @product.get_natural_sorted_versions.each do |version|  %>
 			<div>
+			<% if ReleaseRecognizer.release?(version.version) %>
 				<a href="/package/<%=@product.to_param%>/version/<%=version.to_url_param%>"><%=version.version%></a>
+			<% else %>
+				<a style="color: brown" href="/package/<%=@product.to_param%>/version/<%=version.to_url_param%>"><%=version.version%></a>
+			<% end %>
 			</div>
 		<% end %>
 	</div>

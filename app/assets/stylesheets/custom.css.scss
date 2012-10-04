@@ -20,6 +20,7 @@ $box_border_color: #BBBBBB;
 $border_color: #BBBBBB;
 
 $outdated_row_bg_color: #FFD5D5;
+$outdated_row_pre_bg_color: #ECD88D;
 $unknown_row_bg_color: beige;
 $unknown_color: red;
 $outdated_color: red;
@@ -1427,6 +1428,11 @@ nav ul li a:hover {
 
 .outdated-row{
 	background-color: $outdated_row_bg_color;
+	padding: 5px;
+}
+
+.outdated-row-pre{
+	background-color: $outdated_row_pre_bg_color;
 	padding: 5px;
 }
 

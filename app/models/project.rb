@@ -36,7 +36,7 @@ class Project
   end
 
   def fetch_dependencies
-    self.dependencies = Projectdependency.all(conditions: {project_id: self.id} ).desc(:outdated).asc(:prod_key)
+    self.dependencies = Projectdependency.all(conditions: {project_id: self.id} ).desc(:outdated).desc(:release).asc(:prod_key)
     self.dependencies
   end
 
