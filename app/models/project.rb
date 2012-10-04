@@ -206,6 +206,10 @@ class Project
         result['url'] = file['url']
         result['name'] = name
         result['type'] = "RubyGems"
+      elsif name.eql?("Gemfile.lock")
+        result['url'] = file['url']
+        result['name'] = name
+        result['type'] = "RubyGems"
       elsif name.eql?("pom.xml")
         result['url'] = file['url']
         result['name'] = name

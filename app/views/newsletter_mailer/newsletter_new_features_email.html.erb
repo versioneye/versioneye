@@ -54,19 +54,10 @@ We finished some work again. Here are the new features:
 <br/>
 <ul>
 	<li>
-		<b>New parsers</b>: We refactored all of our parsers for the project files.  The new parsers are now faster and better testable.<br/><br/>
+		<b>Gemfile.lock Parser</b>: We added a new parser for Gemfile.lock.  VersionEye can now monitor your Gemfile.lock and inform you about out-dated dependencies based on your locked GEMs.<br/><br/>
 	</li>
 	<li>
-		<b>Refactored projects UI</b>: We re-designed the project details page a little bit.  It now looks cleaner and more lightweight.<br/><br/>
-		<img src="http://versioneye.files.wordpress.com/2012/09/prject_config.png" /></br></br>
-	</li>
-	<li>
-		<b>Re Parse Button</b>: In the project details page we added now a "Re Parse Now" button. If you hit this button VersionEye will re-parse your project right away and show you the most up-to-date results.<br/><br/>
-	</li>
-	<li>
-		<b>Support for PHP Composer</b>: VersionEye now supports the PHP Package Manager Composer (<a href="http://getcomposer.org" >http://getcomposer.org</a>). Thus, we can now monitor your composer.json file and notify you about outdated dependencies in your PHP project.
-		<br/><br/>
-		<img src="http://versioneye.files.wordpress.com/2012/09/logo-composer-transparent.png" width="200" />
+		<b>New Database</b>: Searching VersionEye has been a little bit slow in the last weeks. We noticed that we were getting more and more traction and an increasing amount of data from the crawlers.  Basically, we outgrew our database plan at MongoHQ.  Yesterday, we upgraded to the next larger plan.  You will notice the improved performance. Hopefully, we will outgrow the current plan as fast as the last one :-)<br/><br/>
 	</li>
 </ul>
 <br/>
