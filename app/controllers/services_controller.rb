@@ -63,6 +63,7 @@ class ServicesController < ApplicationController
 			element = CircleElement.new
 			element.id = dep.prod_key
 			element.text = dep.name
+			element.text = dep.prod_key if element.text.nil?
 			if dep.version_lbl && !dep.version_lbl.empty? 
 				element.text += ":#{dep.version_lbl}"
 			end
