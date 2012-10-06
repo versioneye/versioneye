@@ -7,11 +7,10 @@ describe "registration" do
   # end
 
   it "signs_up successfully" do
-    # request.env['HTTPS'] = 'on'
-    get "/signup"
+    get "/signup", nil, "HTTPS" => "on"
     assert_response :success
 
-    post "/users", :user => {:fullname => "test123", :email => "test@test.de", :password => "test123", :terms => "1", :datenerhebung => "1"}
+    post "/users", { :user => {:fullname => "test123", :email => "test@test.de", :password => "test123", :terms => "1", :datenerhebung => "1"} }, "HTTPS" => "on"
     assert_response :success
 
     user = User.find_by_email("test@test.de")
@@ -21,10 +20,10 @@ describe "registration" do
   end
 
   it "login not successfully, because not activated" do 
-    get "/signin"
+    get "/signin", nil, "HTTPS" => "on"
     assert_response :success
 
-    post "/sessions", :session => {:email => "test@test.de", :password => "test123"}
+    post "/sessions", {:session => {:email => "test@test.de", :password => "test123"}}, "HTTPS" => "on"
     assert_response 302
     response.should redirect_to("/signin")
   end
@@ -32,18 +31,17 @@ describe "registration" do
   it "activates successfully" do 
     user = User.find_by_email("test@test.de")
     user.should_not be_nil
-    get "/users/activate/#{user.verification}"
+    get "/users/activate/#{user.verification}", nil, "HTTPS" => "on"
     assert_response 200
     user = User.find_by_email("test@test.de")
     user.verification.should be_nil
   end
 
   it "login successfully" do 
-    # request.env['HTTPS'] = 'on'
-    get "/signin"
+    get "/signin", nil, "HTTPS" => "on"
     assert_response :success
 
-    post "/sessions", :session => {:email => "test@test.de", :password => "test123"}
+    post "/sessions", {:session => {:email => "test@test.de", :password => "test123"}}, "HTTPS" => "on"
     assert_response 302
     response.should redirect_to("/user/projects")
 
@@ -52,11 +50,10 @@ describe "registration" do
   end
 
   it "login not successfully, because password is wrong" do 
-    # request.env['HTTPS'] = 'on'
-    get "/signin"
+    get "/signin", nil, "HTTPS" => "on"
     assert_response :success
 
-    post "/sessions", :session => {:email => "test@test.de", :password => "test123asfgas"}
+    post "/sessions", {:session => {:email => "test@test.de", :password => "test123asfgas"}}, "HTTPS" => "on"
     assert_response 302
     response.should redirect_to("/signin")
     user = User.find_by_email("test@test.de")
@@ -64,11 +61,10 @@ describe "registration" do
   end
 
   it "don't sign_up because something is missing" do
-    # request.env['HTTPS'] = 'on'
-    get "/signup"
+    get "/signup", nil, "HTTPS" => "on"
     assert_response :success
 
-    post "/users", :user => {:fullname => "test123", :email => "test_bad@test.de", :password => "test123", :terms => "0", :datenerhebung => "0"}
+    post "/users", {:user => {:fullname => "test123", :email => "test_bad@test.de", :password => "test123", :terms => "0", :datenerhebung => "0"}}, "HTTPS" => "on"
     assert_response :success
     
     user = User.find_by_email("test_bad@test.de")
@@ -76,11 +72,10 @@ describe "registration" do
   end
 
   it "don't sign_up because email is not valid" do
-    # request.env['HTTPS'] = 'on'
-    get "/signup"
+    get "/signup", nil, "HTTPS" => "on"
     assert_response :success
 
-    post "/users", :user => {:fullname => "test123", :email => "test_bad@test.", :password => "test123", :terms => "1", :datenerhebung => "1"}
+    post "/users", {:user => {:fullname => "test123", :email => "test_bad@test.", :password => "test123", :terms => "1", :datenerhebung => "1"}}, "HTTPS" => "on"
     assert_response :success
 
     user = User.find_by_email("test_bad@test.de")
