@@ -534,7 +534,7 @@ function show_info_box(data, options){
   info_box = document.getElementById(box_name);
   info_number = document.getElementById(number_name);
   if (info_box){
-    info_box.style.display = "block";
+    info_box.style.display = "inline-block";
   }
   if (info_number){
     var txt = document.createTextNode(recursive_deps);

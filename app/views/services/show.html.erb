@@ -1,6 +1,6 @@
 
 <% if @project %> 
-	<div class="content" style="margin-left: 115px;">
+	<div class="content" style="margin-left: 115px; display: inline-block;">
 		<div style="font-size: 16px; margin-bottom: 20px;">
 			<%= pluralize(@project.dep_number, "Dependency") %>, 
 			<span style="color: <%= outdated_color(@project)%>; font-weight: bold;" ><%= @project.out_number %> Outdated</span>, 
@@ -27,8 +27,8 @@
 	</div>
 
 	<% if !@project.project_type.eql?("PIP") %>
-		<div id="canvas-demo-container">Container</div>
-		<div style="text-align: center; display: none" id="infoBox">
+		<div id="canvas-demo-container" style="display: inline-block;"></div>
+		<div style="text-align: center; display: none; width: 100%;" id="infoBox">
 			<h3 style="text-align: center;" >
 				This project has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive dependencies
 			</h3>
@@ -49,7 +49,7 @@
 						product_version: "UNKNOWN",
 						product_name: "demo", 
 						version: "UNKNOWN",
-						data_border: 70,
+						data_border: 80,
 						show_label: false,
 						resize: false,
 						scope: "runtime",
