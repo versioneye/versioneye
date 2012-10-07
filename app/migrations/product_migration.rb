@@ -37,4 +37,19 @@ class ProductMigration
 		end
 	end
 
+	def self.parse_release_date_global(lang)
+		Product.where(language: lang).each do |product|
+			product.versions.each do |version|
+				if version.released_string.nil? 
+					p "empty!"
+					next 
+				end
+				version.released_at = DateTime.parse version.released_string
+				version.save
+				p "#{version.released_at}"
+			end
+			product.save
+		end
+	end
+
 end
