@@ -34,6 +34,7 @@ class GemfilelockParser
       else
         unknowns += 1
       end
+      dependency.name = name
       GemfileParser.parse_requested_version(version, dependency, product)
 
       dep = deps[name]
