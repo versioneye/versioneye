@@ -46,7 +46,7 @@ class Product
   # versionchanges
   # versioncomments
 
-  attr_accessor :in_my_products, :version_uid, :last_crawle_date
+  attr_accessor :in_my_products, :version_uid, :last_crawle_date, :released_days_ago
 
   def delete
     false
@@ -273,6 +273,10 @@ class Product
     Naturalsorter::Sorter.sort_version_by_method_desc(versions, "version")
   end
 
+  def get_date_sorted_versions
+    versions.sort! { |a,b| b.released_at <=> a.released_at }
+  end
+
   def get_newest_version_by_natural_order
     versions = get_natural_sorted_versions
     versions.first.version
@@ -310,7 +314,6 @@ class Product
   end
 
   def get_tilde_newest(value)
-    
     new_st = "#{value}"
     if value.match(/./)
       splits = value.split(".")
@@ -464,6 +467,30 @@ class Product
       end
     end
     versions_count
+  end
+
+  def average_release_time
+    return nil if versions.nil? || versions.empty? || versions.size < 3
+    sorted_versions = versions.sort! { |a,b| a.released_at <=> b.released_at }
+    first = sorted_versions.first.released_at
+    last = sorted_versions.last.released_at
+    return nil if first.nil? || last.nil?
+    diff = last.to_i - first.to_i 
+    diff_days = diff / 60 / 60 / 24
+    average = diff_days / versions.size 
+    average
+  rescue => e 
+    p "Exception in average_release_time: #{e}" 
+    nil 
+  end
+
+  def copy_released_versions
+    new_versions = Array.new 
+    versions.each do |version| 
+      new_versions << version if version.released_string
+    end
+    self.versions = new_versions
+    self.save
   end
 
   ########### VERSIONS END ########################

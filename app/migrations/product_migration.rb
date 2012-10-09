@@ -52,4 +52,15 @@ class ProductMigration
 		end
 	end
 
+	def self.check_emtpy_release_dates(lang)
+		Product.where(language: lang).each do |product|
+			product.versions.each do |version|
+				if version.released_string.nil? 
+					p "#{product.name} - #{version.version} - empty!"
+					next 
+				end
+			end
+		end
+	end
+
 end

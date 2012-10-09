@@ -55,6 +55,10 @@ module ProductsHelper
         today = DateTime.now.to_date
         diff = today - versionObj.created_at.to_date
         product.last_crawle_date = diff.to_i
+        if versionObj.released_at
+          diff_release = today - versionObj.released_at.to_date
+          product.released_days_ago = diff_release.to_i
+        end
       end
     end
   end
