@@ -33,11 +33,12 @@ class TwitterController < ApplicationController
       return 
     end 
 
+    p "json_user: #{json_user}"
     p "find user by twitter id: #{json_user['id']}"
     json_user_id = json_user['id']
     user = nil 
     if json_user_id && !json_user_id.empty?
-      user = User.find_by_twitter_id( json_user['id'] )
+      user = User.find_by_twitter_id( json_user_id )
     end
     p "user found: #{user}"
     if user
