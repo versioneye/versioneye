@@ -2,19 +2,18 @@ class TwitterController < ApplicationController
 
   def forward 
     oauth = oauth_consumer
-    
     url = "https://www.versioneye.com/auth/twitter/callback"
     request_token = oauth.get_request_token(:oauth_callback => url)
-    
     session[:token] = request_token.token
     session[:secret] = request_token.secret
-    
     redirect_to request_token.authorize_url
   rescue => e 
     p "#{e}"
     e.backtrace.each do |message| 
       p " - #{message}"
     end
+    flash[:error] = "An error occured. Please contact the VersionEye Team."
+    redirect_to "/signup"
   end
 
   def callback
@@ -26,27 +25,22 @@ class TwitterController < ApplicationController
 
     oauth = oauth_consumer    
     access_token = fetch_access_token( oauth, session[:token], session[:secret], oauth_verifier)
-    p "access_token: #{access_token}"
     session[:token] = nil
     session[:secret] = nil
     session[:access_token] = access_token
     json_user = fetch_json_user( oauth, access_token )
 
     if signed_in?
-      p "signed_in as #{current_user.email}"
       update_current_user(current_user, json_user, access_token)
       redirect_to settings_connect_path
       return 
     end 
 
-    p "json_user: #{json_user}"
-    p "find user by twitter id: #{json_user['id']}"
     json_user_id = json_user['id']
     user = nil 
-    if json_user_id && !json_user_id.empty?
+    if json_user_id
       user = User.find_by_twitter_id( json_user_id )
     end
-    p "user found: #{user}"
     if user
       update_current_user(user, json_user, access_token)
       sign_in user
@@ -122,7 +116,6 @@ class TwitterController < ApplicationController
 
     def fetch_json_user( oauth, access_token )
       response = oauth.request(:get, '/1.1/account/verify_credentials.json', access_token, { :scheme => :query_string })
-      p "response: #{response}"
       json_user = JSON.parse(response.body)
     end
 

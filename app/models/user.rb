@@ -243,7 +243,12 @@ class User
   end
 
   def self.find_by_twitter_id(twitter_id)
-    User.where(twitter_id: twitter_id)[0]
+    users = User.where(twitter_id: twitter_id)
+    if users && users.size > 1 
+      return nil 
+    else 
+      users[0]
+    end 
   end
   
   def self.find_by_github_id(github_id)
