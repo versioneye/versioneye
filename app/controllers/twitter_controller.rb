@@ -3,13 +3,15 @@ class TwitterController < ApplicationController
   def forward 
     oauth = oauth_consumer
     
-    url = "http://versioneye.com/auth/twitter/callback"
+    url = "https://www.versioneye.com/auth/twitter/callback"
     request_token = oauth.get_request_token(:oauth_callback => url)
     
     session[:token] = request_token.token
     session[:secret] = request_token.secret
     
     redirect_to request_token.authorize_url
+  rescue => e 
+    p "#{e}"
   end
 
   def callback
@@ -104,7 +106,7 @@ class TwitterController < ApplicationController
     def oauth_consumer
       OAuth::Consumer.new(Settings.twitter_consumer_key, 
                           Settings.twitter_consumer_secret, 
-                          { :site => "https://api.twitter.com/1.1/" })
+                          { :site => "https://api.twitter.com/" })
     end
 
     def fetch_access_token( oauth, token, secret, verifier )
