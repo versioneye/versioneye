@@ -10,7 +10,7 @@
 
 	<% if @product || @project %> 
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-		<%= javascript_include_tag "application",    :defer => true, :async => true %>
+		<%= javascript_include_tag "application",    :defer => false, :async => false %>
 	<% elsif @page.eql?("LandingPage") %>
 		<%= javascript_include_tag "application_lp", :defer => true, :async => true %>
 	<% elsif @page.eql?("statistics") %>
@@ -30,9 +30,7 @@
 		    Stripe.setPublishableKey('<%= Settings.stripe_public_key %>');
 		</script>
 	<% elsif @page.eql?("user_created") %>
-		<%= javascript_include_tag "application_default", :defer => false, :async => false %>
-	<% elsif @page.eql?("product_show") %>
-		<%= javascript_include_tag "application_default", :defer => false, :async => false %>
+		<%= javascript_include_tag "application", :defer => false, :async => false %>
 	<% else %> 
 		<%= javascript_include_tag "application_default", :defer => true, :async => true %>
 	<% end %>
