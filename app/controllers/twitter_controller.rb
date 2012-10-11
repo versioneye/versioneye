@@ -21,6 +21,7 @@ class TwitterController < ApplicationController
 
     oauth = oauth_consumer    
     access_token = fetch_access_token( oauth, session[:token], session[:secret], oauth_verifier)
+    p "access_token: #{access_token}"
     session[:token] = nil
     session[:secret] = nil
     session[:access_token] = access_token
@@ -103,7 +104,7 @@ class TwitterController < ApplicationController
     def oauth_consumer
       OAuth::Consumer.new(Settings.twitter_consumer_key, 
                           Settings.twitter_consumer_secret, 
-                          { :site => "http://twitter.com" })
+                          { :site => "https://api.twitter.com/1.1/" })
     end
 
     def fetch_access_token( oauth, token, secret, verifier )
@@ -113,6 +114,7 @@ class TwitterController < ApplicationController
 
     def fetch_json_user( oauth, access_token )
       response = oauth.request(:get, '/account/verify_credentials.json', access_token, { :scheme => :query_string })
+      p "response: #{response}"
       json_user = JSON.parse(response.body)
     end
 
