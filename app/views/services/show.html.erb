@@ -78,6 +78,7 @@
 				   data-url="<%= Settings.server_url %>/services/<%= @project_id %>" 
 				   data-text="Check out my project @VersionEye " 
 				   data-count="horizontal" >Twitter</a>
+				   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			</li>
 			<li class="list-cell share-on-icon">
 				<iframe src="https://www.facebook.com/plugins/like.php?href=<%=Settings.server_url%>/services/<%=@project_id%>&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=25" style="border:none; width:100px; height:25px" allowTransparency="true" scrolling="no" frameborder="0"></iframe>

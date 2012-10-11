@@ -15,7 +15,6 @@
 //= require moowheel/dependencywheel
 //= require google
 //= require gmap
-//= require twitter
 //= require custom
 //= require custom_update_language
 //= require custom_feedback
