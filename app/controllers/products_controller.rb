@@ -100,6 +100,7 @@ class ProductsController < ApplicationController
           @users = User.find_by_ids(user_ids)
           @versioncomment = Versioncomment.new 
           @versioncommentreply = Versioncommentreply.new
+          @page = "product_show"
         end          
         }
       format.json { 
