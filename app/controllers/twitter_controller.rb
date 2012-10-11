@@ -34,7 +34,11 @@ class TwitterController < ApplicationController
     end 
 
     p "find user by twitter id: #{json_user['id']}"
-    user = User.find_by_twitter_id( json_user['id'] )
+    json_user_id = json_user['id']
+    user = nil 
+    if json_user_id && !json_user_id.empty?
+      user = User.find_by_twitter_id( json_user['id'] )
+    end
     p "user found: #{user}"
     if user
       update_current_user(user, json_user, access_token)
