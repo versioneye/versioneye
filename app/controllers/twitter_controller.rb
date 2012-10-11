@@ -12,6 +12,9 @@ class TwitterController < ApplicationController
     redirect_to request_token.authorize_url
   rescue => e 
     p "#{e}"
+    e.backtrace.each do |message| 
+      p " - #{message}"
+    end
   end
 
   def callback
@@ -106,7 +109,10 @@ class TwitterController < ApplicationController
     def oauth_consumer
       OAuth::Consumer.new(Settings.twitter_consumer_key, 
                           Settings.twitter_consumer_secret, 
-                          { :site => "https://api.twitter.com/" })
+                          :site => "https://api.twitter.com", 
+                          :request_token_path => '/oauth/request_token', 
+                          :authorize_path     => '/oauth/authorize',
+                          :access_token_path  => '/oauth/access_token')
     end
 
     def fetch_access_token( oauth, token, secret, verifier )
