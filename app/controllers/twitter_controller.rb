@@ -27,12 +27,15 @@ class TwitterController < ApplicationController
     json_user = fetch_json_user( oauth, access_token )
 
     if signed_in?
+      p "signed_in as #{current_user.email}"
       update_current_user(current_user, json_user, access_token)
       redirect_to settings_connect_path
       return 
     end 
 
+    p "find user by twitter id: #{json_user['id']}"
     user = User.find_by_twitter_id( json_user['id'] )
+    p "user found: #{user}"
     if user
       update_current_user(user, json_user, access_token)
       sign_in user

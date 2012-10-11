@@ -39,6 +39,7 @@ class UsersController < ApplicationController
       if @user.save
         @user.send_verification_email
         User.new_user_email(@user)
+        @page = "user_created"
       else 
         flash.now[:error] = t(:general_error)
         render 'new'

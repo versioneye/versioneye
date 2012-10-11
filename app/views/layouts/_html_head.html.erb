@@ -29,6 +29,8 @@
 		<script type="text/javascript">
 		    Stripe.setPublishableKey('<%= Settings.stripe_public_key %>');
 		</script>
+	<% elsif @page.eql?("user_created") %>
+		<%= javascript_include_tag "application_default", :defer => false, :async => false %>
 	<% else %> 
 		<%= javascript_include_tag "application_default", :defer => true, :async => true %>
 	<% end %>
