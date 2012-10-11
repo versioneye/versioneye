@@ -121,7 +121,7 @@ class TwitterController < ApplicationController
     end
 
     def fetch_json_user( oauth, access_token )
-      response = oauth.request(:get, '/account/verify_credentials.json', access_token, { :scheme => :query_string })
+      response = oauth.request(:get, '/1.1/account/verify_credentials.json', access_token, { :scheme => :query_string })
       p "response: #{response}"
       json_user = JSON.parse(response.body)
     end
