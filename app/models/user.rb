@@ -41,6 +41,8 @@ class User
   field :stripe_token, type: String
   field :stripe_customer_id, type: String
   field :plan_name_id, type: String, default: "01_free"
+
+  field :refer_name, type: String
   
   validates_presence_of :username, :message => "Username is mandatory!"
   validates_presence_of :fullname, :message => "Fullname is mandatory!"
