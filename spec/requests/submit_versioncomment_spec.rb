@@ -19,8 +19,8 @@ describe "submit a versioncomment" do
     user = User.default
     user.save
 
-    post "/sessions", :session => {:email => user.email, :password => user.password}
-    assert_response 302
+    post "/sessions", {:session => {:email => user.email, :password => user.password}}, "HTTPS" => "on"
+    assert_response 302 
     response.should redirect_to("/user/projects")
 
     get "/package/json_gobi"
