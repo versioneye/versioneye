@@ -12,7 +12,7 @@ function start_firebase(limit_size){
 			var type = messageInfo.type; 
 			var content = "<div class='searchResult' >"
 			content += "<ul class='list-row'>"
-			content += "<li class='list-cell icon-cell'>"
+			content += "<li class='list-cell cell_icon'>"
 			if (type && type == "RubyGem" )
 				content += "<img src='/assets/language/ruby.png' alt='Ruby'></img>";
 			else if (type && type == "PIP")
