@@ -5,9 +5,44 @@
 </div>	
 <div class="content">	
 	
-	<div class="boxHeader">
-		<%= @project.name %>
+	<div id = "project-title" class="boxHeader">		
+		<span class = "namelabel">
+			<%= @project.name %> 
+		</span>
+		<span>
+			<i class = "icon-edit open-editor" 
+			style = "margin-top: 4px;" title = "Change title"></i>
+		</span>
 	</div>
+	<div class = "inline-editor" style= "display:none;">
+		<%= form_tag(update_name_user_project_path(@project), :method => "post", :remote => true, :class => "form-inline") do %>
+			<input type ="text" name = "name" value = "<%= @project.name %>" />
+			<button class = "btn btn-primary"> Save</button>
+			<button href = "#" class = "btn btn-danger close-editor" 
+				data-dismiss="alert" title = "Cancel">Cancel</button>
+		<% end %>
+	</div>
+
+	<script>
+
+
+		jQuery(document).ready(function(){			
+			jQuery("#project-title .open-editor").on("click", function(){
+				jQuery(".inline-editor").css("display", "block");
+				jQuery("#project-title").css("display", "none");
+			});	
+
+			jQuery(".close-editor").on("click", function(ev){
+				//ev.preventDefault();
+				console.log("Closing editor:");
+				jQuery("#project-title").css("display", "block");
+				jQuery(".inline-editor").css("display", "none");
+				return false;
+			});	
+
+		});
+	</script>
+
 	<div class="boxContainer" >
 		<div style="font-size: 16px; margin-bottom: 5px;">
 			<%= pluralize(@project.dep_number, "Dependency") %>, 
