@@ -22,24 +22,19 @@
 				data-dismiss="alert" title = "Cancel">Cancel</button>
 		<% end %>
 	</div>
-
 	<script>
-
-
 		jQuery(document).ready(function(){			
 			jQuery("#project-title .open-editor").on("click", function(){
 				jQuery(".inline-editor").css("display", "block");
 				jQuery("#project-title").css("display", "none");
 			});	
-
+			
 			jQuery(".close-editor").on("click", function(ev){
-				//ev.preventDefault();
 				console.log("Closing editor:");
 				jQuery("#project-title").css("display", "block");
 				jQuery(".inline-editor").css("display", "none");
 				return false;
-			});	
-
+			});
 		});
 	</script>
 

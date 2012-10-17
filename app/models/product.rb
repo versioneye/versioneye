@@ -54,10 +54,10 @@ class Product
 
   # languages have to be an array of strings. 
   def self.search(q, description = nil, group_id = nil, languages = nil, page_count = 1)
-  #self.elastic_search(q, group_id, languages, page_count)
-  #rescue => e 
-  #  p "ERROR in search - #{e}"
-  #  p "Dam. We don't give up. Not yet! Start alternative search on awesome MongoDB."
+    self.elastic_search(q, group_id, languages, page_count)
+  rescue => e 
+    p "ERROR in search - #{e}"
+    p "Dam. We don't give up. Not yet! Start alternative search on awesome MongoDB."
     Product.find_by(q, description, group_id, languages, 300).paginate(:page => page_count)
   end
 
