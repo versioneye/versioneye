@@ -5,6 +5,7 @@ class PackagistCrawler
     packages.each do |name|
       PackagistCrawler.crawle_package name
     end
+    return nil
   end
 
   def self.get_first_level_list
@@ -19,6 +20,8 @@ class PackagistCrawler
     pack = JSON.parse HTTParty.get( resource ).response.body
     package = pack['package']
     package_name = package['name']
+    versions = package['versions']
+    return nil if versions.nil? || versions.empty?
 
     product = PackagistCrawler.get_product package_name
     PackagistCrawler.update_product product, package	
@@ -26,7 +29,7 @@ class PackagistCrawler
     packagist_page = "http://packagist.org/packages/#{package_name}"
     PackagistCrawler.update_packagist_link product, package_name
 
-    package['versions'].each do |version|
+    versions.each do |version|
       version_number = version[0]
       version_obj = version[1]
       db_version = product.get_version version_number
@@ -50,6 +53,7 @@ class PackagistCrawler
     name = package['name']
     product.prod_key = "php/#{name}"
     product.name = name
+    product.name_downcase = name.downcase
     product.description = package['description']
     product.prod_type = "Packagist"
     product.language = "PHP"
@@ -73,10 +77,11 @@ class PackagistCrawler
       db_version.license = license[0]  
     end
     product.versions.push db_version
-    product.update_version_data
     product.save
 
     p " -- product: #{product.prod_key} -- version: #{version_number}"
+
+    product.update_version_data
 
     CrawlerUtils.create_newest product, version_number  
     CrawlerUtils.create_notifications product, version_number
