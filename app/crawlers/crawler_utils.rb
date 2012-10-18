@@ -14,7 +14,7 @@ class CrawlerUtils
     followers = product.get_followers
     if followers && !followers.empty?
       followers.each do |follower|
-        notification = Notificaiton.new
+        notification = Notification.new
         notification.user_id = follower.user_id 
         notification.product_id = follower.product_id
         notification.version_id = version_number
