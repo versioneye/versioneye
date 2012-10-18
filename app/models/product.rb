@@ -92,7 +92,7 @@ class Product
       if exclude_keys 
         query = Product.find_by_name_exclude(searched_name, exclude_keys)
       else 
-        query = Product.find_by_name(searched_name)  
+        query = Product.find_by_name(searched_name)
       end
     elsif description && !description.empty?
       query = Product.find_by_description(description)
@@ -429,7 +429,13 @@ class Product
   end
 
   def update_version_data
-    return if self.versions.nil? || self.versions.length < 2
+    return nil if self.versions.nil? || self.versions.empty?
+
+    if self.versions.length < 2
+      self.version = self.versions.first.version 
+      self.save 
+      return 
+    end
     
     versions = get_natural_sorted_versions
     version = versions.first
