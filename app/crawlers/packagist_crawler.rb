@@ -38,7 +38,7 @@ class PackagistCrawler
       elsif db_version.released_at.nil? 
         db_version.released_string = version_obj['time']
         db_version.released_at = DateTime.parse(version_obj['time'])
-        db.save
+        db_version.save
       end
     end
   rescue => e 
