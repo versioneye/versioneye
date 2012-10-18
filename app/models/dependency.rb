@@ -20,6 +20,12 @@ class Dependency
     Dependency.all(conditions: { prod_key: prod_key, prod_version: version, scope: scope } )
   end
 
+  def self.find_by(name, version, dep_prod_key, prod_key, prod_version)
+    dependencies = Dependency.where(name: name, version: version, dep_prod_key: dep_prod_key, prod_key: prod_key, prod_version: prod_version)
+    return nil if dependencies.nil? || dependencies.empty? 
+    dependencies[0]
+  end
+
   def version_for_url
     return "0" if version.nil?
     url_param = String.new(version)

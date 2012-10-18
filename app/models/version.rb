@@ -16,6 +16,7 @@ class Version
   field :pom, type: String
   field :released_at, type: DateTime
   field :released_string, type: String 
+  field :license, type: String
 
   embedded_in :product
   

@@ -102,5 +102,33 @@ describe Dependency do
     end
 
   end
+
+  context "find_by_context" do
+
+    describe "find_by" do 
+
+      before(:each) do
+        @dependency = Dependency.new({:name => "bodo/bodo", :version => "1.0.1", :dep_prod_key => "bada/bada", :prod_key => "bum/bum", :prod_version => "1.1.1"})
+        @dependency.save
+      end
+      
+      after(:each) do 
+        @dependency.remove
+      end
+
+      it "returns the right dep" do 
+        dep = Dependency.find_by("bodo/bodo", "1.0.1", "bada/bada", "bum/bum", "1.1.1")
+        dep.should_not be_nil
+        dep.name.should eql("bodo/bodo")
+      end
+
+      it "returns nil" do
+        dep = Dependency.find_by("bodo/bodo", "1.0.1", "bada/bada", "bum/bum", "1.1.0")
+        dep.should be_nil
+      end
+
+    end
+
+  end
   
 end

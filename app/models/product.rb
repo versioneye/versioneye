@@ -495,6 +495,10 @@ class Product
 
   ########### VERSIONS END ########################
 
+  def get_followers
+    Follower.find_by_product(self.id.to_s)
+  end
+
   def dependencies(scope)
     scope = main_scope if scope == nil 
     Dependency.find_by_key_version_scope(prod_key, version, scope)
