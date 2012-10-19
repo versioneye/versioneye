@@ -42,6 +42,16 @@ class Versionlink
     versionlink.save
   end
 
+  def self.delete_wrong_ones()
+    packagist_links = Versionlink.where( name: "Packagist Page")
+    packagist_links.each do |link| 
+      if !link.link.match(/^http.*/)
+        p "delete #{link.link}"
+        link.remove
+      end
+    end
+  end
+
   def get_link
     if self.link.match(/^www.*/) != nil 
       return "http://#{self.link}"
