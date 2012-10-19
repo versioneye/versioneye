@@ -494,7 +494,7 @@ class Product
     return nil if first.nil? || last.nil?
     diff = last.to_i - first.to_i 
     diff_days = diff / 60 / 60 / 24
-    average = diff_days / versions.size 
+    average = diff_days / sorted_versions.size 
     average
   rescue => e 
     p "Exception in average_release_time: #{e}" 
