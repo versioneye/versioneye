@@ -52,6 +52,52 @@ class ProductMigration
 		end
 	end
 
+	def self.delete_double_deps(lang)
+		Product.where(language: lang).each do |product|
+			product.versions.each do |version|
+				product.version = version.version 
+
+
+				names = Hash.new 
+				deps = product.dependencies("require")
+				deps.each do |dep|
+					if names[dep.name]
+						p "remove #{product.prod_key} - #{product.version} - #{dep.name}"
+						dep.remove
+					else 
+						names[dep.name] = dep
+					end
+				end
+				
+				names = Hash.new 
+				deps = product.dependencies("require-dev")
+				deps.each do |dep|
+					if names[dep.name]
+						p "remove #{product.prod_key} - #{product.version} - #{dep.name}"
+						dep.remove
+					else 
+						names[dep.name] = dep
+					end
+				end
+				
+				names = Hash.new 
+				deps = product.dependencies("replace")
+				deps.each do |dep|
+					if names[dep.name]
+						p "remove #{product.prod_key} - #{product.version} - #{dep.name}"
+						dep.remove
+					else 
+						names[dep.name] = dep
+					end
+				end
+
+				
+			end
+		end
+	end
+
+
+
 	def self.check_emtpy_release_dates(lang)
 		Product.where(language: lang).each do |product|
 			product.versions.each do |version|
