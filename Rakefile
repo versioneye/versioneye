@@ -9,12 +9,12 @@ Versioneye::Application.load_tasks
 task :do_work => :environment do
 	puts "START"
 
-	start_hour = 23
+	start_hour = 7
 	start_minute = 10
 
 	weekly_hour = 14
 	weekly_minute = 00
-	weekly_day = 2
+	weekly_day = 4
 
 	until 2 < 1 do 
 		
@@ -64,7 +64,7 @@ end
 
 task :update_version_data_global => :environment do
 	puts "START update the version numbers on products."
-    Product.update_version_data_global
+    ProductMigration.update_version_data_global
     puts "STOP update the version numbers on products."
 end
 

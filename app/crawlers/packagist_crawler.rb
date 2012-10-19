@@ -35,10 +35,11 @@ class PackagistCrawler
       db_version = product.get_version version_number
       if db_version.nil? 
         PackagistCrawler.create_new_version product, version_number, version_obj
-      elsif db_version.released_at.nil? 
+      else 
         db_version.released_string = version_obj['time']
         db_version.released_at = DateTime.parse(version_obj['time'])
         db_version.save
+        p " - update released_at #{db_version.released_at}"
       end
     end
   rescue => e 
