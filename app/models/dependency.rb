@@ -20,6 +20,10 @@ class Dependency
     Dependency.all(conditions: { prod_key: prod_key, prod_version: version, scope: scope } )
   end
 
+  def self.find_by_key_and_version(prod_key, version)
+    Dependency.all(conditions: { prod_key: prod_key, prod_version: version } )
+  end
+
   def self.find_by(name, version, dep_prod_key, prod_key, prod_version)
     dependencies = Dependency.where(name: name, version: version, dep_prod_key: dep_prod_key, prod_key: prod_key, prod_version: prod_version)
     return nil if dependencies.nil? || dependencies.empty? 

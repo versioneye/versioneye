@@ -526,7 +526,12 @@ class Product
       scope = main_scope
     end
     hash = Hash.new
-    dependencies = Dependency.find_by_key_version_scope(prod_key, version, scope)
+    dependencies = Array.new 
+    if scope.eql?("all")
+      dependencies = Dependency.find_by_key_and_version(prod_key, version)
+    else 
+      dependencies = Dependency.find_by_key_version_scope(prod_key, version, scope)
+    end
     dependencies.each do |dep|      
       element = CircleElement.new
       element.id = dep.dep_prod_key
