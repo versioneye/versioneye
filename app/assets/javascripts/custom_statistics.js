@@ -69,6 +69,7 @@ function print_legend(selector, color_map){
 // ---------------------------------------------------------------
 function render_statistics(data){
 	//renders awesome summery plots
+	ChartConfig.domain_code = "aa7843dd73cc5af13f5b53855cf92ac0";
 	var chart_container = "chart_container_projects";
 	var chart = new JSChart(chart_container, "bar", ChartConfig.domain_code);
 	if ((data == undefined) || data.length == 0 ){
@@ -103,6 +104,8 @@ function render_trends(language_map){
 		console.log("Error:render_trends - empty dataset!");
 		return null;
 	}
+
+	ChartConfig.domain_code = "aa7843dd73cc5af13f5b53855cf92ac0";
 
 	var chart_container = "chart_container_trends";
 	var chart_selector = "#" + chart_container;
