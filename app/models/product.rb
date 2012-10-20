@@ -637,12 +637,6 @@ class Product
     data
   end
 
-  def self.get_language_stat_cached 
-    Rails.cache.fetch('Product.get_language_stat'){ get_language_stat }  
-  rescue => e 
-    p "#{e}"
-  end
-
   def self.get_language_trend(start_date = nil, end_date =  nil)
     # returns cumulative trend of languages of given period, 
     # which by default is from 4th april to end of current month
@@ -667,12 +661,6 @@ class Product
       first_run = false;
     end    
     return {:xlabels => xlabels, :data => results}
-  end
-
-  def self.get_language_trend_cached
-    Rails.cache.fetch('Product.get_language_trend'){ get_language_trend }  
-  rescue => e 
-    p "#{e}"
   end
 
   def update_in_my_products(array_of_product_ids)
