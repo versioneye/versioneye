@@ -15,7 +15,7 @@
 <br/>
 
 <script type="text/javascript">
-	function render_wheel_development(){
+	 function render_wheel_development(){
 		var wheel = new DependencyWheel.Remote(false, document.getElementById("canvas-container-development"), { 
 			url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/dependencies.json?scope=development',
 			width: "562", 

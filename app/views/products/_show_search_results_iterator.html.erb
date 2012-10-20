@@ -35,12 +35,6 @@
 							<button type="submit" class="btn btn-success btn-mini" onclick="load_dialog_follow('<%= product.name %>');" >FOLLOW</button>
 						<% end %>
 					</li>
-					<li class="searchResult-inner-list-cell small-heart">
-						<%= image_tag("follower_icon.png", :class => "small-heart-img", :title => "Followers" ) %>
-					</li>
-					<li class="searchResult-inner-list-cell ">
-						<label id="<%=product.to_param%>overall_likes"><%=product.followers%></label>
-					</li>
 				</ul>
 			</li>
 		</ul>
