@@ -628,13 +628,19 @@ class Product
     langs = Product.where(:language.in => ["Java", "Ruby", "Python", "PHP", "R", "Node.JS"]).distinct(:language)
   end
 
-  def self.get_language_stat
+  def self.get_language_stat()
     data = []
     self.get_unique_languages_filtered.each do |lang|
       count = self.where(language: lang).count
       data << [lang, count]
     end
     data
+  end
+
+  def self.get_language_stat_cached 
+    Rails.cache.fetch('Product.get_language_stat'){ get_language_stat }  
+  rescue => e 
+    p "#{e}"
   end
 
   def self.get_language_trend(start_date = nil, end_date =  nil)
@@ -663,14 +669,8 @@ class Product
     return {:xlabels => xlabels, :data => results}
   end
 
-  def self.get_language_stat_cached 
-    Rails.cache.fetch('Product.get_language_stat')  
-  rescue => e 
-    p "#{e}"
-  end
-
   def self.get_language_trend_cached
-    Rails.cache.fetch('Product.get_language_trend')  
+    Rails.cache.fetch('Product.get_language_trend'){ get_language_trend }  
   rescue => e 
     p "#{e}"
   end

@@ -23,16 +23,6 @@ module Versioneye
     
     Mongoid.load!("config/mongoid.yml")
 
-    if defined?(Dalli) and defined?(Settings)
-        memcache = Dalli::Client.new(
-            :expires_in => 1.day,
-            :compress   => true,
-            :servers    => Settings.memcache_servers,
-            :username   => Settings.memcache_username,
-            :password   => Settings.memcache_password
-        )
-    end
-
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
