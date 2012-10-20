@@ -663,8 +663,16 @@ class Product
     return {:xlabels => xlabels, :data => results}
   end
 
+  def self.get_language_stat_cached 
+    Rails.cache.fetch('Product.get_language_stat')  
+  rescue => e 
+    p "#{e}"
+  end
+
   def self.get_language_trend_cached
     Rails.cache.fetch('Product.get_language_trend')  
+  rescue => e 
+    p "#{e}"
   end
 
   def update_in_my_products(array_of_product_ids)
