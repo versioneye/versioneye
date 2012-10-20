@@ -96,8 +96,6 @@ class ProductMigration
 		end
 	end
 
-
-
 	def self.check_emtpy_release_dates(lang)
 		Product.where(language: lang).each do |product|
 			product.versions.each do |version|

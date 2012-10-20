@@ -3,12 +3,12 @@ class Dependency
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :name, type: String
-  field :version, type: String  
-  field :group_id, type: String
-  field :artifact_id, type: String
-  field :dep_prod_key, type: String     # this is the prod_key of the dependency (Foreign Key)
-  field :scope, type: String
+  field :name, type: String             # name of the dependency
+  field :version, type: String          # version of the dependency
+  field :group_id, type: String         # groupd_id of the dependency
+  field :artifact_id, type: String      # artifact_id of the dependency
+  field :dep_prod_key, type: String     # prod_key of the dependency (Foreign Key)
+  field :scope, type: String            # scope of the dependency
 
   field :prod_key, type: String         # This dependency belongs to this prod_key
   field :prod_version, type: String     # This dependency belongs to this version of prod_key
@@ -24,8 +24,8 @@ class Dependency
     Dependency.all(conditions: { prod_key: prod_key, prod_version: version } )
   end
 
-  def self.find_by(name, version, dep_prod_key, prod_key, prod_version)
-    dependencies = Dependency.where(name: name, version: version, dep_prod_key: dep_prod_key, prod_key: prod_key, prod_version: prod_version)
+  def self.find_by(prod_key, prod_version, name, version, dep_prod_key)
+    dependencies = Dependency.where(prod_key: prod_key, prod_version: prod_version, name: name, version: version, dep_prod_key: dep_prod_key)
     return nil if dependencies.nil? || dependencies.empty? 
     dependencies[0]
   end

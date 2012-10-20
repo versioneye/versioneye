@@ -117,13 +117,13 @@ describe Dependency do
       end
 
       it "returns the right dep" do 
-        dep = Dependency.find_by("bodo/bodo", "1.0.1", "bada/bada", "bum/bum", "1.1.1")
+        dep = Dependency.find_by("bum/bum", "1.1.1", "bodo/bodo", "1.0.1", "bada/bada")
         dep.should_not be_nil
         dep.name.should eql("bodo/bodo")
       end
 
       it "returns nil" do
-        dep = Dependency.find_by("bodo/bodo", "1.0.1", "bada/bada", "bum/bum", "1.1.0")
+        dep = Dependency.find_by("bum/bum", "1.1.0", "bodo/bodo", "1.0.1", "bada/bada")
         dep.should be_nil
       end
 

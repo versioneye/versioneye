@@ -33,9 +33,10 @@ class PackagistCrawler
       version_number = version[0]
       version_obj = version[1]
       db_version = product.get_version version_number
-      if db_version.nil? 
-        PackagistCrawler.create_new_version product, version_number, version_obj
-      end
+      PackagistCrawler.create_dependencies product, version_number, version_obj
+      # if db_version.nil? 
+      #   PackagistCrawler.create_new_version product, version_number, version_obj
+      # end
     end
   rescue => e 
     p "ERROR in crawle_package Message:   #{e.message}"
@@ -126,13 +127,14 @@ class PackagistCrawler
       require_name = dep[0]
       require_version = dep[1]
       dep_prod_key = "php/#{require_name}"
-      dep = Dependency.find_by(require_name, require_version, dep_prod_key, product.prod_key, version_number)
+      dep = Dependency.find_by(product.prod_key, version_number, require_name, require_version, dep_prod_key)
       if dep.nil?
         dependency = Dependency.new({:name => require_name, :version => require_version, 
-          :dep_prod_key => product.prod_key, :prod_key => "php/#{require_name}", 
-          :prod_version => require_version, :scope => scope, :prod_type => "Packagist", 
+          :dep_prod_key => dep_prod_key, :prod_key => product.prod_key, 
+          :prod_version => version_number, :scope => scope, :prod_type => "Packagist", 
           :language => "PHP"})
         dependency.save
+        p " -- create new dependency: #{dependency.prod_key}:#{dependency.prod_version} -> #{dependency.dep_prod_key}:#{dependency.version}"
       end
     end
   end
