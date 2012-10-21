@@ -52,7 +52,6 @@ class Dependency
     elsif prod_type.eql?("Packagist")
       abs_version = String.new(packagist_version_parsed)
     end
-    p "#{version} -> #{abs_version}"
     abs_version
   end
 

@@ -104,6 +104,21 @@ describe Product do
       ver = @product.get_smaller_than("1.1")
       ver.version.should eql("1.0")
     end
+
+    it "returns the highest value" do
+      @product.versions = Array.new
+      version = Version.new
+      version.version = "2.2.2"
+      @product.versions.push(version)
+      version2 = Version.new
+      version2.version = "2.2.3"
+      @product.versions.push(version2)
+      version3 = Version.new
+      version3.version = "2.3.0"
+      @product.versions.push(version3)
+      ver = @product.get_smaller_than("2.4-dev")
+      ver.version.should eql("2.3.0")
+    end
     
   end
 

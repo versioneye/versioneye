@@ -57,12 +57,11 @@ class ProductMigration
 			product.versions.each do |version|
 				if version.version.match(/v[0-9]+\..*/)
 					p "#{version.version}"
-	        version.version.gsub!("v", "")
-	        version.save
+	        version.version = version.version.gsub("v", "")
+	        product.save
 	        p " -- #{version.version}"
 	      end	
 			end
-			product.save
 		end
 	end
 
