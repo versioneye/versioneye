@@ -27,7 +27,7 @@ class PackagistCrawler
     PackagistCrawler.update_product product, package	
 
     packagist_page = "http://packagist.org/packages/#{package_name}"
-    PackagistCrawler.update_packagist_link product, package_name
+    PackagistCrawler.update_packagist_link product, packagist_page
 
     versions.each do |version|
       version_number = version[0]
