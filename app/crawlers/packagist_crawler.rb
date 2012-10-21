@@ -33,10 +33,9 @@ class PackagistCrawler
       version_number = version[0]
       version_obj = version[1]
       db_version = product.get_version version_number
-      PackagistCrawler.create_dependencies product, version_number, version_obj
-      # if db_version.nil? 
-      #   PackagistCrawler.create_new_version product, version_number, version_obj
-      # end
+      if db_version.nil? 
+        PackagistCrawler.create_new_version product, version_number, version_obj
+      end
     end
   rescue => e 
     p "ERROR in crawle_package Message:   #{e.message}"
