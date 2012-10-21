@@ -52,47 +52,15 @@ class ProductMigration
 		end
 	end
 
-	def self.delete_double_deps(lang)
+	def self.remove_bad_links(lang)
 		Product.where(language: lang).each do |product|
-			product.versions.each do |version|
-				product.version = version.version 
-
-
-				names = Hash.new 
-				deps = product.dependencies("require")
-				deps.each do |dep|
-					if names[dep.name]
-						p "remove #{product.prod_key} - #{product.version} - #{dep.name}"
-						dep.remove
-					else 
-						names[dep.name] = dep
-					end
+			product.get_links.each do |link|
+				if link.link.match(/^http.*/).nil? && link.link.match(/^git.*/).nil?
+					p "remove #{link.link}"
+					link.remove
 				end
-				
-				names = Hash.new 
-				deps = product.dependencies("require-dev")
-				deps.each do |dep|
-					if names[dep.name]
-						p "remove #{product.prod_key} - #{product.version} - #{dep.name}"
-						dep.remove
-					else 
-						names[dep.name] = dep
-					end
-				end
-				
-				names = Hash.new 
-				deps = product.dependencies("replace")
-				deps.each do |dep|
-					if names[dep.name]
-						p "remove #{product.prod_key} - #{product.version} - #{dep.name}"
-						dep.remove
-					else 
-						names[dep.name] = dep
-					end
-				end
-
-				
 			end
+			product.save
 		end
 	end
 
