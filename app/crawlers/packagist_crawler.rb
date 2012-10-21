@@ -32,7 +32,7 @@ class PackagistCrawler
     versions.each do |version|
       version_number = version[0]
       version_obj = version[1]
-      if version_number.match(/v[0-9]+\..*/)
+      if version_number && version_number.match(/v[0-9]+\..*/)
         version_number.gsub!("v", "")
       end
       db_version = product.get_version version_number
