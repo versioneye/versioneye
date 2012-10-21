@@ -535,7 +535,7 @@ class Product
     dependencies.each do |dep|      
       element = CircleElement.new
       element.id = dep.dep_prod_key
-      element.version = dep.version_abs
+      element.version = dep.version_parsed
       Product.attach_label_to_element(element, dep)
       hash[dep.dep_prod_key] = element
     end
@@ -571,7 +571,7 @@ class Product
           new_element.id = dep.dep_prod_key          
           attach_label_to_element(new_element, dep)
           new_element.connections << "#{element.id}"
-          new_element.version = dep.version_abs
+          new_element.version = dep.version_parsed
           new_hash[dep.dep_prod_key] = new_element
         else 
           # p "#{deep_space}  element #{dep.dep_prod_key} : #{dep.version} already fetched"
