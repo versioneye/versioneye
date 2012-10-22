@@ -1,2 +1,6 @@
 jQuery('#dialog_feedback').dialog('close')
-alert("Thank you very much for your feedback.")
+<% if @correct_math %>
+  alert("Thank you very much for your feedback.")
+<% else %>
+  alert("You are not good at math.")
+<% end %>

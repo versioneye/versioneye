@@ -8,13 +8,15 @@ class FeedbackController < ApplicationController
     value_a = params[:value_a]
     value_b = params[:value_b]
 
-    if !name.nil? && !name.empty? && !email.nil? && !email.empty? && !feedback.nil? && !feedback.empty?
-      correct_math = false
+    if name && !name.empty? && email && !email.empty? && feedback && !feedback.empty?
+      @correct_math = false
       if math && value_b && value_a
-         correct_result = value_a.to_i + value_b.to_i
-         correct_math = true if correct_result == math.to_i
+        correct_result = value_a.to_i + value_b.to_i
+        if correct_result == math.to_i 
+          @correct_math = true 
+        end
       end
-      if signed_in? || correct_math
+      if @correct_math
         FeedbackMailer.feedback_email(name, email, feedback).deliver
       end
     end    
