@@ -1,62 +1,58 @@
 <div id="dialog_feedback" class = "modal hide fade">
 	<div class = "modal-header">
-		<button type="button" class="close" 
-			data-dismiss="modal" aria-hidden="true">&times;</button>
-    	<h3>Feedback</h3>
-
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Feedback</h3>
 	</div>
+
+<%= form_tag("/feedback.js", :method => "post", :remote => true, :class => "form-horizontal") do  %>
 	<div class = "modal-body">
-		<%= form_tag("/feedback.js", :method => "post", :remote => true, :class => "form-horizontal") do  %>    
-			<input type="hidden" name="value_a" value="" id="value_a" />
-			<input type="hidden" name="value_b" value="" id="value_b" />
-		    <div class="control-group">	
-				<%= label_tag(:fb_fullname, "Full Name", :class => "control-label") %>
-		      	<div class="controls">
+		
+		<input type="hidden" name="value_a" value="" id="value_a" />
+		<input type="hidden" name="value_b" value="" id="value_b" />
+
+		<div class="control-group">	
+			<%= label_tag(:fb_fullname, "Full Name", :class => "control-label") %>
+			<div class="controls">
 				<% if signed_in? %>
 					<%= text_field_tag :fb_fullname, current_user.fullname, :class => "input-xlarge" %>
 				<% else %>
 					<%= text_field_tag :fb_fullname, nil, :class => "input-xlarge" %>
 				<% end %>
-		      </div>
-		    </div>
+			</div>
+		</div>
 
-		    <div class="control-group">
-				<%= label_tag(:fb_email, "E-Mail", :class => "control-label") %>
-
-		      	<div class="controls">
+		<div class="control-group">
+			<%= label_tag(:fb_email, "E-Mail", :class => "control-label") %>
+			<div class="controls">
 				<% if signed_in? %>
 					<%= text_field_tag :fb_email, current_user.email, :class => "input-xlarge" %>
 				<% else %>
 					<%= text_field_tag :fb_email, nil, :class => "input-xlarge" %>
 				<% end %>
-				
-		      </div>
-		    </div>
-		
-			<div class="control-group">
-				<%= label_tag(:feedback, "", :class => "control-label") %>
-		      <div class="controls">
-				<%= text_area_tag :feedback, nil, :class => "input-xlarge", :maxlength => "1000" %>
+			</div>
+		</div>
+	
+		<div class="control-group">
+			<%= label_tag(:feedback, "", :class => "control-label") %>
+			<div class="controls">
+				<%= text_area_tag :feedback, nil, :class => "input-xlarge", :maxlength => "1000", :onKeyUp => "textCounter(this, document.getElementById('feedback_counter'), 1000)" %>
 				<br />
-				<span id = "feedback-help" class="help-block">max:1000</span>
-				
-		      </div>
-
-		    </div>
-			
-			<div class="control-group">
-				<%= label_tag(:fb_math, "", :id => "fb_math", :class => "control-label") %>
-		      <div class="controls">
-				<%= text_field_tag :fb_math, nil, :class => "input-xlarge" %>
-		      </div>
-		    </div>
+				<span id="feedback_counter" class="help-block">max:1000</span>
+			</div>
+		</div>
 		
-		<% end %>
+		<div class="control-group">
+			<%= label_tag(:fb_math, "", :id => "fb_math", :class => "control-label") %>
+			<div class="controls">
+				<%= text_field_tag :fb_math, nil, :class => "input-xlarge" %>
+			</div>
+		</div>
+
 	</div>
 	<div class="modal-footer">
-	    <button type="button" class="btn btn-large" 
-			data-dismiss="modal" aria-hidden="true">Cancel</button>
-	    <button type="submit" class="btn btn-large btn-primary" 
-	    	onClick="return validateFeedbackForm()" >Send</button>
-  </div>
+		<button type="button" class="btn btn-large" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<button type="submit" class="btn btn-large btn-primary" onClick="return validateFeedbackForm()" >Send</button>
+	</div>
+<% end %>
+
 </div>

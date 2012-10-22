@@ -174,22 +174,6 @@ function load_dialog_follow(product_name){
 		});	
 }
 
-function validateEmail(elementValue){  
-	var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;  
-	var result = emailPattern.test(elementValue);  
-	if (result == false){
-		alert('The E-Mail Address is not valid! Please type in a valid E-Mail Address');
-	}
-	return result;
-}
-
-function textCounter(field, cntfield, maxlimit) {
-	if (field.value.length > maxlimit) 
-		field.value = field.value.substring(0, maxlimit);
-	else
-		cntfield.innerHTML = maxlimit - field.value.length;
-}
-
 function exchangeImage(id, image){
 	image_path = "/assets/" + image
 	document.getElementById(id).src=image_path;
