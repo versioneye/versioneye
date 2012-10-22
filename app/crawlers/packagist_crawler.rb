@@ -38,6 +38,8 @@ class PackagistCrawler
       db_version = product.get_version version_number
       if db_version.nil? 
         PackagistCrawler.create_new_version product, version_number, version_obj
+      else
+        PackagistCrawler.create_dependencies product, version_number, version_obj
       end
     end
   rescue => e 
@@ -128,6 +130,9 @@ class PackagistCrawler
     dependencies.each do |dep|
       require_name = dep[0]
       require_version = dep[1]
+      if require_version.strip.eql?("self.version")
+        require_version = version_number
+      end
       dep_prod_key = "php/#{require_name}"
       dep = Dependency.find_by(product.prod_key, version_number, require_name, require_version, dep_prod_key)
       if dep.nil?
