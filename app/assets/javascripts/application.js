@@ -7,6 +7,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery_ui_1_8_17_custom_min
+//= require bootstrap_min
+
 //= require jquery_textbox_hinter
 //= require moowheel/mootools-1.2-core-nc
 //= require moowheel/mootools-1.2-more
