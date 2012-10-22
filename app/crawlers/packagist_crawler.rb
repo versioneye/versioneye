@@ -30,7 +30,7 @@ class PackagistCrawler
     PackagistCrawler.update_packagist_link product, packagist_page
 
     versions.each do |version|
-      version_number = version[0]
+      version_number = String.new(version[0])
       version_obj = version[1]
       if version_number && version_number.match(/v[0-9]+\..*/)
         version_number.gsub!("v", "")
