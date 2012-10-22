@@ -1,13 +1,4 @@
 
-function text_counter(max_size){
-	var feedback = jQuery('[name="feedback"]').val();
-	jQuery('.feedback-help').text = max_size - feedback.length;
-}
-
-
-function validateEmail(email){
-	return true;
-}
 
 
 function load_dialog_feedback(){
