@@ -36,6 +36,8 @@ class UsersController < ApplicationController
       @user.datenerhebung = true
       @user.create_username
       @user.create_verification
+      refer_name = cookies.signed[:veye_refer]
+      check_refer( refer_name, @user )
       if @user.save
         @user.send_verification_email
         User.new_user_email(@user)
@@ -189,6 +191,18 @@ class UsersController < ApplicationController
 
     def admin_user
       redirect_to(root_path) unless current_user.admin?
+    end
+
+    def check_refer(refer_name, user)
+      if refer_name
+        refer = Refer.get_by_name(refer_name)
+        if refer
+          user.refer_name = refer.name
+        end
+      end
+    rescue => e 
+      p "ERROR in check_refer: #{e}"
+      return nil
     end
 
 end

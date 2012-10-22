@@ -10,7 +10,7 @@ gem 'gravatar_image_tag', '1.1.3'
 gem 'bson_ext', '1.7.0'
 gem 'mongo', '1.7.0'
 gem 'mongoid', '2.5.0'
-gem 'naturalsorter', '0.5.9'
+gem 'naturalsorter', '0.5.11'
 gem 'postmark-rails', '0.4.1'
 gem 'httparty', '0.9.0'
 gem 'oauth', '0.4.7'
@@ -20,7 +20,7 @@ gem 'nokogiri', '1.5.5'
 gem 'stripe', '1.7.3'
 gem 'thin', '1.4.1'
 gem 'tire', '0.4.3'
-gem 'dalli' # memcache library
+gem 'dalli', '2.3.0' # memcache library
 gem 'kgio', '2.7.4' # 20% performance boost for dalli
 
 group :assets do

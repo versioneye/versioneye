@@ -1,5 +1,7 @@
 class StatisticsController < ApplicationController
 
+	caches_action :proglangs, :langtrends
+
 	def index
 		@page = "statistics"
 	end
@@ -14,7 +16,7 @@ class StatisticsController < ApplicationController
 	end 
 
 	def langtrends
-		stats = Product.get_language_trend_cached
+		stats = Product.get_language_trend
 		respond_to do |format|
 			format.json {
 				render :json => stats

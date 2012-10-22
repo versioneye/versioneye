@@ -92,7 +92,7 @@ class Product
       if exclude_keys 
         query = Product.find_by_name_exclude(searched_name, exclude_keys)
       else 
-        query = Product.find_by_name(searched_name)  
+        query = Product.find_by_name(searched_name)
       end
     elsif description && !description.empty?
       query = Product.find_by_description(description)
@@ -429,7 +429,13 @@ class Product
   end
 
   def update_version_data
-    return if self.versions.nil? || self.versions.length < 2
+    return nil if self.versions.nil? || self.versions.empty?
+
+    if self.versions.length < 2
+      self.version = self.versions.first.version 
+      self.save 
+      return 
+    end
     
     versions = get_natural_sorted_versions
     version = versions.first
@@ -469,15 +475,26 @@ class Product
     versions_count
   end
 
+  def versions_with_rleased_date
+    return nil if versions.nil? || versions.empty?
+    new_versions = Array.new 
+    versions.each do |version| 
+      new_versions << version if !version.released_at.nil?
+    end
+    new_versions
+  end
+
   def average_release_time
     return nil if versions.nil? || versions.empty? || versions.size < 3
-    sorted_versions = versions.sort! { |a,b| a.released_at <=> b.released_at }
+    released_versions = versions_with_rleased_date
+    return nil if released_versions.nil? || released_versions.empty? || released_versions.size < 3
+    sorted_versions = released_versions.sort! { |a,b| a.released_at <=> b.released_at }
     first = sorted_versions.first.released_at
     last = sorted_versions.last.released_at
     return nil if first.nil? || last.nil?
     diff = last.to_i - first.to_i 
     diff_days = diff / 60 / 60 / 24
-    average = diff_days / versions.size 
+    average = diff_days / sorted_versions.size 
     average
   rescue => e 
     p "Exception in average_release_time: #{e}" 
@@ -495,6 +512,10 @@ class Product
 
   ########### VERSIONS END ########################
 
+  def get_followers
+    Follower.find_by_product(self.id.to_s)
+  end
+
   def dependencies(scope)
     scope = main_scope if scope == nil 
     Dependency.find_by_key_version_scope(prod_key, version, scope)
@@ -505,12 +526,17 @@ class Product
       scope = main_scope
     end
     hash = Hash.new
-    dependencies = Dependency.find_by_key_version_scope(prod_key, version, scope)
+    dependencies = Array.new 
+    if scope.eql?("all")
+      dependencies = Dependency.find_by_key_and_version(prod_key, version)
+    else 
+      dependencies = Dependency.find_by_key_version_scope(prod_key, version, scope)
+    end
     dependencies.each do |dep|      
       element = CircleElement.new
       element.id = dep.dep_prod_key
+      element.version = dep.version_parsed
       Product.attach_label_to_element(element, dep)
-      element.version = dep.version_abs
       hash[dep.dep_prod_key] = element
     end
     return Product.fetch_deps(1, hash, Hash.new)
@@ -540,15 +566,15 @@ class Product
         key = dep.dep_prod_key
         ele = Product.get_element_from_hash(new_hash, hash, parent_hash, key)
         if ele.nil?
-          # p "#{deep_space}  create new element #{dep.name}"
+          # p "#{deep_space}  create new element #{dep.prod_key} : #{dep.prod_version} -> #{dep.dep_prod_key} : #{dep.version}"
           new_element = CircleElement.new
           new_element.id = dep.dep_prod_key          
           attach_label_to_element(new_element, dep)
           new_element.connections << "#{element.id}"
-          new_element.version = dep.version_abs
+          new_element.version = dep.version_parsed
           new_hash[dep.dep_prod_key] = new_element
         else 
-          # p "#{deep_space}  element #{dep.name} already fetched"
+          # p "#{deep_space}  element #{dep.dep_prod_key} : #{dep.version} already fetched"
           ele.connections << "#{element.id}"
         end
         element.connections << "#{key}"
@@ -602,7 +628,7 @@ class Product
     langs = Product.where(:language.in => ["Java", "Ruby", "Python", "PHP", "R", "Node.JS"]).distinct(:language)
   end
 
-  def self.get_language_stat
+  def self.get_language_stat()
     data = []
     self.get_unique_languages_filtered.each do |lang|
       count = self.where(language: lang).count
@@ -635,10 +661,6 @@ class Product
       first_run = false;
     end    
     return {:xlabels => xlabels, :data => results}
-  end
-
-  def self.get_language_trend_cached
-    Rails.cache.fetch('Product.get_language_trend')  
   end
 
   def update_in_my_products(array_of_product_ids)

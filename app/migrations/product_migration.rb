@@ -52,6 +52,31 @@ class ProductMigration
 		end
 	end
 
+	def self.remove_leading_vs(lang)
+		Product.where(language: lang).each do |product|
+			product.versions.each do |version|
+				if version.version.match(/v[0-9]+\..*/)
+					p "#{version.version}"
+	        version.version = version.version.gsub("v", "")
+	        product.save
+	        p " -- #{version.version}"
+	      end	
+			end
+		end
+	end
+
+	def self.remove_bad_links(lang)
+		Product.where(language: lang).each do |product|
+			product.get_links.each do |link|
+				if link.link.match(/^http.*/).nil?
+					p "remove #{link.link}"
+					link.remove
+				end
+			end
+			product.save
+		end
+	end
+
 	def self.check_emtpy_release_dates(lang)
 		Product.where(language: lang).each do |product|
 			product.versions.each do |version|

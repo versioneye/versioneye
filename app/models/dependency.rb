@@ -3,46 +3,56 @@ class Dependency
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :name, type: String
-  field :version, type: String  
-  field :group_id, type: String
-  field :artifact_id, type: String
-  field :dep_prod_key, type: String     # this is the prod_key of the dependency (Foreign Key)
-  field :scope, type: String
+  field :name, type: String             # name of the dependency
+  field :version, type: String          # version of the dependency. This is the unfiltered version string. It is not parsed yet. 
+  field :group_id, type: String         # groupd_id of the dependency
+  field :artifact_id, type: String      # artifact_id of the dependency
+  field :dep_prod_key, type: String     # prod_key of the dependency (Foreign Key)
+  field :scope, type: String            # scope of the dependency
 
   field :prod_key, type: String         # This dependency belongs to this prod_key
   field :prod_version, type: String     # This dependency belongs to this version of prod_key
 
   field :prod_type, type: String, :default => "RubyGem"
   field :language, type: String, :default => "Ruby"
-  
+
+
+  def self.find_by_key_and_version(prod_key, version)
+    Dependency.all(conditions: { prod_key: prod_key, prod_version: version } )
+  end
+
   def self.find_by_key_version_scope(prod_key, version, scope)
     Dependency.all(conditions: { prod_key: prod_key, prod_version: version, scope: scope } )
   end
 
-  def version_for_url
-    return "0" if version.nil?
-    url_param = String.new(version)
-    if prod_type.eql?("RubyGem")
-      url_param = String.new(gem_version_abs)
-    end
-    url_param.gsub!("/","--")
-    url_param.gsub!(".","~")
-    "#{url_param}"    
-  end
-
-  def version_abs
-    return "0" if version.nil?
-    abs_version = String.new(version)
-    if prod_type.eql?("RubyGem")
-      abs_version = String.new(gem_version_abs)
-    end
-    abs_version
+  def self.find_by(prod_key, prod_version, name, version, dep_prod_key)
+    dependencies = Dependency.where(prod_key: prod_key, prod_version: prod_version, name: name, version: version, dep_prod_key: dep_prod_key)
+    return nil if dependencies.nil? || dependencies.empty? 
+    dependencies[0]
   end
 
   def version_for_label
     return gem_version if prod_type.eql?("RubyGem")
     return version
+  end
+
+  def version_for_url
+    url_param = version_parsed
+    url_param.gsub!("/","--")
+    url_param.gsub!(".","~")
+    url_param
+  end
+
+  ## Rename this to version_parsed
+  def version_parsed
+    return "0" if version.nil?
+    abs_version = String.new(version)
+    if prod_type.eql?("RubyGem")
+      abs_version = String.new(gem_version_parsed)
+    elsif prod_type.eql?("Packagist")
+      abs_version = String.new(packagist_version_parsed)
+    end
+    abs_version
   end
 
   def dep_prod_key_for_url
@@ -62,11 +72,19 @@ class Dependency
     ver
   end
 
-  def gem_version_abs
-    ver = String.new(version)
+  def gem_version_parsed
+    version_string = String.new(version)
     product = Product.find_by_key(self.dep_prod_key)
     dependency = Projectdependency.new
-    GemfileParser.parse_requested_version(ver, dependency, product)
+    GemfileParser.parse_requested_version(version_string, dependency, product)
+    dependency.version_requested
+  end
+
+  def packagist_version_parsed
+    version_string = String.new(version)
+    product = Product.find_by_key(self.dep_prod_key)
+    dependency = Projectdependency.new
+    ComposerParser.parse_requested_version(version_string, dependency, product)
     dependency.version_requested
   end
   

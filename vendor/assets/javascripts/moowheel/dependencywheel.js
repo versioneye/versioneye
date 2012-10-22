@@ -533,12 +533,19 @@ function show_info_box(data, options){
   options.data_length = data.length;
   info_box = document.getElementById(box_name);
   info_number = document.getElementById(number_name);
+  scope_name = document.getElementById("scope_name");
   if (info_box){
     info_box.style.display = "inline-block";
   }
   if (info_number){
-    var txt = document.createTextNode(recursive_deps);
-    info_number.appendChild(txt); 
+    info_number.innerHTML = recursive_deps;
+  }
+  if (scope_name){
+    if (options.scope == "all"){
+      scope_name.innerHTML = "";  
+    } else {
+      scope_name.innerHTML = options.scope;  
+    }
   }
   handle_path(options);
 }

@@ -22,12 +22,29 @@ class Versionlink
     Versionlink.where( prod_key: prod_key, link: link )[0]
   end
 
-  def get_link
-    if self.link.match(/^www.*/) != nil 
-      return "http://#{self.link}"
-    else 
-      return self.link
+  def self.find_version_link(prod_key, version_id, link)
+    Versionlink.where( prod_key: prod_key, version_id: version_id, link: link )
+  end
+
+  def self.create_versionlink prod_key, version_number, link, name
+    return nil if link.nil? || link.empty? 
+    versionlink = Versionlink.find_version_link(prod_key, version_number, link)
+    return nil if versionlink
+      
+    versionlink = Versionlink.new
+    versionlink.name = name
+    versionlink.link = link
+    if versionlink.link.match(/^http.*/).nil? && versionlink.link.match(/^git.*/).nil?
+      versionlink.link = "http://#{versionlink.link}"
     end
+    versionlink.prod_key = prod_key
+    versionlink.version_id = version_number
+    versionlink.save
+  end
+
+  def get_link
+    return "http://#{self.link}" if self.link.match(/^www.*/) != nil 
+    return self.link
   end
   
 end

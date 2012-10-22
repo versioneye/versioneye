@@ -1,6 +1,8 @@
 class ServicesController < ApplicationController
 
 	def index
+		refer_name = params['refer']
+		check_refer( refer_name )
 		@project = Project.new
 		render :layout => 'application_lp'
 	end
@@ -78,5 +80,18 @@ class ServicesController < ApplicationController
 			}
 		end
 	end
+
+	private 
+
+		def check_refer(refer_name)
+			if refer_name
+				refer = Refer.get_by_name(refer_name)
+				if refer
+					refer.count = refer.count + 1 
+					refer.save 
+					cookies.permanent.signed[:veye_refer] = refer_name
+				end
+			end
+		end
 
 end

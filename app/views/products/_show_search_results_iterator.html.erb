@@ -4,7 +4,7 @@
 	<% end %>
 	<div class="searchResult" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/SoftwareApplication" >
 		<ul class="list-row">
-			<li class="list-cell icon-cell">
+			<li class="list-cell cell-cell">
 				<%= render :partial => "/shared/language_icons", :locals => {:language => product.language, :icon => product.icon, :link => product_url(product), :title => product.name } %>
 			</li>
 			<li class="list-cell">
@@ -34,12 +34,6 @@
 						<% else %>
 							<button type="submit" class="btn btn-success btn-mini" onclick="load_dialog_follow('<%= product.name %>');" >FOLLOW</button>
 						<% end %>
-					</li>
-					<li class="searchResult-inner-list-cell small-heart">
-						<%= image_tag("follower_icon.png", :class => "small-heart-img", :title => "Followers" ) %>
-					</li>
-					<li class="searchResult-inner-list-cell ">
-						<label id="<%=product.to_param%>overall_likes"><%=product.followers%></label>
 					</li>
 				</ul>
 			</li>

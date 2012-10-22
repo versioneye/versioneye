@@ -6,49 +6,102 @@
 
 	<div>
 
-		<div  >
-			<ul class="list-row product_header" style="display: block; width: 50%; margin: auto;" >
-				<li class="list-cell icon-cell" style="vertical-align: top;">
-					<%= render :partial => "/shared/language_icons", :locals => {:language => @product.language, :icon => @product.icon, :link => nil, :title => @product.name} %>
-				</li>
-				<li class="list-cell" style="vertical-align: middle; ">
-					<h1 style="margin-bottom: 5px;"><%= @product.name_and_version %></h1>
-					<ul class="list-row">
-						<li class="list-cell share-on-icon">
-							<a href="https://twitter.com/share" 
-							   class="twitter-share-button" 
-							   data-url="<%= Settings.server_url %>/package_visual/<%= @product.to_param %>/version/<%= @product.version_to_url_param %>" 
-							   data-text="Check out the #dependency #Infografic for #<%= @product.name %> @VersionEye" 
-							   data-count="horizontal" >Twitter</a>
-							   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-						</li>
-						<li class="list-cell share-on-icon">
-							<iframe src="https://www.facebook.com/plugins/like.php?href=<%=Settings.server_url%>/package_visual/<%=@product.to_param%>/version/<%= @product.version_to_url_param %>&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=25" style="border:none; width:107px; height:25px"></iframe>
-						</li>
-						<li class="list-cell share-on-icon" style="width: 90px;">
-							<div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="<%= Settings.server_url %>/package_visual/<%= @product.to_param %>/version/<%= @product.version_to_url_param %>" style="width: 90px;"></div>
-						</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
+		<%= render "show_visual_head" %>
 
-		<% if @product.prod_type.eql?("RubyGem") %> 
-			<%= render "product_show_dependencies_scope_main" %>
-			<%= render "product_show_dependencies_scope_test" %>
-			<%= render "product_show_dependencies_scope_development" %>
-		<% elsif @product.prod_type.eql?("Maven2") %>
-			<%= render "product_show_dependencies_scope_main" %>
-			<%= render "product_show_dependencies_scope_test" %>
-			<%= render "product_show_dependencies_scope_provided" %>
-		<% elsif @product.prod_type.eql?("npm") %>
-			<%= render "product_show_dependencies_scope_main" %>
-			<%= render "product_show_dependencies_scope_development" %>
-		<% elsif @product.prod_type.eql?("Packagist") %>
-			<%= render "product_show_dependencies_scope_main" %>
-			<%= render "product_show_dependencies_scope_require_dev" %>
-			<%= render "product_show_dependencies_scope_replace" %>
-		<% end %>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<div>
+  		<div style="display: block; width: 50%; margin: auto;" >
+  			<%= form_tag("/package/follow", :remote => true) do  %>
+  				<label>Scope </label>
+  				<% if @product.prod_type.eql?("RubyGem") %> 
+						<select name="scope" style="width: 150px;" onchange="render_wheel(this.value)" >
+							<option value="all" selected >all</option>
+							<option value="runtime"  >runtime</option>
+		          <option value="test" >test</option>
+		          <option value="development" >development</option>
+		        </select>
+					<% elsif @product.prod_type.eql?("Maven2") %>
+						<select name="scope" style="width: 150px;" onchange="render_wheel(this.value)" >
+							<option value="all" selected >all</option>
+							<option value="compile" >compile</option>
+		          <option value="test" >test</option>
+		          <option value="provided" >provided</option>
+		        </select>
+					<% elsif @product.prod_type.eql?("npm") %>
+						<select name="scope" style="width: 150px;" onchange="render_wheel(this.value)" >
+							<option value="all" selected >all</option>
+							<option value="compile" >compile</option>
+		          <option value="development" >development</option>
+		        </select>
+					<% elsif @product.prod_type.eql?("Packagist") %>
+						<select name="scope" style="width: 150px;" onchange="render_wheel(this.value)" >
+							<option value="all" selected >all</option>
+							<option value="require"  >require</option>
+		          <option value="require-dev" >require-dev</option>
+		          <option value="replace" >replace</option>
+		        </select>
+					<% end %>
+					<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>" />
+				<% end %>
+  		</div>
+  	</div>
+
+		<div id="canvas-container" ></div>
+		<div>
+			<h3 style="text-align: center; display: none; width: 100%" id="infoBox" >
+				<span >
+					<a id="pinit" style="display: none;" href="" class="pin-it-button" count-layout="horizontal"><img border="0" alt="pint_it_on_pinterest" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+				</span><br/>
+				<br/>
+				<%= @product.name %> has <span style="font-weight: bold;" id="recursive_number"></span> recursive <span id="scope_name"><%= @product.main_scope %></span> dependencies
+			</h3>
+		</div>
+		<div style="text-align: center;">
+			<a href="/package/<%=@product.to_param%>/version/<%=@version.to_url_param%>">See more details</a>
+		</div>
+		<br/>
+		<br/>
+
+		<script type="text/javascript">
+			function render_wheel(scope){
+				if (scope == null){
+					scope = "all"
+				}
+				uri = "/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/dependencies.json?scope=" + scope;
+				var wheel = new DependencyWheel.Remote(false, document.getElementById("canvas-container"), { 
+					url: uri,
+					width: "750", 
+					height: "750",
+					data_border: 70,
+					infoBox: "infoBox",
+					infoNumber: "recursive_number",
+					canvas_id: "canvas",
+					canvas_hover_id: "canvas_hover",
+					product_key: "<%= @product.to_param%>", 
+					product_version: "<%= @product.version_to_url_param%>",
+					product_name: "<%= @product.name%>", 
+					version: "<%= @product.version%>",
+					show_label: false,
+					resize: true,
+					resize_factor: 11,
+					resize_ids: "section,container",
+					container_id: "canvas-container",
+					scope: scope,
+					onItemClick: function(item, event){
+						key = item.id; 
+						key = key.replace(/\//g, "--");
+						key = key.replace(/\./g, "~" );
+						version = item.version;
+						version = version.replace(/\//g, "--");
+						version = version.replace(/\./g, "~" );
+						window.location.href = "/package/" + key + "/version/" + version;
+					}
+				} );
+			}	
+		</script>
 
 	</div>
 	

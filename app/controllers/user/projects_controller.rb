@@ -82,6 +82,17 @@ class User::ProjectsController < ApplicationController
     redirect_to user_projects_path
   end
 
+  def update_name
+      @name = params[:name]
+      id = params[:id]
+      project = Project.find_by_id(id)
+      project.name = @name 
+      project.save 
+      respond_to do |format|
+        format.js
+      end
+  end
+
   def reparse
     id = params[:id]
     @project = Project.find_by_id(id)
