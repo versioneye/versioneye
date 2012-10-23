@@ -1,5 +1,17 @@
 class ProductMigration
 
+  def self.create_test_db
+    User.all().each do |user|
+      user.email = "12_#{user.email}_34"
+      user.save
+    end
+    Product.all().each do |product|
+      if !product.language.eql?("Java")
+        product.remove
+      end
+    end
+  end
+
 	def self.correct_namespace
 		products = Product.where(:prod_type => "Packagist" )
 		products.each do |product|
