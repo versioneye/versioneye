@@ -5,7 +5,6 @@
  *
  *= require_self
  *= require bootstrap
- *= require jquery_ui_1_8_17_custom
  *= require custom
  *= require product
  *= require user
