@@ -36,7 +36,7 @@ describe PomParser do
       project = PomParser.parse("https://s3.amazonaws.com/veye_test_env/pom.xml")
       project.should_not be_nil
 
-      dependency_01 = project[:dependencies].first 
+      dependency_01 = project.dependencies.first 
       dependency_01.name.should eql("junit")
       dependency_01.version_requested.should eql("4.4")
       dependency_01.version_current.should eql("4.4")
