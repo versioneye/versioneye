@@ -165,13 +165,7 @@ function show_pinit_button(picture_url, options){
 
 function load_dialog_follow(product_name){	
 	document.getElementById('product_to_follow').innerHTML = product_name;	
-	jQuery('#dialog_follow').dialog(
-		{
-		resizable: false, 
-		modal: true, 
-		draggable: false, 
-		minWidth: 600, 
-		});	
+	jQuery('#dialog_follow').modal({keyboard : true});	
 }
 
 function exchangeImage(id, image){

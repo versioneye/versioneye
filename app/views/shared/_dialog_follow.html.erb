@@ -1,11 +1,21 @@
-<div id="dialog_follow" title="Follow" style="display: none">			
-	<div class="dialog_description">
-		<p>
+<div class="modal hide" id="dialog_follow" tabindex="-1" 
+	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Follow</h3>
+  </div>
+  <div class="modal-body">
+    	<p>
 			<%= link_to "Sign In", signin_path %> 
-			and Follow <span id="product_to_follow"></span> to get notified about new versions.
+			and Follow <span id="product_to_follow">
+				
+			</span> to get notified about new versions.
 		</p>
 		<p>
 			<%= render 'shared/login_options_horizontal' %>
 		</p>
-	</div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
 </div>
