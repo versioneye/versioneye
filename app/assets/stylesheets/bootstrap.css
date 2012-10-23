@@ -3462,6 +3462,8 @@ input[type="submit"].btn.btn-mini {
   *zoom: 1;
 }
 
+.tabbable a:link {text-decoration: none}  
+
 .tabbable:before,
 .tabbable:after {
   display: table;

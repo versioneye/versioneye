@@ -9,48 +9,68 @@
 	
 </div>
 
-<div class="formCel" style="margin-top: 0px;">
-	<%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
-		<div class="div-row" >
-			<div style="padding-bottom: 10px;">
-				Supported files are <b>pom.xml</b>, <b>Gemfile</b>, <b>requirements.txt</b>, <b>package.json</b> and <b>composer.json</b>.
-			</div>
-			<div id="tabs" style="width: 490px;">
-				<ul>
-					<li><a href="#tabs-upload">Upload</a></li>
-					<li><a href="#tabs-url">URL</a></li>
-					<li><a href="#tabs-github">GitHub</a></li>
-				</ul>
-				<div id="tabs-upload">
-					<%= file_field 'upload', 'datafile', :class => "round" %>
-				</div>
-				<div id="tabs-url">
-					<%= f.text_field :url, :class => "round", :style => "width: 430px;" %>
-				</div>
-				<div id="tabs-github">
-					<% if current_user.github_token.nil? %>
-						<%= render 'shared/login_with_github' %>
-					<% else %>
-						<div id="fetchLinkArea" style="display: block">
-							<a href="javascript: void(0);" onclick="fetchGitHubProjects()" >Fetch List from GitHub</a>
-						</div>
-						<div id="loadingbarArea" style="display: none"> 
-							<%= image_tag("loadingbar.gif") %>	
-						</div>
-						<div id="projectListArea" class="div-cell" style="display: none">
-							<select id="github_projects" name="github_project" ></select>
-						</div>
-						<div id="gitHubLogin" class="div-cell" style="display: none">
-							<%= render 'shared/login_with_github' %>
-						</div>
-					<% end %>
-				</div>
-			</div>
-	    </div>
-		<div class="div-row" >
-			<div style="padding-top: 10px;">
-				<button type="submit" class="btn btn-large btn-primary" >Create</button>
-			</div>
-	    </div>
-	<% end %>
+
+<div style="padding-bottom: 10px;">
+	Supported files are <b>pom.xml</b>, 
+	<b>Gemfile</b>, <b>requirements.txt</b>, 
+	<b>package.json</b> and <b>composer.json</b>.
 </div>
+
+<%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
+<div class="tabbable"> 
+<!-- tab bar -->
+  <ul class="nav nav-tabs">
+    <li class="active">
+    	<a href="#tab1" data-toggle="tab">
+    		<i class = "icon-hdd"></i> From disk
+    	</a>
+    </li>
+    <li>
+    	<a href="#tab2" data-toggle="tab">
+    		<i class = "icon-globe"></i> From url
+    	</a>
+    </li>
+    <li>
+    	<a href="#tab3" data-toggle="tab">
+    		<i class = "icon-eye-open"></i> From GitHub
+    	</a>
+	</li>
+  </ul>
+ <!-- tab content -->
+  <div class="tab-content" style="min-height:60px;">
+    <div class="tab-pane active" id="tab1">
+      <%= file_field 'upload', 'datafile', :class => "round" %>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <%= f.text_field :url, :class => "round", :style => "width: 430px;", :placeholder =>"Paste your url here" %>
+    </div>
+
+    <div class = "tab-pane" id="tab3">
+    	<% if current_user.github_token.nil? %>
+			<%= render 'shared/login_with_github' %>
+		<% else %>
+			<div id="fetchLinkArea" style="display: block">
+				<a href="javascript: void(0);" onclick="fetchGitHubProjects()" >Fetch List from GitHub</a>
+			</div>
+			<div id="loadingbarArea" style="display: none"> 
+				<%= image_tag("loadingbar.gif") %>	
+			</div>
+			<div id="projectListArea" class="div-cell" style="display: none">
+				<select id="github_projects" name="github_project" ></select>
+			</div>
+			<div id="gitHubLogin" class="div-cell" style="display: none">
+				<%= render 'shared/login_with_github' %>
+			</div>
+		<% end %>
+    </div>
+  </div>
+
+  <div class="div-row" >
+	<div class = "pull-right" style="padding-top: 10px;">
+		<button type="submit" class="btn btn-primary pull-right"> Create</button>
+	</div>
+</div>
+</div>
+
+
+<% end %>
