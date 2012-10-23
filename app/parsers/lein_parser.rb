@@ -45,10 +45,10 @@ class LeinParser < CommonParser
 			})
 			product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
 			if product
-        		dependency.prod_key = product.prod_key
-        	else
-        		unknowns += 1
-      		end
+				dependency.prod_key = product.prod_key
+			else
+				unknowns += 1
+			end
 			if dependency.outdated?
 				out_number += 1
 			end
