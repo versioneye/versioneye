@@ -95,11 +95,11 @@
 		</form>
 	</div>
 	<div class="dependencies" id="dependencies" >
-		<% if !@project.fetch_dependencies.nil? %>
+		<% if !@project.fetch_dependencies.nil? %>			
 			<% @project.dependencies.each do |dep| %>
 				<% product = dep.get_product %>
 				<div class="dependency" >
-					<% if dep.prod_key.nil? %>
+					<% if dep.prod_key.nil? %>						
 						<%= render :partial => "/user/projects/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
 					<% elsif dep.outdated and dep.release != false  %>
 						<%= render :partial => "/user/projects/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
