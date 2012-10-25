@@ -1188,12 +1188,13 @@ nav ul li a:hover {
 	text-align: left;
 }
 
+
 .dependency{
 	border-bottom: 1px dotted $border_color; 
-	padding-top: 5px;
+	_padding-top: 5px;
 	padding-bottom: 5px; 
 	padding-left: 5px;
-	margin-top: 5px;
+	_margin-top: 5px;
 	margin-bottom: 5px;
 	vertical-align: middle;
 }

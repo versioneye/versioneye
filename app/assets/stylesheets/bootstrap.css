@@ -3522,6 +3522,10 @@ input[type="submit"].btn.btn-mini {
 .tabs-left > .nav-tabs > li,
 .tabs-right > .nav-tabs > li {
   float: none;
+
+}
+.nav-tabs > li > a {
+  text-decoration: none;
 }
 
 .tabs-left > .nav-tabs > li > a,
@@ -3529,6 +3533,7 @@ input[type="submit"].btn.btn-mini {
   min-width: 74px;
   margin-right: 0;
   margin-bottom: 3px;
+  text-decoration: none;
 }
 
 .tabs-left > .nav-tabs {
@@ -3575,6 +3580,7 @@ input[type="submit"].btn.btn-mini {
 .tabs-right > .nav-tabs .active > a:hover {
   border-color: #ddd #ddd #ddd transparent;
   *border-left-color: #ffffff;
+
 }
 
 .navbar {
