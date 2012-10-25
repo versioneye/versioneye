@@ -94,13 +94,9 @@
 		</div>
 		</form>
 	</div>
-	<div class="dependencies" id="dependencies" >
-<<<<<<< HEAD
-		<% if !@project.fetch_dependencies.nil? %>			
-=======
+	<div class="dependencies" id="dependencies" >		
 		<% if !@project.fetch_dependencies.nil? %>
 			<% licences = {} %>
->>>>>>> 72d8b1b7bb5d4471015622a603378519029bf5f9
 			<% @project.dependencies.each do |dep| %>
 				<% product = dep.get_product %>
 
