@@ -137,6 +137,25 @@ class User::ProjectsController < ApplicationController
     end
   end
 
+
+  def get_popular
+      @libs = {}
+      projects = Project.find_by_user(current_user.id.to_s)
+      projects.each do |project|
+        project.fetch_dependencies.each  do |dependency|
+          key = dependency.name
+          @libs[key] ||= []
+          @libs[key] << project
+        end
+      end
+
+      # #return @libs
+      respond_to do |format|
+        format.html { render :template => "user/projects/show_popular" }
+      end
+    end
+
+
   def save_period
     id = params[:id]
     period = params[:period]
@@ -234,5 +253,6 @@ class User::ProjectsController < ApplicationController
         return false
       end
     end
-  
+
+    
 end

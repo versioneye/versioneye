@@ -97,6 +97,8 @@ Versioneye::Application.routes.draw do
   resources :versioncommentreplies
   
   get '/user/projects/github_projects', :to => 'user/projects#github_projects'
+  get '/user/projects/popular', :to => "user/projects#get_popular"
+
   namespace :user do 
     resources :projects do 
       member do 
@@ -104,7 +106,8 @@ Versioneye::Application.routes.draw do
         post 'save_email'
         post 'reparse'
         post 'update_name'
-      end
+
+      end     
     end
   end
 
