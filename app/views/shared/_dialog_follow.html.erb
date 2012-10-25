@@ -5,12 +5,14 @@
     <h3 id="myModalLabel">Follow</h3>
   </div>
   <div class="modal-body">
-    	<p>
-			<%= link_to "Sign In", signin_path %> 
-			and Follow <span id="product_to_follow">
-				
-			</span> to get notified about new versions.
-		</p>
+    <p>
+      <%= link_to "Sign In", signin_path %> 
+      and Follow 
+      <span id="product_to_follow">
+        to get notified about new versions.
+      </span> 
+    </p> 
+
 		<p>
 			<%= render 'shared/login_options_horizontal' %>
 		</p>

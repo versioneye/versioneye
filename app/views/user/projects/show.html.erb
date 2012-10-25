@@ -95,9 +95,19 @@
 		</form>
 	</div>
 	<div class="dependencies" id="dependencies" >
+<<<<<<< HEAD
 		<% if !@project.fetch_dependencies.nil? %>			
+=======
+		<% if !@project.fetch_dependencies.nil? %>
+			<% licences = {} %>
+>>>>>>> 72d8b1b7bb5d4471015622a603378519029bf5f9
 			<% @project.dependencies.each do |dep| %>
 				<% product = dep.get_product %>
+
+				<% if product.license.nil? then key = "unknown" else key  = product.license end %>
+				<% licences[key] = []  unless licences.key? key %>
+				<% licences[key] << product %>
+				
 				<div class="dependency" >
 					<% if dep.prod_key.nil? %>						
 						<%= render :partial => "/user/projects/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
@@ -111,5 +121,27 @@
 				</div>
 			<% end %>
 		<% end %>
+	</div>
+
+
+	<div class="boxContainer" >
+		<div class = "licences">
+
+			<% licences.each do |licence, products| %>
+			<div class = "">
+				<h4><%= licence %></h4>
+
+				<p>
+					<% products.each do |product| %>
+						<a href = "<%= product_url(product) %>" style= "text-decoration: none;">
+							<span class = "label label-success" style = "margin-left :5px;">
+								<%= product.name %>
+							</span>
+						</a>
+					<% end %>
+				</p>
+			</div>
+			<% end %>
+		</div>
 	</div>
 </div>
