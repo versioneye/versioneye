@@ -511,6 +511,15 @@ class Product
   end
 
   ########### VERSIONS END ########################
+  def get_license
+      
+      if self.license.nil?
+        self.license_manual
+      else        
+        self.license
+      end
+  end 
+
 
   def get_followers
     Follower.find_by_product(self.id.to_s)
