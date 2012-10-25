@@ -4,7 +4,7 @@ describe LeinParser do
   
   before(:each) do
     @properties = Hash.new
-    @url = "https://s3.amazonaws.com/veye_test_env/sample.clj"
+    @url = "https://s3.amazonaws.com/veye_test_env/project.clj"
   end
 
   describe "parse" do 
