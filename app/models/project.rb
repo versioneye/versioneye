@@ -157,6 +157,8 @@ class Project
       project = ComposerParser.parse ( url )
     elsif project_type.eql?("gradle")
       project = GradleParser.parse ( url )
+    elsif project_type.eql?("Lein")
+      project = LeinParser.parse ( url )
     end
     project
   rescue => e 

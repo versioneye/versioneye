@@ -24,6 +24,8 @@ module ProjectsHelper
 		  project_type = "gradle"
 		elsif orig_filename.match(/pom.xml/)
 		  project_type = "Maven2"
+		elsif orig_filename.match(/project.clj/)
+		  project_type = "Lein"
 		end
 		project_type
 	end
