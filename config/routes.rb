@@ -106,7 +106,6 @@ Versioneye::Application.routes.draw do
         post 'save_email'
         post 'reparse'
         post 'update_name'
-
       end     
     end
   end
