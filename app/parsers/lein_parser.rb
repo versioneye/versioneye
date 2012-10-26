@@ -22,9 +22,10 @@ class LeinParser < CommonParser
 		content = '<project>' + content + '</project>'
 
 		doc = Nokogiri::XML content
-		#doc.xpath('/project/div[@attr="dependencies"]').children
-		self.build_dependencies doc.xpath('/project/div[@attr="dependencies"]').children
-
+		deps = self.build_dependencies doc.xpath('/project/div[@attr="dependencies"]').children 
+		project = Project.new deps 
+		project.dep_number = project.dependencies.count 
+		project
 	end
 
 	def self.build_dependencies(matches)

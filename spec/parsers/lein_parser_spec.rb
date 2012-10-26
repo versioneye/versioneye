@@ -17,7 +17,7 @@ describe LeinParser do
     it "does it parse sample project correctly" do 
     	project = LeinParser.parse @url
 
-   		dependency_01 = project[:dependencies].first 
+   		dependency_01 = project.dependencies[0]
 	    dependency_01.name.should eql("clojure")
 	    dependency_01.group_id.should eql("org.clojure")
 	    dependency_01.version_requested.should eql("1.3.0")
@@ -25,7 +25,7 @@ describe LeinParser do
 	    dependency_01.comperator.should eql("=")
 	    dependency_01.scope.should eql(nil)
 
-	    dependency_02 = project[:dependencies][1]
+	    dependency_02 = project.dependencies[1]
 	    dependency_02.name.should eql("jclouds")
 	    dependency_02.group_id.should eql("org.jclouds")
 	    dependency_02.version_requested.should eql("1.0")
@@ -33,7 +33,7 @@ describe LeinParser do
 	    dependency_02.comperator.should eql("=")
 	    dependency_02.scope.should eql("test")
 
-	    dependency_03 = project[:dependencies][2]
+	    dependency_03 = project.dependencies[2]
 	    dependency_03.name.should eql("ehcache")
 	    dependency_03.group_id.should eql("net.sf.ehcache")
 	    dependency_03.version_requested.should eql("2.3.1")
@@ -41,7 +41,7 @@ describe LeinParser do
 	    dependency_03.comperator.should eql("=")
 	    dependency_03.scope.should eql(nil)
 
-	   	dependency_04 = project[:dependencies][3]
+	   	dependency_04 = project.dependencies[3]
 	    dependency_04.name.should eql("log4j")
 	    dependency_04.group_id.should eql("log4j")
 	    dependency_04.version_requested.should eql("1.2.15")
