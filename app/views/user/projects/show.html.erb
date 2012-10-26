@@ -94,50 +94,71 @@
 		</div>
 		</form>
 	</div>
-	<div class="dependencies" id="dependencies" >
-		<% if !@project.fetch_dependencies.nil? %>
-			<% licences = {} %>
-			<% @project.dependencies.each do |dep| %>
-				<% product = dep.get_product %>
 
-				<% if product.license.nil? then key = "unknown" else key  = product.license end %>
-				<% licences[key] = []  unless licences.key? key %>
-				<% licences[key] << product %>
-				
-				<div class="dependency" >
-					<% if dep.prod_key.nil? %>						
-						<%= render :partial => "/user/projects/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
-					<% elsif dep.outdated and dep.release != false  %>
-						<%= render :partial => "/user/projects/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
-					<% elsif dep.outdated and dep.release == false %>
-						<%= render :partial => "/user/projects/show_known_out_pre_dep", :locals => {:product => product, :dep => dep} %>
-					<% else %>	
-						<%= render :partial => "/user/projects/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
-					<% end %>					
-				</div>
-			<% end %>
-		<% end %>
-	</div>
+	<div style = "margin-top: 10px;">
+		<ul class = "nav nav-tabs" id = "projectTabs">
+			<li class = "active">
+				<a href = "#dependencies" data-toggle="tab">
+					<i class = "icon-tasks"></i>  Dependencies  </a>
+			</li> 
+			<li> 
+				<a href = "#licenses" data-toggle="tab"> 
+					<i class = "icon-info-sign"></i>  Licenses</a>
+			</li>
+		</ul>
 
+		<div class = "tab-content">
+			<div id="dependencies" class="tab-pane active" >
+				<% if !@project.fetch_dependencies.nil? %>
+					<% licences = {} %>
 
-	<div class="boxContainer" >
-		<div class = "licences">
+					<% @project.dependencies.each do |dep| %>
+						<% product = dep.get_product %>
 
-			<% licences.each do |licence, products| %>
-			<div class = "">
-				<h4><%= licence %></h4>
-
-				<p>
-					<% products.each do |product| %>
-						<a href = "<%= product_url(product) %>" style= "text-decoration: none;">
-							<span class = "label label-success" style = "margin-left :5px;">
-								<%= product.name %>
-							</span>
-						</a>
+						<% if product.license.nil? then key = "unknown" else key  = product.license end %>
+						<% licences[key] = []  unless licences.key? key %>
+						<% licences[key] << product %>
+						
+						<div class="dependency" >
+							<% if dep.prod_key.nil? %>						
+								<%= render :partial => "/user/projects/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
+							<% elsif dep.outdated and dep.release != false  %>
+								<%= render :partial => "/user/projects/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
+							<% elsif dep.outdated and dep.release == false %>
+								<%= render :partial => "/user/projects/show_known_out_pre_dep", :locals => {:product => product, :dep => dep} %>
+							<% else %>	
+								<%= render :partial => "/user/projects/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
+							<% end %>					
+						</div>
 					<% end %>
-				</p>
+				<% end %>
 			</div>
-			<% end %>
+
+
+			<div id = "licenses" class = "tab-pane">				
+				<% licences.each do |licence, products| %>
+				<div class = "">
+					<h4><%= licence %></h4>
+
+					<p>
+						<% products.each do |product| %>
+							<a href = "<%= product_url(product) %>" style= "text-decoration: none;">
+								<span class = "label label-success" style = "margin-left :5px;">
+									<%= product.name %>
+								</span>
+							</a>
+						<% end %>
+					</p>
+				</div>
+				<% end %>
+			</div>
+
+			<script>
+			  $(function () {
+			    $('#projectTabs a:first').tab('show');
+			  });
+			</script>
 		</div>
 	</div>
+	
 </div>
