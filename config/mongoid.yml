@@ -3,11 +3,20 @@ development:
     host: localhost
     database: veye_dev
     persist_in_safe_mode: true
+    max_retries_on_connection_failure: 3
+    pool_size: 5
+    pool_timeout: 10.0
 
 test:
     host: localhost
     database: veye_test
     persist_in_safe_mode: true
+    max_retries_on_connection_failure: 1
+    pool_size: 5
+    pool_timeout: 10.0
 
 production:
     uri: <%= ENV['MONGOHQ_URL'] %>
+    max_retries_on_connection_failure: 3
+    pool_size: 10
+    pool_timeout: 10.0
