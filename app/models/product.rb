@@ -633,7 +633,7 @@ class Product
   end
 
   def self.get_unique_languages_filtered
-    langs = Product.where(:language.in => ["Java", "Ruby", "Python", "PHP", "R", "Node.JS"]).distinct(:language)
+    langs = Product.where(:language.in => ["Java", "Ruby", "Python", "PHP", "R", "Node.JS", "Clojure"]).distinct(:language)
   end
 
   def self.get_language_stat()
