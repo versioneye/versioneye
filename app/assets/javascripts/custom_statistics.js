@@ -40,6 +40,7 @@ var ChartConfig = {
 		"javascript" : "#9ACD32",
 		"node.js" : "#6B8E23",
 		"php" : "#8B6914",
+		"clojure" : "#999999"
 	}
 }
 
