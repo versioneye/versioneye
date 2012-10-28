@@ -12,10 +12,10 @@
 		</div>
 		
 		<div class="projects" id="projects" >
-			<% @libs = @libs.sort_by {|item| -item.length} %>
+			<% @libs = @libs.sort_by {|item, project| -project.length} %>
 			<% @libs.each do |lib_name, projects| %>
 				<div class="project" >					
-					<h3><%= lib_name %>(<%= projects.length %>)</h3>
+					<h3><%= lib_name %> (<%= projects.length %>)</h3>
 					<p>
 						<% projects.each do |project| %>						
 							<a href = "<%= user_project_path(project)  %>" style ="text-decoration:none;" >
