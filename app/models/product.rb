@@ -560,7 +560,7 @@ class Product
     # p "#{deep_space} hash size: #{hash.count} parent_hash size: #{parent_hash.count}"
     new_hash = Hash.new
     hash.each do |prod_key, element|
-      product = Product.find_by_key(element.id)
+      product = Product.find_by_key( prod_key )
       if product.nil?
         p "#{element.id} #{element.version} not found!"
         next
@@ -573,7 +573,10 @@ class Product
       dependencies.each do |dep|
         key = dep.dep_prod_key
         ele = Product.get_element_from_hash(new_hash, hash, parent_hash, key)
-        if ele.nil?
+        if ele
+          # p "#{deep_space}  element #{dep.dep_prod_key} : #{dep.version} already fetched"
+          ele.connections << "#{element.id}"
+        else 
           # p "#{deep_space}  create new element #{dep.prod_key} : #{dep.prod_version} -> #{dep.dep_prod_key} : #{dep.version}"
           new_element = CircleElement.new
           new_element.id = dep.dep_prod_key          
@@ -581,11 +584,9 @@ class Product
           new_element.connections << "#{element.id}"
           new_element.version = dep.version_parsed
           new_hash[dep.dep_prod_key] = new_element
-        else 
-          # p "#{deep_space}  element #{dep.dep_prod_key} : #{dep.version} already fetched"
-          ele.connections << "#{element.id}"
         end
         element.connections << "#{key}"
+        element.dependencies << "#{key}"
       end
     end
     # p "#{deep_space} new hash element #{new_hash.count}"
@@ -594,7 +595,6 @@ class Product
     merged_hash = parent_merged.merge(rec_hash)
     return merged_hash
   end
-  
 
   def self.random_product
     size = Product.count - 7
