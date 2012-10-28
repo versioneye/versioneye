@@ -136,17 +136,22 @@
 			<div id="licenses" class="tab-pane">
 				<% licences = licences.sort_by {|key, vals| -vals.length} %>				
 				<% licences.each do |licence, products| %>
-					<div class = "">
-						<h4><%= licence %></h4>
+					<div  style = "margin: 0px 0px 10px 0px;">
+						<h4 style = "margin: 0px 0px 5px 0px;"><%= licence %></h4>
 						<p>
 							<% products.each do |product| %>
+								
 								<a href = "<%= product_url(product) %>" style= "text-decoration: none;">
-									<span class = "label label-success" style = "margin-left :5px;">
+									<span class = "label label-success" 
+									style = "margin: 2px 2px 2px 0px; float:left;">
 										<%= product.name %>
 									</span>
 								</a>
+								
 							<% end %>
+							
 						</p>
+						<div class = "clearfix" > &nbsp; </div>
 					</div>
 				<% end %>
 			</div>
