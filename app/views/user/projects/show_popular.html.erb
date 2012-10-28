@@ -12,8 +12,9 @@
 		</div>
 		
 		<div class="projects" id="projects" >
+			<% @libs = @libs.sort_by {|item| -item.length} %>
 			<% @libs.each do |lib_name, projects| %>
-				<div class="project" >
+				<div class="project" >					
 					<h3><%= lib_name %>(<%= projects.length %>)</h3>
 					<p>
 						<% projects.each do |project| %>						
