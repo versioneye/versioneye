@@ -133,7 +133,8 @@
 				<% end %>
 			</div>
 
-			<div id="licenses" class="tab-pane">				
+			<div id="licenses" class="tab-pane">
+				<% licences = licences.sort_by {|key, vals| -vals.length} %>				
 				<% licences.each do |licence, products| %>
 					<div class = "">
 						<h4><%= licence %></h4>
