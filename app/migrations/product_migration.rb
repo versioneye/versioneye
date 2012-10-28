@@ -114,7 +114,7 @@ class ProductMigration
         uri = "package/#{product.to_param}"
         uris << uri
       end
-      if uris.count > 47000 
+      if uris.count > 49000 
         p "#{uris.count}"
         p "sitemap count: #{sitemap_count}"
         write_to_xml(uris, "sitemap-#{sitemap_count}.xml")
