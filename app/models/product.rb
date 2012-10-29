@@ -552,12 +552,6 @@ class Product
 
   def self.fetch_deps(deep, hash, parent_hash)
     return hash if hash.empty? 
-    # deep_space = ""
-    # deep.times{
-    #   deep_space = "#{deep_space}  "
-    # }
-    # deep = deep + 1
-    # p "#{deep_space} hash size: #{hash.count} parent_hash size: #{parent_hash.count}"
     new_hash = Hash.new
     hash.each do |prod_key, element|
       product = Product.find_by_key( prod_key )
@@ -569,15 +563,12 @@ class Product
         product.version = element.version
       end
       dependencies = product.dependencies(nil)
-      # p "#{deep_space} #{dependencies.count} deps for #{product.name} #{product.version}"
       dependencies.each do |dep|
         key = dep.dep_prod_key
         ele = Product.get_element_from_hash(new_hash, hash, parent_hash, key)
         if ele
-          # p "#{deep_space}  element #{dep.dep_prod_key} : #{dep.version} already fetched"
           ele.connections << "#{element.id}"
         else 
-          # p "#{deep_space}  create new element #{dep.prod_key} : #{dep.prod_version} -> #{dep.dep_prod_key} : #{dep.version}"
           new_element = CircleElement.new
           new_element.id = dep.dep_prod_key          
           attach_label_to_element(new_element, dep)
@@ -589,7 +580,6 @@ class Product
         element.dependencies << "#{key}"
       end
     end
-    # p "#{deep_space} new hash element #{new_hash.count}"
     parent_merged = hash.merge(parent_hash)
     rec_hash = Product.fetch_deps(deep, new_hash, parent_merged)
     merged_hash = parent_merged.merge(rec_hash)

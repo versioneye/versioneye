@@ -36,53 +36,14 @@ class PageController < ApplicationController
   def newest
   end
 
-  def site_map_01
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_1.xml'
+  def sitemap_1
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-1.xml'
   end
-  def site_map_02
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_2.xml'
+  def sitemap_2
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-2.xml'
   end
-  def site_map_03
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_3.xml'
-  end
-  def site_map_04
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_4.xml'
-  end
-  def site_map_05
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_5.xml'
-  end
-  def site_map_06
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_6.xml'
-  end
-  def site_map_07
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_7.xml'
-  end
-  def site_map_08
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_8.xml'
-  end
-  def site_map_09
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_9.xml'
-  end
-  def site_map_10
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_10.xml'
-  end
-  def site_map_11
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_11.xml'
-  end
-  def site_map_12
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_12.xml'
-  end
-  def site_map_13
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_13.xml'
-  end
-  def site_map_14
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_14.xml'
-  end
-  def site_map_15
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_15.xml'
-  end
-  def site_map_16
-    redirect_to 'https://s3.amazonaws.com/veye_assets/site_map_16.xml'
+  def sitemap_3
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-3.xml'
   end
 
 end
