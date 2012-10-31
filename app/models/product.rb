@@ -540,7 +540,11 @@ class Product
     else 
       dependencies = Dependency.find_by_key_version_scope(prod_key, version, scope)
     end
-    dependencies.each do |dep|      
+    dependencies.each do |dep| 
+      if dep.name.nil? || dep.name.empty?
+        p "dep name is nil! #{dep.dep_prod_key}"
+        next
+      end      
       element = CircleElement.new
       element.id = dep.dep_prod_key
       element.version = dep.version_parsed
@@ -564,6 +568,10 @@ class Product
       end
       dependencies = product.dependencies(nil)
       dependencies.each do |dep|
+        if dep.name.nil? || dep.name.empty?
+          p "dep name is nil! #{dep.dep_prod_key}"
+          next
+        end
         key = dep.dep_prod_key
         ele = Product.get_element_from_hash(new_hash, hash, parent_hash, key)
         if ele
