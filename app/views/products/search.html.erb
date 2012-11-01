@@ -12,7 +12,17 @@
 			<% end %>
 		<% end %>
 		<button id="refresh" class="btn btn-primary" type="submit"  name="commit" onClick="document.forms['ext_searchform'].submit();" style="margin-top: 5px;">Refresh</button>
-	</div>	
+	</div>
+	<div>
+		<div style="text-align: center; padding-top: 15px;">
+			<%= image_tag ("integration/github.png") %>
+		</div>
+		<div style="text-align: center; padding: 10px;">
+			Let VersionEye monitor your private GitHub repositories 
+			to get daily E-Mail notifications about outdated dependencies in your projects.
+		</div>
+		<div style="text-align: center; height: 35px; margin-left: 19px;"><%= render 'shared/login_with_github' %></div>
+	</div>
 </div>
 <div class="content" >	
 	<div align="center">
