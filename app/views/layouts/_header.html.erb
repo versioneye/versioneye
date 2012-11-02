@@ -1,60 +1,55 @@
+
 <header style="z-index: 100;">
-	<div class="container">
-		<a href="/" alt="VersionEye">
-			<div class="logo_div"></div>
-		</a>
-		<div class="searchlink_div">
-			<a href="#" class="searchlink" title="Search" onclick="window.location = '/'">&nbsp;</a>
-		</div>
-		<% if !@page.eql?("LandingPage") %>
-			<div id="searchfield_div" class="searchfield_div">			
-				<form id="searchform" action="/search" method="GET" class="search-form" >
-					<input id="q" name="q" class="searchfield" type="text" value="<%= @query %>" style="margin-top: 6px;" />
-					<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
-				</form>
-			</div>
-		<% end %>
-		<div class="beta" ></div>
-		<div>
-			<nav >
-				<ul>
-					<li class="nav-begin" >&nbsp;</li>
+	<div class="navbar navbar-static-top">
+		<div class="navbar-inner">
+			<div class = "container">
+				<a class = "brand" href="#" alt="VersionEye">
+					<div class="logo_div">VersionEye</div>
+				</a>
+
+				<% if !@page.eql?("LandingPage") %>
+					<div id="searchfield_div" class="searchfield_div">			
+						<form id="searchform" action="/search" method="GET" class="search-form" >
+							<input id="q" name="q" class="searchfield" type="text" value="<%= @query %>" style="margin-top: 6px;" />
+							<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
+						</form>
+					</div>
+				<% end %>
+
+				<ul class="nav pull-right">
+						
 					<% if signed_in? %>
-						<li class="nav-cell">
-							<a href="/user/projects" style="padding: 0">
-								<div class="project_icon"></div>
-							</a>
+						<li >
+							<a href="/user/projects" style="padding: 0">Projects</a>
 						</li>
-						<li class="nav-line" ></li>
-						<li class="nav-cell">
+						<li class="divider-vertical"></li>
+						<li>
 							<a href="/users/<%= current_user.username %>" style="padding: 0">
-								<div class="myprofile"></div>
+								Profile
 							</a>
-						</li>
-						<li class="nav-line" ></li>	
-						<li class="nav-cell">
+						</li>	
+						<li class="divider-vertical"></li>
+						<li >
 							<a href="/settings/name" style="padding: 0">
-								<div class="settings"></div>
+								Settings
 							</a>
 						</li>
-						<li class="nav-line" ></li>	
+						<li class="divider-vertical"></li>	
 						<li class="nav-cell">
-							<a href="/signout" style="padding: 0">
-								<div class="logout"></div>
-							</a>
+							<a href="/signout" style="padding: 0">Logout</a>
 						</li>
 					<% else %>
 						<li><%= link_to t(:page_header_services), services_path %></li>
-						<li class="nav-line" ></li>	
+						<li class="divider-vertical"></li>
 						<li><a href="/services#pricing"><%= t(:page_header_pricing) %></a></li>
-						<li class="nav-line" ></li>	
+						<li class="divider-vertical"></li>
 						<li><%= link_to t(:page_header_signup), signup_path %></li>
-						<li class="nav-line" ></li>	
+						<li class="divider-vertical"></li>
 						<li><%= link_to t(:page_header_signin), signin_path %></li>
 					<% end %>
-					<li class="nav-end" >&nbsp;</li>	
+						
 				</ul>
-			</nav> 
+			<div>	
 		</div>
 	</div>
 </header>

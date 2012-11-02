@@ -1,55 +1,84 @@
 
 <%= render 'shared/dialog_follow' %>
 
-<section class="round" >
-	<div style="text-align: center;">
-		<div style="font-size: 32px; font-weight: bold; height: 35px; vertical-align: middle;" >Find &amp; Follow</div>
-		<div style="font-size: 26px; height: 28px;">Your Software Libraries</div>
+<section class = "container">
+	<div class = "jumbotron">
+		<h1>Stay up to date with <span style =""> VersionEye</span>.</h1>
+		<p>Find and follow your software libraries. It's easy.</p>
 	</div>
-	<div id="lp_search_div" class="lp_search_div">
-		<form id="searchform" action="/search" method="GET" class="search-form" >				
-			<input id="q" name="q" type="text" value="<%= @query %>" style="font-size: 20px; height: 43px; line-height: 43px; width: 377px; margin: 0; padding:0; padding-left: 10px; " />
-			<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
-			<br/>
-			<span style="position: relative; top: 50px; left: -300px;" class="meta-text-small" >click to select --> </span>
-			<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
-				<% @langs = @lang.split(",") %>
-				<div style="padding-left:177px;"> 
-					<ol class="list-row" >
-						<% @languages.each do |language| %>
-							<li class="list-cell-lang-icons" id="<%=language%>" >
-								<label onclick="update_lang('<%=language%>')" >
-									<% if @langs.include?(language) %>
-										<div class="<%= language.gsub(".", "_").downcase %>" id="<%= language.downcase %>_icon" style="border-bottom: 2px solid #f9b323"></div>	
-									<% else %>
-										<div class="<%= language.gsub(".", "_").downcase %>_bw" id="<%= language.downcase %>_icon" style="border-bottom: 0px solid #f9b323"></div>
-									<% end %>
-								</label>
-							</li>
-						<% end %>
-					</ol>
-				</div>
-			<% end %>
-			<br/>
-			<button type="submit" class="btn btn-primary btn-large" >Search</button>
+</section>
+<section class = "container">
+
+	<div class= "search-container" >
+		<form id="form" action="/search" method="GET"  >	
+			<input id="lang" name="lang" class = "hide" type="hidden" value="<%= @lang %>" />		
+			<div class="input-prepend input-append">							
+				<span><i class = "icon-globe"></i></span>
+				<input id="q" name="q" type="text" class = "span5 search-input" value="<%= @query %>" />
+					
+				<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
+					<% @langs = @lang.split(",") %>				
+					<% @languages.each do |language| %>
+						<% langname = language.downcase.gsub(/\./, "_") %> 
+						<button class="btn <%= langname %>_off lang" onclick="update_lang('<%= langname %>')" > &nbsp;&nbsp;&nbsp; </button>
+					<% end %>
+					
+				<% end %>
+				<button type="submit" class="btn btn-primary" >Search</button>
+				
+			</div>
 		</form>
 	</div>
 </section>
-<section class="section-lp round">
-	<h1 class="lp_head" id="h1_about">
-		About VersionEye
-	</h1>
-	<div class="lp_box" id="about">
-		<%= render 'shared/about' %>
-		<span>
-			Sign Up for Free! Or login with your <a href="https://github.com">GitHub</a> Account. 
-		</span>
+
+<section class = "container">
+	<div class = "eye-separator">
+		<img src = "/assets/eye_off.png" class = "img-circle img-rounded" />
+		<hr />
 	</div>
-	<% if !signed_in? %>
-		<div class="lp_box lp_sign_up">
-			<%= form_tag("/signup", :method => "get") do  %>    
-				<button type="submit" class="btn btn-primary" >Sign Up For Free</button>
-			<% end %>
+
+</section>
+<section class=" container">
+	<div class = "marketing">
+		<h1> What is VersionEye? </h1>
+		<p> More than just following your libraries.</p>
+	</div>
+	<div class = "row-fluid">
+		<div class = "span3 well">
+			<h4> Visualizing dependendencies </h4>
+			<p> 
+				VersionEye visualises recursive dependencies and 
+				makes complexity visible. 
+			</p>
+			<a href = "#" >Find out more </a>
 		</div>
-	<% end %>
+		<div class = "span3 well">
+			<h4> Package support </h4>
+			<p> 
+				VersionEye has support for various package managers: 
+				[use ruby erb here ...]
+			</p>
+			<a href = "#" >Find out more </a>
+		</div>
+
+		<div class = "span3 well">
+			<h4> GitHub integratrion </h4>
+			<p>
+				Monitor your private GitHub repositories 
+				to be notified about outdated dependencies.
+			</p>
+			<a href = "#" >Login via GitHub </a>
+		</div>
+		<div class = "span3 well"> 
+			<h4> SignUp free </h4>
+			<p>
+				Monitoring opensource project is free. Only
+				private GitHub are fee-based.
+			</p>
+			<a href = "#" >Find out more </a>
+		</div>
+
+		
+	</div>
+	
 </section>

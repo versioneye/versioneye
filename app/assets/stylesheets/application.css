@@ -5,7 +5,7 @@
  *
  *= require_self
  *= require bootstrap
- *= require custom
+ *= require main
  *= require product
  *= require user
 */
