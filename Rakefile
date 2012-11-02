@@ -38,6 +38,10 @@ task :do_work => :environment do
 			Project.update_dependencies("daily")
 			puts "STOP to send out daily project notification E-Mails."
 
+			puts "START to crawl packagist.org"
+			PackagistCrawler.crawl
+			puts "STOP to crawl packagist.org"
+
 			if Time.now.hour == start_hour && Time.now.min == start_minute 
 				sleep(60)
 			end
