@@ -10,6 +10,7 @@ describe User do
     @user.password = "password"
     @user.salt = "salt"
     @user.fb_id = "asggffffffff"
+    @user.github_id = "github_id_123"
     @user.terms = true
     @user.datenerhebung = true
     @user.save
@@ -263,6 +264,18 @@ describe User do
       user = User.find_by_fb_id("asggffffffff")
       user.should_not be_nil
       user.fb_id.eql?(@user.fb_id).should be_true
+      user.id.eql?(@user.id).should be_true
+    end
+  end
+
+  describe "find_by_github_id" do
+    it "doesn't find by github id" do     
+      User.find_by_github_id("agfgasasgasfgasfg").should be_nil
+    end
+    it "does find by email" do     
+      user = User.find_by_github_id("github_id_123")
+      user.should_not be_nil
+      user.github_id.eql?(@user.github_id).should be_true
       user.id.eql?(@user.id).should be_true
     end
   end

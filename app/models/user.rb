@@ -241,7 +241,12 @@ class User
   end
   
   def self.find_by_fb_id(fb_id)
-    User.where(fb_id: fb_id)[0]
+    users = User.where(fb_id: fb_id)
+    if users && users.size > 1 
+      return nil 
+    else 
+      users[0]
+    end 
   end
 
   def self.find_by_twitter_id(twitter_id)
@@ -254,7 +259,12 @@ class User
   end
   
   def self.find_by_github_id(github_id)
-    User.where(github_id: github_id)[0]
+    users = User.where(github_id: github_id)
+    if users && users.size > 1 
+      return nil 
+    else 
+      users[0]
+    end 
   end
   
   def reset_password
