@@ -105,8 +105,8 @@ class User::ProjectsController < ApplicationController
     respond_to do |format|
       format.json { 
         resp = "{\"projects\": [\""
-        repos1 = Github.repository_names( current_user.github_token )
-        repos2 = Github.all_orga_repo_names( current_user.github_token )
+        repos1 = Github.user_repo_names( current_user.github_token )
+        repos2 = Github.orga_repo_names( current_user.github_token )
         repos = repos1 + repos2
         if repos && !repos.empty?
           resp += repos.join("\",\"")
