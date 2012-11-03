@@ -54,11 +54,15 @@ class Github
   private 
 
     def self.language_supported?(lang)
-      lang.eql?('Java') || lang.eql?('Ruby') || 
-      lang.eql?('Python') || lang.eql?('Node.JS') || 
-      lang.eql?("CoffeeScript") || lang.eql?("JavaScript") || 
-      lang.eql?("PHP") || 
-      lang.eql?("Clojure") || lang.eql?("clojure")
+      return false if lang.nil?
+      lang.casecmp('Java') == 0 || 
+      lang.casecmp('Ruby') == 0 || 
+      lang.casecmp('Python') == 0 || 
+      lang.casecmp('Node.JS') == 0 || 
+      lang.casecmp("CoffeeScript") == 0 || 
+      lang.casecmp("JavaScript") == 0 || 
+      lang.casecmp("PHP") == 0 || 
+      lang.casecmp("Clojure") == 0 
     end
 
     def self.get_message( repositories )
