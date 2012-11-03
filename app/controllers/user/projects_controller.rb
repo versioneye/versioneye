@@ -34,7 +34,7 @@ class User::ProjectsController < ApplicationController
       project.source = "url"
       store_project(project)
     elsif github_project && !github_project.empty? && !github_project.eql?("NO_PROJECTS_FOUND")
-      private_project = is_private_project?(github_project)
+      private_project = Github.private_repo?( current_user.github_token, github_project )
       if private_project && !is_allowed_to_add_private_project?
         flash[:error] = "You selected a private project. Please upgrade your plan to monitor the selected project."
         redirect_to settings_plans_path
@@ -104,57 +104,36 @@ class User::ProjectsController < ApplicationController
   def github_projects
     respond_to do |format|
       format.json { 
-        resp = "{\"projects\": ["
-        projects = JSON.parse HTTParty.get("https://api.github.com/user/repos?access_token=#{current_user.github_token}").response.body
-        
-        if projects && !projects.empty?
-          message = get_message(projects)
-          if message && message.eql?('Bad credentials')
-            resp += "\"BAD_CREDENTIALS\","  
-          else 
-            projects.each do |project|
-              lang = project['language']
-              if language_supported?(lang)
-                full_name = project['full_name']
-                resp += "\"#{full_name}\","
-              end
-            end
-          end
+        resp = "{\"projects\": [\""
+        repos1 = Github.repository_names( current_user.github_token )
+        repos2 = Github.all_orga_repo_names( current_user.github_token )
+        repos = repos1 + repos2
+        if repos && !repos.empty?
+          resp += repos.join("\",\"")
         else 
-          resp += "\"NO_PROJECTS_FOUND\","
+          resp += "NO_PROJECTS_FOUND"
         end
-        
-        if resp.match(/\[$/)
-          resp += "\"NO_SUPPORTED_PROJECTS_FOUND\","
-        else
-          end_point = resp.length - 2
-          resp = resp[0..end_point]  
-        end
-        
-        resp += "]}"
+        resp += "\"]}"
         render :json => "[#{resp}]"
       }
     end
   end
 
-
   def get_popular
-      @libs = {}
-      projects = Project.find_by_user(current_user.id.to_s)
-      projects.each do |project|
-        project.fetch_dependencies.each  do |dependency|
-          key = dependency.name
-          @libs[key] ||= []
-          @libs[key] << project
-        end
-      end
-
-      # #return @libs
-      respond_to do |format|
-        format.html { render :template => "user/projects/show_popular" }
+    @libs = {}
+    projects = Project.find_by_user(current_user.id.to_s)
+    projects.each do |project|
+      project.fetch_dependencies.each  do |dependency|
+        key = dependency.name
+        @libs[key] ||= []
+        @libs[key] << project
       end
     end
 
+    respond_to do |format|
+      format.html { render :template => "user/projects/show_popular" }
+    end
+  end
 
   def save_period
     id = params[:id]
@@ -189,11 +168,7 @@ class User::ProjectsController < ApplicationController
     redirect_to user_project_path(@project)
   end
 
-  private 
-
-    def language_supported?(lang)
-      lang.eql?('Java') || lang.eql?('Ruby') || lang.eql?('Python') || lang.eql?('Node.JS') || lang.eql?("CoffeeScript") || lang.eql?("JavaScript") || lang.eql?("PHP")
-    end
+  private
 
     def create_project( project_type, url, project_name )
       project = Project.create_from_file( project_type, url )
@@ -214,33 +189,6 @@ class User::ProjectsController < ApplicationController
       else
         flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."
       end
-    end
-
-    def get_message( projects )
-      projects['message']
-    rescue => e
-      p "ERROR #{e}"
-      e.backtrace.each do |message| 
-        p " - #{message}"
-      end
-      nil
-    end
-
-    def is_private_project?(name)
-      projects = JSON.parse HTTParty.get("https://api.github.com/user/repos?access_token=#{current_user.github_token}").response.body
-      projects.each do |project|
-        full_name = project['full_name']
-        if full_name.eql?(name)
-          return project['private']
-        end
-      end
-      return false
-    rescue => e
-      p "ERROR in is_private_project - #{e}"
-      e.backtrace.each do |message| 
-        p " - #{message}"
-      end
-      return false
     end
 
     def is_allowed_to_add_private_project?
