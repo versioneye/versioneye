@@ -1,8 +1,7 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
 /*
-  Bootstrap's documentation styles
-  Special styles for presenting Bootstrap's documentation and examples
+  Colors
 */
 
 
@@ -10,10 +9,24 @@ $gradient_start: #7F0200;
 $gradient_end: #610003;
 $link_color: #7575FF;
 $text_yellow: #FBB21C;
+$text_casual: #616970;
+
+$link_hover: #FBB21C;
+$link_color: #FDFDFD;
+$link_visited: #FDFDFD;
+
+$text_link: #669acb;
+$text_hover: #a0b8cf;
+
 
 /* Body and structure
 -------------------------------------------------- */
-h1, 
+body {
+  background: url(/assets/noise_2.png);
+}
+
+
+h1,
 h2,
 h3,
 h4,
@@ -28,6 +41,35 @@ h3 code {
 
 /* Tweak navbar brand link to be super sleek
 -------------------------------------------------- */
+
+.navbar-inner-dark {
+  background: url(/assets/header_os.png);
+  color: #fbb21c;
+  background-repeat: repeat-x;
+}
+
+.brand-container {
+  padding: 0px 0px 0px 5px;
+}
+
+.navbar .brand {
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+}
+
+.navbar .nav > li > a {
+  color: $link_color;
+  &:hover { color: $link_hover; }
+  &:visited { color: $link_visited;}
+}
+
+.navbar .divider-vertical {
+  height: 39px;
+  margin: 0px 9px;
+  border-right: 1px solid #423737;
+  border-left: 1px solid #747070;
+}
+
 
 
 /* Sections
@@ -64,26 +106,26 @@ hr.soften {
 
 .eye-separator {
   height: 60px;
-  padding: 10px 0px 10px 0px;
-  margin: 20px 0px 20px 0px;
+  margin: 80px 0px 30px 0px;
 }
 
 .eye-separator img {
   position: relative;
   left: 45%;
-  background-color: rgba(251, 178, 28, 0.88);
+  background-color: rgba(254, 187, 41, 0.90);
   padding: 20px 8px 20px 8px;
-  border: 6px solid #F4F4F4;
+  border: 4px solid rgba(173, 160, 160, 0.4);
   z-index: 10;
 }
 
 .eye-separator hr {
   position: relative;
   top: -60px;
-  border: 0;
-  border-top: 5px solid #EEE;
+  height: 1px;
+  border-top: 1px solid rgba(196, 196, 196, 0.81);
   z-index : 5;
 }
+
 
 
 /* Jumbotrons
@@ -93,8 +135,9 @@ hr.soften {
 ------------------------- */
 .jumbotron {
   position: relative;
-  padding: 10px 0px 20px 0px;  
+  margin: 60px 0px 0px 0px;
 }
+
 .jumbotron h1 {
   font-size: 40px;
   font-weight: 500;
@@ -109,9 +152,10 @@ hr.soften {
   font-weight : 900;
   font-size: 115%;
 }
+
 .jumbotron p {
   font-size: 20px;
-  line-height: 22px;
+  line-height: 32px;
 }
 
 /* Link styles (used on .masthead-links as well) */
@@ -230,7 +274,7 @@ hr.soften {
 /* Subhead (other pages)
 ------------------------- */
 .subhead {
-  text-align: left;  
+  text-align: left;
 }
 .subhead h1 {
   font-size: 60px;
@@ -244,13 +288,12 @@ hr.soften {
 -------------------------------------------------- */
 
 .marketing {
-  margin: 30px 0 20px;
+  margin: 30px 0px 30px 0px;
   text-align: center;
   color: #5a5a5a;
 }
 
 .marketing h1 {
-  margin: 15px 0px 15px;
   font-size: 3.5em;
   font-weight: 200;
   line-height: 1;
@@ -261,7 +304,7 @@ hr.soften {
   margin-bottom: 5px;
 }
 .marketing p {
-  font-size: 16px;
+  font-size: 20px;
   line-height: 1.5;
 }
 .marketing .marketing-byline {
@@ -276,35 +319,65 @@ hr.soften {
   margin: 0 auto 30px;
 }
 
+.well {
+  text-align : center;
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid #DBD7D7;
+  -webkit-border-radius: 10px;
+     -moz-border-radius: 10px;
+          border-radius: 10px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 
+  & > img {
+    height: 48px;
+  }
+
+  & > a {
+    color: $link_color;
+  }
+}
 
 /* Footer
 -------------------------------------------------- */
 
 .footer {
-  padding: 30px 10px 15px 10px;
+  padding: 30px 0px 15px 0px;
   margin-top: 50px;
-  border-top: 1px solid #b5b5b5;
+  border-top: 1px solid #ffffff;
   background-image: url(/assets/eye_off.png);
   background-repeat: no-repeat;
-  background-position: 920px 40px;
-  background-size: 90px;  
-}
-.footer p {
-  margin-bottom: 0;
-  color: #777;
-}
-.footer-links {
-  margin: 10px 0;
-}
-.footer-links li {
-  display: block;
-  margin: 5px 0px 5px 0px;
+  background-position: 1000px 40px;
+  background-size: 120px;
+
+  & h4 { color: $text_casual;}
+  & p {
+    margin-bottom: 0;
+    color: $text_casual;
+  }
+
 }
 
-.footer-links a {
-  color : $link_color;
-  text-decoration: none;
+.footer-links {
+  margin: 10px 0;
+  & li {
+    display: block;
+    margin: 5px 0px 5px 0px;
+  }
+
+  & a {
+    color : $text_link;
+    text-decoration: none;
+
+    & :hover {
+      color: $text_hover;
+    }
+  }
+
 }
 
 
