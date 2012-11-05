@@ -1,0 +1,56 @@
+
+/* Sprites */
+
+@mixin sprite($x, $y, $width, $height){
+	background: url(/assets/Sprite.png) $x $y no-repeat;
+	display: block;
+	width: $width;
+	height: $height;
+}
+
+/* helper to build on off toggling
+	x1, y1 are  coordinates of off-button
+	x2, y2 are coordinates of on-button
+*/
+@mixin sprite_toggle($x1, $y1, $x2, $y2, $width, $height){
+	@include sprite($x2, $y2, $width, $height);
+	& .off { @include sprite($x1, $y1, $width, $height);}
+	& .btn:hover { @include sprite($x1, $y1, $width, $height);}
+
+}
+
+/* LOGOs */
+
+.icon-beta { @include sprite(0px, 0px, 26px, 35px);}
+.logo { @include sprite(-32px, 0px, 210px, 49px);}
+.bg1 { @include sprite(-246px, 0px, 1px, 49px);}
+.bg2 { @include sprite(-251px, 0px, 2px, 49px);}
+
+/*  ICONS */
+
+.flag_de { @include sprite_toggle(-268px, -7px, -295px, -7px, 24px, 19px);}
+.flag_gb { @include sprite_toggle(-324px, -6px, -351px, -6px, 24px, 19px);}
+
+/* PROGRAMMING LANGUAGES */
+
+/* big icons */
+.icon-ruby { @include sprite_toggle(-71px, -76px, -13px, -76px, 36px, 36px);}
+.icon-r { @include sprite_toggle(-185px, -76px, -126px, -76px, 44px, 36px);}
+.icon-java {@include sprite_toggle(-245px, -66px, -302px, -66px, 31px, 56px);}
+.icon-php {@include sprite_toggle(-410px, -81px, -352px, -81px, 52px, 21px);}
+.icon-nodejs {@include sprite_toggle(-534px, -86px, -474px, -86px, 56px, 16px);}
+.icon-javascript {@include sprite_toggle(-658px, -80px, -599px, -80px, 43px, 31px);}
+.icon-python {@include sprite_toggle(-780px, -84px, -722px, -83px, 34px, 35px);}
+.icon-clojure {@include sprite_toggle(-891px, -79px, -833px, -80px, 44px, 43px)}
+
+/* small icons */
+.small-icon-ruby {@include sprite_toggle(-52px, -128px, -13px, -128px, 25px, 25px);}
+.small-icon-r {@include sprite_toggle(-128px, -128px, -89px, -128px, 31px, 25px);}
+.small-icon-java {@include sprite_toggle(-169px, -122px, -207px, -122px, 22px, 38px);}
+.small-icon-php  {@include sprite_toggle(-281px, -131px, -241px, -131px, 36px, 20px);}
+.small-icon-nodejs {@include sprite_toggle(-364px, -135px, -323px, -135px, 39px, 12px);}
+.small-icon-javascript {@include sprite_toggle(-448px, -131px, -408px, -131px, 30px, 22px);}
+.small-icon-python  {@include sprite_toggle(-530px, -133px, -491px, -133px, 24px, 24px);}
+.small-icon-clojure {@include sprite_toggle(-605px, -130px, -566px, -131px, 30px, 29px);}
+
+

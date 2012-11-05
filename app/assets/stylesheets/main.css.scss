@@ -7,6 +7,13 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
 
+
+/*
+  ICONS
+*/
+
+@import "sprite.css.scss";
+
 /*
   Colors
 */
@@ -661,12 +668,15 @@ hr.soften {
     }
 
   & .btn-group {
-    zoom : 0.69;
+    zoom : 1.0;
   }
 
-  & button.lang {
-      width: 60px;
-      height: 52px;
+  & .lang {
+      text-align:center;
+      width: 40px;
+      height: 40px;
+      margin: 0px;
+      padding: 0px 5px 0px 5px;
       border: 0px;
     }
 }
