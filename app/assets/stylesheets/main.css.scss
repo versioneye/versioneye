@@ -1,6 +1,13 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
 /*
+  Fonts
+*/
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans);
+@import url(http://fonts.googleapis.com/css?family=Droid+Serif);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+
+/*
   Colors
 */
 
@@ -22,7 +29,11 @@ $text_hover: #a0b8cf;
 /* Body and structure
 -------------------------------------------------- */
 body {
+
   background: url(/assets/noise_2.png);
+  font-size: 13px;
+  color: $text_casual;
+  font-family: "Droid Sans", "Droid Serif", Helvetica;
 }
 
 
@@ -31,13 +42,33 @@ h2,
 h3,
 h4,
 h5,
-h6 { color: $text_yellow;}
+h6 {
+  color: $text_yellow;
+  font-family: "Droid Sans";
+}
 
+
+h1.page-title  {
+  font-family: "Droid Serif", "Droid";
+  font-size: 25px;
+  color: $text_casual;
+}
+
+h1, h2 {
+  font-family: "Droid Serif";
+  font-size: 30px;
+}
+
+h3 {
+  font-family: "Droid Sans";
+  font-size: 21pt;
+}
 
 h3 code {
   font-size: 14px;
   font-weight: normal;
 }
+
 
 /* Tweak navbar brand link to be super sleek
 -------------------------------------------------- */
@@ -48,28 +79,52 @@ h3 code {
   background-repeat: repeat-x;
 }
 
-.brand-container {
-  padding: 0px 0px 0px 5px;
+
+.navbar {
+
+  & .brand-container {
+    padding: 0px 0px 0px 5px;
+  }
+
+  & .brand {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+  }
+
+  /* icons in brand section */
+
+  & .beta {
+    margin: -5px 10px 0px 0px;
+  }
+
+  & .eye {
+    margin: 10px 0px 0px 5px;
+  }
+
+  & img.flag {
+    margin: 2px 5px 0px 0px;
+    width: 32px;
+    height: 25px;
+  }
+
+  /* link separators */
+  .divider-vertical {
+    height: 10px;
+    margin: 15px 9px 0px 0px;
+    background-color: #423706;
+    border-style: ridge;
+    border: 1px solid #3C3B3B;
+  }
+
 }
 
-.navbar .brand {
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
-}
 
 .navbar .nav > li > a {
   color: $link_color;
-  &:hover { color: $link_hover; }
-  &:visited { color: $link_visited;}
+  padding: 5px 15px 10px 0px;
+  & :hover { color: $link_hover; }
+  & :visited { color: $link_visited;}
 }
-
-.navbar .divider-vertical {
-  height: 39px;
-  margin: 0px 9px;
-  border-right: 1px solid #423737;
-  border-left: 1px solid #747070;
-}
-
 
 
 /* Sections
@@ -135,12 +190,11 @@ hr.soften {
 ------------------------- */
 .jumbotron {
   position: relative;
-  margin: 60px 0px 0px 0px;
+  margin: 75px 0px 10px 0px;
 }
 
 .jumbotron h1 {
-  font-size: 40px;
-  font-weight: 500;
+  font-weight: 200;
   letter-spacing: -1px;
   line-height: 1;
   color: $text_yellow;
@@ -155,7 +209,8 @@ hr.soften {
 
 .jumbotron p {
   font-size: 20px;
-  line-height: 32px;
+  font-weight: 900;
+  color: $text_casual;
 }
 
 /* Link styles (used on .masthead-links as well) */
@@ -291,22 +346,30 @@ hr.soften {
   margin: 30px 0px 30px 0px;
   text-align: center;
   color: #5a5a5a;
+
+  & h1 {
+    font-weight: 200;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+
+  &  h2 {
+    font-weight: 200;
+    margin-bottom: 5px;
+  }
+
+  & p {
+    font-size: 20px;
+    line-height: 1.5;
+  }
+
+  & img {
+    display: block;
+    margin: 0 auto 30px;
+  }
+
 }
 
-.marketing h1 {
-  font-size: 3.5em;
-  font-weight: 200;
-  line-height: 1;
-  letter-spacing: -1px;
-}
-.marketing h2 {
-  font-weight: 200;
-  margin-bottom: 5px;
-}
-.marketing p {
-  font-size: 20px;
-  line-height: 1.5;
-}
 .marketing .marketing-byline {
   margin-bottom: 40px;
   font-size: 20px;
@@ -314,10 +377,7 @@ hr.soften {
   line-height: 25px;
   color: #999;
 }
-.marketing img {
-  display: block;
-  margin: 0 auto 30px;
-}
+
 
 .well {
   text-align : center;
@@ -337,7 +397,7 @@ hr.soften {
     height: 48px;
   }
 
-  & > a {
+  &  > a {
     color: $link_color;
   }
 }
@@ -351,7 +411,7 @@ hr.soften {
   border-top: 1px solid #ffffff;
   background-image: url(/assets/eye_off.png);
   background-repeat: no-repeat;
-  background-position: 1000px 40px;
+  background-position: 880px 40px;
   background-size: 120px;
 
   & h4 { color: $text_casual;}
@@ -370,11 +430,15 @@ hr.soften {
   }
 
   & a {
-    color : $text_link;
+    font-size: 13px;
+    color: $text_link;
     text-decoration: none;
 
     & :hover {
       color: $text_hover;
+    }
+    &:visited {
+      color: $text_link;
     }
   }
 
@@ -549,10 +613,10 @@ hr.soften {
 -------------------------------------------------- */
   /*Searchcontainer*/
   .search-container {
-    padding: 20px 5px 0px 5px;
+    padding: 20px 20px 10px 20px;
     list-style: none;
     background-color: #fbfbfb;
-    opacity: 0.9;
+    opacity: 0.85;
     background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5);
     background-image: -ms-linear-gradient(top, #ffffff, #f5f5f5);
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f5f5f5));
@@ -561,48 +625,56 @@ hr.soften {
     background-image: linear-gradient(top, #ffffff, #f5f5f5);
     background-repeat: repeat-x;
     border: 1px solid #ddd;
-    -webkit-border-radius: 3px;
-       -moz-border-radius: 3px;
-            border-radius: 3px;
+    -webkit-border-radius: 10px;
+       -moz-border-radius: 10px;
+            border-radius: 10px;
     filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
     -webkit-box-shadow: inset 0 1px 0 #ffffff;
        -moz-box-shadow: inset 0 1px 0 #ffffff;
             box-shadow: inset 0 1px 0 #ffffff;
-}
 
-.search-container li {
-  display: inline-block;
-  *display: inline;
-  text-shadow: 0 1px 0 #ffffff;
-  *zoom: 1;
-}
+  & form {
+    margin: 0px;
+  }
 
-.search-container .divider {
-  padding: 0 5px;
-  color: #999999;
+  & li {
+      display: inline-block;
+      *display: inline;
+      text-shadow: 0 1px 0 #ffffff;
+      *zoom: 1;
+    }
+
+  & .divider {
+      padding: 0 5px;
+      color: #999999;
+    }
+
+  &  input {
+      color : $text_yellow;
+      font-size: 19px;
+      background-image: url(/assets/search_icon.png);
+      background-repeat: no-repeat;
+      background-size: 30px 30px;
+      padding: 0px 0px 0px 35px;
+      width: 340px;
+      height: 35px;
+    }
+
+  & .btn-group {
+    zoom : 0.69;
+  }
+
+  & button.lang {
+      width: 60px;
+      height: 52px;
+      border: 0px;
+    }
 }
 
 .search-container .active a {
   color: #333333;
 }
 
-.search-container input {
-  color : $text_yellow;
-  font-weight: 800;
-  font-size: 24px;
-  background-image: url(/assets/search_icon.png);  
-  background-repeat: no-repeat;
-  background-size: 50px 50px;
-  padding-left: 47px;
-  height: 45px;
-}
-
-.search-container button {
-  height: 55px;  
-  width: 55px;
-  border: 0;
-  padding: 0;  
-}
 
 /* Make tables spaced out a bit more */
 h2 + table,

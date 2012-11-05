@@ -10,22 +10,26 @@
 <section class = "container">
 
 	<div class= "search-container" >
-		<form id="form" action="/search" method="GET"  >	
-			<input id="lang" name="lang" class = "hide" type="hidden" value="<%= @lang %>" />		
-			<div class="input-prepend input-append">							
-				<span><i class = "icon-globe"></i></span>
-				<input id="q" name="q" type="text" class = "span5 search-input" value="<%= @query %>" />
-					
-				<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
-					<% @langs = @lang.split(",") %>				
-					<% @languages.each do |language| %>
-						<% langname = language.downcase.gsub(/\./, "_") %> 
-						<button class="btn <%= langname %>_off lang" onclick="update_lang('<%= langname %>')" > &nbsp;&nbsp;&nbsp; </button>
+		<form id="form" action="/search" method="GET"  >
+			<input id="lang" name="lang" class = "hide" type="hidden" value="<%= @lang %>" />
+			<div class="row-fluid">
+				<div class = "span5">
+					<input id="q" name="q" type="text" value="<%= @query %>" />
+				</div>
+				<div class = "span7" >
+					<span> Filter library s&nbsp;</span>
+					<div class= "btn-group">
+					<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
+						<% @langs = @lang.split(",") %>
+						<% @languages.each do |language| %>
+							<% langname = language.downcase.gsub(/\./, "_") %> 
+							<button class="btn lang <%= langname %>_off lang" onclick="update_lang('<%= langname %>')" > &nbsp;&nbsp;&nbsp; </button>
+						<% end %>
 					<% end %>
-					
-				<% end %>
-				<button type="submit" class="btn btn-primary" >Search</button>
-				
+					</div>
+
+					<button type="submit" class="btn btn-primary pull-right" >Search</button>
+				</div>
 			</div>
 		</form>
 	</div>
@@ -46,8 +50,8 @@
 	<div class = "row-fluid">
 		<div class = "span3 well">
 			<img src = "/assets/settings_on.png" />
-			<h4> Visualizing dependendencies </h4>
-			<p> 
+			<h5> Visualizing dependendencies </h5>
+			<p>
 				VersionEye visualises recursive dependencies and 
 				makes complexity visible. 
 			</p>
@@ -55,8 +59,8 @@
 		</div>
 		<div class = "span3 well">
 			<img src = "/assets/project_on.png" />
-			<h4> Package support </h4>
-			<p> 
+			<h5> Package support </h5>
+			<p>
 				VersionEye has support for various package managers: 
 				[use ruby erb here ...]
 			</p>
@@ -65,7 +69,7 @@
 
 		<div class = "span3 well">
 			<img src = "/assets/eye_on.png" />
-			<h4> GitHub integratrion </h4>
+			<h5> GitHub integratrion </h5>
 			<p>
 				Monitor your private GitHub repositories 
 				to be notified about outdated dependencies.
@@ -74,7 +78,7 @@
 		</div>
 		<div class = "span3 well">
 			<img src = "/assets/news_on.png" />
-			<h4> SignUp free </h4>
+			<h5> SignUp free </h5>
 			<p>
 				Monitoring opensource project is free. Only
 				private GitHub are fee-based.
@@ -82,7 +86,5 @@
 			<a href = "#" >Find out more </a>
 		</div>
 
-		
 	</div>
-	
 </section>
