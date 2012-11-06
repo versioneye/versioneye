@@ -3,7 +3,7 @@
 
 @mixin sprite($x, $y, $width, $height){
 	background: url(/assets/Sprite.png) $x $y no-repeat;
-	display: block;
+	display: inline-block;
 	width: $width;
 	height: $height;
 }
@@ -13,23 +13,25 @@
 	x2, y2 are coordinates of on-button
 */
 @mixin sprite_toggle($x1, $y1, $x2, $y2, $width, $height){
-	@include sprite($x2, $y2, $width, $height);
-	& .off { @include sprite($x1, $y1, $width, $height);}
-	& .btn:hover { @include sprite($x1, $y1, $width, $height);}
-
+	@include sprite($x1, $y1, $width, $height);
+	& .off { @include sprite($x2, $y2, $width, $height);}
+	&:hover { @include sprite($x2, $y2, $width, $height);}
 }
 
+@mixin sprite_btn($x, $y, $height){
+	background: url(/assets/Sprite.png) $x $y repeat-x;
+	display: inline-block;
+	height: $height;
+}
 /* LOGOs */
 
-.icon-beta { @include sprite(0px, 0px, 26px, 35px);}
+.icon-beta { @include sprite(0px, 0px, 26px, 35px); margin-right: 10px;}
 .logo { @include sprite(-32px, 0px, 210px, 49px);}
-.bg1 { @include sprite(-246px, 0px, 1px, 49px);}
-.bg2 { @include sprite(-251px, 0px, 2px, 49px);}
 
 /*  ICONS */
 
-.flag_de { @include sprite_toggle(-268px, -7px, -295px, -7px, 24px, 19px);}
-.flag_gb { @include sprite_toggle(-324px, -6px, -351px, -6px, 24px, 19px);}
+.flag-de { @include sprite_toggle(-268px, -7px, -295px, -7px, 24px, 19px);}
+.flag-gb { @include sprite_toggle(-324px, -6px, -351px, -6px, 24px, 19px);}
 
 /* PROGRAMMING LANGUAGES */
 
@@ -41,7 +43,7 @@
 .icon-nodejs {@include sprite_toggle(-534px, -86px, -474px, -86px, 56px, 16px);}
 .icon-javascript {@include sprite_toggle(-658px, -80px, -599px, -80px, 43px, 31px);}
 .icon-python {@include sprite_toggle(-780px, -84px, -722px, -83px, 34px, 35px);}
-.icon-clojure {@include sprite_toggle(-891px, -79px, -833px, -80px, 44px, 43px)}
+.icon-clojure {@include sprite_toggle(-891px, -79px, -833px, -80px, 44px, 43px);}
 
 /* small icons */
 .small-icon-ruby {@include sprite_toggle(-52px, -128px, -13px, -128px, 25px, 25px);}
@@ -54,3 +56,76 @@
 .small-icon-clojure {@include sprite_toggle(-605px, -130px, -566px, -131px, 30px, 29px);}
 
 
+/* ----------------------------------------------------------------------------
+	ICONS
+*/
+
+/* marketing icons */
+.icon-dependency {@include sprite_toggle(-5px, -172px, -63px, -170px, 54px, 53px);}
+.icon-package {@include sprite_toggle(-136px, -172px, -188px, -172px, 49px, 48px);}
+.icon-gitcat {@include sprite_toggle(-251px, -172px, -317px, -172px, 62px, 48px);}
+.icon-freeprice {@include sprite_toggle(-390px, -171px, -440px, -171px, 48px, 46px);}
+
+/* functionality icons */
+.icon-upload {@include sprite(-501px, -183px, 37px, 35px);}
+.icon-www {@include sprite(-551px, -182px, 43px, 36px);}
+.icon-enterprise {@include sprite(-683px, -174px, 33px, 51px);}
+
+
+/* mini-icons */
+.icon-trangel {@include sprite(-380px, -3px, 16px, 16px);}
+.icon-tringel {@include sprite(-400px, -3px, 160px, 16px);}
+.icon-user {@include sprite(-568px, -3px, 16px, 16px);}
+.icon-user-on {@include sprite(-710px, -3px, 16px, 16px);}
+.icon-settings {@include sprite(-584px, -3px, 16px, 16px);}
+.icon-logout {@include sprite(-603px, -2px, 16px, 16px);}
+.icon-search {@include sprite(-622px, -3px, 16px, 16px);}
+.icon-lock {@include sprite(-642px, 0px, 17px, 21px);}
+.icon-mail {@include sprite(-662px, 0px, 23px, 15px);}
+.icon-donut {@include sprite(-688px, 0px, 24px, 15px);}
+.icon-files {@include sprite(-728px, -4px, 17px, 15px);}
+.icon-profile {@include sprite(-747px, -4px, 17px, 11px);}
+.icon-download {@include sprite(-767px, -4px, 16px, 16px);}
+.icon-link {@include sprite(-786px, -3px, 16px, 16px);}
+.icon-files {@include sprite(-807px, -3px, 16px, 16px);}
+
+/* Profile pictures*/
+.img-profile48 {@include sprite(-876px, 0px, 48px, 48px);}
+.img-profile48-rounded {@include sprite(-826px, 0px, 48px, 48px);}
+
+
+/* eye pictures */
+.separator-eye {@include sprite_toggle(-13px, -347px, -13px, -421px,940px, 61px);}
+.logo-eye {@include sprite(-4px, -487px, 264px, 134px);}
+.logo-eye-text {@include sprite(-279px, -487px, 107px, 83px);}
+
+
+/* ----------------------------------------------------------------------------
+	BUTTONS
+*/
+
+/* social buttons */
+
+.btn-facebook {@include sprite_toggle(0px, -242px, 0px, -285px, 230px, 40px);}
+.btn-twitter {@include sprite_toggle(-233px, -242px, -233px, -285px, 230px, 40px);}
+.btn-github {@include sprite_toggle(-465px, -242px, -465px, -285px, 230px, 40px);}
+
+.btn-facebook-small {@include sprite(-698px, -242px, 77px, 24px);}
+.btn-twitter-small {@include sprite(-776px, -242px, 77px, 24px);}
+.btn-github-small {@include sprite(-856px, -242px, 77px, 24px);}
+
+/* buttons */
+
+.bg-btn {
+	@include sprite_btn(-712px, -283px, 42px);
+	& .closure-left {@include sprite(-704px, -283px, 6px, 42px);}
+	& .closure-right {@include sprite(-715px, -283px, 6px, 42px);}
+
+}
+
+.bg-btn-on {@include sprite_btn(-734px, -283px, 42px);}
+
+.bg-btn-small {
+	@include sprite_btn(-759px, -283px, 30px);
+	& .on {@include sprite_btn(-781px, -283px, 30px);}
+}
