@@ -706,6 +706,44 @@ h2 + .row {
 }
 
 
+.btn2 {
+  cursor: pointer;
+  text-decoration:none;
+  border: 1px solid rgb(153, 153, 153);
+  border-radius:5px 5px 5px 5px;
+  -moz-border-radius:5px 5px 5px 5px;
+  -webkit-border-radius:5px 5px 5px 5px;
+  box-shadow:0px 0px 0px rgb(0, 0, 0);
+  -moz-box-shadow:0px 0px 0px rgb(0, 0, 0);
+  -webkit-box-shadow:0px 0px 0px rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  background-image:linear-gradient(-90deg, rgb(130, 156, 177), rgb(81, 99, 116));
+  background-image:-webkit-gradient(linear, 50% 0%, 50% 100%, from(rgb(130, 156, 177)), to(rgb(81, 99, 116)));
+  background-image:-moz-linear-gradient(-90deg, rgb(130, 156, 177), rgb(81, 99, 116));
+}
+
+.btn2:hover,
+.btn2:active {
+  border: 1px solid rgb(184, 201, 215);
+  box-shadow:0px 0px 0px rgb(0, 0, 0);
+  -moz-box-shadow:0px 0px 0px rgb(0, 0, 0);
+  -webkit-box-shadow:0px 0px 0px rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  background-image:linear-gradient(-90deg, rgb(183, 200, 213), rgb(113, 136, 156));
+  background-image:-webkit-gradient(linear, 50% 0%, 50% 100%, from(rgb(183, 200, 213)), to(rgb(113, 136, 156)));
+  background-image:-moz-linear-gradient(-90deg, rgb(183, 200, 213), rgb(113, 136, 156));
+}
+
+.btn2-big {
+  color: #ffffff;
+  height: 42px;
+  font-size: 19px;
+  padding: 5px 15px 5px 15px;
+}
+
+
+
+
 /* Fake the :focus state to demo it */
 .focused {
   border-color: rgba(82,168,236,.8);
