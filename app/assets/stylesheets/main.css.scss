@@ -377,12 +377,19 @@ hr.separator-eye {
   background-color: transparent;
   border: 0px;
 
-  & > .img {
-    height: 48px;
+  & .off{
+    display: inline-block;
   }
 
+  & .on {
+    display: none;
+  }
   &  > a {
     color: $text_link;
+  }
+
+  & > h5 {
+    color: $text_casual;
   }
 
 }
@@ -399,7 +406,17 @@ hr.separator-eye {
      -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 
+  & .off{
+    display: none;
+  }
 
+  & .on {
+    display: inline-block;
+  }
+
+  & > h5 {
+    color: $text_yellow;
+  }
 }
 
 /* Footer

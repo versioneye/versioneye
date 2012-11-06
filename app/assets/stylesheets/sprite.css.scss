@@ -61,10 +61,15 @@
 */
 
 /* marketing icons */
-.icon-dependency {@include sprite_toggle(-5px, -172px, -63px, -170px, 54px, 53px);}
-.icon-package {@include sprite_toggle(-136px, -172px, -188px, -172px, 49px, 48px);}
-.icon-gitcat {@include sprite_toggle(-251px, -172px, -317px, -172px, 62px, 48px);}
+.icon-dependency { @include sprite_toggle(-5px, -172px, -63px, -170px, 54px, 53px);}
+.icon-package { @include sprite_toggle(-136px, -172px, -188px, -172px, 49px, 48px);}
+.icon-gitcat { @include sprite_toggle(-251px, -172px, -317px, -172px, 62px, 48px);}
 .icon-freeprice {@include sprite_toggle(-390px, -171px, -440px, -171px, 48px, 46px);}
+
+/* icons mixins */
+@mixin on-dependency { @include sprite(-5px, -172px, 54px, 53px);}
+@mixin off-dependency {@include sprite(-63px, -170px, 54px, 53px);}
+
 
 /* functionality icons */
 .icon-upload {@include sprite(-501px, -183px, 37px, 35px);}
