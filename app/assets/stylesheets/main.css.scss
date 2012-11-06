@@ -365,11 +365,31 @@ hr.separator-eye {
 }
 
 
-.well {
+
+
+.well1 {
   text-align : center;
   min-height: 20px;
   padding: 19px;
   margin-bottom: 20px;
+
+
+  background-color: transparent;
+  border: 0px;
+
+  & > .img {
+    height: 48px;
+  }
+
+  &  > a {
+    color: $text_link;
+  }
+
+}
+
+
+.well1:hover {
+
   background-color: #ffffff;
   border: 1px solid #DBD7D7;
   -webkit-border-radius: 10px;
@@ -379,13 +399,7 @@ hr.separator-eye {
      -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 
-  & > img {
-    height: 48px;
-  }
 
-  &  > a {
-    color: $link_color;
-  }
 }
 
 /* Footer

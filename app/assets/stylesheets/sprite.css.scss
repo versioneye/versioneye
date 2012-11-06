@@ -14,7 +14,7 @@
 */
 @mixin sprite_toggle($x1, $y1, $x2, $y2, $width, $height){
 	@include sprite($x1, $y1, $width, $height);
-	& .off { @include sprite($x2, $y2, $width, $height);}
+	&.on { @include sprite($x2, $y2, $width, $height);}
 	&:hover { @include sprite($x2, $y2, $width, $height);}
 }
 
@@ -95,7 +95,7 @@
 
 
 /* eye pictures */
-.separator-eye {@include sprite_toggle(-13px, -347px, -13px, -421px,940px, 61px);}
+.separator-eye {@include sprite_toggle(-13px, -347px, -13px, -420px,940px, 61px);}
 .logo-eye {@include sprite(-4px, -487px, 264px, 134px);}
 .logo-eye-text {@include sprite(-279px, -487px, 107px, 83px);}
 
