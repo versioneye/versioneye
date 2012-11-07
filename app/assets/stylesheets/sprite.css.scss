@@ -1,6 +1,8 @@
 
 /* Sprites */
 
+$sprite_url: "/assets/Sprite.png";
+
 @mixin sprite($x, $y, $width, $height){
 	background: url(/assets/Sprite.png) $x $y no-repeat;
 	display: inline-block;
@@ -24,6 +26,15 @@
 	display: inline-block;
 	height: $height;
 }
+
+@mixin list_icon($x, $y, $width, $height){
+	background: url($sprite_url) $x $y no-repeat;
+	padding-left: $width;
+	line-height: $height;
+}
+
+
+
 /* LOGOs */
 
 .icon-beta { @include sprite(0px, 0px, 26px, 35px); margin-right: 10px;}
@@ -86,9 +97,9 @@
 .icon-settings {@include sprite(-584px, -3px, 16px, 16px);}
 .icon-logout {@include sprite(-603px, -2px, 16px, 16px);}
 .icon-search {@include sprite(-622px, -3px, 16px, 16px);}
-.icon-lock {@include sprite(-642px, 0px, 17px, 21px);}
-.icon-mail {@include sprite(-662px, 0px, 23px, 15px);}
-.icon-donut {@include sprite(-688px, 0px, 24px, 15px);}
+.icon-lock {@include sprite(-642px, 0px, 20px, 20px);}
+.icon-mail {@include sprite(-662px, 0px, 24px, 20px);}
+.icon-donut {@include sprite(-688px, 0px, 20px, 20px);}
 .icon-files {@include sprite(-728px, -4px, 17px, 15px);}
 .icon-profile {@include sprite(-747px, -4px, 17px, 11px);}
 .icon-download {@include sprite(-767px, -4px, 16px, 16px);}
@@ -137,4 +148,21 @@
 .bg-btn-small {
 	@include sprite_btn(-759px, -283px, 30px);
 	& .on {@include sprite_btn(-781px, -283px, 30px);}
+}
+
+
+/*
+	SPECIAL LIST
+*/
+
+.subscription {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+
+	& > li {
+		display: block;
+		margin: 0px, 0px, 10px, 0px;
+		min-height: 20px;
+	}
 }

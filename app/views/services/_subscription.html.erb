@@ -1,106 +1,140 @@
-
-	<div class="boxHeader" style="text-align: center; font-size: 32px;">
-		<a name="pricing"></a>Subscription 
+<div class = "well success row" style = "margin: 0px 30px 20px 30px;">
+	<!-- description of plans-->
+	<div  class = "span4" style = "padding: 0px 20px;">
+		<h3 class = "success"> Free </h3>
+		<p>
+			Try out VersionEye for free. You can monitor as many
+			unlimited opensource repositories.
+			Try before you buy, right?
+		</p>
 	</div>
-	<div style="margin: 30px;">
-		<br/>
-		<div class="boxContainer" style="text-align: left;">
-			Monitoring open source (OS) projects is free. 
-			You only have to pay for monitoring private GitHub repositories.<br/>
-			<b>You can cancel all subscriptions on a monthly basis.</b>
-		</div>
-		<br/>
-		<div class="round boxContainer" >
-			<div class="div-row">
-				<div class="div-cell price_box_head" style="padding-left: 10px; padding-top: 0px; padding-bottom: 0px;">
-					<%= form_tag("/signup", :method => "get") do  %>
-						FREE - 0.00 $ / Month - Unlimited Open Source Projects - <button type="submit" class="btn btn-success" >Sign Up For Free</button>
-					<% end %>
-				</div>
-			</div>
-		</div>
-		<br/>
-		<div class="div-row">
-			<div class="div-cell" >
-				<div class="round price_box">
-					<div class="price_box_head" >MICRO</div>
-					<div class="price_box_service" >
-						1 Private Project<br/>
-						<b>Unlimited</b> OS Projects<br/>
-						Monthly terminable
-					</div>
-					<div class="price_box_price" >7 $ / Month</div>
-					<div class="price_box_action">
-						<%= form_tag("/services/choose_plan", :method => "post") do  %>
-							<input type="hidden" name="plan" value="01_micro" />
-							<button type="submit" class="btn btn-success" >Select</button>
-						<% end %>
-					</div>
-				</div>
-			</div>
-			<div class="div-cell " style="width: 12px;" >
-
-			</div>
-			<div class="div-cell" >
-				<div class="round price_box">
-					<div class="price_box_head" >SMALL</div>
-					<div class="price_box_service" >
-						2 Private Projects<br/>
-						<b>Unlimited</b> OS Projects<br/>
-						Monthly terminable
-					</div>
-					<div class="price_box_price" >12 $ / Month</div>
-					<div class="price_box_action">
-						<%= form_tag("/services/choose_plan", :method => "post") do  %>
-							<input type="hidden" name="plan" value="01_small" />
-							<button type="submit" class="btn btn-success" >Select</button>
-						<% end %>
-					</div>
-				</div>
-			</div>
-			<div class="div-cell " style="width: 12px;" >
-
-			</div>
-			<div class="div-cell" >
-				<div class="round price_box" style="height: 200px; width: 200px;">
-					<div class="price_box_head" style="font-size: 28px; padding-top: 18px;">MEDIUM</div>
-					<div class="price_box_service" >
-						4 Private Projects<br/>
-						<b>Unlimited</b> OS Projects<br/>
-						Monthly terminable
-					</div>
-					<div class="price_box_price" >20 $ / Month</div>
-					<div class="price_box_action" style="padding-top: 10px;">
-						<%= form_tag("/services/choose_plan", :method => "post") do  %>
-							<input type="hidden" name="plan" value="01_medium" />
-							<button type="submit" class="btn btn-large btn-success" >Select</button>
-						<% end %>
-					</div>
-				</div>
-			</div>
-			<div class="div-cell " style="width: 12px;" >
-
-			</div>
-			<div class="div-cell" >
-				<div class="round price_box">
-					<div class="price_box_head" >LARGE</div>
-					<div class="price_box_service" >
-						10 Private Projects<br/>
-						<b>Unlimited</b> OS Projects<br/>
-						Monthly terminable
-					</div>
-					<div class="price_box_price" >47 $ / Month</div>
-					<div class="price_box_action">
-						<%= form_tag("/services/choose_plan", :method => "post") do  %>
-							<input type="hidden" name="plan" value="01_large" />
-							<button type="submit" class="btn btn-success" >Select</button>
-						<% end %>
-					</div>
-				</div>
-			</div>
-		</div>
-		<br/>
-		<div class="boxContainer" style="text-align: left;">
-			You need more than 10 private GitHub repositories? Then please send us a <a href="javascript: return false;" onClick="load_dialog_feedback();" >message</a> with your use case and your contact information. 
+	<!-- sub plans -->
+	<div class = "span8">
+		<!-- subscription item -->
+		<div class  = "subscription-item">
+			<button class = "btn2 btn2-big pull-right">Sign-up</button>
+			<h5> &nbsp; : $0/month </h5>
+			<ul class = "subscription">
+				<li>
+						<span class = "icon-lock" ></span>
+						0 private repositories
+				</li>
+				<li>
+					<span class = "icon-donut" ></span>
+					Unlimited OpenSource repositories 
+				</li>
+				<li><span class = "icon-mail" ></span>
+					1 email
+				</li>
+			</ul>
 		</div>
 	</div>
+
+</div>
+
+<div class = "well warning row" style = "margin: 0px 30px 20px 30px;">
+	<div class= "span4" style = "padding: 0px 20px;">
+		<h3 class = "">Personal plans</h3>
+		<!-- #TODO -->
+		<p> {Robert add here something reasonble thing to read}</p>
+	</div>
+	<div class = "span8">
+		<!-- subscription item -->
+		<div class  = "subscription-item">
+			<button class = "btn2 btn2-big pull-right">Sign-up</button>
+			<h5> &nbsp; Micro: $5/month </h5>
+			<ul class = "subscription">
+				<li><span class = "icon-lock" ></span>
+					10 private repositories
+				</li>
+				<li>
+					<span class = "icon-donut" ></span>
+					Unlimited OpenSource repositories 
+				</li>
+				<li><span class = "icon-mail" ></span>
+					1 email
+				</li>
+			</ul>
+		</div>
+		<!-- subscription item -->
+		<div class  = "subscription-item">
+			<button class = "btn2 btn2-big pull-right">Sign-up</button>
+			<h5> &nbsp; : $10/month </h5>
+			<ul class = "subscription">
+				<li><span class = "icon-lock" ></span>
+					20 private repositories
+				</li>
+				<li>
+					<span class = "icon-donut" ></span>
+					Unlimited OpenSource repositories 
+				</li>
+				<li><span class = "icon-mail" ></span>
+					1 email
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+
+<div class = "well info row" style = "margin: 0px 30px 20px 30px; color: #616970;">
+	<div class= "span4" style = "padding: 0px 20px;">
+		<h3 class = "">Business plans</h3>
+		<!-- #TODO -->
+		<p> {Robert add here something reasonble thing to read}</p>
+	</div>
+	<div class = "span8">
+		<!-- subscription item -->
+		<div class  = "subscription-item">
+			<button class = "btn2 btn2-big pull-right">Sign-up</button>
+			<h5> Bronze: $10/month </h5>
+			<ul class = "subscription">
+				<li><span class = "icon-lock" ></span>
+					10 private repositories
+				</li>
+				<li>
+					<span class = "icon-donut" ></span>
+					Unlimited OpenSource repositories 
+				</li>
+				<li><span class = "icon-mail" ></span>
+					1 email
+				</li>
+			</ul>
+		</div>
+		<!-- subscription item -->
+		<div class  = "subscription-item">
+			<button class = "btn2 btn2-big pull-right">Sign-up</button>
+			<h5> Silver : $25/month </h5>
+			<ul class = "subscription">
+				<li><span class = "icon-lock" ></span>
+					20 private repositories
+				</li>
+				<li>
+					<span class = "icon-donut" ></span>
+					Unlimited OpenSource repositories 
+				</li>
+				<li><span class = "icon-mail" ></span>
+					1 email
+				</li>
+			</ul>
+		</div>
+		<!-- subscription item -->
+		<div class  = "subscription-item">
+			<button class = "btn2 btn2-big pull-right">Sign-up</button>
+			<h5> Silver : $50/month </h5>
+			<ul class = "subscription">
+				<li><span class = "icon-lock" ></span>
+					20 private repositories
+				</li>
+				<li>
+					<span class = "icon-donut" ></span>
+					Unlimited OpenSource repositories 
+				</li>
+				<li><span class = "icon-mail" ></span>
+					1 email
+				</li>
+			</ul>
+		</div>
+
+	</div>
+</div>

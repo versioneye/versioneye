@@ -1,0 +1,18 @@
+/* color-schemas for block items like labels&buttons */
+@mixin color-schema ($fg, $bg, $border-color){
+	color: $fg;
+	background-color: $bg;
+	border-color: $border-color;
+}
+
+.default { @include color-schema(#ffffff, #73868d, #616970);}
+.error,
+.important {@include color-schema(#ffffff, #fbb21c, #d49616);}
+
+.inverse {@include color-schema(#616970, #ffffff, #dddddd);}
+.info  {@include color-schema(#616970, #eef0f1, #d3d8dc);}
+.warning {@include color-schema(#616970, #ffecc4, #ffca5d);}
+.success {
+	@include color-schema(#616970, #ebfdd5, #c0d3a9);
+	& h1, h2, h3, h4, h5 { color: #67A219;}
+}
