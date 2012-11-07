@@ -115,9 +115,9 @@
 .btn-twitter-login {@include sprite(-233px, -242px, 230px, 40px);}
 .btn-github-login {@include sprite(-465px, -242px, 230px, 40px);}
 
-.btn-facebook {@include sprite_toggle(0px, -242px, 0px, -285px, 230px, 40px);}
-.btn-twitter {@include sprite_toggle(-233px, -242px, -233px, -285px, 230px, 40px);}
-.btn-github {@include sprite_toggle(-465px, -242px, -465px, -285px, 230px, 40px);}
+.btn-facebook-connect {@include sprite(0px, -285px, 230px, 40px);}
+.btn-twitter-connect {@include sprite(-233px, -285px, 230px, 40px);}
+.btn-github-connect {@include sprite(-465px, -285px, 230px, 40px);}
 
 .btn-facebook-small {@include sprite(-698px, -242px, 77px, 24px);}
 .btn-twitter-small {@include sprite(-776px, -242px, 77px, 24px);}

@@ -1,61 +1,66 @@
-<div class="boxHeader">
-	<div class="div-row">
-		<div class="div-cell" style="width: 645px;">
-			<%= t(:page_signup_registration) %>
+<section class = "container">
+<div class = "row">
+	<div class="span8">
+		<h1 class = "page-title"> Sign-up to VersionEye</h1>
+	</div>
+	<div class = "span4 pull-right">
+		<div class  = "input-append pull-right" style = "padding-top: 15px;">
+			<input type = "text" class = "" placeholder = "Search for your library.">
+			<button class = "btn"><span class = "icon-search"></span></button>
 		</div>
-		<div class="div-cell">
-			<%= link_to image_tag("flaggs_germany_off.png", :class => "flag", :title => "Germany", :alt=>"Germany", :onmouseover => "document.getElementById('flag_de').src='/assets/flaggs_germany_on.png';", :onmouseout => "document.getElementById('flag_de').src='/assets/flaggs_germany_off.png';", :id => "flag_de"), signup_path(:locale => :de) %>
-			<%= link_to image_tag("flaggs_gb_off.png", :class=>"flag", :title => "GB", :alt=>"GB", :onmouseover => "document.getElementById('flag_en').src='/assets/flaggs_gb_on.png';", :onmouseout => "document.getElementById('flag_en').src='/assets/flaggs_gb_off.png';", :id => "flag_en"), signup_path(:locale => :en) %>
-		</div>
-	</div>	
+	</div>
 </div>
-<div class="boxContainer" style="display: table;" >
-	<div class="formCel"  >
-		<%= form_for @user do |f| %>
+<div class  = "well-white row-fluid" style="padding-top:60px;">
+	<div class = "span6" >
+		<div class = "control-group">
+			<h3> It's free to sign-up! </h3>
+			<p> Join today and track your repositories. </p>
+		</div>
+		<%= form_for @user, :html => {:class => "form-horizontal"} do |f| %>
 			<input id="username" name="user[username]" type="hidden" value="username" />
 		    <div class="messages">
 		        <%= render 'shared/error_messages', :object => f.object %>
 		    </div>
 
-		    <div class="div-row">
-		      <div class="labelCel">
-		        <%= f.label :fullname %> 
-		      </div>
-		      <div class="inputCel">
-		        <%= f.text_field :fullname, :class => "round", :id => "fullname" %>
+		    <div class="control-group">
+		      <%= f.label :fullname, :class => "control-label" %>
+		      <div class="controls">
+		        <%= f.text_field :fullname, :id => "fullname" %>
 		      </div>
 		    </div>
 
-		    <div class="div-row">
-		      <div class="labelCel">
-		        <%= f.label :email %>
-		      </div>
-		      <div class="inputCel">
-		        <%= f.text_field :email, :class => "round", :id => "email" %>
+		    <div class="control-group">
+		        <%= f.label :email, :class => "control-label" %>
+		      <div class="controls">
+		        <%= f.text_field :email, :id => "email" %>
 		      </div>
 		    </div>
 
-		    <div class="div-row">
-		      <div class="labelCel">
-		        <%= f.label :password %>
-		      </div>
-		      <div class="inputCel">
-		        <%= f.password_field :password, :class => "round", :id => "password" %>
+		    <div class="control-group">
+		        <%= f.label :password,  :class => "control-label" %>
+		      <div class="controls">
+		        <%= f.password_field :password, :id => "password" %>
 		      </div>
 		    </div>
 
-		    <div class="div-row">
-		      <div class="labelCel" style="vertical-align: top">
-		        <%= f.check_box :terms %>
+		    <div class="control-group">
+		        <%= f.label "Password again:",  :class => "control-label" %>
+		      <div class="controls">
+		        <%= f.password_field :password2, :id => "password" %>
 		      </div>
-		      <div class="inputCel">
-		        <label for="user_terms" class="label-smaller">
+		    </div>
+
+		    <div class="control-group">
+		      	<div class="controls">
+		      		<%= f.check_box :terms,
+		      		:style => "vertical-align: top;
+margin-right: 10px;" %>
 					<%= t(:terms_part_1) %>
 					<% if I18n.locale == :de %>
 						<%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "new_terms" %> 
 					<% else %>
-						<%= link_to "Conditions of Use", terms_path, :target => "new_terms" %> 
-					<% end %>					 
+						<%= link_to "Conditions of Use", terms_path, :target => "new_terms" %>
+					<% end %>
 					<%= t(:terms_part_2) %>
 					<% if I18n.locale == :de %>
 						<%= link_to "Datenerhebung", datenerhebung_path, :target => "new_data" %>
@@ -63,23 +68,28 @@
 						<%= link_to "Data Acquisition", datacollection_path, :target => "new_data" %>
 					<% end %>
 					<%= t(:terms_part_3) %>
-				</label><br/>
 		      </div>
 		    </div>
 
-		    <div class="div-row">
-		      <div class="labelCel"></div>
-		      <div class="inputCel">
-		        <button type="submit" class="btn btn-primary btn-large" style="margin-top: 5px;" ><%= t(:page_signup_button_signup) %></button>
+		    <div class="control-group">
+		      <div class="control-label"></div>
+		      <div class="controls">
+		        <button type="submit" class="btn2 btn2-big" style="margin-top: 5px;" ><%= t(:page_signup_button_signup) %></button>
 		      </div>
 		    </div>
 
 		<% end %>
 	</div>
-	<div class="alternative_signin_options_cel" style="height: 280px;">
-		<b>OR</b><br/>
-		<br/>
-		<br/>
-		<%= render 'shared/login_options_vertical' %>
-	</div>	
+	<div class="span6">
+
+		<div class = "well transparent" style = "text-align: center">
+			<div style = "margin-top: -40px;">
+				<span class  = "img-profile48-rounded"></span>
+			</div>
+			<h2> Got social media? </h2>
+			<p>Login with your social media account below.</p>
+			<%= render 'shared/connect_options_vertical' %>
+		</div>
+	</div>
 </div>
+</section>
