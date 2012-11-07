@@ -17,7 +17,13 @@
 			<% @projects.each do |project| %>
 				<div class="project" >
 					<%= link_to project.name, user_project_path(project), :class => "searchResultLink" %><br/>
-					<span class="meta-text-small">Private: <%= project.private_project %>, Source: <%= project.source %>, Dependencies: <%= project.dep_number %>, Outdated: <span style="color: <%= outdated_color(project) %>" ><%= project.out_number %></span></span>
+					<span class="meta-text-small">
+						<% if project.private_project %>
+							Private 
+						<% else %>
+							Public 
+						<% end %>
+						project from <%= project.source %>. Dependencies: <%= project.dep_number %>, Outdated: <span style="color: <%= outdated_color(project) %>" ><%= project.out_number %></span></span>
 				</div>
 			<% end %>
 		</div>
