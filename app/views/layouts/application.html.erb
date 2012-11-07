@@ -17,7 +17,7 @@
 	<meta name="url" itemprop="url" content="<%= Settings.server_url %>/package/<%= @product.to_param %>/version/<%= @product.version %>" />
 	<% if !@product.description.nil? && !@product.description.empty? %> 
 	<meta name="description" itemprop="description" content="<%= @product.description[0, 145] %>..." />
-	<% end %>	
+	<% end %>
 <% end %>
 
 	<%= render 'layouts/html_head' %>
@@ -26,16 +26,15 @@
 
 <body>
 	<%= render 'layouts/header' %>
-	
-	<section class="container" >
+
+	<section class="container flash-container" >
 		<% flash.each do |key, value| %>
 			<div class="flash <%= key %>"><%= value %></div>
 		<% end %>
-		<!-- content-->
-		<%= yield %>
-
 	</section>
 
+	<!-- content-->
+	<%= yield %>
 
 	<%= render 'layouts/footer' %>
 	<%= debug(params) if Rails.env.development? %>

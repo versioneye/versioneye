@@ -7,6 +7,24 @@
 		<p>Find and follow your software libraries. It's easy.</p>
 	</div>
 </section>
+
+<% if !@page.eql?("LandingPage") %>
+<section class = "container">
+	<div class = "row">
+		<div class = "span8">
+			<h2 class = "page-title"> [Page name] </h2>
+		</div>
+		<div class = "span3">
+			<div id="searchfield_div" class="searchfield_div">
+				<form id="searchform" action="/search" method="GET" class="search-form" >
+					<input id="q" name="q" class="searchfield" type="text" value="<%= @query %>" style="margin-top: 6px;" />
+					<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
+				</form>
+			</div>
+		</div>
+</section>
+<% end %>
+
 <section class = "container">
 
 	<div class= "search-container" >

@@ -16,6 +16,7 @@
 	@include sprite($x1, $y1, $width, $height);
 	&.on { @include sprite($x2, $y2, $width, $height);}
 	&:hover { @include sprite($x2, $y2, $width, $height);}
+	&:active { @include sprite($x2, $y2, $width, $height);}
 }
 
 @mixin sprite_btn($x, $y, $height){
@@ -110,6 +111,9 @@
 */
 
 /* social buttons */
+.btn-facebook-login {@include sprite(0px, -242px, 230px, 40px);}
+.btn-twitter-login {@include sprite(-233px, -242px, 230px, 40px);}
+.btn-github-login {@include sprite(-465px, -242px, 230px, 40px);}
 
 .btn-facebook {@include sprite_toggle(0px, -242px, 0px, -285px, 230px, 40px);}
 .btn-twitter {@include sprite_toggle(-233px, -242px, -233px, -285px, 230px, 40px);}

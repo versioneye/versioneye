@@ -8,16 +8,6 @@
 		</div>
 
 		<div class = "span7 pull-right">
-
-			<% if !@page.eql?("LandingPage") %>
-				<div id="searchfield_div" class="searchfield_div">
-					<form id="searchform" action="/search" method="GET" class="search-form" >
-						<input id="q" name="q" class="searchfield" type="text" value="<%= @query %>" style="margin-top: 6px;" />
-						<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
-					</form>
-				</div>
-			<% end %>
-
 			<ul class="nav pull-right">
 				<% if signed_in? %>
 					<li >
@@ -49,11 +39,11 @@
 					<li><%= link_to t(:page_header_signin), signin_path %></li>
 					<li class="divider-vertical"></li>
 					<li>
-						<a href="#"><span class = "flag-de"></span></a>
+						<a href="#"><span class = "flag-de flag"></span></a>
 					</li>
 					<li class="divider-vertical"></li>
 					<li>
-						<a href = "#"><span class = "flag-gb"></span></a>
+						<a href = "#"><span class = "flag-gb flag"></span></a>
 					</li>
 				<% end %>
 			</ul>

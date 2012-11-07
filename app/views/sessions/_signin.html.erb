@@ -1,43 +1,58 @@
-<div class="boxHeader">
-	Login
-</div>
-<div class="boxContainer" style="height: 200px;">
-	<div class="formCel">
-		<%= form_for(:session, :url => sessions_path) do |f|  %>
-		    <div class="div-row">
-		      <div class="labelCel">
-		        <%= f.label :email %>
-		      </div>
-		      <div class="inputCel">
-		        <%= f.text_field :email, :class => "round" %>
-		      </div>
-		    </div>
-		    <div class="div-row">
-		      <div class="labelCel">
-		        <%= f.label :password %>
-		      </div>
-		      <div class="inputCel">
-		        <%= f.password_field :password, :class => "round" %><br/>
-		      </div>
-		    </div>
-			<div class="div-row">
-		      <div class="labelCel"></div>
-		      <div class="inputCel" style="padding-bottom: 10px">
-		        <%= link_to "I forgot my password", iforgotmypassword_path %>
-		      </div>
-		    </div>
-		    <div class="div-row">
-		      <div class="labelCel"></div>
-		      <div class="inputCel">
-		        <button type="submit" class="btn btn-primary btn-large" >Sign In</button>
-		      </div>
-		    </div>
-		<% end %>
+<section class = "container">
+<div class = "row">
+	<div class="span8">
+		<h1 class = "page-title"> Login </h1>
 	</div>
-	<div class="alternative_signin_options_cel" style="height: 180px;">
-		<b>OR</b><br/>
-		<br/>
-		<br/>
-		<%= render 'shared/login_options_vertical' %>
+	<div class = "span4 pull-right">
+		<div class  = "input-append pull-right" style = "padding-top: 15px;">
+			<input type = "text" class = "">
+			<button class = "btn"><span class = "icon-search"></span></button>
+		</div>
 	</div>
 </div>
+<div class  = "well-white row">
+	<div class="row-fluid" style="padding-top:60px;">
+		<div class="span6">
+
+			<%= form_for(:session, :url => sessions_path, :html => {:class => "form-horizontal"} ) do |f|  %>
+				<div class = "control-group">
+					<h3> Login with username </h3>
+					<p> Get access to your projects </p>
+				</div>
+			    <div class="control-group">
+			      <%= f.label :email, :class => "control-label" %>
+			      <div class="controls">
+			        <%= f.text_field :email, :class => "round" %>
+			      </div>
+			    </div>
+			    <div class="control-group">
+			      <%= f.label :password, :class => "control-label" %>
+			      <div class="controls">
+			        <%= f.password_field :password, :class => "round" %><br/>
+			      </div>
+			    </div>
+				<div class="control-group">
+			      <div class="controls" style="">
+			        <%= link_to "I forgot my password", iforgotmypassword_path %>
+			      </div>
+			    </div>
+			    <div class="control-group">
+			      <div class="controls">
+			        <button type="submit" class="btn2 btn2-big" >Sign In</button>
+			      </div>
+			    </div>
+			<% end %>
+		</div>
+		<div class="span6">
+			<div class = "well transparent" style = "text-align: center">
+				<div style = "margin-top: -40px;">
+					<span class  = "img-profile48-rounded"></span>
+				</div>
+				<h2> Got social media? </h2>
+				<p>Login with your social media account below.</p>
+				<%= render 'shared/login_options_vertical' %>
+			</div>
+		</div>
+	</div
+</div>
+</section>
