@@ -13,6 +13,11 @@ class PackageParser
     dependencies = data['dependencies']
     return nil if dependencies.nil?
 
+    dev_dependencies = data['devDependencies']
+    if dev_dependencies 
+      dependencies.merge!(dev_dependencies)
+    end
+
     project = Project.new
     project.dependencies = Array.new    
 
