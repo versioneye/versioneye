@@ -12,11 +12,15 @@
 .important {
 	@include color-schema(#ffffff, #fbb21c, #d49616);
 	& h1, h2, h3, h4, h5 { color: #ffffff;}
+	& hr {border: 0px; border-bottom: 1px solid #EBC85B;}
 }
 
 .inverse {@include color-schema(#616970, #ffffff, #dddddd);}
 .info  {@include color-schema(#616970, #eef0f1, #d3d8dc);}
-.warning {@include color-schema(#616970, #ffecc4, #ffca5d);}
+.warning {
+	@include color-schema(#616970, #ffecc4, #ffca5d);
+	& hr {border: 0px; border-bottom: 1px solid #EBC85B;}
+}
 .success {
 	@include color-schema(#616970, #ebfdd5, #c0d3a9);
 	& h1, h2, h3, h4, h5 { color: #67A219;}

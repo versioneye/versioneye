@@ -101,12 +101,12 @@ Versioneye::Application.routes.draw do
 
   namespace :user do 
     resources :projects do 
-      member do 
+      member do
         post 'save_period'
         post 'save_email'
         post 'reparse'
         post 'update_name'
-      end     
+      end
     end
   end
 

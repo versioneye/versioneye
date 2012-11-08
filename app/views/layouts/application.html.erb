@@ -8,7 +8,7 @@
 <head >
 	<meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
 	<META HTTP-EQUIV="Content-Language" Content="en">
-<% if @product %> 
+<% if @product %>
 	<title><%= @product.name %> : <%= @product.version %></title>
 	<meta name="name"     itemprop="name"     content="<%= @product.name %>">
 	<meta name="softwareversion" itemprop="softwareversion"  content="<%= @product.version %>">
@@ -33,8 +33,23 @@
 		<% end %>
 	</section>
 
-	<!-- content-->
-	<%= yield %>
+	<section  class = "container">
+		<div class = "row">
+			<div class="span8">
+				<h1 class = "page-title"> Services </h1>
+			</div>
+			<div class = "span4 pull-right">
+				<div class  = "input-append pull-right" style = "padding-top: 15px;">
+					<input type = "text" class = "">
+					<button class = "btn"><span class = "icon-search"></span></button>
+				</div>
+			</div>
+		</div>
+		<div class  = "well-white row" style="padding-top:60px;">
+			<!-- content-->
+			<%= yield %>
+		</div>
+	</section>
 
 	<%= render 'layouts/footer' %>
 	<%= debug(params) if Rails.env.development? %>

@@ -10,21 +10,24 @@
 		<meta name="description" itemprop="description" content="Search Engine for Software Libraries. Follow your Libraries and get notified about new versions." />
 		<meta name="author"   itemprop="author"   content="VersionEye GmbH" />
 		<meta name="keywords" itemprop="keywords" content="Java, Ruby, Python, Node.JS, JavaScript, PHP, Libraries, Software Libraries, Packages, Repository" />
-		
+
 		<%= render 'layouts/html_head' %>
-		
+
 	</head>
 
 	<body>
-
 		<%= render 'layouts/header' %>
-		
-		<% flash.each do |key, value| %>
-			<div ><%= value %></div>
-		<% end %>
+		<section class = "container flash-container">
+			<% flash.each do |key, value| %>
+				<div ><%= value %></div>
+			<% end %>
+		</section>
+
+		<!-- content-->
 		<%= yield %>
-					
+
 		<%= render 'layouts/footer' %>
+
 		<%= debug(params) if Rails.env.development? %>
 	</body>
 
