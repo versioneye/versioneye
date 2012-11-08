@@ -706,11 +706,45 @@ hr.separator-eye {
     }
 }
 
+
+.search-form {
+  color: $text_casual;
+
+  & > label {
+    color: $text_casual;
+  }
+
+  & .checkbox {
+    color: $text_link;
+  }
+
+  & > div {
+    padding-bottom: 30px;
+    border:0px;
+    border-bottom: 1px solid #ddd;
+  }
+}
+
 .search-container .active a {
   color: #333333;
 }
 
+.search-item {
+  margin-left: 20px;
+  padding: 10px 0px 20px 0px;
+  border-bottom: 1px dotted #DDD;
 
+  & a {
+    color : text_link;
+    font-size: 14px;
+  }
+
+  & button {
+    font-size: 12px;
+    font-family : inherit;
+    padding: 2px 10px 2px 10px;
+  }
+}
 /* Make tables spaced out a bit more */
 h2 + table,
 h3 + table,
