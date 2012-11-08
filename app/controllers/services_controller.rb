@@ -13,6 +13,17 @@ class ServicesController < ApplicationController
 		redirect_to signup_path
 	end
 
+	def show_pricing
+		refer_name = params['refer']
+		check_refer( refer_name )
+		@project = Project.new
+		render :template => "/services/index_pricing", :layout => 'application_lp'
+	end
+
+	def show_services
+		render :template => "/services/index_services", :layout => 'application_lp'
+	end
+
 	def create
 		file = params[:upload]
 

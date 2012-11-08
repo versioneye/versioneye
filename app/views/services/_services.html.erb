@@ -1,0 +1,161 @@
+<div class = "container" style = "margin: 0px 60px 60px 60px;">
+	<div class = "span6">
+		<h3> What is VersionEye </h3>
+		<p style = "font-size: 16px;">
+			VersionEye helps keep your software up to date.
+			Let VersionEye montior your repositories to get notified
+			about outdated dependencies in your projects.
+		</p>
+	</div>
+	<div class = "span5 pull-right">
+		<span class = "logo-eye"> </span>
+	</div>
+</div>
+
+<hr />
+
+<div class = "container" style = "margin: 0px 60px 60px 60px;">
+		<div class =  "span4">
+			<h4> VersionEye supports various package members. </h4>
+			<p>
+			VersionEye supports a wide range of package member and
+			is continuously adding more into the service.
+			</p>
+		</div>
+
+		<div class = "span6">
+			<h5> We currently support: </h5>
+			<!-- #TODO : read it from db -->
+			<div class = "row-fluid">
+				<div class = "span5" style = "min-height: 60px;">
+					<div class = "pull-left"
+					style = "margin: 0px 20px 0px 12px; text-align: center; width: 50px;">
+						<span class =  "icon-ruby on"></span>
+					</div>
+					Ruby GemFiles
+				</div>
+
+				<div class = "span5" style = "min-height: 60px;">
+					<div class = "pull-left" style = "margin-right: 20px; text-align: center; width: 50px;">
+						<span class = "icon-nodejs on"></span>
+					</div>
+					Package.json files from NPM.
+				</div>
+				<div class = "span5" style = "min-height: 60px;">
+					<div class = "pull-left" style = "margin-right: 20px; text-align: center; width: 50px;">
+						<span class = "icon-php on" ></span>
+					</div>
+					composer.json files from packagist.org
+				</div>
+
+				<div class = "span5" style = "min-height: 60px;">
+					<div class = "pull-left" style = "margin-right: 20px; text-align: center; width: 50px;" >
+						<span class = "icon-python on"></span>
+					</div>
+					PIP requirement.txt
+				</div>
+
+				<div class = "span5" style = "min-height: 60px;">
+					<div class = "pull-left" style = "margin-right: 20px; text-align: center; width: 50px;">
+						<span class = "icon-java on"></span>
+					</div>
+					pom.xml files from Maven2 and Maven3.
+				</div>
+			</div>
+		</div>
+</div>
+
+<hr />
+
+<div class = "container" style = "margin: 0px 60px 60px 60px;">
+	<div class = "span4">
+		<h4>VersionEye is very easy to use</h4>
+		<p>
+			VersionEye makes it easy for you to stay up to date
+			with your repositories. We feature an easy to use upload,
+			URL and GitHub integration.
+		</p>
+	</div >
+	<div class = "span6">
+		<div class = "container">
+			<div class = "span1" style = "text-align: center">
+				<span class = "icon-upload"></span>
+			</div>
+			<div class = "span5">
+				<h5> Upload </h5>
+				<p>
+					Just upload your project file and VersionEye will
+					show you the outdated dependencies.
+				</p>
+			</div>
+		</div>
+		<div class = "container">
+			<div class = "span1" style = "text-align: center">
+				<span class = "icon-www"></span>
+			</div>
+			<div class = "span5">
+				<h5> URL </h5>
+				<p>
+					Put in the URL to your project file and VersionEye
+					will fetch it every day and notify you about outdated
+					dependencies.
+				</p>
+			</div>
+		</div>
+
+		<div class = "container">
+			<div class = "span1" style = "text-align: center">
+				<span class = "icon-gitcat"></span>
+			</div>
+			<div class =  "span5">
+				<h5> GitHub </h5>
+				<p>
+					Monitor your prvte GitHub repositories to get periodical
+					E-Mail notifications about outdated dependencies in your
+					projects.
+				</p>
+			</div>
+		</div>
+
+		<div class = "container">
+			<div class =  "span1" style = "text-align: center">
+				<span class = "icon-enterprise"></span>
+			</div>
+			<div class =  "span5">
+				<h5> Enterprise </h5>
+				<p>
+					Enterprise features coming soon.
+				</p>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class = "well important row" style = "margin: 0px 60px 0px 60px;">
+	<div class = "span3">
+		<h3>
+			Try VersionEye now,
+			simply upload a file.
+		</h3>
+	</div>
+	<div class = "span6">
+		<strong>(pom.xml, GemFile, requirements.txt, package,json,
+			composer.json)</strong>
+		<form>
+			<input type = "file" />
+			<button type = "submit" class = "btn2">Upload</button>
+		</form>
+	</div>
+</div>
+
+<hr class = "separator-eye" />
+
+<div class = "container">
+	<div class  = "marketing">
+		<h2>Why not register today. It's free.</h2>
+		<p>
+			You can also <%= link_to "view our subscription plans", :controller => "services", :action => "show_pricing" %> .
+		</p>
+	</div>
+</div>

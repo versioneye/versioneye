@@ -50,9 +50,9 @@ $sprite_url: "/assets/Sprite.png";
 /* big icons */
 .icon-ruby { @include sprite_toggle(-71px, -76px, -13px, -76px, 36px, 36px);}
 .icon-r { @include sprite_toggle(-185px, -76px, -126px, -76px, 44px, 36px);}
-.icon-java {@include sprite_toggle(-245px, -66px, -302px, -66px, 31px, 56px);}
-.icon-php {@include sprite_toggle(-410px, -81px, -352px, -81px, 52px, 21px);}
-.icon-nodejs {@include sprite_toggle(-534px, -86px, -474px, -86px, 56px, 16px);}
+.icon-java {@include sprite_toggle(-243px, -68px, -300px, -68px, 35px, 56px);}
+.icon-php {@include sprite_toggle(-410px, -81px, -352px, -81px, 52px, 30px);}
+.icon-nodejs {@include sprite_toggle(-534px, -86px, -474px, -86px, 56px, 30px);}
 .icon-javascript {@include sprite_toggle(-658px, -80px, -599px, -80px, 43px, 31px);}
 .icon-python {@include sprite_toggle(-780px, -84px, -722px, -83px, 34px, 35px);}
 .icon-clojure {@include sprite_toggle(-891px, -79px, -833px, -80px, 44px, 43px);}

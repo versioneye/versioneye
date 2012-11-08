@@ -5,9 +5,14 @@
 	border-color: $border-color;
 }
 
-.default { @include color-schema(#ffffff, #73868d, #616970);}
+.default {
+	@include color-schema(#ffffff, #73868d, #616970);
+}
 .error,
-.important {@include color-schema(#ffffff, #fbb21c, #d49616);}
+.important {
+	@include color-schema(#ffffff, #fbb21c, #d49616);
+	& h1, h2, h3, h4, h5 { color: #ffffff;}
+}
 
 .inverse {@include color-schema(#616970, #ffffff, #dddddd);}
 .info  {@include color-schema(#616970, #eef0f1, #d3d8dc);}

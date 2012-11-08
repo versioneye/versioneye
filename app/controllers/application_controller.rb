@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
   include ProductsHelper
-  include UsersHelper  
+  include UsersHelper
   include ProjectsHelper
   
 end

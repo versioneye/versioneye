@@ -25,14 +25,15 @@
 							Settings
 						</a>
 					</li>
-					<li class="divider-vertical"></li>	
+					<li class="divider-vertical"></li>
 					<li class="nav-cell">
 						<a href="/signout" style="padding: 0">Logout</a>
 					</li>
 				<% else %>
-					<li><%= link_to t(:page_header_services), services_path %></li>
+					<li><%= link_to "Services", :controller => "services", :action => "show_services" %></li>
 					<li class="divider-vertical"></li>
-					<li><a href="/services#pricing"><%= t(:page_header_pricing) %></a></li>
+					<li><%= link_to "Pricing", :controller => "services", :action => "show_pricing" %>
+					</li>
 					<li class="divider-vertical"></li>
 					<li><%= link_to t(:page_header_signup), signup_path %></li>
 					<li class="divider-vertical"></li>
