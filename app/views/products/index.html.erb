@@ -1,10 +1,10 @@
 
 <%= render 'shared/dialog_follow' %>
 
-<section class = "container">
-	<div class = "jumbotron">
-		<h1>Stay up to date with <span style =""> VersionEye</span>.</h1>
-		<p>Find and follow your software libraries. It's easy.</p>
+<section class="container">
+	<div class="jumbotron">
+		<h1>Stay up to date with <span style ="">VersionEye</span></h1>
+		<p>Follow your libraries and get notified about new versions. It's easy.</p>
 	</div>
 </section>
 
@@ -26,19 +26,18 @@
 <% end %>
 
 <section class = "container">
-
 	<div class= "search-container" >
-		<form id="form" action="/search" method="GET"  >
+		<form id="form" action="/search" method="GET" style="padding: 0; margin:0;" >
 			<input id="lang" name="lang" class = "hide" type="hidden" value="<%= @lang %>" />
 			<div class="row-fluid">
 				<div class = "span5">
 					<div class = "input-prepend">
-						<span class = "icon-search" style = "margin: 0px -25px 0px 10px;"></span>
-						<input id="q" class = "icon-search" name="q" type="text" value="<%= @query %>" />
+						<span class="icon-search" style = "margin: 0px -25px 0px 10px;"></span>
+						<input id="q" name="q" type="text" value="<%= @query %>" />
 					</div>
 				</div>
 				<div class = "span7" >
-					<span> Filter library s&nbsp;</span>
+					<span>Filter</span>
 					<div class= "btn-group">
 					<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
 						<% @langs = @lang.split(",") %>
