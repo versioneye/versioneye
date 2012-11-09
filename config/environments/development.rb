@@ -5,10 +5,10 @@ Versioneye::Application.configure do
   # every request.  This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
-  config.action_controller.perform_caching = true
-  config.cache_store = :dalli_store, Settings.memcache_servers,{
-    :username => Settings.memcache_username, :password => Settings.memcache_password, 
-    :namespace => 'veye', :expires_in => 1.day, :compress => true }
+  config.action_controller.perform_caching = false
+  # config.cache_store = :dalli_store, Settings.memcache_servers,{
+  #   :username => Settings.memcache_username, :password => Settings.memcache_password, 
+  #   :namespace => 'veye', :expires_in => 1.day, :compress => true }
 
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
