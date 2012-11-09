@@ -14,10 +14,10 @@ gem 'naturalsorter', '0.5.11'
 gem 'postmark-rails', '0.4.1'
 gem 'httparty', '0.9.0'
 gem 'oauth', '0.4.7'
-gem 'twitter_oauth', '0.4.3'
+gem 'twitter_oauth', '0.4.4'
 gem 'aws-s3', '0.6.3', :require => 'aws/s3'
 gem 'nokogiri', '1.5.5'
-gem 'stripe', '1.7.3'
+gem 'stripe', '1.7.6'
 gem 'thin', '1.4.1'
 gem 'tire', '0.4.3'
 gem 'dalli', '2.3.0' # memcache library
@@ -32,6 +32,6 @@ end
 
 group :test do
   gem 'turn', :require => false
-  gem 'rspec-rails', '2.11.0'
+  gem 'rspec-rails', '2.11.4'
   gem 'webrat', '0.7.3'
 end
