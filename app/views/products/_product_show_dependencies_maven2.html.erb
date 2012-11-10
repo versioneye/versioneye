@@ -1,4 +1,4 @@
-	<h3><%= pluralize(@main_dependencies.count, "Compile Dependencies") %></h3>
+	<h5><%= pluralize(@main_dependencies.count, "Compile Dependencies") %></h5>
 	<% @main_dependencies.each do |dep| %> 
 		<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
 			<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
@@ -19,7 +19,7 @@
 					<span itemprop="name" ><%= dep.name %></span> 
 					<% if !dep.version_for_label.nil? && !dep.version_for_label.empty? %>
 						: <span itemprop="softwareVersion"><%= dep.version_for_label %></span>
-					<% end %> 
+					<% end %>
 				</a><br/>
 			</span>
 		<% end %>

@@ -1,8 +1,13 @@
-<div class="boxHeader">
-	<%= pluralize(@product.repositories.count, "Repository") %>
-</div>
-<div class="boxContainer">
-	<% @product.repositories.each do |repo| %>
-		<div><a href="<%= repo.src %>" target="new" ><%= repo.src %></a> </div>
-	<% end %>		
+<div class = "well row">
+
+	<div class="span2">
+		<h5>
+			<%= pluralize(@product.repositories.count, "Repository") %>
+		</h5>
+	</div>
+	<div class="span5">
+		<% @product.repositories.each do |repo| %>
+			<div><a href="<%= repo.src %>" target="new" ><%= repo.src %></a> </div>
+		<% end %>		
+	</div>
 </div>

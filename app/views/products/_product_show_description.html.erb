@@ -1,8 +1,7 @@
 <% if (@product.description && !@product.description.empty?) || (@product.description_manual && !@product.description_manual.empty?) %>
-	<div class="boxHeader">
-		Description
-	</div>
-	<div class="boxContainer" >
+
+		<h5> Description </h5>
+
 		<% if @product.description_manual && !@product.description_manual.empty? %>
 			<div class="meta-text-small">[ crawled data ]</div>
 		<% end %>
@@ -11,15 +10,13 @@
 		<% else %>
 			<%= @product.description %>
 		<% end %>
-	</div>
+
 	<% if @product.description_manual && !@product.description_manual.empty? %>
-		<div class="boxContainer" >
 			<div class="meta-text-small">[ manual entry ]</div>
 			<% if @product.description_manual.include? "\n" %>
 				<%= @product.description_manual.gsub!("\n", "<br/>").html_safe %>
 			<% else %>
 				<%= @product.description_manual %>
 			<% end %>
-		</div>
-	<% end %> 
+	<% end %>
 <% end %>
