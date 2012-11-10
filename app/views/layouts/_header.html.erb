@@ -1,55 +1,54 @@
-
 <header style="z-index: 100;">
-<div class="navbar navbar-static-top dark-bg">
-	<div class = "container row">
-		<div class="span4 brand-container" style="margin-left: 0; padding-left: 0;">
-			<span class="pull-left icon-beta"></span>
-			<a href="/"><span class="logo"></span></a>
-		</div>
+	<div class="navbar navbar-static-top dark-bg">
+		<div class = "container row">
+			
+			<div class="span4 brand-container" style="margin-left: 0; padding-left: 0; height: 50px;">
+				<span class="pull-left icon-beta"></span>
+				<a href="/"><span class="logo"></span></a>
+			</div>
 
-		<div class = "span7 pull-right">
-			<ul class="nav pull-right">
-				<% if signed_in? %>
-					<li >
-						<a href="/user/projects" style="padding: 0">Projects</a>
-					</li>
-					<li class="divider-vertical"></li>
-					<li>
-						<a href="/users/<%= current_user.username %>" style="padding: 0">
-							Profile
-						</a>
-					</li>
-					<li class="divider-vertical"></li>
-					<li >
-						<a href="/settings/name" style="padding: 0">
-							Settings
-						</a>
-					</li>
-					<li class="divider-vertical"></li>
-					<li class="nav-cell">
-						<a href="/signout" style="padding: 0">Logout</a>
-					</li>
-				<% else %>
-					<li><%= link_to "Services", :controller => "services", :action => "show_services" %></li>
-					<li class="divider-vertical"></li>
-					<li><%= link_to "Pricing", :controller => "services", :action => "show_pricing" %>
-					</li>
-					<li class="divider-vertical"></li>
-					<li><%= link_to t(:page_header_signup), signup_path %></li>
-					<li class="divider-vertical"></li>
-					<li><%= link_to t(:page_header_signin), signin_path %></li>
-					<li class="divider-vertical"></li>
-					<li>
-						<a href="#"><span class = "flag-de flag"></span></a>
-					</li>
-					<li class="divider-vertical"></li>
-					<li>
-						<a href = "#"><span class = "flag-gb flag"></span></a>
-					</li>
-				<% end %>
-			</ul>
-		</div>
+			<div class = "span7 pull-right">
+				<ul class="nav pull-right">
+					<% if signed_in? %>
+						<li >
+							<a href="/user/projects" style="padding: 0">Projects</a>
+						</li>
+						<li class="divider-vertical"></li>
+						<li>
+							<a href="/users/<%= current_user.username %>" style="padding: 0">
+								Profile
+							</a>
+						</li>
+						<li class="divider-vertical"></li>
+						<li >
+							<a href="/settings/name" style="padding: 0">
+								Settings
+							</a>
+						</li>
+						<li class="divider-vertical"></li>
+						<li class="nav-cell">
+							<a href="/signout" style="padding: 0">Logout</a>
+						</li>
+					<% else %>
+						<li><%= link_to "Services", :controller => "services", :action => "show_services" %></li>
+						<li class="divider-vertical"></li>
+						<li><%= link_to "Pricing", :controller => "services", :action => "show_pricing" %></li>
+						<li class="divider-vertical"></li>
+						<li><%= link_to t(:page_header_signup), signup_path %></li>
+						<li class="divider-vertical"></li>
+						<li><%= link_to t(:page_header_signin), signin_path %></li>
+						<li class="divider-vertical"></li>
+						<li>
+							<a href="#"><span class = "flag-de flag"></span></a>
+						</li>
+						<li class="divider-vertical"></li>
+						<li>
+							<a href = "#"><span class = "flag-gb flag"></span></a>
+						</li>
+					<% end %>
+				</ul>
+			</div>
 
+		</div>
 	</div>
-</div>
 </header>
