@@ -37,7 +37,6 @@ $text_hover: #a0b8cf;
 /* Body and structure
 -------------------------------------------------- */
 body {
-
   background: url(/assets/noise_2.png);
   font-size: 13px;
   color: $text_casual;
@@ -367,9 +366,10 @@ hr.separator-eye {
 
 .well-white {
   background-color: #ffffff;
+  width: 938px;
+  padding: 20px 0px 0px 0px;
+  margin: 0px 0px 60px 0px;
   min-height: 20px;
-  padding: 19px;
-  margin-bottom: 20px;
 
   border: 1px solid #eeeeee;
   -webkit-border-radius: 4px;
