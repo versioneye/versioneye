@@ -1,23 +1,23 @@
-<div class="sidebar" >
-	
+<div class="span3 sidebar" >
+
 	<%= render "/user/projects/navi" %>
-	
-</div>	
-<div class="content">	
+
+</div>
+<div class="span6 content">
 	<% if @libs.nil? || @libs.empty? %>
 		<%= render "/user/projects/create" %>
-	<% else %>		
+	<% else %>
 		<div class="boxHeader">
 			Most popular libs
 		</div>
-		
+
 		<div class="projects" id="projects" >
 			<% @libs = @libs.sort_by {|item, project| -project.length} %>
 			<% @libs.each do |lib_name, projects| %>
-				<div class="project" >					
+				<div class="project" >
 					<h3><%= lib_name %> (<%= projects.length %>)</h3>
 					<p>
-						<% projects.each do |project| %>						
+						<% projects.each do |project| %>
 							<a href = "<%= user_project_path(project)  %>" style ="text-decoration:none;" >
 								<span class = "label label-success"><%= project.name %></span>
 							</a>

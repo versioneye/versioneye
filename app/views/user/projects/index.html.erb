@@ -1,12 +1,12 @@
-<div class="sidebar" >
+<div class="span3 sidebar" >
 	
 	<%= render "/user/projects/navi" %>
 	
 </div>	
-<div class="content">	
+<div class="span6 content">	
 	<% if @projects.nil? || @projects.empty? %>
 		<%= render "/user/projects/create" %>
-	<% else %>		
+	<% else %>
 		<div class="boxHeader">
 			My Projects
 		</div>

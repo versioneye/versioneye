@@ -1,16 +1,14 @@
-<div class="sidebar" >
-	
+<div class="span3" >
 	<%= render "/user/projects/navi" %>
-	
-</div>	
-<div class="content">
-	
+</div>
+<div class=" span6 content">
+
 	<div id = "project-title" class="boxHeader">
 		<span class = "namelabel">
 			<%= @project.name %>
 		</span>
 		<span>
-			<i class = "icon-edit open-editor" 
+			<i class = "icon-edit open-editor"
 			style = "margin-top: 4px;" title = "Change title"></i>
 		</span>
 	</div>
@@ -23,7 +21,7 @@
 		<% end %>
 	</div>
 	<script>
-		jQuery(document).ready(function(){			
+		jQuery(document).ready(function(){
 			jQuery("#project-title .open-editor").on("click", function(){
 				jQuery(".inline-editor").css("display", "block");
 				jQuery("#project-title").css("display", "none");
