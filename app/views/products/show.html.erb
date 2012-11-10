@@ -3,11 +3,11 @@
 	Product not found!
 
 <% else %>
-	
+
 	<% if @product.prod_type.eql? "Maven2" %>
 		<%= render 'products/product_show_maven' %>
 	<% elsif @product.prod_type.eql? "RubyGem" %>
-		<%= render 'products/product_show_gems' %>	
+		<%= render 'products/product_show_gems' %>
 	<% elsif @product.prod_type.eql? "PIP" %>
 		<%= render 'products/product_show_pip' %>
 	<% elsif @product.prod_type.eql? "npm" %>
@@ -23,5 +23,5 @@
 	<% elsif @product.prod_type.eql? "Printer" %>
 		<%= render 'products/product_show_printer' %>
 	<% end %>
-	
+
 <% end %>

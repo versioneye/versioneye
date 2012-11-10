@@ -6,6 +6,7 @@ $sprite_url: "/assets/Sprite.png";
 @mixin sprite($x, $y, $width, $height){
 	background: url(/assets/Sprite.png) $x $y no-repeat;
 	display: inline-block;
+	vertical-align: middle;
 	width: $width;
 	height: $height;
 }

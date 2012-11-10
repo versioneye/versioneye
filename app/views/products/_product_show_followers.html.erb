@@ -1,7 +1,10 @@
-<div class="boxHeader">
-	<%= pluralize(@users.count, "Followers") %>
+<div class="box header">
+	<h5>
+		<span class = "icon-user"></span>
+		<%= pluralize(@users.count, "Followers") %>
+	</h5>
 </div>
-<div class="boxContainer" >
+<div class="box container" >
 	<% @users.each do |user| %>
 		<% if !user.nil? && !user.email.nil? %>
 			<%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :style => "width: 40px;", :gravatar => { :size => 40, :default => "#{Settings.server_url}/profile_icon.png" } ), user_path(user) %>

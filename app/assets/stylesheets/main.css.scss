@@ -837,6 +837,38 @@ h2 + .row {
 
 
 
+/* -------------------------------
+  BOXes
+
+*/
+
+.box {
+
+  border : 0px;
+
+  &.header {
+    padding: 20px;
+    border-top: 1px solid #ddd;
+  }
+
+  &.content {
+    padding: 10px 20px 10px 20px;
+    width: 90%;
+  }
+}
+
+
+/* -------------------------------
+  LISTS
+*/
+
+.list-share {
+  padding-top: 20px;
+  & li {
+    display: inline-block;
+    float: left;
+  }
+}
 
 /* ------------------------------
   Form

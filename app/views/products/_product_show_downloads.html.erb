@@ -1,11 +1,16 @@
 
-	<% if !@downloads.nil? && !@downloads.empty? %>
-		<div class="boxHeader">
+<% if !@downloads.nil? && !@downloads.empty? %>
+	<div class="box header">
+		<h5>
+			<span class = "icon-download"></span>
 			<%= pluralize(@downloads.count, "Download") %>
-		</div>
-		<div class="boxContainer" >
-			<% @downloads.each do |download|  %>
-				<div><a itemprop="downloadUrl" href="<%= download.link %>"><%= download.name %></a></div>
-			<% end %>
-		</div>
-	<% end %>
+		</h5>
+	</div>
+	<div class="box content" >
+		<% @downloads.each do |download|  %>
+			<div>
+				<a itemprop="downloadUrl" href="<%= download.link %>"><%= download.name %></a>
+			</div>
+		<% end %>
+	</div>
+<% end %>
