@@ -25,9 +25,7 @@
 </head>
 
 <body>
-	
 	<%= render 'layouts/header' %>
-
 	<section class="container flash-container" >
 		<% flash.each do |key, value| %>
 			<div class="flash <%= key %>"><%= value %></div>
@@ -41,7 +39,7 @@
 			</div>
 			<div class="span4 pull-right">
 				<div class="input-append pull-right" style="padding-top: 15px;">
-					<input type="text" >
+					<input type="text" name = "q" />
 					<button class="btn"><span class="icon-search"></span></button>
 				</div>
 			</div>

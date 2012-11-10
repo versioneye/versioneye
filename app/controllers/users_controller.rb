@@ -82,7 +82,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html {  }
       format.json { render :json => @user.to_json(:only => [:fullname, :username ] ) }
-    end        
+    end
   end
   
   def favoritepackages
