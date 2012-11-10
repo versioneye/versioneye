@@ -895,8 +895,16 @@ h2 + .row {
 
 .dropdown-toggle:active,
 .open .dropdown-toggle {
+  background: transparent;
+  color: #fff;
   outline: 0;
 }
+
+.dropdown.open .dropdown-toggle {
+  background: transparent;
+  color: #fff;
+}
+
 
 .caret {
   display: inline-block;
@@ -914,6 +922,7 @@ h2 + .row {
   margin-left: 2px;
 }
 
+
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -922,10 +931,10 @@ h2 + .row {
   display: none;
   float: left;
   min-width: 160px;
-  padding: 5px 0;
-  margin: 2px 0 0;
+  padding: 0;
+  margin: 5px 0 0;
   list-style: none;
-  background-color: $text_yellow;
+  background-color: #fff;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
   *border-right-width: 2px;
@@ -963,7 +972,7 @@ h2 + .row {
   clear: both;
   font-weight: normal;
   line-height: 20px;
-  color: #fff;
+  color: $text_link;
   white-space: nowrap;
 }
 
@@ -972,14 +981,18 @@ h2 + .row {
 .dropdown-submenu:hover > a {
   color: #fff;
   text-decoration: none;
-  background-color: #999;
+  background-color: #ffbf1b;
+  opacity: 1.0;
+  filter: alpha(opacity=100);
 }
 
 .dropdown-menu .active > a,
 .dropdown-menu .active > a:hover {
-  color: #333333;
+  color: #fff;
   text-decoration: none;
-  background-color: #999;
+  background-color: #ffbf1b;
+  opacity: 1.0;
+  filter: alpha(opacity=100);
   outline: 0;
 }
 
@@ -993,4 +1006,24 @@ h2 + .row {
   cursor: default;
   background-color: transparent;
   background-image: none;
+}
+
+
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+.navbar .nav li.dropdown.active > .dropdown-toggle,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle {
+  background: transparent;
+  color: #fbb21c;
+}
+
+.navbar .nav li.dropdown > .dropdown-toggle .caret {
+  border-top-color: #777777;
+  border-bottom-color: #777777;
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle .caret,
+.navbar .nav li.dropdown.active > .dropdown-toggle .caret,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle .caret {
+  border-top-color: #555555;
+  border-bottom-color: #555555;
 }
