@@ -4,7 +4,7 @@
 <% if !@user.nil? && !@user.deleted %>
 <%= render "header" %>
 
-
+<% content_for :title, "Profile" %>
 <div class = "row">
 	<div class="span3" >
 		<%= render "users/navi" %>
