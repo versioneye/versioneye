@@ -38,10 +38,14 @@
 				<h1 class="page-title"><%=h yield(:title) %></h1>
 			</div>
 			<div class="span4 pull-right">
+				<form id="form" action="/search" method="GET">
 				<div class="input-append pull-right" style="padding-top: 15px;">
-					<input type="text" name = "q" />
-					<button class="btn"><span class="icon-search"></span></button>
+						<input id="q" name="q" type="text" value="<%= @query %>" />
+						<button class="btn">
+							<span class="icon-search"></span>
+						</button>
 				</div>
+				</form>
 			</div>
 		</div>
 		<div class="well-white row">

@@ -1,4 +1,5 @@
 
+<% content_for :title, "Search results" %>
 <div class="span3">
 	<%= render "extended_search" %>
 </div>
@@ -8,7 +9,7 @@
 	<% end %>
 	<div class =  "row">
 		<div class = "span5 ">
-			<em> `Java`</em> has returned 109 results
+			<em> `<%= params[:q] %>`</em> has returned <%= @products.count %> results
 		</div>
 		<div class = "span3">
 			<div class = "pagination pagination-right pagination-mini"
