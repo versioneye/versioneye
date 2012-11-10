@@ -386,16 +386,13 @@ hr.separator-eye {
   }
 }
 
-
 .well1 {
   text-align : center;
   min-height: 20px;
-  padding: 19px;
+  padding: 28px 5px;
   margin-bottom: 20px;
 
-
   background-color: transparent;
-  border: 0px;
 
   & .off{
     display: inline-block;
@@ -412,11 +409,14 @@ hr.separator-eye {
     color: $text_casual;
   }
 
+  & > .marketing-icon{
+    height: 62px;
+  }
+
 }
 
 
 .well1:hover {
-
   background-color: #ffffff;
   border: 1px solid #DBD7D7;
   -webkit-border-radius: 10px;
@@ -436,6 +436,10 @@ hr.separator-eye {
 
   & > h5 {
     color: $text_yellow;
+  }
+
+  & > .marketing-icon{
+    height: 62px;
   }
 }
 
