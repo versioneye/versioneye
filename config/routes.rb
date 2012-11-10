@@ -111,7 +111,6 @@ Versioneye::Application.routes.draw do
   end
 
   post  '/services/choose_plan',  :to => 'services#choose_plan'
-  get '/service', :to => 'services#show_services'
   resources :services do
     member do
       get  'recursive_dependencies'

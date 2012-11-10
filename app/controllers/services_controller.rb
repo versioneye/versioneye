@@ -4,7 +4,6 @@ class ServicesController < ApplicationController
 		refer_name = params['refer']
 		check_refer( refer_name )
 		@project = Project.new
-		render :layout => 'application_lp'
 	end
 
 	def choose_plan
@@ -18,10 +17,6 @@ class ServicesController < ApplicationController
 		check_refer( refer_name )
 		@project = Project.new
 		render :template => "/services/index_pricing", :layout => 'application'
-	end
-
-	def show_services
-		render :template => "/services/index_services", :layout => 'application'
 	end
 
 	def create
