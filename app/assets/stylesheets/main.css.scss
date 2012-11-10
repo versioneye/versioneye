@@ -738,6 +738,11 @@ hr.separator-eye {
   padding: 10px 0px 20px 0px;
   border-bottom: 1px dotted #DDD;
 
+  &:hover {
+    background-color: #eee;
+    opacity: 0.8;
+  };
+
   & a {
     color : text_link;
     font-size: 14px;
@@ -847,7 +852,7 @@ h2 + .row {
   border : 0px;
 
   &.header {
-    padding: 20px;
+    padding: 10px 20px;
     border-top: 1px solid #ddd;
   }
 

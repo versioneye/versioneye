@@ -2,7 +2,7 @@
 	<meta itemprop="name" content="Newest Comments"  />
 	<% @comments.each do |comment| %>
 		<div class="comment" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Comment" >
-			<ul class="list-row">
+			<ul class="nav nav-list">
 				<li class="list-cell cell_icon">
 					<%= render :partial => "/shared/language_icons", :locals => {:language => comment.language, :icon => nil, :link => "/package/#{comment.prod_key_url}/version/#{comment.version_url}", :title => ":-)" } %>
 				</li>
@@ -15,7 +15,7 @@
 					</div>
 				</li>
 			</ul>
-			<ul class="list-row">
+			<ul class="nav nav-list">
 				<li class="list-cell cell_icon" style="vertical-align: top">
 					<% if show_gravatar %>
 						<%= link_to gravatar_image_tag( comment.user.email, :style => "width: 40px;", :alt => comment.user.fullname, :gravatar => { :size => 40, :default => "#{Settings.server_url}/profile_icon.png" }), user_path(comment.user) %>
@@ -26,7 +26,7 @@
 						<%= comment.comment %>
 					</div>
 					<div class="meta-text-small" >
-						<ul class="searchResult-inner-list-row">
+						<ul class="searchResult-inner-list-row nav nav-list">
 							<li class="searchResult-inner-list-cell share-on-icon">
 								<a href="https://twitter.com/share" 
 								   class="twitter-share-button" 

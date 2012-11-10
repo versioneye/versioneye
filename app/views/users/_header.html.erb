@@ -1,21 +1,28 @@
-<div class="div-row profile_header"  >
-	<div class="div-cell profile_image-cell" >
-		<%= link_to gravatar_image_tag( @user.email, :alt => @user.fullname, :class => "round", :gravatar => { :size => 195, :default => "#{Settings.server_url}/profile_icon.png" }), user_path(@user) %><br/>
+<div class="row profile_header"  >
+	<div class="span3" >
+		<%= link_to gravatar_image_tag( @user.email, :alt => @user.fullname, :class => "round", :gravatar => { :size => 125, :default => "#{Settings.server_url}/profile_icon.png" }), user_path(@user) %><br/>
 		<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
 			<a href="http://gravatar.com/emails">Change Profile Picture</a><br/>
 		<% end %>
 		<a href="<%= @user.blog %>"><%= @user.blog %></a> 
 	</div>
-	<div class="div-cell profile_summary_cell" >
-		<ul >
+	<div class="span6" >
+		<ul class = "nav">
 			<li >
-				<h1 ><%= @user.fullname %></h1>
+				<h3 ><%= @user.fullname %></h3>
 			</li>
 			<li >
-				<h2 >@<%= @user.username %></h2>
+				<h5 >@<%= @user.username %></h5>
+			</li>
+			<li>
+				<% if @user.location && !@user.location.eql?("") %>
+					<%= @user.location %>
+				<% else %>
+					No Location
+				<% end %>
 			</li>
 			<li >
-				<%= @user.description %>
+				<p><%= @user.description %></p>
 			</li>
 			<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
 				<li >
@@ -24,14 +31,7 @@
 			<% end %>
 		</ul>
 	</div>
-	<div class="div-cell profile_map_cell" >
-		<div>
-			<div id="map_for_user_profile" class="map_for_user_profile round" ></div>
-		</div>
-		<% if @user.location && !@user.location.eql?("") %>
-			<%= @user.location %>
-		<% else %>
-			No Location
-		<% end %>
+	<div class="span3" style = "text=align: center;">
+		<div id="map_for_user_profile" class="map_for_user_profile round" ></div>
 	</div>
 </div>

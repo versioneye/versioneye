@@ -1,21 +1,20 @@
-	
-	<div class="boxHeader" >
-		Knows
-	</div>
-	<div >
-		<% @languages.each do |language| %>
-			<div style="float: left; width: 60px; height: 60px;" >
-				<%= render :partial => "/shared/language_icons", :locals => {:language => language, :icon => nil, :link=>nil, :title=>language} %>
-			</div>
-		<% end %>
-	</div>
-	<div style="clear: both;"></div>
+
+<div class="box header" >
+	<h5>Knows</h5>
+</div>
+<div class = "box content">
+	<% @languages.each do |language| %>
+		<% prog_lang = language.downcase.gsub(/\./, "") %>
+		<span class = "icon-<%= prog_lang %> on"></span>
+	<% end %>
+</div>
+<div style="clear: both;"></div>
 
 <% if @userlinkcollection && !@userlinkcollection.empty? %> 
-	<div class="boxHeader" >
+	<div class="box header" >
 		Is on
 	</div>
-	<div >
+	<div class = "box content">
 		<% if !@userlinkcollection.github.nil? && !@userlinkcollection.github.empty? %>
 			<%= link_to image_tag("socialnetworks/github.png"), "https://github.com/#{@userlinkcollection.github}", :target => "github" %>
 		<% end %>

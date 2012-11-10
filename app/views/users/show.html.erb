@@ -1,11 +1,19 @@
-<% if !@user.nil? && !@user.deleted %>	
-	<%= render "header" %>
-	<div class="sidebar" >
+<% if !@user.nil? && @user.deleted %>
+	This Account does not exist anymore.
+<% end %>
+<% if !@user.nil? && !@user.deleted %>
+<%= render "header" %>
+
+
+<div class = "row">
+	<div class="span3" >
 		<%= render "users/navi" %>
-	</div>	
-	<div class="content">
+	</div>
+	<div class="span8" style = "border-left: 1px solid #ddd;">
 		<div class="boxHeader">
-			Follows <%= pluralize(@prod_count, "Package") %>
+			<h5>
+				Follows <%= pluralize(@prod_count, "Package") %>
+			</h5>
 		</div>
 		<div>
 			<% if !@prod_count.nil? && @prod_count > 0 %>
@@ -17,24 +25,22 @@
 				</div>
 			<% end %>
 		</div>
-		
-		<div class="boxHeader">
-			Commented on <%= pluralize(@comments_count, "Package") %>
+		<div class="">
+			<h5>
+				Commented on <%= pluralize(@comments_count, "Package") %>
+			</h5>
 		</div>
 		<div >
 			<% if !@comments_count.nil? && @comments_count > 0 %>
-				<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %> 
+				<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %>
 			<% end %>
 			<% if !@comments_count.nil? && @comments_count > 3 %>
-				<div style="padding-top: 10px;">
-					<a href="/users/<%=@user.username%>/comments" style="padding-left: 10px; font-size: 18px;">See all</a>
-				</div>
+				<h5 style="padding-top: 10px;">
+					<a href="/users/<%=@user.username%>/comments" style="padding-left: 10px; ">See all</a>
+				</h5>
 			<% end %>
 		</div>
-		
 	</div>
-<% end %>
-<% if !@user.nil? && @user.deleted %>
-	This Account does not exist anymore.
+</div>
 <% end %>
 <%= render 'shared/dialog_follow' %>
