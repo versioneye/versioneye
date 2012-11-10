@@ -1,16 +1,16 @@
-<div class="sidebar" >
+<div class="span3" >
 
-	<%= render "settings/navi" %>	
+	<%= render "settings/navi" %>
 
 </div>
-<div class="content">
+<div class="span8">
 
   <div class="boxHeader">
     Links
   </div>
 
 	<div class="boxContainer">
-	<%= form_tag("/settings/updatelinks", :method => "post") do  %>    
+	<%= form_tag("/settings/updatelinks", :method => "post") do  %>
     <div style="display:table-row;">
       <div class="labelCelMiddle">
 		    <%= label_tag(:GitHub, "GitHub") %>

@@ -1,25 +1,24 @@
 <div class="plans" id="plans" >
-
+<table class = "table table-hover">
 	<% @plans = Plan.all() %>
 	<% @plans.each do |plan| %>
-		<div class="plan" >
-			<div class="div-row">
-				<div class="div-cell" style="width: 100px; font-size: 18px;" ><%= plan.name %></div>
-				<div class="div-cell" style="width: 160px; font-size: 18px;"><%= plan.price %> $ / Month</div>
-				<div class="div-cell" style="width: 190px; font-size: 18px;"><%= plan.private_projects %> Private Project</div>
-				<% if !@plan.nil? %>
-					<div class="div-cell" style="width: 100px; font-size: 18px;">
-						<% if @plan && @plan.name_id.eql?( plan.name_id ) %> 
-							<button class="btn btn-primary btn-success" onClick="alert('This is your current plan')" >Current</button>
-						<% else %> 
-							<form action="/settings/updateplan" method="POST" > 
-								<input type="hidden" name="plan" value="<%= plan.name_id %>" />
-								<button type="submit" class="btn btn-primary" onClick="return confirmAction()" >Book It</button>
-							</form>
-						<% end %>
-					</div>
+	<tr>
+		<td ><%= plan.name %></td>
+		<td><%= plan.price %> $ / Month</td>
+		<td><%= plan.private_projects %> Private Project</td>
+		<% if !@plan.nil? %>
+			<td>
+				<% if @plan && @plan.name_id.eql?( plan.name_id ) %> 
+					<button class="btn-success" onClick="alert('This is your current plan')" >Current</button>
+				<% else %> 
+					<form action="/settings/updateplan" method="POST" > 
+						<input type="hidden" name="plan" value="<%= plan.name_id %>" />
+						<button type="submit" class="btn2" onClick="return confirmAction()" >Book It</button>
+					</form>
 				<% end %>
-			</div>
-		</div>
+			</td>
+		<% end %>
+	</tr>
 	<% end %>
+</table>
 </div>
