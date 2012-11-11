@@ -43,8 +43,8 @@ $sprite_url: "/assets/Sprite.png";
 
 /* LOGOs */
 
-.icon-beta { @include sprite(0px, 0px, 26px, 35px); margin-right: 10px;}
-.logo { @include sprite(-32px, 0px, 210px, 49px);}
+.icon_beta { @include sprite(  0px, 0px, 26px,  35px); margin-right: 10px;}
+.logo      { @include sprite(-32px, 0px, 210px, 49px);}
 
 /*  ICONS */
 
@@ -79,10 +79,10 @@ $sprite_url: "/assets/Sprite.png";
 */
 
 /* marketing icons */
-.icon-dependency { @include sprite_toggle(-5px, -172px, -63px, -170px, 54px, 53px);  }
-.icon-package { @include sprite_toggle(-136px, -172px, -188px, -172px, 49px, 48px);  }
-.icon-gitcat { @include sprite_toggle(-251px, -172px, -317px, -172px, 62px, 48px);   }
-.icon-freeprice {@include sprite_toggle(-390px, -171px, -440px, -171px, 48px, 46px); }
+.icon_dependency { @include sprite_toggle(-5px, -172px, -63px, -170px, 54px, 53px);  }
+.icon_package { @include sprite_toggle(-136px, -172px, -188px, -172px, 49px, 48px);  }
+.icon_gitcat { @include sprite_toggle(-251px, -172px, -317px, -172px, 62px, 48px);   }
+.icon_freeprice {@include sprite_toggle(-390px, -171px, -440px, -171px, 48px, 46px); }
 
 /* icons mixins */
 @mixin on-dependency { @include sprite(-5px, -172px, 54px, 53px);}
@@ -102,7 +102,7 @@ $sprite_url: "/assets/Sprite.png";
 .icon-user-on {@include sprite(-710px, -3px, 16px, 16px);}
 .icon-settings {@include sprite(-585px, -3px, 16px, 16px);}
 .icon-logout {@include sprite(-603px, -2px, 16px, 16px);}
-.icon-search {@include sprite(-622px, -3px, 16px, 16px);}
+.icon_search {@include sprite(-622px, -3px, 16px, 16px);}
 .icon-lock {@include sprite(-642px, 0px, 20px, 20px);}
 .icon-mail {@include sprite(-662px, 0px, 24px, 20px);}
 .icon-donut {@include sprite(-688px, 0px, 20px, 20px);}

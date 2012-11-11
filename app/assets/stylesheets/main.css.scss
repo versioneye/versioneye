@@ -47,10 +47,13 @@ body {
 h1,
 h2,
 h3,
-h4,
-h5,
-h6 {
+h4 {
   color: $text_yellow;
+  font-family: "Droid Sans";
+}
+
+h5, h6 {
+  color: $text_casual;
   font-family: "Droid Sans";
 }
 

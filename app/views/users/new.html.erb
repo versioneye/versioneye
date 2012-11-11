@@ -1,4 +1,4 @@
-<% content_for :title, "Sign up" %>
+<% title "Register" %>
 <div class = "span6" >
 	<div class = "control-group">
 		<h3> It's free to sign-up! </h3>
@@ -41,8 +41,7 @@
 	    <div class="control-group">
 	      	<div class="controls">
 	      		<%= f.check_box :terms,
-	      		:style => "vertical-align: top;
-margin-right: 10px;" %>
+	      		:style => "vertical-align: top; margin-right: 10px;" %>
 				<%= t(:terms_part_1) %>
 				<% if I18n.locale == :de %>
 					<%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "new_terms" %>
@@ -69,7 +68,6 @@ margin-right: 10px;" %>
 	<% end %>
 </div>
 <div class="span5">
-
 	<div class = "well transparent" style = "text-align: center">
 		<div style = "margin-top: -40px;">
 			<span class  = "img-profile48-rounded"></span>
@@ -83,4 +81,3 @@ margin-right: 10px;" %>
 		</div>
 	</div>
 </div>
-
