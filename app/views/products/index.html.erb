@@ -29,15 +29,15 @@
 	<div class= "search-container" >
 		<form id="form" action="/search" method="GET" style="padding: 0; margin:0;" >
 			<input id="lang" name="lang" class = "hide" type="hidden" value="<%= @lang %>" />
-			<div class="row-fluid">
-				<div class = "span5">
-					<div class = "input-prepend">
-						<span class="icon_search" style = "margin: 13px -25px 0px 10px;"></span>
-						<input id="q" name="q" type="text" value="<%= @query %>" />
+			<div class="row">
+				<div class = "span5 pull-left divider right">
+					<div class = "input-prepend ">
+						<span class="icon_search" style = "margin: 10px -25px 0px 10px;"></span>
+						<input id="q" class = "input large" name="q" type="text" value="<%= @query %>" />
 					</div>
 				</div>
-				<div class = "span7" >
-					<span>Filter</span>
+				<div class = "span6 pull-right" >
+					<span class = "mute" style = " ">Filter by</span>
 					<div class= "btn-group">
 					<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
 						<% @langs = @lang.split(",") %>
@@ -49,15 +49,17 @@
 						<% end %>
 					<% end %>
 					</div>
-					<button type="submit" class="btn2 btn2-big pull-right" >Search</button>
+					<button type="submit" class="btn2 btn2-big pull-right" >
+						Search
+					</button>
 				</div>
 			</div>
 		</form>
 	</div>
 </section>
 
-<section class="container">
-	<hr class="separator-eye" />
+<section class="container" style = "padding-top: 65px;">
+	<hr class="separator_eye" />
 </section>
 
 <section class=" container" >

@@ -141,7 +141,10 @@ $sprite_url: "/assets/Sprite.png";
 
 
 /* eye pictures */
-.separator_eye {@include sprite_toggle(-13px, -347px, -13px, -420px, 940px, 65px);}
+.separator_eye {
+	border: 0px;
+	@include sprite_toggle(-13px, -347px, -13px, -420px, 940px, 65px);
+}
 .logo_eye {@include sprite(-4px, -487px, 264px, 134px);}
 .logo_eye_text {@include sprite(-279px, -487px, 107px, 83px);}
 

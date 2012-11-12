@@ -119,6 +119,7 @@ h3 code {
     border: 1px solid #3C3B3B;
   }
 
+
 }
 
 
@@ -144,7 +145,9 @@ section > ul li {
   margin-bottom: 5px;
 }
 
-/* Separators (hr) */
+/* -----------------------
+  Separators (hr)
+*/
 .bs-docs-separator {
   margin: 40px 0 39px;
 }
@@ -450,8 +453,7 @@ hr.separator-eye {
 -------------------------------------------------- */
 
 .footer {
-  padding: 30px 0px 15px 0px;
-  margin-top: 50px;
+  padding: 35px 0px 15px 0px;
   border-top: 1px solid rgba(173, 173, 173, 0.22);
 
   & h4 { color: $text_casual;}
@@ -653,11 +655,11 @@ hr.separator-eye {
 -------------------------------------------------- */
   /*Searchcontainer*/
   .search-container {
-    padding: 20px 20px 20px 20px;
+    padding: 20px 20px;
     list-style: none;
-    background-color: #ffffff;
+    background-color: #fff;
     opacity: 0.98;
-    height: 36px;
+    height: 36px; /* + padding = 76px */
     background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5);
     background-image: -ms-linear-gradient(top, #ffffff, #f5f5f5);
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f5f5f5));
@@ -685,18 +687,13 @@ hr.separator-eye {
       *zoom: 1;
     }
 
-  & .divider {
-      padding: 0 5px;
-      color: #999999;
-    }
-
   &  input {
       color : $text_yellow;
-      background: transparent url('asssets/noise_2.png');
+      background: transparent url('/asssets/noise_2.png');
       font-size: 19px;
-      padding: 0px 0px 0px 35px;
-      width: 340px;
-      height: 35px;
+      width: 330px;
+      height: 26px;
+      padding-left: 30px;
     }
 
   & .btn-group > button {
@@ -710,7 +707,16 @@ hr.separator-eye {
       margin: 0px;
       padding: 0px 5px 0px 5px;
       border: 0px;
+  }
+
+  & .divider {
+    &.right {
+      border-right: 1px #ddd solid;
+      padding-right: 30px;
     }
+  }
+
+
 }
 
 
@@ -865,6 +871,11 @@ h2 + .row {
   }
 }
 
+
+.mute {
+
+  color : #999;
+}
 
 /* -------------------------------
   LISTS
