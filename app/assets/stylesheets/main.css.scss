@@ -719,6 +719,9 @@ hr.separator-eye {
 
 }
 
+#q {
+  color: $text_yellow;
+}
 
 .search-form {
   color: $text_casual;
@@ -904,6 +907,7 @@ h2 + .row {
   *display: inline-block;
   *padding-left: 20px;
   margin-left: 160px;
+  padding-right: 40px;
   *margin-left: 0;
 }
 

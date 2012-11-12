@@ -156,23 +156,22 @@ $sprite_url: "/assets/Sprite.png";
 /* social buttons */
 .btn_facebook {
 	display: block;
-
-	&.login {@include sprite(0px, -242px, 230px, 40px);}
-	&.signup {@include sprite(0px, -285px, 230px, 40px);}
+	&.login {@include sprite(0px, -242px, 230px, 40px);display: block;}
+	&.signup {@include sprite(0px, -285px, 230px, 40px);display: block;}
 	&.small {@include sprite(-698px, -242px, 77px, 24px);}
 }
 
 .btn_twitter {
 	display:  block;
-	&.login {@include sprite(-233px, -242px, 230px, 40px);}
-	&.signup {@include sprite(-233px, -285px, 230px, 40px);}
+	&.login {@include sprite(-233px, -242px, 230px, 40px);display: block;}
+	&.signup {@include sprite(-233px, -285px, 230px, 40px);display: block;}
 	&.small {@include sprite(-776px, -242px, 77px, 24px);}
 }
 
 .btn_github {
 	display: block;
-	&.login {@include sprite(-465px, -242px, 230px, 40px);}
-	&.signup {@include sprite(-465px, -285px, 230px, 40px);}
+	&.login {@include sprite(-465px, -242px, 230px, 40px);display: block;}
+	&.signup {@include sprite(-465px, -285px, 230px, 40px);display: block;}
 	&.small {@include sprite(-856px, -242px, 77px, 24px);}
 }
 

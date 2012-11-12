@@ -1,7 +1,7 @@
 <% title "Log in" %>
 
-<div class="span6">
-	<div class = "">
+<div class="span6" style = "padding: 15px 0px 60px 0px;">
+	<div class = "marketing" >
 		<h3> Login with username </h3>
 		<p> Get access to your projects </p>
 	</div>
@@ -31,17 +31,19 @@
 	    </div>
 	<% end %>
 </div>
-<div class="span5">
+<div class="span5" style = "padding: 60px 40px;">
 	<div class = "well transparent" style = "text-align: center">
 		<div style = "margin-top: -40px;">
 			<span class  = "icon_profile48 rounded"></span>
 		</div>
 		<h2>Got social media? </h2>
 		<p>Login with your social media account below.</p>
-		<div>
-			<div><%= render 'shared/login_with_github' %></div>
-			<div><%= render 'shared/login_with_twitter' %></div>
-			<div><%= render 'shared/login_with_facebook' %></div>
+		<div style = "position: relative; left: 10%; width:95%;">
+			<ul class = "nav nav-list">
+				<li><%= render 'shared/login_with_github' %></li>
+				<li><%= render 'shared/login_with_twitter' %></li>
+				<li><%= render 'shared/login_with_facebook' %></li>
+			</ul>
 		</div>
 
 	</div>
