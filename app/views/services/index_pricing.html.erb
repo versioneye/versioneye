@@ -1,8 +1,8 @@
 <% content_for :title, "Pricing" %>
 
-<div class = "">
-	<h1> The best things in life are free </h1>
-	<p>
+<div style = "padding: 30px;">
+	<h2> The best things in life are free </h2>
+	<p style = "font-size: 1.2em;">
 		It's free to register and monitor your projects.
 		You only need to pay a small fee to monitor private libraries.
 		We have a variety of plans to cater for everyone's needs.
@@ -10,6 +10,7 @@
 </div>
 
 
+<div style = "padding-bottom: 30px"> 
 <% plan_groups = Plan.where(active: true).group_by(&:category) %>
 <% plan_groups.each  do |plan_name, plans| %>
 	<% desc  = "" %>
@@ -18,4 +19,7 @@
 				:category => plan_name,
 				:description => desc,
 				:plans => plans) %>
+
 <% end %>
+
+</div>

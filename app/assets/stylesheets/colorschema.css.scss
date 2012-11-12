@@ -8,6 +8,7 @@
 
 .default {
 	@include color-schema(#ffffff, #73868d, #616970);
+	& h1, h2, h3, h4, h5 { color: #fbb21c;}
 }
 
 .error,
@@ -18,9 +19,15 @@
 }
 
 .inverse {@include color-schema(#616970, #ffffff, #dddddd);}
-.info  {@include color-schema(#616970, #eef0f1, #d3d8dc);}
+
+.info  {
+	@include color-schema(#616970, #eef0f1, #d3d8dc);
+	& h1, h2, h3, h4, h5 { color: #fbb21c;}
+}
+
 .warning {
 	@include color-schema(#616970, #ffecc4, #ffca5d);
+	& h1, h2, h3, h4, h5 { color: #FF8F35;}
 	& hr {border: 0px; border-bottom: 1px solid #EBC85B;}
 }
 
