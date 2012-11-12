@@ -2,9 +2,11 @@
 <html xmlns:fb="https://graph.facebook.com/schema/og/" itemscope itemtype="http://schema.org/WebApplication" >
 	
 	<head >
+
 		<title>VersionEye - Search Engine for Software Libraries</title>
+
 		<meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
-		<META HTTP-EQUIV="Content-Language" Content="en">
+		<meta HTTP-EQUIV="Content-Language" Content="en">
 		<meta name="name"     itemprop="name"     content="VersionEye">
 		<meta name="url"      itemprop="url"      content="<%= Settings.server_url %>" />
 		<meta name="description" itemprop="description" content="Search Engine for Software Libraries. Follow your Libraries and get notified about new versions." />
@@ -16,19 +18,21 @@
 	</head>
 
 	<body>
+		
 		<%= render 'layouts/header' %>
+		
 		<section class = "container flash-container">
 			<% flash.each do |key, value| %>
 				<div ><%= value %></div>
 			<% end %>
 		</section>
 
-		<!-- content-->
 		<%= yield %>
 
 		<%= render 'layouts/footer' %>
 
 		<%= debug(params) if Rails.env.development? %>
+	
 	</body>
 
 </html>

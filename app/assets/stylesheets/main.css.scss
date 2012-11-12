@@ -57,11 +57,16 @@ h5, h6 {
   font-family: "Droid Sans";
 }
 
+.no_margin{
+  margin: 0;
+}
+
 
 h1.page-title  {
   font-family: "Droid Serif", "Droid";
   font-size: 25px;
   color: $text_casual;
+  margin: 0;
 }
 
 h1, h2 {
@@ -375,8 +380,8 @@ hr.separator-eye {
 
 .well-white {
   background-color: #ffffff;
-  width: 938px;
-  padding: 20px 0px 0px 0px;
+  width: 878px;
+  padding: 30px;
   margin: 0px 0px 60px 0px;
   min-height: 20px;
 
@@ -397,7 +402,6 @@ hr.separator-eye {
 .well {
   &.pricing {margin: 0px 30px 20px 30px;}
 }
-
 
 
 .well1 {
@@ -656,6 +660,43 @@ hr.separator-eye {
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
           border-radius: 6px;
+}
+
+
+/* 2 Column Layout
+-------------------------------------------------- */
+
+.col2-left {
+  padding-left: 30px;
+  padding-top: 30px;
+}
+
+.col2-right {
+  padding-right: 30px;
+  padding-top: 30px;
+}
+
+
+/* Social Media Login
+-------------------------------------------------- */
+
+.social_media_login_box{
+  text-align: center; 
+  margin-top: 30px;  
+}
+
+.sml_list{
+  width: 300px; 
+  padding-left: 30px;
+}
+
+.sml_list_item{
+  list-style-type: none; 
+  padding-bottom: 5px;
+}
+
+.sml_header{
+  margin-top: -40px;
 }
 
 
@@ -951,7 +992,7 @@ h2 + .row {
 
 .form-horizontal .control-label {
   float: left;
-  width: 140px;
+  width: 100px;
   padding-top: 5px;
   text-align: right;
 }
@@ -959,7 +1000,7 @@ h2 + .row {
 .form-horizontal .controls {
   *display: inline-block;
   *padding-left: 20px;
-  margin-left: 160px;
+  margin-left: 110px;
   padding-right: 40px;
   *margin-left: 0;
 }

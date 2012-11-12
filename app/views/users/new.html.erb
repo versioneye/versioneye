@@ -1,85 +1,9 @@
-<% title "Register" %>
-<div class = "span6" style = "padding: 15px 0px 60px 0px;">
-	<div class = "marketing">
-		<h3> It's free to sign-up! </h3>
-		<p> Join today and track your repositories. </p>
-	</div>
-	<%= form_for @user, :html => {:class => "form-horizontal"} do |f| %>
-		<input id="username" name="user[username]" type="hidden" value="username" />
-	    <div class="messages">
-	        <%= render 'shared/error_messages', :object => f.object %>
-	    </div>
+<% title "Sign Up" %>
 
-	    <div class="control-group">
-	      <%= f.label :fullname, :class => "control-label" %>
-	      <div class="controls">
-	        <%= f.text_field :fullname, :id => "fullname" %>
-	      </div>
-	    </div>
-
-	    <div class="control-group">
-	        <%= f.label :email, :class => "control-label" %>
-	      <div class="controls">
-	        <%= f.text_field :email, :id => "email" %>
-	      </div>
-	    </div>
-
-	    <div class="control-group">
-	        <%= f.label :password,  :class => "control-label" %>
-	      <div class="controls">
-	        <%= f.password_field :password, :id => "password" %>
-	      </div>
-	    </div>
-
-	    <div class="control-group">
-	        <%= f.label "Password again:",  :class => "control-label" %>
-	      <div class="controls">
-	        <%= f.password_field :password2, :id => "password" %>
-	      </div>
-	    </div>
-
-	    <div class="control-group">
-	      	<div class="controls">
-	      		<%= f.check_box :terms,
-	      		:style => "vertical-align: top; margin-right: 10px;" %>
-				<%= t(:terms_part_1) %>
-				<% if I18n.locale == :de %>
-					<%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "new_terms" %>
-				<% else %>
-					<%= link_to "Conditions of Use", terms_path, :target => "new_terms" %>
-				<% end %>
-				<%= t(:terms_part_2) %>
-				<% if I18n.locale == :de %>
-					<%= link_to "Datenerhebung", datenerhebung_path, :target => "new_data" %>
-				<% else %>
-					<%= link_to "Data Acquisition", datacollection_path, :target => "new_data" %>
-				<% end %>
-				<%= t(:terms_part_3) %>
-	      </div>
-	    </div>
-
-	    <div class="control-group">
-	      <div class="control-label"></div>
-	      <div class="controls">
-	        <button type="submit" class="btn2 btn2-big" style="margin-top: 5px;" ><%= t(:page_signup_button_signup) %></button>
-	      </div>
-	    </div>
-
-	<% end %>
+<div class="span5 col2-left" >
+	<%= render 'users/signup_form' %>
 </div>
-<div class="span5" style = "padding: 60px 40px;">
-	<div class = "well transparent " style = "text-align: center">
-		<div style = "margin-top: -40px;">
-			<span class  = "icon_profile48 rounded"></span>
-		</div>
-		<h2> Got social media? </h2>
-		<p>Sign up with your social media account below.</p>
-		<div style = "position: relative; left: 10%; width:95%;">
-			<ul class = "nav nav-list">
-				<li><%= render "shared/login_with_twitter", :btn => "signup" %></li>
-				<li><%= render "shared/login_with_github", :btn => "signup" %></li>
-				<li><%= render "shared/login_with_facebook", :btn => "signup" %></li>
-			</div>
-		</div>
-	</div>
+
+<div class="span5 col2-right pull-right" >
+	<%= render 'shared/social_media_login' %>
 </div>

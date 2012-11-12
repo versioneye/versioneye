@@ -117,7 +117,7 @@ Versioneye::Application.routes.draw do
       post 'recursive_dependencies'
     end
   end
-  get   '/pricing',            :to => 'services#show_pricing'
+  get   '/pricing',            :to => 'services#pricing'
   get   '/news',               :to => 'news#news'
   get   '/mynews',             :to => 'news#mynews'
   get   '/hotnews',            :to => 'news#hotnews'

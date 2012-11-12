@@ -6,19 +6,21 @@
 <% end %>
 
 <head >
+
 	<meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
-	<META HTTP-EQUIV="Content-Language" Content="en">
-<% if @product %>
-	<title><%= @product.name %> : <%= @product.version %></title>
-	<meta name="name"     itemprop="name"     content="<%= @product.name %>">
-	<meta name="softwareversion" itemprop="softwareversion"  content="<%= @product.version %>">
-	<meta name="version" itemprop="version"  content="<%= @product.version %>">
-	<meta name="keywords" itemprop="keywords" content="<%= @product.name %>, <%= @product.language %>, <%= @product.prod_type %>" />
-	<meta name="url" itemprop="url" content="<%= Settings.server_url %>/package/<%= @product.to_param %>/version/<%= @product.version %>" />
-	<% if !@product.description.nil? && !@product.description.empty? %> 
-	<meta name="description" itemprop="description" content="<%= @product.description[0, 145] %>..." />
+	<meta HTTP-EQUIV="Content-Language" Content="en">
+
+	<% if @product %>
+		<title><%= @product.name %> : <%= @product.version %></title>
+		<meta name="name"     itemprop="name"     content="<%= @product.name %>">
+		<meta name="softwareversion" itemprop="softwareversion"  content="<%= @product.version %>">
+		<meta name="version" itemprop="version"  content="<%= @product.version %>">
+		<meta name="keywords" itemprop="keywords" content="<%= @product.name %>, <%= @product.language %>, <%= @product.prod_type %>" />
+		<meta name="url" itemprop="url" content="<%= Settings.server_url %>/package/<%= @product.to_param %>/version/<%= @product.version %>" />
+		<% if !@product.description.nil? && !@product.description.empty? %> 
+			<meta name="description" itemprop="description" content="<%= @product.description[0, 145] %>..." />
+		<% end %>
 	<% end %>
-<% end %>
 
 	<%= render 'layouts/html_head' %>
 
@@ -34,22 +36,8 @@
 		<% end %>
 	</section>
 
-	<section  class="container">
-		<div class="row" >
-			<div class="span6" >
-				<h1 class="page-title"><%= yield(:title) %></h1>
-			</div>
-			<div class="span4 pull-right">
-				<form id="form" action="/search" method="GET">
-				<div class="input-append pull-right" style="padding-top: 15px;">
-						<input id="q" name="q" type="text" value="<%= @query %>" />
-						<button class="btn">
-							<span class="icon_search"></span>
-						</button>
-				</div>
-				</form>
-			</div>
-		</div>
+	<section class="container">
+		<%= render 'layouts/searchbar' %>
 		<div class="well-white row">
 			<%= yield %>
 		</div>

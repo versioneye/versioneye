@@ -6,19 +6,6 @@ class ServicesController < ApplicationController
 		@project = Project.new
 	end
 
-	def choose_plan
-		plan = params[:plan]
-		cookies.permanent.signed[:plan_selected] = plan
-		redirect_to signup_path
-	end
-
-	def show_pricing
-		refer_name = params['refer']
-		check_refer( refer_name )
-		@project = Project.new
-		render :template => "/services/index_pricing", :layout => 'application'
-	end
-
 	def create
 		file = params[:upload]
 
@@ -85,6 +72,16 @@ class ServicesController < ApplicationController
 				render :json => "[#{resp}]"
 			}
 		end
+	end
+
+	def pricing
+		
+	end
+
+	def choose_plan
+		plan = params[:plan]
+		cookies.permanent.signed[:plan_selected] = plan
+		redirect_to signup_path
 	end
 
 	private 

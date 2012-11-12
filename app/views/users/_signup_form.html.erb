@@ -1,0 +1,62 @@
+  
+  <div class = "marketing" >
+    <h3 class="no_margin"> It's free to sign-up! </h3>
+    <p> Join today and track your repositories. </p>
+  </div>
+
+  <%= form_for @user, :html => {:class => "form-horizontal"} do |f| %>
+
+    <div class="messages">
+        <%= render 'shared/error_messages', :object => f.object %>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :fullname, :class => "control-label", :for => "fullname" %>
+      <div class="controls">
+        <%= f.text_field :fullname, :id => "fullname" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+        <%= f.label :email, :class => "control-label", :for => "email" %>
+      <div class="controls">
+        <%= f.text_field :email, :id => "email" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+        <%= f.label :password,  :class => "control-label", :for => "password" %>
+      <div class="controls">
+        <%= f.password_field :password, :id => "password" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <%= f.check_box :terms, :style => "vertical-align: top; margin-right: 5px;", :id => "terms" %>
+        <label for="terms" style="display: inline; font-size: 12px;">
+          <%= t(:terms_part_1) %>
+          <% if I18n.locale == :de %>
+            <%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "new_terms" %>
+          <% else %>
+            <%= link_to "Conditions of Use", terms_path, :target => "new_terms" %>
+          <% end %>
+          <%= t(:terms_part_2) %>
+          <% if I18n.locale == :de %>
+            <%= link_to "Datenerhebung", datenerhebung_path, :target => "new_data" %>
+          <% else %>
+            <%= link_to "Data Acquisition", datacollection_path, :target => "new_data" %>
+          <% end %>
+          <%= t(:terms_part_3) %>
+        </label>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="control-label"></div>
+      <div class="controls">
+        <button type="submit" class="btn2 btn2-big" style="margin-top: 5px;" ><%= t(:page_signup_button_signup) %></button>
+      </div>
+    </div>
+
+  <% end %>

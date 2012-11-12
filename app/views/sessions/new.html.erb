@@ -1,50 +1,9 @@
-<% title "Log in" %>
+<% title "Sign In" %>
 
-<div class="span6" style = "padding: 15px 0px 60px 0px;">
-	<div class = "marketing" >
-		<h3> Login with username </h3>
-		<p> Get access to your projects </p>
-	</div>
-	<%= form_for(:session, :url => sessions_path, :html => {:class => "form-horizontal"} ) do |f|  %>
-
-	    <div class="control-group">
-	      <%= f.label :email, :class => "control-label" %>
-	      <div class="controls">
-	        <%= f.text_field :email, :class => "round" %>
-	      </div>
-	    </div>
-	    <div class="control-group">
-	      <%= f.label :password, :class => "control-label" %>
-	      <div class="controls">
-	        <%= f.password_field :password, :class => "round" %><br/>
-	      </div>
-	    </div>
-		<div class="control-group">
-	      <div class="controls" style="">
-	        <%= link_to "I forgot my password", iforgotmypassword_path %>
-	      </div>
-	    </div>
-	    <div class="control-group">
-	      <div class="controls">
-	        <button type="submit" class="btn2 btn2-big" >Sign In</button>
-	      </div>
-	    </div>
-	<% end %>
+<div class="span5 col2-left" >
+	<%= render 'sessions/signin' %>
 </div>
-<div class="span5" style = "padding: 60px 40px;">
-	<div class = "well transparent" style = "text-align: center">
-		<div style = "margin-top: -40px;">
-			<span class  = "icon_profile48 rounded"></span>
-		</div>
-		<h2>Got social media? </h2>
-		<p>Login with your social media account below.</p>
-		<div style = "position: relative; left: 10%; width:95%;">
-			<ul class = "nav nav-list">
-				<li><%= render 'shared/login_with_github' %></li>
-				<li><%= render 'shared/login_with_twitter' %></li>
-				<li><%= render 'shared/login_with_facebook' %></li>
-			</ul>
-		</div>
 
-	</div>
+<div class="span5 col2-right pull-right" >
+	<%= render 'shared/social_media_login' %>
 </div>
