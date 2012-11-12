@@ -5,16 +5,21 @@
 		</h5>
 	</div>
 	<div class="span5" >
-		<% @main_dependencies.each do |dep| %> 
+		<ul class = "nav nav-list">
+		<% @main_dependencies.each do |dep| %>
+		<li>
 			<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
 				<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
+					<span class = "icon_link icon16"></span>
 					<span itemprop="name" ><%= dep.name %></span> 
 					<% if !dep.version_for_label.nil? && !dep.version_for_label.empty? %>
 						: <span itemprop="softwareVersion"><%= dep.version_for_label %></span>
 					<% end %> 
-				</a><br/>
+				</a>
 			</span>
+		</li>
 		<% end %>
+		</ul>
 	</div>
 </div>
 
@@ -30,7 +35,7 @@
 				<li>
 				<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
 					<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
-						<span class = "icon_link icon16"></span>
+						<span class = "icon_link"></span>
 						<span itemprop="name" ><%= dep.name %></span> 
 						<% if !dep.version_for_label.nil? && !dep.version_for_label.empty? %>
 							: <span itemprop="softwareVersion"><%= dep.version_for_label %></span>
@@ -54,16 +59,21 @@
 		</h5>
 	</div>
 	<div class="span5" >
+		<ul class = "nav nav-list">
 		<% provided_deps.each do |dep| %>
-			<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
-				<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
-					<span itemprop="name" ><%= dep.name %></span> 
-					<% if !dep.version_for_label.nil? && !dep.version_for_label.empty? %>
-						: <span itemprop="softwareVersion"><%= dep.version_for_label %></span>
-					<% end %> 
-				</a><br/>
-			</span>
+			<li>
+				<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
+					<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
+						<span class = "icon_link icon16"></span>
+						<span itemprop="name" ><%= dep.name %></span> 
+						<% if !dep.version_for_label.nil? && !dep.version_for_label.empty? %>
+							: <span itemprop="softwareVersion"><%= dep.version_for_label %></span>
+						<% end %> 
+					</a><br/>
+				</span>
+			</li>
 		<% end %>
+		</ul>
 	</div>
 </div>
 <% end %>
