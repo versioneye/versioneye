@@ -3,16 +3,19 @@
 <div class = "row well">
 	<div class="span2">
 		<h5>
-			<span class = "icon-download"></span>
 			<%= pluralize(@downloads.count, "Download") %>
 		</h5>
 	</div>
 	<div class="span5" >
+		<ul class = "nav nav-list">
 		<% @downloads.each do |download|  %>
-			<div>
-				<a itemprop="downloadUrl" href="<%= download.link %>"><%= download.name %></a>
-			</div>
+			<li>
+				<a itemprop="downloadUrl" title = "Download here." href="<%= download.link %>">
+					<span class = "icon_download icon16"></span>
+					<%= download.name %></a>
+			</li>
 		<% end %>
+		<ul>
 	</div>
 </div>
 <% end %>

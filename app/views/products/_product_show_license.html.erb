@@ -1,6 +1,6 @@
 <div class="box header">
 	<h5>
-		<span class = "icon-profile"></span>
+		<span class = "icon_profile"></span>
 		License
 	</h5>
 </div>
@@ -12,15 +12,16 @@
 			<%= @product.license %> - <span class="meta-text-small">[ crawled data ]</span>
 		<% end %>
 	<% else %>
-		UNKNOWN - <span class="meta-text-small">[ crawled data ]</span>
+		UNKNOWN - <small>[ crawled data ]</small>
 	<% end %>
 </div>
 <% if @product.license_manual && !@product.license_manual.empty? %>
 	<div class="box content" >
 		<% if !@product.licenseLink_manual.nil? && !@product.licenseLink_manual.empty? %>
-			<a href="<%= @product.licenseLink_manual %>" target="_LICENSE"><%= @product.license_manual %></a> <span class="meta-text-small"> - [ manual entry ]</span>
+			<a href="<%= @product.licenseLink_manual %>" target="_LICENSE"><%= @product.license_manual %></a> 
+			<small> - [ manual entry ]</small>
 		<% else %>
-			<%= @product.license_manual %> - <span class="meta-text-small">[ manual entry ]</span>
+			<%= @product.license_manual %> - <small>[ manual entry ]</small>
 		<% end %>
 	</div>
 <% end %>

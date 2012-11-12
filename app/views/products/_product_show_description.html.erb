@@ -3,7 +3,7 @@
 		<h5> Description </h5>
 
 		<% if @product.description_manual && !@product.description_manual.empty? %>
-			<div class="meta-text-small">[ crawled data ]</div>
+			<small>[ crawled data ]</small>
 		<% end %>
 		<% if @product.description && @product.description.include?("\n") %>
 			<%= @product.description.gsub!("\n", "<br/>").html_safe %>
@@ -12,7 +12,7 @@
 		<% end %>
 
 	<% if @product.description_manual && !@product.description_manual.empty? %>
-			<div class="meta-text-small">[ manual entry ]</div>
+			<small>[ manual entry ]</small>
 			<% if @product.description_manual.include? "\n" %>
 				<%= @product.description_manual.gsub!("\n", "<br/>").html_safe %>
 			<% else %>

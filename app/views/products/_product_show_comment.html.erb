@@ -8,17 +8,20 @@
 		    <div class="messages">
 		        <%= render 'shared/error_messages', :object => f.object %>
 		    </div>
-			<div>
-				<%= f.text_area :comment, :class => "round", :maxlength => "1000", :onKeyUp => "textCounter(this, document.getElementById('counter'), 1000)"  %>
+			<div class = "controls-group">
+				<%= f.text_area :comment,
+					:class => "input span8",
+					:maxlength => "1000", :rows => 5, :cols => 80,
+					:onKeyUp => "textCounter(this, document.getElementById('counter'), 1000)"  %>
+				<span class = "help-block pull-right">
+					<small> Characters left: <span id="counter">1000</span></small>
+				</span>
 				<%= f.hidden_field :product_key, :value => @product.prod_key %>
 				<%= f.hidden_field :version, :value => @product.version %>
 			</div>
-			<div style="display: inline-block; width: 550px;">
-				<div style="float: left">
-					<button type="submit" class="btn btn-large btn-primary" >Save</button>
-				</div>
-				<div style="float: right" class="meta-text-small">
-					Characters left: <span id="counter">1000</span>
+			<div class = "controls-group">
+				<div class = "pull-left">
+					<button type="submit" class="btn2 btn-large" >Save</button>
 				</div>
 			</div>
 		<% end %>
