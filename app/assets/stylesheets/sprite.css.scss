@@ -43,8 +43,8 @@ $sprite_url: "/assets/Sprite.png";
 
 /* LOGOs */
 
-.icon_beta { @include sprite(0px, 0px, 26px, 35px); margin-right: 10px;}
-.logo { @include sprite(-32px, 0px, 210px, 49px);}
+.icon_beta { @include sprite(  0px, 0px, 26px,  35px); margin-right: 10px;}
+.logo      { @include sprite(-32px, 0px, 210px, 49px);}
 
 /*  ICONS */
 
@@ -130,6 +130,7 @@ $sprite_url: "/assets/Sprite.png";
 .icon_download {@include sprite(-767px, -4px, 16px, 16px);}
 .icon_link {@include sprite(-786px, -3px, 16px, 16px);}
 .icon_files {@include sprite(-807px, -3px, 16px, 16px);}
+
 
 /* Profile pictures*/
 .icon_profile48 {
