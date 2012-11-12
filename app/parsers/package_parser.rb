@@ -2,6 +2,7 @@ class PackageParser
   
   # Parser for requirements.json from npm. NodeJS
   # https://npmjs.org/doc/json.html
+  # http://wiki.commonjs.org/wiki/Packages/1.1
   # 
   def self.parse ( url )
     return nil if url.nil?
