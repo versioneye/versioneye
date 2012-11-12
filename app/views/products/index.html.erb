@@ -32,7 +32,7 @@
 			<div class="row-fluid">
 				<div class = "span5">
 					<div class = "input-prepend">
-						<span class="icon-search" style = "margin: 13px -25px 0px 10px;"></span>
+						<span class="icon_search" style = "margin: 13px -25px 0px 10px;"></span>
 						<input id="q" name="q" type="text" value="<%= @query %>" />
 					</div>
 				</div>
@@ -44,7 +44,7 @@
 						<% @languages.each do |language| %>
 							<% langname = language.downcase.gsub(/\./, "") %>
 							<button class="btn lang" onclick="update_lang('<%= langname %>')" >
-								<span class = "small-icon-<%= langname %>">&nbsp;</span>
+								<span class = "icon_<%= langname %> small">&nbsp;</span>
 							</button>
 						<% end %>
 					<% end %>
@@ -67,8 +67,8 @@
 	</div>
 	<div class="row-fluid" style="height: 320px;">
 		<div class="span3 well1">
-			<span class="icon-dependency off marketing-icon"></span>
-			<span class="icon-dependency on marketing-icon"></span>
+			<span class="icon_dependency off marketing-icon"></span>
+			<span class="icon_dependency on marketing-icon"></span>
 			<h5>Visualizing dependendencies</h5>
 			<p>
 				VersionEye visualises recursive dependencies and 
@@ -77,8 +77,8 @@
 			<a href="/package/rails/version/3~2~8">Watch example</a>
 		</div>
 		<div class="span3 well1">
-			<span class = "icon-package off marketing-icon"></span>
-			<span class = "icon-package on  marketing-icon"></span>
+			<span class = "icon_package off marketing-icon"></span>
+			<span class = "icon_package on  marketing-icon"></span>
 			<h5>Package support</h5>
 			<p>
 				VersionEye has support for various package managers 
@@ -87,8 +87,8 @@
 			<a href="/services">Find out more</a>
 		</div>
 		<div class="span3 well1">
-			<span class="icon-gitcat off marketing-icon"></span>
-			<span class="icon-gitcat on  marketing-icon"></span>
+			<span class="icon_gitcat off marketing-icon"></span>
+			<span class="icon_gitcat on  marketing-icon"></span>
 			<h5>GitHub integratrion</h5>
 			<p>
 				Monitor your private GitHub repositories 
@@ -97,8 +97,8 @@
 			<a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&amp;scope=repo'>Login via GitHub</a>
 		</div>
 		<div class="span3 well1">
-			<span class="icon-freeprice off marketing-icon"></span>
-			<span class="icon-freeprice on  marketing-icon"></span>
+			<span class="icon_freeprice off marketing-icon"></span>
+			<span class="icon_freeprice on  marketing-icon"></span>
 			<h5>SignUp free</h5>
 			<p>
 				Monitoring opensource project is free. Only

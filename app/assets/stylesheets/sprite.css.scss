@@ -4,7 +4,7 @@
 $sprite_url: "/assets/Sprite.png";
 
 @mixin sprite($x, $y, $width, $height){
-	background: url(/assets/Sprite.png) $x $y no-repeat;
+	background: url($sprite_url) $x $y no-repeat;
 	display: inline-block;
 	vertical-align: middle;
 	width: $width;
@@ -23,7 +23,7 @@ $sprite_url: "/assets/Sprite.png";
 }
 
 @mixin sprite_btn($x, $y, $height){
-	background: url(/assets/Sprite.png) $x $y repeat-x;
+	background: url($sprite_url) $x $y repeat-x;
 	display: inline-block;
 	height: $height;
 }
@@ -43,35 +43,52 @@ $sprite_url: "/assets/Sprite.png";
 
 /* LOGOs */
 
-.icon-beta { @include sprite(0px, 0px, 26px, 35px); margin-right: 10px;}
+.icon_beta { @include sprite(0px, 0px, 26px, 35px); margin-right: 10px;}
 .logo { @include sprite(-32px, 0px, 210px, 49px);}
 
 /*  ICONS */
 
-.flag-de { @include sprite_toggle(-268px, -7px, -295px, -7px, 24px, 19px);}
-.flag-gb { @include sprite_toggle(-324px, -6px, -351px, -6px, 24px, 19px);}
+.flag{
+	&.de { @include sprite_toggle(-268px, -7px, -295px, -7px, 24px, 19px);}
+	&.gb { @include sprite_toggle(-324px, -6px, -351px, -6px, 24px, 19px);}
 
+}
 /* PROGRAMMING LANGUAGES */
 
 /* big icons */
-.icon-ruby { @include sprite_toggle(-71px, -76px, -13px, -76px, 36px, 36px);}
-.icon-r { @include sprite_toggle(-185px, -76px, -126px, -76px, 44px, 36px);}
-.icon-java {@include sprite_toggle(-243px, -68px, -300px, -68px, 35px, 56px);}
-.icon-php {@include sprite_toggle(-410px, -81px, -352px, -81px, 52px, 30px);}
-.icon-nodejs {@include sprite_toggle(-534px, -86px, -474px, -86px, 56px, 30px);}
-.icon-javascript {@include sprite_toggle(-658px, -80px, -599px, -80px, 43px, 31px);}
-.icon-python {@include sprite_toggle(-780px, -84px, -722px, -83px, 34px, 35px);}
-.icon-clojure {@include sprite_toggle(-891px, -79px, -833px, -80px, 44px, 43px);}
+.icon_ruby {
+	@include sprite_toggle(-71px, -76px, -13px, -76px, 36px, 36px);
+	&.small {@include sprite_toggle(-52px, -128px, -13px, -128px, 25px, 25px);}
+}
+.icon_r {
+	@include sprite_toggle(-185px, -76px, -126px, -76px, 44px, 36px);
+	&.small {@include sprite_toggle(-128px, -128px, -89px, -128px, 31px, 25px);}
+}
 
-/* small icons */
-.small-icon-ruby {@include sprite_toggle(-52px, -128px, -13px, -128px, 25px, 25px);}
-.small-icon-r {@include sprite_toggle(-128px, -128px, -89px, -128px, 31px, 25px);}
-.small-icon-java {@include sprite_toggle(-169px, -122px, -207px, -122px, 22px, 38px);}
-.small-icon-php  {@include sprite_toggle(-281px, -131px, -241px, -131px, 36px, 20px);}
-.small-icon-nodejs {@include sprite_toggle(-364px, -135px, -323px, -135px, 39px, 12px);}
-.small-icon-javascript {@include sprite_toggle(-448px, -131px, -408px, -131px, 30px, 22px);}
-.small-icon-python  {@include sprite_toggle(-530px, -133px, -491px, -133px, 24px, 24px);}
-.small-icon-clojure {@include sprite_toggle(-605px, -130px, -566px, -131px, 30px, 29px);}
+.icon_java {
+	@include sprite_toggle(-243px, -68px, -300px, -68px, 35px, 56px);
+	&.small {@include sprite_toggle(-169px, -122px, -207px, -122px, 22px, 38px);}
+}
+.icon_php {
+	@include sprite_toggle(-410px, -81px, -352px, -81px, 52px, 30px);
+	&.small {@include sprite_toggle(-281px, -131px, -241px, -131px, 36px, 20px);}
+}
+.icon_nodejs {
+	@include sprite_toggle(-534px, -86px, -474px, -86px, 56px, 30px);
+	&.small {@include sprite_toggle(-364px, -135px, -323px, -135px, 39px, 12px);}
+}
+.icon_javascript {
+	@include sprite_toggle(-658px, -80px, -599px, -80px, 43px, 31px);
+	&.small {@include sprite_toggle(-448px, -131px, -408px, -131px, 30px, 22px);}
+}
+.icon_python {
+	@include sprite_toggle(-780px, -84px, -722px, -83px, 34px, 35px);
+	&.small {@include sprite_toggle(-530px, -133px, -491px, -133px, 24px, 24px);}
+}
+.icon_clojure {
+	@include sprite_toggle(-891px, -79px, -833px, -80px, 44px, 43px);
+	&.small {@include sprite_toggle(-605px, -130px, -566px, -131px, 30px, 29px);}
+}
 
 
 /* ----------------------------------------------------------------------------
@@ -79,10 +96,10 @@ $sprite_url: "/assets/Sprite.png";
 */
 
 /* marketing icons */
-.icon-dependency { @include sprite_toggle(-5px, -172px, -63px, -170px, 54px, 53px);  }
-.icon-package { @include sprite_toggle(-136px, -172px, -188px, -172px, 49px, 48px);  }
-.icon-gitcat { @include sprite_toggle(-251px, -172px, -317px, -172px, 62px, 48px);   }
-.icon-freeprice {@include sprite_toggle(-390px, -171px, -440px, -171px, 48px, 46px); }
+.icon_dependency { @include sprite_toggle(-5px, -172px, -63px, -170px, 54px, 53px);  }
+.icon_package { @include sprite_toggle(-136px, -172px, -188px, -172px, 49px, 48px);  }
+.icon_gitcat { @include sprite_toggle(-251px, -172px, -317px, -172px, 62px, 48px);   }
+.icon_freeprice {@include sprite_toggle(-390px, -171px, -440px, -171px, 48px, 46px); }
 
 /* icons mixins */
 @mixin on-dependency { @include sprite(-5px, -172px, 54px, 53px);}
@@ -90,38 +107,42 @@ $sprite_url: "/assets/Sprite.png";
 
 
 /* functionality icons */
-.icon-upload {@include sprite(-501px, -183px, 37px, 35px);}
-.icon-www {@include sprite(-551px, -182px, 43px, 36px);}
-.icon-enterprise {@include sprite(-683px, -174px, 33px, 51px);}
+.icon_upload {@include sprite(-501px, -183px, 37px, 35px);}
+.icon_www {@include sprite(-551px, -182px, 43px, 36px);}
+.icon_enterprise {@include sprite(-683px, -174px, 33px, 51px);}
 
 
 /* mini-icons */
-.icon-trangel {@include sprite(-380px, -3px, 16px, 16px);}
-.icon-tringel {@include sprite(-400px, -3px, 160px, 16px);}
-.icon-user {@include sprite(-565px, -3px, 16px, 16px);}
-.icon-user-on {@include sprite(-710px, -3px, 16px, 16px);}
-.icon-settings {@include sprite(-585px, -3px, 16px, 16px);}
-.icon-logout {@include sprite(-603px, -2px, 16px, 16px);}
-.icon-search {@include sprite(-622px, -3px, 16px, 16px);}
-.icon-lock {@include sprite(-642px, 0px, 20px, 20px);}
-.icon-mail {@include sprite(-662px, 0px, 24px, 20px);}
-.icon-donut {@include sprite(-688px, 0px, 20px, 20px);}
-.icon-files {@include sprite(-728px, -4px, 17px, 15px);}
-.icon-profile {@include sprite(-747px, -4px, 17px, 11px);}
-.icon-download {@include sprite(-767px, -4px, 16px, 16px);}
-.icon-link {@include sprite(-786px, -3px, 16px, 16px);}
-.icon-files {@include sprite(-807px, -3px, 16px, 16px);}
+.icon_trangel {@include sprite(-380px, -3px, 16px, 16px);}
+.icon_tringel {@include sprite(-400px, -3px, 160px, 16px);}
+.icon_user {
+	@include sprite(-565px, -3px, 16px, 16px);
+	&.on {@include sprite(-710px, -3px, 16px, 16px);}
+}
+.icon_settings {@include sprite(-585px, -3px, 16px, 16px);}
+.icon_logout {@include sprite(-603px, -2px, 16px, 16px);}
+.icon_search {@include sprite(-622px, -3px, 16px, 16px);}
+.icon_lock {@include sprite(-642px, 0px, 20px, 20px);}
+.icon_mail {@include sprite(-662px, 0px, 24px, 20px);}
+.icon_donut {@include sprite(-688px, 0px, 20px, 20px);}
+.icon_files {@include sprite(-728px, -4px, 17px, 15px);}
+.icon_profile {@include sprite(-747px, -4px, 17px, 11px);}
+.icon_download {@include sprite(-767px, -4px, 16px, 16px);}
+.icon_link {@include sprite(-786px, -3px, 16px, 16px);}
+.icon_files {@include sprite(-807px, -3px, 16px, 16px);}
 
 /* Profile pictures*/
-.img-profile48 {@include sprite(-876px, 0px, 48px, 48px);}
-.img-profile48-rounded {@include sprite(-826px, 0px, 48px, 48px);}
-.img-profile32 {@include sprite(-928px, 0px, 32px, 32px);}
+.icon_profile48 {
+	@include sprite(-876px, 0px, 48px, 48px);
+	&.rounded {@include sprite(-826px, 0px, 48px, 48px);};
+}
+.icon_profile32 {@include sprite(-928px, 0px, 32px, 32px);}
 
 
 /* eye pictures */
-.separator-eye {@include sprite_toggle(-13px, -347px, -13px, -420px, 940px, 65px);}
-.logo-eye {@include sprite(-4px, -487px, 264px, 134px);}
-.logo-eye-text {@include sprite(-279px, -487px, 107px, 83px);}
+.separator_eye {@include sprite_toggle(-13px, -347px, -13px, -420px, 940px, 65px);}
+.logo_eye {@include sprite(-4px, -487px, 264px, 134px);}
+.logo_eye_text {@include sprite(-279px, -487px, 107px, 83px);}
 
 
 /* ----------------------------------------------------------------------------
@@ -129,7 +150,7 @@ $sprite_url: "/assets/Sprite.png";
 */
 
 /* social buttons */
-.btn-facebook {
+.btn_facebook {
 	display: block;
 
 	&.login {@include sprite(0px, -242px, 230px, 40px);}
@@ -137,14 +158,14 @@ $sprite_url: "/assets/Sprite.png";
 	&.small {@include sprite(-698px, -242px, 77px, 24px);}
 }
 
-.btn-twitter {
+.btn_twitter {
 	display:  block;
 	&.login {@include sprite(-233px, -242px, 230px, 40px);}
 	&.signup {@include sprite(-233px, -285px, 230px, 40px);}
 	&.small {@include sprite(-776px, -242px, 77px, 24px);}
 }
 
-.btn-github {
+.btn_github {
 	display: block;
 	&.login {@include sprite(-465px, -242px, 230px, 40px);}
 	&.signup {@include sprite(-465px, -285px, 230px, 40px);}
@@ -154,16 +175,16 @@ $sprite_url: "/assets/Sprite.png";
 
 /* buttons */
 
-.bg-btn {
+.bg_btn {
 	@include sprite_btn(-712px, -283px, 42px);
 	& .closure-left {@include sprite(-704px, -283px, 6px, 42px);}
 	& .closure-right {@include sprite(-715px, -283px, 6px, 42px);}
 
 }
 
-.bg-btn-on {@include sprite_btn(-734px, -283px, 42px);}
+.bg_btn_on {@include sprite_btn(-734px, -283px, 42px);}
 
-.bg-btn-small {
+.bg_btn_small {
 	@include sprite_btn(-759px, -283px, 30px);
 	& .on {@include sprite_btn(-781px, -283px, 30px);}
 }
