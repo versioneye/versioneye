@@ -745,13 +745,28 @@ hr.separator-eye {
   }
 }
 
+#extended_search_container {
+  color: #888;
+  padding: 0px 20px 0px 30px;
+
+  & .control-group {
+    min-height: 1.1em;
+    margin-bottom: 0px;
+  }
+
+  & .control-header {
+    border-top: 1px solid #DDD;
+    padding-top: 10px;
+  }
+}
+
 .search-container .active a {
   color: #333333;
 }
 
 .search-item {
-  margin-left: 20px;
-  padding: 10px 0px 20px 0px;
+  margin-left: 30px;
+  padding: 10px 20px 20px 0px;
   border-bottom: 1px dotted #DDD;
 
   &:hover {
@@ -769,6 +784,13 @@ hr.separator-eye {
     font-family : inherit;
     padding: 2px 10px 2px 10px;
   }
+}
+
+#search-results {
+  margin-top: 15px;
+  padding-top: 15px;
+  border: 0px;
+  border-top: 1px solid #ddd;
 }
 /* Make tables spaced out a bit more */
 h2 + table,

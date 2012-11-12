@@ -1,55 +1,46 @@
-<form id="ext_searchform" action="/search" method="GET" class="search-form" >
-<div class="" id="extended_search_container" >
-<h5 >
-	<i class = "icon-files"></i>
-	Extended search
-</h5>
-	<input id="ext_lang" name="lang" type="hidden" value="<%= @lang %>" />
-		<div style="">
-			<div class="labelCel">
-				<%= label_tag(:name, "Name") %>
-			</div>
-			<div class="inputCel">
-				<%= text_field_tag :q, @query, :class => "round" %>
-			</div>
+<form id="ext_searchform" action="/search" method="GET" class="form" >
+<div class="" id="extended_search_container" style = "" >
+	<div>
+		<h5 >
+			<i class = "icon_files"></i>
+			Extended search
+		</h5>
+	</div>
+	<div  class="control-group">
+		<%= label_tag(:name, "Name", :class => "control-label" )%>
+		<div class="controls">
+			<input id="ext_lang" name="lang" type="hidden" value="<%= @lang %>" />
+			<%= text_field_tag :q, @query, :class => "input-medium" %>
 		</div>
-		<div style="display:table-row;">
-			<div class="labelCel">
-				<%= label_tag(:description, "Description") %>
-			</div>
-			<div class="inputCel">
-				<%= text_field_tag :d, @description, :class => "round" %>
-			</div>
+	</div>
+	<div class="control-group">
+		<%= label_tag(:description, "Description", :class => "control-label") %>
+		<div class="controls">
+			<%= text_field_tag :d, @description, :class => "input-medium" %>
 		</div>
-		<div style="display:table-row;">
-			<div class="labelCel">
-				<%= label_tag(:groupid, "GroupId") %>
-			</div>
-			<div class="inputCel">
-				<%= text_field_tag :g, @groupid, :class => "round" %>
-			</div>
-		</div>
-		<div style="display:table-row;">
-			<div class="labelCel">
-			</div>
-			<div class="inputCel meta-text-small" style="padding-bottom: 10px;">
-				GroupId is (Java) Maven2 specific
-			</div>
-		</div>
-		<div style="display:table-row;">
-			<div class="labelCel"></div>
-			<div class="pull-right">
-				<button type="submit" class="btn2 btn-medium" >Search</button>
-			</div>
-		</div>
-</div>
+	</div>
+	<div class="control-group">
+		<%= label_tag(:groupid, "GroupId") %>
+		<div class="controls">
+			<%= text_field_tag :g, @groupid, :class => "input-medium" %>
+			<span class = "help-block">
+				<small>GroupId is (Java) Maven2 specific</small>
 
-<div style = "margin-top: 20px;">
-	<h5>
-		<i class = "icon-files"></i>
-		Filter
-	</h5>
+			</span>
+		</div>
+	</div>
+	<div class="control-group" style = "height: 30px; padding-bottom:10px;">
+		<div class="pull-right">
+			<button type="submit" class="btn2 btn-medium" >Search</button>
+		</div>
+	</div>
 
+	<div class = "control-header">
+		<h5>
+			<i class = "icon_files"></i>
+			Filter
+		</h5>
+	</div>
 	<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
 		<% @langs = @lang.split(",") %>
 		<% @languages.each do |language| %>
