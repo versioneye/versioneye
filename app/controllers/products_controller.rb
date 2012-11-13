@@ -38,9 +38,7 @@ class ProductsController < ApplicationController
       languages = get_language_array(@lang)
       # @products = Product.search( @query, @description, @groupid, languages, params[:page])
       @products = Product.find_by(@query, @description, @groupid, languages, 300).paginate(:page => params[:page])
-      if @products.nil? || @products.count == 0
-        flash.now[:notice] = "Sorry. No Results found."
-      elsif signed_in?
+      if @products && @products.count > 0 && signed_in?
         @my_product_ids = current_user.fetch_my_product_ids 
       end
       save_search_log(@query, @products)

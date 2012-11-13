@@ -1,27 +1,15 @@
 
-<% content_for :title, "Search results" %>
+<% title "Search Results" %>
 
 <div class="span3">
 	<%= render "extended_search" %>
 </div>
-<div class="span8" style = " border-left: 1px solid #DDD;">
+<div class="span8" style="border-left: 1px solid #DDD;">
 	<% if !signed_in? %>
 		<%= render 'shared/dialog_follow' %>
 	<% end %>
-	<div class =  "row">
-		<div class = "span5">
-			<em> `<%= params[:q] %>`</em> has returned <%= @products.count %> results
-		</div>
-		<div class = "span3 pull-right">
-			<div class = "pagination pagination-right pagination-mini"
-			style = "margin: 0px;">
-				<ul>
-					<li><a href = "#"> 10</a></a> </li>
-					<li class = "active"><a href = "#"> 20 </a></li>
-					<li><a href = "#"> 50 </a></li>
-				</ul>
-			</div>
-		</div>
+	<div class="row" style="padding-left: 30px;">
+		<em> `<%= params[:q] %>`</em> has returned <%= @products.total_entries %> results
 	</div>
 	<%= render :partial => "products/show_search_results",
 		:locals => { :products => @products, :paginate => true,

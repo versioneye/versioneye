@@ -3,44 +3,41 @@
 		<% product.update_in_my_products(@my_product_ids) %>
 	<% end %>
 	<div class="row search-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/SoftwareApplication" >
-			<div class="icon48 span2 pull-left">
-				<% prog_lang = product.language.downcase.gsub(/\./, "") %>
-				<span class = "icon_<%= prog_lang %> on" ></span>
-			</div>
-			<div class = "span5">
 
-				<!-- content of result item -->
-				<a itemprop="url" href="<%= product_url(product) %>" class="searchResultLink">
-					<meta itemprop="name" content="<%= product.name %>" />
-					<meta itemprop="softwareVersion" content="<%= product.version %>" />
-					<span ><%= product.name_version(name_limit) %></span>
-				</a><br/>
-				<% if product.prod_type == "Maven2" %>
-					<span class="meta-text-small">GroupId: <%= product.group_id %></span>
-				<% end %>
+		<div class="icon56 span2 pull-left">
+			<% prog_lang = product.language.downcase.gsub(/\./, "") %>
+			<span class = "icon_<%= prog_lang %> on" ></span>
+		</div>
 
-			</div>
+		<div class = "span5">
+			<a itemprop="url" href="<%= product_url(product) %>" class="searchResultLink">
+				<meta itemprop="name" content="<%= product.name %>" />
+				<meta itemprop="softwareVersion" content="<%= product.version %>" />
+				<span ><%= product.name_version(name_limit) %></span>
+			</a><br/>
+			<% if product.prod_type == "Maven2" %>
+				<span class="meta-text-small">GroupId: <%= product.group_id %></span>
+			<% end %>
+		</div>
 
-			<div class = "span1 pull-right">
-				<!-- subscribe and unsubscribe button -->
-				<% if signed_in? %>
-					<span class = "pull-right" id="follow_<%=product.to_param%>" style="display: <%= display_follow(product) %>">
-						<%= form_tag("/package/follow", :remote => true) do  %>
-							<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>" />
-		 					<button type="submit" class="btn2 btn-medium" id="#{product.to_param}" >Follow</button>
-						<% end %>
-					</span>
-					<span class = "pull-right" id="unfollow_<%=product.to_param%>" style="display: <%= display_unfollow(product) %>">
-						<%= form_tag("/package/unfollow", :remote => true) do  %>
-							<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>" />
-							<button type="submit" class="btn btn-warning btn-medium" id="#{product.to_param}" >Unfollow</button>
-						<% end %>
-					</span>
-				<% else %>
-					<button type="submit" class="btn2 btn-medium" onclick="load_dialog_follow('<%= product.name %>');" >Follow</button>
-				<% end %>
-
-			</div>
+		<div class = "span1 pull-right">
+			<% if signed_in? %>
+				<span class = "pull-right" id="follow_<%=product.to_param%>" style="display: <%= display_follow(product) %>">
+					<%= form_tag("/package/follow", :remote => true) do  %>
+						<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>" />
+	 					<button type="submit" class="btn2 btn-big" id="#{product.to_param}" >Follow</button>
+					<% end %>
+				</span>
+				<span class = "pull-right" id="unfollow_<%=product.to_param%>" style="display: <%= display_unfollow(product) %>">
+					<%= form_tag("/package/unfollow", :remote => true) do  %>
+						<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>" />
+						<button type="submit" class="btn btn-warning btn-big" id="#{product.to_param}" >Unfollow</button>
+					<% end %>
+				</span>
+			<% else %>
+				<button type="submit" class="btn2 btn-medium" onclick="load_dialog_follow('<%= product.name %>');" >Follow</button>
+			<% end %>
+		</div>
 
 	</div>
 <% end %>
