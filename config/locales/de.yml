@@ -17,6 +17,7 @@ de:
     page_signup_error_terms: "Sie müssen die Nutzungsbedingungen UND die Datenerhebung akzeptieren."
     page_signup_error_email: "Die gewählte E-Mail Adresse ist bereits vergeben. Bitte geben Sie eine andere an."
     page_signup_error_password: "Das Passwort muss mindestens 5 Zeichen lang sein."
+    page_signup_error_fullname: "Bitte geben Sie einen Namen an."
     page_footer_about: "Über"
     page_footer_team:  "Mitarbeiter"
     page_header_services: "Leistungen"

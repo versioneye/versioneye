@@ -20,16 +20,23 @@ class UsersController < ApplicationController
     @user = User.new
   end
   
+  def created
+    render 'create'
+  end
+
   def create
     @user = User.new(params[:user])
     if !User.email_valid?(@user.email)
       flash.now[:error] = t(:page_signup_error_email)
       render 'new'
-    elsif @user.terms != true
-      flash.now[:error] = t(:page_signup_error_terms)
-      render 'new'
+    elsif @user.fullname.nil? || @user.fullname.empty? 
+      flash.now[:error] = t(:page_signup_error_fullname)
+      render 'new' 
     elsif @user.password.nil? || @user.password.empty? || @user.password.size < 5
       flash.now[:error] = t(:page_signup_error_password)
+      render 'new'
+    elsif @user.terms != true
+      flash.now[:error] = t(:page_signup_error_terms)
       render 'new'
     else 
       @user = User.new(params[:user])

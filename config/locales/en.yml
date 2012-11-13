@@ -17,6 +17,7 @@ en:
     page_signup_error_terms: "You have to accept the Conditions of Use AND the Data Aquisition."
     page_signup_error_email: "The E-Mail address is already taken. Please choose another E-Mail."
     page_signup_error_password: "Please choose a password with at least 5 characters."
+    page_signup_error_fullname: "The name is mandatory. Please type in a name."
     page_footer_about: "About"
     page_footer_team:  "Team"
     page_header_services: "Services"

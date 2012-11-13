@@ -29,6 +29,7 @@ Versioneye::Application.routes.draw do
       get 'users_location'
     end
   end
+  get   '/created', :to => 'users#created'
   get   '/signup',                       :to => 'users#new'
   get   '/users/:id/notifications',      :to => 'users#notifications'
   get   '/users/activate/:verification', :to => 'users#activate'
