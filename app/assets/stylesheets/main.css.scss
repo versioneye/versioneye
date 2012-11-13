@@ -38,7 +38,7 @@ $text_hover: #a0b8cf;
 -------------------------------------------------- */
 body {
   background: url(/assets/noise_2.png);
-  font-size: 13px;
+  font-size: 12px;
   color: $text_casual;
   font-family: "Droid Sans", "Droid Serif", Helvetica;
 }
@@ -47,8 +47,8 @@ body {
 h1,
 h2,
 h3,
-h4, 
-h5, 
+h4,
+h5,
 h6 {
   color: $text_yellow;
   font-family: "Droid Sans";
@@ -631,16 +631,17 @@ div.content {
 
 .social_media_login_box{
   text-align: center; 
-  margin-top: 30px;  
+  margin-top: 30px;
 }
 
 .sml_list{
-  width: 250px; 
+  width: 250px;
   padding-left: 30px;
 }
 
 .sml_list_item{
-  list-style-type: none; 
+  list-style-type: none;
+  height: 40px;
   padding-bottom: 5px;
   margin: 0;
   width: 240px;
