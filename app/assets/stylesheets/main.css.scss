@@ -47,18 +47,27 @@ body {
 h1,
 h2,
 h3,
-h4 {
+h4, 
+h5, 
+h6 {
   color: $text_yellow;
   font-family: "Droid Sans";
 }
 
-h5, h6 {
-  color: $text_casual;
-  font-family: "Droid Sans";
+h1, h2 {
+  font-family: "Droid Serif";
+  font-size: 30px;
 }
 
 .no_margin{
   margin: 0;
+}
+
+h5.marketing {
+  color: $text_yellow;
+  font-family: "Droid Sans";
+  margin: 0px 0px 20px 0px;
+  text-align: left;
 }
 
 
@@ -69,10 +78,6 @@ h1.page-title  {
   margin: 0;
 }
 
-h1, h2 {
-  font-family: "Droid Serif";
-  font-size: 30px;
-}
 
 h3 {
   font-family: "Droid Sans";
@@ -156,30 +161,10 @@ div.content {
 /* -----------------------
   Separators (hr)
 */
-.bs-docs-separator {
-  margin: 40px 0 39px;
+
+.hr_row{
+  margin: 60px 0px 60px 0px;
 }
-
-/* Faded out hr */
-hr.soften {
-  height: 1px;
-  margin: 70px 0;
-  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.1), rgba(0,0,0,0));
-  background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.1), rgba(0,0,0,0));
-  background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.1), rgba(0,0,0,0));
-  background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.1), rgba(0,0,0,0));
-  border: 0;
-}
-
-
-
-hr.separator-eye {
-  margin: 85px 0px 25px 0px;
-  border: 0px;
-  z-index : 5;
-  opacity: 0.8;
-}
-
 
 
 /* Jumbotrons
@@ -369,12 +354,40 @@ hr.separator-eye {
 
 }
 
+.marketing_exp{
+  padding-top: 20px;
+}
+
+.package_manager{
+  height: 70px;
+  margin-right: 10px;
+}
+
+.package_managers_icon{
+  margin: 0px 20px 0px 0px; 
+  width: 50px;
+}
+
 .marketing .marketing-byline {
   margin-bottom: 40px;
   font-size: 20px;
   font-weight: 300;
   line-height: 25px;
   color: #999;
+}
+
+.integration_icon{
+  text-align: left;
+  width: 72px;
+}
+
+.integration_header{
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.integration_desc{
+  height: 70px;
 }
 
 
@@ -676,6 +689,16 @@ hr.separator-eye {
   padding-top: 30px;
 }
 
+.col2-left-l {
+  padding-left: 30px;
+  padding-top: 0px;
+}
+
+.col2-right-r {
+  padding-right: 30px;
+  padding-top: 0px;
+}
+
 
 /* Social Media Login
 -------------------------------------------------- */
@@ -686,13 +709,15 @@ hr.separator-eye {
 }
 
 .sml_list{
-  width: 300px; 
+  width: 250px; 
   padding-left: 30px;
 }
 
 .sml_list_item{
   list-style-type: none; 
   padding-bottom: 5px;
+  margin: 0;
+  width: 240px;
 }
 
 .sml_header{

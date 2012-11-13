@@ -11,9 +11,23 @@
 	& h1, h2, h3, h4, h5 { color: #fbb21c;}
 }
 
+.flash{
+	padding: 8px 35px 8px 14px;
+	margin-bottom: 0px;
+	color: #C09853;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	background-color: #FCF8E3;
+	border: 1px solid #FBEED5;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
 .error,
 .important {
-	@include color-schema(#ffffff, #fbb21c, #d49616);
+	color: #B94A48;
+	background-color: #F2DEDE;
+	border-color: #EED3D7;
 	& h1, h2, h3, h4, h5 { color: #ffffff;}
 	& hr {border: 0px; border-bottom: 1px solid #EBC85B;}
 }
