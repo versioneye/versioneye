@@ -1,25 +1,39 @@
 <div id="<%= comment.id %>_reply_section" class="versioncomment_reply_section" >
-<% if !comment.versioncommentreplys.empty? %> 
+<% if !comment.versioncommentreplys.empty? %>
 	<% comment.versioncommentreplys.each do |reply| %>
-		<div class="meta-text-small" >
+	<div class = "reply-container" style = "min-height: 35px;">
+		<div class="meta">
+			<span class = "icon_user"></span>
+			<strong>
 			<%= link_to reply.fullname, user_path(reply.username) %> at <%= reply.created_at.strftime("%b %d, %Y - %I:%m %p") %>
+			</strong>
 		</div>
 		<div class="reply">
 			<%= reply.comment %>
+
+
+			<% if !comment.versioncommentreplys.empty? && signed_in? %>
+				<div class="versioncomment_reply_link_section pull-right">
+					<ul class = "nav nav-pills">
+						<li>
+							<a id="<%= comment.id %>_reply_link" href="#" onclick="show_versioncomment_reply('<%= comment.id %>'); return false;">Reply</a>
+						</li>
+						<li>
+							<a id="<%= comment.id %>_hide_link" href="#" onclick="hide_versioncomment_reply('<%= comment.id %>'); return false;" style="display: none;">Hide</a>
+						</li>
+					</ul>
+				</div>
+			<% end %>
 		</div>
+	</div>
 	<% end %>
 <% end %>
 </div  >
-<% if !comment.versioncommentreplys.empty? && signed_in? %> 
-	<div class="versioncomment_reply_link_section">
-		<a id="<%= comment.id %>_reply_link" href="#" onclick="show_versioncomment_reply('<%= comment.id %>'); return false;">Reply</a>
-		<a id="<%= comment.id %>_hide_link" href="#" onclick="hide_versioncomment_reply('<%= comment.id %>'); return false;" style="display: none;">Hide</a>
-	</div>
-<% end %>
+
 
 <% if signed_in? %>
 <% @versioncommentreply = Versioncommentreply.new if @versioncommentreply.nil? %>
-<div id="<%= comment.id %>_reply_form" style="display: none; padding-left: 20px;">
+<div id="<%= comment.id %>_reply_form" style="display: none; padding-left: 0px;">
 	<%= form_for(@versioncommentreply, :remote => true) do |reply| %>
 		<input name="comment_id" type="hidden" value="<%= comment.id %>" />
 	    <div class="messages">
@@ -27,12 +41,12 @@
 	    </div>
 
 	    <div>
-			<%= reply.text_area :comment, :class => "round", :style=>"width: 480px;", :maxlength => "250", :onKeyUp => "textCounter(this, document.getElementById('#{comment.id}_reply_counter'), 250)", :id => "#{comment.id}_textarea"  %>
+			<%= reply.text_area :comment, :class => "round", :style=>"width: 310px;", :maxlength => "250", :onKeyUp => "textCounter(this, document.getElementById('#{comment.id}_reply_counter'), 250)", :id => "#{comment.id}_textarea", :rows => 5  %>
 		</div>
-		<div style="display: inline-block; width: 480px;">
+		<div style="display: inline-block; width: 310px;">
 			<div style="float: left">
-				<button type="submit" class="btn btn-large btn-primary">Save</button>
-			</div>						
+				<button type="submit" class="btn btn-medium btn-primary">Save</button>
+			</div>
 			<div style="float: right" class="meta-text-small">
 				Characters left: <span id="<%= comment.id %>_reply_counter">250</span>
 			</div>

@@ -4,16 +4,11 @@
 			<%= pluralize(@comments.count, "Comments") %>
 		</h5>
 	</div>
-	<div class="box" itemprop="comment" itemscope="" itemtype="http://schema.org/ItemList" >
+	<div class="row" itemprop="comment" itemscope="" itemtype="http://schema.org/ItemList" >
 		<meta name="name" content="comment" />
-		<table>
 		<% @comments.each do |comment|  %>
-			<tr>
-				<td itemprop="itemListElement" itemscope="" itemtype="http://schema.org/UserComments">
+				<span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/UserComments"></span>
 					<%= render :partial => 'shared/show_version_comment', :locals => {:comment => comment} %>
-				</td>
-			</tr>
 		<% end %>
-		</table>
 	</div>
 <% end %>

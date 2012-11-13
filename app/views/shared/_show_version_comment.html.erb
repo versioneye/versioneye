@@ -1,35 +1,36 @@
-<div class="div-row">
-	<div class="div-cell avatar-comment" >
+<div class="row well white well-mini">
+	<div class="span1" style = "width:60px; text-align: center;">
 		<%= gravatar_image_tag( comment.user.email, :style => "width: 40px;", :alt => comment.user.fullname, :gravatar => { :size => 40, :default => "#{Settings.server_url}/profile_icon.png" }) %>
-	</div>
-	<div class="div-cell comment-meta-box">
-		<div class="meta-text-small">
-			<a itemprop="creator" href="/users/<%= comment.user.username %>">
+
+		<a itemprop="creator" href="/users/<%= comment.user.username %>">
 				<span itemprop="name"><%= comment.user.fullname %></span>
-			</a><br/>
-			<time itemprop="commentTime" date="<%= comment.created_at.strftime("%Y-%m-%dT%") %>"><%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %></time>
-		</div>
+			</a>
 	</div>
-</div>
-<div class="div-row">
-	<div class="div-cell" ></div>
-	<div class="div-cell">
-		<div itemprop="commentText">
-			<%= comment.comment %>
-		</div>
-		<div class="meta-text-small share-cell" >
-			<ul class="list-row">
-				<li class="list-cell share-on-icon">
+	<div class="span5">
+		<div class="row">
+			<div class = "pull-left">
+				<strong>
+					<time itemprop="commentTime" date="<%= comment.created_at.strftime("%Y-%m-%dT%") %>"><%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %>
+					</time>
+				</strong>
+			</div>
+			<div class = "pull-right">
 					<a href="https://twitter.com/share" 
 					   class="twitter-share-button" 
 					   data-url="<%= Settings.server_url %>/vc/<%= comment.id %>" 
-					   data-text="<%= comment.user.fullname %> commented <%= @product.name_and_version %> @VersionEye read the #review here:" 
+					   data-text="<%= comment.user.fullname %> commented <%= @product.name_and_version %> @VersionEye read the #review here:"
 					   data-count="horizontal" >Twitter</a>
-					   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-				</li>
-				<%= render :partial => "shared/list_reply_link", :locals => { :comment => comment } %>
-			</ul>
-			<%= render :partial => "shared/version_comment_replies", :locals => { :comment => comment } %>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			</div>
+		</div>
+		<div class = "">
+			<%= comment.comment %>
+			<%= render :partial => "shared/list_reply_link", :locals => { :comment => comment } %>
+		</div>
+		<div class="row">
+			<%= render :partial => "shared/version_comment_replies",
+				:locals => {:comment => comment} %>
 		</div>
 	</div>
+
 </div>

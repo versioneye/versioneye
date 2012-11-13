@@ -4,14 +4,14 @@
 			<%= pluralize(@main_dependencies.count, "Compile Dependencies") %>
 		</h5>
 	</div>
-	<div class="span5" >
+	<div class="span4" >
 		<ul class = "nav nav-list">
 		<% @main_dependencies.each do |dep| %>
 		<li>
 			<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
 				<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
 					<span class = "icon_link icon16"></span>
-					<span itemprop="name" ><%= dep.name %></span> 
+					<span itemprop="name" ><%= dep.name %></span>
 					<% if !dep.version_for_label.nil? && !dep.version_for_label.empty? %>
 						: <span itemprop="softwareVersion"><%= dep.version_for_label %></span>
 					<% end %> 
@@ -29,7 +29,7 @@
 		<div class="span2">
 				<h5><%= pluralize(test_deps.count, "Test Dependencies") %></h5>
 		</div>
-		<div class="span5" >
+		<div class="span4" >
 			<ul class = "nav nav-list">
 			<% test_deps.each do |dep| %>
 				<li>
@@ -58,7 +58,7 @@
 			<%= pluralize(provided_deps.count, "Provided Dependencies") %>
 		</h5>
 	</div>
-	<div class="span5" >
+	<div class="span4" >
 		<ul class = "nav nav-list">
 		<% provided_deps.each do |dep| %>
 			<li>
