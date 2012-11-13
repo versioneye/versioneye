@@ -1,10 +1,10 @@
 <form id="ext_searchform" action="/search" method="GET" class="form" >
 
-	<input id="ext_lang" name="lang" type="hidden" value="<%= @lang %>" />
+	<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
 
 	<div id="extended_search_container" >
 
-		<div style="padding: 0px 20px 0px 0px;">
+		<div class="side_nav_content">
 
 			<div  class="control-group">
 				<%= label_tag(:name, "Name", :class => "control-label" )%>
@@ -33,7 +33,7 @@
 				<% @languages.each do |language| %>
 					<div class = "controls">
 						<label for="<%= language %>" class = "checkbox" style = "color: #669acb;">
-							<input id="<%= language %>" type="checkbox" name="lang" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.include?(language) %> />
+							<input id="<%= language %>" type="checkbox" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.include?(language) %> />
 							<%= language %>
 						</label>
 					</div>
