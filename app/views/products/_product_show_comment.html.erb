@@ -27,13 +27,11 @@
 		<% end %>
 	</div>
 <% elsif %>
-	<div class="well warning">
+	<div class="well well-small warning">
 		<div class = "span3">
-			<p>
-				<%= link_to "Sign In", signin_path %> to leave a comment.
-			</p>
+			<%= link_to "Sign In", signin_path %> to leave a comment.
 		</div>
-		<div class = "span4">
+		<div class = "span4 pull-right">
 			<%= render 'shared/login_options_vertical' %>
 		</div>
 	</div>

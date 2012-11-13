@@ -973,13 +973,14 @@ h2 + .row {
   border : 0px;
 
   &.header {
-    padding: 10px 20px;
+    padding: 10px 0px;
     border-top: 1px solid #ddd;
   }
 
   &.content {
-    padding: 10px 20px 10px 20px;
-    width: 90%;
+    padding: 10px;
+    padding-left: 0px;
+    width: 95%;
   }
 
   &.well {
@@ -1014,9 +1015,12 @@ h2 + .row {
 */
 
 .list-social {
-  padding-top: 10px;
+  min-height: 30px;
+  padding-top: 0px;
   margin: 0px;
   & li {
+    width: 85px;
+    margin: 0px;
     display: block;
     float: left;
   }

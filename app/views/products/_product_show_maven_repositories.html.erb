@@ -5,7 +5,7 @@
 			<%= pluralize(@product.repositories.count, "Repository") %>
 		</h5>
 	</div>
-	<div class="span5">
+	<div class="span4">
 		<% @product.repositories.each do |repo| %>
 			<div><a href="<%= repo.src %>" target="new" ><%= repo.src %></a> </div>
 		<% end %>

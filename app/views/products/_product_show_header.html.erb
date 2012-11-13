@@ -1,5 +1,5 @@
 
-<div class  = "row content">
+<div class  = "row">
 	<div class = "span6">
 		<h3>
 			<% prog_lang = @product.language.downcase.gsub(/\./, "") %>
@@ -7,8 +7,8 @@
 			<%= @product.name_and_version %>
 		</h3>
 	</div>
-	<div class = "span5" style = "height: 50px;">
-		<ul class="list-social pull-right" >
+	<div class = "span5" style = "padding-top: 20px;height: 36px;">
+		<ul class="list-social" >
 			<li class="list-cell share-on-icon">
 				<a href="https://twitter.com/share"
 				   class="twitter-share-button"
@@ -18,10 +18,10 @@
 					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			</li>
 			<li class="list-cell share-on-icon">
-				<iframe src="https://www.facebook.com/plugins/like.php?href=<%=Settings.server_url%>/package/<%=@product.to_param%>&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=25" style="border:none; width:100px; height:25px" allowTransparency="true" scrolling="no" frameborder="0"></iframe>
+				<iframe src="https://www.facebook.com/plugins/like.php?href=<%=Settings.server_url%>/package/<%=@product.to_param%>&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=25" style="border:none; width:85px; height:25px" allowTransparency="true" scrolling="no" frameborder="0"></iframe>
 			</li>
 			<li class="list-cell share-on-icon" >
-				<div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="<%= Settings.server_url %>/package/<%= @product.to_param %>" style="width: 90px;"></div>
+				<div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="<%= Settings.server_url %>/package/<%= @product.to_param %>" style="width:85px;"></div>
 			</li>
 			<li>
 				<%= render 'products/product_show_bigfollow' %>
