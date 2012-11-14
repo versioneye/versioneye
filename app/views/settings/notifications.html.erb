@@ -1,46 +1,46 @@
+
 <div class="span3" >
-
 	<%= render "settings/navi" %>
-
 </div>
-<div class="span8">
 
-  <div class="boxHeader">
-	Notification Center
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    Manage your notifications
   </div>
-  <div class="boxContainer">
-	<%= form_tag("/settings/updatenotifications", :method => "post") do  %>    
+  
+  <div class="span8 content" >
+    
+    <%= form_tag("/settings/updatenotifications", :method => "post", :class => "form-horizontal") do  %>    
 
-		<div class="div-row">
-			<div class="labelCel" style="vertical-align: top; width: 40px;">
-				<%= check_box_tag "general_news", true, @user_notification.newsletter_news %>
-			</div>
-			<div class="inputCel" style="vertical-align: middle; width: 550px;" >
-				<label for="general_news" style="vertical-align: middle" >
-					I want to receive the Newsletter about general news. 
-				</label>
-			</div>
-		</div>
+			<div class="control-group">
+		    <div class="controls">
+		    	<%= check_box_tag "general_news", true, @user_notification.newsletter_news, :id => "general_news" %>
+		      <label for="general_news" style="display: inline; font-size: 12px;">
+		      	I want to receive the Newsletter about general news.   
+		      </label>
+		    </div>
+		  </div>
 
-		<div class="div-row">
-			<div class="labelCel" style="vertical-align: top; width: 40px;">
-				<%= check_box_tag "new_feature_news", true, @user_notification.newsletter_features %>
-			</div>
-			<div class="inputCel" style="vertical-align: middle; width: 550px;" >
-				<label for="new_feature_news" style="vertical-align: middle" >
-					I want to receive the Newsletter about new Features. 
-				</label>
-			</div>
-		</div>
+		  <div class="control-group">
+		    <div class="controls">
+		    	<%= check_box_tag "new_feature_news", true, @user_notification.newsletter_features, :id => "new_feature_news" %>
+		      <label for="general_news" style="display: inline; font-size: 12px;">
+		      	I want to receive the Newsletter about new Features. 
+		      </label>
+		    </div>
+		  </div>
 
-		<div style="display:table-row;">
-			<div class="labelCelBig" style="vertical-align: top; width: 40px;"></div>
-			<div class="inputCel">
-				<button type="submit" class="btn btn-large btn-primary" >Save</button>
-			</div>
-		</div>
+			<div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn2 btn2-big" >Save</button>
+        </div>
+      </div>
 
-	<% end %>
-	</div>
+		<% end %>
 
+  </div>
 </div>
+
+

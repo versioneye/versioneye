@@ -1,15 +1,18 @@
 <div class="span3" >
-
-	<%= render "settings/navi" %>
-
+  <%= render "settings/navi" %>
 </div>
-<div class="span8">
 
-	<h4> Plans & Pricing </h4>
-	<p>
-		Update your plane to monitor private projects. Open source projects are for free.
-	</p>
+<div class="span8" >
 
-	<%= render "/shared/pricing" %>
-
+  <div class="row content_header_def" >
+    Plans & Pricing
+  </div>
+  
+  <div class="span8 content" >
+    <p>
+      Update your plane to monitor private projects. Open source projects are for free.
+    </p>
+    <hr />
+    <%= render "/shared/pricing" %>  
+  </div>
 </div>

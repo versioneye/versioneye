@@ -1,24 +1,22 @@
 <div class="plans" id="plans" >
-<table class = "table table-hover">
 	<% @plans = Plan.all() %>
 	<% @plans.each do |plan| %>
-	<tr>
-		<td ><%= plan.name %></td>
-		<td><%= plan.price %> $ / Month</td>
-		<td><%= plan.private_projects %> Private Project</td>
+	<div class="row search-item" style="height: 45px; margin-left: 0;" >
+		<div class="span1" style="padding: 10px;" ><%= plan.name %></div>
+		<div class="span2" style="padding: 10px;"><%= plan.price %> $ / Month</div>
+		<div class="span2" style="padding: 10px;"><%= plan.private_projects %> Private Project</div>
 		<% if !@plan.nil? %>
-			<td>
+			<div class="span1" style="padding: 10px;" >
 				<% if @plan && @plan.name_id.eql?( plan.name_id ) %> 
-					<button class="btn-success" onClick="alert('This is your current plan')" >Current</button>
+					<span style="color: green; font-weight:bold">Current</span>
 				<% else %> 
 					<form action="/settings/updateplan" method="POST" > 
 						<input type="hidden" name="plan" value="<%= plan.name_id %>" />
-						<button type="submit" class="btn2" onClick="return confirmAction()" >Book It</button>
+						<button type="submit" class="btn2" >Book It</button>
 					</form>
 				<% end %>
-			</td>
+			</div>
 		<% end %>
-	</tr>
+	</div>
 	<% end %>
-</table>
 </div>

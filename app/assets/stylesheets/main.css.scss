@@ -185,8 +185,14 @@ div.content {
   border-bottom: 1px solid #DDD;
 }
 
-.left_border{
+.content_header_def{
+  padding-left: 30px;
+  padding-bottom: 15px;
   border-left: 1px solid #DDD;
+}
+
+.left_border{
+  border-left: 1px solid #DDD;  
 }
 
 
@@ -576,6 +582,11 @@ div.content {
     }
   }
 
+}
+
+.highlight_hint{
+  font-weight:bold; 
+  color: black;
 }
 
 

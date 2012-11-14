@@ -1,49 +1,47 @@
+
 <div class="span3" >
-
 	<%= render "settings/navi" %>
-
 </div>
-<div class="span8">
 
-  <div class="boxHeader">
+<div class="span8" >
+
+  <div class="row content_header_def" >
     Name Settings
   </div>
+  
+  <div class="span8 content" >
+    
+    <%= form_tag("/settings/updatenames", :method => "post", :class => "form-horizontal") do  %>    
 
-	<div class="boxContainer">
-	<%= form_tag("/settings/updatenames", :method => "post") do  %>    
-    <div class="div-row">
-      <div class="labelCelBig">
-		    <%= label_tag(:fullname, "Full Name") %>
+      <div class="control-group">
+        <%= label_tag :fullname, "Full Name", :class => "control-label", :for => "fullname" %>
+        <div class="controls">
+          <%= text_field_tag :fullname, @user.fullname, :id => "fullname" %>
+        </div>
       </div>
-      <div class="inputCel">
-		    <%= text_field_tag :fullname, @user.fullname, :class => "round" %>
-      </div>
-    </div>
 
-    <div style="display:table-row;">
-      <div class="labelCelBig">
-		    <%= label_tag(:username) %>
+      <div class="control-group">
+        <%= label_tag :username, "Username", :class => "control-label", :for => "username" %>
+        <div class="controls">
+          <%= text_field_tag :new_username, @user.username, :id => "username" %>
+        </div>
       </div>
-      <div class="inputCel">
-		    <%= text_field_tag :new_username, @user.new_username, :class => "round" %>
-      </div>
-    </div>
 
-	<div style="display:table-row;">
-      <div class="labelCelBig">
-		    <%= label_tag(:password) %>
+      <div class="control-group">
+        <%= label_tag :password, "Password", :class => "control-label", :for => "password" %>
+        <div class="controls">
+          <%= password_field_tag :password, "", :id => "password" %>
+        </div>
       </div>
-      <div class="inputCel">
-		    <%= password_field_tag :password, "", :class => "round" %>
-      </div>
-    </div>
 
-    <div style="display:table-row;">
-      <div class="labelCelBig"></div>
-      <div class="inputCel">
-		    <button type="submit" class="btn btn-large btn-primary" >Save</button>
+      <div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn2 btn2-big" >Save</button>
+        </div>
       </div>
-    </div>
-	<% end %>
 
+    <% end %>  
+
+  </div>
 </div>

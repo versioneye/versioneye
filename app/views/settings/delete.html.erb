@@ -1,30 +1,33 @@
+
 <div class="span3" >
-
-	<%= render "settings/navi" %>	
-
+  <%= render "settings/navi" %>
 </div>
-<div class="span8">
-  <div class="boxHeader">
-    Delete
+
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    Here you can delete this Account
   </div>
-	<div class="boxContainer">
-    Here you can delete this Account.<br/>
-    <br/>
-  	<%= form_tag("/settings/destroy", :method => "post") do  %>
-      <div style="display:table-row;">
-        <div class="labelCelBig">
-  		    <%= label_tag(:password) %>
-        </div>
-        <div class="inputCel">
-  		    <%= password_field_tag :password, "", :class => "round" %>
-        </div>
-      </div>
-      <div style="display:table-row;">
-        <div class="labelCelBig"></div>
-        <div class="inputCel">
-          <button type="submit" class="btn btn-large btn-danger" onClick="return confirmAction()" >Delete</button>
+  
+  <div class="span8 content" >
+    
+    <%= form_tag("/settings/destroy", :method => "post", :class => "form-horizontal") do  %>
+
+      <div class="control-group">
+        <%= label_tag :password, "Password", :class => "control-label", :for => "password" %>
+        <div class="controls">
+          <%= password_field_tag :password, "", :id => "password" %>
         </div>
       </div>
-  	<% end %>
+
+      <div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn2 btn2-big" >Delete this Account</button>
+        </div>
+      </div>
+
+    <% end %>  
+
   </div>
 </div>
