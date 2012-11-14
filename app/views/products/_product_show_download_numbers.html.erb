@@ -1,11 +1,10 @@
 <% if @product.downloads %>
 	<div class="box header">
 		<h5>
-			<span class = "icon-download"></span>
 			Downloads
 		</h5>
 	</div>
-	<div class="box container" >
+	<div class="box content" >
 		All: <strong> <%= @product.downloads %></strong><br/>
 		This Version: <strong><%= @version.downloads %></strong>
 	</div>

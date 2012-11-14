@@ -1,11 +1,10 @@
 <% if @product.authors %>
 	<div class="box header">
 		<h5>
-			<span class = "icon icon-files"></span>
 			Authors
 		</h5>
 	</div>
-	<div class="box container" itemprop="author">
+	<div class="box content" itemprop="author">
 		<%= @product.authors %>
 	</div>
 <% end %>
