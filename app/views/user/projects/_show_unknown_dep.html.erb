@@ -1,14 +1,16 @@
-<div class="unknown-row" >
-	<ul class="list-row" >
-		<li class="list-cell cell-icon">
-			<%= render :partial => "/shared/language_icons", :locals => {:language => product.language, :icon => product.icon, :link => nil, :title => product.name} %>
-		</li>
-		<li class="list-cell">
-			<span class="searchResultLink"><%= product.name %></span><br/>
-			<% if !dep.group_id.nil? %>
-				<span class="meta-text-small">GroupId: <%= product.group_id %></span><br/>
-			<% end %>
-			<span class="meta-text-small">Version: <%= dep.version_lbl %>, Current Version: </span><span class="unknown">UNKNOWN</span><br/>
-		</li>
-	</ul>
+<div class="row flash info" >
+  
+    <div class="icon56 span2 pull-left">
+      <%= render :partial => "/shared/language_icons", :locals => {:language => product.language, :icon => product.icon, :link => product_url(product), :title => product.name } %> 
+    </div>
+
+    <div class="span5">
+      <a href="<%= product_url(product) %>" class="searchResultLink"><%= product.name %></a><br/>
+      <ul class="list-row">
+        <il class="list-cell">
+          <span class="meta-text">Your Version: <span class="outdated-text"><%= dep.comperator_lbl %> <%= dep.version_lbl %></span> --> Current Version: <span class="current-version-text"><b>UNKNOWN</b></span></span>
+        </il>
+      </ul>
+    </div>
+  
 </div>

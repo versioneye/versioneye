@@ -1,16 +1,7 @@
-<div class="boxHeader">
-	New Project
-</div>
-<div class="boxContainer" >
-	
-	Create a new project and VersionEye will show you the outdated dependencies.<br/>
-	<br/>
-	<b>The file upload can take a couple of seconds. Please be patient.</b>
-	
-</div>
 
-
-<div style="padding-bottom: 10px;">
+<div style="padding-bottom: 20px;">
+  <b>The file upload can take a couple of seconds. Please be patient.</b>
+  <br/>
 	Supported files are <b>pom.xml</b>, 
 	<b>Gemfile</b>, <b>requirements.txt</b>, 
 	<b>package.json</b> and <b>composer.json</b>.
@@ -18,26 +9,26 @@
 
 <%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
 <div class="tabbable"> 
-<!-- tab bar -->
-  <ul class="nav nav-tabs">
+  <ul class="nav nav-tabs" style="margin: 0px;">
     <li class="active">
     	<a href="#tab1" data-toggle="tab">
-    		<i class = "icon-hdd"></i> From disk
+    		From disk
     	</a>
     </li>
     <li>
     	<a href="#tab2" data-toggle="tab">
-    		<i class = "icon-globe"></i> From url
+    		From url
     	</a>
     </li>
     <li>
     	<a href="#tab3" data-toggle="tab">
-    		<i class = "icon-eye-open"></i> From GitHub
+    		From GitHub
     	</a>
 	</li>
   </ul>
- <!-- tab content -->
-  <div class="tab-content" style="min-height:60px;">
+  <!-- tab content -->
+  <div class="tab-content" style="min-height:30px; 
+  border-bottom: 1px solid #DDD; border-left: 1px solid #DDD; border-right: 1px solid #DDD; padding: 10px;">
     <div class="tab-pane active" id="tab1">
       <%= file_field 'upload', 'datafile', :class => "round" %>
     </div>
@@ -65,12 +56,9 @@
     </div>
   </div>
 
-  <div class="div-row" >
-	<div class = "pull-right" style="padding-top: 10px;">
-		<button type="submit" class="btn btn-primary pull-right"> Create</button>
-	</div>
 </div>
-</div>
-
+<div class="pull-left" style="padding-top: 10px;">
+  <button type="submit" class="btn2 btn2-big ">Create</button>
+</div>  
 
 <% end %>

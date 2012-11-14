@@ -171,12 +171,24 @@ section > ul li {
   margin-bottom: 5px;
 }
 
+/* Used on package detail pages */
 div.content {
   padding: 30px 0px 30px 30px;
   border-left: 1px solid #ddd; 
   border-top: 1px solid #ddd; 
   width: 615px;
 }
+
+.content_header{
+  padding-left: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #DDD;
+}
+
+.left_border{
+  border-left: 1px solid #DDD;
+}
+
 
 /* -----------------------
   Separators (hr)
@@ -833,11 +845,16 @@ div.content {
   }
 }
 
+.search_item_context{
+  margin-left: 0; 
+  padding-left: 10px;
+}
+
 #search-results {
   margin-top: 15px;
   padding-top: 15px;
   border: 0px;
-  border-top: 1px solid #ddd;
+  border-top: 0px solid #ddd;
 }
 /* Make tables spaced out a bit more */
 h2 + table,

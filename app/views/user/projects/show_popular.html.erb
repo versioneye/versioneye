@@ -1,30 +1,34 @@
-<div class="span3 sidebar" >
+<% title "Most Used Libraries" %>
 
+<div class="span3" >
 	<%= render "/user/projects/navi" %>
-
 </div>
-<div class="span6 content">
-	<% if @libs.nil? || @libs.empty? %>
-		<%= render "/user/projects/create" %>
-	<% else %>
-		<div class="boxHeader">
-			Most popular libs
-		</div>
 
-		<div class="projects" id="projects" >
-			<% @libs = @libs.sort_by {|item, project| -project.length} %>
-			<% @libs.each do |lib_name, projects| %>
-				<div class="project" >
-					<h3><%= lib_name %> (<%= projects.length %>)</h3>
-					<p>
-						<% projects.each do |project| %>
-							<a href = "<%= user_project_path(project)  %>" style ="text-decoration:none;" >
-								<span class = "label label-success"><%= project.name %></span>
-							</a>
-						<% end %>
-					</p>
-				</div>
-			<% end %>
-		</div>
-	<% end %>
+<div class="span8">
+
+	<div class="row content_header left_border" >
+		Most popular libraries over all your projects
+	</div>
+	<div class="span8 left_border" >
+		<% if @libs.nil? || @libs.empty? %>
+			<%= render "/user/projects/create" %>
+		<% else %>
+			<div id="projects" >
+				<% @libs = @libs.sort_by {|item, project| -project.length} %>
+				<% @libs.each do |lib_name, projects| %>
+					<div class="row search-item" >
+						<h5 class="dep_header"><%= lib_name %> (<%= projects.length %>)</h5>
+						<p>
+							<% projects.each do |project| %>
+								<a href = "<%= user_project_path(project)  %>" style ="text-decoration:none;" >
+									<span class = "label label-success"><%= project.name %></span>
+								</a>
+							<% end %>
+						</p>
+					</div>
+				<% end %>
+			</div>
+		<% end %>
+	</div>
+
 </div>

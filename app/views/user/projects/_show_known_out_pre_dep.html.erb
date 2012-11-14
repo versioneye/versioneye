@@ -1,15 +1,16 @@
-<div class="outdated-row-pre" >
-  <ul class="list-row" >
-    <li class="list-cell cell_icon">
+<div class="row flash warn" >
+  
+    <div class="icon56 span2 pull-left">
       <%= render :partial => "/shared/language_icons", :locals => {:language => product.language, :icon => product.icon, :link => product_url(product), :title => product.name } %> 
-    </li>
-    <li class="list-cell">    
+    </div>
+
+    <div class="span5">
       <a href="<%= product_url(product) %>" class="searchResultLink"><%= product.name %></a><br/>
       <ul class="list-row">
         <il class="list-cell">
           <span class="meta-text">Your Version: <span class="outdated-text"><%= dep.comperator_lbl %> <%= dep.version_lbl %></span> --> Current Version: <span class="current-version-text"><%= product.version %></span></span>
         </il>
       </ul>
-    </li>
-  </ul>
+    </div>
+  
 </div>
