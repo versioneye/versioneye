@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
     @query = params[:q]
     @groupid = params[:g]
     @description = params[:d]
-    @lang = get_lang_value( params, cookies )
+    @lang = get_lang_value( params )
     commit = params[:commit]
     
     hash = do_parse_search_input(@query, @description, @groupid)
@@ -52,7 +52,7 @@ class ProductsController < ApplicationController
   end
 
   def autocomplete_product_name
-    lang = get_lang_value( params, cookies )
+    lang = get_lang_value( params )
     languages = lang.split(",")
     @products = Product.find_by_name(params[:term], languages, 10).paginate(:page => 1)
     respond_to do |format|
@@ -281,16 +281,9 @@ class ProductsController < ApplicationController
       languages
     end
 
-    def get_lang_value( params, cookies )
+    def get_lang_value( params )
       lang = params[:lang]
-      if lang.nil? || lang.empty?
-        lang = cookies[:veye_lang]
-      else 
-        cookies[:veye_lang] = { :value => lang, :expires => 24.hour.from_now }
-      end
-      if lang.nil? || lang.empty?
-        lang = ","
-      end
+      lang = "," if lang.nil? || lang.empty?
       lang
     end
 
