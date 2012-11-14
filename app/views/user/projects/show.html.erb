@@ -7,14 +7,17 @@
 <div class="span8">
 
 	<div class="row content_header left_border" style="border-bottom: 0;">
-		<span class = "namelabel">
-			<%= @project.name %>
-		</span>
-		<span>
-			<i class = "icon-edit open-editor"
-			style = "margin-top: 4px;" title = "Change title"></i>
-		</span>
-		<div class = "inline-editor" style= "display:none;">
+		<div id="project-title">
+			<span  >
+				<%= @project.name %>
+			</span>
+			<div class="icon-edit open-editor" 
+				style="width: 16px; height: 16px; margin: 0; padding: 0;
+				background-image: url('/assets/glyphicons-halflings.png');
+  			background-position: -96px -72px; background-repeat: no-repeat;" title="Change title"></div>
+		</div>
+
+		<div class="inline-editor row" style="display:none;">
 			<%= form_tag(update_name_user_project_path(@project), :method => "post", :remote => true, :class => "form-inline") do %>
 				<input type ="text" name = "name" value = "<%= @project.name %>" />
 				<button class = "btn btn-primary"> Save</button>

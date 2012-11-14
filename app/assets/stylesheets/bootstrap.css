@@ -2153,9 +2153,10 @@ table th[class*="span"],
   vertical-align: text-top;
   background-image: url(/assets/glyphicons-halflings.png);
   background-position: 14px 14px;
-  background-size: 16px 16px;
   background-repeat: no-repeat;
 }
+
+/*background-size: 16px 16px;*/
 
 /* White icons with optional class, or on hover/active states of certain elements */
 
