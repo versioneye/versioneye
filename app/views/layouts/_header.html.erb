@@ -9,39 +9,39 @@
 			<div class = "span7 pull-right">
 				<ul class="nav pull-right">
 					<li>
-						<%= link_to "Services", :controller => "services", :action => "index" %>
+						<%= link_to "Services", "/services" %>
 					</li>
 					<li class="divider-vertical"></li>
 					<li>
-						<%= link_to "Pricing", :controller => "services", :action => "pricing" %>
+						<%= link_to "Pricing", "/pricing" %>
 					</li>
 					<!-- menu for logged-in user -->
 					<% if signed_in? %>
+						<li class="divider-vertical"></li>
+						<li>
+							<a href="/user/projects">
+								Projects
+							</a>
+						</li>	
 						<li class="divider-vertical"></li>
 						<li class ="dropdown">
 							<a class = "dropdown-toggle"
 								data-toggle = "dropdown" href = "#">
 								<span class = "img-profile32" style="zoom: 0.85"></span>
-								 <%= current_user.username %>
+								 <%= current_user.fullname %>
 								 <b class = "caret"></b>
 							</a>
 							<ul class = "dropdown-menu">
 								<li >
-									<a href="/user/projects">
-										<span class = "icon-files"></span>
-											Projects
+									<a href="/settings/name">
+										<span class = "icon-settings"></span>
+										Settings
 									</a>
 								</li>
 								<li>
 									<a href="/users/<%= current_user.username %>" >
 										<span class = "icon-user"></span>
 										Profile
-									</a>
-								</li>
-								<li >
-									<a href="/settings/name">
-										<span class = "icon-settings"></span>
-										Settings
 									</a>
 								</li>
 								<li class = "divider">
