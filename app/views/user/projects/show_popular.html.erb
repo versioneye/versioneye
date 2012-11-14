@@ -16,7 +16,7 @@
 			<div id="projects" >
 				<% @libs = @libs.sort_by {|item, project| -project.length} %>
 				<% @libs.each do |lib_name, projects| %>
-					<div class="row search-item" >
+					<div class="row search-item padding_left" >
 						<h5 class="dep_header"><%= lib_name %> (<%= projects.length %>)</h5>
 						<p>
 							<% projects.each do |project| %>
