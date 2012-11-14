@@ -1,46 +1,52 @@
+<% title "Profile" %>
+
 <% if !@user.nil? && @user.deleted %>
 	This Account does not exist anymore.
 <% end %>
-<% if !@user.nil? && !@user.deleted %>
-<%= render "header" %>
 
-<% content_for :title, "Profile" %>
-<div class = "row">
+<% if !@user.nil? && !@user.deleted %>
+
+	<%= render "header" %>
+
 	<div class="span3" >
 		<%= render "users/navi" %>
 	</div>
-	<div class="span8" style = "border-left: 1px solid #ddd;">
-		<div class="boxHeader">
-			<h5>
+	
+	<div class="span8 content">
+
+		<div >
+			<h5 class="desc_header">
 				Follows <%= pluralize(@prod_count, "Package") %>
 			</h5>
-		</div>
-		<div>
+		</div>		
+		<div style="margin-bottom: 30px;" >
 			<% if !@prod_count.nil? && @prod_count > 0 %>
-			<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
+				<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
 			<% end %>
 			<% if !@prod_count.nil? && @prod_count > 3 %>
 				<div style="padding-top: 10px;">
-					<a href="/users/<%=@user.username%>/favoritepackages" style="padding-left: 10px; font-size: 18px;">See all</a>
+					<a href="/users/<%=@user.username%>/favoritepackages" style="padding-left: 30px;">See all</a>
 				</div>
 			<% end %>
 		</div>
-		<div class="">
-			<h5>
+
+		<div >
+			<h5 class="desc_header">
 				Commented on <%= pluralize(@comments_count, "Package") %>
 			</h5>
 		</div>
-		<div >
+		<div class="" >
 			<% if !@comments_count.nil? && @comments_count > 0 %>
 				<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %>
 			<% end %>
 			<% if !@comments_count.nil? && @comments_count > 3 %>
-				<h5 style="padding-top: 10px;">
-					<a href="/users/<%=@user.username%>/comments" style="padding-left: 10px; ">See all</a>
-				</h5>
+				<div style="padding-top: 10px;">
+					<a href="/users/<%=@user.username%>/comments" style="padding-left: 30px; ">See all</a>
+				</div>
 			<% end %>
 		</div>
+	
 	</div>
-</div>
+
 <% end %>
 <%= render 'shared/dialog_follow' %>
