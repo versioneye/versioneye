@@ -1,14 +1,17 @@
 <footer class="footer">
 	<div class="container row">
+		<hr/>
+	</div>
+	<div class="container row">
 		<div class="span2" >
-			<h5>VersionEye</h5>
+			<h5 class="dep_header">VersionEye</h5>
 			<ul class="footer-links">
 				<li><%= link_to t(:page_footer_about), about_path %></li>
 				<li><%= link_to t(:page_footer_team), about_path %></li>
 			</ul>
 		</div>
-		<div class="span2" >
-			<h5>Legal</h5>
+		<div class="span3" >
+			<h5 class="dep_header">Legal</h5>
 			<ul class="footer-links">
 				<li><%= link_to "Imprint", imprint_path %></li>
 				<li><%= link_to "Conditions of Use", terms_path %></li>
@@ -16,8 +19,9 @@
 				<li><%= link_to "Disclaimer", disclaimer_path %></li>
 			</ul>
 		</div>
+		<% if 1 == 2 %>
 		<div class="span3" >
-			<h5>Recht</h5>
+			<h5 class="dep_header">Recht</h5>
 			<ul class="footer-links">
 				<li><%= link_to "Impressum", impressum_path %></li>
 				<li><%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path %></li>
@@ -25,8 +29,9 @@
 				<li><%= link_to "Haftungsausschluss", disclaimer_path %></li>
 			</ul>
 		</div>
+		<% end %>
 		<div class="span2" >
-			<h5>Community</h5>
+			<h5 class="dep_header">Community</h5>
 			<ul class="footer-links">
 				<li><a href="https://twitter.com/VersionEye" target="new_Twitter">Twitter</a></li>
 				<li><a href="https://plus.google.com/108971109832540479545" rel="publisher" target="new_GPlus">Google+</a></li>
@@ -37,7 +42,7 @@
 			</ul>
 		</div>
 		<div class="span2" >
-			<h5>API</h5>
+			<h5 class="dep_header">API</h5>
 			<ul class="footer-links">
 				<li><%= link_to "JSON API", apijson_path %></li>
 			</ul>
