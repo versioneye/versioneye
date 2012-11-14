@@ -1,7 +1,15 @@
+
 <% if !@downloads.nil? && !@downloads.empty? %>
-	<div class="boxHeader">
-		Install with PIP
-	</div>
-	<div class="boxContainer" style="overflow:scroll;"><pre>
-pip install <%= @downloads[0].link %></pre></div>
+
+<div class = "well row box_snippet" >
+  <div class="span2">
+    <h5 class="dep_header">Install with PIP</h5>
+  </div>
+  <div class="span5" style="width: 430px; margin-bottom: 0; overflow:scroll;">
+    <pre class = "prettyprint" style = "background-color: #fff; margin-bottom: 0;"><code class = "">
+pip install <%= @downloads[0].link %>
+    </code></pre>
+  </div>
+</div>
+
 <% end %>
