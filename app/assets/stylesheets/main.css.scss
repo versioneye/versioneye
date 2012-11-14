@@ -684,12 +684,14 @@ div.content {
   padding-left: 30px;
 }
 
-.sml_list_item{
+.sml_list .sml_list_item{
   list-style-type: none;
-  height: 40px;
   padding-bottom: 5px;
   margin: 0;
   width: 240px;
+  height: 45px;
+  display: inline-table;
+  line-height: 0;
 }
 
 .sml_header{
