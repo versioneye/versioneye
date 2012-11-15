@@ -1,7 +1,7 @@
 <div itemprop="itemList" itemscope="" itemtype="http://schema.org/ItemList">
 	<meta itemprop="name" content="Newest Comments"  />
 	<% @comments.each do |comment| %>
-		<div class="row search-item padding_left" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Comment" >
+		<div class="row search-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Comment" >
 
 			<div class="span1" style = "width:60px; text-align: left;">
 				<%= render :partial => "/shared/language_icons", :locals => {:language => comment.language, :icon => nil, :link => "/package/#{comment.prod_key_url}/version/#{comment.version_url}", :title => ":-)" } %>

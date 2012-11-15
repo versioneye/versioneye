@@ -833,7 +833,7 @@ div.content {
 
 .search-item {
   margin-left: 30px;
-  padding: 10px 10px 10px 0px;
+  padding: 10px 10px 10px 10px;
   border-bottom: 1px dotted #DDD;
 
   &:hover {
@@ -855,10 +855,6 @@ div.content {
 
 .search_item_context{
   margin-left: 0; 
-  padding-left: 10px;
-}
-
-.padding_left{
   padding-left: 10px;
 }
 

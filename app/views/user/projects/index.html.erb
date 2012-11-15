@@ -15,7 +15,7 @@
 		<% else %>
 			<div id="projects" >
 				<% @projects.each do |project| %>
-					<div class="row search-item padding_left"  >
+					<div class="row search-item" >
 						<%= link_to project.name, user_project_path(project), :class => "searchResultLink" %><br/>
 						<span class="meta-text-small">Private: <%= project.private_project %>, Source: <%= project.source %>, Dependencies: <%= project.dep_number %>, Outdated: <span style="color: <%= outdated_color(project) %>" ><%= project.out_number %></span></span>
 					</div>
