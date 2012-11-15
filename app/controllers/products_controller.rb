@@ -275,7 +275,9 @@ class ProductsController < ApplicationController
       p "langs: #{langs}"
       languages = Array.new 
       langs.each do |language|
-        languages.push(language) if !language.strip.empty?
+        if !language.strip.empty?
+          languages.push(language.capitalize) 
+        end
       end
       p "languages: #{languages}"
       languages

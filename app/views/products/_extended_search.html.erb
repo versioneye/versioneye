@@ -33,7 +33,7 @@
 				<% @languages.each do |language| %>
 					<div class = "controls">
 						<label for="<%= language %>" class = "checkbox" style = "color: #669acb;">
-							<input id="<%= language %>" type="checkbox" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.include?(language) %> />
+							<input id="<%= language %>" type="checkbox" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.any?{ |s| s.casecmp(language)==0 }  %> />
 							<%= language %>
 						</label>
 					</div>
