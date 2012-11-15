@@ -1,10 +1,12 @@
 <% links = @product.get_links %>
 <% version_links = @product.get_version_links %>
 <% count = links.count + version_links.count %>
-<div class="boxHeader">
-	<%= pluralize(count, "Link") %>
+<div class="box header">
+	<h5>
+		<%= pluralize(count, "Link") %>
+	</h5>
 </div>
-<div class="boxContainer" id="relatedLinks" >
+<div class="box content" id="relatedLinks" >
 	<% if !links.empty? %>
 		<% links.each do |link| %>
 			<a itemprop="publishingPrinciples" href="<%= link.get_link %>" target="new"><%= link.name %></a><br/>

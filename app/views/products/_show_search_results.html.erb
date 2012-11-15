@@ -1,8 +1,9 @@
-<div class="searchResults" id="searchresults" itemscope="" itemtype="http://schema.org/ItemList" >
+
+<div id="search-results" itemscope="" itemtype="http://schema.org/ItemList" >
 	<% if !products.nil? %>
 		<%= render :partial => "products/show_search_results_iterator", :locals => { :products => products, :prefix => "search", :name_limit => name_limit } %>
 		<% if paginate == true && !products.nil? && !products.empty? %>
-			<div style="margin-top: 20px;">
+			<div class = "pagination pagination-right pagination-mini" style="">
 				<%= will_paginate products %>
 			</div>
 		<% end %>

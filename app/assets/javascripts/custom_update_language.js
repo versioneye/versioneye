@@ -2,21 +2,11 @@ function update_lang(language){
 	orig_param = language;
 	icon_id = orig_param.toLowerCase() + "_icon"
 	lang = document.getElementById("lang").value
-
-	ext_lang = null;
-	ext_lang_field = document.getElementById("ext_lang") 
-	if (ext_lang_field){
-		ext_lang = ext_lang_field.value	
-	}
-
 	language_orig = language;
 	language = language + ","
 	var rg = new RegExp(language,'i');
 	if (lang.search(rg) == -1){
 		lang = lang + "," + language
-		if (ext_lang){
-			ext_lang = ext_lang + "," + language	
-		}
 		if (document.getElementById(icon_id) != null){
 			document.getElementById(icon_id).style.borderBottom = "2px solid #f9b323";
 			if (orig_param == "Java"){
@@ -39,9 +29,6 @@ function update_lang(language){
 		}
 	} else {
 		lang = lang.replace(language, "")
-		if (ext_lang){
-			ext_lang = ext_lang.replace(language, "")
-		}
 		if (document.getElementById(icon_id) != null){
 			document.getElementById(icon_id).style.borderBottom = "0px solid #f9b323";
 			if (orig_param == "Java"){
@@ -66,8 +53,4 @@ function update_lang(language){
 	lang = lang.replace(",,,", ",") 
 	lang = lang.replace(",,", ",") 
 	document.getElementById("lang").value = lang
-	if (ext_lang){
-		ext_lang = ext_lang.replace(",,", ",") 
-		document.getElementById("ext_lang").value = ext_lang
-	}	
 }

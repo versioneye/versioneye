@@ -1,60 +1,66 @@
-<div class="sidebar" >
 
-  <%= render "settings/navi" %> 
-
+<div class="span3" >
+  <%= render "settings/navi" %>
 </div>
-<div class="content">
 
-  <div class="boxHeader">
-    Credit Card
-  </div>
+<div class="span8" >
 
-  <div class="boxContainer">
-    <a href="https://strip.com" target="stripe">Stripe.com</a> is our Payment Provider. 
-    <b>VersionEye doesn't store any Credit Card data.</b>
+  <div class="row content_header_def" >
+    Credit Card Information
   </div>
-  <div>
-    <%= image_tag "ccs.png" %>
-  </div>
-  <div class="boxContainer">
-  <form action="/settings/updatecreditcard" method="POST" id="payment-form">
-    <input type="hidden" name="plan" value="<%= @plan_name_id %>" />
-    <div class="div-row">
-      <div class="labelCelBig">
-        <label>Card Number</label>
-      </div>
-      <div class="inputCel">
-        <input type="text" size="20" autocomplete="off" class="card-number round"/>
-      </div>
+  
+  <div class="span8 content" >
+
+    <p >
+      <a href="https://strip.com" target="stripe">Stripe.com</a> is our Payment Provider. 
+      <b>VersionEye doesn't store any Credit Card data.</b>
+    </p>
+    <div>
+      <%= image_tag "ccs.png" %>
     </div>
 
-    <div style="display:table-row;">
-      <div class="labelCelBig">
-        <label>CVC</label>
+    <hr />
+    
+    <%= form_tag("/settings/updatecreditcard", :method => "post", :class => "form-horizontal", :id => "payment-form") do %>
+      
+      <input type="hidden" name="plan" value="<%= @plan_name_id %>" />
+      
+      <div class="control-group">
+        <%= label_tag :card_number, "Card Number", :class => "control-label-big", :for => "cardnumber" %>
+        <div class="controls" style="margin-left: 155px;">
+          <input type="text" size="20" autocomplete="off" class="card-number round" id="cardnumber"/>
+        </div>
       </div>
-      <div class="inputCel">
-        <input type="text" size="4" autocomplete="off" class="card-cvc round" style="width: 60px;"/>
-      </div>
-    </div>
 
-    <div style="display:table-row;">
-      <div class="labelCelBig">
-        <label>Expiration (MM/YYYY)</label>
+      <div class="control-group">
+        <%= label_tag :cvc, "CVC", :class => "control-label-big", :for => "cvc" %>
+        <div class="controls" style="margin-left: 155px;">
+          <input type="text" size="4" autocomplete="off" class="card-cvc round" style="width: 60px;"/>
+        </div>
       </div>
-      <div class="inputCel">
-        <input type="text" size="2" class="card-expiry-month round" style="width: 40px;" />
-        <span> / </span>
-        <input type="text" size="4" class="card-expiry-year round" style="width: 60px;" />
-      </div>
-    </div>
 
-    <div style="display:table-row;">
-      <div class="labelCelBig"></div>
-      <div class="inputCel">
-        <button type="submit" class="btn btn-large btn-primary" >Submit</button>
+      <div class="control-group">
+        <%= label_tag :Expiration, "Expiration (MM/YYYY)", :class => "control-label-big", :for => "Expiration" %>
+        <div class="controls" style="margin-left: 155px;">
+          <input type="text" size="2" class="card-expiry-month round" style="width: 40px;" />
+          <span> / </span>
+          <input type="text" size="4" class="card-expiry-year round" style="width: 60px;" />
+        </div>
       </div>
-    </div>
-  </form>
+
+      <div class="control-group">
+        <div class="control-label-big"></div>
+        <div class="controls" style="margin-left: 155px;">
+          <button type="submit" class="btn2 btn2-big" >Save</button>
+        </div>
+      </div>
+
+    <% end %>  
+
   </div>
-
 </div>
+
+
+  
+  
+  

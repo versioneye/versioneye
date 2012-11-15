@@ -1,37 +1,29 @@
-<div class="div-row profile_header"  >
-	<div class="div-cell profile_image-cell" >
-		<%= link_to gravatar_image_tag( @user.email, :alt => @user.fullname, :class => "round", :gravatar => { :size => 195, :default => "#{Settings.server_url}/profile_icon.png" }), user_path(@user) %><br/>
+<div class="row" style="margin-bottom: 20px;" >
+	<div class="span3"  >
+		<%= link_to gravatar_image_tag( @user.email, :alt => @user.fullname, :class => "round", :gravatar => { :size => 200, :default => "#{Settings.server_url}/profile_icon.png" }), user_path(@user) %><br/>
 		<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
 			<a href="http://gravatar.com/emails">Change Profile Picture</a><br/>
 		<% end %>
-		<a href="<%= @user.blog %>"><%= @user.blog %></a> 
 	</div>
-	<div class="div-cell profile_summary_cell" >
-		<ul >
-			<li >
-				<h1 ><%= @user.fullname %></h1>
-			</li>
-			<li >
-				<h2 >@<%= @user.username %></h2>
-			</li>
-			<li >
-				<%= @user.description %>
-			</li>
-			<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
-				<li >
-					<a href="/settings/profile">Edit your profile</a>
-				</li>
-			<% end %>
-		</ul>
-	</div>
-	<div class="div-cell profile_map_cell" >
+	<div class="span5" style="width: 424px;" >
+		<h2 ><%= @user.fullname %></h2>
 		<div>
-			<div id="map_for_user_profile" class="map_for_user_profile round" ></div>
+			<p><%= @user.description %></p>
 		</div>
-		<% if @user.location && !@user.location.eql?("") %>
-			<%= @user.location %>
-		<% else %>
-			No Location
-		<% end %>
+		<div>
+			<a href="<%= @user.blog %>"><%= @user.blog %></a> 
+		</div>
+		<div>
+			<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
+				<a href="/settings/profile">Edit your profile</a>
+			<% end %>
+		</div>
+	</div>
+	<div class="span3 pull-right" >
+		<div style = "text-align: right;" >
+			<% if @user.location && !@user.location.eql?("") %>
+				<div id="map_for_user_profile" class="map_for_user_profile round" ></div>
+			<% end %>
+		</div>
 	</div>
 </div>

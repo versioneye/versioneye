@@ -1,119 +1,118 @@
 
 <%= render 'shared/dialog_follow' %>
 
-<section class="round" >
-	<div style="text-align: center;">
-		<div style="font-size: 32px; font-weight: bold; height: 35px; vertical-align: middle;" >Find &amp; Follow</div>
-		<div style="font-size: 26px; height: 28px;">Your Software Libraries</div>
+<section class="container">
+	<div class="jumbotron">
+		<h1>Stay up to date with <span style ="">VersionEye</span></h1>
+		<p>Follow your libraries and get notified about new versions. It's easy.</p>
 	</div>
-	<div id="lp_search_div" class="lp_search_div">
-		<form id="searchform" action="/search" method="GET" class="search-form" >				
-			<input id="q" name="q" type="text" value="<%= @query %>" style="font-size: 20px; height: 43px; line-height: 43px; width: 377px; margin: 0; padding:0; padding-left: 10px; " />
-			<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
-			<br/>
-			<span style="position: relative; top: 50px; left: -300px;" class="meta-text-small" >click to select --> </span>
-			<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
-				<% @langs = @lang.split(",") %>
-				<div style="padding-left:177px;"> 
-					<ol class="list-row" >
-						<% @languages.each do |language| %>
-							<li class="list-cell-lang-icons" id="<%=language%>" >
-								<label onclick="update_lang('<%=language%>')" >
-									<% if @langs.include?(language) %>
-										<div class="<%= language.gsub(".", "_").downcase %>" id="<%= language.downcase %>_icon" style="border-bottom: 2px solid #f9b323"></div>	
-									<% else %>
-										<div class="<%= language.gsub(".", "_").downcase %>_bw" id="<%= language.downcase %>_icon" style="border-bottom: 0px solid #f9b323"></div>
-									<% end %>
-								</label>
-							</li>
-						<% end %>
-					</ol>
+</section>
+
+<% if !@page.eql?("LandingPage") %>
+<section class = "container">
+	<div class = "row">
+		<div class = "span8">
+			<h2 class = "page-title"> [Page name] </h2>
+		</div>
+		<div class = "span3">
+			<div id="searchfield_div" class="searchfield_div">
+				<form id="searchform" action="/search" method="GET" class="search-form" >
+					<input id="q" name="q" class="searchfield" type="text" value="<%= @query %>" style="margin-top: 6px;" />
+					<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
+				</form>
+			</div>
+		</div>
+</section>
+<% end %>
+
+<section class = "container">
+	<div class= "search-container" >
+		<form id="form" action="/search" method="GET" style="padding: 0; margin:0;" >
+			<input id="lang" name="lang" class = "hide" type="hidden" value="<%= @lang %>" />
+			<div class="row">
+				<div class = "span5 pull-left ">
+					<div class = "input-prepend ">
+						<span class="icon_search" style = "margin: 10px -25px 0px 10px;"></span>
+						<input id="q" class = "input large" name="q" type="text" value="<%= @query %>" />
+					</div>
 				</div>
-			<% end %>
-			<br/>
-			<button type="submit" class="btn btn-primary btn-large" >Search</button>
+				<div class="span5" style="text-align: center; padding-left: 30px;">
+					<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
+						<table style="table-layout:fixed; margin: 0; padding: 0; height: 40px; text-align: center; " height="40">
+							<tr style="height: 40px; vertical-align: top;" height="40">
+						<% @langs = @lang.split(",") %>
+						<% @languages.each do |language| %>
+							<% langname = language.downcase.gsub(/\./, "") %>
+							<td style="margin: 0; padding: 0; height: 40px; vertical-align: top;" height="40">
+								<div class="icon_<%= langname %>_small_container" onclick="update_lang('<%= langname %>')" >
+									<span class = "icon_<%= langname %> small">&nbsp;</span>
+								</div>
+							</td>
+						<% end %>
+							</tr>
+						</table>
+					<% end %>
+				</div>
+				<div class = "span2 pull-right" style="width: 100px;" >
+					<button type="submit" class="btn2 btn2-big pull-right" >
+						Search
+					</button>
+				</div>
+			</div>
 		</form>
 	</div>
 </section>
 
-<div class="section-lp round">
-	<div class="boxHeader" style="text-align: center; margin-top: 0px; padding-bottom: 20px;">
-		What is VersionEye
+
+<section class="container" style = "padding-top: 65px;">
+	<hr class="separator_eye" />
+</section>
+
+<section class=" container" >
+	<div class="marketing">
+		<h1>What is VersionEye?</h1>
+		<p>More than just following your libraries.</p>
 	</div>
-	<div class="div-row">
-		<div class="div-cell project-integration-cell project-types-header">
-			
-		</div>
-		<div class="div-cell project-integration-cell project-types-header">
-			
-		</div>
-		<div class="div-cell project-integration-cell project-types-header">
-			<%= image_tag ("integration/github.png") %>
-		</div>
-		<div class="div-cell project-integration-cell project-types-header">
-			
-		</div>
-	</div>	
-	<div class="div-row">
-		<div class="div-cell project-integration-cell project-types-header">
-			Visualising Dependencies
-		</div>
-		<div class="div-cell project-integration-cell project-types-header">
-			Package Support
-		</div>
-		<div class="div-cell project-integration-cell project-types-header">
-			GitHub Integration
-		</div>
-		<div class="div-cell project-integration-cell project-types-header">
-			Sign-Up for free
-		</div>
-	</div>	
-	<div class="div-row">
-		<div class="div-cell project-integration-cell">
-			VersionEye visualises recursive dependencies and makes complexity visible.
-		</div>
-		<div class="div-cell project-integration-cell">
-			VersionEye has support for package managers including Maven2, Bundler, PIP, Composer, Lein and NPM.
-		</div>
-		<div class="div-cell project-integration-cell">
-			Monitor your private GitHub repositories to be notified about outdated dependencies.
-		</div>
-		<div class="div-cell project-integration-cell">
-			Monitoring open source projects is free. Only private GitHub repositories are fee-based. 
-		</div>
-	</div>
-	<div class="div-row">
-		<div class="div-cell project-integration-cell" style="vertical-align: middle;">
-			<a href="/package/rails/version/3~2~8">Watch example</a>
-		</div>
-		<div class="div-cell project-integration-cell" style="vertical-align: middle;">
+	<div class="row-fluid" style="height: 320px;">
+		<div class="span3 well1">
+			<span class = "icon_package off marketing-icon"></span>
+			<span class = "icon_package on  marketing-icon"></span>
+			<h5>Package support</h5>
+			<p>
+				VersionEye has support for various package managers 
+				including Maven, Bundler, Lein and more.
+			</p>
 			<a href="/services">Find out more</a>
 		</div>
-		<div class="div-cell project-integration-cell">
-			<div style="text-align: center; height: 35px; margin-left: 19px;"><%= render 'shared/login_with_github' %></div>
+		<div class="span3 well1">
+			<span class="icon_gitcat off marketing-icon"></span>
+			<span class="icon_gitcat on  marketing-icon"></span>
+			<h5>GitHub integratrion</h5>
+			<p>
+				Monitor your private GitHub repositories 
+				to be notified about outdated dependencies.
+			</p>
+			<a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&amp;scope=repo'>Login via GitHub</a>
 		</div>
-		<div class="div-cell project-integration-cell" style="vertical-align: middle;">
+		<div class="span3 well1">
+			<span class="icon_freeprice off marketing-icon"></span>
+			<span class="icon_freeprice on  marketing-icon"></span>
+			<h5>SignUp free</h5>
+			<p>
+				Monitoring public repositories is free. Only
+				private GitHub repositories are fee-based.
+			</p>
 			<a href="/signup">Register for free</a>
 		</div>
-	</div>
-	<br/>
-</div>
-
-<section class="section-lp round">
-	<h1 class="lp_head" id="h1_about">
-		About VersionEye
-	</h1>
-	<div class="lp_box" id="about">
-		<%= render 'shared/about' %>
-		<span>
-			Sign Up for Free! Or login with your <a href="https://github.com">GitHub</a> Account. 
-		</span>
-	</div>
-	<% if !signed_in? %>
-		<div class="lp_box lp_sign_up">
-			<%= form_tag("/signup", :method => "get") do  %>    
-				<button type="submit" class="btn btn-primary" >Sign Up For Free</button>
-			<% end %>
+		<div class="span3 well1">
+			<span class="icon_dependency off marketing-icon"></span>
+			<span class="icon_dependency on marketing-icon"></span>
+			<h5>Visualizing dependendencies</h5>
+			<p>
+				VersionEye visualises recursive dependencies and 
+				makes complexity visible. 
+			</p>
+			<a href="/package/rails/version/3~2~8">Watch example</a>
 		</div>
-	<% end %>
+	</div>
 </section>

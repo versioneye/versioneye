@@ -7,15 +7,12 @@
   <div class="modal-body">
     <p>
       <%= link_to "Sign In", signin_path %> 
-      and Follow 
+      and Follow
       <span id="product_to_follow">
         to get notified about new versions.
-      </span> 
-    </p> 
-
-		<p>
-			<%= render 'shared/login_options_horizontal' %>
-		</p>
+      </span>
+    </p>  
+		<%= render 'shared/login_options_horizontal' %>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

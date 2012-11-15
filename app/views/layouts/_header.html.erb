@@ -1,60 +1,82 @@
 <header style="z-index: 100;">
-	<div class="container">
-		<a href="/" alt="VersionEye">
-			<div class="logo_div"></div>
-		</a>
-		<div class="searchlink_div">
-			<a href="#" class="searchlink" title="Search" onclick="window.location = '/'">&nbsp;</a>
-		</div>
-		<% if !@page.eql?("LandingPage") %>
-			<div id="searchfield_div" class="searchfield_div">			
-				<form id="searchform" action="/search" method="GET" class="search-form" >
-					<input id="q" name="q" class="searchfield" type="text" value="<%= @query %>" style="margin-top: 6px;" />
-					<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
-				</form>
+	<div class="navbar navbar-static-top dark-bg">
+		<div class = "container row">
+			<div class="span4 brand-container" style="margin-left: 0; padding-left: 0; height: 50px;">
+				<span class="pull-left icon_beta"></span>
+				<a href="/"><span class="logo"></span></a>
 			</div>
-		<% end %>
-		<div class="beta" ></div>
-		<div>
-			<nav >
-				<ul>
-					<li class="nav-begin" >&nbsp;</li>
+
+			<div class = "span7 pull-right">
+				<ul class="nav pull-right">
+					<li>
+						<%= link_to "Services", "/services" %>
+					</li>
+					<li class="divider-vertical"></li>
+					<li>
+						<%= link_to "Pricing", "/pricing" %>
+					</li>
+					<!-- menu for logged-in user -->
 					<% if signed_in? %>
-						<li class="nav-cell">
-							<a href="/user/projects" style="padding: 0">
-								<div class="project_icon"></div>
+						<li class="divider-vertical"></li>
+						<li>
+							<a href="/user/projects">
+								Projects
 							</a>
-						</li>
-						<li class="nav-line" ></li>
-						<li class="nav-cell">
-							<a href="/users/<%= current_user.username %>" style="padding: 0">
-								<div class="myprofile"></div>
+						</li>	
+						<li class="divider-vertical"></li>
+						<li class ="dropdown">
+							<a class = "dropdown-toggle"
+								data-toggle = "dropdown" href = "#">
+								<span class = "img-profile32" style="zoom: 0.85"></span>
+								 <%= current_user.fullname %>
+								 <b class = "caret"></b>
 							</a>
-						</li>
-						<li class="nav-line" ></li>	
-						<li class="nav-cell">
-							<a href="/settings/name" style="padding: 0">
-								<div class="settings"></div>
-							</a>
-						</li>
-						<li class="nav-line" ></li>	
-						<li class="nav-cell">
-							<a href="/signout" style="padding: 0">
-								<div class="logout"></div>
-							</a>
+							<ul class = "dropdown-menu">
+								<li >
+									<a href="/settings/name">
+										<span class = "icon-settings"></span>
+										Settings
+									</a>
+								</li>
+								<li>
+									<a href="/users/<%= current_user.username %>" >
+										<span class = "icon-user"></span>
+										Profile
+									</a>
+								</li>
+								<li class = "divider">
+								</li>
+								<li>
+									<a href="/signout">
+										<span class = "icon-logout"></span>
+										Logout
+									</a>
+								</li>
+							</ul>
 						</li>
 					<% else %>
-						<li><%= link_to t(:page_header_services), services_path %></li>
-						<li class="nav-line" ></li>	
-						<li><a href="/services#pricing"><%= t(:page_header_pricing) %></a></li>
-						<li class="nav-line" ></li>	
+
+						<li class="divider-vertical"></li>
 						<li><%= link_to t(:page_header_signup), signup_path %></li>
-						<li class="nav-line" ></li>	
+						<li class="divider-vertical"></li>
 						<li><%= link_to t(:page_header_signin), signin_path %></li>
+
 					<% end %>
-					<li class="nav-end" >&nbsp;</li>	
+
+					<% if 1 == 2 %>
+						<li class="divider-vertical"></li>
+						<li>
+							<a href="#"><span class = "flag de"></span></a>
+						</li>
+						<li class="divider-vertical"></li>
+						<li>
+							<a href = "#"><span class = "flag gb on"></span></a>
+						</li>
+					<% end %>
+
 				</ul>
-			</nav> 
+			</div>
+
 		</div>
 	</div>
 </header>

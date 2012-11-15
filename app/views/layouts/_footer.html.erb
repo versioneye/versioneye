@@ -1,38 +1,54 @@
-<footer class="round">
-  <nav>
-	<div class="container">
-		<div class="span-3 footer-box" >
-			<div class="meta-text">VersionEye</div>
-			<div><%= link_to t(:page_footer_about), about_path, :class => "footerLink meta-text-small" %></div>
-			<div><%= link_to t(:page_footer_team), about_path, :class => "footerLink meta-text-small" %></div>
+<footer class="footer">
+	<div class="container row">
+		<hr/>
+	</div>
+	<div class="container row">
+		<div class="span2" >
+			<h5 class="dep_header">VersionEye</h5>
+			<ul class="footer-links">
+				<li><%= link_to t(:page_footer_about), about_path %></li>
+				<li><%= link_to t(:page_footer_team), about_path %></li>
+			</ul>
 		</div>
-		<div class="span-4 footer-box" >
-			<div class="meta-text">Legal</div>
-			<div><%= link_to "Imprint", imprint_path, :class => "footerLink meta-text-small" %></div>
-			<div><%= link_to "Conditions of Use", terms_path, :class => "footerLink meta-text-small"  %></div>
-			<div><%= link_to "Data protection provisions ", dataprivacy_path, :class => "footerLink meta-text-small"  %></div>
-			<div><%= link_to "Disclaimer", disclaimer_path, :class => "footerLink meta-text-small"  %></div>
+		<div class="span3" >
+			<h5 class="dep_header">Legal</h5>
+			<ul class="footer-links">
+				<li><%= link_to "Imprint", imprint_path %></li>
+				<li><%= link_to "Conditions of Use", terms_path %></li>
+				<li><%= link_to "Data protection provisions ", dataprivacy_path %></li>
+				<li><%= link_to "Disclaimer", disclaimer_path %></li>
+			</ul>
 		</div>
-		<div class="span-4 footer-box" >
-			<div class="meta-text">Recht</div>
-			<div><%= link_to "Impressum", impressum_path, :class => "footerLink meta-text-small" %></div>
-			<div><%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :class => "footerLink meta-text-small"  %></div>
-			<div><%= link_to "Datenschutzbestimmungen", datenschutz_path, :class => "footerLink meta-text-small"  %></div>
-			<div><%= link_to "Haftungsausschluss", disclaimer_path, :class => "footerLink meta-text-small"  %></div>
+		<% if 1 == 2 %>
+		<div class="span3" >
+			<h5 class="dep_header">Recht</h5>
+			<ul class="footer-links">
+				<li><%= link_to "Impressum", impressum_path %></li>
+				<li><%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path %></li>
+				<li><%= link_to "Datenschutzbestimmungen", datenschutz_path %></li>
+				<li><%= link_to "Haftungsausschluss", disclaimer_path %></li>
+			</ul>
 		</div>
-		<div class="span-4 last footer-box" >
-			<div class="meta-text">Community</div>
-			<div><a href="https://twitter.com/VersionEye"  class="footerLink meta-text-small" target="new_Twitter">Twitter</a></div>
-			<div><a href="https://plus.google.com/108971109832540479545" class="footerLink meta-text-small" rel="publisher" >Google+</a></div>
-			<div><a href="https://www.facebook.com/pages/VersionEye/295350293845442" class="footerLink meta-text-small" target="new_FB">Facebook</a></div>
-			<div><a href="https://www.youtube.com/user/VersionEye/videos" class="footerLink meta-text-small" target="new_YT">YouTube</a></div>
-			<div><a href="https://vimeo.com/37203548" class="footerLink meta-text-small" target="new_Vimeo">Vimeo</a></div>
-			<div><a href="http://pinterest.com/versioneye/pins/" class="footerLink meta-text-small" target="new_Pinterest">Pinterest</a></div>
+		<% end %>
+		<div class="span2" >
+			<h5 class="dep_header">Community</h5>
+			<ul class="footer-links">
+				<li><a href="https://twitter.com/VersionEye" target="new_Twitter">Twitter</a></li>
+				<li><a href="https://plus.google.com/108971109832540479545" rel="publisher" target="new_GPlus">Google+</a></li>
+				<li><a href="https://www.facebook.com/pages/VersionEye/295350293845442"  target="new_FB">Facebook</a></li>
+				<li><a href="https://www.youtube.com/user/VersionEye/videos" target="new_YT">YouTube</a></li>
+				<li><a href="https://vimeo.com/37203548"  target="new_Vimeo">Vimeo</a></li>
+				<li><a href="http://pinterest.com/versioneye/pins/"  target="new_Pinterest">Pinterest</a></li>
+			</ul>
 		</div>
-		<div class="span-4 last footer-box" >
-			<div class="meta-text">API</div>
-			<div><%= link_to "JSON API", apijson_path, :class => "footerLink meta-text-small" %></div>
+		<div class="span2" >
+			<h5 class="dep_header">API</h5>
+			<ul class="footer-links">
+				<li><%= link_to "JSON API", apijson_path %></li>
+			</ul>
+		</div>
+		<div class = "span2 pull-left">
+			<span class = "logo_eye_text">
 		</div>
 	</div>
-  </nav>
 </footer>

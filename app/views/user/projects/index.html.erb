@@ -1,31 +1,28 @@
-<div class="sidebar" >
-	
-	<%= render "/user/projects/navi" %>
-	
-</div>	
-<div class="content">	
-	<% if @projects.nil? || @projects.empty? %>
-		<%= render "/user/projects/create" %>
-	<% else %>		
-		<div class="boxHeader">
-			My Projects
-		</div>
-		<div class="boxContainer" >
-			VersionEye is watching <b><%= pluralize(@projects.size, "Project") %></b> for you.
-		</div>
-		<div class="projects" id="projects" >
-			<% @projects.each do |project| %>
-				<div class="project" >
-					<%= link_to project.name, user_project_path(project), :class => "searchResultLink" %><br/>
-					<span class="meta-text-small">
-						<% if project.private_project %>
-							Private 
-						<% else %>
-							Public 
-						<% end %>
-						project from <%= project.source %>. Dependencies: <%= project.dep_number %>, Outdated: <span style="color: <%= outdated_color(project) %>" ><%= project.out_number %></span></span>
-				</div>
-			<% end %>
-		</div>
-	<% end %>
+
+<% title "My Projects" %>
+
+<div class="span3" >
+	<%= render "/user/projects/navi" %>	
+</div>
+
+<div class="span8">
+
+	<div class="row content_header_def" >
+		VersionEye is watching <b><%= pluralize(@projects.size, "Project") %></b> for you.
+	</div>
+	<div class="span8 left_border" >
+		<% if @projects.nil? || @projects.empty? %>
+			<%= render "/user/projects/create" %>
+		<% else %>
+			<div id="projects" >
+				<% @projects.each do |project| %>
+					<div class="row search-item" >
+						<%= link_to project.name, user_project_path(project), :class => "searchResultLink" %><br/>
+						<span class="meta-text-small">Private: <%= project.private_project %>, Source: <%= project.source %>, Dependencies: <%= project.dep_number %>, Outdated: <span style="color: <%= outdated_color(project) %>" ><%= project.out_number %></span></span>
+					</div>
+				<% end %>
+			</div>
+		<% end %>
+	</div>
+
 </div>

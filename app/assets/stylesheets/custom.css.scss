@@ -27,6 +27,8 @@ $outdated_color: red;
 
 $horizontal_separater_line: #888888;
 
+$lang_icon_width: 32px;
+$lang_icon_height: 32px;
 
 /******* Sprites *****************/
 
@@ -178,8 +180,8 @@ $horizontal_separater_line: #888888;
 
 .clojure{
 	background-position: -654px -59px ;
-	width: 56px;
-	height: 56px;
+	width: $lang_icon_width;
+	height: $lang_icon_height;
 }
 
 .java_bw{
@@ -354,28 +356,9 @@ $horizontal_separater_line: #888888;
 /******* Basic Elements *********/
 
 body {
-	moz-box-orient: vertical;
+	margin-top: 70px;
     background-image: url("noise_2.png");
     background-repeat: repeat;
-    height: 100%;
-    width: 100%;
-    margin: 0;
-}
-
-form{
-	padding: 0px;
-	margin: 0px;
-}
-
-table{
-	margin: 0px;
-}
-
-label {
-	color: $label_color;
-	font-size: 18px;
-	font-weight: bold;
-	display: inline;
 }
 
 .label-small{
@@ -386,28 +369,6 @@ label {
 	font-size: 12px;
 }
 
-textarea{
-	font-size: 16px;
-	width: 550px;
-	height: 100px;
-}
-
-input{
-    padding-left: 15px;
-    height: 35px;
-	line-height: 35px;
-    font-size: 16px;	
-}
-
-pre {
-	margin: 5px;
-}
-
-img {
-	padding: 0;
-	margin: 0;
-	border: 0;
-}
 
 /********* Fonts ***********/
 
@@ -577,7 +538,7 @@ header a:visited:hover {
 /******** LAYOUT **********/
 
 .container {
-	width: 850px;
+	width: 940px;
 	z-index: 100
 }
 
@@ -598,13 +559,6 @@ header {
 	vertical-align: middle;	
 }
 
-section {
-    display: inline-block;
-    width: 810px;
-	padding: 20px;
-	margin-top: 65px;
-	background-color: white;
-}
 
 .section-lp{
 	display: inline-block;
@@ -612,10 +566,6 @@ section {
 	padding: 20px;
 	margin-top: 15px;
 	background-color: white;
-}
-
-section .container{
-	width: 810px;
 }
 
 section h1 {
@@ -645,16 +595,6 @@ section h3{
 	padding-left: 15px;
 }
 
-footer {
-    text-align: left;
-    margin-top: 15px;
-	padding-top: 5px;
-    width: 850px;
-    margin-left: auto;
-    margin-right: auto;
-    clear: both;
-	background-color: white;
-}
 
 footer nav {
     float: none;

@@ -154,7 +154,7 @@ function show_pinit_button(picture_url, options){
 		canvas_container = document.getElementById(options.container_id);
 		var img = document.createElement("IMG");
 		img.src = picture_url;
-		img.style.width = "562px"
+		img.style.width = "600px"
 		canvas_container.appendChild(img);
 	}
 	pin_button = document.getElementById("pinit");

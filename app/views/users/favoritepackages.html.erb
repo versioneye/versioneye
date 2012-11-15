@@ -1,25 +1,36 @@
+<% title "Profile" %>
+
+<% if !@user.nil? && @user.deleted %>
+	This Account does not exist anymore.
+<% end %>
+
 <% if !@user.nil? && !@user.deleted %>
+
 	<%= render "header" %>
-	<div class="sidebar" >	
+
+	<div class="span3" >
 		<%= render "users/navi" %>
-	</div>	
-	<div class="content">		
+	</div>
+	
+	<div class="span8 content">
 		<% if !@products.nil? %>	
-			<div class="boxHeader" >
-				<%= pluralize(@count, "Favorite Package") %>
-			</div>
+
+			<div >
+				<h5 class="desc_header">
+					Follows <%= pluralize(@products.total_entries, "Package") %>
+				</h5>
+			</div>		
+
 			<% if !signed_in? %>
 				<%= render 'shared/dialog_follow' %>	
 			<% end %>
 			<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
 			<% if !@products.nil? && !@products.empty? %> 
-				<div style="margin-top: 20px;">
+				<div style="margin-top: 20px; text-align: right;">
 					<%= will_paginate @products %>
 				</div>
 			<% end %>
+
 		<% end %>
 	</div>
-<% end %>
-<% if !@user.nil? && @user.deleted %>
-	This Account does not exist anymore.
 <% end %>

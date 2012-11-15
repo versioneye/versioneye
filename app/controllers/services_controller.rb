@@ -4,13 +4,6 @@ class ServicesController < ApplicationController
 		refer_name = params['refer']
 		check_refer( refer_name )
 		@project = Project.new
-		render :layout => 'application_lp'
-	end
-
-	def choose_plan
-		plan = params[:plan]
-		cookies.permanent.signed[:plan_selected] = plan
-		redirect_to signup_path
 	end
 
 	def create
@@ -45,7 +38,7 @@ class ServicesController < ApplicationController
 		  flash[:error] = "Ups. An error occured. Something is wrong with your file."
 		end
 		@project_id = project.id
-		redirect_to service_path(project.id)
+		redirect_to service_path( project.id )
 	rescue => e
     	p "ERROR Message:   #{e.message}"
     	p "ERROR backtrace: #{e.backtrace}"
@@ -79,6 +72,16 @@ class ServicesController < ApplicationController
 				render :json => "[#{resp}]"
 			}
 		end
+	end
+
+	def pricing
+		
+	end
+
+	def choose_plan
+		plan = params[:plan]
+		cookies.permanent.signed[:plan_selected] = plan
+		redirect_to signup_path
 	end
 
 	private 

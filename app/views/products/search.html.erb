@@ -1,37 +1,17 @@
-<div class="sidebar">
-	<div class="boxHeader">
-		Filter
-	</div>
-	<div class="boxContainer" >
-		<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
-			<% @langs = @lang.split(",") %>
-			<% @languages.each do |language| %>
-				<div>
-					<input id="<%= language %>" type="checkbox" name="lang" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.include?(language) %> /><label for="<%= language %>" style="padding-left: 5px; margin: 0px; vertical-align: middle;" ><%= language %></label>
-				</div>	
-			<% end %>
-		<% end %>
-		<button id="refresh" class="btn btn-primary" type="submit"  name="commit" onClick="document.forms['ext_searchform'].submit();" style="margin-top: 5px;">Refresh</button>
-	</div>
-	<div>
-		<div style="text-align: center; padding-top: 15px;">
-			<%= image_tag ("integration/github.png") %>
-		</div>
-		<div style="text-align: center; padding: 10px;">
-			Let VersionEye monitor your private GitHub repositories 
-			to get daily E-Mail notifications about outdated dependencies in your projects.
-		</div>
-		<div style="text-align: center; height: 35px; margin-left: 19px;"><%= render 'shared/login_with_github' %></div>
-	</div>
+
+<% title "Search Results" %>
+
+<div class="span3">
+	<%= render "extended_search" %>
 </div>
-<div class="content" >	
-	<div align="center">
-		<% if !signed_in? %>
-			<%= render 'shared/dialog_follow' %>	
-		<% end %>
-
-		<%= render "extended_search" %>
-
-		<%= render :partial => "products/show_search_results", :locals => { :products => @products, :paginate => true, :prefix => "search", :name_limit => 70 }  %>
+<div class="span8 left_border" >
+	<% if !signed_in? %>
+		<%= render 'shared/dialog_follow' %>
+	<% end %>
+	<div class="row content_header" >
+		<em> `<%= params[:q] %>`</em> has returned <%= @products.total_entries %> results
 	</div>
+	<%= render :partial => "products/show_search_results",
+		:locals => { :products => @products, :paginate => true,
+			:prefix => "search", :name_limit => 70 }  %>
 </div>

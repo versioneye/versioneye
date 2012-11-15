@@ -1,20 +1,24 @@
-<div class="boxHeader">
-	Dependencies
+
+<div >
+	<h5 class="desc_header">Dependencies</h5>
 </div>
-<div class="boxContainer" >
+<div class="box well" style="padding-top: 0; margin-top: 0;">
 	<div id="canvas-container"></div>
-	<div style="text-align: center; display: none; width: 100%" id="infoBox">
+	<div class="recursive_info_box" id="infoBox">
 		<span >
-			<a id="pinit" style="display: none;" href="" class="pin-it-button" count-layout="horizontal"><img border="0" alt="pint_it_on_pinterest" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+			<a id="pinit" style="display: none;" href="" class="pin-it-button" count-layout="horizontal">
+				<img border="0" alt="pint_it_on_pinterest" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" />
+			</a>
 		</span>
-		<h3 style="text-align: center;" >
+		<h5>
 			<%= @product.name %> has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive <%= @product.main_scope %> dependencies
-		</h3>
+		</h5>
 		<a href="/package_visual/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>">
 			See visual page
 		</a>
 	</div>
 </div>
+
 <div class="boxContainer" id="dependencies" itemprop="requirements" itemscope="" itemtype="http://schema.org/ItemList">
 	<meta name="name" content="Requirements" itemprop="name" />
 	<% if @product.prod_type.eql?("Maven2") %>
@@ -24,10 +28,9 @@
 	<% elsif @product.prod_type.eql?("npm")  %>
 		<%= render "product_show_dependencies_npm" %>
 	<% elsif @product.prod_type.eql?("Packagist")  %>
-		<%= render "product_show_dependencies_packagist" %>	
+		<%= render "product_show_dependencies_packagist" %>
 	<% end %>
 </div>
-
 
 <script type="text/javascript">
 	function render_wheel(){
@@ -35,8 +38,8 @@
 		if (canvas_container){
 			var wheel = new DependencyWheel.Remote(false, canvas_container, { 
 				url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/dependencies.json?scope=<%= @product.main_scope %>',
-				width: "562", 
-				height: "562",
+				width: "605", 
+				height: "605",
 				infoBox: "infoBox",
 				infoNumber: "runtime_recursive_number",
 				canvas_id: "canvas",
@@ -59,7 +62,7 @@
 					version = version.replace(/\./g, "~" );
 					window.location.href = "/package/" + key + "/version/" + version;
 				}
-			} );	
+			} );
 		}
-	}	
+	}
 </script>

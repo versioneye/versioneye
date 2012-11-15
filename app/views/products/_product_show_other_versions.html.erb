@@ -1,8 +1,10 @@
 <% if !@product.versions.nil? && @product.versions.length > 1 %>
-	<div class="boxHeader">
-		<%= pluralize(@product.versions.count, "Versions") %>
+	<div class="box header">
+		<h5>
+			<%= pluralize(@product.versions.count, "Versions") %>
+		</h5>
 	</div>
-	<div class="boxContainer" >
+	<div class="box content" >
 		<% @product.get_natural_sorted_versions.each do |version|  %>
 			<div>
 			<% if ReleaseRecognizer.release?(version.version) %>

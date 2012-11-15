@@ -1,67 +1,133 @@
-<div class="container" >		
-	<div >
-		<h1>About VersionEye</h1>
-		<%= render 'shared/about' %><br/>
-		<br/>
-		<h2>Team</h2><a name="team" ></a>
-		This is the Team behind VersionEye.<br/>
-		<br/>
-	</div>
-	<div class="row">
-		<div class="span3 aboutCell">
-			<div><%= image_tag "about/RobertReiz.png" %></div>
-			<div class="meta-text">Robert Reiz</div>
-			<div class="meta-text-bold">CEO &amp; Founder</div>
-			<div class="meta-text-small">VersionEye is Robert's 3rd Start-Up. He likes to explore new ideas, new places and new projects.</div>
+
+<% title "VersionEye" %>
+
+<div >
+	<%= render 'shared/about' %>
+	<br/>
+	<h2>Team</h2><a name="team" ></a>
+	<p>This is the Team behind VersionEye.</p>
+</div>
+<div class="row">
+	<ul class = "thumbnails">
+	<li>
+		<div class="thumbnail">
+			<div class = "image">
+				<%= image_tag "about/RobertReiz.png" %>
+					<h5>Robert Reiz</h5>
+					<strong>CEO &amp; Founder</strong>
+			</div>
+			<div class = "caption">
+					<p>VersionEye is Robert's 3rd Start-Up. He likes to explore new ideas, new places and new projects.
+					</p>
+			</div>
 		</div>
-		<div class="span3 aboutCell">
-			<div><%= image_tag "about/ErwinWelter.jpg" %></div>
-			<div class="meta-text">Erwin Welter</div>
-			<div class="meta-text-bold">Creative Head</div>
-			<div class="meta-text-small">Co-Founder of <a href="http://www.punktzebra.de/" target="new_Punktzebra">Punktzebra</a>. He enjoys a good meal and is a funny guy.</div>
+	</li>
+
+	<li>
+		<div class="thumbnail">
+			<div class = "image">
+				<%= image_tag "about/ErwinWelter.jpg" %>
+				<h5>Erwin Welter</h5>
+				<strong>Creative Head</strong>
+			</div>
+			<div class = "caption">
+				<p>
+					Co-Founder of <a href="http://www.punktzebra.de/" target="new_Punktzebra">Punktzebra</a>. He enjoys a good meal and is a funny guy.
+				</p>
+			</div>
 		</div>
-		<div class="span3 aboutCell">
-			<div><%= image_tag "about/JanisKrziwanie.jpg" %></div>
-			<div class="meta-text">Janis Krziwanie</div>
-			<div class="meta-text-bold">Creative Head</div>
-			<div class="meta-text-small">Co-Founder of <a href="http://www.punktzebra.de/" target="new_Punktzebra" >Punktzebra</a>. He is a vegetarian, but still a funny guy.</div>
+	</li>
+
+	<li>
+		<div class= "thumbnail">
+			<div class = "image">
+				<%= image_tag "about/JanisKrziwanie.jpg" %>
+				<h5>Janis Krziwanie</h5>
+				<strong>Creative Head</strong>
+			</div>
+			<div class = "caption">
+				<p>
+					Co-Founder of <a href="http://www.punktzebra.de/" target="new_Punktzebra" >Punktzebra</a>. He is a vegetarian, but still a funny guy.
+				</p>
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="span3 aboutCell">
-			<div><%= image_tag "about/Ilkay.jpg" %></div>
-			<div class="meta-text">Ilkay Bölek</div>
-			<div class="meta-text-bold">Draughtswoman</div>
-			<div class="meta-text-small">Check out her drawings on Facebook. Ilkay likes to help homeless people.</div>
+	</li>
+
+	<li>
+		<div class= "thumbnail">
+			<div class = "image">
+				<%= image_tag "about/Ilkay.jpg" %>
+				<h5>Ilkay Bölek</h5>
+				<strong>Draughtswoman</strong>
+			</div>
+			<div class = "caption">
+				<p>
+					Check out her drawings on Facebook. Ilkay likes to help homeless people.
+				</p>
+			</div>
 		</div>
-		<div class="span3 aboutCell">
-			<div><%= image_tag "about/IngoKoch.jpg" %></div>
-			<div class="meta-text">Ingo Koch</div>
-			<div class="meta-text-bold">iPhone Developer</div>
-			<div class="meta-text-small">Founder of <a href="http://www.appification.de/" target="new_Appification">Appification</a> and Expert for mobile devices. He likes to be challenged.</div>
+	</li>
+
+	<li>
+		<div class= "thumbnail">
+			<div class = "image">
+				<%= image_tag "about/IngoKoch.jpg" %>
+				<h5 class="meta-text">Ingo Koch</h5>
+				<strong>iPhone Developer</strong>
+			</div>
+			<div class = "caption">
+				<p>
+					Founder of <a href="http://www.appification.de/" target="new_Appification">Appification</a> and Expert for mobile devices. He likes to be challenged.
+				</p>
+				</dl>
+			</div>
 		</div>
-		<div class="span3 aboutCell">
-			<div><%= image_tag "about/MartinChristmann.jpg" %></div>
-			<div class="meta-text">Martin Christmann</div>
-			<div class="meta-text-bold">Android Developer</div>
-			<div class="meta-text-small">Expert for mobile devices. He likes sports and travelling.</div>
+	</li>
+
+	<li>
+		<div class= "thumbnail">
+			<div class = "image">
+				<%= image_tag "about/MartinChristmann.jpg" %>
+				<h5>Martin Christmann</h5>
+				<strong>Android Developer</strong>
+			</div>
+			<div class = "caption">
+				<p>
+					Expert for mobile devices. He likes sports and travelling.
+				</p>
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="span3 aboutCell">
-			<div><%= image_tag "about/PepperLuboff.jpg" %></div>
-			<div class="meta-text">Pepper Luboff</div>
-			<div class="meta-text-bold">Content Editor</div>
-			<div class="meta-text-small">Oakland-based writer and artist. You'll find her among crazy poets and the Etsy rabble.</div>
+	</li>
+
+	<li>
+		<div class= "thumbnail">
+			<div class = "image">
+				<%= image_tag "about/PepperLuboff.jpg" %>
+				<h5>Pepper Luboff</h5>
+				<strong>Content Editor</strong>
+			</div>
+			<div class = "caption">
+				<p>
+					Oakland-based writer and artist. You'll find her among crazy poets and the Etsy rabble.
+				</p>
+			</div>
 		</div>
-		<div class="span3 aboutCell">
-			<div><%= image_tag "about/AndreaFrankenbach.jpg" %></div>
-			<div class="meta-text">Andrea Frankenbach</div>
-			<div class="meta-text-bold">Language Consultant</div>
-			<div class="meta-text-small">Co-Founder of <a href="http://www.mot-ma.de">mot</a>. She loves to travel and get to know other cultures.</div>
+	</li>
+
+	<li>
+		<div class= "thumbnail">
+			<div class = "image">
+				<%= image_tag "about/AndreaFrankenbach.jpg" %>
+				<h5>Andrea Frankenbach</h5>
+				<strong>Language Consultant</strong>
+			</div>
+			<div class = "caption">
+				<p>
+					Co-Founder of <a href="http://www.mot-ma.de">mot</a>. She loves to travel and get to know other cultures.
+				</p>
+			</div>
 		</div>
-	</div>
-	
-	
-	
+	</li>
+
+</ul>
 </div>

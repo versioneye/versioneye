@@ -1,144 +1,89 @@
-<div class="sidebar" >
 
-	<%= render "settings/navi" %>	
-
+<div class="span3" >
+  <%= render "settings/navi" %>
 </div>
-<div class="content">
 
-  <div class="boxHeader">
+<div class="span8" >
+
+  <div class="row content_header_def" >
     Links
   </div>
-
-	<div class="boxContainer">
-	<%= form_tag("/settings/updatelinks", :method => "post") do  %>    
-    <div style="display:table-row;">
-      <div class="labelCelMiddle">
-		    <%= label_tag(:GitHub, "GitHub") %>
-      </div>
-      <div class="inputCel">
-		    <%= text_field_tag :github, @userlinkcollection.github, :class => "round" %>
-      </div>
-    </div>
-    <div style="display:table-row;" style="margin-bottom: 20px;">
-      <div class="labelCelMiddle"></div>
-      <div class="inputCel">
-        <span class="meta-text-small">https://github.com/ <b>USERNAME</b></span>
-        <br/>
-        <br/>
-      </div>
-    </div>
-
-    <div style="display:table-row;">
-      <div class="labelCelMiddle">
-        <%= label_tag(:stackoverflow, "Stackoverflow") %>
-      </div>
-      <div class="inputCel">
-        <%= text_field_tag :stackoverflow, @userlinkcollection.stackoverflow, :class => "round" %>
-      </div>
-    </div>
-    <div style="display:table-row;" style="margin-bottom: 20px;">
-      <div class="labelCelMiddle"></div>
-      <div class="inputCel">
-        <span class="meta-text-small">http://stackoverflow.com/users/ <b>ID/USERNAME</b></span>
-        <br/>
-        <br/>
-      </div>
-    </div>
-
-    <div style="display:table-row;">
-      <div class="labelCelMiddle">
-        <%= label_tag(:twitter, "Twitter") %>
-      </div>
-      <div class="inputCel">
-        <%= text_field_tag :twitter, @userlinkcollection.twitter, :class => "round" %>
-      </div>
-    </div>
-    <div style="display:table-row;" style="margin-bottom: 20px;">
-      <div class="labelCelMiddle"></div>
-      <div class="inputCel">
-        <span class="meta-text-small">https://twitter.com/#!/ <b>USERNAME</b></span>
-        <br/>
-        <br/>
-      </div>
-    </div>
-
-
-    <div style="display:table-row;">
-      <div class="labelCelMiddle">
-        <%= label_tag(:linkedin, "LinkedIn") %>
-      </div>
-      <div class="inputCel">
-        <%= text_field_tag :linkedin, @userlinkcollection.linkedin, :class => "round" %>
-      </div>
-    </div>
-    <div style="display:table-row;" style="margin-bottom: 20px;">
-      <div class="labelCelMiddle"></div>
-      <div class="inputCel">
-        <span class="meta-text-small">http://www.linkedin.com/in/ <b>USERNAME</b></span>
-        <br/>
-        <br/>
-      </div>
-    </div>
-
-    <div style="display:table-row;">
-      <div class="labelCelMiddle">
-        <%= label_tag(:facebook, "Facebook") %>
-      </div>
-      <div class="inputCel">
-        <%= text_field_tag :facebook, @userlinkcollection.facebook, :class => "round" %>
-      </div>
-    </div>
-    <div style="display:table-row;" style="margin-bottom: 20px;">
-      <div class="labelCelMiddle"></div>
-      <div class="inputCel">
-        <span class="meta-text-small">http://www.facebook.com/people/ <b>USERNAME</b></span>
-        <br/>
-        <br/>
-      </div>
-    </div>
-
-
-    <div style="display:table-row;">
-      <div class="labelCelMiddle">
-        <%= label_tag(:xing, "Xing") %>
-      </div>
-      <div class="inputCel">
-        <%= text_field_tag :xing, @userlinkcollection.xing, :class => "round" %>
-      </div>
-    </div>
-    <div style="display:table-row;" style="margin-bottom: 20px;">
-      <div class="labelCelMiddle"></div>
-      <div class="inputCel">
-        <span class="meta-text-small">http://www.xing.com/profile/ <b>USERNAME</b></span>
-        <br/>
-        <br/>
-      </div>
-    </div>
-
+  
+  <div class="span8 content" >
     
-    <div style="display:table-row;">
-      <div class="labelCelMiddle">
-        <%= label_tag(:gulp, "Gulp") %>
-      </div>
-      <div class="inputCel">
-        <%= text_field_tag :gulp, @userlinkcollection.gulp, :class => "round" %>
-      </div>
-    </div>
-    <div style="display:table-row;" style="margin-bottom: 20px;">
-      <div class="labelCelMiddle"></div>
-      <div class="inputCel">
-        <span class="meta-text-small">http://www.gulp.de/resume/ <b>USERNAME</b></span>
-        <br/>
-        <br/>
-      </div>
-    </div>
+    <%= form_tag("/settings/updatelinks", :method => "post", :class => "form-horizontal") do  %>    
 
-    <div style="display:table-row;">
-      <div class="labelCelMiddle"></div>
-      <div class="inputCel">
-        <button type="submit" class="btn btn-large btn-primary" >Save</button>
+      <div class="control-group">
+        <%= label_tag :github, "GitHub", :class => "control-label", :for => "github" %>
+        <div class="controls">
+          <%= text_field_tag :github, @userlinkcollection.github, :id => "github" %><br/>
+          <span class="meta-text-small">https://github.com/ <span class="highlight_hint">USERNAME</span> </span>
+        </div>
       </div>
-    </div>
-	<% end %>
 
+      <div class="control-group">
+        <%= label_tag :stackoverflow, "Stackoverflow", :class => "control-label", :for => "stackoverflow" %>
+        <div class="controls">
+          <%= text_field_tag :stackoverflow, @userlinkcollection.stackoverflow, :id => "stackoverflow" %><br/>
+          <span class="meta-text-small">http://stackoverflow.com/users/ <span class="highlight_hint">ID/USERNAME</span></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :twitter, "Twitter", :class => "control-label", :for => "twitter" %>
+        <div class="controls">
+          <%= text_field_tag :twitter, @userlinkcollection.twitter, :id => "twitter" %><br/>
+          <span class="meta-text-small">https://twitter.com/#!/ <span class="highlight_hint">USERNAME</span></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :linkedin, "LinkedIn", :class => "control-label", :for => "linkedin" %>
+        <div class="controls">
+          <%= text_field_tag :linkedin, @userlinkcollection.linkedin, :id => "linkedin" %><br/>
+          <span class="meta-text-small">http://www.linkedin.com/in/ <span class="highlight_hint">USERNAME</span></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :facebook, "Facebook", :class => "control-label", :for => "facebook" %>
+        <div class="controls">
+          <%= text_field_tag :facebook, @userlinkcollection.facebook, :id => "facebook" %><br/>
+          <span class="meta-text-small">http://www.facebook.com/people/ <span class="highlight_hint">USERNAME</span></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :xing, "Xing", :class => "control-label", :for => "xing" %>
+        <div class="controls">
+          <%= text_field_tag :xing, @userlinkcollection.xing, :id => "xing" %><br/>
+          <span class="meta-text-small">http://www.xing.com/profile/ <span class="highlight_hint">USERNAME</span></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :gulp, "Gulp", :class => "control-label", :for => "gulp" %>
+        <div class="controls">
+          <%= text_field_tag :gulp, @userlinkcollection.gulp, :id => "gulp" %><br/>
+          <span class="meta-text-small">http://www.gulp.de/resume/ <span class="highlight_hint">USERNAME</span></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :password, "Password", :class => "control-label", :for => "password" %>
+        <div class="controls">
+          <%= password_field_tag :password, "", :id => "password" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn2 btn2-big" >Save</button>
+        </div>
+      </div>
+
+    <% end %>  
+
+  </div>
 </div>

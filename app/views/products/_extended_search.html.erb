@@ -1,49 +1,53 @@
-<div class="boxHeader" style="text-align: left;" id="ext_search_head">
-	<div style="float: left;">Extended Search</div> 
-	<div style="float: left; padding-top: 2px; padding-left: 10px;">
-		<a href="javascript: void(0);" id="ext_search_link" ><div class="icon-circle-arrow-down"></div></a>
-	</div>
-	<div style="clear: both;"> </div>
-</div>
-<div class="boxContainer" id="extended_search_container" style="display: <%= @products.nil? || @products.empty? ? 'block' : 'none' %> ;">
-	<form id="ext_searchform" action="/search" method="GET" class="search-form" >
-		<input id="ext_lang" name="lang" type="hidden" value="<%= @lang %>" />
-		<div style="display:table-row;">
-			<div class="labelCel">
-				<%= label_tag(:name, "Name") %>
+<form id="ext_searchform" action="/search" method="GET" class="form" >
+
+	<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
+
+	<div id="extended_search_container" >
+
+		<div class="side_nav_content">
+
+			<div  class="control-group">
+				<%= label_tag(:name, "Name", :class => "control-label" )%>
+				<div class="controls">
+					<%= text_field_tag :q, @query, :class => "input-medium" %>
+				</div>
 			</div>
-			<div class="inputCel">
-				<%= text_field_tag :q, @query, :class => "round" %>
+			<div class="control-group">
+				<%= label_tag(:description, "Description", :class => "control-label") %>
+				<div class="controls">
+					<%= text_field_tag :d, @description, :class => "input-medium" %>
+				</div>
 			</div>
-		</div>
-		<div style="display:table-row;">
-			<div class="labelCel">
-				<%= label_tag(:description, "Description") %>
-			</div>
-			<div class="inputCel">
-				<%= text_field_tag :d, @description, :class => "round" %>
-			</div>
-		</div>
-		<div style="display:table-row;">
-			<div class="labelCel">
+			<div class="control-group">
 				<%= label_tag(:groupid, "GroupId") %>
+				<div class="controls">
+					<%= text_field_tag :g, @groupid, :class => "input-medium" %>
+					<span class = "help-block">
+						<small>GroupId is (Java) Maven2 specific</small>
+					</span>
+				</div>
 			</div>
-			<div class="inputCel">
-				<%= text_field_tag :g, @groupid, :class => "round" %>
+
+			<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
+				<% @langs = @lang.split(",") %>
+				<% @languages.each do |language| %>
+					<div class = "controls">
+						<label for="<%= language %>" class = "checkbox" style = "color: #669acb;">
+							<input id="<%= language %>" type="checkbox" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.any?{ |s| s.casecmp(language)==0 }  %> />
+							<%= language %>
+						</label>
+					</div>
+				<% end %>
+			<% end %>
+			
+			<div class="control-group" style = "height: 30px; padding: 10px 0px 20px 0;">
+				<div >
+					<button type="submit" class="btn2 btn-medium" >Search</button>
+				</div>
 			</div>
+
 		</div>
-		<div style="display:table-row;">
-			<div class="labelCel">
-			</div>
-			<div class="inputCel meta-text-small" style="padding-bottom: 10px;">
-				GroupId is (Java) Maven2 specific
-			</div>
-		</div>
-		<div style="display:table-row;">
-			<div class="labelCel"></div>
-			<div class="inputCel">
-				<button type="submit" class="btn btn-large btn-primary" >Search</button>
-			</div>
-		</div>
-	</form>
-</div>
+
+	</div>
+
+</form>

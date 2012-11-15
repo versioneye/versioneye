@@ -1,0 +1,49 @@
+<% category = "undefined" if category.nil? %>
+<% description = "undefined" if description.nil? %>
+<% color_schemas = {"free" => "success", "personal" => "warning", "business" => "info"} %>
+
+<div class = "well pricing <%= color_schemas[category.downcase] %> row" style = "">
+	<!-- description of plans-->
+	<div  class = "span4" >
+		<h3 class = "<%= color_schemas[category.downcase] %>">
+			<%= category.downcase.titlecase %>
+		</h3>
+		<p>
+			<%= description %>
+		</p>
+	</div>
+	<!-- sub plans -->
+	<div class = "span6">
+	<% plans.each do |plan| %>
+		<!-- subscription item -->
+		<div class  = "subscription-item">
+			<%# TODO: where to submit ? %>
+			<% if current_user.nil? then %>
+				<% url = "/signup"; btn_val = "Sign up" %>
+			<% else %>
+				<% url = "/settings/updateplan"; btn_val = "Update plan" %>
+			<% end %>
+			<form action="<%= url %>" method="POST" >
+				<input type="hidden" name="plan" value="<%= plan.name_id %>" />
+				<button type="submit" class="btn2 btn-medium pull-right" onClick="return confirmAction()" >
+					<%= btn_val %>
+				</button>
+			</form>
+			<h5> <%= plan.name.downcase.titlecase %>: $<%= plan.price %>/month </h5>
+			<ul class = "nav subscription">
+				<li>
+						<span class = "icon_lock" ></span>
+						<strong><%= plan.private_projects %></strong> private repositories
+				</li>
+				<li>
+					<span class = "icon_donut" ></span>
+					Unlimited OpenSource repositories
+				</li>
+				<li><span class = "icon_mail" ></span>
+					<strong><%= plan.emails %></strong> emails
+				</li>
+			</ul>
+		</div>
+	<% end %>
+	</div>
+</div>

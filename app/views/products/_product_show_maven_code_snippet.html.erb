@@ -1,10 +1,15 @@
-<div class="boxHeader">
-	Maven2 pom.xml snippet
-</div>
-<div class="boxContainer"><pre>
-<<span>dependency</span>>
-    <<span>groupId</span>><b><%= @product.group_id %></b><<span>/groupId</span>>
-    <<span>artifactId</span>><b><%= @product.artifact_id %></b><<span>/artifactId</span>>
-    <<span>version</span>><b><%= @product.version %></b><<span>/version</span>>
-<<span>/dependency</span>></pre>
+
+<div class = "well row box_snippet" >
+  <div class="span2">
+  	<h5 class="dep_header">pom.xml snippet</h5>
+  </div>
+  <div class="span5" style="width: 430px; margin-bottom: 0;">
+    <pre class = "prettyprint" style = "background-color: #fff; margin-bottom: 0;"><code class = "lang-xml">
+&lt;dependency&gt;
+    &lt;groupId&gt;<b><%= @product.group_id %></b>&lt;/groupId&gt;
+    &lt;artifactId&gt;<b><%= @product.artifact_id %></b>&lt;/artifactId&gt;
+    &lt;version&gt;<b><%= @product.version %></b><<span>/version</span>&gt;
+&lt;/dependency&gt;
+    </code></pre>
+  </div>
 </div>

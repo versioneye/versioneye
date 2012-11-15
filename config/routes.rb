@@ -29,6 +29,7 @@ Versioneye::Application.routes.draw do
       get 'users_location'
     end
   end
+  get   '/created', :to => 'users#created'
   get   '/signup',                       :to => 'users#new'
   get   '/users/:id/notifications',      :to => 'users#notifications'
   get   '/users/activate/:verification', :to => 'users#activate'
@@ -101,28 +102,27 @@ Versioneye::Application.routes.draw do
 
   namespace :user do 
     resources :projects do 
-      member do 
+      member do
         post 'save_period'
         post 'save_email'
         post 'reparse'
         post 'update_name'
-      end     
+      end
     end
   end
 
   post  '/services/choose_plan',  :to => 'services#choose_plan'
-  resources :services do 
-    member do 
+  resources :services do
+    member do
       get  'recursive_dependencies'
       post 'recursive_dependencies'
     end
   end
-  get   '/pricing',               :to => 'services#index'
-
+  get   '/pricing',            :to => 'services#pricing'
   get   '/news',               :to => 'news#news'
   get   '/mynews',             :to => 'news#mynews'
   get   '/hotnews',            :to => 'news#hotnews'
-  
+
   resources :crawles
   get   '/crawles',             :to => 'crawles#index'
   get   '/group/:group',        :to => 'crawles#group'

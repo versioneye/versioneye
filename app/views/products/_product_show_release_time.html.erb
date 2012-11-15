@@ -1,14 +1,14 @@
-  <div class="boxHeader">
-    Release Time
-  </div>
-  <div class="boxContainer" >
-    <% average_release_time = @product.average_release_time %>
-    <% if average_release_time != nil and average_release_time != 0 %>
+
+<div class="well default release_box" >
+  <% average_release_time = @product.average_release_time %>
+  <% if average_release_time != nil and average_release_time != 0 %>
+    <p style="margin: 0;">
       Average release time for this project is <span style="font-weight:bold; font-size: 20px;"><%= average_release_time %></span> days. 
       <% if @product.released_days_ago %>
         This version was released <span style="font-weight: bold; font-size: 20px;"><%= @product.released_days_ago %></span> days ago.
       <% end %>
-    <% else %>
-      <%= render "/products/product_show_detected" %>
-    <% end %>
-  </div>
+    </p>
+  <% else %>
+    <%= render "/products/product_show_detected" %>
+  <% end %>
+</div>

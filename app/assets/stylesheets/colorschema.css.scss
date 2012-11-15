@@ -1,0 +1,51 @@
+/* color-schemas for block items like labels&buttons */
+
+@mixin color-schema ($fg, $bg, $border-color){
+	color: $fg;
+	background-color: $bg;
+	border-color: $border-color;
+}
+
+.default {
+	@include color-schema(#ffffff, #73868d, #616970);
+	& h1, h2, h3, h4, h5 { color: #fbb21c;}
+}
+
+.flash{
+	padding: 8px 35px 8px 14px;
+	margin-bottom: 0px;
+	color: #C09853;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	background-color: #FCF8E3;
+	border: 1px solid #FBEED5;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+.error,
+.important {
+	color: #B94A48;
+	background-color: #F2DEDE;
+	border-color: #EED3D7;
+	& h1, h2, h3, h4, h5 { color: #ffffff;}
+	& hr {border: 0px; border-bottom: 1px solid #EBC85B;}
+}
+
+.inverse {@include color-schema(#616970, #ffffff, #dddddd);}
+
+.info  {
+	@include color-schema(#616970, #eef0f1, #d3d8dc);
+	& h1, h2, h3, h4, h5 { color: #fbb21c;}
+}
+
+.warning {
+	@include color-schema(#616970, #ffecc4, #ffca5d);
+	& h1, h2, h3, h4, h5 { color: #FF8F35;}
+	& hr {border: 0px; border-bottom: 1px solid #EBC85B;}
+}
+
+.success {
+	@include color-schema(#616970, #ebfdd5, #c0d3a9);
+	& h1, h2, h3, h4, h5 { color: #67A219;}
+}
