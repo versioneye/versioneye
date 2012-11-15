@@ -1,22 +1,30 @@
+<% title "Profile" %>
+
+<% if !@user.nil? && @user.deleted %>
+	This Account does not exist anymore.
+<% end %>
+
 <% if !@user.nil? && !@user.deleted %>
+
 	<%= render "header" %>
-	<div class="sidebar" >	
+
+	<div class="span3" >
 		<%= render "users/navi" %>
-	</div>	
-	<div class="content">
+	</div>
+	
+	<div class="span8 content">
 		<% if !@comments.nil? %>	
-			<div class="boxHeader" >
-				<%= pluralize(@count, "Comment") %>
-			</div>
+			<div>
+				<h5 class="desc_header">
+					<%= pluralize(@count, "Comment") %>
+				</h5>
+			</div>	
 			<% if !@comments.nil? && !@comments.empty? %>
 				<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %> 
-				<div style="margin-top: 20px;">
+				<div style="margin-top: 20px;" class="pull-right">
 					<%= will_paginate @comments %>
 				</div>	
 			<% end %>
 		<% end %>
 	</div>
-<% end %>
-<% if !@user.nil? && @user.deleted %>
-	This Account does not exist anymore.
 <% end %>

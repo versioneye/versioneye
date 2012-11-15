@@ -1,45 +1,43 @@
-<div class="searchResults" itemprop="itemList" itemscope="" itemtype="http://schema.org/ItemList">
+<div itemprop="itemList" itemscope="" itemtype="http://schema.org/ItemList">
 	<meta itemprop="name" content="Newest Comments"  />
 	<% @comments.each do |comment| %>
-		<div class="comment" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Comment" >
-			<ul class="nav nav-list">
-				<li class="list-cell cell_icon">
-					<%= render :partial => "/shared/language_icons", :locals => {:language => comment.language, :icon => nil, :link => "/package/#{comment.prod_key_url}/version/#{comment.version_url}", :title => ":-)" } %>
-				</li>
-				<li class="list-cell">
+		<div class="row search-item padding_left" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Comment" >
+
+			<div class="span1" style = "width:60px; text-align: left;">
+				<%= render :partial => "/shared/language_icons", :locals => {:language => comment.language, :icon => nil, :link => "/package/#{comment.prod_key_url}/version/#{comment.version_url}", :title => ":-)" } %>
+			</div>
+
+			<div class="span6" style="width: 505px;">
+				<div class="row">
 					<a href="/package/<%= comment.prod_key_url %>/version/<%= comment.version_url %>"
-					   class="searchResultLink"><%=comment.name_and_version%></a><br/>
-					<div class="meta-text-small">
-						<%= link_to comment.user.fullname, user_path(comment.user) %> <br/> 
-						<time itemprop="created" datetime="<%= comment.created_at.strftime("%Y-%m-%dT%H:%M") %>"><%= comment.created_at.strftime("%b %d, %Y - %I:%M %p") %></time>
+					   class="searchResultLink"><%=comment.get_product.name_and_version%></a><br/>
+					<a itemprop="creator" href="/users/<%= comment.user.username %>">
+						<span itemprop="name"><%= comment.user.fullname %></span>
+					</a> 
+					at <time itemprop="commentTime" date="<%= comment.created_at.strftime("%Y-%m-%dT%") %>"><b><%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %></b></time>
+				</div>
+				<div class="user_comment">
+					<%= comment.comment %>
+				</div>
+				<div class="row">
+					<div class="span2" >
+						<a href="https://twitter.com/share" 
+							   class="twitter-share-button" 
+							   data-url="<%= Settings.server_url %>/vc/<%= comment.id %>" 
+							   data-text="<%= comment.user.fullname %> commented <%= comment.get_product.name_and_version %> @VersionEye read the #review here:"
+							   data-count="horizontal" >Twitter</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 					</div>
-				</li>
-			</ul>
-			<ul class="nav nav-list">
-				<li class="list-cell cell_icon" style="vertical-align: top">
-					<% if show_gravatar %>
-						<%= link_to gravatar_image_tag( comment.user.email, :style => "width: 40px;", :alt => comment.user.fullname, :gravatar => { :size => 40, :default => "#{Settings.server_url}/profile_icon.png" }), user_path(comment.user) %>
-					<% end %>
-				</li>
-				<li class="list-cell">
-					<div itemprop="comment">
-						<%= comment.comment %>
+					<div class="span2">
+						<%= render :partial => "shared/list_reply_link", :locals => { :comment => comment } %>
 					</div>
-					<div class="meta-text-small" >
-						<ul class="searchResult-inner-list-row nav nav-list">
-							<li class="searchResult-inner-list-cell share-on-icon">
-								<a href="https://twitter.com/share" 
-								   class="twitter-share-button" 
-								   data-url="<%= Settings.server_url %>/vc/<%= comment.id %>" 
-								   data-text="<%= comment.user.fullname %> on <%= comment.name_and_version %> @VersionEye" 
-								   data-count="horizontal" >Twitter</a>
-							</li>
-							<%= render :partial => "shared/list_reply_link", :locals => { :comment => comment } %>
-						</ul>
-					</div>
-					<%= render :partial => "shared/version_comment_replies", :locals => { :comment => comment } %>
-				</li>
-			</ul>
+				</div>
+				<div class="row">
+					<%= render :partial => "shared/version_comment_replies",
+						:locals => {:comment => comment} %>
+				</div>
+			</div>
+
 		</div>
 	<% end %>
 </div>

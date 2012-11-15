@@ -32,9 +32,9 @@
 			<%= render 'shared/error_messages', :object => reply.object %>
     </div>
     <div>
-			<%= reply.text_area :comment, :class => "round", :style=>"width: 500px;", :maxlength => "250", :onKeyUp => "textCounter(this, document.getElementById('#{comment.id}_reply_counter'), 250)", :id => "#{comment.id}_textarea", :rows => 5  %>
+			<%= reply.text_area :comment, :class => "round", :style=>"width: 495px;", :maxlength => "250", :onKeyUp => "textCounter(this, document.getElementById('#{comment.id}_reply_counter'), 250)", :id => "#{comment.id}_textarea", :rows => 5  %>
 		</div>
-		<div style="display: inline-block; width: 500px;">
+		<div style="display: inline-block; width: 495px;">
 			<div style="float: left">
 				<button type="submit" class="btn2 btn2-large">Save</button>
 			</div>
