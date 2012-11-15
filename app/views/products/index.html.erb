@@ -30,25 +30,30 @@
 		<form id="form" action="/search" method="GET" style="padding: 0; margin:0;" >
 			<input id="lang" name="lang" class = "hide" type="hidden" value="<%= @lang %>" />
 			<div class="row">
-				<div class = "span5 pull-left divider right">
+				<div class = "span5 pull-left ">
 					<div class = "input-prepend ">
 						<span class="icon_search" style = "margin: 10px -25px 0px 10px;"></span>
 						<input id="q" class = "input large" name="q" type="text" value="<%= @query %>" />
 					</div>
 				</div>
-				<div class = "span6 pull-right" >
-					<span class = "mute" style = " ">Filter by</span>
-					<div class= "btn-group">
+				<div class="span5" style="text-align: center; padding-left: 30px;">
 					<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
+						<table style="table-layout:fixed; margin: 0; padding: 0; height: 40px; text-align: center; " height="40">
+							<tr style="height: 40px; vertical-align: top;" height="40">
 						<% @langs = @lang.split(",") %>
 						<% @languages.each do |language| %>
 							<% langname = language.downcase.gsub(/\./, "") %>
-							<button class="btn lang" onclick="update_lang('<%= langname %>')" >
-								<span class = "icon_<%= langname %> small">&nbsp;</span>
-							</button>
+							<td style="margin: 0; padding: 0; height: 40px; vertical-align: top;" height="40">
+								<div class="icon_<%= langname %>_small_container" onclick="update_lang('<%= langname %>')" >
+									<span class = "icon_<%= langname %> small">&nbsp;</span>
+								</div>
+							</td>
 						<% end %>
+							</tr>
+						</table>
 					<% end %>
-					</div>
+				</div>
+				<div class = "span2 pull-right" style="width: 100px;" >
 					<button type="submit" class="btn2 btn2-big pull-right" >
 						Search
 					</button>
