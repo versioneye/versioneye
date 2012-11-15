@@ -1,34 +1,26 @@
-<div id="<%= comment.id %>_reply_section" class="versioncomment_reply_section" >
 <% if !comment.versioncommentreplys.empty? %>
+	<div id="<%= comment.id %>_reply_section" class="versioncomment_reply_section" >
 	<% comment.versioncommentreplys.each do |reply| %>
-	<div class = "reply-container" style = "min-height: 35px;">
-		<div class="meta">
-			<span class = "icon_user"></span>
+	<div style="min-height: 35px; margin-bottom: 10px;">
+		<div class="row">
+			<span class="icon_user"></span>
 			<strong>
 			<%= link_to reply.fullname, user_path(reply.username) %> at <%= reply.created_at.strftime("%b %d, %Y - %I:%m %p") %>
 			</strong>
 		</div>
-		<div class="reply">
+		<div class="row">
 			<%= reply.comment %>
-
-
-			<% if !comment.versioncommentreplys.empty? && signed_in? %>
-				<div class="versioncomment_reply_link_section pull-right">
-					<ul class = "nav nav-pills">
-						<li>
-							<a id="<%= comment.id %>_reply_link" href="#" onclick="show_versioncomment_reply('<%= comment.id %>'); return false;">Reply</a>
-						</li>
-						<li>
-							<a id="<%= comment.id %>_hide_link" href="#" onclick="hide_versioncomment_reply('<%= comment.id %>'); return false;" style="display: none;">Hide</a>
-						</li>
-					</ul>
-				</div>
-			<% end %>
 		</div>
 	</div>
 	<% end %>
+	<% if !comment.versioncommentreplys.empty? && signed_in? %>
+		<div class="versioncomment_reply_link_section">
+			<a id="<%= comment.id %>_reply_link" href="#" onclick="show_versioncomment_reply('<%= comment.id %>'); return false;">Reply</a>
+			<a id="<%= comment.id %>_hide_link" href="#" onclick="hide_versioncomment_reply('<%= comment.id %>'); return false;" style="display: none;">Hide</a>
+		</div>
+	<% end %>
+	</div  >
 <% end %>
-</div  >
 
 
 <% if signed_in? %>
@@ -36,16 +28,15 @@
 <div id="<%= comment.id %>_reply_form" style="display: none; padding-left: 0px;">
 	<%= form_for(@versioncommentreply, :remote => true) do |reply| %>
 		<input name="comment_id" type="hidden" value="<%= comment.id %>" />
-	    <div class="messages">
-	        <%= render 'shared/error_messages', :object => reply.object %>
-	    </div>
-
-	    <div>
-			<%= reply.text_area :comment, :class => "round", :style=>"width: 310px;", :maxlength => "250", :onKeyUp => "textCounter(this, document.getElementById('#{comment.id}_reply_counter'), 250)", :id => "#{comment.id}_textarea", :rows => 5  %>
+    <div class="messages">
+			<%= render 'shared/error_messages', :object => reply.object %>
+    </div>
+    <div>
+			<%= reply.text_area :comment, :class => "round", :style=>"width: 500px;", :maxlength => "250", :onKeyUp => "textCounter(this, document.getElementById('#{comment.id}_reply_counter'), 250)", :id => "#{comment.id}_textarea", :rows => 5  %>
 		</div>
-		<div style="display: inline-block; width: 310px;">
+		<div style="display: inline-block; width: 500px;">
 			<div style="float: left">
-				<button type="submit" class="btn btn-medium btn-primary">Save</button>
+				<button type="submit" class="btn2 btn2-large">Save</button>
 			</div>
 			<div style="float: right" class="meta-text-small">
 				Characters left: <span id="<%= comment.id %>_reply_counter">250</span>

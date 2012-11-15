@@ -5,13 +5,13 @@
 <% if signed_in? %>
 	<div class="boxContainer">
 		<%= form_for @versioncomment do |f| %>
-		    <div class="messages">
-		        <%= render 'shared/error_messages', :object => f.object %>
-		    </div>
+	    <div class="messages">
+	        <%= render 'shared/error_messages', :object => f.object %>
+	    </div>
 			<div class = "controls-group">
 				<%= f.text_area :comment,
-					:class => "input span8",
-					:maxlength => "1000", :rows => 5, :cols => 80,
+					:class => "input span7", :style => "width: 600px;", 
+					:maxlength => "1000", :rows => 5, :cols => 70,
 					:onKeyUp => "textCounter(this, document.getElementById('counter'), 1000)"  %>
 				<span class = "help-block pull-right">
 					<small> Characters left: <span id="counter">1000</span></small>
