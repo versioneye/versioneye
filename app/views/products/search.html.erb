@@ -9,7 +9,9 @@
 		<%= render 'shared/dialog_follow' %>
 	<% end %>
 	<div class="row content_header" >
-		<em> `<%= params[:q] %>`</em> has returned <%= @products.total_entries %> results
+		<% if @products && !@products.empty? %>
+			<em> `<%= params[:q] %>`</em> has returned <%= @products.total_entries %> results
+		<% end %>
 	</div>
 	<%= render :partial => "products/show_search_results",
 		:locals => { :products => @products, :paginate => true,

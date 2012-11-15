@@ -2,12 +2,20 @@
 -------------------------------------------------- */
 /*
   Fonts
+  @import url(http://fonts.googleapis.com/css?family=Droid+Sans);
 */
-@import url(http://fonts.googleapis.com/css?family=Droid+Sans);
+
 @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
 
-
+@font-face {
+    font-family: 'DroidSans';
+    src: url('font/DroidSans.eot?') format('eot'),
+         url('font/DroidSans.woff') format('woff'),
+         url('font/DroidSans.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 /*
   ICONS
