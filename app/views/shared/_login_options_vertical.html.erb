@@ -1,5 +1,20 @@
 <ul class = "nav list-social">
-	<li><span class = "btn_github small"></span></li>
-	<li><span class = "btn_twitter small"></span></li>
-	<li><span class = "btn_facebook small"></span></li>
+	<li>
+    <% btn  ||= "login" %>
+    <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&scope=repo' style="margin-right: 5px;" >
+      <span class="btn_github small <%= btn %>"></span>
+    </a>
+  </li>
+	<li>
+    <% btn ||= "login" %>
+    <a href="/auth/twitter/forward" >
+      <span class="btn_twitter small <%= btn %>"></span>
+    </a>
+  </li>
+	<li>
+    <% btn ||= "login" %>
+    <a href='javascript:var popupWindow = window.open(oauth_facebook_link, "popupWindow", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, menubar=1, resizable=1, width="+winWidth+",height="+winHeigh+"top="+top+", left="+left);' style="margin-right: 5px;" >
+      <span class="btn_facebook small <%= btn %>"></span>
+    </a>
+  </li>
 </ul>

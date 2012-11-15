@@ -10,8 +10,6 @@
 
 		<br/>
 		<br/>
-		<br/>
-		<br/>
 		<div>
   		<div style="display: block; width: 50%; margin: auto;" >
   			<%= form_tag("/package/follow", :remote => true) do  %>
@@ -51,13 +49,13 @@
 
 		<div id="canvas-container" ></div>
 		<div>
-			<h3 style="text-align: center; display: none; width: 100%" id="infoBox" >
+			<h4 style="text-align: center; display: none; width: 100%" id="infoBox" >
 				<span >
 					<a id="pinit" style="display: none;" href="" class="pin-it-button" count-layout="horizontal"><img border="0" alt="pint_it_on_pinterest" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
 				</span><br/>
 				<br/>
 				<%= @product.name %> has <span style="font-weight: bold;" id="recursive_number"></span> recursive <span id="scope_name"><%= @product.main_scope %></span> dependencies
-			</h3>
+			</h4>
 		</div>
 		<div style="text-align: center;">
 			<a href="/package/<%=@product.to_param%>/version/<%=@version.to_url_param%>">See more details</a>
@@ -73,8 +71,8 @@
 				uri = "/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/dependencies.json?scope=" + scope;
 				var wheel = new DependencyWheel.Remote(false, document.getElementById("canvas-container"), { 
 					url: uri,
-					width: "750", 
-					height: "750",
+					width: "940", 
+					height: "940",
 					data_border: 70,
 					infoBox: "infoBox",
 					infoNumber: "recursive_number",
