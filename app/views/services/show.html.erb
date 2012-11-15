@@ -1,6 +1,8 @@
+<% title "File Upload" %>
 
 <% if @project %>
-	<div class="content" style="margin-left: 115px; display: inline-block;">
+<div>
+	<div class="tab-pane active" style="display: inline-block; width: 530px; margin-left: 174px;">
 		<div style="font-size: 16px; margin-bottom: 20px;">
 			<%= pluralize(@project.dep_number, "Dependency") %>, 
 			<span style="color: <%= outdated_color(@project)%>; font-weight: bold;" ><%= @project.out_number %> Outdated</span>, 
@@ -10,7 +12,7 @@
 			<% if !@project.fetch_dependencies.nil? %>
 				<% @project.dependencies.each do |dep| %>
 					<% product = dep.get_product %>
-					<div class="dependency" >
+					<div class="row search-item search_item_context" >
 						<% if dep.prod_key.nil? %>
 							<%= render :partial => "/user/projects/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
 						<% elsif dep.outdated and dep.release != false  %>
@@ -25,13 +27,14 @@
 			<% end %>
 		</div>
 	</div>
+</div>
 
 	<% if !@project.project_type.eql?("PIP") %>
 		<div id="canvas-demo-container" style="display: inline-block;"></div>
 		<div style="text-align: center; display: none; width: 100%;" id="infoBox">
-			<h3 style="text-align: center;" >
+			<h5 style="text-align: center;" >
 				This project has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive dependencies
-			</h3>
+			</h5>
 		</div>
 		<script type="text/javascript">
 			function render_wheel_demo(){
@@ -39,8 +42,8 @@
 				if (canvas_container){
 					var wheel = new DependencyWheel.Remote(false, canvas_container, { 
 						url: '/services/<%= @project.id %>/recursive_dependencies.json',
-						width: "800", 
-						height: "800",
+						width: "900", 
+						height: "900",
 						infoBox: "infoBox",
 						infoNumber: "runtime_recursive_number",
 						canvas_id: "canvas",
@@ -70,8 +73,8 @@
 		</script>
 	<% end %>
 
-	<div style="width: 333px; margin-right: auto; margin-left: auto;">
-		<ul class="list-row" >
+	<div style="width: 300px; margin-right: auto; margin-left: auto; text-align: center">
+		<ul class="list-social " >
 			<li class="list-cell share-on-icon">
 				<a href="https://twitter.com/share" 
 				   class="twitter-share-button" 
