@@ -2,20 +2,28 @@
 -------------------------------------------------- */
 /*
   Fonts
-  @import url(http://fonts.googleapis.com/css?family=Droid+Sans);
 */
 
-@import url(http://fonts.googleapis.com/css?family=Droid+Serif);
-@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+@font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans'), local('DroidSans'), 
+    url('/fonts/DroidSans.eot?#iefix') format('embedded-opentype'), 
+    url('/fonts/DroidSans.woff') format('woff'), 
+    url('/fonts/DroidSans.ttf') format('truetype');
+}
 
 @font-face {
-    font-family: 'DroidSans';
-    src: url('font/DroidSans.eot?') format('eot'),
-         url('font/DroidSans.woff') format('woff'),
-         url('font/DroidSans.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Droid Serif';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Serif'), local('DroidSerif'), 
+    url('/fonts/DroidSerif.woff') format('woff'), 
+    url('/fonts/DroidSerif.ttf') format('truetype'), 
+    url('/fonts/DroidSerif.svg') format('svg');
 }
+
 
 /*
   ICONS
