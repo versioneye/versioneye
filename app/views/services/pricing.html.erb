@@ -22,9 +22,16 @@
 	</div>
 	<div class = "span6">
 		<div class="subscription-item" style="padding-left: 40px;">
-			<form action="/signup" >
-				<button class="btn2 btn2-big pull-right">Sign Up</button>
-			</form>
+			<% if signed_in? %>
+				<form action="/settings/updateplan" method="POST" > 
+					<input type="hidden" name="plan" value="02_free" />
+					<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+				</form>
+			<% else %> 
+				<form action="/signup" >
+					<button class="btn2 btn2-big pull-right">Sign Up</button>
+				</form>
+			<% end %>
 			<h4> $0/month </h4>
 			<ul class = "subscription">
 				<li>
@@ -51,9 +58,16 @@
 	</div>
 	<div class = "span6">
 		<div class="subscription-item" style="padding-left: 40px;">
-			<form action="/signup" >
-				<button class="btn2 btn2-big pull-right">Sign Up</button>
-			</form>
+			<% if signed_in? %>
+				<form action="/settings/updateplan" method="POST" > 
+					<input type="hidden" name="plan" value="02_personal" />
+					<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+				</form>
+			<% else %> 
+				<form action="/signup" >
+					<button class="btn2 btn2-big pull-right">Sign Up</button>
+				</form>
+			<% end %>
 			<h4> $3/month </h4>
 			<ul class = "subscription">
 				<li>
@@ -80,9 +94,16 @@
 	</div>
 	<div class="span6">
 		<div class="subscription-item" style="padding-left: 40px;">
-			<form action="/signup" >
-				<button class="btn2 btn2-big pull-right">Sign Up</button>
-			</form>
+			<% if signed_in? %>
+				<form action="/settings/updateplan" method="POST" > 
+					<input type="hidden" name="plan" value="02_business_small" />
+					<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+				</form>
+			<% else %> 
+				<form action="/signup" >
+					<button class="btn2 btn2-big pull-right">Sign Up</button>
+				</form>
+			<% end %>
 			<h4> $7/month </h4>
 			<ul class = "subscription">
 				<li>
@@ -101,9 +122,16 @@
 		</div>
 		<hr />
 		<div class  = "subscription-item" style="padding-left: 40px;">
-			<form action="/signup" >
-				<button class="btn2 btn2-big pull-right">Sign Up</button>
-			</form>
+			<% if signed_in? %>
+				<form action="/settings/updateplan" method="POST" > 
+					<input type="hidden" name="plan" value="02_business_normal" />
+					<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+				</form>
+			<% else %> 
+				<form action="/signup" >
+					<button class="btn2 btn2-big pull-right">Sign Up</button>
+				</form>
+			<% end %>
 			<h4> $25/month </h4>
 			<ul class = "subscription">
 				<li>
