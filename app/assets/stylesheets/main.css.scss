@@ -265,34 +265,6 @@ div.content {
   text-shadow: 0 0 10px rgba(255,255,255,.25);
 }
 
-/* Download button */
-.masthead .btn {
-  padding: 14px 24px;
-  font-size: 24px;
-  font-weight: 200;
-  color: #fff; /* redeclare to override the `.jumbotron a` */
-  border: 0;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px;
-  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 5px rgba(0,0,0,.25);
-     -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 5px rgba(0,0,0,.25);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 5px rgba(0,0,0,.25);
-  -webkit-transition: none;
-     -moz-transition: none;
-          transition: none;
-}
-.masthead .btn:hover {
-  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 5px rgba(0,0,0,.25);
-     -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 5px rgba(0,0,0,.25);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 5px rgba(0,0,0,.25);
-}
-.masthead .btn:active {
-  -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,.1), 0 1px 0 rgba(255,255,255,.1);
-     -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,.1), 0 1px 0 rgba(255,255,255,.1);
-          box-shadow: inset 0 2px 4px rgba(0,0,0,.1), 0 1px 0 rgba(255,255,255,.1);
-}
-
 
 .download_list{
   list-style: none;
@@ -319,34 +291,6 @@ div.content {
   opacity: .4;
 }
 
-/* Masthead (docs home)
-------------------------- */
-.masthead {
-  padding: 70px 0 80px;
-  margin-bottom: 0;
-  color: #fff;
-}
-.masthead h1 {
-  font-size: 120px;
-  line-height: 1;
-  letter-spacing: -2px;
-}
-.masthead p {
-  font-size: 40px;
-  font-weight: 200;
-  line-height: 1.25;
-}
-
-/* Textual links in masthead */
-.masthead-links {
-  margin: 0;
-  list-style: none;
-}
-.masthead-links li {
-  display: inline;
-  padding: 0 10px;
-  color: rgba(255,255,255,.25);
-}
 
 /* Social proof buttons from GitHub & Twitter */
 .bs-docs-social {
