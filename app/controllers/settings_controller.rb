@@ -197,6 +197,8 @@ class SettingsController < ApplicationController
     if user_email.save 
       UserMailer.verification_email_only(current_user, user_email.verification, user_email.email).deliver
       flash[:success] = "E-Mail Address added."
+    else 
+      flash[:error] = "E-Mail Address is not valid."
     end 
     redirect_to settings_emails_path()
   end
