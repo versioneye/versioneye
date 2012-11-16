@@ -34,21 +34,21 @@
 							<ul class = "dropdown-menu">
 								<li >
 									<a href="/settings/name">
-										<span class = "icon-settings"></span>
 										Settings
 									</a>
 								</li>
 								<li>
 									<a href="/users/<%= current_user.username %>" >
-										<span class = "icon-user"></span>
 										Profile
 									</a>
+								</li>
+								<li>
+									<a onclick="load_dialog_feedback();" href="#">Feedback</a>
 								</li>
 								<li class = "divider">
 								</li>
 								<li>
 									<a href="/signout">
-										<span class = "icon-logout"></span>
 										Logout
 									</a>
 								</li>
