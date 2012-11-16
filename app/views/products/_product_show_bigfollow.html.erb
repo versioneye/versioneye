@@ -1,20 +1,17 @@
-<div class="product_header">
+<div class="product_header pull-right">
 	<% if signed_in? %>
 		<% if @following %>
 			<%= form_tag("/package/unfollow") do  %>
 				<input id="src_hidden"  name="src_hidden" type="hidden" value="detail"/>
 				<input id="product_key_hidden" name="product_key" type="hidden" value="<%= @product.to_param %>"/>
-				<button type="submit" class="btn2 btn-large" >Follow</button>
+				<button type="submit" class="btn2 btn-large btn-warning" >Unfollow</button>
 			<% end %>
 		<% else %>
 			<%= form_tag("/package/follow") do  %>
 				<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
-				<button type="submit" class="btn2 btn-large" >Follow</button>
+				<button type="submit" class="btn btn-large btn-success" >Follow</button>
 			<% end %>
 		<% end %>
-		<% if signed_in_admin? %>
-			<a href="/package/<%= @product.to_param %>/edit" style="padding-left: 7px; margin-top: 7px; display: block;">edit</a>
-		<% end %> 
 	<% else %>
 		<%= render 'shared/dialog_follow' %>
 		<button type="submit" class="btn2 btn2-big" onclick="load_dialog_follow('<%= @product.name %>');">Follow</button>

@@ -1,17 +1,35 @@
 
 <div class="row">
-	<div class="span6" style="width: 510px;">
+	<div class="span9" >
+		
 		<div class="span1 icon_package_header" >
 			<% prog_lang = @product.language.downcase.gsub(/\./, "") %>
 			<span class="icon_<%= prog_lang %> on " ></span>
 		</div>
-		<div class="span5 pull-left ">
-			<h3 class="no_margin">
-				<%= @product.name_and_version %>
-			</h3>
+		
+		<div class="span7">
+			<div class="row span8 pull-left ">
+				<h3 class="no_margin">
+					<%= @product.name_and_version %>
+				</h3>
+			</div>
+			<div class="row span8 pull-left ">
+				<div class="span2">
+					<% if signed_in_admin? %>
+						<a href="/package/<%= @product.to_param %>/edit">edit</a>
+					<% end %>
+				</div>
+				<div class="span6 pull-right">
+					<ul class="list-social pull-right" >
+				    <%= render 'shared/share_buttons' %>
+				  </ul>
+				</div>
+			</div>
 		</div>
+
 	</div>
-	<div class = "span5 pull-right" style="width: 355px;" >
-		<%= render "shared/share_and_follow" %>
+	<div class="span2 pull-right" >
+		<%= render 'products/product_show_bigfollow' %>
 	</div>
 </div>
+
