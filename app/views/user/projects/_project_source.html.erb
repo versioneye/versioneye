@@ -1,0 +1,17 @@
+  
+    This is a 
+
+    <% if project.private_project %>
+      private project from
+    <% else %>
+      public project from 
+    <% end %>
+
+    <% if project.source.eql? "github" %>
+      <a href="<%= project.github_project%>">GitHub</a>.
+    <% elsif project.source.eql? "url" %>
+      <a href="<%= project.url%>">URL</a>.
+    <% else %>
+      file upload.
+    <% end %>
+    

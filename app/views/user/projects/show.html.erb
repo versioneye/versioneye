@@ -44,20 +44,13 @@
 	<div class="span8 left_border content" >
 
 		<div class="row" >
-			
-			<div style="font-size: 16px; margin-bottom: 5px;">
-				<%= pluralize(@project.dep_number, "Dependency") %>, 
-				<span style="color: <%= outdated_color(@project)%>; font-weight: bold;" ><%= @project.out_number %> Outdated</span>, 
-				<span style="color: <%= unknown_color(@project)%>; font-weight: bold;" ><%= @project.unknown_number %> Unknown</span>
-			</div>
+
+			<%= render :partial => "user/projects/project_numbers_sentence", :locals => { :project => @project } %>
+			<br/>
+			<%= render :partial => "user/projects/project_source", :locals => { :project => @project } %>
 			
 			<div style="font-size: 16px; margin-bottom: 0px;">
-				<div>
-					Source: <%= @project.source %> 
-					<% if @project.source.eql?("url") %>
-						<span style="font-size: 12px;" >(<%= @project.url %>)</span>
-					<% end %>
-				</div>
+			
 				<div class="row">
 					<div class="span2" style="width: 100px;" >
 						<form action="<%= reparse_user_project_path(@project) %>" method="post" style="padding-top: 5px;">
