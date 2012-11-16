@@ -70,8 +70,8 @@
 			
 			<form action="<%= save_period_user_project_path(@project) %>" method="post" class="form-horizontal" >
 			<div class="control-group">
-	      <label class="control-label" >Monitor it</label> 	
-	      <div class="controls">
+	      <label class="control-label" style="width: 200px;" >Monitor it</label> 	
+	      <div class="controls" style="margin-left: 210px;">
 	        <select name="period" style="width: 150px; margin: 0px;" >
 						<option value="daily"  <%= "selected" if @project.period == 'daily'  %> >Daily</option>
 						<option value="weekly" <%= "selected" if @project.period == 'weekly' %> >Weekly</option>
@@ -82,8 +82,8 @@
 
 			<form action="<%= save_email_user_project_path(@project) %>" method="post" class="form-horizontal" >
 			<div class="control-group">
-	      <label class="control-label" >Use this E-Mail</label> 	
-	      <div class="controls">
+	      <label class="control-label" style="width: 200px;" >Send notifications to</label> 	
+	      <div class="controls" style="margin-left: 210px;">
 	        <select name="email" style="width: 150px; margin: 0px;" >
 						<option value="<%= current_user.email %>"  <%= "selected" if @project.email == current_user.email %> ><%= current_user.email %></option>
 						<% current_user.emails_verified.each do |user_email| %> 
