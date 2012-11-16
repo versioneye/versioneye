@@ -276,7 +276,11 @@ class ProductsController < ApplicationController
       languages = Array.new 
       langs.each do |language|
         if !language.strip.empty?
-          languages.push(language.capitalize) 
+          if !language.match("Node.JS")
+            languages.push(language.capitalize) 
+          else
+            languages.push(language) 
+          end
         end
       end
       p "languages: #{languages}"
