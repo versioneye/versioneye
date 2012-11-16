@@ -843,23 +843,42 @@ h2 + .row {
   position: relative;
 }
 
-
 .btn2 {
-  padding: 5px 10px;
-  cursor: pointer;
-  color : #fff;
+  display: inline-block;
+  *display: inline;
+  padding: 5px 10px;  
+  margin-bottom: 0;
+  *margin-left: .3em;
+  font-size: 14px;
+  line-height: 20px;
+  *line-height: 20px;
   text-decoration:none;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  color: #ffffff;
+  background-color: #c1c1c1;
+  *background-color: #c2c2c2;
+  background-image: -moz-linear-gradient(-90deg, rgb(130, 156, 177), rgb(81, 99, 116));
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, from(rgb(130, 156, 177)), to(rgb(81, 99, 116)));
+  background-image: linear-gradient(-90deg, rgb(130, 156, 177), rgb(81, 99, 116));
+  background-image: -webkit-linear-gradient(-90deg, rgb(130, 156, 177), rgb(81, 99, 116));
+  background-image: -o-linear-gradient(-90deg, rgb(130, 156, 177), rgb(81, 99, 116));
+  background-repeat: no-repeat;
   border: 1px solid rgb(153, 153, 153);
-  border-radius:5px 5px 5px 5px;
-  -moz-border-radius:5px 5px 5px 5px;
-  -webkit-border-radius:5px 5px 5px 5px;
-  box-shadow:0px 0px 0px rgb(0, 0, 0);
-  -moz-box-shadow:0px 0px 0px rgb(0, 0, 0);
-  -webkit-box-shadow:0px 0px 0px rgb(0, 0, 0);
-  background-color: rgb(255, 255, 255);
-  background-image:linear-gradient(-90deg, rgb(130, 156, 177), rgb(81, 99, 116));
-  background-image:-webkit-gradient(linear, 50% 0%, 50% 100%, from(rgb(130, 156, 177)), to(rgb(81, 99, 116)));
-  background-image:-moz-linear-gradient(-90deg, rgb(130, 156, 177), rgb(81, 99, 116));
+  *border: 0;
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  border-bottom-color: #a2a2a2;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  *zoom: 1;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .btn2:hover,
@@ -908,6 +927,7 @@ h2 + .row {
 
 /* Icons
 ------------------------- */
+
 .the-icons {
   margin-left: 0;
   list-style: none;
@@ -920,7 +940,6 @@ h2 + .row {
 .the-icons i:hover {
   background-color: rgba(255,0,0,.25);
 }
-
 
 
 /* -------------------------------
