@@ -23,10 +23,14 @@
 	<div class = "span6">
 		<div class="subscription-item" style="padding-left: 40px;">
 			<% if signed_in? %>
-				<form action="/settings/updateplan" method="POST" > 
-					<input type="hidden" name="plan" value="02_free" />
-					<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-				</form>
+				<% if @plan && @plan.name_id.eql?( '02_free' ) %>
+					<button type="submit" class="btn2 btn2-big pull-right" >Current</button>
+				<% else %>
+					<form action="/settings/updateplan" method="POST" > 
+						<input type="hidden" name="plan" value="02_free" />
+						<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+					</form>
+				<% end %>
 			<% else %> 
 				<form action="/signup" >
 					<button class="btn2 btn2-big pull-right">Sign Up</button>
@@ -59,10 +63,14 @@
 	<div class = "span6">
 		<div class="subscription-item" style="padding-left: 40px;">
 			<% if signed_in? %>
-				<form action="/settings/updateplan" method="POST" > 
-					<input type="hidden" name="plan" value="02_personal" />
-					<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-				</form>
+				<% if @plan && @plan.name_id.eql?( '02_personal' ) %> 
+					<button type="submit" class="btn2 btn2-big pull-right" >Current</button>
+				<% else %>
+					<form action="/settings/updateplan" method="POST" > 
+						<input type="hidden" name="plan" value="02_personal" />
+						<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+					</form>
+				<% end %>
 			<% else %> 
 				<form action="/signup" >
 					<button class="btn2 btn2-big pull-right">Sign Up</button>
@@ -95,10 +103,14 @@
 	<div class="span6">
 		<div class="subscription-item" style="padding-left: 40px;">
 			<% if signed_in? %>
-				<form action="/settings/updateplan" method="POST" > 
-					<input type="hidden" name="plan" value="02_business_small" />
-					<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-				</form>
+				<% if @plan && @plan.name_id.eql?( '02_business_small' ) %> 
+					<button type="submit" class="btn2 btn2-big pull-right" >Current</button>
+				<% else %>
+					<form action="/settings/updateplan" method="POST" > 
+						<input type="hidden" name="plan" value="02_business_small" />
+						<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+					</form>
+				<% end %>
 			<% else %> 
 				<form action="/signup" >
 					<button class="btn2 btn2-big pull-right">Sign Up</button>
@@ -123,10 +135,14 @@
 		<hr />
 		<div class  = "subscription-item" style="padding-left: 40px;">
 			<% if signed_in? %>
-				<form action="/settings/updateplan" method="POST" > 
-					<input type="hidden" name="plan" value="02_business_normal" />
-					<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-				</form>
+				<% if @plan && @plan.name_id.eql?( '02_business_normal' ) %> 
+					<button type="submit" class="btn2 btn2-big pull-right" >Current</button>
+				<% else %>
+					<form action="/settings/updateplan" method="POST" >
+						<input type="hidden" name="plan" value="02_business_normal" />
+						<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+					</form>
+				<% end %>
 			<% else %> 
 				<form action="/signup" >
 					<button class="btn2 btn2-big pull-right">Sign Up</button>

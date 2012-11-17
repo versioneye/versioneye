@@ -75,7 +75,7 @@ class ServicesController < ApplicationController
 	end
 
 	def pricing
-		
+		@plan = current_user.plan if signed_in?
 	end
 
 	def choose_plan

@@ -3,6 +3,17 @@
 
 <div class="span3">
 	<%= render "extended_search" %>
+
+	<div class="box" style="text-align: left; padding-top: 30px;">
+    <span class="icon_gitcat off marketing-icon"></span>
+    <h5>GitHub integratrion</h5>
+    <p>
+      Monitor your private GitHub repositories 
+      to be notified about outdated dependencies.
+    </p>
+    <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&amp;scope=repo'>Login via GitHub</a>
+	</div>
+
 </div>
 <div class="span8 left_border" >
 	<% if !signed_in? %>
