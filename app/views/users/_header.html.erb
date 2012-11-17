@@ -2,7 +2,7 @@
 	<div class="span3"  >
 		<%= link_to gravatar_image_tag( @user.email, :alt => @user.fullname, :class => "round", :gravatar => { :size => 200, :default => "#{Settings.server_url}/profile_icon.png" }), user_path(@user) %><br/>
 		<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
-			<a href="http://gravatar.com/emails">Change Profile Picture</a><br/>
+			<a href="http://gravatar.com/emails">Change profile picture</a><br/>
 		<% end %>
 	</div>
 	<div class="span5" style="width: 424px;" >
