@@ -46,7 +46,8 @@ module SessionsHelper
   end
 
   def set_locale
-    locale = params[:locale]
+    # locale = params[:locale]
+    locale = "en"
     if (locale && !locale.empty?)
       I18n.locale = locale
     elsif I18n.locale.nil? 
