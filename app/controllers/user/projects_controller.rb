@@ -43,7 +43,7 @@ class User::ProjectsController < ApplicationController
       sha = Project.get_repo_sha_from_github( github_project, current_user.github_token )
       project_info = Project.get_project_info_from_github( github_project, sha, current_user.github_token )
       if project_info.empty?
-        flash[:error] = "We couldn't fine any project file in the selected project. Please choose another project."
+        flash[:error] = "We couldn't find any project file in the selected project. Please choose another project."
         redirect_to new_user_project_path
         return nil    
       end
