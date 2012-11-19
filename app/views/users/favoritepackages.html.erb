@@ -1,4 +1,5 @@
-<% title "Profile" %>
+<% title "Favorite packages of #{@user.username} (#{@user.fullname}) at VersionEye" %>
+<% page_header "Favorite packages" %>
 
 <% if !@user.nil? && @user.deleted %>
 	This Account does not exist anymore.

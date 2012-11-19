@@ -11,7 +11,15 @@
 	<meta HTTP-EQUIV="Content-Language" Content="en">
 
 	<% if @product %>
-		<title><%= @product.name %> : <%= @product.version %></title>
+		<% if @product.language.eql?("Ruby") %>
+			<title><%= @product.name %> : <%= @product.version %> - Track GEM versions at VersionEye</title>
+		<% if @product.language.eql?("Java") %>
+			<title><%= @product.name %> : <%= @product.version %> - Track your JARs at VersionEye</title>
+		<% if @product.language.eql?("Node.JS") %>
+			<title><%= @product.name %> : <%= @product.version %> - Track your NPM libraries at VersionEye</title>
+		<% else %>	
+			<title><%= @product.name %> : <%= @product.version %> - Track your libraries at VersionEye</title>
+		<% end %>	
 		<meta name="name"     itemprop="name"     content="<%= @product.name %>">
 		<meta name="softwareversion" itemprop="softwareversion"  content="<%= @product.version %>">
 		<meta name="version" itemprop="version"  content="<%= @product.version %>">
@@ -20,6 +28,8 @@
 		<% if !@product.description.nil? && !@product.description.empty? %> 
 			<meta name="description" itemprop="description" content="<%= @product.description[0, 145] %>..." />
 		<% end %>
+	<% else %>
+		<title><%= yield(:title) %></title>
 	<% end %>
 
 	<%= render 'layouts/html_head' %>

@@ -1,6 +1,12 @@
 <div class="row" style="margin-top:20px; margin-bottom: 20px;" >
   <div class="span6" >
-    <h1 class="page-title" ><%= yield(:title) %></h1>
+    <h1 class="page-title" >
+      <% if yield(:page_header) && !yield(:page_header).empty? %>
+        <%= yield(:page_header) %>
+      <% else %>
+        <%= yield(:title) %>
+      <% end %>
+    </h1>
   </div>
   <div class="span4 pull-right">
     <form id="form" action="/search" method="GET">
