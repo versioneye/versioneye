@@ -45,7 +45,7 @@
 							<% langname = language.downcase.gsub(/\./, "") %>
 							<td style="margin: 0; padding: 0; height: 40px; vertical-align: top;" height="40">
 								<div class="icon_<%= langname %>_small_container" onclick="update_lang('<%= langname %>')" >
-									<span class = "icon_<%= langname %> small">&nbsp;</span>
+									<span id="icon_<%= langname %>" class="icon_<%= langname %> small <%= 'on' if @langs.include?(language) %>  ">&nbsp;</span>
 								</div>
 							</td>
 						<% end %>
