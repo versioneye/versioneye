@@ -55,8 +55,11 @@ jQuery(document).ready(function() {
 
     map_for_profile = document.getElementById("map_for_user_profile")
     if (map_for_profile){
+      path = window.location.pathname; 
+      path = path.replace("/favoritepackages", "")
+      path = path.replace("/comments", "")
     	jQuery.ajax({
-	        url: window.location.pathname + "/users_location.json"
+	        url: path + "/users_location.json"
 	    }).done(function (data){
             if (data){
                 initialize_profile(data.location);

@@ -21,7 +21,7 @@
 	</div>
 	<div class="span3 pull-right" >
 		<div style = "text-align: right;" >
-			<% if @user.location && !@user.location.eql?("") %>
+			<% if @user.location && !@user.location.empty? %>
 				<div id="map_for_user_profile" class="map_for_user_profile round" ></div>
 			<% end %>
 		</div>
