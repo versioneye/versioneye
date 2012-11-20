@@ -104,7 +104,7 @@ class SettingsController < ApplicationController
     stripe_token = params[:stripeToken]
 
     if stripe_token.nil? || stripe_token.empty?
-      flash.now[:success] = "Sorry. But something went wrong. Please try again later."
+      flash[:error] = "Sorry. But something went wrong. Please try again later."
       redirect_to settings_plans_path
       return 
     end
@@ -128,7 +128,7 @@ class SettingsController < ApplicationController
     user.plan_name_id = plan_name_id
     user.save
     save_billing_address(current_user, params)
-    flash.now[:success] = "Many Thanks. We just updated your plan."
+    flash[:success] = "Many Thanks. We just updated your plan."
     redirect_to settings_plans_path
   end
 
