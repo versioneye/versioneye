@@ -4,11 +4,6 @@ class SettingsController < ApplicationController
 
   force_ssl
 
-  def name
-    @user = current_user
-    @user.new_username = @user.username
-  end
-
   def password
     @user = current_user
     @user.new_username = @user.username
@@ -21,6 +16,7 @@ class SettingsController < ApplicationController
 
   def profile
     @user = current_user
+    @user.new_username = @user.username
   end
 
   def plans
@@ -130,11 +126,14 @@ class SettingsController < ApplicationController
     redirect_to settings_plans_path
   end
 
-  def updatenames
+  def updateprofile
     fullname = params[:fullname]
     new_username = params[:new_username] 
+    location = params[:location]
+    description = params[:description]
+    blog = params[:blog]
     password = params[:password]
-    
+    p "#{location} - #{description} - #{blog}"
     if password.nil? || password.empty? 
       flash[:error] = "For security reasons. Please type in your current password."
     elsif new_username.nil? || new_username.empty?
@@ -147,14 +146,17 @@ class SettingsController < ApplicationController
       @user = current_user   
       @user.username = new_username
       @user.fullname = fullname
+      @user.description = description
+      @user.location = location
+      @user.blog = blog
       @user.password = password
       if @user.save
         flash[:success] = "Profile updated."
       else
         flash[:error] = "Something went wrong. Please try again later."
       end
-    end         
-    redirect_to settings_name_path()
+    end
+    redirect_to settings_profile_path()
   end
   
   def updatepassword    
@@ -257,26 +259,6 @@ class SettingsController < ApplicationController
       flash[:error] = "Something went wrong. Please try again later."
     end
     redirect_to settings_privacy_path()
-  end
-
-  def updateprofile
-    location = params[:location]
-    description = params[:description]
-    blog = params[:blog]
-    password = params[:password]
-    p "#{location} - #{description} - #{blog}"
-
-    user = current_user
-    user.description = description
-    user.location = location
-    user.blog = blog
-    user.password = password
-    if user.save
-      flash[:success] = "Profile updated."
-    else
-      flash[:error] = "Something went wrong. Please try again later."
-    end
-    redirect_to settings_profile_path()
   end
 
   def updatelinks

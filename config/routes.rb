@@ -38,7 +38,6 @@ Versioneye::Application.routes.draw do
   get   '/home',                         :to => 'users#home'
 
   get  '/settings/profile',              :to => 'settings#profile'
-  get  '/settings/name',                 :to => 'settings#name'
   get  '/settings/password',             :to => 'settings#password'
   get  '/settings/privacy',              :to => 'settings#privacy'
   get  '/settings/delete',               :to => 'settings#delete'
@@ -54,7 +53,6 @@ Versioneye::Application.routes.draw do
   post '/settings/make_email_default',   :to => 'settings#make_email_default'
   post '/settings/add_email',            :to => 'settings#add_email'
   post '/settings/updatecreditcard',     :to => 'settings#updatecreditcard'
-  post '/settings/updatenames',          :to => 'settings#updatenames'
   post '/settings/updatepassword',       :to => 'settings#updatepassword'
   post '/settings/updateprivacy',        :to => 'settings#updateprivacy'
   post '/settings/updateprofile',        :to => 'settings#updateprofile'

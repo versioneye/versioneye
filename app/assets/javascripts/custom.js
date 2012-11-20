@@ -19,19 +19,19 @@ jQuery(document).ready(function() {
 		styleclass: "lp_searchfield_hint"
 	});	
 
-	jQuery("#payment-form").submit(function(event) {
-	    jQuery('.submit-button').attr("disabled", "disabled");
+  jQuery("#payment-form").submit(function(event) {
+    jQuery('.submit-button').attr("disabled", "disabled");
 
-	    Stripe.createToken({
-	        number: jQuery('.card-number').val(),
-	        cvc: jQuery('.card-cvc').val(),
-	        exp_month: jQuery('.card-expiry-month').val(),
-	        exp_year: jQuery('.card-expiry-year').val()
-	    }, stripeResponseHandler);
+    Stripe.createToken({
+        number: jQuery('.card-number').val(),
+        cvc: jQuery('.card-cvc').val(),
+        exp_month: jQuery('.card-expiry-month').val(),
+        exp_year: jQuery('.card-expiry-year').val()
+    }, stripeResponseHandler);
 
-	    // prevent the form from submitting with the default action
-	    return false;
-	  });
+    // prevent the form from submitting with the default action
+    return false;
+  });
 
 	jQuery( "#tabs" ).tabs();
 
