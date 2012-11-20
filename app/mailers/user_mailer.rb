@@ -1,6 +1,17 @@
 class UserMailer < ActionMailer::Base
   
   default from: "\"VersionEye\" <notify@versioneye.com>"
+
+  def receipt_email(user)
+    @user = user
+    @plan = user.plan
+    @billing_address = user.billing_address
+    mail(
+      :to => user.email, 
+      :subject => "Receipt",
+      :tag => "receipt"
+      )
+  end
   
   def verification_email(user, verification, email)
     @user = user

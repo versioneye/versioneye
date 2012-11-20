@@ -29,6 +29,11 @@ class SettingsController < ApplicationController
     if plan 
       @plan_name_id = plan
     end
+    @billing_address = current_user.billing_address
+    if @billing_address.nil?
+      @billing_address = BillingAddress.new
+      @billing_address.name = current_user.fullname
+    end
   end
 
   def links
@@ -122,6 +127,7 @@ class SettingsController < ApplicationController
     user.stripe_customer_id = customer.id
     user.plan_name_id = plan_name_id
     user.save
+    save_billing_address(current_user, params)
     flash.now[:success] = "Many Thanks. We just updated your plan."
     redirect_to settings_plans_path
   end
@@ -171,7 +177,7 @@ class SettingsController < ApplicationController
     elsif User.authenticate(current_user.email, password).nil? 
       flash[:error] = "The password is wrong. Please try again."
     else
-      @user = current_user         
+      @user = current_user
       if @user.update_password(current_user.email, password, new_password)
         flash[:success] = "Profile updated."
       else
@@ -304,6 +310,23 @@ class SettingsController < ApplicationController
       return "everybody" if value.nil? || value.empty?
       return value if value.eql?("everybody") || value.eql?("nobody") || value.eql?("ru")
       return "everybody"
+    end
+
+    def save_billing_address(user, params)
+      billing_address = user.billing_address
+      if billing_address.nil?
+        billing_address = BillingAddress.new 
+      end
+      billing_address.name = params[:name]
+      billing_address.street = params[:street]
+      billing_address.zip = params[:zip_code]
+      billing_address.city = params[:city]
+      billing_address.country = params[:country]
+      billing_address.user_id = user.id.to_s
+      billing_address.save
+    rescue => e 
+      p "#{e}"
+      nil
     end
 
 end

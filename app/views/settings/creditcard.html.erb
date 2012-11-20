@@ -24,6 +24,36 @@
     <%= form_tag("/settings/updatecreditcard", :method => "post", :class => "form-horizontal", :id => "payment-form") do %>
       
       <input type="hidden" name="plan" value="<%= @plan_name_id %>" />
+
+      <div class="control-group">
+        <%= label_tag :name, "Name", :class => "control-label-big", :for => "name" %>
+        <div class="controls" style="margin-left: 155px;">
+          <input type="text" size="20" autocomplete="off" class="card-number round" id="name" name="name" value="<%= @billing_address.name %>" />
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :street, "Street", :class => "control-label-big", :for => "street" %>
+        <div class="controls" style="margin-left: 155px;">
+          <input type="text" size="20" autocomplete="off" class="card-number round" id="street" name="street" value="<%= @billing_address.street %>" />
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :zip_code, "Zip / City", :class => "control-label-big", :for => "zip_code" %>
+        <div class="controls" style="margin-left: 155px;">
+          <input type="text" size="20" autocomplete="off" class="card-number round" id="zip_code" name="zip_code" style="width: 40px;" value="<%= @billing_address.zip %>" /> / <input type="text" size="20" autocomplete="off" class="card-number round" id="city" name="city" style="width: 140px;" value="<%= @billing_address.city %>" />
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :country, "Country", :class => "control-label-big", :for => "country" %>
+        <div class="controls" style="margin-left: 155px;">
+          <input type="text" size="20" autocomplete="off" class="card-number round" id="country" name="country" value="<%= @billing_address.country %>" />
+        </div>
+      </div>
+
+      <hr />
       
       <div class="control-group">
         <%= label_tag :card_number, "Card Number", :class => "control-label-big", :for => "cardnumber" %>
@@ -59,8 +89,3 @@
 
   </div>
 </div>
-
-
-  
-  
-  

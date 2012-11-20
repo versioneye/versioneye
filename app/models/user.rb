@@ -118,6 +118,10 @@ class User
   def plan
     Plan.where(name_id: self.plan_name_id)[0]
   end
+
+  def billing_address
+    billing_address = BillingAddress.where(user_id: self._id.to_s)[0]
+  end
   
   def create_username
     name = fullname.strip
