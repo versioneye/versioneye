@@ -60,7 +60,11 @@ class User::ProjectsController < ApplicationController
       return nil  
     end
 
-    redirect_to user_projects_path
+    if project and project.id 
+      redirect_to user_project_path( project )
+    else 
+      redirect_to user_projects_path
+    end
   end
 
   def show
