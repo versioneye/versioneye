@@ -24,7 +24,7 @@ function load_dialog_feedback(){
 	a_element.value = value_a;
 	b_element.value = value_b;
 	fb_math_label.innerHTML = value_a + " + " + value_b + " = ";
-	jQuery('#dialog_feedback').modal({keyboard : true});	
+	jQuery('#dialog_feedback').modal({keyboard : true});
 }
 
 function validateFeedbackForm(){	

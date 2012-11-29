@@ -220,13 +220,22 @@ class ProductsController < ApplicationController
     version = url_param_to_origin params[:version]
     scope = params[:scope]
     product = Product.find_by_key( key )
-    if !version.nil? && !version.empty?
+    if version && !version.empty?
       product.version = version  
     end
-    @circle = product.dependency_circle(scope)
+    
     respond_to do |format|
       format.json { 
-        resp = generate_json_for_circle(@circle)
+        
+        circle = CircleElement.fetch_circle(key, version, scope)
+        if circle && !circle.empty?
+          resp = generate_json_for_circle_from_array( circle )
+        else 
+          circle = product.dependency_circle( scope )
+          CircleElement.store_circle( circle, key, version, scope )
+          resp = generate_json_for_circle_from_hash( circle )
+        end
+
         render :json => "[#{resp}]"
       }
     end

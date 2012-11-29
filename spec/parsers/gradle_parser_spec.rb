@@ -50,7 +50,7 @@ describe GradleParser do
       @product_13 = ProductFactory.create_for_maven("com.canoo.webtest", "webtest", "3.1-SNAPSHOT")
       @product_13.save
       
-  	end
+      end
 
     after :each do
       @product_1.remove

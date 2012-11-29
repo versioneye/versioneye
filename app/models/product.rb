@@ -546,8 +546,10 @@ class Product
         next
       end      
       element = CircleElement.new
-      element.id = dep.dep_prod_key
+      element.init
+      element.dep_prod_key = dep.dep_prod_key
       element.version = dep.version_parsed
+      element.level = 0
       Product.attach_label_to_element(element, dep)
       hash[dep.dep_prod_key] = element
     end
@@ -560,7 +562,7 @@ class Product
     hash.each do |prod_key, element|
       product = Product.find_by_key( prod_key )
       if product.nil?
-        p "#{element.id} #{element.version} not found!"
+        p "#{element.dep_prod_key} #{element.version} not found!"
         next
       end
       if (element.version && !element.version.eql?("") && !element.version.eql?("0"))
@@ -575,12 +577,14 @@ class Product
         key = dep.dep_prod_key
         ele = Product.get_element_from_hash(new_hash, hash, parent_hash, key)
         if ele
-          ele.connections << "#{element.id}"
+          ele.connections << "#{element.dep_prod_key}"
         else 
           new_element = CircleElement.new
-          new_element.id = dep.dep_prod_key          
+          new_element.init
+          new_element.dep_prod_key = dep.dep_prod_key
+          new_element.level = deep
           attach_label_to_element(new_element, dep)
-          new_element.connections << "#{element.id}"
+          new_element.connections << "#{element.dep_prod_key}"
           new_element.version = dep.version_parsed
           new_hash[dep.dep_prod_key] = new_element
         end
@@ -589,6 +593,7 @@ class Product
       end
     end
     parent_merged = hash.merge(parent_hash)
+    deep += 1 
     rec_hash = Product.fetch_deps(deep, new_hash, parent_merged)
     merged_hash = parent_merged.merge(rec_hash)
     return merged_hash
