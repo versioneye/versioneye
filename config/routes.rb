@@ -62,8 +62,10 @@ Versioneye::Application.routes.draw do
 
   get  '/jobs',          :to => 'jobs#index'
   
-  get   '/product/symfony--symfony'                   => redirect("/package/php--symfony--symfony")
-  get   '/package/symfony--symfony'                   => redirect("/package/php--symfony--symfony")
+  # Legacy paths
+  get   '/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.0.pdf', :to => redirect("/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.1.pdf")
+  get   '/product/symfony--symfony',                  :to => redirect("/package/php--symfony--symfony")
+  get   '/package/symfony--symfony',                  :to => redirect("/package/php--symfony--symfony")
   get   '/package/symfony--symfony/version/:version', :to => redirect('/package/php--symfony--symfony/version/%{version}')
   get   '/product/symfony--symfony/version/:version', :to => redirect('/package/php--symfony--symfony/version/%{version}')
 
@@ -155,11 +157,6 @@ Versioneye::Application.routes.draw do
   get   'sitemap-1.xml',        :to => 'page#sitemap_1'
   get   'sitemap-2.xml',        :to => 'page#sitemap_2'
   get   'sitemap-3.xml',        :to => 'page#sitemap_3'
-
-  # Legacy paths
-  
-  # get   '/package/symfony--symfony/version/v2~0~0-RC6'
-  get   'docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.0.pdf' => redirect("docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.1.pdf")
 
   #default action
   get   '*path',        :to => 'page#routing_error'
