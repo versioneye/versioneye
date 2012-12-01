@@ -22,6 +22,7 @@ Versioneye::Application.routes.draw do
   post   '/androidregistrationid', :to => 'sessions#android_registrationid'
 
 
+  get   '/users/christian.weyand',                    :to => redirect('/users/christianweyand')
   resources :users, :key => :username do
     member do 
       get 'favoritepackages'
