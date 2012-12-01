@@ -35,13 +35,14 @@ class ProductsController < ApplicationController
     elsif @query.include?("%")
       flash.now[:error] = "the character % is not allowed"
     else
+      start = Time.now
       languages = get_language_array(@lang)
       # @products = Product.search( @query, @description, @groupid, languages, params[:page])
       @products = Product.find_by(@query, @description, @groupid, languages, 300).paginate(:page => params[:page])
       if @products && @products.count > 0 && signed_in?
         @my_product_ids = current_user.fetch_my_product_ids 
       end
-      save_search_log(@query, @products)
+      save_search_log( @query, @products, start )
     end    
     respond_to do |format|
       format.html { 
@@ -333,15 +334,19 @@ class ProductsController < ApplicationController
       comment.save
     end
 
-    def save_search_log(query, products)
+    def save_search_log(query, products, start)
+      stop = Time.now
+      wait = (stop - start) * 1000.0
       searchlog = Searchlog.new
       searchlog.search = query
-      if products.nil? || products.count == 0
+      searchlog.wait = wait
+      if products.nil? || products.total_entries == 0
         searchlog.results = 0  
       else
-        searchlog.results = products.count
+        searchlog.results = products.total_entries
       end
       searchlog.save
+      p "searched for #{query}, wait #{wait} milliseconds, found #{searchlog.results} results"
     end
 
     def is_following?(user, product)

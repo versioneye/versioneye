@@ -5,5 +5,6 @@ class Searchlog
 
   field :search, type: String
   field :results, type: Integer
+  field :wait, type: Float
   
 end
