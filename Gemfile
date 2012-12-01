@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 ruby "1.9.3"
 
-gem 'rails', '3.2.8'
-gem 'jquery-rails', '2.1.3'
+gem 'rails', '3.2.9'
+gem 'jquery-rails', '2.1.4'
 gem 'execjs', '1.4.0'
 gem 'therubyracer', '0.10.1'
 gem 'will_paginate', '3.0.3'
@@ -17,7 +17,7 @@ gem 'oauth', '0.4.7'
 gem 'twitter_oauth', '0.4.4'
 gem 'aws-s3', '0.6.3', :require => 'aws/s3'
 gem 'nokogiri', '1.5.5'
-gem 'stripe', '1.7.6'
+gem 'stripe', '1.7.8'
 gem 'thin', '1.4.1'
 gem 'tire', '0.4.3'
 gem 'dalli', '2.3.0' # memcache library
@@ -32,6 +32,6 @@ end
 
 group :test do
   gem 'turn', :require => false
-  gem 'rspec-rails', '2.11.4'
+  gem 'rspec-rails', '2.12.0'
   gem 'webrat', '0.7.3'
 end
