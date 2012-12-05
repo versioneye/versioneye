@@ -14,7 +14,7 @@ jQuery(document).ready(function() {
 	//period filtering: "/statistics/langtrends.json?starts=2012-04&ends=2012-06"
 	jQuery.get(
 			"/statistics/langtrends.json", null, 
-			function(data, status, jqXHR){ render_trends(data);},
+			function(data, status, jqXHR){ render_trends(data); },
 			"json"
 	);
 		

@@ -662,7 +662,7 @@ class Product
       lang_vals = []
       i = 0
       iter_date = start_date
-      while iter_date.month < end_date.month 
+      while iter_date.month < 12 #end_date.month 
         ncount = Product.where(language: lang, created_at: {"$lt" => iter_date}).count
         xlabels << "#{Date::ABBR_MONTHNAMES[iter_date.month]}/#{iter_date.year}" if first_run
         lang_vals << [i += 1, ncount]
