@@ -76,6 +76,18 @@ class ProductMigration
 			end
 		end
 	end
+  
+  def self.count_central_mvn_repo()
+    count = 0
+    Product.where(language: "Java").each do |product|
+      product.repositories.each do |repo|
+        if repo.src.eql?("http://search.maven.org/")
+          count += 1
+          p "count #{count}"
+        end 
+      end
+    end
+  end
 
 	def self.remove_bad_links(lang)
 		Product.where(language: lang).each do |product|
