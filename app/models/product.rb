@@ -529,6 +529,10 @@ class Product
     Dependency.find_by_key_version_scope(prod_key, version, scope)
   end
 
+  def all_dependencies
+    Dependency.find_by_key_and_version(prod_key, version)
+  end
+
   def dependency_circle(scope)
     if scope == nil 
       scope = main_scope

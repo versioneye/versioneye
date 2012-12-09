@@ -89,6 +89,19 @@ class ProductMigration
     end
   end
 
+  def self.count_central_mvn_repo()
+    count = 0
+    Product.where(language: "Java").each do |product|
+      product.all_dependencies.each do |dependency|
+        if dependency.dep_prod_key.eql?("org.testng/testng")
+          count += 1
+          p "count #{count}"
+        end 
+      end
+    end
+    p "#{count}"
+  end
+
 	def self.remove_bad_links(lang)
 		Product.where(language: lang).each do |product|
 			product.get_links.each do |link|

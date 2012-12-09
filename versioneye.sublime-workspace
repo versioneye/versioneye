@@ -4,6 +4,34 @@
 		"selected_items":
 		[
 			[
+				"prod",
+				"prod_key"
+			],
+			[
+				"ini",
+				"initialize"
+			],
+			[
+				"conn",
+				"connections"
+			],
+			[
+				"dee",
+				"deep"
+			],
+			[
+				"sc",
+				"scope"
+			],
+			[
+				"depen",
+				"dependency_circle"
+			],
+			[
+				"dep",
+				"dep_prod_key"
+			],
+			[
 				"curr",
 				"current_user"
 			],
@@ -132,10 +160,6 @@
 				"released_at"
 			],
 			[
-				"prod",
-				"product"
-			],
-			[
 				"pack",
 				"package_name"
 			],
@@ -232,26 +256,18 @@
 	"buffers":
 	[
 		{
-			"file": "app/controllers/application_controller.rb",
+			"file": "app/controllers/services_controller.rb",
 			"settings":
 			{
-				"buffer_size": 182,
+				"buffer_size": 2426,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/controllers/sessions_controller.rb",
+			"file": "app/models/product.rb",
 			"settings":
 			{
-				"buffer_size": 1260,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/controllers/feedback_controller.rb",
-			"settings":
-			{
-				"buffer_size": 723,
+				"buffer_size": 23048,
 				"line_ending": "Unix"
 			}
 		}
@@ -280,11 +296,46 @@
 	},
 	"file_history":
 	[
+		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/products_controller.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/views/products/search.html.erb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/users_controller.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/models/refer.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/Gemfile",
+		"/Users/robertreiz/workspace/versioneye/veye/app/views/layouts/_footer.html.erb",
+		"/Users/robertreiz/Documents/comments/tmp/pp.txt",
+		"/Users/robertreiz/workspace/versioneye/veye/app/models/searchlog.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/config/routes.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/models/circle_element.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/services_controller.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/name.html.erb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/sessions_controller.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/profile.html.erb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/assets/stylesheets/bootstrap.css",
+		"/Users/robertreiz/workspace/versioneye/veye/app/assets/javascripts/custom.js",
+		"/Users/robertreiz/workspace/versioneye/veye/app/views/products/_show_search_results_iterator.html.erb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/views/products/_product_show_followers.html.erb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/helpers/products_helper.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/models/product.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/config/config.yml",
+		"/Users/robertreiz/workspace/versioneye/veye/app/assets/javascripts/bootstrap.min.js",
+		"/Users/robertreiz/workspace/versioneye/veye/app/assets/stylesheets/main.css.scss",
+		"/Users/robertreiz/workspace/versioneye/veye/app/parsers/gradle_parser.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/spec/parsers/gradle_parser_spec.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/spec/parsers/lein_parser_spec.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/application_controller.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/feedback_controller.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/views/layouts/application.html.erb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/views/layouts/_header.html.erb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/user/projects_controller.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/views/products/_product_show_header.html.erb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/models/job.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/models/user.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/dtos/circle_element.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/helpers/sessions_helper.rb",
+		"/Users/robertreiz/workspace/versioneye/veye/app/helpers/users_helper.rb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/feedback/_dialog_feedback.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/assets/javascripts/custom_feedback.js",
-		"/Users/robertreiz/workspace/versioneye/veye/app/assets/javascripts/custom.js",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/sessions/_signin.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/products_controller.rb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/newsletter_mailer/newsletter_new_features_email.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/models/user_email.rb",
 		"/Users/robertreiz/workspace/versioneye/veye/Rakefile",
@@ -292,12 +343,8 @@
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/users/show.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/models/plan.rb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/creditcard.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/models/user.rb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/settings_controller.rb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/users_controller.rb",
-		"/Users/robertreiz/workspace/versioneye/veye/config/config.yml",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/users/_header.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/config/routes.rb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/user_mailer/receipt_email.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/shared/_show_version_comment.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/models/billing_address.rb",
@@ -309,48 +356,32 @@
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/products/index.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/models/user_notification_setting.rb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/shared/_payment_cc.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/name.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/profile.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/layouts/_header.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/_navi.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/layouts/_html_head.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/Gemfile",
 		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/facebook_controller.rb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/connect.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/products/_product_show_detected.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/user/projects_controller.rb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/github_controller.rb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/page/imprint.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/helpers/application_helper.rb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/layouts/_searchbar.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/users/comments.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/users/favoritepackages.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/layouts/application.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/products/search.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/statistics/index.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/layouts/application_lp.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/config/mongoid.yml",
-		"/Users/robertreiz/workspace/versioneye/veye/app/assets/stylesheets/bootstrap.css",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/layouts/_footer.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/services_controller.rb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/services/pricing.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/assets/stylesheets/sprite.css.scss",
-		"/Users/robertreiz/workspace/versioneye/veye/app/controllers/application_controller.rb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/helpers/sessions_helper.rb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/products/_extended_search.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/plans.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/products/_product_show_license.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/shared/_github_ad.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/assets/stylesheets/main.css.scss",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/shared/_pricing.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/products/_show_search_results_iterator.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/shared/_social_buttons.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/emails.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/user/projects/index.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/shared/_share_and_follow.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/models/product.rb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/user/projects/show.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/products/_product_show_header.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/products/_product_show_bigfollow.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/user/projects/_project_numbers_sentence.html.erb",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/user/projects/_project_source.html.erb",
@@ -392,22 +423,7 @@
 		"/Users/robertreiz/workspace/versioneye/veye/app/assets/stylesheets/user.css.scss",
 		"/Users/robertreiz/workspace/versioneye/veye/vendor/assets/stylesheets/.gitkeep",
 		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/delete.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/privacy.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/shared/_language_icons.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/user/projects/new.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/links.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/password.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/users/_signup_form.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/notifications.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/user/projects/update_name.js.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/user/projects/_show_known_out_pre_dep.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/user/projects/_show_known_ok_dep.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/user/projects/_show_unknown_dep.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/user/projects/_show_known_out_dep.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/services/_price_group_iterator.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/sessions/new.html.erb",
-		"/Users/robertreiz/workspace/versioneye/veye/app/assets/stylesheets/custom.css.scss",
-		"/Users/robertreiz/workspace/versioneye/veye/app/views/products/show.html.erb"
+		"/Users/robertreiz/workspace/versioneye/veye/app/views/settings/privacy.html.erb"
 	],
 	"find":
 	{
@@ -433,6 +449,25 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"check_refer",
+			"save_search",
+			"save_search_log",
+			"check_refer",
+			"dep",
+			"store_circle",
+			"url",
+			"generate_json_for_circle_from_hash",
+			"generate_json_for_circle",
+			"product.dependency_circle",
+			"generate_json_for_circle",
+			"CircleElement.new",
+			"element.id",
+			"generate_json_for_circle",
+			"dependency_circle",
+			"class",
+			"authenticate",
+			"sign_in(",
+			".container",
 			"f.text_field",
 			"value_a",
 			"layout",
@@ -541,26 +576,7 @@
 			"header",
 			"sidebar",
 			"562",
-			"562px",
-			";\">",
-			"download",
-			"none",
-			"non",
-			"nav-list",
-			"icon_link",
-			"\"box ",
-			"\"box",
-			"box",
-			"well",
-			"desc_header",
-			"h5",
-			".h5",
-			"content",
-			"ext_searchform",
-			"submit",
-			"ext_searchform",
-			",",
-			"update_lang"
+			"562px"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -578,28 +594,29 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/controllers/application_controller.rb",
+					"file": "app/controllers/services_controller.rb",
 					"settings":
 					{
-						"buffer_size": 182,
+						"buffer_size": 2426,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								58,
-								58
+								353,
+								353
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage"
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -609,18 +626,18 @@
 				},
 				{
 					"buffer": 1,
-					"file": "app/controllers/sessions_controller.rb",
+					"file": "app/models/product.rb",
 					"settings":
 					{
-						"buffer_size": 1260,
+						"buffer_size": 23048,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								308,
-								308
+								2823,
+								2823
 							]
 						],
 						"settings":
@@ -630,35 +647,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "app/controllers/feedback_controller.rb",
-					"settings":
-					{
-						"buffer_size": 723,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								570,
-								554
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 701.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -712,28 +701,204 @@
 		"selected_items":
 		[
 			[
+				"productscontrol",
+				"app/controllers/products_controller.rb"
+			],
+			[
+				"product.rb",
+				"app/models/product.rb"
+			],
+			[
+				"gemfil",
+				"Gemfile"
+			],
+			[
+				"refer",
+				"app/models/refer.rb"
+			],
+			[
+				"userscont",
+				"app/controllers/users_controller.rb"
+			],
+			[
+				"foot",
+				"app/views/layouts/_footer.html.erb"
+			],
+			[
+				"search",
+				"app/models/searchlog.rb"
+			],
+			[
+				"",
+				"app/controllers/products_controller.rb"
+			],
+			[
+				"search.html",
+				"app/views/products/search.html.erb"
+			],
+			[
+				"productsconto",
+				"app/controllers/products_controller.rb"
+			],
+			[
+				"searchlog",
+				"app/models/searchlog.rb"
+			],
+			[
+				"service",
+				"app/controllers/services_controller.rb"
+			],
+			[
+				"circle",
+				"app/models/circle_element.rb"
+			],
+			[
+				"route",
+				"config/routes.rb"
+			],
+			[
+				"config",
+				"config/config.yml"
+			],
+			[
+				"productscontol",
+				"app/controllers/products_controller.rb"
+			],
+			[
+				"cir",
+				"app/models/circle_element.rb"
+			],
+			[
+				"show_follow",
+				"app/views/products/_product_show_followers.html.erb"
+			],
+			[
+				"iterator",
+				"app/views/products/_show_search_results_iterator.html.erb"
+			],
+			[
 				"custom.js",
 				"app/assets/javascripts/custom.js"
 			],
 			[
-				"feedback",
-				"app/views/feedback/_dialog_feedback.html.erb"
+				"bootstr",
+				"app/assets/stylesheets/bootstrap.css"
 			],
 			[
-				"sessionscont",
+				"profile",
+				"app/views/settings/profile.html.erb"
+			],
+			[
+				"sessions",
 				"app/controllers/sessions_controller.rb"
+			],
+			[
+				"main",
+				"app/assets/stylesheets/main.css.scss"
+			],
+			[
+				"name",
+				"app/views/settings/name.html.erb"
+			],
+			[
+				"gradlepar",
+				"spec/parsers/gradle_parser_spec.rb"
+			],
+			[
+				"gradle",
+				"app/parsers/gradle_parser.rb"
+			],
+			[
+				"leinpar",
+				"spec/parsers/lein_parser_spec.rb"
+			],
+			[
+				"productshel",
+				"app/helpers/products_helper.rb"
+			],
+			[
+				"circleel",
+				"app/models/circle_element.rb"
+			],
+			[
+				"productscont",
+				"app/controllers/products_controller.rb"
 			],
 			[
 				"applicationcont",
 				"app/controllers/application_controller.rb"
 			],
 			[
-				"applicationscont",
-				"app/controllers/applications_controller.rb"
+				"product_helper",
+				"app/helpers/products_helper.rb"
 			],
 			[
-				"route",
-				"config/routes.rb"
+				"producthel",
+				"app/helpers/products_helper.rb"
+			],
+			[
+				"user.rb",
+				"app/models/user.rb"
+			],
+			[
+				"job.rb",
+				"app/models/job.rb"
+			],
+			[
+				"user",
+				"app/models/user.rb"
+			],
+			[
+				"product_hea",
+				"app/views/products/_product_show_header.html.erb"
+			],
+			[
+				"users",
+				"app/controllers/users_controller.rb"
+			],
+			[
+				"circleele",
+				"app/dtos/circle_element.rb"
+			],
+			[
+				"sessionshel",
+				"app/helpers/sessions_helper.rb"
+			],
+			[
+				"usershel",
+				"app/helpers/users_helper.rb"
+			],
+			[
+				"projectsc",
+				"app/controllers/user/projects_controller.rb"
+			],
+			[
+				"sessionscont",
+				"app/controllers/sessions_controller.rb"
+			],
+			[
+				"head",
+				"app/views/layouts/_header.html.erb"
+			],
+			[
+				"bootstra",
+				"app/assets/stylesheets/bootstrap.css"
+			],
+			[
+				"main.cs",
+				"app/assets/stylesheets/main.css.scss"
+			],
+			[
+				"header",
+				"app/views/layouts/_header.html.erb"
+			],
+			[
+				"feedback",
+				"app/views/feedback/_dialog_feedback.html.erb"
+			],
+			[
+				"applicationscont",
+				"app/controllers/applications_controller.rb"
 			],
 			[
 				"schema",
@@ -744,24 +909,8 @@
 				"app/models/project.rb"
 			],
 			[
-				"userscont",
-				"app/controllers/users_controller.rb"
-			],
-			[
-				"",
-				"app/controllers/settings_controller.rb"
-			],
-			[
-				"user.rb",
-				"app/models/user.rb"
-			],
-			[
 				"settingscon",
 				"app/controllers/settings_controller.rb"
-			],
-			[
-				"config",
-				"config/config.yml"
 			],
 			[
 				"creditcar",
@@ -812,10 +961,6 @@
 				"app/views/newsletter_mailer/newsletter_new_features_email.html.erb"
 			],
 			[
-				"productscont",
-				"app/controllers/products_controller.rb"
-			],
-			[
 				"plain",
 				"app/views/layouts/plain.html.erb"
 			],
@@ -842,18 +987,6 @@
 			[
 				"navi",
 				"app/views/settings/_navi.html.erb"
-			],
-			[
-				"head",
-				"app/views/layouts/_header.html.erb"
-			],
-			[
-				"profile",
-				"app/views/settings/profile.html.erb"
-			],
-			[
-				"name",
-				"app/views/settings/name.html.erb"
 			],
 			[
 				"creditca",
@@ -920,10 +1053,6 @@
 				"app/views/layouts/application_lp.html.erb"
 			],
 			[
-				"search",
-				"app/views/products/search.html.erb"
-			],
-			[
 				"mongo",
 				"config/mongoid.yml"
 			],
@@ -940,10 +1069,6 @@
 				"app/controllers/application_controller.rb"
 			],
 			[
-				"productscontol",
-				"app/controllers/products_controller.rb"
-			],
-			[
 				"sprite",
 				"app/assets/stylesheets/sprite.css.scss"
 			],
@@ -958,10 +1083,6 @@
 			[
 				"github",
 				"app/views/shared/_github_ad.html.erb"
-			],
-			[
-				"main.cs",
-				"app/assets/stylesheets/main.css.scss"
 			],
 			[
 				"github_ad",
@@ -992,14 +1113,6 @@
 				"app/views/products/_show_search_results_iterator.html.erb"
 			],
 			[
-				"main",
-				"app/assets/stylesheets/main.css.scss"
-			],
-			[
-				"header",
-				"app/views/layouts/_header.html.erb"
-			],
-			[
 				"socia",
 				"app/views/shared/_social_buttons.html.erb"
 			],
@@ -1012,16 +1125,8 @@
 				"app/views/shared/_social_buttons.html.erb"
 			],
 			[
-				"bootstr",
-				"app/assets/stylesheets/bootstrap.css"
-			],
-			[
 				"main.css",
 				"app/assets/stylesheets/main.css.scss"
-			],
-			[
-				"bootstra",
-				"app/assets/stylesheets/bootstrap.css"
 			],
 			[
 				"product_show_big",
@@ -1036,10 +1141,6 @@
 				"app/views/shared/_share_and_follow.html.erb"
 			],
 			[
-				"product_hea",
-				"app/views/products/_product_show_header.html.erb"
-			],
-			[
 				"project",
 				"app/models/project.rb"
 			],
@@ -1050,14 +1151,6 @@
 			[
 				"iter",
 				"app/views/products/_show_search_results_iterator.html.erb"
-			],
-			[
-				"productsconto",
-				"app/controllers/products_controller.rb"
-			],
-			[
-				"product.rb",
-				"app/models/product.rb"
 			],
 			[
 				"plans",
@@ -1084,16 +1177,8 @@
 				"app/views/shared/_share_and_follow.html.erb"
 			],
 			[
-				"iterator",
-				"app/views/products/_show_search_results_iterator.html.erb"
-			],
-			[
 				"product_show_head",
 				"app/views/products/_product_show_header.html.erb"
-			],
-			[
-				"sessionshel",
-				"app/helpers/sessions_helper.rb"
 			],
 			[
 				"pricin",
@@ -1116,10 +1201,6 @@
 				"app/views/user/projects/show.html.erb"
 			],
 			[
-				"search.html",
-				"app/views/products/search.html.erb"
-			],
-			[
 				"index.html.erb",
 				"app/views/products/index.html.erb"
 			],
@@ -1130,98 +1211,6 @@
 			[
 				"edit",
 				"app/views/products/edit.html.erb"
-			],
-			[
-				"spri",
-				"app/assets/stylesheets/sprite.css.scss"
-			],
-			[
-				"navi.html",
-				"app/views/users/_navi.html.erb"
-			],
-			[
-				"sharebu",
-				"app/views/shared/_share_buttons.html.erb"
-			],
-			[
-				"servicecon",
-				"app/controllers/services_controller.rb"
-			],
-			[
-				"share_and_",
-				"app/views/shared/_share_and_follow.html.erb"
-			],
-			[
-				"show_vis",
-				"app/views/products/show_visual.html.erb"
-			],
-			[
-				"show_visu",
-				"app/views/products/_show_visual_head.html.erb"
-			],
-			[
-				"visual",
-				"app/views/products/show_visual.html.erb"
-			],
-			[
-				"face",
-				"app/views/shared/_login_with_facebook.html.erb"
-			],
-			[
-				"twitter",
-				"app/views/shared/_login_with_twitter.html.erb"
-			],
-			[
-				"login_opt",
-				"app/views/shared/_login_options_vertical.html.erb"
-			],
-			[
-				"horizo",
-				"app/views/shared/_login_options_horizontal.html.erb"
-			],
-			[
-				"statistic",
-				"app/controllers/statistics_controller.rb"
-			],
-			[
-				"versioncomm",
-				"app/models/versioncomment.rb"
-			],
-			[
-				"versioncommentscont",
-				"app/controllers/versioncomments_controller.rb"
-			],
-			[
-				"versioncomment.html",
-				"app/views/shared/_show_version_comment.html.erb"
-			],
-			[
-				"show_version_comment",
-				"app/views/shared/_show_version_comment.html.erb"
-			],
-			[
-				"show_comments",
-				"app/views/products/_product_show_comments.html.erb"
-			],
-			[
-				"replie",
-				"app/views/shared/_version_comment_replies.html.erb"
-			],
-			[
-				"reply",
-				"app/views/shared/_list_reply_link.html.erb"
-			],
-			[
-				"comments",
-				"app/views/shared/_comments.html.erb"
-			],
-			[
-				"comments.html",
-				"app/views/shared/_comments.html.erb"
-			],
-			[
-				"develop",
-				"config/environments/development.rb"
 			]
 		],
 		"width": 0.0
@@ -1237,7 +1226,7 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 311.0,
 	"status_bar_visible": true
 }

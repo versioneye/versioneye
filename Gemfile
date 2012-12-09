@@ -21,7 +21,8 @@ gem 'stripe', '1.7.8'
 gem 'thin', '1.4.1'
 gem 'tire', '0.4.3'
 gem 'dalli', '2.3.0' # memcache library
-gem 'kgio', '2.7.4' # 20% performance boost for dalli
+gem 'kgio', '2.7.4'  # 20% performance boost for dalli
+gem 'newrelic_rpm', '3.5.3.25' # performance monitoring 
 
 group :assets do
   gem 'sass-rails', "3.2.5"
@@ -32,6 +33,6 @@ end
 
 group :test do
   gem 'turn', :require => false
-  gem 'rspec-rails', '2.12.0'
+  gem "rspec-rails", "~> 2.0"
   gem 'webrat', '0.7.3'
 end
