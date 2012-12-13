@@ -19,17 +19,15 @@ class ProductsController < ApplicationController
   def search
     @query = params[:q]
     @groupid = params[:g]
-    @description = params[:d]
     @lang = get_lang_value( params )
     commit = params[:commit]
     
-    hash = do_parse_search_input(@query, @description, @groupid)
+    hash = do_parse_search_input(@query, @groupid)
     @query = hash['query'] if !hash['query'].nil?
     @groupid = hash['group'] if !hash['group'].nil?
-    @description = hash['description'] if !hash['description'].nil?
 
-    if ( (@query.nil? || @query.empty?) && (@description.nil? || @description.empty?) && (@groupid.nil? || @groupid.empty?) )
-      flash.now[:error] = "Please give us some input. Type in a value for name or description."
+    if ( (@query.nil? || @query.empty?) && (@groupid.nil? || @groupid.empty?) )
+      flash.now[:error] = "Please give us some input. Type in a value for name."
     elsif @query.length == 1
       flash.now[:error] = "Search term is to short. Please type in at least 2 characters."
     elsif @query.include?("%")
@@ -37,7 +35,7 @@ class ProductsController < ApplicationController
     else
       start = Time.now
       languages = get_language_array(@lang)
-      # @products = Product.search( @query, @description, @groupid, languages, params[:page])
+      #@products = Product.search( @query, @groupid, languages, params[:page])
       @products = Product.find_by(@query, @description, @groupid, languages, 300).paginate(:page => params[:page])
       if @products && @products.count > 0 && signed_in?
         @my_product_ids = current_user.fetch_my_product_ids 

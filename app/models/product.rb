@@ -2,6 +2,7 @@ class Product
 
   require 'will_paginate/array'
 
+
   include Mongoid::Document
   include Mongoid::Timestamps
 
@@ -21,6 +22,7 @@ class Product
   field :link, type: String
   field :downloads, type: Integer
   field :followers, type: Integer, default: 0
+  field :last_release, type: Integer, default: 0
   
   field :license, type: String 
   field :licenseLink, type: String 
@@ -53,12 +55,12 @@ class Product
   end
 
   # languages have to be an array of strings. 
-  def self.search(q, description = nil, group_id = nil, languages = nil, page_count = 1)
-    self.elastic_search(q, group_id, languages, page_count)
+  def self.search(q, group_id = nil, languages = nil, page_count = 1)
+    ProductElastic.search(q, group_id, languages, page_count)
   rescue => e 
     p "ERROR in search - #{e}"
     p "Dam. We don't give up. Not yet! Start alternative search on awesome MongoDB."
-    Product.find_by(q, description, group_id, languages, 300).paginate(:page => page_count)
+    Product.find_by(q, "", group_id, languages, 300).paginate(:page => page_count)
   end
 
   # languages have to be an array of strings. 
@@ -174,98 +176,20 @@ class Product
 
   ######## ELASTIC SEARCH START #####################################
 
-  #include Tire::Model::Search
-  #include Tire::Model::Callbacks
-
-  # index_name "product_#{Rails.env}"
-
-  # mapping do
-  #   indexes :name, analyzer: 'whitespace', boost: 100
-  #   indexes :description, analyzer: 'snowball'
-  #   indexes :description_manual, analyzer: 'snowball'
-  #   indexes :language, analyzer: "string_lowercase", index: :not_analyzed
-  #   indexes :group_id, index: :not_analyzed
-  #   indexes :prod_key, index: :not_analyzed
-  #   indexes :prod_type, index: :not_analyzed
-  #   indexes :version, index: :not_analyzed
-  #   indexes :followers, type: "integer", index: :not_analyzed
-  # end
-
-  # # langs need to be an Array ! 
-  # # 
-  # def self.elastic_search(q, group_id = nil, langs = Array.new, page_count = 0)
-  #   p "#{q} - #{group_id} - #{langs} - #{page_count}"
-  #   if (q.nil? || q.empty?) && (group_id.nil? || group_id.empty?)
-  #     raise ArgumentError, "query and group_id are both empty! This is not allowed"
-  #   end
-  #   group_id = "" if !group_id
-  #   q = "*" if !q || q.empty?
-  #   Product.tire.search( load: true, page: page_count, per_page: 30 ) do |search|
-  #     search.sort { by [{:_score => 'desc'}] }
-  #     if langs and !langs.empty?
-  #       langs_dwoncase = Product.downcase_array langs
-  #       search.filter :terms, :language => langs_dwoncase
-  #     end
-  #     search.query do |query|  
-  #       if q != '*' and !group_id.empty?
-  #         # when user search by name and group_id
-  #         query.boolean do 
-  #           must {string q}                                   
-  #           must {string 'group_id:' + group_id + "*"}                                                     
-  #         end 
-  #       elsif q != '*' and group_id.empty?          
-  #         query.string q
-  #       elsif q == '*' and !group_id.empty?
-  #         query.string "group_id:" + group_id + "*"  
-  #       end 
-  #     end
-  #   end
-  # end
-
-  # def self.elastic_search_exact(name)
-  #   Product.tire.search(load: true) do |search|
-  #       response = search.query do |query|
-  #         query.boolean do
-  #           must {string name, default_operator: "AND" }           
-  #         end 
-  #       end
-  #       #filter result by hand
-  #       result = []
-  #       response.results.each do |item|        
-  #         if item.name.eql? name then
-  #             result << item.to_hash
-  #         end
-  #       end
-        
-  #       return result 
-  #   end
-  # end 
-
-  # def self.clean_all
-  #   Product.tire.index.delete
-  # end
-
-  # def index_one
-  #   Product.tire.index.store self
-  #   Product.tire.index.refresh
-  # end
-
-  # def self.index_all
-  #   Product.clean_all
-  #   Product.all.each do |product|  
-  #     Product.tire.index.store product
-  #     p "index #{product.name}"
-  #   end
-  #   Product.tire.index.refresh
-  # end
-
-  # def self.index_newest
-  #   Product.where(reindex: true).each do |product|
-  #     Product.tire.index.store product
-  #     product.update_attribute(:reindex, false)
-  #   end
-  #   Product.tire.index.refresh
-  # end
+  def to_indexed_json
+    {
+      :_id => self.id.to_s,
+      :_type => "product",
+      :name => self.name,
+      :description => self.description,
+      :description_manual => self.description_manual, 
+      :language => self.language,
+      :followers => self.followers,
+      :group_id => self.group_id, 
+      :prod_key => self.prod_key,
+      :prod_type => self.prod_type
+    }
+  end 
 
   ########### VERSIONS START ########################
 

@@ -8,6 +8,8 @@ require "active_resource/railtie"
 require "rails/test_unit/railtie"
 require "sprockets/railtie"
 require 'dalli'
+require 'tire'
+# require 'yajl/json_gem'
 
 
 if defined?(Bundler)

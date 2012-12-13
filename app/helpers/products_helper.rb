@@ -93,12 +93,11 @@ module ProductsHelper
     key
   end
 
-  def do_parse_search_input( query , description, group_id)
+  def do_parse_search_input( query , group_id )
     hash = Hash.new 
     query_empty = query.nil? || query.empty? || query.eql?("Be up-to-date")
-    description_empty = description.nil? || description.empty? || description.length < 2
     group_id_empty = group_id.nil? || group_id.empty?
-    if query_empty && description_empty && group_id_empty
+    if query_empty && group_id_empty
       hash['query'] = "json"
       return hash
     end
@@ -110,8 +109,6 @@ module ProductsHelper
       parts.each do |part| 
         if !part.match(/^g:/i).nil?
           hash['group'] = part.gsub("g:", "")
-        elsif !part.match(/^d:/i).nil?
-          hash['description'] = part.gsub("d:", "")
         else 
           hash['query'] += part + " "
         end
