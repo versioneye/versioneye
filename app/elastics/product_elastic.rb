@@ -26,20 +26,21 @@ class ProductElastic
   def self.index_all
     Product.all.each do |product|  
       ProductElastic.index product
-      p "index #{product.name}"
     end
   end
 
   def self.index( product )
     Tire.index Settings.elasticsearch_product_index do
       store product.to_indexed_json
+      product.update_attribute(:reindex, false)
       refresh
+      p "index #{product.name}"
     end
   end
 
   def self.index_newest
     Product.where(reindex: true).each do |product|
-      ProductElastic.index_one product
+      ProductElastic.index product
       product.update_attribute(:reindex, false)
     end
   end
@@ -54,10 +55,10 @@ class ProductElastic
     group_id = "" if !group_id
     q = "*" if !q || q.empty?
 
-    Tire.search( Settings.elasticsearch_product_index, load: true, page: page_count, per_page: 30 ) do |search|
+    s = Tire.search( Settings.elasticsearch_product_index, load: true, page: page_count, per_page: 30 ) do |search|
 
-      # search.sort { by [{:_score => 'desc'}] }
-      search.sort { by [{:name => 'desc'}] }
+      search.sort { by [{:_score => 'desc'}] }
+      # search.sort { by [{:name => 'desc'}] }
       
       if langs and !langs.empty?
         langs_dwoncase = Product.downcase_array langs
@@ -80,24 +81,25 @@ class ProductElastic
 
     end
 
+    s.results
   end
 
-  # def self.elastic_search_exact(name)
-  #   Product.tire.search(load: true) do |search|
-  #     response = search.query do |query|
-  #       query.boolean do
-  #         must {string name, default_operator: "AND" }           
-  #       end 
-  #     end
-  #     #filter result by hand
-  #     result = []
-  #     response.results.each do |item|        
-  #       if item.name.eql? name then
-  #           result << item.to_hash
-  #       end
-  #     end
-  #     return result 
-  #   end
-  # end 
+  def self.search_exact(name)
+    s = Tire.search( Settings.elasticsearch_product_index, load: true) do |search|
+      response = search.query do |query|
+        query.boolean do
+          must {string name, default_operator: "AND" }           
+        end 
+      end
+      #filter result by hand
+      result = []
+      response.results.each do |item|        
+        if item.name.eql? name then
+            result << item
+        end
+      end
+      return result 
+    end
+  end 
 
 end
