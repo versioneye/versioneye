@@ -25,9 +25,8 @@ describe "search" do
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"
     
-    assert_tag :tag => "section", :attributes => { :class => "round"}
-    assert_tag :tag => "div", :attributes => { :class => "content"}
-    assert_tag :tag => "ul", :attributes => { :class => "list-row product_header"}
+    assert_tag :tag => "section", :attributes => { :class => "container"}
+    assert_tag :tag => "ul", :attributes => { :class => "nav pull-right"}
 
     product.remove
   end
@@ -52,8 +51,8 @@ describe "search" do
 
     get "/package_visual/json_g/version/1~0"
     assert_response :success
-    assert_select "form[action=?]", "/search"
-    assert_select "input[name=?]", "q"
+    # assert_select "form[action=?]", "/search"
+    # assert_select "input[name=?]", "q"
     
     assert_tag :tag => "h1", :attributes => { :style => "margin-bottom: 5px;"}
 

@@ -7,8 +7,7 @@ describe "search" do
     assert_response :success
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"
-    assert_select "body div.container section"
-    assert_select "div#searchresults"
+    assert_select "div#search-results"
   end
 
   it "show the search with 1 result" do 
@@ -17,6 +16,7 @@ describe "search" do
     product.name = "json"
     product.name_downcase = "json"
     product.prod_key = "json/json"
+    product.language = "Java"
     product.save
     version = Version.new
     version.version = "1.0"
@@ -31,10 +31,8 @@ describe "search" do
     assert_response :success
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"
-    assert_select "body div.container section"
-    assert_select "div#searchresults"
-    assert_tag :tag => "div", :attributes => { :class => "searchResults"}, :children => {:count => 1..2}
-    assert_tag :tag => "div", :attributes => { :class => "searchResult"}, :parent => { :tag => "div" }
+    assert_select "div#search-results"
+    assert_tag :tag => "div", :attributes => { :class => "row search-item"}, :parent => { :tag => "div" }
     assert_tag :tag => "a", :attributes => { :class => "searchResultLink"}
 
     product.remove

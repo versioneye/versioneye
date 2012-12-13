@@ -25,21 +25,21 @@ describe "follow and unfollow" do
 
     get "/package/json_goba"
     assert_response :success
-    assert_tag :tag => "button", :attributes => { :class => "btn btn-success btn-large", :type => "submit" }
+    assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-success", :type => "submit" }
 
     post "/package/follow", :product_key => "json_goba"
     assert_response 302
     response.should redirect_to("/package/json_goba/version/1~0")
 
     get "/package/json_goba/version/1~0"
-    assert_tag :tag => "button", :attributes => { :class => "btn btn-warning btn-large", :type => "submit" }
+    assert_tag :tag => "button", :attributes => { :class => "btn2 btn-large btn-warning", :type => "submit" }
 
     post "/package/unfollow", :product_key => "json_goba", :src_hidden => "detail"
     assert_response 302
     response.should redirect_to("/package/json_goba/version/1~0")
 
     get "/package/json_goba/version/1~0"
-    assert_tag :tag => "button", :attributes => { :class => "btn btn-success btn-large", :type => "submit" }
+    assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-success", :type => "submit" }
     
     user.remove
     product.remove

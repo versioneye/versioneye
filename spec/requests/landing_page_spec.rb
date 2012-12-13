@@ -7,7 +7,7 @@ describe "landing page" do
     assert_response :success
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"
-    assert_select "body div.container section"
+    assert_select "body section.container"
   end
 
 end
