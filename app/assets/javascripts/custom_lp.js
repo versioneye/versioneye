@@ -4,5 +4,11 @@ jQuery(document).ready(function() {
 		text: "json",
 		styleclass: "lp_searchfield_hint"
 	});
+
+
 	
 });
+
+function load_video(){
+  jQuery('#dialog_video').modal({keyboard : true});
+}
