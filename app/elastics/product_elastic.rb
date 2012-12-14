@@ -23,9 +23,20 @@ class ProductElastic
     end
   end
 
+  def self.reset
+    self.clean_all
+    self.create_mappings
+  end
+
   def self.index_all
     Product.all.each do |product|  
       ProductElastic.index product
+    end
+  end
+
+  def self.refresh
+    Tire.index Settings.elasticsearch_product_index do
+      refresh
     end
   end
 
@@ -33,9 +44,13 @@ class ProductElastic
     Tire.index Settings.elasticsearch_product_index do
       store product.to_indexed_json
       product.update_attribute(:reindex, false)
-      refresh
       p "index #{product.name}"
     end
+  end
+
+  def self.index_and_refresh( product )
+    self.index product
+    self.refresh
   end
 
   def self.index_newest
