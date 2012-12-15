@@ -32,12 +32,7 @@ class ProductElastic
     Product.all.each do |product|  
       ProductElastic.index product
     end
-  end
-
-  def self.refresh
-    Tire.index Settings.elasticsearch_product_index do
-      refresh
-    end
+    self.refresh
   end
 
   def self.index( product )
@@ -45,6 +40,12 @@ class ProductElastic
       store product.to_indexed_json
       product.update_attribute(:reindex, false)
       p "index #{product.name}"
+    end
+  end
+
+  def self.refresh
+    Tire.index Settings.elasticsearch_product_index do
+      refresh
     end
   end
 
@@ -56,8 +57,8 @@ class ProductElastic
   def self.index_newest
     Product.where(reindex: true).each do |product|
       ProductElastic.index product
-      product.update_attribute(:reindex, false)
     end
+    self.refresh
   end
 
   # # langs need to be an Array ! 
