@@ -2,12 +2,14 @@ class ProductElastic
 
   def self.create_mappings
     Tire.index Settings.elasticsearch_product_index do
-      delete
       create :mappings => {
         :product => {
           :properties => {
             :_id                => { :type => 'string', :index => 'not_analyzed', :include_in_all => false },
-            :name               => { :type => 'string', :analyzer => 'snowball', :boost => 100 },
+            :name => { :type => 'multi_field', :fields => {
+                :name => {:type => 'string', :analyzer => 'snowball', :boost => 100}, 
+                :untouched => {:type => 'string', :index => 'not_analyzed' }
+              } },
             :description        => { :type => 'string', :analyzer => 'snowball' },
             :description_manual => { :type => 'string', :analyzer => 'snowball' },
             :language           => { :type => 'string', :index => 'not_analyzed'}
@@ -74,7 +76,7 @@ class ProductElastic
     s = Tire.search( Settings.elasticsearch_product_index, load: true, page: page_count, per_page: 30 ) do |search|
 
       search.sort { by [{:_score => 'desc'}] }
-      # search.sort { by [{:name => 'desc'}] }
+      # search.sort { by [{'name.untouched' => 'asc'}] }
       
       if langs and !langs.empty?
         langs_dwoncase = Product.downcase_array langs
@@ -85,11 +87,11 @@ class ProductElastic
         if q != '*' and !group_id.empty?
           # when user search by name and group_id
           query.boolean do 
-            must {string q}                                   
+            must {string 'name:' + q}
             must {string 'group_id:' + group_id + "*"}                                                     
           end 
         elsif q != '*' and group_id.empty?          
-          query.string q
+          query.string "name:" + q
         elsif q == '*' and !group_id.empty?
           query.string "group_id:" + group_id + "*"  
         end 
