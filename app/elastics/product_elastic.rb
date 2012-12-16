@@ -69,11 +69,15 @@ class ProductElastic
     if (q.nil? || q.empty?) && (group_id.nil? || group_id.empty?)
       raise ArgumentError, "query and group_id are both empty! This is not allowed"
     end
+
+    page_count = 0 if page_count.nil?
+    results_per_page = 30
+    from = results_per_page * page_count.to_i
     
     group_id = "" if !group_id
     q = "*" if !q || q.empty?
 
-    s = Tire.search( Settings.elasticsearch_product_index, load: true, page: page_count, per_page: 30, size: 30, :from => page ) do |search|
+    s = Tire.search( Settings.elasticsearch_product_index, load: true, page: page_count, per_page: results_per_page, size: results_per_page, :from => from ) do |search|
 
       search.sort { by [{:_score => 'desc'}] }
       # search.sort { by [{'name.untouched' => 'asc'}] }
