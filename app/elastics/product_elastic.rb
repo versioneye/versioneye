@@ -73,7 +73,7 @@ class ProductElastic
     group_id = "" if !group_id
     q = "*" if !q || q.empty?
 
-    s = Tire.search( Settings.elasticsearch_product_index, load: true, page: page_count, per_page: 30 ) do |search|
+    s = Tire.search( Settings.elasticsearch_product_index, load: true, page: page_count, per_page: 30, size: 30, :from => page ) do |search|
 
       search.sort { by [{:_score => 'desc'}] }
       # search.sort { by [{'name.untouched' => 'asc'}] }
