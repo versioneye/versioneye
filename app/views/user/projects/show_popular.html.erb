@@ -11,7 +11,9 @@
 	</div>
 	<div class="span8 left_border" >
 		<% if @libs.nil? || @libs.empty? %>
-			<%= render "/user/projects/create" %>
+			<div class="content">
+				<%= render "/user/projects/create" %>
+			</div>
 		<% else %>
 			<div id="projects" >
 				<% @libs = @libs.sort_by {|item, project| -project.length} %>

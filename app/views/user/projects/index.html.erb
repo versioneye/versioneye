@@ -12,7 +12,9 @@
 	</div>
 	<div class="span8 left_border" >
 		<% if @projects.nil? || @projects.empty? %>
-			<%= render "/user/projects/create" %>
+			<div class="content">
+				<%= render "/user/projects/create" %>
+			</div>
 		<% else %>
 			<div id="projects" >
 				<% @projects.each do |project| %>

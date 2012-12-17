@@ -124,13 +124,16 @@ class User::ProjectsController < ApplicationController
   end
 
   def get_popular
+    @project = Project.new
     @libs = {}
     projects = Project.find_by_user(current_user.id.to_s)
-    projects.each do |project|
-      project.fetch_dependencies.each  do |dependency|
-        key = dependency.name
-        @libs[key] ||= []
-        @libs[key] << project
+    if projects && !projects.empty?
+      projects.each do |project|
+        project.fetch_dependencies.each  do |dependency|
+          key = dependency.name
+          @libs[key] ||= []
+          @libs[key] << project
+        end
       end
     end
 
