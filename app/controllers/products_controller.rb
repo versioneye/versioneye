@@ -35,8 +35,8 @@ class ProductsController < ApplicationController
     else
       start = Time.now
       languages = get_language_array(@lang)
-      # @products = Product.search( @query, @groupid, languages, params[:page])
-      @products = Product.find_by(@query, @description, @groupid, languages, 300).paginate(:page => params[:page])
+      @products = Product.search( @query, @groupid, languages, params[:page])
+      # @products = Product.find_by(@query, @description, @groupid, languages, 300).paginate(:page => params[:page])
       if @products && @products.count > 0 && signed_in?
         @my_product_ids = current_user.fetch_my_product_ids 
       end
