@@ -39,14 +39,14 @@ class FacebookController < ApplicationController
       p "json_user: #{json_user}"
 
       user = User.find_by_fb_id( json_user['id'] )
-      if !user.nil?
+      if !user.nil? && !user.deleted
         user.fb_token = token
         user.save
         return user
       end
       
       user = User.find_by_email(json_user['email'])
-      if !user.nil?
+      if !user.nil? && !user.deleted
         update_user_with_token(user, json_user, token)
         return user
       end
