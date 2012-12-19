@@ -37,13 +37,13 @@ class PageController < ApplicationController
   end
 
   def sitemap_1
-    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-1.xml'
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_001.xml'
   end
   def sitemap_2
-    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-2.xml'
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_002.xml'
   end
   def sitemap_3
-    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-3.xml'
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_003.xml'
   end
 
 end
