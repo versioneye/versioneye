@@ -4,6 +4,7 @@ class FacebookController < ApplicationController
 
   def callback
     code = params['code']
+    p "code: #{code}"
 
     if code.nil? || code.empty?
       redirect_to "/signup"
@@ -14,6 +15,7 @@ class FacebookController < ApplicationController
     response = HTTParty.get(URI.encode(link))
     data = response.body
     access_token = data.split("=")[1]
+    p "access_token: #{access_token}"
 
     if signed_in? 
       update_user_with_token(current_user, json_user, token)
@@ -51,6 +53,7 @@ class FacebookController < ApplicationController
       
       user = User.new
       user.update_from_fb_json(json_user, token)
+      p "username: #{user.username}"
       user.terms = true
       user.datenerhebung = true
       if user.save
