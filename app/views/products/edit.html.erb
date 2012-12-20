@@ -95,24 +95,23 @@
 	</div>
 	<div class="boxContainer">
 		<%= form_tag("/package/#{@product.to_param}/update", :method => "post") do  %>    
-
-			<div style="display:table-row;">
-				<div class="labelCelMiddle" style="width: 80px;">
-					<%= label_tag(:link, "URL") %>
-				</div>
-				<div class="inputCel" style="width: 450px;">
-					<%= text_field_tag :link_url, "", :class => "round", :style=>"width: 420px;" %>
-				</div>
-		    </div>
-		    <div style="display:table-row;">
+		  <div style="display:table-row;">
 				<div class="labelCelMiddle" style="width: 80px;">
 					<%= label_tag(:label, "Label") %>
 				</div>
 				<div class="inputCel" style="width: 450px;">
 					<%= text_field_tag :link_name, "", :class => "round", :style=>"width: 420px;" %>
 				</div>
-		    </div>
-		    <div style="display:table-row;">
+		  </div>
+		  <div style="display:table-row;">
+				<div class="labelCelMiddle" style="width: 80px;">
+					<%= label_tag(:link, "URL") %>
+				</div>
+				<div class="inputCel" style="width: 450px;">
+					<%= text_field_tag :link_url, "", :class => "round", :style=>"width: 420px;" %>
+				</div>
+		  </div>
+		  <div style="display:table-row;">
 				<div class="labelCelMiddle" style="width: 80px;">
 					&nbsp;
 				</div>
