@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9/">
    <sitemap>
-      <loc>http://www.versioneye.com/sitemap-1.xml</loc>
+      <loc>https://www.versioneye.com/sitemap_001.xml</loc>
    </sitemap>
    <sitemap>
-      <loc>http://www.versioneye.com/sitemap-2.xml</loc>
+      <loc>https://www.versioneye.com/sitemap_002.xml</loc>
    </sitemap>
    <sitemap>
-      <loc>http://www.versioneye.com/sitemap-3.xml</loc>
+      <loc>https://www.versioneye.com/sitemap_003.xml</loc>
    </sitemap>
 </sitemapindex>
