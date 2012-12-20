@@ -196,7 +196,7 @@ class ProductsController < ApplicationController
   
   def unfollow
     src_hidden = params[:src_hidden]
-    product_key = url_param_to_origin params[:product_key]    
+    product_key = url_param_to_origin params[:product_key]
     @product = fetch_product product_key
     @product.followers = @product.followers - 1
     @product.save
@@ -280,7 +280,6 @@ class ProductsController < ApplicationController
 
     def get_language_array(lang)
       langs = lang.split(",")
-      p "langs: #{langs}"
       languages = Array.new 
       langs.each do |language|
         if !language.strip.empty?
@@ -291,7 +290,6 @@ class ProductsController < ApplicationController
           end
         end
       end
-      p "languages: #{languages}"
       languages
     end
 
@@ -344,7 +342,6 @@ class ProductsController < ApplicationController
         searchlog.results = products.total_entries
       end
       searchlog.save
-      p "searched for #{query}, wait #{wait} milliseconds, found #{searchlog.results} results"
     end
 
     def is_following?(user, product)
