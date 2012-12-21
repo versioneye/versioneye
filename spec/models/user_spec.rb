@@ -438,4 +438,51 @@ describe User do
     end
   end
 
+  describe "active_users" do
+    it "returns 3mpty list, when there's no active users" do
+      User.active_users.count.should eql(0)
+    end
+
+    it "returns one user, when there's only one user following" do
+      user = User.all.first
+      Follower.new(user_id: user.id, product_id: 1).save()
+      User.active_users.count.should eql(1)
+      Follower.delete_all #to prevent side effects
+    end
+
+    it "returns one user, when there's only one user who have add comment" do
+      user = User.all.first
+      Versioncomment.new(user_id: user.id, product_key: "1", version: "1", comment: "1").save
+      Versioncomment.new(user_id: user.id, product_key: "2", version: "2", comment: "2").save
+      User.active_users.count.should eql(1)
+    end
+
+    it "returns only one user, when there's only one user with active project" do
+      user = User.all.first
+      Project.new(user_id: user.id).save
+      User.active_users.count.should eql(1)
+      Project.delete_all
+    end
+
+    it "returns only one user, even she commented and has active project" do
+      user = User.all.first
+      Project.new(user_id: user.id)
+      Versioncomment.new(user_id: user.id, product_key: "1", version: "1", comment: "1").save
+      User.active_users.count.should eql(1)
+      Project.delete_all
+      Versioncomment.delete_all
+    end
+
+    it "returns 2 user,when she commented and he has active project" do
+      she = User.all.first
+      he = User.all.last
+      Project.new(user_id: she.id).save
+      Versioncomment.new(user_id: he.id, product_key: "1", version: "1", comment: "1").save
+      User.active_users.count.should eql(2)
+      Project.delete_all
+      Versioncomment.delete_all
+    end
+
+
+  end
 end
