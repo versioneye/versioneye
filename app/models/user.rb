@@ -197,7 +197,6 @@ class User
   def followers
     Follower.find_by_user(self.id)
   end
-  
   def fetch_my_products
     ids = Array.new
     followers.each do |follower|
@@ -277,6 +276,27 @@ class User
     encrypt_password
     save
     UserMailer.reset_password(self, random_value).deliver
+  end
+
+  #-- Class methods 
+  def self.follows_max(n)
+    User.all.select {|user| user.followers.count < n}
+  end
+
+  def self.follows_least(n)
+    User.all.select {|user| user.followers.count >= n}
+  end 
+  def self.non_followers
+    User.all.select {|user| user.followers.count == 0}
+  end
+ 
+  def self.active_users
+    User.all.select do |user|
+      (user.followers.count > 0 or
+       Versioncomment.where(user_id: user.id).exists? or
+       Project.where(user_id: user.id).exists?
+      )
+    end
   end
 
   def self.authenticate(email, submitted_password)
