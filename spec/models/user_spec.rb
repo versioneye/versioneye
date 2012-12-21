@@ -14,10 +14,13 @@ describe User do
     @user.terms = true
     @user.datenerhebung = true
     @user.save
+
+    UserFactory.create_defaults
   end
   
   after(:each) do 
     @user.remove
+    UserFactory.clean_defaults
   end
   
   describe "to_param" do
@@ -395,5 +398,44 @@ describe User do
     end
     
   end
+
+  describe "non_followers" do 
+    it "returns same number of user when users follow nothing" do
+      User.non_followers.count.should eql(User.all.count)
+    end
+    it "returns one user less, when one user starts following new Project" do
+      user = User.all.first
+      Follower.new(user_id: user.id, product_id: 1).save()
+      User.non_followers.count.should eql(User.all.count - 1)
+    end
+  end
+
+  describe "follows_least" do
+    it "returns all users, when argument is 0" do
+      User.follows_least(0).count.should eql(User.all.count)
+    end
     
+    it "returns nothing, when there's no user with specified number follows" do
+      User.follows_least(1).count.should eql(0)
+    end
+
+    it "returns only 1 user, who follows least n packages" do
+      user = User.all.first
+      Follower.new(user_id:  user.id, product_id: 1).save()
+      User.follows_least(1).count.should eql(1)
+    end
+  end
+
+  describe "follows_max" do
+    it "returns all users, when n is large enough" do
+      User.follows_max(32768).count.should eql(User.all.count)
+    end 
+
+    it "returns one user less, when one of un-followers starts following new package" do
+      user = User.all.first
+      Follower.new(user_id: user.id, product_id: 1).save()
+      User.follows_max(1).count.should eql(User.all.count - 1)
+    end
+  end
+
 end
