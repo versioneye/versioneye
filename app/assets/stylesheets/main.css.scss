@@ -510,6 +510,64 @@ div.content {
 }
 
 
+/* Social buttons 
+----------------------------------------------------*/
+
+.socialbuttons {
+  position: absolute;
+  top: 180px;
+  left: 0px;
+  z-index: 10;
+  width: 34px;
+  min-height:120px;
+  
+  a { text-decoration: none;}
+  a:hover {
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+  }
+  & .btn-social {
+    background: transparent no-repeat;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  & .btn-facebook.rounded {
+    background-image: url('/assets/socialnetworks/rounded/facebook.png');
+  }
+
+  & .btn-wordpress.rounded {
+    background-image: url('/assets/socialnetworks/rounded/wordpress.png');
+  }
+
+  & .btn-twitter.rounded {
+    background-image: url('/assets/socialnetworks/rounded/twitter.png');
+  }
+
+  & .btn-googleplus.rounded {
+    background-image: url('/assets/socialnetworks/rounded/gplus.png');
+  }
+
+  & .btn-pinterest.rounded {
+    background-image: url('/assets/socialnetworks/rounded/pinterest.png');
+  }
+
+  & .btn-youtube.rounded {
+    background-image: url('/assets/socialnetworks/rounded/youtube.png');
+  }
+
+  & .btn-addthis.rounded {
+    background-image: url('/assets/socialnetworks/rounded/addthis.png');
+  }
+
+  & .btn-like.rounded {
+    background-image: url('/assets/socialnetworks/rounded/like.png');
+  }
+
+
+}
+
+
 /* Footer
 -------------------------------------------------- */
 
