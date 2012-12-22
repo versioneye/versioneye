@@ -13,7 +13,6 @@ var oauth_facebook_link = fb_domainlink + fb_req_perms + fb_clientid + fb_scope 
 var values = [{ label: "Choice1", va: "value1" }, { label: "Choice2", va: "value2" }]
 
 jQuery(document).ready(function() {
-	
 	jQuery('#q').tbHinter({
 		text: "json",
 		styleclass: "lp_searchfield_hint"

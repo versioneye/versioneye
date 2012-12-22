@@ -514,11 +514,10 @@ div.content {
 ----------------------------------------------------*/
 
 .socialbuttons {
-  position: absolute;
+  position: fixed;
   top: 180px;
   left: 0px;
-  z-index: 10;
-  width: 34px;
+  min-width: 34px;
   min-height:120px;
   
   a { text-decoration: none;}
@@ -530,6 +529,27 @@ div.content {
     background: transparent no-repeat;
     min-width: 32px;
     min-height: 32px;
+  }
+
+  & .btn-rotated90 {
+      position: inherit;
+      left: -45px;
+      -webkit-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
+      writing-mode: lr-tb;
+  }
+
+  & .btn-dark {
+    color: #ddd;
+    background-color: #333;
+    opacity: 0.95;
+    filter: alpha(opacity=95);
+  }
+
+  & .btn-dark:hover {
+    opacity: 0.75;
+    filter: alpha(opacity=75)
   }
 
   & .btn-facebook.rounded {

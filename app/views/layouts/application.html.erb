@@ -47,13 +47,16 @@
 			</div>
 		<% end %>
 	</section>
-
 	<section class="container">
 		<%= render 'layouts/searchbar' %>
 		<div class="well-white row">
 			<%= yield %>
 		</div>
 	</section>
+ 
+  <aside>
+    <%= render "shared/new_url_form" %>
+  </aside>
 
 	<%= render 'layouts/footer' %>
 	<%= render 'feedback/dialog_feedback' %>
