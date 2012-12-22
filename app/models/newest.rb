@@ -4,10 +4,10 @@ class Newest
   include Mongoid::Timestamps
 
   field :name, type: String
+  field :version, type: String
   field :prod_key, type: String
   field :prod_type, type: String
   field :product_id, type: String
-  field :version, type: String
   
   
   def product
