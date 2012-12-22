@@ -483,6 +483,6 @@ describe User do
       Versioncomment.delete_all
     end
 
-
   end
+
 end

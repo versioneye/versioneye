@@ -197,6 +197,7 @@ class User
   def followers
     Follower.find_by_user(self.id)
   end
+  
   def fetch_my_products
     ids = Array.new
     followers.each do |follower|
@@ -282,7 +283,6 @@ class User
   def self.follows_max(n)
     User.all.select {|user| user.followers.count < n}
   end
-
   def self.follows_least(n)
     User.all.select {|user| user.followers.count >= n}
   end 
