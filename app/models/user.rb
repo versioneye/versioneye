@@ -63,7 +63,13 @@ class User
   attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :datenerhebung, :verification, :terms, :datenerhebung
 
   before_validation :downcase_email
-  
+
+  has_many :followers
+  scope :follows_none, where(:followers.empty?)
+  scope :follows_equal, ->(n){where(:followers.count.eq(n))}
+  scope :follows_least, ->(n){where(:followers.count >= n)}
+  scope :follows_max, ->(n){where(:followers.count <= n)}
+
   def save
     encrypt_password if new_record?
     return false if self.terms == false || self.terms == nil
@@ -194,9 +200,10 @@ class User
     UserEmail.where( user_id: self._id.to_s, email: email )[0]
   end
   
-  def followers
-    Follower.find_by_user(self.id)
-  end
+#  def followers
+#    Follower.find_by_user(self.id)
+#  end
+
   def fetch_my_products
     ids = Array.new
     followers.each do |follower|
