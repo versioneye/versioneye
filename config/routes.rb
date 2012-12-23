@@ -128,9 +128,11 @@ Versioneye::Application.routes.draw do
   get   '/mynews',             :to => 'news#mynews'
   get   '/hotnews',            :to => 'news#hotnews'
 
-  resources :crawles
-  get   '/crawles',             :to => 'crawles#index'
-  get   '/group/:group',        :to => 'crawles#group'
+  namespace :admin do
+    resources :crawles
+    get   '/crawles',             :to => 'crawles#index'
+    get   '/group/:group',        :to => 'crawles#group', :as => 'group'
+  end
 
   post  '/feedback',            :to => 'feedback#feedback'
 

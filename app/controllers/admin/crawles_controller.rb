@@ -1,4 +1,4 @@
-class CrawlesController < ApplicationController
+class Admin::CrawlesController < ApplicationController
 
   before_filter :admin_user
 
