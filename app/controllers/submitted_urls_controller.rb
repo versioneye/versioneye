@@ -26,7 +26,7 @@ class SubmittedUrlsController < ApplicationController
     captcha_result = params[:value_a].to_i + params[:value_b].to_i
     
     if current_user 
-      succes = new_submitted_url.save
+      success = new_submitted_url.save
     elsif (not params[:fb_math].nil? and (captcha_result == params[:fb_math].to_i) )
        success = new_submitted_url.save
     end
