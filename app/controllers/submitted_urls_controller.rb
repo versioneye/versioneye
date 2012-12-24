@@ -1,6 +1,16 @@
 class SubmittedUrlsController < ApplicationController
+  require 'will_paginate/array'
+  
   def index 
-    @submitted_urls = SubmittedUrl.where(user_id: current_user.id)
+    default_user = {:fullname => "Anonymous", :email => "anonymous@have.not"}
+    @submitted_urls = SubmittedUrl.desc(:created_at)
+    @submitted_urls.each_with_index do |item, i| 
+      if not item.user_id.nil? 
+        @submitted_urls[i-1][:user] = User.find_by_id(item.user_id)
+      else
+        @submitted_urls[i-1][:user] = User.new default_user
+      end
+    end
     respond_to do |format|
       format.html
       format.json {render :json => @submitted_urls.to_json}
