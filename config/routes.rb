@@ -159,6 +159,8 @@ Versioneye::Application.routes.draw do
   get   'sitemap_002.xml',        :to => 'page#sitemap_2'
   get   'sitemap_003.xml',        :to => 'page#sitemap_3'
 
+
+  resources :submitted_urls
   #default action
   get   '*path',        :to => 'page#routing_error'
   

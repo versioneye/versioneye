@@ -90,7 +90,23 @@ jQuery(document).ready(function() {
     if (window.render_wheel_require_dev) {
     	render_wheel_require_dev();
     }
+
+    if (jQuery('.captcha_math').length){
+      render_captcha_math()      
+    }
 });
+
+
+function render_captcha_math(){
+	value_a = Math.floor((Math.random()*10)+1);
+	value_b = Math.floor((Math.random()*10)+1);
+	a_element = document.getElementById("value_a");
+	b_element = document.getElementById("value_b");
+	fb_math_label = document.getElementById("fb_math");
+	a_element.value = value_a;
+	b_element.value = value_b;
+	fb_math_label.innerHTML = value_a + " + " + value_b + " = ";
+}
 
 function stripeResponseHandler(status, response) {
     if (response.error) {
