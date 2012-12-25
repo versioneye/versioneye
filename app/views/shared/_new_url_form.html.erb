@@ -1,49 +1,41 @@
-<!-- activation button -->
-<div class = "socialbuttons">
-  <a href="#newUrlModal" class =" btn btn-social btn-dark btn-rotated90" data-toggle="modal">
-    Submit new url
-  </a>
-</div>
+<% ignore_submit ||= false %> 
+<%= form_tag(submitted_urls_path, :class => "form-horizontal") do %>
 
-<!-- modal --> 
-<%= form_tag(nil, :class => "form-horizontal") do %>
-<div id = "newUrlModal" class = "modal hide fade" aria-hidden="true">
-   <div class= "modal-header">
-     <button type="button" class = "close" data-dismiss="modal" aria-hidden="true">x</button>
-     <h5> Add new url </h5>
-   </div>
-   <div class="modal-body">
   <div class = "control-group">
     <%= label_tag :url,nil, :class => "control-label" %>
     <div class = "controls">
       <%= text_field_tag :url, nil, :class => "span5" %>
     </div>
   </div>
-   <div class = "control-group">
+
+  <div class = "control-group">
     <%= label_tag :message, nil, :class => "control-label" %>
     <div class = "controls">
-      <%= text_area_tag :message, nil, :size => "29x7", :class => "span5",
-          :maxlength => "1000", 
-          :onKeyUp => "textCounter(this, document.getElementById('feedback_counter'), 1000)" %>
-				<br />
-				<span id="feedback_counter" class="help-block">max:1000</span>
-      
+      <%= text_area_tag :message, nil, :size => "29x4", :class => "span5",
+          :maxlength => "255", 
+          :onKeyUp => "textCounter(this, document.getElementById('feedback_counter'), 255)" %>
+        <br />
+        <span id="feedback_counter" class="help-block label-danger">max:255</span>
+    </div>
+  </div>
+
+  <% unless current_user %>
+    <div class="control-group">
+      <%= hidden_field_tag :value_a %>
+      <%= hidden_field_tag :value_b %>
+      <%= label_tag(:fb_math, "", :id => "fb_math", :class => "control-label") %>
+      <div class="controls captcha_math">
+        <%= text_field_tag :fb_math, nil, :class => "input-large" %>
       </div>
     </div>
+  <% end %>
 
-		<div class="control-group">
-			<%= label_tag(:fb_math, "", :id => "fb_math", :class => "control-label") %>
-			<div class="controls">
-				<%= text_field_tag :fb_math, nil, :class => "input-xlarge" %>
-			</div>
-		</div>
-
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary" type = "submit" >Save changes</button>
-  </div>
-</div>
-
+  <% if ignore_submit == false %>
+    <div class= "control-group">
+      <div class= "controls">
+        <button type= "submit" class = "btn2 btn-large"> Submit</button>
+      </div>
+    </div>
+  <% end %>
 
 <% end %>

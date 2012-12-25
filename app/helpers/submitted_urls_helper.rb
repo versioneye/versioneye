@@ -1,0 +1,2 @@
+module SubmittedUrlsHelper
+end
