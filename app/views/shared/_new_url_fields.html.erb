@@ -17,6 +17,12 @@
 </div>
 
 <% unless current_user %>
+  <div>
+    <%= label_tag :user_email, nil, :class => "control-label" %>
+    <div class = "controls">
+      <%= text_field_tag :user_email, nil, :class => "span5" %>
+    </div>
+  </div>
   <div class="control-group">
     <%= hidden_field_tag :value_a %>
     <%= hidden_field_tag :value_b %>

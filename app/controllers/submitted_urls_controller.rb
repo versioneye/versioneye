@@ -16,9 +16,10 @@ class SubmittedUrlsController < ApplicationController
   def create
     success = false
     user_id = current_user.id unless current_user.nil?
-    new_submitted_url = SubmittedUrl.new  :user_id  => user_id, 
-                                          :url      =>  params[:url],
-                                          :message   => params[:message]
+    new_submitted_url = SubmittedUrl.new  :user_id    => user_id, 
+                                          :url        => params[:url],
+                                          :user_email => params[:user_email],
+                                          :message    => params[:message]
     captcha_result = params[:value_a].to_i + params[:value_b].to_i
     
     if current_user 
