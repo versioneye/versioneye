@@ -1,6 +1,6 @@
 class SubmittedUrlsController < ApplicationController
   
-  def index 
+  def index
     default_user = {:fullname => "Anonymous", :email => "anonymous@have.not"}
     @submitted_urls = SubmittedUrl.desc(:created_at)
     @submitted_urls.each_with_index do |item, i| 
