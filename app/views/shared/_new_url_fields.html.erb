@@ -1,3 +1,5 @@
+<%= hidden_field_tag :search_term, params[:q] %>
+
 <div class = "control-group">
   <%= label_tag :url,nil, :class => "control-label" %>
   <div class = "controls">
@@ -26,7 +28,7 @@
   <div class="control-group">
     <%= hidden_field_tag :value_a %>
     <%= hidden_field_tag :value_b %>
-    <%= label_tag(:fb_math, "", :id => "fb_math", :class => "control-label") %>
+    <%= label_tag(:fb_math, "", :class => "fb_math control-label") %>
     <div class="controls captcha_math">
       <%= text_field_tag :fb_math, nil, :class => "input-large" %>
     </div>

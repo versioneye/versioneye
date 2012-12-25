@@ -100,12 +100,10 @@ jQuery(document).ready(function() {
 function render_captcha_math(){
 	value_a = Math.floor((Math.random()*10)+1);
 	value_b = Math.floor((Math.random()*10)+1);
-	a_element = document.getElementById("value_a");
-	b_element = document.getElementById("value_b");
-	fb_math_label = document.getElementById("fb_math");
-	a_element.value = value_a;
-	b_element.value = value_b;
-	fb_math_label.innerHTML = value_a + " + " + value_b + " = ";
+	jQuery("[name='value_a']").val(value_a);
+	jQuery("[name='value_b']").val(value_b);
+	fb_math_label = jQuery(".fb_math");
+	fb_math_label.html(value_a + " + " + value_b + " = ");
 }
 
 function stripeResponseHandler(status, response) {

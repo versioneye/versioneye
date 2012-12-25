@@ -16,10 +16,11 @@ class SubmittedUrlsController < ApplicationController
   def create
     success = false
     user_id = current_user.id unless current_user.nil?
-    new_submitted_url = SubmittedUrl.new  :user_id    => user_id, 
-                                          :url        => params[:url],
-                                          :user_email => params[:user_email],
-                                          :message    => params[:message]
+    new_submitted_url = SubmittedUrl.new  :user_id      => user_id, 
+                                          :search_term  => params[:search_term],
+                                          :url          => params[:url],
+                                          :user_email   => params[:user_email],
+                                          :message      => params[:message]
     
     if !signed_in? 
       if params[:fb_math].nil?
