@@ -31,7 +31,7 @@ class SubmittedUrlsController < ApplicationController
        success = new_submitted_url.save
     end
     if success
-      flash[:notice] = "Url is saved successfully"
+      flash[:notice] = "Many thanks for your submission. We will integrate it is soon as possible."
     else
       flash[:error] = "Cant save url - not valid content."
     end
