@@ -1,4 +1,5 @@
 class SubmittedUrl
+  require 'will_paginate/array'
   include Mongoid::Document
   include Mongoid::Timestamps
 

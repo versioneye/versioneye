@@ -3,7 +3,7 @@ class SubmittedUrlsController < ApplicationController
   
   def index 
     @users = {}
-    @submitted_urls = SubmittedUrl.desc(:created_at)
+    @submitted_urls = SubmittedUrl.all.paginate(page: params[:page], per_page: 10)
     @submitted_urls.each do |item| 
       user_id = item.user_id 
       @users[user_id] = User.find_by_id(user_id) unless user_id.nil?

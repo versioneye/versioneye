@@ -9,6 +9,7 @@ require "rails/test_unit/railtie"
 require "sprockets/railtie"
 require 'dalli'
 require 'tire'
+#require 'will_paginate/mongoid'
 # require 'yajl/json_gem'
 
 
