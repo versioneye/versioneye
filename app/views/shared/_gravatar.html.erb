@@ -5,7 +5,8 @@
 <% user_link = user_path(@user) unless @user.nil? %>
 <% image_size = size.to_i unless size.nil? %>
 <% if @user.nil? %>
-  <img src= "<%= "#{Settings.server_url}/profile_icon.png" %>" alt = "missing @user var" />
+  <img src= "<%= "/assets/profile_icon.png" %>" 
+       style="<%= "width: #{image_size}px; height: #{image_size}px;" %>" alt = "missing @user var" />
 <% else %>
   <%= link_to(gravatar_image_tag(@user.email, 
                                  :alt => @user.fullname, 
@@ -13,10 +14,11 @@
                                  :gravatar => { :size => image_size, 
                                                 :default => "#{Settings.server_url}/profile_icon.png" }), 
   user_link) %>
-<% end %>
 
-<br/>
-<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
-  <a href="http://gravatar.com/emails">Change profile picture</a><br/>
+  <br/>
+  <% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
+    <a href="http://gravatar.com/emails">Change profile picture</a><br/>
+  <% end %>
+
 <% end %>
 

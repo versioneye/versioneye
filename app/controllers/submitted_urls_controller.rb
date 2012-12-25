@@ -1,14 +1,15 @@
 class SubmittedUrlsController < ApplicationController
   
-  def index 
-    default_user = {:fullname => "Anonymous", :email => "anonymous@have.not"}
-    @submitted_urls = SubmittedUrl.desc(:created_at)
-    @submitted_urls.each_with_index do |item, i| 
-      if not item.user_id.nil? 
-        @submitted_urls[i-1][:user] = User.find_by_id(item.user_id)
-      else
-        @submitted_urls[i-1][:user] = User.new default_user
-      end
+  def index
+    unless signed_in_admin?
+        redirect_to root_path, :error => "You dont have enough privileges."
+        return false
+    end
+    @users = {}
+    @submitted_urls = SubmittedUrl.desc(:created_at).paginate(page: params[:page], per_page: 10)
+    @submitted_urls.each do |item| 
+      user_id = item.user_id 
+      @users[user_id] = User.find_by_id(user_id) unless user_id.nil?
     end
   end
 
