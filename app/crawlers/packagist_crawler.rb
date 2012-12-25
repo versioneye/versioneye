@@ -52,6 +52,7 @@ class PackagistCrawler
     return product if product
     p " -- new product - #{name}"
     Product.new
+    product.reindex = true
   end
 
   def self.update_product product, package 
@@ -82,6 +83,7 @@ class PackagistCrawler
       db_version.license = license[0]  
     end
     product.versions.push db_version
+    product.reindex = true
     product.save
 
     p " -- product: #{product.prod_key} -- version: #{version_number}"

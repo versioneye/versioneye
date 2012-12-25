@@ -21,6 +21,7 @@
 				<% @crawles.each do |crawle| %>
 					<div class="search-item">
 						<%= link_to crawle.repository_src, admin_crawle_path(crawle.to_param), :class => "searchResultLink" %><br/>
+						<span class="meta-text-small">Start: <%= crawle.start_point %></span><br/>
 						<span class="meta-text-small">Crawler: <%= crawle.crawler_name_and_version %></span><br/>
 						<% if crawle.errors.count() > 0 %>
 							<span class="meta-text-small" style="color: red; font-weight:bold">Errors: <%= crawle.errors.count() %></span>
