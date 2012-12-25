@@ -41,7 +41,7 @@ class SubmittedUrlsController < ApplicationController
     if new_submitted_url.save
       flash[:success] = "Many thanks for your submission. We will integrate it as soon as possible."
     else
-      flash[:error] = "An error occurred - Please try again later."
+      flash[:error] = new_submitted_url.errors.full_messages.to_sentence
     end
 
     redirect_to :back
