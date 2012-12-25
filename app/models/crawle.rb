@@ -11,7 +11,7 @@ class Crawle
   field :exec_group, type: String
   field :duration, type: DateTime
   
-  embeds_many :errors
+  embeds_many :error_messages
   
   def crawler_name_and_version
     "#{crawler_name} - #{crawler_version}"

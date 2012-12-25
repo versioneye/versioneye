@@ -1,10 +1,13 @@
 class PackagistCrawler
 
   def self.crawl
+    crawl = self.crawle_object
     packages = PackagistCrawler.get_first_level_list
     packages.each do |name|
-      PackagistCrawler.crawle_package name
+      PackagistCrawler.crawle_package name, crawl
     end
+    crawl.duration = Time.now - crawl.created_at
+    crawl.save
     return nil
   end
 
@@ -13,9 +16,10 @@ class PackagistCrawler
     body['packageNames']
   end
 
-  def self.crawle_package name
+  def self.crawle_package name, crawl
     return nil if name.nil? || name.empty?
     p "crawle #{name}"
+    
     resource = "http://packagist.org/packages/#{name}.json"
     pack = JSON.parse HTTParty.get( resource ).response.body
     package = pack['package']
@@ -37,7 +41,7 @@ class PackagistCrawler
       end
       db_version = product.get_version version_number
       if db_version.nil? 
-        PackagistCrawler.create_new_version product, version_number, version_obj
+        PackagistCrawler.create_new_version product, version_number, version_obj, crawl
       else
         PackagistCrawler.create_dependencies product, version_number, version_obj
       end
@@ -45,6 +49,7 @@ class PackagistCrawler
   rescue => e 
     p "ERROR in crawle_package Message:   #{e.message}"
     p "ERROR in crawle_package backtrace: #{e.backtrace}"
+    PackagistCrawler.store_error crawl, e.message, e.backtrace, name
   end
 
   def self.get_product name
@@ -73,7 +78,7 @@ class PackagistCrawler
     versionlink.save
   end
 
-  def self.create_new_version product, version_number, version_obj
+  def self.create_new_version product, version_number, version_obj, crawl
     db_version = Version.new
     db_version.version = version_number
     db_version.released_string = version_obj['time']
@@ -101,6 +106,7 @@ class PackagistCrawler
   rescue => e 
     p "ERROR in create_new_version Message:   #{e.message}"
     p "ERROR in create_new_version backtrace: #{e.backtrace}"
+    PackagistCrawler.store_error crawl, e.message, e.backtrace, product.name
   end
 
   def self.create_download product, version_number, version_obj
@@ -165,6 +171,28 @@ class PackagistCrawler
         developer.save
       end      
     end
+  end
+
+  def self.crawle_object
+    crawl = Crawle.new()
+    crawl.crawler_name = "PackagistCrawler"
+    crawl.crawler_version = "0.1.0"
+    crawl.repository_src = "http://packagist.org/"
+    crawl.start_point = "/"
+    crawl.exec_group = Time.now.strftime("%Y-%m-%d-%I-%M")
+    crawl.save
+    return crawl
+  end
+
+  def self.store_error( crawl, subject, message, source )
+    error = ErrorMessage.new({:subject => "#{subject}", 
+      :errormessage => "#{message}", 
+      :source => "#{source}" })
+    crawl.error_messages << error
+    crawl.save
+  rescue => e
+    p "ERROR in store_error: #{e.message}"
+    p "ERROR in store_error: #{e.backtrace}"
   end
 
 end
