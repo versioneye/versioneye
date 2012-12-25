@@ -26,7 +26,7 @@ class SubmittedUrlsController < ApplicationController
        success = new_submitted_url.save
     end
     if success
-      flash[:notice] = "Many thanks for your submission. We will integrate it is soon as possible."
+      flash[:notice] = "Many thanks for your submission. We will integrate it as soon as possible."
     else
       flash[:error] = "An error occurred - Please try again later."
     end
