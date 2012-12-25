@@ -521,8 +521,10 @@ div.content {
   min-height:120px;
   
   a { text-decoration: none;}
-  a:hover {
+  & .btn-social:hover {
     opacity: 0.4;
+    -moz-opacity: 0.4;
+    -khtml-opacity: 0.4;
     filter: alpha(opacity=40); /* For IE8 and earlier */
   }
   & .btn-social {

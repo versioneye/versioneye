@@ -33,7 +33,7 @@
 		</div>
 	
 		<div class="control-group">
-			<%= label_tag(:feedback, "", :class => "control-label") %>
+			<%= label_tag(:feedback, nil, :class => "control-label") %>
 			<div class="controls">
 				<%= text_area_tag :feedback, nil, :class => "input-xlarge", :maxlength => "1000", :onKeyUp => "textCounter(this, document.getElementById('feedback_counter'), 1000)" %>
 				<br />
@@ -42,7 +42,7 @@
 		</div>
 		
 		<div class="control-group">
-			<%= label_tag(:fb_math, "", :id => "fb_math", :class => "control-label") %>
+			<%= label_tag(:fb_math, "", :class => "fb_math control-label") %>
 			<div class="controls">
 				<%= text_field_tag :fb_math, nil, :class => "input-xlarge" %>
 			</div>
