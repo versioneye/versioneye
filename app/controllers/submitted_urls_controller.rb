@@ -1,9 +1,13 @@
 class SubmittedUrlsController < ApplicationController
   require 'will_paginate/array'
   
-  def index 
+  def index
+    unless signed_in_admin?
+        redirect_to root_path, :error => "You dont have enough privileges."
+        return false
+    end
     @users = {}
-    @submitted_urls = SubmittedUrl.all.paginate(page: params[:page], per_page: 10)
+    @submitted_urls = SubmittedUrl.desc(:created_at).paginate(page: params[:page], per_page: 10)
     @submitted_urls.each do |item| 
       user_id = item.user_id 
       @users[user_id] = User.find_by_id(user_id) unless user_id.nil?
