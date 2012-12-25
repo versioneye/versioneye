@@ -20,7 +20,6 @@
 	<body>
 		
 		<%= render 'layouts/header' %>
-    <%= render 'shared/social_buttons' %>
 	
 		<section class = "container flash-container">
 			<% flash.each do |key, value| %>
@@ -34,8 +33,9 @@
 		<%= yield %>
 
 		<%= render 'layouts/footer' %>
-		<%= render 'feedback/dialog_feedback' %>
+		<%= render 'shared/social_buttons' %>
 		<%= render 'shared/dialog_video' %>
+		<%= render 'feedback/dialog_feedback' %>
 		<%= debug(params) if Rails.env.development? %>
 	
 	</body>

@@ -2,8 +2,8 @@ class SubmittedUrlsController < ApplicationController
   
   def index
     unless signed_in_admin?
-        redirect_to root_path, :error => "You dont have enough privileges."
-        return false
+      redirect_to root_path, :error => "You dont have enough privileges."
+      return false
     end
     @users = {}
     @submitted_urls = SubmittedUrl.desc(:created_at).paginate(page: params[:page], per_page: 10)
@@ -20,15 +20,25 @@ class SubmittedUrlsController < ApplicationController
                                           :url        => params[:url],
                                           :user_email => params[:user_email],
                                           :message    => params[:message]
-    captcha_result = params[:value_a].to_i + params[:value_b].to_i
     
-    if current_user 
-      success = new_submitted_url.save
-    elsif (not params[:fb_math].nil? and (captcha_result == params[:fb_math].to_i) )
-       success = new_submitted_url.save
+    if !signed_in? 
+      if params[:fb_math].nil?
+        flash[:error] = "You have to solve the math!"
+        redirect_to :back
+        return   
+      end
+
+      captcha_result = params[:value_a].to_i + params[:value_b].to_i
+      submitted_result = params[:fb_math].to_i
+      if submitted_result != captcha_result
+        flash[:error] = "You have to solve the math correct!"
+        redirect_to :back
+        return   
+      end
     end
-    if success
-      flash[:notice] = "Many thanks for your submission. We will integrate it as soon as possible."
+    
+    if new_submitted_url.save
+      flash[:success] = "Many thanks for your submission. We will integrate it as soon as possible."
     else
       flash[:error] = "An error occurred - Please try again later."
     end
