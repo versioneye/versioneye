@@ -28,7 +28,7 @@ class SubmittedUrlsController < ApplicationController
     if success
       flash[:notice] = "Many thanks for your submission. We will integrate it is soon as possible."
     else
-      flash[:error] = "Cant save url - not valid content."
+      flash[:error] = "An error occurred - Please try again later."
     end
 
     redirect_to :back
