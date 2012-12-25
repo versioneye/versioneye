@@ -47,7 +47,11 @@ $label_color: #666666;
 	vertical-align: top; 
 	text-align: center; 
 	border-bottom: 1px solid #BBBBBB;
+  
 }
+
+/* fix for gmaps scrollbar */
+.gmnoprint  img {max-width: none !important;}
 
 .map_for_user_profile{
 	z-index: 1;
