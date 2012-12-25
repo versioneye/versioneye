@@ -159,6 +159,10 @@ class ProductMigration
         sitemap_count += 1
       end
     end
+    p "#{uris.count}"
+    p "sitemap count: #{sitemap_count}"
+    write_to_xml(uris, "sitemap-#{sitemap_count}.xml")
+    return true
   end
 
   def self.write_to_xml(uris, name)
