@@ -20,15 +20,15 @@
 			Duration: <%= @crawle.duration.strftime("%H:%M:%S") %>
 		<% end %>		
 	</div>
-	<% if !@crawle.errors.nil? && @crawle.errors.count() > 0 %>
+	<% if !@crawle.error_messages.nil? && @crawle.error_messages.count() > 0 %>
 		<div class="boxHeader">
-			Errors - <%= @crawle.errors.count() %>
+			Errors - <%= @crawle.error_messages.count() %>
 		</div>
 		<div class="boxContainer" >			
 			<table>
-			<% @crawle.errors.each do |error|  %>
+			<% @crawle.error_messages.each do |error|  %>
 				<tr>
-					<td><%= error.created_at.strftime("%H:%M") %></td>
+					<td style="vertical-align: top;"><%= error.created_at.strftime("%H:%M") %></td>
 					<td><b><%= error.subject %></b></br>
 					<%= error.errormessage %><br/></td>
 				</tr>

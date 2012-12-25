@@ -1,4 +1,4 @@
-class Error
+class ErrorMessage
 
   include Mongoid::Document
   include Mongoid::Timestamps
