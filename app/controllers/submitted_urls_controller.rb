@@ -1,5 +1,4 @@
 class SubmittedUrlsController < ApplicationController
-  require 'will_paginate/array'
   
   def index 
     default_user = {:fullname => "Anonymous", :email => "anonymous@have.not"}
@@ -10,10 +9,6 @@ class SubmittedUrlsController < ApplicationController
       else
         @submitted_urls[i-1][:user] = User.new default_user
       end
-    end
-    respond_to do |format|
-      format.html
-      format.json {render :json => @submitted_urls.to_json}
     end
   end
 
@@ -35,10 +30,6 @@ class SubmittedUrlsController < ApplicationController
     else
       flash[:error] = "Cant save url - not valid content."
     end
-    
-    respond_to do |format|
-      format.html {redirect_to :back} 
-      format.json {render :json => {:success => success}}
-    end
   end
+
 end
