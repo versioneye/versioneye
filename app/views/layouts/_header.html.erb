@@ -14,8 +14,22 @@
 					<li class="divider-vertical"></li>
 					<li>
 						<%= link_to "Pricing", "/pricing" %>
-					</li>
-					<!-- menu for logged-in user -->
+          </li>
+				<!-- menu for logged-in user -->
+	        <!-- menu for admin -->
+          <% if signed_in_admin? %>
+            <li class= "divider-vertical"></li>
+            <li class= "dropdown">
+              <a class = "dropdown-toggle" data-toggle= "dropdown" href= "#">
+                Admin
+                <b class = "caret"></b> 
+              </a>
+              <ul class= "dropdown-menu">
+                <li><%= link_to :Crawls, admin_crawles_path %></li>
+                <li><%= link_to "Submitted URLs", "/admin/submitted_urls" %></li>
+              </ul>
+            </li>
+          <% end %>
 					<% if signed_in? %>
 						<li class="divider-vertical"></li>
 						<li>
