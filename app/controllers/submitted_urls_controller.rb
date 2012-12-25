@@ -1,23 +1,20 @@
 class SubmittedUrlsController < ApplicationController
   
   def index
-    default_user = {:fullname => "Anonymous", :email => "anonymous@have.not"}
+    @users = {}
     @submitted_urls = SubmittedUrl.desc(:created_at)
-    @submitted_urls.each_with_index do |item, i| 
-      if not item.user_id.nil? 
-        @submitted_urls[i-1][:user] = User.find_by_id(item.user_id)
-      else
-        @submitted_urls[i-1][:user] = User.new default_user
-      end
+    @submitted_urls.each do |item| 
+        @users[item.user_id] = User.find_by_id(item.user_id) unless item.user_id.nil?
     end
   end
 
   def create
     success = false
     user_id = current_user.id unless current_user.nil?
-    new_submitted_url = SubmittedUrl.new  :user_id  => user_id, 
-                                          :url      =>  params[:url],
-                                          :message   => params[:message]
+    new_submitted_url = SubmittedUrl.new  :user_id    => user_id, 
+                                          :url        => params[:url],
+                                          :user_email => params[:user_email],
+                                          :message    => params[:message]
     captcha_result = params[:value_a].to_i + params[:value_b].to_i
     
     if current_user 

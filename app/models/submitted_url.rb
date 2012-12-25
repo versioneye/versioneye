@@ -8,5 +8,5 @@ class SubmittedUrl
   field :url, type: String
   field :message, type: String
   field :user_id, type: String
-
+  field :user_email, type: String
 end
