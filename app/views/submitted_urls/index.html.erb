@@ -4,7 +4,7 @@
 <% @submitted_urls.each do |item| %>
   <tr>
     <td class = "span2">
-      <% @user = item[:user] %>
+      <% @user = @users[item[:user_id]] %>
       <%= render "shared/gravatar", :object => @user, :size => 100 %>
     </td>
     <td> 

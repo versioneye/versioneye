@@ -2,14 +2,11 @@ class SubmittedUrlsController < ApplicationController
   require 'will_paginate/array'
   
   def index 
-    default_user = {:fullname => "Anonymous", :email => "anonymous@have.not"}
+    @users = {}
     @submitted_urls = SubmittedUrl.desc(:created_at)
-    @submitted_urls.each_with_index do |item, i| 
-      if not item.user_id.nil? 
-        @submitted_urls[i-1][:user] = User.find_by_id(item.user_id)
-      else
-        @submitted_urls[i-1][:user] = User.new default_user
-      end
+    @submitted_urls.each do |item| 
+      user_id = item.user_id 
+      @users[user_id] = User.find_by_id(user_id) unless user_id.nil?
     end
     respond_to do |format|
       format.html
