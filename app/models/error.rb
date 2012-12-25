@@ -5,6 +5,7 @@ class Error
 
   field :subject, type: String
   field :errormessage, type: String
+  field :source, type: String
 
   embedded_in :crawle
   

@@ -7,6 +7,7 @@ class Crawle
   field :crawler_name, type: String
   field :crawler_version, type: String
   field :repository_src, type: String
+  field :start_point, type: String
   field :exec_group, type: String
   field :duration, type: DateTime
   
