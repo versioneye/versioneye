@@ -6,6 +6,6 @@ class SubmittedUrl
   field :url, type: String
   field :message, type: String
   field :user_id, type: String
- 
+
   attr_accessible :url, :message, :user_id
 end
