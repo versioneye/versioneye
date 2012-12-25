@@ -16,10 +16,11 @@ class SubmittedUrlsController < ApplicationController
   def create
     success = false
     user_id = current_user.id unless current_user.nil?
-    new_submitted_url = SubmittedUrl.new  :user_id    => user_id, 
-                                          :url        => params[:url],
-                                          :user_email => params[:user_email],
-                                          :message    => params[:message]
+    new_submitted_url = SubmittedUrl.new  :user_id      => user_id, 
+                                          :search_term  => params[:search_term],
+                                          :url          => params[:url],
+                                          :user_email   => params[:user_email],
+                                          :message      => params[:message]
     
     if !signed_in? 
       if params[:fb_math].nil?
@@ -40,7 +41,7 @@ class SubmittedUrlsController < ApplicationController
     if new_submitted_url.save
       flash[:success] = "Many thanks for your submission. We will integrate it as soon as possible."
     else
-      flash[:error] = "An error occurred - Please try again later."
+      flash[:error] = new_submitted_url.errors.full_messages.to_sentence
     end
 
     redirect_to :back
