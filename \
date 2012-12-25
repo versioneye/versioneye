@@ -13,7 +13,7 @@
      <h5> Add new url </h5>
    </div>
    <div class="modal-body">
-     <%= render 'shared/new_url_fields' %>
+     <%= render 'shared/new_url_form', :ignore_submit => true %>
    </div>
     <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

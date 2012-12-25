@@ -30,6 +30,8 @@ class SubmittedUrlsController < ApplicationController
     else
       flash[:error] = "Cant save url - not valid content."
     end
+
+    redirect_to :back
   end
 
 end
