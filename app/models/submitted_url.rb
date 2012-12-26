@@ -12,6 +12,7 @@ class SubmittedUrl
   field :search_term, type: String
   field :declined, type: Boolean
   field :declined_message, type: String
+  field :integrated, type: Boolean, default: false
 
   belongs_to :product_resource
 
