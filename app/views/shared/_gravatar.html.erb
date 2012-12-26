@@ -8,7 +8,7 @@
 <% image_size = size.to_i unless size.nil? %>
 <% if @user.nil? %>
   <img src= "<%= "/assets/profile_icon.png" %>" 
-       style="<%= "width: #{image_size}px; height: #{image_size}px;" %>" alt = "missing @user var" />
+       width= "<%= image_size %>" height= "<%= image_size %>" alt = "missing @user var" />
 <% else %>
   <%= link_to(gravatar_image_tag(@user.email, 
                                  :alt => @user.fullname, 

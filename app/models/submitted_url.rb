@@ -10,6 +10,8 @@ class SubmittedUrl
   field :user_id, type: String
   field :user_email, type: String
   field :search_term, type: String
+  field :declined, type: Boolean
+  field :declined_message, type: String
 
   belongs_to :product_resource
 
@@ -17,4 +19,10 @@ class SubmittedUrl
   validates :message, presence: true
   validates :user_email, format: {with: /^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i, 
                                   :allow_blank => true}
+
+  def self.find_by_id(id)
+   return nil if id.nil?
+   id = id.to_s
+   return SubmittedUrl.find(id.to_s) if SubmittedUrl.where(_id: id.to_s).exists? 
+  end
 end

@@ -1,0 +1,26 @@
+<div id= "approval_form_<%= @form_index %>"class = "hide">
+  <%= form_tag(admin_submitted_url_approve_path(@submitted_url), 
+               :class => "form-horizontal") do %>
+
+    <div class = "control-group">
+      <%= hidden_field_tag :submitted_url_id, @submitted_url.id %>
+      <%= label_tag :url,nil, :class => "control-label" %>
+      <div class = "controls">
+        <%= text_field_tag :url, @submitted_url.url, :class => "span5" %>
+      </div>
+    </div>
+
+    <div class = "control-group">
+      <%= label_tag :resource_type, nil, :class => "control-label" %>
+      <div class = "controls">
+        <%= text_field_tag :resource_type, nil, :class => "span5" %>
+      </div>
+    </div>
+
+    <div class = "control-group">
+      <div class = "controls">
+        <%= submit_tag "Accept", :class => "btn2" %> 
+      </div>
+    </div>
+  <% end %>
+</div>

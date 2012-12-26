@@ -129,7 +129,9 @@ Versioneye::Application.routes.draw do
   get   '/hotnews',            :to => 'news#hotnews'
 
   namespace :admin do
-    resources :submitted_urls
+    resources :submitted_urls do
+      post '/approve',            :to => 'submitted_urls#approve'
+    end
     resources :crawles
     get   '/crawles',             :to => 'crawles#index'
     get   '/group/:group',        :to => 'crawles#group', :as => 'group'

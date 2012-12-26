@@ -1,11 +1,17 @@
 <div class="span3">
+  <pre>
   :-)
+  ----
+  *<:)
+  </pre>
 </div>
 
 <div class="span8">
 
   <table class = "table table-hover">
-  <% @submitted_urls.each do |item| %>
+  <% @submitted_urls.each_with_index do |item, i| %>
+    <% @submitted_url = item %>
+    <% @form_index = i %>
     <tr>
       <td class = "span2">
         <% @user = @users[item[:user_id]] %>
@@ -24,6 +30,17 @@
             <a href="mailto:<%= item.user_email.html_safe %>"><%= item.user_email.html_safe %></a>
           <% end %>
         </p>
+
+        <div class = "moderation-group">
+          <div class = "moderation-controls">
+            <button class = "btn btn-mini btn-primary" 
+             onclick="jQuery('#approval_form_<%= @form_index %>').toggleClass('hide');">Approve</button>
+            <button class = "btn btn-mini btn-danger">Decline</button>
+          </div>
+          <div class = "moderation-forms">
+            <%= render "approval_form" %> 
+          </div>
+        </div>
       </td>
     </tr>
   <% end %>

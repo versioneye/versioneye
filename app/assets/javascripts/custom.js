@@ -96,7 +96,6 @@ jQuery(document).ready(function() {
     }
 });
 
-
 function render_captcha_math(){
 	value_a = Math.floor((Math.random()*10)+1);
 	value_b = Math.floor((Math.random()*10)+1);

@@ -11,6 +11,25 @@ class Admin::SubmittedUrlsController < ApplicationController
     end
   end
 
+  def approve
+    submitted_url = SubmittedUrl.find_by_id params[:submitted_url_id]
+    if submitted_url.nil?
+      flash[:error] = "Cant approve: id of SubmittedUrl is missing."
+    else
+      new_resource = ProductResource.new(:url => params[:url],
+                                         :resource_type => params[:resource_type],
+                                         :submitted_url => submitted_url,
+                                         :declined => false)
+      if new_resource.save
+        flash[:notice] = "Resource is accepted successfully"
+      else
+        flash[:error] = new_resource.errors.full_messages.to_sentence
+      end
+    end
+
+    redirect_to :back
+  end
+
   private 
   
     def admin_user
