@@ -3,8 +3,23 @@ class Admin::SubmittedUrlsController < ApplicationController
   before_filter :admin_user
   
   def index
+    @show_state = params[:by_state]
     @users = {}
-    @submitted_urls = SubmittedUrl.desc(:created_at).paginate(page: params[:page], per_page: 10)
+    case @show_state
+    when "unchecked"
+      @submitted_urls = SubmittedUrl.as_unchecked
+    when "checked"
+      @submitted_urls = SubmittedUrl.as_checked
+    when "accepted"
+      @submitted_urls = SubmittedUrl.as_accepted
+    when "declined"
+      @submitted_urls = SubmittedUrl.as_declined
+    when "all"
+      @submitted_urls = SubmittedUrl.all
+    else
+      @submitted_urls = SubmittedUrl.as_unchecked
+    end
+    @submitted_urls = @submitted_urls.desc(:created_at).paginate(page: params[:page], per_page: 10)
     @submitted_urls.each do |item| 
       user_id = item.user_id 
       @users[user_id] = User.find_by_id(user_id) unless user_id.nil?

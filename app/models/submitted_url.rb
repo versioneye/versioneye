@@ -21,6 +21,11 @@ class SubmittedUrl
   validates :user_email, format: {with: /^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i, 
                                   :allow_blank => true}
 
+  scope :as_unchecked, where(declined: nil)
+  scope :as_checked, where(:declined.in => [false, true])
+  scope :as_accepted, where(declined: false)
+  scope :as_declined, where(declined: true)
+
   def self.find_by_id(id)
     return nil if id.nil?
     id = id.to_s
