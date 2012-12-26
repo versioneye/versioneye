@@ -61,6 +61,10 @@ class ProductElastic
       ProductElastic.index product
     end
     self.refresh
+    Product.where(reindex: nil).each do |product|
+      ProductElastic.index product
+    end
+    self.refresh
   end
 
   # # langs need to be an Array ! 
