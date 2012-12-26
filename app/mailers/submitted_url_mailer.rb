@@ -1,4 +1,5 @@
 class SubmittedUrlMailer < ActionMailer::Base
+  
   default from: "\"VersionEye\" <notify@versioneye.com>"
 
   def approved_url_email(user_email, submitted_url)
@@ -8,4 +9,5 @@ class SubmittedUrlMailer < ActionMailer::Base
           :subject  => "Your URL is accepted.", 
           :tag      => "notice")
   end
+
 end

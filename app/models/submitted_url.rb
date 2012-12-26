@@ -21,8 +21,14 @@ class SubmittedUrl
                                   :allow_blank => true}
 
   def self.find_by_id(id)
-   return nil if id.nil?
-   id = id.to_s
-   return SubmittedUrl.find(id.to_s) if SubmittedUrl.where(_id: id.to_s).exists? 
+    return nil if id.nil?
+    id = id.to_s
+    return SubmittedUrl.find(id.to_s) if SubmittedUrl.where(_id: id.to_s).exists? 
   end
+
+  def user
+    return nil unless user_id 
+    User.find_by_id user_id
+  end
+
 end

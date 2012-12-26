@@ -22,6 +22,7 @@ class Admin::SubmittedUrlsController < ApplicationController
                                          :declined => false)
       if new_resource.save
         flash[:notice] = "Resource is accepted successfully"
+        send_approval_email submitted_url
       else
         flash[:error] = new_resource.errors.full_messages.to_sentence
       end
@@ -34,6 +35,20 @@ class Admin::SubmittedUrlsController < ApplicationController
   
     def admin_user
       redirect_to(root_path) unless signed_in_admin?
+    end
+
+    def send_approval_email submitted_url
+      user_email = nil
+      user = submitted_url.user
+      if user
+        user_email = user.email
+      else 
+        user_email = submitted_url.user_email
+      end
+
+      if user_email
+        SubmittedUrlMailer.approved_url_email(user_email, submitted_url).deliver
+      end
     end
 
 end
