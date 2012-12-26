@@ -41,15 +41,18 @@
         </p>
 
         <div class = "moderation-group">
-          <div class = "moderation-controls">
+          <div class = "btn-group">
             <button class = "btn btn-mini btn-primary" 
              onclick="jQuery('.admin-form').addClass('hide');jQuery('#approval_form_<%= @form_index %>').toggleClass('hide');">Approve</button>
            <button class = "btn btn-mini btn-danger"
-            onclick="jQuery('.admin-form').addClass('hide');jQuery('#decline_form_<%= @form_index %>').toggleClass('hide');">Decline</button>
-        </div>
+             onclick="jQuery('.admin-form').addClass('hide');jQuery('#decline_form_<%= @form_index %>').toggleClass('hide');">Decline</button>
+            <button class = "btn btn-mini btn-warning"
+             onclick="jQuery('.admin-form').addClass('hide');jQuery('#delete_form_<%= @form_index %>').toggleClass('hide');">Remove</button>
+       </div>
           <div class = "moderation-forms">
             <%= render "approval_form" %> 
             <%= render "decline_form" %>
+            <%= render "delete_form" %>
           </div>
         </div>
       </td>

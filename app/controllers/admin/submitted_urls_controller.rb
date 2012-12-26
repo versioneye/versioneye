@@ -51,6 +51,18 @@ class Admin::SubmittedUrlsController < ApplicationController
     redirect_to :back
   end
 
+  def destroy
+    item_id = (params[:id] or params[:submitted_url_id])
+    submitted_url = SubmittedUrl.find_by_id item_id
+    if submitted_url.nil?
+      flash[:error] = "Cant delete: id of SubmittedUrl is missing."
+    else
+      submitted_url.delete
+      flash[:notice] = "Submitted Url is now deleted."
+    end
+    redirect_to :back
+  end
+
   private 
   
     def admin_user
