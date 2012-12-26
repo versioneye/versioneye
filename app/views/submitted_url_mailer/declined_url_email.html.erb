@@ -6,13 +6,11 @@
   <body>
     <p>Hey,</p>
     <p>
-      Your submitted URL <i><%= @submitted_url.url %></i> was approved. <br/>
-      We integrated it into our crawler framework. You will get a notification as soon 
-      we crawled the resource the first time. 
+      Your submitted URL <i><%= @submitted_url.url %></i> is declined. <br/>
     </p>
     <p>
-      We keep you informed. <br/>
-      Have a great day!
+      Reason: <br />
+      <%= @submitted_url.declined_message %>
     </p>
     <p>
       Your VersionEye Team<br/>
