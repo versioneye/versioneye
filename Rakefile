@@ -25,6 +25,14 @@ task :do_work => :environment do
 
 		# -- DAILY JOBS ----
 		if hour == start_hour && minute == start_minute
+
+			puts "START to crawl packagist.org"
+			PackagistCrawler.crawl
+			puts "STOP to crawl packagist.org"
+
+			puts "START reindex newest products for elastic search"
+			ProductElastic.index_newest
+			puts "STOP reindex newest products for elastic search"
 			
 			puts "START update the version numbers on products."
 			ProductMigration.update_version_data_global
@@ -37,10 +45,6 @@ task :do_work => :environment do
 			puts "START to send out daily project notification E-Mails."
 			Project.update_dependencies("daily")
 			puts "STOP to send out daily project notification E-Mails."
-
-			puts "START to crawl packagist.org"
-			PackagistCrawler.crawl
-			puts "STOP to crawl packagist.org"
 
 			if Time.now.hour == start_hour && Time.now.min == start_minute 
 				sleep(60)
