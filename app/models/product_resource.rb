@@ -5,6 +5,7 @@ class ProductResource
   field :url, type: String
   field :resource_type, type: String
   field :crawler_name, type: String
+  field :crawled, type: Boolean, default: false
 
   has_one :submitted_url, autosave: true
 
