@@ -522,16 +522,20 @@ div.content {
   
   a { text-decoration: none;}
   & .btn-social:hover {
-    opacity: 0.4;
-    -moz-opacity: 0.4;
-    -khtml-opacity: 0.4;
-    filter: alpha(opacity=40); /* For IE8 and earlier */
+    opacity: 1.0;
+    -moz-opacity: 1.0;
+    -khtml-opacity: 1.0;
+    filter: alpha(opacity=100); /* For IE8 and earlier */
   }
   & .btn-social {
     background: transparent no-repeat;
     min-width: 32px;
     min-height: 32px;
-  }
+    opacity: 0.4;
+    -moz-opacity: 0.4;
+    -khtml-opacity: 0.4;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+ }
 
   & .btn-rotated90 {
       position: inherit;
