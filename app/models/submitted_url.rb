@@ -31,4 +31,13 @@ class SubmittedUrl
     User.find_by_id user_id
   end
 
+  def fetch_user_email
+    return user_email if user_email
+
+    user = self.user
+    return user.email if user
+      
+    return nil
+  end
+
 end

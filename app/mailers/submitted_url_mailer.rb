@@ -17,5 +17,5 @@ class SubmittedUrlMailer < ActionMailer::Base
       :subject  => "You URL is declined.",
       :tag      => "notice")
   end
-end
 
+end
