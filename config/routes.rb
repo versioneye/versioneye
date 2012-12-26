@@ -134,6 +134,8 @@ Versioneye::Application.routes.draw do
     get   '/group/:group',        :to => 'crawles#group', :as => 'group'
   end
 
+  resources :submitted_urls
+
   post  '/feedback',            :to => 'feedback#feedback'
 
   get   '/statistics',            :to => 'statistics#index'
@@ -161,9 +163,7 @@ Versioneye::Application.routes.draw do
   get   'sitemap_0_2.xml',        :to => 'page#sitemap_2'
   get   'sitemap_0_3.xml',        :to => 'page#sitemap_3'
   get   'sitemap_0_4.xml',        :to => 'page#sitemap_4'
-
-
-  resources :submitted_urls
+  
   #default action
   get   '*path',        :to => 'page#routing_error'
   

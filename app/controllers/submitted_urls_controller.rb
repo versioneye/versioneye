@@ -1,10 +1,8 @@
 class SubmittedUrlsController < ApplicationController
+
+  before_filter :admin_user,   :only => [:index]
   
   def index
-    unless signed_in_admin?
-      redirect_to root_path, :error => "You dont have enough privileges."
-      return false
-    end
     @users = {}
     @submitted_urls = SubmittedUrl.desc(:created_at).paginate(page: params[:page], per_page: 10)
     @submitted_urls.each do |item| 
@@ -46,5 +44,11 @@ class SubmittedUrlsController < ApplicationController
 
     redirect_to :back
   end
+
+  private 
+  
+    def admin_user
+      redirect_to(root_path) unless signed_in_admin?
+    end
 
 end
