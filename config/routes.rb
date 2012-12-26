@@ -135,7 +135,7 @@ Versioneye::Application.routes.draw do
     get   '/group/:group',        :to => 'crawles#group', :as => 'group'
   end
 
-  resources :submitted_urls
+  post  '/submitted_urls',      :to => 'submitted_urls#create'
 
   post  '/feedback',            :to => 'feedback#feedback'
 
