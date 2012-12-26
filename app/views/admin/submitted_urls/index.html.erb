@@ -1,16 +1,28 @@
-<div>
+<div class="span3">
+  :-)
+</div>
+
+<div class="span8">
 
   <table class = "table table-hover">
   <% @submitted_urls.each do |item| %>
     <tr>
       <td class = "span2">
         <% @user = @users[item[:user_id]] %>
-        <%= render "shared/gravatar", :object => @user, :size => 100 %>
+        <%= render "shared/gravatar", :object => @user, :size => 100, :show_link => false %>
       </td>
       <td> 
         <strong><%= link_to item.url.html_safe, item.url  %></strong>
         <p>
           <%= item.message.html_safe %>
+        </p>
+        <p>
+          <% if item.search_term %>
+            Searched for: <%= item.search_term.html_safe %><br/>
+          <% end %>
+          <% if item.user_email %>
+            <a href="mailto:<%= item.user_email.html_safe %>"><%= item.user_email.html_safe %></a>
+          <% end %>
         </p>
       </td>
     </tr>

@@ -1,7 +1,9 @@
 <%# default variables %>
 <% user_link = "" %>
 <% image_size = 200 %>
+<% change_link = true %>
 
+<% change_link = show_link if !show_link.nil?  %>
 <% user_link = user_path(@user) unless @user.nil? %>
 <% image_size = size.to_i unless size.nil? %>
 <% if @user.nil? %>
@@ -16,9 +18,8 @@
   user_link) %>
 
   <br/>
-  <% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
+  <% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) && change_link %>
     <a href="http://gravatar.com/emails">Change profile picture</a><br/>
   <% end %>
 
 <% end %>
-
