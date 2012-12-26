@@ -59,4 +59,18 @@ class Admin::SubmittedUrlsController < ApplicationController
       redirect_to(root_path) unless signed_in_admin?
     end
 
+    def send_approval_email submitted_url
+      user_email = nil
+      user = submitted_url.user
+      if user
+        user_email = user.email
+      else 
+        user_email = submitted_url.user_email
+      end
+
+      if user_email
+        SubmittedUrlMailer.approved_url_email(user_email, submitted_url).deliver
+      end
+    end
+
 end
