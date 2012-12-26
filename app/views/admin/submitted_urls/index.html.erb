@@ -8,7 +8,7 @@
 
 <div class="span8">
 
-  <table class = "table table-hover">
+  <table class = "table">
   <% @submitted_urls.each_with_index do |item, i| %>
     <% @submitted_url = item %>
     <% @form_index = i %>
@@ -18,7 +18,16 @@
         <%= render "shared/gravatar", :object => @user, :size => 100, :show_link => false %>
       </td>
       <td> 
-        <strong><%= link_to item.url.html_safe, item.url  %></strong>
+          <% status_colors = {"new" => "warning", "declined" => "important", "accepted" => "success"} %>
+          <% item_status = "new" %>
+          <% item_status = "declined" if @submitted_url.declined == true %>
+          <% item_status = "accepted" if @submitted_url.declined == false %>
+        <p>
+          <span class ="label label-<%= status_colors[item_status] %>">
+            <%= item_status %>
+          </span>
+            <%= link_to item.url.html_safe, item.url%>
+        </p>
         <p>
           <%= item.message.html_safe %>
         </p>
@@ -34,11 +43,13 @@
         <div class = "moderation-group">
           <div class = "moderation-controls">
             <button class = "btn btn-mini btn-primary" 
-             onclick="jQuery('#approval_form_<%= @form_index %>').toggleClass('hide');">Approve</button>
-            <button class = "btn btn-mini btn-danger">Decline</button>
-          </div>
+             onclick="jQuery('.admin-form').addClass('hide');jQuery('#approval_form_<%= @form_index %>').toggleClass('hide');">Approve</button>
+           <button class = "btn btn-mini btn-danger"
+            onclick="jQuery('.admin-form').addClass('hide');jQuery('#decline_form_<%= @form_index %>').toggleClass('hide');">Decline</button>
+        </div>
           <div class = "moderation-forms">
             <%= render "approval_form" %> 
+            <%= render "decline_form" %>
           </div>
         </div>
       </td>

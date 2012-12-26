@@ -1,32 +1,33 @@
-<div id= "approval_form_<%= @form_index %>"class = "hide admin-form">
-  <h5>Accept url </h5>
+<div id= "decline_form_<%= @form_index %>" class= "hide admin-form" >
+  <h5> Decline url </h5>
 
-  <%= form_tag(admin_submitted_url_approve_path(@submitted_url), 
-               :class => "form-horizontal") do %>
-
+  <%= form_tag(admin_submitted_url_decline_path(@submitted_url),
+      :class => "form-horizontal" ) do %>
+  
     <div class = "control-group">
-      <%= hidden_field_tag :submitted_url_id, @submitted_url.id %>
       <%= label_tag :url,nil, :class => "control-label" %>
       <div class = "controls">
-        <%= text_field_tag :url, @submitted_url.url, :class => "span4" %>
+        <%= text_field_tag :url, @submitted_url.url, :class => "span4", :readonly => true %>
       </div>
     </div>
 
     <div class = "control-group">
-      <%= label_tag :resource_type, nil, :class => "control-label" %>
+      <%= label_tag :declined_message, nil, :class => "control-label" %>
       <div class = "controls">
-        <%= text_field_tag :resource_type, nil, :class => "span4" %>
+        <%= text_area_tag :declined_message, nil, :size=>"27x4", :class => "span4" %>
       </div>
     </div>
 
     <div class = "control-group">
       <div class = "controls">
-        
+         
         <button type = "button" class = "btn" 
           onclick="jQuery('.admin-form').addClass('hide')">
           Cancel</button>
        <%= submit_tag "Accept", :class => "btn2" %> 
       </div>
     </div>
+
   <% end %>
+
 </div>

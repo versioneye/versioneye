@@ -131,6 +131,7 @@ Versioneye::Application.routes.draw do
   namespace :admin do
     resources :submitted_urls do
       post '/approve',            :to => 'submitted_urls#approve'
+      post '/decline',            :to => 'submitted_urls#decline'
     end
     resources :crawles
     get   '/crawles',             :to => 'crawles#index'

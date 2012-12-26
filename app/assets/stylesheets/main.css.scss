@@ -938,7 +938,7 @@ h2 + .row {
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-  color: #ffffff;
+  color: #ffffff !important;
   background-color: #c1c1c1;
   *background-color: #c2c2c2;
   background-image: -moz-linear-gradient(-90deg, rgb(130, 156, 177), rgb(81, 99, 116));
