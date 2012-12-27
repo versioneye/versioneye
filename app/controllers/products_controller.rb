@@ -17,14 +17,10 @@ class ProductsController < ApplicationController
   end
   
   def search
-    @query = params[:q]
+    @query = do_parse_search_input(@query)
     @groupid = params[:g]
-    @lang = get_lang_value( params )
+    @lang = get_lang_value( params[:lang] )
     commit = params[:commit]
-    
-    hash = do_parse_search_input(@query, @groupid)
-    @query = hash['query'] if !hash['query'].nil?
-    @groupid = hash['group'] if !hash['group'].nil?
 
     if ( (@query.nil? || @query.empty?) && (@groupid.nil? || @groupid.empty?) )
       flash.now[:error] = "Please give us some input. Type in a value for name."
@@ -35,19 +31,13 @@ class ProductsController < ApplicationController
     else
       start = Time.now
       languages = get_language_array(@lang)
-      @products = Product.search( @query, @groupid, languages, params[:page])
-      # @products = Product.find_by(@query, @description, @groupid, languages, 300).paginate(:page => params[:page])
+      @products = ProductService.search( @query, @groupid, languages, params[:page])
       if @products && @products.count > 0 && signed_in?
         @my_product_ids = current_user.fetch_my_product_ids 
       end
       save_search_log( @query, @products, start )
     end    
-    respond_to do |format|
-      format.html { 
-        @languages = @@languages
-      }
-      format.json { render :json => @products.to_json(:only => [:name, :version, :prod_key, :group_id, :artifact_id, :language] ) }
-    end
+    @languages = @@languages
   end
 
   def autocomplete_product_name
@@ -180,33 +170,33 @@ class ProductsController < ApplicationController
   end
   
   def follow
-    product_key = url_param_to_origin params[:product_key]
-    @product = fetch_product product_key
-    @product.followers = @product.followers + 1
-    @product.save
-    respond = create_follower @product, current_user
+    @prod_key_param = params[:product_key]
+    product_key = url_param_to_origin @prod_key_param
+    respond = ProductService.create_follower product_key, current_user
     respond_to do |format|
       format.js 
       format.html { 
-          redirect_to product_version_path(@product)
+          if respond.eql?("error")
+            flash.now[:error] = "An error occured. Please try again later."
+          end      
+          redirect_to :back
         }
-      format.json { render :json => "[#{respond}]" }
     end
   end
   
   def unfollow
     src_hidden = params[:src_hidden]
-    product_key = url_param_to_origin params[:product_key]
-    @product = fetch_product product_key
-    @product.followers = @product.followers - 1
-    @product.save
-    respond = destroy_follower @product, current_user
+    @prod_key_param = params[:product_key]
+    product_key = url_param_to_origin @prod_key_param
+    respond = ProductService.destroy_follower product_key, current_user
     respond_to do |format|
       format.js 
-      format.json { render :json => "[#{respond}]" }
       format.html { 
+          if respond.eql?("error")
+            flash.now[:error] = "An error occured. Please try again later."
+          end      
           if src_hidden.eql? "detail"
-            redirect_to product_version_path(@product)
+            redirect_to :back
           else
             redirect_to user_path(current_user)
           end
@@ -278,27 +268,6 @@ class ProductsController < ApplicationController
   
   private
 
-    def get_language_array(lang)
-      langs = lang.split(",")
-      languages = Array.new 
-      langs.each do |language|
-        if !language.strip.empty?
-          if language.match("PHP") || language.match("Node.JS")
-            languages.push(language) 
-          else
-            languages.push(language.capitalize)
-          end
-        end
-      end
-      languages
-    end
-
-    def get_lang_value( params )
-      lang = params[:lang]
-      lang = "," if lang.nil? || lang.empty?
-      lang
-    end
-
     def url_exist?(url_path)
       url = URI.parse(url_path)
       req = Net::HTTP.new(url.host, url.port)
@@ -328,20 +297,6 @@ class ProductsController < ApplicationController
         comment.update_type = type
       end
       comment.save
-    end
-
-    def save_search_log(query, products, start)
-      stop = Time.now
-      wait = (stop - start) * 1000.0
-      searchlog = Searchlog.new
-      searchlog.search = query
-      searchlog.wait = wait
-      if products.nil? || products.total_entries == 0
-        searchlog.results = 0  
-      else
-        searchlog.results = products.total_entries
-      end
-      searchlog.save
     end
 
     def is_following?(user, product)

@@ -146,6 +146,12 @@ Versioneye::Application.routes.draw do
   get   '/statistics/proglangs',  :to => 'statistics#proglangs'
   get   '/statistics/langtrends', :to => 'statistics#langtrends'
 
+  namespace :api do
+    namespace :v1 do 
+      get   '/search',           :to => 'products#search'
+    end
+  end
+
   get   '/about',               :to => 'page#about'
   get   '/impressum',           :to => 'page#impressum'
   get   '/imprint',             :to => 'page#imprint'

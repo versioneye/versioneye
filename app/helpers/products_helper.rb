@@ -19,26 +19,43 @@ module ProductsHelper
     return "block" if product.in_my_products
     return "none"
   end
-  
-  def create_follower(product, user)
-    return nil if product.nil? || user.nil?
-    follower = Follower.find_by_user_id_and_product user.id, product._id.to_s
-    if follower.nil?
-      follower = Follower.new
-      follower.user_id = user._id.to_s
-      follower.product_id = product._id.to_s
-      follower.save
+
+  def url_param_to_origin(param)
+    if (param.nil? || param.empty?)
+      return ""
     end
-    return "success"
+    key = String.new(param)
+    key.gsub!("--","/")
+    key.gsub!("~",".")
+    key
   end
-  
-  def destroy_follower(product, user)
-    return nil if product.nil? || user.nil?
-    follower = Follower.find_by_user_id_and_product user._id.to_s, product._id.to_s
-    if !follower.nil?
-      follower.remove
+
+  def do_parse_search_input( query )
+    query_empty = query.nil? || query.empty? || query.eql?("Be up-to-date")
+    query = "json" if query_empty 
+    query = query.strip()
+    query = query.downcase
+    return query
+  end
+
+  def get_lang_value( lang )
+    lang = "," if lang.nil? || lang.empty?
+    lang
+  end
+
+  def get_language_array(lang)
+    langs = lang.split(",")
+    languages = Array.new 
+    langs.each do |language|
+      if !language.strip.empty?
+        if language.match("PHP") || language.match("Node.JS")
+          languages.push(language) 
+        else
+          languages.push(language.capitalize)
+        end
+      end
     end
-    return "success"
+    languages
   end
   
   def attach_version(product, version_from_url)
@@ -61,68 +78,6 @@ module ProductsHelper
         end
       end
     end
-  end
-
-  def fetch_productlike(user, product)
-    productlike = Productlike.find_by_user_id_and_product(user.id, product.prod_key)
-    if productlike.nil?
-      productlike = Productlike.new
-      productlike.user_id = user.id.to_s 
-      productlike.prod_key = product.prod_key
-      productlike.save
-    end
-    productlike
-  end
-
-  def fetch_product(product_key)
-    product = Product.find_by_key product_key
-    if product.nil?
-      @message = "error"
-      flash.now[:error] = "An error occured. Please try again later."
-    end
-    product
-  end
-
-  def url_param_to_origin(param)
-    if (param.nil? || param.empty?)
-      return ""
-    end
-    key = String.new(param)
-    key.gsub!("--","/")
-    key.gsub!("~",".")
-    key
-  end
-
-  def do_parse_search_input( query , group_id )
-    hash = Hash.new 
-    query_empty = query.nil? || query.empty? || query.eql?("Be up-to-date")
-    group_id_empty = group_id.nil? || group_id.empty?
-    if query_empty && group_id_empty
-      hash['query'] = "json"
-      return hash
-    end
-    
-    if (!query_empty)
-      hash = Hash.new 
-      hash['query'] = ""
-      parts = query.split(" ")
-      parts.each do |part| 
-        if !part.match(/^g:/i).nil?
-          hash['group'] = part.gsub("g:", "")
-        else 
-          hash['query'] += part + " "
-        end
-      end
-      new_query = hash['query']
-      new_query = new_query.strip()      
-      new_query.downcase!
-      hash['query'] = new_query
-      return hash
-    end
-
-    query = query.strip()
-    hash['query'] = query.gsub(" ", "-")
-    return hash
   end
 
   def generate_json_for_circle_from_hash(circle)
@@ -153,6 +108,20 @@ module ProductsHelper
     end_point = resp.length - 2
     resp = resp[0..end_point]
     resp
+  end
+
+  def save_search_log(query, products, start)
+    stop = Time.now
+    wait = (stop - start) * 1000.0
+    searchlog = Searchlog.new
+    searchlog.search = query
+    searchlog.wait = wait
+    if products.nil? || products.total_entries == 0
+      searchlog.results = 0  
+    else
+      searchlog.results = products.total_entries
+    end
+    searchlog.save
   end
   
 end

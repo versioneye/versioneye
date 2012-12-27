@@ -96,4 +96,17 @@ class ProductlikesController < ApplicationController
     end
   end
 
+  private 
+
+    def fetch_productlike(user, product)
+      productlike = Productlike.find_by_user_id_and_product(user.id, product.prod_key)
+      if productlike.nil?
+        productlike = Productlike.new
+        productlike.user_id = user.id.to_s 
+        productlike.prod_key = product.prod_key
+        productlike.save
+      end
+      productlike
+    end
+
 end
