@@ -1,5 +1,7 @@
 require 'spec_helper'
+
 describe "empty_search_result" do
+
   before(:each) do
     visit root_path
     visit search_path
@@ -28,6 +30,6 @@ describe "empty_search_result" do
     test_url = test_urls.last
     test_url.should_not be_nil
     test_url[:url].should eql(url_string)
-  
   end
+
 end
