@@ -101,7 +101,7 @@ class ProductsController < ApplicationController
     @product = Product.find_by_key( key )
     if @product.nil? 
       flash[:error] = "The requested package is not available."
-      redirect_to products_path
+      redirect_to products_path(@product)
       return 
     end
     attach_version( @product, params[:version] )
@@ -179,7 +179,7 @@ class ProductsController < ApplicationController
           if respond.eql?("error")
             flash.now[:error] = "An error occured. Please try again later."
           end      
-          redirect_to :back
+          redirect_to products_path(@prod_key_param)
         }
     end
   end
@@ -196,7 +196,7 @@ class ProductsController < ApplicationController
             flash.now[:error] = "An error occured. Please try again later."
           end      
           if src_hidden.eql? "detail"
-            redirect_to :back
+            redirect_to products_path(@prod_key_param)
           else
             redirect_to user_path(current_user)
           end

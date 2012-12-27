@@ -19,3 +19,4 @@ pickle-email-*.html
 .env
 app/assets/.DS_Store
 app/assets/images/.DS_Store
+webrate.log
