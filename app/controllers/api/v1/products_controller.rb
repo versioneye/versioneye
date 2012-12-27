@@ -1,7 +1,15 @@
 class Api::V1::ProductsController < ApplicationController
 
+  def ping
+    respond_to do |format|
+      format.json { 
+        render :json => "[\"pong\"]"
+      }
+    end
+  end
+
   def search
-    @query = do_parse_search_input(@query)
+    @query = do_parse_search_input( params[:id] )
     @groupid = params[:g]
     @lang = get_lang_value( params[:lang] )
 
@@ -24,6 +32,25 @@ class Api::V1::ProductsController < ApplicationController
           render :json => "[#{error}]"    
         else 
           render :json => @products.to_json(:only => [:name, :version, :prod_key, :group_id, :artifact_id, :language] ) 
+        end
+      }
+    end
+  end
+
+  def show
+    key = url_param_to_origin params[:id]
+    product = Product.find_by_key( key )
+    if product.nil? 
+      product = Product.find_by_key_case_insensitiv( key )  
+    end
+    respond_to do |format|
+      format.json { 
+        if product.nil? 
+          render :json => "[\"0 Results\"]"
+        else 
+          render :json => product.to_json(:only => [:name, :version, :prod_key, 
+            :group_id, :artifact_id, :language, :prod_type, :description, :link, 
+            :license ] )
         end
       }
     end

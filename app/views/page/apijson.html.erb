@@ -22,11 +22,11 @@
 	<p  >
 		This is how you can use the search in your application. 
 	</p>
-	<pre class="code">https://www.versioneye.com/search.json?q=<<span>SEARCH TERM</span>></pre>
+	<pre class="code">https://www.versioneye.com/api/v1/products/search/<<span>SEARCH TERM</span>>.json</pre>
 	<p  >
 		Here is an example. 
 	</p>
-	<pre class="code">https://www.versioneye.com/search.json?q=junit</pre>
+	<pre class="code">https://www.versioneye.com/api/v1/products/search/junit.json</pre>
 	<p  >
 		The result is the same as in the web application. But you get it as JSON objects. The result is an array of product objects.
 	</p>
@@ -50,10 +50,6 @@
 				<tr>
 					<td>q</td>
 					<td>The search query. This stands for the name of a package.</td>
-				</tr>
-				<tr>
-					<td>d</td>
-					<td>Description of the package</td>
 				</tr>
 				<tr>
 					<td>g</td>
@@ -114,13 +110,13 @@
 	<p  >
 		If you want to have details to a special product/version you can use this request here.
 	</p>
-	<pre class="code">https://www.versioneye.com/product/<<span>PROD_KEY</span>>/version/<<span>VERSION_ID</span>>.json</pre>
+	<pre class="code">https://www.versioneye.com/api/v1/products/<<span>PROD_KEY</span>>.json</pre>
 	<p  >
 		Here is an example for JUnit.
 	</p>
-	<pre class="code">https://www.versioneye.com/product/junit--junit/version/4~10.json</pre>
+	<pre class="code">https://www.versioneye.com/api/v1/products/junit--junit.json</pre>
 	<p  >
-		If there are some special characters in "PROD_KEY" or "VERSION_ID" you must 
+		If there are some special characters in "PROD_KEY" you must 
 		replace it to make it URL ready! Here is the table with the replacements.
 	</p>
 	<p  >

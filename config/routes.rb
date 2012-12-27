@@ -148,7 +148,9 @@ Versioneye::Application.routes.draw do
 
   namespace :api do
     namespace :v1 do 
-      get   '/search',           :to => 'products#search'
+      get   '/products/search/:id',  :to => 'products#search'
+      get   '/ping',                 :to => 'products#ping'
+      resources :products 
     end
   end
 
