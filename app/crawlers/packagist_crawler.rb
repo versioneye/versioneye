@@ -56,8 +56,9 @@ class PackagistCrawler
     product = Product.find_by_key "php/#{name}"
     return product if product
     p " -- new product - #{name}"
-    Product.new
+    product = Product.new
     product.reindex = true
+    product
   end
 
   def self.update_product product, package 
