@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
   end
   
   def search
-    @query = do_parse_search_input(@query)
+    @query = do_parse_search_input( params[:q] )
     @groupid = params[:g]
     @lang = get_lang_value( params[:lang] )
     commit = params[:commit]
