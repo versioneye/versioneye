@@ -17,15 +17,7 @@ class User::ProjectsController < ApplicationController
     github_project = params[:github_project]
     
     if file && !file.empty?
-      project_name = file['datafile'].original_filename
-      filename = Project.upload_to_s3( file )
-      url = Project.get_project_url_from_s3( filename )
-      project_type = get_project_type( url )
-      project_type = "Maven2" if project_type.nil?
-      project = create_project(project_type, url, project_name)
-      project.s3_filename = filename
-      project.source = "upload"
-      store_project(project)
+      project = upload_and_store file
     elsif project_url && !project_url.empty?
       project_type = get_project_type( project_url )
       project_type = "Maven2" if project_type.nil?
@@ -70,6 +62,26 @@ class User::ProjectsController < ApplicationController
   def show
     id = params[:id]
     @project = Project.find_by_id(id)
+  end
+
+  def update
+    file = params[:upload]
+    project_id = params[:project_id]
+    if file.nil? || project_id.nil? 
+      flash[:error] = "Something went wrong. Please try again later."
+      redirect_to user_projects_path
+    end
+    project = upload_and_store file
+    if project
+      old_project = Project.find_by_id(project_id)
+      project.name = old_project.name
+      project.save
+      flash[:success] = "ReUpload was successful."
+      redirect_to user_project_path( project )
+    else 
+      flash[:error] = "Something went wrong. Please try again later."
+      redirect_to user_projects_path
+    end
   end
   
   def destroy
@@ -176,6 +188,19 @@ class User::ProjectsController < ApplicationController
   end
 
   private
+
+    def upload_and_store file
+      project_name = file['datafile'].original_filename
+      filename = Project.upload_to_s3( file )
+      url = Project.get_project_url_from_s3( filename )
+      project_type = get_project_type( url )
+      project_type = "Maven2" if project_type.nil?
+      project = create_project(project_type, url, project_name)
+      project.s3_filename = filename
+      project.source = "upload"
+      store_project(project)
+      project
+    end
 
     def create_project( project_type, url, project_name )
       project = Project.create_from_file( project_type, url )
