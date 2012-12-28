@@ -63,64 +63,66 @@
 	</div>
 </section>
 
+<% if !signed_in? %>
+	<section class="container" style = "padding-top: 65px;">
+		<hr class="separator_eye" onclick="load_video();" />
+	</section>
 
-<section class="container" style = "padding-top: 65px;">
-	<hr class="separator_eye" onclick="load_video();" />
-</section>
-
-<section class=" container" >
-	<div class="marketing" >
-		<h1>Because Software Libraries don't update themselves</h1>
-		<p>They just become out-dated!</p>
-	</div>
-	<div class="marketing" >
-		<h1>Because Software Libraries are not like iPhone Apps</h1>
-		<p>They are passive! They don't tell you that there are out-dated!</p>
-	</div>
-	<div class="marketing" >
-		<h1>Because Software Developers are wasting time with ..</h1>
-		<p>looking manually for updates. Save Time and Money by automating this process.</p>
-	</div>
-	<div class="row-fluid" style="height: 320px;">
-		<div class="span3 well1">
-			<span class = "icon_package off marketing-icon"></span>
-			<span class = "icon_package on  marketing-icon"></span>
-			<h5>Package support</h5>
-			<p>
-				VersionEye has support for various package managers 
-				including Maven, Bundler, Lein and more.
-			</p>
-			<a href="/services">Find out more</a>
+	<section class=" container" >
+		<div class="marketing" >
+			<h2 class="casual">Because Software Libraries don't update themselves</h2>
+			<p>They just become out-dated!</p>
 		</div>
-		<div class="span3 well1">
-			<span class="icon_gitcat off marketing-icon"></span>
-	    <span class="icon_gitcat on  marketing-icon"></span>
-	    <h5>GitHub integration</h5>
-	    <p>
-	      Monitor your private GitHub repositories 
-	      to be notified about outdated dependencies.
-	    </p>
-	    <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&amp;scope=repo'>Login via GitHub</a>
+		<div class="marketing" >
+			<h2 class="casual">Because Software Libraries are not like iPhone Apps</h2>
+			<p>They are passive! They don't tell you that there are out-dated!</p>
 		</div>
-		<div class="span3 well1">
-			<span class="icon_freeprice off marketing-icon"></span>
-			<span class="icon_freeprice on  marketing-icon"></span>
-			<h5>SignUp free</h5>
-			<p>
-				Monitoring public repositories is free. Only
-				private GitHub repositories are fee-based.
-			</p>
-			<a href="/signup">Register for free</a>
+		<div class="marketing" >
+			<h2 class="casual">Because Software Developers are wasting time with ..</h2>
+			<p>looking manually for updates. Save Time and Money by automating this process.</p>
 		</div>
-		<div class="span3 well1">
-			<span class="icon_dependency off marketing-icon"></span>
-			<span class="icon_dependency on marketing-icon"></span>
-			<h5>Visualizing dependendencies</h5>
-			<p>
-				VersionEye visualises recursive dependencies and 
-				makes complexity visible. 
-			</p>
-			<a href="/package/rails/version/3~2~8">Watch example</a>
+		<div class="row-fluid" style="height: 320px;">
+			<div class="span3 well1">
+				<span class = "icon_package off marketing-icon"></span>
+				<span class = "icon_package on  marketing-icon"></span>
+				<h5>Package support</h5>
+				<p>
+					VersionEye has support for various package managers 
+					including Maven, Bundler, Lein and more.
+				</p>
+				<a href="/services">Find out more</a>
+			</div>
+			<div class="span3 well1">
+				<span class="icon_gitcat off marketing-icon"></span>
+		    <span class="icon_gitcat on  marketing-icon"></span>
+		    <h5>GitHub integration</h5>
+		    <p>
+		      Monitor your private GitHub repositories 
+		      to be notified about outdated dependencies.
+		    </p>
+		    <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&amp;scope=repo'>Login via GitHub</a>
+			</div>
+			<div class="span3 well1">
+				<span class="icon_freeprice off marketing-icon"></span>
+				<span class="icon_freeprice on  marketing-icon"></span>
+				<h5>SignUp free</h5>
+				<p>
+					Monitoring public repositories is free. Only
+					private GitHub repositories are fee-based.
+				</p>
+				<a href="/signup">Register for free</a>
+			</div>
+			<div class="span3 well1">
+				<span class="icon_dependency off marketing-icon"></span>
+				<span class="icon_dependency on marketing-icon"></span>
+				<h5>Visualizing dependendencies</h5>
+				<p>
+					VersionEye visualises recursive dependencies and 
+					makes complexity visible. 
+				</p>
+				<a href="/package/rails/version/3~2~8">Watch example</a>
+			</div>
 		</div>
-	</div>
-</section>
+	</section>
+<% end %>
+<br/><br/><br/><br/>

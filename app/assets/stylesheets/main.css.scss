@@ -343,9 +343,12 @@ div.content {
     letter-spacing: -1px;
   }
 
-  &  h2 {
+  & h2 {
     font-weight: 200;
     margin-bottom: 5px;
+    &.casual {
+      color: $text_casual;  
+    }
   }
 
   & p {
@@ -531,6 +534,7 @@ div.content {
     background: transparent no-repeat;
     min-width: 32px;
     min-height: 32px;
+    margin: 4px;
     opacity: 0.4;
     -moz-opacity: 0.4;
     -khtml-opacity: 0.4;
@@ -548,6 +552,7 @@ div.content {
 
   & .btn-dark {
     color: #ddd;
+    margin: 0;
     background-color: #333;
     opacity: 0.95;
     filter: alpha(opacity=95);
