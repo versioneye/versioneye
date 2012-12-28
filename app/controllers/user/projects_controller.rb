@@ -217,7 +217,7 @@ class User::ProjectsController < ApplicationController
       if project.dependencies && !project.dependencies.empty? && project.save
         dependencies = Array.new(project.dependencies)
         Project.save_dependencies(project, dependencies)
-        flash[:info] = "Project was created successfully."
+        flash[:success] = "Project was created successfully."
       else
         flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."
       end
