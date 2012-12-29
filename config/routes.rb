@@ -147,10 +147,12 @@ Versioneye::Application.routes.draw do
   get   '/statistics/langtrends', :to => 'statistics#langtrends'
 
   namespace :api do
-    namespace :v1 do 
+    namespace :v1 do
       get   '/products/search/:id',  :to => 'products#search'
       get   '/ping',                 :to => 'products#ping'
-      resources :products 
+      get   '/languages',            :to => 'products#languages'
+      get   '/statistics',           :to => 'products#statistics'
+      resources :products
     end
   end
 

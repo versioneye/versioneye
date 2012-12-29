@@ -2,8 +2,8 @@ class Api::V1::ProductsController < ApplicationController
 
   def ping
     respond_to do |format|
-      format.json { 
-        render :json => "[\"pong\"]"
+      format.json {
+        render :json => ["pong"]
       }
     end
   end
@@ -44,10 +44,10 @@ class Api::V1::ProductsController < ApplicationController
       product = Product.find_by_key_case_insensitiv( key )  
     end
     respond_to do |format|
-      format.json { 
-        if product.nil? 
-          render :json => "[\"0 Results\"]"
-        else 
+      format.json {
+        if product.nil?
+          render :json => ["0 Results"]
+        else
           render :json => product.to_json(:only => [:name, :version, :prod_key, 
             :group_id, :artifact_id, :language, :prod_type, :description, :link, 
             :license ] )
@@ -56,11 +56,30 @@ class Api::V1::ProductsController < ApplicationController
     end
   end
 
+  def languages
+    if params.has_key? :lang
+      language_string = params[:lang]
+    else
+      language_string = Product.all.distinct(:language).join(",")
+    end
+    render :json => get_language_array(language_string)
+  end
+
+  def statistics
+    stats = Rails.cache.read("lang_stat")
+    if stats.nil? or stats.empty?
+      stats = Product.get_language_stat
+      Rails.cache.write("lang_stat", stats)
+    end
+
+    render :json => stats.sort {|a, b| b[1] <=> a[1]}
+  end
+
   def follow
     product_key = url_param_to_origin params[:product_key]
     respond = ProductService.create_follower product_key, current_user
     respond_to do |format|
-      format.json { render :json => "[#{respond}]" }
+      format.json { render :json => ["#{respond}"] }
     end
   end
   
@@ -69,7 +88,7 @@ class Api::V1::ProductsController < ApplicationController
     product_key = url_param_to_origin params[:product_key]
     respond = ProductService.destroy_follower product_key, current_user
     respond_to do |format|
-      format.json { render :json => "[#{respond}]" }
+      format.json { render :json => ["#{respond}"] }
     end
   end
 
