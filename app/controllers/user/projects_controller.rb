@@ -19,12 +19,7 @@ class User::ProjectsController < ApplicationController
     if file && !file.empty?
       project = upload_and_store file
     elsif project_url && !project_url.empty?
-      project_type = get_project_type( project_url )
-      project_type = "Maven2" if project_type.nil?
-      project_name = project_url.split("/").last
-      project = create_project(project_type, project_url, project_name)
-      project.source = "url"
-      store_project(project)
+      project = fetch_and_store project_url
     elsif github_project && !github_project.empty? && !github_project.eql?("NO_PROJECTS_FOUND")
       private_project = Github.private_repo?( current_user.github_token, github_project )
       if private_project && !is_allowed_to_add_private_project?
@@ -198,6 +193,16 @@ class User::ProjectsController < ApplicationController
       project = create_project(project_type, url, project_name)
       project.s3_filename = filename
       project.source = "upload"
+      store_project(project)
+      project
+    end
+
+    def fetch_and_store project_url 
+      project_type = get_project_type( project_url )
+      project_type = "Maven2" if project_type.nil?
+      project_name = project_url.split("/").last
+      project = create_project(project_type, project_url, project_name)
+      project.source = "url"
       store_project(project)
       project
     end
