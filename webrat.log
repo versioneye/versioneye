@@ -1,4 +1,0 @@
-# Logfile created on 2012-12-29 20:00:23 +0100 by logger.rb/31641
-REQUESTING PAGE: GET / with {} and HTTP headers {}
-REQUESTING PAGE: GET /search with {} and HTTP headers {"HTTP_REFERER"=>"/"}
-REQUESTING PAGE: GET / with {} and HTTP headers {"HTTP_REFERER"=>"/search"}

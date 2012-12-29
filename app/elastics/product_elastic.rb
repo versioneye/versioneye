@@ -75,9 +75,7 @@ class ProductElastic
       raise ArgumentError, "query and group_id are both empty! This is not allowed"
     end
 
-    if page_count.nil? || page_count.empty?
-      page_count = 1
-    end
+    page_count = 1 if page_count.nil? || page_count.to_i < 1 
     results_per_page = 30
     from = results_per_page * (page_count.to_i - 1)
     
