@@ -19,7 +19,7 @@ class User::ProjectsController < ApplicationController
     if file && !file.empty?
       project = upload_and_store file
     elsif project_url && !project_url.empty?
-      project = fetch_and_store project_url
+      fetch_and_store project_url
     elsif github_project && !github_project.empty? && !github_project.eql?("NO_PROJECTS_FOUND")
       private_project = Github.private_repo?( current_user.github_token, github_project )
       if private_project && !is_allowed_to_add_private_project?
@@ -49,7 +49,7 @@ class User::ProjectsController < ApplicationController
 
     if project and project.id 
       redirect_to user_project_path( project )
-    else 
+    else
       redirect_to user_projects_path
     end
   end
@@ -94,14 +94,14 @@ class User::ProjectsController < ApplicationController
   end
 
   def update_name
-      @name = params[:name]
-      id = params[:id]
-      project = Project.find_by_id(id)
-      project.name = @name 
-      project.save 
-      respond_to do |format|
-        format.js
-      end
+    @name = params[:name]
+    id = params[:id]
+    project = Project.find_by_id(id)
+    project.name = @name 
+    project.save 
+    respond_to do |format|
+      format.js
+    end
   end
 
   def reparse
@@ -239,5 +239,4 @@ class User::ProjectsController < ApplicationController
       end
     end
 
-    
 end
