@@ -68,20 +68,27 @@ class ProductElastic
   end
 
   # # langs need to be an Array ! 
+  # # page_count has to start by 1. Not by 0! 
   # # 
-  def self.search(q, group_id = nil, langs = Array.new, page_count = 0)
+  def self.search(q, group_id = nil, langs = Array.new, page_count = 1)
     if (q.nil? || q.empty?) && (group_id.nil? || group_id.empty?)
       raise ArgumentError, "query and group_id are both empty! This is not allowed"
     end
 
-    page_count = 0 if page_count.nil?
+    if page_count.nil? || page_count.empty?
+      page_count = 1
+    end
     results_per_page = 30
-    from = results_per_page * page_count.to_i
+    from = results_per_page * (page_count.to_i - 1)
     
     group_id = "" if !group_id
     q = "*" if !q || q.empty?
 
-    s = Tire.search( Settings.elasticsearch_product_index, load: true, page: page_count, per_page: results_per_page, size: results_per_page, :from => from ) do |search|
+    s = Tire.search( Settings.elasticsearch_product_index, 
+                      load: true, 
+                      from: from,
+                      per_page: results_per_page, 
+                      size: results_per_page) do |search|
 
       search.sort { by [{:_score => 'desc'}] }
       # search.sort { by [{'name.untouched' => 'asc'}] }
