@@ -23,14 +23,14 @@ class Api::V1::ProductsController < ApplicationController
     else
       start = Time.now
       languages = get_language_array(@lang)
-      @products = ProductService.search( @query, @groupid, languages, params[:page])
+      @products = ProductService.search(@query, @groupid, languages, params[:page])
       save_search_log( @query, @products, start )
-    end    
+    end
     respond_to do |format|
-      format.json { 
+      format.json {
         if error
-          render :json => "[#{error}]"    
-        else 
+          render :json => {:success => false, :msg => error}
+        else
           render :json => @products.to_json(:only => [:name, :version, :prod_key, :group_id, :artifact_id, :language] ) 
         end
       }
