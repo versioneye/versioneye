@@ -1,7 +1,7 @@
 class ProductService
 
   # languages have to be an array of strings. 
-  def self.search(q, group_id = nil, languages = nil, page_count = 1)
+  def self.search(q, group_id = nil, languages = nil, page_count = nil)
     ProductElastic.search(q, group_id, languages, page_count)
   rescue => e 
     p "ERROR in search - #{e}"
