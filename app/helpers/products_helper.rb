@@ -44,12 +44,18 @@ module ProductsHelper
   end
 
   def get_language_array(lang)
+
+    languages = Array.new
+    special_languages = {"php" => "PHP",
+                          "node.js" =>  "Node.JS",
+                          "nodejs" => "Node.JS"}
+
     langs = lang.split(",")
-    languages = Array.new 
     langs.each do |language|
       if !language.strip.empty?
-        if language.match("PHP") || language.match("Node.JS")
-          languages.push(language) 
+        language = language.downcase
+        if special_languages.has_key? language
+          languages.push(special_languages[language])
         else
           languages.push(language.capitalize)
         end
@@ -57,7 +63,7 @@ module ProductsHelper
     end
     languages
   end
-  
+
   def attach_version(product, version_from_url)
     return nil if product.nil?
     version = url_param_to_origin( version_from_url )
