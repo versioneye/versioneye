@@ -46,7 +46,7 @@ test:
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
 
   elasticsearch_url: localhost:9200
-  elasticsearch_product_index: /product
+  elasticsearch_product_index: /product_test
 
   memcache_servers: ["127.0.0.1:11211"]
   memcache_username:
