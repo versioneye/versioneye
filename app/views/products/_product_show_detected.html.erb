@@ -4,14 +4,10 @@
         But this version was detected
         <% last_date = Date.today - @product.last_crawle_date.to_i %>
         <% time_span_text = distance_of_time_in_words(Date.today, last_date) %>
-		<% if @product.last_crawle_date.to_i > 182 %>
-			<% span_style="color: orange; font-weight: bold; font-size: 20px;" %>
-		<% elsif @product.last_crawle_date.i > 365 %> 
-			<% span_style="color: red; font-weight: bold; font-size: 20px;" %>
-		<% else %>
-          <% span_style="font-weight: bold; font-size: 20px;" %>
-    <% end %>
-        <span style="<%= span_style %>">
+		<% span_style= "color:orange;" if @product.last_crawle_date.to_i > 90  %>
+		<% span_style= "color:red;" if @product.last_crawle_date.to_i > 180 %> 
+        
+        <span style="<%= span_style %> font-weight: bold; font-size:18px;">
           <%=  time_span_text %>
         </span>
         ago
