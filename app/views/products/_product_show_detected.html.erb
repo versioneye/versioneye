@@ -1,14 +1,18 @@
 <% if @product.last_crawle_date %>
 	<span title="This is mostly equal with the release date.">
 		We don't have any information about the release date.
-		But this version was detected
-		<% if @product.last_crawle_date > 182 %>
-			<span style="color: orange; font-weight: bold; font-size: 20px;"><%= @product.last_crawle_date %></span>
-		<% elsif @product.last_crawle_date > 365 %> 
-			<span style="color: red; font-weight: bold; font-size: 20px;"><%= @product.last_crawle_date %></span>
+        But this version was detected
+        <% last_date = Date.today - @product.last_crawle_date.to_i %>
+        <% time_span_text = distance_of_time_in_words(Date.today, last_date) %>
+		<% if @product.last_crawle_date.to_i > 182 %>
+			<% span_style="color: orange; font-weight: bold; font-size: 20px;" %>
+		<% elsif @product.last_crawle_date.i > 365 %> 
+			<% span_style="color: red; font-weight: bold; font-size: 20px;" %>
 		<% else %>
-			<span style="font-weight: bold; font-size: 20px;"><%= @product.last_crawle_date %></span>
-		<% end %>
-		days ago.
-	</span>
+          <% span_style="font-weight: bold; font-size: 20px;" %>
+    <% end %>
+        <span style="<%= span_style %>">
+          <%=  time_span_text %>
+        </span>
+        ago
 <% end %>
