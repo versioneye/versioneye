@@ -9,10 +9,10 @@ Versioneye::Application.load_tasks
 task :do_work => :environment do
 	puts "START"
 
-	start_hour = 7
+	start_hour = 2
 	start_minute = 10
 
-	weekly_hour = 14
+	weekly_hour = 15
 	weekly_minute = 00
 	weekly_day = 4
 
@@ -26,17 +26,21 @@ task :do_work => :environment do
 		# -- DAILY JOBS ----
 		if hour == start_hour && minute == start_minute
 
+			puts "START to check integration status of submitted urls"
+			SubmittedUrl.check_integration_status
+			puts "STOP to check integration status of submitted urls"
+
 			puts "START to crawl packagist.org"
 			PackagistCrawler.crawl
 			puts "STOP to crawl packagist.org"
 
-			puts "START reindex newest products for elastic search"
-			ProductElastic.index_newest
-			puts "STOP reindex newest products for elastic search"
-			
 			puts "START update the version numbers on products."
 			ProductMigration.update_version_data_global
 			puts "STOP update the version numbers on products."
+
+			puts "START reindex newest products for elastic search"
+			ProductElastic.index_newest
+			puts "STOP reindex newest products for elastic search"
 			
 			puts "START to send out the notification E-Mails."
 			Notification.send_notifications

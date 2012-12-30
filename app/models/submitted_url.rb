@@ -37,6 +37,10 @@ class SubmittedUrl
     User.find_by_id user_id
   end
 
+  def self.check_integration_status
+    raise "Implement Me Exception! ... Now!"
+  end
+
   def fetch_user_email
     return user_email if user_email
 
