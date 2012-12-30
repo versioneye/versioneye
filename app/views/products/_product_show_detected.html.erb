@@ -6,7 +6,7 @@
         <% time_span_text = distance_of_time_in_words(Date.today, last_date) %>
 		<% if @product.last_crawle_date.to_i > 182 %>
 			<% span_style="color: orange; font-weight: bold; font-size: 20px;" %>
-		<% elsif @product.last_crawle_date.i > 365 %> 
+		<% elsif @product.last_crawle_date.to_i > 365 %> 
 			<% span_style="color: red; font-weight: bold; font-size: 20px;" %>
 		<% else %>
           <% span_style="font-weight: bold; font-size: 20px;" %>
