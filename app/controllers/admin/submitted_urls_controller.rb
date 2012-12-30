@@ -32,19 +32,18 @@ class Admin::SubmittedUrlsController < ApplicationController
       flash[:error] = "Cant approve: id of SubmittedUrl is missing."
     else
       new_resource = ProductResource.new(:url => params[:url],
+                                         :name => params[:name],
                                          :resource_type => params[:resource_type],
                                          :submitted_url => submitted_url)
-                                        
       if new_resource.save
         submitted_url[:declined] = false
         submitted_url.save
-        flash[:notice] = "Resource is accepted successfully"
+        flash[:success] = "Resource was accepted successfully"
         send_approval_email submitted_url    
       else
         flash[:error] = new_resource.errors.full_messages.to_sentence
       end
     end
-
     redirect_to :back
   end
 

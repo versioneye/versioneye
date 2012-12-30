@@ -3,6 +3,7 @@ class ProductResource
   include Mongoid::Document
 
   field :url, type: String
+  field :name, type: String
   field :resource_type, type: String
   field :crawler_name, type: String
   field :crawled, type: Boolean, default: false
@@ -18,4 +19,3 @@ class ProductResource
   end
 
 end
-
