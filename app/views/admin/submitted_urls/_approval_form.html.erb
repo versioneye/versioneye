@@ -8,14 +8,21 @@
       <%= hidden_field_tag :submitted_url_id, @submitted_url.id %>
       <%= label_tag :url,nil, :class => "control-label" %>
       <div class = "controls">
-        <%= text_field_tag :url, @submitted_url.url, :class => "span4" %>
+        <%= text_field_tag :url, @submitted_url.url_guessed, :class => "span4" %>
+      </div>
+    </div>
+
+    <div class = "control-group">
+      <%= label_tag :name, nil, :class => "control-label" %>
+      <div class = "controls">
+        <%= text_field_tag :name, @submitted_url.name_guessed, :class => "span4" %>
       </div>
     </div>
 
     <div class = "control-group">
       <%= label_tag :resource_type, nil, :class => "control-label" %>
       <div class = "controls">
-        <%= text_field_tag :resource_type, nil, :class => "span4" %>
+        <%= text_field_tag :resource_type, @submitted_url.type_guessed, :class => "span4" %>
       </div>
     </div>
 

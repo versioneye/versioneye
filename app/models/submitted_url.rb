@@ -37,6 +37,10 @@ class SubmittedUrl
     User.find_by_id user_id
   end
 
+  def self.check_integration_status
+    raise "Implement Me Exception! ... Now!"
+  end
+
   def fetch_user_email
     return user_email if user_email
 
@@ -65,4 +69,32 @@ class SubmittedUrl
     end
     return false
   end
+  
+  def url_guessed
+    if !url.match(/https:\/\/github.com\//).nil?
+      new_url = url.gsub("https://github.com/", "https://api.github.com/repos/")
+      if !new_url.match("\/$").nil?
+        return new_url[0..-2]
+      end
+      return new_url
+    end
+    url
+  end
+
+  def name_guessed
+    if !url.match(/https:\/\/github.com\//).nil?
+      name = url.gsub("https://github.com/", "")
+      if !name.match("\/$").nil?
+        return name[0..-2]
+      end
+      return name
+    end
+    url
+  end
+
+  def type_guessed
+    return "GitHub" if !url.match(/github.com/).nil?
+    ""
+  end
+
 end
