@@ -1,5 +1,6 @@
 class UserFactory
-  def self.create_new_user(n = 1)
+
+  def self.create_new(n = 1, save_db = true)
     user_data = {:username  => "testuser#{n}",
                   :fullname => "Test User#{n}",
                   :email    => "test.user#{n}@versioneye.com",
@@ -9,11 +10,13 @@ class UserFactory
                   :salt     => "sugar"
                 }
     new_user = User.new user_data
-    new_user.save
+    new_user.save if save_db
+    
+    return new_user
   end
 
   def self.create_defaults(n = 5)
-    1..n.times {|i| UserFactory.create_new_user(i)}
+    1..n.times {|i| UserFactory.create_new(i)}
   end 
 
   def self.clean_defaults

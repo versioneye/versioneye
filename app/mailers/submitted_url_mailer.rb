@@ -18,4 +18,12 @@ class SubmittedUrlMailer < ActionMailer::Base
       :tag      => "notice")
   end
 
+  def integrated_url_email(user_email, submitted_url, product)
+    @submitted_url = submitted_url.url
+    @product = product
+    mail(
+      :to       => user_email,
+      :subject  => "We accepted your's submition for VersionEye.",
+      :tag      => "notice")
+  end
 end

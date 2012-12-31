@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+  <p>Hey,</p>
+    <p>
+      Your submitted URL <i><%#= @submitted_url %></i> is now successfully integrated to our page. <br/>
+      </p>
+      <%= @product %>
+      <h5>Little overview</h5>
+    <ul>
+      <li><strong><%#= @product.name %></strong></li>
+      <li><strong>version: </strong> <%#= @product.version %> </li>
+      <li><strong>product key</strong><%#= @product.prod_key %></li>
+
+    </ul>
+    <p>
+      You can find more information on package page: 
+      <%= link_to :Test, products_path(@product.prod_key) %>
+    </p>
+    <p>
+      Your VersionEye Team<br/>
+      <a href="http://www.versioneye.com">http://www.versioneye.com</a>
+    </p>
+  </body>
+</html>

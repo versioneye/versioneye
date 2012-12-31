@@ -167,7 +167,10 @@ class User
   end
   
   def self.find_by_id( id )
-    User.find( id )
+    return nil if id.nil?
+    id = id.to_s
+    return User.find(id) if User.where(:_id => id).exists?
+  
   rescue => e
     logger.error "-- ERROR user with id #{id} not found! -- #{e}"
     p "ERROR #{e}"

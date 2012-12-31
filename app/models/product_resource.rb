@@ -6,6 +6,7 @@ class ProductResource
   field :resource_type, type: String
   field :crawler_name, type: String
   field :crawled, type: Boolean, default: false
+  field :prod_key, type: String
 
   has_one :submitted_url, autosave: true
 
@@ -17,5 +18,10 @@ class ProductResource
     return ProductResource.find(id) if ProductResource.where(_id: id).exists?
   end
 
+  def self.update_integration_statuses()
+      SubmittedUrl.as_not_integrated.each do |submitted_url| 
+        submitted_url.update_integration_status
+      end
+  end
 end
 
