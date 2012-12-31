@@ -38,10 +38,10 @@ class ProductElastic
   end
 
   def self.index( product )
+    p "index #{product.name}"
     Tire.index Settings.elasticsearch_product_index do
       store product.to_indexed_json
       product.update_attribute(:reindex, false)
-      p "index #{product.name}"
     end
   rescue => e 
     p "ERROR in index(product) Message:   #{e.message}"
