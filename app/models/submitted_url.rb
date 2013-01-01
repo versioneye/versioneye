@@ -46,8 +46,7 @@ class SubmittedUrl
   end
 
   def self.update_integration_statuses()
-    SubmittedUrl.as_not_integrated.each do |submitted_url| 
-      p "update_integration_status #{submitted_url.url}"
+    SubmittedUrl.as_not_integrated.each do |submitted_url|
       submitted_url.update_integration_status
     end
   end
