@@ -26,9 +26,9 @@ task :do_work => :environment do
 		# -- DAILY JOBS ----
 		if hour == start_hour && minute == start_minute
 
-			puts "START to check integration status of submitted urls"
-			SubmittedUrl.check_integration_status
-			puts "STOP to check integration status of submitted urls"
+			puts "START to update integration status of submitted urls"
+			SubmittedUrl.update_integration_statuses()
+			puts "STOP  to update integration status of submitted urls"
 
 			puts "START to crawl packagist.org"
 			PackagistCrawler.crawl
