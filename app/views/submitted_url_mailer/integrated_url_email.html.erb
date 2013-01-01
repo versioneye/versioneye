@@ -6,11 +6,11 @@
   <body>
   <p>Hey,</p>
     <p>
-      Your submitted URL <i><%#= @submitted_url %></i> is now successfully integrated to our page. <br/>
+      Your submitted URL <i><%= @submitted_url %></i> is now successfully integrated to our page. <br/>
     </p>
     <p>
       You can find more information on the package page:
-      <%= link_to @product.name, products_path(@product.prod_key) %>
+      <%= link_to @product.name, "http://www.versioneye.com/package/#{@product.to_param}" %>
     </p>
     <p>
       Best regards, <br/>
