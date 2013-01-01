@@ -18,8 +18,7 @@ class SubmittedUrl
 
   validates :url, presence: true
   validates :message, presence: true
-  validates :user_email, format: {with: /^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i, 
-                                  :allow_blank => true}
+  validates :user_email, format: {with: /^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i, :allow_blank => true}
 
   scope :as_unchecked, where(declined: nil)
   scope :as_checked, where(:declined.in => [false, true])
@@ -37,10 +36,6 @@ class SubmittedUrl
     User.find_by_id user_id
   end
 
-  def self.check_integration_status
-    raise "Implement Me Exception! ... Now!"
-  end
-
   def fetch_user_email
     return user_email if user_email
 
@@ -50,18 +45,24 @@ class SubmittedUrl
     return nil
   end
 
+  def self.update_integration_statuses()
+    SubmittedUrl.as_not_integrated.each do |submitted_url| 
+      p "update_integration_status #{submitted_url.url}"
+      submitted_url.update_integration_status
+    end
+  end
+
   def update_integration_status
     user_email = self.fetch_user_email
     resource = self.product_resource
     prod_key = resource.prod_key unless resource.nil? or resource.prod_key.nil?
     @product =  Product.find_by_key(prod_key)
-    self.integrated = true unless @product.nil?
+    self.integrated = true unless @product.nil?  
     
     if self.save and not @product.nil?
       @submitted_url = self
       SubmittedUrlMailer.integrated_url_email(
         user_email, @submitted_url, @product).deliver unless user_email.nil?
-
       return true
     else
       $stderr.puts "Failed to update integration status for submittedUrl.#{self._id}"

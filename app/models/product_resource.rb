@@ -20,9 +20,4 @@ class ProductResource
     return ProductResource.find(id) if ProductResource.where(_id: id).exists?
   end
 
-  def self.update_integration_statuses()
-      SubmittedUrl.as_not_integrated.each do |submitted_url| 
-        submitted_url.update_integration_status
-      end
-  end
 end
