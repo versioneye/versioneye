@@ -20,6 +20,7 @@ en:
     page_signup_error_fullname: "The name is mandatory. Please type in a name."
     page_footer_about: "About"
     page_footer_team:  "Team"
+    page_footer_statistics:  "Statistics"
     page_header_services: "Services"
     page_header_pricing: "Pricing"
     page_header_signup: "Sign Up"
