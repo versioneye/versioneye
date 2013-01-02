@@ -573,7 +573,7 @@ class Product
     # Arguments have to Date object
    
     start_date = Date.new(2012, 4) if (start_date.nil? or not start_date.instance_of? Date)
-    end_date = Date.today >> 1 if (end_date.nil? or not end_date.instance_of? Date)
+    end_date = Date.today if (end_date.nil? or not end_date.instance_of? Date)
     results = {}
     xlabels = []
     first_run = true
@@ -581,7 +581,7 @@ class Product
       lang_vals = []
       i = 0
       iter_date = start_date
-      while iter_date.month < 12 #end_date.month 
+      while iter_date < end_date
         ncount = Product.where(language: lang, created_at: {"$lt" => iter_date}).count
         xlabels << "#{Date::ABBR_MONTHNAMES[iter_date.month]}/#{iter_date.year}" if first_run
         lang_vals << [i += 1, ncount]
