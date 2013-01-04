@@ -58,7 +58,6 @@ class ProductsController < ApplicationController
     end
     if @product.nil? 
       flash[:error] = "The requested package is not available."
-      redirect_to "/"
       return 
     end
     

@@ -68,9 +68,11 @@ class User::ProjectsController < ApplicationController
     end
     project = upload_and_store file
     if project
-      old_project = Project.find_by_id(project_id)
+      old_project = Project.find_by_id project_id 
       project.name = old_project.name
-      project.save
+      if project.save
+        destroy_project project_id
+      end
       flash[:success] = "ReUpload was successful."
       redirect_to user_project_path( project )
     else 
@@ -81,15 +83,7 @@ class User::ProjectsController < ApplicationController
   
   def destroy
     id = params[:id]
-    project = Project.find_by_id(id)
-    if project.s3_filename && !project.s3_filename.empty?
-      Project.delete_project_from_s3( project.s3_filename )
-    end
-    project.fetch_dependencies
-    project.dependencies.each do |dep|
-      dep.remove
-    end
-    project.remove
+    destroy_project id 
     redirect_to user_projects_path
   end
 
@@ -183,6 +177,18 @@ class User::ProjectsController < ApplicationController
   end
 
   private
+
+    def destroy_project project_id 
+      project = Project.find_by_id( project_id )
+      if project.s3_filename && !project.s3_filename.empty?
+        Project.delete_project_from_s3( project.s3_filename )
+      end
+      project.fetch_dependencies
+      project.dependencies.each do |dep|
+        dep.remove
+      end
+      project.remove
+    end
 
     def upload_and_store file
       project_name = file['datafile'].original_filename
