@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby "1.9.3"
 
-gem 'rails', '3.2.9'
+gem 'rails', '3.2.10'
 gem 'jquery-rails', '2.1.4'
 gem 'execjs', '1.4.0'
 gem 'therubyracer', '0.11.0'
