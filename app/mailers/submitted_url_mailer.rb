@@ -4,6 +4,7 @@ class SubmittedUrlMailer < ActionMailer::Base
 
   def approved_url_email(user_email, submitted_url)
     @submitted_url = submitted_url
+    @user = User.find_by_email user_email
     mail(
       :to       => user_email,
       :subject  => "Your URL is accepted.", 
@@ -19,6 +20,7 @@ class SubmittedUrlMailer < ActionMailer::Base
   end
 
   def integrated_url_email(user_email, submitted_url, product)
+    @user = User.find_by_email user_email
     @submitted_url = submitted_url.url
     @product = product
     mail(

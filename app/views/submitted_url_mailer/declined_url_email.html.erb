@@ -4,7 +4,7 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <p>Hey,</p>
+  <p>Hey, <%= ", #{@user.fullname}!" unless @user.nil?  %> </p>
     <p>
       Your submitted URL <i><%= @submitted_url.url %></i> is declined. <br/>
     </p>
