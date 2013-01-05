@@ -1,6 +1,7 @@
 
 console.log("Closing editor:");
 
+jQuery(".page-title").html("Project: <%= @name %>");
 jQuery("#project-title .namelabel").html("<%= @name %>");
 jQuery("#project-title").css("display", "block");
-jQuery(".inline-editor").css("display", "none");
+jQuery(".project-inline-editor").css("display", "none");

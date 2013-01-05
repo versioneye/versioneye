@@ -17,7 +17,7 @@
   			background-position: -96px -72px; background-repeat: no-repeat;" title="Change title"></div>
 		</div>
 
-		<div class="inline-editor row" style="display:none;">
+		<div class="project-inline-editor row" style="display:none;">
 			<%= form_tag(update_name_user_project_path(@project), :method => "post", :remote => true, :class => "form-inline") do %>
 				<input type ="text" name = "name" value = "<%= @project.name %>" />
 				<button class = "btn btn-primary"> Save</button>
@@ -28,14 +28,14 @@
 		<script>
 			jQuery(document).ready(function(){
 				jQuery("#project-title .open-editor").on("click", function(){
-					jQuery(".inline-editor").css("display", "block");
+					jQuery(".project-inline-editor").css("display", "block");
 					jQuery("#project-title").css("display", "none");
 				});	
 				
 				jQuery(".close-editor").on("click", function(ev){
 					console.log("Closing editor:");
 					jQuery("#project-title").css("display", "block");
-					jQuery(".inline-editor").css("display", "none");
+					jQuery(".project-inline-editor").css("display", "none");
 					return false;
 				});
 			});
