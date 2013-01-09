@@ -24,10 +24,13 @@ gem 'dalli', '2.6.0'           # memcache library
 gem 'kgio', '2.7.4'            # 20% performance boost for dalli
 gem 'newrelic_rpm', '3.5.4.34' # performance monitoring 
 
-# group :development do
-#   gem 'libv8', '~> 3.11.8'
-#   gem 'therubyracer' , '0.11.1', :platforms => :ruby, :require => 'v8'
-# end
+group :development do
+  gem 'libv8', '~> 3.11.8'
+  gem 'therubyracer' , '0.11.1', :platforms => :ruby, :require => 'v8'
+  gem 'psych'
+  gem 'irbtools'
+  gem 'terminal-notifier'
+end
 
 group :assets do
   gem 'sass-rails', "3.2.5"

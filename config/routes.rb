@@ -153,6 +153,10 @@ Versioneye::Application.routes.draw do
       get   '/languages',            :to => 'products#languages'
       get   '/statistics',           :to => 'products#statistics'
       resources :products
+      resources :projects do
+        get '/dependencies',             :to => 'projects#show_dependencies'
+      end
+
     end
   end
 
