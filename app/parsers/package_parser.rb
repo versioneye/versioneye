@@ -22,6 +22,11 @@ class PackageParser
     project = Project.new
     project.dependencies = Array.new    
 
+    project_name = data['name']
+    if project_name
+      project.name = project_name
+    end
+
     dependencies.each do |key, value|
       dependency = Projectdependency.new
       dependency.name = key
