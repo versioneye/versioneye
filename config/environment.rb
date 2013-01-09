@@ -22,7 +22,6 @@ Versioneye::Application.initialize!
 begin
 	Tire.configure do
 		# logger STDERR
-		reset :url 
 		url Settings.elasticsearch_url
 	end
 rescue => e

@@ -1,18 +1,18 @@
 class ProductElastic
 
-  def self.create_mappings
+  def self.create_index_with_mappings
     Tire.index Settings.elasticsearch_product_index do
       create :mappings => {
         :product => {
           :properties => {
-            :_id                => { :type => 'string', :index => 'not_analyzed', :include_in_all => false },
+            :_id                => { :type => 'string', :analyzer => 'keyword', :include_in_all => false },
             :name => { :type => 'multi_field', :fields => {
                 :name => {:type => 'string', :analyzer => 'snowball', :boost => 100}, 
-                :untouched => {:type => 'string', :index => 'not_analyzed' }
+                :untouched => {:type => 'string', :analyzer => 'keyword' }
               } },
             :description        => { :type => 'string', :analyzer => 'snowball' },
             :description_manual => { :type => 'string', :analyzer => 'snowball' },
-            :language           => { :type => 'string', :index => 'not_analyzed'}
+            :language           => { :type => 'string', :analyzer => 'keyword' }
           }
         }
       }
@@ -20,17 +20,16 @@ class ProductElastic
   end
 
   def self.clean_all
-    Tire.index Settings.elasticsearch_product_index do
-      delete
-    end
+    Tire.index( Settings.elasticsearch_product_index ).delete
   end
 
   def self.reset
     self.clean_all
-    self.create_mappings
+    self.create_index_with_mappings
   end
 
   def self.index_all
+    # Tire.index( Settings.elasticsearch_product_index ).import Product.all
     Product.all.each do |product|  
       ProductElastic.index product
     end
@@ -40,7 +39,7 @@ class ProductElastic
   def self.index( product )
     p "index #{product.name}"
     Tire.index Settings.elasticsearch_product_index do
-      store product.to_indexed_json
+      store product.to_indexed_json 
       product.update_attribute(:reindex, false)
     end
   rescue => e 
@@ -49,9 +48,7 @@ class ProductElastic
   end
 
   def self.refresh
-    Tire.index Settings.elasticsearch_product_index do
-      refresh
-    end
+    Tire.index( Settings.elasticsearch_product_index ).refresh
   end
 
   def self.index_and_refresh( product )

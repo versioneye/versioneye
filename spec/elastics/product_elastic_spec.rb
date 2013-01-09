@@ -15,7 +15,7 @@ describe ProductElastic do
 
   before :each do
     ProductElastic.clean_all #remove all previous indexes at elasticsearch
-    ProductElastic.create_mappings
+    ProductElastic.create_index_with_mappings
     @prods = [    
       {:name => "club-mate",        :language => "Java", :group_id => "org.club.mate"},
       {:name => "club-mate-parent", :language => "Java", :group_id => "com.club.mate"},
@@ -118,7 +118,7 @@ describe ProductElastic do
   context " - index all documents in `products` collection" do 
     it "index_all" do
       ProductElastic.clean_all
-      ProductElastic.create_mappings
+      ProductElastic.create_index_with_mappings
       sleep 4
       add_local_products
       ProductElastic.index_all
