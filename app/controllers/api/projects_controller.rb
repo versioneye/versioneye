@@ -57,7 +57,7 @@ class Api::ProjectsController < ApplicationController
           :updated_at         => dep.updated_at,
           :version_current    => dep.version_current,
           :version_requested  => dep.version_requested,
-          :comparator         => dep[:comparator]
+          :outdated           => dep.outdated
         }
         response_data << dep_data     
       end

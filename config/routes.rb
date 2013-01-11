@@ -1,5 +1,9 @@
+#require_relative '../app/api/v1/versioneye'
+
 Versioneye::Application.routes.draw do
   
+  mount V1::Versioneye::API => '/'
+
   root :to => "products#index"
   
   get   '/auth/github/callback',   :to => 'github#callback'

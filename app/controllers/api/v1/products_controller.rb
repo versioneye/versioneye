@@ -3,7 +3,7 @@ class Api::V1::ProductsController < ApplicationController
   def ping
     respond_to do |format|
       format.json {
-        render :json => ["pong"]
+        render :json => {:success => true, :msg=>"Ping", :data => "pong"}
       }
     end
   end
@@ -31,7 +31,12 @@ class Api::V1::ProductsController < ApplicationController
         if error
           render :json => {:success => false, :msg => error}
         else
-          render :json => @products.to_json(:only => [:name, :version, :prod_key, :group_id, :artifact_id, :language] ) 
+          render :json => {:success => true,
+                           :msg => "OK",
+                           :data => JSON.parse(@products.to_json(
+                                    :only => [:name, :version, :prod_key, 
+                                              :group_id, :artifact_id, :language]))
+                          } 
         end
       }
     end
@@ -46,11 +51,15 @@ class Api::V1::ProductsController < ApplicationController
     respond_to do |format|
       format.json {
         if product.nil?
-          render :json => ["0 Results"]
+          render :json => {:success => true, :msg => "0 Results", :data => []}
         else
-          render :json => product.to_json(:only => [:name, :version, :prod_key, 
-            :group_id, :artifact_id, :language, :prod_type, :description, :link, 
-            :license ] )
+          render :json => {:success => true,
+                           :msg => "N results",
+                           :data => JSON.parse(product.to_json(
+                             :only => [:name, :version, :prod_key, 
+                                        :group_id, :artifact_id, :language, 
+                                        :prod_type, :description, :link, :license ]))
+                          }
         end
       }
     end

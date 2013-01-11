@@ -39,6 +39,7 @@ GEM
       builder
       mime-types
       xml-simple
+    backports (2.6.5)
     boson (1.2.4)
     bson (1.7.1)
     bson_ext (1.7.0)
@@ -55,6 +56,7 @@ GEM
     coffee-script-source (1.4.0)
     daemons (1.1.9)
     dalli (2.6.0)
+    descendants_tracker (0.0.1)
     diff-lcs (1.1.3)
     erubis (2.7.0)
     eventmachine (1.0.0)
@@ -65,7 +67,21 @@ GEM
       paint (>= 0.8.1)
       unicode-display_width (>= 0.1.1)
     g (1.7.1)
+    grape (0.2.5)
+      activesupport
+      builder
+      hashie (~> 1.2)
+      multi_json (>= 1.3.2)
+      multi_xml
+      rack
+      rack-accept
+      rack-mount
+      virtus
+    grape-swagger (0.3.0)
+      grape (~> 0.2.0)
+      kramdown
     gravatar_image_tag (1.1.3)
+    hashie (1.2.0)
     hashr (0.0.22)
     hike (1.2.1)
     hirb (0.7.0)
@@ -98,6 +114,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.7.6)
     kgio (2.7.4)
+    kramdown (0.14.1)
     libv8 (3.11.8.13)
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -132,8 +149,12 @@ GEM
       rake
     psych (1.3.4)
     rack (1.4.3)
+    rack-accept (0.4.5)
+      rack (>= 0.4)
     rack-cache (1.2)
       rack (>= 0.4)
+    rack-mount (0.8.3)
+      rack (>= 1.0.0)
     rack-ssl (1.3.2)
       rack
     rack-test (0.6.2)
@@ -214,6 +235,9 @@ GEM
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     unicode-display_width (0.1.1)
+    virtus (0.5.4)
+      backports (~> 2.6.1)
+      descendants_tracker (~> 0.0.1)
     webrat (0.7.3)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -235,6 +259,8 @@ DEPENDENCIES
   coffee-rails (= 3.2.2)
   dalli (= 2.6.0)
   execjs (= 1.4.0)
+  grape
+  grape-swagger
   gravatar_image_tag (= 1.1.3)
   httparty (= 0.9.0)
   irbtools
