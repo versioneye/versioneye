@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby "1.9.3"
 
-gem 'rails', '3.2.10'
+gem 'rails', '3.2.11'
 gem 'jquery-rails', '2.1.4'
 gem 'execjs', '1.4.0'
 gem 'will_paginate', '3.0.3'

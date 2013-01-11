@@ -156,7 +156,6 @@ Versioneye::Application.routes.draw do
       resources :projects do
         get '/dependencies',             :to => 'projects#show_dependencies'
       end
-
     end
   end
 
