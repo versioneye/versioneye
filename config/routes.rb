@@ -150,19 +150,6 @@ Versioneye::Application.routes.draw do
   get   '/statistics/proglangs',  :to => 'statistics#proglangs'
   get   '/statistics/langtrends', :to => 'statistics#langtrends'
 
-  namespace :api do
-    namespace :v1 do
-      get   '/products/search/:id',  :to => 'products#search'
-      get   '/ping',                 :to => 'products#ping'
-      get   '/languages',            :to => 'products#languages'
-      get   '/statistics',           :to => 'products#statistics'
-      resources :products
-      resources :projects do
-        get '/dependencies',             :to => 'projects#show_dependencies'
-      end
-
-    end
-  end
 
   get   '/about',               :to => 'page#about'
   get   '/impressum',           :to => 'page#impressum'
