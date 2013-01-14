@@ -9,5 +9,6 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
+  include ActionDispatch::TestProcess
   # Add more helper methods to be used by all tests here...
 end

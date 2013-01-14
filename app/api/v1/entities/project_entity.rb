@@ -8,7 +8,7 @@ module VersionEye
       expose :name
       expose :project_type
       expose :private_project, :as => :private
-      expose :perion
+      expose :period
       expose :source
       expose :dep_number
       expose :out_number

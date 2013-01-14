@@ -25,20 +25,23 @@ module VersionEye
 
       desc "upload project file"
       params do
-        requires :upload, :type => File, :desc => "Project file"
+        requires :upload, :desc => "Project file"
       end
       post do
-        project_file = {'datafile' => params[:upload]}
-        unless file_attached?(project_file['datafile'])
+        
+        if params[:upload].nil?
           error! "Didnt submit file or used wrong parameter.", 400
         end
+
+        datafile = ActionDispatch::Http::UploadedFile.new(params[:upload])
+        project_file = {'datafile' => datafile}
 
         project = upload_and_store(project_file)
         if project.nil?
           error! "Cant save uploaded file.", 500
         end
-
-        "ok"
+        
+        present project, with: Entities::ProjectEntity
       end
 
       desc "delete given project"

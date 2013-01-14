@@ -13,7 +13,9 @@ class ProductFactory
         product = self.create_for_gemfile(name, version)
       end
 
-      product.save if save_db
+      if save_db and not product.save
+        $sdterr.puts product.error.full_messages.to_sentence
+      end
       return product
     end
 
