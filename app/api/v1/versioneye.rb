@@ -2,6 +2,7 @@ require 'grape'
 require 'products_api'
 require 'services_api'
 require 'projects_api'
+require 'sessions_api'
 
 module V1
   module Versioneye
@@ -10,20 +11,11 @@ module V1
       format :json
     
       rescue_from :all
-     
-      helpers do
-        def api_response(success = false, message = nil, data = nil)
-          {
-            :success  => success,
-            :message  => message,
-            :data     => data
-          }
-        end
-      end
 
       mount VersionEye::ProductsApi
       mount VersionEye::ServicesApi
       mount VersionEye::ProjectsApi
+      mount VersionEye::SessionsApi
     end
   end
 end
