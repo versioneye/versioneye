@@ -3,7 +3,7 @@ class ApiCall
   include Mongoid::Timestamps
 
   field :api_key, type: String
-  field :api_call, type: Integer
+  field :api_call, type: String
   field :ip,      type: String
 
   validates :api_key, presence: true
