@@ -6,7 +6,7 @@ class Api
   field :api_key, type: String
   field :calls, type: Integer, default: 0
 
-  validates :name, presence: true
+  validates :user_id, presence: true
   validates :api_key, presence: true, 
                       length: {minimum: 20, maximum: 20}, 
                       uniqueness: true
