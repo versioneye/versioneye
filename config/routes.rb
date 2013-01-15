@@ -65,6 +65,9 @@ Versioneye::Application.routes.draw do
   post '/settings/updatenotifications',  :to => 'settings#updatenotifications'
   post '/settings/destroy',              :to => 'settings#destroy'
 
+  get '/settings/api',                   :to => 'settings#api'
+  post '/settings/api',                  :to => 'settings#update_api_key'
+
   get  '/jobs',          :to => 'jobs#index'
   
   # Legacy paths

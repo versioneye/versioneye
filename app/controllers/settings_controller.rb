@@ -60,6 +60,23 @@ class SettingsController < ApplicationController
     end
   end
 
+  def api
+    @user_api = Api.find_or_initialize_by(user_id: current_user.id.to_s)
+    if @user_api.api_key.nil?
+      @user_api.api_key = "generate new value"
+    end
+  end
+
+  def update_api_key
+    @user_api = Api.find_or_initialize_by(user_id: current_user.id.to_s)
+    @user_api.generate_api_key!
+
+    unless @user_api.save
+      flash[:notice] << @user_api.errors.full_messages.to_sentence
+    end
+    redirect_to :back
+  end
+
   def disconnect
     user = current_user
     service = params[:service]
