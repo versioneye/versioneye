@@ -1,8 +1,10 @@
 require 'grape'
+
 require 'products_api'
 require 'services_api'
 require 'projects_api'
 require 'sessions_api'
+require 'users_api'
 
 module V1
   module Versioneye
@@ -16,6 +18,7 @@ module V1
       mount VersionEye::ServicesApi
       mount VersionEye::ProjectsApi
       mount VersionEye::SessionsApi
+      mount VersionEye::UsersApi
     end
   end
 end
