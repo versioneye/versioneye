@@ -36,9 +36,22 @@ module VersionEye
       end
     end
 
-    def get_product_key(prod_key)
+    def parse_product_key(prod_key)
       prod_key.to_s.gsub("--", "/").gsub("~", ".")
     end
 
+
+    def encode_product_key(prod_Key)
+       prod_key.to_s.gsub("/", "--").gsub(".", "~")
+    end
+
+    def fetch_product(prod_key)
+      prod_key = parse_product_key(prod_key)
+      @current_product = Product.find_by_key prod_key
+      if @current_product.nil?
+        error! "Wrong product key: `#{params[:prod_key]}` dont exists.", 404
+      end
+      @current_product
+    end
   end
 end

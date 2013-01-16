@@ -1,6 +1,6 @@
 module VersionEye
   module SessionHelpers
-    def authenticated?
+    def authorized? 
       @current_user = current_user()
       if @current_user.nil?
         error! "Not authorized request.", 401

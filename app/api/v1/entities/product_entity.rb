@@ -1,4 +1,4 @@
-require 'grape'
+require 'grape-entity'
 
 module VersionEye
   module Entities

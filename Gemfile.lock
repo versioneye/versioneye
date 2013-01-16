@@ -39,7 +39,7 @@ GEM
       builder
       mime-types
       xml-simple
-    backports (2.6.5)
+    backports (2.6.7)
     boson (1.2.4)
     bson (1.7.1)
     bson_ext (1.7.0)
@@ -67,16 +67,19 @@ GEM
       paint (>= 0.8.1)
       unicode-display_width (>= 0.1.1)
     g (1.7.1)
-    grape (0.2.5)
+    grape (0.2.6)
       activesupport
       builder
       hashie (~> 1.2)
       multi_json (>= 1.3.2)
-      multi_xml
+      multi_xml (>= 0.5.2)
       rack
       rack-accept
       rack-mount
       virtus
+    grape-entity (0.2.0)
+      activesupport
+      multi_json (>= 1.3.2)
     grape-swagger (0.3.0)
       grape (~> 0.2.0)
       kramdown
@@ -131,7 +134,7 @@ GEM
       mongo (~> 1.7)
       tzinfo (~> 0.3.22)
     multi_json (1.5.0)
-    multi_xml (0.5.1)
+    multi_xml (0.5.2)
     naturalsorter (0.5.11)
     newrelic_rpm (3.5.4.34)
     nokogiri (1.5.6)
@@ -148,7 +151,7 @@ GEM
       postmark (>= 0.9.0)
       rake
     psych (1.3.4)
-    rack (1.4.3)
+    rack (1.4.4)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-cache (1.2)
@@ -260,6 +263,7 @@ DEPENDENCIES
   dalli (= 2.6.0)
   execjs (= 1.4.0)
   grape
+  grape-entity
   grape-swagger
   gravatar_image_tag (= 1.1.3)
   httparty (= 0.9.0)

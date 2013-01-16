@@ -23,7 +23,8 @@ gem 'tire', '0.5.3'
 gem 'dalli', '2.6.0'           # memcache library
 gem 'kgio', '2.7.4'            # 20% performance boost for dalli
 gem 'newrelic_rpm', '3.5.4.34' # performance monitoring 
-gem 'grape'
+gem 'grape' 
+gem 'grape-entity'
 gem 'grape-swagger'
 
 

@@ -12,21 +12,20 @@ module VersionEye
     resource :me do
       desc "shows profile of authorized user"
       get do
-        authenticated?
-
+        authorized?
         present @current_user, with: Entities::UserDetailedEntity
       end
 
       desc "shows favorite packages for authorized user"
       get '/favorites' do
-        authenticated?
+        authorized?
         user_favorites = @current_user.fetch_my_products
         present user_favorites, with: Entities::ProductEntity
       end
 
       desc "show comments of authorized user"
       get '/comments' do
-        authenticated?
+        authorized?
         @comments  = Versioncomment.find_by_user_id @current_user.id
         @comments.each_with_index do |cmd, index|
           @comments[index][:product] = Product.find_by_key cmd.product_Key
@@ -41,7 +40,7 @@ module VersionEye
         requires :username, :type => String, :desc => "username" 
       end
       get '/:username' do
-          authenticated?
+          authorized?
           @user = User.find_by_username(params[:username])
           present @user, with: Entities::UserEntity
       end
@@ -51,13 +50,13 @@ module VersionEye
         requires :username, :type => String, :desc => "username"
       end
       get '/:username/favorites' do
-         authenticated?
+         authorized?
          @user = User.find_by_username(params[:username])
          present @user.fetch_my_products, with: Entities::ProductEntity
       end
 
       get '/:username/comments' do
-        authenticated?
+        authorized?
         @user = User.find_by_username params[:username]
         @user_comments =  Versioncomment.find_by_user_id @user.id
         @user_comments.each_with_index do |cmd, index|
