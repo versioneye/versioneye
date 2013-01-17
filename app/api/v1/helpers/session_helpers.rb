@@ -1,6 +1,8 @@
 module VersionEye
   module SessionHelpers
     def authorized? 
+      @api_key = params[:api_key]
+      cookies[:api_key] = @api_key unless @api_key.nil?
       @current_user = current_user()
       if @current_user.nil?
         error! "Not authorized request.", 401
