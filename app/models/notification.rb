@@ -12,6 +12,9 @@ class Notification
   validates_presence_of :user_id,    :message => "User is mandatory!"
   validates_presence_of :product_id, :message => "Product is mandatory!"
   
+  scope :all_not_sent, where(sent_email: false)
+  scope :by_user_id, ->(user_id){where(user_id: user_id)}
+
   def user
     User.find_by_id( self.user_id )
   end

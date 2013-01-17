@@ -2,13 +2,24 @@ require 'spec_helper'
 
 describe VersionEye::UsersApi do
   describe "not authorized user tries to access to user data" do
-    it "returns authorization error when accessing authorized users data" do
+    it "returns authorization error when asking user's profile" do
       get '/v1/me'
       response.status.should == 401
-      
+
+    end
+    
+    it "returns authorization error when asking user's favorites" do
       get '/v1/me/favorites'
       response.status.should == 401
 
+    end
+
+    it "returns authorixation error when asking user's comments" do
+      get '/v1/me/comments'
+      response.status.should == 401
+    end
+
+    it "returns authorization error when asking user's notifications" do
       get '/v1/me/comments'
       response.status.should == 401
     end

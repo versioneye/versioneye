@@ -13,6 +13,10 @@ module VersionEye
       desc "shows profile of authorized user"
       get do
         authorized?
+        @current_user[:notifications] = {
+          :new => Notification.by_user_id(@current_user.id).all_not_sent.count,
+          :total => Notification.by_user_id(@current_user.id).count
+        }
         present @current_user, with: Entities::UserDetailedEntity
       end
 
@@ -31,6 +35,19 @@ module VersionEye
           @comments[index][:product] = Product.find_by_key cmd.product_Key
         end
         present @comments, with: Entities::VersionCommentEntity
+      end
+
+      desc "show unread notifications of authorized user"
+      get '/notifications' do
+        authorized?
+
+        unread_notifications = Notification.by_user_id(@current_user.id).all_not_sent
+        temp_notice = Notification.new #because grape cant handle plain Hashs as input
+        temp_notice[:me] = User.find_by_id @current_user.id.to_s
+        temp_notice[:unread] = unread_notifications.count
+        temp_notice[:notifications] = unread_notifications
+      
+        present temp_notice, with: Entities::UserNotificationEntity
       end
     end
 

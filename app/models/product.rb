@@ -150,15 +150,15 @@ class Product
   end
   
   def self.find_by_id(id)
-    return nil if id.nil? || id.strip == ""
-    result = Product.find(id)
-    result
-  rescue => e 
-    p "ERROR #{e}"
-    e.backtrace.each do |message| 
-      p " - #{message}"
+    result = nil
+    id = id.to_s if id.is_a?(BSON::ObjectId)
+
+    return nil if id.nil? or id.empty?
+
+    if Product.where(_id: id).exists?
+      result = Product.find(id)
     end
-    nil
+    result
   end
   
   def self.find_by_group_and_artifact(group, artifact)
