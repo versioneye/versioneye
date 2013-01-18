@@ -2,6 +2,9 @@
 
 Versioneye::Application.routes.draw do
   
+  resources :swaggers
+
+
   mount V1::Versioneye::API => '/'
 
   root :to => "products#index"

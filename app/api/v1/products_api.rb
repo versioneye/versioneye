@@ -58,9 +58,17 @@ module VersionEye
       get '/:prod_key/follow' do
         authorized?
         @current_product = fetch_product(params[:prod_key])
-                 
-        user_follows = Follower.where(user_id: @current_user.id, prod_id: @current_product.id).exists?
-        {:prod_key => @current_product.prod_key, :follows => user_follows}
+        follow_status = false
+
+        user_follow = Follower.where(user_id: @current_user.id, prod_id: @current_product.id).shift
+        follow_status = true unless user_follow.nil?
+        user_follow = Follower.new if user_follow.nil?
+
+        user_follow[:username] = @current_user.username
+        user_follow[:prod_key] = @current_product.prod_key 
+        user_follow[:follows]  = follow_status
+
+        present user_follow, with: Entities::UserFollowEntity
       end
 
       desc "follow favorite software package"
@@ -74,13 +82,17 @@ module VersionEye
         user_follow = Follower.new user_id: @current_user.id,
                                    product_id: @current_product.id
         if user_follow.save
-          user_follow[:username] = @current_user.username,
+          user_follow[:username] = @current_user.username
           user_follow[:prod_key] = @current_product.prod_key
-          user_follow[:follows] = true
-          present user_follow, with: UserFollowEntity
+          user_follow[:follows]   = true
+
+          present user_follow, with: Entities::UserFollowEntity
         else
-          {:success => false, 
-           :msg => user_follow.errors.full_messages.to_sentence}
+          error! message: {
+                            :success => false, 
+                            :msg => user_follow.errors.full_messages.to_sentence
+                          },
+                 status: 500
         end
       end
 
@@ -96,8 +108,15 @@ module VersionEye
                                      product_id: @current_product.id).shift
         unless user_follow.nil?
           user_follow.delete
+        else
+          user_follow = Follower.new
         end
-        {success: true, msg: "unfollowed"} 
+        
+        user_follow[:username] = @current_user.username
+        user_follow[:prod_key] = @current_product.prod_key
+        user_follow[:follows]  = false
+
+        present user_follow, with: Entities::UserFollowEntity
       end
     end
   end

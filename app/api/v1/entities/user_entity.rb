@@ -12,6 +12,7 @@ module VersionEye
       expose :plan_name_id
       expose :admin
       expose :deleted
+      expose :notifications
     end
   end
 end

@@ -95,9 +95,57 @@ describe VersionEye::ProductsApi do
 
       it "checking state of follow should be successful" do
         get "/v1/products/#{@safe_prod_key}/follow"
-        pp response
         response.status.should == 200
         response_data =  JSON.parse(response.body)
+        response_data["prod_key"].should eql(@test_product.prod_key)
+        response_data["follows"].should be_false
+      end
+
+      it "returns success if authorized user follows specific package" do
+        post "/v1/products/#{@safe_prod_key}/follow"
+        response.status.should == 201
+        response_data =  JSON.parse(response.body)
+        response_data["prod_key"].should eql(@test_product.prod_key)
+        response_data["follows"].should be_true 
+      end
+
+      it "returns proper response if authorized unfollows specific package" do
+        delete "/v1/products/#{@safe_prod_key}/follow"
+        response.status.should == 200
+
+        get "/v1/products/#{@safe_prod_key}/follow"
+        response_data = JSON.parse(response.body)
+        response_data["follows"].should be_false
+      end
+  end
+
+  describe "accessing follow with instantaneous authorization" do
+      before(:each) do
+        @test_user = UserFactory.create_new 10
+        @test_product = ProductFactory.create_new 103
+        @user_api = ApiFactory.create_new @test_user
+        @safe_prod_key = encode_prod_key(@test_product.prod_key)
+     end
+
+      after(:each) do
+        @test_user.remove
+        @test_product.remove
+        @user_api.remove
+
+        #always logout & clear session
+        delete "/v1/sessions"
+      end
+
+      it "fails when user skips authorization key" do
+        get "/v1/products/#{@safe_prod_key}/follow"
+        pp response
+        response.status.should == 401
+      end
+
+      it "returns success if user, who's not authorized yet, tries to check follow" do
+        get "/v1/products/#{@safe_prod_key}/follow", :api_key => @user_api.api_key
+        response.status.should == 200
+
       end
   end
 end
