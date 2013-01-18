@@ -10,7 +10,9 @@ require 'users_api'
 module V1
   module Versioneye
     class API < Grape::API
+      
       version 'v1', :using => :path
+      
       format :json
       default_format :json
 
