@@ -17,6 +17,7 @@ module VersionEye
         requires :prod_key, :type => String, :desc => "Product key"
       end
       get '/:prod_key' do
+
         prod_key = parse_product_key(params[:prod_key])
         product = Product.find_by_key prod_key
         if product.nil?

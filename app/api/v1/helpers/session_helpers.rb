@@ -1,7 +1,7 @@
 module VersionEye
   module SessionHelpers
     def authorized? 
-      @api_key = params[:api_key]
+      @api_key = params[:api_key] 
       cookies[:api_key] = @api_key unless @api_key.nil?
       @current_user = current_user()
       if @current_user.nil?
@@ -27,6 +27,7 @@ module VersionEye
 
     def clear_session
       cookies[:api_key] = nil
+      cookies.delete :api_key
       @current_user = nil
     end
 

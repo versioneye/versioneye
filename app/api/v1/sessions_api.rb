@@ -9,7 +9,7 @@ module VersionEye
     resource :sessions do
       desc "returns session info for authorized users'"
       get do
-        authenticated?
+        authorized?
         
         user_api = Api.where(user_id: @current_user.id).shift
         {
@@ -24,10 +24,12 @@ module VersionEye
       end
       post do
         authorize(params[:api_key])
+        (authorized?) ? "true" : "false"
       end
 
       desc "delete current session aka log out."
       delete do
+        authorized?
         clear_session
         {:message => "Session is closed now."}
       end

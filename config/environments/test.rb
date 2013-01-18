@@ -47,7 +47,7 @@ Versioneye::Application.configure do
     :access_key_id => "123",
     :secret_access_key => "abc",
     :server => "localhost",
-    :port => "10001"
+    :port => "4567"
   )
 
 end

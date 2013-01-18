@@ -1,20 +1,25 @@
 require 'grape'
 
 require_relative 'helpers/project_helpers.rb'
+require_relative 'helpers/session_helpers.rb'
+
 require_relative 'entities/project_entity.rb'
 require_relative 'entities/project_dependency_entity.rb'
 
 module VersionEye
   class ProjectsApi < Grape::API
     helpers ProjectHelpers
+    helpers SessionHelpers
 
     resource :projects do
 
-      desc "get project"
+      desc "show project information"
       params do 
         requires :id, :type => String, :desc => "Project id"
       end
       get '/:id' do
+        authorized?
+
         project = Project.find_by_id params[:id]
         if project.nil?
           error! "Project `#{params[:id]}` dont exists", 400
@@ -28,17 +33,18 @@ module VersionEye
         requires :upload, :desc => "Project file"
       end
       post do
-        
+        authorized?
+
         if params[:upload].nil?
           error! "Didnt submit file or used wrong parameter.", 400
         end
-
         datafile = ActionDispatch::Http::UploadedFile.new(params[:upload])
         project_file = {'datafile' => datafile}
 
+
         project = upload_and_store(project_file)
         if project.nil?
-          error! "Cant save uploaded file.", 500
+          error! "Cant save uploaded file. Probably our fileserver got cold.", 500
         end
         
         present project, with: Entities::ProjectEntity
@@ -49,6 +55,8 @@ module VersionEye
         requires :id, :type => String, :desc => "Delete project file"
       end
       delete '/:id' do
+        authorized?
+
         unless destroy_project(params[:id])
           error! "Cant delete project", 500
         end

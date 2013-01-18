@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe VersionEye::ProductsApi do
+  before(:each) do
+    @product_uri = "/api/v1/products"
+  end
+
   def encode_prod_key(prod_key)
     prod_key.gsub("/", "--").gsub(".", "~")
   end
@@ -16,7 +20,7 @@ describe VersionEye::ProductsApi do
 
     it "returns same product" do
       prod_key_safe = encode_prod_key(@test_product.prod_key)
-      package_url =  "/v1/products/#{prod_key_safe}.json"
+      package_url =  "#{@product_uri}/#{prod_key_safe}.json"
       get package_url
       response.status.should eql(200)
       
@@ -38,26 +42,26 @@ describe VersionEye::ProductsApi do
     end
 
     it "returns statuscode 400, when search query is too short or missing " do
-      get "/v1/products/search/1.json"
+      get "#{@product_uri}/search/1.json"
       response.status.should eql(400)
     end
 
     it "returns status 200 and search results with correct parameters" do
-      get "/v1/products/search/#{@search_term}.json"
+      get "#{@product_uri}/search/#{@search_term}.json"
       response.status.should eql(200)
       response_data = JSON.parse(response.body)
       response_data['results'][0]["name"].should =~ /test_/
     end
 
     it "returns other paging when user specifies page parameter" do
-      get "/v1/products/search/#{@search_term}.json", :page => 2
+      get "#{@product_uri}/search/#{@search_term}.json", :page => 2
       response.status.should eql(200)
       response_data = JSON.parse(response.body)
       response_data['paging']["current_page"].should == 2
     end
 
     it "returns first page, when page argument is zero or less " do
-      get "/v1/products/search/#{@search_term}.json", :page => 0
+      get "#{@product_uri}/search/#{@search_term}.json", :page => 0
       response.status.should == 200
       response_data  = JSON.parse(response.body)
       response_data['paging']["current_page"].should == 1
@@ -74,17 +78,17 @@ describe VersionEye::ProductsApi do
       @test_product.remove
     end
     it "returns unauthorized error, when lulsec tries to get follow status" do
-      get "/v1/products/#{@safe_prod_key}/follow"
+      get "#{@product_uri}/#{@safe_prod_key}/follow"
       response.status.should == 401
     end 
 
     it "returns unauthorized error, when lulsec tries to follow package" do
-      post "/v1/products/#{@safe_prod_key}/follow"
+      post "#{@product_uri}/#{@safe_prod_key}/follow"
       response.status.should == 401
     end
 
     it "returns unauthorized error, when lulSec tries to unfollow"  do
-      delete "/v1/products/#{@safe_prod_key}/follow"
+      delete "#{@product_uri}/#{@safe_prod_key}/follow"
       response.status.should == 401
     end
 
@@ -98,7 +102,7 @@ describe VersionEye::ProductsApi do
         @safe_prod_key = encode_prod_key(@test_product.prod_key)
 
         #initialize new session
-        post '/v1/sessions', :api_key => @user_api.api_key
+        post '/api/v1/sessions', :api_key => @user_api.api_key
       end
 
       after(:each) do
@@ -108,7 +112,7 @@ describe VersionEye::ProductsApi do
       end
 
       it "checking state of follow should be successful" do
-        get "/v1/products/#{@safe_prod_key}/follow"
+        get "#{@product_uri}/#{@safe_prod_key}/follow"
         response.status.should == 200
         response_data =  JSON.parse(response.body)
         response_data["prod_key"].should eql(@test_product.prod_key)
@@ -116,7 +120,7 @@ describe VersionEye::ProductsApi do
       end
 
       it "returns success if authorized user follows specific package" do
-        post "/v1/products/#{@safe_prod_key}/follow"
+        post "#{@product_uri}/#{@safe_prod_key}/follow"
         response.status.should == 201
         response_data =  JSON.parse(response.body)
         response_data["prod_key"].should eql(@test_product.prod_key)
@@ -124,10 +128,10 @@ describe VersionEye::ProductsApi do
       end
 
       it "returns proper response if authorized unfollows specific package" do
-        delete "/v1/products/#{@safe_prod_key}/follow"
+        delete "#{@product_uri}/#{@safe_prod_key}/follow"
         response.status.should == 200
 
-        get "/v1/products/#{@safe_prod_key}/follow"
+        get "#{@product_uri}/#{@safe_prod_key}/follow"
         response_data = JSON.parse(response.body)
         response_data["follows"].should be_false
       end
@@ -147,16 +151,16 @@ describe VersionEye::ProductsApi do
         @user_api.remove
 
         #always logout & clear session
-        delete "/v1/sessions"
+        delete "/api/v1/sessions"
       end
 
       it "fails when user skips authorization key" do
-        get "/v1/products/#{@safe_prod_key}/follow"
+        get "#{@product_uri}/#{@safe_prod_key}/follow"
         response.status.should == 401
       end
 
       it "returns success if user, who's not authorized yet, tries to check follow" do
-        get "/v1/products/#{@safe_prod_key}/follow", :api_key => @user_api.api_key
+        get "#{@product_uri}/#{@safe_prod_key}/follow", :api_key => @user_api.api_key
         response.status.should == 200
 
       end
