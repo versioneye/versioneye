@@ -3,6 +3,7 @@ require 'grape'
 require_relative 'helpers/session_helpers.rb'
 require_relative 'helpers/product_helpers.rb'
 require_relative 'entities/product_entity.rb'
+require_relative 'entities/product_search_entity.rb'
 
 module VersionEye
   class  ProductsApi < Grape::API
@@ -39,16 +40,28 @@ module VersionEye
         group_id = params[:g]
         lang = get_language_param(params[:lang])
         page_nr = params[:page]
+        page_nr = nil if page_nr.to_i < 1 #will_paginate cant handle 0
         if query.length < 2
           error! "Search term was too short.", 400
         end
 
         start_time = Time.now
         languages = get_language_array(lang)
-        products = ProductService.search(query, group_id, languages, page_nr)
+        search_results= ProductService.search(query, group_id, languages, page_nr)
         #save_search_log(query, products, start_time)
+        query_data = Api.new query: query,
+                                  group_id: group_id,
+                                  languages: languages
+        paging = Api.new current_page: search_results.current_page,
+                             per_page: search_results.per_page,
+                             total_entries: search_results.total_entries,
+                             total_pages: search_results.total_pages
+                                            
+        search_results = Api.new query: query_data,
+                                     paging: paging,
+                                     entries: search_results.entries
 
-        present products, with: Entities::ProductEntity
+        present search_results, with: Entities::ProductSearchEntity
       end
 
       desc "as authorized user, you can check are you following this package already"

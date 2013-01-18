@@ -29,8 +29,9 @@ describe VersionEye::ProductsApi do
   describe "Search packages" do
     before(:each) do
       @test_products = []
-      5.times {|i| @test_products << ProductFactory.create_new(i)}
-    end
+      55.times {|i| @test_products << ProductFactory.create_new(i)}
+      @search_term = @test_products[0].name.chop.chop
+   end
 
     after(:each) do
       @test_products.each {|item| item.delete}
@@ -42,11 +43,24 @@ describe VersionEye::ProductsApi do
     end
 
     it "returns status 200 and search results with correct parameters" do
-      search_term = @test_products[0].name.chop.chop
-      get "/v1/products/search/#{search_term}.json"
+      get "/v1/products/search/#{@search_term}.json"
       response.status.should eql(200)
       response_data = JSON.parse(response.body)
-      response_data[0]["name"].should =~ /test_/
+      response_data['results'][0]["name"].should =~ /test_/
+    end
+
+    it "returns other paging when user specifies page parameter" do
+      get "/v1/products/search/#{@search_term}.json", :page => 2
+      response.status.should eql(200)
+      response_data = JSON.parse(response.body)
+      response_data['paging']["current_page"].should == 2
+    end
+
+    it "returns first page, when page argument is zero or less " do
+      get "/v1/products/search/#{@search_term}.json", :page => 0
+      response.status.should == 200
+      response_data  = JSON.parse(response.body)
+      response_data['paging']["current_page"].should == 1
     end
   end
 
@@ -138,7 +152,6 @@ describe VersionEye::ProductsApi do
 
       it "fails when user skips authorization key" do
         get "/v1/products/#{@safe_prod_key}/follow"
-        pp response
         response.status.should == 401
       end
 
