@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/tim-vandecasteele/grape-swagger.git
+  revision: 23454cfbed8227080f77aafeac6aad07d69cfdb2
+  specs:
+    grape-swagger (0.3.0)
+      grape (~> 0.2.0)
+      kramdown
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -80,9 +88,6 @@ GEM
     grape-entity (0.2.0)
       activesupport
       multi_json (>= 1.3.2)
-    grape-swagger (0.3.0)
-      grape (~> 0.2.0)
-      kramdown
     gravatar_image_tag (1.1.3)
     hashie (1.2.0)
     hashr (0.0.22)
@@ -264,7 +269,7 @@ DEPENDENCIES
   execjs (= 1.4.0)
   grape
   grape-entity
-  grape-swagger
+  grape-swagger!
   gravatar_image_tag (= 1.1.3)
   httparty (= 0.9.0)
   irbtools

@@ -22,9 +22,10 @@ module V1
       mount VersionEye::SessionsApi
       mount VersionEye::UsersApi
 
-      add_swagger_documentation api_version: 1.0,
-                                markdown: true,
-                                base_path: "http://127.0.0.1:3000/v1"
+      add_swagger_documentation :base_path => "http://localhost:3000/api", 
+                                :api_version => "v1",
+                                :markdown => true, 
+                                :hide_documentation_path => true
 
       before do
         header['Access-Control-Allow-Origin'] = '*'
