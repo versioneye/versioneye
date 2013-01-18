@@ -4,7 +4,7 @@ module VersionEye
   module Entities
     class UserEntity < Grape::Entity
       expose :fullname
-      expose :usename
+      expose :username
     end
 
     class UserDetailedEntity < Entities::UserEntity

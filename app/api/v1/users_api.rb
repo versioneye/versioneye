@@ -2,6 +2,7 @@ require 'grape'
 require_relative 'entities/user_entity.rb'
 require_relative 'entities/product_entity.rb'
 require_relative 'entities/version_comment_entity.rb'
+require_relative 'entities/user_notification_entity.rb'
 require_relative 'helpers/session_helpers.rb'
 
 module VersionEye
@@ -42,8 +43,8 @@ module VersionEye
         authorized?
 
         unread_notifications = Notification.by_user_id(@current_user.id).all_not_sent
-        temp_notice = Notification.new #because grape cant handle plain Hashs as input
-        temp_notice[:me] = User.find_by_id @current_user.id.to_s
+        temp_notice = Notification.new #grape cant handle plain Hashs w.o to_json
+        temp_notice[:user_info] = @current_user
         temp_notice[:unread] = unread_notifications.count
         temp_notice[:notifications] = unread_notifications
       

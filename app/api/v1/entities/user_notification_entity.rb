@@ -6,9 +6,9 @@ require_relative 'notification_entity.rb'
 module VersionEye
   module Entities
     class UserNotificationEntity < Grape::Entity
-      expose :me, using: Entities::UserEntity, as: "user"
+      expose :user_info, using: Entities::UserEntity, as: "user"
       expose :unread
-      #expose :notifications, :using => Entities::NotificationEntity
+      expose :notifications, :using => Entities::NotificationEntity
     end
   end
 end
