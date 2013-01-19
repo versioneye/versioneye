@@ -56,7 +56,13 @@ module VersionEye
       }
       params do
         requires :q, :type => String, :desc => "Query string"
-        optional :lang, :type => String, :desc => "Filter results by programming languages"
+        optional :lang, :type => String,
+                        :desc => %q[Filter results by programming languages;
+                                It have to be commaseparated list. 
+                                For example, if you want to search Java: then just 
+                                java or if you want to search Java, Ruby and NodeJS
+                                packages, then use java,ruby,nodejs  
+                              ]
         optional :g, :type => String, :desc => "Specify group-id for Java projects"
         optional :page, :type => Integer, :desc => "argument for paging", :regexp => /^[\d]+$/
       end
@@ -70,8 +76,12 @@ module VersionEye
           error! "Search term was too short.", 400
         end
 
-        start_time = Time.now
         languages = get_language_array(lang)
+       
+        p '----------------------'
+        p languages
+
+        start_time = Time.now
         search_results= ProductService.search(query, group_id, languages, page_nr)
         #save_search_log(query, products, start_time)
         query_data = Api.new query: query,

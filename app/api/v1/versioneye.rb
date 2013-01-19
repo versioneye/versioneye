@@ -11,7 +11,7 @@ module V1
   module Versioneye
     class API < Grape::API
       version 'v1', :using => :path
-      #format :json
+      format :json
       default_format :json
 
       rescue_from :all
@@ -22,7 +22,7 @@ module V1
       mount VersionEye::SessionsApi
       mount VersionEye::UsersApi
 
-      add_swagger_documentation :base_path => "http://127.0.0.1:3000/api", 
+      add_swagger_documentation :base_path => ENV['API_BASE_PATH'], 
                                 :api_version => "v1",
                                 :markdown => true, 
                                 :hide_documentation_path => true

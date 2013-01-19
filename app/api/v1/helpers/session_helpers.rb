@@ -1,6 +1,7 @@
 module VersionEye
   module SessionHelpers
     def authorized? 
+      @api_key = header['api_key']
       @api_key = params[:api_key] 
       cookies[:api_key] = @api_key unless @api_key.nil?
       @current_user = current_user()

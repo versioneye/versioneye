@@ -23,12 +23,12 @@ module VersionEye
 
       langs = lang.split(",")
       langs.each do |language|
-        language = language.to_s.strip.downcase
-        unless language.empty?
-          if special_languages.has_key? language
+        language.to_s.strip.downcase!
+        if language.length > 0
+          if special_languages.has_key?(language)
             languages << special_languages[language]
           else
-            languages << language.capitalize
+            languages << language.capitalize!
           end
         end
         
