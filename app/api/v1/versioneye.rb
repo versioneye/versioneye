@@ -14,7 +14,7 @@ module V1
       format :json
       default_format :json
 
-#      rescue_from :all
+      rescue_from :all
 
       mount VersionEye::ProductsApi
       mount VersionEye::ServicesApi
@@ -22,16 +22,17 @@ module V1
       mount VersionEye::SessionsApi
       mount VersionEye::UsersApi
 
-      add_swagger_documentation :base_path => "http://localhost:3000/api", 
+      add_swagger_documentation :base_path => "http://127.0.0.1:3000/api", 
                                 :api_version => "v1",
                                 :markdown => true, 
                                 :hide_documentation_path => true
-
       before do
-        header['Access-Control-Allow-Origin'] = '*'
-        header['Access-Control-Request-Method'] = '*'
+        header "Access-Control-Allow-Origin", "*"
+        header "Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, PATCH, DELETE"
+        header "Access-Control-Request-Method", "*"
+        header "Access-Control-Max-Age", "1728000"
+        header "Access-Control-Allow-Headers", "api_key, Content-Type"
       end
-
-    end
+   end
   end
 end

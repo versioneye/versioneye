@@ -26,15 +26,19 @@
 </div>
 
 <script type="text/javascript">
+    <% @current_user = current_user %>
+    <% user_api = Api.where(user_id: @current_user.id).shift if @current_user %>
+    <% api_key = "Log in to get your own api token" %>  
+    <% api_key = user_api.api_key unless user_api.nil? %> 
     jQuery(function () {
         window.swaggerUi = new SwaggerUi({
-            discoveryUrl: "http://127.0.0.1:3000/v1/swagger_doc.json",
-            apiKey:"<%= Api.generate_api_key %>",
+            discoveryUrl: "http://127.0.0.1:3000/api/v1/swagger_doc.json",
+            apiKey:"<%= api_key %>",
             dom_id:"swagger-ui-container",
             supportHeaderParams: true,
             debug: true,
             //supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
-            docExpansion: "full",
+            docExpansion: "list",
             onComplete: function(swaggerApi, swaggerUi){
                 if(console) {
                     console.log("Loaded SwaggerUI")

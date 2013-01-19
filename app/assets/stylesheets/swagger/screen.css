@@ -1,4 +1,38 @@
 
+#swagger-ui-container {
+    font-size: 13px;
+
+}
+
+#swagger-ui-container  ol, ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#swagger-ui-container > table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#swagger-ui-container > caption, th, td {
+    text-align: left;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+#swagger-ui-container > q, blockquote {
+    quotes: none;
+}
+
+#swagger-ui-container > q:before, q:after, blockquote:before, blockquote:after {
+    content: "";
+    content: none;
+}
+
+#swagger-ui-container > a img {
+    border: none;
+}
 
 h1 span.divider, h2 span.divider, h3 span.divider, h4 span.divider, h5 span.divider, h6 span.divider {
     color: #aaaaaa;
@@ -48,19 +82,19 @@ div.heading_with_menu ul {
     height: 100px;
 }
 
-p {
+#swagger-ui-container > p {
     line-height: 1.4em;
     padding: 0 0 10px 0;
     color: #333333;
 }
 
-ol {
+#swagger-ui-container > ol {
     margin: 0px 0 10px 0;
     padding: 0 0 0 18px;
     list-style-type: decimal;
 }
 
-ol li {
+#swagger-ui-container > ol li {
     padding: 5px 0px;
     font-size: 0.9em;
     color: #333333;
@@ -127,15 +161,11 @@ span.blank, span.empty {
 
 
 
-strong {
-    font-weight: bold;
-}
-
-.code {
+#swagger-ui-container > .code {
     font-family: "Anonymous Pro", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier New", monospace;
 }
 
-pre {
+#swagger-ui-container > pre {
     font-family: "Anonymous Pro", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier New", monospace;
     background-color: #fcf6db;
     border: 1px solid black;
@@ -297,18 +327,18 @@ form.fullwidth ol li.string input, form.fullwidth ol li.url input, form.fullwidt
 
 
 
-body #content_message {
+ #content_message {
     margin: 10px 15px;
     font-style: italic;
     color: #999999;
 }
 
-body #header {
+  #header {
     background-color: #89bf04;
     padding: 14px;
 }
 
-body #header a#logo {
+ #header a#logo {
     font-size: 1.5em;
     font-weight: bold;
     text-decoration: none;
@@ -317,34 +347,34 @@ body #header a#logo {
     color: white;
 }
 
-body #header form#api_selector {
+ #header form#api_selector {
     display: block;
     clear: none;
     float: right;
 }
 
-body #header form#api_selector .input {
+#header form#api_selector .input {
     display: block;
     clear: none;
     float: left;
     margin: 0 10px 0 0;
 }
 
-body #header form#api_selector .input input {
+#header form#api_selector .input input {
     font-size: 0.9em;
     padding: 3px;
     margin: 0;
 }
 
-body #header form#api_selector .input input#input_baseUrl {
+#header form#api_selector .input input#input_baseUrl {
     width: 320px;
 }
 
-body #header form#api_selector .input input#input_apiKey {
+#header form#api_selector .input input#input_apiKey {
     width: 180px;
 }
 
-body #header form#api_selector .input a#explore {
+#header form#api_selector .input a#explore {
     display: block;
     text-decoration: none;
     font-weight: bold;
@@ -360,11 +390,11 @@ body #header form#api_selector .input a#explore {
     border-radius: 4px;
 }
 
-body #header form#api_selector .input a#explore:hover {
+#header form#api_selector .input a#explore:hover {
     background-color: #547f00;
 }
 
-body p#colophon {
+p#colophon {
     margin: 0 15px 40px 15px;
     padding: 10px 0;
     font-size: 0.8em;
@@ -373,13 +403,14 @@ body p#colophon {
     font-style: italic;
 }
 
-body p#colophon a {
+p#colophon a {
     text-decoration: none;
     color: #547f00;
 }
 
-body ul#resources {
+.swagger-ui-wrap > ul#resources {
     font-size: 0.9em;
+    width: 95%;
 }
 
 body ul#resources li.resource {
@@ -405,6 +436,7 @@ body ul#resources li.resource div.heading h2 {
     clear: none;
     float: left;
     font-weight: bold;
+    font-size: 1.9em;
 }
 
 body ul#resources li.resource div.heading h2 a {
@@ -496,6 +528,7 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
     margin: 0;
     padding: 0;
     line-height: 1.1em;
+    font-size: 1.5em;
     color: black;
 }
 
@@ -580,7 +613,7 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.get div.content {
-    background-color: #ebf3f9;
+    width: auto;
     border: 1px solid black;
     border-color: #c3d9ec;
     border-top: none;
@@ -601,6 +634,7 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.get div.content h4 {
+    width: auto;
     color: #0f6ab4;
     font-size: 1.1em;
     margin: 0;
@@ -623,7 +657,6 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
     display: block;
     clear: none;
     float: left;
-    padding: 6px 8px;
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.get div.content div.sandbox_header img {
@@ -634,17 +667,13 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.get div.content div.sandbox_header a {
-    padding: 4px 0 0 10px;
-    color: #6fa5d2;
     display: inline-block;
     font-size: 0.9em;
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.get div.content div.response div.block {
-    background-color: #fcf6db;
-    border: 1px solid black;
-    border-color: #e5e0c6;
-}
+    border: 0px solid black;
+ }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.get div.content div.response div.block pre {
     padding: 10px;
@@ -682,6 +711,7 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
     margin: 0;
     padding: 0;
     line-height: 1.1em;
+    font-size: 1.5em;
     color: black;
 }
 
@@ -766,7 +796,7 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.post div.content {
-    background-color: #ebf7f0;
+    width: auto;
     border: 1px solid black;
     border-color: #c3e8d1;
     border-top: none;
@@ -868,6 +898,7 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
     margin: 0;
     padding: 0;
     line-height: 1.1em;
+    font-size: 1.5em;
     color: black;
 }
 
@@ -952,7 +983,7 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.put div.content {
-    background-color: #faf5ee;
+    width: auto;
     border: 1px solid black;
     border-color: #f0e0ca;
     border-top: none;
@@ -1069,8 +1100,8 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
     text-decoration: none;
     color: white;
     display: inline-block;
-    width: 50px;
-    font-size: 0.7em;
+    width: 60px;
+    font-size: 0.6em;
     text-align: center;
     padding: 7px 0 4px 0;
     -moz-border-radius: 2px;
@@ -1135,7 +1166,7 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.patch div.heading ul.options li a:hover, body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.patch div.heading ul.options li a:active, body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.patch div.heading ul.options li a.active {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.patch div.content {
@@ -1241,6 +1272,7 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
     margin: 0;
     padding: 0;
     line-height: 1.1em;
+    font-size: 1.5em;
     color: black;
 }
 
@@ -1255,8 +1287,8 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
     text-decoration: none;
     color: white;
     display: inline-block;
-    width: 50px;
-    font-size: 0.7em;
+    width: 60px;
+    font-size: 0.6em;
     text-align: center;
     padding: 7px 0 4px 0;
     -moz-border-radius: 2px;
@@ -1325,7 +1357,7 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.delete div.content {
-    background-color: #f7eded;
+    width: auto;
     border: 1px solid black;
     border-color: #e8c6c7;
     border-top: none;
