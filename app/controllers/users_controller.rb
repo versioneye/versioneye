@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate, :only => [:edit, :update, :destroy]
+  before_filter :authenticate, :only => [:edit, :update, :destroy, :index]
   before_filter :correct_user, :only => [:edit, :update]
-  before_filter :admin_user,   :only => [:destroy]
+  before_filter :admin_user,   :only => [:destroy, :index]
   before_filter :set_locale
 
   force_ssl :only => [:new, :create, :activate]
@@ -14,6 +14,10 @@ class UsersController < ApplicationController
     else  
       redirect_to root_path
     end
+  end
+
+  def index 
+    @users = User.find_all(params[:page])
   end
   
   def new
