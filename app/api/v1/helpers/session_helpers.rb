@@ -21,7 +21,7 @@ module VersionEye
 
     def current_user 
       cookie_token = cookies[:api_key]
-      @current_user ||= User.authenticate_with_apikey(cookie_token)
+      @current_user = authorize(cookie_token) unless cookie_token.nil?
       @current_user
     end
 

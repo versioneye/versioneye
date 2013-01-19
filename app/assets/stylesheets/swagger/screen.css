@@ -839,7 +839,6 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
     display: block;
     clear: none;
     float: left;
-    padding: 6px 8px;
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.post div.content div.sandbox_header img {
@@ -850,7 +849,6 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.post div.content div.sandbox_header a {
-    padding: 4px 0 0 10px;
     color: #6fc992;
     display: inline-block;
     font-size: 0.9em;
@@ -1026,7 +1024,6 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
     display: block;
     clear: none;
     float: left;
-    padding: 6px 8px;
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.put div.content div.sandbox_header img {
@@ -1037,7 +1034,6 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.put div.content div.sandbox_header a {
-    padding: 4px 0 0 10px;
     color: #dcb67f;
     display: inline-block;
     font-size: 0.9em;
@@ -1400,7 +1396,6 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
     display: block;
     clear: none;
     float: left;
-    padding: 6px 8px;
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.delete div.content div.sandbox_header img {
@@ -1411,7 +1406,6 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.delete div.content div.sandbox_header a {
-    padding: 4px 0 0 10px;
     color: #c8787a;
     display: inline-block;
     font-size: 0.9em;

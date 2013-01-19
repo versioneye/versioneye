@@ -13,9 +13,11 @@ module VersionEye
 
     resource :projects do
 
-      desc "show project information"
+      desc "show the project's information", {
+        notes: %q[ It shows detailed info of your project. ]
+      }
       params do 
-        requires :id, :type => String, :desc => "Project id"
+        requires :id, :type => String, :desc => "Project identification string"
       end
       get '/:id' do
         authorized?
@@ -30,7 +32,10 @@ module VersionEye
 
       desc "upload project file"
       params do
-        requires :upload, :desc => "Project file"
+        requires :upload,  :desc => "Project file - [maven.pom, Gemfile ...]"
+        optional :api_key, :type => String, 
+                           :desc => "Optional argument to create active session on run."
+
       end
       post do
         authorized?
@@ -64,9 +69,12 @@ module VersionEye
         "ok"
       end
 
-      desc "check versions of packages in project file"
+      desc "check versions of packages in specific project"
       params do
-        requires :id, :type => String, :desc => "Checks versions of packages in project"
+        requires :id, :type => String, 
+                      :desc => "Checks versions of packages in project"
+        optional :api_key, :type => String,
+                            :desc => "Optional argument to create active session on run."
       end
       get '/:id/check' do
         project = Project.find_by_id params[:id]

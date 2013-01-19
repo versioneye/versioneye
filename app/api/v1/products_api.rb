@@ -12,9 +12,25 @@ module VersionEye
     
     resource :products do
 
-      desc "get detailed informations for specific package"
+      desc "detailed information for specific package", {
+          notes: %q[
+                    NB! If there are some special characters in `prod_key`, 
+                    you must replace it to make it URL safe! 
+                    
+                    Special characters such as `/` and `.` should
+                    be replaced with tokens `--` for back-slash and 
+                    `~` for points. 
+
+                    For example `junit/junit` has to be transormed to  `junit--junit`.
+                    \\
+                    It will respond with 404, when given product with given product doesnt exists.
+                ]
+        }
+
       params do
-        requires :prod_key, :type => String, :desc => "Product key"
+        requires :prod_key, :type => String, 
+                            :desc => %Q[ Product specific key. 
+                                         NB! check implementation notes. ]
       end
       get '/:prod_key' do
 
@@ -29,12 +45,20 @@ module VersionEye
       end
 
 
-      desc "search products from VersionEye"
+      desc "search packages", {
+        notes: %q[
+                The result is the same as in the web application. But you get it as JSON objects. The result is an array of product objects.
+                \\
+                The search term must contain at least 2 characters. 
+                Otherwise service will respond with status 404. 
+                If there are no results, you'll get an empty array [ ] back.
+              ]
+      }
       params do
-        requires :q, :type => String, :desc => "Search query"
+        requires :q, :type => String, :desc => "Query string"
         optional :lang, :type => String, :desc => "Filter results by programming languages"
         optional :g, :type => String, :desc => "Specify group-id for Java projects"
-        optional :page, :type => Integer, :desc => "Current page", :regexp => /^[\d]+$/
+        optional :page, :type => Integer, :desc => "argument for paging", :regexp => /^[\d]+$/
       end
       get '/search/:q' do
         query = parse_query(params[:q])
@@ -65,9 +89,24 @@ module VersionEye
         present search_results, with: Entities::ProductSearchEntity
       end
 
-      desc "as authorized user, you can check are you following this package already"
-      params do 
+      desc "check your following status", {
+          notes: %q[
+                    NB! If there are some special characters in `prod_key`, 
+                    you must replace it to make it URL safe! 
+                    
+                    Special characters such as `/` and `.` should
+                    be replaced with tokens `--` for back-slash and 
+                    `~` for points. 
+
+                    For example `junit/junit` has to be transormed to  `junit--junit`.
+                    \\
+                    It will respond with 404, when given product with given product doesnt exists.
+                ]
+        }
+
+     params do 
         requires :prod_key, :type => String, :desc => "Package specifier"
+        optional :api_key, :type => String, :desc => "Your api token, to create active session by run."
       end
       get '/:prod_key/follow' do
         authorized?
@@ -85,9 +124,21 @@ module VersionEye
         present user_follow, with: Entities::UserFollowEntity
       end
 
-      desc "follow favorite software package"
+      desc "follow your favorite software package", {
+          notes: %q[
+                    NB! If there are some special characters in `prod_key`, 
+                    you must replace it to make it URL safe! 
+                    
+                    Special characters such as `/` and `.` should
+                    be replaced with tokens `--` for back-slash and 
+                    `~` for points". 
+
+                    For example `junit/junit` has to be transormed to  `junit--junit`.
+                ]
+        }
       params do
-        requires :prod_key, :type => String, :desc => "Package specific key"
+        requires :prod_key, :type => String, 
+                            :desc => %Q{ Package product key. }
       end
       post '/:prod_key/follow' do
         authorized?

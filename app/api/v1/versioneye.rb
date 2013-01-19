@@ -11,7 +11,7 @@ module V1
   module Versioneye
     class API < Grape::API
       version 'v1', :using => :path
-      format :json
+      #format :json
       default_format :json
 
       rescue_from :all

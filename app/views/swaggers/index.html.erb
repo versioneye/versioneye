@@ -1,3 +1,5 @@
+<% title  "API documentation" %>
+
 <div id='header'>
     <div class="swagger-ui-wrap">
         <a id="logo" href="http://swagger.wordnik.com">swagger</a>
@@ -15,6 +17,20 @@
             <div class='input'><a id="explore" href="#">Explore</a></div>
         </form>
     </div>
+</div>
+
+<div class = "heading">
+  <br/>
+  <p>
+    An API is an "Application Programming Interface". 
+    You can use the API to write mobile Apps for VersionEye. 
+    The iPhone App and Android App we are working on is using the same API. 
+    But you can also use it to write an Desktop Application, Gadget or Widget.
+  </p>
+  <p>
+  This is still beta version, and we are very looking forward your feedback and
+  ideas to make our API more powerful and developer friendly.
+  </p>
 </div>
 
 <div id="message-bar" class="swagger-ui-wrap">
@@ -37,7 +53,7 @@
             dom_id:"swagger-ui-container",
             supportHeaderParams: true,
             debug: true,
-            //supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
+            supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
             docExpansion: "list",
             onComplete: function(swaggerApi, swaggerUi){
                 if(console) {
