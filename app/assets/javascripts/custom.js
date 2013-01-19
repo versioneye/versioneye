@@ -12,13 +12,13 @@ var fb_redirect = "redirect_uri=https://www.versioneye.com/auth/facebook/callbac
 var oauth_facebook_link = fb_domainlink + fb_req_perms + fb_clientid + fb_scope + fb_redirect;
 var values = [{ label: "Choice1", va: "value1" }, { label: "Choice2", va: "value2" }]
 
-jQuery(document).ready(function() {
-	jQuery('#q').tbHinter({
-		text: "json",
-		styleclass: "lp_searchfield_hint"
-	});	
+jQuery(document).ready( function() {
+  jQuery('#q').tbHinter({
+    text: "json",
+    styleclass: "lp_searchfield_hint"
+  }); 
 
-  jQuery("#payment-form").submit(function(event) {
+  jQuery("#payment-form").submit( function(event) {
     jQuery('.submit-button').attr("disabled", "disabled");
 
     Stripe.createToken({
@@ -30,226 +30,233 @@ jQuery(document).ready(function() {
 
     // prevent the form from submitting with the default action
     return false;
+  } );
+
+  jQuery( "#tabs" ).tabs();
+
+  if (window.FB){
+    FB.init({
+          appId:'230574627021570', 
+          cookie:true,
+          status:true, 
+          xfbml:true
+      }); 
+  }
+
+  jQuery("#ext_search_link").click( function() {
+    jQuery("#extended_search_container").fadeToggle("slow", "linear");
   });
 
-	jQuery( "#tabs" ).tabs();
+  map_for_jobs = document.getElementById("map_for_jobs")
+  if (map_for_jobs){
+    initialize_jobs() 
+  }
 
-	if (window.FB){
-		FB.init({
-	        appId:'230574627021570', 
-	        cookie:true,
-	        status:true, 
-	        xfbml:true
-	    });	
-	}
+  map_for_profile = document.getElementById("map_for_user_profile")
+  if (map_for_profile){
+    path = window.location.pathname; 
+    path = path.replace("/favoritepackages", "")
+    path = path.replace("/comments", "")
+    jQuery.ajax({
+        url: path + "/users_location.json"
+    }).done(function (data){
+          if (data){
+              initialize_profile(data.location);
+          }
+    } );
+  }
 
-    jQuery("#ext_search_link").click(function() {
-		jQuery("#extended_search_container").fadeToggle("slow", "linear");
-	});
+  if (window.render_wheel) {
+    render_wheel();
+  }
+  if (window.render_wheel_demo) {
+    render_wheel_demo();
+  }
+  if (window.render_wheel_main) {
+    render_wheel_main();
+  }
+  if (window.render_wheel_development) {
+    render_wheel_development();
+  }
+  if (window.render_wheel_test) {
+    render_wheel_test();
+  }    
+  if (window.render_wheel_provided) {
+    render_wheel_provided();
+  }
+  if (window.render_wheel_replace) {
+    render_wheel_replace();
+  }
+  if (window.render_wheel_require_dev) {
+    render_wheel_require_dev();
+  }
 
-    map_for_jobs = document.getElementById("map_for_jobs")
-    if (map_for_jobs){
-    	initialize_jobs()	
-    }
+  if (jQuery('.captcha_math').length){
+    render_captcha_math()      
+  }
 
-    map_for_profile = document.getElementById("map_for_user_profile")
-    if (map_for_profile){
-      path = window.location.pathname; 
-      path = path.replace("/favoritepackages", "")
-      path = path.replace("/comments", "")
-    	jQuery.ajax({
-	        url: path + "/users_location.json"
-	    }).done(function (data){
-            if (data){
-                initialize_profile(data.location);
-            }
-	    } );
-    }
-
-    if (window.render_wheel) {
-    	render_wheel();
-    }
-    if (window.render_wheel_demo) {
-    	render_wheel_demo();
-    }
-    if (window.render_wheel_main) {
-    	render_wheel_main();
-    }
-    if (window.render_wheel_development) {
-    	render_wheel_development();
-    }
-    if (window.render_wheel_test) {
-    	render_wheel_test();
-    }    
-    if (window.render_wheel_provided) {
-    	render_wheel_provided();
-    }
-    if (window.render_wheel_replace) {
-    	render_wheel_replace();
-    }
-    if (window.render_wheel_require_dev) {
-    	render_wheel_require_dev();
-    }
-
-    if (jQuery('.captcha_math').length){
-      render_captcha_math()      
-    }
 });
 
 function render_captcha_math(){
-	value_a = Math.floor((Math.random()*10)+1);
-	value_b = Math.floor((Math.random()*10)+1);
-	jQuery("[name='value_a']").val(value_a);
-	jQuery("[name='value_b']").val(value_b);
-	fb_math_label = jQuery(".fb_math");
-	fb_math_label.html(value_a + " + " + value_b + " = ");
+  value_a = Math.floor((Math.random()*10)+1);
+  value_b = Math.floor((Math.random()*10)+1);
+  jQuery("[name='value_a']").val(value_a);
+  jQuery("[name='value_b']").val(value_b);
+  fb_math_label = jQuery(".fb_math");
+  fb_math_label.html(value_a + " + " + value_b + " = ");
 }
 
 function stripeResponseHandler(status, response) {
-    if (response.error) {
-        alert(response.error.message)
-        // show the errors on the form
-        $(".payment-errors").text(response.error.message);
-        jQuery(".submit-button").removeAttr("disabled");
-    } else {
-        var form$ = jQuery("#payment-form");
-        // token contains id, last4, and card type
-        var token = response['id'];
-        // insert the token into the form so it gets submitted to the server
-        form$.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-        // and submit
-        form$.get(0).submit();
-    }
+  if (response.error) {
+    alert(response.error.message)
+    // show the errors on the form
+    $(".payment-errors").text(response.error.message);
+    jQuery(".submit-button").removeAttr("disabled");
+  } else {
+    var form$ = jQuery("#payment-form");
+    // token contains id, last4, and card type
+    var token = response['id'];
+    // insert the token into the form so it gets submitted to the server
+    form$.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+    // and submit
+    form$.get(0).submit();
+  }
 }
 
 function confirmAction(){
-	if (confirm('Are you sure?')){
-		return true;
-	} else {
-		return false;
-	}
+  if (confirm('Are you sure?')){
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function handle_path(options){
-	jQuery.ajax({
+  jQuery.ajax({
         type: 'POST',
         url: "/package/image_path.json",
         data: { 'key': options.product_key, 'version': options.product_version, 'scope': options.scope },
         dataType: 'text',
         success: function(data) {
-        	if (data == "nil" ){
-        		upload_file(options);
-        	} else {
-        		show_pinit_button(data, options);
-        	}
+          if (data == "nil" ){
+            upload_file(options);
+          } else {
+            show_pinit_button(data, options);
+          }
         }
     });
 }
 
 function upload_file(options){
-	canvas = document.getElementById(options.canvas_id)
-	if (canvas && options.pinit){
-		jQuery.ajax({
-	        type: 'POST',
-	        url: "/package/upload_image.json",
-	        data: { 'image': document.getElementById(options.canvas_id).toDataURL(), 'key': options.product_key, 'version': options.product_version, 'scope': options.scope },
-	        dataType: 'text',
-	        success: function(data) {
-	            show_pinit_button(data, options);
-	        }
-	    });	
-	}
+  canvas = document.getElementById(options.canvas_id)
+  if (canvas && options.pinit){
+    jQuery.ajax({
+        type: 'POST',
+        url: "/package/upload_image.json",
+        data: { 'image': document.getElementById(options.canvas_id).toDataURL(), 'key': options.product_key, 'version': options.product_version, 'scope': options.scope },
+        dataType: 'text',
+        success: function(data) {
+            show_pinit_button(data, options);
+        }
+    }); 
+  }
 }
 
 function show_pinit_button(picture_url, options){
-	if (options.pinit == false){
-		return ;
-	}
-	if (options.resize == false && options.data_length > options.data_border){ 
-		canvas_container = document.getElementById(options.container_id);
-		var img = document.createElement("IMG");
-		img.src = picture_url;
-		img.style.width = "600px"
-		canvas_container.appendChild(img);
-	}
-	pin_button = document.getElementById("pinit");
-	pin_button.href = "http://pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.versioneye.com/package/"+options.product_key+"/version/"+options.product_version+"&media="+picture_url+"&description=" + options.product_name + " : " + options.version + " : " + options.scope;
-	pin_button.style.display = "block";
+  if (options.pinit == false){
+    return ;
+  }
+  if (options.resize == false && options.data_length > options.data_border){ 
+    canvas_container = document.getElementById(options.container_id);
+    var img = document.createElement("IMG");
+    img.src = picture_url;
+    img.style.width = "600px"
+    canvas_container.appendChild(img);
+  }
+  pin_button = document.getElementById("pinit");
+  pin_button.href = "http://pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.versioneye.com/package/"+options.product_key+"/version/"+options.product_version+"&media="+picture_url+"&description=" + options.product_name + " : " + options.version + " : " + options.scope;
+  pin_button.style.display = "block";
 }
 
-
-function load_dialog_follow(product_name){	
-	document.getElementById('product_to_follow').innerHTML = product_name;	
-	jQuery('#dialog_follow').modal({keyboard : true});	
+function load_dialog_follow(product_name, prod_key){  
+  document.getElementById('product_to_follow').innerHTML = product_name;
+  setCookie("prod_key", prod_key, 1);
+  jQuery('#dialog_follow').modal({keyboard : true});  
 }
 
 function exchangeImage(id, image){
-	image_path = "/assets/" + image
-	document.getElementById(id).src=image_path;
+  image_path = "/assets/" + image
+  document.getElementById(id).src=image_path;
 }
 
 function show_versioncomment_reply(id){
-	var form_id = "#" + id + "_reply_form";
-	var display_link = "#" + id + "_reply_link";
-	var hide_link = "#" + id + "_hide_link";
-	jQuery(form_id).css('display', 'block'); 
-	jQuery(display_link).css('display', 'none'); 
-	jQuery(hide_link).css('display', 'block'); 
-	return false;
+  var form_id = "#" + id + "_reply_form";
+  var display_link = "#" + id + "_reply_link";
+  var hide_link = "#" + id + "_hide_link";
+  jQuery(form_id).css('display', 'block'); 
+  jQuery(display_link).css('display', 'none'); 
+  jQuery(hide_link).css('display', 'block'); 
+  return false;
 }
 
 function hide_versioncomment_reply(id){
-	var form_id = "#" + id + "_reply_form";
-	var display_link = "#" + id + "_reply_link";
-	var hide_link = "#" + id + "_hide_link";
-	jQuery(form_id).css('display', 'none'); 
-	jQuery(display_link).css('display', 'block'); 
-	jQuery(hide_link).css('display', 'none'); 
-	return false;
+  var form_id = "#" + id + "_reply_form";
+  var display_link = "#" + id + "_reply_link";
+  var hide_link = "#" + id + "_hide_link";
+  jQuery(form_id).css('display', 'none'); 
+  jQuery(display_link).css('display', 'block'); 
+  jQuery(hide_link).css('display', 'none'); 
+  return false;
 }
 
 function shareOnFacebook(link, message){
-	var picture = 'https://www.versioneye.com/assets/icon_114.png'
-	FB.ui({ method: 'feed',
+  var picture = 'https://www.versioneye.com/assets/icon_114.png'
+  FB.ui({ method: 'feed',
         link: link,
         picture: picture,
         description: message});
 }
 
 function fetchGitHubProjects(){
-	fetchLinkArea = document.getElementById("fetchLinkArea");
-	fetchLinkArea.style.display = "none";
-	loadingbarArea = document.getElementById("loadingbarArea");
-	loadingbarArea.style.display = "block";
-	jQuery.ajax({
-		url: "/user/projects/github_projects.json"
-	}).done(function (data){
-		if (data){
-			addGitHubProjects(data)			
-		}
-	} );	
+  fetchLinkArea = document.getElementById("fetchLinkArea");
+  fetchLinkArea.style.display = "none";
+  loadingbarArea = document.getElementById("loadingbarArea");
+  loadingbarArea.style.display = "block";
+  jQuery.ajax({
+    url: "/user/projects/github_projects.json"
+  }).done(function (data){
+    if (data){
+      addGitHubProjects(data)     
+    }
+  } );  
 }
 
 function addGitHubProjects(data){
-	if (data[0].projects[0] == "BAD_CREDENTIALS"){
-		alert("Your GitHub token is not valid anymore. Please login again with GitHub.")
-		projectListArea = document.getElementById("gitHubLogin");
-		projectListArea.style.display = "block";
-	} else {
-		first_project = data[0].projects[0]
-		if (first_project == "NO_SUPPORTED_PROJECTS_FOUND"){
-			alert("Sorry. But it seems that your projects are not supported.")
-		} else {
-			for (i = 0; i < data[0].projects.length; i++ ){
-				project = data[0].projects[i];
-				var o = new Option(project, project);
-				jQuery(o).html(project);
-				jQuery("#github_projects").append(o);
-			}
-			projectListArea = document.getElementById("projectListArea");
-			projectListArea.style.display = "block";	
-		}
-	}
-	loadingbarArea = document.getElementById("loadingbarArea");
-	loadingbarArea.style.display = "none";
+  if (data[0].projects[0] == "BAD_CREDENTIALS"){
+    alert("Your GitHub token is not valid anymore. Please login again with GitHub.")
+    projectListArea = document.getElementById("gitHubLogin");
+    projectListArea.style.display = "block";
+  } else {
+    first_project = data[0].projects[0]
+    if (first_project == "NO_SUPPORTED_PROJECTS_FOUND"){
+      alert("Sorry. But it seems that your projects are not supported.")
+    } else {
+      for (i = 0; i < data[0].projects.length; i++ ){
+        project = data[0].projects[i];
+        var o = new Option(project, project);
+        jQuery(o).html(project);
+        jQuery("#github_projects").append(o);
+      }
+      projectListArea = document.getElementById("projectListArea");
+      projectListArea.style.display = "block";  
+    }
+  }
+  loadingbarArea = document.getElementById("loadingbarArea");
+  loadingbarArea.style.display = "none";
+}
+
+function setCookie(name, value, days){
+  var date = new Date();
+  new_date = new Date(date.getFullYear(), date.getMonth(), date.getDate()+days);
+  document.cookie = name +"=" + value + ";expires=" + new_date + ";path=/";
 }
