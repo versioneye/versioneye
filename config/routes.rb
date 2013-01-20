@@ -165,10 +165,12 @@ Versioneye::Application.routes.draw do
   get   '/datacollection',      :to => 'page#datacollection'
   get   '/disclaimer',          :to => 'page#disclaimer'
   
-  get   '/swaggers',            :to => 'swaggers#index'
-  get   '/apijson',             :to => 'swaggers#index'  
-  get   '/apijson_tools',       :to => redirect('/apijson')
-  get   '/apijson_libs',        :to => redirect('/apijson')
+  
+  get   '/api',                 :to => 'swaggers#index'  
+  get   '/swaggers',            :to => redirect('/api')
+  get   '/apijson',             :to => redirect('/api')
+  get   '/apijson_tools',       :to => redirect('/api')
+  get   '/apijson_libs',        :to => redirect('/api')
   
   get   '/newest/version',      :to => 'page#newest'
   get   '/current/version',     :to => 'page#newest'
