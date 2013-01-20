@@ -29,8 +29,8 @@ gem 'grape-swagger', :git => 'https://github.com/tim-vandecasteele/grape-swagger
 
 
 group :development do
-  gem 'libv8', '~> 3.11.8'
-  gem 'therubyracer' , '0.11.1', :platforms => :ruby, :require => 'v8'
+  gem 'libv8' #, '~> 3.11.8'
+  gem 'therubyracer' #, '0.11.1', :platforms => :ruby, :require => 'v8'
   gem 'psych'
   gem 'irbtools'
   gem 'terminal-notifier'

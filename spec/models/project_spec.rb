@@ -64,5 +64,30 @@ describe Project do
     end
 
   end
-  
+
+  describe "make_project_key" do
+    before(:each) do
+      @test_user = UserFactory.create_new 1001
+      @test_user.nil?.should be_false
+
+      @test_project = ProjectFactory.create_new @test_user 
+    end
+
+    after(:each) do
+      @test_user.remove 
+      @test_project.remove
+    end
+
+    it "project factory generated project_key passes validation" do
+      @test_project.errors.full_messages.empty?.should be_true
+    end
+    
+    it "if generates unique project_key if there already exsists similar projects" do
+      new_project = ProjectFactory.create_new @test_user
+      new_project.valid?.should be_true
+      new_project.project_key.should =~ /(\d+)$/
+      new_project.remove
+    end
+
+  end
 end
