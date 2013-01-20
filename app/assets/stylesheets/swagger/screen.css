@@ -159,8 +159,6 @@ span.blank, span.empty {
     font-style: italic;
 }
 
-
-
 #swagger-ui-container > .code {
     font-family: "Anonymous Pro", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier New", monospace;
 }
@@ -171,7 +169,6 @@ span.blank, span.empty {
     border: 1px solid black;
     border-color: #e5e0c6;
     padding: 10px;
-    /* white-space: pre-line */
 }
 
 pre code {
@@ -325,32 +322,22 @@ form.fullwidth ol li.string input, form.fullwidth ol li.url input, form.fullwidt
     width: 500px !important;
 }
 
-
-
- #content_message {
+#content_message {
     margin: 10px 15px;
     font-style: italic;
     color: #999999;
 }
 
-  #header {
-    background-color: #89bf04;
-    padding: 14px;
+#header {
+    background-color: white;
+    padding-bottom: 30px;
+    float: none;
+    display: block;
 }
 
- #header a#logo {
-    font-size: 1.5em;
-    font-weight: bold;
-    text-decoration: none;
-    background: transparent url(../images/logo_small.png) no-repeat left center;
-    padding: 5px 0 5px 10px;
-    color: white;
-}
-
- #header form#api_selector {
+#header form#api_selector {
     display: block;
     clear: none;
-    float: right;
 }
 
 #header form#api_selector .input {
@@ -361,7 +348,6 @@ form.fullwidth ol li.string input, form.fullwidth ol li.url input, form.fullwidt
 }
 
 #header form#api_selector .input input {
-    font-size: 0.9em;
     padding: 3px;
     margin: 0;
 }
@@ -371,14 +357,14 @@ form.fullwidth ol li.string input, form.fullwidth ol li.url input, form.fullwidt
 }
 
 #header form#api_selector .input input#input_apiKey {
-    width: 180px;
+    width: 220px;
 }
 
 #header form#api_selector .input a#explore {
     display: block;
     text-decoration: none;
     font-weight: bold;
-    padding: 6px 8px;
+    padding: 4px 8px;
     font-size: 0.9em;
     color: white;
     background-color: #547f00;
@@ -409,8 +395,8 @@ p#colophon a {
 }
 
 .swagger-ui-wrap > ul#resources {
-    font-size: 0.9em;
     width: 95%;
+    height: 25px;
 }
 
 body ul#resources li.resource {

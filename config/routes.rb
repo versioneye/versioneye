@@ -1,9 +1,6 @@
 #require_relative '../app/api/v1/versioneye'
 
 Versioneye::Application.routes.draw do
-  
-  resources :swaggers
-
 
   mount V1::Versioneye::API => '/api'
 
@@ -167,9 +164,14 @@ Versioneye::Application.routes.draw do
   get   '/datenerhebung',       :to => 'page#datenerhebung'
   get   '/datacollection',      :to => 'page#datacollection'
   get   '/disclaimer',          :to => 'page#disclaimer'
-  get   '/apijson',             :to => 'page#apijson'  
-  get   '/apijson_tools',       :to => 'page#apijson_tools'  
-  get   '/apijson_libs',        :to => 'page#apijson_libs'
+  
+  
+  get   '/api',                 :to => 'swaggers#index'  
+  get   '/swaggers',            :to => redirect('/api')
+  get   '/apijson',             :to => redirect('/api')
+  get   '/apijson_tools',       :to => redirect('/api')
+  get   '/apijson_libs',        :to => redirect('/api')
+  
   get   '/newest/version',      :to => 'page#newest'
   get   '/current/version',     :to => 'page#newest'
   get   '/latest/version',      :to => 'page#newest'
