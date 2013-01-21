@@ -164,7 +164,6 @@ class Product
   def self.find_by_group_and_artifact(group, artifact)
     Product.where( group_id: group, artifact_id: artifact )[0]
   end
-
   ######## ELASTIC SEARCH START #####################################
 
   def to_indexed_json

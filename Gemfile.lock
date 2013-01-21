@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/tim-vandecasteele/grape-swagger.git
-  revision: 23454cfbed8227080f77aafeac6aad07d69cfdb2
+  revision: 857a1e841fb29fcd31a655a398d3529bb3e26761
   specs:
     grape-swagger (0.3.0)
       grape (~> 0.2.0)
@@ -122,7 +122,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.7.6)
     kgio (2.7.4)
-    kramdown (0.14.1)
+    kramdown (0.14.2)
     libv8 (3.11.8.13)
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -148,7 +148,7 @@ GEM
     ori (0.1.0)
     paint (0.8.5)
     polyglot (0.3.3)
-    postmark (0.9.15)
+    postmark (0.9.18)
       json
       rake
     postmark-rails (0.4.1)
@@ -192,7 +192,7 @@ GEM
     rspec-expectations (2.12.1)
       diff-lcs (~> 1.1.3)
     rspec-mocks (2.12.1)
-    rspec-rails (2.12.1)
+    rspec-rails (2.12.2)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -275,7 +275,7 @@ DEPENDENCIES
   irbtools
   jquery-rails (= 2.1.4)
   kgio (= 2.7.4)
-  libv8 (~> 3.11.8)
+  libv8
   mongo (= 1.7.0)
   mongoid (= 2.5.0)
   naturalsorter (= 0.5.11)
@@ -289,7 +289,7 @@ DEPENDENCIES
   sass-rails (= 3.2.5)
   stripe (= 1.7.8)
   terminal-notifier
-  therubyracer (= 0.11.1)
+  therubyracer
   thin (= 1.4.1)
   tire (= 0.5.3)
   turn
