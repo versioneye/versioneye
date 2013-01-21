@@ -13,6 +13,11 @@ module VersionEye
 
     resource :projects do
 
+      desc "show users projects" 
+      get do
+        {msg: "here will be list of your projects."}
+      end
+
       desc "show the project's information", {
         notes: %q[ It shows detailed info of your project. ]
       }
@@ -32,16 +37,20 @@ module VersionEye
 
       desc "upload project file"
       params do
-        optional :upload, type: "file",
-                          :desc => "Project file - [maven.pom, Gemfile ...]"
+        requires :upload
+        #, :type => :file, 
+        #                  :desc => "Project file - [maven.pom, Gemfile ...]"
       end
       post do
         authorized?
-
-        p params
         if params[:upload].nil?
           error! "Didnt submit file or used wrong parameter.", 400
         end
+        
+        if params[:upload].is_a? String
+          error! "File field is plain text. It should be multipart submition.", 400
+        end
+
         datafile = ActionDispatch::Http::UploadedFile.new(params[:upload])
         project_file = {'datafile' => datafile}
 
@@ -50,7 +59,6 @@ module VersionEye
         if project.nil?
           error! "Cant save uploaded file. Probably our fileserver got cold.", 500
         end
-        
         present project, with: Entities::ProjectEntity
       end
 

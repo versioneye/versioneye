@@ -14,7 +14,7 @@ module V1
       format :json
       default_format :json
 
-      rescue_from :all
+#      rescue_from :all
 
       mount VersionEye::ProductsApi
       mount VersionEye::ServicesApi

@@ -6,7 +6,7 @@ describe VersionEye::ProjectsApi do
     @host = "http://127.0.0.1:3000"
     @root_uri = "/api/v1"
     @project_uri = "/api/v1/projects"
-    @test_user = UserFactory.create_new 100
+    @test_user = UserFactory.create_new 90
     @user_api = ApiFactory.create_new @test_user
   end
 
@@ -53,15 +53,13 @@ describe VersionEye::ProjectsApi do
     end
 
     it "returns 201 and project info, when upload was successfully" do
-      full_url = "#{@host}#{@project_uri}"
-      r = RestClient.post full_url, {
-        :upload => @test_file, 
-        :api_key => @user_api.api_key,
-        :multipart => true
+      post @project_uri, {
+        upload: @test_file, 
+        api_key: @user_api.api_key, 
+        send_file: true,
+        multipart: true
       }
-      r.code.should eql(201)
-      #post @project_uri, upload: @test_file, send_file: true
-      #pp response
+      response.status.should == 201
     end
   end
 end
