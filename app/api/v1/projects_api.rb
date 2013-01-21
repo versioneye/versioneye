@@ -32,14 +32,13 @@ module VersionEye
 
       desc "upload project file"
       params do
-        requires :upload,  :desc => "Project file - [maven.pom, Gemfile ...]"
-        optional :api_key, :type => String, 
-                           :desc => "Optional argument to create active session on run."
-
+        optional :upload, type: "file",
+                          :desc => "Project file - [maven.pom, Gemfile ...]"
       end
       post do
         authorized?
 
+        p params
         if params[:upload].nil?
           error! "Didnt submit file or used wrong parameter.", 400
         end

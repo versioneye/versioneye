@@ -54,12 +54,6 @@ describe VersionEye::ProjectsApi do
 
     it "returns 201 and project info, when upload was successfully" do
       full_url = "#{@host}#{@project_uri}"
-      r = RestClient.post "#{@host}#{@root_uri}/sessions", 
-          {
-            'api_key' => @user_api.api_key, 
-            :multipart => true
-          }
-      r.code.should eql(201)
       r = RestClient.post full_url, {
         :upload => @test_file, 
         :api_key => @user_api.api_key,
