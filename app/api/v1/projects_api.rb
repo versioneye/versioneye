@@ -33,9 +33,7 @@ module VersionEye
       desc "upload project file"
       params do
         requires :upload,  :desc => "Project file - [maven.pom, Gemfile ...]"
-        optional :api_key, :type => String, 
-                           :desc => "Optional argument to create active session on run."
-
+        optional :api_key, :type => String, :desc => "Optional argument to create active session on run."
       end
       post do
         authorized?
@@ -45,7 +43,6 @@ module VersionEye
         end
         datafile = ActionDispatch::Http::UploadedFile.new(params[:upload])
         project_file = {'datafile' => datafile}
-
 
         project = upload_and_store(project_file)
         if project.nil?
