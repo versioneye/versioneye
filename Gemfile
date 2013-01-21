@@ -25,7 +25,8 @@ gem 'kgio', '2.7.4'            # 20% performance boost for dalli
 gem 'newrelic_rpm', '3.5.4.34' # performance monitoring 
 gem 'grape' 
 gem 'grape-entity'
-gem 'grape-swagger', :git => 'https://github.com/tim-vandecasteele/grape-swagger.git'
+gem 'grape-swagger', git: "https://github.com/timgluz/grape-swagger.git" 
+#, :git => 'https://github.com/tim-vandecasteele/grape-swagger.git'
 
 
 group :development do

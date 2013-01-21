@@ -37,9 +37,7 @@ module VersionEye
 
       desc "upload project file"
       params do
-        requires :upload #todo: add own validator
-        #, :type => :file, 
-        #                  :desc => "Project file - [maven.pom, Gemfile ...]"
+        requires :upload, type: Hash, desc: "Project file - [maven.pom, Gemfile ...]"
       end
       post do
         authorized?

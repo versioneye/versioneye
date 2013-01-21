@@ -8,7 +8,9 @@ describe VersionEye::ProjectsApi do
     @project_uri = "/api/v1/projects"
     @test_user = UserFactory.create_new 90
     @user_api = ApiFactory.create_new @test_user
-  end
+    file_path =  "#{Rails.root}/test/files/maven-1.0.1.pom"
+    @test_file = Rack::Test::UploadedFile.new(file_path, "text/xml")
+ end
 
   after(:each) do
     @test_user.remove
@@ -20,13 +22,13 @@ describe VersionEye::ProjectsApi do
       delete "#{@root_uri}/sessions"
     end
 
-    it "return 401, when user tryes to get project info" do
+    it "return 401, when user tries to get project info" do
       get @project_uri + '/12abcdef12343434.json'
       response.status.should == 401
     end
 
     it "returns 401, when user tries to upload file" do
-      post @project_uri, :upload => "1234566"
+      post @project_uri, {upload: @test_file, multipart:true, send_file: true}
       response.status.should == 401
     end
 
@@ -49,7 +51,7 @@ describe VersionEye::ProjectsApi do
 
     it "fails, when upload-file is missing" do
       post @project_uri, :api_key => @user_api.api_key
-      response.status.should == 403
+      response.status.should == 400
     end
 
     it "returns 201 and project info, when upload was successfully" do

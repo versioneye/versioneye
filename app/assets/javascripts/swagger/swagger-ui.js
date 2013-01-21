@@ -453,7 +453,9 @@ function program9(depth0,data) {
   tmp1.inverse = self.noop;
   stack1 = stack2.call(depth0, stack1, tmp1);
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                <form accept-charset='UTF-8' class='sandbox'>\n                    <div style='margin:0;padding:0;display:inline'></div>\n                    <h4>Parameters</h4>\n                    <table class='fullwidth'>\n                        <thead>\n                        <tr>\n                            <th style=\"width: 100px; max-width: 100px\" >Parameter</th>\n                            <th style=\"width: 310px; max-width: 310px\">Value</th>\n                            <th style=\"width: 200px; max-width: 200px\">Description</th>\n                            <th style=\"width: 320px; max-width: 330px\">Data Type</th>\n                        </tr>\n                        </thead>\n                        <tbody class=\"operation-params\">\n\n                        </tbody>\n                    </table>\n                    ";
+  buffer += "\n<form accept-charset='UTF-8' class='sandbox'>";
+  buffer += "\n <div style='margin:0;padding:0;display:inline'></div>\n                    <h4>Parameters</h4>\n                    <table class='fullwidth'>\n                        <thead>\n                        <tr>\n                            <th style=\"width: 100px; max-width: 100px\" >Parameter</th>\n                            <th style=\"width: 310px; max-width: 310px\">Value</th>\n                            <th style=\"width: 200px; max-width: 200px\">Description</th>\n                            <th style=\"width: 320px; max-width: 330px\">Data Type</th>\n                        </tr>\n                        </thead>\n                        <tbody class=\"operation-params\">\n\n                        </tbody>\n                    </table>\n                    ";
+  
   foundHelper = helpers.errorResponses;
   stack1 = foundHelper || depth0.errorResponses;
   stack2 = helpers['if'];
@@ -1510,22 +1512,31 @@ templates['status_code'] = template(function (Handlebars,depth0,helpers,partials
           for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
             param = _ref1[_j];
             if (param.paramType === 'body') {
+              log("Added: " + param.name);
               bodyParam.append(param.name, map[param.name]);
+            } else {
+              log("Skipped: " + param.name + " : " + param.paramType);
+              log(param);
             }
           }
+
           $.each($('input[type~="file"]'), function(i, el) {
             return bodyParam.append($(el).attr('name'), el.files[0]);
           });
-          console.log(bodyParam);
+          log("Submitted bodyParam");
+          log(bodyParam);
         } else {
 
+          log("Didnt found any fileinput field.");
+          bodyParam = null;
         }
-        bodyParam = null;
+       
         _ref2 = this.model.parameters;
         for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
           param = _ref2[_k];
           if (param.paramType === 'body') {
-            bodyParam = map[param.name];
+            log("param_name: " + param.name + " map : " + map[param.name]);
+            //bodyParam = map[param.name];
           }
         }
         log("bodyParam = " + bodyParam);

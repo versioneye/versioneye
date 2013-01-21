@@ -1,6 +1,6 @@
 GIT
-  remote: https://github.com/tim-vandecasteele/grape-swagger.git
-  revision: 857a1e841fb29fcd31a655a398d3529bb3e26761
+  remote: https://github.com/timgluz/grape-swagger.git
+  revision: f5c4ad55f8b67edd5342d886b481a83fc7060b00
   specs:
     grape-swagger (0.3.0)
       grape (~> 0.2.0)
