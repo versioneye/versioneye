@@ -37,7 +37,7 @@ module VersionEye
 
       desc "upload project file"
       params do
-        requires :upload
+        requires :upload #todo: add own validator
         #, :type => :file, 
         #                  :desc => "Project file - [maven.pom, Gemfile ...]"
       end
@@ -53,7 +53,6 @@ module VersionEye
 
         datafile = ActionDispatch::Http::UploadedFile.new(params[:upload])
         project_file = {'datafile' => datafile}
-
 
         project = upload_and_store(project_file)
         if project.nil?
