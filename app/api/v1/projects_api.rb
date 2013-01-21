@@ -76,12 +76,11 @@ module VersionEye
                             :desc => "Optional argument to create active session on run."
       end
       get '/:id/check' do
+        authorized?
         project = Project.find_by_id params[:id]
-        
         if project.nil?
           error! "Project dont exist.", 500
         end
-
         Project.process_project(project)
         if project.dependencies.nil?
           error! "Project dont have external dependencies.", 500
