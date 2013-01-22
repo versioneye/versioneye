@@ -7,12 +7,14 @@ require_relative 'entities/user_notification_entity.rb'
 
 require_relative 'helpers/session_helpers.rb'
 require_relative 'helpers/paging_helpers.rb'
+require_relative 'helpers/user_helpers.rb'
 
 module VersionEye
   class UsersApi < Grape::API
 
     helpers SessionHelpers
     helpers PagingHelpers
+    helpers UserHelpers
 
     resource :me do
       desc "shows profile of authorized user", {
@@ -30,20 +32,21 @@ module VersionEye
       end
 
       desc "shows favorite packages for authorized user"
+      params do
+        optional :page, type: Integer, desc: "page number for pagination"
+      end
       get '/favorites' do
         authorized?
-        user_favorites = @current_user.fetch_my_products
-        present user_favorites, with: Entities::ProductEntity
+        make_favorite_response(@current_user, params[:page], 30)
       end
 
       desc "show comments of authorized user"
+      params do
+        optional :page, type: Integer, desc: "page number for pagination"
+      end
       get '/comments' do
         authorized?
-        @comments  = Versioncomment.find_by_user_id @current_user.id
-        @comments.each_with_index do |cmd, index|
-          @comments[index][:product] = Product.find_by_key cmd.product_Key
-        end
-        present @comments, with: Entities::VersionCommentEntity
+        make_comment_response(@current_user, params[:page], 30)
       end
 
       desc "show unread notifications of authorized user", {
@@ -87,15 +90,7 @@ module VersionEye
          @user = User.find_by_username(params[:username])
          error!("User with username `#{params[:username]}` dont exists.", 400) if @user.nil?
 
-         page_nr = params[:page]
-         page_size = 30
-         @favorites = @user.fetch_my_products.paginate(page: page_nr, 
-                                                       per_page: page_size)
-         @user_favorites = Api.new user: @user,
-                                   favorites: @favorites,
-                                   paging: make_paging_object(@favorites)
-
-         present @user_favorites, with: Entities::UserFollowEntities
+         make_favorite_response(@user, params[:page], 30)
       end
 
       desc "show users' comments"
@@ -108,20 +103,8 @@ module VersionEye
 
         @user = User.find_by_username params[:username]
         error!("User #{params[:username]} dont exists", 400) if @user.nil?
-        page_nr = params[:page]
-        page_size = 30
-
-        @comments =  Versioncomment.by_user(@user).paginate(page: page_nr, 
-                                                            per_page: page_size)
-        @comments.each_with_index do |cmd, index|
-          @comments[index][:user] = @user
-          @comments[index][:product] = Product.find_by_key cmd.product_key
-        end
-
-        @paging = make_paging_object(@comments) 
-        @user_comments = Api.new comments: @comments,
-                                 paging: @paging
-        present @user_comments, with: Entities::VersionCommentEntities
+        
+        make_comment_response(@user, params[:page], 30)
       end
     end
   end
