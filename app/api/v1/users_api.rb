@@ -1,14 +1,18 @@
 require 'grape'
 require_relative 'entities/user_entity.rb'
+require_relative 'entities/user_follow_entity.rb'
 require_relative 'entities/product_entity.rb'
 require_relative 'entities/version_comment_entity.rb'
 require_relative 'entities/user_notification_entity.rb'
+
 require_relative 'helpers/session_helpers.rb'
+require_relative 'helpers/paging_helpers.rb'
 
 module VersionEye
   class UsersApi < Grape::API
 
     helpers SessionHelpers
+    helpers PagingHelpers
 
     resource :me do
       desc "shows profile of authorized user", {
@@ -76,23 +80,48 @@ module VersionEye
       desc "show users' favorite packages"
       params do
         requires :username, :type => String, :desc => "username"
+        optional :page, :type => Integer, :desc => "Pagination number"
       end
       get '/:username/favorites' do
          authorized?
          @user = User.find_by_username(params[:username])
-         present @user.fetch_my_products, with: Entities::ProductEntity
+         error!("User with username `#{params[:username]}` dont exists.", 400) if @user.nil?
+
+         page_nr = params[:page]
+         page_size = 30
+         @favorites = @user.fetch_my_products.paginate(page: page_nr, 
+                                                       per_page: page_size)
+         @user_favorites = Api.new user: @user,
+                                   favorites: @favorites,
+                                   paging: make_paging_object(@favorites)
+
+         present @user_favorites, with: Entities::UserFollowEntities
       end
 
+      desc "show users' comments"
+      params do
+        requires :username, type: String, desc: "VersionEye users' nickname"
+        optional :page, type: Integer, desc: "pagination number"
+      end
       get '/:username/comments' do
         authorized?
+
         @user = User.find_by_username params[:username]
-        @user_comments =  Versioncomment.find_by_user_id @user.id
-        @user_comments.each_with_index do |cmd, index|
-          @user_comments[index][:user] = @user
-          @user_comments[index][:product] = Product.find_by_key cmd.product_key
+        error!("User #{params[:username]} dont exists", 400) if @user.nil?
+        page_nr = params[:page]
+        page_size = 30
+
+        @comments =  Versioncomment.by_user(@user).paginate(page: page_nr, 
+                                                            per_page: page_size)
+        @comments.each_with_index do |cmd, index|
+          @comments[index][:user] = @user
+          @comments[index][:product] = Product.find_by_key cmd.product_key
         end
 
-        present @user_comments, with: Entities::CommentEntity
+        @paging = make_paging_object(@comments) 
+        @user_comments = Api.new comments: @comments,
+                                 paging: @paging
+        present @user_comments, with: Entities::VersionCommentEntities
       end
     end
   end

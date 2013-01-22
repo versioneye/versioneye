@@ -1,4 +1,5 @@
 class Versioncomment
+  require 'will_paginate/array'
 
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -19,7 +20,8 @@ class Versioncomment
   validates_presence_of :product_key, :message => "Product is mandatory!"
   validates_presence_of :version,     :message => "Version is mandatory!"
   validates_presence_of :comment,     :message => "Comment is mandatory!"  
-  
+ 
+  scope :by_user, ->(user){ where(user_id: user.id) }
   def as_json parameter
     product = get_product
     prod_name = product.name unless product.nil?

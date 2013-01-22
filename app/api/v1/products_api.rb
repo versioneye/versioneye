@@ -2,6 +2,8 @@ require 'grape'
 
 require_relative 'helpers/session_helpers.rb'
 require_relative 'helpers/product_helpers.rb'
+require_relative 'helpers/paging_helpers.rb'
+
 require_relative 'entities/product_entity.rb'
 require_relative 'entities/product_search_entity.rb'
 
@@ -9,7 +11,8 @@ module VersionEye
   class  ProductsApi < Grape::API
     helpers ProductHelpers
     helpers SessionHelpers
-    
+    helpers PagingHelpers
+
     resource :products do
 
       before do
@@ -88,16 +91,12 @@ module VersionEye
         search_results= ProductService.search(query, group_id, languages, page_nr)
         save_search_log(query, search_results, start_time)
         query_data = Api.new query: query,
-                                  group_id: group_id,
-                                  languages: languages
-        paging = Api.new current_page: search_results.current_page,
-                             per_page: search_results.per_page,
-                             total_entries: search_results.total_entries,
-                             total_pages: search_results.total_pages
-                                            
+                             group_id: group_id,
+                             languages: languages
+        paging = make_paging_object(search_results)                                   
         search_results = Api.new query: query_data,
-                                     paging: paging,
-                                     entries: search_results.entries
+                                 paging: paging,
+                                 entries: search_results.entries
 
         present search_results, with: Entities::ProductSearchEntity
       end
