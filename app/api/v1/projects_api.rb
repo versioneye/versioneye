@@ -15,24 +15,28 @@ module VersionEye
 
       desc "show users projects" 
       get do
-        {msg: "here will be list of your projects."}
+        authorized?
+        @user_projects = Project.by_user(@current_user)
+        present @user_projects, with: Entities::ProjectEntity
       end
 
       desc "show the project's information", {
         notes: %q[ It shows detailed info of your project. ]
       }
       params do 
-        requires :id, :type => String, :desc => "Project identification string"
+        requires :project_key,  :type => String, 
+                                :desc => "Project specific identificator"
       end
-      get '/:id' do
+      get '/:project_key' do
         authorized?
-
-        project = Project.find_by_id params[:id]
+        proj_key = params[:project_key]
+        project = Project.by_user(@current_user).where(project_key: proj_key).shift 
         if project.nil?
           error! "Project `#{params[:id]}` dont exists", 400
         end
-
-        present project, with: Entities::ProjectEntity
+        project.fetch_dependencies
+        present project, with: Entities::ProjectEntity,
+                         type: :full
       end
 
       desc "upload project file"
@@ -52,46 +56,31 @@ module VersionEye
         datafile = ActionDispatch::Http::UploadedFile.new(params[:upload])
         project_file = {'datafile' => datafile}
 
-        project = upload_and_store(project_file)
+        @project = upload_and_store(project_file)
         if project.nil?
           error! "Cant save uploaded file. Probably our fileserver got cold.", 500
         end
-        present project, with: Entities::ProjectEntity
+
+        @project.fetch_dependencies
+        present @project, with: Entities::ProjectEntity, :type => :full 
       end
 
       desc "delete given project"
       params do
-        requires :id, :type => String, :desc => "Delete project file"
+        requires :project_key, :type => String, :desc => "Delete project file"
       end
-      delete '/:id' do
+      delete '/:project_key' do
         authorized?
+        proj_key = params[:project_key]
+        error!("Project key cant be empty", 400) if proj_key.nil? or proj_key.empty?
 
-        unless destroy_project(params[:id])
-          error! "Cant delete project", 500
+
+        project = Project.by_user(@current_user).where(project_key: proj_key).shift
+        if project.nil? or not destroy_project(project.id)
+          error! "Deletion failed because you dont have such project: #{proj_key}", 500
         end
         
-        "ok"
-      end
-
-      desc "check versions of packages in specific project"
-      params do
-        requires :id, :type => String, 
-                      :desc => "Checks versions of packages in project"
-        optional :api_key, :type => String,
-                            :desc => "Optional argument to create active session on run."
-      end
-      get '/:id/check' do
-        authorized?
-        project = Project.find_by_id params[:id]
-        if project.nil?
-          error! "Project dont exist.", 500
-        end
-        Project.process_project(project)
-        if project.dependencies.nil?
-          error! "Project dont have external dependencies.", 500
-        end
-        deps = project.dependencies
-        present deps, with: Entities::ProjectDependencyEntity   
+        {success: true, message: "Project deleted successfully."}
       end
 
     end

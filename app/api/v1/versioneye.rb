@@ -14,7 +14,7 @@ module V1
       format :json
       default_format :json
 
-      #rescue_from :all #comment out if you want to see RAILS error pages
+      rescue_from :all #comment out if you want to see RAILS error pages
 
       mount VersionEye::ProductsApi
       mount VersionEye::ServicesApi

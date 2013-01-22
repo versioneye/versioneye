@@ -4,7 +4,7 @@ require_relative 'project_dependency_entity.rb'
 module VersionEye
   module Entities
     class ProjectEntity < Grape::Entity
-      expose :_id, :as => :id 
+      expose :project_key
       expose :name
       expose :project_type
       expose :private_project, :as => :private

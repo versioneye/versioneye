@@ -31,7 +31,7 @@ module VersionEye
       project_type = get_project_type(url)
       project_type = "Maven2" if project_type.nil?
       project = create_project(project_type, url, project_name)
-      
+      project.make_project_key!      
       project.s3_filename = filename
       project.source = "upload"
       store_project(project)
