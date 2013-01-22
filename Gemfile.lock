@@ -93,6 +93,7 @@ GEM
     hashr (0.0.22)
     hike (1.2.1)
     hirb (0.7.0)
+    htmlentities (4.3.1)
     httparty (0.9.0)
       multi_json (~> 1.0)
       multi_xml
@@ -271,6 +272,7 @@ DEPENDENCIES
   grape-entity
   grape-swagger!
   gravatar_image_tag (= 1.1.3)
+  htmlentities
   httparty (= 0.9.0)
   irbtools
   jquery-rails (= 2.1.4)

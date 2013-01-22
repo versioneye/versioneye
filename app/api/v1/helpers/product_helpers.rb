@@ -1,3 +1,5 @@
+require 'htmlentities'
+
 module VersionEye
   module ProductHelpers
     def parse_query(query)
@@ -37,7 +39,8 @@ module VersionEye
     end
 
     def parse_product_key(prod_key)
-      prod_key.to_s.gsub("--", "/").gsub("~", ".")
+      parsed_key = prod_key.to_s.gsub("--", "/").gsub("~", ".")
+      HTMLEntities.new.decode parsed_key
     end
 
 

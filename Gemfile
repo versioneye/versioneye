@@ -27,6 +27,7 @@ gem 'grape'
 gem 'grape-entity'
 gem 'grape-swagger', git: "https://github.com/timgluz/grape-swagger.git" 
 #, :git => 'https://github.com/tim-vandecasteele/grape-swagger.git'
+gem 'htmlentities'
 
 
 group :development do

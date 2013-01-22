@@ -26,19 +26,22 @@ module VersionEye
 
                     For example `junit/junit` has to be transormed to  `junit--junit`.
                     \\
-                    It will respond with 404, when given product with given product doesnt exists.
+                    It will respond with 404, when given product with given product doesnt exists and it will respond with 302, when you didnt encode product-key correctly.
                 ]
         }
 
       params do
         requires :prod_key, :type => String, 
                             :desc => %Q[ Product specific key. 
-                                         NB! check implementation notes. ]
+                                         NB! check implementation notes about handling
+                                         special characters and preventing 302.
+                                        ]
       end
       get '/:prod_key' do
-
+    
         prod_key = parse_product_key(params[:prod_key])
         product = Product.find_by_key prod_key
+
         if product.nil?
           error_msg = "No such package with product key: `#{prod_key}`."
           error! error_msg, 404
