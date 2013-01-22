@@ -19,7 +19,7 @@
             <%= label_tag :api_key, "API key", :class => "control-label", :for => "api_key" %>
             <%= text_field_tag :api_key, @user_api.api_key, :readonly => true %>
             <button type="submit" class="btn btn-primary">Generate new</button>
-            <span class = "badge badge-info"> <%= @user_api.calls %> </span> calls up to now. 
+            <span class = "badge badge-info"> <%= @api_calls %> </span> calls up to now. 
           </div>
         </div>
       <% end %>

@@ -13,6 +13,10 @@ module VersionEye
 
     resource :projects do
 
+      before do
+        track_apikey
+      end
+
       desc "show users projects" 
       get do
         authorized?

@@ -32,5 +32,21 @@ module VersionEye
       @current_user = nil
     end
 
+    def track_apikey
+      api_key = (request[:api_key] or request.cookies["api_key"])
+      return false if api_key.nil?
+      
+      user_api = Api.where(api_key: api_key).shift
+      user = User.find_by_id user_api.user_id
+
+      call_data = {
+        fullpath: "#{request.host_with_port}/#{request.fullpath}",
+        ip:       request.ip,
+        api_key:  api_key, 
+        user_id:  (user.nil?) ? nil : user.id  
+      }
+      new_api_call =  ApiCall.new call_data
+      new_api_call.save
+    end
   end
 end

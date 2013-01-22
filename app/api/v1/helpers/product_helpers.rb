@@ -53,5 +53,20 @@ module VersionEye
       end
       @current_product
     end
+    
+    def save_search_log(query, products, start)
+      stop = Time.now
+      wait = (stop - start) * 1000.0
+      searchlog = Searchlog.new
+      searchlog.search = query
+      searchlog.wait = wait
+      if products.nil? || products.total_entries == 0
+        searchlog.results = 0  
+      else
+        searchlog.results = products.total_entries
+      end
+      searchlog.save
+    end
+
   end
 end

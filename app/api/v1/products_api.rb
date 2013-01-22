@@ -12,6 +12,9 @@ module VersionEye
     
     resource :products do
 
+      before do
+        track_apikey
+      end
       desc "detailed information for specific package", {
           notes: %q[
                     NB! If there are some special characters in `prod_key`, 
@@ -78,12 +81,9 @@ module VersionEye
 
         languages = get_language_array(lang)
        
-        p '----------------------'
-        p languages
-
         start_time = Time.now
         search_results= ProductService.search(query, group_id, languages, page_nr)
-        #save_search_log(query, products, start_time)
+        save_search_log(query, search_results, start_time)
         query_data = Api.new query: query,
                                   group_id: group_id,
                                   languages: languages
@@ -116,7 +116,6 @@ module VersionEye
 
      params do 
         requires :prod_key, :type => String, :desc => "Package specifier"
-        optional :api_key, :type => String, :desc => "Your api token, to create active session by run."
       end
       get '/:prod_key/follow' do
         authorized?
@@ -165,7 +164,7 @@ module VersionEye
         else
           error! message: {
                             :success => false, 
-                            :msg => user_follow.errors.full_messages.to_sentence
+                            :message => user_follow.errors.full_messages.to_sentence
                           },
                  status: 500
         end

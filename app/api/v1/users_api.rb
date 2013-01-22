@@ -16,9 +16,6 @@ module VersionEye
             On Swagger, you can create session by adding additional parameter :api_key
         ]
       }
-      params do
-        optional :api_key, type: String, desc: "API key"
-      end
       get do
         authorized?
         @current_user[:notifications] = {
@@ -48,9 +45,6 @@ module VersionEye
       desc "show unread notifications of authorized user", {
         notes: "It will show version updates that's not yet sent by email."
       }
-      params do
-        optional :api_key, type: String, desc: "API key"
-      end
       get '/notifications' do
         authorized?
 
@@ -65,6 +59,10 @@ module VersionEye
     end
 
     resource :users do
+      before do
+        track_apikey
+      end
+
       desc "shows profile of given user_id"
       params do
         requires :username, :type => String, :desc => "username" 

@@ -14,7 +14,7 @@ module V1
       format :json
       default_format :json
 
-      rescue_from :all #comment out if you want to see RAILS error pages
+      rescue_from :all #comment out if you want to see RAILS error pages & debug on cmd-line
 
       mount VersionEye::ProductsApi
       mount VersionEye::ServicesApi
@@ -32,6 +32,7 @@ module V1
         header "Access-Control-Request-Method", "*"
         header "Access-Control-Max-Age", "1728000"
         header "Access-Control-Allow-Headers", "api_key, Content-Type"
+
       end
    end
   end
