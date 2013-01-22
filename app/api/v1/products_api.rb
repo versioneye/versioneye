@@ -151,8 +151,12 @@ module VersionEye
       end
       post '/:prod_key/follow' do
         authorized?
-        @current_user = current_user
         @current_product = fetch_product(params[:prod_key])
+        
+        if @current_product.nil?
+          error! "Wrong product_key", 400
+        end
+
         user_follow = Follower.new user_id: @current_user.id,
                                    product_id: @current_product.id
         if user_follow.save
@@ -178,6 +182,9 @@ module VersionEye
         authorized?
         @current_user = current_user
         @current_product = fetch_product(params[:prod_key])
+        
+        error!("Wrong product key", 400) if @current_product.nil?
+
         user_follow = Follower.where(user_id: @current_user.id, 
                                      product_id: @current_product.id).shift
         unless user_follow.nil?

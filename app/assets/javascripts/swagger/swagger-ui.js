@@ -310,7 +310,7 @@ function program7(depth0,data) {
 function program9(depth0,data) {
   
   
-  return "\n                    <div class='sandbox_header'>\n                        <input class='submit btn btn-medium' name='commit' type='button' value='Try it out!' />\n                        <a href='#' class='response_hider btn btn-medium btn-primary' style='display:none'>Hide Response</a>\n                        <img alt='Throbber' class='response_throbber' src='/assets/swagger/throbber.gif' style='display:none' />\n                    </div>\n                    ";}
+  return "\n                    <div class='sandbox_header'>\n                        <input class='submit btn-medium btn2' name='commit' type='button' value='Try it out!' />\n                        <a href='#' class='response_hider btn btn-medium btn-primary' style='display:none'>Hide Response</a>\n                        <img alt='Throbber' class='response_throbber' src='/assets/swagger/throbber.gif' style='display:none' />\n                    </div>\n                    ";}
 
   buffer += "\n    <ul class='operations' >\n      <li class='";
   foundHelper = helpers.httpMethod;

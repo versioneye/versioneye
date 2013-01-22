@@ -835,7 +835,6 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.post div.content div.sandbox_header a {
-    color: #6fc992;
     display: inline-block;
     font-size: 0.9em;
 }
@@ -1020,7 +1019,6 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.put div.content div.sandbox_header a {
-    color: #dcb67f;
     display: inline-block;
     font-size: 0.9em;
 }
@@ -1206,8 +1204,6 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.patch div.content div.sandbox_header a {
-    padding: 4px 0 0 10px;
-    color: #dcb67f;
     display: inline-block;
     font-size: 0.9em;
 }
@@ -1392,7 +1388,6 @@ body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operatio
 }
 
 body ul#resources li.resource ul.endpoints li.endpoint ul.operations li.operation.delete div.content div.sandbox_header a {
-    color: #c8787a;
     display: inline-block;
     font-size: 0.9em;
 }

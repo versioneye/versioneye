@@ -34,9 +34,10 @@ module VersionEye
 
     def track_apikey
       api_key = (request[:api_key] or request.cookies["api_key"])
-      return false if api_key.nil?
       
       user_api = Api.where(api_key: api_key).shift
+      return false if api_key.nil? or user_api.nil?
+      
       user = User.find_by_id user_api.user_id
 
       call_data = {
