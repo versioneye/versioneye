@@ -5,6 +5,7 @@ module VersionEye
   
     class ProjectDependencyEntity < Grape::Entity
       expose :name
+      expose :prod_key
       expose :group_id
       expose :artifact_id
 
