@@ -18,6 +18,7 @@ module VersionEye
       before do
         track_apikey
       end
+
       desc "detailed information for specific package", {
           notes: %q[
                     NB! If there are some special characters in `prod_key`, 
@@ -52,8 +53,7 @@ module VersionEye
         
         present product, with: Entities::ProductEntityDetailed
       end
-
-
+      
       desc "search packages", {
         notes: %q[
                 The result is the same as in the web application. But you get it as JSON objects. The result is an array of product objects.
@@ -116,7 +116,7 @@ module VersionEye
                 ]
         }
 
-     params do 
+      params do 
         requires :prod_key, :type => String, :desc => "Package specifier"
       end
       get '/:prod_key/follow' do
@@ -124,7 +124,8 @@ module VersionEye
         @current_product = fetch_product(params[:prod_key])
         follow_status = false
 
-        user_follow = Follower.where(user_id: @current_user.id, prod_id: @current_product.id).shift
+        user_follow = Follower.where(user_id: @current_user.id, 
+                                     prod_id: @current_product.id).shift
         follow_status = true unless user_follow.nil?
         user_follow = Follower.new if user_follow.nil?
 

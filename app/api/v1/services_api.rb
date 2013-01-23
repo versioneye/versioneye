@@ -6,7 +6,7 @@ module VersionEye
     resource :services do
       desc "Answers to request with basic pong."
       get :ping do
-        "pong"
+        {success: true, message: "pong"}
       end
     end
 

@@ -9,8 +9,8 @@ module VersionEye
                                            :desc => "product key for given package"}
       expose :prod_type, :documentation => {:type => "string",
                                             :desc => "product type of package"}
-      expose :lang, :documentation => {:desc => "Programming language"}    
-
+      expose :version, :documentation => {:desc => "Latest version"}
+      expose :language, :documentation => {:desc => "Programming language"}    
     end
 
     class ProductEntityDetailed < Entities::ProductEntity
@@ -20,7 +20,6 @@ module VersionEye
       expose :licence, :documentation => {:type => "string",
                                           :desc => "licence of package"}
       expose :description, :documentation => {:desc => "description of package"}
-      expose :version, :documentation => {:desc => "Latest version"}
       expose :updated_at, :documentation => {:desc => "Date of last update"}
 
     end
