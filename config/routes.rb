@@ -168,7 +168,7 @@ Versioneye::Application.routes.draw do
   
   get   '/api',                 :to => 'swaggers#index'  
   get   '/swaggers',            :to => redirect('/api')
-  get   '/apijson',             :to => redirect('/api')
+  get   '/apijson',             :to => 'page#apijson'
   get   '/apijson_tools',       :to => redirect('/api')
   get   '/apijson_libs',        :to => redirect('/api')
   
