@@ -27,6 +27,8 @@ class Project
 
   scope :by_user, ->(user){ where(user_id: user.id) }
 
+  before_save :make_project_key!
+
   def self.find_by_id( id )
     Project.find(id)
   rescue => e
@@ -114,7 +116,8 @@ class Project
   end
 
   def make_project_key!
-    self.project_key = make_project_key
+    p "make project key"
+    self.project_key = make_project_key # unless self.project_key
   end
 
   def self.process_project( project )
