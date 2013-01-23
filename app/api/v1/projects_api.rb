@@ -61,7 +61,7 @@ module VersionEye
         project_file = {'datafile' => datafile}
 
         @project = upload_and_store(project_file)
-        if project.nil?
+        if @project.nil?
           error! "Cant save uploaded file. Probably our fileserver got cold.", 500
         end
 
