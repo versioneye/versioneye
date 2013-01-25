@@ -199,7 +199,6 @@ class User::ProjectsController < ApplicationController
       project = create_project(project_type, url, project_name)
       project.s3_filename = filename
       project.source = "upload"
-      project.make_project_key!
       store_project(project)
       project
     end
@@ -226,6 +225,7 @@ class User::ProjectsController < ApplicationController
     end
 
     def store_project(project)
+      project.make_project_key!
       if project.dependencies && !project.dependencies.empty? && project.save
         dependencies = Array.new(project.dependencies)
         Project.save_dependencies(project, dependencies)

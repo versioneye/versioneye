@@ -17,12 +17,14 @@ module VersionEye
         track_apikey
       end
 
+
       desc "show users projects" 
       get do
         authorized?
         @user_projects = Project.by_user(@current_user)
         present @user_projects, with: Entities::ProjectEntity
       end
+
 
       desc "show the project's information", {
         notes: %q[ It shows detailed info of your project. ]
@@ -36,7 +38,10 @@ module VersionEye
         proj_key = params[:project_key]
         project = Project.by_user(@current_user).where(project_key: proj_key).shift 
         if project.nil?
-          error! "Project `#{params[:id]}` dont exists", 400
+          project = Project.by_user(@current_user).where(_id: proj_key).shift   
+          if project.nil?
+            error! "Project `#{params[:project_key]}` dont exists", 400
+          end
         end
         project.fetch_dependencies
         present project, with: Entities::ProjectEntity,
@@ -78,10 +83,12 @@ module VersionEye
         proj_key = params[:project_key]
         error!("Project key cant be empty", 400) if proj_key.nil? or proj_key.empty?
 
-
         project = Project.by_user(@current_user).where(project_key: proj_key).shift
         if project.nil? or not destroy_project(project.id)
-          error! "Deletion failed because you dont have such project: #{proj_key}", 500
+          project = Project.by_user(@current_user).where(_id: proj_key).shift   
+          if project.nil?
+            error! "Deletion failed because you dont have such project: #{proj_key}", 500
+          end
         end
         
         {success: true, message: "Project deleted successfully."}
