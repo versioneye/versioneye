@@ -22,7 +22,6 @@ class Project
   attr_accessor :dependencies
 
   validates :name, presence: true
-  validates :user_id, presence: true
   validates :project_key, presence: true, uniqueness: true
 
   scope :by_user, ->(user){ where(user_id: user.id) }
@@ -99,6 +98,10 @@ class Project
   end
 
   def make_project_key
+    if self.user_id.nil? 
+      rando create_random_value
+      return rando
+    end
     project_nr = 1
     project_key_text = "#{self.project_type}_#{self.name}".downcase
     similar_projects = Project.by_user(self.user).where(
@@ -116,7 +119,6 @@ class Project
   end
 
   def make_project_key!
-    p "make project key"
     self.project_key = make_project_key # unless self.project_key
   end
 
@@ -294,5 +296,14 @@ class Project
     end
     return user.email 
   end  
+
+  private 
+
+    def create_random_value
+      chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+      value = ""
+      10.times { value << chars[rand(chars.size)] }
+      value
+    end
   
 end
