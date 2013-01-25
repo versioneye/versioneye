@@ -124,13 +124,17 @@ module VersionEye
         @current_product = fetch_product(params[:prod_key])
         follow_status = false
 
-        user_follow = Follower.where(user_id: @current_user.id, 
-                                     prod_id: @current_product.id).shift
-        follow_status = true unless user_follow.nil?
-        user_follow = Follower.new if user_follow.nil?
+        user_follow = Follower.where(user_id: @current_user.id,
+                                     product_id: @current_product.id).shift
+
+        if user_follow.nil?
+          user_follow = Follower.new
+        else
+          follow_status = true
+        end
 
         user_follow[:username] = @current_user.username
-        user_follow[:prod_key] = @current_product.prod_key 
+        user_follow[:prod_key] = @current_product.prod_key
         user_follow[:follows]  = follow_status
 
         present user_follow, with: Entities::UserFollowEntity
@@ -170,7 +174,7 @@ module VersionEye
           present user_follow, with: Entities::UserFollowEntity
         else
           error! message: {
-                            :success => false, 
+                            :success => false,
                             :message => user_follow.errors.full_messages.to_sentence
                           },
                  status: 500
@@ -185,20 +189,18 @@ module VersionEye
         authorized?
         @current_user = current_user
         @current_product = fetch_product(params[:prod_key])
-        
+
         error!("Wrong product key", 400) if @current_product.nil?
 
-        user_follow = Follower.where(user_id: @current_user.id, 
-                                     product_id: @current_product.id).shift
+        user_follow = Follower.where(user_id: @current_user.id,
+                                     product_id: @current_product.id)
         unless user_follow.nil?
           user_follow.delete
-        else
-          user_follow = Follower.new
         end
-        
-        user_follow[:username] = @current_user.username
-        user_follow[:prod_key] = @current_product.prod_key
-        user_follow[:follows]  = false
+
+        user_follow = Follower.new  username: @current_user.username,
+                                    prod_key: @current_product.prod_key,
+                                    follows: false
 
         present user_follow, with: Entities::UserFollowEntity
       end
