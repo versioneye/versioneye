@@ -51,7 +51,7 @@ describe VersionEye::ProjectsApi do
 
     it "fails, when upload-file is missing" do
       post @project_uri, :api_key => @user_api.api_key
-      response.status.should == 400
+      response.status.should == 403
     end
 
     it "returns 201 and project info, when upload was successfully" do
