@@ -8,6 +8,7 @@
 	<%= csrf_meta_tag %>
 	<%= stylesheet_link_tag "application" %>
 
+    <meta page="<%= @page %>" />
 	<% if @product || @project %> 
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 		<%= javascript_include_tag "application",    :defer => false, :async => false %>
@@ -31,6 +32,10 @@
 		</script>
 	<% elsif @page.eql?("user_created") %>
 		<%= javascript_include_tag "application", :defer => false, :async => false %>
-	<% else %> 
+	<% elsif current_page?(api_path) %>
+		<%= javascript_include_tag "application_swagger", :defer => false %>
+		<link href='css/swagger/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
+		<link href='assets/swagger/screen.css' media='screen' rel='stylesheet' type='text/css'/>
+	<% else %>
 		<%= javascript_include_tag "application_default", :defer => true, :async => true %>
 	<% end %>

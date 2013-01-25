@@ -76,12 +76,14 @@ Versioneye::Application.configure do
   #    :authentication       => '',
   #    :enable_starttls_auto => true  }
 
+  ENV['API_BASE_PATH'] = "https://www.versioneye.com/api"
+
   Stripe.api_key = Settings.stripe_secret_key
-    
+  
   if Settings.aws_s3_access_key_id && Settings.aws_s3_secret_access_key
       AWS::S3::Base.establish_connection!(
         :access_key_id     => Settings.aws_s3_access_key_id,
         :secret_access_key => Settings.aws_s3_secret_access_key
       )
-  end  
+  end
 end

@@ -7,6 +7,7 @@ class Project
   field :name, type: String
     
   field :project_type, type: String, :default => "Maven2"
+  field :project_key, type: String
   field :private_project, type: Boolean, :default => false
   field :period, type: String, :default => "weekly"
   field :email, type: String
@@ -19,7 +20,14 @@ class Project
   field :unknown_number, type: Integer, default: 0
   
   attr_accessor :dependencies
-  
+
+  validates :name, presence: true
+  validates :project_key, presence: true, uniqueness: true
+
+  scope :by_user, ->(user){ where(user_id: user.id) }
+
+  before_save :make_project_key!
+
   def self.find_by_id( id )
     Project.find(id)
   rescue => e
@@ -87,6 +95,30 @@ class Project
         Project.process_project ( project )
       end
     end
+  end
+
+  def make_project_key
+    if self.user_id.nil? 
+      return Project.create_random_value()
+    end
+    project_nr = 1
+    project_key_text = "#{self.project_type}_#{self.name}".downcase
+    similar_projects = Project.by_user(self.user).where(
+                        name: self.name,
+                        project_type: self.project_type  
+                      )
+
+    project_nr += similar_projects.count unless similar_projects.nil?
+    if project_nr > 1
+      new_project_key =  "#{project_key_text}_#{project_nr}"
+    else
+      new_project_key = project_key_text
+    end
+    new_project_key
+  end
+
+  def make_project_key!
+    self.project_key = make_project_key # unless self.project_key
   end
 
   def self.process_project( project )
@@ -262,6 +294,6 @@ class Project
       return user_email.email
     end
     return user.email 
-  end  
+  end
   
 end

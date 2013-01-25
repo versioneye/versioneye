@@ -48,7 +48,7 @@ class User::ProjectsController < ApplicationController
     end
 
     if project and project.id 
-      redirect_to user_project_path( project )
+      redirect_to user_project_path( project._id )
     else
       redirect_to user_projects_path
     end
@@ -225,6 +225,7 @@ class User::ProjectsController < ApplicationController
     end
 
     def store_project(project)
+      project.make_project_key!
       if project.dependencies && !project.dependencies.empty? && project.save
         dependencies = Array.new(project.dependencies)
         Project.save_dependencies(project, dependencies)

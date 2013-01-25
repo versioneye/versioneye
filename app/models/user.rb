@@ -328,7 +328,16 @@ class User
     end
     nil
   end
-  
+
+  def self.authenticate_with_apikey(token)
+    user_api = Api.where(api_key: token).shift
+    return nil if user_api.nil?
+
+    user = User.find_by_id(user_api.user_id)
+    return nil if user.nil?
+
+    user    
+  end
   def self.username_valid?(username)
     user = User.find_by_username(username)
     return user.nil?

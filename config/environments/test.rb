@@ -39,7 +39,7 @@ Versioneye::Application.configure do
 
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
   config.assets.allow_debugging = true
-
+  ENV['API_BASE_PATH'] = "http://127.0.0.1:3000/api"
   Stripe.api_key = Settings.stripe_secret_key
    
   #uses fake3s gem to simulate offline AWS S3
@@ -47,7 +47,7 @@ Versioneye::Application.configure do
     :access_key_id => "123",
     :secret_access_key => "abc",
     :server => "localhost",
-    :port => "10001"
+    :port => "4567"
   )
 
 end

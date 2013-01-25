@@ -28,6 +28,7 @@ class ServicesController < ApplicationController
 		project.url = url
 		project.s3_filename = filename
 		project.source = "upload"
+		project.make_project_key!
 
 		if !project.dependencies.nil? && !project.dependencies.empty? && project.save
 		  project.dependencies.each do |dep|

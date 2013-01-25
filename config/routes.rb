@@ -1,5 +1,9 @@
+#require_relative '../app/api/v1/versioneye'
+
 Versioneye::Application.routes.draw do
-  
+
+  mount V1::Versioneye::API => '/api'
+
   root :to => "products#index"
   
   get   '/auth/github/callback',   :to => 'github#callback'
@@ -60,6 +64,9 @@ Versioneye::Application.routes.draw do
   post '/settings/updatelinks',          :to => 'settings#updatelinks'
   post '/settings/updatenotifications',  :to => 'settings#updatenotifications'
   post '/settings/destroy',              :to => 'settings#destroy'
+
+  get '/settings/api',                   :to => 'settings#api'
+  post '/settings/api',                  :to => 'settings#update_api_key'
 
   get  '/jobs',          :to => 'jobs#index'
   
@@ -146,19 +153,6 @@ Versioneye::Application.routes.draw do
   get   '/statistics/proglangs',  :to => 'statistics#proglangs'
   get   '/statistics/langtrends', :to => 'statistics#langtrends'
 
-  namespace :api do
-    namespace :v1 do
-      get   '/products/search/:id',  :to => 'products#search'
-      get   '/ping',                 :to => 'products#ping'
-      get   '/languages',            :to => 'products#languages'
-      get   '/statistics',           :to => 'products#statistics'
-      resources :products
-      resources :projects do
-        get '/dependencies',             :to => 'projects#show_dependencies'
-      end
-    end
-  end
-
   get   '/about',               :to => 'page#about'
   get   '/impressum',           :to => 'page#impressum'
   get   '/imprint',             :to => 'page#imprint'
@@ -169,9 +163,14 @@ Versioneye::Application.routes.draw do
   get   '/datenerhebung',       :to => 'page#datenerhebung'
   get   '/datacollection',      :to => 'page#datacollection'
   get   '/disclaimer',          :to => 'page#disclaimer'
-  get   '/apijson',             :to => 'page#apijson'  
-  get   '/apijson_tools',       :to => 'page#apijson_tools'  
-  get   '/apijson_libs',        :to => 'page#apijson_libs'
+  
+  
+  get   '/api',                 :to => 'swaggers#index'  
+  get   '/swaggers',            :to => redirect('/api')
+  get   '/apijson',             :to => redirect('/api')
+  get   '/apijson_tools',       :to => redirect('/api')
+  get   '/apijson_libs',        :to => redirect('/api')
+  
   get   '/newest/version',      :to => 'page#newest'
   get   '/current/version',     :to => 'page#newest'
   get   '/latest/version',      :to => 'page#newest'

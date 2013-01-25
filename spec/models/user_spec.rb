@@ -459,7 +459,11 @@ describe User do
 
     it "returns only one user, when there's only one user with active project" do
       user = User.all.first
-      Project.new(user_id: user.id).save
+      project = Project.new
+      project.user_id = user.id
+      project.name = "test"
+      project.project_key = "test"
+      project.save
       User.active_users.count.should eql(1)
       Project.delete_all
     end
@@ -476,7 +480,11 @@ describe User do
     it "returns 2 user,when she commented and he has active project" do
       she = User.all.first
       he = User.all.last
-      Project.new(user_id: she.id).save
+      project = Project.new
+      project.user_id = she.id
+      project.name = "test"
+      project.project_key = "test"
+      project.save
       Versioncomment.new(user_id: he.id, product_key: "1", version: "1", comment: "1").save
       User.active_users.count.should eql(2)
       Project.delete_all
