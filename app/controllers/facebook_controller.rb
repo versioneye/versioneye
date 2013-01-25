@@ -25,6 +25,15 @@ class FacebookController < ApplicationController
     if !user.nil?
       sign_in user
     end
+
+    product_key = cookies[:prod_key]
+    if product_key 
+      response = ProductService.create_follower product_key, current_user
+      if response.eql?("success")
+        flash[:success] = "Congratulations. You are following now #{product_key} at VersionEye." 
+        cookies.delete(:prod_key)
+      end
+    end
   rescue => e
     p "ERROR FACEBOOK CALLBACK Message:   #{e.message}"
     p "ERROR FACEBOOK CALLBACK backtrace: #{e.backtrace}"

@@ -24,8 +24,6 @@ class ProductsController < ApplicationController
 
     if ( (@query.nil? || @query.empty?) && (@groupid.nil? || @groupid.empty?) )
       flash.now[:error] = "Please give us some input. Type in a value for name."
-    elsif @query.length == 1
-      flash.now[:error] = "Search term is to short. Please type in at least 2 characters."
     elsif @query.include?("%")
       flash.now[:error] = "the character % is not allowed"
     else

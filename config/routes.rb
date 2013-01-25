@@ -153,7 +153,6 @@ Versioneye::Application.routes.draw do
   get   '/statistics/proglangs',  :to => 'statistics#proglangs'
   get   '/statistics/langtrends', :to => 'statistics#langtrends'
 
-
   get   '/about',               :to => 'page#about'
   get   '/impressum',           :to => 'page#impressum'
   get   '/imprint',             :to => 'page#imprint'
@@ -168,7 +167,7 @@ Versioneye::Application.routes.draw do
   
   get   '/api',                 :to => 'swaggers#index'  
   get   '/swaggers',            :to => redirect('/api')
-  get   '/apijson',             :to => 'page#apijson'
+  get   '/apijson',             :to => redirect('/api')
   get   '/apijson_tools',       :to => redirect('/api')
   get   '/apijson_libs',        :to => redirect('/api')
   

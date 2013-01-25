@@ -99,8 +99,7 @@ class Project
 
   def make_project_key
     if self.user_id.nil? 
-      rando create_random_value
-      return rando
+      return Project.create_random_value()
     end
     project_nr = 1
     project_key_text = "#{self.project_type}_#{self.name}".downcase
@@ -109,7 +108,6 @@ class Project
                         name: self.name,
                         project_type: self.project_type  
                       )
-
     project_nr += similar_projects.count unless similar_projects.nil?
     if project_nr > 1
       new_project_key =  "#{project_key_text}_#{project_nr}"
@@ -296,15 +294,6 @@ class Project
       return user_email.email
     end
     return user.email 
-  end  
-
-  private 
-
-    def create_random_value
-      chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-      value = ""
-      10.times { value << chars[rand(chars.size)] }
-      value
-    end
+  end
   
 end

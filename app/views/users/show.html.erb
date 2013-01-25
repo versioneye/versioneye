@@ -1,5 +1,8 @@
 <% page_header "Profile" %>
-<% title "#{@user.username} (#{@user.fullname}) is following Libraries at VersionEye" %>
+
+<% if !@user.nil? %>
+	<% title "#{@user.username} (#{@user.fullname}) is following Libraries at VersionEye" %>
+<% end %>
 
 <% if !@user.nil? && @user.deleted %>
 	This Account does not exist anymore.

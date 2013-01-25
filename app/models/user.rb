@@ -170,7 +170,6 @@ class User
     return nil if id.nil?
     id = id.to_s
     return User.find(id) if User.where(:_id => id).exists?
-  
   rescue => e
     logger.error "-- ERROR user with id #{id} not found! -- #{e}"
     p "ERROR #{e}"
@@ -189,6 +188,10 @@ class User
       p " - #{message}"
     end
     nil
+  end
+
+  def self.find_all( page_count )
+    User.all().desc(:created_at)
   end
 
   def emails
