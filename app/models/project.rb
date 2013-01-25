@@ -5,7 +5,7 @@ class Project
 
   field :user_id, type: String
   field :name, type: String
-    
+
   field :project_type, type: String, :default => "Maven2"
   field :project_key, type: String
   field :private_project, type: Boolean, :default => false
@@ -18,7 +18,7 @@ class Project
   field :dep_number, type: Integer
   field :out_number, type: Integer, default: 0
   field :unknown_number, type: Integer, default: 0
-  
+
   attr_accessor :dependencies
 
   validates :name, presence: true
@@ -101,6 +101,7 @@ class Project
   def make_project_key
     project_nr = 1
     project_key_text = "#{self.project_type}_#{self.name}".downcase
+    project_key_text.gsub!(/\s+/m, "_")
     similar_projects = Project.by_user(self.user).where(
                         name: self.name,
                         project_type: self.project_type  
