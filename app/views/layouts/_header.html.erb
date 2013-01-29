@@ -13,18 +13,24 @@
 							<%= link_to "Services", "/services" %>
 						</li>
 						<li class="divider-vertical"></li>
+						<li>
+							<%= link_to "Pricing", "/pricing" %>
+	          </li>
 					<% end %>
-					<li>
-						<%= link_to "Pricing", "/pricing" %>
-          </li>
 				<!-- menu for logged-in user -->
 					<% if signed_in? %>
 						<li class="divider-vertical"></li>
 						<li>
 							<a href="/user/projects">
-								Projects
+								My Projects
 							</a>
-						</li>	
+						</li>
+						<li class="divider-vertical"></li>
+						<li>
+							<a href="/users/<%= current_user.username %>/favoritepackages">
+								My Libs
+							</a>
+						</li>
 						<li class="divider-vertical"></li>
 						<li class ="dropdown">
 							<a class = "dropdown-toggle"
