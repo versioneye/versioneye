@@ -18,7 +18,7 @@ describe VersionEye::SessionsApi do
 
     it "returns error when api token is missing" do
       post @sessions_url
-      response.status.should == 400
+      response.status.should == 403
     end
 
     it "returns error when user submitted wrong token" do

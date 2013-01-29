@@ -29,3 +29,6 @@ REQUESTING PAGE: GET / with {} and HTTP headers {"HTTP_REFERER"=>"/search"}
 REQUESTING PAGE: GET / with {} and HTTP headers {}
 REQUESTING PAGE: GET /search with {} and HTTP headers {"HTTP_REFERER"=>"/"}
 REQUESTING PAGE: GET / with {} and HTTP headers {"HTTP_REFERER"=>"/search"}
+REQUESTING PAGE: GET / with {} and HTTP headers {}
+REQUESTING PAGE: GET /search with {} and HTTP headers {"HTTP_REFERER"=>"/"}
+REQUESTING PAGE: GET / with {} and HTTP headers {"HTTP_REFERER"=>"/search"}

@@ -5,7 +5,7 @@ class Project
 
   field :user_id, type: String
   field :name, type: String
-    
+
   field :project_type, type: String, :default => "Maven2"
   field :project_key, type: String
   field :private_project, type: Boolean, :default => false
@@ -18,7 +18,7 @@ class Project
   field :dep_number, type: Integer
   field :out_number, type: Integer, default: 0
   field :unknown_number, type: Integer, default: 0
-  
+
   attr_accessor :dependencies
 
   validates :name, presence: true
