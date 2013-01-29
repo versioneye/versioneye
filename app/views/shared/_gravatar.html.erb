@@ -10,7 +10,7 @@
   <img src= "<%= "/assets/profile_icon.png" %>" 
        width= "<%= image_size %>" height= "<%= image_size %>" alt = "missing @user var" />
 <% else %>
-  <%= link_to(gravatar_image_tag(@user.email, 
+  <%= link_to( gravatar_image_tag(@user.email, 
                                  :alt => @user.fullname, 
                                  :class => "round", 
                                  :gravatar => { :size => image_size, 

@@ -20,7 +20,7 @@ gem 'stripe', '1.7.8'
 gem 'thin', '1.4.1'
 gem 'tire', '0.5.3'
 # gem 'yajl-ruby', '1.1.0'     # another JSON parser
-gem 'dalli', '2.6.0'           # memcache library
+gem 'dalli', '2.6.2'           # memcache library
 gem 'kgio', '2.7.4'            # 20% performance boost for dalli
 gem 'newrelic_rpm', '3.5.4.34' # performance monitoring 
 gem 'grape' 
