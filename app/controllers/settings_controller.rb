@@ -20,7 +20,7 @@ class SettingsController < ApplicationController
   end
 
   def plans
-    @plan = current_user.plan  
+    @plan = current_user.plan
   end
 
   def creditcard
@@ -104,8 +104,11 @@ class SettingsController < ApplicationController
     user = current_user
     stripe_token = user.stripe_token
     customer_id = user.stripe_customer_id
+    customer = nil
     if stripe_token && customer_id
       customer = Stripe::Customer.retrieve( customer_id )
+    end 
+    if customer
       customer.update_subscription( :plan => @plan_name_id )
       user.plan_name_id = @plan_name_id
       user.save
