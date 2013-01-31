@@ -108,7 +108,7 @@ class SettingsController < ApplicationController
     if stripe_token && customer_id
       customer = Stripe::Customer.retrieve( customer_id )
     end 
-    if customer
+    if customer && customer.deleted != true
       customer.update_subscription( :plan => @plan_name_id )
       user.plan_name_id = @plan_name_id
       user.save

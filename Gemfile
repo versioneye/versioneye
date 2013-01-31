@@ -39,6 +39,7 @@ group :development do
 end
 
 group :assets do
+  gem 'sass', :require => 'sass'
   gem 'sass-rails', "3.2.5"
   gem 'coffee-rails', "3.2.2"
   gem 'uglifier'
