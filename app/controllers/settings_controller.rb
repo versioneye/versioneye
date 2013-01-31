@@ -30,10 +30,6 @@ class SettingsController < ApplicationController
       @plan_name_id = plan
     end
     @billing_address = current_user.billing_address
-    if @billing_address.nil?
-      @billing_address = BillingAddress.new
-      @billing_address.name = current_user.fullname
-    end
   end
 
   def links
@@ -118,6 +114,7 @@ class SettingsController < ApplicationController
       flash.now[:info] = "Please update your Credit Card information."
       @page = "cc"
       cookies.permanent.signed[:plan_selected] = @plan_name_id
+      @billing_address = current_user.billing_address
       render settings_creditcard_path
     end
   end

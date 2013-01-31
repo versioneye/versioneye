@@ -127,6 +127,11 @@ class User
 
   def billing_address
     billing_address = BillingAddress.where(user_id: self._id.to_s)[0]
+    if billing_address.nil?
+      billing_address = BillingAddress.new
+      billing_address.name = current_user.fullname
+    end
+    billing_address
   end
   
   def create_username
