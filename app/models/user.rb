@@ -129,7 +129,7 @@ class User
     billing_address = BillingAddress.where(user_id: self._id.to_s)[0]
     if billing_address.nil?
       billing_address = BillingAddress.new
-      billing_address.name = current_user.fullname
+      billing_address.name = self.fullname
     end
     billing_address
   end
