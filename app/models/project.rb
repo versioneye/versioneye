@@ -171,6 +171,8 @@ class Project
     end
   end
   
+
+  #TODO: refactor with strategy pattern parser = parsers['gradle'], parsers = {'gradle' => GradleParser}
   def self.create_from_file(project_type, url)
     project = nil
     if project_type.eql?("Maven2")
@@ -184,9 +186,13 @@ class Project
     elsif project_type.eql?("PIP")
       project = RequirementsParser.parse ( url )
     elsif project_type.eql?("npm")
-      project = PackageParser.parse ( url )
+      project = PackageParser.parse(url)
     elsif project_type.eql?("composer")
-      project = ComposerParser.parse ( url )
+      if url.match(/composer\.lock/i)
+        project = ComposerLockParser.parse(url)
+      else
+        project = ComposerParser.parse(url)
+      end
     elsif project_type.eql?("gradle")
       project = GradleParser.parse ( url )
     elsif project_type.eql?("Lein")
