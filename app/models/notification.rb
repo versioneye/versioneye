@@ -30,7 +30,7 @@ class Notification
   end
   
   def self.send_to_rob
-    user = User.find_by_email( "robert.reiz.81@gmail.com" )
+    user = User.find_by_email( "reiz@versioneye.com" )
     send_notifications_for_user( user )
   end
   
