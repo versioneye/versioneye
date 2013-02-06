@@ -7,7 +7,7 @@ class ComposerLockParser < CommonParser
     project.dependencies = []
 
     dependencies.each do |package|
-      process_package project, package  
+      self.process_package project, package  
     end
 
     project.project_type = "composer"
@@ -19,7 +19,7 @@ class ComposerLockParser < CommonParser
     dependency = Projectdependency.new
     dependency.name = package["name"]
 
-    product = product_by_key "#{@@group_id}/#{dependency.name}"
+    product = self.product_by_key "#{@@group_id}/#{dependency.name}"
     dependency.prod_key = product.prod_key if product
 
     version = self.fetch_package_version(package)
