@@ -26,7 +26,7 @@ function validateFeedbackForm(){
 		alert('Please type in your Name.')
 		result = false
 	}
-	var email = jQuery('[name="fb_email"]').val();	
+	var email = jQuery('[name="fb_email"]').val();
 
 	result = validateEmail(email);
 	var feedback = jQuery('[name="feedback"]').val();	
