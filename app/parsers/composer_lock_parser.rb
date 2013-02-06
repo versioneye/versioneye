@@ -7,31 +7,29 @@ class ComposerLockParser < CommonParser
     project.dependencies = []
 
     dependencies.each do |package|
-      dependency = Projectdependency.new
-      dependency.name = package["name"]
-
-      prod_key = "#{@@group_id}/#{dependency.name}"
-      product = Product.find_by_key(prod_key)
-      product = Product.find_by_key_case_insensitiv(prod_key) if product.nil?
-
-      if product.nil?
-        project.unknown_number += 1 
-      else
-        dependency.prod_key = product.prod_key
-      end
-
-      version = self.fetch_package_version(package)
-      ComposerParser.parse_requested_version(version, dependency, product)
-      dependency.update_outdated
-
-      project.out_number += 1 if dependency.outdated?
-
-      project.dependencies << dependency
+      self.process_package project, package  
     end
 
     project.project_type = "composer"
     project.dep_number = project.dependencies.count
     project
+  end
+
+  def self.process_package project, package 
+    dependency = Projectdependency.new
+    dependency.name = package["name"]
+
+    product = self.product_by_key "#{@@group_id}/#{dependency.name}"
+    dependency.prod_key = product.prod_key if product
+
+    version = self.fetch_package_version(package)
+    ComposerParser.parse_requested_version(version, dependency, product)
+    
+    dependency.update_outdated
+    project.out_number += 1 if dependency.outdated?
+    project.unknown_number += 1 unless product
+
+    project.dependencies << dependency
   end
 
   def self.fetch_package_version(package)
@@ -60,6 +58,12 @@ class ComposerLockParser < CommonParser
     return nil if data.nil?  or data['packages'].nil?
 
     data['packages']
+  end
+
+  def self.product_by_key prod_key 
+    product = Product.find_by_key(prod_key)
+    product = Product.find_by_key_case_insensitiv(prod_key) if product.nil?
+    product
   end
 
 end
