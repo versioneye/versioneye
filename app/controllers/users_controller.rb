@@ -110,10 +110,14 @@ class UsersController < ApplicationController
     @my_product_ids = Array.new
     if signed_in?
       @my_product_ids = current_user.fetch_my_product_ids
+      @my_notifications = Notification.by_user_id(current_user.id)
+      @my_updated_products = Product.find(@my_notifications.map(&:product_id)) unless @my_notifications.nil?
+
     end
     respond_to do |format|
-      format.html {  }
-      format.json { render :json => @products.to_json(:only => [:name, :version, :prod_key, :group_id, :artifact_id, :language] ) }
+      format.html {}
+      format.json {render :json => "Please use api."}
+      format.rss {render  :layout => false}
     end
   end
   

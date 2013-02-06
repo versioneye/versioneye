@@ -1,12 +1,14 @@
 <% title "Favorite packages of #{@user.username} (#{@user.fullname}) at VersionEye" %>
 <% page_header "Favorite packages" %>
 
+
 <% if !@user.nil? && @user.deleted %>
 	This Account does not exist anymore.
 <% end %>
 
 <% if !@user.nil? && !@user.deleted %>
-
+  <%= auto_discovery_link_tag(:rss,
+                              "#{url_for(favoritepackages_user_url(@user))}.rss") %>
 	<%= render "header" %>
 
 	<div class="span3" >

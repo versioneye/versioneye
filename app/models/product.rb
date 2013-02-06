@@ -649,6 +649,14 @@ class Product
     array_dwoncase
   end
 
+  def self.encode_prod_key(prod_key)
+    prod_key.gsub("/", "--").gsub(".", "~")
+  end
+
+  def self.decode_prod_key(prod_key)
+    prod_key.gsub("--", "/").gsub("~", ".")
+  end
+
   private
 
     def self.add_description_to_query(query, description)
@@ -693,5 +701,4 @@ class Product
         return newest  
       end
     end
-
 end
