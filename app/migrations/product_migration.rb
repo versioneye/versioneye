@@ -182,4 +182,7 @@ class ProductMigration
     xml_file.close
   end
 
+  def self.unify_unknow_licences
+    Product.all.in(license: [nil, "UNKNOWN"]).update_all({license: "unknown"})
+  end
 end
