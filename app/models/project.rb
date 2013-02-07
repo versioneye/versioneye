@@ -103,7 +103,8 @@ class Project
     end
     project_nr = 1
     project_key_text = "#{self.project_type}_#{self.name}".downcase
-    project_key_text.gsub!(/\s+/m, "_")
+    project_key_text.gsub!(/[\s|\W|\_]+/, "_")
+
     similar_projects = Project.by_user(self.user).where(
                         name: self.name,
                         project_type: self.project_type  
