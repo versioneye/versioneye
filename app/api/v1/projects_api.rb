@@ -11,12 +11,18 @@ module VersionEye
     helpers ProjectHelpers
     helpers SessionHelpers
 
+    def self.fetch_project(user, proj_key)
+      project = Project.by_user(user).where(project_key: proj_key).shift 
+      project = Project.by_user(user).where(_id: proj_key).shift if project.nil? 
+
+      project
+    end
+
     resource :projects do
 
       before do
         track_apikey
       end
-
 
       desc "show users projects" 
       get do
@@ -24,7 +30,6 @@ module VersionEye
         @user_projects = Project.by_user(@current_user)
         present @user_projects, with: Entities::ProjectEntity
       end
-
 
       desc "show the project's information", {
         notes: %q[ It shows detailed info of your project. ]
@@ -94,6 +99,43 @@ module VersionEye
         {success: true, message: "Project deleted successfully."}
       end
 
+
+      desc "get grouped view of licences for dependencies"
+      params do
+        requires :project_key, :type => String, :desc => "Project specific identifier"
+      end
+      get '/:project_key/licenses' do
+        authorized? 
+        
+        @project = ProjectsApi.fetch_project @current_user, params[:project_key]
+        error!("Project `#{params[:project_key]}` dont exists", 400) if @project.nil?
+        
+        licenses = {}
+
+        @project.fetch_dependencies
+        @project.dependencies.each do |dep|
+          package_url = nil
+          unless dep[:prod_key].nil?
+            package = Product.find_by_key dep[:prod_key]
+            license = package[:license]
+          end
+
+          license ||= "unknown"
+          licenses[license] ||= []
+
+          prod_info = {
+            :name => dep.name,
+            :prod_key => dep[:prod_key],
+          }
+          licenses[license] << prod_info 
+        end
+
+        {success: true, licenses: licenses}
+      end
+
     end
+
   end
+
+
 end
