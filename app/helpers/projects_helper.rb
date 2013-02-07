@@ -18,7 +18,7 @@ module ProjectsHelper
 		  project_type = "PIP"
 		elsif orig_filename.match(/package.json/)
 		  project_type = "npm"
-		elsif orig_filename.match(/composer.json/)
+		elsif orig_filename.match(/composer.json/) or orig_filename.match(/composer.lock/)
 		  project_type = "composer"
 		elsif orig_filename.match(/dependencies.gradle/) || orig_filename.match(/.gradle$/)
 		  project_type = "gradle"
