@@ -137,7 +137,6 @@ class User::ProjectsController < ApplicationController
         end
       end
     end
-
     respond_to do |format|
       format.html { render :template => "user/projects/show_popular" }
     end
@@ -214,9 +213,7 @@ class User::ProjectsController < ApplicationController
     end
 
     def create_project( project_type, url, project_name )
-      p "create_project: #{project_type}, #{url}, #{project_name}"
       project = Project.create_from_file( project_type, url )
-      p "create_project: 2: #{project}"
       project.user_id = current_user.id.to_s
       if project.name.nil? || project.name.empty?
         project.name = project_name

@@ -69,7 +69,6 @@ describe Project do
     before(:each) do
       @test_user = UserFactory.create_new 1001
       @test_user.nil?.should be_false
-
       @test_project = ProjectFactory.create_new @test_user 
     end
 
@@ -89,5 +88,15 @@ describe Project do
       new_project.remove
     end
 
+    it "if generates unique project_key only once" do
+      new_project = ProjectFactory.create_new @test_user
+      new_project.valid?.should be_true
+      new_project.project_key.should =~ /(\d+)$/
+      project_key = new_project.project_key 
+      new_project.make_project_key!
+      new_project.project_key.should eql(project_key)
+      new_project.remove
+    end
   end
+
 end

@@ -9,7 +9,6 @@ class GemfileParser
     
     response = CommonParser.fetch_response(url)
     gemfile = response.body
-    p "parse: gemfile: #{gemfile}"
     return nil if gemfile.nil?
     
     project = Project.new
@@ -52,7 +51,6 @@ class GemfileParser
       project.dependencies << dependency
     end
     project.dep_number = project.dependencies.count
-    p "project.dep_number: #{project.dep_number}"
     project
   end
 

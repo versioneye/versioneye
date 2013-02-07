@@ -22,7 +22,7 @@ class Project
   attr_accessor :dependencies
 
   validates :name, presence: true
-  validates :project_key, presence: true, uniqueness: true
+  validates :project_key, presence: true
 
   scope :by_user, ->(user){ where(user_id: user.id) }
 
@@ -97,10 +97,12 @@ class Project
     end
   end
 
+  def make_project_key!
+    self.project_key = make_project_key unless self.project_key
+  end
+
   def make_project_key
-    if self.user_id.nil? 
-      return Project.create_random_value()
-    end
+    return Project.create_random_value() if self.user_id.nil? 
     project_nr = 1
     project_key_text = "#{self.project_type}_#{self.name}".downcase
     project_key_text.gsub!(/[\s|\W|\_]+/, "_")
@@ -110,16 +112,7 @@ class Project
                         project_type: self.project_type  
                       )
     project_nr += similar_projects.count unless similar_projects.nil?
-    if project_nr > 1
-      new_project_key =  "#{project_key_text}_#{project_nr}"
-    else
-      new_project_key = project_key_text
-    end
-    new_project_key
-  end
-
-  def make_project_key!
-    self.project_key = make_project_key # unless self.project_key
+    "#{project_key_text}_#{project_nr}"
   end
 
   def self.process_project( project )
@@ -193,7 +186,6 @@ class Project
     elsif project_type.eql?("Lein")
       project = LeinParser.parse ( url )
     end
-    p "create_from_fle returns project: #{project}"
     project
   rescue => e 
     p "exception: #{e}"

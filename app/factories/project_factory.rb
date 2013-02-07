@@ -1,4 +1,5 @@
 class ProjectFactory
+  
   def self.create_new(user, extra_fields = nil, save = true)
     if user.nil? or user.to_s.empty?
       $stderr.p "User was unspecified or empty."
@@ -31,4 +32,5 @@ class ProjectFactory
 
     new_project
   end
+
 end
