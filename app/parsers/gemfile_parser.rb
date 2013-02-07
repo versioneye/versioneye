@@ -9,6 +9,7 @@ class GemfileParser
     
     response = CommonParser.fetch_response(url)
     gemfile = response.body
+    p "parse: gemfile: #{gemfile}"
     return nil if gemfile.nil?
     
     project = Project.new

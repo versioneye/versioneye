@@ -214,6 +214,7 @@ class User::ProjectsController < ApplicationController
     end
 
     def create_project( project_type, url, project_name )
+      p "create_project: #{project_type}, #{url}, #{project_name}"
       project = Project.create_from_file( project_type, url )
       project.user_id = current_user.id.to_s
       if project.name.nil? || project.name.empty?
