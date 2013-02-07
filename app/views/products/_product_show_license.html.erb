@@ -4,23 +4,13 @@
 	</h5>
 </div>
 <div class="box content" >
-	<% if !@product.license.nil? && !@product.license.empty? %>
-		<% if !@product.licenseLink.nil? && !@product.licenseLink.empty? %>
-			<a href="<%= @product.licenseLink %>" target="_LICENSE"><%= @product.license %></a> - <span class="meta-text-small">[ crawled data ]</span>
+	<% if !@product.license_info.nil? && !@product.license_info.empty? %>
+		<% if !@product.license_link_info.nil? && !@product.license_link_info.empty? %>
+			<a href="<%= @product.license_link_info %>" target="_LICENSE"><%= @product.license_info %></a>
 		<% else %>
-			<%= @product.license %> - <span class="meta-text-small">[ crawled data ]</span>
+			<%= @product.license %>
 		<% end %>
 	<% else %>
-		UNKNOWN - <small>[ crawled data ]</small>
+		UNKNOWN
 	<% end %>
 </div>
-<% if @product.license_manual && !@product.license_manual.empty? %>
-	<div class="box content" >
-		<% if !@product.licenseLink_manual.nil? && !@product.licenseLink_manual.empty? %>
-			<a href="<%= @product.licenseLink_manual %>" target="_LICENSE"><%= @product.license_manual %></a> 
-			<small> - [ manual entry ]</small>
-		<% else %>
-			<%= @product.license_manual %> - <small>[ manual entry ]</small>
-		<% end %>
-	</div>
-<% end %>

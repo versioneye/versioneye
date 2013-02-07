@@ -505,12 +505,12 @@ describe Product do
   describe "handling product licenses" do 
     it "- get licence of product, that is added by crawler" do 
       p = Product.new name: "TestProduct", license: "Apache22"
-      p.get_license.should eql("Apache22")
+      p.license_info.should eql("Apache22")
     end
 
     it "- get license of product that is added by user" do 
       p = Product.new name: "testProduct2", license_manual: "Rocket42"
-      p.get_license.should eql("Rocket42")
+      p.license_info.should eql("Rocket42")
     end
   end
 

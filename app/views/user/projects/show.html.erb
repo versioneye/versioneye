@@ -133,7 +133,7 @@
 							<% @project.dependencies.each do |dep| %>
 								<% product = dep.get_product %>
 
-								<% if product.get_license.nil? then key = "unknown" else key  = product.get_license end %>
+								<% if product.license_info.nil? then key = "unknown" else key  = product.license_info end %>
 								<% licences[key] = []  unless licences.key? key %>
 								<% licences[key] << product %>
 								
