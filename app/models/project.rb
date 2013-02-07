@@ -26,8 +26,6 @@ class Project
 
   scope :by_user, ->(user){ where(user_id: user.id) }
 
-  before_save :make_project_key!
-
   def self.find_by_id( id )
     Project.find(id)
   rescue => e
