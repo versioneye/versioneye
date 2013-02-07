@@ -224,13 +224,12 @@ class User::ProjectsController < ApplicationController
     end
 
     def store_project(project)
-      project.make_project_key!
       if project.dependencies && !project.dependencies.empty? && project.save
         dependencies = Array.new(project.dependencies)
         Project.save_dependencies(project, dependencies)
         flash[:success] = "Project was created successfully."
       else
-        flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."
+        flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team."
       end
     end
 
