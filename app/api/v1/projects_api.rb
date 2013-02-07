@@ -117,7 +117,7 @@ module VersionEye
           package_url = nil
           unless dep[:prod_key].nil?
             package = Product.find_by_key dep[:prod_key]
-            license = package[:license]
+            license = package.license_info
           end
 
           license ||= "unknown"
