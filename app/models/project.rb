@@ -192,6 +192,7 @@ class Project
     elsif project_type.eql?("Lein")
       project = LeinParser.parse ( url )
     end
+    p "create_from_fle returns project: #{project}"
     project
   rescue => e 
     p "exception: #{e}"

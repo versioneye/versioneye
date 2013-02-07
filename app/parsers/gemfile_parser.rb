@@ -52,6 +52,7 @@ class GemfileParser
       project.dependencies << dependency
     end
     project.dep_number = project.dependencies.count
+    p "project.dep_number: #{project.dep_number}"
     project
   end
 
