@@ -24,18 +24,18 @@
 
 		<div class = "span1 pull-right">
 			<% if signed_in? %>
-				<span class = "pull-right" id="follow_<%=product.to_param%>" style="display: <%= display_follow(product) %>">
+				<div class = "pull-right" id="follow_<%=product.to_param%>" style="display: <%= display_follow(product) %>">
 					<%= form_tag("/package/follow", :remote => true) do  %>
-						<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>" />
-	 					<button type="submit" class="btn2 btn-big" id="#{product.to_param}" >Follow</button>
+						<input  name="product_key" type="hidden" value="<%= product.to_param %>" />
+	 					<button type="submit" class="btn2 btn-big" >Follow</button>
 					<% end %>
-				</span>
-				<span class = "pull-right" id="unfollow_<%=product.to_param%>" style="display: <%= display_unfollow(product) %>">
+				</div>
+				<div class = "pull-right" id="unfollow_<%=product.to_param%>" style="display: <%= display_unfollow(product) %>">
 					<%= form_tag("/package/unfollow", :remote => true) do  %>
-						<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= product.to_param %>" />
-						<button type="submit" class="btn btn-warning btn-big" id="#{product.to_param}" >Unfollow</button>
+						<input  name="product_key" type="hidden" value="<%= product.to_param %>" />
+						<button type="submit" class="btn btn-warning btn-big" >Unfollow</button>
 					<% end %>
-				</span>
+				</div>
 			<% else %>
 				<button type="submit" class="btn2 btn-medium" onclick="load_dialog_follow('<%= product.name %>', '<%= product.prod_key %>');" >Follow</button>
 			<% end %>

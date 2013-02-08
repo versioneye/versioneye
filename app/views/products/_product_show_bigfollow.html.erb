@@ -2,13 +2,13 @@
 	<% if signed_in? %>
 		<% if @following %>
 			<%= form_tag("/package/unfollow") do  %>
-				<input id="src_hidden"  name="src_hidden" type="hidden" value="detail"/>
-				<input id="product_key_hidden" name="product_key" type="hidden" value="<%= @product.to_param %>"/>
+				<input name="src_hidden"  type="hidden" value="detail"/>
+				<input name="product_key" type="hidden" value="<%= @product.to_param %>"/>
 				<button type="submit" class="btn2 btn-large btn-warning" >Unfollow</button>
 			<% end %>
 		<% else %>
 			<%= form_tag("/package/follow") do  %>
-				<input id="product_key_hidden"  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
+				<input  name="product_key" type="hidden" value="<%= @product.to_param %>"/>
 				<button type="submit" class="btn btn-large btn-success" >Follow</button>
 			<% end %>
 		<% end %>
