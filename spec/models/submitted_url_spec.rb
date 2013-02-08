@@ -50,40 +50,13 @@ describe SubmittedUrl do
       end
   end
 
-  describe 'fetch_user_email' do
-    before(:each) do
-      @plain_url = SubmittedUrlFactory.create_new
-      @email_url = SubmittedUrlFactory.create_new(user_email: "rob@versioneye.com")
-      @test_user = UserFactory.create_new(3)
-      @user_url  = SubmittedUrlFactory.create_new(user_id: @test_user._id)
-    end
-
-    after(:each) do
-      @plain_url.delete
-      @email_url.delete
-      @test_user.delete
-      @user_url.delete
-    end
-
-    it 'returns nil when submitted url dont have no user and neither email' do
-      @plain_url.fetch_user_email.should be_nil
-    end
-
-    it 'returns correct email when submittedUrl includes email' do
-      @email_url.fetch_user_email.should eql("rob@versioneye.com")
-    end
-
-    it 'returns correct email when submittedUrl has specified userID' do
-      @user_url.fetch_user_email.should eql(@test_user.email)
-    end
-  end
-
   describe 'update_integration_status' do
     before(:each) do
       @submitted_url1 = SubmittedUrlFactory.create_new(user_email: "t1@test.com")
-      @submitted_url2 = SubmittedUrlFactory.create_new(user_email: "robert@versioneye.com")
-      @resource_without_product = ProductResourceFactory.create_new({
-                                  :submitted_url => @submitted_url1})
+      @resource_without_product = ProductResourceFactory.create_new({:submitted_url => @submitted_url1})
+      
+      @test_user_2 = UserFactory.create_new(2)
+      @submitted_url2 = SubmittedUrlFactory.create_new(user_id: @test_user_2._id.to_s)
       @product = ProductFactory.create_new(:maven)
       @resource_with_product = ProductResourceFactory.create_new({
                                   :submitted_url => @submitted_url2, 
@@ -91,11 +64,12 @@ describe SubmittedUrl do
     end
 
     after(:each) do
-        @submitted_url1.delete
-        @submitted_url2.delete
-        @resource_without_product.delete
-        @product.delete
-        @resource_with_product.delete
+      @submitted_url1.delete
+      @submitted_url2.delete
+      @resource_without_product.delete
+      @product.delete
+      @resource_with_product.delete
+      @test_user_2.delete
     end
 
     it 'returns false when updating fails' do

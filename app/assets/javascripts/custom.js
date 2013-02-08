@@ -43,10 +43,6 @@ jQuery(document).ready( function() {
       }); 
   }
 
-  jQuery("#ext_search_link").click( function() {
-    jQuery("#extended_search_container").fadeToggle("slow", "linear");
-  });
-
   map_for_jobs = document.getElementById("map_for_jobs")
   if (map_for_jobs){
     initialize_jobs() 
@@ -91,20 +87,7 @@ jQuery(document).ready( function() {
     render_wheel_require_dev();
   }
 
-  if (jQuery('.captcha_math').length){
-    render_captcha_math()      
-  }
-
 });
-
-function render_captcha_math(){
-  value_a = Math.floor((Math.random()*10)+1);
-  value_b = Math.floor((Math.random()*10)+1);
-  jQuery("[name='value_a']").val(value_a);
-  jQuery("[name='value_b']").val(value_b);
-  fb_math_label = jQuery(".fb_math");
-  fb_math_label.html(value_a + " + " + value_b + " = ");
-}
 
 function stripeResponseHandler(status, response) {
   if (response.error) {

@@ -36,15 +36,6 @@ class SubmittedUrl
     User.find_by_id user_id
   end
 
-  def fetch_user_email
-    return user_email if user_email
-
-    user = self.user
-    return user.email if user
-      
-    return nil
-  end
-
   def self.update_integration_statuses()
     SubmittedUrl.as_not_integrated.each do |submitted_url|
       submitted_url.update_integration_status
@@ -52,7 +43,6 @@ class SubmittedUrl
   end
 
   def update_integration_status
-    user_email = self.fetch_user_email
     resource = self.product_resource
     prod_key = resource.prod_key unless resource.nil? or resource.prod_key.nil?
     @product =  Product.find_by_key(prod_key)
@@ -60,8 +50,7 @@ class SubmittedUrl
     
     if self.save and not @product.nil?
       @submitted_url = self
-      SubmittedUrlMailer.integrated_url_email(
-        user_email, @submitted_url, @product).deliver unless user_email.nil?
+      SubmittedUrlMailer.integrated_url_email(@submitted_url, @product).deliver
       return true
     else
       $stderr.puts "Failed to update integration status for submittedUrl.#{self._id}"

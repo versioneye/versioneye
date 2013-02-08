@@ -1,11 +1,43 @@
-<%= form_tag(submitted_urls_path, :id => "newUrlForm", :class => "form-horizontal") do %>
+<% if signed_in? %>
 
-<%= render "shared/new_url_fields" %>
+  <%= form_tag(submitted_urls_path, :id => "newUrlForm", :class => "form-horizontal") do %>
 
-<div class= "control-group">
-  <div class= "controls">
-    <button type= "submit" class = "btn2 btn-large"> Submit</button>
+    <%= hidden_field_tag :search_term, params[:q] %>
+
+    <div class = "control-group">
+      <%= label_tag :url,nil, :class => "control-label" %>
+      <div class = "controls">
+        <%= text_field_tag :url, nil, :class => "span5" %>
+      </div>
+    </div>
+
+    <div class = "control-group">
+      <%= label_tag :message, nil, :class => "control-label" %>
+      <div class = "controls">
+        <%= text_area_tag :message, nil, :size => "29x4", :class => "span5",
+            :maxlength => "255", 
+            :onKeyUp => "textCounter(this, document.getElementById('new_url_counter'), 255)" %>
+          <br />
+          <span id="new_url_counter" class="help-block label-danger">max:255</span>
+      </div>
+    </div>
+
+    <div class= "control-group">
+      <div class= "controls">
+        <button type= "submit" class = "btn2 btn-large"> Submit</button>
+      </div>
+    </div>
+
+  <% end %>
+
+<% else %>
+
+  <div style = "padding: 15px 30px;">
+    <p>
+      To submit a new Resource you have to login.
+    </p>
   </div>
-</div>
+
+  <%= render "shared/login_options_horizontal" %>
 
 <% end %>

@@ -8,7 +8,6 @@
 	<%= csrf_meta_tag %>
 	<%= stylesheet_link_tag "application" %>
 
-    <meta page="<%= @page %>" />
 	<% if @product || @project %> 
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 		<%= javascript_include_tag "application",    :defer => false, :async => false %>

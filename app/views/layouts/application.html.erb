@@ -8,7 +8,6 @@
 <head >
 
 	<meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
-	<meta HTTP-EQUIV="Content-Language" Content="en">
 
 	<% if @product %>
 		<% if @product.language.eql?("Ruby") %>
@@ -20,9 +19,9 @@
 		<% else %>	
 			<title><%= @product.name %> : <%= @product.version %> - Track your libraries at VersionEye</title>
 		<% end %>
-		<meta name="name"     itemprop="name"     content="<%= @product.name %>">
-		<meta name="softwareversion" itemprop="softwareversion"  content="<%= @product.version %>">
-		<meta name="version" itemprop="version"  content="<%= @product.version %>">
+		<meta name="name"     itemprop="name"     content="<%= @product.name %>" />
+		<meta name="softwareversion" itemprop="softwareversion"  content="<%= @product.version %>" />
+		<meta name="version" itemprop="version"  content="<%= @product.version %>" />
 		<meta name="keywords" itemprop="keywords" content="<%= @product.name %>, <%= @product.language %>, <%= @product.prod_type %>" />
 		<meta name="url" itemprop="url" content="<%= Settings.server_url %>/package/<%= @product.to_param %>/version/<%= @product.version %>" />
 		<% if !@product.description.nil? && !@product.description.empty? %> 
@@ -55,13 +54,11 @@
 			<%= yield %>
 		</div>
 	</section>
- 
-  <aside class = "visible-desktop">
-    <%= render "shared/new_url_modal" %>
-  </aside>
 
 	<%= render 'layouts/footer' %>
-	<%= render 'feedback/dialog_feedback' %>
+	<aside class = "visible-desktop">
+		<%= render 'shared/social_buttons' %>
+	</aside>
 	<%= debug(params) if Rails.env.development? %>
 
 </body>

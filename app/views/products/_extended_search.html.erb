@@ -7,13 +7,13 @@
 		<div class="side_nav_content">
 
 			<div  class="control-group">
-				<%= label_tag(:name, "Name", :class => "control-label" )%>
+				<%= label_tag(:q, "Name", :class => "control-label" )%>
 				<div class="controls">
 					<%= text_field_tag :q, @query, :class => "input-medium" %>
 				</div>
 			</div>
 			<div class="control-group">
-				<%= label_tag(:groupid, "GroupId") %>
+				<%= label_tag(:g, "GroupId") %>
 				<div class="controls">
 					<%= text_field_tag :g, @groupid, :class => "input-medium" %>
 					<span class = "help-block">

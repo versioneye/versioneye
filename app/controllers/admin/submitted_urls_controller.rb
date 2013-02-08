@@ -39,7 +39,7 @@ class Admin::SubmittedUrlsController < ApplicationController
         submitted_url[:declined] = false
         submitted_url.save
         flash[:success] = "Resource was accepted successfully"
-        send_approval_email submitted_url    
+        SubmittedUrlMailer.approved_url_email(submitted_url).deliver
       else
         flash[:error] = new_resource.errors.full_messages.to_sentence
       end
@@ -56,12 +56,11 @@ class Admin::SubmittedUrlsController < ApplicationController
       submitted_url.declined_message = params[:declined_message]
       if submitted_url.save 
         flash[:notice] = "Url is now declined."
-        send_decline_email submitted_url
+        SubmittedUrlMailer.declined_url_email(submitted_url).deliver
       else
         flash[:error] - submitted_url.errors.full_messages.to_sentence
       end
     end
-
     redirect_to :back
   end
 
@@ -81,20 +80,6 @@ class Admin::SubmittedUrlsController < ApplicationController
   
     def admin_user
       redirect_to(root_path) unless signed_in_admin?
-    end
-
-    def send_approval_email submitted_url
-      user_email = submitted_url.fetch_user_email
-      if user_email
-        SubmittedUrlMailer.approved_url_email(user_email, submitted_url).deliver
-      end
-    end
-
-    def send_decline_email submitted_url
-      user_email = submitted_url.fetch_user_email
-      if user_email
-        SubmittedUrlMailer.declined_url_email(user_email, submitted_url).deliver
-      end
     end
 
 end
