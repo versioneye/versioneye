@@ -1,8 +1,7 @@
 <div id= "decline_form_<%= @form_index %>" class= "hide admin-form" >
   <h5> Decline url </h5>
 
-  <%= form_tag(admin_submitted_url_decline_path(@submitted_url),
-      :class => "form-horizontal" ) do %>
+  <%= form_tag(admin_submitted_url_decline_path(@submitted_url), :class => "form-horizontal" ) do %>
   
     <div class = "control-group">
       <%= label_tag :url,nil, :class => "control-label" %>
@@ -20,11 +19,10 @@
 
     <div class = "control-group">
       <div class = "controls">
-         
         <button type = "button" class = "btn" 
           onclick="jQuery('.admin-form').addClass('hide')">
           Cancel</button>
-       <%= submit_tag "Accept", :class => "btn2" %> 
+        <%= submit_tag "Decline", :class => "btn2" %> 
       </div>
     </div>
 

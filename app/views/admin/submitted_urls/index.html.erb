@@ -2,24 +2,20 @@
   Filter by:
   <ul class= "nav nav-tabs nav-stacked">
     <li>
-    <%= link_to "Show all", admin_submitted_urls_path(:by_state => "all") %> 
+      <%= link_to "Show all", admin_submitted_urls_path(:by_state => "all") %> 
     </li>
-     <li>
+    <li>
       <%= link_to "Show unchecked",  admin_submitted_urls_path(:by_state => "unchecked") %> 
-      </li>
-    <li>
-    <%= link_to "Show checked", admin_submitted_urls_path(:by_state => "checked") %> 
     </li>
     <li>
-    <%= link_to "Show accepted", admin_submitted_urls_path(:by_state => "accepted") %> 
+      <%= link_to "Show checked", admin_submitted_urls_path(:by_state => "checked") %> 
     </li>
-
     <li>
-    <%= link_to "Show declined", admin_submitted_urls_path(:by_state => "declined") %> 
+      <%= link_to "Show accepted", admin_submitted_urls_path(:by_state => "accepted") %> 
     </li>
-
-
-
+    <li>
+      <%= link_to "Show declined", admin_submitted_urls_path(:by_state => "declined") %> 
+    </li>
   </ul>
 </div>
 
