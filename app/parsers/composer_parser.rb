@@ -103,8 +103,8 @@ class ComposerParser
       # Greater than or equal to
       version.gsub!(">=", "")
       version.gsub!(" ", "")
-      newest_version = product.get_greater_than_or_equal(version)
-      dependency.version_requested = newest_version.version
+      greater_than_or_equal = product.get_greater_than_or_equal(version)
+      dependency.version_requested = greater_than_or_equal.version
       dependency.comperator = ">="
       dependency.version_label = version
     
@@ -112,8 +112,8 @@ class ComposerParser
       # Greater than version
       version.gsub!(">", "")
       version.gsub!(" ", "")
-      newest_version = product.get_greater_than(version)
-      dependency.version_requested = newest_version.version
+      greater_than = product.get_greater_than(version)
+      dependency.version_requested = greater_than.version
       dependency.comperator = ">"
       dependency.version_label = version
     
@@ -121,8 +121,8 @@ class ComposerParser
       # Less than or equal to
       version.gsub!("<=", "")
       version.gsub!(" ", "")
-      newest_version = product.get_smaller_than_or_equal(version)
-      dependency.version_requested = newest_version.version
+      smaller_or_equal = product.get_smaller_than_or_equal(version)
+      dependency.version_requested = smaller_or_equal.version
       dependency.comperator = "<="
       dependency.version_label = version
     
@@ -130,8 +130,8 @@ class ComposerParser
       # Less than version
       version.gsub!("\<", "")
       version.gsub!(" ", "")
-      newest_version = product.get_smaller_than(version)
-      dependency.version_requested = newest_version.version
+      smaller_than = product.get_smaller_than(version)
+      dependency.version_requested = smaller_than.version
       dependency.comperator = "<"
       dependency.version_label = version
     
@@ -139,8 +139,8 @@ class ComposerParser
       # Not equal to version
       version.gsub!("!=", "")
       version.gsub!(" ", "")
-      newest_version = product.get_newest_but_not(version)
-      dependency.version_requested = newest_version.version
+      newest_but_not = product.get_newest_but_not(version)
+      dependency.version_requested = newest_but_not.version
       dependency.comperator = "!="
       dependency.version_label = version
     
