@@ -10,7 +10,7 @@ class ComposerParser
     data = JSON.parse( response.body )
     return nil if data.nil?
 
-    dependencies = data['require']
+    dependencies = fetch_dependencies data
     return nil if dependencies.nil?
 
     project = Project.new
@@ -39,6 +39,12 @@ class ComposerParser
       project.dependencies << dependency
     end
 
+    name = data['name']
+    description = data['description']
+    license = data['license']
+    project.name = name if name
+    project.description = description if description
+    project.license = license if license
     project.dep_number = project.dependencies.count
     project
   rescue => e 
@@ -175,6 +181,19 @@ class ComposerParser
       dependency.version_label = version
     end
 
+  end
+
+  def self.fetch_dependencies data
+    dependencies     = data['require']
+    dependencies_dev = data['require-dev']
+    if dependencies && dependencies_dev.nil?
+      return dependencies
+    elsif dependencies.nil? && dependencies_dev
+      return dependencies_dev
+    elsif dependencies && dependencies_dev 
+      return dependencies.merge(dependencies_dev)
+    end
+    return nil
   end
 
 end

@@ -5,6 +5,8 @@ class Project
 
   field :user_id, type: String
   field :name, type: String
+  field :description, type: String 
+  field :license, type: String 
 
   field :project_type, type: String, :default => "Maven2"
   field :project_key, type: String

@@ -19,7 +19,7 @@ class User::ProjectsController < ApplicationController
     if file && !file.empty?
       project = upload_and_store file
     elsif project_url && !project_url.empty?
-      fetch_and_store project_url
+      project = fetch_and_store project_url
     elsif github_project && !github_project.empty? && !github_project.eql?("NO_PROJECTS_FOUND")
       private_project = Github.private_repo?( current_user.github_token, github_project )
       if private_project && !is_allowed_to_add_private_project?
@@ -46,7 +46,7 @@ class User::ProjectsController < ApplicationController
       redirect_to new_user_project_path
       return nil  
     end
-
+    
     if project and project.id 
       redirect_to user_project_path( project._id )
     else
