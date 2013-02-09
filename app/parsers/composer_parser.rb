@@ -4,48 +4,17 @@ class ComposerParser
   # http://getcomposer.org/doc/01-basic-usage.md
   #
   def self.parse ( url )
-    return nil if url.nil? 
-    
-    response = CommonParser.fetch_response(url)
-    data = JSON.parse( response.body )
+    data = self.fetch_data( url )
     return nil if data.nil?
 
     dependencies = fetch_dependencies data
     return nil if dependencies.nil?
 
-    project = Project.new
-    project.dependencies = Array.new    
-
+    project = Project.new(:dependencies => Array.new)
     dependencies.each do |key, value|
-      dependency = Projectdependency.new
-      dependency.name = key
-      
-      product = Product.find_by_key("php/#{key}")
-      if product.nil? 
-        product = Product.find_by_key_case_insensitiv("php/#{key}")
-      end
-      if product
-        dependency.prod_key = product.prod_key
-      else 
-        project.unknown_number = project.unknown_number + 1
-      end
-      
-      parse_requested_version(value, dependency, product)
-      
-      dependency.update_outdated
-      if dependency.outdated?
-        project.out_number = project.out_number + 1
-      end      
-      project.dependencies << dependency
+      self.process_dependency( key, value, project )
     end
-
-    name = data['name']
-    description = data['description']
-    license = data['license']
-    project.name = name if name
-    project.description = description if description
-    project.license = license if license
-    project.dep_number = project.dependencies.count
+    self.update_project( project, data )
     project
   rescue => e 
     p "#{e}"
@@ -55,7 +24,7 @@ class ComposerParser
     nil
   end
 
-  # It is important that this method is not writing into the database! 
+  # It is important that this method is NOT writing into the database! 
   # 
   # TODO Write tests for this
   #
@@ -183,6 +152,26 @@ class ComposerParser
 
   end
 
+  def self.process_dependency( key, value, project )
+    dependency = Projectdependency.new
+    dependency.name = key
+    
+    product = self.product_by_key key
+    if product
+      dependency.prod_key = product.prod_key
+    else 
+      project.unknown_number = project.unknown_number + 1
+    end
+    
+    parse_requested_version(value, dependency, product)
+    
+    dependency.update_outdated
+    if dependency.outdated?
+      project.out_number = project.out_number + 1
+    end      
+    project.dependencies << dependency
+  end
+
   def self.fetch_dependencies data
     dependencies     = data['require']
     dependencies_dev = data['require-dev']
@@ -194,6 +183,30 @@ class ComposerParser
       return dependencies.merge(dependencies_dev)
     end
     return nil
+  end
+
+  def self.product_by_key( key )
+    product = Product.find_by_key("php/#{key}")
+    if product.nil? 
+      product = Product.find_by_key_case_insensitiv("php/#{key}")
+    end
+    product
+  end
+
+  def self.update_project( project, data )
+    name = data['name']
+    description = data['description']
+    license = data['license']
+    project.name = name if name
+    project.description = description if description
+    project.license = license if license
+    project.dep_number = project.dependencies.count
+  end
+
+  def self.fetch_data( url )
+    return nil if url.nil? 
+    response = CommonParser.fetch_response(url)
+    JSON.parse( response.body )
   end
 
 end
