@@ -17,11 +17,66 @@ class ComposerParser
     self.update_project( project, data )
     project
   rescue => e 
-    p "#{e}"
-    e.backtrace.each do |message|
-      p " - #{message}"
-    end
+    self.print_backtrace e 
     nil
+  end
+
+  def self.fetch_data( url )
+    return nil if url.nil? 
+    response = CommonParser.fetch_response(url)
+    JSON.parse( response.body )
+  end
+
+  def self.fetch_dependencies data
+    dependencies     = data['require']
+    dependencies_dev = data['require-dev']
+    if dependencies && dependencies_dev.nil?
+      return dependencies
+    elsif dependencies.nil? && dependencies_dev
+      return dependencies_dev
+    elsif dependencies && dependencies_dev 
+      return dependencies.merge(dependencies_dev)
+    end
+    return nil
+  end
+
+  def self.process_dependency( key, value, project )
+    dependency = Projectdependency.new
+    dependency.name = key
+    
+    product = self.product_by_key key
+    if product
+      dependency.prod_key = product.prod_key
+    else 
+      # TODO Check extern dependencies 
+      project.unknown_number += 1
+    end
+    
+    parse_requested_version(value, dependency, product)
+    
+    dependency.update_outdated
+    if dependency.outdated?
+      project.out_number += 1
+    end      
+    project.dependencies << dependency
+  end
+
+  def self.product_by_key( key )
+    product = Product.find_by_key("php/#{key}")
+    if product.nil? 
+      product = Product.find_by_key_case_insensitiv("php/#{key}")
+    end
+    product
+  end
+
+  def self.update_project( project, data )
+    name = data['name']
+    description = data['description']
+    license = data['license']
+    project.name = name if name
+    project.description = description if description
+    project.license = license if license
+    project.dep_number = project.dependencies.count
   end
 
   # It is important that this method is NOT writing into the database! 
@@ -152,61 +207,13 @@ class ComposerParser
 
   end
 
-  def self.process_dependency( key, value, project )
-    dependency = Projectdependency.new
-    dependency.name = key
-    
-    product = self.product_by_key key
-    if product
-      dependency.prod_key = product.prod_key
-    else 
-      project.unknown_number = project.unknown_number + 1
+  private 
+
+    def self.print_backtrace( e )
+      p "#{e}"
+      e.backtrace.each do |message|
+        p " - #{message}"
+      end
     end
-    
-    parse_requested_version(value, dependency, product)
-    
-    dependency.update_outdated
-    if dependency.outdated?
-      project.out_number = project.out_number + 1
-    end      
-    project.dependencies << dependency
-  end
-
-  def self.fetch_dependencies data
-    dependencies     = data['require']
-    dependencies_dev = data['require-dev']
-    if dependencies && dependencies_dev.nil?
-      return dependencies
-    elsif dependencies.nil? && dependencies_dev
-      return dependencies_dev
-    elsif dependencies && dependencies_dev 
-      return dependencies.merge(dependencies_dev)
-    end
-    return nil
-  end
-
-  def self.product_by_key( key )
-    product = Product.find_by_key("php/#{key}")
-    if product.nil? 
-      product = Product.find_by_key_case_insensitiv("php/#{key}")
-    end
-    product
-  end
-
-  def self.update_project( project, data )
-    name = data['name']
-    description = data['description']
-    license = data['license']
-    project.name = name if name
-    project.description = description if description
-    project.license = license if license
-    project.dep_number = project.dependencies.count
-  end
-
-  def self.fetch_data( url )
-    return nil if url.nil? 
-    response = CommonParser.fetch_response(url)
-    JSON.parse( response.body )
-  end
 
 end
