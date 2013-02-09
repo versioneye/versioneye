@@ -7,7 +7,7 @@
 	<% title "Project: #{@project.name}" %>
 
 	<div class="span3" >
-		<%= render "/user/projects/navi" %>	
+		<%= render "/user/projects/helpers/navi" %>	
 	</div>
 
 	<div class="span8">
@@ -54,9 +54,9 @@
 				<%= render :partial => "user/projects/helpers/show_description" %>
 				<%= render :partial => "user/projects/helpers/show_license" %>
 
-				<%= render :partial => "user/projects/project_numbers_sentence", :locals => { :project => @project } %>
+				<%= render :partial => "user/projects/helpers/project_numbers_sentence", :locals => { :project => @project } %>
 				<br/>
-				<%= render :partial => "user/projects/project_source", :locals => { :project => @project } %>
+				<%= render :partial => "user/projects/helpers/project_source", :locals => { :project => @project } %>
 				
 				<div style="font-size: 16px; margin-bottom: 0px;">
 					<div class="row">
@@ -142,13 +142,13 @@
 								
 								<div class="row search-item search_item_context" >
 									<% if dep.prod_key.nil? %>						
-										<%= render :partial => "/user/projects/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
+										<%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
 									<% elsif dep.outdated and dep.release != false  %>
-										<%= render :partial => "/user/projects/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
+										<%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
 									<% elsif dep.outdated and dep.release == false %>
-										<%= render :partial => "/user/projects/show_known_out_pre_dep", :locals => {:product => product, :dep => dep} %>
+										<%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep} %>
 									<% else %>	
-										<%= render :partial => "/user/projects/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
+										<%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
 									<% end %>					
 								</div>
 							<% end %>
@@ -187,4 +187,4 @@
 
 	</div>
 
-<% end %> 
+<% end %>

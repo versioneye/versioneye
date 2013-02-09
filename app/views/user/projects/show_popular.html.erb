@@ -1,7 +1,7 @@
 <% title "Most Used Libraries" %>
 
 <div class="span3" >
-	<%= render "/user/projects/navi" %>
+	<%= render "/user/projects/helpers/navi" %>
 </div>
 
 <div class="span8">
@@ -12,7 +12,7 @@
 	<div class="span8 left_border" >
 		<% if @libs.nil? || @libs.empty? %>
 			<div class="content">
-				<%= render "/user/projects/create" %>
+				<%= render "/user/projects/helpers/create" %>
 			</div>
 		<% else %>
 			<div id="projects" >

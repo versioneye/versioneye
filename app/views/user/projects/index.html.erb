@@ -1,8 +1,7 @@
-
 <% title "My Projects" %>
 
 <div class="span3" >
-	<%= render "/user/projects/navi" %>	
+	<%= render "/user/projects/helpers/navi" %>	
 </div>
 
 <div class="span8">
@@ -13,7 +12,7 @@
 	<div class="span8 left_border" >
 		<% if @projects.nil? || @projects.empty? %>
 			<div class="content">
-				<%= render "/user/projects/create" %>
+				<%= render "/user/projects/helpers/create" %>
 			</div>
 		<% else %>
 			<div id="projects" >
@@ -21,7 +20,7 @@
 					<div class="row search-item" >
 						<%= link_to project.name, user_project_path(project), :class => "searchResultLink" %><br/>
 						<span class="meta-text-small">
-							<%= render :partial => "user/projects/project_numbers_sentence", :locals => { :project => project } %>
+							<%= render :partial => "user/projects/helpers/project_numbers_sentence", :locals => { :project => project } %>
 						</span>
 					</div>
 				<% end %>
