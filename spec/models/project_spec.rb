@@ -101,6 +101,10 @@ describe Project do
 
   describe "type_by_filename" do
     it "returns RubyGems. OK" do 
+      url1 = "http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_Gemfile?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D"
+      url2 = "http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_Gemfile.lock?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D"
+      Project.type_by_filename(url1).should eql(Project::A_TYPE_RUBYGEMS)
+      Project.type_by_filename(url2).should eql(Project::A_TYPE_RUBYGEMS)
       Project.type_by_filename("Gemfile").should eql(Project::A_TYPE_RUBYGEMS)
       Project.type_by_filename("Gemfile.lock").should eql(Project::A_TYPE_RUBYGEMS)
       Project.type_by_filename("app/Gemfile").should eql(Project::A_TYPE_RUBYGEMS)
@@ -114,6 +118,10 @@ describe Project do
     end
 
     it "returns Composer. OK" do 
+      url1 = "http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_composer.json?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D"
+      url2 = "http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_composer.lock?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D"
+      Project.type_by_filename(url1).should eql(Project::A_TYPE_COMPOSER)
+      Project.type_by_filename(url1).should eql(Project::A_TYPE_COMPOSER)
       Project.type_by_filename("composer.json").should eql(Project::A_TYPE_COMPOSER)
       Project.type_by_filename("composer.lock").should eql(Project::A_TYPE_COMPOSER)
       Project.type_by_filename("app/composer.json").should eql(Project::A_TYPE_COMPOSER)
@@ -127,6 +135,8 @@ describe Project do
     end
 
     it "returns PIP. OK" do 
+      url1 = "http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_requirements.txt?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D"
+      Project.type_by_filename(url1).should eql(Project::A_TYPE_PIP)
       Project.type_by_filename("requirements.txt").should eql(Project::A_TYPE_PIP)
       Project.type_by_filename("app/requirements.txt").should eql(Project::A_TYPE_PIP)
     end
@@ -136,6 +146,8 @@ describe Project do
     end
 
     it "returns NPM. OK" do 
+      url1 = "http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_package.json?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D"
+      Project.type_by_filename(url1).should eql(Project::A_TYPE_NPM)
       Project.type_by_filename("package.json").should eql(Project::A_TYPE_NPM)
       Project.type_by_filename("app/package.json").should eql(Project::A_TYPE_NPM)
     end
@@ -145,6 +157,8 @@ describe Project do
     end
 
     it "returns Gradle. OK" do 
+      url1 = "http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_dep.gradle?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D"
+      Project.type_by_filename(url1).should eql(Project::A_TYPE_GRADLE)
       Project.type_by_filename("dependencies.gradle").should eql(Project::A_TYPE_GRADLE)
       Project.type_by_filename("app/dependencies.gradle").should eql(Project::A_TYPE_GRADLE)
       Project.type_by_filename("app/deps.gradle").should eql(Project::A_TYPE_GRADLE)
@@ -157,7 +171,8 @@ describe Project do
     end
 
     it "returns Maven2. OK" do 
-      Project.type_by_filename("pom.xml").should eql(Project::A_TYPE_MAVEN2)
+      url1 = "http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_pom.xml?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D"
+      Project.type_by_filename(url1).should eql(Project::A_TYPE_MAVEN2)
       Project.type_by_filename("app/pom.xml").should eql(Project::A_TYPE_MAVEN2)
     end
     it "returns nil for wrong maven2 file" do 
@@ -166,6 +181,8 @@ describe Project do
     end
 
     it "returns Lein. OK" do 
+      url1 = "http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_project.clj?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D"
+      Project.type_by_filename(url1).should eql(Project::A_TYPE_LEIN)
       Project.type_by_filename("project.clj").should eql(Project::A_TYPE_LEIN)
       Project.type_by_filename("app/project.clj").should eql(Project::A_TYPE_LEIN)
     end

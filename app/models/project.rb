@@ -131,8 +131,6 @@ class Project
     "#{project_key_text}_#{project_nr}"
   end
 
-  # TODO Write test case for this Gemfile URL: http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_Gemfile?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D
-  #
   def self.type_by_filename( filename )
     trimmed_name = filename.split("?")[0]
     return A_TYPE_RUBYGEMS if trimmed_name.match(/Gemfile$/) or trimmed_name.match(/Gemfile.lock$/)
