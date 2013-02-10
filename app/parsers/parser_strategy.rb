@@ -1,7 +1,5 @@
 class ParserStrategy
 
-  # TODO Write test for this
-  # 
   def self.parser_for( project_type, url )
     case project_type
       when Project::A_TYPE_MAVEN2
