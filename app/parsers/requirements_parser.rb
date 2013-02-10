@@ -1,13 +1,13 @@
-class RequirementsParser
+class RequirementsParser < CommonParser
   
   # Parser for requirements.txt files from pip. Python.
   # http://www.pip-installer.org/en/latest/requirements.html#the-requirements-file-format
   # http://www.pip-installer.org/en/latest/#requirements-files
   #
-  def self.parse( url )
+  def parse( url )
     return nil if url.nil?
     
-    response = CommonParser.fetch_response(url)
+    response = self.fetch_response(url)
     txt = response.body
     return nil if txt.nil?
     
@@ -18,7 +18,7 @@ class RequirementsParser
 
       next if !line.match(/^#/).nil?
 
-      splitter = RequirementsParser.get_splitter line
+      splitter = get_splitter line
       requirement = line.split(splitter)
       
       next if requirement.empty? || requirement.count != 2
@@ -55,6 +55,8 @@ class RequirementsParser
       project.dependencies << dependency
     end
     project.dep_number = project.dependencies.count
+    project.project_type = Project::A_TYPE_PIP
+    project.url = url
     project
   rescue => e 
     print "#{e}"
@@ -65,9 +67,9 @@ class RequirementsParser
 
   # It is important that this method is not writing int the database! 
   #
-  def self.parse_requested_version(splitter, version, dependency, product)
+  def parse_requested_version(splitter, version, dependency, product)
     if (version.nil? || version.empty?)
-      CommonParser.update_requested_with_current(dependency, product)
+      self.update_requested_with_current(dependency, product)
       return 
     end
     version = version.strip
@@ -114,7 +116,7 @@ class RequirementsParser
     
   end
   
-  def self.get_splitter line
+  def get_splitter line
     splitter = "=="
     if !line.match(/>=/).nil?
       splitter = ">="

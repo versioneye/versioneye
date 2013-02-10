@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 test_case_url = "https://s3.amazonaws.com/veye_test_env/dependencies.gradle"
+
 describe GradleParser do
   
   describe "parse" do 
@@ -69,14 +70,16 @@ describe GradleParser do
       @version_7.remove
     end
     it "parse from https the file correctly" do
-      project = GemfileParser.parse(test_case_url)
+      parser = GradleParser.new
+      project = parser.parse(test_case_url)
       project.should_not be_nil
     end
 
     it "parse the file correctly" do
       
       #run tests
-      project = GradleParser.parse(test_case_url)
+      parser = GradleParser.new
+      project = parser.parse(test_case_url)
       project.should_not be_nil
 
       dependency_01 = project.dependencies.first 

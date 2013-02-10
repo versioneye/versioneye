@@ -29,7 +29,7 @@
 	</div>
 </div>
 
-	<% if !@project.project_type.eql?("PIP") %>
+	<% if !@project.project_type.eql?( Project::A_TYPE_PIP ) %>
 		<div id="canvas-demo-container" style="display: inline-block;"></div>
 		<div style="text-align: center; display: none; width: 100%;" id="infoBox">
 			<h5 style="text-align: center;" >

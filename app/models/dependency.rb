@@ -43,7 +43,6 @@ class Dependency
     url_param
   end
 
-  ## Rename this to version_parsed
   def version_parsed
     return "0" if version.nil?
     abs_version = String.new(version)
@@ -76,15 +75,19 @@ class Dependency
     version_string = String.new(version)
     product = Product.find_by_key(self.dep_prod_key)
     dependency = Projectdependency.new
-    GemfileParser.parse_requested_version(version_string, dependency, product)
+    parser = GemfileParser.new
+    parser.parse_requested_version(version_string, dependency, product)
     dependency.version_requested
   end
 
+  # TODO Write Test for it !!! 
+  # 
   def packagist_version_parsed
     version_string = String.new(version)
     product = Product.find_by_key(self.dep_prod_key)
     dependency = Projectdependency.new
-    ComposerParser.parse_requested_version(version_string, dependency, product)
+    parser = ComposerParser.new 
+    parser.parse_requested_version(version_string, dependency, product)
     dependency.version_requested
   end
   

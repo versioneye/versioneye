@@ -51,6 +51,31 @@ class Github
     return false
   end
 
+  def self.get_repo_sha(git_project, token)
+    heads = JSON.parse HTTParty.get("https://api.github.com/repos/#{git_project}/git/refs/heads?access_token=" + URI.escape(token) ).response.body
+    heads[0]['object']['sha']
+  end
+
+  def self.get_project_info(git_project, sha, token)
+    result = Hash.new
+    tree = JSON.parse HTTParty.get("https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token) ).response.body
+    tree['tree'].each do |file|
+      name = file['path']
+      result['url'] = file['url']
+      result['name'] = name
+      type = Project.type_by_filename( name )
+      if type 
+        result['type'] = type
+        return result
+      end
+    end
+    return Hash.new
+  end
+
+  def self.fetch_file( url, token )
+    JSON.parse HTTParty.get( "#{url}?access_token=" + URI.escape(token) ).response.body
+  end
+
   private 
 
     def self.language_supported?(lang)

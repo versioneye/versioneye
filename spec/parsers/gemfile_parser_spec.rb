@@ -55,12 +55,14 @@ describe GemfileParser do
     end
     
     it "parse from https the file correctly" do
-      project = GemfileParser.parse("https://s3.amazonaws.com/veye_test_env/Gemfile")
+      parser = GemfileParser.new 
+      project = parser.parse("https://s3.amazonaws.com/veye_test_env/Gemfile")
       project.should_not be_nil
     end
     
     it "parse from http the file correctly" do
-      project = GemfileParser.parse("http://s3.amazonaws.com/veye_test_env/Gemfile")
+      parser = GemfileParser.new 
+      project = parser.parse("http://s3.amazonaws.com/veye_test_env/Gemfile")
       project.should_not be_nil
       project.dependencies.count.should eql(12)
       

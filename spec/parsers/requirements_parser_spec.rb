@@ -5,7 +5,8 @@ describe RequirementsParser do
   describe "parse" do 
     
     it "parse from https the file correctly" do
-      project = RequirementsParser.parse("https://s3.amazonaws.com/veye_test_env/requirements.txt")
+      parser = RequirementsParser.new
+      project = parser.parse("https://s3.amazonaws.com/veye_test_env/requirements.txt")
       project.should_not be_nil
     end
     
@@ -76,7 +77,8 @@ describe RequirementsParser do
       product4.versions.push(version4_1)
       product4.save
 
-      project = RequirementsParser.parse("http://s3.amazonaws.com/veye_test_env/requirements.txt")
+      parser = RequirementsParser.new
+      project = parser.parse("http://s3.amazonaws.com/veye_test_env/requirements.txt")
       project.should_not be_nil
       project.dependencies.count.should eql(20)
 
@@ -117,23 +119,28 @@ describe RequirementsParser do
   describe "get_splitter" do 
     
     it "returns the right splitt ==" do 
-      RequirementsParser.get_splitter("django==1.0").should eql("==")
+      parser = RequirementsParser.new
+      parser.get_splitter("django==1.0").should eql("==")
     end
     
     it "returns the right splitt <" do 
-      RequirementsParser.get_splitter("django<1.0").should eql("<")
+      parser = RequirementsParser.new
+      parser.get_splitter("django<1.0").should eql("<")
     end
     
     it "returns the right splitt <=" do 
-      RequirementsParser.get_splitter("django<=1.0").should eql("<=")
+      parser = RequirementsParser.new
+      parser.get_splitter("django<=1.0").should eql("<=")
     end
     
     it "returns the right splitt >" do 
-      RequirementsParser.get_splitter("django>1.0").should eql(">")
+      parser = RequirementsParser.new
+      parser.get_splitter("django>1.0").should eql(">")
     end
     
     it "returns the right splitt >=" do 
-      RequirementsParser.get_splitter("django>=1.0").should eql(">=")
+      parser = RequirementsParser.new
+      parser.get_splitter("django>=1.0").should eql(">=")
     end
 
   end

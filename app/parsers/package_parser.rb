@@ -1,13 +1,13 @@
-class PackageParser
+class PackageParser < CommonParser
   
   # Parser for requirements.json from npm. NodeJS
   # https://npmjs.org/doc/json.html
   # http://wiki.commonjs.org/wiki/Packages/1.1
   # 
-  def self.parse ( url )
+  def parse ( url )
     return nil if url.nil?
     
-    response = CommonParser.fetch_response(url)
+    response = self.fetch_response(url)
     data = JSON.parse( response.body )
     return nil if data.nil?
 
@@ -52,14 +52,16 @@ class PackageParser
     end
 
     project.dep_number = project.dependencies.count
+    project.project_type = Project::A_TYPE_NPM
+    project.url = url
     project
   end
 
   # It is important that this method is not writing int the database! 
   #
-  def self.parse_requested_version(version, dependency, product)
+  def parse_requested_version(version, dependency, product)
     if (version.nil? || version.empty?)
-      CommonParser.update_requested_with_current(dependency, product)
+      self.update_requested_with_current(dependency, product)
       return 
     end
     version = version.strip

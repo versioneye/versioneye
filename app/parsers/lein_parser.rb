@@ -1,6 +1,6 @@
 class LeinParser < CommonParser
 
-	def self.parse(url)
+	def parse(url)
 		#get content
 		return nil if url.nil? 
 		content = self.fetch_response(url).body
@@ -25,10 +25,12 @@ class LeinParser < CommonParser
 		deps = self.build_dependencies doc.xpath('/project/div[@attr="dependencies"]').children 
 		project = Project.new deps 
 		project.dep_number = project.dependencies.count 
-		project
+		project.project_type = Project::A_TYPE_LEIN
+    project.url = url
+    project
 	end
 
-	def self.build_dependencies(matches)
+	def build_dependencies(matches)
 		data = []
 		unknowns, out_number = 0, 0	
 		matches.each do |item|

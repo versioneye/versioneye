@@ -1,9 +1,9 @@
-class ComposerParser
+class ComposerParser < CommonParser
   
   # Parser for composer.json files from composer, packagist.org. PHP
   # http://getcomposer.org/doc/01-basic-usage.md
   #
-  def self.parse ( url )
+  def parse ( url )
     data = self.fetch_data( url )
     return nil if data.nil?
 
@@ -15,19 +15,21 @@ class ComposerParser
       self.process_dependency( key, value, project )
     end
     self.update_project( project, data )
+    project.project_type = Project::A_TYPE_COMPOSER
+    project.url = url
     project
   rescue => e 
     self.print_backtrace e 
     nil
   end
 
-  def self.fetch_data( url )
+  def fetch_data( url )
     return nil if url.nil? 
-    response = CommonParser.fetch_response(url)
+    response = self.fetch_response(url)
     JSON.parse( response.body )
   end
 
-  def self.fetch_dependencies data
+  def fetch_dependencies data
     dependencies     = data['require']
     dependencies_dev = data['require-dev']
     if dependencies && dependencies_dev.nil?
@@ -40,7 +42,7 @@ class ComposerParser
     return nil
   end
 
-  def self.process_dependency( key, value, project )
+  def process_dependency( key, value, project )
     dependency = Projectdependency.new
     dependency.name = key
     
@@ -61,7 +63,7 @@ class ComposerParser
     project.dependencies << dependency
   end
 
-  def self.product_by_key( key )
+  def product_by_key( key )
     product = Product.find_by_key("php/#{key}")
     if product.nil? 
       product = Product.find_by_key_case_insensitiv("php/#{key}")
@@ -69,7 +71,7 @@ class ComposerParser
     product
   end
 
-  def self.update_project( project, data )
+  def update_project( project, data )
     name = data['name']
     description = data['description']
     license = data['license']
@@ -83,9 +85,9 @@ class ComposerParser
   # 
   # TODO Write tests for this
   #
-  def self.parse_requested_version(version, dependency, product)
+  def parse_requested_version(version, dependency, product)
     if (version.nil? || version.empty?)
-      CommonParser.update_requested_with_current(dependency, product)
+      self.update_requested_with_current(dependency, product)
       return 
     end
     version = version.strip
@@ -209,7 +211,7 @@ class ComposerParser
 
   private 
 
-    def self.print_backtrace( e )
+    def print_backtrace( e )
       p "#{e}"
       e.backtrace.each do |message|
         p " - #{message}"

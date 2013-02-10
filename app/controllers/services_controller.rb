@@ -17,24 +17,16 @@ class ServicesController < ApplicationController
 
 		orig_filename =  file['datafile'].original_filename
 		filename = nil
-		filename = Project.upload_to_s3( file )
-		url = Project.get_project_url_from_s3( filename )
-		
-		project_type = get_project_type( url )
-		
-		project = Project.create_from_file(project_type, url)
+		filename = S3.upload_fileupload( file )
+		url = S3.url_for( filename )
+		project = ProjectService.create_from_url( url )
 		project.name = Project.create_random_value
-		project.project_type = project_type
-		project.url = url
 		project.s3_filename = filename
-		project.source = "upload"
+		project.source = Project::A_SOURCE_UPLOAD
 		project.make_project_key!
 
 		if !project.dependencies.nil? && !project.dependencies.empty? && project.save
-		  project.dependencies.each do |dep|
-		    dep.project_id = project.id.to_s
-		    dep.save
-		  end
+		  project.save_dependencies
 		else
 		  flash[:error] = "Ups. An error occured. Something is wrong with your file."
 		end
@@ -53,7 +45,7 @@ class ServicesController < ApplicationController
 	def recursive_dependencies
 		id = params[:id]
 		project = Project.find_by_id(id)
-		dependencies = project.get_known_dependencies
+		dependencies = project.known_dependencies
 		hash = Hash.new
 		dependencies.each do |dep|      
 			element = CircleElement.new

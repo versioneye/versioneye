@@ -5,7 +5,8 @@ describe PackageParser do
   describe "parse" do 
     
     it "parse from https the file correctly" do
-      project = PackageParser.parse("https://s3.amazonaws.com/veye_test_env/package.json")
+      parser = PackageParser.new 
+      project = parser.parse("https://s3.amazonaws.com/veye_test_env/package.json")
       project.should_not be_nil
     end
     
@@ -221,7 +222,8 @@ describe PackageParser do
       product13.save
 
 
-      project = PackageParser.parse("http://s3.amazonaws.com/veye_test_env/package.json")
+      parser = PackageParser.new 
+      project = parser.parse("http://s3.amazonaws.com/veye_test_env/package.json")
       project.should_not be_nil
       project.dependencies.count.should eql(13)
 

@@ -43,7 +43,7 @@ class ProductResourceFactory
     resource_01 = ProductResource.new({
       :url => resource_01_url, 
       :name => name,
-      :resource_type => "GitHub"
+      :resource_type => Project::A_TYPE_GITHUB
       })
     resource_01.save
   end

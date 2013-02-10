@@ -21,26 +21,8 @@ class User::ProjectsController < ApplicationController
     elsif project_url && !project_url.empty?
       project = fetch_and_store project_url
     elsif github_project && !github_project.empty? && !github_project.eql?("NO_PROJECTS_FOUND")
-      private_project = Github.private_repo?( current_user.github_token, github_project )
-      if private_project && !is_allowed_to_add_private_project?
-        flash[:error] = "You selected a private project. Please upgrade your plan to monitor the selected project."
-        redirect_to settings_plans_path
-        return nil    
-      end
-      sha = Project.get_repo_sha_from_github( github_project, current_user.github_token )
-      project_info = Project.get_project_info_from_github( github_project, sha, current_user.github_token )
-      if project_info.empty?
-        flash[:error] = "We couldn't find any project file in the selected project. Please choose another project."
-        redirect_to new_user_project_path
-        return nil    
-      end
-      s3_infos = Project.fetch_file_from_github(project_info['url'], current_user.github_token, project_info['name'])
-      project = create_project(project_info['type'], s3_infos['s3_url'], github_project)
-      project.source = "github"
-      project.s3_filename = s3_infos['filename']
-      project.github_project = github_project
-      project.private_project = private_project
-      store_project(project)
+      project = fetch_from_github_and_store github_project
+      return nil if project.nil? 
     else
       flash[:error] = "Please put in a URL OR select a file from your computer. Or select a GitHub project."
       redirect_to new_user_project_path
@@ -180,7 +162,7 @@ class User::ProjectsController < ApplicationController
     def destroy_project project_id 
       project = Project.find_by_id( project_id )
       if project.s3_filename && !project.s3_filename.empty?
-        Project.delete_project_from_s3( project.s3_filename )
+        S3.delete( project.s3_filename )
       end
       project.fetch_dependencies
       project.dependencies.each do |dep|
@@ -191,43 +173,61 @@ class User::ProjectsController < ApplicationController
 
     def upload_and_store file
       project_name = file['datafile'].original_filename
-      filename = Project.upload_to_s3( file )
-      url = Project.get_project_url_from_s3( filename )
-      project_type = get_project_type( url )
-      project_type = "Maven2" if project_type.nil?
-      project = create_project(project_type, url, project_name)
+      filename = S3.upload_fileupload( file )
+      url = S3.url_for( filename )
+      project = create_project( url, project_name )
       project.s3_filename = filename
-      project.source = "upload"
+      project.source = Project::A_SOURCE_UPLOAD
       store_project(project)
       project
     end
 
     def fetch_and_store project_url 
-      project_type = get_project_type( project_url )
-      project_type = "Maven2" if project_type.nil?
       project_name = project_url.split("/").last
-      project = create_project(project_type, project_url, project_name)
-      project.source = "url"
+      project = create_project( project_url, project_name )
+      project.source = Project::A_SOURCE_URL
       store_project(project)
       project
     end
 
-    def create_project( project_type, url, project_name )
-      project = Project.create_from_file( project_type, url )
+    def fetch_from_github_and_store github_project
+      private_project = Github.private_repo?( current_user.github_token, github_project )
+      if private_project && !is_allowed_to_add_private_project?
+        flash[:error] = "You selected a private project. Please upgrade your plan to monitor the selected project."
+        redirect_to settings_plans_path
+        return nil
+      end
+      sha = Github.get_repo_sha( github_project, current_user.github_token )
+      project_info = Github.get_project_info( github_project, sha, current_user.github_token )
+      if project_info.empty?
+        flash[:error] = "We couldn't find any project file in the selected project. Please choose another project."
+        redirect_to new_user_project_path
+        return nil    
+      end
+      file = Github.fetch_file( project_info['url'], current_user.github_token )
+      s3_infos = S3.upload_github_file( file, project_info['name'] )
+      project = create_project(s3_infos['s3_url'], github_project)
+      project.source = Project::A_SOURCE_GITHUB
+      project.s3_filename = s3_infos['filename']
+      project.github_project = github_project
+      project.private_project = private_project
+      store_project( project )
+      project
+    end
+
+    def create_project( url, project_name )
+      project = ProjectService.create_from_url( url )
       project.user_id = current_user.id.to_s
       if project.name.nil? || project.name.empty?
         project.name = project_name
       end
-      project.project_type = project_type
-      project.url = url
       project
     end
 
     def store_project(project)
       project.make_project_key!
       if project.dependencies && !project.dependencies.empty? && project.save
-        dependencies = Array.new(project.dependencies)
-        Project.save_dependencies(project, dependencies)
+        project.save_dependencies
         flash[:success] = "Project was created successfully."
       else
         flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."

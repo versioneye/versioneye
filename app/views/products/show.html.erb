@@ -6,24 +6,22 @@
 
 <% else %>
 
-	<% if @product.prod_type.eql? "Maven2" %>
+	<% if @product.prod_type.eql? Project::A_TYPE_MAVEN2 %>
 		<%= render 'products/product_show_maven' %>
 	<% elsif @product.prod_type.eql? "RubyGem" %>
 		<%= render 'products/product_show_gems' %>
-	<% elsif @product.prod_type.eql? "PIP" %>
+	<% elsif @product.prod_type.eql? Project::A_TYPE_PIP %>
 		<%= render 'products/product_show_pip' %>
-	<% elsif @product.prod_type.eql? "npm" %>
+	<% elsif @product.prod_type.eql? Project::A_TYPE_NPM %>
 		<%= render 'products/product_show_npm' %>
 	<% elsif @product.prod_type.eql? "Packagist" %>
 		<%= render 'products/product_show_packagist' %>
 	<% elsif @product.prod_type.eql? "R" %>
 		<%= render 'products/product_show_r' %>
-	<% elsif @product.prod_type.eql? "GitHub" %>
+	<% elsif @product.prod_type.eql? Project::A_TYPE_GITHUB %>
 		<%= render 'products/product_show_github' %>
 	<% elsif @product.prod_type.eql? "opa" %>
 		<%= render 'products/product_show_opa' %>
-	<% elsif @product.prod_type.eql? "Printer" %>
-		<%= render 'products/product_show_printer' %>
 	<% end %>
 
 <% end %>

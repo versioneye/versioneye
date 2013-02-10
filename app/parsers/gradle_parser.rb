@@ -1,6 +1,6 @@
 class GradleParser < CommonParser
 
-	def self.parse(url)
+	def parse(url)
 		return nil if url.nil?
 		content = self.fetch_response(url).body
 		return nil if content.nil?
@@ -17,10 +17,12 @@ class GradleParser < CommonParser
 		deps = self.build_dependencies(matches)
 		project = Project.new deps
 		project.dep_number = project.dependencies.count
+		project.project_type = Project::A_TYPE_GRADLE
+    project.url = url
 		project
 	end
 
-	def self.build_dependencies(matches)
+	def build_dependencies(matches)
 		# build and initiliaze array of dependencies.
 		# Arguments array of matches, should be [[scope, group_id, artifact_id, version],...]
 		# Returns map {:unknowns => 0 , dependencies => []}

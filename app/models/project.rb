@@ -3,18 +3,35 @@ class Project
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  # TODO Check if this not belongs better to Product.rb !!
+  A_TYPE_RUBYGEMS = "RubyGems" # TODO Check doublets with "RubyGem" withous "s" !!!
+  A_TYPE_PIP      = "PIP"
+  A_TYPE_NPM      = "npm"
+  A_TYPE_COMPOSER = "composer"
+  A_TYPE_GRADLE   = "gradle"
+  A_TYPE_MAVEN2   = "Maven2"
+  A_TYPE_LEIN     = "Lein"
+  A_TYPE_GITHUB   = "GitHub"
+
+  A_SOURCE_UPLOAD = "upload"
+  A_SOURCE_URL    = "url"
+  A_SOURCE_GITHUB = "github"
+
+  A_PERIOD_WEEKLY = "weekly"
+  A_PERIOD_DAILY  = "daily"
+
   field :user_id, type: String
   field :name, type: String
   field :description, type: String 
   field :license, type: String 
 
-  field :project_type, type: String, :default => "Maven2"
+  field :project_type, type: String, :default => A_TYPE_MAVEN2
   field :project_key, type: String
   field :private_project, type: Boolean, :default => false
-  field :period, type: String, :default => "weekly"
+  field :period, type: String, :default => A_PERIOD_WEEKLY
   field :email, type: String
   field :url, type: String
-  field :source, type: String, :default => "upload"  # possible values => [upload, url, github]
+  field :source, type: String, :default => A_SOURCE_UPLOAD
   field :s3_filename, type: String
   field :github_project, type: String
   field :dep_number, type: Integer
@@ -31,7 +48,10 @@ class Project
   def self.find_by_id( id )
     Project.find(id)
   rescue => e
-    p "#{e}"
+    p "ERROR in find_by_id #{e}"
+    e.backtrace.each do |message|
+      p "#{message}"
+    end
     nil
   end
   
@@ -53,7 +73,7 @@ class Project
     return nil
   end
 
-  def get_outdated_dependencies
+  def outdated_dependencies
     fetch_dependencies
     outdated_dependencies = Array.new
     self.dependencies.each do |dep|
@@ -62,39 +82,35 @@ class Project
     outdated_dependencies
   end
 
-  def get_known_dependencies
+  def known_dependencies
     fetch_dependencies
-    known_dependencies = Array.new
+    knows_deps = Array.new
     self.dependencies.each do |dep|
-      known_dependencies << dep if dep.prod_key
+      knows_deps << dep if dep.prod_key
     end
-    known_dependencies
+    knows_deps
   end  
 
-  def self.remove_dependencies(project)
-    project.fetch_dependencies
-    project.dependencies.each do |dep|
-      dep.remove
+  def remove_dependencies
+    fetch_dependencies
+    dependencies.each do |dependency|
+      dependency.remove
     end
   end
 
-  def self.save_dependencies(project, dependencies)
-    project.dependencies = Array.new
+  def save_dependencies
     dependencies.each do |dep|
-      project.dependencies << dep
-      dep.project_id = project.id.to_s
-      dep.user_id = project.user_id
+      dep.project_id = self.id.to_s
+      dep.user_id = self.user_id
       dep.save
+      p "save dep #{dep.id}"
     end
   end
 
-  def self.update_dependencies(period="weekly")
-    projects = Project.all()
-    projects.each do |project|
-      if project.period.eql?( period )
-        Project.process_project ( project )
-      end
-    end
+  def overwrite_dependencies( new_dependencies )
+    remove_dependencies
+    self.dependencies = Array.new( new_dependencies )
+    save_dependencies
   end
 
   def make_project_key!
@@ -115,177 +131,21 @@ class Project
     "#{project_key_text}_#{project_nr}"
   end
 
-  def self.process_project( project )
-    if project.user_id.nil?
-      return nil
-    end
-    if project.source.eql?("github")
-      Project.update_from_github( project )
-    end
-    if project.s3_filename && !project.s3_filename.empty?
-      project.url = Project.get_project_url_from_s3( project.s3_filename )
-    end
-    p "user: #{project.user.username}  #{project.name} url: #{project.url}"
-    p " - old: deps: #{project.dep_number} - out: #{project.out_number}"
-    new_project = Project.create_from_file( project.project_type, project.url )
-    p " - new: deps: #{new_project.dep_number} - out: #{new_project.out_number}"
-    if new_project.dependencies && !new_project.dependencies.empty? 
-      Project.remove_dependencies(project)
-      Project.save_dependencies(project, new_project.dependencies)
-      project.out_number = new_project.out_number
-      project.dep_number = new_project.dep_number
-      project.unknown_number = new_project.unknown_number
-      project.save
-      if project.out_number > 0
-        ProjectMailer.projectnotification_email(project).deliver
-      end
-    end
-  rescue => e
-    p "ERROR in proccess_project #{e}"
-    e.backtrace.each do |message|
-      p "#{message}"
-    end
-    nil
+  # TODO Write test case for this Gemfile URL: http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_Gemfile?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D
+  #
+  def self.type_by_filename( filename )
+    trimmed_name = filename.split("?")[0]
+    return A_TYPE_RUBYGEMS if trimmed_name.match(/Gemfile$/) or trimmed_name.match(/Gemfile.lock$/)
+    return A_TYPE_COMPOSER if trimmed_name.match(/composer.json$/) or trimmed_name.match(/composer.lock$/)
+    return A_TYPE_PIP      if trimmed_name.match(/requirements.txt$/)
+    return A_TYPE_NPM      if trimmed_name.match(/package.json$/)
+    return A_TYPE_GRADLE   if trimmed_name.match(/.gradle$/)
+    return A_TYPE_MAVEN2   if trimmed_name.match(/pom.xml$/)
+    return A_TYPE_LEIN     if trimmed_name.match(/project.clj$/)
+    return nil
   end
 
-  def self.update_from_github( project )
-    github_project = project.github_project
-    current_user = project.user
-    sha = Project.get_repo_sha_from_github( github_project, current_user.github_token )
-    project_info = Project.get_project_info_from_github( github_project, sha, current_user.github_token )
-    if project_info.empty?
-      return nil
-    end
-    s3_infos = Project.fetch_file_from_github(project_info['url'], current_user.github_token, project_info['name'])
-    if s3_infos['filename'] && s3_infos['s3_url']
-      delete_project_from_s3( project.s3_filename )
-      project.s3_filename = s3_infos['filename']
-      project.url = s3_infos['s3_url']
-      project.save
-    end
-  end
-  
-
-  #TODO: refactor with strategy pattern parser = parsers['gradle'], parsers = {'gradle' => GradleParser}
-  def self.create_from_file(project_type, url)
-    project = nil
-    if project_type.eql?("Maven2")
-      project = PomParser.parse ( url )
-    elsif project_type.eql?("RubyGems")
-      if url.match(/Gemfile\.lock/)
-        project = GemfilelockParser.parse ( url )
-      else 
-        project = GemfileParser.parse ( url )
-      end
-    elsif project_type.eql?("PIP")
-      project = RequirementsParser.parse ( url )
-    elsif project_type.eql?("npm")
-      project = PackageParser.parse(url)
-    elsif project_type.eql?("composer")
-      if url.match(/composer\.lock/i)
-        project = ComposerLockParser.parse(url)
-      else
-        project = ComposerParser.parse(url)
-      end
-    elsif project_type.eql?("gradle")
-      project = GradleParser.parse ( url )
-    elsif project_type.eql?("Lein")
-      project = LeinParser.parse ( url )
-    end
-    project
-  rescue => e 
-    p "exception: #{e}"
-    e.backtrace.each do |message|
-      p "#{message}"
-    end
-    project = Project.new
-  end
-  
-  def self.sanitize_filename(file_name)
-    just_filename = File.basename(file_name)
-    just_filename.sub(/[^\w\.\-]/,'_')
-  end
-
-  def self.upload_to_s3( fileUp )
-    orig_filename =  fileUp['datafile'].original_filename
-    fname = Project.sanitize_filename(orig_filename)
-    random = Project.create_random_value
-    filename = "#{random}_#{fname}"
-    AWS::S3::S3Object.store(filename, 
-      fileUp['datafile'].read, 
-      Settings.s3_projects_bucket, 
-      :access => "private")
-    filename
-  end
-
-  def self.get_project_url_from_s3 filename
-    AWS::S3::S3Object.url_for(filename, Settings.s3_projects_bucket, :authenticated => true)
-  end
-
-  def self.delete_project_from_s3 filename
-    AWS::S3::S3Object.delete filename, Settings.s3_projects_bucket
-  end
-
-  def self.get_repo_sha_from_github(git_project, token)
-    heads = JSON.parse HTTParty.get("https://api.github.com/repos/#{git_project}/git/refs/heads?access_token=" + URI.escape(token) ).response.body
-    heads[0]['object']['sha']
-  end
-
-  def self.get_project_info_from_github(git_project, sha, token)
-    result = Hash.new
-    tree = JSON.parse HTTParty.get("https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token) ).response.body
-    tree['tree'].each do |file|
-      name = file['path']
-      if name.eql?("Gemfile")
-        result['url'] = file['url']
-        result['name'] = name
-        result['type'] = "RubyGems"
-      elsif name.eql?("Gemfile.lock")
-        result['url'] = file['url']
-        result['name'] = name
-        result['type'] = "RubyGems"
-      elsif name.eql?("pom.xml")
-        result['url'] = file['url']
-        result['name'] = name
-        result['type'] = "Maven2"
-      elsif name.eql?("requirements.txt")
-        result['url'] = file['url']
-        result['name'] = name
-        result['type'] = "PIP"
-      elsif name.eql?("package.json")
-        result['url'] = file['url']
-        result['name'] = name
-        result['type'] = "npm"
-      end 
-    end
-    result
-  end
-
-  def self.fetch_file_from_github(url, token, filename)
-    file = JSON.parse HTTParty.get( "#{url}?access_token=" + URI.escape(token) ).response.body
-    file_bin = file['content']
-    random_value = Project.create_random_value
-    new_filename = "#{random_value}_#{filename}"
-    AWS::S3::S3Object.store(
-      new_filename, 
-      Base64.decode64(file_bin), 
-      Settings.s3_projects_bucket,
-      :access => "private")
-    url = Project.get_project_url_from_s3(new_filename)
-    result = Hash.new
-    result['filename'] = new_filename
-    result['s3_url'] = url
-    result
-  end
-
-  def self.create_random_value
-    chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-    value = ""
-    20.times { value << chars[rand(chars.size)] }
-    value
-  end
-
-  def self.get_email_for(project, user)
+  def self.email_for(project, user)
     if project.email.nil? || project.email.empty? 
       return user.email
     end
@@ -294,6 +154,13 @@ class Project
       return user_email.email
     end
     return user.email 
+  end
+
+  def self.create_random_value
+    chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    value = ""
+    20.times { value << chars[rand(chars.size)] }
+    value
   end
   
 end

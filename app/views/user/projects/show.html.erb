@@ -71,14 +71,14 @@
 								<button class="btn btn-danger btn-mini" onClick="return confirmAction()" >Delete this project</button>
 							</form>
 						</div>
-						<% if @project.source.eql?("upload") %>
+						<% if @project.source.eql?( Project::A_SOURCE_UPLOAD ) %>
 							<div class="span2" style="width: 150px;" >
 								<button style="margin-top: 5px;" class="btn btn-danger btn-mini" onClick="document.getElementById('reupload_form').style.display='block'" >ReUpload</button>
 							</div>
 						<% end %>
 					</div>
 				</div>
-				<% if @project.source.eql?("upload") %>
+				<% if @project.source.eql?( Project::A_SOURCE_UPLOAD ) %>
 					<div id="reupload_form" style="display: none;" >
 						<%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
 							<input name="project_id" id="project_id" type="hidden" value="<%= @project._id.to_s %>" />

@@ -70,7 +70,8 @@ describe ComposerLockParser do
     end
 
     it "parses correctly from S3 file" do
-      project = ComposerLockParser.parse @project_file_url
+      parser = ComposerLockParser.new
+      project = parser.parse @project_file_url
       project.should_not be_nil
       project.dependencies.count.should eql(17)
       

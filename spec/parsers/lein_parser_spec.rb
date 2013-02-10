@@ -10,12 +10,14 @@ describe LeinParser do
   describe "parse" do 
     
     it "read the file correctly" do
-      project = LeinParser.parse @url
+      parser = LeinParser.new
+      project = parser.parse @url
       project.should_not be_nil
     end
 
     it "does it parse sample project correctly" do 
-    	project = LeinParser.parse @url
+      parser = LeinParser.new 
+    	project = parser.parse @url
 
    		dependency_01 = project.dependencies[0]
 	    dependency_01.name.should eql("clojure")

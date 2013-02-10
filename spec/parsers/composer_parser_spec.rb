@@ -5,7 +5,8 @@ describe ComposerParser do
   describe "parse" do 
     
     it "parse from https the file correctly" do
-      project = ComposerParser.parse("https://s3.amazonaws.com/veye_test_env/composer.json")
+      parser = ComposerParser.new
+      project = parser.parse("https://s3.amazonaws.com/veye_test_env/composer.json")
       project.should_not be_nil
     end
     
@@ -88,7 +89,8 @@ describe ComposerParser do
       product_11.versions.push( version_11_03 )
       product_11.save
 
-      project = ComposerParser.parse("http://s3.amazonaws.com/veye_test_env/composer.json")
+      parser = ComposerParser.new 
+      project = parser.parse("http://s3.amazonaws.com/veye_test_env/composer.json")
       project.should_not be_nil
       project.dependencies.count.should eql(11)
 

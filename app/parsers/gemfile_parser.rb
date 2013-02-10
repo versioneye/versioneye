@@ -1,13 +1,13 @@
-class GemfileParser
+class GemfileParser < CommonParser
   
   # Parser for Gemfile. For Ruby. 
   # http://gembundler.com/man/gemfile.5.html
   # http://docs.rubygems.org/read/chapter/16#page74
   # 
-  def self.parse ( url )
+  def parse ( url )
     return nil if url.nil?    
     
-    response = CommonParser.fetch_response(url)
+    response = self.fetch_response(url)
     gemfile = response.body
     return nil if gemfile.nil?
     
@@ -51,14 +51,16 @@ class GemfileParser
       project.dependencies << dependency
     end
     project.dep_number = project.dependencies.count
+    project.project_type = Project::A_TYPE_RUBYGEMS
+    project.url = url
     project
   end
 
   # It is important that this method is not writing into the database! 
   #
-  def self.parse_requested_version(version, dependency, product)
+  def parse_requested_version(version, dependency, product)
     if (version.nil? || version.empty?)
-      CommonParser.update_requested_with_current(dependency, product)
+      self.update_requested_with_current(dependency, product)
       return 
     end
     version = self.replace_comments(version)
@@ -156,7 +158,7 @@ class GemfileParser
     
   end
 
-  def self.replace_comments(value)
+  def replace_comments(value)
     return nil unless value
     comment = value.match(/#.*/)
     if comment 

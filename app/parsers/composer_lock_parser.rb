@@ -1,7 +1,7 @@
 class ComposerLockParser < CommonParser
   @@group_id = "php"
 
-  def self.parse(url)
+  def parse( url )
     dependencies = self.fetch_project_dependencies(url)
     project = Project.new
     project.dependencies = []
@@ -10,12 +10,13 @@ class ComposerLockParser < CommonParser
       self.process_package project, package  
     end
 
-    project.project_type = "composer"
     project.dep_number = project.dependencies.count
+    project.project_type = Project::A_TYPE_COMPOSER
+    project.url = url
     project
   end
 
-  def self.process_package project, package 
+  def process_package project, package 
     dependency = Projectdependency.new
     dependency.name = package["name"]
 
@@ -23,7 +24,8 @@ class ComposerLockParser < CommonParser
     dependency.prod_key = product.prod_key if product
 
     version = self.fetch_package_version(package)
-    ComposerParser.parse_requested_version(version, dependency, product)
+    compposer_parser = ComposerParser.new 
+    compposer_parser.parse_requested_version(version, dependency, product)
     
     dependency.update_outdated
     project.out_number += 1 if dependency.outdated?
@@ -32,7 +34,7 @@ class ComposerLockParser < CommonParser
     project.dependencies << dependency
   end
 
-  def self.fetch_package_version(package)
+  def fetch_package_version(package)
     return nil if package.nil? or package.empty? or not package.has_key?('version')
     version  = package['version']
 
@@ -50,7 +52,7 @@ class ComposerLockParser < CommonParser
     version
   end
 
-  def self.fetch_project_dependencies(url)
+  def fetch_project_dependencies(url)
     return nil if url.nil?
 
     response = self.fetch_response(url)
@@ -60,7 +62,7 @@ class ComposerLockParser < CommonParser
     data['packages']
   end
 
-  def self.product_by_key prod_key 
+  def product_by_key prod_key 
     product = Product.find_by_key(prod_key)
     product = Product.find_by_key_case_insensitiv(prod_key) if product.nil?
     product

@@ -1,12 +1,14 @@
-class GemfilelockParser
+class GemfilelockParser < CommonParser
   
   # Parser for Gemfile.lock. For Ruby. 
   # http://gembundler.com/man/gemfile.5.html
   # http://docs.rubygems.org/read/chapter/16#page74
+  #
+  # TODO Write Tests
   # 
-  def self.parse(url)
+  def parse(url)
     return nil if url.nil?
-    content = CommonParser.fetch_response(url).body
+    content = self.fetch_response(url).body
     return nil if content.nil?
     
     dependecies_matcher = /([\w|\d|\.|\-|\_]+) (\(.*\))/
@@ -15,10 +17,12 @@ class GemfilelockParser
     deps = self.build_dependencies(matches)
     project = Project.new deps
     project.dep_number = project.dependencies.count
+    project.project_type = Project::A_TYPE_RUBYGEMS
+    project.url = url
     project
   end
 
-  def self.build_dependencies(matches)
+  def build_dependencies(matches)
     unknowns, out_number = 0, 0 
     deps = Hash.new
 
