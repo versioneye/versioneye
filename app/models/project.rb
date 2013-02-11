@@ -65,7 +65,7 @@ class Project
 
   def fetch_dependencies
     self.dependencies = Projectdependency.all(conditions: {project_id: self.id} ).desc(:outdated).desc(:release).asc(:prod_key)
-    self.dependencies
+    self.dependencies # This 2nd line is by purpose! Don't delete it! 
   end
 
   def user
