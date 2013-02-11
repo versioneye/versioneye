@@ -1,6 +1,5 @@
-
 <div class="span3" >
-	<%= render "settings/navi" %>
+  <%= render "settings/navi" %>
 </div>
 
 <div class="span8" >
@@ -13,34 +12,32 @@
     
     <%= form_tag("/settings/updatenotifications", :method => "post", :class => "form-horizontal") do  %>    
 
-			<div class="control-group">
-		    <div class="controls">
-		    	<%= check_box_tag "general_news", true, @user_notification.newsletter_news, :id => "general_news" %>
-		      <label for="general_news" style="display: inline; font-size: 12px;">
-		      	I want to receive the Newsletter about general news.   
-		      </label>
-		    </div>
-		  </div>
+      <div class="control-group">
+        <div class="controls">
+          <label for="general_news" style="font-size: 12px;" class="checkbox">
+            <%= check_box_tag "general_news", true, @user_notification.newsletter_news, :id => "general_news" %>
+            I want to receive the Newsletter about general news.   
+          </label>
+        </div>
+      </div>
 
-		  <div class="control-group">
-		    <div class="controls">
-		    	<%= check_box_tag "new_feature_news", true, @user_notification.newsletter_features, :id => "new_feature_news" %>
-		      <label for="general_news" style="display: inline; font-size: 12px;">
-		      	I want to receive the Newsletter about new Features. 
-		      </label>
-		    </div>
-		  </div>
+      <div class="control-group">
+        <div class="controls">
+          <label for="new_feature_news" style="font-size: 12px;" class="checkbox">
+            <%= check_box_tag "new_feature_news", true, @user_notification.newsletter_features, :id => "new_feature_news" %>
+            I want to receive the Newsletter about new Features. 
+          </label>
+        </div>
+      </div>
 
-			<div class="control-group">
+      <div class="control-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn2 btn2-big" >Save</button>
         </div>
       </div>
 
-		<% end %>
+    <% end %>
 
   </div>
 </div>
-
-
