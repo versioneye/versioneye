@@ -53,12 +53,18 @@ class Github
 
   def self.get_repo_sha(git_project, token)
     heads = JSON.parse HTTParty.get("https://api.github.com/repos/#{git_project}/git/refs/heads?access_token=" + URI.escape(token) ).response.body
-    heads[0]['object']['sha']
+    heads.each do |head|
+      if head['url'].match(/heads\/master$/)
+        return head['object']['sha']
+      end
+    end
+    nil
   end
 
   def self.get_project_info(git_project, sha, token)
     result = Hash.new
-    tree = JSON.parse HTTParty.get("https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token) ).response.body
+    url = "https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)
+    tree = JSON.parse HTTParty.get( url ).response.body
     tree['tree'].each do |file|
       name = file['path']
       result['url'] = file['url']
