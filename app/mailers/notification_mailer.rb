@@ -4,7 +4,7 @@ class NotificationMailer < ActionMailer::Base
   def new_version_email(user, notifications)
     @user = user
     @notifications = notifications
-    @link = "#{Settings.server_url}/package/"
+    @link =  "#{Settings.server_url}/package/"
     mail(
       :to => @user.email, 
       :subject => "Notification",
