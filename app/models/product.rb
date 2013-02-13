@@ -599,19 +599,16 @@ class Product
   end
   
   def to_param
-    Product.to_url_param prod_key    
+    Product.encode_product_key self.prod_key
+  end
+
+  def self.encode_product_key(prod_key)
+    return "0" if prod_key.nil?
+    prod_key.to_s.gsub("/", "--").gsub(".", "~")
   end
   
   def version_to_url_param
-    Product.to_url_param version    
-  end
-  
-  def self.to_url_param val
-    return "0" if val.nil?
-    url_param = String.new(val)
-    url_param.gsub!("/","--")
-    url_param.gsub!(".","~")
-    "#{url_param}"    
+    Product.encode_product_key version    
   end
 
   def name_and_version    

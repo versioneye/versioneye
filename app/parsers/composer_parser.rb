@@ -12,7 +12,7 @@ class ComposerParser < CommonParser
 
     project = Project.new(:dependencies => Array.new)
     dependencies.each do |key, value|
-      self.process_dependency( key, value, project )
+      self.process_dependency( key, value, project, data )
     end
     self.update_project( project, data )
     project.project_type = Project::A_TYPE_COMPOSER
@@ -42,24 +42,23 @@ class ComposerParser < CommonParser
     return nil
   end
 
-  def process_dependency( key, value, project )
+  def process_dependency( key, value, project, data )
     dependency = Projectdependency.new
     dependency.name = key
     
     product = self.product_by_key key
-    if product
-      dependency.prod_key = product.prod_key
-    else 
-      # TODO Check extern dependencies 
-      project.unknown_number += 1
-    end
-    
+    dependency.prod_key = product.prod_key if product
+
     parse_requested_version(value, dependency, product)
+    if product.nil?   
+      dep_in_ext_repo = dependency_in_repositories?( dependency, data )
+      project.unknown_number += 1 if !dep_in_ext_repo
+    end 
     
     dependency.update_outdated
     if dependency.outdated?
       project.out_number += 1
-    end      
+    end
     project.dependencies << dependency
   end
 
@@ -86,7 +85,7 @@ class ComposerParser < CommonParser
   # TODO Write tests for this
   #
   def parse_requested_version(version, dependency, product)
-    if (version.nil? || version.empty?)
+    if (version.nil? || version.empty?) && !product.nil?
       self.update_requested_with_current(dependency, product)
       return 
     end
@@ -207,6 +206,26 @@ class ComposerParser < CommonParser
       dependency.version_label = version
     end
 
+  end
+
+  # TODO write tests 
+  def dependency_in_repositories?( dependency, data )
+    repos = data['repositories']
+    return false if repos.nil? || repos.empty? 
+    repos.each do |repo|
+      repo_name = repo['package']['name']
+      repo_version = repo['package']['version']
+      repo_link = repo['package']['dist']['url']
+      if repo_name.eql?(dependency.name)
+        dependency.ext_link = repo_link
+        dependency.version_current = repo_version
+        return true 
+      end
+    end
+    return false 
+  rescue => e 
+    print_backtrace( e )
+    false 
   end
 
   private 
