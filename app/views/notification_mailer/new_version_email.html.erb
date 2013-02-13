@@ -12,9 +12,10 @@
 			<table>				
 				<% @notifications.each do |notification| %>
 					<% product = Product.find_by_id(notification.product_id) %>
-		      		<% version = product.get_version(notification.version_id) %>
-					<div style="border-bottom: 1px dotted gray; padding: 5px;"> 
-						<a href="<%=@link%><%=product.to_param%>/version/<%=version.to_url_param%>"><%=product.name%> (<%= version.version %>)</a>
+		      <% version = product.get_version(notification.version_id) %>
+          <div style="border-bottom: 1px dotted gray; padding: 5px;">
+            <img src= "http://www.versioneye.com/assets/language/<%= product.language.downcase %>.png" />
+						<a href="<%=@link%><%=product.to_param%>/version/<%=version.to_url_param%>"><%=product.name%> (<%= version.version  %>)</a>
 					</div>
 					<% notification.sent_email = true %>
 					<% notification.save %>
