@@ -22,7 +22,7 @@ development:
   # elasticsearch_product_index: 
 
   elasticsearch_url: localhost:9200
-  elasticsearch_product_index: /product
+  elasticsearch_product_index: product
 
   memcache_servers: ["127.0.0.1:11211"]
   memcache_username:
