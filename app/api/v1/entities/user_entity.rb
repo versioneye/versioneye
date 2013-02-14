@@ -2,6 +2,7 @@ require 'grape'
 
 module VersionEye
   module Entities
+    
     class UserEntity < Grape::Entity
       expose :fullname
       expose :username
@@ -14,5 +15,6 @@ module VersionEye
       expose :deleted
       expose :notifications
     end
+    
   end
 end
