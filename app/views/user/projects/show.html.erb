@@ -134,7 +134,7 @@
 						<% if !@project.fetch_dependencies.nil? %>
 							<% licences = {} %>
 							<% @project.dependencies.each do |dep| %>
-								<% product = dep.get_product %>
+								<% product = dep.find_or_init_product %>
 								<% dep.update_from_product %>
 
 								<% if product.license_info.nil? then key = "unknown" else key  = product.license_info end %>

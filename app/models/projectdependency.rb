@@ -23,7 +23,7 @@ class Projectdependency
   field :ext_link, type: String    # Link to external package. For example zip file on GitHub / Google Code. 
   
   
-  def get_product
+  def find_or_init_product
     if !self.prod_key.nil?
       product = Product.find_by_key(prod_key)
     end
