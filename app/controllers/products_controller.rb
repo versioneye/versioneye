@@ -68,29 +68,11 @@ class ProductsController < ApplicationController
     @productlook = Productlook.find_by_key(key)
     @main_dependencies = @product.dependencies(nil)
 
-    format = params[:format]
-    if format && !format.eql?("html") && !format.eql?("json")
-      redirect_to "/package/#{@product.to_param}/version/#{@version.to_url_param}"
-      return 
-    end
-
-    respond_to do |format|
-      format.html { 
-        if !mobile.nil? && mobile.eql?('true')
-          render "show_mobile", :layout => "application_mobile"
-        else
-          @users = Array.new
-          user_ids = Follower.find_followers_for_product( @product.id )
-          @users = User.find_by_ids(user_ids)
-          @versioncomment = Versioncomment.new 
-          @versioncommentreply = Versioncommentreply.new
-          @page = "product_show"
-        end          
-        }
-      format.json { 
-        render :json => @product.to_json(:only => [:name, :version, :prod_key, :group_id, :artifact_id, :language, :prod_type, :description, :link, :license ] )
-      }
-    end
+    user_ids = Follower.find_followers_for_product( @product.id )
+    @users = User.find_by_ids(user_ids)
+    @versioncomment = Versioncomment.new 
+    @versioncommentreply = Versioncommentreply.new
+    @page = "product_show"    
   end
 
   def show_visual
@@ -231,7 +213,7 @@ class ProductsController < ApplicationController
     image_key = params[:key]
     image_version = params[:version]
     scope = params[:scope]
-    url = Product.get_infographic_url_from_s3("#{image_key}:#{image_version}:#{scope}.png")  
+    url = S3.infographic_url_for("#{image_key}:#{image_version}:#{scope}.png")  
     respond_to do |format|
       format.json { 
         if url_exist?(url)
@@ -255,7 +237,7 @@ class ProductsController < ApplicationController
       Base64.decode64(image_bin), 
       Settings.s3_infographics_bucket, 
       :access => "public-read")
-    url = Product.get_infographic_url_from_s3(filename)
+    url = S3.infographic_url_for(filename)
     respond_to do |format|
       format.json { 
         render :json => "#{url}"
