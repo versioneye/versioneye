@@ -176,5 +176,14 @@ describe ComposerParser do
     end
     
   end
+
+  describe "dependency_in_repositories?" do 
+
+    it "returns false because of nil parameters" do 
+      ComposerParser parser = ComposerParser.new 
+      parser.dependency_in_repositories?(nil, nil).should be_false   
+    end 
+
+  end
   
 end
