@@ -209,9 +209,11 @@ class ComposerParser < CommonParser
   end
 
   # TODO write tests 
+  # 
   def dependency_in_repositories?( dependency, data )
+    return false if (dependency.nil? || data.nil?)
     repos = data['repositories']
-    return false if repos.nil? || repos.empty? 
+    return false if (repos.nil? || repos.empty?)
     repos.each do |repo|
       repo_name = repo['package']['name']
       repo_version = repo['package']['version']
