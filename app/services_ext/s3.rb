@@ -4,6 +4,10 @@ class S3
     AWS::S3::S3Object.url_for(filename, Settings.s3_projects_bucket, :authenticated => true)
   end
 
+  def self.infographic_url_for filename
+    AWS::S3::S3Object.url_for(filename, Settings.s3_infographics_bucket, :authenticated => false)
+  end
+
   def self.delete filename
     AWS::S3::S3Object.delete filename, Settings.s3_projects_bucket
   end
