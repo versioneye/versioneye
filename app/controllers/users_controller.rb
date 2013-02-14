@@ -89,11 +89,6 @@ class UsersController < ApplicationController
     else 
       flash.now[:error] = "There is no user with the given username"
     end
-    
-    respond_to do |format|
-      format.html {  }
-      format.json { render :json => @user.to_json(:only => [:fullname, :username ] ) }
-    end
   end
   
   def favoritepackages
@@ -111,10 +106,6 @@ class UsersController < ApplicationController
     if signed_in?
       @my_product_ids = current_user.fetch_my_product_ids
     end
-    respond_to do |format|
-      format.html {  }
-      format.json { render :json => @products.to_json(:only => [:name, :version, :prod_key, :group_id, :artifact_id, :language] ) }
-    end
   end
   
   def comments
@@ -127,10 +118,6 @@ class UsersController < ApplicationController
     if has_permission_to_see_comments( @user, current_user ) && !@user.nil?
       @comments = Versioncomment.find_by_user_id( @user.id ).paginate(:page => params[:page])
       @count = Versioncomment.count_by_user_id( @user.id )
-    end
-    respond_to do |format|
-      format.html {  }
-      format.json { render :json => @comments }
     end
   end
   
