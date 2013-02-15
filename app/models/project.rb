@@ -135,7 +135,7 @@ class Project
     trimmed_name = filename.split("?")[0]
     return A_TYPE_RUBYGEMS if trimmed_name.match(/Gemfile$/) or trimmed_name.match(/Gemfile.lock$/)
     return A_TYPE_COMPOSER if trimmed_name.match(/composer.json$/) or trimmed_name.match(/composer.lock$/)
-    return A_TYPE_PIP      if trimmed_name.match(/requirements.txt$/)
+    return A_TYPE_PIP      if trimmed_name.match(/requirements.txt$/) or trimmed_name.match(/setup.py$/)
     return A_TYPE_NPM      if trimmed_name.match(/package.json$/)
     return A_TYPE_GRADLE   if trimmed_name.match(/.gradle$/)
     return A_TYPE_MAVEN2   if trimmed_name.match(/pom.xml$/)

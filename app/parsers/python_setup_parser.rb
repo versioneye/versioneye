@@ -1,4 +1,3 @@
-
 class PythonSetupParser < RequirementsParser
   def parse(url)
     response = fetch_response(url)
