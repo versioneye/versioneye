@@ -54,7 +54,7 @@ module VersionEye
     def store_project(project)
       success = false
       if project.dependencies && !project.dependencies.empty? && project.save
-        project.save_dependencies( dependencies )
+        project.save_dependencies
         success = true
       end
       return success
