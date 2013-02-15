@@ -23,7 +23,11 @@ class PythonSetupParser < RequirementsParser
         product = Product.find_by_key_case_insensitiv(key)
       end
       
-      project.unknown_number + 1 if product.nil?
+      if product.nil?
+        project.unknown_number + 1 
+      else 
+        key = product.prod_key
+      end
 
       dependency = Projectdependency.new name: package.strip,
                                          prod_key: key,
