@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-	</head>
-	<body>
-		<p>Hello <%= @user.fullname %></p>
-		<p>
-			There are new releases out there. 
-		</p>
-		<p>
-			<table>				
-				<% @notifications.each do |notification| %>
-					<% product = Product.find_by_id(notification.product_id) %>
-		      <% version = product.get_version(notification.version_id) %>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>Hello <%= @user.fullname %></p>
+    <p>
+      There are new releases out there. 
+    </p>
+    <p>
+      <table>       
+        <% @notifications.each do |notification| %>
+          <% product = Product.find_by_id(notification.product_id) %>
+          <% version = product.get_version(notification.version_id) %>
           <div style="border-bottom: 1px dotted gray; padding: 5px;">
             <img src= "http://www.versioneye.com/assets/language/<%= product.language.downcase %>.png" />
-						<a href="<%=@link%><%=product.to_param%>/version/<%=version.to_url_param%>"><%=product.name%> (<%= version.version  %>)</a>
-					</div>
-					<% notification.sent_email = true %>
-					<% notification.save %>
-				<% end %>
-			</table>
-		</p>
-		<p>
-			We keep you informed. <br/>
-			Have a great day!
-		</p>
-		<p>
-			Your VersionEye Team<br/>
-			<a href="http://www.versioneye.com">http://www.versioneye.com</a>
-		</p>
-	</body>
+            <a href="<%=@link%><%=product.to_param%>/version/<%=version.to_url_param%>"><%=product.name%> (<%= version.version  %>)</a>
+          </div>
+          <% notification.sent_email = true %>
+          <% notification.save %>
+        <% end %>
+      </table>
+    </p>
+    <p>
+      We keep you informed. <br/>
+      Have a great day!
+    </p>
+    <p>
+      Your VersionEye Team<br/>
+      <a href="http://www.versioneye.com">http://www.versioneye.com</a>
+    </p>
+  </body>
 </html>
