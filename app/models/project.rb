@@ -3,7 +3,6 @@ class Project
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  # TODO Check if this not belongs better to Product.rb !!
   A_TYPE_RUBYGEMS = "RubyGems" # TODO Check doublets with "RubyGem" withous "s" !!!
   A_TYPE_PIP      = "PIP"
   A_TYPE_NPM      = "npm"
