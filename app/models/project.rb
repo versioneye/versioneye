@@ -1,4 +1,4 @@
-cl;ass Project
+class Project
 
   include Mongoid::Document
   include Mongoid::Timestamps
