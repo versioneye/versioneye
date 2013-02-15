@@ -44,11 +44,6 @@ module VersionEye
       HTMLEntities.new.decode parsed_key
     end
 
-    # TODO move to Product.rb
-    def encode_product_key(prod_Key)
-       prod_key.to_s.gsub("/", "--").gsub(".", "~")
-    end
-
     def fetch_product(prod_key)
       prod_key = parse_product_key(prod_key)
       @current_product = Product.find_by_key prod_key

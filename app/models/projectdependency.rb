@@ -20,9 +20,10 @@ class Projectdependency
   field :prod_key, type: String
   field :prod_type, type: String
   field :outdated, type: Boolean
+  field :ext_link, type: String    # Link to external package. For example zip file on GitHub / Google Code. 
   
   
-  def get_product
+  def find_or_init_product
     if !self.prod_key.nil?
       product = Product.find_by_key(prod_key)
     end
@@ -34,17 +35,35 @@ class Projectdependency
     end
     product
   end
+
+  def update_from_product
+    if !self.prod_key.nil?
+      product = Product.find_by_key(prod_key)
+    end
+    if !product.nil?
+      self.version_current = product.version
+      self.save 
+    end
+  end
+
+  def unknown?
+    prod_key.nil? && ext_link.nil? 
+  end
   
+  # TODO Write tests for the case that prod_key is nil and version_current is not nil 
+  # 
   def outdated?
-    if self.prod_key.nil?
+    if self.prod_key.nil? && self.version_current.nil? 
       self.outdated = false
       return false 
-    end 
-    product = get_product
-    if !self.version_current.eql?(product.version)
+    end
+    
+    product = Product.find_by_key prod_key
+    if product && !self.version_current.eql?(product.version)
       self.version_current = product.version
       self.save()
     end
+
     if self.version_requested.eql?("GIT")
       self.outdated = false
       return false
@@ -82,6 +101,17 @@ class Projectdependency
     # else
     #   comperator
     # end
+  end
+
+  def link 
+    if self.prod_key 
+      key = Product.encode_product_key( prod_key )
+      return "/package/#{key}"
+    elsif self.ext_link 
+      return self.ext_link
+    else 
+      return "#"
+    end
   end
   
 end

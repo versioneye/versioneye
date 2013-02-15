@@ -164,8 +164,8 @@ class Product
   def self.find_by_group_and_artifact(group, artifact)
     Product.where( group_id: group, artifact_id: artifact )[0]
   end
-  ######## ELASTIC SEARCH START #####################################
-
+  
+  ######## ELASTIC SEARCH MAPPING ###################
   def to_indexed_json
     {
       :_id => self.id.to_s,
@@ -372,6 +372,7 @@ class Product
     end
   end
 
+  # TODO MOVE TO MIGRATION
   def self.count_versions(lang)
     versions_count = 0 
     count = Product.where(language: lang).count()
@@ -599,19 +600,16 @@ class Product
   end
   
   def to_param
-    Product.to_url_param prod_key    
+    Product.encode_product_key self.prod_key
+  end
+
+  def self.encode_product_key(prod_key)
+    return "0" if prod_key.nil?
+    prod_key.to_s.gsub("/", "--").gsub(".", "~")
   end
   
   def version_to_url_param
-    Product.to_url_param version    
-  end
-  
-  def self.to_url_param val
-    return "0" if val.nil?
-    url_param = String.new(val)
-    url_param.gsub!("/","--")
-    url_param.gsub!(".","~")
-    "#{url_param}"    
+    Product.encode_product_key version    
   end
 
   def name_and_version    
@@ -637,10 +635,6 @@ class Product
     elsif self.language.eql?("PHP")
       return "require"
     end
-  end
-
-  def self.get_infographic_url_from_s3 filename
-    AWS::S3::S3Object.url_for(filename, Settings.s3_infographics_bucket, :authenticated => false)
   end
 
   def self.downcase_array(arr)
