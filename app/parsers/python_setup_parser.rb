@@ -1,4 +1,5 @@
 class PythonSetupParser < RequirementsParser
+
   def parse(url)
     response = fetch_response(url)
     doc = response.body
@@ -16,12 +17,16 @@ class PythonSetupParser < RequirementsParser
       comparator = get_splitter requirement
       package, version = requirement.split(comparator)
           
-      key = "pip/#{package}".strip 
-      product = Product.find_by_key_case_insensitiv key
+      key = "pip/#{package}"
+      product = Product.find_by_key(key)
+      if product.nil? 
+        product = Product.find_by_key_case_insensitiv(key)
+      end
+      
       project.unknown_number + 1 if product.nil?
 
       dependency = Projectdependency.new name: package.strip,
-                                         prodkey: key,
+                                         prod_key: key,
                                          version_label: "#{version}".strip,
                                          comperator: comparator,
                                          scope: "compile"
