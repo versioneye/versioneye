@@ -38,10 +38,8 @@ module VersionEye
       project
     end
 
-    # TODO remove the project_type parameter
     def create_project( project_type, url, project_name )
       project = ProjectService.create_from_url( url )
-      current_user = User.first
       project.user_id = current_user.id.to_s
       if project.name.nil? || project.name.empty?
         project.name = project_name
