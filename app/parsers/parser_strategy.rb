@@ -5,7 +5,11 @@ class ParserStrategy
       when Project::A_TYPE_MAVEN2
         return PomParser.new
       when Project::A_TYPE_PIP
-        return RequirementsParser.new
+        if url.match(/requirements.txt/)
+          return RequirementsParser.new
+        else 
+          return PythonSetupParser.new  
+        end
       when Project::A_TYPE_NPM
         return PackageParser.new
       when Project::A_TYPE_GRADLE

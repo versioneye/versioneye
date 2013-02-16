@@ -63,4 +63,18 @@ class ProductFactory
 		product
 	end
 
+	def self.create_for_pip(name, version)
+		product = Product.new name: name,
+                          name_downcase: name.downcase,
+		                      prod_key: "pip/#{name}",
+		                      language: "Python",
+                          version: version
+
+		version_obj = Version.new version: version
+    product.versions.push(version_obj)
+		
+    product
+	end
+
+
 end
