@@ -51,7 +51,7 @@ class RequirementsParser < CommonParser
       dependency.update_outdated
       if dependency.outdated?
         project.out_number = project.out_number + 1
-      end      
+      end
       project.dependencies << dependency
     end
     project.dep_number = project.dependencies.count
