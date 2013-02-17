@@ -18,9 +18,6 @@ xml.rss :version => "2.0" do
       package = @products[notification.product_id]
       safe_prod_key = Product.encode_prod_key package.prod_key 
       version_id = notification.version_id
-      if version_id.nil? 
-        version_id = package.version
-      end
       safe_version_key = Product.encode_prod_key version_id
       package_url = url_for package_version_url( safe_prod_key, safe_version_key )
       notification_message = %Q[
