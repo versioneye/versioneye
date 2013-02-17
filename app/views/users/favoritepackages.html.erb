@@ -7,8 +7,6 @@
 <% end %>
 
 <% if !@user.nil? && !@user.deleted %>
-  <%= auto_discovery_link_tag(:rss,
-                              "#{url_for(favoritepackages_user_url(@user))}.rss") %>
 	<%= render "header" %>
 
 	<div class="span3" >
@@ -20,7 +18,8 @@
 
 			<div >
 				<h5 class="desc_header">
-					Follows <%= pluralize(@products.total_entries, "Package") %>
+					Follows <%= pluralize(@products.total_entries, "Package") %> 
+					<a href="<%= url_for(favoritepackages_user_url(@user)) %>.rss"><%= image_tag "rss.png" %></a>
 				</h5>
 			</div>		
 
