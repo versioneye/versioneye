@@ -23,13 +23,11 @@ gem 'tire', '0.5.4'
 gem 'json', '1.7.7'
 gem 'dalli', '2.6.2'           # memcache library
 gem 'kgio', '2.8.0'            # 20% performance boost for dalli
-gem 'newrelic_rpm', '3.5.4.34' # performance monitoring 
 gem 'grape' 
 gem 'grape-entity'
 gem 'grape-swagger', git: "https://github.com/timgluz/grape-swagger.git" 
 #, :git => 'https://github.com/tim-vandecasteele/grape-swagger.git'
 gem 'htmlentities'
-
 
 group :development do
   gem 'libv8' , '~> 3.11.8'
@@ -37,6 +35,7 @@ group :development do
   gem 'psych'
   gem 'irbtools'
   gem 'terminal-notifier'
+  gem 'fakes3'
 end
 
 group :assets do
