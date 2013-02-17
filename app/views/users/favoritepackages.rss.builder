@@ -1,8 +1,7 @@
-xml.instruct! :xml, :version => "1.0" 
 xml.rss :version => "2.0" do
   xml.channel do
-    xml.title "#Notification feed for #{@user.fullname}'s favorite packages "
-    xml.description "Here will be latest notifications for signup user"
+    xml.title "VersionEye Notifications for #{@user.fullname}"
+    xml.description "Latest VersionEye notifications."
     xml.link "#{url_for favoritepackages_user_url}.rss"
     
     @my_updated_products ||= []
@@ -11,17 +10,13 @@ xml.rss :version => "2.0" do
       safe_prod_key = Product.encode_prod_key package.prod_key 
       package_url = url_for products_url(safe_prod_key)
       notification_message = %Q[
-        VersionEye detected new version (#{package.version}) of #{package.name}.
-        Additional information:
-          description: #{package.description},
-          product_key: #{package.prod_key},
-          language: #{package.language},
-          product_type: #{package.prod_type},
-          product_page: #{package_url},
-          version_page: #{package.version_link}
+        VersionEye detected version (#{package.version}) of #{package.name}. 
+        #{package.description_summary}
       ]
       xml.item do
-        xml.title "#{package.name}".capitalize
+        xml.title "#{package.name} : #{package.version}".capitalize
+        xml.author "VersionEye"
+        xml.icon ""
         xml.description notification_message
         xml.category package.prod_type
         xml.pubDate package.updated_at.to_s(:rfc822)

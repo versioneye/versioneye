@@ -99,25 +99,27 @@ class UsersController < ApplicationController
   def favoritepackages
     @page = "profile"
     @user = User.find_by_username(params[:id])
-    product_ids = Follower.find_product_ids_for_user( @user.id )
-    @languages = Product.get_unique_languages_for_product_ids(product_ids)
+    @my_product_ids = Follower.find_product_ids_for_user( @user.id )
+    @languages = Product.get_unique_languages_for_product_ids( @my_product_ids )
     @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
     @products = Array.new
-    if has_permission_to_see_products( @user, current_user ) && !@user.nil?
-      @products = @user.fetch_my_products.paginate(:page => params[:page]) 
-      @count = @user.fetch_my_products_count
-    end    
-    @my_product_ids = Array.new
-    if signed_in?
-      @my_product_ids = current_user.fetch_my_product_ids
-      @my_notifications = Notification.by_user_id(current_user.id)
-      @my_updated_products = Product.find(@my_notifications.map(&:product_id)) unless @my_notifications.nil?
-
-    end
     respond_to do |format|
-      format.html {}
-      format.json {render :json => "Please use api."}
-      format.rss {render  :layout => false}
+      format.html {
+        if has_permission_to_see_products( @user, current_user ) && !@user.nil?
+          @products = @user.fetch_my_products.paginate(:page => params[:page]) 
+          @count = @user.fetch_my_products_count
+        end    
+      }
+      format.json {
+        render :json => "Please use our API at https://www.versioneye.com/api"
+      }
+      format.rss {
+        if has_permission_to_see_products( @user, current_user ) && !@user.nil?
+          @my_notifications = Notification.by_user_id(@user.id) # TODO order by newest and limit to last 30 
+          @my_updated_products = Product.find(@my_notifications.map(&:product_id)) unless @my_notifications.nil?
+        end
+        render  :layout => false
+      }
     end
   end
   

@@ -657,6 +657,18 @@ class Product
     prod_key.gsub("--", "/").gsub("~", ".")
   end
 
+  def description_summary
+    if description && description_manual
+      return "#{description} \n \n #{description_manual}"
+    elsif description && !description_manual 
+      return description
+    elsif !description && description_manual
+      return description_manual
+    else 
+      return ""
+    end
+  end
+
   private
 
     def self.add_description_to_query(query, description)
