@@ -97,14 +97,14 @@ class UsersController < ApplicationController
   end
   
   def favoritepackages
-    @page = "profile"
     @user = User.find_by_username(params[:id])
     @my_product_ids = Follower.find_product_ids_for_user( @user.id )
-    @languages = Product.get_unique_languages_for_product_ids( @my_product_ids )
-    @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
     @products = Array.new
     respond_to do |format|
       format.html {
+        @page = "profile"
+        @languages = Product.get_unique_languages_for_product_ids( @my_product_ids )
+        @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
         if has_permission_to_see_products( @user, current_user ) && !@user.nil?
           @products = @user.fetch_my_products.paginate(:page => params[:page]) 
           @count = @user.fetch_my_products_count
@@ -115,8 +115,12 @@ class UsersController < ApplicationController
       }
       format.rss {
         if has_permission_to_see_products( @user, current_user ) && !@user.nil?
-          @my_notifications = Notification.by_user_id(@user.id) # TODO order by newest and limit to last 30 
-          @my_updated_products = Product.find(@my_notifications.map(&:product_id)) unless @my_notifications.nil?
+          @notifications = Notification.by_user_id(@user.id)
+          @my_updated_products = Product.find(@notifications.map(&:product_id)) unless @notifications.nil?
+          @products = Hash.new 
+          @my_updated_products.each do |prod|
+            @products[prod._id.to_s] = prod
+          end
         end
         render  :layout => false
       }
