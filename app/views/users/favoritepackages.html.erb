@@ -19,7 +19,7 @@
 			<div >
 				<h5 class="desc_header">
 					Follows <%= pluralize(@products.total_entries, "Package") %> 
-					<a href="<%= url_for(favoritepackages_user_url(@user)) %>.rss"><%= image_tag "rss.png" %></a>
+					<a href="<%= url_for(favoritepackages_user_url(@user)) %>.rss"><%= image_tag "rss.png", :title => "Subscribe via RSS", :alt => "Subscribe via RSS" %></a>
 				</h5>
 			</div>		
 

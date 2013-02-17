@@ -21,7 +21,7 @@
 		<div >
 			<h5 class="desc_header">
 				Follows <%= pluralize(@prod_count, "Package") %>
-				<a href="<%= url_for(favoritepackages_user_url(@user)) %>.rss"><%= image_tag "rss.png" %></a>
+				<a href="<%= url_for(favoritepackages_user_url(@user)) %>.rss"><%= image_tag "rss.png", :title => "Subscribe via RSS", :alt => "Subscribe via RSS" %></a>
 			</h5>
 		</div>		
 		<div style="margin-bottom: 30px;" >
