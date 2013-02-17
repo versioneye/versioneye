@@ -92,19 +92,33 @@ class UsersController < ApplicationController
   end
   
   def favoritepackages
-    @page = "profile"
     @user = User.find_by_username(params[:id])
-    product_ids = Follower.find_product_ids_for_user( @user.id )
-    @languages = Product.get_unique_languages_for_product_ids(product_ids)
-    @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
+    @my_product_ids = Follower.find_product_ids_for_user( @user.id )
     @products = Array.new
-    if has_permission_to_see_products( @user, current_user ) && !@user.nil?
-      @products = @user.fetch_my_products.paginate(:page => params[:page]) 
-      @count = @user.fetch_my_products_count
-    end    
-    @my_product_ids = Array.new
-    if signed_in?
-      @my_product_ids = current_user.fetch_my_product_ids
+    respond_to do |format|
+      format.html {
+        @page = "profile"
+        @languages = Product.get_unique_languages_for_product_ids( @my_product_ids )
+        @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
+        if has_permission_to_see_products( @user, current_user ) && !@user.nil?
+          @products = @user.fetch_my_products.paginate(:page => params[:page]) 
+          @count = @user.fetch_my_products_count
+        end    
+      }
+      format.json {
+        render :json => "Please use our API at https://www.versioneye.com/api"
+      }
+      format.rss {
+        if has_permission_to_see_products( @user, current_user ) && !@user.nil?
+          @notifications = Notification.by_user_id(@user.id)
+          my_updated_products = Product.find(@notifications.map(&:product_id)) unless @notifications.nil?
+          @products = Hash.new 
+          my_updated_products.each do |prod|
+            @products[prod._id.to_s] = prod
+          end
+        end
+        render  :layout => false
+      }
     end
   end
   
