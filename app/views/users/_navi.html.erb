@@ -39,7 +39,11 @@
 					<%= link_to image_tag("socialnetworks/xing.png"), "http://www.xing.com/profile/#{@userlinkcollection.xing}", :target => "xing" %>
 				<% end %>
 				<% if !@userlinkcollection.gulp.nil? && !@userlinkcollection.gulp.empty? %>
-					<%= link_to image_tag("socialnetworks/gulp.png"), "http://www.gulp.de/resume/#{@userlinkcollection.gulp}", :target => "gulp" %>
+					<% gulp_url = "http://www.gulp.de/resume/#{@userlinkcollection.gulp}.html" %>
+					<% !if Net::HTTP.get_response(URI.parse("http://www.heise.de")).code.eql?("200") %>
+						<% gulp_url = "http://www.gulp.de/profil/#{@userlinkcollection.gulp}.html" %>	
+					<% end %>
+					<%= link_to image_tag("socialnetworks/gulp.png"), gulp_url, :target => "gulp" %>
 				<% end %>
 			</div>
 		<% end %>
