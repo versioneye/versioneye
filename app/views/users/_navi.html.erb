@@ -30,7 +30,11 @@
 					<%= link_to image_tag("socialnetworks/twitter-bird.png"), "https://twitter.com/#!/#{@userlinkcollection.twitter}", :target => "twitter" %>
 				<% end %>
 				<% if !@userlinkcollection.facebook.nil? && !@userlinkcollection.facebook.empty? %>
-					<%= link_to image_tag("socialnetworks/facebook.png"), "http://www.facebook.com/people/#{@userlinkcollection.facebook}", :target => "facebook" %>
+					<% fb_url = "http://www.facebook.com/people/#{@userlinkcollection.facebook}" %>
+					<% if Net::HTTP.get_response(URI.parse(fb_url)).code.eql?("302") %>
+						<% fb_url = "http://www.facebook.com/#{@userlinkcollection.facebook}" %>	
+					<% end %>
+					<%= link_to image_tag("socialnetworks/facebook.png"), fb_url, :target => "facebook" %>
 				<% end %>
 				<% if !@userlinkcollection.linkedin.nil? && !@userlinkcollection.linkedin.empty? %>
 					<%= link_to image_tag("socialnetworks/linkedin.png"), "http://www.linkedin.com/in/#{@userlinkcollection.linkedin}", :target => "linkedin" %>
@@ -40,7 +44,7 @@
 				<% end %>
 				<% if !@userlinkcollection.gulp.nil? && !@userlinkcollection.gulp.empty? %>
 					<% gulp_url = "http://www.gulp.de/resume/#{@userlinkcollection.gulp}.html" %>
-					<% !if Net::HTTP.get_response(URI.parse("http://www.heise.de")).code.eql?("200") %>
+					<% if Net::HTTP.get_response(URI.parse(gulp_url)).code.eql?("404") %>
 						<% gulp_url = "http://www.gulp.de/profil/#{@userlinkcollection.gulp}.html" %>	
 					<% end %>
 					<%= link_to image_tag("socialnetworks/gulp.png"), gulp_url, :target => "gulp" %>
