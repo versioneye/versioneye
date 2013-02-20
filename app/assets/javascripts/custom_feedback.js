@@ -20,7 +20,7 @@ function load_dialog_feedback(){
 }
 
 function validateFeedbackForm(){	
-	var result = true
+  var result = true
 	var fullname = jQuery('[name="fb_fullname"]').val();	
 	if (fullname == "" || fullname == null){
 		alert('Please type in your Name.')
@@ -36,7 +36,8 @@ function validateFeedbackForm(){
 	}
 
 	if (result == true){
-		jQuery('#dialog_feedback').modal('hide');
+		jQuery.noConflict();
+    jQuery('#dialog_feedback').modal('hide');
 	}
 	return result;
 
