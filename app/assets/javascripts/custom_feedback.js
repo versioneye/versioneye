@@ -38,6 +38,7 @@ function validateFeedbackForm(){
 	if (result == true){
 		cancel_button = document.getElementById("feedback_dialog_cancel");
 		if (cancel_button){
+			// We do it sneaky like this because of a conflict on the API page. 
 			cancel_button.click(); 
 		} else {
 			jQuery('#dialog_feedback').modal('hide');
