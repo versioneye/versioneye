@@ -12,6 +12,10 @@
 
 //= require google
 
+//= require custom
+//= require custom_update_language
+//= require custom_feedback
+
 //= require swagger/lib/jquery-1.8.0.min
 //= require swagger/lib/jquery.slideto.min
 //= require swagger/lib/jquery.wiggle.min
@@ -23,6 +27,3 @@
 //= require swagger/swagger-ui.js
 //= require swagger/lib/highlight.7.3.pack
 
-//= require custom
-//= require custom_update_language
-//= require custom_feedback

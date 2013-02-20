@@ -36,9 +36,12 @@ function validateFeedbackForm(){
 	}
 
 	if (result == true){
-		jQuery.noConflict(); 
-    jQuery('#dialog_feedback').modal('hide');
+		cancel_button = document.getElementById("feedback_dialog_cancel");
+		if (cancel_button){
+			cancel_button.click(); 
+		} else {
+			jQuery('#dialog_feedback').modal('hide');
+		}
 	}
 	return result;
-
 }
