@@ -6,17 +6,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery_ui_1_8_17_custom_min
 //= require bootstrap.min
-//= require jquery_textbox_hinter
 
 //= require google
 
-//= require custom
-//= require custom_update_language
-//= require custom_feedback
-
 //= require swagger/lib/jquery-1.8.0.min
+//= require custom_feedback
 //= require swagger/lib/jquery.slideto.min
 //= require swagger/lib/jquery.wiggle.min
 //= require swagger/lib/jquery.ba-bbq.min
@@ -26,4 +21,3 @@
 //= require swagger/lib/swagger.js
 //= require swagger/swagger-ui.js
 //= require swagger/lib/highlight.7.3.pack
-

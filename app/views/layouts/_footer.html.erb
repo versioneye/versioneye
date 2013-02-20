@@ -9,7 +9,6 @@
 				<li><%= link_to t(:page_footer_about), about_path %></li>
 				<li><%= link_to t(:page_footer_team), about_path %></li>
 				<li><%= link_to t(:page_footer_statistics), statistics_path %></li>
-				<li><a onclick="load_dialog_feedback();" href="#">Feedback</a></li>
 				<% if signed_in? %>
 					<li><%= link_to "Services", "/services" %></li>
 					<li><%= link_to "Pricing", "/pricing" %></li>
