@@ -16,7 +16,6 @@
 //= require custom_update_language
 //= require custom_feedback
 
-
 //=require swagger/lib/jquery.slideto.min
 //=require swagger/lib/jquery.wiggle.min
 //=require swagger/lib/jquery.ba-bbq.min
