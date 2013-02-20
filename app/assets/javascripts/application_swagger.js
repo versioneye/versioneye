@@ -11,6 +11,7 @@
 //= require jquery_textbox_hinter
 
 //= require google
+
 //= require swagger/lib/jquery.slideto.min
 //= require swagger/lib/jquery.wiggle.min
 //= require swagger/lib/jquery.ba-bbq.min
@@ -21,9 +22,6 @@
 //= require swagger/swagger-ui.js
 //= require swagger/lib/highlight.7.3.pack
 
-
 //= require custom
 //= require custom_update_language
 //= require custom_feedback
-
-
