@@ -12,6 +12,7 @@
 
 //= require google
 
+//= require swagger/lib/jquery-1.8.0.min
 //= require swagger/lib/jquery.slideto.min
 //= require swagger/lib/jquery.wiggle.min
 //= require swagger/lib/jquery.ba-bbq.min
