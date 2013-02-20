@@ -36,7 +36,6 @@ function validateFeedbackForm(){
 	}
 
 	if (result == true){
-		jQuery.noConflict();
     jQuery('#dialog_feedback').modal('hide');
 	}
 	return result;
