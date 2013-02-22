@@ -89,6 +89,33 @@ class ProductsController < ApplicationController
     render :layout => 'application_visual'
   end
 
+  def show_shield
+    path = "app/assets/images/shields"
+    accepted_mimes = {
+      "png" => "images/png", 
+      "svg" => "images/svg+xml"
+    }
+
+    prod_key = Product.decode_prod_key params[:key] 
+    version = Version.decode_version params[:version]
+    shield = "unknown"
+    format = params[:format]
+    format = "png" if format.nil? or not accepted_mimes.keys.include? format
+
+    @product = Product.find_by_key(prod_key)
+    unless @product.nil?  
+      if @product.version == version or @product.wouldbenewest? version
+        shield = "up-to-date"
+      else
+        shield = "out-of-date"
+      end
+    end
+
+    send_file "#{path}/version_#{shield}.#{format}", 
+              :type => accepted_mimes[format], 
+              :disposition => 'inline'
+  end
+
   def edit
     key = url_param_to_origin params[:key]
     @product = Product.find_by_key( key )

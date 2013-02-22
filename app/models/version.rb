@@ -29,12 +29,26 @@ class Version
       :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
     }
   end
-  
+ 
+  def self.encode_version(version)
+    version.gsub("/", "--").gsub(".", "~")
+  end
+
+  def self.decode_version(version)
+    version.gsub("--", "/").gsub("~", ".")
+  end
+
+  def to_param 
+    val = Version.encode_version(self.version)
+    "#{val}".strip
+  end
+
+  def from_param
+    Version.decode_version self.version
+  end
+
   def to_url_param
-    url_param = String.new(version)
-    url_param.gsub!("/","--")
-    url_param.gsub!(".","~")
-    "#{url_param}"    
+    self.to_param     
   end
   
   def get_decimal_uid

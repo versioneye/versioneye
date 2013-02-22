@@ -93,6 +93,8 @@ Versioneye::Application.routes.draw do
 
   get   '/product/:key',                                :to => 'products#show'
   get   '/product/:key/version/:version',               :to => 'products#show'
+  get   '/product/:key/version/:version/shield',        :to => 'products#show_shield'
+  get   '/package/:key/version/:version/shield',        :to => 'products#show_shield'
 
   get   '/package_visual/:key/version/:version',        :to => 'products#show_visual'
 
