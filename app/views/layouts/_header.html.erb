@@ -21,6 +21,10 @@
 					<% if signed_in? %>
 						<li class="divider-vertical"></li>
 						<li>
+							<%= link_to "Pricing", "/pricing" %>
+	          </li>
+	          <li class="divider-vertical"></li>
+						<li>
 							<a href="/user/projects">
 								My Projects
 							</a>
@@ -52,6 +56,9 @@
 								</li>
 								<li>
 									<a href="/search?q=submit_new_resource_<%= rand(1000) %>">Submit New Resource</a>
+								</li>
+								<li>
+									<a href="JavaScript: load_dialog_feedback()">Feedback</a>
 								</li>
 								<li class = "divider"></li>
 								<li>

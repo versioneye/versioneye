@@ -16,7 +16,12 @@ function textCounter(field, cntfield, maxlimit) {
 }
 
 function load_dialog_feedback(){
-	jQuery('#dialog_feedback').modal({keyboard : true});
+	if (jQuery('#dialog_feedback').modal){
+		jQuery('#dialog_feedback').modal({keyboard : true});	
+	} else {
+		cancel_button = document.getElementById("love_icon");
+		cancel_button.click(); 
+	}
 }
 
 function validateFeedbackForm(){	
@@ -36,12 +41,12 @@ function validateFeedbackForm(){
 	}
 
 	if (result == true){
-		cancel_button = document.getElementById("feedback_dialog_cancel");
-		if (cancel_button){
-			// We do it sneaky like this because of a conflict on the API page. 
-			cancel_button.click(); 
-		} else {
+		if (jQuery('#dialog_feedback').modal){
 			jQuery('#dialog_feedback').modal('hide');
+		} else {
+			// Fallback solution. Used on API page. 
+			cancel_button = document.getElementById("feedback_dialog_cancel");
+			cancel_button.click(); 
 		}
 	}
 	return result;
