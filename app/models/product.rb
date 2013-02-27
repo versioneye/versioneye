@@ -427,7 +427,9 @@ class Product
   ########### VERSIONS END ########################
   
   def license_info
-    return self.license_manual unless self.license
+    if self.license.nil? || self.license.empty? || self.license.eql?("unknown")
+      return self.license_manual
+    end
     return self.license
   end
 
