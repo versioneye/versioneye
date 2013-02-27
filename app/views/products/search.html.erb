@@ -2,31 +2,23 @@
 <% title "Search Results" %>
 
 <% if !signed_in? %>
-	<%= render 'shared/dialog_follow' %>
+  <%= render 'shared/dialog_follow' %>
 <% end %>
 
 <div class="span3">
 
-	<%= render "extended_search" %>
+  <%= render "extended_search" %>
 
-	<div class="box" style="text-align: left; padding-top: 30px; padding-right: 20px;">
-    <span class="icon_gitcat off marketing-icon"></span>
-    <h5>GitHub integration</h5>
-    <p>
-      Monitor your GitHub repositories 
-      to be notified about outdated dependencies.
-    </p>
-    <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&amp;scope=repo'>Login via GitHub</a>
-	</div>
+  <%= render "/shared/github_ad" %>
 
 </div>
 <div class="span8 left_border" >
-	<div class="row content_header" >
-		<% if @products && !@products.empty? %>
-			<em> `<%= params[:q] %>`</em> has returned <%= @products.total_entries %> results
-		<% end %>
-	</div>
-	<%= render :partial => "products/show_search_results",
-		:locals => { :products => @products, :paginate => true,
-			:prefix => "search", :name_limit => 70 }  %>
+  <div class="row content_header" >
+    <% if @products && !@products.empty? %>
+      <em> `<%= params[:q] %>`</em> has returned <%= @products.total_entries %> results
+    <% end %>
+  </div>
+  <%= render :partial => "products/show_search_results",
+    :locals => { :products => @products, :paginate => true,
+      :prefix => "search", :name_limit => 70 }  %>
 </div>

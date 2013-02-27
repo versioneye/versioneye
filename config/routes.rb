@@ -119,6 +119,7 @@ Versioneye::Application.routes.draw do
       member do
         post 'save_period'
         post 'save_email'
+        post 'save_visibility'
         post 'reparse'
         post 'update_name'
       end

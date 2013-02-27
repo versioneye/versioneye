@@ -174,10 +174,9 @@ class User
   def self.find_by_id( id )
     return nil if id.nil?
     id = id.to_s
-    return User.find(id) if User.where(:_id => id).exists?
+    return User.find(id)
   rescue => e
-    logger.error "-- ERROR user with id #{id} not found! -- #{e}"
-    p "ERROR #{e}"
+    p "-- ERROR user with id #{id} not found! -- #{e}"
     e.backtrace.each do |message| 
       p " - #{message}"
     end
@@ -320,6 +319,7 @@ class User
     user = User.where( email: email.downcase )[0]
     return nil  if user.nil? || user.deleted
     return user if user.has_password?(submitted_password)
+    return nil
   end
 
   def self.authenticate_with_salt(id, coockie_salt)

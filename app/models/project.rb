@@ -36,6 +36,7 @@ class Project
   field :dep_number, type: Integer
   field :out_number, type: Integer, default: 0
   field :unknown_number, type: Integer, default: 0
+  field :public, type: Boolean, :default => false 
 
   attr_accessor :dependencies
 

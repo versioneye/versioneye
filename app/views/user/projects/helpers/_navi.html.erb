@@ -5,5 +5,7 @@
 		<li><%= link_to "Add New Project", new_user_project_path %></li>
 		<li><%= link_to "Most used libraries", :controller => 'user/projects', :action => "get_popular"  %> </li>
 	</ul>
+  <% else %> 
+    <%= render "/shared/github_ad" %>
 	<% end %>
 </div>

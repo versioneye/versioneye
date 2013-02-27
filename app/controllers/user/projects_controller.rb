@@ -1,6 +1,6 @@
 class User::ProjectsController < ApplicationController
   
-  before_filter :authenticate
+  before_filter :authenticate, :except => [:show]
   
   def index
     @project = Project.new
@@ -39,6 +39,10 @@ class User::ProjectsController < ApplicationController
   def show
     id = params[:id]
     @project = Project.find_by_id(id)
+    if @project && @project.public == false 
+      return if authenticate == false 
+      redirect_to(root_path) unless current_user?(@project.user)
+    end
   end
 
   def update
@@ -134,6 +138,19 @@ class User::ProjectsController < ApplicationController
     else 
       flash[:error] = "Something went wrong. Please try again later."
     end
+    redirect_to user_project_path(@project)
+  end
+
+  def save_visibility
+    id = params[:id]
+    visibility = params[:visibility]
+    @project = Project.find_by_id(id)
+    if visibility.eql? "public"
+      @project.public = true 
+    else 
+      @project.public = false 
+    end
+    @project.save 
     redirect_to user_project_path(@project)
   end
 

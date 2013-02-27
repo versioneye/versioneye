@@ -20,7 +20,15 @@ module SessionsHelper
   end
 
   def current_user?(user)
-    user == current_user
+    if user.nil? 
+      p "user is nil"
+      return false 
+    end
+    if current_user.nil? 
+      p "current_user is nil"
+      return nil
+    end
+    user.username.eql? current_user.username
   end
 
   def signed_in?
@@ -32,7 +40,9 @@ module SessionsHelper
   end
 
   def authenticate
-    deny_access unless signed_in?
+    return true if signed_in?
+    deny_access
+    return false 
   end
 
   def deny_access
