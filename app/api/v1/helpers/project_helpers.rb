@@ -11,6 +11,14 @@ module VersionEye
       return result
     end
 
+    def fetch_project_by_key_and_user(project_key, current_user)
+      project = Project.by_user(current_user).where(project_key: project_key).shift 
+      if project.nil?
+        project = Project.by_user(current_user).where(_id: project_key).shift   
+      end
+      project
+    end
+
     def destroy_project project_id 
       project = Project.find_by_id( project_id )
       if project.s3_filename && !project.s3_filename.empty?
@@ -24,18 +32,21 @@ module VersionEye
     end
 
     def upload_and_store(file)
+      project = upload file 
+      store_project project 
+      project
+    end
+
+    def upload file 
       project_name = file['datafile'].original_filename
       filename = S3.upload_fileupload(file )
       url = S3.url_for( filename )
-      
       project_type = Project.type_by_filename( url )
       project = create_project(project_type, url, project_name)
       project.make_project_key!      
       project.s3_filename = filename
       project.source = Project::A_SOURCE_UPLOAD
-      store_project(project)
-      
-      project
+      project 
     end
 
     def create_project( project_type, url, project_name )
