@@ -49,22 +49,25 @@ class User::ProjectsController < ApplicationController
     file = params[:upload]
     project_id = params[:project_id]
     if file.nil? || project_id.nil? 
-      flash[:error] = "Something went wrong. Please try again later."
+      flash[:error] = "Something went wrong. Please contact the VersionEye Team."
+      redirect_to user_projects_path
+      return 
+    end
+    project = Project.find_by_id project_id 
+    if project.nil? 
+      flash[:error] = "No project with given key. Please contact the VersionEye Team."
+      redirect_to user_projects_path
+      return 
+    end
+    new_project = upload file
+    if new_project.nil?
+      flash[:error] = "Something went wrong. Please contact the VersionEye Team."
       redirect_to user_projects_path
     end
-    project = upload_and_store file
-    if project
-      old_project = Project.find_by_id project_id 
-      project.name = old_project.name
-      if project.save
-        destroy_project project_id
-      end
-      flash[:success] = "ReUpload was successful."
-      redirect_to user_project_path( project )
-    else 
-      flash[:error] = "Something went wrong. Please try again later."
-      redirect_to user_projects_path
-    end
+
+    project.update_from new_project
+    flash[:success] = "ReUpload was successful."
+    redirect_to user_project_path( project )
   end
   
   def destroy
@@ -90,6 +93,11 @@ class User::ProjectsController < ApplicationController
     Project.process_project( @project )
     flash[:info] = "Project re parse is done."
     redirect_to user_project_path(@project)
+  end
+
+  def libs_i_follow
+    @my_product_ids = Follower.find_product_ids_for_user( current_user.id )
+    @products = current_user.fetch_my_products.paginate(:page => params[:page]) 
   end
 
   def github_projects
@@ -189,13 +197,18 @@ class User::ProjectsController < ApplicationController
     end
 
     def upload_and_store file
+      project = upload file 
+      store_project project
+      project
+    end
+
+    def upload file
       project_name = file['datafile'].original_filename
       filename = S3.upload_fileupload( file )
       url = S3.url_for( filename )
       project = create_project( url, project_name )
       project.s3_filename = filename
       project.source = Project::A_SOURCE_UPLOAD
-      store_project(project)
       project
     end
 

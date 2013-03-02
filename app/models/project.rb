@@ -131,6 +131,17 @@ class Project
     "#{project_key_text}_#{project_nr}"
   end
 
+  def update_from new_project 
+    self.overwrite_dependencies( new_project.dependencies )
+    self.description = new_project.description
+    self.license = new_project.license
+    self.s3_filename = new_project.s3_filename
+    self.dep_number = new_project.dep_number
+    self.out_number = new_project.out_number
+    self.unknown_number = new_project.unknown_number
+    self.save
+  end
+
   def self.type_by_filename( filename )
     trimmed_name = filename.split("?")[0]
     return A_TYPE_RUBYGEMS if trimmed_name.match(/Gemfile$/) or trimmed_name.match(/Gemfile.lock$/)

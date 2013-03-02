@@ -41,16 +41,12 @@ module VersionEye
       get '/:project_key' do
         authorized?
         proj_key = params[:project_key]
-        project = Project.by_user(@current_user).where(project_key: proj_key).shift 
+        project = fetch_project_by_key_and_user(project_key, current_user)
         if project.nil?
-          project = Project.by_user(@current_user).where(_id: proj_key).shift   
-          if project.nil?
-            error! "Project `#{params[:project_key]}` dont exists", 400
-          end
+          error! "Project `#{params[:project_key]}` dont exists", 400
         end
         project.fetch_dependencies
-        present project, with: Entities::ProjectEntity,
-                         type: :full
+        present project, with: Entities::ProjectEntity, type: :full
       end
 
       desc "upload project file"
@@ -75,6 +71,40 @@ module VersionEye
           error! "Cant save uploaded file. Probably our fileserver got cold.", 500
         end
 
+        @project.fetch_dependencies
+        present @project, with: Entities::ProjectEntity, :type => :full 
+      end
+
+      desc "update project with new file"
+      params do
+        requires :project_key, :type => String, :desc => "Project specific identificator"
+        requires :upload, type: Hash, desc: "Project file - [maven.pom, Gemfile ...]"
+      end
+      post '/:project_key' do
+        authorized?
+
+        @project = fetch_project_by_key_and_user(project_key, current_user)
+        if @project.nil?
+          error! "Project `#{params[:project_key]}` dont exists", 400
+        end
+
+        if params[:upload].nil?
+          error! "Didnt submit file or used wrong parameter.", 400
+        end
+        
+        if params[:upload].is_a? String
+          error! "File field is plain text. It should be multipart submition.", 400
+        end
+
+        datafile = ActionDispatch::Http::UploadedFile.new(params[:upload])
+        project_file = {'datafile' => datafile}
+
+        new_project = upload project_file
+        if new_project.nil?
+          error! "Cant save uploaded file. Probably our fileserver got cold.", 500
+        end
+
+        @project.update_from new_project
         @project.fetch_dependencies
         present @project, with: Entities::ProjectEntity, :type => :full 
       end
