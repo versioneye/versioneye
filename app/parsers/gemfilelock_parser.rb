@@ -1,4 +1,4 @@
-class GemfilelockParser < CommonParser
+class GemfilelockParser < GemfileParser 
   
   # Parser for Gemfile.lock. For Ruby. 
   # http://gembundler.com/man/gemfile.5.html
@@ -39,7 +39,7 @@ class GemfilelockParser < CommonParser
         unknowns += 1
       end
       dependency.name = name
-      GemfileParser.parse_requested_version(version, dependency, product)
+      parse_requested_version(version, dependency, product)
 
       dep = deps[name]
       if dep.nil? or !dep.comperator.eql?("=")
