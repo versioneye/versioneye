@@ -74,4 +74,16 @@ class ProjectService
     project = Project.new
   end
 
+  def self.destroy_project project_id 
+    project = Project.find_by_id( project_id )
+    if project.s3_filename && !project.s3_filename.empty?
+      S3.delete( project.s3_filename )
+    end
+    project.fetch_dependencies
+    project.dependencies.each do |dep|
+      dep.remove
+    end
+    project.remove
+  end
+
 end

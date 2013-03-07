@@ -72,7 +72,7 @@ class User::ProjectsController < ApplicationController
   
   def destroy
     id = params[:id]
-    destroy_project id 
+    ProjectService.destroy_project id 
     redirect_to user_projects_path
   end
 
@@ -183,18 +183,6 @@ class User::ProjectsController < ApplicationController
   end
 
   private
-
-    def destroy_project project_id 
-      project = Project.find_by_id( project_id )
-      if project.s3_filename && !project.s3_filename.empty?
-        S3.delete( project.s3_filename )
-      end
-      project.fetch_dependencies
-      project.dependencies.each do |dep|
-        dep.remove
-      end
-      project.remove
-    end
 
     def upload_and_store file
       project = upload file 
