@@ -5,6 +5,15 @@ class Product
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  A_LANGUAGE_RUBY       = "Ruby"
+  A_LANGUAGE_PYTHON     = "Python"
+  A_LANGUAGE_NODEJS     = "Node.JS"
+  A_LANGUAGE_JAVA       = "Java"
+  A_LANGUAGE_PHP        = "PHP"
+  A_LANGUAGE_R          = "R"
+  A_LANGUAGE_JAVASCRIPT = "JavaScript"
+  A_LANGUAGE_CLOJURE    = "Clojure"
+
   field :name, type: String
   field :name_downcase, type: String
   field :prod_key, type: String

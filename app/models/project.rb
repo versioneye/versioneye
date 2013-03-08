@@ -25,6 +25,7 @@ class Project
   field :license, type: String 
 
   field :project_type, type: String, :default => A_TYPE_MAVEN2
+  field :language, type: String
   field :project_key, type: String
   field :private_project, type: Boolean, :default => false
   field :period, type: String, :default => A_PERIOD_WEEKLY
