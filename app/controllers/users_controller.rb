@@ -93,14 +93,18 @@ class UsersController < ApplicationController
   
   def favoritepackages
     @user = User.find_by_username(params[:id])
-    @my_product_ids = Follower.find_product_ids_for_user( @user.id )
+    @user_product_ids = Follower.find_product_ids_for_user( @user.id )
+    @my_product_ids = Array.new 
     @products = Array.new
     respond_to do |format|
       format.html {
         @page = "profile"
-        @languages = Product.get_unique_languages_for_product_ids( @my_product_ids )
+        @languages = Product.get_unique_languages_for_product_ids( @user_product_ids )
         @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
         if has_permission_to_see_products( @user, current_user ) && !@user.nil?
+          if signed_in? 
+            @my_product_ids = Follower.find_product_ids_for_user( current_user.id )
+          end
           @products = @user.fetch_my_products.paginate(:page => params[:page]) 
           @count = @user.fetch_my_products_count
         end    
