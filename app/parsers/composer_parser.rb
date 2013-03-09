@@ -16,6 +16,7 @@ class ComposerParser < CommonParser
     end
     self.update_project( project, data )
     project.project_type = Project::A_TYPE_COMPOSER
+    project.language = Product::A_LANGUAGE_PHP
     project.url = url
     project
   rescue => e 

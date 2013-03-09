@@ -56,6 +56,7 @@ class RequirementsParser < CommonParser
     end
     project.dep_number = project.dependencies.count
     project.project_type = Project::A_TYPE_PIP
+    project.language = Product::A_LANGUAGE_PYTHON
     project.url = url
     project
   rescue => e 

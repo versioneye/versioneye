@@ -53,6 +53,7 @@ class PackageParser < CommonParser
 
     project.dep_number = project.dependencies.count
     project.project_type = Project::A_TYPE_NPM
+    project.language = Product::A_LANGUAGE_NODEJS
     project.url = url
     project
   end

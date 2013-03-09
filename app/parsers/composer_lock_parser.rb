@@ -12,6 +12,7 @@ class ComposerLockParser < CommonParser
 
     project.dep_number = project.dependencies.count
     project.project_type = Project::A_TYPE_COMPOSER
+    project.language = Product::A_LANGUAGE_PHP
     project.url = url
     project
   end

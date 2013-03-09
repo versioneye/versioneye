@@ -18,6 +18,7 @@ class GemfilelockParser < GemfileParser
     project = Project.new deps
     project.dep_number = project.dependencies.count
     project.project_type = Project::A_TYPE_RUBYGEMS
+    project.language = Product::A_LANGUAGE_RUBY
     project.url = url
     project
   end

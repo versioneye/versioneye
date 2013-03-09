@@ -28,6 +28,7 @@ class PomParser < CommonParser
 
     project.dep_number = project.dependencies.count
     project.project_type = Project::A_TYPE_MAVEN2
+    project.language = Product::A_LANGUAGE_JAVA
     project.url = url
     project
   end
