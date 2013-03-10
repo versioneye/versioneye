@@ -219,7 +219,7 @@ class User
     followers.each do |follower|
       ids.push follower.product_id
     end  
-    Product.any_in(_id: ids).desc(:updated_at)
+    Product.any_in(_id: ids).asc(:name)
   end
 
   def fetch_my_products_count
