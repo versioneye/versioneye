@@ -19,6 +19,8 @@
 				</a><br/>
 				<% if product.prod_type == "Maven2" %>
 					<span class="meta-text-small">GroupId: <%= product.group_id %></span>
+				<% else %> 
+					<span class="meta-text-small"><%= product.short_summary %></span>
 				<% end %>
 			</div>
 

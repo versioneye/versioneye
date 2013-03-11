@@ -675,7 +675,18 @@ class Product
     end
   end
 
+  def short_summary
+    return get_summary(description, 125) if description
+    return get_summary(description_manual, 125)
+  end
+
   private
+
+    def get_summary text, size 
+      return "" if text.nil? 
+      return "#{text[0..size]}..." if text.size > size 
+      return text[0..size]
+    end
 
     def self.add_description_to_query(query, description)
       if (description && !description.empty?)
