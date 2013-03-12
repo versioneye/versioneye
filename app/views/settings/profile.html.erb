@@ -35,7 +35,7 @@
       </div>
 
       <div class="control-group">
-        <%= label_tag :description, "Description", :class => "control-label", :for => "description" %>
+        <%= label_tag :description, "About me", :class => "control-label", :for => "description" %>
         <div class="controls">
           <%= text_area_tag :description, @user.description, :style => "width: 400px; height: 100px;", :maxlength => "177", :onKeyUp => "textCounter(this, document.getElementById('counter'), 177)", :id => "description"  %>
         </div>
