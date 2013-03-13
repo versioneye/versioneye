@@ -89,10 +89,26 @@ describe ComposerParser do
       product_11.versions.push( version_11_03 )
       product_11.save
 
+
+      product_13 = ProductFactory.create_for_composer("symfony/locale_de", "2.2.x-dev")
+      version_13_01 = Version.new 
+      version_13_01.version = "2.2.1"
+      product_13.versions.push( version_13_01 )
+      product_13.save
+
+
+      product_16 = ProductFactory.create_for_composer("symfony/finder", "2.2.1")
+      version_16_01 = Version.new 
+      version_16_01.version = "2.2.0"
+      product_16.versions.push( version_16_01 )
+      product_16.save
+
+
+
       parser = ComposerParser.new 
       project = parser.parse("http://s3.amazonaws.com/veye_test_env/composer.json")
       project.should_not be_nil
-      project.dependencies.count.should eql(11)
+      project.dependencies.count.should eql(16)
 
       dep_01 = project.dependencies.first
       dep_01.name.should eql("symfony/symfony")
@@ -160,6 +176,20 @@ describe ComposerParser do
       dep_11.version_requested.should eql("2.0.7")
       dep_11.version_current.should eql("2.0.10")
       dep_11.comperator.should eql("=")
+
+      dep_13 = project.dependencies[12]
+      dep_13.name.should eql("symfony/locale_de")
+      dep_13.version_label.should eql("2.2.*@dev")
+      dep_13.version_requested.should eql("2.2.x-dev")
+      dep_13.version_current.should   eql("2.2.x-dev")
+      dep_13.comperator.should eql("=")
+
+      dep_16 = project.dependencies[15]
+      dep_16.name.should eql("symfony/finder")
+      dep_16.version_label.should eql("@dev")
+      dep_16.version_requested.should eql("2.2.1")
+      dep_16.version_current.should   eql("2.2.1")
+      dep_16.comperator.should eql("=")
 
       product_01.remove
       product_02.remove

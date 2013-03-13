@@ -20,7 +20,7 @@ class ComposerParser < CommonParser
     project.url = url
     project
   rescue => e 
-    self.print_backtrace e 
+    print_backtrace e 
     nil
   end
 
@@ -82,8 +82,6 @@ class ComposerParser < CommonParser
   end
 
   # It is important that this method is NOT writing into the database! 
-  # 
-  # TODO Write tests for this
   #
   def parse_requested_version(version, dependency, product)
     if (version.nil? || version.empty?) && !product.nil?
@@ -93,10 +91,17 @@ class ComposerParser < CommonParser
     version = version.strip
     version = version.gsub('"', '')
     version = version.gsub("'", "")
+
+    dependency.version_label = String.new(version)
+
+    Naturalsorter::Sorter.replace_minimum_stability version
+    if version.empty? && !product.nil?
+      self.update_requested_with_current(dependency, product)
+      return 
+    end
     
     if product.nil? 
       dependency.version_requested = version
-      dependency.version_label = version
 
     elsif version.match(/,/)
       # Version Ranges
@@ -134,7 +139,6 @@ class ComposerParser < CommonParser
         dependency.version_requested = version
       end
       dependency.comperator = "="
-      dependency.version_label = version
     
     elsif version.match(/.\*$/)
       # WildCards. 1.0.* => 1.0.0 | 1.0.2 | 1.0.20
@@ -148,7 +152,6 @@ class ComposerParser < CommonParser
         dependency.version_requested = version
       end
       dependency.comperator = "="
-      dependency.version_label = version
 
     elsif version.empty? || version.match(/^\*$/)
       # This case is not allowed. But we handle it anyway. Because we are fucking awesome!
@@ -163,7 +166,6 @@ class ComposerParser < CommonParser
       greater_than_or_equal = product.get_greater_than_or_equal(version)
       dependency.version_requested = greater_than_or_equal.version
       dependency.comperator = ">="
-      dependency.version_label = version
     
     elsif version.match(/^>/)
       # Greater than version
@@ -172,7 +174,6 @@ class ComposerParser < CommonParser
       greater_than = product.get_greater_than(version)
       dependency.version_requested = greater_than.version
       dependency.comperator = ">"
-      dependency.version_label = version
     
     elsif version.match(/^<=/)
       # Less than or equal to
@@ -181,7 +182,6 @@ class ComposerParser < CommonParser
       smaller_or_equal = product.get_smaller_than_or_equal(version)
       dependency.version_requested = smaller_or_equal.version
       dependency.comperator = "<="
-      dependency.version_label = version
     
     elsif version.match(/^\</)
       # Less than version
@@ -190,7 +190,6 @@ class ComposerParser < CommonParser
       smaller_than = product.get_smaller_than(version)
       dependency.version_requested = smaller_than.version
       dependency.comperator = "<"
-      dependency.version_label = version
     
     elsif version.match(/^!=/)
       # Not equal to version
@@ -199,12 +198,10 @@ class ComposerParser < CommonParser
       newest_but_not = product.get_newest_but_not(version)
       dependency.version_requested = newest_but_not.version
       dependency.comperator = "!="
-      dependency.version_label = version
     
     else # = 
       dependency.version_requested = version
       dependency.comperator = "="
-      dependency.version_label = version
     end
 
   end
