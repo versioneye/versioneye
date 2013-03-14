@@ -39,7 +39,7 @@ class PackagistCrawler
       if version_number && version_number.match(/v[0-9]+\..*/)
         version_number.gsub!("v", "")
       end
-      db_version = product.get_version version_number
+      db_version = product.version_by_number version_number
       if db_version.nil? 
         PackagistCrawler.create_new_version product, version_number, version_obj, crawl
       else

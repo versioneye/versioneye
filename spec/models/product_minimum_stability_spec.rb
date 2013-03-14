@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Product do
   
-  describe "newest_version" do
+  describe "newest_version_number" do
     
     it 'delivers dev' do
       product = ProductFactory.create_for_composer("symfony/pojo", "2.0.7")
@@ -11,15 +11,15 @@ describe Product do
       product.versions.push( version_01 )
       product.save    
 
-      version = product.newest_version( Projectdependency::A_STABILITY_DEV )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_DEV )
       version.should eql("2.0.7")
-      version = product.newest_version( Projectdependency::A_STABILITY_ALPHA )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_ALPHA )
       version.should eql("2.0.7")
-      version = product.newest_version( Projectdependency::A_STABILITY_BETA )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_BETA )
       version.should eql("2.0.7")
-      version = product.newest_version( Projectdependency::A_STABILITY_RC )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_RC )
       version.should eql("2.0.7")
-      version = product.newest_version( Projectdependency::A_STABILITY_STABLE )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_STABLE )
       version.should eql("2.0.7")
     end
 
@@ -30,15 +30,15 @@ describe Product do
       product.versions.push( version_01 )
       product.save    
 
-      version = product.newest_version( Projectdependency::A_STABILITY_DEV )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_DEV )
       version.should eql("2.0.x-dev")
-      version = product.newest_version( Projectdependency::A_STABILITY_ALPHA )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_ALPHA )
       version.should eql("2.0.6")
-      version = product.newest_version( Projectdependency::A_STABILITY_BETA )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_BETA )
       version.should eql("2.0.6")
-      version = product.newest_version( Projectdependency::A_STABILITY_RC )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_RC )
       version.should eql("2.0.6")
-      version = product.newest_version( Projectdependency::A_STABILITY_STABLE )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_STABLE )
       version.should eql("2.0.6")
     end
 
@@ -52,9 +52,9 @@ describe Product do
       product.versions.push( version_02 )
       product.save    
 
-      version = product.newest_version( Projectdependency::A_STABILITY_DEV )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_DEV )
       version.should eql("2.0.x-dev")
-      version = product.newest_version( Projectdependency::A_STABILITY_ALPHA )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_ALPHA )
       version.should eql("2.0.1-alpha0")
     end
 
@@ -71,9 +71,9 @@ describe Product do
       product.versions.push( version_03 )
       product.save    
 
-      version = product.newest_version( Projectdependency::A_STABILITY_DEV )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_DEV )
       version.should eql("2.0.x-dev")
-      version = product.newest_version( Projectdependency::A_STABILITY_BETA )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_BETA )
       version.should eql("2.0.1-BETA")
     end
 
@@ -93,9 +93,9 @@ describe Product do
       product.versions.push( version_04 )
       product.save    
 
-      version = product.newest_version( Projectdependency::A_STABILITY_DEV )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_DEV )
       version.should eql("2.0.x-dev")
-      version = product.newest_version( Projectdependency::A_STABILITY_RC )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_RC )
       version.should eql("2.0.1-RC")
     end
 
@@ -118,7 +118,7 @@ describe Product do
       product.versions.push( version_05 )
       product.save    
 
-      version = product.newest_version( Projectdependency::A_STABILITY_STABLE )
+      version = product.newest_version_number( Projectdependency::A_STABILITY_STABLE )
       version.should eql("2.0.1")
     end
     

@@ -65,7 +65,7 @@ class ProductsController < ApplicationController
     
     attach_version( @product, params[:version] )
     @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
-    @version = @product.get_version(@product.version)
+    @version = @product.version_by_number @product.version
     @downloads = @version.versionarchive
     @productlook = Productlook.find_by_key(key)
     @main_dependencies = @product.dependencies(nil)
@@ -86,7 +86,7 @@ class ProductsController < ApplicationController
       return 
     end
     attach_version( @product, params[:version] )
-    @version = @product.get_version(@product.version)
+    @version = @product.version_by_number( @product.version )
     @main_dependencies = @product.dependencies(nil)
     render :layout => 'application_visual'
   end

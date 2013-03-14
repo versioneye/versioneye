@@ -138,7 +138,7 @@ class ComposerParser < CommonParser
           prod.versions = new_range
         end
       end
-      highest_version = Product.get_newest_version_by_natural_order( prod.versions )
+      highest_version = Product.newest_version_from( prod.versions )
       if highest_version
         dependency.version_requested = highest_version.version
       else 
@@ -151,7 +151,7 @@ class ComposerParser < CommonParser
       ver = version.gsub("*", "")
       ver = ver.gsub(" ", "")
       # versions = product.get_versions_start_with(ver)
-      # highest_version = Product.get_newest_version_by_natural_order(versions)
+      # highest_version = Product.newest_version_from(versions)
       highest_version = product.newest_version_from_wildcard( ver, dependency.stability )
       if highest_version
         dependency.version_requested = highest_version
@@ -162,7 +162,7 @@ class ComposerParser < CommonParser
 
     elsif version.empty? || version.match(/^\*$/)
       # This case is not allowed. But we handle it anyway. Because we are fucking awesome!
-      dependency.version_requested = product.newest_version( dependency.stability )
+      dependency.version_requested = product.newest_version_number( dependency.stability )
       dependency.version_label = "*"
       dependency.comperator = "="
     
@@ -242,7 +242,7 @@ class ComposerParser < CommonParser
     #
     def update_requested_with_current( dependency, product )
       if product && product.version
-        dependency.version_requested = product.newest_version( dependency.stability )
+        dependency.version_requested = product.newest_version_number( dependency.stability )
       else
         dependency.version_requested = "UNKNOWN"
       end

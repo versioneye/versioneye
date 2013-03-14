@@ -150,7 +150,7 @@ class PackageParser < CommonParser
       ver = ver.gsub("X", "")
       ver = ver.gsub(" ", "")
       versions = product.get_versions_start_with(ver)
-      highest_version = Product.get_newest_version_by_natural_order(versions)
+      highest_version = Product.newest_version_from(versions)
       if highest_version
         dependency.version_requested = highest_version.version
       else 
@@ -165,7 +165,7 @@ class PackageParser < CommonParser
       start = version_splitted[0]
       stop = version_splitted[1]
       version_range = product.get_version_range(start, stop)
-      highest_version = Product.get_newest_version_by_natural_order( version_range )
+      highest_version = Product.newest_version_from( version_range )
       if highest_version
         dependency.version_requested = highest_version.version
       else 

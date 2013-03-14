@@ -132,7 +132,7 @@ class GemfileParser < CommonParser
       ver = ver.gsub(" ", "")
       starter = Product.get_approximately_greater_than_starter(ver)
       versions = product.get_versions_start_with(starter)
-      highest_version = Product.get_newest_version_by_natural_order(versions)
+      highest_version = Product.newest_version_from(versions)
       if highest_version
         dependency.version_requested = highest_version.version
       else 

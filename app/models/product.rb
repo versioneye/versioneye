@@ -200,71 +200,63 @@ class Product
     versions.first.version
   end
 
-  # TODO rename it to newest_version_from(versions, stability)
-  def self.get_newest_version_by_natural_order(versions)
+  def self.newest_version_from(versions, stability = "stable")
     return nil if !versions || versions.empty?
-    ordered_versions = Naturalsorter::Sorter.sort_version_by_method_desc(versions, "version")
-    ordered_versions.first
+    product = Product.new({:versions => versions})
+    product.newest_version( stability )
   end
 
-  # This is for minimum-stability in PHP composer projects
-  # https://igor.io/2013/02/07/composer-stability-flags.html
-  # 
   def newest_version( stability = "stable" )
     versions = self.sorted_versions
     return nil if versions.nil? || versions.empty? 
     versions.each do |version|
       if stability.casecmp(Projectdependency::A_STABILITY_STABLE) == 0
         if ReleaseRecognizer.stable?(version.version)
-          return version.version 
+          return version
         end
       elsif stability.casecmp(Projectdependency::A_STABILITY_RC) == 0
         if ReleaseRecognizer.stable?(version.version) || 
            ReleaseRecognizer.rc?(version.version)
-          return version.version 
+          return version
         end
       elsif stability.casecmp(Projectdependency::A_STABILITY_BETA) == 0
         if ReleaseRecognizer.stable?(version.version) || 
            ReleaseRecognizer.rc?(version.version) ||
            ReleaseRecognizer.beta?(version.version)
-          return version.version 
+          return version
         end
       elsif stability.casecmp(Projectdependency::A_STABILITY_ALPHA) == 0 
         if ReleaseRecognizer.stable?(version.version) || 
            ReleaseRecognizer.rc?(version.version) ||
            ReleaseRecognizer.beta?(version.version) || 
            ReleaseRecognizer.alpha?(version.version)
-          return version.version 
+          return version
         end
       else 
-        return version.version 
+        return version
       end
     end
     return nil
   end
 
-  def newest_version_from_wildcard( version_start, stability = "stable" )
-    versions = get_versions_start_with(version_start)
-    product = Product.new 
-    product.versions = versions
-    return product.newest_version stability
+  def newest_version_number( stability = "stable" )
+    version = newest_version( stability )
+    return nil if version.nil? 
+    return version.version
   end
 
-  # TODO rename to version_by_number
-  def get_version(searched_version)
+  def newest_version_from_wildcard( version_start, stability = "stable" )
+    versions = get_versions_start_with( version_start )
+    product = Product.new({:versions => versions}) 
+    return product.newest_version_number stability
+  end
+
+  def version_by_number(searched_version)
     versions.each do |version|
       return version if version.version.eql?(searched_version)
     end
     nil
   end 
-
-  # TODO rename to version_by_uid
-  def get_version_by_uid(uid)
-    versions.each do |version|
-      return version if version.uid.eql?(uid)
-    end
-    return nil
-  end
 
   # TODO rename to version_approximately_greater_than(value, stability)
   def self.get_approximately_greater_than_starter(value)
@@ -294,7 +286,7 @@ class Product
         versions.push(version)
       end
     end
-    Product.get_newest_version_by_natural_order(versions)
+    Product.newest_version_from(versions)
   end
 
   # TODO rename to version_range(start, stop, stability)
@@ -331,7 +323,7 @@ class Product
       end
     end
     return filtered_versions if range
-    newest = Product.get_newest_version_by_natural_order(filtered_versions)
+    newest = Product.newest_version_from(filtered_versions)
     return get_newest_or_value(newest, value)
   end
 
@@ -344,7 +336,7 @@ class Product
       end
     end
     return filtered_versions if range 
-    newest = Product.get_newest_version_by_natural_order(filtered_versions)
+    newest = Product.newest_version_from(filtered_versions)
     return get_newest_or_value(newest, value)
   end
 
@@ -357,7 +349,7 @@ class Product
       end
     end
     return filtered_versions if range 
-    newest = Product.get_newest_version_by_natural_order(filtered_versions)
+    newest = Product.newest_version_from(filtered_versions)
     return get_newest_or_value(newest, value)
   end
 
@@ -370,7 +362,7 @@ class Product
       end
     end
     return filtered_versions if range 
-    newest = Product.get_newest_version_by_natural_order(filtered_versions)
+    newest = Product.newest_version_from(filtered_versions)
     return get_newest_or_value(newest, value)
   end
 
@@ -383,7 +375,7 @@ class Product
       end
     end
     return filtered_versions if range
-    newest = Product.get_newest_version_by_natural_order(filtered_versions)
+    newest = Product.newest_version_from(filtered_versions)
     return get_newest_or_value(newest, value)
   end
 

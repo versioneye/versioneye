@@ -70,7 +70,7 @@ module ProductsHelper
     if version.nil? || version.empty?
       version = product.version
     end
-    versionObj = product.get_version(version)
+    versionObj = product.version_by_number( version )
     if versionObj
       product.version = versionObj.version
       product.version_link = versionObj.link

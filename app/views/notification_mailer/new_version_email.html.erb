@@ -13,8 +13,8 @@
         <% @notifications.each do |notification| %>
           <tr>
             <td>
-              <% product = Product.find_by_id(notification.product_id) %>
-              <% version = product.get_version(notification.version_id) %>
+              <% product = Product.find_by_id( notification.product_id ) %>
+              <% version = product.version_by_number( notification.version_id ) %>
               <img src= "http://www.versioneye.com/assets/language/<%= product.language.downcase %>.png" style = "width: 48px; height: 48px;"/>
             </td>
             <td style = "vertical-align: middle;">

@@ -326,7 +326,7 @@ describe Product do
     
   end
 
-  describe "static get_newest_version_by_natural_order" do 
+  describe "static newest_version_from" do 
 
     it "returns the correct version" do 
       versions = Array.new 
@@ -342,7 +342,7 @@ describe Product do
       version3.version = "1.30"
       versions.push(version3)
 
-      Product.get_newest_version_by_natural_order(versions).version.should eql("1.229")
+      Product.newest_version_from(versions).version.should eql("1.229")
     end
 
   end
