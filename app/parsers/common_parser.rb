@@ -42,4 +42,26 @@ class CommonParser
     dependency
   end
 
+  def process_stability_flag( version, dependency )
+    if version.match(/@.*$/)
+      spliti = version.split("@")
+      dependency.stability = spliti[1]
+    else 
+      if ReleaseRecognizer.stable? version
+        dependency.stability = Projectdependency::A_STABILITY_STABLE
+      elsif ReleaseRecognizer.rc? version
+        dependency.stability = Projectdependency::A_STABILITY_RC
+      elsif ReleaseRecognizer.beta? version
+        dependency.stability = Projectdependency::A_STABILITY_BETA
+      elsif ReleaseRecognizer.alpha? version
+        dependency.stability = Projectdependency::A_STABILITY_ALPHA
+      elsif ReleaseRecognizer.snapshot? version
+        dependency.stability = Projectdependency::A_STABILITY_DEV
+      else
+        dependency.stability = Projectdependency::A_STABILITY_DEV
+      end
+    end 
+    Naturalsorter::Sorter.replace_minimum_stability version
+  end
+
 end

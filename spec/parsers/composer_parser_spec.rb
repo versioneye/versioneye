@@ -12,6 +12,9 @@ describe ComposerParser do
     
     it "parse from http the file correctly" do
       product_01 = ProductFactory.create_for_composer("symfony/symfony", "2.0.7")
+      version_01_01 = Version.new 
+      version_01_01.version = "2.0.7-dev"
+      product_01.versions.push( version_01_01 )
       product_01.save
 
       product_02 = ProductFactory.create_for_composer("symfony/doctrine-bundle", "2.0.7")
@@ -21,6 +24,9 @@ describe ComposerParser do
       version_03_01 = Version.new 
       version_03_01.version = "2.0.6"
       product_03.versions.push( version_03_01 )
+      version_03_02 = Version.new 
+      version_03_02.version = "dev-master"
+      product_03.versions.push( version_03_02 )
       product_03.save
 
       product_04 = ProductFactory.create_for_composer("symfony/browser-kit", "2.0.7")
@@ -87,14 +93,43 @@ describe ComposerParser do
       version_11_03 = Version.new 
       version_11_03.version = "2.0.7"
       product_11.versions.push( version_11_03 )
+      version_11_04 = Version.new 
+      version_11_04.version = "2.2.0-BETA2"
+      product_11.versions.push( version_11_04 )
       product_11.save
 
 
-      product_13 = ProductFactory.create_for_composer("symfony/locale_de", "2.2.x-dev")
+      product_12 = ProductFactory.create_for_composer("symfony/translation", "2.2.x-dev")
+      version_12_01 = Version.new 
+      version_12_01.version = "2.2.0"
+      product_12.versions.push( version_12_01 )
+      version_12_02 = Version.new 
+      version_12_02.version = "2.2.1"
+      product_12.versions.push( version_12_02 )
+      version_12_03 = Version.new 
+      version_12_03.version = "2.2.0-alpha"
+      product_12.versions.push( version_12_03 )
+      version_12_04 = Version.new 
+      version_12_04.version = "2.2.0-BETA2"
+      product_12.versions.push( version_12_04 )
+      product_12.save
+
+
+      product_13 = ProductFactory.create_for_composer("symfony/filesystem", "2.2.x-dev")
       version_13_01 = Version.new 
       version_13_01.version = "2.2.1"
       product_13.versions.push( version_13_01 )
+      version_13_02 = Version.new 
+      version_13_02.version = "2.2.0-BETA2"
+      product_13.versions.push( version_13_02 )
       product_13.save
+
+
+      product_14 = ProductFactory.create_for_composer("symfony/stopwatch", "2.2.x-dev")
+      version_14_01 = Version.new 
+      version_14_01.version = "2.2.1"
+      product_14.versions.push( version_14_01 )
+      product_14.save
 
 
       product_16 = ProductFactory.create_for_composer("symfony/finder", "2.2.1")
@@ -102,7 +137,6 @@ describe ComposerParser do
       version_16_01.version = "2.2.0"
       product_16.versions.push( version_16_01 )
       product_16.save
-
 
 
       parser = ComposerParser.new 
@@ -114,6 +148,7 @@ describe ComposerParser do
       dep_01.name.should eql("symfony/symfony")
       dep_01.version_requested.should eql("2.0.7")
       dep_01.version_current.should eql("2.0.7")
+      dep_01.stability.should eql("stable")
       dep_01.comperator.should eql("=")
 
       dep_02 = project.dependencies[1]
@@ -143,7 +178,7 @@ describe ComposerParser do
       dep_06 = project.dependencies[5]
       dep_06.name.should eql("symfony/locale")
       dep_06.version_requested.should eql("2.0.7")
-      dep_06.version_current.should eql("2.0.7")
+      dep_06.version_current.should eql("2.0.8")
       dep_06.comperator.should eql("<=")
 
       dep_07 = project.dependencies[6]
@@ -176,13 +211,33 @@ describe ComposerParser do
       dep_11.version_requested.should eql("2.0.7")
       dep_11.version_current.should eql("2.0.10")
       dep_11.comperator.should eql("=")
+      dep_11.stability.should eql("stable")
+
+      dep_12 = project.dependencies[11]
+      dep_12.name.should eql("symfony/translation")
+      dep_12.version_requested.should eql("2.2.x-dev")
+      dep_12.version_current.should eql("2.2.x-dev")
+      dep_12.comperator.should eql("=")
+      dep_12.outdated.should be_false
+      dep_12.stability.should eql("dev")
 
       dep_13 = project.dependencies[12]
-      dep_13.name.should eql("symfony/locale_de")
+      dep_13.name.should eql("symfony/filesystem")
       dep_13.version_label.should eql("2.2.*@dev")
       dep_13.version_requested.should eql("2.2.x-dev")
       dep_13.version_current.should   eql("2.2.x-dev")
+      dep_13.outdated.should be_false
       dep_13.comperator.should eql("=")
+
+      dep_14 = project.dependencies[13]
+      dep_14.name.should eql("symfony/stopwatch")
+      dep_14.version_label.should eql("2.2.*@stable")
+      dep_14.version_requested.should eql("2.2.1")
+      dep_14.version_current.should   eql("2.2.1")
+      dep_14.outdated.should be_false
+      dep_14.comperator.should eql("=")
+      dep_14.stability.should eql("stable")
+
 
       dep_16 = project.dependencies[15]
       dep_16.name.should eql("symfony/finder")

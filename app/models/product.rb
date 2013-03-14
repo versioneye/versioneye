@@ -195,48 +195,45 @@ class Product
     Naturalsorter::Sorter.sort_version_by_method_desc( versions, "version" )
   end
 
-  def newest_version_number
-    versions = sorted_versions
-    versions.first.version
-  end
-
-  def self.newest_version_from(versions, stability = "stable")
-    return nil if !versions || versions.empty?
-    product = Product.new({:versions => versions})
-    product.newest_version( stability )
-  end
-
   def newest_version( stability = "stable" )
     versions = self.sorted_versions
     return nil if versions.nil? || versions.empty? 
     versions.each do |version|
-      if stability.casecmp(Projectdependency::A_STABILITY_STABLE) == 0
-        if ReleaseRecognizer.stable?(version.version)
-          return version
-        end
-      elsif stability.casecmp(Projectdependency::A_STABILITY_RC) == 0
-        if ReleaseRecognizer.stable?(version.version) || 
-           ReleaseRecognizer.rc?(version.version)
-          return version
-        end
-      elsif stability.casecmp(Projectdependency::A_STABILITY_BETA) == 0
-        if ReleaseRecognizer.stable?(version.version) || 
-           ReleaseRecognizer.rc?(version.version) ||
-           ReleaseRecognizer.beta?(version.version)
-          return version
-        end
-      elsif stability.casecmp(Projectdependency::A_STABILITY_ALPHA) == 0 
-        if ReleaseRecognizer.stable?(version.version) || 
-           ReleaseRecognizer.rc?(version.version) ||
-           ReleaseRecognizer.beta?(version.version) || 
-           ReleaseRecognizer.alpha?(version.version)
-          return version
-        end
-      else 
-        return version
+      if Product.does_it_fit_stability version.version, stability
+        return version 
       end
     end
     return nil
+  end
+
+  def self.does_it_fit_stability( version_number, stability )
+    if stability.casecmp(Projectdependency::A_STABILITY_STABLE) == 0
+      if ReleaseRecognizer.stable?( version_number )
+        return true 
+      end
+    elsif stability.casecmp(Projectdependency::A_STABILITY_RC) == 0
+      if ReleaseRecognizer.stable?( version_number ) || 
+         ReleaseRecognizer.rc?( version_number )
+        return true 
+      end
+    elsif stability.casecmp(Projectdependency::A_STABILITY_BETA) == 0
+      if ReleaseRecognizer.stable?( version_number ) || 
+         ReleaseRecognizer.rc?( version_number ) ||
+         ReleaseRecognizer.beta?( version_number )
+        return true 
+      end
+    elsif stability.casecmp(Projectdependency::A_STABILITY_ALPHA) == 0 
+      if ReleaseRecognizer.stable?( version_number ) || 
+         ReleaseRecognizer.rc?( version_number ) ||
+         ReleaseRecognizer.beta?( version_number ) || 
+         ReleaseRecognizer.alpha?( version_number )
+        return true 
+      end
+    elsif stability.casecmp(Projectdependency::A_STABILITY_DEV) == 0 
+      return true 
+    else  
+      return false 
+    end
   end
 
   def newest_version_number( stability = "stable" )
@@ -245,21 +242,26 @@ class Product
     return version.version
   end
 
+  def self.newest_version_from(versions, stability = "stable")
+    return nil if !versions || versions.empty?
+    product = Product.new({:versions => versions})
+    product.newest_version( stability )
+  end
+
   def newest_version_from_wildcard( version_start, stability = "stable" )
-    versions = get_versions_start_with( version_start )
+    versions = versions_start_with( version_start )
     product = Product.new({:versions => versions}) 
     return product.newest_version_number stability
   end
 
-  def version_by_number(searched_version)
+  def version_by_number( searched_version )
     versions.each do |version|
       return version if version.version.eql?(searched_version)
     end
     nil
   end 
 
-  # TODO rename to version_approximately_greater_than(value, stability)
-  def self.get_approximately_greater_than_starter(value)
+  def self.version_approximately_greater_than_starter(value)
     if value.match(/\.0$/)
       new_end = value.length - 2
       return value[0..new_end]
@@ -268,8 +270,7 @@ class Product
     end
   end
 
-  # TODO rename to version_tilde_newest(value, stabilitz)
-  def get_tilde_newest(value)
+  def version_tilde_newest(value)
     new_st = "#{value}"
     if value.match(/./)
       splits = value.split(".")
@@ -279,7 +280,7 @@ class Product
     end
     starter = "#{new_st}."
     
-    versions_group1 = self.get_versions_start_with(starter)
+    versions_group1 = self.versions_start_with( starter )
     versions = Array.new
     versions_group1.each do |version| 
       if Naturalsorter::Sorter.bigger_or_equal?(version.version, value)
@@ -289,13 +290,12 @@ class Product
     Product.newest_version_from(versions)
   end
 
-  # TODO rename to version_range(start, stop, stability)
-  def get_version_range(start, stop)
+  def version_range(start, stop)
     # get all versions from range ( >=start <=stop )
     range = Array.new 
     versions.each do |version|
-      fits_stop  = Naturalsorter::Sorter.smaller_or_equal?(version.version, stop)
-      fits_start = Naturalsorter::Sorter.bigger_or_equal?(version.version, start)
+      fits_stop  = Naturalsorter::Sorter.smaller_or_equal?( version.version, stop  )
+      fits_start = Naturalsorter::Sorter.bigger_or_equal?(  version.version, start )
       if fits_start && fits_stop
         range.push(version)
       end
@@ -303,8 +303,7 @@ class Product
     range
   end
 
-  # TODO rename to versions_start_with(val)
-  def get_versions_start_with(val)
+  def versions_start_with(val)
     result = Array.new
     versions.each do |version|
       if version.version.match(/^#{val}/)
@@ -314,8 +313,7 @@ class Product
     result
   end
 
-  # TODO rename to newest_but_not(value, range, stability)
-  def get_newest_but_not(value, range=false)
+  def newest_but_not(value, range=false)
     filtered_versions = Array.new
     versions.each do |version|
       if !version.version.match(/^#{value}/)
@@ -327,8 +325,7 @@ class Product
     return get_newest_or_value(newest, value)
   end
 
-  # TODO rename to greater_than(value, range, stability)
-  def get_greater_than(value, range = false)
+  def greater_than(value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.bigger?(version.version, value)
@@ -340,8 +337,7 @@ class Product
     return get_newest_or_value(newest, value)
   end
 
-  # TODO rename to greater_than_or_equal(value, range, stability)
-  def get_greater_than_or_equal(value, range = false)
+  def greater_than_or_equal(value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.bigger_or_equal?(version.version, value)
@@ -353,8 +349,7 @@ class Product
     return get_newest_or_value(newest, value)
   end
 
-  # TODO rename to smaller_than(value, range, stability)
-  def get_smaller_than(value, range = false)
+  def smaller_than(value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.smaller?(version.version, value)
@@ -366,8 +361,7 @@ class Product
     return get_newest_or_value(newest, value)
   end
 
-  # TODO rename to smaller_than_or_equal(value, range, stability)
-  def get_smaller_than_or_equal(value, range = false)
+  def smaller_than_or_equal(value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.smaller_or_equal?(version.version, value)

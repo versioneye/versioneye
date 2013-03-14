@@ -36,7 +36,6 @@ class PythonSetupParser < RequirementsParser
                                          scope: "compile"
       
       parse_requested_version(comparator, version, dependency, product)
-      dependency.update_outdated
       if dependency.outdated?
         project.out_number = project.out_number + 1
       end

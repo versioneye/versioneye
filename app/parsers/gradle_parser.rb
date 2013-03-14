@@ -30,23 +30,25 @@ class GradleParser < CommonParser
     data = []
     unknowns, out_number = 0, 0 
     matches.each do |row|
+      version = row[3]
       dependency = Projectdependency.new({
         :scope => row[0],
         :group_id => row[1],
         :artifact_id => row[2],
         :name => row[2],
-        :version_requested => row[3], 
+        :version_requested => version, 
         :comperator => "="  
       })
+
+      process_stability_flag version, dependency
+      
       product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
       if product
-            dependency.prod_key = product.prod_key
-          else
-            unknowns += 1
-          end
-      if dependency.outdated?
-        out_number += 1
+        dependency.prod_key = product.prod_key
+      else
+        unknowns += 1
       end
+      out_number += 1 if dependency.outdated?
       data << dependency
     end
 

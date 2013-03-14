@@ -12,7 +12,7 @@
 			<% if !@project.fetch_dependencies.nil? %>
 				<% @project.dependencies.each do |dep| %>
 					<% product = dep.find_or_init_product %>
-					<% dep.update_from_product %>
+					<% dep.outdated? %>
 					<div class="row search-item search_item_context" >
 						<% if dep.unknown? %>
 							<%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>

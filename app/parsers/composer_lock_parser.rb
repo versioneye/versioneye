@@ -28,7 +28,6 @@ class ComposerLockParser < CommonParser
     compposer_parser = ComposerParser.new 
     compposer_parser.parse_requested_version(version, dependency, product)
     
-    dependency.update_outdated
     project.out_number += 1 if dependency.outdated?
     project.unknown_number += 1 unless product
 

@@ -452,11 +452,11 @@ describe Product do
     
   end
 
-  describe "get_versions_start_with" do
+  describe "versions_start_with" do
 
     it "returns an empty array" do 
       @product.versions = nil 
-      @product.get_versions_start_with("1.0").should eql([])
+      @product.versions_start_with("1.0").should eql([])
     end 
 
     it "returns the correct array" do 
@@ -472,11 +472,11 @@ describe Product do
       @product.versions.push(version2)
       @product.versions.push(version3)
       @product.versions.push(version4)
-      results = @product.get_versions_start_with("1")
+      results = @product.versions_start_with("1")
       results.size.should eql(3)
       results.first.version.should eql(version.version)
       results.last.version.should eql(version3.version)
-      results = @product.get_versions_start_with("1.")
+      results = @product.versions_start_with("1.")
       results.size.should eql(3)
       results.first.version.should eql(version.version)
       results.last.version.should eql(version3.version)
@@ -484,13 +484,13 @@ describe Product do
 
   end
 
-  describe "get_approximately_greater_than_starter" do 
+  describe "version_approximately_greater_than_starter" do 
 
     it "returns the given value" do 
-      Product.get_approximately_greater_than_starter("1.0").should eql("1.")
+      Product.version_approximately_greater_than_starter("1.0").should eql("1.")
     end
     it "returns the given value" do 
-      Product.get_approximately_greater_than_starter("1.2").should eql("1.2.")
+      Product.version_approximately_greater_than_starter("1.2").should eql("1.2.")
     end
 
   end

@@ -51,6 +51,8 @@ class PomParser < CommonParser
     if dependency.scope.nil? 
       dependency.scope = "compile"
     end
+
+    process_stability_flag dependency.version_requested, dependency
     
     product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
     if product

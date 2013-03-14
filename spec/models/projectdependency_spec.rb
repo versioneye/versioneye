@@ -52,6 +52,7 @@ describe Projectdependency do
       dep = Projectdependency.new
       dep.prod_key = product.prod_key
       dep.version_requested = "2.2.x-dev"
+      dep.stability = "dev"
       
       dep.outdated?.should be_false
       dep.version_current.should eql("2.2.x-dev")

@@ -47,16 +47,6 @@ class Projectdependency
     product
   end
 
-  def update_from_product
-    if !self.prod_key.nil?
-      product = Product.find_by_key(prod_key)
-    end
-    if !product.nil?
-      self.version_current = product.version
-      self.save 
-    end
-  end
-
   def unknown?
     prod_key.nil? && ext_link.nil? 
   end
@@ -70,32 +60,31 @@ class Projectdependency
     end
     
     product = Product.find_by_key prod_key
-    if product && !self.version_current.eql?(product.version)
-      self.version_current = product.version
-      self.save()
+    if product 
+      newest_version = product.newest_version_number( self.stability )
+      self.version_current = newest_version
+      self.save() 
     end
 
     if self.version_requested.eql?("GIT")
       self.outdated = false
       return false
     end
+    
     if self.version_requested.eql?(self.version_current)
       self.outdated = false
       return false
-    else 
-      newest_version = Naturalsorter::Sorter.sort_version([self.version_current, self.version_requested]).last
-      if newest_version.eql?(version_requested)
-        self.outdated = false
-        return false   
-      end
-      self.outdated = true
-      self.release = ReleaseRecognizer.release? self.version_current
-      return true
+    end 
+    
+    newest_version = Naturalsorter::Sorter.sort_version([self.version_current, self.version_requested]).last
+    if newest_version.eql?(version_requested)
+      self.outdated = false
+      return false   
     end
-  end
-  
-  def update_outdated
-    self.outdated = outdated? 
+    
+    self.outdated = true
+    self.release = ReleaseRecognizer.release? self.version_current
+    return true
   end
 
   def version_lbl

@@ -104,7 +104,6 @@ class Project
       dep.project_id = self.id.to_s
       dep.user_id = self.user_id
       dep.save
-      p "save dep #{dep.id}"
     end
   end
 

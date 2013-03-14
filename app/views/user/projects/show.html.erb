@@ -158,7 +158,7 @@
               <% licences = {} %>
               <% @project.dependencies.each do |dep| %>
                 <% product = dep.find_or_init_product %>
-                <% dep.update_from_product %>
+                <% dep.outdated? %>
 
                 <% if product.license_info.nil? then key = "unknown" else key  = product.license_info end %>
                 <% licences[key] = []  unless licences.key? key %>

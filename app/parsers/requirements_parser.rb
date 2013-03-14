@@ -48,7 +48,6 @@ class RequirementsParser < CommonParser
       
       parse_requested_version(splitter, version, dependency, product)
       
-      dependency.update_outdated
       if dependency.outdated?
         project.out_number = project.out_number + 1
       end
@@ -87,27 +86,27 @@ class RequirementsParser < CommonParser
     
     elsif splitter.match(/^!=/)
       # Not equal to version
-      newest_version = product.get_newest_but_not(version)
+      newest_version = product.newest_but_not(version)
       dependency.version_requested = newest_version
     
     elsif splitter.match(/^>=/)
       # Greater than or equal to
-      newest_version = product.get_greater_than_or_equal(version)
+      newest_version = product.greater_than_or_equal(version)
       dependency.version_requested = newest_version.version
     
     elsif splitter.match(/^>/)
       # Greater than version
-      newest_version = product.get_greater_than(version)
+      newest_version = product.greater_than(version)
       dependency.version_requested = newest_version.version
     
     elsif splitter.match(/^<=/)
       # Less than or equal to
-      newest_version = product.get_smaller_than_or_equal(version)
+      newest_version = product.smaller_than_or_equal(version)
       dependency.version_requested = newest_version.version
     
     elsif version.match(/^\</)
       # Less than version
-      newest_version = product.get_smaller_than(version)
+      newest_version = product.smaller_than(version)
       dependency.version_requested = newest_version.version
     
     else

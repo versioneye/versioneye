@@ -23,13 +23,13 @@ describe Product do
       version3 = Version.new
       version3.version = "1.2"
       @product.versions.push(version3)
-      ver = @product.get_greater_than("1.1")
+      ver = @product.greater_than("1.1")
       ver.version.should eql("1.2")
     end
     
   end
 
-  describe "get_greater_than_or_equal" do
+  describe "greater_than_or_equal" do
     
     it "returns the highest value" do
       @product.versions = Array.new
@@ -42,7 +42,7 @@ describe Product do
       version3 = Version.new
       version3.version = "1.2"
       @product.versions.push(version3)
-      ver = @product.get_greater_than_or_equal("1.1")
+      ver = @product.greater_than_or_equal("1.1")
       ver.version.should eql("1.2")
     end
 
@@ -54,7 +54,7 @@ describe Product do
       version2 = Version.new
       version2.version = "1.1"
       @product.versions.push(version2)
-      ver = @product.get_greater_than_or_equal("1.1")
+      ver = @product.greater_than_or_equal("1.1")
       ver.version.should eql("1.1")
     end
     
@@ -73,7 +73,7 @@ describe Product do
       version3 = Version.new
       version3.version = "1.2"
       @product.versions.push(version3)
-      ver = @product.get_smaller_than_or_equal("1.1")
+      ver = @product.smaller_than_or_equal("1.1")
       ver.version.should eql("1.1")
     end
 
@@ -82,13 +82,13 @@ describe Product do
       version = Version.new
       version.version = "1.0"
       @product.versions.push(version)
-      ver = @product.get_smaller_than_or_equal("1.1")
+      ver = @product.smaller_than_or_equal("1.1")
       ver.version.should eql("1.0")
     end
     
   end
 
-  describe "get_smaller_than" do
+  describe "smaller_than" do
     
     it "returns the highest value" do
       @product.versions = Array.new
@@ -101,7 +101,7 @@ describe Product do
       version3 = Version.new
       version3.version = "1.2"
       @product.versions.push(version3)
-      ver = @product.get_smaller_than("1.1")
+      ver = @product.smaller_than("1.1")
       ver.version.should eql("1.0")
     end
 
@@ -116,7 +116,7 @@ describe Product do
       version3 = Version.new
       version3.version = "2.3.0"
       @product.versions.push(version3)
-      ver = @product.get_smaller_than("2.4-dev")
+      ver = @product.smaller_than("2.4-dev")
       ver.version.should eql("2.3.0")
     end
     
@@ -142,7 +142,7 @@ describe Product do
       version5.version = "1.4"
       @product.versions.push(version5)
 
-      range = @product.get_version_range("1.1", "1.3")
+      range = @product.version_range("1.1", "1.3")
       range.count.should eql(3)
       range.first.version.should eql("1.1")
       range.last.version.should eql("1.3")
@@ -171,7 +171,7 @@ describe Product do
       version5.version = "2.0"
       @product.versions.push(version5)
 
-      tilde_version = @product.get_tilde_newest("1.2")
+      tilde_version = @product.version_tilde_newest("1.2")
       tilde_version.version.should eql("1.3")
     end
 
@@ -193,7 +193,7 @@ describe Product do
       version5.version = "2.0"
       @product.versions.push(version5)
 
-      tilde_version = @product.get_tilde_newest("1.2")
+      tilde_version = @product.version_tilde_newest("1.2")
       tilde_version.version.should eql("1.4")
     end
 
@@ -215,7 +215,7 @@ describe Product do
       version5.version = "2.0"
       @product.versions.push(version5)
 
-      tilde_version = @product.get_tilde_newest("1")
+      tilde_version = @product.version_tilde_newest("1")
       tilde_version.version.should eql("1.4")
     end
 

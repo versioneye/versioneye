@@ -44,7 +44,6 @@ class GemfileParser < CommonParser
       version = line_elements[1]
       parse_requested_version(version, dependency, product)
       
-      dependency.update_outdated
       if dependency.outdated?
         project.out_number = project.out_number + 1
       end      
@@ -85,7 +84,7 @@ class GemfileParser < CommonParser
       # Not equal to version
       version.gsub!("!=", "")
       version.gsub!(" ", "")
-      newest_version = product.get_newest_but_not(version)
+      newest_version = product.newest_but_not(version)
       dependency.version_requested = newest_version
       dependency.comperator = "!="
       dependency.version_label = version
@@ -94,7 +93,7 @@ class GemfileParser < CommonParser
       # Greater than or equal to
       version.gsub!(">=", "")
       version.gsub!(" ", "")
-      newest_version = product.get_greater_than_or_equal(version)
+      newest_version = product.greater_than_or_equal(version)
       dependency.version_requested = newest_version.version
       dependency.comperator = ">="
       dependency.version_label = version
@@ -103,7 +102,7 @@ class GemfileParser < CommonParser
       # Greater than version
       version.gsub!(">", "")
       version.gsub!(" ", "")
-      newest_version = product.get_greater_than(version)
+      newest_version = product.greater_than(version)
       dependency.version_requested = newest_version.version
       dependency.comperator = ">"
       dependency.version_label = version
@@ -112,7 +111,7 @@ class GemfileParser < CommonParser
       # Less than or equal to
       version.gsub!("<=", "")
       version.gsub!(" ", "")
-      newest_version = product.get_smaller_than_or_equal(version)
+      newest_version = product.smaller_than_or_equal(version)
       dependency.version_requested = newest_version.version
       dependency.comperator = "<="
       dependency.version_label = version
@@ -121,7 +120,7 @@ class GemfileParser < CommonParser
       # Less than version
       version.gsub!("\<", "")
       version.gsub!(" ", "")
-      newest_version = product.get_smaller_than(version)
+      newest_version = product.smaller_than(version)
       dependency.version_requested = newest_version.version
       dependency.comperator = "<"
       dependency.version_label = version
@@ -130,8 +129,8 @@ class GemfileParser < CommonParser
       # Approximately greater than -> Pessimistic Version Constraint
       ver = version.gsub("~>", "")
       ver = ver.gsub(" ", "")
-      starter = Product.get_approximately_greater_than_starter(ver)
-      versions = product.get_versions_start_with(starter)
+      starter = Product.version_approximately_greater_than_starter(ver)
+      versions = product.versions_start_with( starter )
       highest_version = Product.newest_version_from(versions)
       if highest_version
         dependency.version_requested = highest_version.version

@@ -42,7 +42,6 @@ class PackageParser < CommonParser
       
       parse_requested_version(value, dependency, product)
       
-      dependency.update_outdated
       if dependency.outdated?
         project.out_number = project.out_number + 1
       end      
@@ -89,7 +88,7 @@ class PackageParser < CommonParser
       # Not equal to version
       version.gsub!("!=", "")
       version.gsub!(" ", "")
-      newest_version = product.get_newest_but_not(version)
+      newest_version = product.newest_but_not(version)
       dependency.version_requested = newest_version
       dependency.comperator = "!="
       dependency.version_label = version
@@ -98,7 +97,7 @@ class PackageParser < CommonParser
       # Greater than or equal to
       version.gsub!(">=", "")
       version.gsub!(" ", "")
-      newest_version = product.get_greater_than_or_equal(version)
+      newest_version = product.greater_than_or_equal(version)
       dependency.version_requested = newest_version.version
       dependency.comperator = ">="
       dependency.version_label = version
@@ -107,7 +106,7 @@ class PackageParser < CommonParser
       # Greater than version
       version.gsub!(">", "")
       version.gsub!(" ", "")
-      newest_version = product.get_greater_than(version)
+      newest_version = product.greater_than(version)
       dependency.version_requested = newest_version.version
       dependency.comperator = ">"
       dependency.version_label = version
@@ -116,7 +115,7 @@ class PackageParser < CommonParser
       # Less than or equal to
       version.gsub!("<=", "")
       version.gsub!(" ", "")
-      newest_version = product.get_smaller_than_or_equal(version)
+      newest_version = product.smaller_than_or_equal(version)
       dependency.version_requested = newest_version.version
       dependency.comperator = "<="
       dependency.version_label = version
@@ -125,7 +124,7 @@ class PackageParser < CommonParser
       # Less than version
       version.gsub!("\<", "")
       version.gsub!(" ", "")
-      newest_version = product.get_smaller_than(version)
+      newest_version = product.smaller_than(version)
       dependency.version_requested = newest_version.version
       dependency.comperator = "<"
       dependency.version_label = version
@@ -135,7 +134,7 @@ class PackageParser < CommonParser
       # ~1.2.3 = >=1.2.3 <1.3.0
       ver = version.gsub("~", "")
       ver = ver.gsub(" ", "")
-      highest_version = product.get_tilde_newest(ver)
+      highest_version = product.version_tilde_newest(ver)
       if highest_version
         dependency.version_requested = highest_version.version
       else 
@@ -149,7 +148,7 @@ class PackageParser < CommonParser
       ver = version.gsub("x", "")
       ver = ver.gsub("X", "")
       ver = ver.gsub(" ", "")
-      versions = product.get_versions_start_with(ver)
+      versions = product.versions_start_with( ver )
       highest_version = Product.newest_version_from(versions)
       if highest_version
         dependency.version_requested = highest_version.version
@@ -164,7 +163,7 @@ class PackageParser < CommonParser
       version_splitted = version.split(" - ")
       start = version_splitted[0]
       stop = version_splitted[1]
-      version_range = product.get_version_range(start, stop)
+      version_range = product.version_range(start, stop)
       highest_version = Product.newest_version_from( version_range )
       if highest_version
         dependency.version_requested = highest_version.version

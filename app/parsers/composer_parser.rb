@@ -50,16 +50,13 @@ class ComposerParser < CommonParser
     product = self.product_by_key key
     dependency.prod_key = product.prod_key if product
 
-    parse_requested_version(value, dependency, product)
+    parse_requested_version( value, dependency, product )
     if product.nil?   
       dep_in_ext_repo = dependency_in_repositories?( dependency, data )
       project.unknown_number += 1 if !dep_in_ext_repo
     end 
     
-    dependency.update_outdated
-    if dependency.outdated?
-      project.out_number += 1
-    end
+    project.out_number += 1 if dependency.outdated?
     project.dependencies << dependency
   end
 
@@ -93,14 +90,9 @@ class ComposerParser < CommonParser
     version = version.gsub("'", "")
 
     dependency.version_label = String.new(version)
-
-    if version.match(/@.*$/)
-      spliti = version.split("@")
-      dependency.stability = spliti[1]
-    else 
-      dependency.stability = Projectdependency::A_STABILITY_STABLE
-    end
-    Naturalsorter::Sorter.replace_minimum_stability version
+    
+    process_stability_flag version, dependency
+        
     if version.empty? && !product.nil?
       update_requested_with_current(dependency, product)
       return 
@@ -118,23 +110,23 @@ class ComposerParser < CommonParser
         verso.gsub!(" ", "")
         if verso.match(/^>=/)
           verso.gsub!(">=", "")  
-          new_range = prod.get_greater_than_or_equal( verso, true )
+          new_range = prod.greater_than_or_equal( verso, true )
           prod.versions = new_range
         elsif verso.match(/^>/)
           verso.gsub!(">", "")
-          new_range = prod.get_greater_than( verso, true )
+          new_range = prod.greater_than( verso, true )
           prod.versions = new_range
         elsif verso.match(/^<=/)
           verso.gsub!("<=", "")
-          new_range = prod.get_smaller_than_or_equal( verso, true )
+          new_range = prod.smaller_than_or_equal( verso, true )
           prod.versions = new_range
         elsif verso.match(/^</)
           verso.gsub!("<", "")
-          new_range = prod.get_smaller_than( verso, true )
+          new_range = prod.smaller_than( verso, true )
           prod.versions = new_range
         elsif verso.match(/^!=/)
           verso.gsub!("!=", "")
-          new_range = prod.get_newest_but_not(verso, true)
+          new_range = prod.newest_but_not(verso, true)
           prod.versions = new_range
         end
       end
@@ -150,8 +142,6 @@ class ComposerParser < CommonParser
       # WildCards. 1.0.* => 1.0.0 | 1.0.2 | 1.0.20
       ver = version.gsub("*", "")
       ver = ver.gsub(" ", "")
-      # versions = product.get_versions_start_with(ver)
-      # highest_version = Product.newest_version_from(versions)
       highest_version = product.newest_version_from_wildcard( ver, dependency.stability )
       if highest_version
         dependency.version_requested = highest_version
@@ -170,7 +160,7 @@ class ComposerParser < CommonParser
       # Greater than or equal to
       version.gsub!(">=", "")
       version.gsub!(" ", "")
-      greater_than_or_equal = product.get_greater_than_or_equal(version)
+      greater_than_or_equal = product.greater_than_or_equal(version)
       dependency.version_requested = greater_than_or_equal.version
       dependency.comperator = ">="
     
@@ -178,7 +168,7 @@ class ComposerParser < CommonParser
       # Greater than version
       version.gsub!(">", "")
       version.gsub!(" ", "")
-      greater_than = product.get_greater_than(version)
+      greater_than = product.greater_than(version)
       dependency.version_requested = greater_than.version
       dependency.comperator = ">"
     
@@ -186,7 +176,7 @@ class ComposerParser < CommonParser
       # Less than or equal to
       version.gsub!("<=", "")
       version.gsub!(" ", "")
-      smaller_or_equal = product.get_smaller_than_or_equal(version)
+      smaller_or_equal = product.smaller_than_or_equal(version)
       dependency.version_requested = smaller_or_equal.version
       dependency.comperator = "<="
     
@@ -194,7 +184,7 @@ class ComposerParser < CommonParser
       # Less than version
       version.gsub!("\<", "")
       version.gsub!(" ", "")
-      smaller_than = product.get_smaller_than(version)
+      smaller_than = product.smaller_than(version)
       dependency.version_requested = smaller_than.version
       dependency.comperator = "<"
     
@@ -202,7 +192,7 @@ class ComposerParser < CommonParser
       # Not equal to version
       version.gsub!("!=", "")
       version.gsub!(" ", "")
-      newest_but_not = product.get_newest_but_not(version)
+      newest_but_not = product.newest_but_not(version)
       dependency.version_requested = newest_but_not.version
       dependency.comperator = "!="
     

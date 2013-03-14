@@ -204,7 +204,7 @@ class User::ProjectsController < ApplicationController
       project_name = project_url.split("/").last
       project = create_project( project_url, project_name )
       project.source = Project::A_SOURCE_URL
-      store_project(project)
+      store_project project
       project
     end
 
