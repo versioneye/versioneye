@@ -12,6 +12,23 @@ class ProductMigration
     end
   end
 
+  def self.count_versions(lang)
+    versions_count = 0 
+    count = Product.where(language: lang).count()
+    p "language: #{lang}, count: #{count}"
+    pack = 100
+    max = count / pack     
+    (0..max).each do |i|
+      skip = i * pack
+      products = Product.where(language: "Java").skip(skip).limit(pack)
+      products.each do |product|
+        versions_count = versions_count + product.versions.count
+        p "#{versions_count}"
+      end
+    end
+    versions_count
+  end
+
   def self.correct_namespace
     products = Product.where(:prod_type => "Packagist" )
     products.each do |product|
