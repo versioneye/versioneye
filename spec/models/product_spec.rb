@@ -258,7 +258,7 @@ describe Product do
     
   end
   
-  describe "get_newest_version_by_natural_order" do 
+  describe "newest_version_number" do 
     
     it "returns the newest version correct." do
       @product.versions = Array.new
@@ -269,7 +269,7 @@ describe Product do
         ver += 1
         @product.versions.push(version)
       }
-      version = @product.get_newest_version_by_natural_order
+      version = @product.newest_version_number
       version.should eql("5")
     end
     
@@ -282,7 +282,7 @@ describe Product do
         ver += 1
         @product.versions.push(version)
       }
-      version = @product.get_newest_version_by_natural_order
+      version = @product.newest_version_number
       version.should eql("1.5")
     end
     
@@ -301,7 +301,7 @@ describe Product do
       version3.version = "1.3"
       @product.versions.push(version3)
       
-      version = @product.get_newest_version_by_natural_order
+      version = @product.newest_version_number
       version.should eql("1.3")
     end
     
@@ -320,7 +320,7 @@ describe Product do
       version3.version = "1.30"
       @product.versions.push(version3)
       
-      version = @product.get_newest_version_by_natural_order
+      version = @product.newest_version_number
       version.should eql("1.229")
     end
     
@@ -473,6 +473,10 @@ describe Product do
       @product.versions.push(version3)
       @product.versions.push(version4)
       results = @product.get_versions_start_with("1")
+      results.size.should eql(3)
+      results.first.version.should eql(version.version)
+      results.last.version.should eql(version3.version)
+      results = @product.get_versions_start_with("1.")
       results.size.should eql(3)
       results.first.version.should eql(version.version)
       results.last.version.should eql(version3.version)

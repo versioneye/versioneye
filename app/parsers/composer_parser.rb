@@ -85,7 +85,7 @@ class ComposerParser < CommonParser
   #
   def parse_requested_version(version, dependency, product)
     if (version.nil? || version.empty?) && !product.nil?
-      self.update_requested_with_current(dependency, product)
+      update_requested_with_current(dependency, product)
       return 
     end
     version = version.strip
@@ -94,9 +94,15 @@ class ComposerParser < CommonParser
 
     dependency.version_label = String.new(version)
 
+    if version.match(/@.*$/)
+      spliti = version.split("@")
+      dependency.stability = spliti[1]
+    else 
+      dependency.stability = Projectdependency::A_STABILITY_STABLE
+    end
     Naturalsorter::Sorter.replace_minimum_stability version
     if version.empty? && !product.nil?
-      self.update_requested_with_current(dependency, product)
+      update_requested_with_current(dependency, product)
       return 
     end
     
@@ -144,10 +150,11 @@ class ComposerParser < CommonParser
       # WildCards. 1.0.* => 1.0.0 | 1.0.2 | 1.0.20
       ver = version.gsub("*", "")
       ver = ver.gsub(" ", "")
-      versions = product.get_versions_start_with(ver)
-      highest_version = Product.get_newest_version_by_natural_order(versions)
+      # versions = product.get_versions_start_with(ver)
+      # highest_version = Product.get_newest_version_by_natural_order(versions)
+      highest_version = product.newest_version_from_wildcard( ver, dependency.stability )
       if highest_version
-        dependency.version_requested = highest_version.version
+        dependency.version_requested = highest_version
       else 
         dependency.version_requested = version
       end
@@ -155,7 +162,7 @@ class ComposerParser < CommonParser
 
     elsif version.empty? || version.match(/^\*$/)
       # This case is not allowed. But we handle it anyway. Because we are fucking awesome!
-      dependency.version_requested = product.version
+      dependency.version_requested = product.newest_version( dependency.stability )
       dependency.version_label = "*"
       dependency.comperator = "="
     
@@ -229,6 +236,18 @@ class ComposerParser < CommonParser
   end
 
   private 
+
+    # This method exist in CommonParser, too! 
+    # This is just a copy with a different implementation for Composer! 
+    #
+    def update_requested_with_current( dependency, product )
+      if product && product.version
+        dependency.version_requested = product.newest_version( dependency.stability )
+      else
+        dependency.version_requested = "UNKNOWN"
+      end
+      dependency
+    end
 
     def print_backtrace( e )
       p "#{e}"

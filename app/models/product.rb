@@ -191,27 +191,66 @@ class Product
 
   ########### VERSIONS START ########################
 
-  def get_natural_sorted_versions
-    Naturalsorter::Sorter.sort_version_by_method_desc(versions, "version")
+  def sorted_versions
+    Naturalsorter::Sorter.sort_version_by_method_desc( versions, "version" )
   end
 
-  def get_date_sorted_versions
-    versions.sort! { |a,b| b.released_at <=> a.released_at }
-  end
-
-  def get_newest_version_by_natural_order
-    versions = get_natural_sorted_versions
+  def newest_version_number
+    versions = sorted_versions
     versions.first.version
   end
 
+  # TODO rename it to newest_version_from(versions, stability)
   def self.get_newest_version_by_natural_order(versions)
-    if !versions || versions.empty?
-      return nil
-    end
+    return nil if !versions || versions.empty?
     ordered_versions = Naturalsorter::Sorter.sort_version_by_method_desc(versions, "version")
     ordered_versions.first
   end
 
+  # This is for minimum-stability in PHP composer projects
+  # https://igor.io/2013/02/07/composer-stability-flags.html
+  # 
+  def newest_version( stability = "stable" )
+    versions = self.sorted_versions
+    return nil if versions.nil? || versions.empty? 
+    versions.each do |version|
+      if stability.casecmp(Projectdependency::A_STABILITY_STABLE) == 0
+        if ReleaseRecognizer.stable?(version.version)
+          return version.version 
+        end
+      elsif stability.casecmp(Projectdependency::A_STABILITY_RC) == 0
+        if ReleaseRecognizer.stable?(version.version) || 
+           ReleaseRecognizer.rc?(version.version)
+          return version.version 
+        end
+      elsif stability.casecmp(Projectdependency::A_STABILITY_BETA) == 0
+        if ReleaseRecognizer.stable?(version.version) || 
+           ReleaseRecognizer.rc?(version.version) ||
+           ReleaseRecognizer.beta?(version.version)
+          return version.version 
+        end
+      elsif stability.casecmp(Projectdependency::A_STABILITY_ALPHA) == 0 
+        if ReleaseRecognizer.stable?(version.version) || 
+           ReleaseRecognizer.rc?(version.version) ||
+           ReleaseRecognizer.beta?(version.version) || 
+           ReleaseRecognizer.alpha?(version.version)
+          return version.version 
+        end
+      else 
+        return version.version 
+      end
+    end
+    return nil
+  end
+
+  def newest_version_from_wildcard( version_start, stability = "stable" )
+    versions = get_versions_start_with(version_start)
+    product = Product.new 
+    product.versions = versions
+    return product.newest_version stability
+  end
+
+  # TODO rename to version_by_number
   def get_version(searched_version)
     versions.each do |version|
       return version if version.version.eql?(searched_version)
@@ -219,6 +258,7 @@ class Product
     nil
   end 
 
+  # TODO rename to version_by_uid
   def get_version_by_uid(uid)
     versions.each do |version|
       return version if version.uid.eql?(uid)
@@ -226,6 +266,7 @@ class Product
     return nil
   end
 
+  # TODO rename to version_approximately_greater_than(value, stability)
   def self.get_approximately_greater_than_starter(value)
     if value.match(/\.0$/)
       new_end = value.length - 2
@@ -235,6 +276,7 @@ class Product
     end
   end
 
+  # TODO rename to version_tilde_newest(value, stabilitz)
   def get_tilde_newest(value)
     new_st = "#{value}"
     if value.match(/./)
@@ -255,6 +297,7 @@ class Product
     Product.get_newest_version_by_natural_order(versions)
   end
 
+  # TODO rename to version_range(start, stop, stability)
   def get_version_range(start, stop)
     # get all versions from range ( >=start <=stop )
     range = Array.new 
@@ -268,6 +311,7 @@ class Product
     range
   end
 
+  # TODO rename to versions_start_with(val)
   def get_versions_start_with(val)
     result = Array.new
     versions.each do |version|
@@ -278,6 +322,7 @@ class Product
     result
   end
 
+  # TODO rename to newest_but_not(value, range, stability)
   def get_newest_but_not(value, range=false)
     filtered_versions = Array.new
     versions.each do |version|
@@ -290,6 +335,7 @@ class Product
     return get_newest_or_value(newest, value)
   end
 
+  # TODO rename to greater_than(value, range, stability)
   def get_greater_than(value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
@@ -302,6 +348,7 @@ class Product
     return get_newest_or_value(newest, value)
   end
 
+  # TODO rename to greater_than_or_equal(value, range, stability)
   def get_greater_than_or_equal(value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
@@ -314,6 +361,7 @@ class Product
     return get_newest_or_value(newest, value)
   end
 
+  # TODO rename to smaller_than(value, range, stability)
   def get_smaller_than(value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
@@ -326,6 +374,7 @@ class Product
     return get_newest_or_value(newest, value)
   end
 
+  # TODO rename to smaller_than_or_equal(value, range, stability)
   def get_smaller_than_or_equal(value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
@@ -343,7 +392,7 @@ class Product
   end
 
   def wouldbenewest?(version)
-    current = get_newest_version_by_natural_order
+    current = newest_version_number()
     return false if current.eql? version
     newest = Naturalsorter::Sorter.get_newest_version(current, version) 
     return true if version.eql? newest
@@ -359,7 +408,7 @@ class Product
       return 
     end
     
-    versions = get_natural_sorted_versions
+    versions = sorted_versions
     version = versions.first
     
     if version.mistake == true 
@@ -378,24 +427,6 @@ class Product
     e.backtrace.each do |message|
       p "#{message}"
     end
-  end
-
-  # TODO MOVE TO MIGRATION
-  def self.count_versions(lang)
-    versions_count = 0 
-    count = Product.where(language: lang).count()
-    p "language: #{lang}, count: #{count}"
-    pack = 100
-    max = count / pack     
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.where(language: "Java").skip(skip).limit(pack)
-      products.each do |product|
-        versions_count = versions_count + product.versions.count
-        p "#{versions_count}"
-      end
-    end
-    versions_count
   end
 
   def versions_with_rleased_date
