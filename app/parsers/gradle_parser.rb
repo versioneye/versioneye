@@ -40,7 +40,8 @@ class GradleParser < CommonParser
         :comperator => "="  
       })
 
-      process_stability_flag version, dependency
+      dependency.stability = VersionTagRecognizer.stability_tag_for version 
+      VersionTagRecognizer.remove_minimum_stability version
       
       product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
       if product

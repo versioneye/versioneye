@@ -52,7 +52,8 @@ class PomParser < CommonParser
       dependency.scope = "compile"
     end
 
-    process_stability_flag dependency.version_requested, dependency
+    dependency.stability = VersionTagRecognizer.stability_tag_for dependency.version_requested
+    VersionTagRecognizer.remove_minimum_stability dependency.version_requested
     
     product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
     if product

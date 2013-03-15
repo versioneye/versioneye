@@ -1,15 +1,5 @@
 class Projectdependency
 
-  # Minimum stability for PHP composer
-  # https://igor.io/2013/02/07/composer-stability-flags.html
-  # 
-  A_STABILITY_STABLE = "stable"
-  A_STABILITY_RC = "RC"
-  A_STABILITY_BETA = "beta"
-  A_STABILITY_ALPHA = "alpha"
-  A_STABILITY_DEV = "dev"
-  A_STABILITY_PRE = "pre"
-
   include Mongoid::Document
   include Mongoid::Timestamps
 
@@ -26,7 +16,7 @@ class Projectdependency
   field :comperator, type: String, :default => "="
   field :scope, type: String, :default => "compile"
   field :release, type: Boolean
-  field :stability, type: String, :default => A_STABILITY_STABLE
+  field :stability, type: String, :default => VersionTagRecognizer::A_STABILITY_STABLE
   
   field :prod_key, type: String
   field :prod_type, type: String
@@ -83,7 +73,7 @@ class Projectdependency
     end
     
     self.outdated = true
-    self.release = ReleaseRecognizer.release? self.version_current
+    self.release = VersionTagRecognizer.release? self.version_current
     return true
   end
 

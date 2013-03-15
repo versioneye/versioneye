@@ -199,41 +199,11 @@ class Product
     versions = self.sorted_versions
     return nil if versions.nil? || versions.empty? 
     versions.each do |version|
-      if Product.does_it_fit_stability version.version, stability
+      if VersionTagRecognizer.does_it_fit_stability? version.version, stability
         return version 
       end
     end
     return nil
-  end
-
-  def self.does_it_fit_stability( version_number, stability )
-    if stability.casecmp(Projectdependency::A_STABILITY_STABLE) == 0
-      if ReleaseRecognizer.stable?( version_number )
-        return true 
-      end
-    elsif stability.casecmp(Projectdependency::A_STABILITY_RC) == 0
-      if ReleaseRecognizer.stable?( version_number ) || 
-         ReleaseRecognizer.rc?( version_number )
-        return true 
-      end
-    elsif stability.casecmp(Projectdependency::A_STABILITY_BETA) == 0
-      if ReleaseRecognizer.stable?( version_number ) || 
-         ReleaseRecognizer.rc?( version_number ) ||
-         ReleaseRecognizer.beta?( version_number )
-        return true 
-      end
-    elsif stability.casecmp(Projectdependency::A_STABILITY_ALPHA) == 0 
-      if ReleaseRecognizer.stable?( version_number ) || 
-         ReleaseRecognizer.rc?( version_number ) ||
-         ReleaseRecognizer.beta?( version_number ) || 
-         ReleaseRecognizer.alpha?( version_number )
-        return true 
-      end
-    elsif stability.casecmp(Projectdependency::A_STABILITY_DEV) == 0 
-      return true 
-    else  
-      return false 
-    end
   end
 
   def newest_version_number( stability = "stable" )

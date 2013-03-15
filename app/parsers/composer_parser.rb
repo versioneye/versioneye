@@ -91,7 +91,8 @@ class ComposerParser < CommonParser
 
     dependency.version_label = String.new(version)
     
-    process_stability_flag version, dependency
+    dependency.stability = VersionTagRecognizer.stability_tag_for version 
+    VersionTagRecognizer.remove_minimum_stability version
         
     if version.empty? && !product.nil?
       update_requested_with_current(dependency, product)
