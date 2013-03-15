@@ -448,6 +448,10 @@ class User
     self.fullname = "Deleted"
     self.save
   end
+
+  def projects 
+    Project.all(conditions: { user_id: self._id.to_s } ).desc(:private_project).asc(:name)
+  end
     
   private
 
