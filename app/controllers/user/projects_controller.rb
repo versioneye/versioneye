@@ -90,7 +90,7 @@ class User::ProjectsController < ApplicationController
   def reparse
     id = params[:id]
     @project = Project.find_by_id(id)
-    Project.process_project( @project )
+    ProjectService.process_project( @project )
     flash[:info] = "Project re parse is done."
     redirect_to user_project_path(@project)
   end
