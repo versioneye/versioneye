@@ -46,6 +46,7 @@ module VersionEye
       project.make_project_key!      
       project.s3_filename = filename
       project.source = Project::A_SOURCE_UPLOAD
+      project.api_created = true  
       project 
     end
 
