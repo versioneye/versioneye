@@ -66,7 +66,7 @@ module VersionEye
         datafile = ActionDispatch::Http::UploadedFile.new(params[:upload])
         project_file = {'datafile' => datafile}
 
-        @project = upload_and_store(project_file)
+        @project = upload_and_store( project_file )
         if @project.nil?
           error! "Cant save uploaded file. Probably our fileserver got cold.", 500
         end

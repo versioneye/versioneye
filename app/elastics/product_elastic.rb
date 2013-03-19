@@ -131,7 +131,7 @@ class ProductElastic
           must {string name, default_operator: "AND" }           
         end 
       end
-      #filter result by hand
+      # filter result by hand
       result = []
       response.results.each do |item|        
         if item.name.eql? name then

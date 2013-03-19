@@ -19,6 +19,10 @@ class Notification
     User.find_by_id( self.user_id )
   end
 
+  def product 
+    Product.find(self.product_id)
+  end
+
   def self.disable_all_for_user(user_id)
     notifications = Notification.all( conditions: {user_id: user_id} )
     if !notifications.nil? && !notifications.empty?
