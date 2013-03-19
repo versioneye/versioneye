@@ -522,12 +522,14 @@ class Product
     Product.skip(rand( size )).first 
   end
   
+  # TODO rename to http_links
   def get_links
-    Versionlink.all(conditions: { prod_key: self.prod_key, version_id: nil}).asc(:name)
+    Versionlink.all(conditions: { prod_key: self.prod_key, version_id: nil, link: /^http*/}).asc(:name)
   end
   
+  # TODO rename to http_version_links
   def get_version_links()
-    Versionlink.all(conditions: { prod_key: self.prod_key, version_id: self.version}).asc(:name)
+    Versionlink.all(conditions: { prod_key: self.prod_key, version_id: self.version, link: /^http*/ }).asc(:name)
   end
   
   def self.get_hotest( count )

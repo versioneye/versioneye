@@ -18,6 +18,10 @@ class Versionlink
     }
   end
 
+  def product
+    Product.find_by_key(self.prod_key)
+  end
+
   def self.find_by(prod_key, link)
     Versionlink.where( prod_key: prod_key, link: link )[0]
   end
@@ -28,8 +32,11 @@ class Versionlink
 
   def self.create_versionlink prod_key, version_number, link, name
     return nil if link.nil? || link.empty? 
-    versionlink = Versionlink.find_version_link(prod_key, version_number, link)
-    return nil if versionlink
+    versionlinks = Versionlink.find_version_link(prod_key, version_number, link)
+    if versionlinks && !versionlinks.empty?  
+      p "-- link exist already : #{prod_key} - #{version_number} - #{link} - #{name}"
+      return nil 
+    end
       
     versionlink = Versionlink.new
     versionlink.name = name

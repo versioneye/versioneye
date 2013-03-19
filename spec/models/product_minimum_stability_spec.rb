@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+# https://igor.io/2013/02/07/composer-stability-flags.html
+#
 describe Product do
   
   describe "newest_version_number" do
