@@ -61,9 +61,10 @@ class Notification
   
   def self.send_notifications_for_user(user)    
     notifications = Notification.all( conditions: {sent_email: "false", user_id: user.id.to_s} )
+
     if !notifications.nil? && !notifications.empty?
-      notifications.sort! { |a,b| a.product_id <=> b.product_id }
-      NotificationMailer.new_version_email(user, notifications).deliver
+     notifications.sort_by {|notice| [notice.product.language]}
+     NotificationMailer.new_version_email(user, notifications).deliver
       p "send notifications for user #{user.fullname} start"
       return true
     end
