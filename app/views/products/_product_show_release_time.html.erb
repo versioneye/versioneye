@@ -16,3 +16,8 @@
     <%= render "/products/product_show_detected" %>
   <% end %>
 </div>
+<% if @used_by %>
+  <div class="well default release_box" >
+    <span style="font-weight:bold; font-size: 20px;"><%= @used_by %></span> other Packages are referencing this Package.
+  </div>
+<% end %> 

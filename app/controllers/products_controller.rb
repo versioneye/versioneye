@@ -62,13 +62,18 @@ class ProductsController < ApplicationController
     end
     
     @following = is_following?(current_user, @product)
-    
+
     attach_version( @product, params[:version] )
     @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
     @version = @product.version_by_number @product.version
     @downloads = @version.versionarchive
     @productlook = Productlook.find_by_key(key)
     @main_dependencies = @product.dependencies(nil)
+
+    langs = [Product::A_LANGUAGE_RUBY, Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_PHP, Product::A_LANGUAGE_NODEJS]
+    if langs.include? @product.language
+      @used_by = Dependency.where(:dep_prod_key => key).count
+    end
 
     user_ids = Follower.find_followers_for_product( @product.id )
     @users = User.find_by_ids(user_ids)
