@@ -40,7 +40,7 @@ module VersionEye
       end
       get '/:project_key' do
         authorized?
-        proj_key = params[:project_key]
+        project_key = params[:project_key]
         project = fetch_project_by_key_and_user(project_key, current_user)
         if project.nil?
           error! "Project `#{params[:project_key]}` dont exists", 400
