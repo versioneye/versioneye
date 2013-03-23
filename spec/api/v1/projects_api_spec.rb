@@ -56,7 +56,7 @@ describe VersionEye::ProjectsApi do
 
     it "returns 201 and project info, when upload was successfully" do
       post @project_uri, {
-        upload: @test_file, 
+        upload: @test_file,
         api_key: @user_api.api_key, 
         send_file: true,
         multipart: true
