@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate, :only => [:edit, :update, :destroy, :index]
-  before_filter :correct_user, :only => [:edit, :update]
+  #noinspection RailsParamDefResolve
+  before_filter :authenticate, :only => [:update, :destroy, :index]
+  before_filter :correct_user, :only => [:update]
   before_filter :admin_user,   :only => [:destroy, :index]
   before_filter :set_locale
 
