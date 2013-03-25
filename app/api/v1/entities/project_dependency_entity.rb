@@ -14,6 +14,7 @@ module VersionEye
 
       expose :comperator, :as => :comparator
       expose :outdated
+      expose :release, :as => :stable 
     end
 
   end
