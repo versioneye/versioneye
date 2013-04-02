@@ -67,76 +67,87 @@
         
         <% if current_user?(@project.user) %>
 
-        <div style="font-size: 16px; margin-bottom: 0px;">
-          <div class="row">
-            <div class="span2" style="width: 100px;" >
-              <form action="<%= reparse_user_project_path(@project) %>" method="post" style="padding-top: 5px;">
-                <button class="btn btn-success btn-mini">Re Parse Now</button>
-              </form>
-            </div>
-            <div class="span2" style="width: 120px;" >
-              <form action="<%= user_project_path(@project) %>" method="post" style="padding-top: 5px;">
-                <input name="_method" type="hidden" value="delete" />
-                <button class="btn btn-danger btn-mini" onClick="return confirmAction()" >Delete this project</button>
-              </form>
-            </div>
-            <% if @project.source.eql?( Project::A_SOURCE_UPLOAD ) %>
-              <div class="span2" style="width: 150px;" >
-                <button style="margin-top: 5px;" class="btn btn-mini" onClick="document.getElementById('reupload_form').style.display='block'" >ReUpload</button>
+          <div style="font-size: 16px; margin-bottom: 0px;">
+            <div class="row">
+              <div class="span2" style="width: 100px;" >
+                <form action="<%= reparse_user_project_path(@project) %>" method="post" style="padding-top: 5px;">
+                  <button class="btn btn-success btn-mini">Re Parse Now</button>
+                </form>
               </div>
-            <% end %>
-          </div>
-        </div>
-        <% if @project.source.eql?( Project::A_SOURCE_UPLOAD ) %>
-          <div id="reupload_form" style="display: none;" >
-            <%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
-              <input name="project_id" id="project_id" type="hidden" value="<%= @project._id.to_s %>" />
-              <%= file_field 'upload', 'datafile', :class => "round" %>   
-              <button type="submit" class="btn2 btn2-large">Upload</button>
-              <button class="btn2 btn2-large" onClick="document.getElementById('reupload_form').style.display='none'; return false;">Hide</button>
-            <% end %>
-          </div>
-        <% end %>
-
-        <hr/>
-        
-        <form action="<%= save_period_user_project_path(@project) %>" method="post" class="form-horizontal" >
-          <div class="control-group">
-            <label class="control-label" style="width: 200px;" >Monitor it</label>  
-            <div class="controls" style="margin-left: 210px;">
-              <select name="period" style="width: 150px; margin: 0px;" >
-                <option value="daily"  <%= "selected" if @project.period == 'daily'  %> >Daily</option>
-                <option value="weekly" <%= "selected" if @project.period == 'weekly' %> >Weekly</option>
-              </select> <button type="submit" class="btn2 btn2-large" >Save</button>
+              <div class="span2" style="width: 120px;" >
+                <form action="<%= user_project_path(@project) %>" method="post" style="padding-top: 5px;">
+                  <input name="_method" type="hidden" value="delete" />
+                  <button class="btn btn-danger btn-mini" onClick="return confirmAction()" >Delete this project</button>
+                </form>
+              </div>
+              <% if @project.source.eql?( Project::A_SOURCE_UPLOAD ) %>
+                <div class="span2" style="width: 150px;" >
+                  <button style="margin-top: 5px;" class="btn btn-mini" onClick="document.getElementById('reupload_form').style.display='block'" >ReUpload</button>
+                </div>
+              <% end %>
             </div>
           </div>
-        </form>
-
-        <form action="<%= save_email_user_project_path(@project) %>" method="post" class="form-horizontal" >
-          <div class="control-group">
-            <label class="control-label" style="width: 200px;" >Send notifications to</label>   
-            <div class="controls" style="margin-left: 210px;">
-              <select name="email" style="width: 150px; margin: 0px;" >
-                <option value="<%= current_user.email %>"  <%= "selected" if @project.email == current_user.email %> ><%= current_user.email %></option>
-                <% current_user.emails_verified.each do |user_email| %> 
-                  <option value="<%= user_email.email %>" <%= "selected" if @project.email == user_email.email %> ><%= user_email.email %></option> 
-                <% end %>
-              </select> <button type="submit" class="btn2 btn2-large" >Save</button> <button type="button" onclick="window.location.href='/settings/emails'" class="btn btn-success" >Add E-Mail</button>
+          <% if @project.source.eql?( Project::A_SOURCE_UPLOAD ) %>
+            <div id="reupload_form" style="display: none;" >
+              <%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
+                <input name="project_id" id="project_id" type="hidden" value="<%= @project._id.to_s %>" />
+                <%= file_field 'upload', 'datafile', :class => "round" %>   
+                <button type="submit" class="btn2 btn2-large">Upload</button>
+                <button class="btn2 btn2-large" onClick="document.getElementById('reupload_form').style.display='none'; return false;">Hide</button>
+              <% end %>
             </div>
-          </div>
-        </form>
+          <% end %>
 
-        <form action="<%= save_visibility_user_project_path(@project) %>" method="post" class="form-horizontal" >
-          <div class="control-group">
-            <label class="control-label" style="width: 200px;" >This Project is</label>  
-            <div class="controls" style="margin-left: 210px;">
-              <select name="visibility" style="width: 150px; margin: 0px;" >
-                <option value="private"  <%= "selected" if @project.public == false %> >Private</option>
-                <option value="public"   <%= "selected" if @project.public == true  %> >Public</option>
-              </select> <button type="submit" class="btn2 btn2-large" >Save</button>
-            </div>
+          <div >
+            <a id="show_settings_links" 
+               href="JavaScript: document.getElementById('settings_area').style.display = 'block'; 
+                                 document.getElementById('show_settings_links').style.display = 'none';
+                                 document.getElementById('hide_settings_links').style.display = 'block'; " >Show Settings</a>
+            <a id="hide_settings_links" style="display: none;" 
+               href="JavaScript: document.getElementById('settings_area').style.display = 'none'; 
+                                 document.getElementById('show_settings_links').style.display = 'block';
+                                 document.getElementById('hide_settings_links').style.display = 'none';" >Hide Settings</a>
           </div>
-        </form>
+          
+          <div style="display: none" id="settings_area">
+            <form action="<%= save_period_user_project_path(@project) %>" method="post" class="form-horizontal" >
+              <div class="control-group">
+                <label class="control-label" style="width: 200px;" >Monitor it</label>  
+                <div class="controls" style="margin-left: 210px;">
+                  <select name="period" style="width: 150px; margin: 0px;" >
+                    <option value="daily"  <%= "selected" if @project.period == 'daily'  %> >Daily</option>
+                    <option value="weekly" <%= "selected" if @project.period == 'weekly' %> >Weekly</option>
+                  </select> <button type="submit" class="btn2 btn2-large" >Save</button>
+                </div>
+              </div>
+            </form>
+
+            <form action="<%= save_email_user_project_path(@project) %>" method="post" class="form-horizontal" >
+              <div class="control-group">
+                <label class="control-label" style="width: 200px;" >Send notifications to</label>   
+                <div class="controls" style="margin-left: 210px;">
+                  <select name="email" style="width: 150px; margin: 0px;" >
+                    <option value="<%= current_user.email %>"  <%= "selected" if @project.email == current_user.email %> ><%= current_user.email %></option>
+                    <% current_user.emails_verified.each do |user_email| %> 
+                      <option value="<%= user_email.email %>" <%= "selected" if @project.email == user_email.email %> ><%= user_email.email %></option> 
+                    <% end %>
+                  </select> <button type="submit" class="btn2 btn2-large" >Save</button> <button type="button" onclick="window.location.href='/settings/emails'" class="btn btn-success" >Add E-Mail</button>
+                </div>
+              </div>
+            </form>
+
+            <form action="<%= save_visibility_user_project_path(@project) %>" method="post" class="form-horizontal" >
+              <div class="control-group">
+                <label class="control-label" style="width: 200px;" >This Project is</label>  
+                <div class="controls" style="margin-left: 210px;">
+                  <select name="visibility" style="width: 150px; margin: 0px;" >
+                    <option value="private"  <%= "selected" if @project.public == false %> >Private</option>
+                    <option value="public"   <%= "selected" if @project.public == true  %> >Public</option>
+                  </select> <button type="submit" class="btn2 btn2-large" >Save</button>
+                </div>
+              </div>
+            </form>
+          </div>
 
         <% end %>
 
