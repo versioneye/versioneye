@@ -3,6 +3,8 @@ class Plan
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  A_PLAN_FREE = "02_free"
+
   field :name_id, type: String
   field :name, type: String
   field :price, type: String
@@ -10,7 +12,7 @@ class Plan
 
   def self.create_default_plans
     free = Plan.new
-    free.name_id = "02_free"
+    free.name_id = A_PLAN_FREE
     free.name = "Free"
     free.price = "0"
     free.private_projects = 0
