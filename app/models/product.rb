@@ -357,27 +357,12 @@ class Product
 
   def update_version_data
     return nil if self.versions.nil? || self.versions.empty?
-
-    if self.versions.length < 2
-      self.version = self.versions.first.version 
-      self.save 
-      return 
-    end
-    
-    versions = sorted_versions
-    version = versions.first
-    
-    if version.mistake == true 
-      p " -- mistake #{self.name} with version #{version.version}"
-      return 
-    end
-    
-    return if version.version.eql?(self.version)
-      
-    self.version = version.version
-    self.version_link = version.link
+    newest_stable_version = self.newest_version
+    return nil if newest_stable_version.version.eql?(self.version)
+    self.version = newest_stable_version.version
+    self.version_link = newest_stable_version.link
     self.save
-    p " udpate #{self.name} with version #{self.version}"
+    # p " udpate #{self.name} with version #{self.version}"
   rescue => e
     p " -- ERROR -- something went wrong --- #{e}"
     e.backtrace.each do |message|
