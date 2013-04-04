@@ -1,4 +1,5 @@
 class NotificationFactory
+  
   def self.create_new(user = nil, save = true)
     user = UserFactory.create_new if user.nil?
     random_product = Product.random_product
