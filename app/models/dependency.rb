@@ -1,5 +1,10 @@
 class Dependency
 
+  #
+  # This Model describes the relationship between 2 products/packages 
+  # This Model describes 1 dependency of a package to another package
+  #
+
   include Mongoid::Document
   include Mongoid::Timestamps
 
@@ -29,6 +34,14 @@ class Dependency
     dependencies = Dependency.where(prod_key: prod_key, prod_version: prod_version, name: name, version: version, dep_prod_key: dep_prod_key)
     return nil if dependencies.nil? || dependencies.empty? 
     dependencies[0]
+  end
+
+  def product
+    Product.find_by_key( dep_prod_key )
+  end
+
+  def parent_product
+    Product.find_by_key( prod_key )
   end
 
   def version_for_label
