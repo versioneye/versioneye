@@ -67,8 +67,8 @@ class PackagistCrawler
     product.name = name
     product.name_downcase = name.downcase
     product.description = package['description']
-    product.prod_type = "Packagist"
-    product.language = "PHP"
+    product.prod_type = Project::A_TYPE_COMPOSER
+    product.language  = Product::A_LANGUAGE_PHP
     product.save
   end
 
@@ -147,7 +147,7 @@ class PackagistCrawler
       if dep.nil?
         dependency = Dependency.new({:name => require_name, :version => require_version, 
           :dep_prod_key => dep_prod_key, :prod_key => product.prod_key, 
-          :prod_version => version_number, :scope => scope, :prod_type => "Packagist", 
+          :prod_version => version_number, :scope => scope, :prod_type => Project::A_TYPE_COMPOSER, 
           :language => "PHP"})
         dependency.save
         p " -- create new dependency: #{dependency.prod_key}:#{dependency.prod_version} -> #{dependency.dep_prod_key}:#{dependency.version}"

@@ -3,10 +3,10 @@ class Project
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_TYPE_RUBYGEMS = "RubyGems" # TODO Check doublets with "RubyGem" withous "s" !!!
+  A_TYPE_RUBYGEMS = "RubyGem"
   A_TYPE_PIP      = "PIP"
   A_TYPE_NPM      = "npm"
-  A_TYPE_COMPOSER = "composer"
+  A_TYPE_COMPOSER = "composer" 
   A_TYPE_GRADLE   = "gradle"
   A_TYPE_MAVEN2   = "Maven2"
   A_TYPE_LEIN     = "Lein"

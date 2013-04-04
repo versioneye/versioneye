@@ -14,27 +14,27 @@
   		<div style="display: block; width: 50%; margin: auto;" >
   			<%= form_tag("/package/follow", :remote => true) do  %>
   				<label>Scope </label>
-  				<% if @product.prod_type.eql?("RubyGem") %> 
+  				<% if @product.prod_type.eql?( Project::A_TYPE_RUBYGEMS ) %> 
 						<select name="scope" style="width: 150px;" onchange="render_wheel(this.value)" >
 							<option value="all" selected >all</option>
 							<option value="runtime"  >runtime</option>
 		          <option value="test" >test</option>
 		          <option value="development" >development</option>
 		        </select>
-					<% elsif @product.prod_type.eql?("Maven2") %>
+					<% elsif @product.prod_type.eql?( Project::A_TYPE_MAVEN2 ) %>
 						<select name="scope" style="width: 150px;" onchange="render_wheel(this.value)" >
 							<option value="all" selected >all</option>
 							<option value="compile" >compile</option>
 		          <option value="test" >test</option>
 		          <option value="provided" >provided</option>
 		        </select>
-					<% elsif @product.prod_type.eql?("npm") %>
+					<% elsif @product.prod_type.eql?( Project::A_TYPE_NPM ) %>
 						<select name="scope" style="width: 150px;" onchange="render_wheel(this.value)" >
 							<option value="all" selected >all</option>
 							<option value="compile" >compile</option>
 		          <option value="development" >development</option>
 		        </select>
-					<% elsif @product.prod_type.eql?("Packagist") %>
+					<% elsif @product.prod_type.eql?(Project::A_TYPE_COMPOSER) %>
 						<select name="scope" style="width: 150px;" onchange="render_wheel(this.value)" >
 							<option value="all" selected >all</option>
 							<option value="require"  >require</option>

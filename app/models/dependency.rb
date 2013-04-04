@@ -18,8 +18,8 @@ class Dependency
   field :prod_key, type: String         # This dependency belongs to this prod_key
   field :prod_version, type: String     # This dependency belongs to this version of prod_key
 
-  field :prod_type, type: String, :default => "RubyGem"
-  field :language, type: String, :default => "Ruby"
+  field :prod_type, type: String,  :default => Project::A_TYPE_RUBYGEMS
+  field :language,  type: String,  :default => Product::A_LANGUAGE_RUBY 
 
 
   def self.find_by_key_and_version(prod_key, version)
@@ -44,8 +44,26 @@ class Dependency
     Product.find_by_key( prod_key )
   end
 
+  # TODO write tests for this
+  def outdated? 
+    product = self.product
+    return false  if product.nil? 
+    newest_product_version = product.newest_version_number()
+    parser = ParserStrategy.parser_for( self.prod_type, "" )
+    project_dependency = Projectdependency.new
+    parser.parse_requested_version(self.version, project_dependency, product)
+    newest_version = Naturalsorter::Sorter.sort_version([project_dependency.version_requested, newest_product_version]).last
+    if newest_version.eql?( project_dependency.version_requested )
+      return false   
+    end
+    true
+  rescue => e 
+    p "#{e}"
+    return false
+  end
+
   def version_for_label
-    return gem_version if prod_type.eql?("RubyGem")
+    return gem_version if prod_type.eql?( Project::A_TYPE_RUBYGEMS )
     return version
   end
 
@@ -59,9 +77,9 @@ class Dependency
   def version_parsed
     return "0" if version.nil?
     abs_version = String.new(version)
-    if prod_type.eql?("RubyGem")
+    if prod_type.eql?( Project::A_TYPE_RUBYGEMS )
       abs_version = String.new(gem_version_parsed)
-    elsif prod_type.eql?("Packagist")
+    elsif prod_type.eql?( Project::A_TYPE_COMPOSER )
       abs_version = String.new(packagist_version_parsed)
     end
     abs_version

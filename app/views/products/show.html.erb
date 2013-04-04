@@ -8,13 +8,13 @@
 
 	<% if @product.prod_type.eql? Project::A_TYPE_MAVEN2 %>
 		<%= render 'products/product_show_maven' %>
-	<% elsif @product.prod_type.eql? "RubyGem" %>
+	<% elsif @product.prod_type.eql? Project::A_TYPE_RUBYGEMS %>
 		<%= render 'products/product_show_gems' %>
 	<% elsif @product.prod_type.eql? Project::A_TYPE_PIP %>
 		<%= render 'products/product_show_pip' %>
 	<% elsif @product.prod_type.eql? Project::A_TYPE_NPM %>
 		<%= render 'products/product_show_npm' %>
-	<% elsif @product.prod_type.eql? "Packagist" %>
+	<% elsif @product.prod_type.eql? Project::A_TYPE_COMPOSER %>
 		<%= render 'products/product_show_packagist' %>
 	<% elsif @product.prod_type.eql? "R" %>
 		<%= render 'products/product_show_r' %>

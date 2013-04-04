@@ -29,20 +29,8 @@ class ProductMigration
     versions_count
   end
 
-  def self.correct_namespace
-    products = Product.where(:prod_type => "Packagist" )
-    products.each do |product|
-
-      product.name = product.prod_key.gsub("php/", "")
-      product.save
-
-      deps = Dependency.all(conditions: { prod_key: product.prod_key } )
-      deps.each do |dep|
-        dep.name = dep.dep_prod_key.gsub("php/", "")
-        dep.save
-      end
-
-    end
+  def self.migrate_packagist_to_composer
+    Product.where(:prod_type => "Packagist").update_all(:prod_type => Project::A_TYPE_COMPOSER)
   end
 
   def self.update_name_downcase_global

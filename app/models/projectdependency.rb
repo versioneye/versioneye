@@ -1,5 +1,10 @@
 class Projectdependency
 
+  #
+  # This Model describes the relationship between a project and a package
+  # This Model describes 1 dependency of a project
+  #
+
   include Mongoid::Document
   include Mongoid::Timestamps
 
@@ -19,11 +24,18 @@ class Projectdependency
   field :stability, type: String, :default => VersionTagRecognizer::A_STABILITY_STABLE
   
   field :prod_key, type: String
-  field :prod_type, type: String
   field :outdated, type: Boolean
   field :ext_link, type: String    # Link to external package. For example zip file on GitHub / Google Code. 
   
   
+  def project 
+    Project.find(self.project_id)
+  end
+
+  def product 
+    Product.find_by_key(self.prod_key)
+  end
+
   def find_or_init_product
     if !self.prod_key.nil?
       product = Product.find_by_key(prod_key)

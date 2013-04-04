@@ -122,6 +122,16 @@ h3 code {
   font-weight: normal;
 }
 
+.dependency_table .version_col{
+  width: 130px;
+}
+.dependency_table .name_col{
+  width: 270px;
+}
+.dependency_table th{
+  text-align: left;
+}
+
 
 /* Tweak navbar brand link to be super sleek
 -------------------------------------------------- */

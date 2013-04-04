@@ -21,13 +21,13 @@
 
 <div class="boxContainer" id="dependencies" itemprop="requirements" itemscope="" itemtype="http://schema.org/ItemList">
 	<meta name="name" content="Requirements" itemprop="name" />
-	<% if @product.prod_type.eql?(Project::A_TYPE_MAVEN2) %>
+	<% if @product.prod_type.eql?( Project::A_TYPE_MAVEN2 ) %>
 		<%= render "product_show_dependencies_maven2" %>
-	<% elsif @product.prod_type.eql?("RubyGem")  %>
+	<% elsif @product.prod_type.eql?( Project::A_TYPE_RUBYGEMS )  %>
 		<%= render "product_show_dependencies_rubygems" %>
-	<% elsif @product.prod_type.eql?(Project::A_TYPE_NPM)  %>
+	<% elsif @product.prod_type.eql?( Project::A_TYPE_NPM )  %>
 		<%= render "product_show_dependencies_npm" %>
-	<% elsif @product.prod_type.eql?("Packagist")  %>
+	<% elsif @product.prod_type.eql?(Project::A_TYPE_COMPOSER)  %>
 		<%= render "product_show_dependencies_packagist" %>
 	<% end %>
 </div>
