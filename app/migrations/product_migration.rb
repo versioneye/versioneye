@@ -97,7 +97,7 @@ class ProductMigration
 
   def self.remove_bad_links(lang)
     Product.where(language: lang).each do |product|
-      product.get_links.each do |link|
+      product.http_links.each do |link|
         if link.link.match(/^http.*/).nil?
           p "remove #{link.link}"
           link.remove

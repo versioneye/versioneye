@@ -1,5 +1,5 @@
-<% links = @product.get_links %>
-<% version_links = @product.get_version_links %>
+<% links = @product.http_links %>
+<% version_links = @product.http_version_links %>
 <% count = links.count + version_links.count %>
 <div class="box header">
 	<h5>

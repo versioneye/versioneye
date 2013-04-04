@@ -122,7 +122,7 @@
 		<% end %>
 		<br/>
 		<br/>
-		<% version_links = @product.get_links %>
+		<% version_links = @product.http_links %>
 		<% if !version_links.empty? %>
 			<table>
 				<colgroup>

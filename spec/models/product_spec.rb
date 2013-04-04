@@ -347,10 +347,10 @@ describe Product do
 
   end
   
-  describe "get_links" do
+  describe "http_links" do
     
     it "returns an empty array" do
-      @product.get_links.size.should eq(0)
+      @product.http_links.size.should eq(0)
     end
 
     it "returns one link" do
@@ -359,7 +359,7 @@ describe Product do
       link.link = "http://link.de"
       link.name = "Name"
       link.save
-      @product.get_links.size.should eq(1)
+      @product.http_links.size.should eq(1)
       link.remove
     end
 
@@ -370,7 +370,7 @@ describe Product do
       link.version_id = "nope"
       link.name = "Name"
       link.save
-      @product.get_links.size.should eq(0)
+      @product.http_links.size.should eq(0)
       link.remove
     end
 
@@ -382,7 +382,7 @@ describe Product do
       link.name = "Name"
       link.save
       @product.version = "1.1"
-      @product.get_version_links.size.should eq(1)
+      @product.http_version_links.size.should eq(1)
       link.remove
     end
     

@@ -531,13 +531,11 @@ class Product
     Product.skip(rand( size )).first 
   end
   
-  # TODO rename to http_links
-  def get_links
+  def http_links
     Versionlink.all(conditions: { prod_key: self.prod_key, version_id: nil, link: /^http*/}).asc(:name)
   end
   
-  # TODO rename to http_version_links
-  def get_version_links()
+  def http_version_links
     Versionlink.all(conditions: { prod_key: self.prod_key, version_id: self.version, link: /^http*/ }).asc(:name)
   end
   
