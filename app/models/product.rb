@@ -447,6 +447,15 @@ class Product
     Dependency.find_by_key_and_version(prod_key, version)
   end
 
+  def dependencies_outdated?(scope = nil )
+    deps = self.dependencies(scope)
+    deps.each do |dep| 
+      newest_version = dep.product.newest_version()
+      return true if !newest_version.version.eql? dep.version
+    end
+    return false
+  end
+
   def dependency_circle(scope)
     if scope == nil 
       scope = main_scope

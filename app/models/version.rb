@@ -31,10 +31,12 @@ class Version
   end
  
   def self.encode_version(version)
+    return nil if version.nil?
     version.gsub("/", "--").gsub(".", "~")
   end
 
   def self.decode_version(version)
+    return nil if version.nil?
     version.gsub("--", "/").gsub("~", ".")
   end
 

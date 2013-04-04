@@ -92,6 +92,8 @@ Versioneye::Application.routes.draw do
   get   '/package/:key/version/:version/dependencies',  :to => 'products#recursive_dependencies'
 
   get   '/product/:key',                                :to => 'products#show'
+  get   '/product/:key/shield',                         :to => 'products#show_shield'
+  get   '/package/:key/shield',                         :to => 'products#show_shield'
   get   '/product/:key/version/:version',               :to => 'products#show'
   get   '/product/:key/version/:version/shield',        :to => 'products#show_shield'
   get   '/package/:key/version/:version/shield',        :to => 'products#show_shield'

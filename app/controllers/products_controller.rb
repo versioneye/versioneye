@@ -97,30 +97,20 @@ class ProductsController < ApplicationController
   end
 
   def show_shield
-    path = "app/assets/images/shields"
-    accepted_mimes = {
-      "png" => "images/png", 
-      "svg" => "images/svg+xml"
-    }
-
     prod_key = Product.decode_prod_key params[:key] 
-    version = Version.decode_version params[:version]
+    path = "app/assets/images/shields"
     shield = "unknown"
-    format = params[:format]
-    format = "png" if format.nil? or not accepted_mimes.keys.include? format
-
     @product = Product.find_by_key(prod_key)
-    unless @product.nil?  
-      if @product.version == version or @product.wouldbenewest? version
-        shield = "up-to-date"
-      else
+    unless @product.nil? 
+      version = Version.decode_version params[:version]
+      version = @product.version if version.nil? 
+      if @product.dependencies_outdated?()
         shield = "out-of-date"
+      else
+        shield = "up-to-date"
       end
     end
-
-    send_file "#{path}/version_#{shield}.#{format}", 
-              :type => accepted_mimes[format], 
-              :disposition => 'inline'
+    send_file "#{path}/version_#{shield}.png", :type => "images/png", :disposition => 'inline'
   end
 
   def edit
