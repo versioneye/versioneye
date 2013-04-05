@@ -31,6 +31,7 @@ class Product
   field :downloads, type: Integer
   field :followers, type: Integer, default: 0
   field :last_release, type: Integer, default: 0
+  field :used_by_count, type: Integer, default: 0
   
   field :license, type: String 
   field :licenseLink, type: String 
@@ -203,7 +204,7 @@ class Product
         return version 
       end
     end
-    return nil
+    return versions.first
   end
 
   def newest_version_number( stability = "stable" )
@@ -355,16 +356,16 @@ class Product
     return false 
   end
 
-  def update_version_data
+  def update_version_data( persist = true )
     return nil if self.versions.nil? || self.versions.empty?
     newest_stable_version = self.newest_version
     return nil if newest_stable_version.version.eql?(self.version)
     self.version = newest_stable_version.version
     self.version_link = newest_stable_version.link
-    self.save
+    self.save if persist
     # p " udpate #{self.name} with version #{self.version}"
   rescue => e
-    p " -- ERROR -- something went wrong --- #{e}"
+    p " -- ERROR -- something went wrong -- #{self.prod_key} --- #{e}"
     e.backtrace.each do |message|
       p "#{message}"
     end
@@ -406,6 +407,20 @@ class Product
   end
 
   ########### VERSIONS END ########################
+
+  def comments
+    Versioncomment.find_by_prod_key_and_version(self.prod_key, self.version)
+  end
+
+  def get_followers
+    Follower.find_by_product(self.id.to_s)
+  end
+
+  # TODO write tests 
+  def subscribers
+    user_ids = Follower.find_follower_ids_for_product( self.id )
+    return User.find_by_ids( user_ids )
+  end
   
   def license_info
     if self.license.nil? || self.license.empty? || self.license.eql?("unknown")
@@ -419,8 +434,9 @@ class Product
     return self.licenseLink
   end
 
-  def get_followers
-    Follower.find_by_product(self.id.to_s)
+  def update_used_by_count( persist = true )
+    self.used_by_count = Dependency.where(:dep_prod_key => self.prod_key).count
+    self.save if persist 
   end
 
   def dependencies(scope)
@@ -637,10 +653,12 @@ class Product
   end
 
   def self.encode_prod_key(prod_key)
+    return nil if prod_key.nil? 
     prod_key.gsub("/", "--").gsub(".", "~")
   end
 
   def self.decode_prod_key(prod_key)
+    return nil if prod_key.nil? 
     prod_key.gsub("--", "/").gsub("~", ".")
   end
 

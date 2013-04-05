@@ -1,12 +1,13 @@
-<% if !@comments.nil? && @comments.length > 0 %>
+<% comments = @product.comments %>
+<% if !comments.nil? && !comments.empty? %>
 	<div class="box">
 		<h5 class="desc_header">
-			<%= pluralize(@comments.count, "Comments") %>
+			<%= pluralize(comments.count, "Comments") %>
 		</h5>
 	</div>
 	<div class="row" itemprop="comment" itemscope="" itemtype="http://schema.org/ItemList" style="margin-bottom: 20px;" >
 		<meta name="name" content="comment" />
-		<% @comments.each do |comment|  %>
+		<% comments.each do |comment|  %>
 			<span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/UserComments"></span>
 			<%= render :partial => 'shared/show_version_comment', :locals => {:comment => comment} %>
 		<% end %>

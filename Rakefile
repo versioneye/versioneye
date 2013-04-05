@@ -34,9 +34,9 @@ task :do_work => :environment do
 			PackagistCrawler.crawl
 			puts "STOP to crawl packagist.org"
 
-			puts "START update the version numbers on products."
-			ProductMigration.update_version_data_global
-			puts "STOP update the version numbers on products."
+			puts "START update meta data on products."
+			ProductMigration.update_meta_data_global
+			puts "STOP  update meta data on products."
 
 			puts "START reindex newest products for elastic search"
 			ProductElastic.index_newest

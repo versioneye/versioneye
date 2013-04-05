@@ -41,14 +41,30 @@ class ProductMigration
     end
   end
 
+  def self.update_meta_data_global
+    count = Product.count()
+    page = 100
+    iterations = count / page 
+    iterations += 1 
+    (0..iterations).each do |i|
+      skip = i * page
+      products = Product.all().skip(skip).limit(page)
+      products.each do |product|
+        product.update_version_data( false )
+        product.update_used_by_count( false )
+        product.save
+      end
+    end
+  end
+
   def self.update_version_data_global
     count = Product.count()
-    pack = 100
-    max = count / pack 
-    max += 1 
-    (0..max).each do |i|
-      skip = i * pack
-      products = Product.all().skip(skip).limit(pack)
+    page = 100
+    iterations = count / page 
+    iterations += 1 
+    (0..iterations).each do |i|
+      skip = i * page
+      products = Product.all().skip(skip).limit(page)
       products.each do |product|
         product.update_version_data
       end

@@ -100,14 +100,6 @@ Versioneye::Application.routes.draw do
 
   get   '/package_visual/:key/version/:version',        :to => 'products#show_visual'
 
-  get   '/packagelike/like_overall',    :to => 'productlikes#like_overall'
-  get   '/packagelike/dislike_overall', :to => 'productlikes#dislike_overall'
-  get   '/packagelike/like_docu',       :to => 'productlikes#like_docu'
-  get   '/packagelike/dislike_docu',    :to => 'productlikes#dislike_docu'
-  get   '/packagelike/like_support',    :to => 'productlikes#like_support'
-  get   '/packagelike/dislike_support', :to => 'productlikes#dislike_support'
-
-
   resources :versioncomments
   get   '/vc/:id',                       :to => 'versioncomments#show'
 

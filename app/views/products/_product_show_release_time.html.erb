@@ -16,8 +16,7 @@
     <%= render "/products/product_show_detected" %>
   <% end %>
 </div>
-<% if @used_by %>
-  <div class="well default release_box" >
-    <span style="font-weight:bold; font-size: 20px;"><%= @used_by %></span> other Packages are referencing this Package.
-  </div>
-<% end %> 
+<div class="well default release_box" >
+  <% @product.update_used_by_count if @product.used_by_count == 0  %> 
+  <span style="font-weight:bold; font-size: 20px;"><%= @product.used_by_count %></span> other Packages are referencing this Package.
+</div>

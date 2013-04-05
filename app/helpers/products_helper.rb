@@ -20,16 +20,6 @@ module ProductsHelper
     return "none"
   end
 
-  def url_param_to_origin(param)
-    if (param.nil? || param.empty?)
-      return ""
-    end
-    key = String.new(param)
-    key.gsub!("--","/")
-    key.gsub!("~",".")
-    key
-  end
-
   def do_parse_search_input( query )
     query_empty = query.nil? || query.empty? || query.strip.empty? || query.eql?("Be up-to-date")
     query = "json" if query_empty 
@@ -66,7 +56,7 @@ module ProductsHelper
 
   def attach_version(product, version_from_url)
     return nil if product.nil?
-    version = url_param_to_origin( version_from_url )
+    version = Version.decode_version( version_from_url )
     if version.nil? || version.empty?
       version = product.version
     end
@@ -74,14 +64,18 @@ module ProductsHelper
     if versionObj
       product.version = versionObj.version
       product.version_link = versionObj.link
-      if versionObj.created_at
-        today = DateTime.now.to_date
-        diff = today - versionObj.created_at.to_date
-        product.last_crawle_date = diff.to_i
-        if versionObj.released_at
-          diff_release = today - versionObj.released_at.to_date
-          product.released_days_ago = diff_release.to_i
-        end
+      update_release_infos( versionObj, product )
+    end
+  end
+
+  def update_release_infos( versionObj, product )
+    if versionObj.created_at
+      today = DateTime.now.to_date
+      diff = today - versionObj.created_at.to_date
+      product.last_crawle_date = diff.to_i
+      if versionObj.released_at
+        diff_release = today - versionObj.released_at.to_date
+        product.released_days_ago = diff_release.to_i
       end
     end
   end

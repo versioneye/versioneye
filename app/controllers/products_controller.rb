@@ -50,8 +50,7 @@ class ProductsController < ApplicationController
   end
   
   def show
-    mobile = params[:mobile]
-    key = url_param_to_origin params[:key]
+    key = Product.decode_prod_key params[:key]
     @product = Product.find_by_key( key )
     if @product.nil? 
       @product = Product.find_by_key_case_insensitiv( key )  
@@ -64,26 +63,18 @@ class ProductsController < ApplicationController
     @following = is_following?(current_user, @product)
 
     attach_version( @product, params[:version] )
-    @comments = Versioncomment.find_by_prod_key_and_version(@product.prod_key, @product.version)
+    # @comments = @product.comments
     @version = @product.version_by_number @product.version
     @downloads = @version.versionarchive
-    @productlook = Productlook.find_by_key(key)
     @main_dependencies = @product.dependencies(nil)
 
-    langs = [Product::A_LANGUAGE_RUBY, Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_PHP, Product::A_LANGUAGE_NODEJS]
-    if langs.include? @product.language
-      @used_by = Dependency.where(:dep_prod_key => key).count
-    end
-
-    user_ids = Follower.find_followers_for_product( @product.id )
-    @users = User.find_by_ids(user_ids)
     @versioncomment = Versioncomment.new 
     @versioncommentreply = Versioncommentreply.new
     @page = "product_show"    
   end
 
   def show_visual
-    key = url_param_to_origin params[:key]
+    key = Product.decode_prod_key( params[:key] )
     @product = Product.find_by_key( key )
     if @product.nil? 
       flash[:error] = "The requested package is not available."
@@ -114,13 +105,13 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    key = url_param_to_origin params[:key]
+    key = Product.decode_prod_key params[:key]
     @product = Product.find_by_key( key )
   end
 
   def delete_link
     link_url = params[:link_url]
-    key = url_param_to_origin params[:key]
+    key = Product.decode_prod_key params[:key]
     @product = Product.find_by_key( key )
     versionlink = Versionlink.find_by(key, link_url)
     if versionlink && versionlink.manual
@@ -137,7 +128,7 @@ class ProductsController < ApplicationController
     twitter_name = params[:twitter_name]
     link_url = params[:link_url]
     link_name = params[:link_name]
-    key = url_param_to_origin params[:key]
+    key = Product.decode_prod_key params[:key]
     @product = Product.find_by_key( key )
     if @product.nil? || !current_user.admin 
       flash[:success] = "An error occured. Please try again later."
@@ -174,7 +165,7 @@ class ProductsController < ApplicationController
   
   def follow
     @prod_key_param = params[:product_key]
-    product_key = url_param_to_origin @prod_key_param
+    product_key = Product.decode_prod_key @prod_key_param
     respond = ProductService.create_follower product_key, current_user
     respond_to do |format|
       format.js 
@@ -190,7 +181,7 @@ class ProductsController < ApplicationController
   def unfollow
     src_hidden = params[:src_hidden]
     @prod_key_param = params[:product_key]
-    product_key = url_param_to_origin @prod_key_param
+    product_key = Product.decode_prod_key @prod_key_param
     respond = ProductService.destroy_follower product_key, current_user
     respond_to do |format|
       format.js 
@@ -208,8 +199,8 @@ class ProductsController < ApplicationController
   end
 
   def recursive_dependencies
-    key = url_param_to_origin params[:key]
-    version = url_param_to_origin params[:version]
+    key = Product.decode_prod_key params[:key]
+    version = Version.decode_version params[:version]
     scope = params[:scope]
     product = Product.find_by_key( key )
     if version && !version.empty?
