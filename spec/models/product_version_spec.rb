@@ -39,6 +39,24 @@ describe Product do
       @product.version.should eql("1.1")
     end
 
+    it "returns the highest unststable because there is no stable" do 
+      @product.versions = Array.new
+      version = Version.new
+      version.version = "1.0-beta"
+      @product.versions.push(version)
+      
+      version2 = Version.new
+      version2.version = "1.1-beta"
+      @product.versions.push(version2)
+
+      version3 = Version.new
+      version3.version = "1.2-dev"
+      @product.versions.push(version3)
+
+      @product.update_version_data
+      @product.version.should eql("1.2-dev")
+    end
+
   end
   
   describe "get_greater_than" do
