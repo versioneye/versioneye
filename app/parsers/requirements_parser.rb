@@ -46,7 +46,7 @@ class RequirementsParser < CommonParser
         project.unknown_number = project.unknown_number + 1
       end
       
-      parse_requested_version(splitter, version, dependency, product)
+      parse_requested_version("#{splitter}#{version}", dependency, product)
       
       if dependency.outdated?
         project.out_number = project.out_number + 1
@@ -67,7 +67,7 @@ class RequirementsParser < CommonParser
 
   # It is important that this method is not writing int the database! 
   #
-  def parse_requested_version(splitter, version, dependency, product)
+  def parse_requested_version(version, dependency, product)
     if (version.nil? || version.empty?)
       self.update_requested_with_current(dependency, product)
       return 
@@ -75,39 +75,57 @@ class RequirementsParser < CommonParser
     version = version.strip
     version = version.gsub('"', '')
     version = version.gsub("'", "")
-    dependency.version_label = version
+    dependency.version_label = String.new(version)
     
     if product.nil? 
       dependency.version_requested = version
     
-    elsif splitter.match(/^==/)
+    elsif version.match(/^==/)
       # Equals
+      version.gsub!("==", "")
+      version.gsub!(" ", "")
       dependency.version_requested = version
+      dependency.comperator = "=="
     
-    elsif splitter.match(/^!=/)
+    elsif version.match(/^!=/)
       # Not equal to version
+      version.gsub!("!=", "")
+      version.gsub!(" ", "")
       newest_version = product.newest_but_not(version)
       dependency.version_requested = newest_version
+      dependency.comperator = "!="
     
-    elsif splitter.match(/^>=/)
+    elsif version.match(/^>=/)
       # Greater than or equal to
+      version.gsub!(">=", "")
+      version.gsub!(" ", "")
       newest_version = product.greater_than_or_equal(version)
       dependency.version_requested = newest_version.version
+      dependency.comperator = ">="
     
-    elsif splitter.match(/^>/)
+    elsif version.match(/^>/)
       # Greater than version
+      version.gsub!(">", "")
+      version.gsub!(" ", "")
       newest_version = product.greater_than(version)
       dependency.version_requested = newest_version.version
+      dependency.comperator = ">"
     
-    elsif splitter.match(/^<=/)
+    elsif version.match(/^<=/)
       # Less than or equal to
+      version.gsub!("<=", "")
+      version.gsub!(" ", "")
       newest_version = product.smaller_than_or_equal(version)
       dependency.version_requested = newest_version.version
+      dependency.comperator = "<="
     
     elsif version.match(/^\</)
       # Less than version
+      version.gsub!("<", "")
+      version.gsub!(" ", "")
       newest_version = product.smaller_than(version)
       dependency.version_requested = newest_version.version
+      dependency.comperator = "<"
     
     else
       dependency.version_requested = version

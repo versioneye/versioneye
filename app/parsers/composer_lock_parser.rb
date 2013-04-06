@@ -1,4 +1,5 @@
-class ComposerLockParser < CommonParser
+class ComposerLockParser < ComposerParser
+
   @@group_id = "php"
 
   def parse( url )
@@ -25,8 +26,7 @@ class ComposerLockParser < CommonParser
     dependency.prod_key = product.prod_key if product
 
     version = self.fetch_package_version(package)
-    compposer_parser = ComposerParser.new 
-    compposer_parser.parse_requested_version(version, dependency, product)
+    self.parse_requested_version(version, dependency, product)
     
     project.out_number += 1 if dependency.outdated?
     project.unknown_number += 1 unless product
@@ -47,7 +47,6 @@ class ComposerLockParser < CommonParser
       end
     end
 
-    #replace leading v
     version.gsub! /^v/i, ''
     version
   end

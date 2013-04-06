@@ -155,7 +155,6 @@ class GemfileParser < CommonParser
       dependency.comperator = "="
       dependency.version_label = version
     end
-    
   end
 
   def replace_comments(value)

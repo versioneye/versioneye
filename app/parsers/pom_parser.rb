@@ -98,4 +98,28 @@ class PomParser < CommonParser
     end
   end
 
+  # TODO use this method in this class to parse version strings 
+  def parse_requested_version(version, dependency, product)
+    if (version.nil? || version.empty?)
+      self.update_requested_with_current(dependency, product)
+      return 
+    end
+    version = version.strip
+    version = version.gsub('"', '')
+    version = version.gsub("'", "")
+
+    if product.nil? 
+      dependency.version_requested = version
+      dependency.version_label = version
+
+    # TODO implement more cases
+
+    else
+      dependency.version_requested = version
+      dependency.comperator = "="
+      dependency.version_label = version
+
+    end
+  end
+
 end
