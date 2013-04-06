@@ -3,11 +3,23 @@ require 'spec_helper'
 describe Product do
   
   before(:each) do
+    Product.all().each do |prod|
+      prod.remove
+    end
+    Dependency.all().each do |dep|
+      dep.remove()
+    end
     @product = Product.new
   end
   
   after(:each) do 
     @product.remove
+    Product.all().each do |prod|
+      prod.remove
+    end
+    Dependency.all().each do |dep|
+      dep.remove()
+    end
   end
   
   describe "dependencies_outdated?( scope )" do
@@ -41,7 +53,6 @@ describe Product do
       dep_2.remove
       dep_3.remove
       dep_4.remove
-
     end
 
     it "is outdated" do 
@@ -75,7 +86,6 @@ describe Product do
       dep_2.remove
       dep_3.remove
       dep_4.remove
-
     end
 
   end

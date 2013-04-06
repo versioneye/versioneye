@@ -44,19 +44,19 @@ class Dependency
     Product.find_by_key( prod_key )
   end
 
-  # TODO write tests for this
   def outdated? 
     product = self.product
-    return false  if product.nil? 
+    return false if product.nil? 
     newest_product_version = product.newest_version_number()
-    parser = ParserStrategy.parser_for( self.prod_type, "" )
+    
     project_dependency = Projectdependency.new
+    parser = ParserStrategy.parser_for( self.prod_type, "" )
     parser.parse_requested_version(self.version, project_dependency, product)
-    newest_version = Naturalsorter::Sorter.sort_version([project_dependency.version_requested, newest_product_version]).last
-    if newest_version.eql?( project_dependency.version_requested )
-      return false   
-    end
-    true
+    version_requested = project_dependency.version_requested
+    
+    newest_version = Naturalsorter::Sorter.sort_version([version_requested, newest_product_version]).last
+    return false if newest_version.eql?( version_requested )
+    return true
   rescue => e 
     p "#{e}"
     return false

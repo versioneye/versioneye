@@ -25,13 +25,14 @@ class ProductFactory
     version_obj = Version.new :version => version
     product = Product.new(
       {
-        :name         => artifact_id,
+        :name          => artifact_id,
         :name_downcase => artifact_id.downcase,
-        :group_id     => group_id,
-        :artifact_id  => artifact_id,
-        :prod_key     => "#{group_id}/#{artifact_id}",
-        :language     => "Java",
-        :version      => version
+        :group_id      => group_id,
+        :artifact_id   => artifact_id,
+        :prod_key      => "#{group_id}/#{artifact_id}",
+        :language      => "Java",
+        :prod_type     => Project::A_TYPE_MAVEN2,
+        :version       => version
       })
     product.versions.push(version_obj)
     product
@@ -48,6 +49,7 @@ class ProductFactory
     version_obj.version = version
     product.versions.push(version_obj)
     product.version = version
+    product.prod_type = Project::A_TYPE_COMPOSER
     product
   end
 
@@ -62,6 +64,7 @@ class ProductFactory
     version_obj.version = version
     product.versions.push(version_obj)
     product.version = version
+    product.prod_type = Project::A_TYPE_RUBYGEMS
     product
   end
 
@@ -71,6 +74,7 @@ class ProductFactory
                           name_downcase: name.downcase,
                           prod_key: "pip/#{name}",
                           language: "Python",
+                          prod_type: Project::A_TYPE_PIP,
                           version: version
 
     version_obj = Version.new version: version

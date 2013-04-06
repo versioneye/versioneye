@@ -5,29 +5,81 @@ describe Dependency do
   describe "gem_version" do 
     
     it "returns valid value" do 
-  		dependency = Dependency.new
-  		dependency.version = "1.0"
-  		dependency.gem_version().should eql("1.0")
+      dependency = Dependency.new
+      dependency.version = "1.0"
+      dependency.gem_version().should eql("1.0")
     end
 
     it "returns valid value" do
-  		dependency = Dependency.new
-  		dependency.version = "= 1.0"
-  		dependency.gem_version().should eql("1.0")
-  	end
+      dependency = Dependency.new
+      dependency.version = "= 1.0"
+      dependency.gem_version().should eql("1.0")
+    end
 
-  	it "returns valid value" do
-  		dependency = Dependency.new
-  		dependency.version = " =  1.0"
-  		dependency.gem_version().should eql("1.0")
-  	end
+    it "returns valid value" do
+      dependency = Dependency.new
+      dependency.version = " =  1.0"
+      dependency.gem_version().should eql("1.0")
+    end
+
+  end
+
+  describe "outdated?" do 
+    
+    it "is outdated" do 
+      product = ProductFactory.create_new(1)
+      version = Version.new
+      version.version = "1.0"
+      product.versions.push(version)
+      product.save
+
+      dependency = Dependency.new 
+      dependency.version = "0.1"
+      dependency.dep_prod_key = product.prod_key 
+      dependency.prod_type = product.prod_type
+      dependency.outdated?().should be_true 
+    end
+
+    it "is not outdated, because it's equal" do 
+      product = ProductFactory.create_new(87)
+      version = Version.new
+      version.version = "100.0"
+      product.versions.push(version)
+      product.version = version.version
+      product.save
+
+      dependency = Dependency.new 
+      dependency.version = version.version
+      dependency.dep_prod_key = product.prod_key 
+      dependency.prod_type = product.prod_type
+      dependency.outdated?().should be_false 
+    end
+
+    it "is not outdated, because it's higher" do 
+      product = ProductFactory.create_new(1)
+      version = Version.new
+      version.version = "1.0"
+      product.versions.push(version)
+      product.save
+
+      dependency = Dependency.new 
+      dependency.version = "100000.2"
+      dependency.dep_prod_key = product.prod_key 
+      dependency.outdated?().should be_false 
+    end
+
+    it "is not outdated, because unknown dep" do 
+      dependency = Dependency.new 
+      dependency.version = "0.1"
+      dependency.outdated?().should be_false  
+    end
 
   end
 
   describe "gem_version_parsed" do 
     
     it "returns valid value" do 
-    	product = Product.new
+      product = Product.new
       product.versions = Array.new
       product.name = "test"
       product.prod_key = "gasgagasgj8623_jun44444it/juasgnit23afsg"
@@ -58,8 +110,8 @@ describe Dependency do
     end
 
     it "returns valid value" do 
-    	product = Product.new
-    	product.versions = Array.new
+      product = Product.new
+      product.versions = Array.new
       product.name = "test"
       product.prod_key = "huj_buuuuu"
 
@@ -70,7 +122,7 @@ describe Dependency do
       version = Version.new
       version.version = "2.0"
       product.versions.push(version)
-      	
+        
       version = Version.new
       version.version = "2.2.1"
       product.versions.push(version)
