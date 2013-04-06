@@ -416,7 +416,6 @@ class Product
     Follower.find_by_product(self.id.to_s)
   end
 
-  # TODO write tests 
   def subscribers
     user_ids = Follower.find_follower_ids_for_product( self.id )
     return User.find_by_ids( user_ids )

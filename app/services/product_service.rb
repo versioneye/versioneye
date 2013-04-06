@@ -9,6 +9,7 @@ class ProductService
     Product.find_by(q, "", group_id, languages, 300).paginate(:page => page_count)
   end
 
+  
   def self.create_follower(prod_key, user)
     product = Product.find_by_key prod_key
     return "error" if product.nil? || user.nil?
@@ -26,6 +27,7 @@ class ProductService
     end
   end
   
+  
   def self.destroy_follower(prod_key, user)
     product = Product.find_by_key prod_key
     return "error" if product.nil? || user.nil?
@@ -34,6 +36,8 @@ class ProductService
       resp = follower.remove
       product.followers -= 1
       product.save
+    else 
+      return "error"
     end
     return "success"
   end
