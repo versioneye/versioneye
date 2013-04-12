@@ -30,7 +30,7 @@ class FacebookController < ApplicationController
     if product_key 
       response = ProductService.create_follower product_key, current_user
       if response.eql?("success")
-        flash[:success] = "Congratulations. You are following now #{product_key} at VersionEye." 
+        flash[:success] = "Congratulation. You are following now #{product_key} at VersionEye." 
         cookies.delete(:prod_key)
       end
     end
