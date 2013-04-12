@@ -1,5 +1,6 @@
 class ProductMigration
 
+  # TODO execute this on production after the crawler is through
   def self.remove_bad_npm_deps 
     products = Product.where(language: Product::A_LANGUAGE_NODEJS )
     products.each do |product|
@@ -10,6 +11,19 @@ class ProductMigration
           dependency.remove 
         end
       end
+    end
+  end
+
+  # TODO execute this on production after the crawler is through
+  def self.remove_npm_circles 
+    products = Product.where(language: Product::A_LANGUAGE_NODEJS)
+    products.each do |product|
+      elements = CircleElement.where(prod_key: product.prod_key)
+      if elements && !elements.empty?
+        elements.each do |circle|
+          circle.remove()
+        end
+      end      
     end
   end
 
