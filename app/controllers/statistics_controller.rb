@@ -9,7 +9,7 @@ class StatisticsController < ApplicationController
 	def proglangs
 		stats = Rails.cache.read("lang_stat")
 		if stats.nil? or stats.empty? 
-			stats = Product.get_language_stat
+			stats = StatisticService.language_project_count
 			Rails.cache.write("lang_stat", stats)
 		end
 		respond_to do |format|
@@ -22,7 +22,7 @@ class StatisticsController < ApplicationController
 	def langtrends
 		stats = Rails.cache.read("lang_trend")
 		if stats.nil? or stats.empty? 
-			stats = Product.get_language_trend
+			stats = StatisticService.language_project_trend
 			Rails.cache.write("lang_trend", stats)
 		end
 		respond_to do |format|

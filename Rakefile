@@ -26,6 +26,10 @@ task :do_work => :environment do
 		# -- DAILY JOBS ----
 		if hour == start_hour && minute == start_minute
 
+			puts "START to update the json strings for the statistic page."
+			StatisticService.update_all
+			puts "END to update the json strings for the statistic page."
+
 			puts "START to update integration status of submitted urls"
 			SubmittedUrl.update_integration_statuses()
 			puts "STOP  to update integration status of submitted urls"
