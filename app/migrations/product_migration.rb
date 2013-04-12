@@ -1,13 +1,14 @@
 class ProductMigration
 
-  def self.create_test_db
-    User.all().each do |user|
-      user.email = "12_#{user.email}_34"
-      user.save
-    end
-    Product.all().each do |product|
-      if !product.language.eql?("Java")
-        product.remove
+  def self.remove_bad_npm_deps 
+    products = Product.where(language: Product::A_LANGUAGE_NODEJS )
+    products.each do |product|
+      p "product: #{product.name}"
+      product.all_dependencies.each do |dependency|
+        if dependency.dep_prod_key.eql? product.prod_key 
+          p "  remove dep: #{dependency.name} - #{dependency.dep_prod_key}"
+          dependency.remove 
+        end
       end
     end
   end
@@ -27,10 +28,6 @@ class ProductMigration
       end
     end
     versions_count
-  end
-
-  def self.migrate_packagist_to_composer
-    Product.where(:prod_type => "Packagist").update_all(:prod_type => Project::A_TYPE_COMPOSER)
   end
 
   def self.update_name_downcase_global
