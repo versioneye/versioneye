@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
       @lang = ""
       cookies[:veye_lang] = ""
     end
-    @languages = @@languages # Product.get_unique_languages
+    @languages = @@languages
     render :layout => 'application_lp'
   end
   
