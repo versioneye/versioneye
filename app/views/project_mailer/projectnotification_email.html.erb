@@ -15,24 +15,24 @@
           <tr>
             <th ></th>
             <th ></th>
-            <th style="font-weight: bold;">Project Version</th>
+            <th style="font-weight: bold; width: 110px;">Project Version</th>
             <th style="font-weight: bold;">Current Version</th>
           </tr>
         </thead>
         <% @dependencies.each do |dep| %>
-          <tr style="border-bottom: 1px dotted gray; padding: 5px;">
-            <td>
+          <tr >
+            <td style="border-bottom: 1px dotted gray; padding: 5px;">
               <% product = Product.find_by_key( dep.prod_key ) %>
               <% version = product.version_by_number( dep.version_current ) %>
               <img src= "http://www.versioneye.com/assets/language/<%= product.language.downcase %>.png" style = "width: 48px; height: 48px;"/>
             </td>
-            <td style = "vertical-align: middle;">
+            <td style = "vertical-align: middle; border-bottom: 1px dotted gray; padding: 5px;">
               <a href="<%=@link%><%= product.prod_key %>"><%= product.name %></a> 
             </td>
-            <td style = "vertical-align: middle;">
+            <td style = "vertical-align: middle; border-bottom: 1px dotted gray; padding: 5px;">
               <%= dep.version_lbl %>
             </td>
-            <td style = "vertical-align: middle;">
+            <td style = "vertical-align: middle; border-bottom: 1px dotted gray; padding: 5px;">
               <%= dep.version_current %>
             </td>
           </tr>

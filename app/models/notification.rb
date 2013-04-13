@@ -15,13 +15,9 @@ class Notification
   scope :all_not_sent, where(sent_email: false)
   scope :by_user_id, ->(user_id){where(user_id: user_id).desc(:created_at).limit(30)}
 
-  def user
-    User.find_by_id( self.user_id )
-  end
+  belongs_to :user 
+  belongs_to :product 
 
-  def product 
-    Product.find(self.product_id)
-  end
 
   def self.disable_all_for_user(user_id)
     notifications = Notification.all( conditions: {user_id: user_id} )
@@ -44,9 +40,7 @@ class Notification
     user_ids.each do |id|
       user = User.find_by_id( id )
       if !user.nil? && user.deleted != true
-          if send_notifications_for_user( user )
-            count = count + 1
-          end
+        count += 1 if send_notifications_for_user( user )
       else
         p " -- no user found for id: #{id} "
         notifications = Notification.all( conditions: {user_id: id} )
@@ -63,8 +57,8 @@ class Notification
     notifications = Notification.all( conditions: {sent_email: "false", user_id: user.id.to_s} )
 
     if !notifications.nil? && !notifications.empty?
-     notifications.sort_by {|notice| [notice.product.language]}
-     NotificationMailer.new_version_email(user, notifications).deliver
+      notifications.sort_by {|notice| [notice.product.language]}
+      NotificationMailer.new_version_email( user, notifications ).deliver
       p "send notifications for user #{user.fullname} start"
       return true
     end

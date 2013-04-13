@@ -11,7 +11,7 @@ class ProjectMailer < ActionMailer::Base
     email = Project.email_for(project, @user)
     mail(
       :to => email, 
-      :subject => "Project Notification",
+      :subject => "Project Notification for #{project.name}",
       :tag => "project_notification"
       )
   end
