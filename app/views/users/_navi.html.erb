@@ -20,34 +20,26 @@
 				</h5>
 			</div>
 			<div class="box content" >
-				<% if !@userlinkcollection.github.nil? && !@userlinkcollection.github.empty? %>
-					<%= link_to image_tag("socialnetworks/github.png"), "https://github.com/#{@userlinkcollection.github}", :target => "github" %>
+				<% if !@userlinkcollection.github_empty? %>
+					<%= link_to image_tag("socialnetworks/github.png"), @userlinkcollection.github, :target => "github" %>
 				<% end %>
-				<% if !@userlinkcollection.stackoverflow.nil? && !@userlinkcollection.stackoverflow.empty? %>
-					<%= link_to image_tag("socialnetworks/stackoverflow.png"), "http://stackoverflow.com/users/#{@userlinkcollection.stackoverflow}", :target => "stackoverflow" %>
+				<% if !@userlinkcollection.stackoverflow_empty? %>
+					<%= link_to image_tag("socialnetworks/stackoverflow.png"), @userlinkcollection.stackoverflow, :target => "stackoverflow" %>
 				<% end %>
-				<% if !@userlinkcollection.twitter.nil? && !@userlinkcollection.twitter.empty? %>
-					<%= link_to image_tag("socialnetworks/twitter-bird.png"), "https://twitter.com/#!/#{@userlinkcollection.twitter}", :target => "twitter" %>
+				<% if !@userlinkcollection.twitter_empty? %>
+					<%= link_to image_tag("socialnetworks/twitter-bird.png"), @userlinkcollection.twitter, :target => "twitter" %>
 				<% end %>
-				<% if !@userlinkcollection.facebook.nil? && !@userlinkcollection.facebook.empty? %>
-					<% fb_url = "http://www.facebook.com/people/#{@userlinkcollection.facebook}" %>
-					<% if Net::HTTP.get_response(URI.parse(fb_url)).code.eql?("302") %>
-						<% fb_url = "http://www.facebook.com/#{@userlinkcollection.facebook}" %>	
-					<% end %>
-					<%= link_to image_tag("socialnetworks/facebook.png"), fb_url, :target => "facebook" %>
+				<% if !@userlinkcollection.facebook_empty? %>
+					<%= link_to image_tag("socialnetworks/facebook.png"), @userlinkcollection.facebook, :target => "facebook" %>
 				<% end %>
-				<% if !@userlinkcollection.linkedin.nil? && !@userlinkcollection.linkedin.empty? %>
-					<%= link_to image_tag("socialnetworks/linkedin.png"), "http://www.linkedin.com/in/#{@userlinkcollection.linkedin}", :target => "linkedin" %>
+				<% if !@userlinkcollection.linkedin_empty? %>
+					<%= link_to image_tag("socialnetworks/linkedin.png"), @userlinkcollection.linkedin, :target => "linkedin" %>
 				<% end %>
-				<% if !@userlinkcollection.xing.nil? && !@userlinkcollection.xing.empty? %>
-					<%= link_to image_tag("socialnetworks/xing.png"), "http://www.xing.com/profile/#{@userlinkcollection.xing}", :target => "xing" %>
+				<% if !@userlinkcollection.xing_empty? %>
+					<%= link_to image_tag("socialnetworks/xing.png"), @userlinkcollection.xing, :target => "xing" %>
 				<% end %>
-				<% if !@userlinkcollection.gulp.nil? && !@userlinkcollection.gulp.empty? %>
-					<% gulp_url = "http://www.gulp.de/resume/#{@userlinkcollection.gulp}.html" %>
-					<% if Net::HTTP.get_response(URI.parse(gulp_url)).code.eql?("404") %>
-						<% gulp_url = "http://www.gulp.de/profil/#{@userlinkcollection.gulp}.html" %>	
-					<% end %>
-					<%= link_to image_tag("socialnetworks/gulp.png"), gulp_url, :target => "gulp" %>
+				<% if !@userlinkcollection.gulp_empty? %>
+					<%= link_to image_tag("socialnetworks/gulp.png"), @userlinkcollection.gulp, :target => "gulp" %>
 				<% end %>
 			</div>
 		<% end %>

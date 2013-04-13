@@ -3,21 +3,77 @@ class Userlinkcollection
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :user_id, type: String 
-  field :linkedin, type: String
-  field :xing, type: String
-  field :gulp, type: String
-  field :github, type: String
-  field :stackoverflow, type: String
-  field :twitter, type: String
-  field :facebook, type: String
+  A_LINKEDIN      = "http://www.linkedin.com/in/"
+  A_XING          = "http://www.xing.com/profile/"
+  A_GULP          = "http://www.gulp.de/resume/"
+  A_GITHUB        = "https://github.com/"
+  A_STACKOVERFLOW = "http://stackoverflow.com/users/"
+  A_TWITTER       = "https://twitter.com/#!/"
+  A_FACEBOOK      = "http://www.facebook.com/people/"
+
+  field :user_id,       type: String 
+  field :linkedin,      type: String, :default => A_LINKEDIN
+  field :xing,          type: String, :default => A_XING
+  field :gulp,          type: String, :default => A_GULP
+  field :github,        type: String, :default => A_GITHUB
+  field :stackoverflow, type: String, :default => A_STACKOVERFLOW
+  field :twitter,       type: String, :default => A_TWITTER
+  field :facebook,      type: String, :default => A_FACEBOOK
 
   def self.find_all_by_user(user_id)
   	Userlinkcollection.where( user_id: user_id )[0]
   end
 
   def empty?
-  	linkedin.nil? && xing.nil? && gulp.nil? && github.nil? && stackoverflow.nil? && twitter.nil? && facebook.nil? && linkedin.empty? && xing.empty? && gulp.empty? && github.empty? && stackoverflow.empty? && twitter.empty? && facebook.empty? 
+  	linkedin_empty? && xing_empty? && gulp_empty? && github_empty? && 
+    stackoverflow_empty? && twitter_empty? && facebook_empty?
+  end
+
+  def convert_to_abs
+    if self.linkedin && !self.linkedin.empty?
+      self.linkedin = "#{A_LINKEDIN}#{self.linkedin}"
+    end
+    if self.xing && !self.xing.empty?
+      self.xing = "#{A_XING}#{self.xing}"
+    end
+    if self.gulp && !self.gulp.empty? 
+      self.gulp = "#{A_GULP}#{self.gulp}"
+    end
+    if self.github && !self.github.empty? 
+      self.github = "#{A_GITHUB}#{self.github}"
+    end
+    if self.stackoverflow && !self.stackoverflow.empty? 
+      self.stackoverflow = "#{A_STACKOVERFLOW}#{self.stackoverflow}"
+    end
+    if self.twitter && !self.twitter.empty?
+      self.twitter = "#{A_TWITTER}#{self.twitter}"
+    end
+    if self.facebook && !self.facebook.empty?
+      self.facebook = "#{A_FACEBOOK}#{self.facebook}"
+    end
+    self.save()
+  end
+
+  def linkedin_empty?
+    self.linkedin.nil? || self.linkedin.empty? || self.linkedin.eql?(A_LINKEDIN)
+  end
+  def xing_empty?
+    self.xing.nil? || self.xing.empty? || self.xing.eql?(A_XING)
+  end
+  def gulp_empty?
+    self.gulp.nil? || self.gulp.empty? || self.gulp.eql?(A_GULP)
+  end
+  def github_empty?
+    self.github.nil? || self.github.empty? || self.github.eql?(A_GITHUB)
+  end
+  def stackoverflow_empty?
+    self.stackoverflow.nil? || self.stackoverflow.empty? || self.stackoverflow.eql?(A_STACKOVERFLOW)
+  end
+  def twitter_empty?
+    self.twitter.nil? || self.twitter.empty? || self.twitter.eql?(A_TWITTER)
+  end
+  def facebook_empty?
+    self.facebook.nil? || self.facebook.empty? || self.facebook.eql?(A_FACEBOOK)
   end
 
 end

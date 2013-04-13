@@ -10,62 +10,60 @@
   </div>
   
   <div class="span8 content" >
+
+    <p> 
+      Enter the absolute links to your profiles to show your reputation.<br/>
+      <br/>
+    </p>
     
     <%= form_tag("/settings/updatelinks", :method => "post", :class => "form-horizontal") do  %>    
 
       <div class="control-group">
         <%= label_tag :github, "GitHub", :class => "control-label", :for => "github" %>
         <div class="controls">
-          <%= text_field_tag :github, @userlinkcollection.github, :id => "github" %><br/>
-          <span class="meta-text-small">https://github.com/ <span class="highlight_hint">USERNAME</span> </span>
+          <%= text_field_tag :github, @userlinkcollection.github, :id => "github", :class => "input-big" %>
         </div>
       </div>
 
       <div class="control-group">
         <%= label_tag :stackoverflow, "Stackoverflow", :class => "control-label", :for => "stackoverflow" %>
         <div class="controls">
-          <%= text_field_tag :stackoverflow, @userlinkcollection.stackoverflow, :id => "stackoverflow" %><br/>
-          <span class="meta-text-small">http://stackoverflow.com/users/ <span class="highlight_hint">ID/USERNAME</span></span>
+          <%= text_field_tag :stackoverflow, @userlinkcollection.stackoverflow, :id => "stackoverflow", :class => "input-big" %>
         </div>
       </div>
 
       <div class="control-group">
         <%= label_tag :twitter, "Twitter", :class => "control-label", :for => "twitter" %>
         <div class="controls">
-          <%= text_field_tag :twitter, @userlinkcollection.twitter, :id => "twitter" %><br/>
-          <span class="meta-text-small">https://twitter.com/#!/ <span class="highlight_hint">USERNAME</span></span>
+          <%= text_field_tag :twitter, @userlinkcollection.twitter, :id => "twitter", :class => "input-big" %>
         </div>
       </div>
 
       <div class="control-group">
         <%= label_tag :linkedin, "LinkedIn", :class => "control-label", :for => "linkedin" %>
         <div class="controls">
-          <%= text_field_tag :linkedin, @userlinkcollection.linkedin, :id => "linkedin" %><br/>
-          <span class="meta-text-small">http://www.linkedin.com/in/ <span class="highlight_hint">USERNAME</span></span>
+          <%= text_field_tag :linkedin, @userlinkcollection.linkedin, :id => "linkedin", :class => "input-big" %>
         </div>
       </div>
 
       <div class="control-group">
         <%= label_tag :facebook, "Facebook", :class => "control-label", :for => "facebook" %>
         <div class="controls">
-          <%= text_field_tag :facebook, @userlinkcollection.facebook, :id => "facebook" %><br/>
-          <span class="meta-text-small">http://www.facebook.com/people/ <span class="highlight_hint">USERNAME</span></span>
+          <%= text_field_tag :facebook, @userlinkcollection.facebook, :id => "facebook", :class => "input-big" %>
         </div>
       </div>
 
       <div class="control-group">
         <%= label_tag :xing, "Xing", :class => "control-label", :for => "xing" %>
         <div class="controls">
-          <%= text_field_tag :xing, @userlinkcollection.xing, :id => "xing" %><br/>
-          <span class="meta-text-small">http://www.xing.com/profile/ <span class="highlight_hint">USERNAME</span></span>
+          <%= text_field_tag :xing, @userlinkcollection.xing, :id => "xing", :class => "input-big" %>
         </div>
       </div>
 
       <div class="control-group">
         <%= label_tag :gulp, "Gulp", :class => "control-label", :for => "gulp" %>
         <div class="controls">
-          <%= text_field_tag :gulp, @userlinkcollection.gulp, :id => "gulp" %><br/>
-          <span class="meta-text-small">http://www.gulp.de/resume/ <span class="highlight_hint">USERNAME</span></span>
+          <%= text_field_tag :gulp, @userlinkcollection.gulp, :id => "gulp", :class => "input-big" %>
         </div>
       </div>
 
