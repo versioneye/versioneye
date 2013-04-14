@@ -7,13 +7,13 @@ class UserFollower
   field :followed_id, type: String
 
   def followers( user_id )
-    UserFollower.where( :followed_id => user_id )
-    # TODO fetch only ids and than fetch user objects 
+    follower_ids = UserFollower.all(conditions: { followed_id: user_id } ).distinct(:follower_id)
+    return User.find_by_ids( follower_ids )
   end
 
   def following( user_id )
-    UserFollower.where( :follower_id => user_id )
-    # TODO fetch only ids and than fetch user objects 
+    followed_ids = UserFollower.all(conditions: { follower_id: user_id } ).distinct(:followed_id)
+    return User.find_by_ids( followed_ids )
   end
 
 end
