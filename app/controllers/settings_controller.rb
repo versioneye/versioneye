@@ -331,7 +331,7 @@ class SettingsController < ApplicationController
 
   private 
 
-  	def validates_privacy_value value
+    def validates_privacy_value value
       return "everybody" if value.nil? || value.empty?
       return value if value.eql?("everybody") || value.eql?("nobody") || value.eql?("ru")
       return "everybody"
