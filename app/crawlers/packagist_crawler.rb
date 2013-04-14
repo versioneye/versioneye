@@ -150,6 +150,7 @@ class PackagistCrawler
           :prod_version => version_number, :scope => scope, :prod_type => Project::A_TYPE_COMPOSER, 
           :language => "PHP"})
         dependency.save
+        dependency.update_known
         p " -- create new dependency: #{dependency.prod_key}:#{dependency.prod_version} -> #{dependency.dep_prod_key}:#{dependency.version}"
       end
     end

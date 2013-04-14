@@ -1,20 +1,17 @@
-<div class="row flash info" >
-  
-    <div class="icon56 span2 pull-left">
-      <%= render :partial => "/shared/language_icons", 
-                 :locals => {:language => product.language, 
-                             :icon => product.icon, 
-                             :link => product_url(product), 
-                             :title => product.name } %> 
-    </div>
+<tr class="flash info">
+  <td>
+    
+  </td>
+  <td>
+    <span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
+      <span itemprop="name" ><%= product.name %></span>
+    </span>
+  </td>
+  <td>
+    <span itemprop="softwareVersion"><%= dep.comperator_lbl %> <%= dep.version_lbl %></span>
+  </td>
+  <td>
+    UNKNOWN
+  </td>
+</tr>
 
-    <div class="span5">
-      <%= product.name %><br/>
-      <ul class="list-row">
-        <il class="list-cell">
-          <span class="meta-text">Your Version: <span class="outdated-text"><%= dep.comperator_lbl %> <%= dep.version_lbl %></span> --> Current Version: <span class="current-version-text"><b>UNKNOWN</b></span></span>
-        </il>
-      </ul>
-    </div>
-  
-</div>

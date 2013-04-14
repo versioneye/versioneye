@@ -1,28 +1,6 @@
 require 'spec_helper'
 
 describe Dependency do
-  
-  describe "gem_version" do 
-    
-    it "returns valid value" do 
-      dependency = Dependency.new
-      dependency.version = "1.0"
-      dependency.gem_version().should eql("1.0")
-    end
-
-    it "returns valid value" do
-      dependency = Dependency.new
-      dependency.version = "= 1.0"
-      dependency.gem_version().should eql("1.0")
-    end
-
-    it "returns valid value" do
-      dependency = Dependency.new
-      dependency.version = " =  1.0"
-      dependency.gem_version().should eql("1.0")
-    end
-
-  end
 
   describe "outdated?" do 
     

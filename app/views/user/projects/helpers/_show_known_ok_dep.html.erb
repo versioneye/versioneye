@@ -1,18 +1,18 @@
-<div class="row flash success" >
-  
-    <div class="icon56 span2 pull-left">
-      <% if !product.nil? && !product.language.nil? %>
-        <%= render :partial => "/shared/language_icons", :locals => {:language => product.language, :icon => product.icon, :link => dep.link, :title => dep.name } %> 
-      <% end %> 
-    </div>
-
-    <div class="span5">
-      <a href="<%= dep.link %>" class="searchResultLink"><%= dep.name %></a><br/>
-      <ul class="list-row">
-        <il class="list-cell">
-          <span class="meta-text">Your Version: <span class="outdated-text"><%= dep.comperator_lbl %> <%= dep.version_lbl %></span> --> Current Version: <span class="current-version-text"><%= dep.version_current %></span></span>
-        </il>
-      </ul>
-    </div>
-  
-</div>
+<tr class="flash success">
+  <td>
+    
+  </td>
+  <td>
+    <span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
+      <a itemprop="url" class="#a dep_link" href="<%= product_url(product) %>" >
+        <span itemprop="name" ><%= product.name %></span>
+      </a>
+    </span>
+  </td>
+  <td>
+    <span itemprop="softwareVersion"><%= dep.comperator_lbl %> <%= dep.version_lbl %></span>
+  </td>
+  <td>
+    <%= dep.version_current %>
+  </td>
+</tr>

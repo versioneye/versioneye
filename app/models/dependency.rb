@@ -20,6 +20,7 @@ class Dependency
 
   field :prod_type, type: String,  :default => Project::A_TYPE_RUBYGEMS
   field :language,  type: String,  :default => Product::A_LANGUAGE_RUBY 
+  field :known,     type: Boolean, :default => true
 
 
   def self.find_by_key_and_version(prod_key, version)
@@ -44,6 +45,13 @@ class Dependency
     Product.find_by_key( prod_key )
   end
 
+  def update_known
+    product = self.product
+    self.known = false if product.nil?
+    self.known = true  if !product.nil?
+    self.save()
+  end
+
   def outdated? 
     product = self.product
     return false if product.nil? 
@@ -62,44 +70,16 @@ class Dependency
     return false
   end
 
-  def version_for_label
-    return gem_version if prod_type.eql?( Project::A_TYPE_RUBYGEMS )
-    return version
-  end
-
-  def version_for_url
-    url_param = version_parsed
-    url_param.gsub!("/","--")
-    url_param.gsub!(".","~")
-    url_param
-  end
-
   def version_parsed
     return "0" if version.nil?
     abs_version = String.new(version)
     if prod_type.eql?( Project::A_TYPE_RUBYGEMS )
       abs_version = String.new(gem_version_parsed)
     elsif prod_type.eql?( Project::A_TYPE_COMPOSER )
-      abs_version = String.new(packagist_version_parsed)
+      abs_version = String.new( packagist_version_parsed )
     end
+    # TODO cases for java and node.js 
     abs_version
-  end
-
-  def dep_prod_key_for_url
-    return "0" if dep_prod_key.nil?
-    url_param = String.new(dep_prod_key)
-    url_param.gsub!("/","--")
-    url_param.gsub!(".","~")
-    "#{url_param}"    
-  end
-
-  def gem_version
-    ver = String.new(version)
-    ver = ver.gsub(" ", "")
-    if ver.match(/^=/)
-      ver = ver.gsub("=", "")
-    end
-    ver
   end
 
   def gem_version_parsed
@@ -121,5 +101,14 @@ class Dependency
     parser.parse_requested_version(version_string, dependency, product)
     dependency.version_requested
   end
-  
+
+  def dep_prod_key_for_url
+    Product.encode_product_key dep_prod_key
+  end
+
+  def version_for_url
+    url_param = version_parsed
+    Version.encode_version( url_param )
+  end
+
 end

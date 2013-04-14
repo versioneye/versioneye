@@ -565,11 +565,6 @@ class Product
   def to_param
     Product.encode_product_key self.prod_key
   end
-
-  def self.encode_product_key(prod_key)
-    return "0" if prod_key.nil?
-    prod_key.to_s.gsub("/", "--").gsub(".", "~")
-  end
   
   def version_to_url_param
     Product.encode_product_key version    
@@ -606,6 +601,11 @@ class Product
       array_dwoncase.push element.downcase
     end
     array_dwoncase
+  end
+
+  def self.encode_product_key(prod_key)
+    return "0" if prod_key.nil?
+    prod_key.to_s.gsub("/", "--").gsub(".", "~")
   end
 
   def self.encode_prod_key(prod_key)
@@ -670,10 +670,7 @@ class Product
     end
 
     def self.attach_label_to_element(element, dep)
-      element.text = dep.name
-      if dep.version_for_label && !dep.version_for_label.empty? 
-        element.text += ":#{dep.version_for_label}"
-      end
+      element.text = "dep.name:#{dep.version}"
     end
 
     def get_newest_or_value(newest, value)

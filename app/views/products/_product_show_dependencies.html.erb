@@ -1,7 +1,17 @@
 
-<div >
-	<h5 class="desc_header">Dependencies</h5>
+<div class="boxContainer" id="dependencies" itemprop="requirements" itemscope="" itemtype="http://schema.org/ItemList">
+	<meta name="name" content="Requirements" itemprop="name" />
+	<% if @product.prod_type.eql?( Project::A_TYPE_MAVEN2 ) %>
+		<%= render "product_show_dependencies_maven2" %>
+	<% elsif @product.prod_type.eql?( Project::A_TYPE_RUBYGEMS )  %>
+		<%= render "product_show_dependencies_rubygems" %>
+	<% elsif @product.prod_type.eql?( Project::A_TYPE_NPM )  %>
+		<%= render "product_show_dependencies_npm" %>
+	<% elsif @product.prod_type.eql?(Project::A_TYPE_COMPOSER)  %>
+		<%= render "product_show_dependencies_packagist" %>
+	<% end %>
 </div>
+
 <div class="box well" style="padding-top: 0; margin-top: 0;">
 	<div id="canvas-container"></div>
 	<div class="recursive_info_box" id="infoBox">
@@ -17,19 +27,6 @@
 			See visual page
 		</a>
 	</div>
-</div>
-
-<div class="boxContainer" id="dependencies" itemprop="requirements" itemscope="" itemtype="http://schema.org/ItemList">
-	<meta name="name" content="Requirements" itemprop="name" />
-	<% if @product.prod_type.eql?( Project::A_TYPE_MAVEN2 ) %>
-		<%= render "product_show_dependencies_maven2" %>
-	<% elsif @product.prod_type.eql?( Project::A_TYPE_RUBYGEMS )  %>
-		<%= render "product_show_dependencies_rubygems" %>
-	<% elsif @product.prod_type.eql?( Project::A_TYPE_NPM )  %>
-		<%= render "product_show_dependencies_npm" %>
-	<% elsif @product.prod_type.eql?(Project::A_TYPE_COMPOSER)  %>
-		<%= render "product_show_dependencies_packagist" %>
-	<% end %>
 </div>
 
 <script type="text/javascript">

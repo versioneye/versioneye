@@ -125,8 +125,14 @@ h3 code {
 .dependency_table .version_col{
   width: 130px;
 }
+.dependency_table .icon_col{
+  width: 10px;
+}
 .dependency_table .name_col{
   width: 270px;
+}
+.dependency_table .name_col_after_icon{
+  width: 255px;
 }
 .dependency_table th{
   text-align: left;

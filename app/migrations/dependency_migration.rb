@@ -13,4 +13,11 @@ class DependencyMigration
     p "#{z}"
   end
 
+  def self.update_known
+    Dependency.all().each do |dep|
+      dep.update_known
+      p "#{dep.known} - #{dep.dep_prod_key}" if dep.known == false 
+    end
+  end
+
 end

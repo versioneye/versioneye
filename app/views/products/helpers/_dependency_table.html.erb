@@ -8,23 +8,27 @@
       </tr>
     </thead>
     <% dependencies.each do |dep| %>
+      <% product = dep.product %> 
       <% tr_class = "flash warn" if dep.outdated? %>
       <tr class="<%= tr_class %>">
         <td>
-          <span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
-            <a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
-              <div class="icon_link icon16"></div>
-              <span itemprop="name" ><%= dep.name %></span>
-            </a>
-          </span>
+          <% if product %> 
+            <span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
+              <a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
+                <div class="icon_link icon16"></div>
+                <span itemprop="name" ><%= dep.name %></span>
+              </a>
+            </span>
+          <% else %>
+            <div class="icon_link icon16"></div>
+            <span itemprop="name" ><%= dep.name %></span>
+          <% end %>
         </td>
         <td>
-          <% if !dep.version_for_label.nil? && !dep.version_for_label.empty? %>
-            <span itemprop="softwareVersion"><%= dep.version_for_label %></span>
-          <% end %> 
+          <span itemprop="softwareVersion"><%= dep.version %></span>
         </td>
         <td>
-          <% if !dep.product.nil? %> 
+          <% if product %> 
             <%= dep.product.newest_version.version %>
           <% else %> 
             UNKNOWN
