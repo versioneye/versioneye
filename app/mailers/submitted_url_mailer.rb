@@ -2,6 +2,15 @@ class SubmittedUrlMailer < ActionMailer::Base
   
   default from: "\"VersionEye\" <notify@versioneye.com>"
 
+  def new_submission_email(submitted_url)
+    @submitted_url = submitted_url
+    @user = submitted_url.user
+    mail(
+      :to       => "reiz@versioneye.com",
+      :subject  => "New Submission", 
+      :tag      => "notice")
+  end
+
   def approved_url_email(submitted_url)
     @submitted_url = submitted_url
     @user = submitted_url.user
