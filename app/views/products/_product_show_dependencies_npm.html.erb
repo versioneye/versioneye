@@ -1,84 +1,33 @@
 <div class="well box_dep">
 
 <div class="row">
-	<div class="span2">
+	<div class="span6">
 		<h5 class="dep_header">
 			<%= pluralize(@main_dependencies.count, "Compile Dependencies") %>
 		</h5>
 	</div>
-	<div class="span4" >
-		<ul class = "nav nav-list">
-		<% @main_dependencies.each do |dep| %>
-		<li >
-			<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
-				<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
-					<div class="icon_link icon16"></div>
-					<span itemprop="name" ><%= dep.name %></span>
-					<% if !dep.version_for_label.nil? && !dep.version_for_label.empty? %>
-						: <span itemprop="softwareVersion"><%= dep.version_for_label %></span>
-					<% end %> 
-				</a>
-			</span>
-		</li>
-		<% end %>
-		</ul>
+	<div class="span7" >
+		<% if !@main_dependencies.empty? %>
+      <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => @main_dependencies }  %>
+    <% end %>
 	</div>
 </div>
+
 <% test_deps = @product.dependencies("test") %>
 <% if test_deps.count > 0 %>
 	<hr/>
-	<div class="row">
-		<div class="span2">
-			<h5 class="dep_header">
-				<%= pluralize(test_deps.count, "Test Dependencies") %>
-			</h5>
-		</div>
-		<div class="span4" >
-			<ul class = "nav nav-list">
-			<% test_deps.each do |dep| %>
-				<li>
-				<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
-					<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
-						<span class = "icon_link"></span>
-						<span itemprop="name" ><%= dep.name %></span> 
-						<% if !dep.version_for_label.nil? && !dep.version_for_label.empty? %>
-							: <span itemprop="softwareVersion"><%= dep.version_for_label %></span>
-						<% end %>
-					</a>
-				</span>
-				</li>
-			<% end %>
-			</ul>
-		</div>
-	</div>
+	<h5 class="dep_header">
+    <%= pluralize(test_deps.count, "Test Dependencies") %>
+  </h5>
+  <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => test_deps }  %>
 <% end %>
 
-<% provided_deps = @product.dependencies("development") %>
-<% if provided_deps.count > 0 %>
+<% dev_deps = @product.dependencies("development") %>
+<% if dev_deps.count > 0 %>
 	<hr />
-<div class="row">
-	<div class="span2">
-		<h5 class="dep_header">
-			<%= pluralize(provided_deps.count, "Development Dependencies") %>
-		</h5>
-	</div>
-	<div class="span4" >
-		<ul class = "nav nav-list">
-		<% provided_deps.each do |dep| %>
-			<li>
-				<span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
-					<a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
-						<span class = "icon_link icon16"></span>
-						<span itemprop="name" ><%= dep.name %></span> 
-						<% if !dep.version_for_label.nil? && !dep.version_for_label.empty? %>
-							: <span itemprop="softwareVersion"><%= dep.version_for_label %></span>
-						<% end %> 
-					</a><br/>
-				</span>
-			</li>
-		<% end %>
-		</ul>
-	</div>
-</div>
+	<h5 class="dep_header">
+    <%= pluralize(dev_deps.count, "Development Dependencies") %>
+  </h5>
+  <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => dev_deps }  %>
 <% end %>
 </div>
