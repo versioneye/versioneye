@@ -89,22 +89,6 @@ class Projectdependency
     return true
   end
 
-  def version_lbl
-    # if version_label
-    #   version_label
-    # else
-      version_requested
-    # end
-  end
-
-  def comperator_lbl
-    # if version_label && version_label.match(/.x$/)
-      "="
-    # else
-    #   comperator
-    # end
-  end
-
   def link 
     if self.prod_key 
       key = Product.encode_product_key( prod_key )

@@ -196,6 +196,20 @@ class ComposerParser < CommonParser
       newest_but_not = product.newest_but_not(version)
       dependency.version_requested = newest_but_not.version
       dependency.comperator = "!="
+
+    elsif version.match(/^~/)
+      # Approximately greater than -> Pessimistic Version Constraint
+      version.gsub!("~", "")
+      version.gsub!(" ", "")
+      starter = Product.version_approximately_greater_than_starter( version )
+      versions = product.versions_start_with( starter )
+      highest_version = Product.newest_version_from( versions )
+      if highest_version
+        dependency.version_requested = highest_version.version
+      else 
+        dependency.version_requested = version
+      end
+      dependency.comperator = "~"
     
     else # = 
       dependency.version_requested = version

@@ -52,8 +52,8 @@ class ServicesController < ApplicationController
 			element.id = dep.prod_key
 			element.text = dep.name
 			element.text = dep.prod_key if element.text.nil?
-			if dep.version_lbl && !dep.version_lbl.empty? 
-				element.text += ":#{dep.version_lbl}"
+			if dep.version_requested && !dep.version_requested.empty? 
+				element.text += ":#{dep.version_requested}"
 			end
 			element.version = dep.version_requested
 			hash[dep.prod_key] = element

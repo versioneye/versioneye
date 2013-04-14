@@ -138,11 +138,17 @@ describe ComposerParser do
       product_16.versions.push( version_16_01 )
       product_16.save
 
+      product_17 = ProductFactory.create_for_composer("symfony/config", "2.2.1")
+      version_17_01 = Version.new 
+      version_17_01.version = "2.2.1"
+      product_17.versions.push( version_17_01 )
+      product_17.save
+
 
       parser = ComposerParser.new 
       project = parser.parse("http://s3.amazonaws.com/veye_test_env/composer.json")
       project.should_not be_nil
-      project.dependencies.count.should eql(16)
+      project.dependencies.count.should eql(17)
 
       dep_01 = project.dependencies.first
       dep_01.name.should eql("symfony/symfony")
@@ -238,13 +244,19 @@ describe ComposerParser do
       dep_14.comperator.should eql("=")
       dep_14.stability.should eql("stable")
 
-
       dep_16 = project.dependencies[15]
       dep_16.name.should eql("symfony/finder")
       dep_16.version_label.should eql("@dev")
       dep_16.version_requested.should eql("2.2.1")
       dep_16.version_current.should   eql("2.2.1")
       dep_16.comperator.should eql("=")
+
+      dep_17 = project.dependencies[16]
+      dep_17.name.should eql("symfony/config")
+      dep_17.version_label.should eql("~2.2")
+      dep_17.version_requested.should eql("2.2.1")
+      dep_17.version_current.should   eql("2.2.1")
+      dep_17.comperator.should eql("~")
 
       product_01.remove
       product_02.remove
@@ -257,7 +269,11 @@ describe ComposerParser do
       product_09.remove
       product_10.remove
       product_11.remove
-
+      product_12.remove
+      product_13.remove
+      product_14.remove
+      product_16.remove
+      product_17.remove
     end
     
   end
