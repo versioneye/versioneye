@@ -38,15 +38,13 @@ class GemfileParser < CommonParser
         dependency.prod_key = product.prod_key 
         dependency.version_current = product.version
       else 
-        project.unknown_number = project.unknown_number + 1
+        project.unknown_number += 1
       end
       
       version = line_elements[1]
       parse_requested_version(version, dependency, product)
       
-      if dependency.outdated?
-        project.out_number = project.out_number + 1
-      end      
+      project.out_number += 1 if dependency.outdated?
       project.dependencies << dependency
     end
     project.dep_number = project.dependencies.count

@@ -53,18 +53,14 @@ class PomParser < CommonParser
     end
     
     product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
+    parse_requested_version( dependency.version_requested, dependency, product )
     if product
       dependency.prod_key = product.prod_key
-      if dependency.version_requested.nil? 
-        dependency.version_requested = product.version
-      end
     else 
-      project.unknown_number = project.unknown_number + 1
+      project.unknown_number += 1
     end
     
-    if dependency.outdated?
-      project.out_number = project.out_number + 1
-    end
+    project.out_number += 1 if dependency.outdated?
     dependency
   end
 
@@ -98,7 +94,6 @@ class PomParser < CommonParser
     end
   end
 
-  # TODO use this method in this class to parse version strings 
   def parse_requested_version(version, dependency, product)
     if (version.nil? || version.empty?)
       self.update_requested_with_current(dependency, product)
