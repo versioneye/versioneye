@@ -47,9 +47,10 @@ class Dependency
 
   def update_known
     product = self.product
-    self.known = false if product.nil?
-    self.known = true  if !product.nil?
-    self.save()
+    if product.nil?
+      self.known = false
+      self.save()  
+    end
   end
 
   def outdated? 

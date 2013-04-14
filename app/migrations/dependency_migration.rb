@@ -14,9 +14,9 @@ class DependencyMigration
   end
 
   def self.update_known
-    Dependency.all().each do |dep|
+    Dependency.where(:known => nil).each do |dep|
       dep.update_known
-      p "#{dep.known} - #{dep.dep_prod_key}" if dep.known == false 
+      p "#{dep.known} - #{dep.dep_prod_key} - #{dep.prod_key} - #{dep.prod_type}" if dep.known == false 
     end
   end
 
