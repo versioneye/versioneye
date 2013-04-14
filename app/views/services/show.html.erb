@@ -2,99 +2,113 @@
 
 <% if @project %>
 <div>
-	<div class="tab-pane active" style="display: inline-block; width: 530px; margin-left: 174px;">
-		<div style="font-size: 16px; margin-bottom: 20px;">
-			<%= pluralize(@project.dep_number, "Dependency") %>, 
-			<span style="color: <%= outdated_color(@project)%>; font-weight: bold;" ><%= @project.out_number %> Outdated</span>, 
-			<span style="color: <%= unknown_color(@project)%>; font-weight: bold;" ><%= @project.unknown_number %> Unknown</span>
-		</div>
-		<div class="dependencies" id="dependencies" >
-			<% if !@project.fetch_dependencies.nil? %>
-				<% @project.dependencies.each do |dep| %>
-					<% product = dep.find_or_init_product %>
-					<% dep.outdated? %>
-					<div class="row search-item search_item_context" >
-						<% if dep.unknown? %>
-							<%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
-						<% elsif dep.outdated and dep.release != false  %>
-							<%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
-						<% elsif dep.outdated and dep.release == false %>
-							<%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep} %>
-						<% else %>	
-							<%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
-						<% end %>
-					</div>
-				<% end %>
-			<% end %>
-		</div>
-	</div>
+  <div class="tab-pane active" style="display: inline-block; width: 530px; margin-left: 174px;">
+    <div style="font-size: 16px; margin-bottom: 20px;">
+      <%= pluralize(@project.dep_number, "Dependency") %>, 
+      <span style="color: <%= outdated_color(@project)%>; font-weight: bold;" ><%= @project.out_number %> Outdated</span>, 
+      <span style="color: <%= unknown_color(@project)%>; font-weight: bold;" ><%= @project.unknown_number %> Unknown</span>
+    </div>
+    <div class="dependencies" id="dependencies" >
+      <% if !@project.fetch_dependencies.nil? %>
+
+        <table class="dependency_table" style="width: 570px;">
+          <thead>
+            <tr>
+              <th class="icon_col" ></th>
+              <th class="name_col_after_icon"></th>
+              <th class="version_col">Locked Version</th>
+              <th class="version_col">Current Version</th>
+            </tr>
+          </thead>
+
+          <% @project.dependencies.each do |dep| %>
+            <% product = dep.find_or_init_product %>
+            <% dep.outdated? %>
+            
+            <% if dep.unknown? %>
+              <%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
+            <% elsif dep.outdated and dep.release != false  %>
+              <%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
+            <% elsif dep.outdated and dep.release == false %>
+              <%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep} %>
+            <% else %>  
+              <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
+            <% end %>
+            
+          <% end %>
+
+        </table>
+
+      <% end %>
+    </div>
+  </div>
 </div>
 
-	<% if !@project.project_type.eql?( Project::A_TYPE_PIP ) %>
-		<div id="canvas-demo-container" style="display: inline-block;"></div>
-		<div style="text-align: center; display: none; width: 100%;" id="infoBox">
-			<h5 style="text-align: center;" >
-				This project has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive dependencies
-			</h5>
-		</div>
-		<script type="text/javascript">
-			function render_wheel_demo(){
-				canvas_container = document.getElementById("canvas-demo-container")
-				if (canvas_container){
-					var wheel = new DependencyWheel.Remote(false, canvas_container, { 
-						url: '/services/<%= @project.id %>/recursive_dependencies.json',
-						width: "900", 
-						height: "900",
-						infoBox: "infoBox",
-						infoNumber: "runtime_recursive_number",
-						canvas_id: "canvas",
-						canvas_hover_id: "canvas_hover",
-						product_key: "UNKNOWN", 
-						product_version: "UNKNOWN",
-						product_name: "demo", 
-						version: "UNKNOWN",
-						data_border: 80,
-						show_label: false,
-						resize: false,
-						scope: "runtime",
-						container_id: "canvas-demo-container",
-						pinit: false,
-						onItemClick: function(item, event){
-							key = item.id; 
-							key = key.replace(/\//g, "--");
-							key = key.replace(/\./g, "~" );
-							version = item.version;
-							version = version.replace(/\//g, "--");
-							version = version.replace(/\./g, "~" );
-							window.location.href = "/package/" + key + "/version/" + version;
-						}
-					} );	
-				}
-			}	
-		</script>
-	<% end %>
+  <% if !@project.project_type.eql?( Project::A_TYPE_PIP ) %>
+    <div id="canvas-demo-container" style="display: inline-block;"></div>
+    <div style="text-align: center; display: none; width: 100%;" id="infoBox">
+      <h5 style="text-align: center;" >
+        This project has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive dependencies
+      </h5>
+    </div>
+    <script type="text/javascript">
+      function render_wheel_demo(){
+        canvas_container = document.getElementById("canvas-demo-container")
+        if (canvas_container){
+          var wheel = new DependencyWheel.Remote(false, canvas_container, { 
+            url: '/services/<%= @project.id %>/recursive_dependencies.json',
+            width: "900", 
+            height: "900",
+            infoBox: "infoBox",
+            infoNumber: "runtime_recursive_number",
+            canvas_id: "canvas",
+            canvas_hover_id: "canvas_hover",
+            product_key: "UNKNOWN", 
+            product_version: "UNKNOWN",
+            product_name: "demo", 
+            version: "UNKNOWN",
+            data_border: 80,
+            show_label: false,
+            resize: false,
+            scope: "runtime",
+            container_id: "canvas-demo-container",
+            pinit: false,
+            onItemClick: function(item, event){
+              key = item.id; 
+              key = key.replace(/\//g, "--");
+              key = key.replace(/\./g, "~" );
+              version = item.version;
+              version = version.replace(/\//g, "--");
+              version = version.replace(/\./g, "~" );
+              window.location.href = "/package/" + key + "/version/" + version;
+            }
+          } );  
+        }
+      } 
+    </script>
+  <% end %>
 
-	<div style="width: 300px; margin-right: auto; margin-left: auto; text-align: center">
-		<ul class="list-social " >
-			<li class="list-cell share-on-icon">
-				<a href="https://twitter.com/share" 
-				   class="twitter-share-button" 
-				   data-url="<%= Settings.server_url %>/services/<%= @project_id %>" 
-				   data-text="Check out my project @VersionEye " 
-				   data-count="horizontal" >Twitter</a>
-				   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-			</li>
-			<li class="list-cell share-on-icon">
-				<iframe src="https://www.facebook.com/plugins/like.php?href=<%=Settings.server_url%>/services/<%=@project_id%>&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=25" style="border:none; width:100px; height:25px" allowTransparency="true" scrolling="no" frameborder="0"></iframe>
-			</li>
-			<li class="list-cell share-on-icon" >
-				<div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="<%= Settings.server_url %>/services/<%= @project_id %>" style="width: 90px;"></div>
-			</li>
-		</ul>
-	</div>
-	
-	<div style="text-align: center; padding-top: 30px;">
-		<%= render 'services/subscription' %>
-	</div>
+  <div style="width: 300px; margin-right: auto; margin-left: auto; text-align: center">
+    <ul class="list-social " >
+      <li class="list-cell share-on-icon">
+        <a href="https://twitter.com/share" 
+           class="twitter-share-button" 
+           data-url="<%= Settings.server_url %>/services/<%= @project_id %>" 
+           data-text="Check out my project @VersionEye " 
+           data-count="horizontal" >Twitter</a>
+           <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+      </li>
+      <li class="list-cell share-on-icon">
+        <iframe src="https://www.facebook.com/plugins/like.php?href=<%=Settings.server_url%>/services/<%=@project_id%>&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=25" style="border:none; width:100px; height:25px" allowTransparency="true" scrolling="no" frameborder="0"></iframe>
+      </li>
+      <li class="list-cell share-on-icon" >
+        <div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="<%= Settings.server_url %>/services/<%= @project_id %>" style="width: 90px;"></div>
+      </li>
+    </ul>
+  </div>
+  
+  <div style="text-align: center; padding-top: 30px;">
+    <%= render 'services/subscription' %>
+  </div>
 
 <% end %>

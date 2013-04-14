@@ -181,8 +181,8 @@
                   </tr>
                 </thead>
 
-              <% licences = {} %>
-              <% @project.dependencies.each do |dep| %>
+                <% licences = {} %>
+                <% @project.dependencies.each do |dep| %>
                 <% product = dep.find_or_init_product %>
                 <% dep.outdated? %>
 
