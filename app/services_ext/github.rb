@@ -21,7 +21,7 @@ class Github
 
   def self.repo_names_for_orga( github_token, organisation_name )
     repo_names = Array.new 
-    page = 0 
+    page = 1
     loop do 
       body = HTTParty.get("https://api.github.com/orgs/#{organisation_name}/repos?access_token=#{github_token}&page=#{page}").response.body
       repos = JSON.parse( body )
