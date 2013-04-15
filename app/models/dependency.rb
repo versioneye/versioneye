@@ -53,6 +53,10 @@ class Dependency
     end
   end
 
+  def update_known_if_nil
+    self.update_known() if self.known.nil? 
+  end
+
   def outdated? 
     product = self.product
     return false if product.nil? 

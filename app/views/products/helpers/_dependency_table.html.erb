@@ -8,11 +8,11 @@
       </tr>
     </thead>
     <% dependencies.each do |dep| %>
-      <% product = dep.product %> 
+      <% dep.update_known_if_nil() %> 
       <% tr_class = "flash warn" if dep.outdated? %>
       <tr class="<%= tr_class %>">
         <td>
-          <% if product %> 
+          <% if dep.known %> 
             <span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
               <a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
                 <div class="icon_link icon16"></div>
@@ -28,7 +28,7 @@
           <span itemprop="softwareVersion"><%= dep.version %></span>
         </td>
         <td>
-          <% if product %> 
+          <% if dep.known %> 
             <%= dep.product.newest_version.version %>
           <% else %> 
             UNKNOWN
