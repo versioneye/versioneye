@@ -79,11 +79,13 @@ class Dependency
     return "0" if version.nil?
     abs_version = String.new(version)
     if prod_type.eql?( Project::A_TYPE_RUBYGEMS )
-      abs_version = String.new(gem_version_parsed)
+      abs_version = String.new( gem_version_parsed )
     elsif prod_type.eql?( Project::A_TYPE_COMPOSER )
       abs_version = String.new( packagist_version_parsed )
+    elsif prod_type.eql?( Project::A_TYPE_NPM )  
+      abs_version = String.new( npm_version_parsed )  
     end
-    # TODO cases for java and node.js 
+    # TODO cases for java 
     abs_version
   end
 
@@ -96,14 +98,21 @@ class Dependency
     dependency.version_requested
   end
 
-  # TODO Write Test for it !!! 
-  # 
   def packagist_version_parsed
     version_string = String.new(version)
     product = Product.find_by_key(self.dep_prod_key)
     dependency = Projectdependency.new
     parser = ComposerParser.new 
     parser.parse_requested_version(version_string, dependency, product)
+    dependency.version_requested
+  end
+
+  def npm_version_parsed 
+    version_string = String.new( version )
+    product = Product.find_by_key(self.dep_prod_key)
+    dependency = Projectdependency.new
+    parser = PackageParser.new
+    parser.parse_requested_version( version_string, dependency, product )
     dependency.version_requested
   end
 

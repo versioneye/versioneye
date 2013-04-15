@@ -133,6 +133,120 @@ describe Dependency do
 
   end
 
+  describe "packagist_version_parsed" do 
+    
+    it "returns valid value" do 
+      product = Product.new
+      product.versions = Array.new
+      product.name = "test"
+      product.prod_key = "gasgj8623_jun44444it/juat23afsg"
+
+      version = Version.new
+      version.version = "1.0"
+      product.versions.push(version)
+
+      version = Version.new
+      version.version = "1.1"
+      product.versions.push(version)
+
+      version = Version.new
+      version.version = "1.2"
+      product.versions.push(version)
+
+      version = Version.new
+      version.version = "2.0"
+      product.versions.push(version)
+      product.save
+
+      dependency = Dependency.new
+      dependency.version = "~1.0"
+      dependency.dep_prod_key = product.prod_key
+      dependency.packagist_version_parsed().should eql("1.2")
+      
+      product.remove
+    end
+
+    it "returns valid value" do 
+      product = Product.new
+      product.versions = Array.new
+      product.name = "test"
+      product.prod_key = "huj_buuuuu"
+
+      version = Version.new
+      version.version = "1.2"
+      product.versions.push(version)
+
+      version = Version.new
+      version.version = "2.0"
+      product.versions.push(version)
+        
+      version = Version.new
+      version.version = "2.2.1"
+      product.versions.push(version)
+
+      version = Version.new
+      version.version = "2.2.2"
+      product.versions.push(version)
+
+      version = Version.new
+      version.version = "2.2.9"
+      product.versions.push(version)
+
+      version = Version.new
+      version.version = "2.3"
+      product.versions.push(version)
+
+      product.save
+
+      dependency = Dependency.new
+      dependency.version = "~2.2"
+      dependency.dep_prod_key = product.prod_key
+      dependency.packagist_version_parsed().should eql("2.2.9")
+
+      dependency.version = "~2.0"
+      dependency.dep_prod_key = product.prod_key
+      dependency.packagist_version_parsed().should eql("2.3")
+
+      product.remove
+    end
+
+  end
+
+  describe "npm_version_parsed" do 
+    
+    it "returns valid value" do 
+      product = Product.new
+      product.versions = Array.new
+      product.name = "test"
+      product.prod_key = "gasgj8623_jun44444it/juat23afsg"
+
+      version = Version.new
+      version.version = "1.0"
+      product.versions.push(version)
+
+      version = Version.new
+      version.version = "1.1"
+      product.versions.push(version)
+
+      version = Version.new
+      version.version = "1.2"
+      product.versions.push(version)
+
+      version = Version.new
+      version.version = "2.0"
+      product.versions.push(version)
+      product.save
+
+      dependency = Dependency.new
+      dependency.version = "~1.0"
+      dependency.dep_prod_key = product.prod_key
+      dependency.npm_version_parsed().should eql("1.2")
+      
+      product.remove
+    end
+
+  end
+
   context "find_by_context" do
 
     describe "find_by" do 
