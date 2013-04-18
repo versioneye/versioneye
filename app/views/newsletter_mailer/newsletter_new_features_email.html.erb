@@ -1,83 +1,83 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-	<head >
-		<title>VersionEye</title>
-	</head>
+  <head >
+    <title>VersionEye</title>
+  </head>
 
-	<body style="color: #22211f;
-				background-color: lightgray;
-				background-repeat: no-repeat;
-				background-position: 50px 30px;
-				font-size: 14px;
-				font-family: sans-serif, arial, verdana, tahoma, 'lucida grande', 'Segoe UI', 'lucida sans unicode';
-				padding: 0px; 
-				margin: 0px;">
-	
-		<div style="background-image: url('http://www.versioneye.com/assets/header_os.png');
-				background-repeat: repeat-x;
-			    background-position: top;
-				margin: 0px;
-				padding: 0px;
-				height: 55px;
-				width: 100%;
-				vertical-align: middle;">
-			<div style="width: 690px;
-				margin: 0 auto; 
-				clear: both;
-			    display: block;
-			    height: 0;">
-				<div style="float: left; margin: 0; padding: 0;">
-					<a href="http://wwww.versioneye.com"><img src="http://www.versioneye.com/assets/header_logo_os.png" /></a>
-				</div>
-				<div style="float:left; margin-top: 13px; margin-left: 5px;">
-					<a href="http://www.versioneye.com"><img src="http://www.versioneye.com/assets/eye_off.png" /></a>
-				</div>
-			</div>
-		</div>
+  <body style="color: #22211f;
+        background-color: lightgray;
+        background-repeat: no-repeat;
+        background-position: 50px 30px;
+        font-size: 14px;
+        font-family: sans-serif, arial, verdana, tahoma, 'lucida grande', 'Segoe UI', 'lucida sans unicode';
+        padding: 0px; 
+        margin: 0px;">
+  
+    <div style="background-image: url('http://www.versioneye.com/assets/header_os.png');
+        background-repeat: repeat-x;
+          background-position: top;
+        margin: 0px;
+        padding: 0px;
+        height: 55px;
+        width: 100%;
+        vertical-align: middle;">
+      <div style="width: 690px;
+        margin: 0 auto; 
+        clear: both;
+          display: block;
+          height: 0;">
+        <div style="float: left; margin: 0; padding: 0;">
+          <a href="http://wwww.versioneye.com"><img src="http://www.versioneye.com/assets/header_logo_os.png" /></a>
+        </div>
+        <div style="float:left; margin-top: 13px; margin-left: 5px;">
+          <a href="http://www.versioneye.com"><img src="http://www.versioneye.com/assets/eye_off.png" /></a>
+        </div>
+      </div>
+    </div>
 
-		<div style="width: 690px;
-				margin: 0 auto;">
-			<div style="
-				display: inline-block;
-			    width: 650px;
-				padding: 20px;
-				margin-top: 10px;
-				background-color: white;
-				-moz-border-radius:    10px;
-			    -webkit-border-radius: 10px;
-			    border-radius:         10px;" >
+    <div style="width: 690px;
+        margin: 0 auto;">
+      <div style="
+        display: inline-block;
+          width: 650px;
+        padding: 20px;
+        margin-top: 10px;
+        background-color: white;
+        -moz-border-radius:    10px;
+          -webkit-border-radius: 10px;
+          border-radius:         10px;" >
 Hey <%= @user.fullname %>,<br/>
 <br/>
 We're always hard at work to become the most awesome community for software developers.<br/>
 To prove this, we have developed these awesome new features:</br>
 <ul>
-	<li>
-		<b>Minimum stability</b>: VersionEye now supports the minimum stability feature for PHP Composer. This is our first implementation. We rely on your Feedback!<br/> 
-		<br/>
-		<a href="http://versioneye.wordpress.com/2013/03/25/minimum-stability/">http://versioneye.wordpress.com/2013/03/25/minimum-stability/</a><br/>
-		<br/>
-		<img src="http://versioneye.files.wordpress.com/2013/03/minimum-stability.png"/><br/>
-		<br/>
-	</li>
-	<li>
-		<b>Summary in search results</b>: We now show a short summary in the search results.  Thus, you get a better overview and you will find what you are looking for much faster.<br/><br/>
-	</li>
-	<li>
-		<b>Git links fixed</b>: There was a bug concerning links starting with "git".  We fixed that. All links now start with "http". If you find broken links, please let us know.<br/><br/>
-	</li>
-	<li>
-		<b>Update project via API</b>: We added a new endpoint to our API. It enables you to update existing projects with new file uploads using the API.<br/>
-		<br/>
-		<a href="http://versioneye.wordpress.com/2013/03/25/updating-an-existing-versioneye-project-using-api/">http://versioneye.wordpress.com/2013/03/25/updating-an-existing-versioneye-project-using-api/</a><br/>
-		<br/>
-	</li>
-	<li>
-		<b>Improved menu</b>: We restructured the menu a little bit.  Your favorite libraries are now positioned in the "My Projects" menu. <br/><br/>
-	</li>
-	<li>
-		Many small bug fixes and improvements.<br/><br/>
-	</li>
+  <li>
+    <b>Dependencies</b>: We changed the look & feel of the dependencies. They are now displayed in a table view.<br/> 
+    <br/>
+    <a href="http://versioneye.wordpress.com/2013/04/15/table-view-for-dependencies/">Table View for Dependencies</a><br/>
+    <br/>
+    <img src="http://versioneye.files.wordpress.com/2013/04/screen-shot-2013-04-15-at-6-29-03-pm.png"/><br/>
+    <br/>
+  </li>
+  <li>
+    <b>NPM</b>: There was a bug causing some of the Node.JS dependencies from NPM not to be displayed. This is fixed now!<br/><br/>
+  </li>
+  <li>
+    <b>Statistics Page</b>: We dramatically improved the performance of the statistics page. Check it out here:
+    <a href="https://www.versioneye.com/statistics">https://www.versioneye.com/statistics</a><br/><br/>
+  </li>
+  <li>
+    <b>Emails</b>: We changed the subjects of our e-mails. Now you can see which libraries are affected without having to open the e-mail. And we are using the new table view in the e-mails as well.<br/><br/>
+  </li>
+  <li>
+    <b>Link section</b>: The Link section works now with absolute links. Check out this blog post:<br/>
+    <a href="http://versioneye.wordpress.com/2013/04/15/absolute-links-in-the-link-section/">http://versioneye.wordpress.com/2013/04/15/absolute-links-in-the-link-section/</a>
+    <br/><br/>
+  </li>
+  <li>
+    <b>PHP</b>: We added support for "Next Significant Release (Tilde Operator)".<br/>
+  </li>
 </ul>
 <br/>
 As usual, your feedback is highly appreciated. <br/>
@@ -86,27 +86,27 @@ Best regards, <br/>
 Your VersionEye Team<br/>
 <a href="http://www.versioneye.com">http://www.versioneye.com</a>
 <br/>
-			</div>
-			<div style="-moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
-				text-align: left;
-			    margin-top: 15px;
-				padding: 20px;
-			    width: 650px;
-			    margin-left: auto;
-			    margin-right: auto;
-			    clear: both;
-				background-color: white; 
-				font-size: 12px;
-				color: #808080;
-				word-wrap:break-word;" >
-				VersionEye GmbH | Invalidenstrasse 50/51 | 10557 Berlin | Germany | 
+      </div>
+      <div style="-moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
+        text-align: left;
+          margin-top: 15px;
+        padding: 20px;
+          width: 650px;
+          margin-left: auto;
+          margin-right: auto;
+          clear: both;
+        background-color: white; 
+        font-size: 12px;
+        color: #808080;
+        word-wrap:break-word;" >
+        VersionEye GmbH | Invalidenstrasse 50/51 | 10557 Berlin | Germany | 
 E-Mail: contact [at] versioneye.com | Amtsgericht: Berlin / Charlottenburg | Handelsregister: Berlin, HRB 144242 B | USt-IdNr.: DE282045007 | CEO: Robert Reiz<br/>
 <a href="https://www.versioneye.com/imprint">Imprint</a> / <a href="https://www.versioneye.com/impressum">Impressum</a>. Unsubscribe here: <a href="https://www.versioneye.com/settings/notifications">Notification Center</a>
-			</div>
-		</div>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-	</body>
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+  </body>
 </html>
