@@ -22,7 +22,7 @@
               <%= error.errormessage %>
             </div>
             <div>
-              <%= error.created_at %> - <%= error.source %>
+              <%= error.created_at.strftime("%b %d, %Y - %I:%m %p") %>
             </div>
           </div>        
         <% end %>
