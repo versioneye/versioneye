@@ -1,0 +1,33 @@
+<div class="span3" >
+  
+  <br/>
+  <br/>
+  
+</div>  
+
+<div class="span8" >
+  
+  <div >
+    <div>
+      <h1>Errors</h1>
+    </div>  
+    <div class="searchResults">
+      <% if !@errors.nil? %>
+        <% @errors.each do |error| %>
+          <div class="search-item">
+            <div>
+              <%= error.subject %>
+            </div>
+            <div>
+              <%= error.errormessage %>
+            </div>
+            <div>
+              <%= error.source %> 
+            </div>
+          </div>        
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+</div>

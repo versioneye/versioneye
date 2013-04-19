@@ -138,6 +138,7 @@ Versioneye::Application.routes.draw do
       post '/approve',            :to => 'submitted_urls#approve'
       post '/decline',            :to => 'submitted_urls#decline'
     end
+    resources :error_messages
     resources :crawles
     get   '/crawles',             :to => 'crawles#index'
     get   '/group/:group',        :to => 'crawles#group', :as => 'group'
