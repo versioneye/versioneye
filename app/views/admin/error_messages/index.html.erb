@@ -15,14 +15,14 @@
       <% if !@errors.nil? %>
         <% @errors.each do |error| %>
           <div class="search-item">
-            <div>
+            <div style="font-weight: bold;">
               <%= error.subject %>
             </div>
             <div>
               <%= error.errormessage %>
             </div>
             <div>
-              <%= error.source %> 
+              <%= error.created_at %> - <%= error.source %>
             </div>
           </div>        
         <% end %>
