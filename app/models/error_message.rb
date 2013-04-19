@@ -7,6 +7,6 @@ class ErrorMessage
   field :errormessage, type: String
   field :source, type: String
 
-  embedded_in :crawle
+  belongs_to :crawle
   
 end

@@ -28,7 +28,7 @@ class PackagistCrawler
     return nil if versions.nil? || versions.empty?
 
     product = PackagistCrawler.get_product package_name
-    PackagistCrawler.update_product product, package	
+    PackagistCrawler.update_product product, package  
 
     packagist_page = "http://packagist.org/packages/#{package_name}"
     PackagistCrawler.update_packagist_link product, packagist_page
@@ -187,11 +187,8 @@ class PackagistCrawler
   end
 
   def self.store_error( crawl, subject, message, source )
-    error = ErrorMessage.new({:subject => "#{subject}", 
-      :errormessage => "#{message}", 
-      :source => "#{source}" })
-    crawl.error_messages << error
-    crawl.save
+    error = ErrorMessage.new({:subject => "#{subject}", :errormessage => "#{message}", :source => "#{source}", :crawle_id => crawl.id })
+    error.save
   rescue => e
     p "ERROR in store_error: #{e.message}"
     p "ERROR in store_error: #{e.backtrace}"
