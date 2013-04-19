@@ -20,7 +20,7 @@ class Dependency
 
   field :prod_type, type: String,  :default => Project::A_TYPE_RUBYGEMS
   field :language,  type: String,  :default => Product::A_LANGUAGE_RUBY 
-  field :known,     type: Boolean, :default => true
+  field :known,     type: Boolean
 
 
   def self.find_by_key_and_version(prod_key, version)
@@ -49,8 +49,10 @@ class Dependency
     product = self.product
     if product.nil?
       self.known = false
-      self.save()  
+    else 
+      self.known = true 
     end
+    self.save()
   end
 
   def update_known_if_nil
