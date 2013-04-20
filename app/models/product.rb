@@ -448,7 +448,8 @@ class Product
   end
 
   def dependencies_outdated?(scope = nil )
-    deps = self.dependencies(scope)
+    deps = self.dependencies( scope )
+    return false if deps.nil? || deps.empty?
     deps.each do |dep| 
       newest_version = dep.product.newest_version()
       return true if !newest_version.version.eql? dep.version

@@ -87,21 +87,21 @@ class ProductsController < ApplicationController
     render :layout => 'application_visual'
   end
 
-  def show_shield
+  def show_badge
     prod_key = Product.decode_prod_key params[:key] 
-    path = "app/assets/images/shields"
-    shield = "unknown"
+    path = "app/assets/images/badges"
+    badge = "unknown"
     @product = Product.find_by_key(prod_key)
     unless @product.nil? 
       version = Version.decode_version params[:version]
       version = @product.version if version.nil? 
       if @product.dependencies_outdated?()
-        shield = "out-of-date"
+        badge = "out-of-date"
       else
-        shield = "up-to-date"
+        badge = "up-to-date"
       end
     end
-    send_file "#{path}/version_#{shield}.png", :type => "images/png", :disposition => 'inline'
+    send_file "#{path}/version_#{badge}.png", :type => "images/png", :disposition => 'inline'
   end
 
   def edit
