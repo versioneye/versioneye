@@ -1,8 +1,7 @@
 class Admin::ErrorMessagesController < ApplicationController
 
   def index 
-    @errors = ErrorMessage.all().desc(:_id).paginate(:page => 1, :limit => 30)
-    # @errors = ErrorMessage.all
+    @errors = ErrorMessage.fetch_page(params[:page])
   end  
 
 end

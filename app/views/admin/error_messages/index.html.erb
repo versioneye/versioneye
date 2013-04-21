@@ -13,9 +13,12 @@
     </div>  
     <div class="searchResults">
       <% if !@errors.nil? %>
+        <div>
+          <%= @errors.total_entries %> Errors 
+        </div>
         <% @errors.each do |error| %>
           <div class="search-item">
-            <div style="font-weight: bold;">
+            <div style="font-weight: bold; font-family: arial;">
               <%= error.subject %>
             </div>
             <div>
@@ -26,6 +29,9 @@
             </div>
           </div>        
         <% end %>
+        <div class = "pagination pagination-right pagination-mini" >
+          <%= will_paginate @errors %>
+        </div>
       <% end %>
     </div>
   </div>

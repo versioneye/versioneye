@@ -10,5 +10,10 @@ class ErrorMessage
   field :source, type: String
 
   belongs_to :crawle
+
+  def self.fetch_page( page_number )
+    query = Mongoid::Criteria.new(ErrorMessage)
+    query.paginate( :page => page_number, :per_page => 30 )
+  end
   
 end
