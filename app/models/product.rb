@@ -447,12 +447,12 @@ class Product
     Dependency.find_by_key_and_version(prod_key, version)
   end
 
+  # TODO write tests for this 
   def dependencies_outdated?(scope = nil )
     deps = self.dependencies( scope )
     return false if deps.nil? || deps.empty?
     deps.each do |dep| 
-      newest_version = dep.product.newest_version()
-      return true if !newest_version.version.eql? dep.version
+      return true if dep.outdated? 
     end
     return false
   end
@@ -634,6 +634,11 @@ class Product
   def short_summary
     return get_summary(description, 125) if description
     return get_summary(description_manual, 125)
+  end
+
+  def show_dependency_badge? 
+    self.language.eql?(A_LANGUAGE_JAVA) or self.language.eql?(A_LANGUAGE_PHP) or 
+    self.language.eql?(A_LANGUAGE_RUBY) or self.language.eql?(A_LANGUAGE_NODEJS)
   end
 
   private

@@ -94,7 +94,9 @@ class ProductsController < ApplicationController
     @product = Product.find_by_key(prod_key)
     unless @product.nil? 
       version = Version.decode_version params[:version]
-      version = @product.version if version.nil? 
+      if !version.nil? && !version.empty? 
+        @product.version = version
+      end
       if @product.dependencies_outdated?()
         badge = "out-of-date"
       else

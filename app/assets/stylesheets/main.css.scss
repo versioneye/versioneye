@@ -1203,6 +1203,10 @@ h2 + .row {
   width: 400px;
 }
 
+.input-bigger {
+  width: 500px;
+}
+
 .form-horizontal .controls {
   *display: inline-block;
   *padding-left: 20px;
@@ -1349,4 +1353,13 @@ h2 + .row {
 .navbar .nav li.dropdown.open.active > .dropdown-toggle .caret {
   border-top-color: #555555;
   border-bottom-color: #555555;
+}
+
+.dialog_badge_header{
+  font-size: 24px; 
+  color: black;
+}
+
+.dialog_badge_group{
+  padding-bottom: 15px;
 }
