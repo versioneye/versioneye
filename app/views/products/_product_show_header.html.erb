@@ -14,18 +14,7 @@
       </div>
       <div class="row span8 pull-left ">
         <div class="span3">
-
-          <% if @product.show_dependency_badge? %>
-            <%= render "products/helpers/dialog_dependency_badge" %>
-            <a href="#dialog_dependency_badge" id="show_dep_badge_window" role="button" data-toggle="modal">
-              <img id="dependency_badge" src="" />
-            </a>
-            <script type="text/javascript">
-              element = document.getElementById("dependency_badge")
-              element.src = document.URL + "/badge.png"
-            </script>
-          <% end %> 
-
+          <%= render :partial => "shared/dependency_badge", :locals => { :project => @product } %> 
         </div>
         <div class="span5 pull-right">
           <ul class="list-social pull-right" >

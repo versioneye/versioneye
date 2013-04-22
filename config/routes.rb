@@ -92,11 +92,11 @@ Versioneye::Application.routes.draw do
   get   '/package/:key/version/:version/dependencies',  :to => 'products#recursive_dependencies'
 
   get   '/product/:key',                                :to => 'products#show'
-  get   '/product/:key/badge',                         :to => 'products#show_badge'
-  get   '/package/:key/badge',                         :to => 'products#show_badge'
+  get   '/product/:key/badge',                          :to => 'products#badge'
+  get   '/package/:key/badge',                          :to => 'products#badge'
   get   '/product/:key/version/:version',               :to => 'products#show'
-  get   '/product/:key/version/:version/badge',        :to => 'products#show_badge'
-  get   '/package/:key/version/:version/badge',        :to => 'products#show_badge'
+  get   '/product/:key/version/:version/badge',         :to => 'products#badge'
+  get   '/package/:key/version/:version/badge',         :to => 'products#badge'
 
   get   '/package_visual/:key/version/:version',        :to => 'products#show_visual'
 
@@ -112,6 +112,7 @@ Versioneye::Application.routes.draw do
   namespace :user do 
     resources :projects do 
       member do
+        get  'badge'
         post 'save_period'
         post 'save_email'
         post 'save_visibility'

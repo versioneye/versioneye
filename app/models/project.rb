@@ -27,7 +27,6 @@ class Project
   field :project_type, type: String, :default => A_TYPE_MAVEN2
   field :language, type: String
   field :project_key, type: String
-  field :private_project, type: Boolean, :default => false
   field :period, type: String, :default => A_PERIOD_WEEKLY
   field :email, type: String
   field :url, type: String
@@ -37,7 +36,8 @@ class Project
   field :dep_number, type: Integer
   field :out_number, type: Integer, default: 0
   field :unknown_number, type: Integer, default: 0
-  field :public, type: Boolean, :default => false 
+  field :public, type: Boolean, :default => false           # visible for everybody 
+  field :private_project, type: Boolean, :default => false  # private project from GitHub
   field :api_created, type: Boolean, :default => false 
 
   attr_accessor :dependencies
@@ -73,6 +73,22 @@ class Project
   def user
     return User.find_by_id(user_id) if user_id
     return nil
+  end
+
+  def show_dependency_badge?
+    p self.public
+    self.public and
+    (self.language.eql?(Product::A_LANGUAGE_JAVA) or self.language.eql?(Product::A_LANGUAGE_PHP) or 
+    self.language.eql?(Product::A_LANGUAGE_RUBY) or self.language.eql?(Product::A_LANGUAGE_NODEJS) )
+  end
+
+  # TODO test this 
+  def outdated? 
+    fetch_dependencies
+    self.dependencies.each do |dep|
+      return true if dep.outdated
+    end
+    return false 
   end
 
   def outdated_dependencies

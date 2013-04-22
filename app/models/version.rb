@@ -4,6 +4,8 @@ class Version
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes
 
+  # self.collection_name = 'people'
+
   field :uid, type: String
   field :version, type: String
   field :link, type: String

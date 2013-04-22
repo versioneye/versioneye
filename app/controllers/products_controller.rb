@@ -87,7 +87,7 @@ class ProductsController < ApplicationController
     render :layout => 'application_visual'
   end
 
-  def show_badge
+  def badge
     prod_key = Product.decode_prod_key params[:key] 
     path = "app/assets/images/badges"
     badge = "unknown"

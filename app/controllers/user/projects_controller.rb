@@ -1,6 +1,6 @@
 class User::ProjectsController < ApplicationController
   
-  before_filter :authenticate, :except => [:show]
+  before_filter :authenticate, :except => [:show, :badge]
   
   def index
     @project = Project.new
@@ -43,6 +43,21 @@ class User::ProjectsController < ApplicationController
       return if authenticate == false 
       redirect_to(root_path) unless current_user?(@project.user)
     end
+  end
+
+  def badge
+    id = params[:id]
+    @project = Project.find_by_id(id)
+    path = "app/assets/images/badges"
+    badge = "unknown"
+    unless @project.nil? 
+      if @project.outdated?
+        badge = "out-of-date"
+      else
+        badge = "up-to-date"
+      end
+    end
+    send_file "#{path}/version_#{badge}.png", :type => "images/png", :disposition => 'inline'
   end
 
   def update

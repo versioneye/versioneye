@@ -58,11 +58,12 @@
 
       <div class="row" >
 
+        <div>
+          <%= render :partial => "shared/dependency_badge", :locals => { :project => @project } %> 
+        </div>
         <%= render :partial => "user/projects/helpers/show_description" %>
         <%= render :partial => "user/projects/helpers/show_license" %>
-
-        <%= render :partial => "user/projects/helpers/project_numbers_sentence", :locals => { :project => @project } %>
-        <br/>
+        <%= render :partial => "user/projects/helpers/project_numbers_sentence", :locals => { :project => @project } %><br/>
         <%= render :partial => "user/projects/helpers/project_source", :locals => { :project => @project } %>
         
         <% if current_user?(@project.user) %>
