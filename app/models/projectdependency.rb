@@ -65,6 +65,7 @@ class Projectdependency
     if product 
       newest_version = product.newest_version_number( self.stability )
       self.version_current = newest_version
+      self.release = VersionTagRecognizer.release? self.version_current
       self.save() 
     end
 
