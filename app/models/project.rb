@@ -82,11 +82,12 @@ class Project
     self.language.eql?(Product::A_LANGUAGE_RUBY) or self.language.eql?(Product::A_LANGUAGE_NODEJS) )
   end
 
-  # TODO test this 
+  # TODO test this
+  #  
   def outdated? 
     fetch_dependencies
     self.dependencies.each do |dep|
-      return true if dep.outdated
+      return true if dep.outdated?
     end
     return false 
   end

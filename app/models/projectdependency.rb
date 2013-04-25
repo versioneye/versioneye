@@ -54,6 +54,8 @@ class Projectdependency
   end
   
   # TODO Write tests for the case that prod_key is nil and version_current is not nil 
+  # attribute self.outdated is not saved 
+  # eventuelle rename self.outdated to self.outdated_cached 
   # 
   def outdated?
     if self.prod_key.nil? && self.version_current.nil? 
