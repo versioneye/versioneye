@@ -16,7 +16,11 @@
             <span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
               <a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
                 <div class="icon_link icon16"></div>
-                <span itemprop="name" ><%= dep.name %></span>
+                <% if dep.group_id && dep.artifact_id %> 
+                  <span itemprop="name" ><%= dep.group_id %> : <%= dep.artifact_id %></span>
+                <% else %> 
+                  <span itemprop="name" ><%= dep.name %></span>
+                <% end %>
               </a>
             </span>
           <% else %>
