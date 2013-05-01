@@ -31,6 +31,10 @@ class PythonSetupParser < RequirementsParser
         key = product.prod_key
       end
 
+      if version.nil? && !product.nil? 
+        version = product.version
+      end
+
       dependency = Projectdependency.new name: package.strip,
                                          prod_key: key,
                                          version_label: "#{version}".strip,

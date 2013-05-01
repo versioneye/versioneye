@@ -47,7 +47,6 @@ describe PythonSetupParser do
       dep2 = project.dependencies.shift
       dep2.name.should eql(@product2.name)
       dep2.version_requested.should eql(@product2.version)
-      dep2.comperator.should eql('>=')
 
       dep3 = project.dependencies.shift
       dep3.name.should eql(@product3.name)
