@@ -7,6 +7,7 @@ class PythonSetupParser < RequirementsParser
 
     requirements = parse_requirements(doc)
     extras = parse_extras(doc)
+    
     project = Project.new 
     project.dependencies = []
 
@@ -16,7 +17,8 @@ class PythonSetupParser < RequirementsParser
 
       comparator = get_splitter requirement
       package, version = requirement.split(comparator)
-          
+    
+
       key = "pip/#{package}"
       product = Product.find_by_key(key)
       if product.nil? 
@@ -36,6 +38,7 @@ class PythonSetupParser < RequirementsParser
                                          scope: "compile"
       
       parse_requested_version("#{comparator}#{version}", dependency, product)
+
       if dependency.outdated?
         project.out_number = project.out_number + 1
       end
@@ -55,12 +58,11 @@ class PythonSetupParser < RequirementsParser
     doc_file = File.new "test/files/setup.py"
     doc_file.read
   end
-  
+
   def parse_requirements(doc)
     return nil if doc.nil? or doc.empty?
     req_text = slice_content doc, 'install_requires', '[', ']', false
-    req_text.gsub! /[\'|\"]+/, ""
-    req_text.split ','
+    req_text.split(/\'/).keep_if {|item| item.strip.length > 1}
   end
 
   def parse_extras(doc)
@@ -73,6 +75,8 @@ class PythonSetupParser < RequirementsParser
     return nil if doc.nil? or doc.empty?
 
     content_pos = doc.index keyword
+    return nil if content_pos.nil? 
+
     start_pos = doc.index start_matcher, content_pos
     end_pos =  doc.index end_matcher, content_pos
 
