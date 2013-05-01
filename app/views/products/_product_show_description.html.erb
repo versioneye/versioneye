@@ -4,9 +4,9 @@
 	
 	<p>
 		<% if @product.description && @product.description.include?("\n") %>
-			<small>[ crawled data ]</small>: <%= @product.description.gsub!("\n", "<br/>").html_safe %>
+			<%= @product.description.gsub!("\n", "<br/>").html_safe %>
 		<% else %>
-			<small>[ crawled data ]</small>: <%= @product.description %>
+			<%= @product.description %>
 		<% end %>
 	</p>
 

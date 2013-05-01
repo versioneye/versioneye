@@ -63,9 +63,10 @@ class ProductsController < ApplicationController
     @following = is_following?(current_user, @product)
 
     attach_version( @product, params[:version] )
-    # @comments = @product.comments
-    @version = @product.version_by_number @product.version
-    @downloads = @version.versionarchive
+    if @product.version 
+      @version = @product.version_by_number @product.version
+      @downloads = @version.versionarchive
+    end
     @main_dependencies = @product.dependencies(nil)
 
     @versioncomment = Versioncomment.new 
