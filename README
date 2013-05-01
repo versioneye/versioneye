@@ -25,7 +25,9 @@ If you still have trouble comment out the code in class Product which is respons
 
 ## Amazon S3 
 
-For uploading files a connection to Amazon S3 is mandatory. You can find the configuration for Amazon S3 in "config/config.yml". Please add here your "aws_s3_access_key_id" and your "aws_s3_secret_access_key" and don't commit it back! With that all file uploads will work fine. 
+For uploading files a connection to Amazon S3 is mandatory. You can find the configuration for Amazon S3 in "config/config.yml". Please add here your "aws_s3_access_key_id" and your "aws_s3_secret_access_key" and don't commit it back! With that all file uploads will work fine.
+You can use the fake-s3 GEM to simulate S3 offline: <https://github.com/jubos/fake-s3>
+You can start the fake-s3 service like this: fakes3 -r /tmp -p 4567
 
 ## Memcache 
 
