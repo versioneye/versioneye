@@ -11,7 +11,8 @@ class ErrorMessage
 
   belongs_to :crawle
 
-  def self.fetch_page( page_number )
+  def self.fetch_page( page_number  )
+    page_number = 1 if page_number.nil? 
     query = Mongoid::Criteria.new(ErrorMessage)
     query.paginate( :page => page_number, :per_page => 30 )
   end
