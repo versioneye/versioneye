@@ -38,14 +38,12 @@ class GithubController < ApplicationController
   def new
     @email = ""
     @terms = false
-    @datenerhebung = false
   end
   
   def create    
     @email = params[:email]
     @terms = params[:terms]
-    @datenerhebung = params[:datenerhebung]
-    
+
     if !User.email_valid?(@email)
       flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
       render 'new'
@@ -62,7 +60,6 @@ class GithubController < ApplicationController
       json_user = get_json_user( token )
       user = User.new
       user.update_from_github_json(json_user, token)
-      user.datenerhebung = true
       user.email = @email
       user.terms = true
       user.datenerhebung = true
