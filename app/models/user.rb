@@ -25,7 +25,9 @@ class User
   field :location, type: String
   field :time_zone, type: String
   field :blog, type: String
-  field :background_color, type: String
+
+  # TODO refactor this in facebook_account, twitter_account
+  # create own models for that und connect them to user  
 
   field :fb_id, type: String 
   field :fb_token, type: String
@@ -41,6 +43,7 @@ class User
   field :stripe_token, type: String
   field :stripe_customer_id, type: String
   field :plan_name_id, type: String, default: Plan::A_PLAN_FREE
+  belongs_to :plan
 
   field :refer_name, type: String
   
@@ -121,9 +124,12 @@ class User
     end
   end
 
-  def plan
-    Plan.where(name_id: self.plan_name_id)[0]
-  end
+  # TODO remove this if :belongs_to plan is working 
+  # TODO and remove plan_name_id as well ! 
+  # 
+  # def plan
+  #   Plan.where(name_id: self.plan_name_id)[0]
+  # end
 
   def billing_address
     billing_address = BillingAddress.where(user_id: self._id.to_s)[0]
@@ -295,7 +301,6 @@ class User
     UserMailer.reset_password(self, random_value).deliver
   end
 
-  # -- Class methods 
   def self.follows_max(n)
     User.all.select {|user| user.followers.count < n}
   end
@@ -391,7 +396,6 @@ class User
     self.location = json_user['location']
     self.time_zone = json_user['time_zone']
     self.blog = json_user['url']
-    self.background_color = json_user['profile_background_color']
     self.twitter_id = json_user['id']
     self.twitter_token = token
     self.twitter_secret = secret
