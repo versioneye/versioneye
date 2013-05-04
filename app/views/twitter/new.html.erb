@@ -1,51 +1,52 @@
-<div class="boxHeader">
-	<span>
-		Sign Up
-	</span>
-</div>
-<div class="boxContainer" style="height: 177px;">
-	<div class="formCel">		
-		<%= form_tag("/auth/twitter/create", :method => "post") do  %>    
+<% title "Sign Up" %>
 
-		    <div class="div-row">
-		      <div class="labelCel">
-				<%= label_tag(:email, "E-Mail") %>
-		      </div>
-		      <div class="inputCel">
-				<%= text_field_tag :email, @email, :class => "round", :id => "email"  %>
-		      </div>
-		    </div>
+<div class="span8 col2-left" >
 
-		    <div class="div-row">
-		      <div class="labelCel" style="vertical-align: top">
-		        <%= check_box_tag :terms %>
-		      </div>
-		      <div class="inputCel">
-		        <label for="terms" class="label-smaller">
-					<%= t(:terms_part_1) %>
-					<% if I18n.locale == :de %>
-						<%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "new_terms" %> 
-					<% else %>
-						<%= link_to "Conditions of Use", terms_path, :target => "new_terms" %> 
-					<% end %>					 
-					<%= t(:terms_part_2) %>
-					<% if I18n.locale == :de %>
-						<%= link_to "Datenerhebung", datenerhebung_path, :target => "new_data" %>
-					<% else %>
-						<%= link_to "Data Acquisition", datacollection_path, :target => "new_data" %>
-					<% end %>
-					<%= t(:terms_part_3) %>
-				</label><br/><br/>
-		      </div>
-		    </div>
+  <%= form_tag("/auth/twitter/create", :method => "post", :class => "form-horizontal") do  %> 
 
-		    <div class="div-row">
-		      <div class="labelCel"></div>
-		      <div class="inputCel">
-				<button type="submit" class="btn btn-primary" onClick="return validateEmail( document.getElementById('email').value )" >Save</button>
-		      </div>
-		    </div>
+    <div class="control-group">
+      <div class="controls">
+        Almost done. We just need your email address. 
+      </div>
+    </div>
 
-		<% end %>
-	</div>
+    <div class="control-group">
+      <%= label_tag(:email, "E-Mail", :class => "control-label", :for => "email") %>
+      <div class="controls">
+        <%= text_field_tag :email, @email, :class => "round", :id => "email"  %>
+      </div>
+    </div>   
+
+    <div class="control-group">
+      <div class="controls">
+        <%= check_box_tag :terms, "1", false, :style => "vertical-align: top; margin-right: 5px;", :id => "terms" %>
+        <label for="terms" style="display: inline; font-size: 12px;">
+          <%= t(:terms_part_1) %>
+          <% if I18n.locale == :de %>
+            <%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "new_terms" %>
+          <% else %>
+            <%= link_to "Conditions of Use", terms_path, :target => "new_terms" %>
+          <% end %>
+          <%= t(:terms_part_2) %>
+          <% if I18n.locale == :de %>
+            <%= link_to "Datenerhebung", datenerhebung_path, :target => "new_data" %>
+          <% else %>
+            <%= link_to "Data Acquisition", datacollection_path, :target => "new_data" %>
+          <% end %>
+          <%= t(:terms_part_3) %>
+        </label>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="control-label"></div>
+      <div class="controls">
+        <button type="submit" 
+                class="btn2 btn2-big" 
+                onClick="return validateEmail( document.getElementById('email').value )" ><%= t(:page_signup_button_signup) %></button>
+      </div>
+    </div>
+
+  <% end %>
+
 </div>
