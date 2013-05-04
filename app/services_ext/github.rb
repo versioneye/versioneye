@@ -1,7 +1,9 @@
 class Github
 
+  A_USER_AGENT = "www.versioneye.com"
+
   def self.user_repo_names( github_token )
-    body = HTTParty.get("https://api.github.com/user/repos?access_token=#{github_token}").response.body
+    body = HTTParty.get("https://api.github.com/user/repos?access_token=#{github_token}", :headers => {"User-Agent" => A_USER_AGENT } ).response.body
     repos = JSON.parse( body )
     extract_repo_names( repos )
   end
@@ -23,7 +25,7 @@ class Github
     repo_names = Array.new 
     page = 1
     loop do 
-      body = HTTParty.get("https://api.github.com/orgs/#{organisation_name}/repos?access_token=#{github_token}&page=#{page}").response.body
+      body = HTTParty.get("https://api.github.com/orgs/#{organisation_name}/repos?access_token=#{github_token}&page=#{page}", :headers => {"User-Agent" => A_USER_AGENT} ).response.body
       repos = JSON.parse( body )
       break if ( repos.nil? || repos.empty? )
       repo_names += extract_repo_names( repos )
@@ -33,7 +35,7 @@ class Github
   end
 
   def self.orga_names( github_token )
-    body = HTTParty.get("https://api.github.com/user/orgs?access_token=#{github_token}").response.body
+    body = HTTParty.get("https://api.github.com/user/orgs?access_token=#{github_token}", :headers => {"User-Agent" => A_USER_AGENT} ).response.body
     organisations = JSON.parse( body )
     message = get_message( organisations )
     names = Array.new
@@ -47,7 +49,7 @@ class Github
   end
 
   def self.private_repo?( github_token, name )
-    body = HTTParty.get("https://api.github.com/repos/#{name}?access_token=#{github_token}").response.body
+    body = HTTParty.get("https://api.github.com/repos/#{name}?access_token=#{github_token}", :headers => {"User-Agent" => A_USER_AGENT} ).response.body
     repo = JSON.parse( body )
     repo['private']
   rescue => e
@@ -59,7 +61,7 @@ class Github
   end
 
   def self.get_repo_sha(git_project, token)
-    heads = JSON.parse HTTParty.get("https://api.github.com/repos/#{git_project}/git/refs/heads?access_token=" + URI.escape(token) ).response.body
+    heads = JSON.parse HTTParty.get("https://api.github.com/repos/#{git_project}/git/refs/heads?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT}  ).response.body
     heads.each do |head|
       if head['url'].match(/heads\/master$/)
         return head['object']['sha']
@@ -71,7 +73,7 @@ class Github
   def self.get_project_info(git_project, sha, token)
     result = Hash.new
     url = "https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)
-    tree = JSON.parse HTTParty.get( url ).response.body
+    tree = JSON.parse HTTParty.get( url, :headers => {"User-Agent" => A_USER_AGENT} ).response.body
     tree['tree'].each do |file|
       name = file['path']
       result['url'] = file['url']
@@ -86,7 +88,7 @@ class Github
   end
 
   def self.fetch_file( url, token )
-    JSON.parse HTTParty.get( "#{url}?access_token=" + URI.escape(token) ).response.body
+    JSON.parse HTTParty.get( "#{url}?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT} ).response.body
   end
 
   private 
