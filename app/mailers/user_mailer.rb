@@ -56,6 +56,7 @@ class UserMailer < ActionMailer::Base
   def new_user_email(user)
     @fullname = user.fullname
     @username = user.username
+    @github = user.github_id 
     mail(
       :to => "reiz@versioneye.com", 
       :subject => "New User",
