@@ -48,6 +48,9 @@ describe GemfileParser do
 
       product12 = ProductFactory.create_for_gemfile("copycopter_client", "1.0.0")
       product12.save
+
+      product13 = ProductFactory.create_for_gemfile("govkit", "1.0.0")
+      product13.save
     end
 
     after :each do 
@@ -64,7 +67,7 @@ describe GemfileParser do
       parser = GemfileParser.new 
       project = parser.parse("http://s3.amazonaws.com/veye_test_env/Gemfile")
       project.should_not be_nil
-      project.dependencies.count.should eql(12)
+      project.dependencies.count.should eql(13)
       
       dep_1 = project.dependencies.first
       dep_1.name.should eql("rails")
@@ -141,6 +144,12 @@ describe GemfileParser do
       dep_12.version_requested.should eql("GIT")
       dep_12.version_current.should eql("1.0.0")
       dep_12.comperator.should eql("=")
+
+      dep_13 = project.dependencies[12]
+      dep_13.name.should eql("govkit")
+      dep_13.version_requested.should eql("PATH")
+      dep_13.version_current.should eql("1.0.0")
+      dep_13.comperator.should eql("=")
     end
     
   end

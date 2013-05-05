@@ -18,7 +18,7 @@ class GemfileParser < CommonParser
       
       # if it starts not with gem skip the line
       line = line.strip
-      next if line.match(/^gem/).nil?
+      next if line.match(/^gem /).nil?
       
       line = line.gsub("gem ", "")
       line_elements = line.split(",")
@@ -141,6 +141,11 @@ class GemfileParser < CommonParser
     elsif version.match(/^git:/) or version.match(/^:git/)
       dependency.version_requested = "GIT"
       dependency.version_label = "GIT"
+      dependency.comperator = "="
+
+    elsif version.match(/^path:/) or version.match(/^:path/)
+      dependency.version_requested = "PATH"
+      dependency.version_label = "PATH"
       dependency.comperator = "="
 
     elsif version.match(/^require:/) or version.match(/^:require/) or version.match(/^:group/) or version.match(/^group:/)
