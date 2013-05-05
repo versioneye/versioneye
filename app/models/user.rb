@@ -44,13 +44,9 @@ class User
 
   field :stripe_token, type: String
   field :stripe_customer_id, type: String
-
-  # TODO refactor this. set plan through relation 
-  field :plan_name_id, type: String, default: Plan::A_PLAN_FREE
   
   # *** RELATIONS START ***
   belongs_to :plan
-  
   has_one    :billing_address
   
   # TODO bug ... there are many followers with string ids in the db. check this. 
@@ -135,14 +131,6 @@ class User
       p " - #{message}"
     end
   end
-
-  # TODO remove this if :belongs_to plan is working 
-  # TODO and remove plan_name_id as well ! 
-  # TODO write migration code for this 
-  # 
-  # def plan
-  #   Plan.where(name_id: self.plan_name_id)[0]
-  # end
   
   def create_username
     name = fullname.strip

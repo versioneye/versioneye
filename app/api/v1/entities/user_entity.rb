@@ -10,7 +10,6 @@ module VersionEye
 
     class UserDetailedEntity < Entities::UserEntity
       expose :email
-      expose :plan_name_id
       expose :admin
       expose :deleted
       expose :notifications

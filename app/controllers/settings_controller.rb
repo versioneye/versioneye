@@ -111,8 +111,6 @@ class SettingsController < ApplicationController
     end 
     if customer && customer.deleted != true
       customer.update_subscription( :plan => @plan_name_id )
-      # TODO remove this line 
-      # user.plan_name_id = @plan_name_id
       user.save
       flash[:success] = "We updated your plan successfully."
       redirect_to settings_plans_path
@@ -137,8 +135,6 @@ class SettingsController < ApplicationController
     customer = StripeService.create_or_update_customer user, stipe_token, plan_name_id
     user.stripe_token = stripe_token
     user.stripe_customer_id = customer.id
-    # TODO remove this line 
-    # user.plan_name_id = plan_name_id
     user.save
     user.billing_address.update_from_params( params )
     flash[:success] = "Many Thanks. We just updated your plan."
