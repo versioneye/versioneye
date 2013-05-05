@@ -48,11 +48,12 @@ class User
   # *** RELATIONS START ***
   belongs_to :plan
   has_one    :billing_address
+  has_many   :projects 
   
   # TODO bug ... there are many followers with string ids in the db. check this. 
   has_many   :followers
 
-  # has_many   :projects 
+  
   # *** RELATIONS END ***
 
   validates_presence_of :username, :message => "Username is mandatory!"
@@ -426,11 +427,6 @@ class User
     self.prev_fullname = self.fullname
     self.fullname = "Deleted"
     self.save
-  end
-
-  # TODO replace through has_many :projects relation 
-  def projects 
-    Project.all(conditions: { user_id: self._id.to_s } ).desc(:private_project).asc(:name)
   end
 
   def fetch_or_create_billing_address

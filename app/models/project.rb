@@ -45,8 +45,7 @@ class Project
   validates :name, presence: true
   validates :project_key, presence: true
 
-  field :user_id, type: String
-  # belongs_to :user 
+  belongs_to :user 
 
   scope :by_user, ->(user){ where(user_id: user.id) }
 
@@ -71,12 +70,6 @@ class Project
   def fetch_dependencies
     self.dependencies = Projectdependency.all(conditions: {project_id: self.id} ).desc(:outdated).desc(:release).asc(:prod_key)
     self.dependencies # This 2nd line is by purpose! Don't delete it! 
-  end
-
-  # TODO replace through relation 
-  def user
-    return User.find_by_id(user_id) if user_id
-    return nil
   end
 
   def show_dependency_badge?
