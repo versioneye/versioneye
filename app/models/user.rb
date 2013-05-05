@@ -26,6 +26,8 @@ class User
   field :time_zone, type: String
   field :blog, type: String
 
+  field :refer_name, type: String
+
   # TODO refactor this in facebook_account, twitter_account
   # create own models for that und connect them to user  
 
@@ -42,11 +44,21 @@ class User
 
   field :stripe_token, type: String
   field :stripe_customer_id, type: String
-  field :plan_name_id, type: String, default: Plan::A_PLAN_FREE
-  belongs_to :plan
 
-  field :refer_name, type: String
+  # TODO refactor this. set plan through relation 
+  field :plan_name_id, type: String, default: Plan::A_PLAN_FREE
   
+  # *** RELATIONS START ***
+  belongs_to :plan
+  
+  has_one    :billing_address
+  
+  # TODO bug ... there are many followers with string ids in the db. check this. 
+  has_many   :followers
+
+  # has_many   :projects 
+  # *** RELATIONS END ***
+
   validates_presence_of :username, :message => "Username is mandatory!"
   validates_presence_of :fullname, :message => "Fullname is mandatory!"
   validates_presence_of :email, :message => "E-Mail is mandatory!"
@@ -61,18 +73,18 @@ class User
    
   validates_format_of :username, with: /^[a-zA-Z0-9]+$/
   validates_format_of :email,    with: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-  
-  attr_accessor :password, :new_username
-  attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :datenerhebung, :verification, :terms, :datenerhebung
 
   before_validation :downcase_email
-
-  has_many :followers
+  
   scope :follows_none, where(:followers.empty?)
   scope :follows_equal, ->(n){where(:followers.count.eq(n))}
   scope :follows_least, ->(n){where(:followers.count >= n)}
   scope :follows_max, ->(n){where(:followers.count <= n)}
 
+  attr_accessor :password, :new_username
+  attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :datenerhebung, :verification, :terms, :datenerhebung
+
+  
   def save
     encrypt_password if new_record?
     return false if self.terms == false || self.terms == nil
@@ -126,19 +138,11 @@ class User
 
   # TODO remove this if :belongs_to plan is working 
   # TODO and remove plan_name_id as well ! 
+  # TODO write migration code for this 
   # 
   # def plan
   #   Plan.where(name_id: self.plan_name_id)[0]
   # end
-
-  def billing_address
-    billing_address = BillingAddress.where(user_id: self._id.to_s)[0]
-    if billing_address.nil?
-      billing_address = BillingAddress.new
-      billing_address.name = self.fullname
-    end
-    billing_address
-  end
   
   def create_username
     name = fullname.strip
@@ -215,10 +219,6 @@ class User
   def get_email(email)
     UserEmail.where( user_id: self._id.to_s, email: email )[0]
   end
-  
-#  def followers
-#    Follower.find_by_user(self.id)
-#  end
 
   def fetch_my_products
     ids = Array.new
@@ -453,8 +453,19 @@ class User
     self.save
   end
 
+  # TODO replace through has_many :projects relation 
   def projects 
     Project.all(conditions: { user_id: self._id.to_s } ).desc(:private_project).asc(:name)
+  end
+
+  # TODO write unit test for this. Test the relation 
+  def fetch_or_create_billing_address
+    if self.billing_address.nil?
+      self.billing_address = BillingAddress.new
+      self.billing_address.name = self.fullname
+      self.billing_address.save
+    end
+    self.billing_address
   end
     
   private

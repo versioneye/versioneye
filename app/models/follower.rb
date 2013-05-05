@@ -3,9 +3,12 @@ class Follower
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  field :notification, type: Boolean
+
+  # TODO refactor with relations 
   field :user_id, type: String
   field :product_id, type: String  
-  field :notification, type: Boolean
+  
   
   validates_presence_of :user_id,    :message => "User is mandatory!"
   validates_presence_of :product_id, :message => "Product is mandatory!"

@@ -29,7 +29,7 @@ class SettingsController < ApplicationController
     if plan 
       @plan_name_id = plan
     end
-    @billing_address = current_user.billing_address
+    @billing_address = current_user.fetch_or_create_billing_address
   end
 
   def links
@@ -102,7 +102,7 @@ class SettingsController < ApplicationController
     customer_id = user.stripe_customer_id
     customer = nil
     if stripe_token && customer_id
-      customer = Stripe::Customer.retrieve( customer_id )
+      customer = StripeService.fetch_customer customer_id
     end
     if customer && customer.deleted
       user.stripe_token = nil 
@@ -111,7 +111,8 @@ class SettingsController < ApplicationController
     end 
     if customer && customer.deleted != true
       customer.update_subscription( :plan => @plan_name_id )
-      user.plan_name_id = @plan_name_id
+      # TODO remove this line 
+      # user.plan_name_id = @plan_name_id
       user.save
       flash[:success] = "We updated your plan successfully."
       redirect_to settings_plans_path
@@ -119,7 +120,7 @@ class SettingsController < ApplicationController
       flash.now[:info] = "Please update your Credit Card information."
       @page = "cc"
       cookies.permanent.signed[:plan_selected] = @plan_name_id
-      @billing_address = current_user.billing_address
+      @billing_address = current_user.fetch_or_create_billing_address
       render settings_creditcard_path
     end
   end
@@ -127,32 +128,19 @@ class SettingsController < ApplicationController
   def updatecreditcard
     plan_name_id = params[:plan]
     stripe_token = params[:stripeToken]
-
     if stripe_token.nil? || stripe_token.empty?
       flash[:error] = "Sorry. But something went wrong. Please try again later."
       redirect_to settings_plans_path
       return 
     end
-    
     user = current_user
-    customer = nil
-    if user.stripe_customer_id 
-      customer = Stripe::Customer.retrieve( user.stripe_customer_id )
-      customer.card = stripe_token
-      customer.save
-      customer.update_subscription( :plan => plan_name_id )
-    else 
-      customer = Stripe::Customer.create(
-        :card => stripe_token,
-        :plan => plan_name_id,
-        :email => user.email
-      )  
-    end
+    customer = StripeService.create_or_update_customer user, stipe_token, plan_name_id
     user.stripe_token = stripe_token
     user.stripe_customer_id = customer.id
-    user.plan_name_id = plan_name_id
+    # TODO remove this line 
+    # user.plan_name_id = plan_name_id
     user.save
-    save_billing_address(current_user, params)
+    user.billing_address.update_from_params( params )
     flash[:success] = "Many Thanks. We just updated your plan."
     redirect_to settings_plans_path
   end
@@ -335,23 +323,6 @@ class SettingsController < ApplicationController
       return "everybody" if value.nil? || value.empty?
       return value if value.eql?("everybody") || value.eql?("nobody") || value.eql?("ru")
       return "everybody"
-    end
-
-    def save_billing_address(user, params)
-      billing_address = user.billing_address
-      if billing_address.nil?
-        billing_address = BillingAddress.new 
-      end
-      billing_address.name = params[:name]
-      billing_address.street = params[:street]
-      billing_address.zip = params[:zip_code]
-      billing_address.city = params[:city]
-      billing_address.country = params[:country]
-      billing_address.user_id = user.id.to_s
-      billing_address.save
-    rescue => e 
-      p "#{e}"
-      nil
     end
 
 end

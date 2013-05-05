@@ -19,7 +19,7 @@ class Project
   A_PERIOD_WEEKLY = "weekly"
   A_PERIOD_DAILY  = "daily"
 
-  field :user_id, type: String
+  
   field :name, type: String
   field :description, type: String 
   field :license, type: String 
@@ -44,6 +44,9 @@ class Project
 
   validates :name, presence: true
   validates :project_key, presence: true
+
+  field :user_id, type: String
+  # belongs_to :user 
 
   scope :by_user, ->(user){ where(user_id: user.id) }
 
@@ -70,6 +73,7 @@ class Project
     self.dependencies # This 2nd line is by purpose! Don't delete it! 
   end
 
+  # TODO replace through relation 
   def user
     return User.find_by_id(user_id) if user_id
     return nil
