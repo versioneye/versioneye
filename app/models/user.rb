@@ -446,7 +446,6 @@ class User
     Project.all(conditions: { user_id: self._id.to_s } ).desc(:private_project).asc(:name)
   end
 
-  # TODO write unit test for this. Test the relation 
   def fetch_or_create_billing_address
     if self.billing_address.nil?
       self.billing_address = BillingAddress.new

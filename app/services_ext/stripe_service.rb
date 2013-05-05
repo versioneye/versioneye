@@ -4,7 +4,6 @@ class StripeService
     Stripe::Customer.retrieve( customer_id )
   end
 
-  
   def self.create_customer stripe_token, plan_name_id, email 
     Stripe::Customer.create(
         :card => stripe_token,
@@ -12,7 +11,6 @@ class StripeService
         :email => email
       )
   end
-
   
   def self.create_or_update_customer user, stipe_token, plan_name_id
     customer = nil
