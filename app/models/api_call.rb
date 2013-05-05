@@ -1,4 +1,5 @@
 class ApiCall
+
   include Mongoid::Document
   include Mongoid::Timestamps
 
@@ -12,6 +13,6 @@ class ApiCall
 
   scope :by_user, ->(user){ where(user_id: user.id.to_s) }
   scope :by_api_key, ->(api_key){ where(api_key: api_key) }
-  scope :today, where(:created_at.gte => Date.today.midnight, 
-                      :created_at.lt => Date.tomorrow.midnight)
+  scope :today, where(:created_at.gte => Date.today.midnight, :created_at.lt => Date.tomorrow.midnight)
+  
 end
