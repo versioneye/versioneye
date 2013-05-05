@@ -16,17 +16,13 @@ describe User do
     @user.save
 
     UserFactory.create_defaults
-    BillingAddress.all.each do |bill|
-      bill.remove 
-    end
+    BillingAddress.destroy_all
   end
   
   after(:each) do 
     @user.remove
     UserFactory.clean_defaults
-    BillingAddress.all.each do |bill|
-      bill.remove 
-    end
+    BillingAddress.destroy_all
   end
   
   describe "fetch_or_create_billing_address" do

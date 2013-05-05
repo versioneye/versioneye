@@ -25,12 +25,4 @@ class ProjectMigration
     end
   end
 
-  def self.migrate_user_ids 
-    projects = Project.all 
-    projects.each do |project|
-      project.user 
-      project.save 
-    end
-  end
-
 end

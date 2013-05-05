@@ -34,10 +34,10 @@ describe Notification do
   end
   
   after(:each) do
-    @user.remove
-    @product.remove
-    @follower.remove
-    @notification.remove
+    User.destroy_all
+    Product.destroy_all
+    Follower.destroy_all
+    Notification.destroy_all
   end
   
   describe "disable_all_for_user" do

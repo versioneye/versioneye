@@ -3,6 +3,10 @@ require 'spec_helper'
 describe Follower do
   
   before(:each) do
+    User.destroy_all
+    Product.destroy_all
+    Follower.destroy_all
+    
     @product = Product.new
     @product.name = "name"
     @product.prod_key = "gasgagasgj8623_junit/junit"
@@ -26,9 +30,9 @@ describe Follower do
   end
   
   after(:each) do
-    @user.remove
-    @product.remove
-    @follower.remove
+    User.destroy_all
+    Product.destroy_all
+    Follower.destroy_all
   end
   
   describe "find_by_user_id_and_product" do

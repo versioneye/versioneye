@@ -3,23 +3,15 @@ require 'spec_helper'
 describe Product do
   
   before(:each) do
-    Product.all().each do |prod|
-      prod.remove
-    end
-    Dependency.all().each do |dep|
-      dep.remove()
-    end
+    Product.destroy_all
+    Dependency.destroy_all
     @product = Product.new
   end
   
   after(:each) do 
     @product.remove
-    Product.all().each do |prod|
-      prod.remove
-    end
-    Dependency.all().each do |dep|
-      dep.remove()
-    end
+    Product.destroy_all
+    Dependency.destroy_all
   end
   
   describe "dependencies_outdated?( scope )" do

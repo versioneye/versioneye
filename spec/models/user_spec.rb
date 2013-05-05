@@ -3,6 +3,7 @@ require 'spec_helper'
 describe User do
   
   before(:each) do
+    User.destroy_all
     @user = User.new
     @user.fullname = "Hans Tanz"
     @user.username = "hanstanz"
@@ -19,7 +20,7 @@ describe User do
   end
   
   after(:each) do 
-    @user.remove
+    User.destroy_all
     UserFactory.clean_defaults
   end
   

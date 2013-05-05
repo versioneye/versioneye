@@ -3,12 +3,13 @@ require 'spec_helper'
 describe Developer do
 
   before(:each) do
+    Developer.destroy_all 
     @developer = Developer.new({:prod_key => "junit/junit", :version => "1.0", :name => "Hans Banz", :email => "hans@banz.de"})
     @developer.save
   end
   
-  after(:each) do 
-    @developer.remove
+  after(:each) do
+    Developer.destroy_all
   end
   
   describe "find_by" do 
