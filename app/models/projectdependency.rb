@@ -54,6 +54,7 @@ class Projectdependency
   end
   
   # TODO Write tests for the case that prod_key is nil and version_current is not nil 
+  # TODO Write tests for GIT & PATH case 
   # attribute self.outdated is not saved 
   # eventuelle rename self.outdated to self.outdated_cached 
   # 
@@ -71,7 +72,7 @@ class Projectdependency
       self.save() 
     end
 
-    if self.version_requested.eql?("GIT")
+    if self.version_requested.eql?("GIT") || self.version_requested.eql?("PATH")
       self.outdated = false
       return false
     end
