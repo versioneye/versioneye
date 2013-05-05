@@ -140,18 +140,6 @@ class UsersController < ApplicationController
     end
   end
   
-  def notifications
-    result = 0
-    user = User.find_by_username(params[:id])
-    if signed_in? && user.id == current_user.id
-      notificaaions = Follower.find_notifications_by_user_id(current_user.id)
-      result = notificaaions.count unless notificaaions.nil?
-    end
-    respond_to do |format|
-      format.json { render :json => result }
-    end
-  end
-  
   def activate
     verification = params[:verification]
     if User.activate!(verification)

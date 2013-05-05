@@ -36,6 +36,7 @@ class VersioncommentsController < ApplicationController
   private 
       
     def send_comment_mails(product, user, comment)
+      # TODO refactor this with product.users relation 
       followers = Follower.find_by_product(product.id.to_s)
       
       if followers.nil? || followers.empty?

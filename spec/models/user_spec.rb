@@ -174,7 +174,6 @@ describe User do
       follower = Follower.new
       follower.user_id = @user.id
       follower.product_id = product.id.to_s
-      follower.notification = false
       follower.save
       
       products = @user.fetch_my_products
@@ -205,13 +204,11 @@ describe User do
       follower = Follower.new
       follower.user_id = @user.id
       follower.product_id = product.id.to_s
-      follower.notification = false
       follower.save
       
       follower2 = Follower.new
       follower2.user_id = @user.id
       follower2.product_id = product2.id.to_s
-      follower2.notification = false
       follower2.save
       
       ids = @user.fetch_my_product_ids

@@ -49,11 +49,10 @@ class User
   belongs_to :plan
   has_one    :billing_address
   has_many   :projects 
+  has_and_belongs_to_many :products 
   
   # TODO bug ... there are many followers with string ids in the db. check this. 
   has_many   :followers
-
-  
   # *** RELATIONS END ***
 
   validates_presence_of :username, :message => "Username is mandatory!"
@@ -209,13 +208,9 @@ class User
   end
 
   def fetch_my_products_count
-    notification_ids = Array.new
     ids = Array.new
     followers.each do |follower|
       ids.push follower.product_id
-      if follower.notification == true
-        notification_ids.push follower.product_id 
-      end      
     end  
     Product.any_in(_id: ids).count()
   end

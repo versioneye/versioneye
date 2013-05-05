@@ -25,7 +25,6 @@ describe Follower do
     @follower = Follower.new
     @follower.user_id = @user.id.to_s
     @follower.product_id = @product.id.to_s
-    @follower.notification = false
     @follower.save
   end
   
@@ -63,30 +62,6 @@ describe Follower do
       followers.should_not be_nil
       followers.count.should eql(1)
       followers[0].id.should eql(@follower.id)
-    end
-    
-  end
-  
-  describe "find_notifications_by_user_id" do
-    
-    it "returns an empty array. Id not valid." do
-      follower = Follower.find_notifications_by_user_id("44444")
-      follower.should_not be_nil
-      follower.count.should eql(0)
-    end
-    
-    it "returns an empty array because follower don't have notifications." do
-      followers = Follower.find_notifications_by_user_id(@user.id)
-      followers.should_not be_nil
-      followers.count.should eql(0)
-    end
-    
-    it "returns the notifications." do
-      @follower.notification = true
-      @follower.save
-      followers = Follower.find_notifications_by_user_id(@user.id)
-      followers.should_not be_nil
-      followers.count.should eql(1)
     end
     
   end

@@ -3,8 +3,6 @@ class Follower
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :notification, type: Boolean
-
   # TODO refactor with relations 
   field :user_id, type: String
   field :product_id, type: String  
@@ -19,10 +17,6 @@ class Follower
   
   def self.find_by_product(product_id)
     Follower.all(conditions: { product_id: product_id } )
-  end
-  
-  def self.find_notifications_by_user_id(user_id)    
-    Follower.all(conditions: { user_id: user_id, notification: true } )
   end
   
   def self.find_by_user(user_id)

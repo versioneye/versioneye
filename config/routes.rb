@@ -36,7 +36,6 @@ Versioneye::Application.routes.draw do
   end
   get   '/created', :to => 'users#created'
   get   '/signup',                       :to => 'users#new'
-  get   '/users/:id/notifications',      :to => 'users#notifications'
   get   '/users/activate/:verification', :to => 'users#activate'
   get   '/iforgotmypassword',            :to => 'users#iforgotmypassword'
   post  '/resetpassword',                :to => 'users#resetpassword'

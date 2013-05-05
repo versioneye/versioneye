@@ -21,7 +21,6 @@ describe Notification do
     @follower = Follower.new
     @follower.user_id = @user.id.to_s
     @follower.product_id = @product.id.to_s
-    @follower.notification = false
     @follower.save
 
     @notification = Notification.new

@@ -297,23 +297,10 @@ class ProductsController < ApplicationController
     end
 
     def is_following?(user, product)
-      if !user || !product
-        return false
-      end
+      return false if !user || !product
       follower = Follower.find_by_user_id_and_product(user.id, product._id.to_s)
-      if follower
-        update_notification_status(follower)
-        return true
-      else 
-        return false
-      end
-    end
-
-    def update_notification_status(follower)
-      if follower && follower.notification == true
-        follower.notification = false
-        follower.save
-      end
+      return true  if follower
+      return false if follower.nil?
     end
 
 end

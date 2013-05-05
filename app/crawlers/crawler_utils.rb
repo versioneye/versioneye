@@ -19,8 +19,6 @@ class CrawlerUtils
         notification.product_id = follower.product_id
         notification.version_id = version_number
         notification.save 
-        follower.notification = true 
-        follower.save
       end
     end
   end
