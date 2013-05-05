@@ -13,7 +13,11 @@ class Plan
   field :price, type: String
   field :private_projects, type: Integer
 
-  has_many :users 
+  has_many :users
+
+  def self.by_name_id name_id 
+    Plan.where(:name_id => name_id).shift
+  end 
 
   def self.create_default_plans
     free = Plan.new

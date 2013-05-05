@@ -12,7 +12,7 @@ class StripeService
       )
   end
   
-  def self.create_or_update_customer user, stipe_token, plan_name_id
+  def self.create_or_update_customer user, stripe_token, plan_name_id
     customer = nil
     if user.stripe_customer_id 
       customer = self.fetch_customer user.stripe_customer_id

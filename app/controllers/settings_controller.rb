@@ -104,13 +104,9 @@ class SettingsController < ApplicationController
     if stripe_token && customer_id
       customer = StripeService.fetch_customer customer_id
     end
-    if customer && customer.deleted
-      user.stripe_token = nil 
-      user.stripe_customer_id = nil
-      user.save
-    end 
-    if customer && customer.deleted != true
+    if customer 
       customer.update_subscription( :plan => @plan_name_id )
+      user.plan = Plan.by_name_id @plan_name_id 
       user.save
       flash[:success] = "We updated your plan successfully."
       redirect_to settings_plans_path
@@ -132,7 +128,7 @@ class SettingsController < ApplicationController
       return 
     end
     user = current_user
-    customer = StripeService.create_or_update_customer user, stipe_token, plan_name_id
+    customer = StripeService.create_or_update_customer user, stripe_token, plan_name_id
     user.stripe_token = stripe_token
     user.stripe_customer_id = customer.id
     user.save
