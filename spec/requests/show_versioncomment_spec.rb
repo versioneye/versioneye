@@ -16,7 +16,7 @@ describe "show_versioncomment" do
     product.versions.push(version)
     product.save
 
-    user = User.default
+    user = UserFactory.default
     user.save
 
     comment = Versioncomment.new

@@ -30,4 +30,17 @@ class UserFactory
     p "Cant delete Users default_values, because Rails is  in wrong environment: #{rails_mode}."
     return false
   end
+
+  def self.default
+    user = User.new
+    user.fullname = "Hans Tanz"
+    user.username = "hanstanz"
+    user.email = "hans@tanz.de"
+    user.password = "password"
+    user.salt = "salt"
+    user.terms = true
+    user.datenerhebung = true
+    user
+  end
+
 end

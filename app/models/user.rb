@@ -91,18 +91,6 @@ class User
   def to_param
     username
   end
-
-  def self.default
-    user = User.new
-    user.fullname = "Hans Tanz"
-    user.username = "hanstanz"
-    user.email = "hans@tanz.de"
-    user.password = "password"
-    user.salt = "salt"
-    user.terms = true
-    user.datenerhebung = true
-    user
-  end
   
   def create_verification
     random = create_random_value
@@ -166,13 +154,16 @@ class User
   end
   
   def self.find_by_username( username )
-    User.where( username: /^#{username}$/i )[0]
+    User.where( username: /^#{username}$/i ).shift
+  end
+
+  def self.find_by_email(email)
+    User.where(email: /^#{email}$/i).shift
   end
   
   def self.find_by_id( id )
     return nil if id.nil?
-    id = id.to_s
-    return User.find(id)
+    return User.find(id.to_s)
   rescue => e
     p "-- ERROR user with id #{id} not found! -- #{e}"
     e.backtrace.each do |message| 
@@ -248,10 +239,6 @@ class User
 
   def has_password?(submitted_password)
     self.encrypted_password == encrypt(submitted_password)
-  end
-  
-  def self.find_by_email(email)
-    User.where(email: /^#{email}$/i)[0]
   end
   
   def self.find_by_fb_id(fb_id)

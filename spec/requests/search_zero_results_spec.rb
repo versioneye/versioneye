@@ -8,7 +8,7 @@ describe "empty_search_result" do
   end
 
   it "submits query with empty results" do
-    user = User.default
+    user = UserFactory.default
     user.save
 
     post "/sessions", {:session => {:email => user.email, :password => user.password}}, "HTTPS" => "on"

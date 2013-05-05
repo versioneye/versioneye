@@ -1,7 +1,0 @@
-# Logfile created on 2013-05-04 15:00:34 +0200 by logger.rb/31641
-REQUESTING PAGE: GET / with {} and HTTP headers {}
-REQUESTING PAGE: GET /search with {} and HTTP headers {"HTTP_REFERER"=>"/"}
-REQUESTING PAGE: GET / with {} and HTTP headers {"HTTP_REFERER"=>"/search"}
-REQUESTING PAGE: GET / with {} and HTTP headers {}
-REQUESTING PAGE: GET /search with {} and HTTP headers {"HTTP_REFERER"=>"/"}
-REQUESTING PAGE: GET / with {} and HTTP headers {"HTTP_REFERER"=>"/search"}
