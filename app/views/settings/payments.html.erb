@@ -1,0 +1,20 @@
+<div class="span3" >
+  <%= render "settings/navi" %>
+</div>
+
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    Payment History
+  </div>
+  
+  <div class="span8 content" >
+    <% if @customer.nil? || @customer.invoices.nil? || @customer.invoices.count == 0 %>
+      <p>
+        You don't have any Payment History.
+      </p>
+    <% else %>
+      <%= render :partial => "/settings/helpers/stripe_payment_history" %> 
+    <% end %>
+  </div>
+</div>

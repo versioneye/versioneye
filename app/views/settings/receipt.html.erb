@@ -1,0 +1,145 @@
+<style type="text/css">
+body {
+  color: #000000;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body, td, th, input, textarea, select, a {
+  font-size: 12px;
+}
+p {
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+a, a:visited, a b {
+  color: #378DC1;
+  text-decoration: underline;
+  cursor: pointer;
+}
+a:hover {
+  text-decoration: none;
+}
+a img {
+  border: none;
+}
+#container {
+  width: 680px;
+}
+#logo {
+  margin-bottom: 20px;
+}
+table.list {
+  border-collapse: collapse;
+  width: 100%;
+  border-top: 1px solid #DDDDDD;
+  border-left: 1px solid #DDDDDD;
+  margin-bottom: 20px;
+}
+table.list td {
+  border-right: 1px solid #DDDDDD;
+  border-bottom: 1px solid #DDDDDD;
+}
+table.list thead td {
+  background-color: #EFEFEF;
+  padding: 0px 5px;
+}
+table.list thead td a, .list thead td {
+  text-decoration: none;
+  color: #222222;
+  font-weight: bold;
+}
+table.list tbody td a {
+  text-decoration: underline;
+}
+table.list tbody td {
+  vertical-align: top;
+  padding: 0px 5px;
+}
+table.list .left {
+  text-align: left;
+  padding: 7px;
+}
+table.list .right {
+  text-align: right;
+  padding: 7px;
+}
+table.list .center {
+  text-align: center;
+  padding: 7px;
+}
+</style>
+
+  <p>
+    <br />
+    Dear <%= @billing_address.name %>,<br />
+    <br />
+    This is a receipt for your VersionEye subscription. 
+  </p>
+  
+  <table class="list">
+    <thead>
+      <tr>
+        <td class="left">Receiver</td>
+        <td class="right">Sender</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="left">
+          <%= @billing_address.name %><br/>
+          <%= @billing_address.street %><br/>
+          <%= @billing_address.zip %> <%= @billing_address.city %><br/>
+          <%= @billing_address.country %>
+        </td>
+        <td class="right">
+          VersionEye GmbH<br />
+          Invalidenstraße 50/51<br />
+          10557 Berlin<br />
+          Germany<br />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="list">
+    <thead>
+      <tr>
+        <td class="left">Date</td>
+        <td class="left">Plan</td>
+        <td class="right">Price</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="left"><%= Time.at( @invoice.date ).to_date %></td>
+        <td class="left"><%= @invoice.lines.subscriptions.first.plan.name %></td>
+        <td class="right">
+          <% one_percent = @invoice.total / 10000.0 %>
+          Price: <%= sprintf("%.2f", (one_percent * 81) ) %> <%= @invoice.currency.upcase %><br/>
+          Tax (Mwst.): <%= sprintf("%.2f", (one_percent * 19) ) %> <%= @invoice.currency.upcase %><br/>
+          Total: <%= sprintf("%.2f", (@invoice.total / 100) )  %> <%= @invoice.currency.upcase %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <p>
+    If you have any questions, please contact us anytime at
+    <a href="mailto:support@versioneye.com">support@versioneye.com</a>. Thank you for your business!
+  </p>
+  <p>
+    Your Feedback is always appreciated. <br/>
+  </p>
+  <p>
+    Best regards, <br/>
+    Your VersionEye Team<br/>
+    <a href="http://www.versioneye.com">http://www.versioneye.com</a>
+  </p>
+  <hr>
+  <div >
+    VersionEye GmbH | Invalidenstrasse 50/51 | 10557 Berlin | Germany | E-Mail: contact [at] versioneye.com | Amtsgericht: Berlin / Charlottenburg | Handelsregister: Berlin, HRB 144242 B | USt-IdNr.: DE282045007 | CEO: Robert Reiz. 
+    <a href="https://www.versioneye.com/imprint">Imprint</a> / <a href="https://www.versioneye.com/impressum">Impressum</a>.
+  </div>
+  <br/>
+  <br/>
+  <br/>
+  <br/>

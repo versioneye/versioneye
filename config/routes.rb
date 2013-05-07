@@ -48,6 +48,8 @@ Versioneye::Application.routes.draw do
   get  '/settings/links',                :to => 'settings#links'
   get  '/settings/creditcard',           :to => 'settings#creditcard'
   get  '/settings/plans',                :to => 'settings#plans'
+  get  '/settings/payments',             :to => 'settings#payments'
+  get  '/settings/receipt/:invoice_id',  :to => 'settings#receipt', :as => 'settings_receipt'
   get  '/settings/connect',              :to => 'settings#connect'
   get  '/settings/disconnect/',          :to => 'settings#disconnect'
   get  '/settings/emails/',              :to => 'settings#emails'

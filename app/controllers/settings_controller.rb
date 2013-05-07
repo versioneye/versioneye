@@ -1,6 +1,7 @@
 class SettingsController < ApplicationController
 
   before_filter :authenticate
+  layout :resolve_layout
 
   force_ssl
 
@@ -21,6 +22,20 @@ class SettingsController < ApplicationController
 
   def plans
     @plan = current_user.plan
+  end
+
+  def payments 
+    customer_id = current_user.stripe_customer_id
+    @customer = nil
+    if customer_id
+      @customer = StripeService.fetch_customer customer_id
+    end
+  end
+
+  def receipt
+    invoice_id = params['invoice_id']
+    @invoice = StripeService.get_invoice( invoice_id )
+    @billing_address = current_user.billing_address
   end
 
   def creditcard
@@ -309,7 +324,16 @@ class SettingsController < ApplicationController
     redirect_to "/"
   end
 
-  private 
+  private
+
+    def resolve_layout
+      case action_name
+      when "receipt"
+        "plain"
+      else
+        "application"
+      end
+    end
 
     def validates_privacy_value value
       return "everybody" if value.nil? || value.empty?

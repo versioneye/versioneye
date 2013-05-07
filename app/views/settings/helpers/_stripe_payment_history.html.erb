@@ -1,0 +1,32 @@
+<table class = "table">
+  <tr>
+    <th>
+      Date
+    </th>
+    <th>
+      Plan
+    </th>
+    <th>
+      Amount
+    </th>
+    <th>
+      Receipt
+    </th>
+  </tr>
+  <% @customer.invoices.each do |invoice| %>
+  <tr>
+    <td>
+      <%= Time.at( invoice.date ).to_date %>
+    </td>
+    <td>
+      <%= invoice.lines.subscriptions.first.plan.name %>
+    </td>
+    <td>
+      <%= sprintf("%.2f", (invoice.total / 100) )  %> <%= invoice.currency.upcase %>
+    </td>
+    <td>
+      <%= link_to "View Receipt", settings_receipt_path(:invoice_id => invoice.id) %>
+    </td>
+  </tr>
+  <% end %>
+</table>

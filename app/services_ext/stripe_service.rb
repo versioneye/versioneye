@@ -25,4 +25,8 @@ class StripeService
     customer
   end
 
+  def self.get_invoice( invoice_id )
+    Stripe::Invoice.retrieve( invoice_id )
+  end
+
 end
