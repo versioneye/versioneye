@@ -2,22 +2,22 @@
 <% version_links = @product.http_version_links %>
 <% count = links.count + version_links.count %>
 <div class="box header">
-	<h5>
-		<%= pluralize(count, "Link") %>
-	</h5>
+  <h5>
+    <%= pluralize(count, "Link") %>
+  </h5>
 </div>
 <div class="box content" id="relatedLinks" >
-	<% if !links.empty? %>
-		<% links.each do |link| %>
-			<a itemprop="publishingPrinciples" href="<%= link.get_link %>" target="new"><%= link.name %></a><br/>
-		<% end %>
-	<% end %>
-	<% if !version_links.empty? %>
-		<% version_links.each do |link| %>
-			<a itemprop="publishingPrinciples" href="<%= link.get_link %>" target="new"><%= link.name %></a><br/>
-		<% end %>
-	<% end %>
-	<% if @product.twitter_name && !@product.twitter_name.empty? %> 
-		<a href="https://twitter.com/<%= @product.twitter_name %>" target="_Twitter" >Twitter Page</a>
-	<% end %>
+  <% if !links.empty? %>
+    <% links.each do |link| %>
+      <a itemprop="publishingPrinciples" href="<%= link.get_link %>" target="new"><%= link.name %></a><br/>
+    <% end %>
+  <% end %>
+  <% if !version_links.empty? %>
+    <% version_links.each do |link| %>
+      <a itemprop="publishingPrinciples" href="<%= link.get_link %>" target="new"><%= link.name %></a><br/>
+    <% end %>
+  <% end %>
+  <% if @product.twitter_name && !@product.twitter_name.empty? %> 
+    <a href="https://twitter.com/<%= @product.twitter_name %>" target="_Twitter" >Twitter Page</a>
+  <% end %>
 </div>
