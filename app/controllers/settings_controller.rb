@@ -32,9 +32,13 @@ class SettingsController < ApplicationController
     end
   end
 
+  # TODO test it 
   def receipt
-    invoice_id = params['invoice_id']
-    @invoice = StripeService.get_invoice( invoice_id )
+    @invoice = StripeService.get_invoice( params['invoice_id'] )
+    # Ensure that the invoice belongs to the current logged in user!
+    if @invoice && !@invoice.customer.eql?( current_user.stripe_customer_id )
+      @invoice = nil 
+    end
     @billing_address = current_user.billing_address
   end
 
