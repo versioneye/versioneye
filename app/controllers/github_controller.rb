@@ -11,8 +11,7 @@ class GithubController < ApplicationController
     end
 
     token = get_token( code )
-    p "token: #{token}"
-    json_user = GitHub.user token 
+    json_user = Github.user token 
     
     if signed_in?
       user = current_user
