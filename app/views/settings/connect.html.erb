@@ -37,7 +37,8 @@
 			<div class="span4" >
 				<% if @user.github_token %>
 					<span style="color: green">Connected</span>
-					<%= link_to "[ disconnect ]", settings_disconnect_path(:service => "github"), :confirm => "Are you sure?", :class => "meta-text-small" %>
+					<%= link_to "[ disconnect ]", settings_disconnect_path(:service => "github"), :confirm => "Are you sure?", :class => "meta-text-small" %> 
+					scopes: [<%= current_user.github_scope %>]
 				<% else %> 
 					<a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&scope=repo'  >
 						Connect with GitHub

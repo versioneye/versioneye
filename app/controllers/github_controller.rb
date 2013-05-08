@@ -17,7 +17,7 @@ class GithubController < ApplicationController
       user = current_user
       user.github_id = json_user['id']
       user.github_token = token
-      user.github_scope = "no_scope" # "repo"
+      user.github_scope = Github.oauth_scopes( token )
       user.save
       redirect_to settings_connect_path
       return
@@ -59,7 +59,8 @@ class GithubController < ApplicationController
       end
       json_user = get_json_user( token )
       user = User.new
-      user.update_from_github_json(json_user, token)
+      scopes = Github.oauth_scopes( token )
+      user.update_from_github_json(json_user, token, scopes)
       user.email = @email
       user.terms = true
       user.datenerhebung = true

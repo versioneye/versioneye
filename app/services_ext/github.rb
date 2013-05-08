@@ -3,10 +3,17 @@ class Github
   A_USER_AGENT = "www.versioneye.com"
 
   def self.user( token )
-    url = 'https://api.github.com/user?access_token=' + URI.escape(token)
+    url = 'https://api.github.com/user?access_token=' + URI.escape( token )
     response_body = HTTParty.get(url, :headers => {"User-Agent" => A_USER_AGENT } ).response.body
     json_user = JSON.parse response_body
     json_user
+  end
+
+  def self.oauth_scopes( token )
+    resp = HTTParty.get("https://api.github.com/user?access_token=#{token}", :headers => {"User-Agent" => A_USER_AGENT } )
+    resp.headers['x-oauth-scopes']
+  rescue => e 
+    "no_scope"
   end
 
   def self.user_repo_names( github_token )
@@ -14,6 +21,7 @@ class Github
     repos = JSON.parse( body )
     extract_repo_names( repos )
   end
+  
 
   def self.orga_repo_names( github_token )
     orga_names = self.orga_names github_token
