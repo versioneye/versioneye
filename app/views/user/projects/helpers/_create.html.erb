@@ -40,11 +40,11 @@
       <% if current_user.github_token.nil? %>
         <%= render 'shared/login_with_github', :btn => "signup" %>
       <% else %>
-        <% if !current_user.github_token.nil? && current_user.github_scope.eql?("no_scope") %>
-          With the current scope we can fetch only your public repositories. If you want to fetch 
-          your private repositories you have to grand as access withe "repo" scope: 
+        <% if !current_user.github_token.nil? && (current_user.github_scope.eql?("no_scope") || current_user.github_scope.empty? ) %>
+          With the current scope we can fetch only your public repositories. If you want to monitor 
+          private repositories you have to grand VersionEye access to your private repositories: 
           <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&amp;scope=repo' style="margin-right: 5px;" >
-            Grand Access to private repositories
+            Grand access to private repositories
           </a> <br/><br/>
         <% end %> 
         <div id="fetchLinkArea" style="display: block">
