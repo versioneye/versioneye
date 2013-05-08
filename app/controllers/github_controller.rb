@@ -11,13 +11,14 @@ class GithubController < ApplicationController
     end
 
     token = get_token( code )
-    json_user = get_json_user( token )
+    p "token: #{token}"
+    json_user = GitHub.user token 
     
     if signed_in?
       user = current_user
       user.github_id = json_user['id']
       user.github_token = token
-      user.github_scope = "repo"
+      user.github_scope = "user"
       user.save
       redirect_to settings_connect_path
       return
@@ -94,10 +95,6 @@ class GithubController < ApplicationController
     token = pips[0].split("=")[1]
     token
   end
-
-    def get_json_user( token )
-      json_user = JSON.parse HTTParty.get('https://api.github.com/user?access_token=' + URI.escape(token) ).response.body
-    end
 
     def get_user_for_token(json_user, token)
       user = User.find_by_github_id( json_user['id'] )
