@@ -36,10 +36,10 @@ class TwitterController < ApplicationController
       return 
     end 
 
-    json_user_id = json_user['id']
+    twitter_user_id = json_user['id']
     user = nil 
-    if json_user_id
-      user = User.find_by_twitter_id( json_user_id )
+    if twitter_user_id
+      user = User.find_by_twitter_id( twitter_user_id )
     end
     if user
       update_current_user(user, json_user, access_token)
