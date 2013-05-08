@@ -17,7 +17,7 @@ class GithubController < ApplicationController
       user = current_user
       user.github_id = json_user['id']
       user.github_token = token
-      user.github_scope = "user"
+      user.github_scope = "no_scope" # "repo"
       user.save
       redirect_to settings_connect_path
       return

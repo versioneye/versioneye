@@ -385,7 +385,7 @@ class User
     self.username = json_user['login']
     self.github_id = json_user['id']
     self.github_token = token
-    self.github_scope = "repo"
+    self.github_scope = "no_scope"
     self.password = create_random_value
     if self.username.nil? || self.username.empty?
       self.username = create_random_value
