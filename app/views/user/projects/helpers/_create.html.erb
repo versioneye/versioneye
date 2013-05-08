@@ -38,7 +38,7 @@
 
     <div class = "tab-pane" id="tab3">
       <% if current_user.github_token.nil? %>
-        <%= render 'shared/login_with_github' %>
+        <%= render 'shared/login_with_github', :btn => "signup" %>
       <% else %>
         <% if !current_user.github_token.nil? && current_user.github_scope.eql?("no_scope") %>
           With the current scope we can fetch only your public repositories. If you want to fetch 
