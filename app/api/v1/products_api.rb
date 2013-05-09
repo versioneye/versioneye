@@ -156,12 +156,17 @@ module VersionEye
         if @current_product.nil?
           error! "Wrong product_key", 400
         end
-        @current_user.products.push @current_product if !@current_user.products.include?( @current_product )
+
+        if !@current_product.users.include? @current_user
+          @current_product.users.push @current_user
+          @current_product.followers += 1 
+          @current_product.save
+        end
         
         user_follow = UserFollow.new
         user_follow.username = @current_user.username 
         user_follow.prod_key = @current_product.prod_key 
-        user_follow.follows = @current_user.products.include? @current_product
+        user_follow.follows = @current_product.users.include? @current_user
         
         present user_follow, with: Entities::UserFollowEntity
       end
@@ -175,7 +180,12 @@ module VersionEye
         @current_user = current_user
         @current_product = fetch_product(params[:prod_key])
         error!("Wrong product key", 400) if @current_product.nil?
-        @current_user.products.delete @current_product
+
+        if @current_product.users.include? @current_user
+          @current_product.users.delete @current_user
+          @current_product.followers -= 1 
+          @current_product.save
+        end
         
         user_follow = UserFollow.new
         user_follow.username = @current_user.username 

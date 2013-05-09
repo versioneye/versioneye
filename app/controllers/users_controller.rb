@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
 
-  #noinspection RailsParamDefResolve
   before_filter :authenticate, :only => [:update, :destroy, :index]
   before_filter :correct_user, :only => [:update]
   before_filter :admin_user,   :only => [:destroy, :index]

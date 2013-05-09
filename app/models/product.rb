@@ -535,17 +535,6 @@ class Product
   def self.get_hotest( count )
     Product.all().desc(:followers).limit( count )
   end
-  
-  def self.update_followers
-    ids = Follower.all.distinct( :product_id )
-    ids.each do |id|
-      count = Follower.all(conditions: {product_id: id}).count
-      product = Product.find(id)
-      product.followers = count
-      product.save
-      p "#{id} - #{product.name} - #{count}"
-    end
-  end
 
   # TODO test
   def self.get_unique_languages_for_product_ids(product_ids)
