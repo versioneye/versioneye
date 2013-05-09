@@ -33,7 +33,7 @@ describe "follow and unfollow" do
     response.should redirect_to("/package/json_goba")
     
     prod = Product.find_by_key( prod_key )
-    subscribers = prod.subscribers
+    subscribers = prod.users
     subscribers.size.should eq(1)
     subscribers.first.email.should eql( user.email )
 
@@ -50,7 +50,7 @@ describe "follow and unfollow" do
     response.should contain("0 Followers")
 
     prod = Product.find_by_key( prod_key )
-    subscribers = prod.subscribers
+    subscribers = prod.users
     subscribers.size.should eq(0)
     
     user.remove

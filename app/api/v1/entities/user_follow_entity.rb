@@ -7,6 +7,7 @@ require 'paging_entity.rb'
 
 module VersionEye
   module Entities
+
     class UserFollowEntity < Grape::Entity
       expose :username
       expose :prod_key
@@ -18,5 +19,6 @@ module VersionEye
       expose :favorites, using: Entities::ProductEntity
       expose :paging, using: Entities::PagingEntity
     end
+    
   end
 end

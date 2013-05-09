@@ -3,26 +3,9 @@ require 'spec_helper'
 describe Notification do
   
   before(:each) do
-    @product = Product.new
-    @product.name = "name"
-    @product.prod_key = "gasgagasgj8623_junit/junit"
-    @product.save
+    @product = ProductFactory.create_new 
+    @user = UserFactory.create_new 
     
-    @user = User.new
-    @user.fullname = "Hans Tanz"
-    @user.username = "hanstanz"
-    @user.email = "hans@tanz.de"
-    @user.password = "password"
-    @user.salt = "salt"
-    @user.terms = true
-    @user.datenerhebung = true
-    @user.save
-    
-    @follower = Follower.new
-    @follower.user_id = @user.id.to_s
-    @follower.product_id = @product.id.to_s
-    @follower.save
-
     @notification = Notification.new
     @notification.user_id = @user.id.to_s
     @notification.product_id = @product.id.to_s
@@ -35,7 +18,6 @@ describe Notification do
   after(:each) do
     User.destroy_all
     Product.destroy_all
-    Follower.destroy_all
     Notification.destroy_all
   end
   

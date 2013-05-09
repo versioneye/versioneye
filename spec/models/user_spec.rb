@@ -164,66 +164,6 @@ describe User do
     end
   end
   
-  describe "fetch_my_products" do
-    it "fetches one product" do 
-      product = Product.new
-      product.name = "name"
-      product.prod_key = "gasgagasgj8623_junit/junit"
-      product.save
-      
-      follower = Follower.new
-      follower.user_id = @user.id
-      follower.product_id = product.id.to_s
-      follower.save
-      
-      products = @user.fetch_my_products
-      products.count.should eql(1)
-      
-      product.remove
-      follower.remove
-    end    
-  end
-  
-  describe "fetch_my_product_ids" do
-    it "fetches the product ids" do     
-      product = Product.new
-      product.name = "name"
-      product.prod_key = "gasgagasgj8623_junit/junit"
-      product.save
-      
-      product2 = Product.new
-      product2.name = "name2"
-      product2.prod_key = "2gasgagasgj8623_junit/junit"
-      product2.save
-      
-      product3 = Product.new
-      product3.name = "name3"
-      product3.prod_key = "32gasgagasgj8623_junit/junit"
-      product3.save
-      
-      follower = Follower.new
-      follower.user_id = @user.id
-      follower.product_id = product.id.to_s
-      follower.save
-      
-      follower2 = Follower.new
-      follower2.user_id = @user.id
-      follower2.product_id = product2.id.to_s
-      follower2.save
-      
-      ids = @user.fetch_my_product_ids
-      ids.count.should eql(2)
-      ids.include?(product.id.to_s).should be_true
-      ids.include?(product2.id.to_s).should be_true
-      
-      product.remove
-      product2.remove
-      product3.remove
-      follower.remove
-      follower2.remove
-    end
-  end
-  
   describe "has_password?" do
     it "doesn't have the password" do     
       @user.has_password?("agfasgasfgasfg").should be_false
@@ -403,7 +343,8 @@ describe User do
     end
     it "returns one user less, when one user starts following new Project" do
       user = User.all.first
-      Follower.new(user_id: user.id, product_id: 1).save()
+      prod = ProductFactory.create_new 
+      user.products.push prod 
       User.non_followers.count.should eql(User.all.count - 1)
     end
   end
@@ -419,7 +360,8 @@ describe User do
 
     it "returns only 1 user, who follows least n packages" do
       user = User.all.first
-      Follower.new(user_id:  user.id, product_id: 1).save()
+      prod = ProductFactory.create_new 
+      user.products.push prod 
       User.follows_least(1).count.should eql(1)
     end
   end
@@ -431,7 +373,8 @@ describe User do
 
     it "returns one user less, when one of un-followers starts following new package" do
       user = User.all.first
-      Follower.new(user_id: user.id, product_id: 1).save()
+      prod = ProductFactory.create_new 
+      user.products.push prod 
       User.follows_max(1).count.should eql(User.all.count - 1)
     end
   end
@@ -443,9 +386,9 @@ describe User do
 
     it "returns one user, when there's only one user following" do
       user = User.all.first
-      Follower.new(user_id: user.id, product_id: 1).save()
+      prod = ProductFactory.create_new 
+      user.products.push prod 
       User.active_users.count.should eql(1)
-      Follower.delete_all #to prevent side effects
     end
 
     it "returns one user, when there's only one user who have add comment" do

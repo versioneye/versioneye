@@ -1,19 +1,15 @@
+# TODO delete after cleared the db 
 class Follower
 
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  # TODO refactor with relations 
   field :user_id, type: String
   field :product_id, type: String  
   
   
   validates_presence_of :user_id,    :message => "User is mandatory!"
   validates_presence_of :product_id, :message => "Product is mandatory!"
-  
-  def self.find_by_user_id_and_product(user_id, product_id)    
-    Follower.where( user_id: user_id, product_id: product_id )[0]
-  end
   
   def self.find_by_product(product_id)
     Follower.all(conditions: { product_id: product_id } )

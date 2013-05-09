@@ -20,15 +20,15 @@
 
 		<div >
 			<h5 class="desc_header">
-				Follows <%= pluralize(@prod_count, "Package") %>
+				Follows <%= pluralize(@user['product_ids'].count, "Package") %>
 				<a href="<%= url_for(favoritepackages_user_url(@user)) %>.rss"><%= image_tag "rss.png", :title => "Subscribe via RSS", :alt => "Subscribe via RSS" %></a>
 			</h5>
 		</div>		
 		<div style="margin-bottom: 30px;" >
-			<% if !@prod_count.nil? && @prod_count > 0 %>
+			<% if @user['product_ids'].count > 0 %>
 				<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
 			<% end %>
-			<% if !@prod_count.nil? && @prod_count > 3 %>
+			<% if @user['product_ids'].count > 3 %>
 				<div style="padding-top: 10px;">
 					<a href="/users/<%=@user.username%>/favoritepackages" style="padding-left: 30px;">See all</a>
 				</div>

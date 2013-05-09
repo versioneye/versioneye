@@ -111,8 +111,7 @@ class User::ProjectsController < ApplicationController
   end
 
   def libs_i_follow
-    @my_product_ids = Follower.find_product_ids_for_user( current_user.id )
-    @products = current_user.fetch_my_products.paginate(:page => params[:page]) 
+    @products = current_user.products.paginate(:page => params[:page]) 
   end
 
   def github_projects

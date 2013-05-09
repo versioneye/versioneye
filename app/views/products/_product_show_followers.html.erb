@@ -1,13 +1,12 @@
-<% users = @product.subscribers %>
 <div class="box header">
-	<h5>
-		<%= pluralize(users.count, "Followers") %>
-	</h5>
+  <h5>
+    <%= pluralize(@product['user_ids'].count, "Followers") %>
+  </h5>
 </div>
 <div class="box content" >
-	<% users.each do |user| %>
-		<% if !user.nil? && !user.email.nil? %>
-			<%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :style => "width: 40px;", :gravatar => { :size => 40, :default => "#{Settings.server_url}/profile_icon.png" } ), user_path(user) %>
-		<% end %>
-	<% end %>
+  <% @product.users.each do |user| %>
+    <% if !user.nil? && !user.email.nil? %>
+      <%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :style => "width: 40px;", :gravatar => { :size => 40, :default => "#{Settings.server_url}/profile_icon.png" } ), user_path(user) %>
+    <% end %>
+  <% end %>
 </div>

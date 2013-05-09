@@ -10,13 +10,13 @@ module ProductsHelper
     return "/package/#{product.to_param}"
   end
   
-  def display_follow(product)
-    return "none" if product.in_my_products
+  def display_follow(product, user)
+    return "none" if user.products.include? product
     return "block"
   end
   
-  def display_unfollow(product)
-    return "block" if product.in_my_products
+  def display_unfollow(product, user)
+    return "block" if user.products.include? product
     return "none"
   end
 

@@ -19,8 +19,8 @@ describe ProductService do
       message.should_not be_nil
       message.should eql("success") 
       prod = Product.find_by_key( @product.prod_key )
-      prod.followers.should eq(1)
-      subscribers = prod.subscribers
+      prod.users.count.should eq(1)
+      subscribers = prod.users
       subscribers.size.should eq(1)
       sub_user = subscribers.first 
       sub_user.email.should eql(@user.email)
@@ -31,9 +31,9 @@ describe ProductService do
       message.should_not be_nil
       message.should eql("success") 
       prod = Product.find_by_key( @product.prod_key )
-      subscribers = prod.subscribers
+      subscribers = prod.users
       subscribers.size.should eq(0)
-      prod.followers.should eq(0)
+      prod.users.count.should eq(0)
     end
 
     it "destroys returns error because product does not exist" do 

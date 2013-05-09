@@ -412,17 +412,6 @@ class Product
   def comments
     Versioncomment.find_by_prod_key_and_version(self.prod_key, self.version)
   end
-
-  # TODO refactor this. relation users 
-  def get_followers
-    Follower.find_by_product(self.id.to_s)
-  end
-
-  # TODO refactor this. relation users 
-  def subscribers
-    user_ids = Follower.find_follower_ids_for_product( self.id )
-    return User.find_by_ids( user_ids )
-  end
   
   def license_info
     if self.license.nil? || self.license.empty? || self.license.eql?("unknown")
@@ -558,6 +547,7 @@ class Product
     end
   end
 
+  # TODO test
   def self.get_unique_languages_for_product_ids(product_ids)
     Product.where(:_id.in => product_ids).distinct(:language)
   end

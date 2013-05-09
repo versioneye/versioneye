@@ -32,9 +32,6 @@ class ProductsController < ApplicationController
       start = Time.now
       languages = get_language_array(@lang)
       @products = ProductService.search( @query, @groupid, languages, params[:page])
-      if @products && @products.count > 0 && signed_in?
-        @my_product_ids = current_user.fetch_my_product_ids 
-      end
       save_search_log( @query, @products, start )
     end    
     @languages = @@languages
@@ -59,8 +56,6 @@ class ProductsController < ApplicationController
       flash[:error] = "The requested package is not available."
       return 
     end
-    
-    @following = is_following?(current_user, @product)
 
     attach_version( @product, params[:version] )
     if @product.version 
@@ -294,13 +289,6 @@ class ProductsController < ApplicationController
         comment.update_type = type
       end
       comment.save
-    end
-
-    def is_following?(user, product)
-      return false if !user || !product
-      follower = Follower.find_by_user_id_and_product(user.id, product._id.to_s)
-      return true  if follower
-      return false if follower.nil?
     end
 
 end

@@ -65,16 +65,14 @@ class UsersController < ApplicationController
     @user = User.find_by_username(params[:id])
     @page = "profile"
     
-    if ( !@user.nil? )
-      product_ids = Follower.find_product_ids_for_user( @user.id )
-      @languages = Product.get_unique_languages_for_product_ids(product_ids)
+    if @user 
+      # TODO refactor the use of @languages .. do it in erb 
+      @languages = Product.get_unique_languages_for_product_ids( @user['product_ids'] )
       @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
 
       @products = Array.new
       if has_permission_to_see_products( @user, current_user ) && !@user.nil?
-        @products = @user.fetch_my_products.paginate(:page => params[:page], :per_page => 3)
-        @prod_count = @user.fetch_my_products_count
-        @prod_count = 0 if @prod_count.nil?
+        @products = @user.products.paginate(:page => params[:page], :per_page => 3)
       end
       
       @comments = Array.new
@@ -83,10 +81,6 @@ class UsersController < ApplicationController
         @comments_count = Versioncomment.count_by_user_id( @user.id )
         @comments_count = 0 if @comments_count.nil?
       end
-
-      if signed_in?
-        @my_product_ids = current_user.fetch_my_product_ids
-      end
     else 
       flash.now[:error] = "There is no user with the given username"
     end
@@ -94,20 +88,15 @@ class UsersController < ApplicationController
   
   def favoritepackages
     @user = User.find_by_username(params[:id])
-    @user_product_ids = Follower.find_product_ids_for_user( @user.id )
-    @my_product_ids = Array.new 
     @products = Array.new
     respond_to do |format|
       format.html {
         @page = "profile"
-        @languages = Product.get_unique_languages_for_product_ids( @user_product_ids )
+        @languages = Product.get_unique_languages_for_product_ids( @user['product_ids'] )
         @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
         if has_permission_to_see_products( @user, current_user ) && !@user.nil?
-          if signed_in? 
-            @my_product_ids = Follower.find_product_ids_for_user( current_user.id )
-          end
-          @products = @user.fetch_my_products.paginate(:page => params[:page]) 
-          @count = @user.fetch_my_products_count
+          @products = @user.products.paginate(:page => params[:page]) 
+          @count = @user.products.count
         end    
       }
       format.json {
@@ -130,8 +119,7 @@ class UsersController < ApplicationController
   def comments
     @page = "profile"
     @user = User.find_by_username(params[:id])
-    product_ids = Follower.find_product_ids_for_user( @user.id )
-    @languages = Product.get_unique_languages_for_product_ids(product_ids)
+    @languages = Product.get_unique_languages_for_product_ids(@user['product_ids'])
     @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
     @comments = Array.new
     if has_permission_to_see_comments( @user, current_user ) && !@user.nil?

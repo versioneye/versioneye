@@ -11,15 +11,14 @@ class CrawlerUtils
   end
 
   def self.create_notifications product, version_number
-    followers = product.get_followers
-    if followers && !followers.empty?
-      followers.each do |follower|
-        notification = Notification.new
-        notification.user_id = follower.user_id 
-        notification.product_id = follower.product_id
-        notification.version_id = version_number
-        notification.save 
-      end
+    followers = product.users
+    return nil if followers.nil? || followers.empty?
+    followers.each do |follower|
+      notification = Notification.new
+      notification.user_id = follower.id 
+      notification.product_id = product.id
+      notification.version_id = version_number
+      notification.save 
     end
   end
 

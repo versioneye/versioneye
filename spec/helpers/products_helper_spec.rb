@@ -7,7 +7,7 @@ describe ProductsHelper do
     @products_controller.extend(ProductsHelper)
   end
   
-    describe "do_parse_search_input" do 
+  describe "do_parse_search_input" do 
     
     it "returns the given search input" do 
       query = "junit"
@@ -33,6 +33,40 @@ describe ProductsHelper do
       query.should eql('json')
     end
     
+  end
+
+  describe "display_follow" do 
+
+    it "displays block" do 
+      product = ProductFactory.create_new 
+      user = UserFactory.create_new 
+      @products_controller.display_follow(product, user).should eql("block")
+    end
+
+    it "displays none" do 
+      product = ProductFactory.create_new 
+      user = UserFactory.create_new 
+      user.products.push product
+      @products_controller.display_follow(product, user).should eql("none")
+    end
+
+  end
+
+  describe "display_unfollow" do 
+
+    it "displays block" do 
+      product = ProductFactory.create_new 
+      user = UserFactory.create_new 
+      user.products.push product
+      @products_controller.display_unfollow(product, user).should eql("block")
+    end
+
+    it "displays none" do 
+      product = ProductFactory.create_new 
+      user = UserFactory.create_new 
+      @products_controller.display_unfollow(product, user).should eql("none")
+    end
+
   end
     
 end

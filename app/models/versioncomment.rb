@@ -22,18 +22,6 @@ class Versioncomment
   validates_presence_of :comment,     :message => "Comment is mandatory!"  
  
   scope :by_user, ->(user){ where(user_id: user.id) }
-  def as_json parameter
-    product = get_product
-    prod_name = product.name unless product.nil?
-    prod_key = product.prod_key unless product.nil?
-    {
-      :comment => self.comment,
-      :from => user.fullname,
-      :product_name => prod_name,
-      :product_key => prod_key,
-      :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p")
-    }
-  end
   
   def self.find_by_id(id)
     Versioncomment.find( id )
@@ -78,18 +66,7 @@ class Versioncomment
     "#{self.prod_name} (#{self.version})" 
   end
   
-  def self.update_product_names
-    comments = Versioncomment.all
-    comments.each do |comment|
-      product = comment.get_product
-      if !product.nil?
-        comment.prod_name = product.name
-        comment.language = product.language
-        comment.save
-      end      
-    end
-  end
-  
+  # TODO rename to product
   def get_product
     product = Product.find_by_key(self.product_key)
     if !product.nil?

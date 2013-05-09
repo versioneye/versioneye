@@ -49,8 +49,7 @@ class User
   belongs_to :plan
   has_one    :billing_address
   has_many   :projects 
-  has_and_belongs_to_many :products 
-  
+  has_and_belongs_to_many :products
   # TODO bug ... there are many followers with string ids in the db. check this. 
   has_many   :followers
   # *** RELATIONS END ***
@@ -72,15 +71,25 @@ class User
 
   before_validation :downcase_email
   
-  scope :follows_none, where(:followers.empty?)
-  scope :follows_equal, ->(n){where(:followers.count.eq(n))}
-  scope :follows_least, ->(n){where(:followers.count >= n)}
-  scope :follows_max, ->(n){where(:followers.count <= n)}
+  scope :follows_none, where(:product_ids.empty?)
+  scope :follows_equal, ->(n){where(:product_ids.count.eq(n))}
+  scope :follows_least, ->(n){where(:product_ids.count >= n)}
+  scope :follows_max, ->(n){where(:product_ids.count <= n)}
 
   attr_accessor :password, :new_username
   attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :datenerhebung, :verification, :terms, :datenerhebung
 
   
+  # TODO remove after migration 
+  def fetch_my_products
+    ids = Array.new
+    followers.each do |follower|
+      ids.push follower.product_id
+    end  
+    Product.any_in(_id: ids).asc(:name)
+  end
+
+
   def save
     encrypt_password if new_record?
     return false if self.terms == false || self.terms == nil
@@ -199,30 +208,7 @@ class User
     UserEmail.where( user_id: self._id.to_s, email: email )[0]
   end
 
-  def fetch_my_products
-    ids = Array.new
-    followers.each do |follower|
-      ids.push follower.product_id
-    end  
-    Product.any_in(_id: ids).asc(:name)
-  end
-
-  def fetch_my_products_count
-    ids = Array.new
-    followers.each do |follower|
-      ids.push follower.product_id
-    end  
-    Product.any_in(_id: ids).count()
-  end
-      
-  def fetch_my_product_ids
-    ids = Array.new
-    followers.each do |follower|
-      ids.push follower.product_id
-    end
-    ids
-  end
-
+  # TODO replace with relation 
   def notification_settings
     UserNotificationSetting.get_by_user_id(self.id.to_s)
   end
@@ -272,19 +258,20 @@ class User
     UserMailer.reset_password(self, random_value).deliver
   end
 
+  # TODO replace with relation 
   def self.follows_max(n)
-    User.all.select {|user| user.followers.count < n}
+    User.all.select {|user| user['product_ids'].count < n}
   end
   def self.follows_least(n)
-    User.all.select {|user| user.followers.count >= n}
+    User.all.select {|user| user['product_ids'].count >= n}
   end 
   def self.non_followers
-    User.all.select {|user| user.followers.count == 0}
+    User.all.select {|user| user['product_ids'].count == 0}
   end
- 
+  
   def self.active_users
     User.all.select do |user|
-      (user.followers.count > 0 or
+      (user['product_ids'].count > 0 or
        Versioncomment.where(user_id: user.id).exists? or
        Project.where(user_id: user.id).exists?
       )
@@ -407,13 +394,6 @@ class User
     username = username.gsub("_", "")
     username
   end
-  
-  def as_json param
-    {
-      :fullname => self.fullname,
-      :username => self.username
-    }
-  end
 
   def delete_user
     random = create_random_value
@@ -421,6 +401,7 @@ class User
     self.email = "#{random}_#{self.email}"
     self.prev_fullname = self.fullname
     self.fullname = "Deleted"
+    self.products.clear 
     self.save
   end
 

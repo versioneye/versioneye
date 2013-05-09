@@ -36,20 +36,15 @@ class VersioncommentsController < ApplicationController
   private 
       
     def send_comment_mails(product, user, comment)
-      # TODO refactor this with product.users relation 
-      followers = Follower.find_by_product(product.id.to_s)
-      
-      if followers.nil? || followers.empty?
-        return nil
-      end
-      
-      followers.each do |follower|
-        if !follower.user_id.eql?(user.id.to_s)
-          follower_user = follower.user
-          next if follower_user.deleted
-          VersioncommentMailer.versioncomment_email(product, follower.user, user, comment).deliver
+      return nil if product.users.nil? || product.users.empty?
+      send_to_users = Array.new 
+      product.users.each do |follower|
+        if !follower.id.to_s.eql?(user.id.to_s) && follower.deleted == false 
+          VersioncommentMailer.versioncomment_email(product, follower, user, comment).deliver
+          send_to_users << follower
         end
       end
+      send_to_users
     end
   
 end

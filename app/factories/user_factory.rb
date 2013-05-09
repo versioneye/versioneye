@@ -10,7 +10,11 @@ class UserFactory
                   :salt     => "sugar"
                 }
     new_user = User.new user_data
-    new_user.save if save_db
+    if save_db
+      if !new_user.save
+        p new_user.errors
+      end
+    end
     
     return new_user
   end
