@@ -156,7 +156,7 @@ module VersionEye
         if @current_product.nil?
           error! "Wrong product_key", 400
         end
-        @current_user.products.push @current_product
+        @current_user.products.push @current_product if !@current_user.products.include?( @current_product )
         
         user_follow = UserFollow.new
         user_follow.username = @current_user.username 

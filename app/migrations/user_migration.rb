@@ -1,15 +1,23 @@
 class UserMigration
 
-  def self.migrate_followers
-    users = User.all 
-    count = 0 
-    users.each do |user|
-      products = user.fetch_my_products
-      products.each do |product| 
-        user.products.push product 
-        count += 1
+  def self.show_users_with_double_products 
+    User.all.each do |user|
+      if user.products.count != user['product_ids'].count
+        p "#{user.username} : #{user.products.count} : #{user['product_ids'].count}"
       end
-      p count 
+    end
+  end
+
+  def self.remove_double_products 
+    User.all.each do |user|
+      if user.products.count != user['product_ids'].count
+        p user.username 
+        products = Array.new( user.products )
+        user.products.clear 
+        products.each do |product|
+          user.products.push product 
+        end
+      end
     end
   end
 

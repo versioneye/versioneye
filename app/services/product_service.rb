@@ -13,7 +13,7 @@ class ProductService
   def self.create_follower(prod_key, user)
     product = Product.find_by_key prod_key
     return "error" if product.nil? || user.nil?
-    product.users.push user 
+    product.users.push user if !product.users.include?(user)
     return "success"
   end
   
