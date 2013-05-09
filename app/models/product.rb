@@ -657,8 +657,9 @@ class Product
       return element
     end
 
+    # TODO test and move 
     def self.attach_label_to_element(element, dep)
-      element.text = "dep.name:#{dep.version}"
+      element.text = "#{dep.name}:#{dep.version}"
     end
 
     def get_newest_or_value(newest, value)
