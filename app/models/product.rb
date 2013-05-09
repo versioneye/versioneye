@@ -449,75 +449,7 @@ class Product
     return false
   end
 
-  def dependency_circle(scope)
-    if scope == nil 
-      scope = main_scope
-    end
-    hash = Hash.new
-    dependencies = Array.new 
-    if scope.eql?("all")
-      dependencies = Dependency.find_by_key_and_version(prod_key, version)
-    else 
-      dependencies = Dependency.find_by_key_version_scope(prod_key, version, scope)
-    end
-    dependencies.each do |dep| 
-      if dep.name.nil? || dep.name.empty?
-        p "dep name is nil! #{dep.dep_prod_key}"
-        next
-      end      
-      element = CircleElement.new
-      element.init
-      element.dep_prod_key = dep.dep_prod_key
-      element.version = dep.version_parsed
-      element.level = 0
-      Product.attach_label_to_element(element, dep)
-      hash[dep.dep_prod_key] = element
-    end
-    return Product.fetch_deps(1, hash, Hash.new)
-  end
-
-  def self.fetch_deps(deep, hash, parent_hash)
-    return hash if hash.empty? 
-    new_hash = Hash.new
-    hash.each do |prod_key, element|
-      product = Product.find_by_key( prod_key )
-      if product.nil?
-        p "#{element.dep_prod_key} #{element.version} not found!"
-        next
-      end
-      if (element.version && !element.version.eql?("") && !element.version.eql?("0"))
-        product.version = element.version
-      end
-      dependencies = product.dependencies(nil)
-      dependencies.each do |dep|
-        if dep.name.nil? || dep.name.empty?
-          p "dep name is nil! #{dep.dep_prod_key}"
-          next
-        end
-        key = dep.dep_prod_key
-        ele = Product.get_element_from_hash(new_hash, hash, parent_hash, key)
-        if ele
-          ele.connections << "#{element.dep_prod_key}"
-        else 
-          new_element = CircleElement.new
-          new_element.init
-          new_element.dep_prod_key = dep.dep_prod_key
-          new_element.level = deep
-          attach_label_to_element(new_element, dep)
-          new_element.connections << "#{element.dep_prod_key}"
-          new_element.version = dep.version_parsed
-          new_hash[dep.dep_prod_key] = new_element
-        end
-        element.connections << "#{key}"
-        element.dependencies << "#{key}"
-      end
-    end
-    parent_merged = hash.merge(parent_hash)
-    deep += 1 
-    rec_hash = Product.fetch_deps(deep, new_hash, parent_merged)
-    merged_hash = parent_merged.merge(rec_hash)
-    return merged_hash
-  end
+  
 
   def self.random_product
     size = Product.count - 7
@@ -646,21 +578,7 @@ class Product
         query = query.in(language: languages)
       end
       query
-    end
-
-    def self.get_element_from_hash(new_hash, hash, parent_hash, key)
-      element = new_hash[key]
-      return element if !element.nil?
-      element = hash[key]
-      return element if !element.nil?
-      element = parent_hash[key]
-      return element
-    end
-
-    # TODO test and move 
-    def self.attach_label_to_element(element, dep)
-      element.text = "#{dep.name}:#{dep.version}"
-    end
+    end    
 
     def get_newest_or_value(newest, value)
       if newest.nil?
