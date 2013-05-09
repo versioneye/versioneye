@@ -50,8 +50,6 @@ class User
   has_one    :billing_address
   has_many   :projects 
   has_and_belongs_to_many :products
-  # TODO bug ... there are many followers with string ids in the db. check this. 
-  has_many   :followers
   # *** RELATIONS END ***
 
   validates_presence_of :username, :message => "Username is mandatory!"
@@ -78,16 +76,6 @@ class User
 
   attr_accessor :password, :new_username
   attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :datenerhebung, :verification, :terms, :datenerhebung
-
-  
-  # TODO remove after migration 
-  def fetch_my_products
-    ids = Array.new
-    followers.each do |follower|
-      ids.push follower.product_id
-    end  
-    Product.any_in(_id: ids).asc(:name)
-  end
 
 
   def save
