@@ -20,6 +20,7 @@ describe ProductService do
       message.should eql("success") 
       prod = Product.find_by_key( @product.prod_key )
       prod.users.count.should eq(1)
+      prod.followers.should eq(1)
       subscribers = prod.users
       subscribers.size.should eq(1)
       sub_user = subscribers.first 
@@ -31,6 +32,7 @@ describe ProductService do
       message.should_not be_nil
       message.should eql("success") 
       prod = Product.find_by_key( @product.prod_key )
+      prod.followers.should eq(0)
       subscribers = prod.users
       subscribers.size.should eq(0)
       prod.users.count.should eq(0)

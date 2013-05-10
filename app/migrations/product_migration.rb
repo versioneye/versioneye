@@ -12,6 +12,16 @@ class ProductMigration
     end
   end
 
+  def self.update_followers
+    products = Product.where( :"user_ids.0" => {"$exists"=>true} )
+    products.each do |product| 
+      product.followers = product.users.count 
+      product.save 
+      p "update followers for #{product.name}"
+    end
+    p "#{products.count} products updated."
+  end
+
   def self.count_versions(lang)
     versions_count = 0 
     count = Product.where(language: lang).count()

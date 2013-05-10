@@ -69,6 +69,7 @@ class Dependency
     parser.parse_requested_version(self.version, project_dependency, product)
     version_requested = project_dependency.version_requested
     
+    return false if newest_product_version.eql?( version_requested )
     newest_version = Naturalsorter::Sorter.sort_version([version_requested, newest_product_version]).last
     return false if newest_version.eql?( version_requested )
     return true

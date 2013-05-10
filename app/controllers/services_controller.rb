@@ -60,7 +60,7 @@ class ServicesController < ApplicationController
       end
       hash[dep.prod_key] = element
     end
-    circle = Product.fetch_deps(1, hash, Hash.new)
+    circle = CircleElement.fetch_deps(1, hash, Hash.new)
     respond_to do |format|
       format.json { 
         resp = generate_json_for_circle_from_hash(circle)

@@ -181,7 +181,7 @@ class User
   end
 
   def self.find_all( page_count )
-    User.all().desc(:created_at)
+    User.all().desc(:created_at).paginate(page: page_count, per_page: 30)
   end
 
   def emails
@@ -294,6 +294,7 @@ class User
 
     user    
   end
+  
   def self.username_valid?(username)
     user = User.find_by_username(username)
     return user.nil?
