@@ -12,11 +12,18 @@ class PackageParser < CommonParser
     return nil if data.nil?
 
     dependencies = data['dependencies']
-    return nil if dependencies.nil?
 
     dev_dependencies = data['devDependencies']
-    if dev_dependencies 
-      dependencies.merge!(dev_dependencies)
+    if dev_dependencies
+      if dependencies.nil? 
+        dependencies = dev_dependencies
+      else 
+        dependencies.merge!(dev_dependencies)
+      end
+    end
+
+    if dependencies.nil?
+      return nil 
     end
 
     project = Project.new
