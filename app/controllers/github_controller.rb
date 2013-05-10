@@ -57,7 +57,7 @@ class GithubController < ApplicationController
         render 'new'
         return
       end
-      json_user = Gtihub.user( token )
+      json_user = Github.user( token )
       user = User.new
       scopes = Github.oauth_scopes( token )
       user.update_from_github_json(json_user, token, scopes)
