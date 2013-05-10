@@ -446,12 +446,10 @@ class Product
     deps = self.dependencies( scope )
     return false if deps.nil? || deps.empty?
     deps.each do |dep| 
-      return true if dep.outdated? 
+      return true if dep.outdated?
     end
     return false
   end
-
-  
 
   def self.random_product
     size = Product.count - 7
