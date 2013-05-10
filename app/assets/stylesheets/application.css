@@ -6,6 +6,7 @@
  *= require_self
  *= require bootstrap
  *= require bootstrap_responsive
+ *= require bootstrap_switch
  *= require main
  *= require product
  *= require user

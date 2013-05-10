@@ -16,10 +16,16 @@ class Github
     "no_scope"
   end
 
-  def self.user_repo_names( github_token )
+ 
+  def self.user_repos(github_token)
     body = HTTParty.get("https://api.github.com/user/repos?access_token=#{github_token}", :headers => {"User-Agent" => A_USER_AGENT } ).response.body
     repos = JSON.parse( body )
-    extract_repo_names( repos )
+    repos
+  end
+  
+  def self.user_repo_names( github_token )
+    repose = user_repo(github_token)
+    extract_repo_names(repos)
   end
   
 
@@ -104,6 +110,11 @@ class Github
 
   def self.fetch_file( url, token )
     JSON.parse HTTParty.get( "#{url}?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT} ).response.body
+  end
+  
+  def self.supported_languages()
+    Set['java', 'ruby', 'python', 'node.js', 'php', 'javascript', 
+        'coffeescript', 'clojure']
   end
 
   private 

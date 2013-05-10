@@ -13,7 +13,7 @@ class User::ProjectsController < ApplicationController
   
   def create
     file = params[:upload]
-    project_url = params[:project][:url]
+    project_url = params[:project][:url] if params.has_key? :url
     github_project = params[:github_project]
     
     if file && !file.empty?
@@ -28,11 +28,15 @@ class User::ProjectsController < ApplicationController
       redirect_to new_user_project_path
       return nil  
     end
-    
-    if project and project.id 
-      redirect_to user_project_path( project._id )
-    else
-      redirect_to user_projects_path
+    respond_to do |format|     
+      format.html {
+        if project and project.id 
+          redirect_to user_project_path( project._id )
+        else
+          redirect_to user_projects_path
+        end
+      }
+      format.json {render json: {project_id: project._id}}
     end
   end
 
@@ -88,7 +92,10 @@ class User::ProjectsController < ApplicationController
   def destroy
     id = params[:id]
     ProjectService.destroy_project id 
-    redirect_to user_projects_path
+    respond_to do |format|
+      format.html {redirect_to user_projects_path}
+      format.json {render json: {success: true, project_id: id}}
+    end
   end
 
   def update_name
@@ -116,6 +123,12 @@ class User::ProjectsController < ApplicationController
 
   def github_projects
     respond_to do |format|
+      @repos = Github.user_repos(current_user.github_token)
+      @repos.sort_by! {|repo| "%s" % repo["language"].to_s }
+      @imported_repos = Project.by_user(current_user).by_source(Project::A_SOURCE_GITHUB)
+      @imported_repo_names  = @imported_repos.map(&:name).to_set
+      @supported_langs = Github.supported_languages
+      format.html {render template: "user/projects/show_github_projects"}
       format.json { 
         resp = "{\"projects\": [\""
         repos1 = Github.user_repo_names( current_user.github_token )
