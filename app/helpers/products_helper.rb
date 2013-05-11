@@ -85,6 +85,7 @@ module ProductsHelper
     circle.each do |key, dep| 
       resp += "{"
       resp += "\"connections\": [#{dep.connections_as_string}],"
+      resp += "\"dependencies\": [#{dep.dependencies_as_string}],"
       resp += "\"text\": \"#{dep.text}\","
       resp += "\"id\": \"#{dep.dep_prod_key}\"," 
       resp += "\"version\": \"#{dep.version}\"" 
@@ -100,6 +101,7 @@ module ProductsHelper
     circle.each do |element| 
       resp += "{"
       resp += "\"connections\": [#{element.connections_string}],"
+      resp += "\"dependencies\": [#{element.dependencies_string}],"
       resp += "\"text\": \"#{element.text}\","
       resp += "\"id\": \"#{element.dep_prod_key}\"," 
       resp += "\"version\": \"#{element.version}\"" 
