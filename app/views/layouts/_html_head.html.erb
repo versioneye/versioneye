@@ -10,7 +10,7 @@
 
 	<% if @product || @project %> 
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-		<%= javascript_include_tag "application",    :defer => false, :async => false %>
+		<%= javascript_include_tag "application_product",    :defer => false, :async => false %>
 	<% elsif @page.eql?("LandingPage") %>
 		<%= javascript_include_tag "application_lp", :defer => true, :async => true %>
 	<% elsif @page.eql?("statistics") %>
