@@ -16,9 +16,5 @@
 //= require moowheel/excanvas
 //= require moowheel/dependencywheel
 //= require google
-//= require gmap
 //= require custom
-//= require custom_update_language
 //= require custom_feedback
-
-

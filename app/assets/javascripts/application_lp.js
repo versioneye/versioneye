@@ -12,5 +12,4 @@
 //= require google
 
 //= require custom_lp
-//= require custom_update_language
 //= require custom_feedback
