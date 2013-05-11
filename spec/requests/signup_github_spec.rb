@@ -2,6 +2,14 @@ require 'spec_helper'
 
 describe "SignUp with GitHub" do
 
+  before(:each) do
+    User.destroy_all
+  end
+
+  after(:each) do
+    User.destroy_all
+  end
+
   it "github callback passes" do 
     
     get "/signup", nil, "HTTPS" => "on"
@@ -13,6 +21,13 @@ describe "SignUp with GitHub" do
     
     get "/auth/github/callback?code=123"
     assert_response :success
+
+    post "/auth/github/create", {:email => "test@test.de", :terms => "0" }, "HTTPS" => "on"
+    response.should contain("You have to accept the Conditions of Use AND the Data Aquisition.")
+
+    post "/auth/github/create", {:email => "test@test.de", :terms => "1" }, "HTTPS" => "on"
+    assert_response :success
+    response.should contain("Congratulation")
 
   end
 
