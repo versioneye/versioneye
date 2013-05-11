@@ -13,7 +13,7 @@ class User::ProjectsController < ApplicationController
   
   def create
     file = params[:upload]
-    project_url = params[:project][:url] if params.has_key? :url
+    project_url = params[:project][:url] 
     github_project = params[:github_project]
 
     if file && !file.empty?
