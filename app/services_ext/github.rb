@@ -24,8 +24,8 @@ class Github
   end
   
   def self.user_repo_names( github_token )
-    repose = user_repo(github_token)
-    extract_repo_names(repos)
+    repos = user_repo(github_token)
+    extract_repo_names( repos )
   end
   
 
