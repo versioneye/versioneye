@@ -34,19 +34,19 @@ var DependencyWheel = new Class({
       onItemClick: $empty,
       infoBox: 'mooinfo', 
       infoNumber: 'moonumber', 
+      scope: "compile", 
       data_border: 70,
       canvas_id: 'canvas', 
-      canvas_hover_id: 'canvas_hover', 
+      canvas_hover_id: 'canvas_hover',       
       product_key: "product_key", 
       product_version: "product_version", 
       product_name: "product_name", 
       version: "version", 
       show_label: false, 
       resize: false,
-      resize_ids: "section,container", 
+      resize_ids: "container,section", 
       resize_factor: 11, 
-      scope: "compile", 
-      container_id: "canvas-container", 
+      container_id: "canvas-container",
       pinit: true
     },
    
@@ -165,7 +165,7 @@ var DependencyWheel = new Class({
          
          if (this.options.lines.color == 'random'){
             p1 = 100;
-            p2 = 20;
+            p2 = 100;
             color['__default'] = "rgba(" + (Math.floor(Math.random() * p1) + p2) + "," + (Math.floor(Math.random() * p1) + p2) + "," + (Math.floor(Math.random() * p1) + p2) + ", 1)";
          } else{
             color['__default'] = this.options.lines.color;
@@ -329,8 +329,12 @@ var DependencyWheel = new Class({
       for(var j = 0; j < connections.length; j++) {
          var itemIdx = this.getItemIdxById(connections[j]);
 
-         cx.strokeStyle = hover ? (item['colors'][connections[j][0]] ? item['colors'][connections[j][0]] : item['colors']["__default"]).replace(/, \d\.?\d+?\)/, ',1)') :
-                                  (item['colors'][connections[j][0]] ? item['colors'][connections[j][0]] : item['colors']["__default"]);
+          var connectionName = connections[ j ];
+
+          var isDependency = !!( item[ 'dependencies' ] && item[ 'dependencies' ].indexOf( connectionName ) != -1 );
+
+//         cx.strokeStyle = hover ? (item['colors'][connections[j][0]] ? item['colors'][connections[j][0]] : item['colors']["__default"]).replace(/, \d\.?\d+?\)/, ',1)') :
+//                                  (item['colors'][connections[j][0]] ? item['colors'][connections[j][0]] : item['colors']["__default"]);
 
          cx.beginPath();
          cx.moveTo(x, y);
@@ -341,6 +345,23 @@ var DependencyWheel = new Class({
          cp1y = this.options.center.y + Math.sin(angle * (Math.PI / 180)) * (this.radius / 1.5);
          cp2x = this.options.center.x + Math.cos(rpos * (Math.PI / 180)) * (this.radius / 1.5);
          cp2y = this.options.center.y + Math.sin(rpos * (Math.PI / 180)) * (this.radius / 1.5);
+
+          var stopItem = this.data[ itemIdx ];
+
+          cx.strokeStyle = hover ?
+              this.getStrokeGradient(
+                  cx,
+                  { x1: x, y1: y, c1: item[ 'colors' ][ '__default' ], x2: x2, y2: y2, c2: stopItem[ 'colors' ][ '__default' ] },
+                  isDependency
+              ) :
+                                  (item['colors'][connections[j][0]] ? item['colors'][connections[j][0]] : item['colors']["__default"]);
+
+          //    cx.strokeStyle = this.getStrokeGradient( cx, { x1: x, y1: y, c1: item[ 'colors' ][ '__default' ], x2: x2, y2: y2, c2: stopItem[ 'colors' ][ '__default' ] } );
+
+          cx.beginPath();
+          cx.moveTo(x, y);
+
+
          cx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x2, y2);
          cx.stroke();
          cx.closePath();
@@ -363,6 +384,36 @@ var DependencyWheel = new Class({
         show_info_box(this.data, this.options);
       }
    },
+
+    /**
+     * Creates gradient for connection
+     *
+     * @param ctx convas context
+     * @param {Object} connectionRect Configuration of dots to be connected
+     * @param connectionRect.x1 x-coordinate of start point
+     * @param connectionRect.y1 y-coordinate of start point
+     * @param connectionRect.c1 color of start point
+     * @param connectionRect.x2 x-coordinate of end point
+     * @param connectionRect.y2 y-coordinate of end point
+     * @param connectionRect.c2 color of end point
+     * @param {Boolean} isDependency
+     *
+     * @returns {*|CanvasGradient}
+     */
+    getStrokeGradient: function( ctx, connectionRect, isDependency ) {
+        var grad = ctx.createLinearGradient( connectionRect.x1, connectionRect.y1, connectionRect.x2, connectionRect.y2 );
+
+        if ( isDependency ) {
+            grad.addColorStop(0, 'rgba(0,0,127,0.5)');
+            grad.addColorStop(1, 'rgba(0,0,127,1)');
+        }
+        else {
+            grad.addColorStop(0, 'rgba(0,127,0,0.5)' );//connectionRect.c1 );
+            grad.addColorStop(1, 'rgba(0,127,0,1)' );//connectionRect.c2);
+        }
+
+        return grad;
+    },
    
    // draw the entire DependencyWheel
    draw: function() {
@@ -401,7 +452,7 @@ var DependencyWheel = new Class({
             if(conn !== false) {
                if(this.lastMouseOver == conn)
                   return;
-                   
+
                this.drawConnection(conn, true);
 
                this.lastMouseOver = conn;
@@ -465,9 +516,9 @@ DependencyWheel.Remote = new Class({
               options.width = wheelData.length * options.resize_factor;
               options.height = wheelData.length * options.resize_factor;
               element_ids = options.resize_ids.split(",");
-              for (ele_count = 0; ele_count < element_ids.length; ele_count++){
-                element = document.getElementById(element_ids[ele_count]);
-                new_width = options.width + (ele_count * 20);
+              for (element_count = 0; element_count < element_ids.length; element_count++){
+                element = document.getElementById(element_ids[element_count]);
+                new_width = options.width + (element_count * 20);
                 if (element.offsetWidth < new_width){
                   element.style.width = new_width + "px";
                 }
@@ -531,15 +582,18 @@ function show_info_box(data, options){
   number_name = options.infoNumber;
   recursive_deps = data.length;
   options.data_length = data.length;
+  
   info_box = document.getElementById(box_name);
-  info_number = document.getElementById(number_name);
-  scope_name = document.getElementById("scope_name");
   if (info_box){
     info_box.style.display = "inline-block";
   }
+
+  info_number = document.getElementById(number_name);
   if (info_number){
     info_number.innerHTML = recursive_deps;
   }
+
+  scope_name = document.getElementById("scope_name");
   if (scope_name){
     if (options.scope == "all"){
       scope_name.innerHTML = "";  
@@ -547,5 +601,7 @@ function show_info_box(data, options){
       scope_name.innerHTML = options.scope;  
     }
   }
-  handle_path(options);
+  if (typeof(handle_path) == 'function'){
+    handle_path(options);  
+  }
 }
