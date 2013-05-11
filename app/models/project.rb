@@ -48,6 +48,7 @@ class Project
   belongs_to :user 
 
   scope :by_user, ->(user){ where(user_id: user.id) }
+  scope :by_source, ->(source){where(source: source)}
 
   def self.find_by_id( id )
     Project.find(id)
