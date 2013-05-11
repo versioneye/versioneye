@@ -116,6 +116,7 @@ class CircleElement
 
   def connections_as_string
     response = ""
+    return response if connections.nil? or connections.empty? 
     connections.each do |conn|
       response += "\"#{conn}\","
     end
@@ -125,6 +126,7 @@ class CircleElement
 
   def dependencies_as_string
     response = ""
+    return response if dependencies.nil? or dependencies.empty? 
     dependencies.each do |dep|
       response += "\"#{dep}\","
     end
