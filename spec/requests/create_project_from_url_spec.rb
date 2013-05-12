@@ -18,14 +18,14 @@ describe "Create Project from URL" do
   end
 
   it "create a project from URL" do 
-    get "/signin", nil, "HTTPS" => "on"
+    get signin_path, nil, "HTTPS" => "on"
     assert_response :success
 
-    post "/sessions", {:session => {:email => @user1.email, :password => "12345"}}, "HTTPS" => "on"
+    post sessions_path, {:session => {:email => @user1.email, :password => "12345"}}, "HTTPS" => "on"
     assert_response 302
-    response.should redirect_to("/user/projects")
+    response.should redirect_to( user_projects_path )
 
-    get "/user/projects/new", nil, "HTTPS" => "on"
+    get new_user_project_path, nil, "HTTPS" => "on"
     assert_response :success
     response.should contain("Create a new project")
 
@@ -33,9 +33,9 @@ describe "Create Project from URL" do
     assert_response 302
     project = Project.first 
     project.should_not be_nil
-    response.should redirect_to("/user/projects/#{project.id.to_s}")
+    response.should redirect_to( user_project_path( project ) )
     
-    get "/user/projects/#{project.id.to_s}", nil, "HTTPS" => "on"
+    get user_project_path( project ), nil, "HTTPS" => "on"
     response.should contain("Dependencies are Outdated")
     response.should contain("rails")
     response.should contain("jquery-rails")
