@@ -33,8 +33,8 @@ class ServicesController < ApplicationController
     @project_id = project.id
     redirect_to service_path( project.id )
   rescue => e
-      p "ERROR Message:   #{e.message}"
-      p "ERROR backtrace: #{e.backtrace}"
+    logger.error "ERROR Message:   #{e.message}"
+    logger.error "ERROR backtrace: #{e.backtrace}"
   end
 
   def show

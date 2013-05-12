@@ -189,7 +189,7 @@ class UsersController < ApplicationController
         end
       end
     rescue => e 
-      p "ERROR in check_refer: #{e}"
+      logger.error "ERROR in check_refer: #{e}"
       return nil
     end
 
