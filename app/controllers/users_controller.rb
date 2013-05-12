@@ -65,8 +65,6 @@ class UsersController < ApplicationController
     @page = "profile"
     
     if @user 
-      # TODO refactor the use of @languages .. do it in erb 
-      @languages = Product.get_unique_languages_for_product_ids( @user['product_ids'] )
       @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
 
       @products = Array.new
@@ -91,7 +89,6 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html {
         @page = "profile"
-        @languages = Product.get_unique_languages_for_product_ids( @user['product_ids'] )
         @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
         if has_permission_to_see_products( @user, current_user ) && !@user.nil?
           @products = @user.products.paginate(:page => params[:page]) 
@@ -118,7 +115,6 @@ class UsersController < ApplicationController
   def comments
     @page = "profile"
     @user = User.find_by_username(params[:id])
-    @languages = Product.get_unique_languages_for_product_ids(@user['product_ids'])
     @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
     @comments = Array.new
     if has_permission_to_see_comments( @user, current_user ) && !@user.nil?
