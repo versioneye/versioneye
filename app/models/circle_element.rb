@@ -174,10 +174,10 @@ class CircleElement
     resp
   end
 
-  private 
+  private
 
-    # TODO test and move 
     def self.attach_label_to_element(element, dep)
+      return nil if !element or !dep
       element.text = "#{dep.name}:#{dep.version}"
     end
 
