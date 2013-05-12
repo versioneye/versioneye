@@ -197,7 +197,6 @@ class Product
     Naturalsorter::Sorter.sort_version_by_method_desc( versions, "version" )
   end
 
-  # TODO write more tests 
   def newest_version( stability = "stable" )
     return nil if versions.nil? || versions.empty?
     filtered = Array.new  
@@ -205,6 +204,9 @@ class Product
       if VersionTagRecognizer.does_it_fit_stability? version.version, stability
         filtered << version 
       end
+    end
+    if filtered.empty? 
+      filtered = versions
     end
     sorted = Naturalsorter::Sorter.sort_version_by_method_desc( filtered, "version" )
     return sorted.first
