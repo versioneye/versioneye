@@ -17,7 +17,7 @@ describe "Create Project from file uplaod" do
     Projectdependency.destroy_all
   end
 
-  it "create a project from file upload" do 
+  it "create a project from file upload as singned in user." do 
     get signin_path, nil, "HTTPS" => "on"
     assert_response :success
 
