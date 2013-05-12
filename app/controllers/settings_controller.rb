@@ -67,10 +67,10 @@ class SettingsController < ApplicationController
   end
 
   def notifications
-    @user_notification = current_user.notification_settings
+    @user_notification = current_user.user_notification_setting
     if @user_notification.nil?
       @user_notification = UserNotificationSetting.new 
-      @user_notification.user_id = current_user.id.to_s
+      @user_notification.user = current_user
       @user_notification.save
     end
   end
@@ -247,7 +247,7 @@ class SettingsController < ApplicationController
   def updatenotifications
     news = params[:general_news]
     features = params[:new_feature_news]
-    @user_notification = current_user.notification_settings
+    @user_notification = current_user.user_notification_setting
     @user_notification.newsletter_news = news 
     @user_notification.newsletter_features = features
     if @user_notification.save 

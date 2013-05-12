@@ -3,9 +3,10 @@ class UserNotificationSetting
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :user_id, type: String
   field :newsletter_news, type: Boolean, default: true      # getting general news from VersionEye
   field :newsletter_features, type: Boolean, default: true  # getting new features newsletter from VersionEye
+
+  belongs_to :user 
 
   def self.get_by_user_id(id)
   	UserNotificationSetting.where(user_id: id)[0]
@@ -14,8 +15,8 @@ class UserNotificationSetting
   def self.send_newsletters_features
     users = User.all()
     users.each do |user|
-      notification_settings = user.notification_settings
-      if user.deleted != true && ( notification_settings.nil? || notification_settings.newsletter_features )
+      notification_setting = user.user_notification_setting
+      if user.deleted != true && ( notification_setting.nil? || notification_setting.newsletter_features )
         UserNotificationSetting.send_newsletter_new_features_for_user( user )
       end
     end
