@@ -1,6 +1,7 @@
 <div itemprop="itemList" itemscope="" itemtype="http://schema.org/ItemList">
 	<meta itemprop="name" content="Newest Comments"  />
 	<% @comments.each do |comment| %>
+		<% comment_product = comment.product %>
 		<div class="row search-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/Comment" >
 
 			<div class="span1" style = "width:60px; text-align: left;">
@@ -10,7 +11,7 @@
 			<div class="span6" style="width: 505px;">
 				<div class="row">
 					<a href="/package/<%= comment.prod_key_url %>/version/<%= comment.version_url %>"
-					   class="searchResultLink"><%=comment.get_product.name_and_version%></a><br/>
+					   class="searchResultLink"><%= comment_product.name_and_version %></a><br/>
 					<a itemprop="creator" href="/users/<%= comment.user.username %>">
 						<span itemprop="name"><%= comment.user.fullname %></span>
 					</a> 
@@ -24,7 +25,7 @@
 						<a href="https://twitter.com/share" 
 							   class="twitter-share-button" 
 							   data-url="<%= Settings.server_url %>/vc/<%= comment.id %>" 
-							   data-text="<%= comment.user.fullname %> commented <%= comment.get_product.name_and_version %> @VersionEye read the #review here:"
+							   data-text="<%= comment.user.fullname %> commented <%= comment_product.name_and_version %> @VersionEye read the #review here:"
 							   data-count="horizontal" >Twitter</a>
 						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 					</div>

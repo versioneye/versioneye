@@ -66,8 +66,7 @@ class Versioncomment
     "#{self.prod_name} (#{self.version})" 
   end
   
-  # TODO rename to product
-  def get_product
+  def product
     product = Product.find_by_key(self.product_key)
     if !product.nil?
       product.version = self.version
