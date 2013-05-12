@@ -8,10 +8,8 @@ class TwitterController < ApplicationController
     session[:secret] = request_token.secret
     redirect_to request_token.authorize_url
   rescue => e 
-    p "#{e}"
-    e.backtrace.each do |message| 
-      p " - #{message}"
-    end
+    logger.error e 
+    logger.error e.backtrace.first
     flash[:error] = "An error occured. Please contact the VersionEye Team."
     redirect_to "/signup"
   end

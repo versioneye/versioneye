@@ -63,7 +63,7 @@ class ServicesController < ApplicationController
     circle = CircleElement.fetch_deps(1, hash, Hash.new)
     respond_to do |format|
       format.json { 
-        resp = generate_json_for_circle_from_hash(circle)
+        resp = CircleElement.generate_json_for_circle_from_hash(circle)
         render :json => "[#{resp}]"
       }
     end
