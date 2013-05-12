@@ -518,4 +518,18 @@ describe Product do
     end
   end
 
+  describe "get_unique_languages_for_product_ids" do 
+
+    it "returns unique languages for the product" do 
+      product_1 = ProductFactory.create_new 1
+      product_2 = ProductFactory.create_new 2
+      product_3 = ProductFactory.create_new 3, Project::A_TYPE_COMPOSER
+      languages = Product.get_unique_languages_for_product_ids( [product_1.id, product_2.id, product_3.id] )
+      languages.size.should eq(2)
+      languages.include?("PHP").should be_true
+      languages.include?("Java").should be_true
+    end
+
+  end
+
 end
