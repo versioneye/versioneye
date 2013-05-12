@@ -53,10 +53,8 @@ class Project
   def self.find_by_id( id )
     Project.find(id)
   rescue => e
-    p "ERROR in find_by_id #{e}"
-    e.backtrace.each do |message|
-      p "#{message}"
-    end
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     nil
   end
   
@@ -74,7 +72,6 @@ class Project
   end
 
   def show_dependency_badge?
-    p self.public
     self.public and
     (self.language.eql?(Product::A_LANGUAGE_JAVA) or self.language.eql?(Product::A_LANGUAGE_PHP) or 
     self.language.eql?(Product::A_LANGUAGE_RUBY) or self.language.eql?(Product::A_LANGUAGE_NODEJS) )

@@ -158,7 +158,6 @@ class SettingsController < ApplicationController
     description = params[:description]
     blog = params[:blog]
     password = params[:password]
-    p "#{location} - #{description} - #{blog}"
     if password.nil? || password.empty? 
       flash[:error] = "For security reasons. Please type in your current password."
     elsif new_username.nil? || new_username.empty?

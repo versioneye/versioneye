@@ -26,7 +26,8 @@ class Versioncomment
   def self.find_by_id(id)
     Versioncomment.find( id )
   rescue => e
-    p "#{e}"
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     nil
   end
   

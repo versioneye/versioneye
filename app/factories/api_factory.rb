@@ -1,10 +1,10 @@
 class ApiFactory
+  
   def self.create_new(user = nil, save = true)
     user = UserFactory.create_new(101) if user.nil?
-   
     if user.nil?
-      p "User is not specified or cant create random test-user"
-      p user.errors.full_messages.to_sentence
+      Rails.logger.error "User is not specified or cant create random test-user"
+      Rails.logger.error user.errors.full_messages.to_sentence
       return nil
     end
     new_api_key = Api.generate_api_key

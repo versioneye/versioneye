@@ -19,10 +19,8 @@ class CommonParser
     query = uri.query
     http.get("#{path}?#{query}")
   rescue => e 
-    p "#{e}"
-    e.backtrace.each do |message|
-      p "#{message}"
-    end
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
   end
 
   def do_replacements_for_github(url)

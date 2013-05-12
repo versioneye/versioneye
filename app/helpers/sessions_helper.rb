@@ -20,14 +20,8 @@ module SessionsHelper
   end
 
   def current_user?(user)
-    if user.nil? 
-      p "user is nil"
-      return false 
-    end
-    if current_user.nil? 
-      p "current_user is nil"
-      return nil
-    end
+    return false if user.nil? 
+    return nil if current_user.nil? 
     user.username.eql? current_user.username
   end
 
@@ -56,7 +50,6 @@ module SessionsHelper
   end
 
   def set_locale
-    # locale = params[:locale]
     locale = "en"
     if (locale && !locale.empty?)
       I18n.locale = locale
@@ -64,10 +57,8 @@ module SessionsHelper
       I18n.locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
     end
   rescue => e
-    p "ERROR #{e}"
-    e.backtrace.each do |message| 
-      p " - #{message}"
-    end
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     nil
   end
 

@@ -37,8 +37,8 @@ class UserNotificationSetting
     Rails.logger.info "Send new feature newsletter to #{user.fullname}"
     NewsletterMailer.newsletter_new_features_email(user).deliver
   rescue => e
-    Rails.logger.error " -- An error occured. E-Mail inactive: #{user.fullname} - #{user.email}"
-    Rails.logger.error e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
   end
 
 end

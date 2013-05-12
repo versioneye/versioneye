@@ -36,7 +36,7 @@ class FacebookController < ApplicationController
     end
   rescue => e
     logger.error "ERROR FACEBOOK CALLBACK Message:   #{e.message}"
-    logger.error "ERROR FACEBOOK CALLBACK backtrace: #{e.backtrace}"
+    logger.error "ERROR FACEBOOK CALLBACK backtrace: #{e.backtrace.first}"
   end
 
   private
@@ -61,12 +61,8 @@ class FacebookController < ApplicationController
       user.update_from_fb_json(json_user, token)
       user.terms = true
       user.datenerhebung = true
-      if user.save
-        p "facebook: new user stored in db #{user.username}"
-      else
-        p "facebook: couldn't store new user in db."
-      end
-      User.new_user_email(user)
+      user.save
+      User.new_user_email( user )
       return user
     end
 

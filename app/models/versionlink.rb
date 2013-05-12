@@ -34,7 +34,7 @@ class Versionlink
     return nil if link.nil? || link.empty? 
     versionlinks = Versionlink.find_version_link(prod_key, version_number, link)
     if versionlinks && !versionlinks.empty?  
-      p "-- link exist already : #{prod_key} - #{version_number} - #{link} - #{name}"
+      Rails.logger.info "-- link exist already : #{prod_key} - #{version_number} - #{link} - #{name}"
       return nil 
     end
       

@@ -46,7 +46,7 @@ class VersionlinkMigration
       if new_link_is_valid
         resp = Versionlink.create_versionlink link.prod_key, link.version_id, new_link, link.name
         if !resp.nil? 
-          p "added: #{new_link} - #{link.prod_key} - #{link.version_id}" 
+          Rails.logger.info "added: #{new_link} - #{link.prod_key} - #{link.version_id}" 
         end
       end 
     end
@@ -59,7 +59,8 @@ class VersionlinkMigration
       res = req.request_head(url.path)
       res.code.to_i == 200
     rescue => e 
-      p "ERROR #{e.message}"
+      Rails.logger.error e.message
+      Rails.logger.error e.backtrace.first
       return false 
     end 
 
