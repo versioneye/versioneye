@@ -24,7 +24,7 @@ describe "Private Project" do
     @project.delete
   end
 
-  it "login successfully" do 
+  it "ensure that private user projects stay private" do 
     get "/signin", nil, "HTTPS" => "on"
     assert_response :success
 
@@ -68,7 +68,6 @@ describe "Private Project" do
     response.should_not contain("Monitor it")
     response.should_not contain("Send notifications to")
     response.should_not contain("Delete this project")
-
   end
 
 end
