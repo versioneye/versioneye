@@ -67,12 +67,7 @@ class SettingsController < ApplicationController
   end
 
   def notifications
-    @user_notification = current_user.user_notification_setting
-    if @user_notification.nil?
-      @user_notification = UserNotificationSetting.new 
-      @user_notification.user = current_user
-      @user_notification.save
-    end
+    @user_notification = fetch_or_create_notification_setting current_user
   end
 
   def api
