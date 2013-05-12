@@ -10,6 +10,62 @@ describe Product do
     @product.remove
   end
 
+  describe "newest_version" do 
+
+    it "returns the newest stable version" do 
+      version = Version.new
+      version.version = "1.0"
+      @product.versions.push(version)
+
+      version2 = Version.new
+      version2.version = "1.1"
+      @product.versions.push(version2)
+
+      newest = @product.newest_version
+      newest.version.should eql("1.1")
+    end
+
+    it "returns the newest stable version" do 
+      version = Version.new
+      version.version = "1.0"
+      @product.versions.push(version)
+
+      version2 = Version.new
+      version2.version = "1.1-dev"
+      @product.versions.push(version2)
+
+      newest = @product.newest_version
+      newest.version.should eql("1.0")
+    end
+
+    it "returns the newest dev version" do 
+      version = Version.new
+      version.version = "1.0"
+      @product.versions.push(version)
+
+      version2 = Version.new
+      version2.version = "1.1-dev"
+      @product.versions.push(version2)
+
+      newest = @product.newest_version( VersionTagRecognizer::A_STABILITY_DEV )
+      newest.version.should eql("1.1-dev")
+    end
+
+    it "returns the newest dev version because there is no stable" do 
+      version = Version.new
+      version.version = "1.0-Beta"
+      @product.versions.push(version)
+
+      version2 = Version.new
+      version2.version = "1.1-dev"
+      @product.versions.push(version2)
+
+      newest = @product.newest_version()
+      newest.version.should eql("1.1-dev")
+    end
+
+  end
+
   describe "update_version_data" do 
 
     it "returns the one" do 
