@@ -443,7 +443,9 @@ class Product
     Dependency.find_by_key_and_version(prod_key, version)
   end
 
-  # TODO write tests for this 
+  # TRUE  -> if 1 of the dependencies is outdated. 
+  # FALSE -> if non of the dependencies are outdated.  
+  # 
   def dependencies_outdated?(scope = nil )
     deps = self.dependencies( scope )
     return false if deps.nil? || deps.empty?

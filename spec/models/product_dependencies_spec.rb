@@ -35,16 +35,6 @@ describe Product do
 
       @product.dependencies(nil).size.should eq(4)
       @product.dependencies_outdated?().should be_false
-
-      prod_1.remove
-      prod_2.remove
-      prod_3.remove
-      prod_4.remove
-
-      dep_1.remove
-      dep_2.remove
-      dep_3.remove
-      dep_4.remove
     end
 
     it "is outdated" do 
@@ -68,16 +58,6 @@ describe Product do
 
       @product.dependencies(nil).size.should eq(4)
       @product.dependencies_outdated?().should be_true
-
-      prod_1.remove
-      prod_2.remove
-      prod_3.remove
-      prod_4.remove
-
-      dep_1.remove
-      dep_2.remove
-      dep_3.remove
-      dep_4.remove
     end
 
   end
