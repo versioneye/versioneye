@@ -5,7 +5,8 @@
 			</h5>
 		</div>
 		<div class="box content" >
-			<% @languages.each do |language| %>
+			<% languages = Product.get_unique_languages_for_product_ids( @user['product_ids'] ) %>
+			<% languages.each do |language| %>
 				<% prog_lang = language.downcase.gsub(/\./, "") %>
 				<div class="icon_<%= prog_lang %>_big_container">
 					<div class = "icon_<%= prog_lang %> fix_big on" ></div>
