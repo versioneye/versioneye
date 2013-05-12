@@ -35,8 +35,8 @@ class FacebookController < ApplicationController
       end
     end
   rescue => e
-    p "ERROR FACEBOOK CALLBACK Message:   #{e.message}"
-    p "ERROR FACEBOOK CALLBACK backtrace: #{e.backtrace}"
+    logger.error "ERROR FACEBOOK CALLBACK Message:   #{e.message}"
+    logger.error "ERROR FACEBOOK CALLBACK backtrace: #{e.backtrace}"
   end
 
   private
