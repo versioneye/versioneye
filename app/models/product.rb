@@ -472,7 +472,6 @@ class Product
     Product.all().desc(:followers).limit( count )
   end
 
-  # TODO test
   def self.get_unique_languages_for_product_ids(product_ids)
     Product.where(:_id.in => product_ids).distinct(:language)
   end
