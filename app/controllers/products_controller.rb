@@ -204,11 +204,11 @@ class ProductsController < ApplicationController
       format.json { 
         circle = CircleElement.fetch_circle(key, version, scope)
         if circle && !circle.empty?
-          resp = generate_json_for_circle_from_array( circle )
+          resp = CircleElement.generate_json_for_circle_from_array( circle )
         else 
           circle = CircleElement.dependency_circle( key, version, scope )
           CircleElement.store_circle( circle, key, version, scope )
-          resp = generate_json_for_circle_from_hash( circle )
+          resp = CircleElement.generate_json_for_circle_from_hash( circle )
         end
         render :json => "[#{resp}]"
       }
