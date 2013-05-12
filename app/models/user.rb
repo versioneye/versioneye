@@ -48,6 +48,7 @@ class User
   # *** RELATIONS START ***
   belongs_to :plan
   has_one    :billing_address
+  has_one    :user_notification_setting
   has_many   :projects 
   has_and_belongs_to_many :products
   # *** RELATIONS END ***
@@ -194,11 +195,6 @@ class User
 
   def get_email(email)
     UserEmail.where( user_id: self._id.to_s, email: email )[0]
-  end
-
-  # TODO replace with relation 
-  def notification_settings
-    UserNotificationSetting.get_by_user_id(self.id.to_s)
   end
 
   def image_url
