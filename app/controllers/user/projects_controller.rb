@@ -13,7 +13,10 @@ class User::ProjectsController < ApplicationController
   
   def create
     file = params[:upload]
-    project_url = params[:project][:url] 
+    project_url = nil 
+    if params[:project]
+      project_url = params[:project][:url] 
+    end
     github_project = params[:github_project]
 
     if file && !file.empty?
@@ -39,7 +42,10 @@ class User::ProjectsController < ApplicationController
       format.json {render json: {project_id: project._id}}
     end
   rescue => e 
-    p "ERROR IN PROJECTS_CONTROLLER.create backtrace: #{e.backtrace}"
+    logger.error e 
+    e.backtrace.each do |message| 
+      logger.error message  
+    end
     flash[:error] = "VersionEye is not able to parse your project. Please contact the VersionEye Team."
     redirect_to user_projects_path
   end
