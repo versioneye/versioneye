@@ -74,7 +74,8 @@ class Dependency
     return false if newest_version.eql?( version_requested )
     return true
   rescue => e 
-    p "#{e}"
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     return false
   end
 

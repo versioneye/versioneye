@@ -19,10 +19,7 @@ class ProjectService
     if project.s3_filename && !project.s3_filename.empty?
       project.url = S3.url_for( project.s3_filename )
     end
-    p "user: #{project.user.username}  #{project.name} url: #{project.url}"
-    p " - old deps: #{project.dep_number} - out: #{project.out_number}"
     new_project = self.create_from_url( project.url )
-    p " - new deps: #{new_project.dep_number} - out: #{new_project.out_number}"
     if new_project.dependencies && !new_project.dependencies.empty? 
       project.overwrite_dependencies( new_project.dependencies )
       project.out_number = new_project.out_number
@@ -34,10 +31,8 @@ class ProjectService
       end
     end
   rescue => e
-    p "ERROR in proccess_project #{e}"
-    e.backtrace.each do |message|
-      p "#{message}"
-    end
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     nil
   end
 
@@ -67,10 +62,8 @@ class ProjectService
     parser = ParserStrategy.parser_for( project_type, url )
     parser.parse url 
   rescue => e 
-    p "exception: #{e}"
-    e.backtrace.each do |message|
-      p "#{message}"
-    end
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     project = Project.new
   end
 

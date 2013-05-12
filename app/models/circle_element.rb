@@ -55,10 +55,7 @@ class CircleElement
       dependencies = Dependency.find_by_key_version_scope(prod_key, version, scope)
     end
     dependencies.each do |dep| 
-      if dep.name.nil? || dep.name.empty?
-        p "dep name is nil! #{dep.dep_prod_key}"
-        next
-      end      
+      next if dep.name.nil? || dep.name.empty?
       element = CircleElement.new
       element.init
       element.dep_prod_key = dep.dep_prod_key
@@ -76,7 +73,6 @@ class CircleElement
     hash.each do |prod_key, element|
       product = Product.find_by_key( prod_key )
       if product.nil?
-        p "#{element.dep_prod_key} #{element.version} not found!"
         next
       end
       if (element.version && !element.version.eql?("") && !element.version.eql?("0"))
@@ -85,7 +81,6 @@ class CircleElement
       dependencies = product.dependencies(nil)
       dependencies.each do |dep|
         if dep.name.nil? || dep.name.empty?
-          p "dep name is nil! #{dep.dep_prod_key}"
           next
         end
         key = dep.dep_prod_key

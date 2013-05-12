@@ -111,11 +111,8 @@ class User
       UserMailer.verification_email_reminder(self, self.verification, self.email).deliver
     end
   rescue => e 
-    p "ups. Something went wrong for #{self.fullname}"
-    p "ERROR #{e}"
-    e.backtrace.each do |message| 
-      p " - #{message}"
-    end
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
   end
   
   def create_username
@@ -163,21 +160,16 @@ class User
     return nil if id.nil?
     return User.find(id.to_s)
   rescue => e
-    p "-- ERROR user with id #{id} not found! -- #{e}"
-    e.backtrace.each do |message| 
-      p " - #{message}"
-    end
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     nil
   end
 
   def self.find_by_ids( ids )
     User.all(conditions: {:_id.in => ids})
   rescue => e
-    logger.error "-- ERROR user with id #{id} not found! --"
-    p "ERROR #{e}"
-    e.backtrace.each do |message| 
-      p " - #{message}"
-    end
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     nil
   end
 
@@ -273,11 +265,9 @@ class User
     return nil if !id || !coockie_salt
     user = User.find( id )
     ( user && user.salt == coockie_salt ) ? user : nil
-  rescue => ex
-    p "EXCEPTION: #{ex}"
-    ex.backtrace.each do |message|
-      p "#{message}"
-    end
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     nil
   end
 

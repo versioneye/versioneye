@@ -46,14 +46,14 @@ class ProductElastic
   end
 
   def self.index( product )
-    p "index #{product.name}"
+    Rails.logger.info "index #{product.name}"
     Tire.index Settings.elasticsearch_product_index do
       store product.to_indexed_json 
       product.update_attribute(:reindex, false)
     end
   rescue => e 
-    p "ERROR in index(product) Message:   #{e.message}"
-    p "ERROR in index(product) backtrace: #{e.backtrace}"
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
   end
 
   def self.refresh
@@ -76,9 +76,9 @@ class ProductElastic
     self.refresh
   end
 
-  # # langs need to be an Array ! 
-  # # page_count has to start by 1. Not by 0! 
-  # # 
+  # langs: need to be an Array ! 
+  # page_count: has to start by 1. Not by 0! 
+  #
   def self.search(q, group_id = nil, langs = Array.new, page_count = 1)
     if (q.nil? || q.empty?) && (group_id.nil? || group_id.empty?)
       raise ArgumentError, "query and group_id are both empty! This is not allowed"

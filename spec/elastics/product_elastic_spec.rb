@@ -51,7 +51,6 @@ describe ProductElastic do
         ProductElastic.clean_all
         "true".should eql("false")
       rescue 
-        p "Expecting Index not exist Exception"
         "true".should eql("true")
       end
     end
@@ -61,7 +60,6 @@ describe ProductElastic do
         ProductElastic.search("random query")
         "true".should eql("false")
       rescue
-        p "planed Eexception! Exactly like expected"
         "true".should eql("true")
       end
     end
@@ -94,9 +92,6 @@ describe ProductElastic do
       sleep 7
       results = ProductElastic.search "club-mate"
       results.count.should eql(7)
-      results.each do |result|
-        p "#{result.name}"
-      end
       results[0].name.should eql("club-mate") #async adding&indexing gaves diff results
     end
 

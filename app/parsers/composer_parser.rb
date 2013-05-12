@@ -255,10 +255,8 @@ class ComposerParser < CommonParser
     end
 
     def print_backtrace( e )
-      p "#{e}"
-      e.backtrace.each do |message|
-        p " - #{message}"
-      end
+      Rails.logger.error e.message
+      Rails.logger.error e.backtrace.first
     end
 
 end

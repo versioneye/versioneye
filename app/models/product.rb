@@ -84,7 +84,8 @@ class Product
     result = result1 + result2
     return result
   rescue => e 
-    p "ERROR in find_by - #{e}"
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     Mongoid::Criteria.new(Product, {_id: -1})
   end
 
@@ -108,7 +109,8 @@ class Product
     query = query.desc(:followers).asc(:name).limit(limit)
     return query
   rescue => e
-    p "#{e}" 
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     Mongoid::Criteria.new(Product, {_id: -1})
   end
 
@@ -118,7 +120,8 @@ class Product
     end
     Product.where(name_downcase: /^#{searched_name}/)
   rescue => e
-    p "rescue #{e}"
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     Mongoid::Criteria.new(Product, {_id: -1})
   end
 
@@ -136,7 +139,8 @@ class Product
     query = Product.all(conditions: {"$or" => [ {"description" => /#{description}/i}, {"description_manual" => /#{description}/i} ] })
     query
   rescue => e
-    p "rescue #{e}"
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     Mongoid::Criteria.new(Product, {_id: -1})
   end
 
@@ -368,12 +372,9 @@ class Product
     self.version = newest_stable_version.version
     self.version_link = newest_stable_version.link
     self.save if persist
-    # p " udpate #{self.name} with version #{self.version}"
   rescue => e
-    p " -- ERROR -- something went wrong -- #{self.prod_key} --- #{e}"
-    e.backtrace.each do |message|
-      p "#{message}"
-    end
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
   end
 
   def versions_with_rleased_date
@@ -398,7 +399,8 @@ class Product
     average = diff_days / sorted_versions.size 
     average
   rescue => e 
-    p "Exception in average_release_time: #{e}" 
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     nil 
   end
 

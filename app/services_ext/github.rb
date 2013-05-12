@@ -74,10 +74,8 @@ class Github
     repo = JSON.parse( body )
     repo['private']
   rescue => e
-    p "ERROR in is_private_repo - #{e}"
-    e.backtrace.each do |message| 
-      p " - #{message}"
-    end
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     return false
   end
 

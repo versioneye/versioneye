@@ -59,10 +59,8 @@ class RequirementsParser < CommonParser
     project.url = url
     project
   rescue => e 
-    print "#{e}"
-    e.backtrace.each do |message|
-      p "#{message}"
-    end
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
   end
 
   # It is important that this method is not writing int the database! 

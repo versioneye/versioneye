@@ -1,7 +1,7 @@
 class PageController < ApplicationController
 
   def routing_error
-    p "routing error path: #{params[:path]}"
+    logger.error "Routing error for path: #{params[:path]}"
     redirect_to "/"
   end
 

@@ -17,15 +17,15 @@ class ProductMigration
     products.each do |product| 
       product.followers = product.users.count 
       product.save 
-      p "update followers for #{product.name}"
+      Rails.logger.info "update followers for #{product.name}"
     end
-    p "#{products.count} products updated."
+    Rails.logger.info "#{products.count} products updated."
   end
 
   def self.count_versions(lang)
     versions_count = 0 
     count = Product.where(language: lang).count()
-    p "language: #{lang}, count: #{count}"
+    Rails.logger.info "language: #{lang}, count: #{count}"
     pack = 100
     max = count / pack     
     (0..max).each do |i|
@@ -33,7 +33,6 @@ class ProductMigration
       products = Product.where(language: "Java").skip(skip).limit(pack)
       products.each do |product|
         versions_count = versions_count + product.versions.count
-        p "#{versions_count}"
       end
     end
     versions_count
@@ -81,12 +80,12 @@ class ProductMigration
     Product.where(language: lang).each do |product|
       product.versions.each do |version|
         if version.released_string.nil? 
-          p "empty!"
+          Rails.logger.info "empty!"
           next 
         end
         version.released_at = DateTime.parse version.released_string
         version.save
-        p "#{version.released_at}"
+        Rails.logger.info "#{version.released_at}"
       end
       product.save
     end
@@ -96,10 +95,10 @@ class ProductMigration
     Product.where(language: lang).each do |product|
       product.versions.each do |version|
         if version.version.match(/v[0-9]+\..*/)
-          p "#{version.version}"
+          Rails.logger.info "#{version.version}"
           version.version = version.version.gsub("v", "")
           product.save
-          p " -- #{version.version}"
+          Rails.logger.info " -- #{version.version}"
         end 
       end
     end
@@ -111,7 +110,7 @@ class ProductMigration
       product.repositories.each do |repo|
         if repo.src.eql?("http://search.maven.org/")
           count += 1
-          p "count #{count}"
+          Rails.logger.info "count #{count}"
         end 
       end
     end
@@ -121,7 +120,7 @@ class ProductMigration
     Product.where(language: lang).each do |product|
       product.http_links.each do |link|
         if link.link.match(/^http.*/).nil?
-          p "remove #{link.link}"
+          Rails.logger.info "remove #{link.link}"
           link.remove
         end
       end
@@ -133,7 +132,7 @@ class ProductMigration
     Product.where(language: "Ruby").each do |product|
       Versionlink.all(conditions: { prod_key: product.prod_key }).each do |link| 
         if !link.version_id.nil?
-          p "improve link #{product.prod_key} - #{link.link} - #{link.version_id}"
+          Rails.logger.info "improve link #{product.prod_key} - #{link.link} - #{link.version_id}"
           link.version_id = nil 
           link.save
         end
@@ -145,7 +144,7 @@ class ProductMigration
     Product.where(language: lang).each do |product|
       product.versions.each do |version|
         if version.released_string.nil? 
-          p "#{product.name} - #{version.version} - empty!"
+          Rails.logger.info "#{product.name} - #{version.version} - empty!"
           next 
         end
       end
@@ -153,7 +152,7 @@ class ProductMigration
   end
 
   def self.xml_site_map
-    p "xml_site_map"
+    Rails.logger.info "xml_site_map"
     uris = Array.new
     sitemap_count = 1
     count = Product.count()
@@ -167,21 +166,21 @@ class ProductMigration
         uris << uri
       end
       if uris.count > 49000 
-        p "#{uris.count}"
-        p "sitemap count: #{sitemap_count}"
+        Rails.logger.info "#{uris.count}"
+        Rails.logger.info "sitemap count: #{sitemap_count}"
         write_to_xml(uris, "sitemap-#{sitemap_count}.xml")
         uris = Array.new
         sitemap_count += 1
       end
     end
-    p "#{uris.count}"
-    p "sitemap count: #{sitemap_count}"
+    Rails.logger.info "#{uris.count}"
+    Rails.logger.info "sitemap count: #{sitemap_count}"
     write_to_xml(uris, "sitemap-#{sitemap_count}.xml")
     return true
   end
 
   def self.write_to_xml(uris, name)
-    p "write to xml"
+    Rails.logger.info "write to xml"
     xml = Builder::XmlMarkup.new( :indent => 2 )
     xml.instruct!(:xml, :encoding => "UTF8", :version => "1.0")
     xml.urlset(:xmlns => "http://www.sitemaps.org/schemas/sitemap/0.9") do |urlset|

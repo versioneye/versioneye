@@ -4,8 +4,9 @@ class ProductService
   def self.search(q, group_id = nil, languages = nil, page_count = 1)
     ProductElastic.search(q, group_id, languages, page_count)
   rescue => e 
-    p "ERROR in search - #{e}"
-    p "Dam. We don't give up. Not yet! Start alternative search on awesome MongoDB."
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    Rails.logger.info  "Dam. We don't give up. Not yet! Start alternative search on awesome MongoDB."
     Product.find_by(q, "", group_id, languages, 300).paginate(:page => page_count)
   end
 

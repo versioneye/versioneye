@@ -18,7 +18,7 @@ class PackagistCrawler
 
   def self.crawle_package name, crawl
     return nil if name.nil? || name.empty?
-    p "crawle #{name}"
+    Rails.logger.info "Crawle #{name}"
     
     resource = "http://packagist.org/packages/#{name}.json"
     pack = JSON.parse HTTParty.get( resource ).response.body
@@ -47,15 +47,15 @@ class PackagistCrawler
       end
     end
   rescue => e 
-    p "ERROR in crawle_package Message:   #{e.message}"
-    p "ERROR in crawle_package backtrace: #{e.backtrace}"
+    Rails.logger.error "ERROR in crawle_package Message:   #{e.message}"
+    Rails.logger.error "ERROR in crawle_package backtrace: #{e.backtrace.first}"
     PackagistCrawler.store_error crawl, e.message, e.backtrace, name
   end
 
   def self.get_product name
     product = Product.find_by_key "php/#{name}"
     return product if product
-    p " -- new product - #{name}"
+    Rails.logger.info " -- New Product - #{name}"
     product = Product.new
     product.reindex = true
     product
@@ -92,7 +92,7 @@ class PackagistCrawler
     product.reindex = true
     product.save
 
-    p " -- product: #{product.prod_key} -- version: #{version_number}"
+    Rails.logger.info " -- Product: #{product.prod_key} -- Version: #{version_number}"
 
     product.update_version_data
 
@@ -105,8 +105,8 @@ class PackagistCrawler
     PackagistCrawler.create_download product, version_number, version_obj
     PackagistCrawler.create_dependencies product, version_number, version_obj
   rescue => e 
-    p "ERROR in create_new_version Message:   #{e.message}"
-    p "ERROR in create_new_version backtrace: #{e.backtrace}"
+    Rails.logger.error "ERROR in create_new_version Message:   #{e.message}"
+    Rails.logger.error "ERROR in create_new_version backtrace: #{e.backtrace}"
     PackagistCrawler.store_error crawl, e.message, e.backtrace, product.name
   end
 
@@ -151,7 +151,7 @@ class PackagistCrawler
           :language => "PHP"})
         dependency.save
         dependency.update_known
-        p " -- create new dependency: #{dependency.prod_key}:#{dependency.prod_version} -> #{dependency.dep_prod_key}:#{dependency.version}"
+        Rails.logger.info " -- Create new dependency: #{dependency.prod_key}:#{dependency.prod_version} -> #{dependency.dep_prod_key}:#{dependency.version}"
       end
     end
   end
@@ -190,8 +190,8 @@ class PackagistCrawler
     error = ErrorMessage.new({:subject => "#{subject}", :errormessage => "#{message}", :source => "#{source}", :crawle_id => crawl.id })
     error.save
   rescue => e
-    p "ERROR in store_error: #{e.message}"
-    p "ERROR in store_error: #{e.backtrace}"
+    Rails.logger.error "ERROR in store_error: #{e.message}"
+    Rails.logger.error "ERROR in store_error: #{e.backtrace.first}"
   end
 
 end

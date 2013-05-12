@@ -156,7 +156,6 @@ describe User do
       user.terms = true
       user.datenerhebung = true
       save = user.save
-      p "save is #{save}"
       save.should be_false
       db_user = User.find_by_email( email )
       db_user.should be_nil

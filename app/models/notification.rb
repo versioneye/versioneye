@@ -42,10 +42,10 @@ class Notification
       if !user.nil? && user.deleted != true
         count += 1 if send_notifications_for_user( user )
       else
-        p " -- no user found for id: #{id} "
+        Rails.logger.info " -- No user found for id: #{id} "
         notifications = Notification.all( conditions: {user_id: id} )
         notifications.each do |noti|
-          p " ---- remove notification for user id: #{id} "
+          Rails.logger.info " ---- Remove notification for user id: #{id} "
           noti.remove
         end        
       end
@@ -59,7 +59,7 @@ class Notification
     if !notifications.nil? && !notifications.empty?
       notifications.sort_by {|notice| [notice.product.language]}
       NotificationMailer.new_version_email( user, notifications ).deliver
-      p "send notifications for user #{user.fullname} start"
+      Rails.logger.info "send notifications for user #{user.fullname} start"
       return true
     end
     return false
