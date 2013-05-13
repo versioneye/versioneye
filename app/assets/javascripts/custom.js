@@ -95,7 +95,6 @@ jQuery(document).ready(function(){
   if (window.render_wheel_require_dev) {
     render_wheel_require_dev();
   }
-
 }); // end-of-ready
 
 function stripeResponseHandler(status, response) {
