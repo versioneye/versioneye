@@ -15,3 +15,4 @@
 //= require custom
 //= require custom_feedback
 //= require bootstrap_switch
+//= require bootstrap_upload.min
