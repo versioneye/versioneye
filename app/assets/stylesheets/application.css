@@ -7,6 +7,7 @@
  *= require bootstrap
  *= require bootstrap_responsive
  *= require bootstrap_switch
+ *= require bootstrap_upload
  *= require main
  *= require product
  *= require user

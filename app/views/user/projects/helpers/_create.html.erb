@@ -30,7 +30,15 @@
   <!-- tab content -->
   <div class="tab-content" style="min-height:30px; padding: 10px;">
     <div class="tab-pane active" id="tab1">
-      <%= file_field 'upload', 'datafile', :class => "round" %>
+      <div class = "fileupload fileupload-new" data-provides="fileupload">
+        <span class = "btn btn-file">
+          <span class = "fileupload-new"> Select project file </span>
+          <span class = "fileupload-exists"> Change file </span>
+          <%= file_field 'upload', 'datafile', :class => "" %>
+        </span>
+        <span class = "fileupload-preview"></span>
+        <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
+      </div>
     </div>
     <div class="tab-pane" id="tab2">
       <%= f.text_field :url, :class => "round", :style => "width: 430px;", :placeholder =>"Paste your url here" %>
