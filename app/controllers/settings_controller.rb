@@ -27,8 +27,26 @@ class SettingsController < ApplicationController
   def payments 
     customer_id = current_user.stripe_customer_id
     @customer = nil
-    if customer_id
-      @customer = StripeService.fetch_customer customer_id
+    @customer = StripeService.fetch_customer customer_id if customer_id
+    @customer_invoices = @customer.invoice unless @customer.nil?    
+
+    if params[:mock]
+      @customer_invoices = StripeInvoiceFactory.create_defaults
+    end
+
+    respond_to do |format|
+      format.html
+      format.json do 
+        @invoices = []
+        unless @customer_invoices.nil?
+          @customer_invoices.each do |invoice|
+            invoice[:plan_name] = invoice[:subscriptions].first[:plan][:name]
+            invoice[:link_to] = settings_receipt_path(invoice_id: invoice[:id])
+            @invoices << invoice
+          end
+        end
+        render json: @invoices
+      end
     end
   end
 
