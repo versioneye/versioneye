@@ -16,8 +16,8 @@ jQuery(document).ready(function(){
   jQuery('#q').tbHinter({
     text: "json",
     styleclass: "lp_searchfield_hint"
-  }); 
-  
+  });
+
   if(jQuery("#payment-form").length){
     jQuery("#payment-form").submit( function(event) {
       jQuery('.submit-button').attr("disabled", "disabled");
@@ -36,7 +36,7 @@ jQuery(document).ready(function(){
     jQuery( "#tabs" ).tabs();
   }
 
-  if(jQuery('.github_switch').length > 0){  
+  if(jQuery('.github_switch').length > 0){
     jQuery('.github_switch').on('switch-change', function(e, data){
       toggleGitHubProject(data.el, data.value);
     });
@@ -45,21 +45,21 @@ jQuery(document).ready(function(){
 
   if (window.FB){
     FB.init({
-          appId:'230574627021570', 
+          appId:'230574627021570',
           cookie:true,
-          status:true, 
+          status:true,
           xfbml:true
-      }); 
+      });
   }
 
   map_for_jobs = document.getElementById("map_for_jobs")
   if (map_for_jobs){
-    initialize_jobs() 
+    initialize_jobs()
   }
 
   map_for_profile = document.getElementById("map_for_user_profile")
   if (map_for_profile){
-    path = window.location.pathname; 
+    path = window.location.pathname;
     path = path.replace("/favoritepackages", "")
     path = path.replace("/comments", "")
     jQuery.ajax({
@@ -85,7 +85,7 @@ jQuery(document).ready(function(){
   }
   if (window.render_wheel_test) {
     render_wheel_test();
-  }    
+  }
   if (window.render_wheel_provided) {
     render_wheel_provided();
   }
@@ -123,10 +123,10 @@ function confirmAction(){
   }
 }
 
-function load_dialog_follow(product_name, prod_key){  
+function load_dialog_follow(product_name, prod_key){
   document.getElementById('product_to_follow').innerHTML = product_name;
   setCookie("prod_key", prod_key, 1);
-  jQuery('#dialog_follow').modal({keyboard : true});  
+  jQuery('#dialog_follow').modal({keyboard : true});
 }
 
 function exchangeImage(id, image){
@@ -138,9 +138,9 @@ function show_versioncomment_reply(id){
   var form_id = "#" + id + "_reply_form";
   var display_link = "#" + id + "_reply_link";
   var hide_link = "#" + id + "_hide_link";
-  jQuery(form_id).css('display', 'block'); 
-  jQuery(display_link).css('display', 'none'); 
-  jQuery(hide_link).css('display', 'block'); 
+  jQuery(form_id).css('display', 'block');
+  jQuery(display_link).css('display', 'none');
+  jQuery(hide_link).css('display', 'block');
   return false;
 }
 
@@ -148,9 +148,9 @@ function hide_versioncomment_reply(id){
   var form_id = "#" + id + "_reply_form";
   var display_link = "#" + id + "_reply_link";
   var hide_link = "#" + id + "_hide_link";
-  jQuery(form_id).css('display', 'none'); 
-  jQuery(display_link).css('display', 'block'); 
-  jQuery(hide_link).css('display', 'none'); 
+  jQuery(form_id).css('display', 'none');
+  jQuery(display_link).css('display', 'block');
+  jQuery(hide_link).css('display', 'none');
   return false;
 }
 
@@ -162,47 +162,9 @@ function shareOnFacebook(link, message){
         description: message});
 }
 
-function fetchGitHubProjects(){
-  fetchLinkArea = document.getElementById("fetchLinkArea");
-  fetchLinkArea.style.display = "none";
-  loadingbarArea = document.getElementById("loadingbarArea");
-  loadingbarArea.style.display = "block";
-  jQuery.ajax({
-    url: "/user/projects/github_projects.json"
-  }).done(function (data){
-    if (data){
-      addGitHubProjects(data)     
-    }
-  } );  
-}
-
-function addGitHubProjects(data){
-  if (data[0].projects[0] == "BAD_CREDENTIALS"){
-    alert("Your GitHub token is not valid anymore. Please login again with GitHub.")
-    projectListArea = document.getElementById("gitHubLogin");
-    projectListArea.style.display = "block";
-  } else {
-    first_project = data[0].projects[0]
-    if (first_project == "NO_SUPPORTED_PROJECTS_FOUND"){
-      alert("Sorry. But it seems that your projects are not supported.")
-    } else {
-      for (i = 0; i < data[0].projects.length; i++ ){
-        project = data[0].projects[i];
-        var o = new Option(project, project);
-        jQuery(o).html(project);
-        jQuery("#github_projects").append(o);
-      }
-      projectListArea = document.getElementById("projectListArea");
-      projectListArea.style.display = "block";  
-    }
-  }
-  loadingbarArea = document.getElementById("loadingbarArea");
-  loadingbarArea.style.display = "none";
-}
-
 //TODO: finish it
 function make_home_label(data){
-  var repo_url = "/user/projects/" + data["project_id"]; 
+  var repo_url = "/user/projects/" + data["project_id"];
   var label = ['<a href="' + repo_url + '">',
                 '<span class = "label label-success repo-homepage ">',
                   '<i class = "icon icon-home"></i>',
@@ -241,7 +203,7 @@ function addGitHubProject(selected_el, data){
   var selected_item = jQuery(selected_el);
   var jqxhr = jQuery.ajax({
     type: "POST",
-    url: "/user/projects", 
+    url: "/user/projects",
     data: {"github_project" : data.githubFullname},
     dataType: "json"
   });
@@ -266,7 +228,7 @@ function removeGitHubProject(selected_el, data){
   var selected_item = jQuery(selected_el);
   var query_url = "/user/projects/" + data.githubProjectId + ".json";
   var jqxhr = jQuery.ajax({url: query_url, type: "DELETE"});
-  
+
   show_repo_loader(data.githubId);
   //-- response handlers
   jqxhr.done(function(response, status, xhrReq){
