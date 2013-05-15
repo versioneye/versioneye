@@ -7,7 +7,7 @@
     <p>Hello <%= @user.fullname %></p>
     <p>
       This is a notification E-Mail for your project <a href="<%= @projectlink %>"><%= @project_name %></a>.<br/>
-      Some of your dependencies are outdated. 
+      Some of your dependencies are outdated.
     </p>
     <p>
       <table>
@@ -27,7 +27,7 @@
               <img src= "http://www.versioneye.com/assets/language/<%= product.language.downcase %>.png" style = "width: 48px; height: 48px;"/>
             </td>
             <td style = "vertical-align: middle; border-bottom: 1px dotted gray; padding: 5px;">
-              <a href="<%=@link%><%= product.prod_key %>"><%= product.name %></a> 
+              <a href="<%=@link%><%= product.prod_key %>"><%= product.name %></a>
             </td>
             <td style = "vertical-align: middle; border-bottom: 1px dotted gray; padding: 5px;">
               <%= dep.version_requested %>

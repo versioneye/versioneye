@@ -1,169 +1,169 @@
 <% title "Pricing" %>
 
 <div class = "col2-left col2-right">
-	<h1 style="margin:0"> The best things in life are free </h1>
-	<p style="padding-top: 30px; margin-bottom: 45px; font-size: 18px;">
-		It's free to register and monitor your projects.
-		You only need to pay a small fee to monitor private repositories.
-		We have a variety of plans to cater for everyone's needs.<br/>
-		<br/>
-		<b>All plans are monthly terminable.</b>
-	</p>
+  <h1 style="margin:0"> The best things in life are free </h1>
+  <p style="padding-top: 30px; margin-bottom: 45px; font-size: 18px;">
+    It's free to register and monitor your projects.
+    You only need to pay a small fee to monitor private repositories.
+    We have a variety of plans to cater for everyone's needs.<br/>
+    <br/>
+    <b>All plans are monthly terminable.</b>
+  </p>
 </div>
 
 <div class="row well pricing success">
-	<div class="span4" >
-		<h3 class="success pricing_h" >Free</h3>
-		<p>
-			Try VersionEye for free.<br/> 
-			You can monitor unlimited public repositories with this plan but no 
-			private repositories.
-		</p>
-	</div>
-	<div class = "span6">
-		<div class="subscription-item" style="padding-left: 40px;">
-			<% if signed_in? %>
-				<% if @plan && @plan.name_id.eql?( '02_free' ) %>
-					<button type="submit" class="btn2 btn2-big pull-right" >Current</button>
-				<% else %>
-					<form action="/settings/updateplan" method="POST" > 
-						<input type="hidden" name="plan" value="02_free" />
-						<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-					</form>
-				<% end %>
-			<% else %> 
-				<form action="/signup" >
-					<button class="btn2 btn2-big pull-right">Sign Up</button>
-				</form>
-			<% end %>
-			<h4> $0/month </h4>
-			<ul class = "subscription">
-				<li>
-					Unlimited public repositories 
-				</li>
-				<li>
-					0 private repositories
-				</li>
-				<li>
-					No support for GitHub Organisations
-				</li>
-				<li>
-					1 email
-				</li>
-			</ul>
-		</div>
-	</div>
+  <div class="span4" >
+    <h3 class="success pricing_h" >Free</h3>
+    <p>
+      Try VersionEye for free.<br/>
+      You can monitor unlimited public repositories with this plan but no
+      private repositories.
+    </p>
+  </div>
+  <div class = "span6">
+    <div class="subscription-item" style="padding-left: 40px;">
+      <% if signed_in? %>
+        <% if @plan && @plan.name_id.eql?( '02_free' ) %>
+          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
+        <% else %>
+          <form action="/settings/updateplan" method="POST" >
+            <input type="hidden" name="plan" value="02_free" />
+            <button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+          </form>
+        <% end %>
+      <% else %>
+        <form action="/signup" >
+          <button class="btn2 btn2-big pull-right">Sign Up</button>
+        </form>
+      <% end %>
+      <h4> $0/month </h4>
+      <ul class = "subscription">
+        <li>
+          Unlimited public repositories
+        </li>
+        <li>
+          0 private repositories
+        </li>
+        <li>
+          No support for GitHub Organisations
+        </li>
+        <li>
+          1 email
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
 
 <div class="row well pricing warning">
-	<div class= "span4">
-		<h3 class = "pricing_h">Personal</h3>
-		<p>Use the personal plan as an individual person to track your private repositories.</p>
-	</div>
-	<div class = "span6">
-		<div class="subscription-item" style="padding-left: 40px;">
-			<% if signed_in? %>
-				<% if @plan && @plan.name_id.eql?( '02_personal' ) %> 
-					<button type="submit" class="btn2 btn2-big pull-right" >Current</button>
-				<% else %>
-					<form action="/settings/updateplan" method="POST" > 
-						<input type="hidden" name="plan" value="02_personal" />
-						<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-					</form>
-				<% end %>
-			<% else %> 
-				<form action="/signup" >
-					<button class="btn2 btn2-big pull-right">Sign Up</button>
-				</form>
-			<% end %>
-			<h4> $3/month </h4>
-			<ul class = "subscription">
-				<li>
-					Unlimited public repositories 
-				</li>
-				<li>
-					5 private repositories
-				</li>
-				<li>
-					No support for GitHub Organisations
-				</li>
-				<li>
-					1 email
-				</li>
-			</ul>
-		</div>
-	</div>
+  <div class= "span4">
+    <h3 class = "pricing_h">Personal</h3>
+    <p>Use the personal plan as an individual person to track your private repositories.</p>
+  </div>
+  <div class = "span6">
+    <div class="subscription-item" style="padding-left: 40px;">
+      <% if signed_in? %>
+        <% if @plan && @plan.name_id.eql?( '02_personal' ) %>
+          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
+        <% else %>
+          <form action="/settings/updateplan" method="POST" >
+            <input type="hidden" name="plan" value="02_personal" />
+            <button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+          </form>
+        <% end %>
+      <% else %>
+        <form action="/signup" >
+          <button class="btn2 btn2-big pull-right">Sign Up</button>
+        </form>
+      <% end %>
+      <h4> $3/month </h4>
+      <ul class = "subscription">
+        <li>
+          Unlimited public repositories
+        </li>
+        <li>
+          5 private repositories
+        </li>
+        <li>
+          No support for GitHub Organisations
+        </li>
+        <li>
+          1 email
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
 
 <div class="row well pricing info">
-	<div class= "span4">
-		<h3 class = "pricing_h">Business</h3>
-		<p>Use the business plans as an organisation and take advantage of the advanced features.</p>
-	</div>
-	<div class="span6">
-		<div class="subscription-item" style="padding-left: 40px;">
-			<% if signed_in? %>
-				<% if @plan && @plan.name_id.eql?( '02_business_small' ) %> 
-					<button type="submit" class="btn2 btn2-big pull-right" >Current</button>
-				<% else %>
-					<form action="/settings/updateplan" method="POST" > 
-						<input type="hidden" name="plan" value="02_business_small" />
-						<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-					</form>
-				<% end %>
-			<% else %> 
-				<form action="/signup" >
-					<button class="btn2 btn2-big pull-right">Sign Up</button>
-				</form>
-			<% end %>
-			<h4> $7/month </h4>
-			<ul class = "subscription">
-				<li>
-					Unlimited public repositories 
-				</li>
-				<li>
-					10 private repositories
-				</li>
-				<li>
-					Unlimited E-Mail addresses
-				</li>
-				<li>
-					Support for GitHub Organisations
-				</li>
-			</ul>
-		</div>
-		<hr />
-		<div class  = "subscription-item" style="padding-left: 40px;">
-			<% if signed_in? %>
-				<% if @plan && @plan.name_id.eql?( '02_business_normal' ) %> 
-					<button type="submit" class="btn2 btn2-big pull-right" >Current</button>
-				<% else %>
-					<form action="/settings/updateplan" method="POST" >
-						<input type="hidden" name="plan" value="02_business_normal" />
-						<button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-					</form>
-				<% end %>
-			<% else %> 
-				<form action="/signup" >
-					<button class="btn2 btn2-big pull-right">Sign Up</button>
-				</form>
-			<% end %>
-			<h4> $25/month </h4>
-			<ul class = "subscription">
-				<li>
-					Unlimited public repositories 
-				</li>
-				<li>
-					50 private repositories
-				</li>
-				<li>
-					Unlimited E-Mail addresses
-				</li>
-				<li>
-					Support for GitHub Organisations
-				</li>
-			</ul>
-		</div>
+  <div class= "span4">
+    <h3 class = "pricing_h">Business</h3>
+    <p>Use the business plans as an organisation and take advantage of the advanced features.</p>
+  </div>
+  <div class="span6">
+    <div class="subscription-item" style="padding-left: 40px;">
+      <% if signed_in? %>
+        <% if @plan && @plan.name_id.eql?( '02_business_small' ) %>
+          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
+        <% else %>
+          <form action="/settings/updateplan" method="POST" >
+            <input type="hidden" name="plan" value="02_business_small" />
+            <button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+          </form>
+        <% end %>
+      <% else %>
+        <form action="/signup" >
+          <button class="btn2 btn2-big pull-right">Sign Up</button>
+        </form>
+      <% end %>
+      <h4> $7/month </h4>
+      <ul class = "subscription">
+        <li>
+          Unlimited public repositories
+        </li>
+        <li>
+          10 private repositories
+        </li>
+        <li>
+          Unlimited E-Mail addresses
+        </li>
+        <li>
+          Support for GitHub Organisations
+        </li>
+      </ul>
+    </div>
+    <hr />
+    <div class  = "subscription-item" style="padding-left: 40px;">
+      <% if signed_in? %>
+        <% if @plan && @plan.name_id.eql?( '02_business_normal' ) %>
+          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
+        <% else %>
+          <form action="/settings/updateplan" method="POST" >
+            <input type="hidden" name="plan" value="02_business_normal" />
+            <button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+          </form>
+        <% end %>
+      <% else %>
+        <form action="/signup" >
+          <button class="btn2 btn2-big pull-right">Sign Up</button>
+        </form>
+      <% end %>
+      <h4> $25/month </h4>
+      <ul class = "subscription">
+        <li>
+          Unlimited public repositories
+        </li>
+        <li>
+          50 private repositories
+        </li>
+        <li>
+          Unlimited E-Mail addresses
+        </li>
+        <li>
+          Support for GitHub Organisations
+        </li>
+      </ul>
+    </div>
 
-	</div>
+  </div>
 </div>
