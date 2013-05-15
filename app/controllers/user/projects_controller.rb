@@ -8,6 +8,7 @@ class User::ProjectsController < ApplicationController
   end
 
   def new
+    @page = "project_new"
     @project = Project.new
   end
 
