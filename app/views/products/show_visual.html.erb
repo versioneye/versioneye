@@ -14,7 +14,7 @@
       <div style="display: block; width: 50%; margin: auto;" >
         <%= form_tag("/package/follow", :remote => true) do  %>
           <label>Scope </label>
-          <% if @product.prod_type.eql?( Project::A_TYPE_RUBYGEMS ) %> 
+          <% if @product.prod_type.eql?( Project::A_TYPE_RUBYGEMS ) %>
             <select name="scope" style="width: 150px;" onchange="render_wheel(this.value)" >
               <option value="all" selected >all</option>
               <option value="runtime"  >runtime</option>
@@ -69,18 +69,18 @@
           scope = "all"
         }
         uri = "/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/dependencies.json?scope=" + scope;
-        var wheel = new DependencyWheel.Remote(false, document.getElementById("canvas-container"), { 
+        var wheel = new DependencyWheel.Remote(false, document.getElementById("canvas-container"), {
           url: uri,
-          width: "940", 
+          width: "940",
           height: "940",
           data_border: 70,
           infoBox: "infoBox",
           infoNumber: "recursive_number",
           canvas_id: "canvas",
           canvas_hover_id: "canvas_hover",
-          product_key: "<%= @product.to_param%>", 
+          product_key: "<%= @product.to_param%>",
           product_version: "<%= @product.version_to_url_param%>",
-          product_name: "<%= @product.name%>", 
+          product_name: "<%= @product.name%>",
           version: "<%= @product.version%>",
           show_label: false,
           resize: true,
@@ -89,7 +89,7 @@
           container_id: "canvas-container",
           scope: scope,
           onItemClick: function(item, event){
-            key = item.id; 
+            key = item.id;
             key = key.replace(/\//g, "--");
             key = key.replace(/\./g, "~" );
             version = item.version;
@@ -98,9 +98,9 @@
             window.location.href = "/package/" + key + "/version/" + version;
           }
         } );
-      } 
+      }
     </script>
 
   </div>
-  
+
 <% end %>
