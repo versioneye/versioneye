@@ -1,18 +1,18 @@
 class UserNotificationSetting
-  
+
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  # Receiving general news from VersionEye. For example about Investments. 
-  field :newsletter_news,     type: Boolean, default: true  
-  
-  # Receiving the newsletter about new features
-  field :newsletter_features, type: Boolean, default: true  
+  # Receiving general news from VersionEye. For example about Investments.
+  field :newsletter_news,     type: Boolean, default: true
 
-  belongs_to :user 
+  # Receiving the newsletter about new features
+  field :newsletter_features, type: Boolean, default: true
+
+  belongs_to :user
 
   def self.send_newsletter_features
-    count = 0 
+    count = 0
     users = User.all()
     users.each do |user|
       next if user.deleted
@@ -22,13 +22,13 @@ class UserNotificationSetting
         count += 1
       end
     end
-    count 
+    count
   end
 
-  def self.fetch_or_create_notification_setting user 
-    if user.user_notification_setting.nil? 
-      user.user_notification_setting = UserNotificationSetting.new 
-      user.save   
+  def self.fetch_or_create_notification_setting user
+    if user.user_notification_setting.nil?
+      user.user_notification_setting = UserNotificationSetting.new
+      user.save
     end
     user.user_notification_setting
   end
