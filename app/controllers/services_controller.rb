@@ -3,6 +3,7 @@ class ServicesController < ApplicationController
   def index
     refer_name = params['refer']
     check_refer( refer_name )
+    @page = "project_new"
     @project = Project.new
   end
 
@@ -55,14 +56,14 @@ class ServicesController < ApplicationController
       element.level = 0
       element.text = dep.name
       element.text = dep.prod_key if element.text.nil?
-      if dep.version_requested && !dep.version_requested.empty? 
+      if dep.version_requested && !dep.version_requested.empty?
         element.text += ":#{dep.version_requested}"
       end
       hash[dep.prod_key] = element
     end
     circle = CircleElement.fetch_deps(1, hash, Hash.new)
     respond_to do |format|
-      format.json { 
+      format.json {
         resp = CircleElement.generate_json_for_circle_from_hash(circle)
         render :json => "[#{resp}]"
       }
@@ -79,14 +80,14 @@ class ServicesController < ApplicationController
     redirect_to signup_path
   end
 
-  private 
+  private
 
     def check_refer(refer_name)
       if refer_name
         refer = Refer.get_by_name(refer_name)
         if refer
-          refer.count = refer.count + 1 
-          refer.save 
+          refer.count = refer.count + 1
+          refer.save
           cookies.permanent.signed[:veye_refer] = refer_name
         end
       end
