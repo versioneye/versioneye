@@ -122,7 +122,7 @@ class SettingsController < ApplicationController
       customer.update_subscription( :plan => @plan_name_id )
       user.plan = Plan.by_name_id @plan_name_id
       if user.save
-        SubscriptionMailer.update_subscription( user )
+        SubscriptionMailer.update_subscription( user ).deliver
       end
       flash[:success] = "We updated your plan successfully."
       redirect_to settings_plans_path
