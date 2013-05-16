@@ -5,7 +5,8 @@ class StripeInvoiceFactory
                     date: (Date.today - 1).iso8601,
                     total: Random.rand * 10 * n,
                     currency: "USD",
-                    subscriptions: [{plan: plan}]}
+                    lines: {subscriptions: [{plan: plan}]}
+                    }
     invoice_data
   end
 
