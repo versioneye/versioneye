@@ -1,5 +1,5 @@
 class Plan
-  
+
   include Mongoid::Document
   include Mongoid::Timestamps
 
@@ -15,9 +15,9 @@ class Plan
 
   has_many :users
 
-  def self.by_name_id name_id 
+  def self.by_name_id name_id
     Plan.where(:name_id => name_id).shift
-  end 
+  end
 
   def self.create_default_plans
     free = Plan.new
@@ -61,12 +61,12 @@ class Plan
     Plan.where(name_id: A_PLAN_PERSONAL).shift
   end
 
-  def self.business_small_plan 
+  def self.business_small_plan
     Plan.where(name_id: A_PLAN_BUSINESS_SMALL).shift
   end
 
-  def self.business_normal_plan 
+  def self.business_normal_plan
     Plan.where(name_id: A_PLAN_BUSINESS_NORMAL).shift
   end
-  
+
 end
