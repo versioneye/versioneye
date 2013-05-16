@@ -1,13 +1,13 @@
 Versioneye::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
-  
+
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
   config.action_controller.perform_caching = false
   config.cache_store = :dalli_store, Settings.memcache_servers,{
-    :username => Settings.memcache_username, :password => Settings.memcache_password, 
+    :username => Settings.memcache_username, :password => Settings.memcache_password,
     :namespace => 'veye', :expires_in => 1.day, :compress => true }
 
   # Log error messages when you accidentally call methods on nil.
@@ -32,18 +32,18 @@ Versioneye::Application.configure do
   config.assets.debug = true
 
   config.log_level = :debug
-  
+
   config.action_mailer.delivery_method   = :sendmail
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   # config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
-  
+
   ENV['API_BASE_PATH'] = "http://127.0.0.1:3000/api"
-  
+
   Stripe.api_key = Settings.stripe_secret_key
-  
+
   routes.default_url_options = { host: "127.0.0.1", port: 3000 }
-  
+
   #uses fake3s gem to simulate offline AWS S3
   AWS::S3::Base.establish_connection!(
     :access_key_id => "123",
