@@ -25,6 +25,7 @@ var ChartConfig = {
 	height : 400,
 	domain_code : "",
 	left_padding : 80,
+  right_padding : 80,
 	font_family : "Helvetica Neue, Helvetica, sans-serif,  Arial",
 	font_size : 14,
 	color_map : {
@@ -88,6 +89,8 @@ function render_statistics(data){
 	chart.setAxisNameX("", false);
 	chart.setAxisNameY("", false);
 	chart.setAxisPaddingLeft(ChartConfig.left_padding);
+	chart.setAxisPaddingRight(ChartConfig.right_padding);
+
 	chart.setAxisValuesFontSizeX(ChartConfig.font_size);
 	chart.setAxisValuesFontFamily(ChartConfig.font_family);
 	chart.setLabelFontFamily(ChartConfig.font_family);
