@@ -70,7 +70,7 @@ table.list .center {
 
   <p>
     <br />
-    Dear <%= @billing_address.name %>,<br />
+    Dear <%= @billing_address.try(:name) %>,<br />
     <br />
     This is a receipt for your VersionEye subscription. 
   </p>

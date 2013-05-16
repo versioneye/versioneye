@@ -35,7 +35,7 @@ function render_payment_history(selector, data){
 
 function render_fail_invoice(selector, data){
   var template = _.template(jQuery("#fail_invoice_template").html());
-  jQuery(selector).html(template({message: "Cant read payment history from Payment service"}));
+  jQuery(selector).html(template({message:data}));
 }
 
 jQuery(document).ready(function(){
@@ -49,7 +49,7 @@ jQuery(document).ready(function(){
     var content_selector = "#payment_history";
     render_loading_invoice(content_selector); 
 
-    var jqxhr = jQuery.getJSON("/settings/payments.json");
+    var jqxhr = jQuery.getJSON("/settings/payments.json"); //, {mock: true});
     
     //-- response handlers
     jqxhr.done(function(data, status, jqxhr){
