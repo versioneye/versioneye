@@ -1,13 +1,13 @@
-<% if @project.nil? %> 
+<% if @project.nil? %>
 
   Project not found. Please contact the VersionEye Team.
 
-<% else %> 
+<% else %>
 
   <% title "Project: #{@project.name}" %>
 
   <div class="span3" >
-    <%= render "/user/projects/helpers/navi" %> 
+    <%= render "/user/projects/helpers/navi" %>
   </div>
 
   <div class="span8">
@@ -18,11 +18,11 @@
           <%= @project.name %>
         </span>
         <% if current_user?(@project.user) %>
-          <div class="icon-edit open-editor" 
+          <div class="icon-edit open-editor"
             style="width: 16px; height: 16px; margin: 0; padding: 0;
             background-image: url('/assets/glyphicons-halflings.png');
             background-position: -96px -72px; background-repeat: no-repeat;" title="Change title"></div>
-        <% end %> 
+        <% end %>
       </div>
 
       <% if current_user?(@project.user) %>
@@ -31,7 +31,7 @@
           <%= form_tag(update_name_user_project_path(@project), :method => "post", :remote => true, :class => "form-inline") do %>
             <input type ="text" name = "name" value = "<%= @project.name %>" />
             <button class = "btn btn-primary"> Save</button>
-            <button href = "#" class = "btn btn-danger close-editor" 
+            <button href = "#" class = "btn btn-danger close-editor"
               data-dismiss="alert" title = "Cancel">Cancel</button>
           <% end %>
         </div>
@@ -40,8 +40,8 @@
             jQuery("#project-title .open-editor").on("click", function(){
               jQuery(".project-inline-editor").css("display", "block");
               jQuery("#project-title").css("display", "none");
-            }); 
-            
+            });
+
             jQuery(".close-editor").on("click", function(ev){
               console.log("Closing editor:");
               jQuery("#project-title").css("display", "block");
@@ -59,13 +59,13 @@
       <div class="row" >
 
         <div>
-          <%= render :partial => "shared/dependency_badge", :locals => { :project => @project } %> 
+          <%= render :partial => "shared/dependency_badge", :locals => { :project => @project } %>
         </div>
         <%= render :partial => "user/projects/helpers/show_description" %>
         <%= render :partial => "user/projects/helpers/show_license" %>
         <%= render :partial => "user/projects/helpers/project_numbers_sentence", :locals => { :project => @project } %><br/>
         <%= render :partial => "user/projects/helpers/project_source", :locals => { :project => @project } %>
-        
+
         <% if current_user?(@project.user) %>
 
           <div style="font-size: 16px; margin-bottom: 0px;">
@@ -92,7 +92,7 @@
             <div id="reupload_form" style="display: none;" >
               <%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
                 <input name="project_id" id="project_id" type="hidden" value="<%= @project._id.to_s %>" />
-                <%= file_field 'upload', 'datafile', :class => "round" %>   
+                <%= file_field 'upload', 'datafile', :class => "round" %>
                 <button type="submit" class="btn2 btn2-large">Upload</button>
                 <button class="btn2 btn2-large" onClick="document.getElementById('reupload_form').style.display='none'; return false;">Hide</button>
               <% end %>
@@ -100,24 +100,24 @@
           <% end %>
 
           <div >
-            <a id="show_settings_links" 
-               href="JavaScript: document.getElementById('settings_area').style.display = 'block'; 
+            <a id="show_settings_links"
+               href="#" onclick="document.getElementById('settings_area').style.display = 'block';
                                  document.getElementById('show_settings_links').style.display = 'none';
-                                 document.getElementById('hide_settings_links').style.display = 'block'; " >
+                                 document.getElementById('hide_settings_links').style.display = 'block'; return false;" >
               Show Settings
             </a>
-            <a id="hide_settings_links" style="display: none;" 
-               href="JavaScript: document.getElementById('settings_area').style.display = 'none'; 
+            <a id="hide_settings_links" style="display: none;"
+               href="#" onclick="document.getElementById('settings_area').style.display = 'none';
                                  document.getElementById('show_settings_links').style.display = 'block';
-                                 document.getElementById('hide_settings_links').style.display = 'none';" >
+                                 document.getElementById('hide_settings_links').style.display = 'none'; return false;" >
               Hide Settings
             </a>
           </div>
-          
+
           <div style="display: none" id="settings_area">
             <form action="<%= save_period_user_project_path(@project) %>" method="post" class="form-horizontal" >
               <div class="control-group">
-                <label class="control-label" style="width: 200px;" >Monitor it</label>  
+                <label class="control-label" style="width: 200px;" >Monitor it</label>
                 <div class="controls" style="margin-left: 210px;">
                   <select name="period" style="width: 150px; margin: 0px;" >
                     <option value="daily"  <%= "selected" if @project.period == 'daily'  %> >Daily</option>
@@ -129,12 +129,12 @@
 
             <form action="<%= save_email_user_project_path(@project) %>" method="post" class="form-horizontal" >
               <div class="control-group">
-                <label class="control-label" style="width: 200px;" >Send notifications to</label>   
+                <label class="control-label" style="width: 200px;" >Send notifications to</label>
                 <div class="controls" style="margin-left: 210px;">
                   <select name="email" style="width: 150px; margin: 0px;" >
                     <option value="<%= current_user.email %>"  <%= "selected" if @project.email == current_user.email %> ><%= current_user.email %></option>
-                    <% current_user.emails_verified.each do |user_email| %> 
-                      <option value="<%= user_email.email %>" <%= "selected" if @project.email == user_email.email %> ><%= user_email.email %></option> 
+                    <% current_user.emails_verified.each do |user_email| %>
+                      <option value="<%= user_email.email %>" <%= "selected" if @project.email == user_email.email %> ><%= user_email.email %></option>
                     <% end %>
                   </select> <button type="submit" class="btn2 btn2-large" >Save</button> <button type="button" onclick="window.location.href='/settings/emails'" class="btn btn-success" >Add E-Mail</button>
                 </div>
@@ -143,7 +143,7 @@
 
             <form action="<%= save_visibility_user_project_path(@project) %>" method="post" class="form-horizontal" >
               <div class="control-group">
-                <label class="control-label" style="width: 200px;" >This Project is</label>  
+                <label class="control-label" style="width: 200px;" >This Project is</label>
                 <div class="controls" style="margin-left: 210px;">
                   <select name="visibility" style="width: 150px; margin: 0px;" >
                     <option value="private"  <%= "selected" if @project.public == false %> >Private</option>
@@ -162,8 +162,8 @@
         <ul class = "nav nav-tabs" style="margin-bottom: 0" id="projectTabs">
           <li class = "active">
             <a href = "#dependencies" data-toggle="tab">Dependencies</a>
-          </li> 
-          <li> 
+          </li>
+          <li>
             <a href = "#licenses" data-toggle="tab">Licenses</a>
           </li>
         </ul>
@@ -190,25 +190,25 @@
                 <% if product.license_info.nil? then key = "unknown" else key  = product.license_info end %>
                 <% licences[key] = []  unless licences.key? key %>
                 <% licences[key] << product %>
-                
-                <% if dep.unknown? %>     
+
+                <% if dep.unknown? %>
                   <%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
                 <% elsif dep.outdated and dep.release == true  %>
                   <%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
                 <% elsif dep.outdated and dep.release == false %>
                   <%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep} %>
-                <% else %>  
+                <% else %>
                   <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
                 <% end %>
 
               <% end %>
-              </table> 
+              </table>
 
             <% end %>
           </div>
 
           <div id="licenses" class="tab-pane">
-            <% licences = licences.sort_by {|key, vals| -vals.length} %>        
+            <% licences = licences.sort_by {|key, vals| -vals.length} %>
             <% licences.each do |licence, products| %>
               <div class="row search-item search_item_context" >
                 <h5 class="dep_header"><%= licence %></h5>
