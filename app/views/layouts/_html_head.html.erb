@@ -9,7 +9,7 @@
 	<%= stylesheet_link_tag "application" %>
 
 	<% if @page.eql?("project_new") %>
-		<%= javascript_include_tag "application_project_new", :defer => false, :async => true %>
+		<%= javascript_include_tag "application_project_new", :defer => false, :async => false %>
 	<% elsif @product || @project %>
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 		<%= javascript_include_tag "application_product",     :defer => false, :async => false %>

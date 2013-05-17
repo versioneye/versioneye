@@ -146,14 +146,16 @@ class User::ProjectsController < ApplicationController
     @products = current_user.products.paginate(:page => params[:page])
   end
 
-  def github_repos
+  def github_repositories
     respond_to do |format|
-      @repos = Github.user_repos(current_user.github_token)
-      @repos.sort_by! {|repo| "%s" % repo["language"].to_s }
-      @imported_repos = Project.by_user(current_user).by_source(Project::A_SOURCE_GITHUB)
-      @imported_repo_names  = @imported_repos.map(&:name).to_set
-      @supported_langs = Github.supported_languages
-      format.html {render template: "user/projects/show_github_projects"}
+      format.html {
+        @repos = Github.user_repos(current_user.github_token)
+        @repos.sort_by! {|repo| "%s" % repo["language"].to_s }
+        @imported_repos = Project.by_user(current_user).by_source(Project::A_SOURCE_GITHUB)
+        @imported_repo_names  = @imported_repos.map(&:name).to_set
+        @supported_langs = Github.supported_languages
+        @page = "project_new"
+      }
       format.json {
         resp = "{\"projects\": [\""
         repos1 = Github.user_repo_names( current_user.github_token )

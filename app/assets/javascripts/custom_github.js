@@ -1,11 +1,30 @@
 
+jQuery(document).ready(function(){
+  jQuery('#q').tbHinter({
+    text: "json",
+    styleclass: "lp_searchfield_hint"
+  });
+
+  if(jQuery("#tabs").length > 0){
+    jQuery( "#tabs" ).tabs();
+  }
+
+  if(jQuery('.github_switch').length > 0){
+    jQuery('.github_switch').on('switch-change', function(e, data){
+      toggleGitHubProject(data.el, data.value);
+    });
+    console.log("Github switches are registered.");
+  }
+
+}); // end-of-ready
+
 function fetchGitHubProjects(){
   fetchLinkArea = document.getElementById("fetchLinkArea");
   fetchLinkArea.style.display = "none";
   loadingbarArea = document.getElementById("loadingbarArea");
   loadingbarArea.style.display = "block";
   jQuery.ajax({
-    url: "/user/projects/github_projects.json"
+    url: "/user/projects/github_repositories.json"
   }).done(function (data){
     if (data){
       addGitHubProjects(data)
