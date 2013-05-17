@@ -19,13 +19,12 @@ gem 'nokogiri', '1.5.9'
 gem 'stripe', '1.7.11'
 gem 'thin', '1.5.1'
 gem 'tire', '0.5.5'
-# gem 'yajl-ruby', '1.1.0'     # another JSON parser
 gem 'json', '1.7.7'
 gem 'dalli', '2.6.2'           # memcache library
 gem 'kgio', '2.8.0'            # 20% performance boost for dalli
 gem 'grape', '0.2.6'
 gem 'grape-entity', '0.2.0'
-gem 'grape-swagger', git: "https://github.com/timgluz/grape-swagger.git" 
+gem 'grape-swagger', git: "https://github.com/timgluz/grape-swagger.git"
 #, :git => 'https://github.com/tim-vandecasteele/grape-swagger.git'
 gem 'htmlentities', '4.3.1'
 
