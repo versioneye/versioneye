@@ -115,13 +115,16 @@
   background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
   background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
   background-repeat: repeat-x;
+  /*
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+  */
   border-color: #e6e6e6 #e6e6e6 #bfbfbf;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #e6e6e6;
   /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  /*
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false
+  */
 }
 .has-switch label:hover,
 .has-switch label:focus,
@@ -166,13 +169,16 @@
   background-image: -o-linear-gradient(top, #e6e6e6, #ffffff);
   background-image: linear-gradient(to bottom, #e6e6e6, #ffffff);
   background-repeat: repeat-x;
+  /*
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe6e6e6', endColorstr='#ffffffff', GradientType=0);
+  */
   border-color: #ffffff #ffffff #d9d9d9;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #ffffff;
   /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-
+  /*
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  */
 }
 .has-switch span.switch-right:hover,
 .has-switch span.switch-right:focus,
@@ -199,13 +205,16 @@
   background-image: -o-linear-gradient(top, #0044cc, #0088cc);
   background-image: linear-gradient(to bottom, #0044cc, #0088cc);
   background-repeat: repeat-x;
+  /*
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0044cc', endColorstr='#ff0088cc', GradientType=0);
+  */
   border-color: #0088cc #0088cc #005580;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #0088cc;
   /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-
+  /*
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  */
 }
 .has-switch span.switch-primary:hover,
 .has-switch span.switch-left:hover,
@@ -239,13 +248,16 @@
   background-image: -o-linear-gradient(top, #2f96b4, #5bc0de);
   background-image: linear-gradient(to bottom, #2f96b4, #5bc0de);
   background-repeat: repeat-x;
+  /*
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2f96b4', endColorstr='#ff5bc0de', GradientType=0);
+  */
   border-color: #5bc0de #5bc0de #28a1c5;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #5bc0de;
   /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-
+  /*
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  */
 }
 .has-switch span.switch-info:hover,
 .has-switch span.switch-info:focus,
@@ -271,13 +283,16 @@
   background-image: -o-linear-gradient(top, #51a351, #62c462);
   background-image: linear-gradient(to bottom, #51a351, #62c462);
   background-repeat: repeat-x;
+  /*
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff51a351', endColorstr='#ff62c462', GradientType=0);
+  */
   border-color: #62c462 #62c462 #3b9e3b;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #62c462;
   /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-
+  /*
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  */
 }
 .has-switch span.switch-success:hover,
 .has-switch span.switch-success:focus,
@@ -303,13 +318,16 @@
   background-image: -o-linear-gradient(top, #f89406, #fbb450);
   background-image: linear-gradient(to bottom, #f89406, #fbb450);
   background-repeat: repeat-x;
+  /*
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff89406', endColorstr='#fffbb450', GradientType=0);
+  /*
   border-color: #fbb450 #fbb450 #f89406;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #fbb450;
   /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-
+  /*
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  */
 }
 .has-switch span.switch-warning:hover,
 .has-switch span.switch-warning:focus,
@@ -335,13 +353,16 @@
   background-image: -o-linear-gradient(top, #bd362f, #ee5f5b);
   background-image: linear-gradient(to bottom, #bd362f, #ee5f5b);
   background-repeat: repeat-x;
+  /*
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffbd362f', endColorstr='#ffee5f5b', GradientType=0);
+  */
   border-color: #ee5f5b #ee5f5b #e51d18;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #ee5f5b;
   /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-
+  /*
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  */
 }
 .has-switch span.switch-danger:hover,
 .has-switch span.switch-danger:focus,

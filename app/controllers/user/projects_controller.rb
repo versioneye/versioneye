@@ -40,7 +40,20 @@ class User::ProjectsController < ApplicationController
           redirect_to user_projects_path
         end
       }
-      format.json {render json: {project_id: project._id}}
+      format.json {
+        if project and project.id
+          response_msg = {
+            success: true,
+            data: {project_id: project.id}
+          }
+        else
+          response_msg = {
+            success: false,
+            msg: "Cant read project's info from Github or we have problems with s3."
+          }
+        end
+        render json: response_msg
+      }
     end
   rescue => e
     logger.error e
@@ -105,7 +118,8 @@ class User::ProjectsController < ApplicationController
     ProjectService.destroy_project id
     respond_to do |format|
       format.html {redirect_to user_projects_path}
-      format.json {render json: {success: true, project_id: id}}
+      format.json {
+        render json: {success: true, project_id: id}}
     end
   end
 
@@ -132,7 +146,7 @@ class User::ProjectsController < ApplicationController
     @products = current_user.products.paginate(:page => params[:page])
   end
 
-  def github_projects
+  def github_repos
     respond_to do |format|
       # @repos = Github.user_repos(current_user.github_token)
       # @repos.sort_by! {|repo| "%s" % repo["language"].to_s }

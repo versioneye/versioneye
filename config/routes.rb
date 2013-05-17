@@ -5,11 +5,11 @@ Versioneye::Application.routes.draw do
   mount V1::Versioneye::API => '/api'
 
   root :to => "products#index"
-  
+
   get   '/auth/github/callback',   :to => 'github#callback'
   get   '/auth/github/new',        :to => 'github#new'
   post  '/auth/github/create',     :to => 'github#create'
-  
+
   get   '/auth/twitter/forward',   :to => 'twitter#forward'
   get   '/auth/twitter/callback',  :to => 'twitter#callback'
   get   '/auth/twitter/new',       :to => 'twitter#new'
@@ -19,7 +19,7 @@ Versioneye::Application.routes.draw do
 
   get   '/cloudcontrol/resources', :to => 'cloudcontrol#resources'
 
-  
+
   resources :sessions, :only => [:new, :create, :destroy]
   get    '/signin',                :to => 'sessions#new'
   get    '/signout',               :to => 'sessions#destroy'
@@ -28,7 +28,7 @@ Versioneye::Application.routes.draw do
 
   get   '/users/christian.weyand',                    :to => redirect('/users/christianweyand')
   resources :users, :key => :username do
-    member do 
+    member do
       get 'favoritepackages'
       get 'comments'
       get 'users_location'
@@ -70,7 +70,7 @@ Versioneye::Application.routes.draw do
   post '/settings/api',                  :to => 'settings#update_api_key'
 
   get  '/jobs',          :to => 'jobs#index'
-  
+
   # Legacy paths
   get   '/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.0.pdf', :to => redirect("/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.1.pdf")
   get   '/product/symfony--symfony',                  :to => redirect("/package/php--symfony--symfony")
@@ -105,13 +105,13 @@ Versioneye::Application.routes.draw do
   get   '/vc/:id',                       :to => 'versioncomments#show'
 
   resources :versioncommentreplies
-  
-  get '/user/projects/github_projects', :to => 'user/projects#github_projects'
+
+  get '/user/projects/github_repos',    :to => 'user/projects#github_repos'
   get '/user/projects/popular',         :to => "user/projects#get_popular"
   get '/user/projects/libs_i_follow',   :to => "user/projects#libs_i_follow"
 
-  namespace :user do 
-    resources :projects do 
+  namespace :user do
+    resources :projects do
       member do
         get  'badge'
         post 'save_period'
@@ -157,21 +157,21 @@ Versioneye::Application.routes.draw do
   get   '/about',               :to => 'page#about'
   get   '/impressum',           :to => 'page#impressum'
   get   '/imprint',             :to => 'page#imprint'
-  get   '/nutzungsbedingungen', :to => 'page#nutzungsbedingungen'  
+  get   '/nutzungsbedingungen', :to => 'page#nutzungsbedingungen'
   get   '/terms',               :to => 'page#terms'
   get   '/datenschutz',         :to => 'page#datenschutz'
   get   '/dataprivacy',         :to => 'page#dataprivacy'
   get   '/datenerhebung',       :to => 'page#datenerhebung'
   get   '/datacollection',      :to => 'page#datacollection'
   get   '/disclaimer',          :to => 'page#disclaimer'
-  
-  
-  get   '/api',                 :to => 'swaggers#index'  
+
+
+  get   '/api',                 :to => 'swaggers#index'
   get   '/swaggers',            :to => redirect('/api')
   get   '/apijson',             :to => redirect('/api')
   get   '/apijson_tools',       :to => redirect('/api')
   get   '/apijson_libs',        :to => redirect('/api')
-  
+
   get   '/newest/version',      :to => 'page#newest'
   get   '/current/version',     :to => 'page#newest'
   get   '/latest/version',      :to => 'page#newest'
@@ -180,8 +180,8 @@ Versioneye::Application.routes.draw do
   get   'sitemap_00_2.xml',        :to => 'page#sitemap_2'
   get   'sitemap_00_3.xml',        :to => 'page#sitemap_3'
   get   'sitemap_00_4.xml',        :to => 'page#sitemap_4'
-  
+
   #default action
   get   '*path',        :to => 'page#routing_error'
-  
+
 end
