@@ -1,7 +1,7 @@
 class User::ProjectsController < ApplicationController
-  
+
   before_filter :authenticate, :except => [:show, :badge]
-  
+
   def index
     @project = Project.new
     @projects = Project.find_by_user(current_user.id.to_s)
@@ -10,12 +10,12 @@ class User::ProjectsController < ApplicationController
   def new
     @project = Project.new
   end
-  
+
   def create
     file = params[:upload]
-    project_url = nil 
+    project_url = nil
     if params[:project]
-      project_url = params[:project][:url] 
+      project_url = params[:project][:url]
     end
     github_project = params[:github_project]
 
@@ -25,15 +25,15 @@ class User::ProjectsController < ApplicationController
       project = fetch_and_store project_url
     elsif github_project && !github_project.empty? && !github_project.eql?("NO_PROJECTS_FOUND")
       project = fetch_from_github_and_store github_project
-      return nil if project.nil? 
+      return nil if project.nil?
     else
       flash[:error] = "Please put in a URL OR select a file from your computer. Or select a GitHub project."
       redirect_to new_user_project_path
-      return nil  
+      return nil
     end
-    respond_to do |format|     
+    respond_to do |format|
       format.html {
-        if project and project.id 
+        if project and project.id
           redirect_to user_project_path( project._id )
         else
           redirect_to user_projects_path
@@ -42,22 +42,22 @@ class User::ProjectsController < ApplicationController
       format.json {
         if project and project.id
           response_msg = {
-            success: true, 
+            success: true,
             data: {project_id: project.id}
           }
         else
           response_msg = {
-            success: false, 
+            success: false,
             msg: "Cant read project's info from Github or we have problems with s3."
           }
         end
         render json: response_msg
       }
     end
-  rescue => e 
-    logger.error e 
-    e.backtrace.each do |message| 
-      logger.error message  
+  rescue => e
+    logger.error e
+    e.backtrace.each do |message|
+      logger.error message
     end
     flash[:error] = "VersionEye is not able to parse your project. Please contact the VersionEye Team."
     redirect_to user_projects_path
@@ -66,8 +66,8 @@ class User::ProjectsController < ApplicationController
   def show
     id = params[:id]
     @project = Project.find_by_id(id)
-    if @project && @project.public == false 
-      return if authenticate == false 
+    if @project && @project.public == false
+      return if authenticate == false
       redirect_to(root_path) unless current_user?(@project.user)
     end
   end
@@ -77,7 +77,7 @@ class User::ProjectsController < ApplicationController
     @project = Project.find_by_id(id)
     path = "app/assets/images/badges"
     badge = "unknown"
-    unless @project.nil? 
+    unless @project.nil?
       if @project.outdated?
         badge = "out-of-date"
       else
@@ -90,16 +90,16 @@ class User::ProjectsController < ApplicationController
   def update
     file = params[:upload]
     project_id = params[:project_id]
-    if file.nil? || project_id.nil? 
+    if file.nil? || project_id.nil?
       flash[:error] = "Something went wrong. Please contact the VersionEye Team."
       redirect_to user_projects_path
-      return 
+      return
     end
-    project = Project.find_by_id project_id 
-    if project.nil? 
+    project = Project.find_by_id project_id
+    if project.nil?
       flash[:error] = "No project with given key. Please contact the VersionEye Team."
       redirect_to user_projects_path
-      return 
+      return
     end
     new_project = upload file
     if new_project.nil?
@@ -111,10 +111,10 @@ class User::ProjectsController < ApplicationController
     flash[:success] = "ReUpload was successful."
     redirect_to user_project_path( project )
   end
-  
+
   def destroy
     id = params[:id]
-    ProjectService.destroy_project id 
+    ProjectService.destroy_project id
     respond_to do |format|
       format.html {redirect_to user_projects_path}
       format.json {
@@ -126,8 +126,8 @@ class User::ProjectsController < ApplicationController
     @name = params[:name]
     id = params[:id]
     project = Project.find_by_id(id)
-    project.name = @name 
-    project.save 
+    project.name = @name
+    project.save
     respond_to do |format|
       format.js
     end
@@ -142,10 +142,10 @@ class User::ProjectsController < ApplicationController
   end
 
   def libs_i_follow
-    @products = current_user.products.paginate(:page => params[:page]) 
+    @products = current_user.products.paginate(:page => params[:page])
   end
 
-  def github_projects
+  def github_repos
     respond_to do |format|
       @repos = Github.user_repos(current_user.github_token)
       @repos.sort_by! {|repo| "%s" % repo["language"].to_s }
@@ -153,14 +153,14 @@ class User::ProjectsController < ApplicationController
       @imported_repo_names  = @imported_repos.map(&:name).to_set
       @supported_langs = Github.supported_languages
       format.html {render template: "user/projects/show_github_projects"}
-      format.json { 
+      format.json {
         resp = "{\"projects\": [\""
         repos1 = Github.user_repo_names( current_user.github_token )
         repos2 = Github.orga_repo_names( current_user.github_token )
         repos = repos1 + repos2
         if repos && !repos.empty?
           resp += repos.join("\",\"")
-        else 
+        else
           resp += "NO_PROJECTS_FOUND"
         end
         resp += "\"]}"
@@ -194,7 +194,7 @@ class User::ProjectsController < ApplicationController
     @project.period = period
     if @project.save
       flash[:success] = "Status saved."
-    else 
+    else
       flash[:error] = "Something went wrong. Please try again later."
     end
     redirect_to user_project_path(@project)
@@ -205,11 +205,11 @@ class User::ProjectsController < ApplicationController
     visibility = params[:visibility]
     @project = Project.find_by_id(id)
     if visibility.eql? "public"
-      @project.public = true 
-    else 
-      @project.public = false 
+      @project.public = true
+    else
+      @project.public = false
     end
-    @project.save 
+    @project.save
     redirect_to user_project_path(@project)
   end
 
@@ -227,7 +227,7 @@ class User::ProjectsController < ApplicationController
     @project.email = new_email
     if @project.save
       flash[:success] = "Status saved."
-    else 
+    else
       flash[:error] = "Something went wrong. Please try again later."
     end
     redirect_to user_project_path(@project)
@@ -236,7 +236,7 @@ class User::ProjectsController < ApplicationController
   private
 
     def upload_and_store file
-      project = upload file 
+      project = upload file
       store_project project
       project
     end
@@ -251,7 +251,7 @@ class User::ProjectsController < ApplicationController
       project
     end
 
-    def fetch_and_store project_url 
+    def fetch_and_store project_url
       project_name = project_url.split("/").last
       project = create_project( project_url, project_name )
       project.source = Project::A_SOURCE_URL
@@ -271,7 +271,7 @@ class User::ProjectsController < ApplicationController
       if project_info.empty?
         flash[:error] = "We couldn't find any project file in the selected project. Please choose another project."
         redirect_to new_user_project_path
-        return nil    
+        return nil
       end
       file = Github.fetch_file( project_info['url'], current_user.github_token )
       s3_infos = S3.upload_github_file( file, project_info['name'] )
