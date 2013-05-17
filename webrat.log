@@ -104,3 +104,7 @@ REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
 REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
 REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
 REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE:  /settings/payments with {"HTTPS"=>"on"} and HTTP headers {}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {}
+REQUESTING PAGE: GET https://127.0.0.1:3000/settings/payments with {} and HTTP headers {}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {}
