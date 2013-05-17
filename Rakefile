@@ -16,12 +16,12 @@ task :do_work => :environment do
 	weekly_minute = 00
 	weekly_day = 4
 
-	until 2 < 1 do 
-		
+	until 2 < 1 do
+
 		now = Time.now
 		hour   = now.hour
 		minute = now.min
-		day = now.wday 
+		day = now.wday
 
 		# -- DAILY JOBS ----
 		if hour == start_hour && minute == start_minute
@@ -45,7 +45,7 @@ task :do_work => :environment do
 			puts "START reindex newest products for elastic search"
 			ProductElastic.index_newest
 			puts "STOP reindex newest products for elastic search"
-			
+
 			puts "START to send out the notification E-Mails."
 			Notification.send_notifications
 			puts "STOP to send out the notification E-Mails."
@@ -54,14 +54,14 @@ task :do_work => :environment do
 			ProjectService.update_dependencies( Project::A_PERIOD_DAILY )
 			puts "STOP to send out daily project notification E-Mails."
 
-			if Time.now.hour == start_hour && Time.now.min == start_minute 
+			if Time.now.hour == start_hour && Time.now.min == start_minute
 				sleep(60)
 			end
 		end
 
 		# -- WEEKLY JOBS ----
 		if day == weekly_day && hour == weekly_hour && minute == weekly_minute
-			
+
 			puts "START to send out the verification reminder E-Mails."
 			User.send_verification_reminders
 			puts "STOP to send out the verification reminder E-Mails."
@@ -69,13 +69,13 @@ task :do_work => :environment do
 			puts "START to send out weekly project notification E-Mails."
 			ProjectService.update_dependencies( Project::A_PERIOD_WEEKLY )
 			puts "STOP to send out weekly project notification E-Mails."
-		    
+
 			if Time.now.hour == weekly_hour && Time.now.min == weekly_minute
 				sleep(60)
 			end
 		end
 
-	end	
+	end
 end
 
 task :update_version_data_global => :environment do

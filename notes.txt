@@ -1,2 +1,0 @@
-. 
-<li><%= link_to "Manage Github projects", user_projects_github_projects_path %></li>
