@@ -1,4 +1,4 @@
-<% title "Github projects" %>
+<% title "Github Repositories" %>
 
 <div class="span3" >
 	<%= render "/user/projects/helpers/navi" %>
@@ -7,7 +7,7 @@
 <div class="span8">
 
 	<div class="row content_header_def" >
-    Select the GitHub projects you want to monitor.
+    Select the GitHub repositories you want to monitor.
   </div>
   <div class="span8 left_border">
     <table class = "table table-hover">
@@ -29,12 +29,9 @@
 
                   <% is_not_supported = (@supported_langs.include? language_name) ? false : true %>
                   <% unless is_not_supported %>
-                    <%= image_tag("/assets/language/%s.png" % language_name,
-                                  style: "width: 64px;" ) %>
+                    <%= image_tag("/assets/language/%s.png" % language_name, style: "width: 64px;" ) %>
                   <% else %>
-                    <%= image_tag("/assets/language/ruby_bw.png",
-                                  style: "width: 64px;" ) %>
-
+                    <%= image_tag("/assets/language/ruby_bw.png", style: "width: 64px;" ) %>
                   <% end %>
                 </div>
               <div class = "span10">
@@ -64,7 +61,6 @@
                   </div>
                 </div>
                 <div id = "notification-bar-<%= repo["id"] %>" class = "span12 hide"></div>
-
             </td>
             <td>
               <div class = "github_switch switch switch-small pull-right">
@@ -75,7 +71,6 @@
                   data-github-id = "<%= repo["id"] %>"
                   data-github-project-id = "<%= project_id %>"
                   data-github-fullname = "<%= repo["full_name"] %>" />
-
               </div>
             </td>
           </tr>
