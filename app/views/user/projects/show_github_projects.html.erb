@@ -1,4 +1,4 @@
-<% title "Most Used Libraries" %>
+<% title "Github Repositories" %>
 
 <div class="span3" >
 	<%= render "/user/projects/helpers/navi" %>
@@ -7,9 +7,10 @@
 <div class="span8">
 
 	<div class="row content_header_def" >
-    Select your's github projects you want to follow.
+    Select the GitHub repositories you want to monitor.
   </div>
-  <div class="span8 left_border">
+  <div class="span8">
+    <% if @repos %>
     <table class = "table table-hover">
       <tbody>
         <% @repos.each do |repo| %>
@@ -26,15 +27,12 @@
                   <% end %>
                   <% language_name = ("%s" % repo["language"]).downcase %>
                   <% language_name = "unspecified" if repo["language"].nil? %>
-                   
-                  <% is_not_supported = (@supported_langs.include? language_name) ? false : true %>
-                  <% unless is_not_supported %> 
-                    <%= image_tag("/assets/language/%s.png" % language_name,
-                                  style: "width: 64px;" ) %>
-                  <% else %>
-                    <%= image_tag("/assets/language/default.png",
-                                  style: "width: 64px;" ) %>
 
+                  <% is_not_supported = (@supported_langs.include? language_name) ? false : true %>
+                  <% unless is_not_supported %>
+                    <%= image_tag("/assets/language/%s.png" % language_name, style: "width: 64px;" ) %>
+                  <% else %>
+                    <%= image_tag("/assets/language/ruby_bw.png", style: "width: 64px;" ) %>
                   <% end %>
                 </div>
               <div class = "span10">
@@ -49,10 +47,10 @@
                       language: <%= language_name %>
                     </span>
                     <% if is_not_supported %>
-                      <span class = "label label-warning repo-supported">Not supported</span>  
+                      <span class = "label label-warning repo-supported">Not supported</span>
                     <% end %>
                     <span class = "label repo-updated">
-                      updated: 
+                      updated:
                       <%= time_ago_in_words repo["updated_at"].to_datetime %> ago
                     </span>
                     <% if repo_exists %>
@@ -64,23 +62,26 @@
                   </div>
                 </div>
                 <div id = "notification-bar-<%= repo["id"] %>" class = "span12 hide"></div>
-
             </td>
             <td>
-              <div class = "github_switch switch switch-small pull-right"> 
-                <input type = "checkbox" 
+              <div class = "github_switch switch switch-small pull-right">
+                <input type = "checkbox"
                   class = "input"
-                  <%= "disabled" if is_not_supported %> 
+                  <%= "disabled" if is_not_supported %>
                   <%= "checked" if repo_exists %>
                   data-github-id = "<%= repo["id"] %>"
                   data-github-project-id = "<%= project_id %>"
                   data-github-fullname = "<%= repo["full_name"] %>" />
-
               </div>
             </td>
-          <tr>
+          </tr>
         <% end %>
       </tbody>
     </table>
+    <% else %>
+      <div class="content">
+        Ups. Something went wrong. We are not able to fetch your GitHub Repositories. Please contact the VersionEye Team.
+      </div>
+    <% end %>
   </div>
 </div>
