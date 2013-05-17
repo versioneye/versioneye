@@ -10,5 +10,6 @@
 //= require jquery_textbox_hinter
 //= require bootstrap.min
 //= require bootstrap_fileupload
+//= require bootstrap_switch
 //= require custom_github
 //= require custom_feedback
