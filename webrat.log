@@ -1,0 +1,106 @@
+# Logfile created on 2013-05-17 13:50:39 +0300 by logger.rb/31641
+REQUESTING PAGE: GET /signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"/signin"}
+REQUESTING PAGE: GET /signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"/signin"}
+REQUESTING PAGE: GET /signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"/signin"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"admin@versioneye.com", "password"=>"baas471"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://www.example.com/settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/settings/payments"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://www.example.com/settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/settings/payments"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://www.example.com/settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/settings/payments"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://www.example.com/settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/settings/payments"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://www.example.com/settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/settings/payments"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://www.example.com/settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/settings/payments"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://www.example.com/settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/signin"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/settings/payments"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET http://www.example.com/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://www.example.com/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://www.example.com/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://www.example.com/sessions/new"}
+REQUESTING PAGE: GET https://www.example.com/signin with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
