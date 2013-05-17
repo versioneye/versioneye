@@ -19,11 +19,11 @@ class Product
   field :prod_key, type: String
   field :prod_type, type: String
   field :language, type: String
-  
+
   field :group_id, type: String
   field :artifact_id, type: String
   field :parent_id, type: String
-  
+
   field :authors, type: String
   field :description, type: String
   field :description_manual, type: String
@@ -32,21 +32,21 @@ class Product
   field :followers, type: Integer, default: 0
   field :last_release, type: Integer, default: 0
   field :used_by_count, type: Integer, default: 0
-  
-  field :license, type: String 
-  field :licenseLink, type: String 
-  field :license_manual, type: String 
+
+  field :license, type: String
+  field :licenseLink, type: String
+  field :license_manual, type: String
   field :licenseLink_manual, type: String
-  
+
   field :version, type: String
   field :version_link, type: String
 
   field :like_overall, type: Integer, default: 0
   field :like_docu, type: Integer, default: 0
   field :like_support, type: Integer, default: 0
-  
+
   field :icon, type: String
-  field :twitter_name, type: String 
+  field :twitter_name, type: String
 
   field :reindex, type: Boolean, default: true
 
@@ -64,38 +64,38 @@ class Product
     false
   end
 
-  # languages have to be an array of strings. 
+  # languages have to be an array of strings.
   def self.find_by(query, description = nil, group_id = nil, languages=nil, limit=300)
-    searched_name = nil 
-    if query 
+    searched_name = nil
+    if query
       searched_name = String.new( query.gsub(" ", "-") )
     end
     result1 = Product.find_all(searched_name, description, group_id, languages, limit, nil)
-    
-    if searched_name.nil? || searched_name.empty? 
-      return result1 
+
+    if searched_name.nil? || searched_name.empty?
+      return result1
     end
 
     prod_keys = Array.new
     if result1 && !result1.empty?
       prod_keys = result1.map{|w| "#{w.prod_key}"}
     end
-    result2 = Product.find_all(searched_name, description, group_id, languages, limit, prod_keys)  
+    result2 = Product.find_all(searched_name, description, group_id, languages, limit, prod_keys)
     result = result1 + result2
     return result
-  rescue => e 
+  rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
     Mongoid::Criteria.new(Product, {_id: -1})
   end
 
-  # languages have to be an array of strings. 
+  # languages have to be an array of strings.
   def self.find_all(searched_name, description, group_id, languages=nil, limit=300, exclude_keys)
     query = Mongoid::Criteria.new(Product)
     if searched_name && !searched_name.empty?
-      if exclude_keys 
+      if exclude_keys
         query = Product.find_by_name_exclude(searched_name, exclude_keys)
-      else 
+      else
         query = Product.find_by_name(searched_name)
       end
     elsif description && !description.empty?
@@ -148,7 +148,7 @@ class Product
     return nil if searched_key.nil? || searched_key.strip == ""
     result = Product.where(prod_key: searched_key)
     return nil if (result.nil? || result.empty?)
-    return result[0]    
+    return result[0]
   end
 
   # This is slow !! Searches by regex are always slower than exact searches!
@@ -156,13 +156,13 @@ class Product
     return nil if searched_key.nil? || searched_key.strip == ""
     result = Product.all(conditions: {prod_key: /^#{searched_key}$/i})
     return nil if (result.nil? || result.empty?)
-    return result[0]    
+    return result[0]
   end
 
   def self.find_by_keys(product_keys)
     Product.where(:prod_key.in => product_keys)
   end
-  
+
   def self.find_by_id(id)
     result = nil
     id = id.to_s if id.is_a?(BSON::ObjectId)
@@ -174,11 +174,11 @@ class Product
     end
     result
   end
-  
+
   def self.find_by_group_and_artifact(group, artifact)
     Product.where( group_id: group, artifact_id: artifact )[0]
   end
-  
+
   ######## ELASTIC SEARCH MAPPING ###################
   def to_indexed_json
     {
@@ -186,14 +186,14 @@ class Product
       :_type => "product",
       :name => self.name,
       :description => self.description ? self.description : "" ,
-      :description_manual => self.description_manual ? self.description_manual : "" , 
+      :description_manual => self.description_manual ? self.description_manual : "" ,
       :language => self.language,
       :followers => self.followers,
-      :group_id => self.group_id ? self.group_id : "", 
+      :group_id => self.group_id ? self.group_id : "",
       :prod_key => self.prod_key,
       :prod_type => self.prod_type
     }
-  end 
+  end
 
   ########### VERSIONS START ########################
 
@@ -203,13 +203,13 @@ class Product
 
   def newest_version( stability = "stable" )
     return nil if versions.nil? || versions.empty?
-    filtered = Array.new  
+    filtered = Array.new
     versions.each do |version|
       if VersionTagRecognizer.does_it_fit_stability? version.version, stability
-        filtered << version 
+        filtered << version
       end
     end
-    if filtered.empty? 
+    if filtered.empty?
       filtered = versions
     end
     sorted = Naturalsorter::Sorter.sort_version_by_method_desc( filtered, "version" )
@@ -218,7 +218,7 @@ class Product
 
   def newest_version_number( stability = "stable" )
     version = newest_version( stability )
-    return nil if version.nil? 
+    return nil if version.nil?
     return version.version
   end
 
@@ -230,7 +230,7 @@ class Product
 
   def newest_version_from_wildcard( version_start, stability = "stable" )
     versions = versions_start_with( version_start )
-    product = Product.new({:versions => versions}) 
+    product = Product.new({:versions => versions})
     return product.newest_version_number stability
   end
 
@@ -239,13 +239,13 @@ class Product
       return version if version.version.eql?(searched_version)
     end
     nil
-  end 
+  end
 
   def self.version_approximately_greater_than_starter(value)
     if value.match(/\.0$/)
       new_end = value.length - 2
       return value[0..new_end]
-    else 
+    else
       return "#{value}."
     end
   end
@@ -259,10 +259,10 @@ class Product
       new_st = new_slice.join(".")
     end
     starter = "#{new_st}."
-    
+
     versions_group1 = self.versions_start_with( starter )
     versions = Array.new
-    versions_group1.each do |version| 
+    versions_group1.each do |version|
       if Naturalsorter::Sorter.bigger_or_equal?(version.version, value)
         versions.push(version)
       end
@@ -272,7 +272,7 @@ class Product
 
   def version_range(start, stop)
     # get all versions from range ( >=start <=stop )
-    range = Array.new 
+    range = Array.new
     versions.each do |version|
       fits_stop  = Naturalsorter::Sorter.smaller_or_equal?( version.version, stop  )
       fits_start = Naturalsorter::Sorter.bigger_or_equal?(  version.version, start )
@@ -312,7 +312,7 @@ class Product
         filtered_versions.push(version)
       end
     end
-    return filtered_versions if range 
+    return filtered_versions if range
     newest = Product.newest_version_from(filtered_versions)
     return get_newest_or_value(newest, value)
   end
@@ -324,7 +324,7 @@ class Product
         filtered_versions.push(version)
       end
     end
-    return filtered_versions if range 
+    return filtered_versions if range
     newest = Product.newest_version_from(filtered_versions)
     return get_newest_or_value(newest, value)
   end
@@ -336,7 +336,7 @@ class Product
         filtered_versions.push(version)
       end
     end
-    return filtered_versions if range 
+    return filtered_versions if range
     newest = Product.newest_version_from(filtered_versions)
     return get_newest_or_value(newest, value)
   end
@@ -360,9 +360,9 @@ class Product
   def wouldbenewest?(version)
     current = newest_version_number()
     return false if current.eql? version
-    newest = Naturalsorter::Sorter.get_newest_version(current, version) 
+    newest = Naturalsorter::Sorter.get_newest_version(current, version)
     return true if version.eql? newest
-    return false 
+    return false
   end
 
   def update_version_data( persist = true )
@@ -379,8 +379,8 @@ class Product
 
   def versions_with_rleased_date
     return nil if versions.nil? || versions.empty?
-    new_versions = Array.new 
-    versions.each do |version| 
+    new_versions = Array.new
+    versions.each do |version|
       new_versions << version if !version.released_at.nil?
     end
     new_versions
@@ -394,19 +394,19 @@ class Product
     first = sorted_versions.first.released_at
     last = sorted_versions.last.released_at
     return nil if first.nil? || last.nil?
-    diff = last.to_i - first.to_i 
+    diff = last.to_i - first.to_i
     diff_days = diff / 60 / 60 / 24
-    average = diff_days / sorted_versions.size 
+    average = diff_days / sorted_versions.size
     average
-  rescue => e 
+  rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
-    nil 
+    nil
   end
 
   def copy_released_versions
-    new_versions = Array.new 
-    versions.each do |version| 
+    new_versions = Array.new
+    versions.each do |version|
       new_versions << version if version.released_string
     end
     self.versions = new_versions
@@ -418,7 +418,7 @@ class Product
   def comments
     Versioncomment.find_by_prod_key_and_version(self.prod_key, self.version)
   end
-  
+
   def license_info
     if self.license.nil? || self.license.empty? || self.license.eql?("unknown")
       return self.license_manual
@@ -426,18 +426,18 @@ class Product
     return self.license
   end
 
-  def license_link_info 
+  def license_link_info
     return self.licenseLink_manual unless self.licenseLink
     return self.licenseLink
   end
 
   def update_used_by_count( persist = true )
     self.used_by_count = Dependency.where(:dep_prod_key => self.prod_key).count
-    self.save if persist 
+    self.save if persist
   end
 
   def dependencies(scope)
-    scope = main_scope if scope == nil 
+    scope = main_scope if scope == nil
     Dependency.find_by_key_version_scope(prod_key, version, scope)
   end
 
@@ -445,13 +445,13 @@ class Product
     Dependency.find_by_key_and_version(prod_key, version)
   end
 
-  # TRUE  -> if 1 of the dependencies is outdated. 
-  # FALSE -> if non of the dependencies are outdated.  
-  # 
+  # TRUE  -> if 1 of the dependencies is outdated.
+  # FALSE -> if non of the dependencies are outdated.
+  #
   def dependencies_outdated?(scope = nil )
     deps = self.dependencies( scope )
     return false if deps.nil? || deps.empty?
-    deps.each do |dep| 
+    deps.each do |dep|
       return true if dep.outdated?
     end
     return false
@@ -459,17 +459,17 @@ class Product
 
   def self.random_product
     size = Product.count - 7
-    Product.skip(rand( size )).first 
+    Product.skip(rand( size )).first
   end
-  
+
   def http_links
     Versionlink.all(conditions: { prod_key: self.prod_key, version_id: nil, link: /^http*/}).asc(:name)
   end
-  
+
   def http_version_links
     Versionlink.all(conditions: { prod_key: self.prod_key, version_id: self.version, link: /^http*/ }).asc(:name)
   end
-  
+
   def self.get_hotest( count )
     Product.all().desc(:followers).limit( count )
   end
@@ -481,23 +481,23 @@ class Product
   def update_in_my_products(array_of_product_ids)
     self.in_my_products = array_of_product_ids.include?(_id.to_s)
   end
-  
+
   def to_param
     Product.encode_product_key self.prod_key
   end
-  
+
   def version_to_url_param
-    Product.encode_product_key version    
+    Product.encode_product_key version
   end
 
-  def name_and_version    
+  def name_and_version
     "#{name} : #{version}"
   end
-  
-  def name_version(limit)    
+
+  def name_version(limit)
     nameversion = "#{name} (#{version})"
     if nameversion.length > limit
-      return "#{nameversion[0, limit]}.." 
+      return "#{nameversion[0, limit]}.."
     else
       return nameversion
     end
@@ -516,7 +516,7 @@ class Product
   end
 
   def self.downcase_array(arr)
-    array_dwoncase = Array.new 
+    array_dwoncase = Array.new
     arr.each do |element|
       array_dwoncase.push element.downcase
     end
@@ -529,23 +529,23 @@ class Product
   end
 
   def self.encode_prod_key(prod_key)
-    return nil if prod_key.nil? 
+    return nil if prod_key.nil?
     prod_key.gsub("/", "--").gsub(".", "~")
   end
 
   def self.decode_prod_key(prod_key)
-    return nil if prod_key.nil? 
+    return nil if prod_key.nil?
     prod_key.gsub("--", "/").gsub("~", ".")
   end
 
   def description_summary
     if description && description_manual
       return "#{description} \n \n #{description_manual}"
-    elsif description && !description_manual 
+    elsif description && !description_manual
       return description
     elsif !description && description_manual
       return description_manual
-    else 
+    else
       return ""
     end
   end
@@ -555,16 +555,16 @@ class Product
     return get_summary(description_manual, 125)
   end
 
-  def show_dependency_badge? 
-    self.language.eql?(A_LANGUAGE_JAVA) or self.language.eql?(A_LANGUAGE_PHP) or 
+  def show_dependency_badge?
+    self.language.eql?(A_LANGUAGE_JAVA) or self.language.eql?(A_LANGUAGE_PHP) or
     self.language.eql?(A_LANGUAGE_RUBY) or self.language.eql?(A_LANGUAGE_NODEJS)
   end
 
   private
 
-    def get_summary text, size 
-      return "" if text.nil? 
-      return "#{text[0..size]}..." if text.size > size 
+    def get_summary text, size
+      return "" if text.nil?
+      return "#{text[0..size]}..." if text.size > size
       return text[0..size]
     end
 
@@ -583,15 +583,15 @@ class Product
         query = query.in(language: languages)
       end
       query
-    end    
+    end
 
     def get_newest_or_value(newest, value)
       if newest.nil?
-        version = Version.new 
-        version.version = value  
+        version = Version.new
+        version.version = value
         return version
-      else 
-        return newest  
+      else
+        return newest
       end
     end
 end
