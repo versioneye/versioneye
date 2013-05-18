@@ -108,3 +108,112 @@ REQUESTING PAGE:  /settings/payments with {"HTTPS"=>"on"} and HTTP headers {}
 REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {}
 REQUESTING PAGE: GET https://127.0.0.1:3000/settings/payments with {} and HTTP headers {}
 REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {}
+REQUESTING PAGE: GET /statistics with {} and HTTP headers {}
+REQUESTING PAGE: GET /statistics with {} and HTTP headers {}
+REQUESTING PAGE: GET /statistics with {} and HTTP headers {}
+REQUESTING PAGE: GET /signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"admin@versioneye.com", "password"=>"baas471"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"admin@versioneye.com", "password"=>"baas471"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"admin@versioneye.com", "password"=>"baas471"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"admin@versioneye.com", "password"=>"baas471"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"admin@versioneye.com", "password"=>"baas471"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"admin@versioneye.com", "password"=>"baas471"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"admin@versioneye.com", "password"=>"baas471"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"admin@versioneye.com", "password"=>"baas471"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"admin@versioneye.com", "password"=>"baas471"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"admin@versioneye.com", "password"=>"baas471"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET https://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1:3000/signin"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET /signin with {} and HTTP headers {}
+REQUESTING PAGE: GET /signin with {} and HTTP headers {}
+REQUESTING PAGE: GET http://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://127.0.0.1/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://127.0.0.1:3000/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1/sessions/new"}
+REQUESTING PAGE: GET http://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://127.0.0.1/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://127.0.0.1:3000/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1/sessions/new"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET http://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://127.0.0.1/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://127.0.0.1:3000/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1/sessions/new"}
+REQUESTING PAGE: GET http://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://127.0.0.1/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://127.0.0.1:3000/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1/sessions/new"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET http://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://127.0.0.1/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://127.0.0.1:3000/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1/sessions/new"}
+REQUESTING PAGE: GET http://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://127.0.0.1/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://127.0.0.1:3000/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1/sessions/new"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
+REQUESTING PAGE: GET http://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://127.0.0.1/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://127.0.0.1:3000/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1/sessions/new"}
+REQUESTING PAGE: GET http://127.0.0.1:3000/signin with {} and HTTP headers {}
+REQUESTING PAGE: GET https://127.0.0.1/sessions/new with {} and HTTP headers {"HTTP_REFERER"=>"http://127.0.0.1:3000/signin"}
+REQUESTING PAGE: POST /sessions with {"utf8"=>"✓", "session"=>{"email"=>"hans@tanz.de", "password"=>"password"}} and HTTP headers {"HTTP_REFERER"=>"https://127.0.0.1/sessions/new"}
+REQUESTING PAGE: GET /settings/payments with {} and HTTP headers {"HTTP_REFERER"=>"/sessions"}
