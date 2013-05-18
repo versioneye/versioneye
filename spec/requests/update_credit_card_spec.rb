@@ -15,6 +15,7 @@ describe "Update Credit Card Information" do
     Plan.destroy_all
   end
 
+  # TODO move this to features.
   it "updates the credit card information successfully" do
     get signin_path, nil, "HTTPS" => "on"
     assert_response :success
