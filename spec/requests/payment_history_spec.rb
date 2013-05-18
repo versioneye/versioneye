@@ -1,18 +1,19 @@
 require 'spec_helper'
 
 describe "Payment History" do
+
   before :each do
     @test_user = UserFactory.default
     @test_user.save
     host!('127.0.0.1:3000')
     
-    post "/sessions", 
-      {:session => {email: @test_user.email, password: @test_user.password}}, 
-      "HTTPS" => "on"
-    assert_response 302
+    visit 'http://127.0.0.1:3000/signin'
+    fill_in 'session[email]', :with => @test_user.email
+    fill_in 'session[password]', :with => @test_user.password
+    click_button 'Sign In'
+    assert_response 302 
     response.should redirect_to("/user/projects")
-
-
+ 
   end
 
   after :each do
@@ -51,8 +52,8 @@ describe "Payment History" do
     before :each do
       @test_user.stripe_customer_id = "cus_1m9PBsr4Xhumds"
       @test_user.save
+      
       url = "https://api.stripe.com/v1/invoices?customer=%s -u %s:" % [@test_user.stripe_customer_id, Stripe.api_key]
-
       recorded_response = `curl -is #{url}`      
       FakeWeb.register_uri(
         :get, 
@@ -62,14 +63,13 @@ describe "Payment History" do
    end
 
     it "shows correct list of invoices for current user" do
-      #visit settings_payments_path;
-      get settings_payments_path, nil, "HTTPS" => "on"
+      
+      visit settings_payments_path
       assert_response :success
       have_css "#payment_history"
-      
-      should_not have_text('Iniatilizing frontend app..')
       save_and_open_page
-      response.should have_selector('table tr', :count => 2)
+      should_not have_content('Iniatilizing frontend app..')
+      should have_selector('tbody tr', :count => 2)
     end
   end
 
