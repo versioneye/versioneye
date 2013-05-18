@@ -10,7 +10,7 @@ gem 'bson_ext', '1.7.0'
 gem 'mongo', '1.7.0'
 gem 'mongoid', '2.5.0'
 gem 'naturalsorter', '2.0.4'
-gem 'postmark-rails', '0.4.1'
+gem 'postmark-rails', '0.5.0'
 gem 'httparty', '0.10.2'
 gem 'oauth', '0.4.7'
 gem 'twitter_oauth', '0.4.4'
@@ -25,7 +25,7 @@ gem 'dalli', '2.6.2'           # memcache library
 gem 'kgio', '2.8.0'            # 20% performance boost for dalli
 gem 'grape', '0.2.6'
 gem 'grape-entity', '0.2.0'
-gem 'grape-swagger', git: "https://github.com/timgluz/grape-swagger.git" 
+gem 'grape-swagger', git: "https://github.com/timgluz/grape-swagger.git"
 #, :git => 'https://github.com/tim-vandecasteele/grape-swagger.git'
 gem 'htmlentities', '4.3.1'
 
@@ -49,9 +49,7 @@ end
 group :test do
   gem 'turn', :require => false
   gem "rspec-rails", "~> 2.0"
-  gem 'webrat', '0.7.3'
+  gem 'capybara', '2.1.0'
+  gem 'selenium-webdriver', '2.32.1'
   gem 'fakeweb', '1.3.0'
-  gem 'capybara', "2.1.0"
-  gem 'poltergeist', "1.3.0"
-  gem 'launchy'
 end
