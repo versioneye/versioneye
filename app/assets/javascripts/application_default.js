@@ -15,3 +15,6 @@
 //= require custom
 //= require custom_feedback
 //= require bootstrap_switch
+
+//= require underscore-min
+//= require settings
