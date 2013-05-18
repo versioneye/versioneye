@@ -5,5 +5,5 @@ We are using the semantic versioning. Check out this: http://semver.org/
 
 == 1.0.0
 
-* *Payment History*: We just added a payment history to the settings. Now you can always print your receipts.
-* *Dependency Badges*: We added to every package page dependency badges. You can even integrate them into your website.
+* *Payment History*:: We just added a payment history to the settings. Now you can always print your receipts.
+* *Dependency Badges*:: We added to every package page dependency badges. You can even integrate them into your website.
