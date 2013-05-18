@@ -28,14 +28,25 @@ describe "Update Credit Card Information" do
     Plan.count.should eq(4)
     response.should contain("Plans & Pricing")
     response.should contain("Personal")
-    # click_button("02_personal_button")
 
     post settings_updateplan_path, {:plan => Plan::A_PLAN_PERSONAL}, "HTTPS" => "on"
     assert_response :success
     response.should contain("Credit Card Information")
-    page.find_by_id("plan").value.should eql(Plan::A_PLAN_PERSONAL)
-    # response.should contain(Plan::A_PLAN_PERSONAL)
+    assert_select "input[name=?]", "plan"
+    assert_select "input[value=?]", Plan::A_PLAN_PERSONAL
   end
+
+  # it "does some test stuff" do
+  #   visit signin_path
+  #   fill_in "Email",    :with => @user1.email
+  #   fill_in "Password", :with => "12345"
+  #   click_button "Sign In"
+
+  #   visit settings_plans_path
+  #   click_button "Book It"
+  #   response.status.should be(200)
+  #   page.should have_content("Credit Card Information")
+  # end
 
   # it "do some tests" do
   #   visit signin_path
@@ -46,6 +57,5 @@ describe "Update Credit Card Information" do
   #   click_link 'Sign In'
   #   page.should have_content 'Success'
   # end
-
 
 end
