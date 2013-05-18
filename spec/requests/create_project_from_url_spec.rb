@@ -11,13 +11,13 @@ describe "Create Project from URL" do
     @user1.save
   end
 
-  after(:each) do 
+  after(:each) do
     User.destroy_all
     Project.destroy_all
     Projectdependency.destroy_all
   end
 
-  it "create a project from URL" do 
+  it "create a project from URL" do
     get signin_path, nil, "HTTPS" => "on"
     assert_response :success
 
@@ -31,10 +31,10 @@ describe "Create Project from URL" do
 
     post "/user/projects", {:project => {:url => "https://s3.amazonaws.com/veye_test_env/Gemfile" }}, "HTTPS" => "on"
     assert_response 302
-    project = Project.first 
+    project = Project.first
     project.should_not be_nil
     response.should redirect_to( user_project_path( project ) )
-    
+
     get user_project_path( project ), nil, "HTTPS" => "on"
     response.should contain("Dependencies are Outdated")
     response.should contain("rails")
