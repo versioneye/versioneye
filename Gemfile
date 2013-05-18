@@ -50,4 +50,5 @@ group :test do
   gem "rspec-rails", "~> 2.0"
   gem 'webrat', '0.7.3'
   gem 'fakeweb', '1.3.0'
+  gem 'capybara'
 end
