@@ -23,7 +23,7 @@
 
     <%= form_tag("/settings/updatecreditcard", :method => "post", :class => "form-horizontal", :id => "payment-form") do %>
 
-      <input type="hidden" name="plan" value="<%= @plan_name_id %>" />
+      <input type="hidden" name="plan" id="plan" value="<%= @plan_name_id %>" />
 
       <div class="control-group">
         <%= label_tag :name, "Name", :class => "control-label-big", :for => "name" %>
