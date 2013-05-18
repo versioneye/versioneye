@@ -9,12 +9,8 @@
   </div>
   
   <div class="span8 content" >
-    <% if @customer.nil? || @customer.invoices.nil? || @customer.invoices.count == 0 %>
-      <p>
-        You don't have any Payment History.
-      </p>
-    <% else %>
-      <%= render :partial => "/settings/helpers/stripe_payment_history" %> 
-    <% end %>
+    <div id = "payment_history">Iniatilizing frontend app..</div>
+    <%# include templates for frontend app %>
+    <%= render :partial => "/settings/helpers/stripe_payment_history" %> 
   </div>
 </div>

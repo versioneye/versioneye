@@ -10,7 +10,7 @@ gem 'bson_ext', '1.7.0'
 gem 'mongo', '1.7.0'
 gem 'mongoid', '2.5.0'
 gem 'naturalsorter', '2.0.4'
-gem 'postmark-rails', '0.4.1'
+gem 'postmark-rails', '0.5.0'
 gem 'httparty', '0.10.2'
 gem 'oauth', '0.4.7'
 gem 'twitter_oauth', '0.4.4'
@@ -48,7 +48,7 @@ end
 group :test do
   gem 'turn', :require => false
   gem "rspec-rails", "~> 2.0"
-  gem 'webrat', '0.7.3'
+  gem 'capybara', '2.1.0'
+  gem 'selenium-webdriver', '2.32.1'
   gem 'fakeweb', '1.3.0'
-  # gem 'capybara'
 end
