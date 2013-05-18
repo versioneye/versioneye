@@ -7,10 +7,10 @@
 		<div class="span2" style="padding: 0px; "><%= plan.private_projects %> Private Projects</div>
 		<% if !@plan.nil? %>
 			<div class="span2 pull-right" style="padding: 0px; width: 150px;" >
-				<% if @plan && @plan.name_id.eql?( plan.name_id ) %> 
+				<% if @plan && @plan.name_id.eql?( plan.name_id ) %>
 					<span style="color: green; font-weight:bold">Current</span>
-				<% else %> 
-					<form action="/settings/updateplan" method="POST" > 
+				<% else %>
+					<form action="/settings/updateplan" method="POST" >
 						<input type="hidden" name="plan" value="<%= plan.name_id %>" />
 						<button type="submit" class="btn2" >Book It</button>
 					</form>

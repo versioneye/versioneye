@@ -8,11 +8,11 @@
   <div class="row content_header_def" >
     Credit Card Information
   </div>
-  
+
   <div class="span8 content" >
 
     <p >
-      <a href="https://stripe.com" target="stripe">Stripe.com</a> is our Payment Provider. 
+      <a href="https://stripe.com" target="stripe">Stripe.com</a> is our Payment Provider.
       <b>VersionEye doesn't store any Credit Card data.</b>
     </p>
     <div>
@@ -20,9 +20,9 @@
     </div>
 
     <hr />
-    
+
     <%= form_tag("/settings/updatecreditcard", :method => "post", :class => "form-horizontal", :id => "payment-form") do %>
-      
+
       <input type="hidden" name="plan" value="<%= @plan_name_id %>" />
 
       <div class="control-group">
@@ -61,7 +61,7 @@
       </div>
 
       <hr />
-      
+
       <div class="control-group">
         <%= label_tag :card_number, "Card Number", :class => "control-label-big", :for => "cardnumber" %>
         <div class="controls" style="margin-left: 155px;">
@@ -92,7 +92,7 @@
         </div>
       </div>
 
-    <% end %>  
+    <% end %>
 
   </div>
 </div>
