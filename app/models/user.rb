@@ -1,7 +1,7 @@
-class User 
-  
+class User
+
   require 'will_paginate/array'
-  
+
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes
@@ -29,27 +29,27 @@ class User
   field :refer_name, type: String
 
   # TODO refactor this in facebook_account, twitter_account
-  # create own models for that und connect them to user  
+  # create own models for that und connect them to user
 
-  field :fb_id, type: String 
+  field :fb_id, type: String
   field :fb_token, type: String
 
   field :twitter_id, type: String
   field :twitter_token, type: String
   field :twitter_secret, type: String
-  
-  field :github_id, type: String 
+
+  field :github_id, type: String
   field :github_token, type: String
   field :github_scope, type: String
 
   field :stripe_token, type: String
   field :stripe_customer_id, type: String
-  
+
   # *** RELATIONS START ***
   belongs_to :plan
   has_one    :billing_address
   has_one    :user_notification_setting
-  has_many   :projects 
+  has_many   :projects
   has_and_belongs_to_many :products
   # *** RELATIONS END ***
 
@@ -58,18 +58,18 @@ class User
   validates_presence_of :email, :message => "E-Mail is mandatory!"
   validates_presence_of :encrypted_password, :message => "Encrypted_password is mandatory!"
   validates_presence_of :salt, :message => "Salt is mandatory!"
-   
+
   validates_uniqueness_of :username, :message => "Username exist already."
   validates_uniqueness_of :email, :message => "E-Mail exist already."
-   
+
   validates_length_of :username, minimum: 2, maximum: 50, :message => "username length is not ok"
   validates_length_of :fullname, minimum: 2, maximum: 50, :message => "fullname length is not ok"
-   
+
   validates_format_of :username, with: /^[a-zA-Z0-9]+$/
   validates_format_of :email,    with: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
 
   before_validation :downcase_email
-  
+
   scope :follows_none, where(:product_ids.empty?)
   scope :follows_equal, ->(n){where(:product_ids.count.eq(n))}
   scope :follows_least, ->(n){where(:product_ids.count >= n)}
@@ -85,36 +85,36 @@ class User
     return false if self.datenerhebung == false || self.datenerhebung == nil
     super
   end
-  
+
   def to_param
     username
   end
-  
+
   def create_verification
     random = create_random_value
     self.verification = secure_hash("#{random}--#{username}")
   end
-  
+
   def send_verification_email
     UserMailer.verification_email(self, self.verification, self.email).deliver
-  end  
+  end
 
   def self.send_verification_reminders
     users = User.all(conditions: {verification: {"$ne" => nil}})
     users.each do |user|
-      user.send_verification_reminder  
+      user.send_verification_reminder
     end
-  end 
+  end
 
-  def send_verification_reminder 
+  def send_verification_reminder
     if !self.verification.nil? && self.deleted != true
       UserMailer.verification_email_reminder(self, self.verification, self.email).deliver
     end
-  rescue => e 
+  rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
   end
-  
+
   def create_username
     name = fullname.strip
     if name.include?(" ")
@@ -129,11 +129,11 @@ class User
     end
     self.username = name
   end
-  
+
   def self.new_user_email(user)
     UserMailer.new_user_email(user).deliver
   end
-  
+
   def self.activate!(verification)
     user = User.where(verification: verification)[0]
     if user
@@ -143,11 +143,11 @@ class User
     end
     return false;
   end
-  
+
   def activated?
     return verification.nil?
   end
-  
+
   def self.find_by_username( username )
     User.where( username: /^#{username}$/i ).shift
   end
@@ -155,7 +155,7 @@ class User
   def self.find_by_email(email)
     User.where(email: /^#{email}$/i).shift
   end
-  
+
   def self.find_by_id( id )
     return nil if id.nil?
     return User.find(id.to_s)
@@ -198,34 +198,34 @@ class User
   def has_password?(submitted_password)
     self.encrypted_password == encrypt(submitted_password)
   end
-  
+
   def self.find_by_fb_id(fb_id)
     users = User.where(fb_id: fb_id)
-    if users && users.size > 1 
-      return nil 
-    else 
+    if users && users.size > 1
+      return nil
+    else
       users[0]
-    end 
+    end
   end
 
   def self.find_by_twitter_id(twitter_id)
     users = User.where(twitter_id: twitter_id)
-    if users && users.size > 1 
-      return nil 
-    else 
+    if users && users.size > 1
+      return nil
+    else
       users[0]
-    end 
+    end
   end
-  
+
   def self.find_by_github_id(github_id)
     users = User.where(github_id: github_id)
-    if users && users.size > 1 
-      return nil 
-    else 
+    if users && users.size > 1
+      return nil
+    else
       users[0]
-    end 
+    end
   end
-  
+
   def reset_password
     random_value = create_random_value
     self.password = random_value
@@ -234,17 +234,17 @@ class User
     UserMailer.reset_password(self, random_value).deliver
   end
 
-  # TODO replace with relation 
+  # TODO replace with relation
   def self.follows_max(n)
     User.all.select {|user| user['product_ids'].count < n}
   end
   def self.follows_least(n)
     User.all.select {|user| user['product_ids'].count >= n}
-  end 
+  end
   def self.non_followers
     User.all.select {|user| user['product_ids'].count == 0}
   end
-  
+
   def self.active_users
     User.all.select do |user|
       (user['product_ids'].count > 0 or
@@ -278,14 +278,14 @@ class User
     user = User.find_by_id(user_api.user_id)
     return nil if user.nil?
 
-    user    
+    user
   end
-  
+
   def self.username_valid?(username)
     user = User.find_by_username(username)
     return user.nil?
   end
-  
+
   def self.email_valid?(email)
     user = find_by_email(email)
     user_email = UserEmail.find_by_email(email)
@@ -296,7 +296,7 @@ class User
     enc_password = encrypt(password)
     enc_password.eql?(encrypted_password)
   end
-  
+
   def update_password(email, password, new_password)
     user = User.authenticate(email, password)
     return false if user.nil?
@@ -341,7 +341,7 @@ class User
       self.fullname = self.username
     end
   end
-  
+
   def update_from_github_json(json_user, token, scopes = "no_scope")
     self.fullname = json_user['name']
     self.username = json_user['login']
@@ -376,7 +376,7 @@ class User
     self.email = "#{random}_#{self.email}"
     self.prev_fullname = self.fullname
     self.fullname = "Deleted"
-    self.products.clear 
+    self.products.clear
     self.save
   end
 
@@ -388,7 +388,7 @@ class User
     end
     self.billing_address
   end
-    
+
   private
 
     def create_random_value
@@ -396,13 +396,13 @@ class User
       value = ""
       10.times { value << chars[rand(chars.size)] }
       value
-    end    
-    
+    end
+
     def encrypt_password
       self.salt = make_salt if new_record?
       self.encrypted_password = encrypt(password)
     end
-    
+
     def downcase_email
       self.email = self.email.downcase if self.email.present?
     end
