@@ -1,9 +1,9 @@
-# Changelog
+= Changelog
 
 Here we track our changes. Because the app is already online since 1 year we start bey version 1.0.0.
-We are using the semantic versioning. Check out this: <http://semver.org/>
+We are using the semantic versioning. Check out this: http://semver.org/
 
-## 1.0.0
+== 1.0.0
 
 * Payment History: We just added a payment history to the settings. Now you can always print your receipts.
 * Dependency Badges: We added to every package page dependency badges. You can even integrate them into your website.
