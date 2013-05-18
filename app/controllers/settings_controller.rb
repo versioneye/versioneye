@@ -21,6 +21,10 @@ class SettingsController < ApplicationController
   end
 
   def plans
+    if current_user.plan.nil?
+      current_user.plan = Plan.free_plan
+      current_user.save
+    end
     @plan = current_user.plan
   end
 
