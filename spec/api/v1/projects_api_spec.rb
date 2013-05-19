@@ -3,7 +3,6 @@ require 'rest_client'
 
 describe VersionEye::ProjectsApi do
   before(:each) do
-    @host = "http://127.0.0.1:3000"
     @root_uri = "/api/v1"
     @project_uri = "/api/v1/projects"
     @test_user = UserFactory.create_new 90
@@ -50,12 +49,12 @@ describe VersionEye::ProjectsApi do
     end
 
     it "fails, when upload-file is missing" do
-      post @project_uri, {:api_key => @user_api.api_key}, "HTTPS" => "on"
+      response = post @project_uri, {:api_key => @user_api.api_key}, "HTTPS" => "on"
       response.status.should eq(403)
     end
 
     it "returns 201 and project info, when upload was successfully" do
-      post @project_uri, {
+      response = post @project_uri, {
         upload: @test_file,
         api_key: @user_api.api_key,
         send_file: true,
