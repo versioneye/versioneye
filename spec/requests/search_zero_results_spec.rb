@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "empty_search_result" do
 
   before(:each) do
-    visit root_path
-    visit search_path
+    get root_path
+    get search_path
   end
 
   it "submits query with empty results" do
@@ -12,7 +12,7 @@ describe "empty_search_result" do
     user.save
 
     post "/sessions", {:session => {:email => user.email, :password => user.password}}, "HTTPS" => "on"
-    assert_response 302 
+    assert_response 302
     response.should redirect_to("/user/projects")
 
     url_string = "http://versioneye.com"
@@ -21,7 +21,7 @@ describe "empty_search_result" do
     get "/search", {:q => "BullshitBongo1235"}
     assert_response :success
     assert_select "#newUrlForm"
-    visit root_path
+    get root_path
     post submitted_urls_path, {:url => url_string, :message => msg_string},
                               {'HTTP_REFERER' => search_path}
     assert_response 302

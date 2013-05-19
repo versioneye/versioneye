@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "follow and unfollow" do
 
-  it "do follow successfully" do 
+  it "do follow successfully" do
     prod_key = "json_goba"
   	product = Product.new
   	product.versions = Array.new
@@ -31,7 +31,7 @@ describe "follow and unfollow" do
     post "/package/follow", :product_key => "json_goba"
     assert_response 302
     response.should redirect_to("/package/json_goba")
-    
+
     prod = Product.find_by_key( prod_key )
     subscribers = prod.users
     subscribers.size.should eq(1)
@@ -39,7 +39,7 @@ describe "follow and unfollow" do
 
     get "/package/json_goba/version/1~0"
     assert_tag :tag => "button", :attributes => { :class => "btn2 btn-large btn-warning", :type => "submit" }
-    response.should contain("1 Followers")
+    response.body.should match("1 Followers")
 
     post "/package/unfollow", :product_key => "json_goba", :src_hidden => "detail"
     assert_response 302
@@ -47,12 +47,12 @@ describe "follow and unfollow" do
 
     get "/package/json_goba/version/1~0"
     assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-success", :type => "submit" }
-    response.should contain("0 Followers")
+    response.body.should match("0 Followers")
 
     prod = Product.find_by_key( prod_key )
     subscribers = prod.users
     subscribers.size.should eq(0)
-    
+
     user.remove
     product.remove
   end
