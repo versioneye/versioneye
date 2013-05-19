@@ -27,7 +27,7 @@ describe "Create Project from URL" do
 
     get new_user_project_path, nil, "HTTPS" => "on"
     assert_response :success
-    response.should contain("Create a new project")
+    response.body.should match("Create a new project")
 
     post "/user/projects", {:project => {:url => "https://s3.amazonaws.com/veye_test_env/Gemfile" }}, "HTTPS" => "on"
     assert_response 302
@@ -36,10 +36,10 @@ describe "Create Project from URL" do
     response.should redirect_to( user_project_path( project ) )
 
     get user_project_path( project ), nil, "HTTPS" => "on"
-    response.should contain("Dependencies are Outdated")
-    response.should contain("rails")
-    response.should contain("jquery-rails")
-    response.should contain("therubyracer")
+    response.body.should match("Dependencies are Outdated")
+    response.body.should match("rails")
+    response.body.should match("jquery-rails")
+    response.body.should match("therubyracer")
   end
 
 end

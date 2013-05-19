@@ -18,13 +18,13 @@ describe "Private Project" do
     @project.save_dependencies
   end
 
-  after(:each) do 
+  after(:each) do
     @user1.delete
     @user2.delete
     @project.delete
   end
 
-  it "ensure that private user projects stay private" do 
+  it "ensure that private user projects stay private" do
     get "/signin", nil, "HTTPS" => "on"
     assert_response :success
 
@@ -34,7 +34,7 @@ describe "Private Project" do
 
     get "/user/projects/#{@project._id.to_s}"
     assert_response :success
-    response.should contain("symfony/doctrine-bundle")
+    response.body.should match("symfony/doctrine-bundle")
 
     get "/signout"
 
@@ -50,24 +50,24 @@ describe "Private Project" do
     assert_response 302
     response.should redirect_to("/")
 
-    @project.public = true 
-    @project.save 
+    @project.public = true
+    @project.save
 
     get "/user/projects/#{@project._id.to_s}"
     assert_response :success
-    response.should contain("symfony/doctrine-bundle")
-    response.should_not contain("Monitor it")
-    response.should_not contain("Send notifications to")
-    response.should_not contain("Delete this project")
+    response.body.should     match("symfony/doctrine-bundle")
+    response.body.should_not match("Monitor it")
+    response.body.should_not match("Send notifications to")
+    response.body.should_not match("Delete this project")
 
     get "/signout"
 
     get "/user/projects/#{@project._id.to_s}"
     assert_response :success
-    response.should contain("symfony/doctrine-bundle")
-    response.should_not contain("Monitor it")
-    response.should_not contain("Send notifications to")
-    response.should_not contain("Delete this project")
+    response.body.should     match("symfony/doctrine-bundle")
+    response.body.should_not match("Monitor it")
+    response.body.should_not match("Send notifications to")
+    response.body.should_not match("Delete this project")
   end
 
 end

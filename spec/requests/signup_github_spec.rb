@@ -22,13 +22,12 @@ describe "SignUp with GitHub" do
     assert_response :success
 
     post "/auth/github/create", {:email => "test@test.de", :terms => "0" }, "HTTPS" => "on"
-    response.should contain("You have to accept the Conditions of Use AND the Data Aquisition.")
+    response.body.should match("You have to accept the Conditions of Use AND the Data Aquisition")
 
     post "/auth/github/create", {:email => "test@test.de", :terms => "1" }, "HTTPS" => "on"
     assert_response :success
-    response.should contain("Congratulation")
+    response.body.should match("Congratulation")
   end
-
 
   it "signin an existing user with GitHub. The GitHub ID is already in the database." do
     user = UserFactory.create_new
@@ -46,7 +45,6 @@ describe "SignUp with GitHub" do
     user_db = User.find_by_email( user.email )
     user_db.github_token.should eql("token_123")
   end
-
 
   it "signin an existing user with GitHub. The email address is already in the database." do
     user = UserFactory.create_new
@@ -86,6 +84,5 @@ describe "SignUp with GitHub" do
     user_db.github_id.should eql("1585858")
     user_db.github_scope.should be_nil
   end
-
 
 end
