@@ -150,16 +150,11 @@ class User::ProjectsController < ApplicationController
     respond_to do |format|
       format.html {
         @repos = Github.user_repos(current_user.github_token)
-        if @repos && @repos['message'].nil?
-          @repos.sort_by! {|repo| "%s" % repo["language"].to_s }
-          @imported_repos = Project.by_user(current_user).by_source(Project::A_SOURCE_GITHUB)
-          @imported_repo_names  = @imported_repos.map(&:name).to_set
-          @supported_langs = Github.supported_languages
-          @page = "project_new"
-        else
-          flash[:error] = "An error occured. Maybe you have to reconnect your VersionEye Account with your GitHub Account."
-          redirect_to user_projects_path
-        end
+        @repos.sort_by! {|repo| "%s" % repo["language"].to_s }
+        @imported_repos = Project.by_user(current_user).by_source(Project::A_SOURCE_GITHUB)
+        @imported_repo_names  = @imported_repos.map(&:name).to_set
+        @supported_langs = Github.supported_languages
+        @page = "project_new"
       }
       format.json {
         resp = "{\"projects\": [\""
@@ -175,6 +170,11 @@ class User::ProjectsController < ApplicationController
         render :json => "[#{resp}]"
       }
     end
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    flash[:error] = "An error occured. Maybe you have to reconnect your VersionEye Account with your GitHub Account."
+    redirect_to user_projects_path
   end
 
   def get_popular
