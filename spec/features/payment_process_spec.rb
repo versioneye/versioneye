@@ -18,8 +18,8 @@ describe "Payment Process" do
   end
 
   after :all do
-    # User.destroy_all
-    # Plan.destroy_all
+    User.destroy_all
+    Plan.destroy_all
   end
 
   describe "Empty Payment History", :js => true do
