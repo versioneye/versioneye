@@ -1,10 +1,10 @@
 class SessionsController < ApplicationController
 
-  force_ssl :only => [:new, :create]
+  force_ssl :only => [:new, :create] if Rails.env.production?
 
   def new
   end
-  
+
   def create
     user = User.authenticate(params[:session][:email],
                              params[:session][:password])
@@ -20,12 +20,12 @@ class SessionsController < ApplicationController
       redirect_back_or( "/user/projects" )
     end
   end
-  
+
   def destroy
     sign_out
     redirect_to root_path
   end
-  
+
   def android_registrationid
     registration_id = params[:registration_id]
     user = current_user
@@ -34,5 +34,5 @@ class SessionsController < ApplicationController
       user.save
     end
   end
-  
+
 end

@@ -17,7 +17,7 @@
 
 <script id = "invoice_table_template" type = "text/template">
   <table id = "invoice_table" class = "table table-hover">
-    <thead> 
+    <thead>
       <tr>
         <th>Date</th>
         <th>Plan</th>
@@ -32,9 +32,9 @@
 
 <script id = "invoice_row_template" type = "text/template">
   <tr>
-      <td>{{= invoice.date }}</td>
+      <td>{{= invoice.date_s }}</td>
       <td>{{= invoice.plan_name }}</td>
-      <td>{{= invoice.total }} {{= invoice.currency }}</td>
+      <td>{{= invoice.amount_s }}</td>
       <td><a href="{{= invoice.link_to}}">View receipt</a></td>
   </tr>
 </script>
