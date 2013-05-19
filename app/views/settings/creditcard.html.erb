@@ -72,16 +72,16 @@
       <div class="control-group">
         <%= label_tag :cvc, "CVC", :class => "control-label-big", :for => "cvc" %>
         <div class="controls" style="margin-left: 155px;">
-          <input type="text" size="4" autocomplete="off" class="card-cvc round" style="width: 60px;"/>
+          <input type="text" size="4" autocomplete="off" class="card-cvc round" style="width: 60px;" id="cvc"/>
         </div>
       </div>
 
       <div class="control-group">
         <%= label_tag :Expiration, "Expiration (MM/YYYY)", :class => "control-label-big", :for => "Expiration" %>
         <div class="controls" style="margin-left: 155px;">
-          <input type="text" size="2" class="card-expiry-month round" style="width: 40px;" />
+          <input type="text" size="2" class="card-expiry-month round" style="width: 40px;" id="month" />
           <span> / </span>
-          <input type="text" size="4" class="card-expiry-year round" style="width: 60px;" />
+          <input type="text" size="4" class="card-expiry-year round" style="width: 60px;" id="year" />
         </div>
       </div>
 
