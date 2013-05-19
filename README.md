@@ -27,8 +27,9 @@ If you still have trouble comment out the code in class Product which is respons
 ## Amazon S3
 
 For uploading files a connection to Amazon S3 is mandatory. You can find the configuration for Amazon S3 in "config/config.yml". Please add here your "aws_s3_access_key_id" and your "aws_s3_secret_access_key" and don't commit it back! With that all file uploads will work fine.
-You can use the fake-s3 GEM to simulate S3 offline: <https://github.com/jubos/fake-s3>
-You can start the fake-s3 service like this: fakes3 -r /tmp -p 4567
+
+You can use the fake-s3 GEM to simulate S3 offline: <https://github.com/jubos/fake-s3>.
+You can start the fake-s3 service like this: `fakes3 -r /tmp -p 4567`
 
 ## Memcache
 
@@ -45,7 +46,12 @@ VersionEye is using many 3rd part services in the Internet. Services like GitHub
 
 ## Tests
 
-For tests we are using RSpec: <http://rspec.info/>
-We are using it for all kind of tests! Even for HTML UI Tests.
-You can run all tests with the "rspec" command.
-Before you run the tests you should switch to test environment! You can do that by exporting the RAISL_ENV like this: "export RAILS_ENV=test".
+For tests we are using
+
+* RSpec: <http://rspec.info/>
+* Capybara: <https://github.com/jnicklas/capybara>
+* Selenium-Webdriver: <http://www.versioneye.com/package/selenium-webdriver>
+
+We are using RSpec for all kind of tests! Even for acceptance Tests. In the past we used RSpec togehter with webrat. But because webrat is not maintained anymore we moved to capybara. All new acceptance tests have to be written in capybara and placed in `spec/features`. If JavaScript is required for the test we use selenium as webdriver for capybara.
+
+You can run all tests with the "rspec" command. Before you run the tests you should switch to test environment! You can do that by exporting the RAISL_ENV like this: `export RAILS_ENV=test`.
