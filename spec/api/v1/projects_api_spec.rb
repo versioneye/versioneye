@@ -3,7 +3,6 @@ require 'rest_client'
 
 describe VersionEye::ProjectsApi do
   before(:each) do
-    @host = "http://127.0.0.1:3000"
     @root_uri = "/api/v1"
     @project_uri = "/api/v1/projects"
     @test_user = UserFactory.create_new 90
@@ -23,18 +22,18 @@ describe VersionEye::ProjectsApi do
     end
 
     it "return 401, when user tries to get project info" do
-      get @project_uri + '/12abcdef12343434.json'
-      response.status.should == 401
+      get "#{@project_uri}/12abcdef12343434.json", nil, "HTTPS" => "on"
+      response.status.should eq(401)
     end
 
     it "returns 401, when user tries to upload file" do
-      post @project_uri, {upload: @test_file, multipart:true, send_file: true}
-      response.status.should == 401
+      post @project_uri, {upload: @test_file, multipart:true, send_file: true}, "HTTPS" => "on"
+      response.status.should eq(401)
     end
 
     it "returns 401, when user tries to delete file" do
-      delete @project_uri + '/1223335454545324.json', :upload => "123456"
-      response.status.should == 401
+      delete @project_uri + '/1223335454545324.json', :upload => "123456", "HTTPS" => "on"
+      response.status.should eq(401)
     end
 
   end
@@ -50,18 +49,18 @@ describe VersionEye::ProjectsApi do
     end
 
     it "fails, when upload-file is missing" do
-      post @project_uri, :api_key => @user_api.api_key
-      response.status.should == 403
+      response = post @project_uri, {:api_key => @user_api.api_key}, "HTTPS" => "on"
+      response.status.should eq(403)
     end
 
     it "returns 201 and project info, when upload was successfully" do
-      post @project_uri, {
+      response = post @project_uri, {
         upload: @test_file,
-        api_key: @user_api.api_key, 
+        api_key: @user_api.api_key,
         send_file: true,
         multipart: true
-      }
-      response.status.should == 201
+      }, "HTTPS" => "on"
+      response.status.should eq(201)
     end
   end
 end

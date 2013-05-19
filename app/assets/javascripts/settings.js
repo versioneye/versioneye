@@ -20,7 +20,6 @@ function render_invoice_row(selector, invoice){
 }
 
 function render_payment_history(selector, data){
-
   if (data.length == 0) {
     console.debug("Rendering empty invoices");
     render_empty_invoice(selector, {});
@@ -29,7 +28,9 @@ function render_payment_history(selector, data){
     var row_selector = "#invoice_table > tbody";
     console.debug("Rendering table");
     render_invoice_table(selector, {});
-    _.each(data, function(invoice){render_invoice_row(row_selector, invoice)});
+    _.each(data, function(invoice){
+      render_invoice_row(row_selector, invoice)
+    } );
   }
 }
 
@@ -39,7 +40,7 @@ function render_fail_invoice(selector, data){
 }
 
 jQuery(document).ready(function(){
-  
+
   if(jQuery("#payment_history").length){
     console.debug("Going to render payment history...");
     _.templateSettings = {
@@ -47,10 +48,10 @@ jQuery(document).ready(function(){
       evaluate: /\{\{(.+?)\}\}/g
     };
     var content_selector = "#payment_history";
-    render_loading_invoice(content_selector); 
+    render_loading_invoice(content_selector);
 
     var jqxhr = jQuery.getJSON("/settings/payments.json");
-    
+
     //-- response handlers
     jqxhr.done(function(data, status, jqxhr){
       console.debug("Got invoices: " + status);

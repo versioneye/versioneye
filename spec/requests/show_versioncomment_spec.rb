@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "show_versioncomment" do
 
-  it "show detail page for a versioncomment" do 
+  it "show detail page for a versioncomment" do
   	product = Product.new
   	product.versions = Array.new
     product.name = "jsonbuo"
@@ -20,7 +20,7 @@ describe "show_versioncomment" do
     user.save
 
     comment = Versioncomment.new
-    comment.user_id = user.id 
+    comment.user_id = user.id
     comment.product_key = product.prod_key
     comment.prod_name = product.name
     comment.language = product.language
@@ -29,7 +29,7 @@ describe "show_versioncomment" do
 
     get "/vc/#{comment.id}"
     assert_response :success
-    
+
     user.remove
     comment.remove
     product.remove
