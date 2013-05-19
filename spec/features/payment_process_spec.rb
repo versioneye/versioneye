@@ -80,7 +80,9 @@ describe "Payment Process" do
       visit settings_payments_path
       page.should_not have_content('Iniatilizing frontend app..')
       page.all(:css, "#payment_history")
-      page.all('a', :text => 'View receipt')
+      within('#payment_history') do
+        page.all('a', :text => 'View receipt')
+      end
     end
   end
 
