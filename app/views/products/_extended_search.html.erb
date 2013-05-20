@@ -26,14 +26,14 @@
 				<% @langs = @lang.split(",") %>
 				<% @languages.each do |language| %>
 					<div class = "controls">
-						<label for="<%= language %>" class = "checkbox" style = "color: #669acb;">
+						<label for="<%= language %>" id="label_<%= language %>__" class = "checkbox" style = "color: #669acb;">
 							<input id="<%= language %>" type="checkbox" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.any?{ |s| s.casecmp(language)==0 }  %> />
 							<%= language %>
 						</label>
 					</div>
 				<% end %>
 			<% end %>
-			
+
 			<div class="control-group" style = "height: 30px; padding: 10px 0px 20px 0;">
 				<div >
 					<button type="submit" class="btn2 btn-medium" >Search</button>
