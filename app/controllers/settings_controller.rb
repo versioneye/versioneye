@@ -39,10 +39,10 @@ class SettingsController < ApplicationController
         @invoices = []
         unless @customer_invoices.nil?
           @customer_invoices.each do |invoice|
-            invoice[:date_s] = Time.at( invoice.date ).to_date
+            invoice[:date_s]    = Time.at( invoice.date ).to_date
             invoice[:plan_name] = invoice["lines"]["subscriptions"].first[:plan][:name]
-            invoice[:amount_s] = "#{sprintf("%.2f", (invoice.total / 100) )} #{invoice.currency.upcase}"
-            invoice[:link_to] = settings_receipt_path(invoice_id: invoice[:id])
+            invoice[:amount_s]  = "#{sprintf("%.2f", (invoice.total / 100) )} #{invoice.currency.upcase}"
+            invoice[:link_to]   = settings_receipt_path(invoice_id: invoice[:id])
             @invoices << invoice
           end
         end
