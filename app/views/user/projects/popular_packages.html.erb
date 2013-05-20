@@ -1,0 +1,30 @@
+<% title "Most Used Libraries" %>
+
+<div class="span3" >
+  <%= render "/user/projects/helpers/navi" %>
+</div>
+
+<div class="span8">
+
+  <div class="row content_header_def" >
+    Most used packages over all your projects
+  </div>
+  <div class="span8 content" >
+    <div id="projects" >
+      <% @libs = @libs.sort_by {|item, project| -project.length} %>
+      <% @libs.each do |lib_name, projects| %>
+        <div class="row search-item" >
+          <h5 class="dep_header"><%= lib_name %> (<%= projects.length %>)</h5>
+          <p>
+            <% projects.each do |project| %>
+              <a href = "<%= user_project_path(project)  %>" style ="text-decoration:none;" >
+                <span class = "label label-success"><%= project.name %></span>
+              </a>
+            <% end %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>
