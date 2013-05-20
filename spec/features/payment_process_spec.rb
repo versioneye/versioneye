@@ -18,8 +18,8 @@ describe "Payment Process" do
   end
 
   after :all do
-    User.destroy_all
-    Plan.destroy_all
+    # User.destroy_all
+    # Plan.destroy_all
   end
 
   describe "Empty Payment History", :js => true do
@@ -81,7 +81,9 @@ describe "Payment Process" do
       page.should_not have_content('Iniatilizing frontend app..')
       page.all(:css, "#payment_history")
       within('#payment_history') do
-        page.all('a', :text => 'View receipt')
+        page.all('a',  :text => 'View receipt')
+        page.all('td', :text => 'Business Small')
+        page.all('td', :text => '7.00 USD')
       end
     end
   end
