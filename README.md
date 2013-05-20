@@ -19,7 +19,7 @@ You will find downloads and tutorials to MongoDB here: <http://www.mongodb.org/>
 
 ## ElasticSearch
 
-We are using ElasticSearch for better search results. You can find downloads and tutorials to ElasticSearch here: <http://www.elasticsearch.org/>. The connection to the ElasticSearch Server is configured in "config/config.yml". If you start the rails console you can re-index the whole MongoDB with "Product.reindex_all".
+We are using ElasticSearch for better search results. You can find downloads and tutorials to ElasticSearch here: <http://www.elasticsearch.org/>. The connection to the ElasticSearch Server is configured in "config/config.yml". If you start the rails console you can re-index the whole MongoDB with "ProductElastic.reindex_all".
 
 You can also use the application without ElasticSearch, if that is to much trouble for you. In the class ProductsController in the Action "search", "Product.search(…)" is called. Just comment it out and use instead of theat "Product.find_by(…)". That will use MongoDB for search results.
 If you still have trouble comment out the code in class Product which is responsible for ElasticSearch. The code which is responsible for the ElasticSearch is marked with "### ELASTIC SEARCH START ###" and "### ELASTIC SEARCH END ###".
