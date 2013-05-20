@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe "registration" do
 
+  before :all do
+    User.destroy_all
+    Project.destroy_all
+  end
+
   it "signs_up successfully" do
     get "/signup", nil, "HTTPS" => "on"
     assert_response :success
@@ -39,9 +44,9 @@ describe "registration" do
 
     post "/sessions", {:session => {:email => "test@test.de", :password => "test123"}}, "HTTPS" => "on"
     assert_response 302
-    response.should redirect_to("/user/projects")
+    response.should redirect_to( new_user_project_path )
 
-    get "/user/projects"
+    get new_user_project_path
     assert_response :success
   end
 

@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe VersionEye::ProductsApi do
+
+  before :all do
+    User.destroy_all
+    Product.destroy_all
+    ProductElastic.reset
+  end
+
   before(:each) do
     @product_uri = "/api/v1/products"
   end
@@ -19,11 +26,11 @@ describe VersionEye::ProductsApi do
     end
 
     it "returns same product" do
-      prod_key_safe = encode_prod_key(@test_product.prod_key)
+      prod_key_safe = encode_prod_key( @test_product.prod_key )
       package_url =  "#{@product_uri}/#{prod_key_safe}.json"
       get package_url
       response.status.should eql(200)
-      
+
       response_data = JSON.parse(response.body)
       response_data["name"].should eql(@test_product.name)
     end
@@ -34,8 +41,9 @@ describe VersionEye::ProductsApi do
     before(:each) do
       @test_products = []
       55.times {|i| @test_products << ProductFactory.create_new(i)}
-      @search_term = @test_products[0].name.chop.chop
-   end
+      @search_term = "#{@test_products[0].name.chop.chop}*"
+      ProductElastic.index_newest
+    end
 
     after(:each) do
       @test_products.each {|item| item.delete}
@@ -80,7 +88,7 @@ describe VersionEye::ProductsApi do
     it "returns unauthorized error, when lulsec tries to get follow status" do
       get "#{@product_uri}/#{@safe_prod_key}/follow"
       response.status.should == 401
-    end 
+    end
 
     it "returns unauthorized error, when lulsec tries to follow package" do
       post "#{@product_uri}/#{@safe_prod_key}/follow"
@@ -95,74 +103,75 @@ describe VersionEye::ProductsApi do
   end
 
   describe "authorized user tries to use follow" do
-      before(:each) do
-        @test_product = ProductFactory.create_new 102
-        @test_user = UserFactory.create_new
-        @user_api = ApiFactory.create_new @test_user
-        @safe_prod_key = encode_prod_key(@test_product.prod_key)
+    before(:each) do
+      @test_product = ProductFactory.create_new 102
+      @test_user = UserFactory.create_new
+      @user_api = ApiFactory.create_new @test_user
+      @safe_prod_key = encode_prod_key(@test_product.prod_key)
 
-        #initialize new session
-        post '/api/v1/sessions', :api_key => @user_api.api_key
-      end
+      #initialize new session
+      post '/api/v1/sessions', :api_key => @user_api.api_key
+    end
 
-      after(:each) do
-        @test_product.remove
-        @user_api.remove
-        @test_user.remove
-      end
+    after(:each) do
+      @test_product.remove
+      @user_api.remove
+      @test_user.remove
+    end
 
-      it "checking state of follow should be successful" do
-        get "#{@product_uri}/#{@safe_prod_key}/follow"
-        response.status.should == 200
-        response_data =  JSON.parse(response.body)
-        response_data["prod_key"].should eql(@test_product.prod_key)
-        response_data["follows"].should be_false
-      end
+    it "checking state of follow should be successful" do
+      get "#{@product_uri}/#{@safe_prod_key}/follow"
+      response.status.should == 200
+      response_data =  JSON.parse(response.body)
+      response_data["prod_key"].should eql(@test_product.prod_key)
+      response_data["follows"].should be_false
+    end
 
-      it "returns success if authorized user follows specific package" do
-        post "#{@product_uri}/#{@safe_prod_key}/follow"
-        response.status.should == 201
-        response_data =  JSON.parse(response.body)
-        response_data["prod_key"].should eql(@test_product.prod_key)
-        response_data["follows"].should be_true 
-      end
+    it "returns success if authorized user follows specific package" do
+      post "#{@product_uri}/#{@safe_prod_key}/follow"
+      response.status.should == 201
+      response_data =  JSON.parse(response.body)
+      response_data["prod_key"].should eql(@test_product.prod_key)
+      response_data["follows"].should be_true
+    end
 
-      it "returns proper response if authorized unfollows specific package" do
-        delete "#{@product_uri}/#{@safe_prod_key}/follow"
-        response.status.should == 200
+    it "returns proper response if authorized unfollows specific package" do
+      delete "#{@product_uri}/#{@safe_prod_key}/follow"
+      response.status.should == 200
 
-        get "#{@product_uri}/#{@safe_prod_key}/follow"
-        response_data = JSON.parse(response.body)
-        response_data["follows"].should be_false
-      end
+      get "#{@product_uri}/#{@safe_prod_key}/follow"
+      response_data = JSON.parse(response.body)
+      response_data["follows"].should be_false
+    end
   end
 
   describe "accessing follow with instantaneous authorization" do
-      before(:each) do
-        @test_user = UserFactory.create_new 10
-        @test_product = ProductFactory.create_new 103
-        @user_api = ApiFactory.create_new @test_user
-        @safe_prod_key = encode_prod_key(@test_product.prod_key)
-     end
+    before(:each) do
+      @test_user = UserFactory.create_new 10
+      @test_product = ProductFactory.create_new 103
+      @user_api = ApiFactory.create_new @test_user
+      @safe_prod_key = encode_prod_key(@test_product.prod_key)
+   end
 
-      after(:each) do
-        @test_user.remove
-        @test_product.remove
-        @user_api.remove
+    after(:each) do
+      @test_user.remove
+      @test_product.remove
+      @user_api.remove
 
-        #always logout & clear session
-        delete "/api/v1/sessions"
-      end
+      #always logout & clear session
+      delete "/api/v1/sessions"
+    end
 
-      it "fails when user skips authorization key" do
-        get "#{@product_uri}/#{@safe_prod_key}/follow"
-        response.status.should == 401
-      end
+    it "fails when user skips authorization key" do
+      get "#{@product_uri}/#{@safe_prod_key}/follow"
+      response.status.should == 401
+    end
 
-      it "returns success if user, who's not authorized yet, tries to check follow" do
-        get "#{@product_uri}/#{@safe_prod_key}/follow", :api_key => @user_api.api_key
-        response.status.should == 200
+    it "returns success if user, who's not authorized yet, tries to check follow" do
+      get "#{@product_uri}/#{@safe_prod_key}/follow", :api_key => @user_api.api_key
+      response.status.should == 200
 
-      end
+    end
   end
+
 end

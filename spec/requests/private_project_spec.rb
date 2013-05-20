@@ -11,7 +11,7 @@ describe "Private Project" do
 
     parser = ComposerParser.new
     @project = parser.parse("https://s3.amazonaws.com/veye_test_env/composer.json")
-    @project.user_id = @user1._id.to_s
+    @project.user = @user1
     @project.name = "composer.json"
     @project.project_key = "composer_hutzi_1"
     @project.save
@@ -19,9 +19,8 @@ describe "Private Project" do
   end
 
   after(:each) do
-    @user1.delete
-    @user2.delete
-    @project.delete
+    User.destroy_all
+    Project.destroy_all
   end
 
   it "ensure that private user projects stay private" do
@@ -30,7 +29,7 @@ describe "Private Project" do
 
     post "/sessions", {:session => {:email => @user1.email, :password => "12345"}}, "HTTPS" => "on"
     assert_response 302
-    response.should redirect_to("/user/projects")
+    response.should redirect_to( user_projects_path )
 
     get "/user/projects/#{@project._id.to_s}"
     assert_response :success
@@ -44,11 +43,11 @@ describe "Private Project" do
 
     post "/sessions", {:session => {:email => @user2.email, :password => "12345"}}, "HTTPS" => "on"
     assert_response 302
-    response.should redirect_to("/user/projects")
+    response.should redirect_to( new_user_project_path )
 
     get "/user/projects/#{@project._id.to_s}"
     assert_response 302
-    response.should redirect_to("/")
+    response.should redirect_to( root_path )
 
     @project.public = true
     @project.save

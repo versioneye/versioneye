@@ -11,7 +11,7 @@ describe "SignUp with GitHub" do
   end
 
   it "signup a new user with GitHub" do
-    get "/signup", nil, "HTTPS" => "on"
+    get signup_path, nil, "HTTPS" => "on"
     assert_response :success
     assert_tag :tag => "span", :attributes => { :class => "btn_github login" }
 
@@ -40,7 +40,7 @@ describe "SignUp with GitHub" do
 
     get "/auth/github/callback?code=123"
     assert_response 302
-    response.should redirect_to("/user/projects")
+    response.should redirect_to( user_projects_path )
 
     user_db = User.find_by_email( user.email )
     user_db.github_token.should eql("token_123")
@@ -54,7 +54,7 @@ describe "SignUp with GitHub" do
 
     get "/auth/github/callback?code=123"
     assert_response 302
-    response.should redirect_to("/user/projects")
+    response.should redirect_to( user_projects_path )
 
     user_db = User.find_by_email( user.email )
     user_db.github_token.should eql("token_123")
@@ -70,7 +70,7 @@ describe "SignUp with GitHub" do
 
     post "/sessions", {:session => {:email => user.email, :password => "12345" }}, "HTTPS" => "on"
     assert_response 302
-    response.should redirect_to("/user/projects")
+    response.should redirect_to( new_user_project_path )
 
     FakeWeb.register_uri(:get, "https://github.com/login/oauth/access_token?client_id=#{Settings.github_client_id}&client_secret=#{Settings.github_client_secret}&code=123", :body => "token=token_123")
     FakeWeb.register_uri(:get, "https://api.github.com/user?access_token=token_123", :body => "{\"id\": 1585858, \"email\": \"#{user.email}\"}")
