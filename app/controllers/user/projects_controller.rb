@@ -176,6 +176,36 @@ class User::ProjectsController < ApplicationController
     flash[:error] = "An error occured. Maybe you have to reconnect your VersionEye Account with your GitHub Account."
     redirect_to user_projects_path
   end
+  
+  #TODO: add organizations
+  def github_repos
+    repos = []
+    github_repos = Github.user_repos(current_user.github_token)
+    imported_repos = Project.by_user(current_user).by_source(Project::A_SOURCE_GITHUB)
+    imported_repo_names  = imported_repos.map(&:name).to_set
+    supported_langs = Github.supported_languages
+    github_repos.each do |repo|
+      repo["language"] = "#{repo["language"]}".downcase.strip
+      repo[:supported] = supported_langs.include? repo["language"]
+      repo[:imported] = imported_repo_names.include? repo["full_name"]
+      if repo[:imported]
+        project_id = imported_repos.where(name: repo["full_name"]).first.id 
+        repo[:project_url] = url_for(action: "show", id: project_id)
+        repo[:project_id] = project_id
+      else
+        repo[:project_url] = nil
+        repo[:project_id] = nil
+      end
+      filtered_repo = repo.slice("id", :project_id, "full_name", "private", 
+                                 :project_url, "html_url", "description", 
+                                 "fork", "created_at", "updated_at",
+                                 "homepage", "size", "language", 
+                                 :supported, :imported)
+      repos << filtered_repo
+    end
+    repos.sort_by! {|repo| "%s" % repo["language"].to_s}
+    render json: repos.to_json 
+  end
 
   def get_popular
     @project = Project.new

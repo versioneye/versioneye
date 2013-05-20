@@ -9,11 +9,8 @@ jQuery(document).ready(function(){
     jQuery( "#tabs" ).tabs();
   }
 
-  if(jQuery('.github_switch').length > 0){
-    jQuery('.github_switch').on('switch-change', function(e, data){
-      toggleGitHubProject(data.el, data.value);
-    });
-    console.log("Github switches are registered.");
+  if(jQuery('#github-repos').length){
+    show_github_repos();
   }
 
 }); // end-of-ready
@@ -56,45 +53,33 @@ function addGitHubProjects(data){
   loadingbarArea.style.display = "none";
 }
 
-//TODO: finish it
-function make_home_label(data){
-  var repo_url = "/user/projects/" + data["project_id"];
-  var label = ['<a href="' + repo_url + '">',
-                '<span class = "label label-success repo-homepage ">',
-                  '<i class = "icon icon-home"></i>',
-                  "Project's page",
-                "</span></a>"
-              ].join(' ');
+function show_repo_notification(selector, style, message){
+  var notification_template = _.template(jQuery("#github-notification-template").html());
 
- return label;
+  jQuery(selector).find(".repo-notification").html(
+    notification_template({
+      classes: style, 
+      message: message
+    })
+  ).delay(10000).fadeOut(1000);
 }
 
-function make_notification_bar(style, message){
- var notification_bar = [
-   '<div class="alert ' + style + '">',
-   '<button type="button" class="close" data-dismiss="alert">&times;</button>',
-   message,
-   '</div>'
- ].join(' ');
- return notification_bar;
-};
-
-function show_repo_notification(repo_id, style, message){
-  jQuery("#notification-bar-" + repo_id).html(
-    make_notification_bar(style, message)
-  ).delay(5000).fadeOut(2000);
-}
-
-function show_repo_loader(repo_id){
-  jQuery("#notification-bar-" + repo_id).html(
-    '<img src="/assets/loadingbar.gif" style="width: 64px; height: 64px; margin: 0 auto; left: 45%; right: 45%; position: relative;" />'
+function show_repo_loader(selector, msg){
+  var loader_template = _.template(jQuery("#github-loading-template").html());
+  jQuery(selector).find(".repo-notification").html(
+    loader_template({classes: "alert alert-info", message: msg})
   ).fadeIn(800);
-
 }
 
 function addGitHubProject(selected_el, data){
   console.debug("Going to add new Github project: ", data.githubFullname);
   var selected_item = jQuery(selected_el);
+  var selected_repo_el = "#github-repo-" + data.githubId;
+  var repo_label_template = _.template(jQuery("#github-repo-label-template").html());
+  var url_template = _.template('<a href="{{= url}}" >{{= content }}</a>');
+ 
+  show_repo_loader(selected_repo_el, "Importing data from Github..");
+
   var jqxhr = jQuery.ajax({
     type: "POST",
     url: "/user/projects",
@@ -103,28 +88,37 @@ function addGitHubProject(selected_el, data){
   });
 
   selected_item.parents('.switch').bootstrapSwitch('setActive', false);
-  show_repo_loader(data.githubId);
-  // -- response handlers
+   // -- response handlers
   jqxhr.done(function(response, status, xhrReq){
     selected_item.parents('.switch').bootstrapSwitch('setActive', true);
 
     if(response.success){
-      var home_label = make_home_label(response.data);
+      var home_label = url_template({
+        url: "/user/projects/" + response.data["project_id"], 
+        content: repo_label_template({
+          classes: "label label-success",
+          content: '<i class= "icon-white icon-home"></i> Project home'
+        })
+      });
       selected_item.data('githubProjectId', response.data["project_id"]);
-      jQuery("#repo-labels-" + data.githubId).append(home_label);
-      show_repo_notification(data.githubId, "alert-success", "Project is added.");
+      jQuery(selected_repo_el).find(".repo-labels").append(home_label);
+      show_repo_notification(selected_repo_el, 
+                             "alert alert-success", 
+                             "Project is added successfully. You can visit project's page now.");
     } else {
-      show_repo_notification(data.githubId, "alert-warning",
-                             "Fail: " + response.msg + "with status " + status);
+      show_repo_notification(selected_repo_el, 
+                             "alert alert-warning",
+                             "Fail: " + response.msg);
       selected_item.parents('.switch').bootstrapSwitch('toggleState');
-
     }
   });
 
   jqxhr.fail(function(response, status, xhrReq){
     selected_item.parents('.switch').bootstrapSwitch('setActive', true);
     selected_item.parents('.switch').bootstrapSwitch('setState', false);
-    show_repo_notification(data.githubId, "alert-warning", "Backend failure: " + status);
+    show_repo_notification(selected_repo_el, 
+                           "alert alert-warning", 
+                           "Backend failure: " + status);
   });
 
 }
@@ -132,24 +126,32 @@ function addGitHubProject(selected_el, data){
 function removeGitHubProject(selected_el, data){
   console.debug("Going to remove GitHub project: ", data.githubFullname);
   var selected_item = jQuery(selected_el);
+  var selected_repo_el = "#github-repo-" + data.githubId;
+
   if(data.githubProjectId.length > 1){
     var query_url = "/user/projects/" + data.githubProjectId + ".json";
     var jqxhr = jQuery.ajax({url: query_url, type: "DELETE"});
   } else {
-    show_repo_notification(data.githubId, "alert-warning", "Cant remove because we didnt get correct project id after importing from github.");
-    return 0;
+    show_repo_notification(selected_repo_el, 
+                           "alert alert-warning", 
+                           "Cant remove because we didnt get correct project id after importing from github.");
+    return 0; //stop executing
   }
 
   selected_item.parents('.switch').bootstrapSwitch('setActive', false);
-  show_repo_loader(data.githubId);
+  show_repo_loader(selected_repo_el, "");
   //-- response handlers
   jqxhr.done(function(response, status, xhrReq){
     selected_item.parents('.switch').bootstrapSwitch('setActive', true);
     if(response.success){
-      jQuery("#repo-labels-" + data.githubId).find(".repo-homepage").remove();
-      show_repo_notification(data.githubId, "alert-success", "Project removed");
+      jQuery(selected_repo_el).find(".repo-homepage").remove();
+      show_repo_notification(selected_repo_el, 
+                             "alert alert-success", 
+                             "Project is now removed.");
     } else {
-      show_repo_notification(data.githubId, "alert-error", "Fail: " + response.msg);
+      show_repo_notification(selected_repo_el, 
+                             "alert-error", 
+                             "Fail: " + response.msg);
       selected_item.parents('.switch').bootstrapSwitch('toggleState');
    }
 
@@ -158,7 +160,9 @@ function removeGitHubProject(selected_el, data){
   jqxhr.fail(function(response, status, xhrReq){
     selected_item.parents('.switch').bootstrapSwitch('setActive', true);
     selected_item.parents('.switch').bootstrapSwitch('toggleState');
-    show_repo_notification(data.githubId, "alert-warning", "Failure: " + status);
+    show_repo_notification(selected_repo_el, 
+                           "alert alert-warning", 
+                           "Failure: Cant remove project - backend failure.");
   });
 }
 
@@ -170,5 +174,110 @@ function toggleGitHubProject(selected_el, toggle_value){
   } else {
     removeGitHubProject(selected_el, data);
   }
+}
+
+// -- functions to render views 
+
+function render_github_loading(selector){
+  var loading_template = _.template(jQuery("#github-loading-template").html());
+  jQuery(selector).html(loading_template({
+    classes: "alert alert-info",
+    message: "Please wait - we are importing github repostiories."
+  }));
+}
+
+function make_github_repo_labels(repo){
+  var repo_label_template = _.template(jQuery("#github-repo-label-template").html());
+  var url_template = _.template('<a href="{{= url}}" >{{= content }}</a>');
+  var labels = "";
+  
+  labels += repo_label_template({
+    classes: "repo-type label label-warning", 
+    content: _.template("<strong>{{= type}}</strong>", 
+                        {type: (repo.private) ? "private": "public"})
+  });
+ 
+  labels += repo_label_template({
+    classes: "repo-language label label-info",
+    content: "" + repo.language
+  });
+  var timeago = moment(repo.updated_at).fromNow();
+  labels += repo_label_template({
+    classes: "repo-updated label", 
+    content: "<strong>updated:&nbsp;</strong>" + timeago
+  });
+  if (repo.project_url){
+    labels += url_template({
+      url: repo.project_url, 
+      content: repo_label_template({
+        classes: "repo-homepage label label-info", 
+        content: '<i class= "icon-white icon-home"></i>&nbsp;Project page ' 
+      })
+    });
+  }
+  return labels
+};
+
+function render_github_repo_row(selector, repo){
+  var table_row_template = _.template(jQuery("#github-table-row-template").html());
+  var repo_info_template = _.template(jQuery("#github-repo-info-template").html());
+  var repo_switch_template = _.template(jQuery("#github-repo-switch-template").html());
+  
+  var info_content = repo_info_template({
+      repo: repo,
+      labels: make_github_repo_labels(repo),
+      github_switch: repo_switch_template({repo: repo})
+  });
+  var row_content = table_row_template({content: info_content});
+
+  jQuery(selector).append(row_content);
+}
+
+function render_github_repo_table(selector, repos){
+  var table_template = _.template(jQuery("#github-table-template").html());
+  var table_selector = "#github-repos-table > tbody";
+  jQuery(selector).html(table_template({}));
+  //render rows
+  _.each(repos, function(repo, index, coll){
+    render_github_repo_row(table_selector, repo);
+  });
+
+  //register events
+  jQuery(".switch").bootstrapSwitch();
+  jQuery('.github_switch').on('switch-change', function(e, data){
+    toggleGitHubProject(data.el, data.value);
+  });
+  console.log("Github switches are registered.");
+
+}
+
+function render_github_fail(selector, response){
+  var notification_template = _.template(jQuery("#github-notification-template").html());
+  jQuery(selector).html(notification_template({
+    classes: "alert alert-warning",
+    message: "<strong> Error! </strong> Cant read github repos: your account is not connected or Github is taking nap."
+  }));
+}
+
+// -- main function that iniatialise view renderings
+function show_github_repos(){
+  console.debug("Going to render githup repos ...");
+  _.templateSettings = {
+      interpolate: /\{\{\=(.+?)\}\}/g,
+      evaluate: /\{\{(.+?)\}\}/g
+  };
+  var content_selector = "#github-repos";
+
+  render_github_loading(content_selector);
+  var jqxhr = jQuery.getJSON("/user/projects/github_repos");
+  //-- response handlers
+  jqxhr.done(function(data, status, jqxhr){
+    console.debug("Got github repos" + status);
+    render_github_repo_table(content_selector, data);
+  });
+  jqxhr.fail(function(data, status, jqxhr){
+    console.debug("Failed to read github repos" + status);
+    render_github_fail(content_selector, data);
+  });
 
 }
