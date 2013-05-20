@@ -23,7 +23,6 @@ Versioneye::Application.routes.draw do
   resources :sessions, :only => [:new, :create, :destroy]
   get    '/signin',                :to => 'sessions#new'
   get    '/signout',               :to => 'sessions#destroy'
-  post   '/androidregistrationid', :to => 'sessions#android_registrationid'
 
 
   get   '/users/christian.weyand',                    :to => redirect('/users/christianweyand')
