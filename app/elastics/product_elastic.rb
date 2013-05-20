@@ -7,7 +7,7 @@ class ProductElastic
           :properties => {
             :_id                => { :type => 'string', :analyzer => 'keyword', :include_in_all => false },
             :name => { :type => 'multi_field', :fields => {
-                :name => {:type => 'string', :analyzer => 'snowball', :boost => 100}, 
+                :name => {:type => 'string', :analyzer => 'snowball', :boost => 100},
                 :untouched => {:type => 'string', :analyzer => 'keyword' }
               } },
             :description        => { :type => 'string', :analyzer => 'snowball' },
@@ -31,15 +31,15 @@ class ProductElastic
   def self.index_all
     # count = Product.count()
     # bulk = 100
-    # max = count / bulk 
-    # max += 1 
+    # max = count / bulk
+    # max += 1
     # (0..max).each do |i|
     #   skip = i * bulk
     #   products = Product.all().skip(skip).limit(bulk)
     #   Tire.index( Settings.elasticsearch_product_index ).bulk_store products.to_a
     # end
 
-    Product.all.each do |product|  
+    Product.all.each do |product|
       ProductElastic.index product
     end
     self.refresh
@@ -48,10 +48,10 @@ class ProductElastic
   def self.index( product )
     Rails.logger.info "index #{product.name}"
     Tire.index Settings.elasticsearch_product_index do
-      store product.to_indexed_json 
+      store product.to_indexed_json
       product.update_attribute(:reindex, false)
     end
-  rescue => e 
+  rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
   end
@@ -76,47 +76,47 @@ class ProductElastic
     self.refresh
   end
 
-  # langs: need to be an Array ! 
-  # page_count: has to start by 1. Not by 0! 
+  # langs: need to be an Array !
+  # page_count: has to start by 1. Not by 0!
   #
   def self.search(q, group_id = nil, langs = Array.new, page_count = 1)
     if (q.nil? || q.empty?) && (group_id.nil? || group_id.empty?)
       raise ArgumentError, "query and group_id are both empty! This is not allowed"
     end
 
-    page_count = 1 if page_count.nil? || page_count.to_i < 1 
+    page_count = 1 if page_count.nil? || page_count.to_i < 1
     results_per_page = 30
     from = results_per_page * (page_count.to_i - 1)
-    
+
     group_id = "" if !group_id
     q = "*" if !q || q.empty?
 
-    s = Tire.search( Settings.elasticsearch_product_index, 
-                      load: true, 
+    s = Tire.search( Settings.elasticsearch_product_index,
+                      load: true,
                       from: from,
-                      per_page: results_per_page, 
+                      per_page: results_per_page,
                       size: results_per_page) do |search|
 
       search.sort { by [{:_score => 'desc'}] }
       # search.sort { by [{'name.untouched' => 'asc'}] }
-      
+
       if langs and !langs.empty?
         # langs_dwoncase = Product.downcase_array langs
         search.filter :terms, :language => langs
       end
-      
-      search.query do |query|  
+
+      search.query do |query|
         if q != '*' and !group_id.empty?
           # when user search by name and group_id
-          query.boolean do 
+          query.boolean do
             must {string 'name:' + q}
-            must {string 'group_id:' + group_id + "*"}                                                     
-          end 
-        elsif q != '*' and group_id.empty?          
+            must {string 'group_id:' + group_id + "*"}
+          end
+        elsif q != '*' and group_id.empty?
           query.string "name:" + q
         elsif q == '*' and !group_id.empty?
-          query.string "group_id:" + group_id + "*"  
-        end 
+          query.string "group_id:" + group_id + "*"
+        end
       end
 
     end
@@ -128,18 +128,18 @@ class ProductElastic
     s = Tire.search( Settings.elasticsearch_product_index, load: true) do |search|
       response = search.query do |query|
         query.boolean do
-          must {string name, default_operator: "AND" }           
-        end 
+          must {string name, default_operator: "AND" }
+        end
       end
       # filter result by hand
       result = []
-      response.results.each do |item|        
+      response.results.each do |item|
         if item.name.eql? name then
             result << item
         end
       end
-      return result 
+      return result
     end
-  end 
+  end
 
 end

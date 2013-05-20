@@ -8,16 +8,17 @@
 <div class="span3">
 
   <%= render "extended_search" %>
-
   <%= render "/shared/github_ad" %>
 
 </div>
-<div class="span8 left_border" >
-  <div class="row content_header" >
+<div class="span8" >
+  <div class="row content_header_def" >
     <% if @products && !@products.empty? %>
       <em> `<%= params[:q] %>`</em> has returned <%= @products.total_entries %> results
     <% end %>
   </div>
+  <div class="content">
   <%= render :partial => "products/show_search_results",
              :locals => { :products => @products, :paginate => true, :prefix => "search", :name_limit => 70 }  %>
+  </div>
 </div>

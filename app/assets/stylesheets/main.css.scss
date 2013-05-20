@@ -8,9 +8,9 @@
   font-family: 'Droid Sans';
   font-style: normal;
   font-weight: 400;
-  src: local('Droid Sans'), local('DroidSans'), 
-    url('/fonts/DroidSans.eot?#iefix') format('embedded-opentype'), 
-    url('/fonts/DroidSans.woff') format('woff'), 
+  src: local('Droid Sans'), local('DroidSans'),
+    url('/fonts/DroidSans.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/DroidSans.woff') format('woff'),
     url('/fonts/DroidSans.ttf') format('truetype');
 }
 
@@ -18,9 +18,9 @@
   font-family: 'Droid Serif';
   font-style: normal;
   font-weight: 400;
-  src: local('Droid Serif'), local('DroidSerif'), 
-    url('/fonts/DroidSerif.woff') format('woff'), 
-    url('/fonts/DroidSerif.ttf') format('truetype'), 
+  src: local('Droid Serif'), local('DroidSerif'),
+    url('/fonts/DroidSerif.woff') format('woff'),
+    url('/fonts/DroidSerif.ttf') format('truetype'),
     url('/fonts/DroidSerif.svg') format('svg');
 }
 
@@ -207,15 +207,9 @@ section > ul li {
 /* Used on package detail pages */
 div.content {
   padding: 30px 0px 30px 30px;
-  border-left: 1px solid #ddd; 
-  border-top: 1px solid #ddd; 
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
   width: 615px;
-}
-
-.content_header{
-  padding-left: 30px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #DDD;
 }
 
 .content_header_def{
@@ -223,11 +217,6 @@ div.content {
   padding-bottom: 15px;
   border-left: 1px solid #DDD;
 }
-
-.left_border{
-  border-left: 1px solid #DDD;  
-}
-
 
 /* -----------------------
   Separators (hr)
@@ -363,7 +352,7 @@ div.content {
     font-weight: 200;
     margin-bottom: 5px;
     &.casual {
-      color: $text_casual;  
+      color: $text_casual;
     }
   }
 
@@ -389,7 +378,7 @@ div.content {
 }
 
 .package_managers_icon{
-  margin: 0px 20px 0px 0px; 
+  margin: 0px 20px 0px 0px;
   width: 50px;
 }
 
@@ -513,7 +502,7 @@ div.content {
 }
 
 .release_box{
-  margin-top: 30px; 
+  margin-top: 30px;
   margin-bottom: 30px;
 }
 
@@ -529,7 +518,7 @@ div.content {
 }
 
 
-/* Social buttons 
+/* Social buttons
 ----------------------------------------------------*/
 
 .socialbuttons {
@@ -538,7 +527,7 @@ div.content {
   left: 0px;
   min-width: 34px;
   min-height:120px;
-  
+
   a { text-decoration: none;}
   & .btn-social:hover {
     opacity: 1.0;
@@ -651,7 +640,7 @@ div.content {
 }
 
 .highlight_hint{
-  font-weight:bold; 
+  font-weight:bold;
   color: black;
 }
 
@@ -761,7 +750,7 @@ div.content {
 -------------------------------------------------- */
 
 .social_media_login_box{
-  text-align: center; 
+  text-align: center;
   margin-top: 30px;
 }
 
@@ -895,8 +884,11 @@ div.content {
   color: #333333;
 }
 
-.search-item {
+.l-left-margin{
   margin-left: 30px;
+}
+
+.search-item {
   padding: 10px 10px 10px 10px;
   border-bottom: 1px dotted #DDD;
 
@@ -915,11 +907,6 @@ div.content {
     font-family : inherit;
     padding: 2px 10px 2px 10px;
   }
-}
-
-.search_item_context{
-  margin-left: 0; 
-  padding-left: 10px;
 }
 
 .dialog_video{
@@ -953,7 +940,7 @@ h2 + .row {
 .btn2 {
   display: inline-block;
   *display: inline;
-  padding: 5px 10px;  
+  padding: 5px 10px;
   margin-bottom: 0;
   *margin-left: .3em;
   font-size: 14px;
@@ -1091,9 +1078,9 @@ h2 + .row {
 }
 
 .recursive_info_box{
-  text-align: center; 
-  display: none; 
-  width: 100%; 
+  text-align: center;
+  display: none;
+  width: 100%;
   padding: 10px 0 10px 0;
 }
 
@@ -1356,7 +1343,7 @@ h2 + .row {
 }
 
 .dialog_badge_header{
-  font-size: 24px; 
+  font-size: 24px;
   color: black;
 }
 

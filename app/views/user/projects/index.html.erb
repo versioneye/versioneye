@@ -1,7 +1,7 @@
 <% title "My Projects" %>
 
 <div class="span3" >
-	<%= render "/user/projects/helpers/navi" %>	
+	<%= render "/user/projects/helpers/navi" %>
 </div>
 
 <div class="span8">
@@ -9,7 +9,8 @@
 	<div class="row content_header_def" >
 		VersionEye is watching <b><%= pluralize(@projects.size, "Project") %></b> for you.
 	</div>
-	<div class="span8 left_border" >
+
+	<div class="span8 content" >
 		<% if @projects.nil? || @projects.empty? %>
 			<div class="content">
 				<%= render "/user/projects/helpers/create" %>

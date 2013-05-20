@@ -54,7 +54,7 @@
       <% end %>
 
     </div>
-    <div class="span8 left_border content" >
+    <div class="span8 content" >
 
       <div class="row" >
 
@@ -210,7 +210,7 @@
           <div id="licenses" class="tab-pane">
             <% licences = licences.sort_by {|key, vals| -vals.length} %>
             <% licences.each do |licence, products| %>
-              <div class="row search-item search_item_context" >
+              <div class="row search-item" >
                 <h5 class="dep_header"><%= licence %></h5>
                 <p>
                   <% products.each do |product| %>
