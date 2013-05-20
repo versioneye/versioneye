@@ -13,5 +13,6 @@
 //= require bootstrap_switch
 //= require underscore-min
 //= require moment.min
+//= require jquery.cookie
 //= require custom_github
 //= require custom_feedback
