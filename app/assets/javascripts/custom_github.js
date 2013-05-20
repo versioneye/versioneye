@@ -13,6 +13,21 @@ jQuery(document).ready(function(){
     show_github_repos();
   }
 
+  if(jQuery.cookie('github_repos')){
+    //if user have been already here, then reload content
+    console.log("Going to reload content;");
+    show_github_repos();
+  } else {
+    console.log("Saving customer visit.");
+    var now = new Date().getTime();
+    now = Math.round((new Date(now)).getTime() / 1000)+ 3600;
+    jQuery.cookie('github_repos', "true", {
+      path: window.location.pathname, 
+      expires: now
+    });
+  }
+
+
 }); // end-of-ready
 
 function fetchGitHubProjects(){
