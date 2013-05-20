@@ -18,7 +18,7 @@
     <% end %>
   </div>
   <div class="content">
-  <%= render :partial => "products/show_search_results",
-             :locals => { :products => @products, :paginate => true, :prefix => "search", :name_limit => 70 }  %>
+    <%= render :partial => "products/show_search_results",
+               :locals => { :products => @products, :paginate => true, :prefix => "search", :name_limit => 70 }  %>
   </div>
 </div>

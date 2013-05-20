@@ -3,13 +3,13 @@
   <b>The file upload can take a couple of seconds. Please be patient.</b>
   <br/>
   Supported files are <b>pom.xml</b>, <b>dependency.gradle</b>
-  <b>Gemfile</b>, <b>Gemfile.lock</b>, 
+  <b>Gemfile</b>, <b>Gemfile.lock</b>,
   <b>requirements.txt</b>, <b>setup.py</b>,
   <b>package.json</b>, <b>composer.json</b>, <b>composer.lock</b> and <b>project.clj</b>
 </div>
 
 <%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
-<div class="tabbable"> 
+<div class="tabbable">
   <ul class="nav nav-tabs" style="margin: 0px;">
     <li class="active">
       <a href="#tab1" data-toggle="tab">
@@ -48,18 +48,18 @@
       <% if current_user.github_token.nil? %>
         <%= render 'shared/login_with_github', :btn => "signup" %>
       <% else %>
-        <% if !current_user.github_token.nil? && (current_user.github_scope.eql?("no_scope") || current_user.github_scope.empty? ) %>
-          With the current scope we can fetch only your public repositories. If you want to monitor 
-          private repositories you have to grand VersionEye access to your private repositories: 
+        <% if !current_user.github_token.nil? && !current_user.github_scope.eql?("repo") %>
+          With the current scope we can fetch only your public repositories. If you want to monitor
+          private repositories you have to grand VersionEye access to your private repositories:
           <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&amp;scope=repo' style="margin-right: 5px;" >
             Grand access to private repositories
           </a> <br/><br/>
-        <% end %> 
+        <% end %>
         <div id="fetchLinkArea" style="display: block">
           <a href="javascript: void(0);" onclick="fetchGitHubProjects()" >Fetch List from GitHub</a>
         </div>
-        <div id="loadingbarArea" style="display: none"> 
-          <%= image_tag("loadingbar.gif") %>  
+        <div id="loadingbarArea" style="display: none">
+          <%= image_tag("loadingbar.gif") %>
         </div>
         <div id="projectListArea" class="div-cell" style="display: none">
           <select id="github_projects" name="github_project" ></select>
@@ -74,6 +74,6 @@
 </div>
 <div class="pull-left" style="padding-top: 10px;">
   <button type="submit" class="btn2 btn2-big ">Create</button>
-</div>  
+</div>
 
 <% end %>

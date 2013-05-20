@@ -1,7 +1,13 @@
 require 'spec_helper'
 
 describe "search" do
-  
+
+  before :all do
+    User.destroy_all
+    Product.destroy_all
+    ProductElastic.reset
+  end
+
   it "shows the default search" do
     get "/search", :q => ""
     assert_response :success
@@ -10,7 +16,7 @@ describe "search" do
     assert_select "div#search-results"
   end
 
-  it "show the search with 1 result" do 
+  it "show the search with 1 result" do
   	product = Product.new
   	product.versions = Array.new
     product.name = "json"
@@ -27,6 +33,8 @@ describe "search" do
     results.should_not be_nil
     results.size.should eq(1)
 
+    ProductElastic.index_all
+
     get "/search", :q => "json"
     assert_response :success
     assert_select "form[action=?]", "/search"
@@ -38,7 +46,7 @@ describe "search" do
     product.remove
   end
 
-  it "shows the search with 2 result" do 
+  it "shows the search with 2 result" do
     product = Product.new
     product.versions = Array.new
     product.name = "junit"
@@ -66,6 +74,8 @@ describe "search" do
     results = Product.find_by_name( "junit" )
     results.should_not be_nil
     results.size.should eq(2)
+
+    ProductElastic.index_newest
 
     get "/search", :q => "junit"
     assert_response :success

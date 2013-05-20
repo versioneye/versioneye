@@ -22,7 +22,7 @@ describe "follow and unfollow" do
 
     post "/sessions", {:session => {:email => user.email, :password => user.password}}, "HTTPS" => "on"
     assert_response 302
-    response.should redirect_to("/user/projects")
+    response.should redirect_to( new_user_project_path )
 
     get "/package/json_goba"
     assert_response :success
@@ -30,7 +30,7 @@ describe "follow and unfollow" do
 
     post "/package/follow", :product_key => "json_goba"
     assert_response 302
-    response.should redirect_to("/package/json_goba")
+    response.should redirect_to( "/package/json_goba" )
 
     prod = Product.find_by_key( prod_key )
     subscribers = prod.users

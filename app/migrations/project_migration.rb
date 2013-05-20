@@ -1,7 +1,7 @@
 class ProjectMigration
 
   def self.set_languages_based_on_type
-    projects = Project.all 
+    projects = Project.all
     projects.each do |project|
       if project.project_type.eql? Project::A_TYPE_RUBYGEMS
         project.language = Product::A_LANGUAGE_RUBY
@@ -18,10 +18,21 @@ class ProjectMigration
       elsif project.project_type.eql? Project::A_TYPE_LEIN
         project.language = Product::A_LANGUAGE_CLOJURE
       end
-      if project.project_key.nil? || project.project_key.empty? 
+      if project.project_key.nil? || project.project_key.empty?
         project.make_project_key!
       end
       project.save
+    end
+  end
+
+  def self.migrate_projects
+    users = User.all
+    users.each do |user|
+      projects = Project.all(conditions: { user_id: user.id } )
+      projects.each do |project|
+        project.user = user
+        project.save
+      end
     end
   end
 

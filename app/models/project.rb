@@ -6,7 +6,7 @@ class Project
   A_TYPE_RUBYGEMS = "RubyGem"
   A_TYPE_PIP      = "PIP"
   A_TYPE_NPM      = "npm"
-  A_TYPE_COMPOSER = "composer" 
+  A_TYPE_COMPOSER = "composer"
   A_TYPE_GRADLE   = "gradle"
   A_TYPE_MAVEN2   = "Maven2"
   A_TYPE_LEIN     = "Lein"
@@ -19,10 +19,10 @@ class Project
   A_PERIOD_WEEKLY = "weekly"
   A_PERIOD_DAILY  = "daily"
 
-  
+
   field :name, type: String
-  field :description, type: String 
-  field :license, type: String 
+  field :description, type: String
+  field :license, type: String
 
   field :project_type, type: String, :default => A_TYPE_MAVEN2
   field :language, type: String
@@ -36,16 +36,16 @@ class Project
   field :dep_number, type: Integer
   field :out_number, type: Integer, default: 0
   field :unknown_number, type: Integer, default: 0
-  field :public, type: Boolean, :default => false           # visible for everybody 
+  field :public, type: Boolean, :default => false           # visible for everybody
   field :private_project, type: Boolean, :default => false  # private project from GitHub
-  field :api_created, type: Boolean, :default => false 
+  field :api_created, type: Boolean, :default => false
 
   attr_accessor :dependencies
 
   validates :name, presence: true
   validates :project_key, presence: true
 
-  belongs_to :user 
+  belongs_to :user
 
   scope :by_user, ->(user){ where(user_id: user.id) }
   scope :by_source, ->(source){where(source: source)}
@@ -57,10 +57,6 @@ class Project
     Rails.logger.error e.backtrace.first
     nil
   end
-  
-  def self.find_by_user user_id
-    Project.all(conditions: { user_id: user_id } ).desc(:private_project).asc(:name)
-  end
 
   def self.find_private_projects_by_user user_id
     Project.all(conditions: { user_id: user_id, private_project: true } )
@@ -68,23 +64,23 @@ class Project
 
   def fetch_dependencies
     self.dependencies = Projectdependency.all(conditions: {project_id: self.id} ).desc(:outdated).desc(:release).asc(:prod_key)
-    self.dependencies # This 2nd line is by purpose! Don't delete it! 
+    self.dependencies # This 2nd line is by purpose! Don't delete it!
   end
 
   def show_dependency_badge?
     self.public and
-    (self.language.eql?(Product::A_LANGUAGE_JAVA) or self.language.eql?(Product::A_LANGUAGE_PHP) or 
+    (self.language.eql?(Product::A_LANGUAGE_JAVA) or self.language.eql?(Product::A_LANGUAGE_PHP) or
     self.language.eql?(Product::A_LANGUAGE_RUBY) or self.language.eql?(Product::A_LANGUAGE_NODEJS) )
   end
 
   # TODO test this
-  #  
-  def outdated? 
+  #
+  def outdated?
     fetch_dependencies
     self.dependencies.each do |dep|
       return true if dep.outdated?
     end
-    return false 
+    return false
   end
 
   def outdated_dependencies
@@ -103,7 +99,7 @@ class Project
       knows_deps << dep if dep.prod_key
     end
     knows_deps
-  end  
+  end
 
   def remove_dependencies
     fetch_dependencies
@@ -131,20 +127,20 @@ class Project
   end
 
   def make_project_key
-    return Project.create_random_value() if self.user_id.nil? 
+    return Project.create_random_value() if self.user_id.nil?
     project_nr = 1
     project_key_text = "#{self.project_type}_#{self.name}".downcase
     project_key_text.gsub!(/[\s|\W|\_]+/, "_")
 
     similar_projects = Project.by_user(self.user).where(
                         name: self.name,
-                        project_type: self.project_type  
+                        project_type: self.project_type
                       )
     project_nr += similar_projects.count unless similar_projects.nil?
     "#{project_key_text}_#{project_nr}"
   end
 
-  def update_from new_project 
+  def update_from new_project
     self.overwrite_dependencies( new_project.dependencies )
     self.description = new_project.description
     self.license = new_project.license
@@ -168,14 +164,14 @@ class Project
   end
 
   def self.email_for(project, user)
-    if project.email.nil? || project.email.empty? 
+    if project.email.nil? || project.email.empty?
       return user.email
     end
     user_email = user.get_email( project.email )
     if user_email && user_email.verified?
       return user_email.email
     end
-    return user.email 
+    return user.email
   end
 
   def self.create_random_value
@@ -184,5 +180,5 @@ class Project
     20.times { value << chars[rand(chars.size)] }
     value
   end
-  
+
 end
