@@ -1,38 +1,32 @@
 <% title "My Projects" %>
 
 <div class="span3" >
-	<%= render "/user/projects/helpers/navi" %>
+  <%= render "/user/projects/helpers/navi" %>
 </div>
 
 <div class="span8">
 
-	<div class="row content_header_def" >
-		VersionEye is watching <b><%= pluralize(@projects.size, "Project") %></b> for you.
-	</div>
+  <div class="row content_header_def" >
+    VersionEye is watching <b><%= pluralize(@projects.size, "Project") %></b> for you.
+  </div>
 
-	<div class="span8 content" >
-		<% if @projects.nil? || @projects.empty? %>
-			<div class="content">
-				<%= render "/user/projects/helpers/create" %>
-			</div>
-		<% else %>
-			<div id="projects" >
-				<% @projects.each do |project| %>
-					<div class="row search-item" >
-						<div class="icon56 span2 pull-left">
-							<% prog_lang = project.language.downcase.gsub(/\./, "") %>
-							<span class = "icon_<%= prog_lang %> on" ></span>
-						</div>
-						<div class = "span5">
-							<%= link_to project.name, user_project_path(project), :class => "searchResultLink" %><br/>
-							<span class="meta-text-small">
-								<%= render :partial => "user/projects/helpers/project_numbers_sentence", :locals => { :project => project } %>
-							</span>
-						</div>
-					</div>
-				<% end %>
-			</div>
-		<% end %>
-	</div>
+  <div class="span8 content" >
+    <div id="projects" >
+      <% @projects.each do |project| %>
+        <div class="row search-item" >
+          <div class="icon56 span2 pull-left">
+            <% prog_lang = project.language.downcase.gsub(/\./, "") %>
+            <span class = "icon_<%= prog_lang %> on" ></span>
+          </div>
+          <div class = "span5">
+            <%= link_to project.name, user_project_path(project), :class => "searchResultLink" %><br/>
+            <span class="meta-text-small">
+              <%= render :partial => "user/projects/helpers/project_numbers_sentence", :locals => { :project => project } %>
+            </span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
 
 </div>

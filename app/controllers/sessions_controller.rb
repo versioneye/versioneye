@@ -17,22 +17,17 @@ class SessionsController < ApplicationController
       redirect_to "/signin"
     else
       sign_in user
-      redirect_back_or( "/user/projects" )
+      if user.projects.empty?
+        redirect_back_or( new_user_project_path )
+      else
+        redirect_back_or( user_projects_path )
+      end
     end
   end
 
   def destroy
     sign_out
     redirect_to root_path
-  end
-
-  def android_registrationid
-    registration_id = params[:registration_id]
-    user = current_user
-    if !user.nil?
-      user.registrationid = registration_id
-      user.save
-    end
   end
 
 end

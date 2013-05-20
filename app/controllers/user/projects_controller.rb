@@ -1,10 +1,11 @@
 class User::ProjectsController < ApplicationController
 
   before_filter :authenticate, :except => [:show, :badge]
+  before_filter :check_redirect, :only => [:index, :get_popular, :libs_i_follow]
 
   def index
     @project = Project.new
-    @projects = Project.find_by_user(current_user.id.to_s)
+    @projects = current_user.projects # TODO remove this instance variable
   end
 
   def new
@@ -180,7 +181,7 @@ class User::ProjectsController < ApplicationController
   def get_popular
     @project = Project.new
     @libs = {}
-    projects = Project.find_by_user(current_user.id.to_s)
+    projects = current_user.projects
     if projects && !projects.empty?
       projects.each do |project|
         project.fetch_dependencies.each  do |dependency|
@@ -242,6 +243,12 @@ class User::ProjectsController < ApplicationController
   end
 
   private
+
+    def check_redirect
+      if signed_in? && current_user.projects.empty?
+        redirect_to new_user_project_path
+      end
+    end
 
     def upload_and_store file
       project = upload file
