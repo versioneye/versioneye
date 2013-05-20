@@ -292,7 +292,6 @@ div.content {
   right: 0;
   bottom: 0;
   left: 0;
-  background: url(/assets/bs-docs-masthead-pattern.png) repeat center center;
   opacity: .4;
 }
 
@@ -812,7 +811,7 @@ div.content {
 
   &  input {
       color : $text_yellow;
-      background: transparent url('/asssets/noise_2.png');
+      background: transparent url('/assets/noise_2.png');
       font-size: 19px;
       width: 330px;
       height: 26px;
