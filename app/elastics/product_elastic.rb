@@ -90,11 +90,7 @@ class ProductElastic
 
     group_id = "" if !group_id
 
-    if !q || q.empty?
-      q = "*"
-    else
-      q = "#{q}*"
-    end
+    q = "*" if !q || q.empty?
 
     s = Tire.search( Settings.elasticsearch_product_index,
                       load: true,
