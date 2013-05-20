@@ -105,9 +105,9 @@ Versioneye::Application.routes.draw do
 
   resources :versioncommentreplies
 
-  get '/user/projects/github_repositories',  :to => 'user/projects#github_repositories'
-  get '/user/projects/popular',              :to => "user/projects#get_popular"
-  get '/user/projects/libs_i_follow',        :to => "user/projects#libs_i_follow"
+  get '/user/packages/popular_in_my_projects', :to => "user/packages#popular_in_my_projects"
+  get '/user/packages/i_follow',               :to => "user/packages#i_follow"
+  get '/user/projects/github_repositories',    :to => 'user/projects#github_repositories'
 
   namespace :user do
     resources :projects do

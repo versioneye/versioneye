@@ -7,12 +7,12 @@
 <div class="span8">
 
   <div class="row content_header_def" >
-    Most popular libraries over all your projects
+    Most used packages over all your projects
   </div>
   <div class="span8 content" >
     <div id="projects" >
-      <% @libs = @libs.sort_by {|item, project| -project.length} %>
-      <% @libs.each do |lib_name, projects| %>
+      <% @packages = @packages.sort_by {|item, project| -project.length} %>
+      <% @packages.each do |lib_name, projects| %>
         <div class="row search-item" >
           <h5 class="dep_header"><%= lib_name %> (<%= projects.length %>)</h5>
           <p>

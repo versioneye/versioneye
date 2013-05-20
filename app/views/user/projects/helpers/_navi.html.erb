@@ -2,12 +2,13 @@
   <% if signed_in? %>
   <ul class = "nav nav-pills nav-stacked">
     <li><%= link_to "My Projects", user_projects_path %></li>
-    <li><%= link_to "Libs I follow", :controller => 'user/projects', :action => "libs_i_follow" %></li>
-    <li><%= link_to "Most used libraries", :controller => 'user/projects', :action => "get_popular"  %> </li>
     <li><%= link_to "Add New Project", new_user_project_path %></li>
     <% if current_user.github_token && !current_user.github_token.empty? && 1 == 2 %>
       <li><%= link_to "Github Repositories", user_projects_github_repositories_path %></li>
     <% end %>
+    <li><hr/></li>
+    <li><%= link_to "Most used packages", :controller => 'user/packages', :action => "popular_in_my_projects"  %> </li>
+    <li><%= link_to "Packages I follow",  :controller => 'user/packages', :action => "i_follow" %></li>
 </ul>
   <% else %>
     <%= render "/shared/github_ad" %>
