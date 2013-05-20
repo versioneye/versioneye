@@ -2,6 +2,18 @@ require 'spec_helper'
 
 describe "submit a versioncomment" do
 
+  before(:each) do
+    User.destroy_all
+    Product.destroy_all
+    Versioncomment.destroy_all
+  end
+
+  after(:each) do
+    User.destroy_all
+    Product.destroy_all
+    Versioncomment.destroy_all
+  end
+
   it "submit a versioncomment successfully" do
   	product = Product.new
   	product.versions = Array.new

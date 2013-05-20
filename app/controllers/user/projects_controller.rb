@@ -1,7 +1,7 @@
 class User::ProjectsController < ApplicationController
 
   before_filter :authenticate, :except => [:show, :badge]
-  before_filter :check_redirect, :only => [:index, :get_popular, :libs_i_follow]
+  before_filter :new_project_redirect, :only => [:index]
 
   def index
     @project = Project.new
@@ -143,10 +143,6 @@ class User::ProjectsController < ApplicationController
     redirect_to user_project_path(@project)
   end
 
-  def libs_i_follow
-    @products = current_user.products.paginate(:page => params[:page])
-  end
-
   def github_repositories
     respond_to do |format|
       format.html {
@@ -176,24 +172,6 @@ class User::ProjectsController < ApplicationController
     Rails.logger.error e.backtrace.first
     flash[:error] = "An error occured. Maybe you have to reconnect your VersionEye Account with your GitHub Account."
     redirect_to user_projects_path
-  end
-
-  def get_popular
-    @project = Project.new
-    @libs = {}
-    projects = current_user.projects
-    if projects && !projects.empty?
-      projects.each do |project|
-        project.fetch_dependencies.each  do |dependency|
-          key = dependency.name
-          @libs[key] ||= []
-          @libs[key] << project
-        end
-      end
-    end
-    respond_to do |format|
-      format.html { render :template => "user/projects/show_popular" }
-    end
   end
 
   def save_period
@@ -243,12 +221,6 @@ class User::ProjectsController < ApplicationController
   end
 
   private
-
-    def check_redirect
-      if signed_in? && current_user.projects.empty?
-        redirect_to new_user_project_path
-      end
-    end
 
     def upload_and_store file
       project = upload file
