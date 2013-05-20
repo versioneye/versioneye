@@ -89,7 +89,12 @@ class ProductElastic
     from = results_per_page * (page_count.to_i - 1)
 
     group_id = "" if !group_id
-    q = "*" if !q || q.empty?
+
+    if !q || q.empty?
+      q = "*"
+    else
+      q = "#{q}*"
+    end
 
     s = Tire.search( Settings.elasticsearch_product_index,
                       load: true,
