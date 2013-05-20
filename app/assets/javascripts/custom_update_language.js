@@ -17,7 +17,7 @@ function update_lang(language){
 		lang = lang.replace(rg, "")
 		if (document.getElementById(icon_id) != null){
 			document.getElementById(icon_id).className = icon_id + " small off";
-		}		
+		}
 	}
 
 	lang = lang.replace(/[\,]+/, ",") //remove multiple comas
