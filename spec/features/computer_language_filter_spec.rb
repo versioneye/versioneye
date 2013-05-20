@@ -27,7 +27,7 @@ describe "Computer Language Filter" do
     it "uses the language filter without errors" do
       visit root_path
 
-      fill_in 'q', :with => "json"
+      fill_in 'q', :with => "json*"
       click_button "Search"
 
       page.should have_content("json-test")
@@ -37,7 +37,7 @@ describe "Computer Language Filter" do
       page.should have_content("jsonC")
 
       visit root_path
-      fill_in 'q', :with => "json"
+      fill_in 'q', :with => "json*"
       find(:xpath, '//div[contains(@class, "icon_java_small_container")]' ).click
       click_button  "Search"
 
