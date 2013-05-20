@@ -9,20 +9,19 @@ gem 'gravatar_image_tag', '1.1.3'
 gem 'bson_ext'          , '1.7.0'
 gem 'mongo'             , '1.7.0'
 gem 'mongoid'           , '2.5.0'
-gem 'naturalsorter'     , '2.0.4'
+gem 'naturalsorter'     , '2.0.5'
 gem 'postmark-rails'    , '0.5.0'
-gem 'httparty'          , '0.10.2'
+gem 'httparty'          , '0.11.0'
 gem 'oauth'             , '0.4.7'
 gem 'twitter_oauth'     , '0.4.4'
 gem 'aws-s3'            , '0.6.3', :require => 'aws/s3'
 gem 'nokogiri'          , '1.5.9'
-gem 'stripe'            , '1.7.11'
+gem 'stripe'            , '1.8.3'
 gem 'puma'              , '2.0.1'
-# gem 'thin'              , '1.5.1'
-gem 'tire'              , '0.5.5'
-gem 'json'              , '1.7.7'
-gem 'dalli'             , '2.6.2'           # memcache library
-gem 'kgio'              , '2.8.0'            # 20% performance boost for dalli
+gem 'tire'              , '0.5.8'
+gem 'json'              , '1.8.0'
+gem 'dalli'             , '2.6.3'   # memcache library
+gem 'kgio'              , '2.8.0'   # 20% performance boost for dalli
 gem 'grape'             , '0.2.6'
 gem 'grape-entity'      , '0.2.0'
 gem 'grape-swagger'     , git: "https://github.com/timgluz/grape-swagger.git"
@@ -52,3 +51,5 @@ group :test do
   gem 'selenium-webdriver', '2.32.1'
   gem 'fakeweb'           , '1.3.0'
 end
+
+#gem 'thin'              , '1.5.1'
