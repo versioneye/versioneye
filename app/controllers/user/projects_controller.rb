@@ -26,7 +26,7 @@ class User::ProjectsController < ApplicationController
       project = fetch_and_store project_url
     elsif github_project && !github_project.empty? && !github_project.eql?("NO_PROJECTS_FOUND")
       project = fetch_from_github_and_store github_project
-      return nil if project.nil?
+      #return nil if project.nil? #why the heck you that? 
     else
       flash[:error] = "Please put in a URL OR select a file from your computer. Or select a GitHub project."
       redirect_to new_user_project_path
@@ -288,8 +288,8 @@ class User::ProjectsController < ApplicationController
       project.s3_filename = s3_infos['filename']
       project.github_project = github_project
       project.private_project = private_project
-      store_project( project )
-      project
+      project if store_project( project )
+
     end
 
     def create_project( url, project_name )
@@ -306,8 +306,12 @@ class User::ProjectsController < ApplicationController
       if project.dependencies && !project.dependencies.empty? && project.save
         project.save_dependencies
         flash[:success] = "Project was created successfully."
+        return true
       else
+        p "#--------------------", "Cant save project: ", project.to_json
+        p project.error.full_messages.to_sentence
         flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."
+        return false
       end
     end
 
