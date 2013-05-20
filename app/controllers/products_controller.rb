@@ -3,8 +3,8 @@ class ProductsController < ApplicationController
   before_filter :authenticate, :only   => [:edit, :update]
   #before_filter :force_http
 
-  @@languages = [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY, 
-    Product::A_LANGUAGE_PYTHON, Product::A_LANGUAGE_NODEJS, Product::A_LANGUAGE_PHP, 
+  @@languages = [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
+    Product::A_LANGUAGE_PYTHON, Product::A_LANGUAGE_NODEJS, Product::A_LANGUAGE_PHP,
     Product::A_LANGUAGE_R, Product::A_LANGUAGE_JAVASCRIPT, Product::A_LANGUAGE_CLOJURE]
 
   def index
@@ -17,11 +17,12 @@ class ProductsController < ApplicationController
     @languages = @@languages
     render :layout => 'application_lp'
   end
-  
+
   def search
     @query = do_parse_search_input( params[:q] )
     @groupid = params[:g]
     @lang = get_lang_value( params[:lang] )
+    @page = "search"
     commit = params[:commit]
 
     if ( (@query.nil? || @query.empty?) && (@groupid.nil? || @groupid.empty?) )
@@ -33,7 +34,7 @@ class ProductsController < ApplicationController
       languages = get_language_array(@lang)
       @products = ProductService.search( @query, @groupid, languages, params[:page])
       save_search_log( @query, @products, start )
-    end    
+    end
     @languages = @@languages
   end
 
@@ -45,37 +46,37 @@ class ProductsController < ApplicationController
       format.json { render :json => @products.as_json(:only => [:name]) }
     end
   end
-  
+
   def show
     key = Product.decode_prod_key params[:key]
     @product = Product.find_by_key( key )
-    if @product.nil? 
-      @product = Product.find_by_key_case_insensitiv( key )  
+    if @product.nil?
+      @product = Product.find_by_key_case_insensitiv( key )
     end
-    if @product.nil? 
+    if @product.nil?
       flash[:error] = "The requested package is not available."
-      return 
+      return
     end
 
     attach_version( @product, params[:version] )
-    if @product.version 
+    if @product.version
       @version = @product.version_by_number @product.version
       @downloads = @version.versionarchive
     end
     @main_dependencies = @product.dependencies(nil)
 
-    @versioncomment = Versioncomment.new 
+    @versioncomment = Versioncomment.new
     @versioncommentreply = Versioncommentreply.new
-    @page = "product_show"    
+    @page = "product_show"
   end
 
   def show_visual
     key = Product.decode_prod_key( params[:key] )
     @product = Product.find_by_key( key )
-    if @product.nil? 
+    if @product.nil?
       flash[:error] = "The requested package is not available."
       redirect_to products_path(@product)
-      return 
+      return
     end
     attach_version( @product, params[:version] )
     @version = @product.version_by_number( @product.version )
@@ -84,13 +85,13 @@ class ProductsController < ApplicationController
   end
 
   def badge
-    prod_key = Product.decode_prod_key params[:key] 
+    prod_key = Product.decode_prod_key params[:key]
     path = "app/assets/images/badges"
     badge = "unknown"
     @product = Product.find_by_key(prod_key)
-    unless @product.nil? 
+    unless @product.nil?
       version = Version.decode_version params[:version]
-      if !version.nil? && !version.empty? 
+      if !version.nil? && !version.empty?
         @product.version = version
       end
       if @product.dependencies_outdated?()
@@ -128,10 +129,10 @@ class ProductsController < ApplicationController
     link_name = params[:link_name]
     key = Product.decode_prod_key params[:key]
     @product = Product.find_by_key( key )
-    if @product.nil? || !current_user.admin 
+    if @product.nil? || !current_user.admin
       flash[:success] = "An error occured. Please try again later."
       redirect_to products_path(@product)
-      return       
+      return
     end
     if description && !description.empty?
       @product.description_manual = description
@@ -160,33 +161,33 @@ class ProductsController < ApplicationController
     end
     redirect_to products_path(@product)
   end
-  
+
   def follow
     @prod_key_param = params[:product_key]
     product_key = Product.decode_prod_key @prod_key_param
     respond = ProductService.create_follower product_key, current_user
     respond_to do |format|
-      format.js 
-      format.html { 
+      format.js
+      format.html {
           if respond.eql?("error")
             flash.now[:error] = "An error occured. Please try again later."
-          end      
+          end
           redirect_to products_path(@prod_key_param)
         }
     end
   end
-  
+
   def unfollow
     src_hidden = params[:src_hidden]
     @prod_key_param = params[:product_key]
     product_key = Product.decode_prod_key @prod_key_param
     respond = ProductService.destroy_follower product_key, current_user
     respond_to do |format|
-      format.js 
-      format.html { 
+      format.js
+      format.html {
           if respond.eql?("error")
             flash.now[:error] = "An error occured. Please try again later."
-          end      
+          end
           if src_hidden.eql? "detail"
             redirect_to products_path(@prod_key_param)
           else
@@ -199,13 +200,13 @@ class ProductsController < ApplicationController
   def recursive_dependencies
     key = Product.decode_prod_key params[:key]
     version = Version.decode_version params[:version]
-    scope = params[:scope]    
+    scope = params[:scope]
     respond_to do |format|
-      format.json { 
+      format.json {
         circle = CircleElement.fetch_circle(key, version, scope)
         if circle && !circle.empty?
           resp = CircleElement.generate_json_for_circle_from_array( circle )
-        else 
+        else
           circle = CircleElement.dependency_circle( key, version, scope )
           CircleElement.store_circle( circle, key, version, scope )
           resp = CircleElement.generate_json_for_circle_from_hash( circle )
@@ -219,9 +220,9 @@ class ProductsController < ApplicationController
     image_key = params[:key]
     image_version = params[:version]
     scope = params[:scope]
-    url = S3.infographic_url_for("#{image_key}:#{image_version}:#{scope}.png")  
+    url = S3.infographic_url_for("#{image_key}:#{image_version}:#{scope}.png")
     respond_to do |format|
-      format.json { 
+      format.json {
         if url_exist?(url)
           render :json => "#{url}"
         else
@@ -239,18 +240,18 @@ class ProductsController < ApplicationController
     filename = "#{image_key}:#{image_version}:#{scope}.png"
     image_bin.gsub!(/data:image\/png;base64,/, "")
     AWS::S3::S3Object.store(
-      filename, 
-      Base64.decode64(image_bin), 
-      Settings.s3_infographics_bucket, 
+      filename,
+      Base64.decode64(image_bin),
+      Settings.s3_infographics_bucket,
       :access => "public-read")
     url = S3.infographic_url_for(filename)
     respond_to do |format|
-      format.json { 
+      format.json {
         render :json => "#{url}"
       }
     end
   end
-  
+
   private
 
     def url_exist?(url_path)
@@ -270,7 +271,7 @@ class ProductsController < ApplicationController
       comment.product_key = product.prod_key
       comment.prod_name = product.name
       comment.language = product.language
-      comment.version = product.version 
+      comment.version = product.version
       if type.eql?("description")
         comment.comment = "UPDATE: #{user.fullname} updated the description"
         comment.update_type = type

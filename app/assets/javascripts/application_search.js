@@ -9,8 +9,6 @@
 //= require jquery_textbox_hinter
 //= require jquery_ui_1_8_17_custom_min
 //= require bootstrap.min
-//= require google
 
-//= require custom_lp
 //= require custom_update_language
 //= require custom_feedback
