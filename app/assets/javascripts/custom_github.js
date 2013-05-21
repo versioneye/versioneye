@@ -14,7 +14,7 @@ jQuery(document).ready(function(){
   }
 
   if(jQuery.cookie('github_repos')){
-    //if user have been already here, then reload content
+    //if user have active session for github pages, then reload content
     console.log("Going to reload content;");
     show_github_repos();
   } else {
@@ -108,13 +108,17 @@ function addGitHubProject(selected_el, data){
     selected_item.parents('.switch').bootstrapSwitch('setActive', true);
 
     if(response.success){
-      var home_label = url_template({
-        url: "/user/projects/" + response.data["project_id"], 
-        content: repo_label_template({
-          classes: "label label-success",
-          content: '<i class= "icon-white icon-home"></i> Project home'
+      //fix: labels rendering in link 
+      var home_label = repo_label_template({
+        classes: "repo-homepage", 
+        content: url_template({
+                  url: "/user/projects/" + response.data["project_id"], 
+                  content: repo_label_template({
+                    classes: "label label-success",
+                    content: '<i class= "icon-white icon-home"></i> Project home'
+                  })
         })
-      });
+      })
       selected_item.data('githubProjectId', response.data["project_id"]);
       jQuery(selected_repo_el).find(".repo-labels").append(home_label);
       show_repo_notification(selected_repo_el, 
@@ -222,11 +226,14 @@ function make_github_repo_labels(repo){
     content: "<strong>updated:&nbsp;</strong>" + timeago
   });
   if (repo.project_url){
-    labels += url_template({
-      url: repo.project_url, 
-      content: repo_label_template({
-        classes: "repo-homepage label label-info", 
-        content: '<i class= "icon-white icon-home"></i>&nbsp;Project page ' 
+    labels += repo_label_template({
+      classes: "repo-homepage",
+      content: url_template({
+        url: repo.project_url, 
+        content: repo_label_template({
+          classes: "label label-info", 
+          content: '<i class= "icon-white icon-home"></i>&nbsp;Project page ' 
+        })
       })
     });
   }

@@ -1,6 +1,7 @@
 class Github
 
   A_USER_AGENT = "www.versioneye.com"
+  A_API_URL = "https://api.github.com"
 
   def self.user( token )
     url = 'https://api.github.com/user?access_token=' + URI.escape( token )
@@ -18,10 +19,53 @@ class Github
     "no_scope"
   end
 
-  # TODO do paging
-  def self.user_repos(github_token)
-    body  = HTTParty.get("https://api.github.com/user/repos?access_token=#{github_token}", :headers => {"User-Agent" => A_USER_AGENT } ).response.body
-    repos = JSON.parse( body )
+  def self.parse_paging_links(headers)
+    return nil unless headers.has_key? "link"
+    links = []
+    headers["link"].split(",").each do |link_token|
+      matches = link_token.strip.match /<([\w|\/|\.|:|=|?|\&]+)>;\s+rel=\"(\w+)\"/m
+      links << [matches[2], matches[1]]
+    end
+
+    Hash[*links.flatten]
+  end
+
+  
+  #TODO: test it more - tryu to catch 304
+  def self.user_repos_changed?(user)
+    repo = user.github_repos.all.first
+    headers = {
+      "User-Agent" => A_USER_AGENT,
+      "If-None-Match" => repo[:etag].to_s,
+    }
+    url =  "#{A_API_URL}/user?access_token=#{user.github_token}"
+    response = HTTParty.head(url, headers: headers)
+    p response.code, response.headers
+    response.code == 304 ? false : true
+  end
+
+  def self.user_repos(user, url = nil, page = 1, per_page = 20)
+    headers = {"User-Agent" => A_USER_AGENT}
+    if url.nil?
+      url =  "#{A_API_URL}/user/repos?page=#{page}&per_page=#{per_page}&access_token=#{user.github_token}"
+    end
+
+    response  = HTTParty.get(url, headers: headers)
+    paging_links = parse_paging_links(response.headers)
+    
+    repos = {
+      repos: JSON.parse(response.body),
+      paging: {
+        start: page,
+        per_page: per_page
+      },
+      etag: response.headers["etag"],
+      ratelimit: {
+        limit: response.headers["x-ratelimit-limit"],
+        remaining: response.header["x-ratelimit-remaining"]
+      }
+    }
+    repos[:paging].merge! paging_links unless paging_links.nil?
     repos
   end
 

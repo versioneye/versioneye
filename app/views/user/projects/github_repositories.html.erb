@@ -48,7 +48,7 @@
 </script>
 
 <script id = "github-repo-info-template" type = "text/template">
-  <div id = "github-repo-{{= repo.id }}">
+  <div id = "github-repo-{{= repo.github_id }}">
     <div class = "repo-info row-fluid">
       <div class = "repo-logo span2">
         {{ var logo_path = "/assets/language/" }}
@@ -57,7 +57,7 @@
           style = "position: relative; left: 25%; right: 25%; height: 72px; " />
       </div>
       <div class = "repo-info-content span8">
-        <h5>{{= repo.full_name }}</h5>
+        <h5>{{= repo.fullname }}</h5>
         <p> {{= repo.description}} </h5>
         <div class = "repo-labels"> {{= labels }} </div>
 
@@ -81,9 +81,9 @@
       <input type = "checkbox" class = "input"
         {{= repo.supported ? "" : " disabled " }}
         {{= repo.imported ? " checked " : "" }}
-        data-github-id = "{{= repo.id }}"
+        data-github-id = "{{= repo.github_id }}"
         data-github-project-id = "{{= repo.project_id }}"
-        data-github-fullname = "{{= repo.full_name }}" />
+        data-github-fullname = "{{= repo.fullname }}" />
   </div>
 </script>
 

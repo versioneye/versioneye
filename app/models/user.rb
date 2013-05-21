@@ -50,6 +50,7 @@ class User
   has_one    :billing_address
   has_one    :user_notification_setting
   has_many   :projects
+  has_many   :github_repos
   has_and_belongs_to_many :products
   # *** RELATIONS END ***
 

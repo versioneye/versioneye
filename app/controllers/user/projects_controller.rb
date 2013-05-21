@@ -149,11 +149,6 @@ class User::ProjectsController < ApplicationController
   def github_repositories
     respond_to do |format|
       format.html {
-        @repos = Github.user_repos(current_user.github_token)
-        @repos.sort_by! {|repo| "%s" % repo["language"].to_s }
-        @imported_repos = Project.by_user(current_user).by_source(Project::A_SOURCE_GITHUB)
-        @imported_repo_names  = @imported_repos.map(&:name).to_set
-        @supported_langs = Github.supported_languages
         @page = "project_new"
       }
       format.json {
@@ -180,28 +175,23 @@ class User::ProjectsController < ApplicationController
   #TODO: add organizations
   def github_repos
     repos = []
-    github_repos = Github.user_repos(current_user.github_token)
+    #github_repos = Github.user_repos(current_user.github_token)
+    github_repos = current_user.github_repos
     imported_repos = Project.by_user(current_user).by_source(Project::A_SOURCE_GITHUB)
     imported_repo_names  = imported_repos.map(&:name).to_set
     supported_langs = Github.supported_languages
     github_repos.each do |repo|
-      repo["language"] = "#{repo["language"]}".downcase.strip
       repo[:supported] = supported_langs.include? repo["language"]
-      repo[:imported] = imported_repo_names.include? repo["full_name"]
+      repo[:imported] = imported_repo_names.include? repo["fullname"]
       if repo[:imported]
-        project_id = imported_repos.where(name: repo["full_name"]).first.id 
+        project_id = imported_repos.where(name: repo["fullname"]).first.id 
         repo[:project_url] = url_for(action: "show", id: project_id)
         repo[:project_id] = project_id
       else
         repo[:project_url] = nil
         repo[:project_id] = nil
       end
-      filtered_repo = repo.slice("id", :project_id, "full_name", "private", 
-                                 :project_url, "html_url", "description", 
-                                 "fork", "created_at", "updated_at",
-                                 "homepage", "size", "language", 
-                                 :supported, :imported)
-      repos << filtered_repo
+      repos << repo
     end
     repos.sort_by! {|repo| "%s" % repo["language"].to_s}
     render json: repos.to_json 
