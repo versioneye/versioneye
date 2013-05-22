@@ -86,7 +86,7 @@ class User::ProjectsController < ApplicationController
         badge = "up-to-date"
       end
     end
-    send_file "#{path}/version_#{badge}.png", :type => "images/png", :disposition => 'inline'
+    send_file "#{path}/dep_#{badge}.png", :type => "images/png", :disposition => 'inline'
   end
 
   def update
