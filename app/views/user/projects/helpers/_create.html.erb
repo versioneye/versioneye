@@ -53,7 +53,7 @@
           private repositories you have to grand VersionEye access to your private repositories:
           <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&amp;scope=repo' style="margin-right: 5px;" >
             Grand access to private repositories
-          </a> <br/><br/>
+          </a><br/><br/>
         <% end %>
         <div id="fetchLinkArea" style="display: block">
           <a href="javascript: void(0);" onclick="fetchGitHubProjects()" >Fetch List from GitHub</a>
@@ -62,6 +62,7 @@
           <%= image_tag("loadingbar.gif") %>
         </div>
         <div id="projectListArea" class="div-cell" style="display: none">
+          We fetch only the repositories with supported language settings. <br/><br/>
           <select id="github_projects" name="github_project" ></select>
         </div>
         <div id="gitHubLogin" class="div-cell" style="display: none">
