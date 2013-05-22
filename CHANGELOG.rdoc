@@ -7,3 +7,5 @@ We are using the semantic versioning. Check out this: http://semver.org/
 
 * <b>Payment History</b>: We just added a payment history to the settings. Now you can always print your receipts.
 * <b>Dependency Badges</b>: We added to every package page dependency badges. You can even integrate them into your website.
+* <b>Project Area Refactored</b>: We refactored the whole project area. It is now more clean and consistent.
+
