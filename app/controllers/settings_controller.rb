@@ -51,7 +51,6 @@ class SettingsController < ApplicationController
     end
   end
 
-  # TODO test it
   def receipt
     @invoice = StripeService.get_invoice( params['invoice_id'] )
     # Ensure that the invoice belongs to the current logged in user!

@@ -80,11 +80,28 @@ describe "Payment Process" do
       visit settings_payments_path
       page.should_not have_content('Iniatilizing frontend app..')
       page.all(:css, "#payment_history")
-      within('#payment_history') do
-        page.all('a',  :text => 'View receipt')
-        page.all('td', :text => 'Business Small')
-        page.all('td', :text => '7.00 USD')
+      using_wait_time 10 do
+        find_by_id("invoice_table")
+        page.should have_content("View receipt")
+        page.should have_content("Personal")
+        page.should have_content("3.00 USD")
+        # The Business Small plan is the upcoming invoice
       end
+    end
+  end
+
+  describe "Receipt", :js => true  do
+    it "shows the receipt" do
+      user = User.find_by_email(@user.email)
+      customer = StripeService.fetch_customer user.stripe_customer_id
+      invoices = customer.invoices
+      invoices.count.should eq(1)
+      invoice = invoices.first
+
+      visit settings_receipt_path( invoice.id )
+      page.should have_content("This is a receipt for your VersionEye subscription.")
+      page.should have_content("Personal")
+      page.should have_content("3.00 USD")
     end
   end
 
