@@ -9,7 +9,7 @@ function initialize_profile(address) {
     if (map_for_user_profile != null){
     	geo.geocode({'address': address},function(results, status){
 			if (status == google.maps.GeocoderStatus.OK) {
-				var latlng = results[0].geometry.location 
+				var latlng = results[0].geometry.location
 				var myOptions = {
 			        zoom: 5,
 			        center: latlng,
@@ -18,11 +18,12 @@ function initialize_profile(address) {
 			    map = new google.maps.Map(map_for_user_profile, myOptions);
 			    var marker = new google.maps.Marker({position: latlng, map: map});
 			} else {
-				alert("Geocode was not successful for the following reason: " + status);
+				// alert("Geocode was not successful for the following reason: " + status);
+                alert("Sorry. We are not able to display the location on Google Maps. Maybe you should edit your location.");
 			}
 		});
     }
-}  
+}
 
 function initialize_jobs() {
     var map_for_jobs = document.getElementById("map_for_jobs");
