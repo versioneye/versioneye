@@ -5,7 +5,7 @@ class NewsletterMailer < ActionMailer::Base
     @user = user
     mail(
       :to => @user.email,
-      :subject => "Hasso Plattner Ventures invests 100K EUR into VersionEye",
+      :subject => "New Features - Badges - Payment - GitHub",
       :tag => "newsletter"
       )
   end
