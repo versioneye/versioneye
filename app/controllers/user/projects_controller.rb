@@ -146,6 +146,7 @@ class User::ProjectsController < ApplicationController
     @products = current_user.products.paginate(:page => params[:page])
   end
 
+  #TODO: remove if it's not required anymore
   def github_repositories
     respond_to do |format|
       format.html {
@@ -176,7 +177,12 @@ class User::ProjectsController < ApplicationController
   def github_repos
     repos = []
     #github_repos = Github.user_repos(current_user.github_token)
-    github_repos = current_user.github_repos
+    github_repos = GithubRepo.cached_user_repos(current_user)
+    github_repos = github_repos.paginate(
+      page: (params[:page] || 1), 
+      per_page: (params[:per_page] || 30)
+    )
+
     imported_repos = Project.by_user(current_user).by_source(Project::A_SOURCE_GITHUB)
     imported_repo_names  = imported_repos.map(&:name).to_set
     supported_langs = Github.supported_languages
@@ -193,8 +199,20 @@ class User::ProjectsController < ApplicationController
       end
       repos << repo
     end
+
     repos.sort_by! {|repo| "%s" % repo["language"].to_s}
-    render json: repos.to_json 
+    paging = {
+      current_page: github_repos.current_page,
+      per_page: github_repos.per_page,
+      total_entries: github_repos.total_entries,
+      total_pages: github_repos.total_pages
+    }
+
+    render json: {
+      success: true,
+      repos: repos,
+      paging: paging
+    }.to_json
   end
 
   def get_popular

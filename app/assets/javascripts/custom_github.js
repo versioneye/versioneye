@@ -270,7 +270,38 @@ function render_github_repo_table(selector, repos){
     toggleGitHubProject(data.el, data.value);
   });
   console.log("Github switches are registered.");
+}
 
+function render_github_pagination(selector, paging){
+  var container_template = _.template(jQuery("#github-pagination-template").html());
+  var item_template = _.template(jQuery("#github-pagination-item-template").html());
+  var paging_items = [];
+
+  for(i = 1; i < paging.total_pages; i++){
+    var item_classes = "paging-item";
+    item_classes += (i == paging.current_page) ? " active" : ""
+
+    paging_items.push(item_template({
+      page:  i, 
+      classes: item_classes,
+      paging: paging
+    }));
+  }
+
+  var pagination = container_template({
+    classes: "pagination-centered",
+    items: paging_items.join('')
+  });
+  jQuery(selector).append(pagination);
+
+  //register pagination events
+  jQuery("#github_pagination").find(".paging-item").on("click", function(ev){
+    var paging_data = jQuery(ev.target).data();
+    console.debug("Going to load page nr: " + paging_data.page);
+    jQuery(ev.target).toggleClass("active");
+    show_github_repos(paging_data.page, paging_data.perPage);
+    return false;
+  });
 }
 
 function render_github_fail(selector, response){
@@ -282,20 +313,29 @@ function render_github_fail(selector, response){
 }
 
 // -- main function that iniatialise view renderings
-function show_github_repos(){
+function show_github_repos(page, per_page){
   console.debug("Going to render githup repos ...");
   _.templateSettings = {
       interpolate: /\{\{\=(.+?)\}\}/g,
       evaluate: /\{\{(.+?)\}\}/g
   };
-  var content_selector = "#github-repos";
 
+  var content_selector = "#github-repos";
+  var page = page || 1;
+  var per_page = per_page || 5;
+  var request_url = "/user/projects/github_repos?page=" + page + "&per_page=" + per_page;
   render_github_loading(content_selector);
-  var jqxhr = jQuery.getJSON("/user/projects/github_repos");
+  var jqxhr = jQuery.getJSON(request_url);
   //-- response handlers
   jqxhr.done(function(data, status, jqxhr){
     console.debug("Got github repos" + status);
-    render_github_repo_table(content_selector, data);
+    if(data.success){
+      render_github_repo_table(content_selector, data.repos);
+      render_github_pagination(content_selector, data.paging)
+    } else {
+      console.debug("Controller failed");
+      render_github_fail(content_selector, data);
+    }
   });
   jqxhr.fail(function(data, status, jqxhr){
     console.debug("Failed to read github repos" + status);

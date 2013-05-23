@@ -30,8 +30,6 @@ class Github
     Hash[*links.flatten]
   end
 
-  
-  #TODO: test it more - tryu to catch 304
   def self.user_repos_changed?(user)
     repo = user.github_repos.all.first
     headers = {
@@ -40,7 +38,6 @@ class Github
     }
     url =  "#{A_API_URL}/user?access_token=#{user.github_token}"
     response = HTTParty.head(url, headers: headers)
-    p response.code, response.headers
     response.code == 304 ? false : true
   end
 
@@ -81,7 +78,6 @@ class Github
     end
     repo_names
   end
-
 
   def self.orga_repo_names( github_token )
     orga_names = self.orga_names github_token
