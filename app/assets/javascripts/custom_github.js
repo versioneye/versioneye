@@ -9,10 +9,6 @@ jQuery(document).ready(function(){
     jQuery( "#tabs" ).tabs();
   }
 
-  if(jQuery('#github-repos').length){
-    show_github_repos();
-  }
-
   if(jQuery.cookie('github_repos')){
     //if user have active session for github pages, then reload content
     console.log("Going to reload content;");
@@ -25,6 +21,7 @@ jQuery(document).ready(function(){
       path: window.location.pathname, 
       expires: now
     });
+    show_github_repos();
   }
 
 
@@ -322,7 +319,7 @@ function show_github_repos(page, per_page){
 
   var content_selector = "#github-repos";
   var page = page || 1;
-  var per_page = per_page || 5;
+  var per_page = per_page || 10;
   var request_url = "/user/projects/github_repos?page=" + page + "&per_page=" + per_page;
   render_github_loading(content_selector);
   var jqxhr = jQuery.getJSON(request_url);
