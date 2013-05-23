@@ -24,6 +24,7 @@ class GithubRepo
 
 
   scope :by_language, ->(lang){where(language: lang)}
+  scope :by_user, ->(user){where(user_id: user._id)}
 
   def self.add_new(user, repo, etag = nil)
     new_repo = GithubRepo.new({
@@ -48,9 +49,14 @@ class GithubRepo
     new_repo.save
   end
 
-  def self.import_for_user(user)
-    "Reads user's github repositories and removes already existing repos."
-
+=begin
+  Returns github repos for user;
+  If user dont have yet any github repos 
+     or there's been any change on user's github account, 
+  then trys to read from github 
+  else it returns cached results from GitHubRepos collection.
+=end
+  def self.cached_user_repos(user)
     if user.github_repos.all.count == 0
       url = nil
       begin
@@ -62,15 +68,13 @@ class GithubRepo
         p "Remaining Github 1hour rate-limit: #{data[:ratelimit][:remaining]}"
 
       end while not url.nil?
-    else
-      if Github.user_repos_changed?(user) 
+    elsif Github.user_repos_changed?(user) 
         user.github_repos.delete_all
         GithubRepo.import_for_user user
-      else
+    else
         p "Nothing is changed - skipping update."
-      end
     end
-
-    return user.github_repos.all.count
+    
+    GithubRepo.by_user(user)
   end
 end

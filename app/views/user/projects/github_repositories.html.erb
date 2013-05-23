@@ -87,3 +87,19 @@
   </div>
 </script>
 
+<script id = "github-pagination-template" type = "text/template">
+  <div id= "github_pagination" class = "pagination {{= classes}}">
+    <ul> 
+      {{= items }}
+    </ul>
+  </div>
+</script>
+
+<script id = "github-pagination-item-template" type = "text/template">
+  <li class = "{{= classes}}">
+    <span href = "#"
+      data-per-page = "{{= paging.per_page}}"
+      data-page = "{{= page }}"
+      >{{= page }}</span>
+  </li>
+</script>
