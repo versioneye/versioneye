@@ -165,15 +165,15 @@ class ProductsController < ApplicationController
   def follow
     @prod_key_param = params[:product_key]
     product_key = Product.decode_prod_key @prod_key_param
-    respond = ProductService.create_follower product_key, current_user
+    follow = ProductService.follow product_key, current_user
     respond_to do |format|
       format.js
       format.html {
-          if respond.eql?("error")
-            flash.now[:error] = "An error occured. Please try again later."
-          end
-          redirect_to products_path(@prod_key_param)
-        }
+        if !follow
+          flash.now[:error] = "An error occured. Please try again later and contact the VersionEye Team."
+        end
+        redirect_to products_path(@prod_key_param)
+      }
     end
   end
 
@@ -181,11 +181,11 @@ class ProductsController < ApplicationController
     src_hidden = params[:src_hidden]
     @prod_key_param = params[:product_key]
     product_key = Product.decode_prod_key @prod_key_param
-    respond = ProductService.destroy_follower product_key, current_user
+    unfollow = ProductService.unfollow product_key, current_user
     respond_to do |format|
       format.js
       format.html {
-          if respond.eql?("error")
+          if !unfollow
             flash.now[:error] = "An error occured. Please try again later."
           end
           if src_hidden.eql? "detail"

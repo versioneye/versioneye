@@ -15,22 +15,20 @@ class FacebookController < ApplicationController
     data = response.body
     access_token = data.split("=")[1]
 
-    if signed_in? 
+    if signed_in?
       update_user_with_token(current_user, json_user, token)
       redirect_to settings_connect_path
-      return 
+      return
     end
 
     user = get_user_for_token( access_token )
-    if !user.nil?
-      sign_in user
-    end
+    sign_in user if !user.nil?
 
     product_key = cookies[:prod_key]
-    if product_key 
-      response = ProductService.create_follower product_key, current_user
-      if response.eql?("success")
-        flash[:success] = "Congratulation. You are following now #{product_key} at VersionEye." 
+    if product_key
+      follow = ProductService.follow product_key, current_user
+      if follow
+        flash[:success] = "Congratulation. You are following now #{product_key} at VersionEye."
         cookies.delete(:prod_key)
       end
     end
@@ -50,13 +48,13 @@ class FacebookController < ApplicationController
         user.save
         return user
       end
-      
+
       user = User.find_by_email(json_user['email'])
       if !user.nil? && !user.deleted
         update_user_with_token(user, json_user, token)
         return user
       end
-      
+
       user = User.new
       user.update_from_fb_json(json_user, token)
       user.terms = true
