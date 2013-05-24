@@ -11,27 +11,27 @@ class ProductService
   end
 
 
-  def self.create_follower(prod_key, user)
+  def self.follow(prod_key, user)
+    result = false
     product = Product.find_by_key prod_key
-    return "error" if product.nil? || user.nil?
-    if !product.users.include?(user)
+    if product && user && !product.users.include?( user )
       product.users.push user
       product.followers += 1
-      product.save
+      result = product.save
     end
-    return "success"
+    result
   end
 
 
-  def self.destroy_follower(prod_key, user)
+  def self.unfollow(prod_key, user)
+    result = false
     product = Product.find_by_key prod_key
-    return "error" if product.nil? || user.nil?
-    if product.users.include? user
+    if product && user && product.users.include?( user )
       product.users.delete(user)
       product.followers -= 1
-      product.save
+      result = product.save
     end
-    return "success"
+    result
   end
 
 end
