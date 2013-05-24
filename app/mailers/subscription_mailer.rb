@@ -1,4 +1,5 @@
 class SubscriptionMailer < ActionMailer::Base
+
   default from: "\"VersionEye\" <notify@versioneye.com>"
 
   def update_subscription( user )
@@ -9,4 +10,5 @@ class SubscriptionMailer < ActionMailer::Base
       tag: "subscription"
     )
   end
+
 end

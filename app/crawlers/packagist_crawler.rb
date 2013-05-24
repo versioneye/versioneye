@@ -19,7 +19,7 @@ class PackagistCrawler
   def self.crawle_package name, crawl
     return nil if name.nil? || name.empty?
     Rails.logger.info "Crawle #{name}"
-    
+
     resource = "http://packagist.org/packages/#{name}.json"
     pack = JSON.parse HTTParty.get( resource ).response.body
     package = pack['package']
@@ -28,7 +28,7 @@ class PackagistCrawler
     return nil if versions.nil? || versions.empty?
 
     product = PackagistCrawler.get_product package_name
-    PackagistCrawler.update_product product, package  
+    PackagistCrawler.update_product product, package
 
     packagist_page = "http://packagist.org/packages/#{package_name}"
     PackagistCrawler.update_packagist_link product, packagist_page
@@ -40,13 +40,13 @@ class PackagistCrawler
         version_number.gsub!("v", "")
       end
       db_version = product.version_by_number version_number
-      if db_version.nil? 
+      if db_version.nil?
         PackagistCrawler.create_new_version product, version_number, version_obj, crawl
       else
         PackagistCrawler.create_dependencies product, version_number, version_obj
       end
     end
-  rescue => e 
+  rescue => e
     Rails.logger.error "ERROR in crawle_package Message:   #{e.message}"
     Rails.logger.error "ERROR in crawle_package backtrace: #{e.backtrace.first}"
     PackagistCrawler.store_error crawl, e.message, e.backtrace, name
@@ -61,7 +61,7 @@ class PackagistCrawler
     product
   end
 
-  def self.update_product product, package 
+  def self.update_product product, package
     name = package['name']
     product.prod_key = "php/#{name}"
     product.name = name
@@ -86,7 +86,7 @@ class PackagistCrawler
     db_version.released_at = DateTime.parse(version_obj['time'])
     license = version_obj['license']
     if license && !license.empty?
-      db_version.license = license[0]  
+      db_version.license = license[0]
     end
     product.versions.push db_version
     product.reindex = true
@@ -96,7 +96,7 @@ class PackagistCrawler
 
     product.update_version_data
 
-    CrawlerUtils.create_newest product, version_number  
+    CrawlerUtils.create_newest product, version_number
     CrawlerUtils.create_notifications product, version_number
 
     Versionlink.create_versionlink product.prod_key, version_number, version_obj['homepage'], "Homepage"
@@ -104,7 +104,7 @@ class PackagistCrawler
     PackagistCrawler.create_developers version_obj['authors'], product, version_number
     PackagistCrawler.create_download product, version_number, version_obj
     PackagistCrawler.create_dependencies product, version_number, version_obj
-  rescue => e 
+  rescue => e
     Rails.logger.error "ERROR in create_new_version Message:   #{e.message}"
     Rails.logger.error "ERROR in create_new_version backtrace: #{e.backtrace}"
     PackagistCrawler.store_error crawl, e.message, e.backtrace, product.name
@@ -112,7 +112,7 @@ class PackagistCrawler
 
   def self.create_download product, version_number, version_obj
     dist = version_obj['dist']
-    if dist && !dist.empty? 
+    if dist && !dist.empty?
       dist_url = dist['url']
       dist_type = dist['type']
       dist_name = "#{product.name}.#{dist_type}"
@@ -135,7 +135,7 @@ class PackagistCrawler
   end
 
   def self.create_dependency dependencies, product, version_number, scope
-    return nil if dependencies.nil? || dependencies.empty? 
+    return nil if dependencies.nil? || dependencies.empty?
     dependencies.each do |dep|
       require_name = dep[0]
       require_version = dep[1]
@@ -145,9 +145,9 @@ class PackagistCrawler
       dep_prod_key = "php/#{require_name}"
       dep = Dependency.find_by(product.prod_key, version_number, require_name, require_version, dep_prod_key)
       if dep.nil?
-        dependency = Dependency.new({:name => require_name, :version => require_version, 
-          :dep_prod_key => dep_prod_key, :prod_key => product.prod_key, 
-          :prod_version => version_number, :scope => scope, :prod_type => Project::A_TYPE_COMPOSER, 
+        dependency = Dependency.new({:name => require_name, :version => require_version,
+          :dep_prod_key => dep_prod_key, :prod_key => product.prod_key,
+          :prod_version => version_number, :scope => scope, :prod_type => Project::A_TYPE_COMPOSER,
           :language => "PHP"})
         dependency.save
         dependency.update_known
@@ -164,14 +164,14 @@ class PackagistCrawler
         author_homepage = author['homepage']
         author_role = author['role']
         devs = Developer.find_by product.prod_key, version_number, author_name
-        if devs && !devs.empty? 
+        if devs && !devs.empty?
           next
         end
-        developer = Developer.new({:prod_key => product.prod_key, 
-          :version => version_number, :name => author_name, :email => author_email, 
+        developer = Developer.new({:prod_key => product.prod_key,
+          :version => version_number, :name => author_name, :email => author_email,
           :homepage => author_homepage, :role => author_role})
         developer.save
-      end      
+      end
     end
   end
 
