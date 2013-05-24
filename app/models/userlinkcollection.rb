@@ -1,17 +1,17 @@
 class Userlinkcollection
-  
+
   include Mongoid::Document
   include Mongoid::Timestamps
 
   A_LINKEDIN      = "http://www.linkedin.com/in/"
   A_XING          = "http://www.xing.com/profile/"
-  A_GULP          = "http://www.gulp.de/resume/"
+  A_GULP          = "http://www.gulp.de/resume/"    # TODO remove this shit
   A_GITHUB        = "https://github.com/"
   A_STACKOVERFLOW = "http://stackoverflow.com/users/"
   A_TWITTER       = "https://twitter.com/#!/"
   A_FACEBOOK      = "http://www.facebook.com/people/"
 
-  field :user_id,       type: String 
+  field :user_id,       type: String
   field :linkedin,      type: String, :default => A_LINKEDIN
   field :xing,          type: String, :default => A_XING
   field :gulp,          type: String, :default => A_GULP
@@ -25,7 +25,7 @@ class Userlinkcollection
   end
 
   def empty?
-  	linkedin_empty? && xing_empty? && gulp_empty? && github_empty? && 
+  	linkedin_empty? && xing_empty? && gulp_empty? && github_empty? &&
     stackoverflow_empty? && twitter_empty? && facebook_empty?
   end
 
@@ -36,13 +36,13 @@ class Userlinkcollection
     if self.xing && !self.xing.empty?
       self.xing = "#{A_XING}#{self.xing}"
     end
-    if self.gulp && !self.gulp.empty? 
+    if self.gulp && !self.gulp.empty?
       self.gulp = "#{A_GULP}#{self.gulp}"
     end
-    if self.github && !self.github.empty? 
+    if self.github && !self.github.empty?
       self.github = "#{A_GITHUB}#{self.github}"
     end
-    if self.stackoverflow && !self.stackoverflow.empty? 
+    if self.stackoverflow && !self.stackoverflow.empty?
       self.stackoverflow = "#{A_STACKOVERFLOW}#{self.stackoverflow}"
     end
     if self.twitter && !self.twitter.empty?

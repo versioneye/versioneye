@@ -1,12 +1,14 @@
 class Versionchange
-  
+
+  # TODO where used ?
+
   include Mongoid::Document
   include Mongoid::Timestamps
-  
+
   field :prod_key, type: String
-  field :version_id, type: String  
+  field :version_id, type: String
   field :change, type: String
-  
+
   def as_json parameter
     {
       :name => self.name,
@@ -15,5 +17,5 @@ class Versionchange
       :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
     }
   end
-  
+
 end

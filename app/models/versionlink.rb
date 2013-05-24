@@ -3,12 +3,12 @@ class Versionlink
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :prod_key, type: String
-  field :version_id, type: String  
-  field :link, type: String
-  field :name, type: String
-  field :manual, type: Boolean, :default => false
-  
+  field :prod_key  , type: String
+  field :version_id, type: String
+  field :link      , type: String
+  field :name      , type: String
+  field :manual    , type: Boolean, :default => false
+
   def as_json parameter
     {
       :name => self.name,
@@ -31,13 +31,13 @@ class Versionlink
   end
 
   def self.create_versionlink prod_key, version_number, link, name
-    return nil if link.nil? || link.empty? 
+    return nil if link.nil? || link.empty?
     versionlinks = Versionlink.find_version_link(prod_key, version_number, link)
-    if versionlinks && !versionlinks.empty?  
+    if versionlinks && !versionlinks.empty?
       Rails.logger.info "-- link exist already : #{prod_key} - #{version_number} - #{link} - #{name}"
-      return nil 
+      return nil
     end
-      
+
     versionlink = Versionlink.new
     versionlink.name = name
     versionlink.link = link
@@ -50,8 +50,8 @@ class Versionlink
   end
 
   def get_link
-    return "http://#{self.link}" if self.link.match(/^www.*/) != nil 
+    return "http://#{self.link}" if self.link.match(/^www.*/) != nil
     return self.link
   end
-  
+
 end

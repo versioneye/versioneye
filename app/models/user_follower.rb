@@ -1,9 +1,11 @@
 class UserFollower
 
+  # TODO where used ?
+
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :follower_id, type: String  
+  field :follower_id, type: String
   field :followed_id, type: String
 
   def followers( user_id )

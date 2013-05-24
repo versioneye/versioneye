@@ -1,5 +1,7 @@
 class Productlook
 
+  # TODO where used ?
+
   require 'will_paginate/array'
 
   include Mongoid::Document
