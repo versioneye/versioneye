@@ -1,4 +1,6 @@
-class Job 
+class Job
+
+	# TODO where used ?
 
 	include Mongoid::Document
 	include Mongoid::Timestamps
@@ -6,7 +8,7 @@ class Job
 
 	field :title, type: String
 	field :mandant, type: String
-	field :link, type: String 
+	field :link, type: String
 	field :start, type: DateTime
 	field :stop, type: DateTime
 	field :location, type: String

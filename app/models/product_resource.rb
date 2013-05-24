@@ -13,8 +13,8 @@ class ProductResource
   has_one :submitted_url, autosave: true
 
   validates_presence_of :url, :resource_type
-  
-  def self.find_by_id(id)
+
+  def self.find_by_id( id )
     return nil if id.nil?
     id = id.to_s
     return ProductResource.find(id) if ProductResource.where(_id: id).exists?
