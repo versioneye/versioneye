@@ -1,4 +1,4 @@
-class ProjectService 
+class ProjectService
 
   def self.update_dependencies( period )
     projects = Project.all()
@@ -20,7 +20,7 @@ class ProjectService
       project.url = S3.url_for( project.s3_filename )
     end
     new_project = self.create_from_url( project.url )
-    if new_project.dependencies && !new_project.dependencies.empty? 
+    if new_project.dependencies && !new_project.dependencies.empty?
       project.overwrite_dependencies( new_project.dependencies )
       project.out_number = new_project.out_number
       project.dep_number = new_project.dep_number
@@ -36,9 +36,9 @@ class ProjectService
     nil
   end
 
-  # Fetch the project file from GitHub, store it on S3 and 
-  # update the s3_filename & url in the project instance 
-  # 
+  # Fetch the project file from GitHub, store it on S3 and
+  # update the s3_filename & url in the project instance
+  #
   def self.update_from_github( project )
     github_project = project.github_project
     current_user = project.user
@@ -60,14 +60,14 @@ class ProjectService
   def self.create_from_url( url )
     project_type = Project.type_by_filename( url )
     parser = ParserStrategy.parser_for( project_type, url )
-    parser.parse url 
-  rescue => e 
+    parser.parse url
+  rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
     project = Project.new
   end
 
-  def self.destroy_project project_id 
+  def self.destroy_project project_id
     project = Project.find_by_id( project_id )
     if project.s3_filename && !project.s3_filename.empty?
       S3.delete( project.s3_filename )
