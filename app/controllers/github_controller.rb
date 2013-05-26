@@ -10,7 +10,7 @@ class GithubController < ApplicationController
       return
     end
 
-    token = get_token( code )
+    token = Github.token( code )
     json_user = Github.user token
 
     if signed_in?
@@ -79,24 +79,6 @@ class GithubController < ApplicationController
   end
 
   private
-
-    # TODO move to GitHub.rb
-    def get_token( code )
-      domain = 'https://github.com/'
-      uri = 'login/oauth/access_token'
-      query = 'client_id='
-      query += Settings.github_client_id
-      query += '&client_secret='
-      query += Settings.github_client_secret
-      query += '&code=' + code
-      link = "#{domain}#{uri}?#{query}"
-      doc = Nokogiri::HTML( open( URI.encode(link) ) )
-      p_element = doc.xpath('//body/p')
-      p_string = p_element.text
-      pips = p_string.split("&")
-      token = pips[0].split("=")[1]
-      token
-    end
 
     def get_user_for_token(json_user, token)
       user = User.find_by_github_id( json_user['id'] )
