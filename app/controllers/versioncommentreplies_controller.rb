@@ -1,5 +1,5 @@
 class VersioncommentrepliesController < ApplicationController
-  
+
   before_filter :authenticate
 
   def create
@@ -19,15 +19,15 @@ class VersioncommentrepliesController < ApplicationController
     @versioncomment.language = @product.language
     attach_version(@product, ver)
     saved = false;
-    if @versioncomment.save      
+    if @versioncomment.save
       saved = true
       send_comment_reply_mails(user, @versioncomment)
-    end        
+    end
     respond_to do |format|
-      format.html { 
-        if saved 
+      format.html {
+        if saved
           flash[:success] = "Comment saved!"
-        else 
+        else
           flash[:error] = "Something went wrong"
         end
         redirect_to product_version_path(@product)
@@ -35,14 +35,14 @@ class VersioncommentrepliesController < ApplicationController
       format.js { }
     end
   end
-  
-  private 
-      
+
+  private
+
     def send_comment_reply_mails(user, comment)
       comment_user = comment.user
       if !comment_user.username.eql?(user.username)
         VersioncommentreplyMailer.versioncomment_reply_email(comment_user, user, comment).deliver
       end
     end
-  
+
 end

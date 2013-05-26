@@ -1,44 +1,41 @@
-	<link href="<%= Settings.server_url %>/favicon.ico" rel="shortcut icon"  />
-	<!--[if lt IE 8]>
-		<meta http-equiv="REFRESH" content="0;url=http://www.versioneye.com/oldbrowser.html" />
-	<![endif]-->
-	<!--[if lt IE 9]>
-		<script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-	<%= csrf_meta_tag %>
-	<%= stylesheet_link_tag "application" %>
+  <link href="<%= Settings.server_url %>/favicon.ico" rel="shortcut icon"  />
+  <!--[if lt IE 8]>
+    <meta http-equiv="REFRESH" content="0;url=http://www.versioneye.com/oldbrowser.html" />
+  <![endif]-->
+  <!--[if lt IE 9]>
+    <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <%= csrf_meta_tag %>
+  <%= stylesheet_link_tag "application" %>
 
-	<% if @page.eql?("project_new") %>
-		<%= javascript_include_tag "application_project_new", :defer => false, :async => false %>
-	<% elsif @product || @project %>
-		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-		<%= javascript_include_tag "application_product",     :defer => false, :async => false %>
-	<% elsif @page.eql?("LandingPage") %>
-		<%= javascript_include_tag "application_lp",          :defer => true, :async => true %>
-	<% elsif @page.eql?("search") %>
-		<%= javascript_include_tag "application_search",      :defer => true, :async => true %>
-	<% elsif @page.eql?("statistics") %>
-		<%= javascript_include_tag "application_statistics",  :defer => false, :async => false %>
-	<% elsif @page.eql?("profile") %>
-		<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
-		<%= javascript_include_tag "application_profile",     :defer => true, :async => true %>
-	<% elsif @page.eql?("jobs") %>
-		<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
-		<%= javascript_include_tag "application_jobs",        :defer => true, :async => true %>
-	<% elsif @page.eql?("news") %>
-		<%= javascript_include_tag "application_news",        :defer => true, :async => true %>
-	<% elsif @page.eql?("cc") %>
-		<%= javascript_include_tag "application_default",     :defer => true, :async => true %>
-		<script type="text/javascript" src="https://js.stripe.com/v1/"></script>
-		<script type="text/javascript">
-		    Stripe.setPublishableKey('<%= Settings.stripe_public_key %>');
-		</script>
-	<% elsif @page.eql?("user_created") %>
-		<%= javascript_include_tag "application",             :defer => false, :async => false %>
-	<% elsif current_page?(api_path) %>
-		<%= javascript_include_tag "application_swagger",     :defer => false %>
-		<link href='css/swagger/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
-		<link href='assets/swagger/screen.css' media='screen' rel='stylesheet' type='text/css'/>
-	<% else %>
-		<%= javascript_include_tag "application_default",     :defer => true, :async => true %>
-	<% end %>
+  <% if @page.eql?("project_new") %>
+    <%= javascript_include_tag "application_project_new", :defer => false, :async => false %>
+  <% elsif @product || @project %>
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+    <%= javascript_include_tag "application_product",     :defer => false, :async => false %>
+  <% elsif @page.eql?("LandingPage") %>
+    <%= javascript_include_tag "application_lp",          :defer => true, :async => true %>
+  <% elsif @page.eql?("search") %>
+    <%= javascript_include_tag "application_search",      :defer => true, :async => true %>
+  <% elsif @page.eql?("statistics") %>
+    <%= javascript_include_tag "application_statistics",  :defer => false, :async => false %>
+  <% elsif @page.eql?("profile") %>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+    <%= javascript_include_tag "application_profile",     :defer => true, :async => true %>
+  <% elsif @page.eql?("news") %>
+    <%= javascript_include_tag "application_news",        :defer => true, :async => true %>
+  <% elsif @page.eql?("cc") %>
+    <%= javascript_include_tag "application_default",     :defer => true, :async => true %>
+    <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+    <script type="text/javascript">
+        Stripe.setPublishableKey('<%= Settings.stripe_public_key %>');
+    </script>
+  <% elsif @page.eql?("user_created") %>
+    <%= javascript_include_tag "application",             :defer => false, :async => false %>
+  <% elsif current_page?(api_path) %>
+    <%= javascript_include_tag "application_swagger",     :defer => false %>
+    <link href='css/swagger/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='assets/swagger/screen.css' media='screen' rel='stylesheet' type='text/css'/>
+  <% else %>
+    <%= javascript_include_tag "application_default",     :defer => true, :async => true %>
+  <% end %>
