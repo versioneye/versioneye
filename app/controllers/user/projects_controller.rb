@@ -27,7 +27,6 @@ class User::ProjectsController < ApplicationController
       project = fetch_and_store project_url
     elsif github_project && !github_project.empty? && !github_project.eql?("NO_PROJECTS_FOUND")
       project = fetch_from_github_and_store github_project
-      return nil if project.nil?
     else
       flash[:error] = "Please put in a URL OR select a file from your computer. Or select a GitHub project."
       redirect_to new_user_project_path
@@ -38,7 +37,8 @@ class User::ProjectsController < ApplicationController
         if project and project.id
           redirect_to user_project_path( project._id )
         else
-          redirect_to user_projects_path
+          flash[:error] = "Cant import that project from Github: unparseable project file or issues with filestorage. Please send issue to versioneye."
+          redirect_to :back
         end
       }
       format.json {
@@ -48,9 +48,10 @@ class User::ProjectsController < ApplicationController
             data: {project_id: project.id}
           }
         else
+          p flash[:error]
           response_msg = {
             success: false,
-            msg: "Cant read project's info from Github or we have problems with s3."
+            msg: flash[:error]
           }
         end
         render json: response_msg
@@ -257,7 +258,6 @@ class User::ProjectsController < ApplicationController
       project_info = Github.get_project_info( github_project, sha, current_user.github_token )
       if project_info.empty?
         flash[:error] = "We couldn't find any project file in the selected project. Please choose another project."
-        redirect_to new_user_project_path
         return nil
       end
       file = Github.fetch_file( project_info['url'], current_user.github_token )
@@ -267,8 +267,9 @@ class User::ProjectsController < ApplicationController
       project.s3_filename = s3_infos['filename']
       project.github_project = github_project
       project.private_project = private_project
-      store_project( project )
-      project
+      if store_project( project )
+        return project
+      end
     end
 
     def create_project( url, project_name )
@@ -285,8 +286,10 @@ class User::ProjectsController < ApplicationController
       if project.dependencies && !project.dependencies.empty? && project.save
         project.save_dependencies
         flash[:success] = "Project was created successfully."
+        return true
       else
         flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."
+        return false
       end
     end
 
