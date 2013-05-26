@@ -33,7 +33,7 @@ class ProductsController < ApplicationController
       start = Time.now
       languages = get_language_array(@lang)
       @products = ProductService.search( @query, @groupid, languages, params[:page])
-      save_search_log( @query, @products, start )
+      # save_search_log( @query, @products, start )
     end
     @languages = @@languages
   end
