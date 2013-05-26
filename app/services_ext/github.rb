@@ -2,6 +2,23 @@ class Github
 
   A_USER_AGENT = "www.versioneye.com"
 
+  def self.token( code )
+    domain = 'https://github.com/'
+    uri = 'login/oauth/access_token'
+    query = 'client_id='
+    query += Settings.github_client_id
+    query += '&client_secret='
+    query += Settings.github_client_secret
+    query += '&code=' + code
+    link = "#{domain}#{uri}?#{query}"
+    doc = Nokogiri::HTML( open( URI.encode(link) ) )
+    p_element = doc.xpath('//body/p')
+    p_string = p_element.text
+    pips = p_string.split("&")
+    token = pips[0].split("=")[1]
+    token
+  end
+
   def self.user( token )
     url = 'https://api.github.com/user?access_token=' + URI.escape( token )
     response_body = HTTParty.get(url, :headers => {"User-Agent" => A_USER_AGENT } ).response.body
@@ -37,7 +54,6 @@ class Github
     end
     repo_names
   end
-
 
   def self.orga_repo_names( github_token )
     orga_names = self.orga_names github_token
