@@ -92,7 +92,6 @@ class UsersController < ApplicationController
         @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
         if has_permission_to_see_products( @user, current_user ) && !@user.nil?
           @products = @user.products.paginate(:page => params[:page])
-          @count = @user.products.count
         end
       }
       format.json {
@@ -100,12 +99,8 @@ class UsersController < ApplicationController
       }
       format.rss {
         if has_permission_to_see_products( @user, current_user ) && !@user.nil?
+          # load the 30 newest notifications
           @notifications = Notification.by_user_id(@user.id)
-          my_updated_products = Product.find(@notifications.map(&:product_id)) unless @notifications.nil?
-          @products = Hash.new
-          my_updated_products.each do |prod|
-            @products[prod._id.to_s] = prod
-          end
         end
         render  :layout => false
       }

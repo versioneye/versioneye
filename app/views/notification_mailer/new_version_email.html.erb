@@ -6,14 +6,14 @@
   <body>
     <p>Hello <%= @user.fullname %></p>
     <p>
-      There are new releases out there. 
+      There are new releases out there.
     </p>
     <p>
-      <table>       
+      <table>
         <% @notifications.each do |notification| %>
           <tr>
             <td>
-              <% product = Product.find_by_id( notification.product_id ) %>
+              <% product = notification.product %>
               <% version = product.version_by_number( notification.version_id ) %>
               <img src= "http://www.versioneye.com/assets/language/<%= product.language.downcase %>.png" style = "width: 48px; height: 48px;"/>
             </td>
@@ -22,9 +22,9 @@
               <% product_url += "/version/#{version.to_param}" unless version.nil? %>
               <% product_title = "#{product.name}".strip %>
               <% product_title += " (#{version.version})" unless version.nil? %>
-              
+
               <a href="<%= product_url %>"><%= product_title %></a>
-              
+
               <% notification.sent_email = true %>
               <% notification.save %>
             </td>
