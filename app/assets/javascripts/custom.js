@@ -52,11 +52,6 @@ jQuery(document).ready(function(){
       });
   }
 
-  map_for_jobs = document.getElementById("map_for_jobs")
-  if (map_for_jobs){
-    initialize_jobs()
-  }
-
   map_for_profile = document.getElementById("map_for_user_profile")
   if (map_for_profile){
     path = window.location.pathname;
