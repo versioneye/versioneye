@@ -82,7 +82,7 @@ function make_notification_bar(style, message){
 function show_repo_notification(repo_id, style, message){
   jQuery("#notification-bar-" + repo_id).html(
     make_notification_bar(style, message)
-  ).delay(5000).fadeOut(2000);
+  ).delay(15000).fadeOut(2000);
 }
 
 function show_repo_loader(repo_id){
@@ -115,7 +115,7 @@ function addGitHubProject(selected_el, data){
       show_repo_notification(data.githubId, "alert-success", "Project is added.");
     } else {
       show_repo_notification(data.githubId, "alert-warning",
-                             "Fail: " + response.msg + "with status " + status);
+                             "Fail: " + response.msg);
       selected_item.parents('.switch').bootstrapSwitch('toggleState');
 
     }
@@ -136,7 +136,7 @@ function removeGitHubProject(selected_el, data){
     var query_url = "/user/projects/" + data.githubProjectId + ".json";
     var jqxhr = jQuery.ajax({url: query_url, type: "DELETE"});
   } else {
-    show_repo_notification(data.githubId, "alert-warning", "Cant remove because we didnt get correct project id after importing from github.");
+   // show_repo_notification(data.githubId, "alert-warning", "Cant remove because we didnt get correct project id after importing from github.");
     return 0;
   }
 
