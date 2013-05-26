@@ -3,6 +3,11 @@
 Here we track our changes. Because the app is already online since 1 year we start bey version 1.0.0.
 We are using the semantic versioning. Check out this: http://semver.org/
 
+== 1.1.0
+
+* <b>Python</b>: We improved the parser for requirement.txt and added support for pip.log.
+* <b>RSS</b>: BugFix and test case for fav. RSS feed.
+
 == 1.0.0
 
 * <b>Dependency Badges</b>: We added to every package page dependency badges. You can even integrate them into your website.
