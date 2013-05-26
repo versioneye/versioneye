@@ -1,21 +1,17 @@
 class Notification
 
-  # TODO where used ?
-
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :user_id, type: String
-  field :product_id, type: String
   field :version_id, type: String
-  field :read, type: Boolean, default: false
+  field :read      , type: Boolean, default: false
   field :sent_email, type: Boolean, default: false
 
-  validates_presence_of :user_id,    :message => "User is mandatory!"
+  validates_presence_of :user_id   , :message => "User is mandatory!"
   validates_presence_of :product_id, :message => "Product is mandatory!"
 
   scope :all_not_sent, where(sent_email: false)
-  scope :by_user_id, ->(user_id){where(user_id: user_id).desc(:created_at).limit(30)}
+  scope :by_user_id  , ->(user_id){where(user_id: user_id).desc(:created_at).limit(30)}
 
   belongs_to :user
   belongs_to :product
