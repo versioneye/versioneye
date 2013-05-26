@@ -17,7 +17,7 @@ gem 'twitter_oauth'     , '0.4.4'
 gem 'aws-s3'            , '0.6.3', :require => 'aws/s3'
 gem 'nokogiri'          , '1.5.9'
 gem 'stripe'            , '1.8.3'
-gem 'puma'              , '2.0.1'
+gem 'thin'              , '1.5.1'
 gem 'tire'              , '0.5.8'
 gem 'json'              , '1.8.0'
 gem 'dalli'             , '2.6.3'   # memcache library
@@ -52,4 +52,4 @@ group :test do
   gem 'fakeweb'           , '1.3.0'
 end
 
-#gem 'thin'              , '1.5.1'
+gem 'puma'              , '2.0.1'
