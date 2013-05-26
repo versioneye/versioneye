@@ -1,15 +1,23 @@
 require 'spec_helper'
 
 describe RequirementsParser do
-  
-  describe "parse" do 
-    
+
+  before :all do
+    Product.destroy_all
+  end
+
+  after :all do
+    Product.destroy_all
+  end
+
+  describe "parse" do
+
     it "parse from https the file correctly" do
       parser = RequirementsParser.new
       project = parser.parse("https://s3.amazonaws.com/veye_test_env/requirements.txt")
       project.should_not be_nil
     end
-    
+
     it "parse from http the file correctly" do
       name = "South"
       product = Product.new
@@ -77,10 +85,22 @@ describe RequirementsParser do
       product4.versions.push(version4_1)
       product4.save
 
+      name5 = "jsmin"
+      product5 = Product.new
+      product5.name = name5
+      product5.name_downcase = name5
+      product5.prod_key = "pip/jsmin"
+      product5.version = "1.1.7"
+      product5.save
+      version5_1 = Version.new
+      version5_1.version = "1.1.7"
+      product5.versions.push(version5_1)
+      product5.save
+
       parser = RequirementsParser.new
       project = parser.parse("http://s3.amazonaws.com/veye_test_env/requirements.txt")
       project.should_not be_nil
-      project.dependencies.count.should eql(20)
+      project.dependencies.count.should eql(22)
 
       dep_01 = project.dependencies.first
       dep_01.name.should eql("Django")
@@ -106,43 +126,54 @@ describe RequirementsParser do
       dep_04.version_current.should eql("2.0.0")
       dep_04.comperator.should eql(">=")
 
-      project.dependencies.last.name.should eql("xmpppy")
+      dep_05 = project.dependencies[20]
+      dep_05.name.should eql("jsmin")
+      dep_05.version_requested.should eql("1.1.7")
+      dep_05.version_current.should eql("1.1.7")
+      dep_05.comperator.should eql(nil)
 
-      product.remove
-      product2.remove
-      product3.remove
-      product4.remove
-    end
-    
-  end
-  
-  describe "get_splitter" do 
-    
-    it "returns the right splitt ==" do 
-      parser = RequirementsParser.new
-      parser.get_splitter("django==1.0").should eql("==")
-    end
-    
-    it "returns the right splitt <" do 
-      parser = RequirementsParser.new
-      parser.get_splitter("django<1.0").should eql("<")
-    end
-    
-    it "returns the right splitt <=" do 
-      parser = RequirementsParser.new
-      parser.get_splitter("django<=1.0").should eql("<=")
-    end
-    
-    it "returns the right splitt >" do 
-      parser = RequirementsParser.new
-      parser.get_splitter("django>1.0").should eql(">")
-    end
-    
-    it "returns the right splitt >=" do 
-      parser = RequirementsParser.new
-      parser.get_splitter("django>=1.0").should eql(">=")
+      project.dependencies.last.name.should eql("emencia.django.newsletter")
     end
 
   end
-  
+
+  describe "extract_comparator" do
+
+    it "returns the right splitt ==" do
+      parser = RequirementsParser.new
+      parser.extract_comparator("django==1.0").should eql("==")
+    end
+
+    it "returns the right splitt <" do
+      parser = RequirementsParser.new
+      parser.extract_comparator("django<1.0").should eql("<")
+    end
+
+    it "returns the right splitt <=" do
+      parser = RequirementsParser.new
+      parser.extract_comparator("django<=1.0").should eql("<=")
+    end
+
+    it "returns the right splitt >" do
+      parser = RequirementsParser.new
+      parser.extract_comparator("django>1.0").should eql(">")
+    end
+
+    it "returns the right splitt >=" do
+      parser = RequirementsParser.new
+      parser.extract_comparator("django>=1.0").should eql(">=")
+    end
+
+    it "returns the right splitt !=" do
+      parser = RequirementsParser.new
+      parser.extract_comparator("django!=1.0").should eql("!=")
+    end
+
+    it "returns nil" do
+      parser = RequirementsParser.new
+      parser.extract_comparator("django").should be_nil
+    end
+
+  end
+
 end

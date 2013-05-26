@@ -281,7 +281,7 @@ class User::ProjectsController < ApplicationController
       project
     end
 
-    def store_project(project)
+    def store_project( project )
       project.make_project_key!
       if project.dependencies && !project.dependencies.empty? && project.save
         project.save_dependencies
