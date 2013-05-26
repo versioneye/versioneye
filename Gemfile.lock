@@ -70,10 +70,12 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.2)
+    daemons (1.1.9)
     dalli (2.6.3)
     descendants_tracker (0.0.1)
     diff-lcs (1.2.4)
     erubis (2.7.0)
+    eventmachine (1.0.3)
     every_day_irb (1.4.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -235,6 +237,10 @@ GEM
     therubyracer (0.11.4)
       libv8 (~> 3.11.8.12)
       ref
+    thin (1.5.1)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
     thor (0.18.1)
     tilt (1.4.1)
     tire (0.5.8)
@@ -312,6 +318,7 @@ DEPENDENCIES
   stripe (= 1.8.3)
   terminal-notifier
   therubyracer
+  thin (= 1.5.1)
   tire (= 0.5.8)
   turn
   twitter_oauth (= 0.4.4)
