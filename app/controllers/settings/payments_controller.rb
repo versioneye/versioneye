@@ -6,8 +6,8 @@ class Settings::PaymentsController < ApplicationController
   force_ssl if Rails.env.production?
 
   def index
-    customer_id = current_user.stripe_customer_id
-    @customer = StripeService.fetch_customer(customer_id) if customer_id
+    customer_id        = current_user.stripe_customer_id
+    @customer          = StripeService.fetch_customer(customer_id) if customer_id
     @customer_invoices = @customer.invoices unless @customer.nil?
 
     respond_to do |format|

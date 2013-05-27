@@ -13,10 +13,10 @@ class Settings::PlanController < ApplicationController
 
   def update
     @plan_name_id = params[:plan]
-    user = current_user
-    stripe_token = user.stripe_token
-    customer_id = user.stripe_customer_id
-    customer = nil
+    user          = current_user
+    stripe_token  = user.stripe_token
+    customer_id   = user.stripe_customer_id
+    customer      = nil
     if stripe_token && customer_id
       customer = StripeService.fetch_customer customer_id
     end
