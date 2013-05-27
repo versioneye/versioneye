@@ -34,11 +34,12 @@ class Github
     repo = user.github_repos.all.first
     headers = {
       "User-Agent" => A_USER_AGENT,
-      "If-None-Match" => repo[:etag].to_s,
+      "If-Modified-Since" => repo[:imported_at].httpdate
     }
     url =  "#{A_API_URL}/user?access_token=#{user.github_token}"
     response = HTTParty.head(url, headers: headers)
-    response.code == 304 ? false : true
+    p "Is User repos changed: #{response.code != 304}, response code: #{response.code} "
+    response.code != 304
   end
 
   def self.user_repos(user, url = nil, page = 1, per_page = 20)

@@ -176,7 +176,6 @@ class User::ProjectsController < ApplicationController
   #TODO: add organizations
   def github_repos
     repos = []
-    #github_repos = Github.user_repos(current_user.github_token)
     github_repos = GithubRepo.cached_user_repos(current_user).asc(:language)
     github_repos = github_repos.paginate(
       page: (params[:page] || 1), 
