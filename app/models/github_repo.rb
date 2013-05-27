@@ -65,12 +65,11 @@ class GithubRepo
           new_repo = GithubRepo.add_new(user, repo, data[:etag])
         end
         url = data[:paging]["next"]
-        p "Remaining Github 1hour rate-limit: #{data[:ratelimit][:remaining]}"
-
       end while not url.nil?
     elsif Github.user_repos_changed?(user) 
+        p "Repos are changed - going to re-import all user repos."
         user.github_repos.delete_all
-        GithubRepo.import_for_user user
+        GithubRepo.cached_user_repos user
     else
         p "Nothing is changed - skipping update."
     end
