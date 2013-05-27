@@ -8,7 +8,7 @@ class ComposerLockParser < ComposerParser
     project.dependencies = []
 
     dependencies.each do |package|
-      self.process_package project, package  
+      self.process_package project, package
     end
 
     project.dep_number = project.dependencies.count
@@ -18,7 +18,7 @@ class ComposerLockParser < ComposerParser
     project
   end
 
-  def process_package project, package 
+  def process_package project, package
     dependency = Projectdependency.new
     dependency.name = package["name"]
 
@@ -27,7 +27,7 @@ class ComposerLockParser < ComposerParser
 
     version = self.fetch_package_version(package)
     self.parse_requested_version(version, dependency, product)
-    
+
     project.out_number += 1 if dependency.outdated?
     project.unknown_number += 1 unless product
 
@@ -42,7 +42,7 @@ class ComposerLockParser < ComposerParser
     unless version =~ /\d+/
       if package.has_key? 'extra' and package['extra'].has_key? 'branch-alias'
         aliases = package['extra']['branch-alias']
-        alias_value = aliases[version] 
+        alias_value = aliases[version]
         version = alias_value unless alias_value.nil?
       end
     end
@@ -61,7 +61,7 @@ class ComposerLockParser < ComposerParser
     data['packages']
   end
 
-  def product_by_key prod_key 
+  def product_by_key prod_key
     product = Product.find_by_key(prod_key)
     product = Product.find_by_key_case_insensitiv(prod_key) if product.nil?
     product
