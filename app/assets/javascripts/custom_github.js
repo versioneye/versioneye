@@ -267,7 +267,7 @@ function render_github_pagination(selector, paging){
   var item_template = _.template(jQuery("#github-pagination-item-template").html());
   var paging_items = [];
 
-  for(i = 1; i < paging.total_pages; i++){
+  for(i = 1; i <= paging.total_pages; i++){
     var item_classes = "paging-item";
     item_classes += (i == paging.current_page) ? " active" : ""
 
