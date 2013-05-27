@@ -189,15 +189,14 @@ class User::ProjectsController < ApplicationController
       page: (params[:page] || 1), 
       per_page: (params[:per_page] || 30)
     )
-
-    imported_repos = Project.by_user(current_user).by_source(Project::A_SOURCE_GITHUB)
-    imported_repo_names  = imported_repos.map(&:name).to_set
+    imported_repos = current_user.projects.by_source(Project::A_SOURCE_GITHUB)
+    imported_repo_names  = imported_repos.map(&:github_project).to_set
     supported_langs = Github.supported_languages
     github_repos.each do |repo|
       repo[:supported] = supported_langs.include? repo["language"]
       repo[:imported] = imported_repo_names.include? repo["fullname"]
       if repo[:imported]
-        project_id = imported_repos.where(name: repo["fullname"]).first.id 
+        project_id = imported_repos.where(github_project: repo["fullname"]).first.id 
         repo[:project_url] = url_for(action: "show", id: project_id)
         repo[:project_id] = project_id
       else
