@@ -40,35 +40,43 @@ Versioneye::Application.routes.draw do
   post  '/resetpassword',                :to => 'users#resetpassword'
   get   '/home',                         :to => 'users#home'
 
+
   get  '/settings/profile',              :to => 'settings#profile'
-  get  '/settings/password',             :to => 'settings#password'
-  get  '/settings/privacy',              :to => 'settings#privacy'
-  get  '/settings/delete',               :to => 'settings#delete'
-  get  '/settings/links',                :to => 'settings#links'
-  get  '/settings/creditcard',           :to => 'settings#creditcard'
-  get  '/settings/plans',                :to => 'settings#plans'
-  get  '/settings/payments',             :to => 'settings#payments'
-  get  '/settings/receipt/:invoice_id',  :to => 'settings#receipt', :as => 'settings_receipt'
-  get  '/settings/connect',              :to => 'settings#connect'
-  get  '/settings/disconnect/',          :to => 'settings#disconnect'
-  get  '/settings/emails/',              :to => 'settings#emails'
-  get  '/settings/notifications/',       :to => 'settings#notifications'
-  post '/settings/updateplan',           :to => 'settings#updateplan'
-  post '/settings/delete_email',         :to => 'settings#delete_email'
-  post '/settings/make_email_default',   :to => 'settings#make_email_default'
-  post '/settings/add_email',            :to => 'settings#add_email'
-  post '/settings/updatecreditcard',     :to => 'settings#updatecreditcard'
-  post '/settings/updatepassword',       :to => 'settings#updatepassword'
-  post '/settings/updateprivacy',        :to => 'settings#updateprivacy'
   post '/settings/updateprofile',        :to => 'settings#updateprofile'
-  post '/settings/updatelinks',          :to => 'settings#updatelinks'
-  post '/settings/updatenotifications',  :to => 'settings#updatenotifications'
+
+  get  '/settings/password',             :to => 'settings#password'
+  post '/settings/updatepassword',       :to => 'settings#updatepassword'
+
+  get  '/settings/privacy',              :to => 'settings#privacy'
+  post '/settings/updateprivacy',        :to => 'settings#updateprivacy'
+
+  get  '/settings/delete',               :to => 'settings#delete'
   post '/settings/destroy',              :to => 'settings#destroy'
 
-  get '/settings/api',                   :to => 'settings#api'
+  get  '/settings/links',                :to => 'settings#links'
+  post '/settings/updatelinks',          :to => 'settings#updatelinks'
+
+  get  '/settings/creditcard',           :to => 'settings#creditcard'
+  post '/settings/updatecreditcard',     :to => 'settings#updatecreditcard'
+  get  '/settings/plans',                :to => 'settings#plans'
+  post '/settings/updateplan',           :to => 'settings#updateplan'
+  get  '/settings/payments',             :to => 'settings#payments'
+  get  '/settings/receipt/:invoice_id',  :to => 'settings#receipt', :as => 'settings_receipt'
+
+  get  '/settings/connect',              :to => 'settings#connect'
+  get  '/settings/disconnect/',          :to => 'settings#disconnect'
+
+  get  '/settings/emails/',              :to => 'settings#emails'
+  post '/settings/add_email',            :to => 'settings#add_email'
+  post '/settings/delete_email',         :to => 'settings#delete_email'
+  post '/settings/make_email_default',   :to => 'settings#make_email_default'
+
+  get  '/settings/notifications/',       :to => 'settings#notifications'
+  post '/settings/updatenotifications',  :to => 'settings#updatenotifications'
+
+  get  '/settings/api',                   :to => 'settings#api'
   post '/settings/api',                  :to => 'settings#update_api_key'
 
-  get  '/jobs',          :to => 'jobs#index'
 
   # Legacy paths
   get   '/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.0.pdf', :to => redirect("/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.1.pdf")

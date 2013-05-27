@@ -1,7 +1,7 @@
 class SettingsController < ApplicationController
 
   before_filter :authenticate
-  layout :resolve_layout
+  layout        :resolve_layout
 
   force_ssl if Rails.env.production?
 
@@ -10,15 +10,89 @@ class SettingsController < ApplicationController
     @user.new_username = @user.username
   end
 
+  def updatepassword
+    password = params[:password]
+    new_password = params[:new_password]
+    repeat_new_password = params[:repeat_new_password]
+
+    if password.nil? || password.empty? || new_password.nil? || new_password.empty? || repeat_new_password.nil? || repeat_new_password.empty?
+      flash[:error] = "Please fill out all input fields."
+    elsif !new_password.eql?(repeat_new_password)
+      flash[:error] = "The new password does not match with the repeat new password. Please try again."
+    elsif User.authenticate(current_user.email, password).nil?
+      flash[:error] = "The password is wrong. Please try again."
+    else
+      @user = current_user
+      if @user.update_password(current_user.email, password, new_password)
+        flash[:success] = "Profile updated."
+      else
+        flash[:error] = "Something went wrong. Please try again later."
+      end
+    end
+    redirect_to settings_password_path()
+  end
+
+
   def privacy
     @user = current_user
     @user.new_username = @user.username
   end
 
+  def updateprivacy
+    privacy_products = validates_privacy_value params[:following_products]
+    privacy_comments = validates_privacy_value params[:comments]
+    password = params[:password]
+    user = current_user
+    user.privacy_products = privacy_products
+    user.privacy_comments = privacy_comments
+    user.password = password
+    if user.save
+      flash[:success] = "Profile updated."
+    else
+      flash[:error] = "Something went wrong. Please try again later."
+    end
+    redirect_to settings_privacy_path()
+  end
+
+
   def profile
     @user = current_user
     @user.new_username = @user.username
   end
+
+  def updateprofile
+    fullname = params[:fullname]
+    new_username = params[:new_username]
+    location = params[:location]
+    description = params[:description]
+    blog = params[:blog]
+    password = params[:password]
+    if password.nil? || password.empty?
+      flash[:error] = "For security reasons. Please type in your current password."
+    elsif new_username.nil? || new_username.empty?
+      flash[:error] = "Please type in a username."
+    elsif !current_user.username.eql?(new_username) && !User.username_valid?(new_username)
+      flash[:error] = "Username exist already. Please choose another username."
+    elsif User.authenticate(current_user.email, password).nil?
+      flash[:error] = "The password is wrong. Please try again."
+    else
+      @user = current_user
+      @user.username = new_username
+      @user.fullname = fullname
+      @user.description = description
+      @user.location = location
+      @user.blog = blog
+      @user.password = password
+      if @user.save
+        flash[:success] = "Profile updated."
+      else
+        flash[:error] = "Something went wrong. Please try again later."
+      end
+    end
+    redirect_to settings_profile_path()
+  end
+
+
 
   def plans
     if current_user.plan.nil?
@@ -69,6 +143,7 @@ class SettingsController < ApplicationController
     @billing_address = current_user.fetch_or_create_billing_address
   end
 
+
   def links
     @userlinkcollection = Userlinkcollection.find_all_by_user( current_user.id )
     if @userlinkcollection.nil?
@@ -76,36 +151,30 @@ class SettingsController < ApplicationController
     end
   end
 
+  def updatelinks
+    @userlinkcollection = Userlinkcollection.find_all_by_user( current_user.id )
+    if @userlinkcollection.nil?
+      @userlinkcollection = Userlinkcollection.new
+    end
+    @userlinkcollection.github = params[:github]
+    @userlinkcollection.stackoverflow = params[:stackoverflow]
+    @userlinkcollection.linkedin = params[:linkedin]
+    @userlinkcollection.xing = params[:xing]
+    @userlinkcollection.twitter = params[:twitter]
+    @userlinkcollection.facebook = params[:facebook]
+    @userlinkcollection.gulp = params[:gulp]
+    @userlinkcollection.user_id = current_user.id
+    if @userlinkcollection.save
+      flash[:success] = "Profile updated."
+    else
+      flash[:error] = "Something went wrong. Please try again later."
+    end
+    redirect_to settings_links_path()
+  end
+
+
   def connect
     @user = current_user
-  end
-
-  def emails
-    @user = current_user
-  end
-
-  def notifications
-    @user_notification = UserNotificationSetting.fetch_or_create_notification_setting current_user
-  end
-
-  def api
-    @user_api = Api.find_or_initialize_by(user_id: current_user.id.to_s)
-    @api_calls = 0
-    if @user_api.api_key.nil?
-      @user_api.api_key = "generate new value"
-    else
-      @api_calls = ApiCall.by_user(current_user).by_api_key(@user_api.api_key).count
-    end
-  end
-
-  def update_api_key
-    @user_api = Api.find_or_initialize_by(user_id: current_user.id.to_s)
-    @user_api.generate_api_key!
-
-    unless @user_api.save
-      flash[:notice] << @user_api.errors.full_messages.to_sentence
-    end
-    redirect_to :back
   end
 
   def disconnect
@@ -125,6 +194,103 @@ class SettingsController < ApplicationController
     end
     user.save
     redirect_to settings_connect_path
+  end
+
+
+  def emails
+    @user = current_user
+  end
+
+  def add_email
+    email = params[:email]
+
+    user = User.find_by_email(email)
+    user_email = UserEmail.find_by_email(email)
+    if user || user_email
+      flash[:error] = "The E-Mail Address exist already in our system. Please choose another one."
+      redirect_to settings_emails_path()
+      return
+    end
+
+    user_email = UserEmail.new
+    user_email.email = email
+    user_email.user_id = current_user.id
+    user_email.create_verification
+    if user_email.save
+      UserMailer.verification_email_only(current_user, user_email.verification, user_email.email).deliver
+      flash[:success] = "E-Mail Address added."
+    else
+      flash[:error] = "E-Mail Address is not valid."
+    end
+    redirect_to settings_emails_path()
+  end
+
+  def delete_email
+    email = params[:email]
+    user_email = current_user.get_email(email)
+    if user_email
+      user_email.remove
+    end
+    redirect_to settings_emails_path()
+  end
+
+  def make_email_default
+    email = params[:email]
+    user = current_user
+    user_email = user.get_email(email)
+    if user_email && user_email.verified?
+      orig_email = user.email
+      user.email = user_email.email
+      user.save
+      user_email.email = orig_email
+      user_email.save
+      flash[:success] = "Default E-Mail Address changed successfully."
+    else
+      flash[:error] = "An error occured. Please try again later."
+    end
+    redirect_to settings_emails_path()
+  end
+
+
+
+  def notifications
+    @user_notification = UserNotificationSetting.fetch_or_create_notification_setting current_user
+  end
+
+  def updatenotifications
+    news = params[:general_news]
+    features = params[:new_feature_news]
+    @user_notification = current_user.user_notification_setting
+    @user_notification.newsletter_news = news
+    @user_notification.newsletter_features = features
+    if @user_notification.save
+      flash[:success] = "Your changes have been saved successfully."
+    else
+      flash[:error] = "An error occured. Please try again later."
+    end
+    redirect_to settings_notifications_path
+  end
+
+
+
+  def api
+    @user_api = Api.find_or_initialize_by(user_id: current_user.id.to_s)
+    @api_calls = 0
+    if @user_api.api_key.nil?
+      @user_api.api_key = "generate new value"
+    else
+      @api_calls = ApiCall.by_user(current_user).by_api_key(@user_api.api_key).count
+    end
+  end
+
+  def update_api_key
+    @user_api = Api.find_or_initialize_by(user_id: current_user.id.to_s)
+    @user_api.generate_api_key!
+
+    unless @user_api.save
+      flash[:notice] << @user_api.errors.full_messages.to_sentence
+    end
+    redirect_to :back
   end
 
   def updateplan
@@ -176,160 +342,7 @@ class SettingsController < ApplicationController
     redirect_to settings_plans_path
   end
 
-  def updateprofile
-    fullname = params[:fullname]
-    new_username = params[:new_username]
-    location = params[:location]
-    description = params[:description]
-    blog = params[:blog]
-    password = params[:password]
-    if password.nil? || password.empty?
-      flash[:error] = "For security reasons. Please type in your current password."
-    elsif new_username.nil? || new_username.empty?
-      flash[:error] = "Please type in a username."
-    elsif !current_user.username.eql?(new_username) && !User.username_valid?(new_username)
-      flash[:error] = "Username exist already. Please choose another username."
-    elsif User.authenticate(current_user.email, password).nil?
-      flash[:error] = "The password is wrong. Please try again."
-    else
-      @user = current_user
-      @user.username = new_username
-      @user.fullname = fullname
-      @user.description = description
-      @user.location = location
-      @user.blog = blog
-      @user.password = password
-      if @user.save
-        flash[:success] = "Profile updated."
-      else
-        flash[:error] = "Something went wrong. Please try again later."
-      end
-    end
-    redirect_to settings_profile_path()
-  end
 
-  def updatepassword
-    password = params[:password]
-    new_password = params[:new_password]
-    repeat_new_password = params[:repeat_new_password]
-
-    if password.nil? || password.empty? || new_password.nil? || new_password.empty? || repeat_new_password.nil? || repeat_new_password.empty?
-      flash[:error] = "Please fill out all input fields."
-    elsif !new_password.eql?(repeat_new_password)
-      flash[:error] = "The new password does not match with the repeat new password. Please try again."
-    elsif User.authenticate(current_user.email, password).nil?
-      flash[:error] = "The password is wrong. Please try again."
-    else
-      @user = current_user
-      if @user.update_password(current_user.email, password, new_password)
-        flash[:success] = "Profile updated."
-      else
-        flash[:error] = "Something went wrong. Please try again later."
-      end
-    end
-    redirect_to settings_password_path()
-  end
-
-  def add_email
-    email = params[:email]
-
-    user = User.find_by_email(email)
-    user_email = UserEmail.find_by_email(email)
-    if user || user_email
-      flash[:error] = "The E-Mail Address exist already in our system. Please choose another one."
-      redirect_to settings_emails_path()
-      return
-    end
-
-    user_email = UserEmail.new
-    user_email.email = email
-    user_email.user_id = current_user.id
-    user_email.create_verification
-    if user_email.save
-      UserMailer.verification_email_only(current_user, user_email.verification, user_email.email).deliver
-      flash[:success] = "E-Mail Address added."
-    else
-      flash[:error] = "E-Mail Address is not valid."
-    end
-    redirect_to settings_emails_path()
-  end
-
-  def delete_email
-    email = params[:email]
-    user_email = current_user.get_email(email)
-    if user_email
-      user_email.remove
-    end
-    redirect_to settings_emails_path()
-  end
-
-  def updatenotifications
-    news = params[:general_news]
-    features = params[:new_feature_news]
-    @user_notification = current_user.user_notification_setting
-    @user_notification.newsletter_news = news
-    @user_notification.newsletter_features = features
-    if @user_notification.save
-      flash[:success] = "Your changes have been saved successfully."
-    else
-      flash[:error] = "An error occured. Please try again later."
-    end
-    redirect_to settings_notifications_path
-  end
-
-  def make_email_default
-    email = params[:email]
-    user = current_user
-    user_email = user.get_email(email)
-    if user_email && user_email.verified?
-      orig_email = user.email
-      user.email = user_email.email
-      user.save
-      user_email.email = orig_email
-      user_email.save
-      flash[:success] = "Default E-Mail Address changed successfully."
-    else
-      flash[:error] = "An error occured. Please try again later."
-    end
-    redirect_to settings_emails_path()
-  end
-
-  def updateprivacy
-    privacy_products = validates_privacy_value params[:following_products]
-    privacy_comments = validates_privacy_value params[:comments]
-    password = params[:password]
-    user = current_user
-    user.privacy_products = privacy_products
-    user.privacy_comments = privacy_comments
-    user.password = password
-    if user.save
-      flash[:success] = "Profile updated."
-    else
-      flash[:error] = "Something went wrong. Please try again later."
-    end
-    redirect_to settings_privacy_path()
-  end
-
-  def updatelinks
-    @userlinkcollection = Userlinkcollection.find_all_by_user( current_user.id )
-    if @userlinkcollection.nil?
-      @userlinkcollection = Userlinkcollection.new
-    end
-    @userlinkcollection.github = params[:github]
-    @userlinkcollection.stackoverflow = params[:stackoverflow]
-    @userlinkcollection.linkedin = params[:linkedin]
-    @userlinkcollection.xing = params[:xing]
-    @userlinkcollection.twitter = params[:twitter]
-    @userlinkcollection.facebook = params[:facebook]
-    @userlinkcollection.gulp = params[:gulp]
-    @userlinkcollection.user_id = current_user.id
-    if @userlinkcollection.save
-      flash[:success] = "Profile updated."
-    else
-      flash[:error] = "Something went wrong. Please try again later."
-    end
-    redirect_to settings_links_path()
-  end
 
   def destroy
     password = params[:password]
