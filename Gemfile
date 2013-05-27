@@ -12,6 +12,7 @@ gem 'mongoid'           , '2.5.0'
 gem 'naturalsorter'     , '2.0.4'
 gem 'postmark-rails'    , '0.5.0'
 gem 'httparty'          , '0.10.2'
+gem 'persistent_httparty'
 gem 'oauth'             , '0.4.7'
 gem 'twitter_oauth'     , '0.4.4'
 gem 'aws-s3'            , '0.6.3', :require => 'aws/s3'
@@ -35,7 +36,6 @@ group :development do
   gem 'irbtools'
   gem 'terminal-notifier'
   gem 'fakes3'
-  gem 'persistent_httparty'
 end
 
 group :assets do
