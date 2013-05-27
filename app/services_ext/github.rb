@@ -1,4 +1,6 @@
 class Github
+  include HTTParty
+  persistent_connection_adapter
 
   A_USER_AGENT = "www.versioneye.com"
   A_API_URL = "https://api.github.com"
@@ -29,26 +31,31 @@ class Github
 
     Hash[*links.flatten]
   end
-
+ 
   def self.user_repos_changed?(user)
     repo = user.github_repos.all.first
     headers = {
       "User-Agent" => A_USER_AGENT,
       "If-Modified-Since" => repo[:imported_at].httpdate
     }
-    url =  "#{A_API_URL}/user?access_token=#{user.github_token}"
-    response = HTTParty.head(url, headers: headers)
-    p "Is User repos changed: #{response.code != 304}, response code: #{response.code} "
+    url = "#{A_API_URL}/user?access_token=#{URI.escape(user.github_token)}"
+   
+    response = self.head(url, headers: headers)
     response.code != 304
   end
 
+  def self.bm(user, n = 1)
+    Benchmark.measure do
+      n.times {|i| Github.user_repos_changed?(user)}
+    end
+  end
   def self.user_repos(user, url = nil, page = 1, per_page = 20)
     headers = {"User-Agent" => A_USER_AGENT}
     if url.nil?
       url =  "#{A_API_URL}/user/repos?page=#{page}&per_page=#{per_page}&access_token=#{user.github_token}"
     end
 
-    response  = HTTParty.get(url, headers: headers)
+    response  = self.get(url, headers: headers)
     paging_links = parse_paging_links(response.headers)
     
     repos = {

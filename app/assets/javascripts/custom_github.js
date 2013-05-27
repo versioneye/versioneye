@@ -321,6 +321,7 @@ function show_github_repos(page, per_page){
     dataType: "json",
     cache: false //required
   });
+
   //-- response handlers
   jqxhr.done(function(data, status, jqxhr){
     console.debug("Got github repos" + status);
