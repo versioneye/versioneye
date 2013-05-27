@@ -15,14 +15,14 @@ class Settings::LinksController < ApplicationController
     if @userlinkcollection.nil?
       @userlinkcollection = Userlinkcollection.new
     end
-    @userlinkcollection.github = params[:github]
+    @userlinkcollection.github        = params[:github]
     @userlinkcollection.stackoverflow = params[:stackoverflow]
-    @userlinkcollection.linkedin = params[:linkedin]
-    @userlinkcollection.xing = params[:xing]
-    @userlinkcollection.twitter = params[:twitter]
-    @userlinkcollection.facebook = params[:facebook]
-    @userlinkcollection.gulp = params[:gulp]
-    @userlinkcollection.user_id = current_user.id
+    @userlinkcollection.linkedin      = params[:linkedin]
+    @userlinkcollection.xing          = params[:xing]
+    @userlinkcollection.twitter       = params[:twitter]
+    @userlinkcollection.facebook      = params[:facebook]
+    @userlinkcollection.gulp          = params[:gulp]
+    @userlinkcollection.user_id       = current_user.id
     if @userlinkcollection.save
       flash[:success] = "Profile updated."
     else
