@@ -8,15 +8,15 @@
   <div class="row content_header_def" >
     Links
   </div>
-  
+
   <div class="span8 content" >
 
-    <p> 
+    <p>
       Enter the absolute links to your profiles to show your reputation.<br/>
       <br/>
     </p>
-    
-    <%= form_tag("/settings/updatelinks", :method => "post", :class => "form-horizontal") do  %>    
+
+    <%= form_tag(settings_update_links_path, :method => "post", :class => "form-horizontal") do  %>
 
       <div class="control-group">
         <%= label_tag :github, "GitHub", :class => "control-label", :for => "github" %>
@@ -74,7 +74,7 @@
         </div>
       </div>
 
-    <% end %>  
+    <% end %>
 
   </div>
 </div>

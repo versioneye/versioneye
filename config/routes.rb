@@ -41,42 +41,47 @@ Versioneye::Application.routes.draw do
   get   '/home',                         :to => 'users#home'
 
 
-  get  '/settings/profile',              :to => 'settings#profile'
-  post '/settings/updateprofile',        :to => 'settings#updateprofile'
+  namespace :settings do
 
-  get  '/settings/password',             :to => 'settings#password'
-  post '/settings/updatepassword',       :to => 'settings#updatepassword'
+    get  'profile'             , :to => 'profile#index'
+    post 'update_profile'      , :to => 'profile#update'
 
-  get  '/settings/privacy',              :to => 'settings#privacy'
-  post '/settings/updateprivacy',        :to => 'settings#updateprivacy'
+    get  'links'               , :to => 'links#index'
+    post 'update_links'        , :to => 'links#update'
 
-  get  '/settings/delete',               :to => 'settings#delete'
-  post '/settings/destroy',              :to => 'settings#destroy'
+    get  'emails'              , :to => 'emails#index'
+    post 'add_email'           , :to => 'emails#add_email'
+    post 'delete_email'        , :to => 'emails#delete_email'
+    post 'make_email_default'  , :to => 'emails#make_email_default'
 
-  get  '/settings/links',                :to => 'settings#links'
-  post '/settings/updatelinks',          :to => 'settings#updatelinks'
+    get  'notifications'       , :to => 'user_notification_settings#index'
+    post 'update_notifications', :to => 'user_notification_settings#update'
 
-  get  '/settings/creditcard',           :to => 'settings#creditcard'
-  post '/settings/updatecreditcard',     :to => 'settings#updatecreditcard'
-  get  '/settings/plans',                :to => 'settings#plans'
-  post '/settings/updateplan',           :to => 'settings#updateplan'
-  get  '/settings/payments',             :to => 'settings#payments'
-  get  '/settings/receipt/:invoice_id',  :to => 'settings#receipt', :as => 'settings_receipt'
+    get  'password'            , :to => 'password#index'
+    post 'update_password'     , :to => 'password#update'
 
-  get  '/settings/connect',              :to => 'settings#connect'
-  get  '/settings/disconnect/',          :to => 'settings#disconnect'
+    get  'privacy'             , :to => 'privacy#index'
+    post 'update_privacy'      , :to => 'privacy#update'
 
-  get  '/settings/emails/',              :to => 'settings#emails'
-  post '/settings/add_email',            :to => 'settings#add_email'
-  post '/settings/delete_email',         :to => 'settings#delete_email'
-  post '/settings/make_email_default',   :to => 'settings#make_email_default'
+    get  'connect'             , :to => 'connect#index'
+    get  'disconnect'          , :to => 'connect#disconnect'
 
-  get  '/settings/notifications/',       :to => 'settings#notifications'
-  post '/settings/updatenotifications',  :to => 'settings#updatenotifications'
+    get  'api'                 , :to => 'api#index'
+    post 'api'                 , :to => 'api#update'
 
-  get  '/settings/api',                   :to => 'settings#api'
-  post '/settings/api',                  :to => 'settings#update_api_key'
+    get  'delete'              , :to => 'delete#index'
+    post 'destroy'             , :to => 'delete#destroy'
 
+    get  'plans'               , :to => 'plan#index'
+    post 'update_plan'         , :to => 'plan#update'
+
+    get  'creditcard'          , :to => 'creditcard#index'
+    post 'update_creditcard'   , :to => 'creditcard#update'
+
+    get  'payments'            , :to => 'payments#index'
+    get  'receipt/:invoice_id' , :to => 'payments#receipt', :as => 'receipt'
+
+  end
 
   # Legacy paths
   get   '/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.0.pdf', :to => redirect("/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.1.pdf")
