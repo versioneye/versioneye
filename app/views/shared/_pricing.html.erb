@@ -10,8 +10,8 @@
 				<% if @plan && @plan.name_id.eql?( plan.name_id ) %>
 					<span style="color: green; font-weight:bold">Current</span>
 				<% else %>
-					<form action="/settings/updateplan" method="POST" >
-						<input type="hidden" name="plan" value="<%= plan.name_id %>" />
+					<form action="/settings/update_plan" method="POST" >
+						<input  type="hidden" name="plan" value="<%= plan.name_id %>" />
 						<button type="submit" class="btn2" id="<%= plan.name_id %>_button" >Book It</button>
 					</form>
 				<% end %>

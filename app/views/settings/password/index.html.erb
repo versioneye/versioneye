@@ -8,10 +8,10 @@
   <div class="row content_header_def" >
     Password
   </div>
-  
+
   <div class="span8 content" >
-    
-    <%= form_tag("/settings/updatepassword", :method => "post", :class => "form-horizontal") do  %>    
+
+    <%= form_tag(settings_update_password_path, :method => "post", :class => "form-horizontal") do  %>
 
       <div class="control-group">
         <%= label_tag :password, "Cur. Password", :class => "control-label", :for => "password" %>
@@ -47,7 +47,7 @@
         </div>
       </div>
 
-    <% end %>  
+    <% end %>
 
   </div>
 </div>

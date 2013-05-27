@@ -21,7 +21,7 @@
 
     <hr />
 
-    <%= form_tag("/settings/updatecreditcard", :method => "post", :class => "form-horizontal", :id => "payment-form") do %>
+    <%= form_tag(settings_update_creditcard_path, :method => "post", :class => "form-horizontal", :id => "payment-form") do %>
 
       <input type="hidden" name="plan" id="plan" value="<%= @plan_name_id %>" />
 
