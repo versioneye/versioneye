@@ -115,11 +115,19 @@ class User::ProjectsController < ApplicationController
 
   def destroy
     id = params[:id]
-    ProjectService.destroy_project id
+    success = false
+    msg = ""
+    if Project.where(_id: id).exists?
+      ProjectService.destroy_project id
+      success = true
+    else
+      msg = "Cant remove project with id: `#{id}` - it doesnt exist. Please refresh page."
+      p msg
+    end
     respond_to do |format|
       format.html {redirect_to user_projects_path}
       format.json {
-        render json: {success: true, project_id: id}}
+        render json: {success: success, project_id: id, msg: msg}}
     end
   end
 
