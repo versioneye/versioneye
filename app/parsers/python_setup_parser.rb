@@ -85,7 +85,7 @@ class PythonSetupParser < RequirementsParser
     return nil if content_pos.nil?
 
     start_pos = doc.index start_matcher, content_pos
-    end_pos =  doc.index end_matcher, content_pos
+    end_pos   =  doc.index end_matcher, content_pos
 
     block_length = (end_pos - start_pos) + 1
     if include_matchers
@@ -96,7 +96,7 @@ class PythonSetupParser < RequirementsParser
 
     #clean up
     req_txt.gsub! /\#.*[^\n]$/, " " #remove python inline commens
-    req_txt.gsub! /\s+/, " " #remove redutant spacer
+    req_txt.gsub! /\s+       /, " " #remove redutant spacer
 
     req_txt
   end

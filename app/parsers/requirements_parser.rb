@@ -11,17 +11,14 @@ class RequirementsParser < CommonParser
     txt = response.body
     return nil if txt.nil? || txt.empty?
 
-    project = Project.new
-    project.dependencies = Array.new
+    project = init_project( url )
 
     txt.each_line do |line|
       parse_line line, project
     end
 
     project.dep_number = project.dependencies.count
-    project.project_type = Project::A_TYPE_PIP
-    project.language = Product::A_LANGUAGE_PYTHON
-    project.url = url
+
     return project
   rescue => e
     Rails.logger.error e.message
@@ -188,6 +185,16 @@ class RequirementsParser < CommonParser
       dependency.comperator = "=="
     end
 
+  end
+
+
+  def init_project url
+    project = Project.new
+    project.dependencies = Array.new
+    project.project_type = Project::A_TYPE_PIP
+    project.language = Product::A_LANGUAGE_PYTHON
+    project.url = url
+    project
   end
 
 
