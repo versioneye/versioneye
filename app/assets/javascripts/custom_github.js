@@ -8,24 +8,10 @@ jQuery(document).ready(function(){
   if(jQuery("#tabs").length > 0){
     jQuery( "#tabs" ).tabs();
   }
-
-  if(jQuery.cookie('github_repos')){
-    //if user have active session for github pages, then reload content
-    console.log("Going to reload content;");
-    show_github_repos();
-  } else {
-    console.log("Saving customer visit.");
-    var now = new Date().getTime();
-    now = Math.round((new Date(now)).getTime() / 1000)+ 3600;
-    jQuery.cookie('github_repos', "true", {
-      path: window.location.pathname, 
-      expires: now
-    });
-    show_github_repos();
-  }
-
-
+  
+  show_github_repos(); 
 }); // end-of-ready
+
 
 function fetchGitHubProjects(){
   fetchLinkArea = document.getElementById("fetchLinkArea");
@@ -89,9 +75,14 @@ function addGitHubProject(selected_el, data){
   var selected_repo_el = "#github-repo-" + data.githubId;
   var repo_label_template = _.template(jQuery("#github-repo-label-template").html());
   var url_template = _.template('<a href="{{= url}}" >{{= content }}</a>');
- 
-  show_repo_loader(selected_repo_el, "Importing data from Github..");
+  
+  //stop execution if switch is unactive and state is changed by code
+  if (selected_item.parents('.switch').bootstrapSwitch('isActive') != true){
+    console.debug("Dropping event on unactive switch;");
+    return false;
+  }
 
+  show_repo_loader(selected_repo_el, "Importing data from Github..");
   var jqxhr = jQuery.ajax({
     type: "POST",
     url: "/user/projects",
@@ -102,10 +93,7 @@ function addGitHubProject(selected_el, data){
   selected_item.parents('.switch').bootstrapSwitch('setActive', false);
    // -- response handlers
   jqxhr.done(function(response, status, xhrReq){
-    selected_item.parents('.switch').bootstrapSwitch('setActive', true);
-
     if(response.success){
-      //fix: labels rendering in link 
       var home_label = repo_label_template({
         classes: "repo-homepage", 
         content: url_template({
@@ -121,17 +109,21 @@ function addGitHubProject(selected_el, data){
       show_repo_notification(selected_repo_el, 
                              "alert alert-success", 
                              "Project is added successfully. You can visit project's page now.");
+      start_github_session();
     } else {
       show_repo_notification(selected_repo_el, 
                              "alert alert-warning",
                              "Fail: " + response.msg);
       selected_item.parents('.switch').bootstrapSwitch('toggleState');
     }
-  });
+   //finally restore visibility of switch
+   selected_item.parents('.switch').bootstrapSwitch('setActive', true);
+ });
 
   jqxhr.fail(function(response, status, xhrReq){
-    selected_item.parents('.switch').bootstrapSwitch('setActive', true);
     selected_item.parents('.switch').bootstrapSwitch('setState', false);
+    selected_item.parents('.switch').bootstrapSwitch('setActive', true);
+    
     show_repo_notification(selected_repo_el, 
                            "alert alert-warning", 
                            "Backend failure: " + status);
@@ -158,24 +150,26 @@ function removeGitHubProject(selected_el, data){
   show_repo_loader(selected_repo_el, "");
   //-- response handlers
   jqxhr.done(function(response, status, xhrReq){
-    selected_item.parents('.switch').bootstrapSwitch('setActive', true);
     if(response.success){
       jQuery(selected_repo_el).find(".repo-homepage").remove();
       show_repo_notification(selected_repo_el, 
                              "alert alert-success", 
                              "Project is now removed.");
+      //clean project id on switch
+      selected_item.data('githubProjectId', "");
     } else {
       show_repo_notification(selected_repo_el, 
                              "alert-error", 
                              "Fail: " + response.msg);
       selected_item.parents('.switch').bootstrapSwitch('toggleState');
    }
-
+    //finally restore visibility of switch 
+    selected_item.parents('.switch').bootstrapSwitch('setActive', true);
   });
 
   jqxhr.fail(function(response, status, xhrReq){
-    selected_item.parents('.switch').bootstrapSwitch('setActive', true);
     selected_item.parents('.switch').bootstrapSwitch('toggleState');
+    selected_item.parents('.switch').bootstrapSwitch('setActive', true);
     show_repo_notification(selected_repo_el, 
                            "alert alert-warning", 
                            "Failure: Cant remove project - backend failure.");
@@ -322,7 +316,11 @@ function show_github_repos(page, per_page){
   var per_page = per_page || 10;
   var request_url = "/user/projects/github_repos?page=" + page + "&per_page=" + per_page;
   render_github_loading(content_selector);
-  var jqxhr = jQuery.getJSON(request_url);
+  var jqxhr = jQuery.ajax({
+    url: request_url,
+    dataType: "json",
+    cache: false //required
+  });
   //-- response handlers
   jqxhr.done(function(data, status, jqxhr){
     console.debug("Got github repos" + status);
