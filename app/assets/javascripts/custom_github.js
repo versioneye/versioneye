@@ -109,7 +109,6 @@ function addGitHubProject(selected_el, data){
       show_repo_notification(selected_repo_el, 
                              "alert alert-success", 
                              "Project is added successfully. You can visit project's page now.");
-      start_github_session();
     } else {
       show_repo_notification(selected_repo_el, 
                              "alert alert-warning",
