@@ -35,6 +35,7 @@ group :development do
   gem 'irbtools'
   gem 'terminal-notifier'
   gem 'fakes3'
+  gem 'persistent_httparty'
 end
 
 group :assets do
