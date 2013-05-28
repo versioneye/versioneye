@@ -12,6 +12,7 @@ gem 'mongoid'           , '2.5.0'
 gem 'naturalsorter'     , '2.0.5'
 gem 'postmark-rails'    , '0.5.0'
 gem 'httparty'          , '0.11.0'
+gem 'persistent_httparty'
 gem 'oauth'             , '0.4.7'
 gem 'twitter_oauth'     , '0.4.4'
 gem 'aws-s3'            , '0.6.3', :require => 'aws/s3'
@@ -52,4 +53,4 @@ group :test do
   gem 'fakeweb'           , '1.3.0'
 end
 
-gem 'puma'              , '2.0.1'
+# gem 'puma'              , '2.0.1'

@@ -5,83 +5,100 @@
 </div>
 
 <div class="span8">
-
 	<div class="row content_header_def" >
     Select the GitHub Repositories you want to monitor.
   </div>
-  <div class="span8 content" >
-    <% if @repos %>
-    <table class = "table table-hover">
-      <tbody>
-        <% @repos.each do |repo| %>
-          <tr>
-            <td>
-              <div class = "row-fluid">
-                <div class = "pull-left span2">
-                  <%# view specific variables %>
-                  <% repo_exists = false %>
-                  <% project_id = "" %>
-                  <% if (@imported_repo_names.include? repo["full_name"]) %>
-                    <% repo_exists = true %>
-                    <% project_id = @imported_repos.where(name: repo["full_name"]).first.id.to_s %>
-                  <% end %>
-                  <% language_name = ("%s" % repo["language"]).downcase %>
-                  <% language_name = "unspecified" if repo["language"].nil? %>
-
-                  <% is_not_supported = (@supported_langs.include? language_name) ? false : true %>
-                  <% unless is_not_supported %>
-                    <%= image_tag("/assets/language/%s.png" % language_name, style: "width: 64px;" ) %>
-                  <% else %>
-                    <%= image_tag("/assets/language/ruby_bw.png", style: "width: 64px;" ) %>
-                  <% end %>
-                </div>
-              <div class = "span10">
-                <h5><%= repo["full_name"] %></h5>
-                <div id = "repo-labels-<%= repo["id"] %>" class= "row">
-                    <% if repo["private"] %>
-                      <span class = "label label-warning repo-scope"> private </span>
-                    <% else %>
-                      <span class = "label label-success repo-scope"> public </span>
-                    <% end %>
-                    <span class = "label">
-                      language: <%= language_name %>
-                    </span>
-                    <% if is_not_supported %>
-                      <span class = "label label-warning repo-supported">Not supported</span>
-                    <% end %>
-                    <span class = "label repo-updated">
-                      updated:
-                      <%= time_ago_in_words repo["updated_at"].to_datetime %> ago
-                    </span>
-                    <% if repo_exists %>
-                      <a href ="<%= url_for(action: "show", id: project_id) %>">
-                        <span class = "label label-info repo-homepage">
-                          <i class= "icon icon-home"></i> Project's page</span>
-                      </a>
-                    <% end %>
-                  </div>
-                </div>
-                <div id = "notification-bar-<%= repo["id"] %>" class = "span12 hide"></div>
-            </td>
-            <td>
-              <div class = "github_switch switch switch-small pull-right">
-                <input type = "checkbox"
-                  class = "input"
-                  <%= "disabled" if is_not_supported %>
-                  <%= "checked" if repo_exists %>
-                  data-github-id = "<%= repo["id"] %>"
-                  data-github-project-id = "<%= project_id %>"
-                  data-github-fullname = "<%= repo["full_name"] %>" />
-              </div>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <% else %>
-      <div class="content">
-        Ups. Something went wrong. We are not able to fetch your GitHub Repositories. Please contact the VersionEye Team.
-      </div>
-    <% end %>
+  <div id = "github-repos" class="content" >
+    <div >
+      Please enable Javascript to see content of the page.
+    </div>
   </div>
 </div>
+
+<script id = "github-loading-template" type = "text/template">
+  <div>
+    <div class="{{= classes}}">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{= message }}
+    </div>
+    <div>
+      <img src = "/assets/loadingbar2.gif" style = "position: relative; left: 40%;">
+    </div>
+  </div>
+</script>
+
+<script id = "github-notification-template" type = "text/template">
+  <div class="{{= classes }}">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{=  message }}
+  </div>
+</script>
+
+<script id = "github-table-template" type = "text/template">
+  <table id = "github-repos-table" class = "table table-hover">
+    <tbody></tbody>
+  </table>
+</script>
+
+<script id = "github-table-row-template" type = "text/template">
+  <tr>
+    <td> {{= content}} </td>
+  </tr>
+</script>
+
+<script id = "github-repo-info-template" type = "text/template">
+  <div id = "github-repo-{{= repo.github_id }}">
+    <div class = "repo-info row-fluid">
+      <div class = "repo-logo span2">
+        {{ var logo_path = "/assets/language/" }}
+        {{ var logo_name = (repo.supported) ? repo.language : "ruby_bw" }}
+        <img src = {{= logo_path + logo_name + ".png"}}
+          style = "position: relative; left: 25%; right: 25%; height: 72px; " />
+      </div>
+      <div class = "repo-info-content span8">
+        <h5>{{= repo.fullname }}</h5>
+        <p> {{= repo.description}} </h5>
+        <div class = "repo-labels"> {{= labels }} </div>
+
+      </div>
+      <div class = "repo-switch span2">
+        {{= github_switch }}
+      </div>
+    </div>
+    <div class = "repo-notification"></div>
+  </div>
+</script>
+
+<script id = "github-repo-label-template" type = "text/template">
+  <span class="{{= classes }}">
+    {{= content }}
+  </span>
+</script>
+
+<script id = "github-repo-switch-template" type = "text/template">
+   <div class = "github_switch switch switch-small pull-right">
+      <input type = "checkbox" class = "input"
+        {{= repo.supported ? "" : " disabled " }}
+        {{= repo.imported ? " checked " : "" }}
+        data-github-id = "{{= repo.github_id }}"
+        data-github-project-id = "{{= repo.project_id }}"
+        data-github-fullname = "{{= repo.fullname }}" />
+  </div>
+</script>
+
+<script id = "github-pagination-template" type = "text/template">
+  <div id= "github_pagination" class = "pagination {{= classes}}">
+    <ul>
+      {{= items }}
+    </ul>
+  </div>
+</script>
+
+<script id = "github-pagination-item-template" type = "text/template">
+  <li class = "{{= classes}}">
+    <span href = "#"
+      data-per-page = "{{= paging.per_page}}"
+      data-page = "{{= page }}"
+      >{{= page }}</span>
+  </li>
+</script>

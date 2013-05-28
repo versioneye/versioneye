@@ -83,12 +83,12 @@ Versioneye::Application.routes.draw do
 
   end
 
-  # Legacy paths
+  # Legacy paths. Keep them alive for Google
   get   '/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.0.pdf', :to => redirect("/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.1.pdf")
-  get   '/product/symfony--symfony',                  :to => redirect("/package/php--symfony--symfony")
-  get   '/package/symfony--symfony',                  :to => redirect("/package/php--symfony--symfony")
-  get   '/package/symfony--symfony/version/:version', :to => redirect('/package/php--symfony--symfony/version/%{version}')
-  get   '/product/symfony--symfony/version/:version', :to => redirect('/package/php--symfony--symfony/version/%{version}')
+  get   '/product/symfony--symfony'                       , :to => redirect("/package/php--symfony--symfony")
+  get   '/package/symfony--symfony'                       , :to => redirect("/package/php--symfony--symfony")
+  get   '/package/symfony--symfony/version/:version'      , :to => redirect('/package/php--symfony--symfony/version/%{version}')
+  get   '/product/symfony--symfony/version/:version'      , :to => redirect('/package/php--symfony--symfony/version/%{version}')
 
   get   '/search',                                      :to => 'products#search'
   get   '/package/name',                                :to => 'products#autocomplete_product_name'
@@ -119,8 +119,9 @@ Versioneye::Application.routes.draw do
   resources :versioncommentreplies
 
   get '/user/packages/popular_in_my_projects', :to => "user/packages#popular_in_my_projects"
-  get '/user/packages/i_follow',               :to => "user/packages#i_follow"
-  get '/user/projects/github_repositories',    :to => 'user/projects#github_repositories'
+  get '/user/packages/i_follow'              , :to => "user/packages#i_follow"
+  get '/user/projects/github_repositories'   , :to => 'user/projects#github_repositories'
+  get '/user/projects/github_repos'          , :to => 'user/projects#github_repos'
 
   namespace :user do
     resources :projects do
