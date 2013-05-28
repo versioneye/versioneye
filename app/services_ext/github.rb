@@ -1,4 +1,5 @@
 class Github
+
   include HTTParty
   persistent_connection_adapter
 
@@ -38,43 +39,26 @@ class Github
     "no_scope"
   end
 
-  def self.parse_paging_links(headers)
-    return nil unless headers.has_key? "link"
-    links = []
-    headers["link"].split(",").each do |link_token|
-      matches = link_token.strip.match /<([\w|\/|\.|:|=|?|\&]+)>;\s+rel=\"(\w+)\"/m
-      links << [matches[2], matches[1]]
-    end
-
-    Hash[*links.flatten]
-  end
- 
-  def self.user_repos_changed?(user)
+  def self.user_repos_changed?( user )
     repo = user.github_repos.all.first
     headers = {
       "User-Agent" => A_USER_AGENT,
       "If-Modified-Since" => repo[:imported_at].httpdate
     }
     url = "#{A_API_URL}/user?access_token=#{URI.escape(user.github_token)}"
-   
     response = self.head(url, headers: headers)
     response.code != 304
   end
 
-  def self.bm(user, n = 1)
-    Benchmark.measure do
-      n.times {|i| Github.user_repos_changed?(user)}
-    end
-  end
-  def self.user_repos(user, url = nil, page = 1, per_page = 20)
+  def self.user_repos(user, url = nil, page = 1, per_page = 30)
     headers = {"User-Agent" => A_USER_AGENT}
     if url.nil?
       url =  "#{A_API_URL}/user/repos?page=#{page}&per_page=#{per_page}&access_token=#{user.github_token}"
     end
 
-    response  = self.get(url, headers: headers)
+    response     = self.get(url, headers: headers)
     paging_links = parse_paging_links(response.headers)
-    
+
     repos = {
       repos: JSON.parse(response.body),
       paging: {
@@ -164,6 +148,7 @@ class Github
     nil
   end
 
+  # TODO rename to .repo_info ()
   def self.get_project_info(git_project, sha, token)
     result = Hash.new
     url = "https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)
@@ -186,8 +171,7 @@ class Github
   end
 
   def self.supported_languages()
-    Set['java', 'ruby', 'python', 'node.js', 'php', 'javascript',
-        'coffeescript', 'clojure']
+    Set['java', 'ruby', 'python', 'node.js', 'php', 'javascript', 'coffeescript', 'clojure']
   end
 
   private
@@ -225,6 +209,16 @@ class Github
         repo_names << repo['full_name'] if self.language_supported?( lang )
       end
       repo_names
+    end
+
+    def self.parse_paging_links( headers )
+      return nil unless headers.has_key? "link"
+      links = []
+      headers["link"].split(",").each do |link_token|
+        matches = link_token.strip.match /<([\w|\/|\.|:|=|?|\&]+)>;\s+rel=\"(\w+)\"/m
+        links << [matches[2], matches[1]]
+      end
+      Hash[*links.flatten]
     end
 
 end
