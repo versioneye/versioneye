@@ -148,8 +148,7 @@ class Github
     nil
   end
 
-  # TODO rename to .repo_info ()
-  def self.get_project_info(git_project, sha, token)
+  def self.repository_info(git_project, sha, token)
     result = Hash.new
     url = "https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)
     tree = JSON.parse HTTParty.get( url, :headers => {"User-Agent" => A_USER_AGENT} ).response.body
