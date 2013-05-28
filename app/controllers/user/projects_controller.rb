@@ -5,7 +5,6 @@ class User::ProjectsController < ApplicationController
 
   def index
     @project = Project.new
-    @projects = current_user.projects # TODO remove this instance variable
   end
 
   def new

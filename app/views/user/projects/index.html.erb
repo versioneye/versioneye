@@ -7,12 +7,12 @@
 <div class="span8">
 
   <div class="row content_header_def" >
-    VersionEye is watching <b><%= pluralize(@projects.size, "Project") %></b> for you.
+    VersionEye is watching <b><%= pluralize(current_user.projects.size, "Project") %></b> for you.
   </div>
 
   <div class="span8 content" >
     <div id="projects" >
-      <% @projects.each do |project| %>
+      <% current_user.projects.each do |project| %>
         <div class="row search-item" >
           <div class="icon56 span2 pull-left">
             <% prog_lang = project.language.downcase.gsub(/\./, "") %>
