@@ -7,6 +7,7 @@ We are using the semantic versioning. Check out this: http://semver.org/
 
 * <b>Python</b>: We improved the parser for requirement.txt and added support for pip.log.
 * <b>RSS</b>: BugFix and test case for fav. RSS feed.
+* <b>GitHub View</b>: We developed a single page application for dealing with GitHub Repositories.
 
 == 1.0.0
 
