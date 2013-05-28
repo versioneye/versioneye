@@ -6,43 +6,43 @@ class User
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes
 
-  field :old_id, type: String
-  field :username, type: String
-  field :fullname, type: String
-  field :prev_fullname, type: String
-  field :email, type: String
+  field :old_id            , type: String
+  field :username          , type: String
+  field :fullname          , type: String
+  field :prev_fullname     , type: String
+  field :email             , type: String
   field :encrypted_password, type: String
-  field :salt, type: String
-  field :admin, type: Boolean, default: false
-  field :deleted, type: Boolean, default: false
-  field :verification, type: String
-  field :terms, type: Boolean
-  field :datenerhebung, type: Boolean
-  field :privacy_products, type: String, default: "everybody"
-  field :privacy_comments, type: String, default: "everybody"
+  field :salt              , type: String
+  field :admin             , type: Boolean, default: false
+  field :deleted           , type: Boolean, default: false
+  field :verification      , type: String
+  field :terms             , type: Boolean
+  field :datenerhebung     , type: Boolean
+  field :privacy_products  , type: String, default: "everybody"
+  field :privacy_comments  , type: String, default: "everybody"
 
   field :description, type: String
-  field :location, type: String
-  field :time_zone, type: String
-  field :blog, type: String
+  field :location   , type: String
+  field :time_zone  , type: String
+  field :blog       , type: String
 
   field :refer_name, type: String
 
   # TODO refactor this in facebook_account, twitter_account
   # create own models for that und connect them to user
 
-  field :fb_id, type: String
+  field :fb_id   , type: String
   field :fb_token, type: String
 
-  field :twitter_id, type: String
-  field :twitter_token, type: String
+  field :twitter_id    , type: String
+  field :twitter_token , type: String
   field :twitter_secret, type: String
 
-  field :github_id, type: String
+  field :github_id   , type: String
   field :github_token, type: String
   field :github_scope, type: String
 
-  field :stripe_token, type: String
+  field :stripe_token      , type: String
   field :stripe_customer_id, type: String
 
   # *** RELATIONS START ***
@@ -50,6 +50,7 @@ class User
   has_one    :billing_address
   has_one    :user_notification_setting
   has_many   :projects
+  has_many   :github_repos
   has_and_belongs_to_many :products
   # *** RELATIONS END ***
 
@@ -224,6 +225,10 @@ class User
     else
       users[0]
     end
+  end
+
+  def github_account_connected?
+    self.github_id && !self.github_id.empty? && self.github_token && !self.github_token.empty?
   end
 
   def reset_password

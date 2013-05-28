@@ -138,6 +138,11 @@ h3 code {
   text-align: left;
 }
 
+.table th, .table td {
+  border-top: 0px;
+  border-bottom: 1px solid #dddddd;
+}
+
 
 /* Tweak navbar brand link to be super sleek
 -------------------------------------------------- */

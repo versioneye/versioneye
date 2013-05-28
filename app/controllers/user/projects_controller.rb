@@ -117,11 +117,19 @@ class User::ProjectsController < ApplicationController
 
   def destroy
     id = params[:id]
-    ProjectService.destroy_project id
+    success = false
+    msg = ""
+    if Project.where(_id: id).exists?
+      ProjectService.destroy_project id
+      success = true
+    else
+      msg = "Cant remove project with id: `#{id}` - it doesnt exist. Please refresh page."
+      p msg
+    end
     respond_to do |format|
       format.html {redirect_to user_projects_path}
       format.json {
-        render json: {success: true, project_id: id}}
+        render json: {success: success, project_id: id, msg: msg}}
     end
   end
 
@@ -147,11 +155,6 @@ class User::ProjectsController < ApplicationController
   def github_repositories
     respond_to do |format|
       format.html {
-        @repos = Github.user_repos(current_user.github_token)
-        @repos.sort_by! {|repo| "%s" % repo["language"].to_s }
-        @imported_repos = Project.by_user(current_user).by_source(Project::A_SOURCE_GITHUB)
-        @imported_repo_names  = @imported_repos.map(&:name).to_set
-        @supported_langs = Github.supported_languages
         @page = "project_new"
       }
       format.json {
@@ -173,6 +176,46 @@ class User::ProjectsController < ApplicationController
     Rails.logger.error e.backtrace.first
     flash[:error] = "An error occured. Maybe you have to reconnect your VersionEye Account with your GitHub Account."
     redirect_to user_projects_path
+  end
+
+  #TODO: add organizations
+  def github_repos
+    repos = []
+    github_repos = GithubRepo.cached_user_repos(current_user).asc(:language)
+    github_repos = github_repos.paginate(
+      page: (params[:page] || 1),
+      per_page: (params[:per_page] || 30)
+    )
+    imported_repos = current_user.projects.by_source(Project::A_SOURCE_GITHUB)
+    imported_repo_names  = imported_repos.map(&:github_project).to_set
+    supported_langs = Github.supported_languages
+    github_repos.each do |repo|
+      repo[:supported] = supported_langs.include? repo["language"]
+      repo[:imported] = imported_repo_names.include? repo["fullname"]
+      if repo[:imported]
+        project_id = imported_repos.where(github_project: repo["fullname"]).first.id
+        repo[:project_url] = url_for(action: "show", id: project_id)
+        repo[:project_id] = project_id
+      else
+        repo[:project_url] = nil
+        repo[:project_id] = nil
+      end
+      repos << repo
+    end
+
+    repos.sort_by! {|repo| "%s" % repo["language"].to_s}
+    paging = {
+      current_page: github_repos.current_page,
+      per_page: github_repos.per_page,
+      total_entries: github_repos.total_entries,
+      total_pages: github_repos.total_pages
+    }
+
+    render json: {
+      success: true,
+      repos: repos,
+      paging: paging
+    }.to_json
   end
 
   def save_period
@@ -267,6 +310,7 @@ class User::ProjectsController < ApplicationController
       project.s3_filename = s3_infos['filename']
       project.github_project = github_project
       project.private_project = private_project
+
       if store_project( project )
         return project
       end
@@ -288,6 +332,8 @@ class User::ProjectsController < ApplicationController
         flash[:success] = "Project was created successfully."
         return true
       else
+        p "#--------------------", "Cant save project: ", project.to_json
+        p project.error.full_messages.to_sentence
         flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."
         return false
       end
