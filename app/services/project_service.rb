@@ -43,7 +43,7 @@ class ProjectService
     github_project = project.github_project
     current_user = project.user
     sha = Github.get_repo_sha( github_project, current_user.github_token )
-    project_info = Github.get_project_info( github_project, sha, current_user.github_token )
+    project_info = Github.repository_info( github_project, sha, current_user.github_token )
     if project_info.empty?
       return nil
     end
