@@ -7,29 +7,18 @@ class Notification
   field :read      , type: Boolean, default: false
   field :sent_email, type: Boolean, default: false
 
+  belongs_to :user
+  belongs_to :product
+
   validates_presence_of :user_id   , :message => "User is mandatory!"
   validates_presence_of :product_id, :message => "Product is mandatory!"
 
   scope :all_not_sent, where(sent_email: false)
   scope :by_user_id  , ->(user_id){where(user_id: user_id).desc(:created_at).limit(30)}
 
-  belongs_to :user
-  belongs_to :product
 
-
-  def self.disable_all_for_user(user_id)
-    notifications = Notification.all( conditions: {user_id: user_id} )
-    if !notifications.nil? && !notifications.empty?
-      notifications.each do |notification|
-        notification.sent_email = true;
-        notification.save
-      end
-    end
-  end
-
-  def self.send_to_rob
-    user = User.find_by_email( "reiz@versioneye.com" )
-    send_notifications_for_user( user )
+  def self.unsent_user_notifications( user )
+    Notification.all( conditions: {sent_email: "false", user_id: user.id} )
   end
 
   def self.send_notifications
@@ -37,23 +26,19 @@ class Notification
     user_ids = Notification.all.distinct(:user_id)
     user_ids.each do |id|
       user = User.find_by_id( id )
-      if !user.nil? && user.deleted != true
-        count += 1 if send_notifications_for_user( user )
+      next if user.nil?
+      if user.deleted == true
+        self.remove_notifications user
       else
-        Rails.logger.info " -- No user found for id: #{id} "
-        notifications = Notification.all( conditions: {user_id: id} )
-        notifications.each do |noti|
-          Rails.logger.info " ---- Remove notification for user id: #{id} "
-          noti.remove
-        end
+        count += 1 if self.send_unsend_notifications user
       end
     end
-    NotificationMailer.status(count).deliver
+    NotificationMailer.status( count ).deliver
+    count
   end
 
-  def self.send_notifications_for_user(user)
-    notifications = Notification.all( conditions: {sent_email: "false", user_id: user.id.to_s} )
-
+  def self.send_unsend_notifications user
+    notifications = self.unsent_user_notifications user
     if !notifications.nil? && !notifications.empty?
       notifications.sort_by {|notice| [notice.product.language]}
       NotificationMailer.new_version_email( user, notifications ).deliver
@@ -61,6 +46,15 @@ class Notification
       return true
     end
     return false
+  end
+
+  def self.remove_notifications user
+    Rails.logger.info " -- No user found for id: #{user.id} "
+    notifications = Notification.where( :user_id => user.id )
+    notifications.each do |notification|
+      Rails.logger.info " ---- Remove notification for user id: #{user.id} "
+      notification.remove
+    end
   end
 
 end
