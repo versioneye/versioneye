@@ -5,7 +5,7 @@ class CircleElement
 
   field :prod_key, type: String
   field :prod_version, type: String
-  field :prod_scope, type: String  
+  field :prod_scope, type: String
   field :dep_prod_key, type: String
   field :version, type: String
   field :text, type: String
@@ -21,14 +21,14 @@ class CircleElement
 
   def init
     self.connections = Array.new
-    self.dependencies = Array.new 
+    self.dependencies = Array.new
     self.text = ""
     self.dep_prod_key = ""
     self.level = 1
   end
 
   def self.store_circle(circle, prod_key, version, scope)
-    circle.each do |key, element| 
+    circle.each do |key, element|
       element.prod_key = prod_key
       element.prod_version = version
       element.prod_scope = scope
@@ -40,21 +40,21 @@ class CircleElement
 
 
   def self.dependency_circle(prod_key, version, scope)
-    if scope == nil 
+    if scope == nil
       scope = main_scope
     end
-    if version.nil? || version.empty? 
+    if version.nil? || version.empty?
       product = Product.find_by_key prod_key
       version = product.version
     end
     hash = Hash.new
-    dependencies = Array.new 
+    dependencies = Array.new
     if scope.eql?("all")
       dependencies = Dependency.find_by_key_and_version(prod_key, version)
-    else 
+    else
       dependencies = Dependency.find_by_key_version_scope(prod_key, version, scope)
     end
-    dependencies.each do |dep| 
+    dependencies.each do |dep|
       next if dep.name.nil? || dep.name.empty?
       element = CircleElement.new
       element.init
@@ -68,7 +68,7 @@ class CircleElement
   end
 
   def self.fetch_deps(deep, hash, parent_hash)
-    return hash if hash.empty? 
+    return hash if hash.empty?
     new_hash = Hash.new
     hash.each do |prod_key, element|
       product = Product.find_by_key( prod_key )
@@ -87,7 +87,7 @@ class CircleElement
         ele = self.get_element_from_hash(new_hash, hash, parent_hash, key)
         if ele
           ele.connections << "#{element.dep_prod_key}"
-        else 
+        else
           new_element = CircleElement.new
           new_element.init
           new_element.dep_prod_key = dep.dep_prod_key
@@ -102,7 +102,7 @@ class CircleElement
       end
     end
     parent_merged = hash.merge(parent_hash)
-    deep += 1 
+    deep += 1
     rec_hash = self.fetch_deps(deep, new_hash, parent_merged)
     merged_hash = parent_merged.merge(rec_hash)
     return merged_hash
@@ -111,7 +111,7 @@ class CircleElement
 
   def connections_as_string
     response = ""
-    return response if connections.nil? or connections.empty? 
+    return response if connections.nil? or connections.empty?
     connections.each do |conn|
       response += "\"#{conn}\","
     end
@@ -121,7 +121,7 @@ class CircleElement
 
   def dependencies_as_string
     response = ""
-    return response if dependencies.nil? or dependencies.empty? 
+    return response if dependencies.nil? or dependencies.empty?
     dependencies.each do |dep|
       response += "\"#{dep}\","
     end
@@ -133,19 +133,19 @@ class CircleElement
     {
       :text => self.text,
       :id => self.dep_prod_key,
-      :connections => self.connections 
+      :connections => self.connections
     }
   end
 
   def self.generate_json_for_circle_from_hash(circle)
     resp = ""
-    circle.each do |key, dep| 
+    circle.each do |key, dep|
       resp += "{"
       resp += "\"connections\": [#{dep.connections_as_string}],"
       resp += "\"dependencies\": [#{dep.dependencies_as_string}],"
       resp += "\"text\": \"#{dep.text}\","
-      resp += "\"id\": \"#{dep.dep_prod_key}\"," 
-      resp += "\"version\": \"#{dep.version}\"" 
+      resp += "\"id\": \"#{dep.dep_prod_key}\","
+      resp += "\"version\": \"#{dep.version}\""
       resp += "},"
     end
     end_point = resp.length - 2
@@ -155,13 +155,13 @@ class CircleElement
 
   def self.generate_json_for_circle_from_array(circle)
     resp = ""
-    circle.each do |element| 
+    circle.each do |element|
       resp += "{"
       resp += "\"connections\": [#{element.connections_string}],"
       resp += "\"dependencies\": [#{element.dependencies_string}],"
       resp += "\"text\": \"#{element.text}\","
-      resp += "\"id\": \"#{element.dep_prod_key}\"," 
-      resp += "\"version\": \"#{element.version}\"" 
+      resp += "\"id\": \"#{element.dep_prod_key}\","
+      resp += "\"version\": \"#{element.version}\""
       resp += "},"
     end
     end_point = resp.length - 2
@@ -184,5 +184,5 @@ class CircleElement
       element = parent_hash[key]
       return element
     end
- 
+
 end
