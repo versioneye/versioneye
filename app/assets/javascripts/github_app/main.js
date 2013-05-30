@@ -19,43 +19,57 @@ define(
 			if(response.success){
 				return response.repos;
 			} else {
-				return [];
+				return [];;
 			}
 		}
 	});
 
 	var GithubRepoSwitchView = Backbone.View.extend({
-		el: $('#github-repos'),
 		template: _.template($("#github-repo-switch-template").html()),
-
+		
 		events: {
-			'switch-change .switch': 'on_switch_change'
+			"switch-change .switch" : "onSwitchChange"
+		},
+		
+		initialize: function(options){
+			this.parent = options.parent;
 		},
 
-		render_str: function(model){
-			this.model = model || this.model;
-			return this.template({repo: this.model.toJSON()});
+		render: function(){
+			this.$el.html(this.template({repo: this.model.toJSON()}));
+			return this;
 		},
-		on_switch_change: function(ev){
-			//TODO: finish it - and it runs ~27times;
-			console.log(ev.target);
-			
-			ev.stopPropagation();
-        	ev.stopImmediatePropagation();
 
+		onSwitchChange: function(ev, switch_data){
+			console.log(switch_data);
+        	is_switch_active = switch_data.el.bootstrapSwitch("isActive");
+
+        	if(is_switch_active && switch_data.value){
+        		this.addProject(switch_data.el, switch_data.value);
+        	} else if (is_switch_active && !switch_data.value) {
+        		this.removeProject(switch_data.el), switch_data.value;
+        	} else {
+        		console.log("Going to drop event of unactive switch.")
+        	}
 			return false;
+		},
+
+		addProject: function(el, data){
+			console.log("Adding new project");
+			console.log(this.model.toJSON());
+		},
+		removeProject: function(el, data){
+			console.log("Removing selected project.");
 		}
 	});
 
 	var GithubRepoLabelView = Backbone.View.extend({
 		template: _.template($("#github-repo-label-template").html()),
 
-		render_str: function(model){
-			return this.template(model);
+		initialize: function(options){
+			this.parent = options.parent;
 		},
-
-		render_labels: function(model){
-			this.model = model || this.model;
+		render: function(){
 
 			var repo = this.model.toJSON();
 			var type_label_template = _.template('<strong>{{= type}}</strong>');
@@ -97,41 +111,41 @@ define(
 				labels.push(that.template(label_model));
 			});
 
-			return labels;
+			this.$el.html(labels.join(' '));
+			return this;
 		}
 	});
 
-	var GithubRepoInfoView = Backbone.View.extend({
+	var GithubRepoItemView = Backbone.View.extend({
 		template: _.template($("#github-repo-info-template").html()),
 
-		render_str: function(model){
-			this.model = model || this.model;
+		render: function(){
+
 			var switch_view = new GithubRepoSwitchView({model: this.model});
 			var label_view = new GithubRepoLabelView({model: this.model});
 
-			return  this.template({
-				repo: this.model.toJSON(),
-				labels: label_view.render_labels().join('\n'),
-				github_switch: switch_view.render_str()
+			var repo_container = this.template({
+				repo: this.model.toJSON()
 			});
+			this.$el.html(repo_container);
+			this.$el.find(".repo-switch").html(switch_view.render().el);
+			this.$el.find(".repo-labels").html(label_view.render().el);
+			return this;
 		}
 	});
 	var GithubRepoView = Backbone.View.extend({
-		el: "#github-repos",
-		template: _.template($("#github-table-template").html()),
+		el: '#github-repos',
 
 		render: function(){
-			console.log(this.collection.toJSON());
-			$(this.el).html(this.template({}));
-			var table_el = $(this.el).find("tbody");
-			var item_view = new GithubRepoInfoView({});
-
-			this.collection.each(function(repo_model){
-				table_el.append(item_view.render_str(repo_model));
-			});
+			this.$el.empty();
+			this.collection.each(this.addItem);
 
 			$(".switch").bootstrapSwitch();
-
+			return this;
+		},
+		addItem : function(model){
+			var itemview = new GithubRepoItemView({model: model});
+			$("#github-repos").append(itemview.render().el);
 		}
 	});
 
@@ -165,7 +179,6 @@ define(
 					repo_view.render();
 				}
 			});
-			
 		},
 		showOrgRepos: function(){
 			console.log("going to show repos for org");
