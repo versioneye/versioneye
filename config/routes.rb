@@ -177,6 +177,7 @@ Versioneye::Application.routes.draw do
   get   '/datenerhebung',       :to => 'page#datenerhebung'
   get   '/datacollection',      :to => 'page#datacollection'
   get   '/disclaimer',          :to => 'page#disclaimer'
+  get   '/logos',               :to => 'page#logos'
 
 
   get   '/api',                 :to => 'swaggers#index'

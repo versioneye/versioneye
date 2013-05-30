@@ -14,7 +14,7 @@ class PageController < ApplicationController
 
   def about
   end
-  
+
   def impressum
   end
 
@@ -28,12 +28,15 @@ class PageController < ApplicationController
   end
 
   def signup
-  end  
-  
+  end
+
   def apijson
   end
-  
+
   def newest
+  end
+
+  def logos
   end
 
   def sitemap_1
