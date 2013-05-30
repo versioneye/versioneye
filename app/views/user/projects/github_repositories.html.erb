@@ -34,17 +34,6 @@
   </div>
 </script>
 
-<script id = "github-table-template" type = "text/template">
-  <table id = "github-repos-table" class = "table table-hover">
-    <tbody></tbody>
-  </table>
-</script>
-
-<script id = "github-table-row-template" type = "text/template">
-  <tr>
-    <td> {{= content}} </td>
-  </tr>
-</script>
 
 <script id = "github-repo-info-template" type = "text/template">
   <div id = "github-repo-{{= repo.github_id }}">
@@ -58,12 +47,9 @@
       <div class = "repo-info-content span8">
         <h5>{{= repo.fullname }}</h5>
         <p> {{= repo.description}} </h5>
-        <div class = "repo-labels"> {{= labels }} </div>
-
+        <div class = "repo-labels"></div>
       </div>
-      <div class = "repo-switch span2">
-        {{= github_switch }}
-      </div>
+      <div class = "repo-switch span2"></div>
     </div>
     <div class = "repo-notification"></div>
   </div>
@@ -76,10 +62,12 @@
 </script>
 
 <script id = "github-repo-switch-template" type = "text/template">
-   <div class = "github_switch switch switch-small pull-right">
-      <input type = "checkbox" class = "input"
-        {{= repo.supported ? "" : " disabled " }}
-        {{= repo.imported ? " checked " : "" }}
+   <div class = "github-switch switch switch-small pull-right">
+      <input
+        id = "{{= 'github-repo-switch-'+ repo.github_id }} "
+        type = "checkbox" class = "input"
+        {{= !repo.supported ? ' disabled ' : '' }}
+        {{= repo.imported ? ' checked ': '' }}
         data-github-id = "{{= repo.github_id }}"
         data-github-project-id = "{{= repo.project_id }}"
         data-github-fullname = "{{= repo.fullname }}" />
