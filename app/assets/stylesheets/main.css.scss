@@ -223,6 +223,15 @@ div.content {
   border-left: 1px solid #DDD;
 }
 
+.flash-container {
+    overflow: auto;
+    position: fixed;
+    top: 0;
+    right: 10%;
+    left: 10%;
+    width: 70%;
+}
+
 /* -----------------------
   Separators (hr)
 */

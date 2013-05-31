@@ -121,7 +121,6 @@ Versioneye::Application.routes.draw do
   get '/user/packages/popular_in_my_projects', :to => "user/packages#popular_in_my_projects"
   get '/user/packages/i_follow'              , :to => "user/packages#i_follow"
   get '/user/projects/github_repositories'   , :to => 'user/projects#github_repositories'
-  get '/user/projects/github_repos'          , :to => 'user/projects#github_repos'
 
   namespace :user do
     resources :projects do
@@ -134,6 +133,7 @@ Versioneye::Application.routes.draw do
         post 'update_name'
       end
     end
+    resources :github_repos
   end
 
   post  '/services/choose_plan',  :to => 'services#choose_plan'

@@ -7,19 +7,37 @@ define(
       evaluate: /\{\{(.+?)\}\}/g
     };
 
-	var GithubRepoModel = Backbone.Model.extend({
+  function showNotification(classes, message){
+    var flash_template = _.template(jQuery("#github-notification-template").html());
+    $(".flash-container").html(flash_template({
+      classes: classes,
+      content: message
+    }));
+  }
 
-	});
+  function addRepoLinkLabel(selector, model){
+    var url_label_template = _.template(jQuery("#github-repo-urllabel-template").html());
+    $(selector).find('.repo-labels').append({
+      classes: "label label-info",
+      url: model.get("project_url"),
+      content: '<i class="icon-home"></i> Project\'s page'
+    });
+  }
+
+  function removeRepoLinkLabel(selector){
+    $(selector).find('.repo-homepage').remove();  
+  }
+
+	var GithubRepoModel = Backbone.Model.extend({});
 
 	var GithubRepoCollection = Backbone.Collection.extend({
-		url: "/user/projects/github_repos",
+		url: "/user/github_repos",
 		model: GithubRepoModel,
 		parse: function(response){
-			console.log(response);
 			if(response.success){
 				return response.repos;
 			} else {
-				return [];;
+				return [];
 			}
 		}
 	});
@@ -41,26 +59,91 @@ define(
 		},
 
 		onSwitchChange: function(ev, switch_data){
-			console.log(switch_data);
-        	is_switch_active = switch_data.el.bootstrapSwitch("isActive");
+      console.debug(switch_data);
+      is_switch_active = switch_data.el.parent().bootstrapSwitch("isActive");
+      
+      switch_data.el.parent().bootstrapSwitch('setActive', false);
 
-        	if(is_switch_active && switch_data.value){
-        		this.addProject(switch_data.el, switch_data.value);
-        	} else if (is_switch_active && !switch_data.value) {
-        		this.removeProject(switch_data.el), switch_data.value;
-        	} else {
-        		console.log("Going to drop event of unactive switch.")
-        	}
+      if(is_switch_active && switch_data.value){
+        this.addProject(switch_data.el, switch_data.value);
+      } else if (is_switch_active && !switch_data.value) {
+        this.removeProject(switch_data.el), switch_data.value;
+      } else {
+        console.log("Going to drop event of unactive switch.")
+      }
 			return false;
 		},
 
 		addProject: function(el, data){
 			console.log("Adding new project");
-			console.log(this.model.toJSON());
-		},
+	    el.parent().bootstrapSwitch('setActive', false);
+	    this.model.save(
+        {command: "import"}, 
+        {
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', 
+                                 $('meta[name="csrf-token"]').attr('content'));
+          },
+          success: this.onAddSuccess,
+          error: this.onAddFailure
+        });
+    },
+
+    onAddSuccess: function(model, xhr, options){
+      var selector = "#github-repo-" + model.get("github_id");
+      var switch_selector = "github-repo-switch-" + model.get('github_id');
+      var msg = ['<strong> Success! </strong>',
+                 'Github project ', model.get('fullname'),
+                 ' is now successfully imported.', 
+                 'You can now checkout project\'s page to see state of dependencies.'
+                 ].join(' ');
+
+      addRepoLinkLabel(selector, model);
+      $(switch_selector).parent().bootstrapSwitch('setActive', true);
+      showNotification("alert alert-success", msg);
+    },
+
+    onAddFailure: function(model, xhr, options){
+      console.log("Failure: Cant import project: " + model.get('fullname'));
+      var switch_selector = "github-repo-switch-" + model.get('github_id');
+      $(switch_selector).parent().bootstrapSwitch("setState", false);
+      $(switch_selector).parent().bootstrapSwitch('setActive', true);
+    },
+
 		removeProject: function(el, data){
 			console.log("Removing selected project.");
-		}
+      this.model.save(
+        {command: "remove"},
+        {
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', 
+                                 $('meta[name="csrf-token"]').attr('content'));
+          },
+          success: this.onRemoveSuccess,
+          error: this.onRemoveFailure
+        }
+      );
+		},
+
+   onRemoveSuccess: function(model, xhr, options){
+      var selector = "#github-repo-" + model.get("github_id");
+      var msg = [
+        '<strong>Success!</strong>',
+        'Github project ', model.get('fullname'),
+        ' is now successfully removed from your projects.'
+      ].join(' ');
+
+      removeRepoLinkLabel(selector);
+      var switch_selector = "github-repo-switch-" + model.get('github_id');
+      $(switch_selector).parent().bootstrapSwitch('setActive', true);
+      showNotification("alert alert-succes", msg);
+   },
+   onRemoveFailure: function(model, xhr, options){
+      console.log("Fail: Cant remove project");
+      var switch_selector = "github-repo-switch-" + model.get('github_id');
+      $(switch_selector).parent().bootstrapSwitch('setState', true);
+      $(switch_selector).parent().bootstrapSwitch('setActive', true);
+  },
 	});
 
 	var GithubRepoLabelView = Backbone.View.extend({

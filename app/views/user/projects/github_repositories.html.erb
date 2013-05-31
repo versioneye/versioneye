@@ -30,13 +30,13 @@
 <script id = "github-notification-template" type = "text/template">
   <div class="{{= classes }}">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-    {{=  message }}
+    {{=  content }}
   </div>
 </script>
 
 
 <script id = "github-repo-info-template" type = "text/template">
-  <div id = "github-repo-{{= repo.github_id }}">
+  <div id = "github-repo-{{= repo.github_id}}" class = "repo-container">
     <div class = "repo-info row-fluid">
       <div class = "repo-logo span2">
         {{ var logo_path = "/assets/language/" }}
@@ -61,10 +61,18 @@
   </span>
 </script>
 
+<script id = "github-repo-urllabel-template" type = "text/template">
+  <span class="">
+    <a href= "{{= url }}">
+      <span class = "{{= classes }}">{{= content }}</span>
+    </a>
+  </span>
+</script>
+
 <script id = "github-repo-switch-template" type = "text/template">
    <div class = "github-switch switch switch-small pull-right">
       <input
-        id = "{{= 'github-repo-switch-'+ repo.github_id }} "
+        id = "{{= 'github-repo-switch-'+ repo.github_id }}"
         type = "checkbox" class = "input"
         {{= !repo.supported ? ' disabled ' : '' }}
         {{= repo.imported ? ' checked ': '' }}

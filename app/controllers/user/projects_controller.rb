@@ -123,7 +123,7 @@ class User::ProjectsController < ApplicationController
       success = true
     else
       msg = "Cant remove project with id: `#{id}` - it doesnt exist. Please refresh page."
-      p msg
+      Rails.logger.error msg
     end
     respond_to do |format|
       format.html {redirect_to user_projects_path}
@@ -175,46 +175,6 @@ class User::ProjectsController < ApplicationController
     Rails.logger.error e.backtrace.first
     flash[:error] = "An error occured. Maybe you have to reconnect your VersionEye Account with your GitHub Account."
     redirect_to user_projects_path
-  end
-
-  #TODO: add organizations
-  def github_repos
-    repos = []
-    github_repos = GitHubService.cached_user_repos(current_user).asc(:language)
-    github_repos = github_repos.paginate(
-      page: (params[:page] || 1),
-      per_page: (params[:per_page] || 30)
-    )
-    imported_repos = current_user.projects.by_source(Project::A_SOURCE_GITHUB)
-    imported_repo_names  = imported_repos.map(&:github_project).to_set
-    supported_langs = Github.supported_languages
-    github_repos.each do |repo|
-      repo[:supported] = supported_langs.include? repo["language"]
-      repo[:imported] = imported_repo_names.include? repo["fullname"]
-      if repo[:imported]
-        project_id = imported_repos.where(github_project: repo["fullname"]).first.id
-        repo[:project_url] = url_for(action: "show", id: project_id)
-        repo[:project_id] = project_id
-      else
-        repo[:project_url] = nil
-        repo[:project_id] = nil
-      end
-      repos << repo
-    end
-
-    repos.sort_by! {|repo| "%s" % repo["language"].to_s}
-    paging = {
-      current_page: github_repos.current_page,
-      per_page: github_repos.per_page,
-      total_entries: github_repos.total_entries,
-      total_pages: github_repos.total_pages
-    }
-
-    render json: {
-      success: true,
-      repos: repos,
-      paging: paging
-    }.to_json
   end
 
   def save_period
