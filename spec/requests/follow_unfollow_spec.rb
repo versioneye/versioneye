@@ -2,6 +2,16 @@ require 'spec_helper'
 
 describe "follow and unfollow" do
 
+  before :all do
+    User.destroy_all
+    Product.destroy_all
+  end
+
+  after :all do
+    User.destroy_all
+    Product.destroy_all
+  end
+
   it "do follow successfully" do
     prod_key = "json_goba"
   	product = Product.new
@@ -40,6 +50,11 @@ describe "follow and unfollow" do
     get "/package/json_goba/version/1~0"
     assert_tag :tag => "button", :attributes => { :class => "btn2 btn-large btn-warning", :type => "submit" }
     response.body.should match("1 Followers")
+
+    get user_packages_i_follow_path
+    assert_response :success
+    assert_tag :tag => "div", :attributes => { :class => "row search-item" }
+    response.body.should match("json_goba")
 
     post "/package/unfollow", :product_key => "json_goba", :src_hidden => "detail"
     assert_response 302
