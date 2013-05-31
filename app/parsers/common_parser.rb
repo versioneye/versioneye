@@ -1,11 +1,11 @@
-class CommonParser  
-  
-  @@curl_ca_bundle = "/opt/local/share/curl/curl-ca-bundle.crt"
+class CommonParser
+
+  @@curl_ca_bundle  = "/opt/local/share/curl/curl-ca-bundle.crt"
   @@ca_certificates = "/usr/lib/ssl/certs/ca-certificates.crt"
-  
+
   def fetch_response( url )
-    url = self.do_replacements_for_github( url )
-    uri = URI.parse(url)
+    url  = self.do_replacements_for_github( url )
+    uri  = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
     if uri.port == 443
       http.use_ssl = true
@@ -15,12 +15,22 @@ class CommonParser
         http.ca_file = @@ca_certificates
       end
     end
-    path = uri.path
+    path  = uri.path
     query = uri.query
     http.get("#{path}?#{query}")
-  rescue => e 
+  rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
+    nil
+  end
+
+  def fetch_response_body( url )
+    response = self.fetch_response( url )
+    gemfile = response.body
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    nil
   end
 
   def do_replacements_for_github(url)
