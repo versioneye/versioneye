@@ -240,6 +240,12 @@ div.content {
   margin: 60px 0px 60px 0px;
 }
 
+#github-menu {
+  .dropdown.open .dropdown-toggle {
+    background: #afafaf !important;
+    color: #FFFFFF;
+  }
+}
 
 /* Jumbotrons
 -------------------------------------------------- */

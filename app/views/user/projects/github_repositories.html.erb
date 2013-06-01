@@ -7,6 +7,8 @@
 <div class="span8">
 	<div class="row content_header_def" >
     Select the GitHub Repositories you want to monitor.
+    <div id = "github-menu"></div>
+
   </div>
   <div id = "github-repos" class="content" >
     <div >
@@ -80,6 +82,65 @@
         data-github-project-id = "{{= repo.project_id }}"
         data-github-fullname = "{{= repo.fullname }}" />
   </div>
+</script>
+
+<script id = "github-menu-template" type = "text/template">
+  <ul class="nav nav-pills">
+    <li class="active">
+      <a href="#">Private repositories</a>
+    </li>
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Organizations
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="">
+          <a href="#">Org 1</a>
+        </li>
+        <li class="">
+          <a href="#">Org 2</a>
+        </li>
+        <li class="">
+          <a href="#">Org 3</a>
+        </li>
+      </ul>
+    </li>
+   <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Sort by
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="">
+          <a href="#">Language</a>
+        </li>
+        <li class="">
+          <a href="#">Updated</a>
+        </li>
+        <li class="">
+          <a href="#">...</a>
+        </li>
+      </ul>
+    </li>
+   <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Filter by
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="">
+          <a href="#">Language</a>
+        </li>
+        <li class="">
+          <a href="#">Updated</a>
+        </li>
+        <li class="">
+          <a href="#">...</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
 </script>
 
 <script id = "github-pagination-template" type = "text/template">
