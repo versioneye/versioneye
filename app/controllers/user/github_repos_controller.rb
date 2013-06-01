@@ -65,8 +65,8 @@ class User::GithubReposController < ApplicationController
       id = params[:project_id]
       if Project.where(_id: id).exists?
         ProjectService.destroy_project id
-        success = true
-        repo = {}
+        repo = GithubRepo.find(params[:_id])
+        repo = process_repo(repo)
       else
         error_msg = "Cant remove project with id: `#{id}` - it doesnt exist. Please refresh page."
         Rails.logger.error error_msg
