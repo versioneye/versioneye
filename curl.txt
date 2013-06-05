@@ -1,0 +1,19 @@
+curl -XDELETE 'http://localhost:9200/product_test/'
+
+curl -XPUT 'http://localhost:9200/product_test/' -d '{
+    "settings" : {
+        "index" : {
+            "number_of_shards" : 5
+        }
+    }
+}'
+
+
+curl -XPUT 'http://localhost:9200/product_test/product/_mapping' -d'
+{
+    "product" : {
+        "properties" : {
+            "name" : {"type" : "string", "analyzer" : "snowball", "boost" : "100"}
+        }
+    }
+}'
