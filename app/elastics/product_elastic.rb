@@ -18,6 +18,7 @@ class ProductElastic
       }
     end
   end
+  # , :settings => { :number_of_shards => 1 }
 
   def self.clean_all
     Tire.index( Settings.elasticsearch_product_index ).delete
@@ -96,9 +97,10 @@ class ProductElastic
                       load: true,
                       from: from,
                       per_page: results_per_page,
+                      search_type: "dfs_query_and_fetch",
                       size: results_per_page) do |search|
 
-      search.sort { by [{:_score => 'desc'}] }
+      # search.sort { by [{:_score => 'desc'}] }
       # search.sort { by [{'name.untouched' => 'asc'}] }
 
       if langs and !langs.empty?
