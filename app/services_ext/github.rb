@@ -51,12 +51,23 @@ class Github
   end
 
   def self.user_repos(user, url = nil, page = 1, per_page = 30)
-    headers = {"User-Agent" => A_USER_AGENT}
     if url.nil?
       url =  "#{A_API_URL}/user/repos?page=#{page}&per_page=#{per_page}&access_token=#{user.github_token}"
     end
+    
+    read_repos(url, page, per_page)
+  end
 
-    response     = self.get(url, headers: headers)
+  def self.user_orga_repos(user, orga_name, url = nil, page = 1, per_page = 30)
+    if url.nil?
+      url = "#{A_API_URL}/orgs/#{orga_name}/repos?access_token=#{user.github_token}"
+    end
+    read_repos(url, page, per_page)
+  end
+
+  def self.read_repos(url, page = 1, per_page = 30)
+    request_headers = {"User-Agent" => A_USER_AGENT}
+    response = self.get(url, headers: request_headers)
     paging_links = parse_paging_links(response.headers)
 
     repos = {
@@ -73,6 +84,7 @@ class Github
     }
     repos[:paging].merge! paging_links unless paging_links.nil?
     repos
+
   end
 
   def self.user_repo_names( github_token )
@@ -127,7 +139,6 @@ class Github
     end
     names
   end
-
   def self.private_repo?( github_token, name )
     body = HTTParty.get("https://api.github.com/repos/#{name}?access_token=#{github_token}", :headers => {"User-Agent" => A_USER_AGENT} ).response.body
     repo = JSON.parse( body )

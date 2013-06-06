@@ -10,7 +10,8 @@ class GitHubService
   def self.cached_user_repos( user )
     if user.github_repos.all.count == 0
       Rails.logger.info "Fetch Repositories from GitHub and cache them in DB."
-      self.cache_user_repos( user )
+      orga_names = Github.orga_names(user.github_token)
+      self.cache_user_all_repos(user, orga_names)
     elsif Github.user_repos_changed?( user )
       Rails.logger.info "Repos are changed - going to re-import all user repos."
       user.github_repos.delete_all
@@ -22,11 +23,30 @@ class GitHubService
   end
 
   private
+    
+    def self.cache_user_all_repos(user, orga_names)
+      #get user github login
+      user[:user_login] = Github.user(user.github_token)['login'] 
+      #load data
+      self.cache_user_repos(user)
+      orga_names.each {|orga_name| self.cache_user_orga_repos(user, orga_name)}
+    end
 
     def self.cache_user_repos( user )
       url = nil
       begin
         data = Github.user_repos(user, url)
+        data[:repos].each do |repo|
+          GithubRepo.add_new(user, repo, data[:etag])
+        end
+        url = data[:paging]["next"]
+      end while not url.nil?
+    end
+
+    def self.cache_user_orga_repos(user, orga_name)
+      url = nil
+      begin
+        data = Github.user_orga_repos(user, orga_name, url)
         data[:repos].each do |repo|
           GithubRepo.add_new(user, repo, data[:etag])
         end

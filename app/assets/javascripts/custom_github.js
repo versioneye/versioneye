@@ -4,7 +4,8 @@ require.config({
         'underscore': '/assets/libs/underscore-min',
         'backbone': '/assets/libs/backbone-min',
         'moment': '/assets/libs/moment.min',
-        'bootstrap_switch': '/assets/libs/bootstrap_switch'
+        'bootstrap_switch': '/assets/libs/bootstrap_switch',
+        'paginator': '/assets/libs/backbone.paginator.min'
     },
     shim: {
         'jQuery': {
@@ -15,6 +16,9 @@ require.config({
         },
         'underscore': {
             exports: '_'
+        },
+        'paginator' : {
+          exports: 'Backbone.Paginator'
         }
     }
 });

@@ -1,11 +1,12 @@
 define(
-	['jQuery', 'underscore', 'backbone', 'moment', 'bootstrap_switch'],
-	function($, _, Backbone, moment){
+	['jQuery', 'underscore', 'backbone', 'moment', 'bootstrap_switch',
+   'paginator'],
+	function($, _, Backbone, moment, BootstrapSwitch, Paginator){
 
 	_.templateSettings = {
       interpolate: /\{\{\=(.+?)\}\}/g,
       evaluate: /\{\{(.+?)\}\}/g
-    };
+  };
 
   function showNotification(classes, message){
     var flash_template = _.template(jQuery("#github-notification-template").html());
@@ -17,38 +18,58 @@ define(
 
   function addRepoLinkLabel(selector, model){
     var url_label_template = _.template(jQuery("#github-repo-urllabel-template").html());
-    $(selector).find('.repo-labels').append({
+    $(selector).find('.repo-labels').append(url_label_template({
       classes: "label label-info",
       url: model.get("project_url"),
       content: '<i class="icon-home"></i> Project\'s page'
-    });
+    }));
   }
 
   function removeRepoLinkLabel(selector){
-    $(selector).find('.repo-homepage').remove();  
+    $(selector).find('.repo-homepage').remove();
   }
 
 	var GithubRepoModel = Backbone.Model.extend({});
+  var GithubRepoCollection = Backbone.Paginator.requestPager.extend({
+    model: GithubRepoModel,
+    paginator_core: {
+      type: 'GET',
+      dataType: 'json',
+      url: '/user/github_repos'
+    },
+    paginator_ui: {
+      firstPage: 1,
+      currentPage: 1,
+      perPage: 5
+    }, 
+    server_api: {
+      per_page: function(){return this.perPage;},
+      page: function(){return this.currentPage;}
+    },
+    parse: function(response){
+      if(response.success){
+        this.totalPages = response.paging.total_pages;
+        this.totalRecords = response.paging.total_entries;
+        this.currentPage = response.paging.current_page;
+        return response.repos;
+      } else {
+        return []
+      }
+    }
+  });
 
-	var GithubRepoCollection = Backbone.Collection.extend({
-		url: "/user/github_repos",
-		model: GithubRepoModel,
-		parse: function(response){
-			if(response.success){
-				return response.repos;
-			} else {
-				return [];
-			}
-		}
+	var GithubMenuItem = Backbone.Model.extend({});
+	var GithubMenuCollection = Backbone.Collection.extend({
+		url: "/user/menu/github_repos",
+		model: GithubMenuItem
 	});
 
 	var GithubRepoSwitchView = Backbone.View.extend({
 		template: _.template($("#github-repo-switch-template").html()),
-		
 		events: {
 			"switch-change .switch" : "onSwitchChange"
 		},
-		
+
 		initialize: function(options){
 			this.parent = options.parent;
 		},
@@ -59,9 +80,8 @@ define(
 		},
 
 		onSwitchChange: function(ev, switch_data){
-      console.debug(switch_data);
       is_switch_active = switch_data.el.parent().bootstrapSwitch("isActive");
-      
+
       switch_data.el.parents(".github-switch").bootstrapSwitch('setActive', false);
 
       if(is_switch_active && switch_data.value){
@@ -81,7 +101,7 @@ define(
         {command: "import"}, 
         {
           beforeSend: function(xhr) {
-            xhr.setRequestHeader('X-CSRF-Token', 
+            xhr.setRequestHeader('X-CSRF-Token',
                                  $('meta[name="csrf-token"]').attr('content'));
           },
           success: this.onAddSuccess,
@@ -101,6 +121,7 @@ define(
       addRepoLinkLabel(selector, model);
       $(switch_selector).parents(".github-switch").bootstrapSwitch('setActive', true);
       showNotification("alert alert-success", msg);
+      return true;
     },
 
     onAddFailure: function(model, xhr, options){
@@ -108,6 +129,7 @@ define(
       var switch_selector = "#github-repo-switch-" + model.get('github_id');
       $(switch_selector).parents(".github-switch").bootstrapSwitch("setState", false);
       $(switch_selector).parents(".github-switch").bootstrapSwitch('setActive', true);
+      return false;
     },
 
 		removeProject: function(el, data){
@@ -137,6 +159,8 @@ define(
       var switch_selector = "#github-repo-switch-" + model.get('github_id');
       $(switch_selector).parents(".github-switch").bootstrapSwitch('setActive', true);
       showNotification("alert alert-succes", msg);
+
+      return true;
    },
    onRemoveFailure: function(model, xhr, options){
       var msg = "Fail: Cant remove project";
@@ -145,6 +169,8 @@ define(
       $(switch_selector).parents(".github-switch").bootstrapSwitch('setState', true);
       $(switch_selector).parents(".github-switch").bootstrapSwitch('setActive', true);
       showNotification("alert alert-warning", msg);
+
+      return false;
     },
 	});
 
@@ -203,7 +229,6 @@ define(
 
 	var GithubRepoItemView = Backbone.View.extend({
 		template: _.template($("#github-repo-info-template").html()),
-
 		render: function(){
 
 			var switch_view = new GithubRepoSwitchView({model: this.model});
@@ -220,29 +245,49 @@ define(
 	});
 	
   var GithubMenuView =  Backbone.View.extend({
-    el: ".content_header_def",
+    el: "#github-menu",
     template: _.template($("#github-menu-template").html()),
+	  item_template: _.template($("#github-menu-item-template").html()),
+    initialize: function(){
+      this.collection.bind('change', this.render, this);
+      this.collection.on('all', this.render, this);
+    }, 
     render: function(){
+      console.log("Rendering menu...");
       $(this.el).html(this.template({}));
+
+      $(this.el).find("#github-menu-orgs").empty();
+      this.collection.each(function(org){
+      	$(this.el).find("#github-menu-orgs").append(
+      		this.item_template({org: org.toJSON()})
+      	);
+      }, this)
       return this;
     }
   });
   
   var GithubRepoView = Backbone.View.extend({
 		el: '#github-repos',
-
-		render: function(){
-			this.$el.empty();
-			this.collection.each(this.addItem);
-
-			$(".switch").bootstrapSwitch(); //activates switches on rendered view
-			return this;
+    initialize: function(){
+      var repos = this.collection;
+      repos.on('add', this.addItem, this);
+      repos.on('reset', this.resetView, this);
+      //repos.on('all', this.render, this);
+      //repos.pager();
+    },
+		resetView: function(){
+      console.debug("Resetting repo view");
+      $("#github-loader").remove();
+      $("#github-repos").empty(); 
+			return false;
 		},
 		addItem : function(model){
-      console.log(model.toJSON());
 			var itemview = new GithubRepoItemView({model: model});
+      var switch_selector = "#github-repo-switch-" + model.get('github_id');
 			$("#github-repos").append(itemview.render().el);
-		}
+			$(switch_selector).parent().bootstrapSwitch(); 
+	    $("#github-loader").remove();
+  }
 	});
 
 	var GithubLoadingView = Backbone.View.extend({
@@ -256,35 +301,71 @@ define(
 		}
 	});
 
-	var AppRouter = Backbone.Router.extend({
+  var GithubPaginationView = Backbone.View.extend({
+    events: {
+      "click .btn-pagination-next": "loadMore"
+    },
+    template: _.template($("#github-pagination-template").html()),
+    initialize: function () {
+      this.collection.on('sync', this.render, this);
+      $('#github-pagination').html(this.$el);
+    },
+    render: function(){
+      $(this.el).html(this.template({
+        paging: {
+          currentPage: this.collection.currentPage,
+          totalPages: this.collection.totalPages
+        }
+      }));
+    },
+    loadMore: function(e){
+      console.debug("Showing more results.");
+      this.collection.requestNextPage();
+      return false;
+    }
+  });
+
+  var prev_org_id = null;
+  var user_repos = new GithubRepoCollection();
+  var repo_view = new GithubRepoView({collection: user_repos});
+  var pagination_view = new GithubPaginationView({collection: user_repos});
+  var AppRouter = Backbone.Router.extend({
 		routes: {
-			'user': 'showUserRepos',
-			'org': 'showOrgRepos',
-			'*path': 'showUserRepos'
+			'user': 'showRepos',
+			'org/:org_id': 'showRepos',
+			'*path': 'showRepos'
 		},
-		showUserRepos: function(){
-			console.log("going to show repos for user");
+		showRepos: function(org_id){
+      org_id = (_.isNull(org_id)) ? "user" : org_id;
+      if(prev_org_id !== org_id){
+        console.log("Org id changed - cleaning up & reseting pager.");
+        user_repos.reset();
+        user_repos.currentPage = 1;
+        prev_org_id = org_id;
+      }
+			console.log("going to show repos for: " + org_id);
+
+      $('.github-switch').bootstrapSwitch('destroy');
+      $('.github-switch').remove();
+
 			var loader_view = new GithubLoadingView();
 			loader_view.render();
-			//load repo data
-      var menu_view = new GithubMenuView();
-      menu_view.render();
 
-      var user_repos = new GithubRepoCollection();
-			user_repos.fetch({
-				data: {page: 1},
-				success:  function(repos, response, options){
-					var repo_view = new GithubRepoView({collection: repos});
-					repo_view.render();
-				}
-			});
-		},
-		showOrgRepos: function(){
-			console.log("going to show repos for org");
+			var menu_items = new GithubMenuCollection();
+		  var menu_view = new GithubMenuView({collection: menu_items});
+      menu_items.fetch({});
+ 
+      user_repos.fetch({
+        data: {org_id: org_id},
+        cache: false,
+        error: function(repos, response, options){
+          showNotification(
+            "alert alert-warning",
+            "Cant load repos: " + response);
+        }
+      });
 		}
-
 	});
-
 
 	return {init : function(){
 		console.log("Running github app");
