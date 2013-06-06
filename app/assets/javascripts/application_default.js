@@ -15,5 +15,4 @@
 //= require custom
 //= require custom_feedback
 
-//= require underscore-min
 //= require settings

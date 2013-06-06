@@ -1,11 +1,17 @@
 class User::GithubReposController < ApplicationController
   before_filter :authenticate
 
-  #TODO: add organizations
   def index
     repos = []
-    github_repos = GitHubService.cached_user_repos(current_user).asc(:language)
-    github_repos = github_repos.paginate(
+    org_id = params["org_id"]
+    github_repos = current_user.github_repos.all #GitHubService.cached_user_repos(current_user)
+    if org_id.nil? or org_id == "user"
+      github_repos = github_repos.by_owner_type("user")
+    else
+      github_repos = github_repos.by_owner_login(org_id)
+    end
+
+    github_repos = github_repos.asc(:language).paginate(
       page: (params[:page] || 1),
       per_page: (params[:per_page] || 30)
     )
@@ -58,8 +64,9 @@ class User::GithubReposController < ApplicationController
         repo = process_repo(repo)
       else
         error_msg = "Cant import given project: #{project_name}."
-        logger.error error_msg
+        Rails.logger.error error_msg
         render text: error_msg, status: 503
+        return false
       end
     when "remove"
       id = params[:project_id]
@@ -71,6 +78,7 @@ class User::GithubReposController < ApplicationController
         error_msg = "Cant remove project with id: `#{id}` - it doesnt exist. Please refresh page."
         Rails.logger.error error_msg
         render text: error_msg, status: 400
+        return false
       end
 
     end
@@ -86,6 +94,20 @@ class User::GithubReposController < ApplicationController
       error_msg = "No such github repo with id: `#{id}`"
       render text: error_msg, status: 400
     end
+  end
+
+  def show_menu_items
+    menu_items = []
+    user_orgs = current_user.github_repos.distinct(:owner_login)
+    user_orgs.each do |owner_login|
+      repo = current_user.github_repos.by_owner_login(owner_login).first
+      menu_items << {
+        name: repo[:owner_login],
+        type: repo[:owner_type] 
+      }
+    end
+
+    render json: menu_items
   end
 
   def destroy
@@ -106,7 +128,6 @@ class User::GithubReposController < ApplicationController
     end
   end
 
-
   private
     #adds additional data for repos
     def process_repo repo
@@ -118,7 +139,7 @@ class User::GithubReposController < ApplicationController
       repo[:imported] = imported_repo_names.include? repo["fullname"]
       if repo[:imported]
         project_id = imported_repos.where(github_project: repo["fullname"]).first.id
-        repo[:project_url] = url_for(contoller: 'projects', action: "show", id: project_id)
+        repo[:project_url] = url_for(controller: 'projects', action: "show", id: project_id)
         repo[:project_id] = project_id
       else
         repo[:project_url] = nil
@@ -133,7 +154,6 @@ class User::GithubReposController < ApplicationController
       private_project = Github.private_repo?( current_user.github_token, github_project )
       if private_project && !is_allowed_to_add_private_project?
         flash[:error] = "You selected a private project. Please upgrade your plan to monitor the selected project."
-        redirect_to settings_plans_path
         return nil
       end
       sha = Github.get_repo_sha( github_project, current_user.github_token )
@@ -152,6 +172,10 @@ class User::GithubReposController < ApplicationController
 
       if store_project( project )
         return project
+      else
+        msg = "Cant save github project: #{github_project}."
+        Rails.logger.error msg
+        flash[:error] = msg 
       end
     end
 
@@ -171,8 +195,7 @@ class User::GithubReposController < ApplicationController
         flash[:success] = "Project was created successfully."
         return true
       else
-        logger.error "#--------------------", "Cant save project: ", project.to_json
-        logger.error project.error.full_messages.to_sentence
+        Rails.logger.error "Cant save project: #{project.to_json}"
         flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."
         return false
       end
@@ -182,7 +205,11 @@ class User::GithubReposController < ApplicationController
       user = current_user
       private_projects = Project.find_private_projects_by_user(user.id)
       plan = user.plan
-      if plan.private_projects > private_projects.count
+      if plan.nil?
+        error_msg = "Current plan doesnt allow to add private project. Please update your plan."
+        flash[:error] = error_msg
+        return false
+      elsif plan.private_projects > private_projects.count
         return true
       else
         return false

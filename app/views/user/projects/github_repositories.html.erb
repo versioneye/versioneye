@@ -15,10 +15,20 @@
       Please enable Javascript to see content of the page.
     </div>
   </div>
+  <div id = "github-pagination"></div>
 </div>
 
+<script id = "github-pagination-template" type = "text/template">
+  <div class = "pagination pagination-centered">
+    <button class = "btn btn-mini btn-warning btn-block btn-pagination-next"
+      {{= (paging.currentPage >= paging.totalPages) ? " disabled " : ""}}>
+      Show more ({{= paging.currentPage}}/{{= paging.totalPages}})
+    </button>
+  </div>
+</script>
+
 <script id = "github-loading-template" type = "text/template">
-  <div>
+  <div id = "github-loader">
     <div class="{{= classes }}">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       {{= message }}
@@ -84,27 +94,22 @@
   </div>
 </script>
 
+<script id = "github-menu-item-template" type = "text/template">
+  <li>
+      <a href="#org/{{= org.name}}">
+        {{= org.name}} - {{= org.type}}
+      </a>
+  </li>
+</script>
+
 <script id = "github-menu-template" type = "text/template">
   <ul class="nav nav-pills">
-    <li class="active">
-      <a href="#">Private repositories</a>
-    </li>
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         Organizations
         <b class="caret"></b>
       </a>
-      <ul class="dropdown-menu">
-        <li class="">
-          <a href="#">Org 1</a>
-        </li>
-        <li class="">
-          <a href="#">Org 2</a>
-        </li>
-        <li class="">
-          <a href="#">Org 3</a>
-        </li>
-      </ul>
+      <ul class="dropdown-menu" id = "github-menu-orgs">Loading...</ul>
     </li>
    <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -143,19 +148,3 @@
   </ul>
 </script>
 
-<script id = "github-pagination-template" type = "text/template">
-  <div id= "github_pagination" class = "pagination {{= classes}}">
-    <ul>
-      {{= items }}
-    </ul>
-  </div>
-</script>
-
-<script id = "github-pagination-item-template" type = "text/template">
-  <li class = "{{= classes}}">
-    <span href = "#"
-      data-per-page = "{{= paging.per_page}}"
-      data-page = "{{= page }}"
-      >{{= page }}</span>
-  </li>
-</script>

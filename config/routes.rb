@@ -134,6 +134,8 @@ Versioneye::Application.routes.draw do
       end
     end
     resources :github_repos
+    get '/menu/github_repos', :to => 'github_repos#show_menu_items'
+
   end
 
   post  '/services/choose_plan',  :to => 'services#choose_plan'
