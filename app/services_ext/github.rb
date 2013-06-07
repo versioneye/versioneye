@@ -41,6 +41,10 @@ class Github
 
   def self.user_repos_changed?( user )
     repo = user.github_repos.all.first
+    if repo.nil?
+      #if user dont have any repos in cache, then force to load data
+      return true
+    end
     headers = {
       "User-Agent" => A_USER_AGENT,
       "If-Modified-Since" => repo[:imported_at].httpdate

@@ -8,12 +8,32 @@ define(
       evaluate: /\{\{(.+?)\}\}/g
   };
 
+  function pollChanges(){
+    var jqxhr = $.ajax("/user/poll/github_repos")
+        .done(function(data, status, jqxhr){
+          if(data.changed){
+            showNotification(
+              "alert alert-info",
+              "Detected changes on your Github repos - updated view."
+            );
+            user_repos.reset();
+            update_user_repos();
+          } else {
+            console.log("No changes for repos - i'll wait and poll again.");
+          }
+        })
+        .always(function(){
+                  setTimeout(pollChanges, 10000);
+        });
+  }
+
   function showNotification(classes, message){
     var flash_template = _.template(jQuery("#github-notification-template").html());
     $(".flash-container").html(flash_template({
       classes: classes,
       content: message
-    }));
+    })).fadeIn(400).delay(3000).fadeOut(800);
+
   }
 
   function addRepoLinkLabel(selector, model){
@@ -243,7 +263,7 @@ define(
 			return this;
 		}
 	});
-	
+
   var GithubMenuView =  Backbone.View.extend({
     el: "#github-menu",
     template: _.template($("#github-menu-template").html()),
@@ -251,7 +271,7 @@ define(
     initialize: function(){
       this.collection.bind('change', this.render, this);
       this.collection.on('all', this.render, this);
-    }, 
+    },
     render: function(){
       console.log("Rendering menu...");
       $(this.el).html(this.template({}));
@@ -272,20 +292,20 @@ define(
       var repos = this.collection;
       repos.on('add', this.addItem, this);
       repos.on('reset', this.resetView, this);
-      //repos.on('all', this.render, this);
-      //repos.pager();
     },
 		resetView: function(){
       console.debug("Resetting repo view");
+      $('.github-switch').bootstrapSwitch('destroy');
+      $('.github-switch').remove();
       $("#github-loader").remove();
-      $("#github-repos").empty(); 
+      $("#github-repos").empty();
 			return false;
 		},
 		addItem : function(model){
 			var itemview = new GithubRepoItemView({model: model});
       var switch_selector = "#github-repo-switch-" + model.get('github_id');
 			$("#github-repos").append(itemview.render().el);
-			$(switch_selector).parent().bootstrapSwitch(); 
+			$(switch_selector).parent().bootstrapSwitch();
 	    $("#github-loader").remove();
   }
 	});
@@ -325,6 +345,18 @@ define(
     }
   });
 
+  function update_user_repos(){
+    user_repos.fetch({
+      data: {org_id: prev_org_id},
+      cache: false,
+      error: function(repos, response, options){
+        showNotification(
+          "alert alert-warning",
+          "Cant load repos: " + response);
+      }
+    });
+  }
+
   var prev_org_id = null;
   var user_repos = new GithubRepoCollection();
   var repo_view = new GithubRepoView({collection: user_repos});
@@ -345,25 +377,13 @@ define(
       }
 			console.log("going to show repos for: " + org_id);
 
-      $('.github-switch').bootstrapSwitch('destroy');
-      $('.github-switch').remove();
-
 			var loader_view = new GithubLoadingView();
 			loader_view.render();
 
 			var menu_items = new GithubMenuCollection();
 		  var menu_view = new GithubMenuView({collection: menu_items});
       menu_items.fetch({});
- 
-      user_repos.fetch({
-        data: {org_id: org_id},
-        cache: false,
-        error: function(repos, response, options){
-          showNotification(
-            "alert alert-warning",
-            "Cant load repos: " + response);
-        }
-      });
+      update_user_repos();
 		}
 	});
 
@@ -371,5 +391,6 @@ define(
 		console.log("Running github app");
 		var app_router = new AppRouter();
 		Backbone.history.start();
+    setTimeout(pollChanges, 1000);
 	}};
 });
