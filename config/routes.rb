@@ -38,6 +38,8 @@ Versioneye::Application.routes.draw do
   get   '/users/activate/:verification', :to => 'users#activate'
   get   '/iforgotmypassword',            :to => 'users#iforgotmypassword'
   post  '/resetpassword',                :to => 'users#resetpassword'
+  get   '/updatepassword/:verification', :to => 'users#show_update_password'
+  post  '/updatepassword',               :to => 'users#update_password'
   get   '/home',                         :to => 'users#home'
 
 
