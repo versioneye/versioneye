@@ -110,6 +110,20 @@ class User::GithubReposController < ApplicationController
     render json: menu_items
   end
 
+
+  def poll_changes
+    is_changed = Github.user_repos_changed?(current_user)
+    p "Has changed? ",  is_changed
+    if is_changed == true
+      updated_repos = GitHubService.cached_user_repos(current_user)
+      render json: {changed: true,
+                    msg: "Changed - pulled #{current_user.github_repos.all.count} repos"} 
+      return true
+    end
+
+    render json: {changed: false}
+  end
+
   def destroy
     id = params[:project_id]
     success = false
