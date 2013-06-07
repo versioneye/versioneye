@@ -71,11 +71,12 @@ class User
 
   before_validation :downcase_email
 
+  scope :by_verification, ->(code){where(verification: code)}
   scope :follows_none, where(:product_ids.empty?)
   scope :follows_equal, ->(n){where(:product_ids.count.eq(n))}
   scope :follows_least, ->(n){where(:product_ids.count >= n)}
   scope :follows_max, ->(n){where(:product_ids.count <= n)}
-
+  
   attr_accessor :password, :new_username
   attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :datenerhebung, :verification, :terms, :datenerhebung
 
@@ -233,10 +234,11 @@ class User
 
   def reset_password
     random_value = create_random_value
-    self.password = random_value
+    self.password = random_value #prevents using old password
+    self.verification = create_random_token
     encrypt_password
     save
-    UserMailer.reset_password(self, random_value).deliver
+    UserMailer.reset_password(self).deliver
   end
 
   # TODO replace with relation
@@ -302,10 +304,10 @@ class User
     enc_password.eql?(encrypted_password)
   end
 
-  def update_password(email, password, new_password)
-    user = User.authenticate(email, password)
+  def update_password(verification_code, password)
+    user = User.by_verification(verification_code).first
     return false if user.nil?
-    self.password = new_password
+    self.password = password
     encrypt_password
     return save
   end
@@ -395,6 +397,10 @@ class User
   end
 
   private
+
+    def create_random_token(length = 25)
+      SecureRandom.urlsafe_base64(length)
+    end
 
     def create_random_value
       chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
