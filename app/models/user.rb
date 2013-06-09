@@ -239,7 +239,6 @@ class User
     UserMailer.reset_password(self, random_value).deliver
   end
 
-  # TODO replace with relation
   def self.follows_max(n)
     User.all.select {|user| user['product_ids'].count < n}
   end
