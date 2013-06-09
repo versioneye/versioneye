@@ -19,36 +19,34 @@ class Project
   A_PERIOD_WEEKLY = "weekly"
   A_PERIOD_DAILY  = "daily"
 
-
-  field :name, type: String
-  field :description, type: String
-  field :license, type: String
-
-  field :project_type, type: String, :default => A_TYPE_MAVEN2
-  field :language, type: String
-  field :project_key, type: String
-  field :period, type: String, :default => A_PERIOD_WEEKLY
-  field :email, type: String
-  field :url, type: String
-  field :source, type: String, :default => A_SOURCE_UPLOAD
-  field :s3_filename, type: String
-  field :github_project, type: String
-  field :dep_number, type: Integer
-  field :out_number, type: Integer, default: 0
-  field :unknown_number, type: Integer, default: 0
-  field :public, type: Boolean, :default => false           # visible for everybody
+  field :name           , type: String
+  field :description    , type: String
+  field :license        , type: String
+  field :project_type   , type: String, :default => A_TYPE_MAVEN2
+  field :language       , type: String
+  field :project_key    , type: String
+  field :period         , type: String, :default => A_PERIOD_WEEKLY
+  field :email          , type: String
+  field :url            , type: String
+  field :source         , type: String, :default => A_SOURCE_UPLOAD
+  field :s3_filename    , type: String
+  field :github_project , type: String
+  field :dep_number     , type: Integer
+  field :out_number     , type: Integer, :default => 0
+  field :unknown_number , type: Integer, :default => 0
+  field :public         , type: Boolean, :default => false  # visible for everybody
   field :private_project, type: Boolean, :default => false  # private project from GitHub
-  field :api_created, type: Boolean, :default => false
+  field :api_created    , type: Boolean, :default => false  # this project was created through the VersionEye API
 
   attr_accessor :dependencies
 
-  validates :name, presence: true
+  validates :name       , presence: true
   validates :project_key, presence: true
 
   belongs_to :user
 
-  scope :by_user, ->(user){ where(user_id: user.id) }
-  scope :by_source, ->(source){where(source: source)}
+  scope :by_user  , ->(user)  { where(user_id: user.id) }
+  scope :by_source, ->(source){ where(source:  source ) }
 
   def self.find_by_id( id )
     Project.find(id)
@@ -62,15 +60,16 @@ class Project
     Project.all(conditions: { user_id: user_id, private_project: true } )
   end
 
+  # TODO refactor this relations
   def fetch_dependencies
     self.dependencies = Projectdependency.all(conditions: {project_id: self.id} ).desc(:outdated).desc(:release).asc(:prod_key)
-    self.dependencies # This 2nd line is by purpose! Don't delete it!
+    self.dependencies
   end
 
   def show_dependency_badge?
     self.public and
     (self.language.eql?(Product::A_LANGUAGE_JAVA) or self.language.eql?(Product::A_LANGUAGE_PHP) or
-    self.language.eql?(Product::A_LANGUAGE_RUBY) or self.language.eql?(Product::A_LANGUAGE_NODEJS) )
+     self.language.eql?(Product::A_LANGUAGE_RUBY) or self.language.eql?(Product::A_LANGUAGE_NODEJS) )
   end
 
   # TODO test this
@@ -111,7 +110,6 @@ class Project
   def save_dependencies
     dependencies.each do |dep|
       dep.project_id = self.id.to_s
-      dep.user_id = self.user_id
       dep.save
     end
   end
@@ -142,11 +140,11 @@ class Project
 
   def update_from new_project
     self.overwrite_dependencies( new_project.dependencies )
-    self.description = new_project.description
-    self.license = new_project.license
-    self.s3_filename = new_project.s3_filename
-    self.dep_number = new_project.dep_number
-    self.out_number = new_project.out_number
+    self.description    = new_project.description
+    self.license        = new_project.license
+    self.s3_filename    = new_project.s3_filename
+    self.dep_number     = new_project.dep_number
+    self.out_number     = new_project.out_number
     self.unknown_number = new_project.unknown_number
     self.save
   end
