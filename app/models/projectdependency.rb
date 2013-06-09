@@ -8,8 +8,6 @@ class Projectdependency
 
   A_SECONDS_PER_DAY = 5184000
 
-  field :project_id , type: String # TODO refactor with mongoid relations
-
   field :prod_key   , type: String
   field :ext_link   , type: String # Link to external package. For example zip file on GitHub / Google Code.
 
@@ -28,10 +26,8 @@ class Projectdependency
   field :outdated           , type: Boolean
   field :outdated_updated_at, type: DateTime, :default => Time.now
 
+  belongs_to :project
 
-  def project
-    Project.find(self.project_id)
-  end
 
   def product
     Product.find_by_key(self.prod_key)
