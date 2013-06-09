@@ -2,23 +2,15 @@ class PythonSetupParser < RequirementsParser
 
   def parse(url)
     response = fetch_response(url)
-    doc = response.body
+    doc      = response.body
     return nil if doc.nil? or doc.empty?
-
-    requirements = parse_requirements(doc)
-    extras = parse_extras(doc)
-
-    project = Project.new
-
+    requirements = parse_requirements( doc )
+    extras       = parse_extras( doc )
+    project      = init_project( url )
     requirements.each do |requirement|
       parse_line requirement, project
     end
-
     project.dep_number = project.dependencies.size
-    project.project_type = Project::A_TYPE_PIP
-    project.language = Product::A_LANGUAGE_PYTHON
-    project.url = url
-
     project
   end
 

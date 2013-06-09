@@ -13,11 +13,11 @@ class GemfilelockParser < GemfileParser
 
     matches = content.scan( dependecies_matcher )
     deps = self.build_dependencies(matches)
-    project = Project.new deps
-    project.dep_number   = project.dependencies.size
-    project.project_type = Project::A_TYPE_RUBYGEMS
-    project.language     = Product::A_LANGUAGE_RUBY
-    project.url          = url
+    project                     = init_project( url )
+    project.dep_number          = project.dependencies.size
+    project.unknown_number      = deps[:unknown_number]
+    project.out_number          = deps[:out_number]
+    project.projectdependencies = deps[:projectdependencies]
     project
   end
 

@@ -14,12 +14,12 @@ class GradleParser < CommonParser
     /xi
 
     matches = content.scan( dependecies_matcher )
-    deps = self.build_dependencies(matches)
-    project = Project.new deps
-    project.dep_number = project.dependencies.size
+    deps    = self.build_dependencies(matches)
+    project              = Project.new deps
     project.project_type = Project::A_TYPE_GRADLE
-    project.language = Product::A_LANGUAGE_JAVA
-    project.url = url
+    project.language     = Product::A_LANGUAGE_JAVA
+    project.url          = url
+    project.dep_number   = project.dependencies.size
     project
   end
 

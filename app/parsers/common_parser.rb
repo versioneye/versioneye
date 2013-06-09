@@ -26,11 +26,28 @@ class CommonParser
 
   def fetch_response_body( url )
     response = self.fetch_response( url )
-    gemfile = response.body
+    response.body
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
     nil
+  end
+
+  def fetch_response_body_json( url )
+    body = self.fetch_response_body( url )
+    JSON.parse( body )
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    nil
+  end
+
+  def fetch_product( key )
+    product = Product.find_by_key( key )
+    if product.nil?
+      product = Product.find_by_key_case_insensitiv( key )
+    end
+    product
   end
 
   def do_replacements_for_github(url)

@@ -5,59 +5,26 @@ class PackageParser < CommonParser
   # http://wiki.commonjs.org/wiki/Packages/1.1
   #
   def parse ( url )
-    return nil if url.nil?
-
-    response = self.fetch_response(url)
-    data = JSON.parse( response.body )
+    return nil if url.nil? || url.empty?
+    data = self.fetch_response_body_json( url )
     return nil if data.nil?
-
-    dependencies = data['dependencies']
-
-    dev_dependencies = data['devDependencies']
-    if dev_dependencies
-      if dependencies.nil?
-        dependencies = dev_dependencies
-      else
-        dependencies.merge!(dev_dependencies)
-      end
-    end
-
-    if dependencies.nil?
-      return nil
-    end
-
-    project = Project.new
-    project.name = data['name']
-    project.description = data['description']
-
+    dependencies = fetch_dependencies( data )
+    return nil if dependencies.nil?
+    project = init_project( url, data )
     dependencies.each do |key, value|
-      dependency = Projectdependency.new
-      dependency.name = key
-
-      key = "npm/#{key}"
-      product = Product.find_by_key(key)
-      if product.nil?
-        product = Product.find_by_key_case_insensitiv(key)
-      end
-      if product
-        dependency.prod_key = product.prod_key
-      else
-        project.unknown_number = project.unknown_number + 1
-      end
-
-      parse_requested_version(value, dependency, product)
-
-      if dependency.outdated?
-        project.out_number = project.out_number + 1
-      end
-      project.projectdependencies.push dependency
+      parse_line( key, value, project )
     end
-
     project.dep_number = project.dependencies.size
-    project.project_type = Project::A_TYPE_NPM
-    project.language = Product::A_LANGUAGE_NODEJS
-    project.url = url
     project
+  end
+
+  def parse_line( key, value, project )
+    product    = fetch_product( "npm/#{key}" )
+    dependency = init_dependency( product, key )
+    parse_requested_version( value, dependency, product )
+    project.out_number     += 1 if dependency.outdated?
+    project.unknown_number += 1 if product.nil?
+    project.projectdependencies.push dependency
   end
 
   # It is important that this method is not writing int the database!
@@ -184,6 +151,39 @@ class PackageParser < CommonParser
       dependency.version_label = version
     end
 
+  end
+
+  def init_project( url, data )
+    project = Project.new
+    project.project_type = Project::A_TYPE_NPM
+    project.language     = Product::A_LANGUAGE_NODEJS
+    project.url          = url
+    project.name         = data['name']
+    project.description  = data['description']
+    project
+  end
+
+  def fetch_dependencies( data )
+    dependencies = data['dependencies']
+    dev_dependencies = data['devDependencies']
+    if dev_dependencies
+      if dependencies.nil?
+        dependencies = dev_dependencies
+      else
+        dependencies.merge!(dev_dependencies)
+      end
+    end
+    dependencies
+  end
+
+  def init_dependency( product, name )
+    dependency = Projectdependency.new
+    dependency.name = name
+    if product
+      dependency.prod_key        = product.prod_key
+      dependency.version_current = product.version
+    end
+    dependency
   end
 
 end

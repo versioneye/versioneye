@@ -22,11 +22,11 @@ class LeinParser < CommonParser
 
     doc = Nokogiri::XML content
     deps = self.build_dependencies doc.xpath('/project/div[@attr="dependencies"]').children
-    project = Project.new deps
-    project.dep_number = project.dependencies.size
+    project              = Project.new deps
     project.project_type = Project::A_TYPE_LEIN
-    project.language = Product::A_LANGUAGE_CLOJURE
-    project.url = url
+    project.language     = Product::A_LANGUAGE_CLOJURE
+    project.url          = url
+    project.dep_number   = project.dependencies.size
     project
   end
 

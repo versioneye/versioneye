@@ -192,14 +192,6 @@ class GemfileParser < CommonParser
     value
   end
 
-  def fetch_product( name )
-    product = Product.find_by_key( name )
-    if product.nil?
-      product = Product.find_by_key_case_insensitiv( name )
-    end
-    product
-  end
-
   def init_project( url )
     project = Project.new
     project.project_type = Project::A_TYPE_RUBYGEMS
