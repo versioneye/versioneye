@@ -1,12 +1,12 @@
 class PackageParser < CommonParser
-  
+
   # Parser for requirements.json from npm. NodeJS
   # https://npmjs.org/doc/json.html
   # http://wiki.commonjs.org/wiki/Packages/1.1
-  # 
+  #
   def parse ( url )
     return nil if url.nil?
-    
+
     response = self.fetch_response(url)
     data = JSON.parse( response.body )
     return nil if data.nil?
@@ -15,74 +15,72 @@ class PackageParser < CommonParser
 
     dev_dependencies = data['devDependencies']
     if dev_dependencies
-      if dependencies.nil? 
+      if dependencies.nil?
         dependencies = dev_dependencies
-      else 
+      else
         dependencies.merge!(dev_dependencies)
       end
     end
 
     if dependencies.nil?
-      return nil 
+      return nil
     end
 
     project = Project.new
-    project.dependencies = Array.new    
-
     project.name = data['name']
     project.description = data['description']
 
     dependencies.each do |key, value|
       dependency = Projectdependency.new
       dependency.name = key
-      
+
       key = "npm/#{key}"
       product = Product.find_by_key(key)
-      if product.nil? 
+      if product.nil?
         product = Product.find_by_key_case_insensitiv(key)
       end
       if product
         dependency.prod_key = product.prod_key
-      else 
+      else
         project.unknown_number = project.unknown_number + 1
       end
-      
+
       parse_requested_version(value, dependency, product)
-      
+
       if dependency.outdated?
         project.out_number = project.out_number + 1
-      end      
-      project.dependencies << dependency
+      end
+      project.projectdependencies.push dependency
     end
 
-    project.dep_number = project.dependencies.count
+    project.dep_number = project.dependencies.size
     project.project_type = Project::A_TYPE_NPM
     project.language = Product::A_LANGUAGE_NODEJS
     project.url = url
     project
   end
 
-  # It is important that this method is not writing int the database! 
+  # It is important that this method is not writing int the database!
   #
   def parse_requested_version(version, dependency, product)
     if (version.nil? || version.empty?)
       self.update_requested_with_current(dependency, product)
-      return 
+      return
     end
     version = version.strip
     version = version.gsub('"', '')
     version = version.gsub("'", "")
-    
-    if product.nil? 
+
+    if product.nil?
       dependency.version_requested = version
       dependency.version_label = version
-    
+
     elsif version.match(/\*/) || version.empty?
       # Start Matching. Matches everything.
       dependency.version_requested = product.version
       dependency.version_label = "*"
       dependency.comperator = "="
-    
+
     elsif version.match(/^=/)
       # Equals
       version.gsub!("=", "")
@@ -90,7 +88,7 @@ class PackageParser < CommonParser
       dependency.version_requested = version
       dependency.version_label = version
       dependency.comperator = "="
-    
+
     elsif version.match(/^!=/)
       # Not equal to version
       version.gsub!("!=", "")
@@ -99,7 +97,7 @@ class PackageParser < CommonParser
       dependency.version_requested = newest_version
       dependency.comperator = "!="
       dependency.version_label = version
-    
+
     elsif version.match(/^>=/)
       # Greater than or equal to
       version.gsub!(">=", "")
@@ -108,7 +106,7 @@ class PackageParser < CommonParser
       dependency.version_requested = newest_version.version
       dependency.comperator = ">="
       dependency.version_label = version
-    
+
     elsif version.match(/^>/)
       # Greater than version
       version.gsub!(">", "")
@@ -117,7 +115,7 @@ class PackageParser < CommonParser
       dependency.version_requested = newest_version.version
       dependency.comperator = ">"
       dependency.version_label = version
-    
+
     elsif version.match(/^<=/)
       # Less than or equal to
       version.gsub!("<=", "")
@@ -126,7 +124,7 @@ class PackageParser < CommonParser
       dependency.version_requested = newest_version.version
       dependency.comperator = "<="
       dependency.version_label = version
-    
+
     elsif version.match(/^\</)
       # Less than version
       version.gsub!("\<", "")
@@ -135,7 +133,7 @@ class PackageParser < CommonParser
       dependency.version_requested = newest_version.version
       dependency.comperator = "<"
       dependency.version_label = version
-    
+
     elsif version.match(/^~/)
       # Tilde Version Ranges -> Pessimistic Version Constraint
       # ~1.2.3 = >=1.2.3 <1.3.0
@@ -144,12 +142,12 @@ class PackageParser < CommonParser
       highest_version = product.version_tilde_newest(ver)
       if highest_version
         dependency.version_requested = highest_version.version
-      else 
+      else
         dependency.version_requested = ver
       end
       dependency.comperator = "~"
       dependency.version_label = ver
-    
+
     elsif version.match(/.x$/i)
       # X Version Ranges
       ver = version.gsub("x", "")
@@ -159,12 +157,12 @@ class PackageParser < CommonParser
       highest_version = Product.newest_version_from(versions)
       if highest_version
         dependency.version_requested = highest_version.version
-      else 
+      else
         dependency.version_requested = version
       end
       dependency.comperator = "="
       dependency.version_label = version
-    
+
     elsif version.match(/ - /i)
       # Version Ranges
       version_splitted = version.split(" - ")
@@ -174,18 +172,18 @@ class PackageParser < CommonParser
       highest_version = Product.newest_version_from( version_range )
       if highest_version
         dependency.version_requested = highest_version.version
-      else 
+      else
         dependency.version_requested = version
       end
       dependency.comperator = "="
       dependency.version_label = version
-    
+
     else
       dependency.version_requested = version
       dependency.comperator = "="
       dependency.version_label = version
     end
-    
+
   end
-  
+
 end

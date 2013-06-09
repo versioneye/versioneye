@@ -17,7 +17,7 @@ class RequirementsParser < CommonParser
       parse_line line, project
     end
 
-    project.dep_number = project.dependencies.count
+    project.dep_number = project.dependencies.size
 
     return project
   rescue => e
@@ -58,7 +58,7 @@ class RequirementsParser < CommonParser
     if dependency.outdated?
       project.out_number = project.out_number + 1
     end
-    project.dependencies << dependency
+    project.projectdependencies.push dependency
   end
 
 
@@ -190,7 +190,6 @@ class RequirementsParser < CommonParser
 
   def init_project url
     project = Project.new
-    project.dependencies = Array.new
     project.project_type = Project::A_TYPE_PIP
     project.language = Product::A_LANGUAGE_PYTHON
     project.url = url

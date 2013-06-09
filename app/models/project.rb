@@ -38,15 +38,18 @@ class Project
   field :private_project, type: Boolean, :default => false  # private project from GitHub
   field :api_created    , type: Boolean, :default => false  # this project was created through the VersionEye API
 
-  attr_accessor :dependencies
-
   validates :name       , presence: true
   validates :project_key, presence: true
 
   belongs_to :user
+  has_many   :projectdependencies
 
   scope :by_user  , ->(user)  { where(user_id: user.id) }
   scope :by_source, ->(source){ where(source:  source ) }
+
+  def dependencies
+    self.projectdependencies
+  end
 
   def self.find_by_id( id )
     Project.find(id)
@@ -56,14 +59,9 @@ class Project
     nil
   end
 
+  # TODO double check this
   def self.find_private_projects_by_user user_id
     Project.all(conditions: { user_id: user_id, private_project: true } )
-  end
-
-  # TODO refactor this relations
-  def fetch_dependencies
-    self.dependencies = Projectdependency.all(conditions: {project_id: self.id} ).desc(:outdated).desc(:release).asc(:prod_key)
-    self.dependencies
   end
 
   def show_dependency_badge?
@@ -75,49 +73,46 @@ class Project
   # TODO test this
   #
   def outdated?
-    fetch_dependencies
-    self.dependencies.each do |dep|
+    self.projectdependencies.each do |dep|
       return true if dep.outdated?
     end
     return false
   end
 
   def outdated_dependencies
-    fetch_dependencies
     outdated_dependencies = Array.new
-    self.dependencies.each do |dep|
-      outdated_dependencies << dep if dep.outdated
+    self.projectdependencies.each do |dep|
+      outdated_dependencies << dep if dep.outdated?
     end
     outdated_dependencies
   end
 
   def known_dependencies
-    fetch_dependencies
     knows_deps = Array.new
-    self.dependencies.each do |dep|
+    self.projectdependencies.each do |dep|
       knows_deps << dep if dep.prod_key
     end
     knows_deps
   end
 
   def remove_dependencies
-    fetch_dependencies
-    dependencies.each do |dependency|
+    projectdependencies.each do |dependency|
       dependency.remove
     end
   end
 
   def save_dependencies
-    dependencies.each do |dep|
-      dep.project_id = self.id.to_s
-      dep.save
+    projectdependencies.each do |dependency|
+      dependency.save
     end
   end
 
   def overwrite_dependencies( new_dependencies )
     remove_dependencies
-    self.dependencies = Array.new( new_dependencies )
-    save_dependencies
+    new_dependencies.each do |dep|
+      projectdependencies.push dep
+      dep.save
+    end
   end
 
   def make_project_key!

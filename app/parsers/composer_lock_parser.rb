@@ -5,13 +5,12 @@ class ComposerLockParser < ComposerParser
   def parse( url )
     dependencies = self.fetch_project_dependencies(url)
     project = Project.new
-    project.dependencies = []
 
     dependencies.each do |package|
       self.process_package project, package
     end
 
-    project.dep_number = project.dependencies.count
+    project.dep_number = project.dependencies.size
     project.project_type = Project::A_TYPE_COMPOSER
     project.language = Product::A_LANGUAGE_PHP
     project.url = url
@@ -31,7 +30,7 @@ class ComposerLockParser < ComposerParser
     project.out_number += 1 if dependency.outdated?
     project.unknown_number += 1 unless product
 
-    project.dependencies << dependency
+    project.projectdependencies.push dependency
   end
 
   def fetch_package_version(package)

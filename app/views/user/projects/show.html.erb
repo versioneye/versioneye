@@ -170,7 +170,7 @@
 
         <div class="tab-content" >
           <div id="dependencies" class="tab-pane active" >
-            <% if !@project.fetch_dependencies.nil? %>
+            <% if @project.dependencies && @project.dependencies.size > 0 %>
 
               <table class="dependency_table" style="width: 570px;">
                 <thead>

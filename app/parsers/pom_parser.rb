@@ -15,7 +15,6 @@ class PomParser < CommonParser
     return nil if doc.nil?
 
     project = Project.new
-    project.dependencies = Array.new
 
     project.name = doc.xpath('//project/name').text
 
@@ -26,7 +25,7 @@ class PomParser < CommonParser
       project.dependencies.push( dep )
     end
 
-    project.dep_number = project.dependencies.count
+    project.dep_number = project.dependencies.size
     project.project_type = Project::A_TYPE_MAVEN2
     project.language = Product::A_LANGUAGE_JAVA
     project.url = url

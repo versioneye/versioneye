@@ -1,15 +1,15 @@
 require 'spec_helper'
 
 describe PackageParser do
-  
-  describe "parse" do 
-    
+
+  describe "parse" do
+
     it "parse from https the file correctly" do
-      parser = PackageParser.new 
+      parser = PackageParser.new
       project = parser.parse("https://s3.amazonaws.com/veye_test_env/package.json")
       project.should_not be_nil
     end
-    
+
     it "parse from http the file correctly" do
       name1 = "connect-redis"
       product1 = Product.new
@@ -222,10 +222,10 @@ describe PackageParser do
       product13.save
 
 
-      parser = PackageParser.new 
+      parser = PackageParser.new
       project = parser.parse("http://s3.amazonaws.com/veye_test_env/package.json")
       project.should_not be_nil
-      project.dependencies.count.should eql(13)
+      project.dependencies.size.should eql(13)
 
       dep_01 = project.dependencies.first
       dep_01.name.should eql("connect-redis")
@@ -319,7 +319,7 @@ describe PackageParser do
       product12.remove
       product13.remove
     end
-    
+
   end
-  
+
 end
