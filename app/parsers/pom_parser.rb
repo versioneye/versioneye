@@ -1,12 +1,12 @@
 class PomParser < CommonParser
-  
+
   # Parser for pom.xml file from Maven2/Maven3. Java.
   # XPath: //project/dependencyManagement/dependencies/dependency
   # XPath: //project/dependencies/dependency
-  # 
+  #
   def parse( url )
     return nil if url.nil?
-    
+
     response = self.fetch_response(url)
     doc = Nokogiri::XML( response.body )
     return nil if doc.nil?
@@ -32,12 +32,12 @@ class PomParser < CommonParser
     project.url = url
     project
   end
-  
+
   def fetch_dependency(node, properties, project)
     dependency = Projectdependency.new
-    node.children.each do |child|  
+    node.children.each do |child|
       if child.name.casecmp("groupId") == 0
-        dependency.group_id = child.text.strip 
+        dependency.group_id = child.text.strip
       elsif child.name.casecmp("artifactId") == 0
         dependency.artifact_id = child.text.strip
       elsif child.name.casecmp("version") == 0
@@ -48,18 +48,18 @@ class PomParser < CommonParser
       end
     end
     dependency.name = dependency.artifact_id
-    if dependency.scope.nil? 
-      dependency.scope = "compile"
+    if dependency.scope.nil?
+      dependency.scope = Dependency::A_SCOPE_COMPILE
     end
-    
+
     product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
     parse_requested_version( dependency.version_requested, dependency, product )
     if product
       dependency.prod_key = product.prod_key
-    else 
+    else
       project.unknown_number += 1
     end
-    
+
     project.out_number += 1 if dependency.outdated?
     dependency
   end
@@ -71,7 +71,7 @@ class PomParser < CommonParser
         if !child.text.strip.empty?
           properties[child.name.downcase] = child.text.strip
         end
-      end  
+      end
     end
     project_version = doc.xpath('//project/version')
     if project_version
@@ -79,7 +79,7 @@ class PomParser < CommonParser
     end
     properties
   end
-  
+
   def get_variable_value_from_pom( properties, val )
     if val.include?("${") && val.include?("}")
       new_val = String.new(val)
@@ -88,22 +88,22 @@ class PomParser < CommonParser
       new_val.downcase!
       value = properties[new_val]
       return val if value.nil? || value.empty?
-      return value 
-    else 
-      return val  
+      return value
+    else
+      return val
     end
   end
 
   def parse_requested_version(version, dependency, product)
     if (version.nil? || version.empty?)
       self.update_requested_with_current(dependency, product)
-      return 
+      return
     end
     version = version.strip
     version = version.gsub('"', '')
     version = version.gsub("'", "")
 
-    if product.nil? 
+    if product.nil?
       dependency.version_requested = version
       dependency.version_label = version
 

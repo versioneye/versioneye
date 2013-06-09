@@ -5,7 +5,7 @@ class DependencyFacotry
     dependency.name         = dep_product.name
     dependency.version      = dep_product.version
     dependency.dep_prod_key = dep_product.prod_key
-    dependency.scope        = "compile"
+    dependency.scope        = Dependency::A_SCOPE_COMPILE
     dependency.prod_key     = product.prod_key
     dependency.prod_version = product.version
     dependency.prod_type    = dep_product.prod_type

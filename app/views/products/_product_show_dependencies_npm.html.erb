@@ -13,7 +13,7 @@
 	</div>
 </div>
 
-<% test_deps = @product.dependencies("test") %>
+<% test_deps = @product.dependencies( Dependency::A_SCOPE_TEST ) %>
 <% if test_deps.count > 0 %>
 	<hr/>
 	<h5 class="dep_header">

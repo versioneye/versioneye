@@ -1,15 +1,15 @@
 require 'spec_helper'
 
 describe PomParser do
-  
+
   before(:each) do
     @properties = Hash.new
   end
 
   describe "parse" do
-    
+
     it "parse from https the file correctly" do
-      parser = PomParser.new 
+      parser = PomParser.new
       project = parser.parse("https://s3.amazonaws.com/veye_test_env/pom.xml")
       project.should_not be_nil
     end
@@ -34,16 +34,16 @@ describe PomParser do
       product_6 = ProductFactory.create_for_maven("org.apache.commons", "commons-email", "1.4")
       product_6.save
 
-      parser = PomParser.new 
+      parser = PomParser.new
       project = parser.parse("https://s3.amazonaws.com/veye_test_env/pom.xml")
       project.should_not be_nil
 
-      dependency_01 = project.dependencies.first 
+      dependency_01 = project.dependencies.first
       dependency_01.name.should eql("junit")
       dependency_01.version_requested.should eql("4.4")
       dependency_01.version_current.should eql("4.4")
       dependency_01.comperator.should eql("=")
-      dependency_01.scope.should eql("test")
+      dependency_01.scope.should eql(Dependency::A_SCOPE_TEST)
 
       dependency_02 = project.dependencies[1]
       dependency_02.name.should eql("commons-logging")
@@ -89,37 +89,37 @@ describe PomParser do
     end
 
   end
-  
+
   describe "get_variable_value_from_pom" do
-    
+
     it "returns val" do
-      parser = PomParser.new  
+      parser = PomParser.new
       parser.get_variable_value_from_pom(@properties, "1.0").should eql("1.0")
     end
-    
+
     it "returns still val" do
-      @properties["springVersion"] = "3.1" 
-      parser = PomParser.new 
+      @properties["springVersion"] = "3.1"
+      parser = PomParser.new
       parser.get_variable_value_from_pom(@properties, "1.0").should eql("1.0")
     end
-    
+
     it "returns value from the properties" do
-      @properties["springversion"] = "3.1" 
-      parser = PomParser.new 
+      @properties["springversion"] = "3.1"
+      parser = PomParser.new
       parser.get_variable_value_from_pom(@properties, "${springVersion}").should eql("3.1")
     end
-    
+
     it "returns 3.1 because of downcase!" do
-      @properties["springversion"] = "3.1" 
-      parser = PomParser.new 
+      @properties["springversion"] = "3.1"
+      parser = PomParser.new
       parser.get_variable_value_from_pom(@properties, "${springVERSION}").should eql("3.1")
     end
-    
-    it "returns val because properties is empty" do 
-      parser = PomParser.new 
+
+    it "returns val because properties is empty" do
+      parser = PomParser.new
       parser.get_variable_value_from_pom(@properties, "${springVersion}").should eql("${springVersion}")
     end
 
   end
-  
+
 end
