@@ -4,16 +4,11 @@ class ComposerLockParser < ComposerParser
 
   def parse( url )
     dependencies = self.fetch_project_dependencies(url)
-    project = Project.new
-
+    project = init_project( url )
     dependencies.each do |package|
       self.process_package project, package
     end
-
     project.dep_number = project.dependencies.size
-    project.project_type = Project::A_TYPE_COMPOSER
-    project.language = Product::A_LANGUAGE_PHP
-    project.url = url
     project
   end
 

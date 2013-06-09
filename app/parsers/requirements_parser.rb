@@ -189,10 +189,10 @@ class RequirementsParser < CommonParser
 
 
   def init_project url
-    project = Project.new
+    project              = Project.new
     project.project_type = Project::A_TYPE_PIP
-    project.language = Product::A_LANGUAGE_PYTHON
-    project.url = url
+    project.language     = Product::A_LANGUAGE_PYTHON
+    project.url          = url
     project
   end
 
@@ -203,15 +203,6 @@ class RequirementsParser < CommonParser
     dependency.comperator = comparator
     dependency.scope = Dependency::A_SCOPE_COMPILE
     dependency
-  end
-
-
-  def fetch_product key
-    product = Product.find_by_key(key)
-    if product.nil?
-      product = Product.find_by_key_case_insensitiv(key)
-    end
-    product
   end
 
 
