@@ -1,9 +1,11 @@
 class ProductFactory
 
-  
-  def self.create_new(n = 1, manager_type = :maven, save_db = true)
+
+  def self.create_new(n = 1, manager_type = :maven, save_db = true, version)
     name = "test_#{manager_type.to_s}_#{n}"
-    version = "#{Random.rand(0..4)}.#{Random.rand(1..9)}"
+    if version.nil?
+      version = "#{Random.rand(0..4)}.#{Random.rand(1..9)}"
+    end
 
     case manager_type.to_sym
     when :maven
@@ -19,8 +21,8 @@ class ProductFactory
     end
     return product
   end
-    
-  
+
+
   def self.create_for_maven(group_id, artifact_id, version)
     version_obj = Version.new :version => version
     product = Product.new(
@@ -53,7 +55,7 @@ class ProductFactory
     product
   end
 
-  
+
   def self.create_for_gemfile(name, version)
     product = Product.new
     product.name = name
@@ -68,7 +70,7 @@ class ProductFactory
     product
   end
 
-  
+
   def self.create_for_pip(name, version)
     product = Product.new name: name,
                           name_downcase: name.downcase,
@@ -79,7 +81,7 @@ class ProductFactory
 
     version_obj = Version.new version: version
     product.versions.push(version_obj)
-    
+
     product
   end
 

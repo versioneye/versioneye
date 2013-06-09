@@ -73,8 +73,15 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.2)
+    columnize (0.3.6)
     daemons (1.1.9)
     dalli (2.6.3)
+    debugger (1.6.0)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.2.1)
+    debugger-linecache (1.2.0)
+    debugger-ruby_core_source (1.2.2)
     descendants_tracker (0.0.1)
     diff-lcs (1.2.4)
     erubis (2.7.0)
@@ -297,6 +304,7 @@ DEPENDENCIES
   capybara (= 2.1.0)
   coffee-rails (= 3.2.2)
   dalli (= 2.6.3)
+  debugger
   execjs (= 1.4.0)
   fakes3
   fakeweb (= 1.3.0)

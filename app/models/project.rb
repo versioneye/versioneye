@@ -125,7 +125,7 @@ class Project
   end
 
   def make_project_key
-    return Project.create_random_value() if self.user_id.nil?
+    return Project.create_random_value() if self.user.nil?
     project_nr = 1
     project_key_text = "#{self.project_type}_#{self.name}".downcase
     project_key_text.gsub!(/[\s|\W|\_]+/, "_")

@@ -35,6 +35,7 @@ group :development do
   gem 'irbtools'
   gem 'terminal-notifier'
   gem 'fakes3'
+  gem 'debugger'
 end
 
 group :assets do
@@ -51,6 +52,7 @@ group :test do
   gem 'capybara'          , '2.1.0'
   gem 'selenium-webdriver', '2.32.1'
   gem 'fakeweb'           , '1.3.0'
+  gem 'debugger'
 end
 
 # gem 'puma'              , '2.0.1'
