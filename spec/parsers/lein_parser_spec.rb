@@ -1,22 +1,22 @@
 require 'spec_helper'
 
 describe LeinParser do
-  
+
   before(:each) do
     @properties = Hash.new
     @url = "https://s3.amazonaws.com/veye_test_env/project.clj"
   end
 
-  describe "parse" do 
-    
+  describe "parse" do
+
     it "read the file correctly" do
       parser = LeinParser.new
       project = parser.parse @url
       project.should_not be_nil
     end
 
-    it "does it parse sample project correctly" do 
-      parser = LeinParser.new 
+    it "does it parse sample project correctly" do
+      parser = LeinParser.new
     	project = parser.parse @url
 
    		dependency_01 = project.dependencies[0]
@@ -33,7 +33,7 @@ describe LeinParser do
 	    dependency_02.version_requested.should eql("1.0")
 	    dependency_02.version_current.should eql(nil)
 	    dependency_02.comperator.should eql("=")
-	    dependency_02.scope.should eql("test")
+	    dependency_02.scope.should eql(Dependency::A_SCOPE_TEST)
 
 	    dependency_03 = project.dependencies[2]
 	    dependency_03.name.should eql("ehcache")

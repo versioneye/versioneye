@@ -40,7 +40,7 @@ class PythonSetupParser < RequirementsParser
     dependency = Projectdependency.new name: package.strip,
                                        version_label: "#{version}".strip,
                                        comperator: comparator,
-                                       scope: "compile"
+                                       scope: Dependency::A_SCOPE_COMPILE
 
     if product.nil?
       project.unknown_number + 1

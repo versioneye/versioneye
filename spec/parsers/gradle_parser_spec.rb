@@ -3,8 +3,8 @@ require 'spec_helper'
 test_case_url = "https://s3.amazonaws.com/veye_test_env/dependencies.gradle"
 
 describe GradleParser do
-  
-  describe "parse" do 
+
+  describe "parse" do
   	before :each do
   	  @product_1 = ProductFactory.create_for_maven("org.apache.httpcomponents", "httpclient", "4.1.2")
       @product_1.save
@@ -34,7 +34,7 @@ describe GradleParser do
       							"spring-security-core", "3.0.5.RELEASE")
       @product_8.save
 
-      @product_9 = ProductFactory.create_for_maven("org.springframework.security", 
+      @product_9 = ProductFactory.create_for_maven("org.springframework.security",
       	"spring-security-web", "3.0.5.RELEASE")
 
       @product_9.save
@@ -50,7 +50,7 @@ describe GradleParser do
 
       @product_13 = ProductFactory.create_for_maven("com.canoo.webtest", "webtest", "3.1-SNAPSHOT")
       @product_13.save
-      
+
       end
 
     after :each do
@@ -76,13 +76,13 @@ describe GradleParser do
     end
 
     it "parse the file correctly" do
-      
+
       #run tests
       parser = GradleParser.new
       project = parser.parse(test_case_url)
       project.should_not be_nil
 
-      dependency_01 = project.dependencies.first 
+      dependency_01 = project.dependencies.first
       dependency_01.name.should eql(@product_1.artifact_id)
       dependency_01.group_id.should eql(@product_1.group_id)
       dependency_01.artifact_id.should eql(@product_1.artifact_id)
@@ -97,14 +97,14 @@ describe GradleParser do
       dependency_02.version_requested.should eql(@product_2.version)
       dependency_02.version_current.should eql(@product_2.version)
       dependency_02.comperator.should eql("=")
-      dependency_02.scope.should eql("test")
+      dependency_02.scope.should eql(Dependency::A_SCOPE_TEST)
 
       dependency_03 = project.dependencies[2]
       dependency_03.name.should eql(@product_3.artifact_id)
       dependency_03.version_requested.should eql(@product_3.version)
       dependency_03.version_current.should eql(@product_3.version)
       dependency_03.comperator.should eql("=")
-      dependency_03.scope.should eql("test")
+      dependency_03.scope.should eql(Dependency::A_SCOPE_TEST)
 
       dependency_04 = project.dependencies[3]
       dependency_04.name.should eql(@product_4.artifact_id)
@@ -174,10 +174,10 @@ describe GradleParser do
       dependency_13.version_requested.should eql(@product_13.version)
       dependency_13.version_current.should eql(@product_13.version)
       dependency_13.comperator.should eql("=")
-      dependency_13.scope.should eql("test")
-      
+      dependency_13.scope.should eql(Dependency::A_SCOPE_TEST)
+
     end
-  
+
   end
 
 end

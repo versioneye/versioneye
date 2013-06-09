@@ -202,7 +202,7 @@ class RequirementsParser < CommonParser
     dependency = Projectdependency.new
     dependency.name = package
     dependency.comperator = comparator
-    dependency.scope = "compile"
+    dependency.scope = Dependency::A_SCOPE_COMPILE
     dependency
   end
 
