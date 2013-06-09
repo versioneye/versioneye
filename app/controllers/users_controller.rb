@@ -159,6 +159,51 @@ class UsersController < ApplicationController
     redirect_to iforgotmypassword_path
   end
 
+  def show_update_password
+    @verification = params[:verification]
+    user = User.by_verification(@verification).first
+    if @verification.nil? or user.nil?
+      render text: "Verification code is wrong, malformed or doesnt exist. If
+      it's mistake, please send feedback to our customer support.", 
+             layout: "application"
+      return false
+    end
+    render 'updatepassword'
+  end
+
+  def update_password
+    
+    has_failure = false
+    password = params[:password]
+    password2 = params[:password2] 
+    verification_code = params[:verification]
+
+    user = User.by_verification(verification_code).first
+
+    if user.nil?
+      flash[:error] = "Wrong verification code. If it's mistake, please send feedback to our customer support."
+      has_failure = true
+    elsif password.empty? or password != password2  
+      flash[:error] = "Passwords dont match."
+      has_failure = true
+    end
+    
+    unless user.update_password(verification_code, password)
+      has_failure = true
+      flash[:error] = "Cant save new password:\n #{user.errors.full_messages.to_sentence}"
+    end
+    if has_failure
+      redirect_to :back
+      return false
+    end
+    
+    user.verification = nil
+    user.save
+
+    flash[:success] = "Your password is now successfully changed and you can signin by using your fresh password."
+    redirect_to signin_path
+  end
+
   def destroy
     User.find_by_username(params[:id]).delete_user
     flash[:success] = "User deleted"
