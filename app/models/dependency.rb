@@ -1,9 +1,7 @@
 class Dependency
 
-  #
   # This Model describes the relationship between 2 products/packages
   # This Model describes 1 dependency of a package to another package
-  #
 
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -100,27 +98,27 @@ class Dependency
 
   def gem_version_parsed
     version_string = String.new(version)
-    product = Product.find_by_key(self.dep_prod_key)
-    dependency = Projectdependency.new
-    parser = GemfileParser.new
+    product        = Product.find_by_key(self.dep_prod_key)
+    dependency     = Projectdependency.new
+    parser         = GemfileParser.new
     parser.parse_requested_version(version_string, dependency, product)
     dependency.version_requested
   end
 
   def packagist_version_parsed
     version_string = String.new(version)
-    product = Product.find_by_key(self.dep_prod_key)
-    dependency = Projectdependency.new
-    parser = ComposerParser.new
+    product        = Product.find_by_key(self.dep_prod_key)
+    dependency     = Projectdependency.new
+    parser         = ComposerParser.new
     parser.parse_requested_version(version_string, dependency, product)
     dependency.version_requested
   end
 
   def npm_version_parsed
     version_string = String.new( version )
-    product = Product.find_by_key(self.dep_prod_key)
-    dependency = Projectdependency.new
-    parser = PackageParser.new
+    product        = Product.find_by_key(self.dep_prod_key)
+    dependency     = Projectdependency.new
+    parser         = PackageParser.new
     parser.parse_requested_version( version_string, dependency, product )
     dependency.version_requested
   end
