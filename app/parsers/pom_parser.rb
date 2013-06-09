@@ -5,31 +5,20 @@ class PomParser < CommonParser
   # XPath: //project/dependencies/dependency
   #
   def parse( url )
-    return nil if url.nil?
-
-    response = self.fetch_response(url)
-    doc = Nokogiri::XML( response.body )
-    return nil if doc.nil?
-
-    doc.remove_namespaces!
-    return nil if doc.nil?
-
-    project = Project.new
-
-    project.name = doc.xpath('//project/name').text
-
+    doc        = fetch_xml( url )
+    project    = init_project( url, doc )
     properties = fetch_properties( doc )
 
     doc.xpath('//dependencies/dependency').each do |node|
-      dep = fetch_dependency(node, properties, project)
-      project.dependencies.push( dep )
+      fetch_dependency(node, properties, project)
     end
 
-    project.dep_number   = project.dependencies.size
-    project.project_type = Project::A_TYPE_MAVEN2
-    project.language     = Product::A_LANGUAGE_JAVA
-    project.url          = url
+    project.dep_number = project.dependencies.size
     project
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    nil
   end
 
   def fetch_dependency(node, properties, project)
@@ -53,13 +42,11 @@ class PomParser < CommonParser
 
     product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
     parse_requested_version( dependency.version_requested, dependency, product )
-    if product
-      dependency.prod_key = product.prod_key
-    else
-      project.unknown_number += 1
-    end
 
-    project.out_number += 1 if dependency.outdated?
+    dependency.prod_key    = product.prod_key if product
+    project.unknown_number += 1 if product.nil?
+    project.out_number     += 1 if dependency.outdated?
+    project.projectdependencies.push( dependency )
     dependency
   end
 
@@ -114,6 +101,24 @@ class PomParser < CommonParser
       dependency.version_label = version
 
     end
+  end
+
+  def init_project( url, doc )
+    project              = Project.new
+    project.project_type = Project::A_TYPE_MAVEN2
+    project.language     = Product::A_LANGUAGE_JAVA
+    project.url          = url
+    project.name         = doc.xpath('//project/name').text
+    project
+  end
+
+  def fetch_xml( url )
+    response = self.fetch_response( url )
+    doc = Nokogiri::XML( response.body )
+    return nil if doc.nil?
+    doc.remove_namespaces!
+    return nil if doc.nil?
+    doc
   end
 
 end
