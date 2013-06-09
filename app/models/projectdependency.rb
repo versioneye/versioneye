@@ -1,31 +1,32 @@
 class Projectdependency
 
-  #
   # This Model describes the relationship between a project and a package
   # This Model describes 1 dependency of a project
-  #
 
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :user_id, type: String
-  field :project_id, type: String
+  A_SECONDS_PER_DAY = 5184000
 
-  field :name, type: String
-  field :group_id, type: String
+  field :project_id , type: String # TODO refactor with mongoid relations
+
+  field :prod_key   , type: String
+  field :ext_link   , type: String # Link to external package. For example zip file on GitHub / Google Code.
+
+  field :name       , type: String
+  field :group_id   , type: String
   field :artifact_id, type: String
 
-  field :version_current, type: String    # the newest version from the database
+  field :version_current  , type: String  # the newest version from the database
   field :version_requested, type: String  # locked version
-  field :version_label, type: String      # the version number from the Gemfile
-  field :comperator, type: String, :default => "="
-  field :scope, type: String, :default => "compile"
-  field :release, type: Boolean
-  field :stability, type: String, :default => VersionTagRecognizer::A_STABILITY_STABLE
+  field :version_label    , type: String  # the version number from the projectfile (Gemfile, package.json)
+  field :comperator       , type: String, :default => "="
+  field :scope            , type: String, :default => Dependency::A_SCOPE_COMPILE
+  field :release          , type: Boolean
+  field :stability        , type: String, :default => VersionTagRecognizer::A_STABILITY_STABLE
 
-  field :prod_key, type: String
-  field :outdated, type: Boolean
-  field :ext_link, type: String    # Link to external package. For example zip file on GitHub / Google Code.
+  field :outdated           , type: Boolean
+  field :outdated_updated_at, type: DateTime, :default => Time.now
 
 
   def project
@@ -37,15 +38,8 @@ class Projectdependency
   end
 
   def find_or_init_product
-    if !self.prod_key.nil?
-      product = Product.find_by_key(prod_key)
-    end
-    if product.nil?
-      product = Product.new
-      product.name = self.name
-      product.group_id = self.group_id
-      product.artifact_id = self.artifact_id
-    end
+    product = Product.find_by_key(prod_key) if self.prod_key.nil?
+    product = init_product if product.nil?
     product
   end
 
@@ -53,44 +47,29 @@ class Projectdependency
     prod_key.nil? && ext_link.nil?
   end
 
-  # TODO Write tests for the case that prod_key is nil and version_current is not nil
-  # TODO Write tests for GIT & PATH case
-  # attribute self.outdated is not saved
-  # eventuelle rename self.outdated to self.outdated_cached
-  #
   def outdated?
-    if self.prod_key.nil? && self.version_current.nil?
-      self.outdated = false
-      return false
-    end
+    return update_outdated! if self.outdated.nil?
+    last_update_ago = Time.now - self.outdated_updated_at
+    return self.outdated if last_update_ago < A_SECONDS_PER_DAY
+    return update_outdated!
+  end
 
-    product = Product.find_by_key prod_key
-    if product
-      newest_version = product.newest_version_number( self.stability )
-      self.version_current = newest_version
-      self.release = VersionTagRecognizer.release? self.version_current
-      self.save()
-    end
+  def update_outdated!
+    update_version_current
 
-    if self.version_requested.eql?("GIT") || self.version_requested.eql?("PATH")
-      self.outdated = false
-      return false
-    end
-
-    if self.version_requested.eql?(self.version_current)
-      self.outdated = false
-      return false
+    if ( self.prod_key.nil? && self.version_current.nil? ) ||
+       ( self.version_requested.eql?("GIT") || self.version_requested.eql?("PATH") ) ||
+       ( self.version_requested.eql?(self.version_current) )
+      return update_outdated( false )
     end
 
     newest_version = Naturalsorter::Sorter.sort_version([self.version_current, self.version_requested]).last
     if newest_version.eql?(version_requested)
-      self.outdated = false
-      return false
+      return update_outdated( false )
     end
 
-    self.outdated = true
-    self.release = VersionTagRecognizer.release? self.version_current
-    return true
+    update_outdated( true )
+    self.outdated
   end
 
   def link
@@ -103,5 +82,32 @@ class Projectdependency
       return "#"
     end
   end
+
+  private
+
+    def init_product
+      product             = Product.new
+      product.name        = self.name
+      product.group_id    = self.group_id
+      product.artifact_id = self.artifact_id
+      product
+    end
+
+    def update_outdated( out_value )
+      self.outdated = out_value
+      self.outdated_updated_at = Time.now
+      self.save
+      self.outdated
+    end
+
+    def update_version_current
+      return false if self.prod_key.nil?
+      product = Product.find_by_key self.prod_key
+      return false if product.nil?
+      newest_version       = product.newest_version_number( self.stability )
+      self.version_current = newest_version
+      self.release         = VersionTagRecognizer.release? self.version_current
+      self.save()
+    end
 
 end
