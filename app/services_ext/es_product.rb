@@ -1,4 +1,4 @@
-class ProductElastic
+class EsProduct
 
   def self.create_index_with_mappings
     Tire.index Settings.elasticsearch_product_index do
@@ -41,7 +41,7 @@ class ProductElastic
     # end
 
     Product.all.each do |product|
-      ProductElastic.index product
+      index product
     end
     self.refresh
   end
@@ -68,11 +68,11 @@ class ProductElastic
 
   def self.index_newest
     Product.where(reindex: true).each do |product|
-      ProductElastic.index product
+      index product
     end
     self.refresh
     Product.where(reindex: nil).each do |product|
-      ProductElastic.index product
+      index product
     end
     self.refresh
   end
@@ -146,3 +146,4 @@ class ProductElastic
   end
 
 end
+

@@ -43,7 +43,7 @@ task :do_work => :environment do
 			puts "STOP  update meta data on products."
 
 			puts "START reindex newest products for elastic search"
-			ProductElastic.index_newest
+			EsProduct.index_newest
 			puts "STOP reindex newest products for elastic search"
 
 			puts "START to send out the notification E-Mails."
