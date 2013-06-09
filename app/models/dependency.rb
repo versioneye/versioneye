@@ -8,6 +8,11 @@ class Dependency
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  A_SCOPE_COMPILE = "compile"
+  A_SCOPE_RUNTIME = "runtime"
+  A_SCOPE_REQUIRE = "require"
+  A_SCOPE_TEST    = "test"
+
   field :name        , type: String   # name of the dependency
   field :version     , type: String   # version of the dependency. This is the unfiltered version string. It is not parsed yet.
   field :group_id    , type: String   # groupd_id of the dependency

@@ -505,13 +505,13 @@ class Product
 
   def main_scope
     if self.language.eql?("Ruby")
-      return "runtime"
+      return Dependency::A_SCOPE_RUNTIME
     elsif self.language.eql?("Java")
-      return "compile"
+      return Dependency::A_SCOPE_COMPILE
     elsif self.language.eql?("Node.JS")
-      return "compile"
+      return Dependency::A_SCOPE_COMPILE
     elsif self.language.eql?("PHP")
-      return "require"
+      return Dependency::A_SCOPE_REQUIRE
     end
   end
 
