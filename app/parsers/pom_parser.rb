@@ -8,11 +8,9 @@ class PomParser < CommonParser
     doc        = fetch_xml( url )
     project    = init_project( url, doc )
     properties = fetch_properties( doc )
-
     doc.xpath('//dependencies/dependency').each do |node|
       fetch_dependency(node, properties, project)
     end
-
     project.dep_number = project.dependencies.size
     project
   rescue => e
@@ -39,10 +37,8 @@ class PomParser < CommonParser
     if dependency.scope.nil?
       dependency.scope = Dependency::A_SCOPE_COMPILE
     end
-
     product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
     parse_requested_version( dependency.version_requested, dependency, product )
-
     dependency.prod_key    = product.prod_key if product
     project.unknown_number += 1 if product.nil?
     project.out_number     += 1 if dependency.outdated?
