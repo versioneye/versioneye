@@ -9,13 +9,12 @@ class PythonSetupParser < RequirementsParser
     extras = parse_extras(doc)
 
     project = Project.new
-    project.dependencies = []
 
     requirements.each do |requirement|
       parse_line requirement, project
     end
 
-    project.dep_number = project.dependencies.count
+    project.dep_number = project.dependencies.size
     project.project_type = Project::A_TYPE_PIP
     project.language = Product::A_LANGUAGE_PYTHON
     project.url = url
@@ -54,7 +53,7 @@ class PythonSetupParser < RequirementsParser
       project.out_number = project.out_number + 1
     end
 
-    project.dependencies << dependency
+    project.projectdependencies.push dependency
   end
 
 

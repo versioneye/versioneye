@@ -3,14 +3,18 @@ require 'spec_helper'
 describe Project do
 
   before(:each) do
-    @user       = UserFactory.create_new
+    User.destroy_all
+    Project.destroy_all
+    Product.destroy_all
+    user        = UserFactory.create_new
     @product    = ProductFactory.create_new(1, :maven, true, "2.0.0")
-    @project    = ProjectFactory.create_new( @user )
-    @properties = Hash.new
+    @project    = ProjectFactory.create_new( user )
   end
 
   after(:each) do
-    @user.remove
+    User.destroy_all
+    Project.destroy_all
+    Product.destroy_all
   end
 
   describe "outdated?" do
@@ -24,7 +28,7 @@ describe Project do
       outdated.should be_false
     end
 
-    it "is not outdated" do
+    it "is outdated" do
       dep_1 = ProjectdependencyFactory.create_new( @project, @product )
       dep_1.version_current   = "2.0.0"
       dep_1.version_requested = "1.0.0"

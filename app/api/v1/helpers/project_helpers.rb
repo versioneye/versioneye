@@ -1,10 +1,10 @@
 module VersionEye
   module ProjectHelpers
-     
+
     def file_attached?(file_obj)
       result = false
-      
-      if file_obj.nil? == false and file_obj.is_a?(ActionDispatch::Http::UploadedFile ) 
+
+      if file_obj.nil? == false and file_obj.is_a?(ActionDispatch::Http::UploadedFile )
         result = true
       end
 
@@ -12,19 +12,18 @@ module VersionEye
     end
 
     def fetch_project_by_key_and_user(project_key, current_user)
-      project = Project.by_user(current_user).where(project_key: project_key).shift 
+      project = Project.by_user(current_user).where(project_key: project_key).shift
       if project.nil?
-        project = Project.by_user(current_user).where(_id: project_key).shift   
+        project = Project.by_user(current_user).where(_id: project_key).shift
       end
       project
     end
 
-    def destroy_project project_id 
+    def destroy_project project_id
       project = Project.find_by_id( project_id )
       if project.s3_filename && !project.s3_filename.empty?
         S3.delete( project.s3_filename )
       end
-      project.fetch_dependencies
       project.dependencies.each do |dep|
         dep.remove
       end
@@ -32,22 +31,22 @@ module VersionEye
     end
 
     def upload_and_store(file)
-      project = upload file 
-      store_project project 
+      project = upload file
+      store_project project
       project
     end
 
-    def upload file 
+    def upload file
       project_name = file['datafile'].original_filename
       filename = S3.upload_fileupload(file )
       url = S3.url_for( filename )
       project_type = Project.type_by_filename( url )
       project = create_project(project_type, url, project_name)
-      project.make_project_key!      
+      project.make_project_key!
       project.s3_filename = filename
       project.source = Project::A_SOURCE_UPLOAD
-      project.api_created = true  
-      project 
+      project.api_created = true
+      project
     end
 
     def create_project( project_type, url, project_name )
@@ -61,6 +60,7 @@ module VersionEye
       project
     end
 
+    # TODO check if this is doublicate ! Check the code in PrjectsController, ServiceController & ProjectService
     def store_project(project)
       success = false
       if project.dependencies && !project.dependencies.empty? && project.save
@@ -71,4 +71,5 @@ module VersionEye
     end
 
   end
+
 end

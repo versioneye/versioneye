@@ -12,7 +12,7 @@ class GemfileParser < CommonParser
     gemfile.each_line do |line|
       parse_line( line, project )
     end
-    project.dep_number   = project.dependencies.count
+    project.dep_number = project.dependencies.size
     project
   end
 
@@ -28,7 +28,7 @@ class GemfileParser < CommonParser
 
     parse_requested_version( version, dependency, product )
 
-    project.dependencies   << dependency
+    project.projectdependencies.push dependency
     project.out_number     += 1 if dependency.outdated?
     project.unknown_number += 1 if product.nil?
   end
@@ -202,7 +202,6 @@ class GemfileParser < CommonParser
 
   def init_project( url )
     project = Project.new
-    project.dependencies = Array.new
     project.project_type = Project::A_TYPE_RUBYGEMS
     project.language     = Product::A_LANGUAGE_RUBY
     project.url          = url

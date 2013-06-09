@@ -1,7 +1,7 @@
 class ProductFactory
 
 
-  def self.create_new(n = 1, manager_type = :maven, save_db = true, version)
+  def self.create_new(n = 1, manager_type = :maven, save_db = true, version = nil)
     name = "test_#{manager_type.to_s}_#{n}"
     if version.nil?
       version = "#{Random.rand(0..4)}.#{Random.rand(1..9)}"

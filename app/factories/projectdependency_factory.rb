@@ -2,7 +2,6 @@ class ProjectdependencyFactory
 
   def self.create_new(project, product, store = true)
     dependency = Projectdependency.new
-    dependency.project_id  = project.id.to_s
     if product
       dependency.name        = product.name
       dependency.prod_key    = product.prod_key
@@ -12,6 +11,7 @@ class ProjectdependencyFactory
     if store
       dependency.save
     end
+    project.projectdependencies.push dependency
     dependency
   end
 

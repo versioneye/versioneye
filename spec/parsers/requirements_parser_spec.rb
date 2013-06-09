@@ -100,7 +100,7 @@ describe RequirementsParser do
       parser = RequirementsParser.new
       project = parser.parse("http://s3.amazonaws.com/veye_test_env/requirements.txt")
       project.should_not be_nil
-      project.dependencies.count.should eql(22)
+      project.dependencies.size.should eql(22)
 
       dep_01 = project.dependencies.first
       dep_01.name.should eql("Django")

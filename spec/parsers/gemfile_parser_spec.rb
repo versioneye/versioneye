@@ -68,7 +68,7 @@ describe GemfileParser do
       parser = GemfileParser.new
       project = parser.parse("http://s3.amazonaws.com/veye_test_env/Gemfile")
       project.should_not be_nil
-      project.dependencies.count.should eql(14)
+      project.dependencies.size.should eql(14)
 
       dep_1 = project.dependencies.first
       dep_1.name.should eql("rails")

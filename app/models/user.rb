@@ -76,7 +76,7 @@ class User
   scope :follows_equal, ->(n){where(:product_ids.count.eq(n))}
   scope :follows_least, ->(n){where(:product_ids.count >= n)}
   scope :follows_max, ->(n){where(:product_ids.count <= n)}
-  
+
   attr_accessor :password, :new_username
   attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :datenerhebung, :verification, :terms, :datenerhebung
 
@@ -232,15 +232,6 @@ class User
     self.github_id && !self.github_id.empty? && self.github_token && !self.github_token.empty?
   end
 
-  def reset_password
-    random_value = create_random_value
-    self.password = random_value #prevents using old password
-    self.verification = create_random_token
-    encrypt_password
-    save
-    UserMailer.reset_password(self).deliver
-  end
-
   def self.follows_max(n)
     User.all.select {|user| user['product_ids'].count < n}
   end
@@ -301,6 +292,15 @@ class User
   def password_valid?(password)
     enc_password = encrypt(password)
     enc_password.eql?(encrypted_password)
+  end
+
+  def reset_password
+    random_value = create_random_value
+    self.password = random_value # prevents using old password
+    self.verification = create_random_token
+    encrypt_password
+    save
+    UserMailer.reset_password(self).deliver
   end
 
   def update_password(verification_code, password)

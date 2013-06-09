@@ -7,7 +7,7 @@ class User::PackagesController < ApplicationController
     projects = current_user.projects
     if projects && !projects.empty?
       projects.each do |project|
-        project.fetch_dependencies.each do |dependency|
+        project.dependencies.each do |dependency|
           key = dependency.name
           @packages[key] ||= []
           @packages[key] << project

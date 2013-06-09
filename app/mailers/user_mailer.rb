@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  
+
   default from: "\"VersionEye\" <notify@versioneye.com>"
 
   def receipt_email(user)
@@ -7,17 +7,17 @@ class UserMailer < ActionMailer::Base
     @plan = user.plan
     @billing_address = user.billing_address
     mail(
-      :to => user.email, 
+      :to => user.email,
       :subject => "Receipt",
       :tag => "receipt"
       )
   end
-  
+
   def verification_email(user, verification, email)
     @user = user
     @verificationlink = "#{Settings.server_url_https}/users/activate/#{verification}"
     mail(
-      :to => email, 
+      :to => email,
       :subject => "Verification",
       :tag => "verification"
       )
@@ -27,7 +27,7 @@ class UserMailer < ActionMailer::Base
     @user = user
     @verificationlink = "#{Settings.server_url_https}/users/activate/#{verification}"
     mail(
-      :to => email, 
+      :to => email,
       :subject => "Verification",
       :tag => "verification"
       )
@@ -37,31 +37,31 @@ class UserMailer < ActionMailer::Base
     @user = user
     @verificationlink = "#{Settings.server_url_https}/users/activate/#{verification}"
     mail(
-      :to => email, 
+      :to => email,
       :subject => "Verification Reminder",
       :tag => "verification_reminder"
       )
   end
-  
+
   def reset_password(user)
     @user = user
-    @url = "#{root_url}/updatepassword/#{@user.verification}"
+    @url = "#{Settings.server_url_https}/updatepassword/#{@user.verification}"
     mail(
-      :to => @user.email, 
+      :to => @user.email,
       :subject => "Password Reset",
       :tag => "password_reset"
       )
   end
-  
+
   def new_user_email(user)
     @fullname = user.fullname
     @username = user.username
-    @github = user.github_id 
+    @github = user.github_id
     mail(
-      :to => "reiz@versioneye.com", 
+      :to => "reiz@versioneye.com",
       :subject => "New User",
       :tag => "new_user"
       )
   end
-  
+
 end
