@@ -14,16 +14,8 @@ development:
   twitter_consumer_secret:
   stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
-
-  # elasticsearch_url: https://www.indexdepot.com/elasticsearch/
-  # elasticsearch_product_index:
-
-  # elasticsearch_url: https://api.searchbox.io/api-key/
-  # elasticsearch_product_index:
-
   elasticsearch_url: localhost:9200
   elasticsearch_product_index: product
-
   memcache_servers: ["127.0.0.1:11211"]
   memcache_username:
   memcache_password:
@@ -44,10 +36,8 @@ test:
   twitter_consumer_secret: so1T6l4nrLaY5IZEfIFzb8CtkrmNwe0I7K6F4a3oZx4
   stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
-
   elasticsearch_url: localhost:9200
   elasticsearch_product_index: /product_test
-
   memcache_servers: ["127.0.0.1:11211"]
   memcache_username:
   memcache_password:
