@@ -14,8 +14,8 @@ describe "Computer Language Filter" do
     prod3.save
     prod4.save
     prod5.save
-    ProductElastic.reset
-    ProductElastic.index_all
+    EsProduct.reset
+    EsProduct.index_all
   end
 
   after :all do

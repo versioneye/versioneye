@@ -5,7 +5,7 @@ describe VersionEye::ProductsApi do
   before :all do
     User.destroy_all
     Product.destroy_all
-    ProductElastic.reset
+    EsProduct.reset
   end
 
   before(:each) do
@@ -42,7 +42,7 @@ describe VersionEye::ProductsApi do
       @test_products = []
       55.times {|i| @test_products << ProductFactory.create_new(i)}
       @search_term = "#{@test_products[0].name.chop.chop}*"
-      ProductElastic.index_newest
+      EsProduct.index_newest
     end
 
     after(:each) do

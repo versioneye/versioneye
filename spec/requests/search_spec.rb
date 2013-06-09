@@ -5,7 +5,7 @@ describe "search" do
   before :all do
     User.destroy_all
     Product.destroy_all
-    ProductElastic.reset
+    EsProduct.reset
   end
 
   it "shows the default search" do
@@ -33,7 +33,7 @@ describe "search" do
     results.should_not be_nil
     results.size.should eq(1)
 
-    ProductElastic.index_all
+    EsProduct.index_all
 
     get "/search", :q => "json"
     assert_response :success
@@ -75,7 +75,7 @@ describe "search" do
     results.should_not be_nil
     results.size.should eq(2)
 
-    ProductElastic.index_newest
+    EsProduct.index_newest
 
     get "/search", :q => "junit"
     assert_response :success

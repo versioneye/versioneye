@@ -2,7 +2,7 @@ class ProductService
 
   # languages have to be an array of strings.
   def self.search(q, group_id = nil, languages = nil, page_count = 1)
-    ProductElastic.search(q, group_id, languages, page_count)
+    EsProduct.search(q, group_id, languages, page_count)
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first

@@ -5,7 +5,7 @@ describe "empty_search_result" do
   before :all do
     User.destroy_all
     Product.destroy_all
-    ProductElastic.reset
+    EsProduct.reset
   end
 
   before(:each) do
