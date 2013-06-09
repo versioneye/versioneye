@@ -3,7 +3,7 @@ require File.expand_path('../application', __FILE__)
 
 
 class Settings
-	raw_config = File.read("#{::Rails.root.to_s}/config/config.yml")
+	raw_config = File.read("#{::Rails.root.to_s}/config/settings.yml")
 	erb_config = ERB.new(raw_config).result
 	settings = YAML.load(erb_config)[::Rails.env]
 
