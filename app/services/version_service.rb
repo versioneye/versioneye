@@ -1,17 +1,7 @@
 class VersionService
 
-  attr_accessor :product #, :product_class
 
-  def initialize product, product_class = Product
-    self.product       = product
-    # self.product_class = product_class
-  end
-
-  def sorted_versions
-    Naturalsorter::Sorter.sort_version_by_method_desc( versions, "version" )
-  end
-
-  def newest_version( stability = "stable")
+  def self.newest_version(versions, stability = "stable")
     return nil if versions.nil? || versions.empty?
     filtered = Array.new
     versions.each do |version|
@@ -19,26 +9,24 @@ class VersionService
         filtered << version
       end
     end
-    if filtered.empty?
-      filtered = versions
-    end
+    filtered = versions if filtered.empty?
     sorted = Naturalsorter::Sorter.sort_version_by_method_desc( filtered, "version" )
-    return sorted.first
+    sorted.first
   end
 
-  def newest_version_number( stability = "stable" )
-    version = newest_version( stability )
+
+  def self.newest_version_number( versions, stability = "stable" )
+    version = newest_version( versions, stability )
     return nil if version.nil?
     return version.version
   end
 
-  # TODOO
+
   def self.newest_version_from(versions, stability = "stable")
     return nil if !versions || versions.empty?
-    product = Product.new({:versions => versions})
-    version_service = VersionService.new( product )
-    version_service.newest_version( stability )
+    VersionService.newest_version( versions, stability )
   end
+
 
   def newest_version_from_wildcard( version_start, stability = "stable" )
     versions = versions_start_with( version_start )
@@ -46,12 +34,14 @@ class VersionService
     return product.newest_version_number stability
   end
 
+
   def version_by_number( searched_version )
     versions.each do |version|
       return version if version.version.eql?(searched_version)
     end
     nil
   end
+
 
   def self.version_approximately_greater_than_starter(value)
     if value.match(/\.0$/)
@@ -61,6 +51,7 @@ class VersionService
       return "#{value}."
     end
   end
+
 
   def version_tilde_newest(value)
     new_st = "#{value}"
@@ -82,6 +73,7 @@ class VersionService
     VersionService.newest_version_from(versions)
   end
 
+
   def version_range(start, stop)
     # get all versions from range ( >=start <=stop )
     range = Array.new
@@ -95,6 +87,7 @@ class VersionService
     range
   end
 
+
   def versions_start_with(val)
     result = Array.new
     versions.each do |version|
@@ -104,6 +97,7 @@ class VersionService
     end
     result
   end
+
 
   def newest_but_not(value, range=false)
     filtered_versions = Array.new
@@ -117,6 +111,7 @@ class VersionService
     return get_newest_or_value(newest, value)
   end
 
+
   def greater_than(value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
@@ -128,6 +123,7 @@ class VersionService
     newest = VersionService.newest_version_from(filtered_versions)
     return get_newest_or_value(newest, value)
   end
+
 
   def greater_than_or_equal(value, range = false)
     filtered_versions = Array.new
@@ -141,6 +137,7 @@ class VersionService
     return get_newest_or_value(newest, value)
   end
 
+
   def smaller_than(value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
@@ -152,6 +149,7 @@ class VersionService
     newest = VersionService.newest_version_from(filtered_versions)
     return get_newest_or_value(newest, value)
   end
+
 
   def smaller_than_or_equal(value, range = false)
     filtered_versions = Array.new
@@ -165,9 +163,11 @@ class VersionService
     return get_newest_or_value(newest, value)
   end
 
+
   def versions_empty?
     versions.nil? || versions.size == 0 ? true : false
   end
+
 
   def wouldbenewest?(version)
     current = newest_version_number()
@@ -176,6 +176,7 @@ class VersionService
     return true if version.eql? newest
     return false
   end
+
 
   def update_version_data( persist = true )
     return nil if self.versions.nil? || self.versions.empty?
@@ -189,6 +190,7 @@ class VersionService
     Rails.logger.error e.backtrace.first
   end
 
+
   def versions_with_rleased_date
     return nil if versions.nil? || versions.empty?
     new_versions = Array.new
@@ -197,6 +199,7 @@ class VersionService
     end
     new_versions
   end
+
 
   def average_release_time
     return nil if versions.nil? || versions.empty? || versions.size < 3
@@ -216,6 +219,7 @@ class VersionService
     nil
   end
 
+
   def copy_released_versions
     new_versions = Array.new
     versions.each do |version|
@@ -224,6 +228,7 @@ class VersionService
     self.versions = new_versions
     self.save
   end
+
 
   private
 

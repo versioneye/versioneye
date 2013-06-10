@@ -9,7 +9,7 @@
     </thead>
     <% dependencies.each do |dep| %>
       <% dep.update_known_if_nil() %>
-      <% tr_class = "flash warn" if dep.outdated? %>
+      <% tr_class = "flash warn" if DependencyService.outdated?( dep ) %>
       <tr class="<%= tr_class %>">
         <td>
           <% if dep.known %>
