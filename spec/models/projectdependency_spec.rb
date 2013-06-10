@@ -16,12 +16,6 @@ describe Projectdependency do
     @product.save
   end
 
-  after(:each) do
-    Project.destroy_all
-    Product.destroy_all
-    User.destroy_all
-  end
-
   describe "outdated?" do
 
     it "is up to date" do

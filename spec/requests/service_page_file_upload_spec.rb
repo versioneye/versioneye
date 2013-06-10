@@ -2,16 +2,6 @@ require 'spec_helper'
 
 describe "Create Project from file uplaod on the service page - guest area" do
 
-  before(:each) do
-    Project.destroy_all
-    Projectdependency.destroy_all
-  end
-
-  after(:each) do
-    Project.destroy_all
-    Projectdependency.destroy_all
-  end
-
   it "create a project from file upload as singned in user." do
     get services_path
     assert_response :success

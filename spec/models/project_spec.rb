@@ -16,10 +16,6 @@ describe Project do
     @properties = Hash.new
   end
 
-  after(:each) do
-    @user.remove
-  end
-
   describe "email_for" do
 
     it "returns user default email" do

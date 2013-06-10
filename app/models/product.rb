@@ -235,7 +235,7 @@ class Product
     self.save if persist
   end
 
-  def dependencies(scope)
+  def dependencies(scope = nil)
     scope = main_scope if scope == nil
     Dependency.find_by_key_version_scope(prod_key, version, scope)
   end
