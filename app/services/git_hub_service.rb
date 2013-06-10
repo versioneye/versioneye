@@ -37,7 +37,11 @@ class GitHubService
       begin
         data = Github.user_repos(user, url)
         data[:repos].each do |repo|
-          GithubRepo.add_new(user, repo, data[:etag])
+          begin
+            GithubRepo.add_new(user, repo, data[:etag])
+          rescue
+            Rails.logger.error("Cant add repo to cache: #{repo}")
+          end
         end
         url = data[:paging]["next"]
       end while not url.nil?
