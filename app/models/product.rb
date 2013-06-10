@@ -195,10 +195,13 @@ class Product
     }
   end
 
+  ######## START VERSIONS ###################
 
+  def sorted_versions
+    Naturalsorter::Sorter.sort_version_by_method_desc( versions, "version" )
+  end
 
-
-
+  ######## END VERSIONS ###################
 
   def comments
     Versioncomment.find_by_prod_key_and_version(self.prod_key, self.version)
@@ -228,18 +231,6 @@ class Product
 
   def all_dependencies
     Dependency.find_by_key_and_version(prod_key, version)
-  end
-
-  # TRUE  -> if 1 of the dependencies is outdated.
-  # FALSE -> if non of the dependencies are outdated.
-  #
-  def dependencies_outdated?(scope = nil )
-    deps = self.dependencies( scope )
-    return false if deps.nil? || deps.empty?
-    deps.each do |dep|
-      return true if dep.outdated?
-    end
-    return false
   end
 
   def self.random_product
