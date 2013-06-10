@@ -32,6 +32,12 @@ describe "Computer Language Filter" do
       page.should have_content("jsonG")
       page.should have_content("jsonC")
 
+      find(:xpath, '//button[contains(@id, "button_json2")]' ).click
+      using_wait_time 2 do
+        page.should have_content("Sign In and Follow")
+        page.should have_content("to get notified about new versions.")
+      end
+
       visit root_path
       fill_in 'q', :with => "json*"
       find(:xpath, '//div[contains(@class, "icon_java_small_container")]' ).click
