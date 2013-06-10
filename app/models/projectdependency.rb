@@ -96,11 +96,13 @@ class Projectdependency
       self.outdated
     end
 
+    # TODO refactor this. Move code!
     def update_version_current
       return false if self.prod_key.nil?
       product = Product.find_by_key self.prod_key
       return false if product.nil?
-      newest_version       = product.newest_version_number( self.stability )
+      version_service = VersionService.new product
+      newest_version       = version_service.newest_version_number( self.stability )
       self.version_current = newest_version
       self.release         = VersionTagRecognizer.release? self.version_current
       self.save()
