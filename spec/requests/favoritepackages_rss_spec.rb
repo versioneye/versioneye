@@ -2,18 +2,6 @@ require 'spec_helper'
 
 describe "UsersController" do
 
-  before(:each) do
-    User.destroy_all
-    Product.destroy_all
-    Notification.destroy_all
-  end
-
-  after(:each) do
-    User.destroy_all
-    Product.destroy_all
-    Notification.destroy_all
-  end
-
   it "ensure that favoritepackages.rss gets loaded" do
     user1 = UserFactory.create_new(103, true)
     user1.save

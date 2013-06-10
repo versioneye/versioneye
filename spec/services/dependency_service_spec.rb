@@ -18,13 +18,13 @@ describe DependencyService do
     it "is not outdated, because it's equal" do
       product = ProductFactory.create_new(87)
       product.versions.push( Version.new({:version => "100.0"}) )
-      product.version = version.version
+      product.version = "100.0"
       product.save
 
-      dependency = Dependency.new
-      dependency.version = version.version
+      dependency              = Dependency.new
+      dependency.version      = product.version
       dependency.dep_prod_key = product.prod_key
-      dependency.prod_type = product.prod_type
+      dependency.prod_type    = product.prod_type
       DependencyService.outdated?( dependency ).should be_false
     end
 

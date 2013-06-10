@@ -6,10 +6,6 @@ describe SubmittedUrl do
       @submitted_url = SubmittedUrlFactory.create_new
     end
 
-    after(:each) do
-      @submitted_url.delete
-    end
-
     it 'return nil, when parameter `id` is nil' do
       SubmittedUrl.find_by_id(nil).should be_nil
     end
@@ -52,14 +48,14 @@ describe SubmittedUrl do
 
   describe 'update_integration_status' do
     before(:each) do
-      @submitted_url1 = SubmittedUrlFactory.create_new(user_email: "t1@test.com")
+      @submitted_url1           = SubmittedUrlFactory.create_new(user_email: "t1@test.com")
       @resource_without_product = ProductResourceFactory.create_new({:submitted_url => @submitted_url1})
-      
-      @test_user_2 = UserFactory.create_new(2)
-      @submitted_url2 = SubmittedUrlFactory.create_new(user_id: @test_user_2._id.to_s)
-      @product = ProductFactory.create_new(:maven)
+
+      @test_user_2           = UserFactory.create_new(2)
+      @submitted_url2        = SubmittedUrlFactory.create_new(user_id: @test_user_2._id.to_s)
+      @product               = ProductFactory.create_new(:maven)
       @resource_with_product = ProductResourceFactory.create_new({
-                                  :submitted_url => @submitted_url2, 
+                                  :submitted_url => @submitted_url2,
                                   :prod_key => @product.prod_key})
     end
 
@@ -73,11 +69,11 @@ describe SubmittedUrl do
     end
 
     it 'returns false when updating fails' do
-      @submitted_url1.update_integration_status.should be_false  
+      @submitted_url1.update_integration_status.should be_false
     end
 
     it 'returns true when updating is successful' do
-      @submitted_url2.update_integration_status.should be_true 
+      @submitted_url2.update_integration_status.should be_true
     end
 
   end

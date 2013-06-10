@@ -2,13 +2,7 @@ require 'spec_helper'
 
 describe Product do
 
-  before(:each) do
-    @product = Product.new
-  end
-
-  after(:each) do
-    @product.remove
-  end
+  let( :product ){ Product.new }
 
   describe "versions_empty?" do
 
@@ -18,9 +12,7 @@ describe Product do
 
     it "returns false" do
       product.versions = Array.new
-      version = Version.new
-      version.version = "1.0"
-      product.versions.push(version)
+      product.versions.push( Version.new({ :version => "1.0" }) )
       product.versions_empty?.should be_false
     end
 
@@ -29,9 +21,7 @@ describe Product do
       product.name = "test"
       product.prod_key = "gasgagasgj8623_junit/junit23"
       product.save
-      version = Version.new
-      version.version = "1.0"
-      product.versions.push(version)
+      product.versions.push( Version.new({ :version => "1.0" }) )
       prod = Product.find_by_key("gasgagasgj8623_junit/junit23")
       prod.versions_empty?.should be_false
     end
