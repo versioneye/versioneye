@@ -34,7 +34,7 @@ class Projectdependency
   end
 
   def find_or_init_product
-    product = Product.find_by_key(prod_key) if self.prod_key.nil?
+    product = Product.find_by_key(prod_key) if self.prod_key
     product = init_product if product.nil?
     product
   end
