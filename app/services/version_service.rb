@@ -174,17 +174,6 @@ class VersionService
 
 
   # TODO test
-  def self.versions_with_rleased_date( versions )
-    return nil if versions.nil? || versions.empty?
-    new_versions = Array.new
-    versions.each do |version|
-      new_versions << version if !version.released_at.nil?
-    end
-    new_versions
-  end
-
-
-  # TODO test
   def self.average_release_time( versions )
     return nil if versions.nil? || versions.empty? || versions.size < 3
     released_versions = self.versions_with_rleased_date( versions )
@@ -205,6 +194,15 @@ class VersionService
 
 
   private
+
+    def self.versions_with_rleased_date( versions )
+      return nil if versions.nil? || versions.empty?
+      new_versions = Array.new
+      versions.each do |version|
+        new_versions << version if !version.released_at.nil?
+      end
+      new_versions
+    end
 
     def self.get_newest_or_value(newest, value)
       if newest.nil?
