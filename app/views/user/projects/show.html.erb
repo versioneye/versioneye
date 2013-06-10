@@ -208,21 +208,22 @@
           </div>
 
           <div id="licenses" class="tab-pane">
-            <% licences = licences.sort_by {|key, vals| -vals.length} %>
-            <% licences.each do |licence, products| %>
-              <div class="row search-item" >
-                <h5 class="dep_header"><%= licence %></h5>
-                <p>
-                  <% products.each do |product| %>
-                    <a href = "<%= product_url(product) %>" style= "text-decoration: none;">
-                      <span class = "label label-success" style = "margin-left :5px;">
-                        <%= product.name %>
-                      </span>
-                    </a>
-                  <% end %>
-                </p>
-
-              </div>
+            <% if licences %>
+              <% licences = licences.sort_by {|key, vals| -vals.length} %>
+              <% licences.each do |licence, products| %>
+                <div class="row search-item" >
+                  <h5 class="dep_header"><%= licence %></h5>
+                  <p>
+                    <% products.each do |product| %>
+                      <a href = "<%= product_url(product) %>" style= "text-decoration: none;">
+                        <span class = "label label-success" style = "margin-left :5px;">
+                          <%= product.name %>
+                        </span>
+                      </a>
+                    <% end %>
+                  </p>
+                </div>
+              <% end %>
             <% end %>
           </div>
 
