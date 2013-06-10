@@ -4,7 +4,13 @@ describe GemfileParser do
 
   describe "parse" do
 
-    before :each do
+    it "parse from https the file correctly" do
+      parser = GemfileParser.new
+      project = parser.parse("https://s3.amazonaws.com/veye_test_env/Gemfile")
+      project.should_not be_nil
+    end
+
+    it "parse from http the file correctly" do
       product1 = ProductFactory.create_for_gemfile("execjs", "1.4.0")
       product1.versions.push( Version.new({version: "1.3.0"}) )
       product1.save
@@ -52,20 +58,8 @@ describe GemfileParser do
       product13 = ProductFactory.create_for_gemfile("govkit", "1.0.0")
       product13.save
 
-    end
 
-    after :each do
-      Product.where().delete()
-    end
-
-    it "parse from https the file correctly" do
-      parser = GemfileParser.new
-      project = parser.parse("https://s3.amazonaws.com/veye_test_env/Gemfile")
-      project.should_not be_nil
-    end
-
-    it "parse from http the file correctly" do
-      parser = GemfileParser.new
+      parser  = GemfileParser.new
       project = parser.parse("http://s3.amazonaws.com/veye_test_env/Gemfile")
       project.should_not be_nil
       project.dependencies.size.should eql(14)

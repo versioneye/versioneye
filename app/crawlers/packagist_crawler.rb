@@ -94,7 +94,7 @@ class PackagistCrawler
 
     Rails.logger.info " -- Product: #{product.prod_key} -- Version: #{version_number}"
 
-    product.update_version_data
+    VersionService.update_version_data( product )
 
     CrawlerUtils.create_newest product, version_number
     CrawlerUtils.create_notifications product, version_number

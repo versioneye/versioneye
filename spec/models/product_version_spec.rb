@@ -10,51 +10,30 @@ describe Product do
     @product.remove
   end
 
-  describe "update_version_data" do
+  describe "versions_empty?" do
 
-    it "returns the one" do
-      @product.versions = Array.new
-      version = Version.new
-      version.version = "1.0"
-      @product.versions.push(version)
-      @product.update_version_data
-      @product.version.should eql("1.0")
+    it "returns true" do
+      product.versions_empty?.should be_true
     end
 
-    it "returns the highest stable" do
-      @product.versions = Array.new
+    it "returns false" do
+      product.versions = Array.new
       version = Version.new
       version.version = "1.0"
-      @product.versions.push(version)
-
-      version2 = Version.new
-      version2.version = "1.1"
-      @product.versions.push(version2)
-
-      version3 = Version.new
-      version3.version = "1.2-dev"
-      @product.versions.push(version3)
-
-      @product.update_version_data
-      @product.version.should eql("1.1")
+      product.versions.push(version)
+      product.versions_empty?.should be_false
     end
 
-    it "returns the highest unststable because there is no stable" do
-      @product.versions = Array.new
+    it "returns false" do
+      product.versions = Array.new
+      product.name = "test"
+      product.prod_key = "gasgagasgj8623_junit/junit23"
+      product.save
       version = Version.new
-      version.version = "1.0-beta"
-      @product.versions.push(version)
-
-      version2 = Version.new
-      version2.version = "1.1-beta"
-      @product.versions.push(version2)
-
-      version3 = Version.new
-      version3.version = "1.2-dev"
-      @product.versions.push(version3)
-
-      @product.update_version_data
-      @product.version.should eql("1.2-dev")
+      version.version = "1.0"
+      product.versions.push(version)
+      prod = Product.find_by_key("gasgagasgj8623_junit/junit23")
+      prod.versions_empty?.should be_false
     end
 
   end

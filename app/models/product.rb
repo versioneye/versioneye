@@ -201,6 +201,17 @@ class Product
     Naturalsorter::Sorter.sort_version_by_method_desc( versions, "version" )
   end
 
+  def version_by_number( searched_version )
+    versions.each do |version|
+      return version if version.version.eql?(searched_version)
+    end
+    nil
+  end
+
+  def versions_empty?
+    versions.nil? || versions.size == 0 ? true : false
+  end
+
   ######## END VERSIONS ###################
 
   def comments
