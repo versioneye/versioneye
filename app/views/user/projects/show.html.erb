@@ -173,6 +173,7 @@
             <% if @project.dependencies && @project.dependencies.size > 0 %>
 
               <table class="dependency_table" style="width: 570px;">
+
                 <thead>
                   <tr>
                     <th class="icon_col" ></th>
@@ -184,24 +185,24 @@
 
                 <% licences = {} %>
                 <% @project.dependencies.each do |dep| %>
-                <% product = dep.find_or_init_product %>
-                <% dep.outdated? %>
+                  <% product = dep.find_or_init_product %>
+                  <% dep.outdated? %>
 
-                <% if product.license_info.nil? then key = "unknown" else key  = product.license_info end %>
-                <% licences[key] = []  unless licences.key? key %>
-                <% licences[key] << product %>
+                  <% if product.license_info.nil? then key = "unknown" else key  = product.license_info end %>
+                  <% licences[key] = []  unless licences.key? key %>
+                  <% licences[key] << product %>
 
-                <% if dep.unknown? %>
-                  <%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
-                <% elsif dep.outdated and dep.release == true  %>
-                  <%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
-                <% elsif dep.outdated and dep.release == false %>
-                  <%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep} %>
-                <% else %>
-                  <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
+                  <% if dep.unknown? %>
+                    <%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
+                  <% elsif dep.outdated and dep.release == true  %>
+                    <%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
+                  <% elsif dep.outdated and dep.release == false %>
+                    <%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep} %>
+                  <% else %>
+                    <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
+                  <% end %>
+
                 <% end %>
-
-              <% end %>
               </table>
 
             <% end %>
