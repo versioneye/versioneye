@@ -47,7 +47,7 @@ class Github
     end
     headers = {
       "User-Agent" => A_USER_AGENT,
-      "If-Modified-Since" => repo[:imported_at].httpdate
+      "If-Modified-Since" => repo[:cached_at].httpdate
     }
     url = "#{A_API_URL}/user?access_token=#{URI.escape(user.github_token)}"
     response = self.head(url, headers: headers)

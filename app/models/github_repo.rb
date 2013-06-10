@@ -22,7 +22,7 @@ class GithubRepo
   field :created_at  , type: DateTime
   field :updated_at  , type: DateTime #when github repo was updated
   field :pushed_at   , type: DateTime
-  field :imported_at , type: DateTime
+  field :cached_at , type: DateTime
   field :refreshed_at, type: DateTime #when this doc updated
 
   belongs_to :user
@@ -34,6 +34,10 @@ class GithubRepo
   scope :by_org, ->(org_name){where(owner_login: org_name, owner_type: "organization")}
 
   def self.add_new(user, repo, etag = nil)
+    if repo['owner'].nil?
+      Rails.console.error("Repo #{full_name} is missing owner. Adding as unknown.")
+      repo['owner'] = {'type' => "ufo"}
+    end
     case repo['owner']['type'].to_s.downcase
     when 'organization'
       owner_type = 'organization'
@@ -70,7 +74,7 @@ class GithubRepo
       created_at: repo['created_at'],
       updated_at: repo['updated_at'],
       pushed_at: repo['pushed_at'],
-      imported_at: DateTime.now
+      cached_at: DateTime.now
     })
     new_repo.save
   end
