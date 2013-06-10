@@ -2,15 +2,6 @@ require 'spec_helper'
 
 describe LeinParser do
 
-  before(:each) do
-    Product.destroy_all
-    @url = "https://s3.amazonaws.com/veye_test_env/project.clj"
-  end
-
-  after :each do
-    Product.destroy_all
-  end
-
   describe "parse" do
 
     def fetch_by_name(dependencies, name)
@@ -21,13 +12,13 @@ describe LeinParser do
 
     it "read the file correctly" do
       parser = LeinParser.new
-      project = parser.parse @url
+      project = parser.parse "https://s3.amazonaws.com/veye_test_env/project.clj"
       project.should_not be_nil
     end
 
     it "does it parse sample project correctly" do
       parser = LeinParser.new
-    	project = parser.parse @url
+    	project = parser.parse "https://s3.amazonaws.com/veye_test_env/project.clj"
 
       dependency_01 = fetch_by_name( project.dependencies, "clojure")
 	    dependency_01.name.should eql("clojure")

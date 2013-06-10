@@ -18,10 +18,6 @@ describe "Computer Language Filter" do
     EsProduct.index_all
   end
 
-  after :all do
-    Product.destroy_all
-  end
-
   describe "the computer language filter", :js => true do
 
     it "uses the language filter without errors" do

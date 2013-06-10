@@ -22,6 +22,7 @@ class ComposerParser < CommonParser
   def fetch_data( url )
     return nil if url.nil?
     response = self.fetch_response(url)
+    return nil if response.nil?
     JSON.parse( response.body )
   end
 
@@ -39,28 +40,15 @@ class ComposerParser < CommonParser
   end
 
   def process_dependency( key, value, project, data )
-    dependency = Projectdependency.new
-    dependency.name = key
-
-    product = self.product_by_key key
-    dependency.prod_key = product.prod_key if product
-
+    product    = fetch_product( "php/#{key}" )
+    dependency = init_projectdependency( key, product )
     parse_requested_version( value, dependency, product )
     if product.nil?
       dep_in_ext_repo = dependency_in_repositories?( dependency, data )
       project.unknown_number += 1 if !dep_in_ext_repo
     end
-
     project.out_number += 1 if dependency.outdated?
     project.projectdependencies.push dependency
-  end
-
-  def product_by_key( key )
-    product = Product.find_by_key("php/#{key}")
-    if product.nil?
-      product = Product.find_by_key_case_insensitiv("php/#{key}")
-    end
-    product
   end
 
   def update_project( project, data )
@@ -96,8 +84,11 @@ class ComposerParser < CommonParser
 
     if product.nil?
       dependency.version_requested = version
+      return nil
+    end
 
-    elsif version.match(/,/)
+    case
+    when version.match(/,/)
       # Version Ranges
       version_splitted = version.split(",")
       prod = Product.new
@@ -106,27 +97,27 @@ class ComposerParser < CommonParser
         verso.gsub!(" ", "")
         if verso.match(/^>=/)
           verso.gsub!(">=", "")
-          new_range = prod.greater_than_or_equal( verso, true )
+          new_range = VersionService.greater_than_or_equal( prod.versions, verso, true )
           prod.versions = new_range
         elsif verso.match(/^>/)
           verso.gsub!(">", "")
-          new_range = prod.greater_than( verso, true )
+          new_range = VersionService.greater_than( prod.versions, verso, true )
           prod.versions = new_range
         elsif verso.match(/^<=/)
           verso.gsub!("<=", "")
-          new_range = prod.smaller_than_or_equal( verso, true )
+          new_range = VersionService.smaller_than_or_equal( prod.versions, verso, true )
           prod.versions = new_range
         elsif verso.match(/^</)
           verso.gsub!("<", "")
-          new_range = prod.smaller_than( verso, true )
+          new_range = VersionService.smaller_than( prod.versions, verso, true )
           prod.versions = new_range
         elsif verso.match(/^!=/)
           verso.gsub!("!=", "")
-          new_range = prod.newest_but_not(verso, true)
+          new_range = VersionService.newest_but_not( prod.versions, verso, true)
           prod.versions = new_range
         end
       end
-      highest_version = Product.newest_version_from( prod.versions )
+      highest_version = VersionService.newest_version_from( prod.versions )
       if highest_version
         dependency.version_requested = highest_version.version
       else
@@ -134,11 +125,11 @@ class ComposerParser < CommonParser
       end
       dependency.comperator = "="
 
-    elsif version.match(/.\*$/)
+    when version.match(/.\*$/)
       # WildCards. 1.0.* => 1.0.0 | 1.0.2 | 1.0.20
       ver = version.gsub("*", "")
       ver = ver.gsub(" ", "")
-      highest_version = product.newest_version_from_wildcard( ver, dependency.stability )
+      highest_version = VersionService.newest_version_from_wildcard( product.versions, ver, dependency.stability )
       if highest_version
         dependency.version_requested = highest_version
       else
@@ -146,59 +137,59 @@ class ComposerParser < CommonParser
       end
       dependency.comperator = "="
 
-    elsif version.empty? || version.match(/^\*$/)
+    when version.empty? || version.match(/^\*$/)
       # This case is not allowed. But we handle it anyway. Because we are fucking awesome!
-      dependency.version_requested = product.newest_version_number( dependency.stability )
+      dependency.version_requested = VersionService.newest_version_number( product.versions, dependency.stability )
       dependency.version_label = "*"
       dependency.comperator = "="
 
-    elsif version.match(/^>=/)
+    when version.match(/^>=/)
       # Greater than or equal to
       version.gsub!(">=", "")
       version.gsub!(" ", "")
-      greater_than_or_equal = product.greater_than_or_equal(version)
+      greater_than_or_equal = VersionService.greater_than_or_equal( product.versions, version)
       dependency.version_requested = greater_than_or_equal.version
       dependency.comperator = ">="
 
-    elsif version.match(/^>/)
+    when version.match(/^>/)
       # Greater than version
       version.gsub!(">", "")
       version.gsub!(" ", "")
-      greater_than = product.greater_than(version)
+      greater_than = VersionService.greater_than( product.versions, version)
       dependency.version_requested = greater_than.version
       dependency.comperator = ">"
 
-    elsif version.match(/^<=/)
+    when version.match(/^<=/)
       # Less than or equal to
       version.gsub!("<=", "")
       version.gsub!(" ", "")
-      smaller_or_equal = product.smaller_than_or_equal(version)
+      smaller_or_equal = VersionService.smaller_than_or_equal( product.versions, version )
       dependency.version_requested = smaller_or_equal.version
       dependency.comperator = "<="
 
-    elsif version.match(/^\</)
+    when version.match(/^\</)
       # Less than version
       version.gsub!("\<", "")
       version.gsub!(" ", "")
-      smaller_than = product.smaller_than(version)
+      smaller_than = VersionService.smaller_than( product.versions, version )
       dependency.version_requested = smaller_than.version
       dependency.comperator = "<"
 
-    elsif version.match(/^!=/)
+    when version.match(/^!=/)
       # Not equal to version
       version.gsub!("!=", "")
       version.gsub!(" ", "")
-      newest_but_not = product.newest_but_not(version)
+      newest_but_not = VersionService.newest_but_not( product.versions, version )
       dependency.version_requested = newest_but_not.version
       dependency.comperator = "!="
 
-    elsif version.match(/^~/)
+    when version.match(/^~/)
       # Approximately greater than -> Pessimistic Version Constraint
       version.gsub!("~", "")
       version.gsub!(" ", "")
-      starter = Product.version_approximately_greater_than_starter( version )
-      versions = product.versions_start_with( starter )
-      highest_version = Product.newest_version_from( versions )
+      starter         = VersionService.version_approximately_greater_than_starter( version )
+      versions        = VersionService.versions_start_with( product.versions, starter )
+      highest_version = VersionService.newest_version_from( versions )
       if highest_version
         dependency.version_requested = highest_version.version
       else
@@ -245,12 +236,22 @@ class ComposerParser < CommonParser
 
   private
 
+    def init_projectdependency( key, product )
+      dependency      = Projectdependency.new
+      dependency.name = key
+      if product
+        dependency.prod_key        = product.prod_key
+        dependency.version_current = product.version
+      end
+      dependency
+    end
+
     # This method exist in CommonParser, too!
     # This is just a copy with a different implementation for Composer!
     #
     def update_requested_with_current( dependency, product )
       if product && product.version
-        dependency.version_requested = product.newest_version_number( dependency.stability )
+        dependency.version_requested = VersionService.newest_version_number( product.versions, dependency.stability )
       else
         dependency.version_requested = "UNKNOWN"
       end

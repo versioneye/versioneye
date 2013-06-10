@@ -19,11 +19,6 @@ describe User do
     UserFactory.create_defaults
   end
 
-  after(:each) do
-    User.destroy_all
-    UserFactory.clean_defaults
-  end
-
   describe "to_param" do
     it "returns username as default param" do
       @user.username = "hanstanz"

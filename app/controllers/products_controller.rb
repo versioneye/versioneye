@@ -94,7 +94,7 @@ class ProductsController < ApplicationController
       if !version.nil? && !version.empty?
         @product.version = version
       end
-      if @product.dependencies_outdated?()
+      if DependencyService.dependencies_outdated?( @product.dependencies )
         badge = "out-of-date"
       else
         badge = "up-to-date"

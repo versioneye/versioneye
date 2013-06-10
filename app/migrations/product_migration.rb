@@ -1,6 +1,6 @@
 class ProductMigration
 
-  def self.remove_npm_circles 
+  def self.remove_npm_circles
     products = Product.where(language: Product::A_LANGUAGE_NODEJS)
     products.each do |product|
       elements = CircleElement.where(prod_key: product.prod_key)
@@ -8,26 +8,26 @@ class ProductMigration
         elements.each do |circle|
           circle.remove()
         end
-      end      
+      end
     end
   end
 
   def self.update_followers
     products = Product.where( :"user_ids.0" => {"$exists"=>true} )
-    products.each do |product| 
-      product.followers = product.users.count 
-      product.save 
+    products.each do |product|
+      product.followers = product.users.count
+      product.save
       Rails.logger.info "update followers for #{product.name}"
     end
     Rails.logger.info "#{products.count} products updated."
   end
 
   def self.count_versions(lang)
-    versions_count = 0 
+    versions_count = 0
     count = Product.where(language: lang).count()
     Rails.logger.info "language: #{lang}, count: #{count}"
     pack = 100
-    max = count / pack     
+    max = count / pack
     (0..max).each do |i|
       skip = i * pack
       products = Product.where(language: "Java").skip(skip).limit(pack)
@@ -49,13 +49,13 @@ class ProductMigration
   def self.update_meta_data_global
     count = Product.count()
     page = 100
-    iterations = count / page 
-    iterations += 1 
+    iterations = count / page
+    iterations += 1
     (0..iterations).each do |i|
       skip = i * page
       products = Product.all().skip(skip).limit(page)
       products.each do |product|
-        product.update_version_data( false )
+        VersionService.update_version_data( product, false )
         product.update_used_by_count( false )
         product.save
       end
@@ -65,13 +65,13 @@ class ProductMigration
   def self.update_version_data_global
     count = Product.count()
     page = 100
-    iterations = count / page 
-    iterations += 1 
+    iterations = count / page
+    iterations += 1
     (0..iterations).each do |i|
       skip = i * page
       products = Product.all().skip(skip).limit(page)
       products.each do |product|
-        product.update_version_data
+        VersionService.update_version_data( product )
       end
     end
   end
@@ -79,9 +79,9 @@ class ProductMigration
   def self.parse_release_date_global(lang)
     Product.where(language: lang).each do |product|
       product.versions.each do |version|
-        if version.released_string.nil? 
+        if version.released_string.nil?
           Rails.logger.info "empty!"
-          next 
+          next
         end
         version.released_at = DateTime.parse version.released_string
         version.save
@@ -99,11 +99,11 @@ class ProductMigration
           version.version = version.version.gsub("v", "")
           product.save
           Rails.logger.info " -- #{version.version}"
-        end 
+        end
       end
     end
   end
-  
+
   def self.count_central_mvn_repo()
     count = 0
     Product.where(language: "Java").each do |product|
@@ -111,7 +111,7 @@ class ProductMigration
         if repo.src.eql?("http://search.maven.org/")
           count += 1
           Rails.logger.info "count #{count}"
-        end 
+        end
       end
     end
   end
@@ -127,13 +127,13 @@ class ProductMigration
       product.save
     end
   end
-  
+
   def self.improve_ruby_links()
     Product.where(language: "Ruby").each do |product|
-      Versionlink.all(conditions: { prod_key: product.prod_key }).each do |link| 
+      Versionlink.all(conditions: { prod_key: product.prod_key }).each do |link|
         if !link.version_id.nil?
           Rails.logger.info "improve link #{product.prod_key} - #{link.link} - #{link.version_id}"
-          link.version_id = nil 
+          link.version_id = nil
           link.save
         end
       end
@@ -143,9 +143,9 @@ class ProductMigration
   def self.check_emtpy_release_dates(lang)
     Product.where(language: lang).each do |product|
       product.versions.each do |version|
-        if version.released_string.nil? 
+        if version.released_string.nil?
           Rails.logger.info "#{product.name} - #{version.version} - empty!"
-          next 
+          next
         end
       end
     end
@@ -165,7 +165,7 @@ class ProductMigration
         uri = "package/#{product.to_param}"
         uris << uri
       end
-      if uris.count > 49000 
+      if uris.count > 49000
         Rails.logger.info "#{uris.count}"
         Rails.logger.info "sitemap count: #{sitemap_count}"
         write_to_xml(uris, "sitemap-#{sitemap_count}.xml")

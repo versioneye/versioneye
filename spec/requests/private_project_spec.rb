@@ -18,11 +18,6 @@ describe "Private Project" do
     @project.save_dependencies
   end
 
-  after(:each) do
-    User.destroy_all
-    Project.destroy_all
-  end
-
   it "ensure that private user projects stay private" do
     get "/signin", nil, "HTTPS" => "on"
     assert_response :success

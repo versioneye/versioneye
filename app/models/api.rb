@@ -5,7 +5,7 @@ class Api
 
   field :user_id, type: String
   field :api_key, type: String
-  field :calls, type: Integer, default: 0
+  field :calls  , type: Integer, default: 0
 
   validates :user_id, presence: true
   validates :api_key, presence: true,

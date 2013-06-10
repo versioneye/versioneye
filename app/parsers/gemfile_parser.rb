@@ -44,8 +44,10 @@ class GemfileParser < CommonParser
     if product.nil?
       dependency.version_requested = version
       dependency.version_label     = version
+      return
+    end
 
-    elsif version.match(/^=/)
+    if version.match(/^=/)
       # Equals
       version.gsub!("=", "")
       version.gsub!(" ", "")
@@ -57,7 +59,7 @@ class GemfileParser < CommonParser
       # Not equal to version
       version.gsub!("!=", "")
       version.gsub!(" ", "")
-      newest_version = product.newest_but_not(version)
+      newest_version = VersionService.newest_but_not( product.versions, version)
       dependency.version_requested = newest_version
       dependency.comperator        = "!="
       dependency.version_label     = version
@@ -66,7 +68,7 @@ class GemfileParser < CommonParser
       # Greater than or equal to
       version.gsub!(">=", "")
       version.gsub!(" ", "")
-      newest_version = product.greater_than_or_equal(version)
+      newest_version = VersionService.greater_than_or_equal( product.versions, version)
       dependency.version_requested = newest_version.version
       dependency.comperator        = ">="
       dependency.version_label     = version
@@ -75,7 +77,7 @@ class GemfileParser < CommonParser
       # Greater than version
       version.gsub!(">", "")
       version.gsub!(" ", "")
-      newest_version = product.greater_than(version)
+      newest_version = VersionService.greater_than( product.versions, version )
       dependency.version_requested = newest_version.version
       dependency.comperator        = ">"
       dependency.version_label     = version
@@ -84,7 +86,7 @@ class GemfileParser < CommonParser
       # Less than or equal to
       version.gsub!("<=", "")
       version.gsub!(" ", "")
-      newest_version = product.smaller_than_or_equal(version)
+      newest_version = VersionService.smaller_than_or_equal( product.versions, version )
       dependency.version_requested = newest_version.version
       dependency.comperator        = "<="
       dependency.version_label     = version
@@ -93,7 +95,7 @@ class GemfileParser < CommonParser
       # Less than version
       version.gsub!("\<", "")
       version.gsub!(" ", "")
-      newest_version = product.smaller_than(version)
+      newest_version = VersionService.smaller_than( product.versions, version )
       dependency.version_requested = newest_version.version
       dependency.comperator        = "<"
       dependency.version_label     = version
@@ -102,9 +104,9 @@ class GemfileParser < CommonParser
       # Approximately greater than -> Pessimistic Version Constraint
       ver = version.gsub("~>", "")
       ver = ver.gsub(" ", "")
-      starter = Product.version_approximately_greater_than_starter(ver)
-      versions = product.versions_start_with( starter )
-      highest_version = Product.newest_version_from(versions)
+      starter         = VersionService.version_approximately_greater_than_starter( ver )
+      versions        = VersionService.versions_start_with( product.versions, starter )
+      highest_version = VersionService.newest_version_from( versions )
       if highest_version
         dependency.version_requested = highest_version.version
       else
@@ -127,7 +129,6 @@ class GemfileParser < CommonParser
       dependency.version_requested = version
       dependency.comperator        = "="
       dependency.version_label     = version
-
     end
   end
 
