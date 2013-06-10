@@ -7,7 +7,7 @@ describe VersionEye::ProjectsApi do
   let( :project_uri ) { "/api/v1/projects" }
   let( :test_user   ) { UserFactory.create_new(90) }
   let( :user_api    ) { ApiFactory.create_new test_user }
-  let( :file_path   ) { "#{Rails.root}/test/files/maven-1.0.1.pom" }
+  let( :file_path   ) { "#{Rails.root}/spec/files/maven-1.0.1.pom" }
   let( :test_file   ) { Rack::Test::UploadedFile.new(file_path, "text/xml") }
 
   describe "Unauthorized user shouldnt have access" do
