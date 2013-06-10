@@ -42,11 +42,9 @@ class CommonParser
     nil
   end
 
-  def fetch_product( key )
-    product = Product.find_by_key( key )
-    if product.nil?
-      product = Product.find_by_key_case_insensitiv( key )
-    end
+  def fetch_product( prod_key )
+    product = Product.find_by_key(prod_key)
+    product = Product.find_by_key_case_insensitiv(prod_key) if product.nil?
     product
   end
 

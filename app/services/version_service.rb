@@ -22,24 +22,16 @@ class VersionService
   end
 
 
-  def self.newest_version_from(versions, stability = "stable")
+  def self.newest_version_from( versions, stability = "stable")
     return nil if !versions || versions.empty?
     VersionService.newest_version( versions, stability )
   end
 
 
-  def newest_version_from_wildcard( version_start, stability = "stable" )
-    versions = versions_start_with( version_start )
-    product = Product.new({:versions => versions})
-    return product.newest_version_number stability
-  end
-
-
-  def version_by_number( searched_version )
-    versions.each do |version|
-      return version if version.version.eql?(searched_version)
-    end
-    nil
+  # TODO write test
+  def self.newest_version_from_wildcard( versions, version_start, stability = "stable" )
+    versions_filtered = versions_start_with( versions, version_start )
+    return newest_version_number( versions_filtered, stability )
   end
 
 
@@ -53,7 +45,7 @@ class VersionService
   end
 
 
-  def version_tilde_newest(value)
+  def self.version_tilde_newest( versions, value )
     new_st = "#{value}"
     if value.match(/./)
       splits = value.split(".")
@@ -63,18 +55,18 @@ class VersionService
     end
     starter = "#{new_st}."
 
-    versions_group1 = self.versions_start_with( starter )
-    versions = Array.new
+    versions_group1 = self.versions_start_with( versions, starter )
+    versions_filtered = Array.new
     versions_group1.each do |version|
       if Naturalsorter::Sorter.bigger_or_equal?(version.version, value)
-        versions.push(version)
+        versions_filtered.push(version)
       end
     end
-    VersionService.newest_version_from(versions)
+    VersionService.newest_version_from( versions_filtered )
   end
 
 
-  def version_range(start, stop)
+  def self.version_range( versions, start, stop)
     # get all versions from range ( >=start <=stop )
     range = Array.new
     versions.each do |version|
@@ -88,8 +80,9 @@ class VersionService
   end
 
 
-  def versions_start_with(val)
+  def self.versions_start_with( versions, val )
     result = Array.new
+    return result if versions.nil? || versions.empty?
     versions.each do |version|
       if version.version.match(/^#{val}/)
         result.push(version)
@@ -99,7 +92,8 @@ class VersionService
   end
 
 
-  def newest_but_not(value, range=false)
+  # TODO write test for it
+  def self.newest_but_not( versions, value, range=false)
     filtered_versions = Array.new
     versions.each do |version|
       if !version.version.match(/^#{value}/)
@@ -112,7 +106,7 @@ class VersionService
   end
 
 
-  def greater_than(value, range = false)
+  def self.greater_than( versions, value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.bigger?(version.version, value)
@@ -125,7 +119,7 @@ class VersionService
   end
 
 
-  def greater_than_or_equal(value, range = false)
+  def self.greater_than_or_equal( versions, value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.bigger_or_equal?(version.version, value)
@@ -138,7 +132,7 @@ class VersionService
   end
 
 
-  def smaller_than(value, range = false)
+  def self.smaller_than( versions, value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.smaller?(version.version, value)
@@ -151,7 +145,7 @@ class VersionService
   end
 
 
-  def smaller_than_or_equal(value, range = false)
+  def self.smaller_than_or_equal( versions, value, range = false)
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.smaller_or_equal?(version.version, value)
@@ -164,34 +158,23 @@ class VersionService
   end
 
 
-  def versions_empty?
-    versions.nil? || versions.size == 0 ? true : false
-  end
-
-
-  def wouldbenewest?(version)
-    current = newest_version_number()
-    return false if current.eql? version
-    newest = Naturalsorter::Sorter.get_newest_version(current, version)
-    return true if version.eql? newest
-    return false
-  end
-
-
-  def update_version_data( persist = true )
-    return nil if self.versions.nil? || self.versions.empty?
-    newest_stable_version = self.newest_version
-    return nil if newest_stable_version.version.eql?(self.version)
-    self.version = newest_stable_version.version
-    self.version_link = newest_stable_version.link
-    self.save if persist
+  def self.update_version_data( product, persist = true )
+    return nil if product.nil?
+    versions = product.versions
+    return nil if versions.nil? || versions.empty?
+    newest_stable_version = self.newest_version( versions )
+    return nil if newest_stable_version.version.eql?( product.version)
+    product.version      = newest_stable_version.version
+    product.version_link = newest_stable_version.link
+    product.save if persist
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
   end
 
 
-  def versions_with_rleased_date
+  # TODO test
+  def self.versions_with_rleased_date( versions )
     return nil if versions.nil? || versions.empty?
     new_versions = Array.new
     versions.each do |version|
@@ -201,13 +184,14 @@ class VersionService
   end
 
 
-  def average_release_time
+  # TODO test
+  def self.average_release_time( versions )
     return nil if versions.nil? || versions.empty? || versions.size < 3
-    released_versions = versions_with_rleased_date
+    released_versions = self.versions_with_rleased_date( versions )
     return nil if released_versions.nil? || released_versions.empty? || released_versions.size < 3
     sorted_versions = released_versions.sort! { |a,b| a.released_at <=> b.released_at }
     first = sorted_versions.first.released_at
-    last = sorted_versions.last.released_at
+    last  = sorted_versions.last.released_at
     return nil if first.nil? || last.nil?
     diff = last.to_i - first.to_i
     diff_days = diff / 60 / 60 / 24
@@ -220,23 +204,9 @@ class VersionService
   end
 
 
-  def copy_released_versions
-    new_versions = Array.new
-    versions.each do |version|
-      new_versions << version if version.released_string
-    end
-    self.versions = new_versions
-    self.save
-  end
-
-
   private
 
-    def versions
-      self.product.versions
-    end
-
-    def get_newest_or_value(newest, value)
+    def self.get_newest_or_value(newest, value)
       if newest.nil?
         version = Version.new
         version.version = value
