@@ -2,61 +2,9 @@ require 'spec_helper'
 
 describe Dependency do
 
-  describe "outdated?" do 
-    
-    it "is outdated" do 
-      product = ProductFactory.create_new(1)
-      version = Version.new
-      version.version = "1.0"
-      product.versions.push(version)
-      product.save
+  describe "gem_version_parsed" do
 
-      dependency = Dependency.new 
-      dependency.version = "0.1"
-      dependency.dep_prod_key = product.prod_key 
-      dependency.prod_type = product.prod_type
-      dependency.outdated?().should be_true 
-    end
-
-    it "is not outdated, because it's equal" do 
-      product = ProductFactory.create_new(87)
-      version = Version.new
-      version.version = "100.0"
-      product.versions.push(version)
-      product.version = version.version
-      product.save
-
-      dependency = Dependency.new 
-      dependency.version = version.version
-      dependency.dep_prod_key = product.prod_key 
-      dependency.prod_type = product.prod_type
-      dependency.outdated?().should be_false 
-    end
-
-    it "is not outdated, because it's higher" do 
-      product = ProductFactory.create_new(1)
-      version = Version.new
-      version.version = "1.0"
-      product.versions.push(version)
-      product.save
-
-      dependency = Dependency.new 
-      dependency.version = "100000.2"
-      dependency.dep_prod_key = product.prod_key 
-      dependency.outdated?().should be_false 
-    end
-
-    it "is not outdated, because unknown dep" do 
-      dependency = Dependency.new 
-      dependency.version = "0.1"
-      dependency.outdated?().should be_false  
-    end
-
-  end
-
-  describe "gem_version_parsed" do 
-    
-    it "returns valid value" do 
+    it "returns valid value" do
       product = Product.new
       product.versions = Array.new
       product.name = "test"
@@ -83,11 +31,11 @@ describe Dependency do
       dependency.version = "~> 1.0"
       dependency.dep_prod_key = product.prod_key
       dependency.gem_version_parsed().should eql("1.2")
-      
+
       product.remove
     end
 
-    it "returns valid value" do 
+    it "returns valid value" do
       product = Product.new
       product.versions = Array.new
       product.name = "test"
@@ -100,7 +48,7 @@ describe Dependency do
       version = Version.new
       version.version = "2.0"
       product.versions.push(version)
-        
+
       version = Version.new
       version.version = "2.2.1"
       product.versions.push(version)
@@ -133,9 +81,9 @@ describe Dependency do
 
   end
 
-  describe "packagist_version_parsed" do 
-    
-    it "returns valid value" do 
+  describe "packagist_version_parsed" do
+
+    it "returns valid value" do
       product = Product.new
       product.versions = Array.new
       product.name = "test"
@@ -162,11 +110,11 @@ describe Dependency do
       dependency.version = "~1.0"
       dependency.dep_prod_key = product.prod_key
       dependency.packagist_version_parsed().should eql("1.2")
-      
+
       product.remove
     end
 
-    it "returns valid value" do 
+    it "returns valid value" do
       product = Product.new
       product.versions = Array.new
       product.name = "test"
@@ -179,7 +127,7 @@ describe Dependency do
       version = Version.new
       version.version = "2.0"
       product.versions.push(version)
-        
+
       version = Version.new
       version.version = "2.2.1"
       product.versions.push(version)
@@ -212,9 +160,9 @@ describe Dependency do
 
   end
 
-  describe "npm_version_parsed" do 
-    
-    it "returns valid value" do 
+  describe "npm_version_parsed" do
+
+    it "returns valid value" do
       product = Product.new
       product.versions = Array.new
       product.name = "test"
@@ -241,7 +189,7 @@ describe Dependency do
       dependency.version = "~1.0"
       dependency.dep_prod_key = product.prod_key
       dependency.npm_version_parsed().should eql("1.2")
-      
+
       product.remove
     end
 
@@ -249,18 +197,18 @@ describe Dependency do
 
   context "find_by_context" do
 
-    describe "find_by" do 
+    describe "find_by" do
 
       before(:each) do
         @dependency = Dependency.new({:name => "bodo/bodo", :version => "1.0.1", :dep_prod_key => "bada/bada", :prod_key => "bum/bum", :prod_version => "1.1.1"})
         @dependency.save
       end
-      
-      after(:each) do 
+
+      after(:each) do
         @dependency.remove
       end
 
-      it "returns the right dep" do 
+      it "returns the right dep" do
         dep = Dependency.find_by("bum/bum", "1.1.1", "bodo/bodo", "1.0.1", "bada/bada")
         dep.should_not be_nil
         dep.name.should eql("bodo/bodo")
@@ -274,5 +222,5 @@ describe Dependency do
     end
 
   end
-  
+
 end

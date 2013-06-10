@@ -2,13 +2,8 @@ require 'spec_helper'
 
 describe "search" do
 
-  before :all do
-    User.destroy_all
-    Product.destroy_all
-    EsProduct.reset
-  end
-
   it "shows the default search" do
+    EsProduct.reset
     get "/search", :q => ""
     assert_response :success
     assert_select "form[action=?]", "/search"
@@ -17,6 +12,7 @@ describe "search" do
   end
 
   it "show the search with 1 result" do
+    EsProduct.reset
   	product = Product.new
   	product.versions = Array.new
     product.name = "json"
@@ -24,9 +20,7 @@ describe "search" do
     product.prod_key = "json/json"
     product.language = "Java"
     product.save
-    version = Version.new
-    version.version = "1.0"
-    product.versions.push(version)
+    product.versions.push( Version.new({:version => "1.0"}) )
     product.save
 
     results = Product.find_by_name( "json" )
@@ -47,6 +41,7 @@ describe "search" do
   end
 
   it "shows the search with 2 result" do
+    EsProduct.reset
     product = Product.new
     product.versions = Array.new
     product.name = "junit"
