@@ -11,12 +11,6 @@ describe Notification do
     @notification = NotificationFactory.create_new @user
   end
 
-  after(:each) do
-    User.destroy_all
-    Product.destroy_all
-    Notification.destroy_all
-  end
-
   describe "unsent_user_notifications" do
 
     it "fetches all unsent notifications" do

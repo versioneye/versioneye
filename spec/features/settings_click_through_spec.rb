@@ -3,8 +3,6 @@ require 'spec_helper'
 describe "Settings click throgh" do
 
   before :all do
-    User.destroy_all
-    Plan.destroy_all
     @user = UserFactory.create_new
     Plan.create_default_plans
   end
@@ -15,11 +13,6 @@ describe "Settings click throgh" do
     fill_in 'session[password]', :with => @user.password
     click_button 'Sign In'
     page.should have_content("My Projects")
-  end
-
-  after :all do
-    User.destroy_all
-    Plan.destroy_all
   end
 
   describe "test all links in the settings area", :js => true do

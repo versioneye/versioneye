@@ -38,11 +38,6 @@ describe EsProduct do
     sleep 3
   end
 
-  after :each do
-    EsProduct.clean_all
-    Product.where().delete
-  end
-
   context "With no indexes: " do
 
     it "does clean_all successfull" do

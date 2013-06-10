@@ -2,14 +2,6 @@ require 'spec_helper'
 
 describe RequirementsParser do
 
-  before :all do
-    Product.destroy_all
-  end
-
-  after :all do
-    Product.destroy_all
-  end
-
   describe "parse" do
 
     it "parse from https the file correctly" do

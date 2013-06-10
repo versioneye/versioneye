@@ -2,18 +2,9 @@ require 'spec_helper'
 
 describe "empty_search_result" do
 
-  before :all do
-    User.destroy_all
-    Product.destroy_all
-    EsProduct.reset
-  end
-
-  before(:each) do
-    get root_path
-    get search_path
-  end
-
   it "submits query with empty results" do
+    get root_path
+
     user = UserFactory.default
     user.save
 

@@ -9,6 +9,12 @@ require_relative 'entities/product_search_entity.rb'
 
 module VersionEye
   class  ProductsApi < Grape::API
+
+    # Log Exceptions
+    # rescue_from :all do |e|
+    #   p e
+    # end
+
     helpers ProductHelpers
     helpers SessionHelpers
     helpers PagingHelpers
@@ -76,27 +82,24 @@ module VersionEye
         optional :page, :type => Integer, :desc => "argument for paging", :regexp => /^[\d]+$/
       end
       get '/search/:q' do
-        query = parse_query(params[:q])
+        query    = parse_query(params[:q])
         group_id = params[:g]
-        lang = get_language_param(params[:lang])
-        page_nr = params[:page]
-        page_nr = nil if page_nr.to_i < 1 #will_paginate cant handle 0
+        lang     = get_language_param(params[:lang])
+        page_nr  = params[:page]
+        page_nr  = nil if page_nr.to_i < 1 #will_paginate cant handle 0
         if query.length < 2
           error! "Search term was too short.", 400
         end
 
         languages = get_language_array(lang)
 
-        start_time = Time.now
-        search_results= ProductService.search(query, group_id, languages, page_nr)
+        start_time     = Time.now
+        search_results = ProductService.search(query, group_id, languages, page_nr)
+
         save_search_log(query, search_results, start_time)
-        query_data = Api.new query: query,
-                             group_id: group_id,
-                             languages: languages
-        paging = make_paging_object(search_results)
-        search_results = Api.new query: query_data,
-                                 paging: paging,
-                                 entries: search_results.entries
+        query_data     = Api.new query: query, group_id: group_id, languages: languages
+        paging         = make_paging_object(search_results)
+        search_results = Api.new query: query_data, paging: paging, entries: search_results.entries
 
         present search_results, with: Entities::ProductSearchEntity
       end
@@ -129,7 +132,7 @@ module VersionEye
         user_follow = UserFollow.new
         user_follow.username = @current_user.username
         user_follow.prod_key = @current_product.prod_key
-        user_follow.follows = @current_user.products.include? @current_product
+        user_follow.follows  = @current_user.products.include? @current_product
 
         present user_follow, with: Entities::UserFollowEntity
       end
@@ -166,7 +169,7 @@ module VersionEye
         user_follow = UserFollow.new
         user_follow.username = @current_user.username
         user_follow.prod_key = @current_product.prod_key
-        user_follow.follows = @current_product.users.include? @current_user
+        user_follow.follows  = @current_product.users.include? @current_user
 
         present user_follow, with: Entities::UserFollowEntity
       end
@@ -190,7 +193,7 @@ module VersionEye
         user_follow = UserFollow.new
         user_follow.username = @current_user.username
         user_follow.prod_key = @current_product.prod_key
-        user_follow.follows = @current_user.products.include? @current_product
+        user_follow.follows  = @current_user.products.include? @current_product
 
         present user_follow, with: Entities::UserFollowEntity
       end

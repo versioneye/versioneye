@@ -2,14 +2,6 @@ require 'spec_helper'
 
 describe "SignUp with GitHub" do
 
-  before(:each) do
-    User.destroy_all
-  end
-
-  after(:each) do
-    User.destroy_all
-  end
-
   it "signup a new user with GitHub" do
     get signup_path, nil, "HTTPS" => "on"
     assert_response :success

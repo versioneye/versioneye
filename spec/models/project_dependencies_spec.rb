@@ -3,18 +3,9 @@ require 'spec_helper'
 describe Project do
 
   before(:each) do
-    User.destroy_all
-    Project.destroy_all
-    Product.destroy_all
     user        = UserFactory.create_new
     @product    = ProductFactory.create_new(1, :maven, true, "2.0.0")
     @project    = ProjectFactory.create_new( user )
-  end
-
-  after(:each) do
-    User.destroy_all
-    Project.destroy_all
-    Product.destroy_all
   end
 
   describe "outdated?" do
