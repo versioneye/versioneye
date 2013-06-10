@@ -33,7 +33,7 @@
         </td>
         <td>
           <% if dep.known %>
-            <%= dep.product.newest_version.version %>
+            <%= VersionService.newest_version( dep.product.versions ).version %>
           <% else %>
             UNKNOWN
           <% end %>
