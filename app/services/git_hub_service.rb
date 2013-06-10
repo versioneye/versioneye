@@ -21,6 +21,16 @@ class GitHubService
     GithubRepo.by_user( user )
   end
 
+  def self.bad_credentail? repo
+    p repo[0]
+    p repo[1]
+    message = repo[0]
+    return true if message.eql?("message")
+  rescue => e
+    Rails.logger.error "Bad Credentials"
+    false
+  end
+
   private
 
     def self.cache_user_repos( user )
@@ -28,10 +38,13 @@ class GitHubService
       begin
         data = Github.user_repos(user, url)
         data[:repos].each do |repo|
+          return nil if bad_credentail?( repo )
           GithubRepo.add_new(user, repo, data[:etag])
         end
         url = data[:paging]["next"]
       end while not url.nil?
     end
+
+
 
 end
