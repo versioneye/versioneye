@@ -9,6 +9,7 @@
     </h1>
   </div>
   <div class="span4 pull-right">
+    <% if !yield(:title).eql?("Sign Up") && !yield(:title).eql?("Sign In") %>
     <form id="form" action="/search" method="GET">
       <div class="input-append pull-right" >
           <input name="q" type="text" value="<%= @query %>" />
@@ -17,5 +18,6 @@
           </button>
       </div>
     </form>
+    <% end %>
   </div>
 </div>
