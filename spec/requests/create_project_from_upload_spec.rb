@@ -3,18 +3,8 @@ require 'spec_helper'
 describe "Create Project from file uplaod" do
 
   before(:each) do
-    User.destroy_all
-    Project.destroy_all
-    Projectdependency.destroy_all
-
     @user1 = UserFactory.create_new(100, true)
     @user1.save
-  end
-
-  after(:each) do
-    User.destroy_all
-    Project.destroy_all
-    Projectdependency.destroy_all
   end
 
   it "create a project from file upload as singned in user." do

@@ -53,6 +53,7 @@ group :test do
   gem 'selenium-webdriver', '2.32.1'
   gem 'fakeweb'           , '1.3.0'
   gem 'debugger'
+  gem 'database_cleaner'  , '1.0.1'
 end
 
 # gem 'puma'              , '2.0.1'

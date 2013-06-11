@@ -1,105 +1,105 @@
 <header style="z-index: 100;">
-	<div class="navbar navbar-static-top dark-bg">
-		<div class = "container row">
-			<div class="span4 brand-container" style="margin-left: 0; padding-left: 0; height: 50px;">
-				<span class="pull-left icon_beta"></span>
-				<a href="/"><span class="logo"></span></a>
-			</div>
+  <div class="navbar navbar-static-top dark-bg">
+    <div class = "container row">
+      <div class="span4 brand-container" style="margin-left: 0; padding-left: 0; height: 50px;">
+        <span class="pull-left icon_beta"></span>
+        <a href="/"><span class="logo"></span></a>
+      </div>
 
-			<div class = "span7 pull-right">
-				<ul class="nav pull-right">
-					<% if !signed_in? %>
-						<li>
-							<%= link_to "Services", "/services" %>
-						</li>
-						<li class="divider-vertical"></li>
-						<li>
-							<%= link_to "Pricing", "/pricing" %>
-	          </li>
-					<% end %>
-				<!-- menu for logged-in user -->
-					<% if signed_in? %>
-						<li class="divider-vertical"></li>
-						<li>
-							<%= link_to "Pricing", "/pricing" %>
-	          </li>
-	          <li class="divider-vertical"></li>
-						<li>
-							<a href="/user/projects">
-								My Projects
-							</a>
-						</li>
-						<li class="divider-vertical"></li>
-						<li class ="dropdown">
-							<a class = "dropdown-toggle"
-								data-toggle = "dropdown" href = "#">
-								<span class = "img-profile32" style="zoom: 0.85"></span>
-								 <%= current_user.fullname %>
-								 <b class = "caret"></b>
-							</a>
-							<ul class = "dropdown-menu">
-								<li >
-									<a href="/settings/profile">
-										Settings
-									</a>
-								</li>
-								<li>
-									<a href="/users/<%= current_user.username %>" >
-										Profile
-									</a>
-								</li>
-								<li>
-									<a href="/search?q=submit_new_resource_<%= rand(1000) %>">Submit New Resource</a>
-								</li>
-								<li>
-									<a href="JavaScript: load_dialog_feedback()">Feedback</a>
-								</li>
-								<li class = "divider"></li>
-								<li>
-									<a href="/signout">
-										Logout
-									</a>
-								</li>
-							</ul>
-						</li>
-						<!-- menu for admin -->
-	          <% if signed_in_admin? %>
-	            <li class= "divider-vertical"></li>
-	            <li class= "dropdown">
-	              <a class = "dropdown-toggle" data-toggle= "dropdown" href= "#">
-	                Admin
-	                <b class = "caret"></b> 
-	              </a>
-	              <ul class= "dropdown-menu">
-	                <li><%= link_to :Crawls, admin_crawles_path %></li>
-	                <li><%= link_to :ErrorMessages, admin_error_messages_path %></li>
-	                <li><%= link_to "Submitted URLs", admin_submitted_urls_path %></li>
-	              </ul>
-	            </li>
-	          <% end %>
-					<% else %>
+      <div class = "span7 pull-right">
+        <ul class="nav pull-right">
+          <% if !signed_in? %>
+            <li>
+              <%= link_to "Services", "/services" %>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <%= link_to "Pricing", "/pricing" %>
+            </li>
+          <% end %>
+        <!-- menu for logged-in user -->
+          <% if signed_in? %>
+            <li class="divider-vertical"></li>
+            <li>
+              <%= link_to "Pricing", "/pricing" %>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <a href="/user/projects">
+                My Projects
+              </a>
+            </li>
+            <li class="divider-vertical"></li>
+            <li class ="dropdown">
+              <a class = "dropdown-toggle"
+                data-toggle = "dropdown" href = "#">
+                <span class = "img-profile32" style="zoom: 0.85"></span>
+                 <%= current_user.fullname %>
+                 <b class = "caret"></b>
+              </a>
+              <ul class = "dropdown-menu">
+                <li >
+                  <a href="/settings/profile">
+                    Settings
+                  </a>
+                </li>
+                <li>
+                  <a href="/users/<%= current_user.username %>" >
+                    Profile
+                  </a>
+                </li>
+                <li>
+                  <a href="/search?q=submit_new_resource_<%= rand(1000) %>">Submit New Resource</a>
+                </li>
+                <li>
+                  <a href="JavaScript: load_dialog_feedback()">Feedback</a>
+                </li>
+                <li class = "divider"></li>
+                <li>
+                  <a href="/signout">
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <!-- menu for admin -->
+            <% if signed_in_admin? %>
+              <li class= "divider-vertical"></li>
+              <li class= "dropdown">
+                <a class = "dropdown-toggle" data-toggle= "dropdown" href= "#">
+                  Admin
+                  <b class = "caret"></b>
+                </a>
+                <ul class= "dropdown-menu">
+                  <li><%= link_to :Crawls, admin_crawles_path %></li>
+                  <li><%= link_to :ErrorMessages, admin_error_messages_path %></li>
+                  <li><%= link_to "Submitted URLs", admin_submitted_urls_path %></li>
+                </ul>
+              </li>
+            <% end %>
+          <% else %>
 
-						<li class="divider-vertical"></li>
-						<li><%= link_to t(:page_header_signup), signup_path %></li>
-						<li class="divider-vertical"></li>
-						<li><%= link_to t(:page_header_signin), signin_path %></li>
+            <li class="divider-vertical"></li>
+            <li><%= link_to t(:page_header_signin), signin_path %></li>
+            <li class="divider-vertical"></li>
+            <li style="font-weight: bold; font-size: 16px;"><%= link_to t(:page_header_signup), signup_path, :style => "color: #fbb21c" %></li>
 
-					<% end %>
+          <% end %>
 
-					<% if 1 == 2 %>
-						<li class="divider-vertical"></li>
-						<li>
-							<a href="#"><span class = "flag de"></span></a>
-						</li>
-						<li class="divider-vertical"></li>
-						<li>
-							<a href = "#"><span class = "flag gb on"></span></a>
-						</li>
-					<% end %>
+          <% if 1 == 2 %>
+            <li class="divider-vertical"></li>
+            <li>
+              <a href="#"><span class = "flag de"></span></a>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <a href = "#"><span class = "flag gb on"></span></a>
+            </li>
+          <% end %>
 
-				</ul>
-			</div>
+        </ul>
+      </div>
 
-		</div>
-	</div>
+    </div>
+  </div>
 </header>

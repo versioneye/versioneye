@@ -4,146 +4,6 @@ describe ComposerParser do
 
   describe "parse" do
 
-    before :all do
-      product_01 = ProductFactory.create_for_composer("symfony/symfony", "2.0.7")
-      version_01_01 = Version.new
-      version_01_01.version = "2.0.7-dev"
-      product_01.versions.push( version_01_01 )
-      product_01.save
-
-      product_02 = ProductFactory.create_for_composer("symfony/doctrine-bundle", "2.0.7")
-      product_02.save
-
-      product_03 = ProductFactory.create_for_composer("symfony/process", "2.0.7")
-      version_03_01 = Version.new
-      version_03_01.version = "2.0.6"
-      product_03.versions.push( version_03_01 )
-      version_03_02 = Version.new
-      version_03_02.version = "dev-master"
-      product_03.versions.push( version_03_02 )
-      product_03.save
-
-      product_04 = ProductFactory.create_for_composer("symfony/browser-kit", "2.0.7")
-      version_04_01 = Version.new
-      version_04_01.version = "2.0.6"
-      product_04.versions.push( version_04_01 )
-      product_04.save
-
-      product_05 = ProductFactory.create_for_composer("symfony/security-bundle", "2.0.7")
-      version_05_01 = Version.new
-      version_05_01.version = "2.0.6"
-      product_05.versions.push( version_05_01 )
-      product_05.save
-
-      product_06 = ProductFactory.create_for_composer("symfony/locale", "2.0.7")
-      version_06_01 = Version.new
-      version_06_01.version = "2.0.8"
-      product_06.versions.push( version_06_01 )
-      product_06.save
-
-      product_07 = ProductFactory.create_for_composer("symfony/yaml", "2.0.8")
-      version_07_01 = Version.new
-      version_07_01.version = "2.0.7"
-      product_07.versions.push( version_07_01 )
-      product_07.save
-
-      product_08 = ProductFactory.create_for_composer("symfony/http-kernel", "2.0.7")
-      version_08_01 = Version.new
-      version_08_01.version = "2.0.6"
-      product_08.versions.push( version_08_01 )
-      product_08.save
-
-      product_09 = ProductFactory.create_for_composer("twig/twig", "2.0.0")
-      version_09_01 = Version.new
-      version_09_01.version = "1.9.0"
-      product_09.versions.push( version_09_01 )
-      version_09_02 = Version.new
-      version_09_02.version = "1.9.1"
-      product_09.versions.push( version_09_02 )
-      version_09_03 = Version.new
-      version_09_03.version = "1.9.9"
-      product_09.versions.push( version_09_03 )
-      product_09.save
-
-      product_10 = ProductFactory.create_for_composer("doctrine/common", "2.4")
-      version_10_01 = Version.new
-      version_10_01.version = "2.2"
-      product_10.versions.push( version_10_01 )
-      version_10_02 = Version.new
-      version_10_02.version = "2.3"
-      product_10.versions.push( version_10_02 )
-      version_10_03 = Version.new
-      version_10_03.version = "2.1"
-      product_10.versions.push( version_10_03 )
-      product_10.save
-
-      product_11 = ProductFactory.create_for_composer("symfony/console", "2.0.10")
-      version_11_01 = Version.new
-      version_11_01.version = "2.0.0"
-      product_11.versions.push( version_11_01 )
-      version_11_02 = Version.new
-      version_11_02.version = "2.0.6"
-      product_11.versions.push( version_11_02 )
-      version_11_03 = Version.new
-      version_11_03.version = "2.0.7"
-      product_11.versions.push( version_11_03 )
-      version_11_04 = Version.new
-      version_11_04.version = "2.2.0-BETA2"
-      product_11.versions.push( version_11_04 )
-      product_11.save
-
-
-      product_12 = ProductFactory.create_for_composer("symfony/translation", "2.2.x-dev")
-      version_12_01 = Version.new
-      version_12_01.version = "2.2.0"
-      product_12.versions.push( version_12_01 )
-      version_12_02 = Version.new
-      version_12_02.version = "2.2.1"
-      product_12.versions.push( version_12_02 )
-      version_12_03 = Version.new
-      version_12_03.version = "2.2.0-alpha"
-      product_12.versions.push( version_12_03 )
-      version_12_04 = Version.new
-      version_12_04.version = "2.2.0-BETA2"
-      product_12.versions.push( version_12_04 )
-      product_12.save
-
-
-      product_13 = ProductFactory.create_for_composer("symfony/filesystem", "2.2.x-dev")
-      version_13_01 = Version.new
-      version_13_01.version = "2.2.1"
-      product_13.versions.push( version_13_01 )
-      version_13_02 = Version.new
-      version_13_02.version = "2.2.0-BETA2"
-      product_13.versions.push( version_13_02 )
-      product_13.save
-
-
-      product_14 = ProductFactory.create_for_composer("symfony/stopwatch", "2.2.x-dev")
-      version_14_01 = Version.new
-      version_14_01.version = "2.2.1"
-      product_14.versions.push( version_14_01 )
-      product_14.save
-
-
-      product_16 = ProductFactory.create_for_composer("symfony/finder", "2.2.1")
-      version_16_01 = Version.new
-      version_16_01.version = "2.2.0"
-      product_16.versions.push( version_16_01 )
-      product_16.save
-
-      product_17 = ProductFactory.create_for_composer("symfony/config", "2.2.1")
-      version_17_01 = Version.new
-      version_17_01.version = "2.2.1"
-      product_17.versions.push( version_17_01 )
-      product_17.save
-    end
-
-    after :all do
-      Product.where().delete
-    end
-
-
     def fetch_by_name(dependencies, name)
       dependencies.each do |dep|
         return dep if dep.name.eql? name
@@ -157,10 +17,87 @@ describe ComposerParser do
     end
 
     it "parse from http the file correctly" do
-      parser = ComposerParser.new
+      product_01 = ProductFactory.create_for_composer("symfony/symfony", "2.0.7")
+      product_01.versions.push( Version.new({ :version => "2.0.7-dev" }) )
+      product_01.save
+
+      product_02 = ProductFactory.create_for_composer("symfony/doctrine-bundle", "2.0.7")
+      product_02.save
+
+      product_03 = ProductFactory.create_for_composer("symfony/process", "2.0.7")
+      product_03.versions.push( Version.new({ :version => "2.0.6" }) )
+      product_03.versions.push( Version.new({ :version => "dev-master" }) )
+      product_03.save
+
+      product_04 = ProductFactory.create_for_composer("symfony/browser-kit", "2.0.7")
+      product_04.versions.push( Version.new({ :version => "2.0.6" }) )
+      product_04.save
+
+      product_05 = ProductFactory.create_for_composer("symfony/security-bundle", "2.0.7")
+      product_05.versions.push( Version.new({ :version => "2.0.6" }) )
+      product_05.save
+
+      product_06 = ProductFactory.create_for_composer("symfony/locale", "2.0.7")
+      product_06.versions.push( Version.new({ :version => "2.0.8" }) )
+      product_06.save
+
+      product_07 = ProductFactory.create_for_composer("symfony/yaml", "2.0.8")
+      product_07.versions.push( Version.new({ :version => "2.0.7" }) )
+      product_07.save
+
+      product_08 = ProductFactory.create_for_composer("symfony/http-kernel", "2.0.7")
+      product_08.versions.push( Version.new({ :version => "2.0.6" }) )
+      product_08.save
+
+      product_09 = ProductFactory.create_for_composer("twig/twig", "2.0.0")
+      product_09.versions.push( Version.new({ :version => "1.9.0" }) )
+      product_09.versions.push( Version.new({ :version => "1.9.1" }) )
+      product_09.versions.push( Version.new({ :version => "1.9.9" }) )
+      product_09.save
+
+      product_10 = ProductFactory.create_for_composer("doctrine/common", "2.4")
+      product_10.versions.push( Version.new({ :version => "2.2" }) )
+      product_10.versions.push( Version.new({ :version => "2.3" }) )
+      product_10.versions.push( Version.new({ :version => "2.1" }) )
+      product_10.save
+
+      product_11 = ProductFactory.create_for_composer("symfony/console", "2.0.10")
+      product_11.versions.push( Version.new({ :version => "2.0.0"       }) )
+      product_11.versions.push( Version.new({ :version => "2.0.6"       }) )
+      product_11.versions.push( Version.new({ :version => "2.0.7"       }) )
+      product_11.versions.push( Version.new({ :version => "2.2.0-BETA2" }) )
+      product_11.save
+
+      product_12 = ProductFactory.create_for_composer("symfony/translation", "2.2.x-dev")
+      product_12.versions.push( Version.new({ :version => "2.0.0"       }) )
+      product_12.versions.push( Version.new({ :version => "2.2.1"       }) )
+      product_12.versions.push( Version.new({ :version => "2.2.0-alpha" }) )
+      product_12.versions.push( Version.new({ :version => "2.2.0-BETA2" }) )
+      product_12.save
+
+      product_13 = ProductFactory.create_for_composer("symfony/filesystem", "2.2.x-dev")
+      product_13.versions.push( Version.new({ :version => "2.2.1"       }) )
+      product_13.versions.push( Version.new({ :version => "2.2.0-BETA2" }) )
+      product_13.save
+
+      product_14 = ProductFactory.create_for_composer("symfony/stopwatch", "2.2.x-dev")
+      product_14.versions.push( Version.new({ :version => "2.2.1"       }) )
+      product_14.save
+
+      product_16 = ProductFactory.create_for_composer("symfony/finder", "2.2.1")
+      product_16.versions.push( Version.new({ :version => "2.2.0"       }) )
+      product_16.save
+
+      product_17 = ProductFactory.create_for_composer("symfony/config", "2.2.1")
+      product_17.versions.push( Version.new({ :version => "2.2.1"       }) )
+      product_17.save
+
+
+      parser  = ComposerParser.new
       project = parser.parse("http://s3.amazonaws.com/veye_test_env/composer.json")
       project.should_not be_nil
       project.dependencies.size.should eql(17)
+
 
       dep_01 = fetch_by_name(project.dependencies, "symfony/symfony")
       dep_01.name.should eql("symfony/symfony")

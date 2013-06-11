@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:fb="https://graph.facebook.com/schema/og/" itemscope itemtype="http://schema.org/WebApplication" >
-	
+
 	<head >
 
 		<title>VersionEye - Search Engine for Software Libraries</title>
@@ -16,10 +16,10 @@
 
 	</head>
 
-	<body>
-		
+	<body onload="regulate_height();">
+
 		<%= render 'layouts/header' %>
-	
+
 		<section class = "container flash-container">
 			<% flash.each do |key, value| %>
 				<div class="alert">
@@ -32,12 +32,8 @@
 		<%= yield %>
 
 		<%= render 'layouts/footer' %>
-		<aside class = "visible-desktop">
-			<%= render 'shared/social_buttons' %>
-		</aside>
-		<%= render 'shared/dialog_video' %>
 		<%= debug(params) if Rails.env.development? %>
-	
+
 	</body>
 
 </html>
