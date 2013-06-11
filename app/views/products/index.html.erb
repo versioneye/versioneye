@@ -1,57 +1,21 @@
 
-<%= render 'shared/dialog_follow' %>
-
 <section class="container">
-  <div class="jumbotron">
+  <div id="headline_1" class="jumbotron">
     <h1>Stay up to date with <span style ="">VersionEye</span></h1>
     <p>Follow your libraries and get notified about new versions. Save Time and Money. It's easy.</p>
   </div>
 </section>
 
-<% if !@page.eql?("LandingPage") %>
-<section class = "container">
-  <div class = "row">
-    <div class = "span8">
-      <h2 class = "page-title"> [Page name] </h2>
-    </div>
-    <div class = "span3">
-      <div id="searchfield_div" class="searchfield_div">
-        <form id="searchform" action="/search" method="GET" class="search-form" >
-          <input id="q" name="q" class="searchfield" type="text" value="<%= @query %>" style="margin-top: 6px;" />
-          <input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
-        </form>
-      </div>
-    </div>
-</section>
-<% end %>
-
-<section class = "container">
-  <div class= "search-container" >
+<section id="search_section" class="container" style="padding-bottom: 65px;" >
+  <div id="search_bar" class="search-container" >
     <form id="form" action="/search" method="GET" style="padding: 0; margin:0;" >
-      <input id="lang" name="lang" class = "hide" type="hidden" value="<%= @lang %>" />
+      <input id="lang" name="lang" class="hide" type="hidden" value="<%= @lang %>" />
       <div class="row">
         <div class = "span5 pull-left ">
           <div class = "input-prepend ">
-            <span class="icon_search" style = "margin: 10px -25px 0px 10px;"></span>
+            <span class="icon_search" style = "margin: 10px -25px 0px 10px; border: 1px solid pink;"></span>
             <input id="q" class = "input large" name="q" type="text" value="<%= @query %>" />
           </div>
-        </div>
-        <div class="span5" style="text-align: center; padding-left: 30px;">
-          <% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
-            <table style="table-layout:fixed; margin: 0; padding: 0; height: 40px; text-align: center; " height="40">
-              <tr style="height: 40px; vertical-align: top;" height="40">
-            <% @langs = @lang.split(",") %>
-            <% @languages.each do |language| %>
-              <% langname = language.downcase.gsub(/\./, "") %>
-              <td style="margin: 0; padding: 0; height: 40px; vertical-align: top;" height="40">
-                <div class="icon_<%= langname %>_small_container" onclick="update_lang('<%= langname %>')" >
-                  <span id="icon_<%= langname %>" class="icon_<%= langname %> small <%= 'on' if @langs.include?(language) %>  ">&nbsp;</span>
-                </div>
-              </td>
-            <% end %>
-              </tr>
-            </table>
-          <% end %>
         </div>
         <div class = "span2 pull-right" style="width: 100px;" >
           <button type="submit" class="btn2 btn2-big pull-right" >
@@ -61,11 +25,31 @@
       </div>
     </form>
   </div>
+  <div id="headline_1" class="jumbotron" style="margin-top: 20px;">
+    <div class="span12" style="text-align: center; vertical-align: middle;">
+      <p style="display: inline; float: left; padding-top: 13px;">Continuous Updating for </p>
+      <% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
+        <table style="table-layout:fixed; margin: 0; padding: 0; height: 40px; text-align: center; " height="40">
+          <tr style="height: 40px; vertical-align: top;" height="40">
+          <% @langs = @lang.split(",") %>
+          <% @languages.each do |language| %>
+            <% langname = language.downcase.gsub(/\./, "") %>
+            <td style="margin: 0; padding: 0; height: 40px; vertical-align: top;" height="40">
+              <div class="icon_<%= langname %>_small_container" >
+                <span id="icon_<%= langname %>" class="icon_<%= langname %> small on" alt="<%= langname %>" title="<%= langname %>">&nbsp;</span>
+              </div>
+            </td>
+          <% end %>
+          </tr>
+        </table>
+      <% end %>
+    </div>
+  </div>
 </section>
 
 <% if !signed_in? %>
-  <section class="container" style = "padding-top: 65px;">
-    <hr class="separator_eye" onclick="load_video();" />
+  <section class="container" >
+    <hr class="separator_eye" />
   </section>
 
   <section class=" container" >

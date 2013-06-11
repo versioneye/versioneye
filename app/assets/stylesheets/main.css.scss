@@ -786,7 +786,7 @@ div.content {
     padding: 20px 20px;
     list-style: none;
     opacity: 0.98;
-    height: 36px; /* + padding = 76px */
+    height: 42px; /* + padding = 76px */
     background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5);
     background-image: -ms-linear-gradient(top, #ffffff, #f5f5f5);
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f5f5f5));
@@ -814,13 +814,15 @@ div.content {
       *zoom: 1;
     }
 
-  &  input {
+  & input {
       color : $text_yellow;
-      background: transparent url('/assets/noise_2.png');
       font-size: 19px;
-      width: 330px;
-      height: 26px;
+      width: 750px;
+      height: 32px;
       padding-left: 30px;
+      -webkit-border-radius: 4px 4px 4px 4px;
+      -moz-border-radius: 4px 4px 4px 4px;
+      border-radius: 4px 4px 4px 4px;
     }
 
   & .btn-group > button {
