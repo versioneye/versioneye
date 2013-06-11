@@ -23,7 +23,14 @@ define(['underscore', 'backbone', 'paginator'],
         this.totalPages = response.paging.total_pages;
         this.totalRecords = response.paging.total_entries;
         this.currentPage = response.paging.current_page;
-        return response.repos;
+        if(response.repos.length){
+          console.log("Got " + response.repos.length + " repos.");
+          return response.repos;
+        } else {
+          console.log("Got no repos;");
+          $("#github-repos").html("You have no repositories on Github or Github is not accessible.");
+        }
+
       } else {
         return []
       }
