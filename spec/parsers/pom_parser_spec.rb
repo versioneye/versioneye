@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe PomParser do
 
-  before(:each) do
-    @properties = Hash.new
-  end
-
   describe "parse" do
 
     it "parse from https the file correctly" do
@@ -94,30 +90,35 @@ describe PomParser do
 
     it "returns val" do
       parser = PomParser.new
-      parser.get_variable_value_from_pom(@properties, "1.0").should eql("1.0")
+      properties = Hash.new
+      parser.get_variable_value_from_pom(properties, "1.0").should eql("1.0")
     end
 
     it "returns still val" do
-      @properties["springVersion"] = "3.1"
+      properties = Hash.new
+      properties["springVersion"] = "3.1"
       parser = PomParser.new
-      parser.get_variable_value_from_pom(@properties, "1.0").should eql("1.0")
+      parser.get_variable_value_from_pom(properties, "1.0").should eql("1.0")
     end
 
     it "returns value from the properties" do
-      @properties["springversion"] = "3.1"
+      properties = Hash.new
+      properties["springversion"] = "3.1"
       parser = PomParser.new
-      parser.get_variable_value_from_pom(@properties, "${springVersion}").should eql("3.1")
+      parser.get_variable_value_from_pom(properties, "${springVersion}").should eql("3.1")
     end
 
     it "returns 3.1 because of downcase!" do
-      @properties["springversion"] = "3.1"
+      properties = Hash.new
+      properties["springversion"] = "3.1"
       parser = PomParser.new
-      parser.get_variable_value_from_pom(@properties, "${springVERSION}").should eql("3.1")
+      parser.get_variable_value_from_pom(properties, "${springVERSION}").should eql("3.1")
     end
 
     it "returns val because properties is empty" do
       parser = PomParser.new
-      parser.get_variable_value_from_pom(@properties, "${springVersion}").should eql("${springVersion}")
+      properties = Hash.new
+      parser.get_variable_value_from_pom(properties, "${springVersion}").should eql("${springVersion}")
     end
 
   end

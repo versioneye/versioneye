@@ -27,22 +27,23 @@ class GithubRepo
   scope :by_user, ->(user){where(user_id: user._id)}
 
   def self.add_new(user, repo, etag = nil)
+    return false if repo.nil? || repo.empty?
     new_repo = GithubRepo.new({
-      user_id: user.id,
-      github_id: repo['id'],
-      name: repo['name'],
-      fullname: repo['full_name'],
-      language: repo['language'].to_s.downcase,
+      user_id:     user.id,
+      github_id:   String.new(repo['id']),
+      name:        repo['name'],
+      fullname:    repo['full_name'],
+      language:    repo['language'].to_s.downcase,
       description: repo['description'],
-      private: repo['private'],
-      fork: repo['fork'],
-      github_url: repo['url'],
-      homepage: repo['homepage'],
-      size: repo['size'],
-      etag: etag.to_s,
-      created_at: repo['created_at'],
-      updated_at: repo['updated_at'],
-      pushed_at: repo['pushed_at'],
+      private:     repo['private'],
+      fork:        repo['fork'],
+      github_url:  repo['url'],
+      homepage:    repo['homepage'],
+      size:        repo['size'],
+      etag:        etag.to_s,
+      created_at:  repo['created_at'],
+      updated_at:  repo['updated_at'],
+      pushed_at:   repo['pushed_at'],
       imported_at: DateTime.now
     })
     new_repo.save

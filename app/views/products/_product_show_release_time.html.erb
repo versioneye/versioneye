@@ -1,12 +1,12 @@
 
 <div class="well default release_box" >
-  <% average_release_time = @product.average_release_time %>
+  <% average_release_time = VersionService.average_release_time( @product.versions ) %>
   <% if average_release_time != nil and average_release_time != 0 %>
     <p style="margin: 0;">
-      Average release time for this project is <span style="font-weight:bold; font-size: 20px;"><%= average_release_time %></span> days. 
+      Average release time for this project is <span style="font-weight:bold; font-size: 20px;"><%= average_release_time %></span> days.
       <% if @product.released_days_ago %>
         <% last_date = Date.today - @product.released_days_ago %>
-        This version was released 
+        This version was released
         <span style="font-weight: bold; font-size: 18px;">
             <%= distance_of_time_in_words(Date.today, last_date) %>
         </span> ago.
@@ -17,6 +17,6 @@
   <% end %>
 </div>
 <div class="well default release_box" >
-  <% @product.update_used_by_count if @product.used_by_count == 0  %> 
+  <% @product.update_used_by_count if @product.used_by_count == 0  %>
   <span style="font-weight:bold; font-size: 20px;"><%= @product.used_by_count %></span> other Packages are referencing this Package.
 </div>

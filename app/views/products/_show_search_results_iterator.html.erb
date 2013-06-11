@@ -1,5 +1,5 @@
 <% if products && !products.empty? %>
-  <% user = current_user %> 
+  <% user = current_user %>
   <% products.each do |product| %>
     <% next if product.nil? %>
     <div class="row search-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/SoftwareApplication" >
@@ -17,7 +17,7 @@
         </a><br/>
         <% if product.prod_type == "Maven2" %>
           <span class="meta-text-small">GroupId: <%= product.group_id %></span>
-        <% else %> 
+        <% else %>
           <span class="meta-text-small"><%= product.short_summary %></span>
         <% end %>
       </div>
@@ -30,7 +30,7 @@
               <input  name="product_key" type="hidden" value="<%= product.to_param %>" />
               <button type="submit" class="btn2 btn-big" >Follow</button>
             <% end %>
-          </div>          
+          </div>
 
           <div class = "pull-right" id="unfollow_<%=product.to_param%>" style="display: <%= display_unfollow(product, user) %>">
             <%= form_tag("/package/unfollow", :remote => true) do  %>
@@ -40,7 +40,7 @@
           </div>
 
         <% else %>
-          <button type="submit" class="btn2 btn-medium" onclick="load_dialog_follow('<%= product.name %>', '<%= product.prod_key %>');" >Follow</button>
+          <button id="button_<%= product.prod_key %>" type="submit" class="btn2 btn-medium" onclick="load_dialog_follow('<%= product.name %>', '<%= product.prod_key %>');" >Follow</button>
         <% end %>
       </div>
 

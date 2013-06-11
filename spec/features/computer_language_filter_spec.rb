@@ -18,10 +18,6 @@ describe "Computer Language Filter" do
     EsProduct.index_all
   end
 
-  after :all do
-    Product.destroy_all
-  end
-
   describe "the computer language filter", :js => true do
 
     it "uses the language filter without errors" do
@@ -35,6 +31,12 @@ describe "Computer Language Filter" do
       page.should have_content("json2")
       page.should have_content("jsonG")
       page.should have_content("jsonC")
+
+      find(:xpath, '//button[contains(@id, "button_json2")]' ).click
+      using_wait_time 2 do
+        page.should have_content("Sign In and Follow")
+        page.should have_content("to get notified about new versions.")
+      end
 
       visit root_path
       fill_in 'q', :with => "json*"

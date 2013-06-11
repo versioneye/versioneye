@@ -180,7 +180,7 @@ class User::ProjectsController < ApplicationController
   #TODO: add organizations
   def github_repos
     repos = []
-    github_repos = GitHubService.cached_user_repos(current_user).asc(:language)
+    github_repos = GitHubService.cached_user_repos( current_user ).asc(:language)
     github_repos = github_repos.paginate(
       page: (params[:page] || 1),
       per_page: (params[:per_page] || 30)

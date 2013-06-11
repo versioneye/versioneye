@@ -16,7 +16,7 @@ class ComposerLockParser < ComposerParser
     dependency = Projectdependency.new
     dependency.name = package["name"]
 
-    product = self.product_by_key "#{@@group_id}/#{dependency.name}"
+    product = self.fetch_product "#{@@group_id}/#{dependency.name}"
     dependency.prod_key = product.prod_key if product
 
     version = self.fetch_package_version(package)
@@ -47,18 +47,10 @@ class ComposerLockParser < ComposerParser
 
   def fetch_project_dependencies(url)
     return nil if url.nil?
-
     response = self.fetch_response(url)
     data = JSON.parse(response.body)
     return nil if data.nil?  or data['packages'].nil?
-
     data['packages']
-  end
-
-  def product_by_key prod_key
-    product = Product.find_by_key(prod_key)
-    product = Product.find_by_key_case_insensitiv(prod_key) if product.nil?
-    product
   end
 
 end

@@ -58,29 +58,11 @@ class Dependency
     self.save()
   end
 
+
   def update_known_if_nil
     self.update_known() if self.known.nil?
   end
 
-  def outdated?
-    product = self.product
-    return false if product.nil?
-    newest_product_version = product.newest_version_number()
-
-    project_dependency = Projectdependency.new
-    parser = ParserStrategy.parser_for( self.prod_type, "" )
-    parser.parse_requested_version(self.version, project_dependency, product)
-    version_requested = project_dependency.version_requested
-
-    return false if newest_product_version.eql?( version_requested )
-    newest_version = Naturalsorter::Sorter.sort_version([version_requested, newest_product_version]).last
-    return false if newest_version.eql?( version_requested )
-    return true
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
-    return false
-  end
 
   def version_parsed
     return "0" if version.nil?
