@@ -23,10 +23,10 @@ class GitHubService
   end
 
   private
-    
+
     def self.cache_user_all_repos(user, orga_names)
       #get user github login
-      user[:user_login] = Github.user(user.github_token)['login'] 
+      user[:user_login] = Github.user(user.github_token)['login']
       #load data
       self.cache_user_repos(user)
       orga_names.each {|orga_name| self.cache_user_orga_repos(user, orga_name)}
@@ -36,6 +36,8 @@ class GitHubService
       url = nil
       begin
         data = Github.user_repos(user, url)
+        p "data: #{data}"
+        # TODO catch the case if there is an error
         data[:repos].each do |repo|
           begin
             GithubRepo.add_new(user, repo, data[:etag])
