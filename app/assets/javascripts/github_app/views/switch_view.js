@@ -18,7 +18,7 @@ define(['underscore', 'backbone'],
   var addRepoLinkLabel = function(selector, model){
     var url_label_template = _.template(jQuery("#github-repo-urllabel-template").html());
     $(selector).find('.repo-labels').append(url_label_template({
-      classes: "label label-info",
+      classes: "label label-info repo-homepage",
       url: model.get("project_url"),
       content: '<i class="icon-home"></i> Project\'s page'
     }));
@@ -118,7 +118,8 @@ define(['underscore', 'backbone'],
           'Github project ', model.get('fullname'),
           ' is now successfully removed from your projects.'
         ].join(' ');
-
+        
+        console.log("Going to remove label from: "+ selector);
         removeRepoLinkLabel(selector);
         var switch_selector = "#github-repo-switch-" + model.get('github_id');
         $(switch_selector).parents(".github-switch").bootstrapSwitch('setActive', true);
