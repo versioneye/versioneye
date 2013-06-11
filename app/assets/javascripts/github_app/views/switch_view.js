@@ -5,7 +5,30 @@ define(['underscore', 'backbone'],
     interpolate: /\{\{\=(.+?)\}\}/g,
     evaluate: /\{\{(.+?)\}\}/g
   };
-  
+      
+  var showNotification = function(classes, message){
+    var flash_template = _.template(jQuery("#github-notification-template").html());
+    $(".flash-container").html(flash_template({
+      classes: classes,
+      content: message
+    })).fadeIn(400).delay(3000).fadeOut(800);
+  }
+
+ 
+  var addRepoLinkLabel = function(selector, model){
+    var url_label_template = _.template(jQuery("#github-repo-urllabel-template").html());
+    $(selector).find('.repo-labels').append(url_label_template({
+      classes: "label label-info",
+      url: model.get("project_url"),
+      content: '<i class="icon-home"></i> Project\'s page'
+    }));
+  }
+
+  var removeRepoLinkLabel = function(selector){
+    $(selector).find('.repo-homepage').remove();
+  }
+
+
   var GithubRepoSwitchView = Backbone.View.extend({
   		template: _.template($("#github-repo-switch-template").html()),
   		events: {
@@ -59,7 +82,6 @@ define(['underscore', 'backbone'],
                    ' is now successfully imported.', 
                    'You can now checkout project\'s page to see state of dependencies.'
                    ].join(' ');
-
         addRepoLinkLabel(selector, model);
         $(switch_selector).parents(".github-switch").bootstrapSwitch('setActive', true);
         showNotification("alert alert-success", msg);
@@ -113,8 +135,8 @@ define(['underscore', 'backbone'],
         showNotification("alert alert-warning", msg);
 
         return false;
-      },
-  	});
+      }
+  });
 
   return GithubRepoSwitchView;
 });

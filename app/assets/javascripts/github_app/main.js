@@ -39,7 +39,6 @@ define(
     })).fadeIn(400).delay(3000).fadeOut(800);
 
   }
-
   function update_user_repos(){
     user_repos.fetch({
       data: {org_id: prev_org_id},
@@ -51,20 +50,6 @@ define(
       }
     });
   }
-
-  function addRepoLinkLabel(selector, model){
-    var url_label_template = _.template(jQuery("#github-repo-urllabel-template").html());
-    $(selector).find('.repo-labels').append(url_label_template({
-      classes: "label label-info",
-      url: model.get("project_url"),
-      content: '<i class="icon-home"></i> Project\'s page'
-    }));
-  }
-
-  function removeRepoLinkLabel(selector){
-    $(selector).find('.repo-homepage').remove();
-  }
-
   var prev_org_id = null;
   var user_repos = new GithubRepoCollection();
   var repo_view = new GithubRepoView({collection: user_repos});
