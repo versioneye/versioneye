@@ -1,6 +1,6 @@
 
 <section class="container">
-  <div id="headline_1" class="jumbotron">
+  <div id="headline_1" class="jumbotron" style="text-align: center;">
     <h1>Stay up to date with <span style ="">VersionEye</span></h1>
     <p>Follow your libraries and get notified about new versions. Save Time and Money. It's easy.</p>
   </div>
@@ -13,7 +13,6 @@
       <div class="row">
         <div class = "span5 pull-left ">
           <div class = "input-prepend ">
-            <span class="icon_search" style = "margin: 10px -25px 0px 10px; border: 1px solid pink;"></span>
             <input id="q" class = "input large" name="q" type="text" value="<%= @query %>" />
           </div>
         </div>
@@ -25,23 +24,16 @@
       </div>
     </form>
   </div>
-  <div id="headline_1" class="jumbotron" style="margin-top: 20px;">
-    <div class="span12" style="text-align: center; vertical-align: middle;">
-      <p style="display: inline; float: left; padding-top: 13px;">Continuous Updating for </p>
+  <div id="headline_1" class="jumbotron" style="margin-top: 10px;">
+    <div class="row" style="text-align: center; vertical-align: middle;">
       <% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
-        <table style="table-layout:fixed; margin: 0; padding: 0; height: 40px; text-align: center; " height="40">
-          <tr style="height: 40px; vertical-align: top;" height="40">
           <% @langs = @lang.split(",") %>
           <% @languages.each do |language| %>
             <% langname = language.downcase.gsub(/\./, "") %>
-            <td style="margin: 0; padding: 0; height: 40px; vertical-align: top;" height="40">
-              <div class="icon_<%= langname %>_small_container" >
-                <span id="icon_<%= langname %>" class="icon_<%= langname %> small on" alt="<%= langname %>" title="<%= langname %>">&nbsp;</span>
-              </div>
-            </td>
+            <div class="icon_<%= langname %>_small_container" >
+              <span id="icon_<%= langname %>" class="icon_<%= langname %> small on" alt="<%= langname %>" title="<%= langname %>">&nbsp;</span>
+            </div>
           <% end %>
-          </tr>
-        </table>
       <% end %>
     </div>
   </div>
