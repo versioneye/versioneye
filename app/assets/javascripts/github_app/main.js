@@ -12,6 +12,28 @@ define(
 
 
 
+  function showNotification(classes, message){
+    var flash_template = _.template(jQuery("#github-notification-template").html());
+    $(".flash-container").html(flash_template({
+      classes: classes,
+      content: message
+    })).fadeIn(400).delay(3000).fadeOut(800);
+
+  }
+
+  function update_user_repos(){
+    user_repos.fetch({
+      data: {org_id: prev_org_id},
+      cache: false,
+      error: function(repos, response, options){
+        showNotification(
+          "alert alert-warning",
+          "Cant load repos: " + response);
+        $("#github-repos").html("You dont have any github repos or we just cant imported.");
+      }
+    });
+  }
+
   function pollChanges(){
     var jqxhr = $.ajax("/user/poll/github_repos")
         .done(function(data, status, jqxhr){
@@ -30,26 +52,7 @@ define(
                   setTimeout(pollChanges, 10000);
         });
   }
-
-  function showNotification(classes, message){
-    var flash_template = _.template(jQuery("#github-notification-template").html());
-    $(".flash-container").html(flash_template({
-      classes: classes,
-      content: message
-    })).fadeIn(400).delay(3000).fadeOut(800);
-
-  }
-  function update_user_repos(){
-    user_repos.fetch({
-      data: {org_id: prev_org_id},
-      cache: false,
-      error: function(repos, response, options){
-        showNotification(
-          "alert alert-warning",
-          "Cant load repos: " + response);
-      }
-    });
-  }
+  
   var prev_org_id = null;
   var user_repos = new GithubRepoCollection();
   var repo_view = new GithubRepoView({collection: user_repos});

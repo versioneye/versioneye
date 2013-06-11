@@ -28,7 +28,7 @@ define(['underscore', 'backbone',
 			$("#github-repos").append(itemview.render().el);
 			$(switch_selector).parent().bootstrapSwitch();
 	    $("#github-loader").remove();
-  }
+    }
 	});
 
 	return GithubRepoView;
