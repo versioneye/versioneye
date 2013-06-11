@@ -25,6 +25,8 @@ define(
     user_repos.fetch({
       data: {org_id: prev_org_id},
       cache: false,
+      remove: false,
+      update: true,
       error: function(repos, response, options){
         showNotification(
           "alert alert-warning",

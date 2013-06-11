@@ -1,7 +1,9 @@
 define(['underscore', 'backbone', 'paginator'],
   function(_, Backbone, Paginator){
 
-	var GithubRepoModel = Backbone.Model.extend({});
+	var GithubRepoModel = Backbone.Model.extend({
+    urlRoot: "/user/github_repos"
+  });
   var GithubRepoCollection = Backbone.Paginator.requestPager.extend({
     model: GithubRepoModel,
     paginator_core: {
