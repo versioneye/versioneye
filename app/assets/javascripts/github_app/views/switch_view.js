@@ -45,6 +45,7 @@ define(['underscore', 'backbone'],
   		},
 
   		onSwitchChange: function(ev, switch_data){
+        console.debug(switch_data);
         is_switch_active = switch_data.el.parent().bootstrapSwitch("isActive");
 
         switch_data.el.parents(".github-switch").bootstrapSwitch('setActive', false);
@@ -62,6 +63,8 @@ define(['underscore', 'backbone'],
 
   		addProject: function(el, data){
   			console.log("Adding new project");
+        console.debug("Changing items for model: ");
+        console.debug(this.model);
   	    this.model.save(
           {command: "import"}, 
           {
