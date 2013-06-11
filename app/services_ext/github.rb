@@ -73,9 +73,13 @@ class Github
     request_headers = {"User-Agent" => A_USER_AGENT}
     response = self.get(url, headers: request_headers)
     paging_links = parse_paging_links(response.headers)
-
+    data = JSON.parse response.body
+    if data.is_a?(Hash)
+      Rails.logger.warning("Github returned error response: #{data}")
+      data = []
+    end
     repos = {
-      repos: JSON.parse(response.body),
+      repos: data,
       paging: {
         start: page,
         per_page: per_page
