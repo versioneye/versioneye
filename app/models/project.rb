@@ -151,7 +151,7 @@ class Project
     return A_TYPE_PIP      if trimmed_name.match(/requirements.txt$/) or trimmed_name.match(/setup.py$/) or trimmed_name.match(/pip.log$/)
     return A_TYPE_NPM      if trimmed_name.match(/package.json$/)
     return A_TYPE_GRADLE   if trimmed_name.match(/.gradle$/)
-    return A_TYPE_MAVEN2   if trimmed_name.match(/pom[.xml]?$/)
+    return A_TYPE_MAVEN2   if trimmed_name.match(/pom.xml$/)
     return A_TYPE_LEIN     if trimmed_name.match(/project.clj$/)
     return nil
   end
