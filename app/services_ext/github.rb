@@ -79,12 +79,12 @@ class Github
     repo_names = Array.new
     page = 1
     loop do
-      body  = HTTParty.get("https://api.github.com/user/repos?access_token=#{github_token}&page=#{page}", :headers => {"User-Agent" => A_USER_AGENT } ).response.body
-      repos = JSON.parse( body )
+      body    = HTTParty.get("https://api.github.com/user/repos?access_token=#{github_token}&page=#{page}", :headers => {"User-Agent" => A_USER_AGENT } ).response.body
+      repos   = JSON.parse( body )
       message = get_message( repos )
       break if ( repos.nil? || repos.empty? || !message.nil? )
       repo_names += extract_repo_names( repos )
-      page += 1
+      page       += 1
     end
     repo_names
   end
