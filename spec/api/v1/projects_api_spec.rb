@@ -47,7 +47,7 @@ describe VersionEye::ProjectsApi do
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
-      
+
       response.status.should eq(201)
     end
   end
@@ -55,8 +55,8 @@ describe VersionEye::ProjectsApi do
   describe "Accessing not-existing project as authorized user" do
 
     it "fails when authorized user uses project key that don exist" do
-      get "#{@project_uri}/kill_koll_bug_on_loll.json", {
-        api_key: @user_api.api_key
+      get "#{project_uri}/kill_koll_bug_on_loll.json", {
+        api_key: user_api.api_key
       }
 
       response.status.should eq(400)
@@ -67,11 +67,14 @@ describe VersionEye::ProjectsApi do
     include Rack::Test::Methods
 
     before(:each) do
-      file_path =  "#{Rails.root}/test/files/Gemfile.lock"
-      @test_file = Rack::Test::UploadedFile.new(file_path, "text/xml")
-      response = post @project_uri, {
-        upload: @test_file,
-        api_key: @user_api.api_key,
+
+      # TODO Create Test DATA here. Fill DB with test data.
+
+      file_path =  "#{Rails.root}/spec/files/Gemfile.lock"
+      test_file = Rack::Test::UploadedFile.new(file_path, "text/xml")
+      response  = post project_uri, {
+        upload:    test_file,
+        api_key:   user_api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
@@ -82,9 +85,9 @@ describe VersionEye::ProjectsApi do
 
     it "returns correct project info for existing project" do
       project_key = @project_info["project_key"]
-      
-      response = get "#{@project_uri}/#{project_key}.json", {
-        api_key: @user_api.api_key
+
+      response = get "#{project_uri}/#{project_key}.json", {
+        api_key: user_api.api_key
       }
       response.status.should eq(200)
       project_info2 = JSON.parse response.body
@@ -96,7 +99,7 @@ describe VersionEye::ProjectsApi do
 
     it "return correct licence info for existing project" do
       project_key = @project_info["project_key"]
-      response = get "#{@project_uri}/#{project_key}/licenses.json"
+      response = get "#{project_uri}/#{project_key}/licenses.json"
       response.status.should eql(200)
 
       data = JSON.parse response.body
@@ -106,7 +109,7 @@ describe VersionEye::ProjectsApi do
       MIT_licences.include?("daemons").should be_true
       MIT_licences.include?("rack").should be_true
       MIT_licences.include?("tilt").should be_true
-      
+
       ruby_licences = data["licenses"]["Ruby"].map {|x| x['name']}
       ruby_licences = unknown_licences.to_set
       ruby_licences.include?("eventmachine").should be_true
@@ -119,7 +122,7 @@ describe VersionEye::ProjectsApi do
    end
 
     it "deletes existing project successfully" do
-      response = delete "#{@project_uri}/#{@project_info['project_key']}.json"
+      response = delete "#{project_uri}/#{@project_info['project_key']}.json"
       response.status.should eql(200)
       msg = JSON.parse response.body
       msg["success"].should be_true
