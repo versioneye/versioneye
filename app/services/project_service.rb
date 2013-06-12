@@ -1,5 +1,17 @@
 class ProjectService
 
+  def self.type_by_filename( filename )
+    trimmed_name = filename.split("?")[0]
+    return Project::A_TYPE_RUBYGEMS if trimmed_name.match(/Gemfile$/) or trimmed_name.match(/Gemfile.lock$/)
+    return Project::A_TYPE_COMPOSER if trimmed_name.match(/composer.json$/) or trimmed_name.match(/composer.lock$/)
+    return Project::A_TYPE_PIP      if trimmed_name.match(/requirements.txt$/) or trimmed_name.match(/setup.py$/) or trimmed_name.match(/pip.log$/)
+    return Project::A_TYPE_NPM      if trimmed_name.match(/package.json$/)
+    return Project::A_TYPE_GRADLE   if trimmed_name.match(/.gradle$/)
+    return Project::A_TYPE_MAVEN2   if trimmed_name.match(/pom.xml$/)
+    return Project::A_TYPE_LEIN     if trimmed_name.match(/project.clj$/)
+    return nil
+  end
+
   def self.update_dependencies( period )
     projects = Project.all()
     projects.each do |project|
@@ -58,7 +70,7 @@ class ProjectService
   end
 
   def self.create_from_url( url )
-    project_type = Project.type_by_filename( url )
+    project_type = type_by_filename( url )
     parser = ParserStrategy.parser_for( project_type, url )
     parser.parse url
   rescue => e

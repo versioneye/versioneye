@@ -40,7 +40,7 @@ module VersionEye
       project_name = file['datafile'].original_filename
       filename = S3.upload_fileupload(file )
       url = S3.url_for( filename )
-      project_type = Project.type_by_filename( url )
+      project_type = ProjectService.type_by_filename( url )
       project = create_project(project_type, url, project_name)
       project.make_project_key!
       project.s3_filename = filename

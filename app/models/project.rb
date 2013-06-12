@@ -22,13 +22,13 @@ class Project
   field :name           , type: String
   field :description    , type: String
   field :license        , type: String
-  field :project_type   , type: String, :default => A_TYPE_MAVEN2
+  field :project_type   , type: String,  :default => A_TYPE_MAVEN2
   field :language       , type: String
   field :project_key    , type: String
-  field :period         , type: String, :default => A_PERIOD_WEEKLY
+  field :period         , type: String,  :default => A_PERIOD_WEEKLY
   field :email          , type: String
   field :url            , type: String
-  field :source         , type: String, :default => A_SOURCE_UPLOAD
+  field :source         , type: String,  :default => A_SOURCE_UPLOAD
   field :s3_filename    , type: String
   field :github_project , type: String
   field :dep_number     , type: Integer
@@ -142,18 +142,6 @@ class Project
     self.out_number     = new_project.out_number
     self.unknown_number = new_project.unknown_number
     self.save
-  end
-
-  def self.type_by_filename( filename )
-    trimmed_name = filename.split("?")[0]
-    return A_TYPE_RUBYGEMS if trimmed_name.match(/Gemfile$/) or trimmed_name.match(/Gemfile.lock$/)
-    return A_TYPE_COMPOSER if trimmed_name.match(/composer.json$/) or trimmed_name.match(/composer.lock$/)
-    return A_TYPE_PIP      if trimmed_name.match(/requirements.txt$/) or trimmed_name.match(/setup.py$/) or trimmed_name.match(/pip.log$/)
-    return A_TYPE_NPM      if trimmed_name.match(/package.json$/)
-    return A_TYPE_GRADLE   if trimmed_name.match(/.gradle$/)
-    return A_TYPE_MAVEN2   if trimmed_name.match(/pom.xml$/)
-    return A_TYPE_LEIN     if trimmed_name.match(/project.clj$/)
-    return nil
   end
 
   def self.email_for(project, user)
