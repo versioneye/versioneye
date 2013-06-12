@@ -157,7 +157,7 @@ class Github
       name = file['path']
       result['url'] = file['url']
       result['name'] = name
-      type = Project.type_by_filename( name )
+      type = ProjectService.type_by_filename( name )
       if type
         result['type'] = type
         return result

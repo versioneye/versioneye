@@ -96,8 +96,8 @@ class EsProduct
     s = Tire.search( Settings.elasticsearch_product_index,
                       load: true,
                       from: from,
-                      per_page: results_per_page,
                       search_type: "dfs_query_and_fetch",
+                      per_page: results_per_page,
                       size: results_per_page) do |search|
 
       # search.sort { by [{:_score => 'desc'}] }
