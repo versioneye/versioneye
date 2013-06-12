@@ -20,32 +20,32 @@ class Product
   field :prod_type    , type: String
   field :language     , type: String
 
-  field :group_id, type: String
+  field :group_id   , type: String
   field :artifact_id, type: String
-  field :parent_id, type: String
+  field :parent_id  , type: String
 
-  field :authors, type: String
-  field :description, type: String
+  field :authors           , type: String
+  field :description       , type: String
   field :description_manual, type: String
-  field :link, type: String
-  field :downloads, type: Integer
-  field :followers, type: Integer, default: 0
-  field :last_release, type: Integer, default: 0
-  field :used_by_count, type: Integer, default: 0
+  field :link              , type: String
+  field :downloads         , type: Integer
+  field :followers         , type: Integer, default: 0
+  field :last_release      , type: Integer, default: 0
+  field :used_by_count     , type: Integer, default: 0
 
-  field :license, type: String
-  field :licenseLink, type: String
-  field :license_manual, type: String
+  field :license           , type: String
+  field :licenseLink       , type: String
+  field :license_manual    , type: String
   field :licenseLink_manual, type: String
 
-  field :version, type: String
+  field :version     , type: String
   field :version_link, type: String
 
   field :like_overall, type: Integer, default: 0
-  field :like_docu, type: Integer, default: 0
+  field :like_docu   , type: Integer, default: 0
   field :like_support, type: Integer, default: 0
 
-  field :icon, type: String
+  field :icon        , type: String
   field :twitter_name, type: String
 
   field :reindex, type: Boolean, default: true
@@ -164,15 +164,10 @@ class Product
   end
 
   def self.find_by_id(id)
-    result = nil
-    id = id.to_s if id.is_a?(BSON::ObjectId)
-
-    return nil if id.nil? or id.empty?
-
-    if Product.where(_id: id).exists?
-      result = Product.find(id)
-    end
-    result
+    self.find( id )
+  rescue => e
+    Rails.logger.error e.message
+    nil
   end
 
   def self.find_by_group_and_artifact(group, artifact)
