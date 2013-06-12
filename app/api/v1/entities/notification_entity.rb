@@ -6,6 +6,8 @@ module VersionEye
     class NotificationEntity < Grape::Entity
       expose :created_at
       expose :version
+      expose :sent_email
+      expose :read
       expose :product_id, as: "product", proc: lambda { |obj, options| 
         @product = Product.find_by_id(obj[:product_id])
         ProductEntity.new @product

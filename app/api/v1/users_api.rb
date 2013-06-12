@@ -55,7 +55,7 @@ module VersionEye
       get '/notifications' do
         authorized?
 
-        unread_notifications = Notification.by_user_id(@current_user.id).all_not_sent
+        unread_notifications = Notification.by_user(@current_user).desc(:created_at).limit(30)
         temp_notice = Notification.new #grape cant handle plain Hashs w.o to_json
         temp_notice[:user_info] = @current_user
         temp_notice[:unread] = unread_notifications.count
