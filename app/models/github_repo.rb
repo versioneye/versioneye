@@ -28,9 +28,10 @@ class GithubRepo
 
   def self.add_new(user, repo, etag = nil)
     return false if repo.nil? || repo.empty?
+    repo_id = "#{repo['id']}"
     new_repo = GithubRepo.new({
       user_id:     user.id,
-      github_id:   String.new(repo['id']),
+      github_id:   repo_id,
       name:        repo['name'],
       fullname:    repo['full_name'],
       language:    repo['language'].to_s.downcase,
