@@ -105,13 +105,13 @@ describe VersionEye::ProjectsApi do
       data = JSON.parse response.body
       data["success"].should be_true
       MIT_licences = data["licenses"]["MIT"].map {|x| x['name']}
-      MIT_licences = unknown_licences.to_set
+      MIT_licences = MIT_licences.to_set
       MIT_licences.include?("daemons").should be_true
       MIT_licences.include?("rack").should be_true
       MIT_licences.include?("tilt").should be_true
 
       ruby_licences = data["licenses"]["Ruby"].map {|x| x['name']}
-      ruby_licences = unknown_licences.to_set
+      ruby_licences = ruby_licences.to_set
       ruby_licences.include?("eventmachine").should be_true
       ruby_licences.include?("thin").should be_true
 
@@ -130,4 +130,3 @@ describe VersionEye::ProjectsApi do
   end
 
 end
-
