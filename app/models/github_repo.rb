@@ -19,6 +19,7 @@ class GithubRepo
   field :homepage    , type: String
   field :size        , type: Integer
   field :etag        , type: String
+  field :branches    , type: Array
   field :created_at  , type: DateTime
   field :updated_at  , type: DateTime #when github repo was updated
   field :pushed_at   , type: DateTime
@@ -71,6 +72,7 @@ class GithubRepo
       homepage: repo['homepage'],
       size: repo['size'],
       etag: etag.to_s,
+      branches: repo['branches'],
       created_at: repo['created_at'],
       updated_at: repo['updated_at'],
       pushed_at: repo['pushed_at'],

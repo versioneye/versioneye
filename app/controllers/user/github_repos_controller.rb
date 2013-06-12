@@ -58,8 +58,10 @@ class User::GithubReposController < ApplicationController
     case params[:command] 
     when "import" 
       project_name = params[:fullname]
-      project = fetch_from_github_and_store project_name
-      if project
+      branch = params[:branch]
+      project = fetch_from_github_and_store project_name, branch
+      
+      unless project.nil?
         repo = GithubRepo.find(params[:_id])
         repo = process_repo(repo)
       else
@@ -163,69 +165,33 @@ class User::GithubReposController < ApplicationController
       repo
     end
 
-#TODO: refactor it to projectService - same code already exists in projects_controller
-    def fetch_from_github_and_store github_project
-      private_project = Github.private_repo?( current_user.github_token, github_project )
-      if private_project && !is_allowed_to_add_private_project?
-        flash[:error] = "You selected a private project. Please upgrade your plan to monitor the selected project."
-        return nil
-      end
-      sha = Github.get_repo_sha( github_project, current_user.github_token )
-      project_info = Github.repository_info( github_project, sha, current_user.github_token )
-      if project_info.empty?
-        flash[:error] = "We couldn't find any project file in the selected project. Please choose another project."
-        return nil
-      end
-      file = Github.fetch_file( project_info['url'], current_user.github_token )
-      s3_infos = S3.upload_github_file( file, project_info['name'] )
-      project = create_project(s3_infos['s3_url'], github_project)
-      project.source = Project::A_SOURCE_GITHUB
-      project.s3_filename = s3_infos['filename']
-      project.github_project = github_project
-      project.private_project = private_project
+    def fetch_from_github_and_store(project_name, branch = "master")
+      imported_project = ProjectService.import_from_github(current_user, project_name, branch)
 
-      if store_project( project )
-        return project
-      else
-        msg = "Cant save github project: #{github_project}."
+      return imported_project if store_project(imported_project)
+
+      msg = "Cant save github project: #{project_name}. #{imported_project.errors.full_messages.to_sentence}"
+      Rails.logger.error msg
+      flash[:error] = msg 
+
+    end
+
+    def store_project(project)
+      if project.nil?
+        msg = "Project cant be nil. Some error with importing."
         Rails.logger.error msg
-        flash[:error] = msg 
+        flash[:error] = msg
       end
-    end
 
-    def create_project( url, project_name )
-      project = ProjectService.create_from_url( url )
-      project.user_id = current_user.id.to_s
-      if project.name.nil? || project.name.empty?
-        project.name = project_name
-      end
-      project
-    end
-
-    def store_project( project )
       project.make_project_key!
       if project.dependencies && !project.dependencies.empty? && project.save
         project.save_dependencies
         flash[:success] = "Project was created successfully."
         return true
       else
-        Rails.logger.error "Cant save project: #{project.to_json}"
+        p "Is dependencies empty?:",  project.dependencies.nil?
+        Rails.logger.error "Cant save project: #{project.errors.full_messages.to_json}"
         flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."
-        return false
-      end
-    end
-
-    def is_allowed_to_add_private_project?
-      user = current_user
-      private_projects = Project.find_private_projects_by_user(user.id)
-      plan = user.plan
-      if plan.nil?
-        error_msg = "Current plan doesnt allow to add private project. Please update your plan."
-        flash[:error] = error_msg
-        return false
-      elsif plan.private_projects > private_projects.count
-        return true
-      else
         return false
       end
     end
