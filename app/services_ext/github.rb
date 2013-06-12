@@ -59,25 +59,31 @@ class Github
       url =  "#{A_API_URL}/user/repos?page=#{page}&per_page=#{per_page}&access_token=#{user.github_token}"
     end
     
-    read_repos(url, page, per_page)
+    read_repos(user, url, page, per_page)
   end
 
   def self.user_orga_repos(user, orga_name, url = nil, page = 1, per_page = 30)
     if url.nil?
       url = "#{A_API_URL}/orgs/#{orga_name}/repos?access_token=#{user.github_token}"
     end
-    read_repos(url, page, per_page)
+    read_repos(user, url, page, per_page)
   end
 
-  def self.read_repos(url, page = 1, per_page = 30)
+  def self.read_repos(user, url, page = 1, per_page = 30)
     request_headers = {"User-Agent" => A_USER_AGENT}
     response = self.get(url, headers: request_headers)
     paging_links = parse_paging_links(response.headers)
     data = JSON.parse response.body
     if data.is_a?(Hash)
-      Rails.logger.warning("Github returned error response: #{data}")
+      p "failed to read: #{url}"
+      Rails.logger.error("Github returned error for: #{url}\n #{data}")
       data = []
     end
+    data.each do |repo|
+      branches = Github.repo_branches(user, repo['full_name']).map {|x| x['name']}
+      repo['branches'] = branches
+    end
+
     repos = {
       repos: data,
       paging: {
@@ -93,6 +99,50 @@ class Github
     repos[:paging].merge! paging_links unless paging_links.nil?
     repos
 
+  end
+
+  def self.repo_branches(user, repo_name)
+    request_headers = {"User-Agent" => A_USER_AGENT}
+    url = "#{A_API_URL}/repos/#{repo_name}/branches?access_token=#{user.github_token}"
+    response = self.get(url, headers: request_headers)
+    if response.code != 200
+      Rails.logger.error "Cant fetch branches for #{repo_name}:  #{response.headers}"
+      return nil
+    end
+
+    JSON.parse response.body
+  end
+  
+  def self.repo_branch_info(user, repo_name, branch)
+    request_headers = {"User-Agent" => A_USER_AGENT}
+    url = "#{A_API_URL}/repos/#{repo_name}/branches/#{branch}?access_token=#{user.github_token}"
+    response = self.get(url, headers: request_headers)
+    if response.code != 200
+      Rails.logger.error "Cant fetch repoinfo for #{repo_name} branch #{branch}: #{response.code}"
+      return nil
+    end
+
+    JSON.parse response.body
+  end
+
+  def self.import_from_branch(user, repo_name, branch)
+    branch_info = Github.repo_branch_info user, repo_name, branch
+    if branch_info.nil?
+      Rails.logger.error "Cancelling importing: cant read branch info."
+      return nil
+    end
+ 
+    project_file_info = Github.repo_info user, repo_name, branch_info["commit"]["sha"]
+    if project_file_info.nil?
+      Rails.logger.error "Cancelling importing: cant read info about project's file."
+      return nil
+    end
+    
+    project_file = Github.fetch_file project_file_info["url"], user.github_token
+    project_file["name"] = project_file_info["name"]
+    project_file["type"] = project_file_info["type"]
+
+    project_file
   end
 
   def self.user_repo_names( github_token )
@@ -165,6 +215,10 @@ class Github
       end
     end
     nil
+  end
+  
+  def self.repo_info(user, project_name, sha)
+    repository_info project_name, sha, user.github_token
   end
 
   def self.repository_info(git_project, sha, token)

@@ -30,7 +30,7 @@ define(['underscore', 'backbone'],
 
 
   var GithubRepoSwitchView = Backbone.View.extend({
-    className: "repo-switch span2",
+    className: "span3",
     template: _.template($("#github-repo-switch-template").html()),
     events: {
       "switch-change .switch" : "onSwitchChange"

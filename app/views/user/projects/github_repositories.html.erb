@@ -56,9 +56,10 @@
         <img src = {{= logo_path + logo_name + ".png"}}
           style = "position: relative; left: 25%; right: 25%; height: 72px; " />
       </div>
-      <div class = "repo-info-content span8">
+      <div class = "repo-info-content span10">
         <h5>{{= repo.fullname }}</h5>
         <p> {{= repo.description}} </h5>
+        <div class = "repo-controls row"></div>
       </div>
     </div>
     <div class = "repo-notification"></div>
@@ -80,16 +81,28 @@
 </script>
 
 <script id = "github-repo-switch-template" type = "text/template">
-   <div class = "github-switch switch switch-small pull-right">
-      <input
-        id = "{{= 'github-repo-switch-'+ repo.github_id }}"
-        type = "checkbox" class = "input"
-        {{= !repo.supported ? ' disabled ' : '' }}
-        {{= repo.imported ? ' checked ': '' }}
-        data-github-id = "{{= repo.github_id }}"
-        data-github-project-id = "{{= repo.project_id }}"
-        data-github-fullname = "{{= repo.fullname }}" />
+  <div class = "github-switch switch">
+    <input
+      id = "{{= 'github-repo-switch-'+ repo.github_id }}"
+      type = "checkbox" class = "input"
+      {{= !repo.supported ? ' disabled ' : '' }}
+      {{= repo.imported ? ' checked ': '' }}
+      data-github-id = "{{= repo.github_id }}"
+      data-github-project-id = "{{= repo.project_id }}"
+      data-github-fullname = "{{= repo.fullname }}" />
   </div>
+</script>
+
+<script id = "github-repo-select-template" type = "text/template">
+  <select id = "{{= 'github-repo-select-' + repo.github_id}}" class = "span github-repo-select">
+    {{= options}}
+  </select>
+</script>
+
+<script id = "github-repo-select-option-template" type = "text/template">
+  <option value = "{{= value }}" {{= selected}}>
+    {{= content }}
+  </option>
 </script>
 
 <script id = "github-menu-item-template" type = "text/template">

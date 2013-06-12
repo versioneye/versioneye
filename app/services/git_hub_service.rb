@@ -36,8 +36,6 @@ class GitHubService
       url = nil
       begin
         data = Github.user_repos(user, url)
-        p "data: #{data}"
-        # TODO catch the case if there is an error
         data[:repos].each do |repo|
           begin
             GithubRepo.add_new(user, repo, data[:etag])
