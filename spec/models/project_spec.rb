@@ -165,7 +165,7 @@ describe Project do
 
     it "returns Maven2. OK" do
       url1 = "http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_pom.xml?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D"
-      Project.type_by_filename(url1).should eql(Project::A_TYPE_MAVEN2)
+      Project.type_by_filename(url1).should          eql(Project::A_TYPE_MAVEN2)
       Project.type_by_filename("app/pom.xml").should eql(Project::A_TYPE_MAVEN2)
     end
     it "returns nil for wrong maven2 file" do
