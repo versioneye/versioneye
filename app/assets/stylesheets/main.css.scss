@@ -1370,3 +1370,12 @@ h2 + .row {
 .dialog_badge_group{
   padding-bottom: 15px;
 }
+
+.repo-container {
+  border-bottom: 1px solid #f3f3f3; 
+  padding: 10px 0px;
+
+  &:hover {
+    background-color: #fafafa;
+  };
+}
