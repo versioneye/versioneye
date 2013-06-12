@@ -8,7 +8,8 @@ define(['underscore', 'backbone'],
 
 
 	var GithubRepoLabelView = Backbone.View.extend({
-		template: _.template($("#github-repo-label-template").html()),
+		className: "repo-labels",
+    template: _.template($("#github-repo-label-template").html()),
 
 		initialize: function(options){
 			this.parent = options.parent;
