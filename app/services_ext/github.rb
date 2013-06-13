@@ -279,6 +279,7 @@ class Github
     end
 
     def self.get_message( repositories )
+      p "#---------------", repositories
       repositories['message']
     rescue => e
       # by default here should be no message or nil

@@ -71,6 +71,7 @@ define(
       if(prev_org_id !== org_id){
         console.log("Org id changed - cleaning up & reseting pager.");
         user_repos.reset();
+        user_repos.org_id = org_id;
         user_repos.currentPage = 1;
         prev_org_id = org_id;
       }
