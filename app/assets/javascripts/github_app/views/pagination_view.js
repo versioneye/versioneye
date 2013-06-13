@@ -19,7 +19,7 @@ define(['underscore', 'backbone', 'paginator'],
       $(this.el).html(this.template({
         paging: {
           currentPage: this.collection.currentPage,
-          totalPages: this.collection.totalPages
+          totalPages:  this.collection.totalPages
         }
       }));
     },

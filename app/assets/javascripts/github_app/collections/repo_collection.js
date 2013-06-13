@@ -6,10 +6,13 @@ define(['underscore', 'backbone', 'paginator'],
   });
   var GithubRepoCollection = Backbone.Paginator.requestPager.extend({
     model: GithubRepoModel,
+    initialize: function(opts){
+      this.org_id = opts.org_id;
+    },
     paginator_core: {
       type: 'GET',
       dataType: 'json',
-      url: '/user/github_repos'
+      url: function(){'/user/github_repos?org_id=' + this.org_id}
     },
     paginator_ui: {
       firstPage: 1,
