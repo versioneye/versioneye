@@ -91,10 +91,10 @@ class ProjectService
                               s3_filename: s3_info['filename'],
                               url: s3_info['s3_url']
 
-    parsed_project = parse_from_url new_project.url
+    parsed_project = create_from_url new_project.url
     parsed_project.update_attributes(new_project.attributes)
     
-    return parsed_project
+    return parsed_project if store_project(parsed_project)    
   end
 
   def self.is_allowed_to_add_private_project?(user)
@@ -111,17 +111,6 @@ class ProjectService
     end
   end
 
-  def self.parse_from_url( url )
-    project_type = Project.type_by_filename( url )
-    parser = ParserStrategy.parser_for( project_type, url )
-    parser.parse url
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
-    project = Project.new
-  end
-
-
   def self.create_from_url( url )
     project_type = Project.type_by_filename( url )
     parser = ParserStrategy.parser_for( project_type, url )
@@ -131,6 +120,23 @@ class ProjectService
     Rails.logger.error e.backtrace.first
     project = Project.new
   end
+
+  def self.store_project(project)
+    if project.nil?
+      msg = "Project cant be nil. Some error with importing."
+      Rails.logger.error msg
+    end
+
+    project.make_project_key!
+    if project.dependencies && !project.dependencies.empty? && project.save
+      project.save_dependencies
+      return true
+    else
+      Rails.logger.error "Cant save project: #{project.errors.full_messages.to_json}"
+      return false
+    end
+  end
+
 
   def self.destroy_project project_id
     project = Project.find_by_id( project_id )

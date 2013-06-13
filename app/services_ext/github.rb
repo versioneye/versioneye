@@ -72,17 +72,18 @@ class Github
   def self.read_repos(user, url, page = 1, per_page = 30)
     request_headers = {"User-Agent" => A_USER_AGENT}
     response = self.get(url, headers: request_headers)
-    paging_links = parse_paging_links(response.headers)
     data = JSON.parse response.body
-    if data.is_a?(Hash)
-      p "failed to read: #{url}"
-      Rails.logger.error("Github returned error for: #{url}\n #{data}")
+    if data.is_a?(Hash) or response.code != 200
+      Rails.logger.error("Github returned error for: #{url}\n#{response.message}\n#{data}")
       data = []
     end
+
     data.each do |repo|
       branches = Github.repo_branches(user, repo['full_name']).map {|x| x['name']}
       repo['branches'] = branches
     end
+
+    paging_links = parse_paging_links(response.headers)
 
     repos = {
       repos: data,
@@ -106,7 +107,8 @@ class Github
     url = "#{A_API_URL}/repos/#{repo_name}/branches?access_token=#{user.github_token}"
     response = self.get(url, headers: request_headers)
     if response.code != 200
-      Rails.logger.error "Cant fetch branches for #{repo_name}:  #{response.headers}"
+      Rails.logger.error "Cant fetch branches for #{repo_name}:#{response.code}\n
+      #{response.headers}\n#{response.message}\n#{response.data}"
       return nil
     end
 
@@ -118,7 +120,8 @@ class Github
     url = "#{A_API_URL}/repos/#{repo_name}/branches/#{branch}?access_token=#{user.github_token}"
     response = self.get(url, headers: request_headers)
     if response.code != 200
-      Rails.logger.error "Cant fetch repoinfo for #{repo_name} branch #{branch}: #{response.code}"
+      Rails.logger.error "Cant fetch info for #{repo_name} branch `#{branch}`: 
+      #{response.code}\n#{response.message}\n#{response.body}"
       return nil
     end
 
@@ -149,8 +152,9 @@ class Github
     repo_names = Array.new
     page = 1
     loop do
-      body  = HTTParty.get("https://api.github.com/user/repos?access_token=#{github_token}&page=#{page}", :headers => {"User-Agent" => A_USER_AGENT } ).response.body
-      repos = JSON.parse( body )
+      response  = HTTParty.get("https://api.github.com/user/repos?access_token=#{github_token}&page=#{page}", :headers => {"User-Agent" => A_USER_AGENT } )
+        
+      repos = JSON.parse( response.body )
       break if ( repos.nil? || repos.empty? )
       repo_names += extract_repo_names( repos )
       page += 1
@@ -239,7 +243,15 @@ class Github
   end
 
   def self.fetch_file( url, token )
-    JSON.parse HTTParty.get( "#{url}?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT} ).response.body
+    response = HTTParty.get( "#{url}?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT} )
+
+    if response.code != 200
+      Rails.logger.error "Cant fetch file from #{url}:  #{response.code}\n
+        #{response.message}\n#{response.data}"
+      return nil
+    end
+
+    JSON.parse response.body
   end
 
   def self.supported_languages()

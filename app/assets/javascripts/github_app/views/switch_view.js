@@ -47,25 +47,37 @@ define(['underscore', 'backbone'],
 
     onSwitchChange: function(ev, switch_data){
       console.debug(switch_data);
-      is_switch_active = switch_data.el.parent().bootstrapSwitch("isActive");
-
-      switch_data.el.parents(".github-switch").bootstrapSwitch('setActive', false);
-
-      if(is_switch_active && switch_data.value){
-        this.addProject(switch_data.el, switch_data.value);
-      } else if (is_switch_active && !switch_data.value) {
-        this.removeProject(switch_data.el), switch_data.value;
-      } else {
+      is_switch_active = switch_data.el.parents('.switch').bootstrapSwitch("isActive");
+      
+      if(!is_switch_active){
         console.log("Going to drop event of unactive switch.");
-        switch_data.el.parents(".github-switch").bootstrapSwitch('setActive', true);
+        ev.preventDefault();
+        ev.stopImmediatePropagation();
+        ev.stopPropagation();
+        return false;
       }
-      return false;
+
+      switch_data.el.parents(".switch").bootstrapSwitch('setActive', false);
+
+      var notification_template = _.template($("#github-notification-template").html());
+      var loading_info = notification_template({
+        classes: "alert alert-info",
+        content: ['<img src="/assets/loadingbar2.gif" style = "height: 20px;">',
+          '<strong>Please wait!</strong> We are still importing data from Github.',
+          'It may take up-to 4seconds. But we are almost there.'].join(' ')
+      });
+
+      if(switch_data.value){
+        switch_data.el.parents(".repo-container").find(".repo-notification").html(loading_info);
+        this.addProject(switch_data.el, switch_data.value);
+      } else {
+        this.removeProject(switch_data.el), switch_data.value;
+      } 
+      return true;
     },
 
     addProject: function(el, data){
       console.log("Adding new project");
-      console.debug("Changing items for model: ");
-      console.debug(this.model);
       this.model.save(
         {command: "import"}, 
         {
@@ -87,7 +99,12 @@ define(['underscore', 'backbone'],
                  'You can now checkout project\'s page to see state of dependencies.'
                  ].join(' ');
       addRepoLinkLabel(selector, model);
-      $(switch_selector).parents(".github-switch").bootstrapSwitch('setActive', true);
+
+      var repo_switch = $(switch_selector).parents(".github-switch");
+      
+      repo_switch.bootstrapSwitch('setState', true);
+      repo_switch.bootstrapSwitch('setActive', true);
+      $(switch_selector).parents(".repo-container").find(".repo-notification").html("");
       showNotification("alert alert-success", msg);
       return true;
     },
@@ -95,8 +112,10 @@ define(['underscore', 'backbone'],
     onAddFailure: function(model, xhr, options){
       console.log("Failure: Cant import project: " + model.get('fullname'));
       var switch_selector = "#github-repo-switch-" + model.get('github_id');
-      $(switch_selector).parents(".github-switch").bootstrapSwitch("setState", false);
-      $(switch_selector).parents(".github-switch").bootstrapSwitch('setActive', true);
+      var repo_switch = $(switch_selector).parents(".github-switch");
+      
+      repo_switch.bootstrapSwitch("setState", false);
+      repo_switch.bootstrapSwitch('setActive', true);
       return false;
     },
 
@@ -113,6 +132,7 @@ define(['underscore', 'backbone'],
           error: this.onRemoveFailure
         }
       );
+      return false;
     },
 
    onRemoveSuccess: function(model, xhr, options){
@@ -126,17 +146,21 @@ define(['underscore', 'backbone'],
       console.log("Going to remove label from: "+ selector);
       removeRepoLinkLabel(selector);
       var switch_selector = "#github-repo-switch-" + model.get('github_id');
-      $(switch_selector).parents(".github-switch").bootstrapSwitch('setActive', true);
-      showNotification("alert alert-succes", msg);
+      var repo_switch = $(switch_selector).parents(".github-switch");
+      
+      repo_switch.bootstrapSwitch('setState', false);
+      repo_switch.bootstrapSwitch('setActive', true);
+      showNotification("alert alert-success", msg);
 
       return true;
    },
    onRemoveFailure: function(model, xhr, options){
       var msg = "Fail: Cant remove project";
       var switch_selector = "#github-repo-switch-" + model.get('github_id');
-
-      $(switch_selector).parents(".github-switch").bootstrapSwitch('setState', true);
-      $(switch_selector).parents(".github-switch").bootstrapSwitch('setActive', true);
+      var repo_switch = $(switch_selector).parents(".github-switch");
+      
+      repo_switch.bootstrapSwitch('setState', true);
+      repo_switch.bootstrapSwitch('setActive', true);
       showNotification("alert alert-warning", msg);
 
       return false;

@@ -58,9 +58,9 @@ class User::GithubReposController < ApplicationController
     case params[:command] 
     when "import" 
       project_name = params[:fullname]
-      branch = params[:branch]
-      project = fetch_from_github_and_store project_name, branch
-      
+      branch = params.has_key?(:branch) ? params[:branch] : "master"
+      project = ProjectService.import_from_github(current_user, project_name, branch)
+
       unless project.nil?
         repo = GithubRepo.find(params[:_id])
         repo = process_repo(repo)
@@ -145,7 +145,10 @@ class User::GithubReposController < ApplicationController
   end
 
   private
-    #adds additional data for repos
+=begin
+  adds additional data for each item in repo collection, 
+  for example is this project already imported etc
+=end
     def process_repo repo
       imported_repos = current_user.projects.by_source(Project::A_SOURCE_GITHUB)
       imported_repo_names  = imported_repos.map(&:github_project).to_set
@@ -164,36 +167,4 @@ class User::GithubReposController < ApplicationController
     
       repo
     end
-
-    def fetch_from_github_and_store(project_name, branch = "master")
-      imported_project = ProjectService.import_from_github(current_user, project_name, branch)
-
-      return imported_project if store_project(imported_project)
-
-      msg = "Cant save github project: #{project_name}. #{imported_project.errors.full_messages.to_sentence}"
-      Rails.logger.error msg
-      flash[:error] = msg 
-
-    end
-
-    def store_project(project)
-      if project.nil?
-        msg = "Project cant be nil. Some error with importing."
-        Rails.logger.error msg
-        flash[:error] = msg
-      end
-
-      project.make_project_key!
-      if project.dependencies && !project.dependencies.empty? && project.save
-        project.save_dependencies
-        flash[:success] = "Project was created successfully."
-        return true
-      else
-        p "Is dependencies empty?:",  project.dependencies.nil?
-        Rails.logger.error "Cant save project: #{project.errors.full_messages.to_json}"
-        flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."
-        return false
-      end
-    end
-
 end
