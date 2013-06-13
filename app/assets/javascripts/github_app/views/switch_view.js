@@ -110,12 +110,13 @@ define(['underscore', 'backbone'],
     },
 
     onAddFailure: function(model, xhr, options){
-      console.log("Failure: Cant import project: " + model.get('fullname'));
+      var error_msg = "Failure: Cant import project: " + model.get('fullname');
       var switch_selector = "#github-repo-switch-" + model.get('github_id');
       var repo_switch = $(switch_selector).parents(".github-switch");
       
-      showNotification("alert alert-success", msg);
-      repo_switch.parents(".repo-container").find(".repo-notification").html("");
+      showNotification("alert alert-success", error_msg);
+      console.debug(error_msg);
+      $(switch_selector).parents(".repo-container").find(".repo-notification").html("");
       repo_switch.bootstrapSwitch("setState", false);
       repo_switch.bootstrapSwitch('setActive', true);
       return false;
