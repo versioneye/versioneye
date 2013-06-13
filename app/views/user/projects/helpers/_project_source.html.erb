@@ -8,7 +8,9 @@
     <% end %>
 
     <% if project.source.eql? "github" %>
-      <a href="https://github.com/<%= project.github_project%>">GitHub</a>.
+      <a href="https://github.com/<%= project.github_project%>/tree/<%= project.github_branch %>">
+        GitHub <%= project.github_branch %> branch
+      </a>.
     <% elsif project.source.eql? "url" %>
       <a href="<%= project.url%>">URL</a>.
     <% else %>
