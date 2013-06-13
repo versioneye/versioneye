@@ -69,15 +69,15 @@ class ProjectService
       return nil
     end
 
-   github_file = Github.import_from_branch(user, repo_name, branch)
+    github_file = Github.import_from_branch(user, repo_name, branch)
     if github_file.nil?
       Rails.logger.error "Cant import project file from #{repo_name} branch #{branch} "
       return nil
     end
-    
+
     s3_info = S3.upload_github_file(github_file, github_file['name'])
     if s3_info.nil? && !s3_info.has_key?('filename') && !s3_info.has_key?('s3_url')
-      Rails.logger.error "Cant upload file to s3: #{github_file['name']}" 
+      Rails.logger.error "Cant upload file to s3: #{github_file['name']}"
       return nil
     end
 
@@ -93,8 +93,8 @@ class ProjectService
 
     parsed_project = create_from_url new_project.url
     parsed_project.update_attributes(new_project.attributes)
-    
-    return parsed_project if store_project(parsed_project)    
+
+    return parsed_project if store_project(parsed_project)
   end
 
   def self.is_allowed_to_add_private_project?(user)
