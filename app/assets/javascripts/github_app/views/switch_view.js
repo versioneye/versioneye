@@ -11,7 +11,7 @@ define(['underscore', 'backbone'],
     $(".flash-container").html(flash_template({
       classes: classes,
       content: message
-    })).fadeIn(400).delay(3000).fadeOut(800);
+    })).fadeIn(400).delay(6000).fadeOut(800);
   }
 
  
@@ -114,7 +114,7 @@ define(['underscore', 'backbone'],
       var switch_selector = "#github-repo-switch-" + model.get('github_id');
       var repo_switch = $(switch_selector).parents(".github-switch");
       
-      showNotification("alert alert-success", error_msg);
+      showNotification("alert alert-warning", error_msg);
       console.debug(error_msg);
       $(switch_selector).parents(".repo-container").find(".repo-notification").html("");
       repo_switch.bootstrapSwitch("setState", false);
