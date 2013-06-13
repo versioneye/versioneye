@@ -10,9 +10,8 @@
 //= require jquery_textbox_hinter
 //= require bootstrap.min
 //= require bootstrap_fileupload
-//= require bootstrap_switch
-//= require underscore-min
-//= require moment.min
-//= require jquery.cookie
+//= require libs/require
+
+//= require libs/moment.min
 //= require custom_github
 //= require custom_feedback
