@@ -142,6 +142,7 @@ class Github
     end
     
     project_file = Github.fetch_file project_file_info["url"], user.github_token
+
     project_file["name"] = project_file_info["name"]
     project_file["type"] = project_file_info["type"]
 
@@ -245,6 +246,7 @@ class Github
   def self.fetch_file( url, token )
     response = HTTParty.get( "#{url}?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT} )
 
+    p response.body
     if response.code != 200
       Rails.logger.error "Cant fetch file from #{url}:  #{response.code}\n
         #{response.message}\n#{response.data}"

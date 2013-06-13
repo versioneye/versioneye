@@ -114,6 +114,8 @@ define(['underscore', 'backbone'],
       var switch_selector = "#github-repo-switch-" + model.get('github_id');
       var repo_switch = $(switch_selector).parents(".github-switch");
       
+      showNotification("alert alert-success", msg);
+      repo_switch.parents(".repo-container").find(".repo-notification").html("");
       repo_switch.bootstrapSwitch("setState", false);
       repo_switch.bootstrapSwitch('setActive', true);
       return false;
