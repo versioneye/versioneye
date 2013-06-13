@@ -5,7 +5,7 @@ define(['underscore', 'backbone'],
     interpolate: /\{\{\=(.+?)\}\}/g,
     evaluate: /\{\{(.+?)\}\}/g
   };
-      
+
   var showNotification = function(classes, message){
     var flash_template = _.template(jQuery("#github-notification-template").html());
     $(".flash-container").html(flash_template({
@@ -14,7 +14,7 @@ define(['underscore', 'backbone'],
     })).fadeIn(400).delay(6000).fadeOut(800);
   }
 
- 
+
   var addRepoLinkLabel = function(selector, model){
     var url_label_template = _.template(jQuery("#github-repo-urllabel-template").html());
     $(selector).find('.repo-labels').append(url_label_template({
@@ -48,7 +48,7 @@ define(['underscore', 'backbone'],
     onSwitchChange: function(ev, switch_data){
       console.debug(switch_data);
       is_switch_active = switch_data.el.parents('.switch').bootstrapSwitch("isActive");
-      
+
       if(!is_switch_active){
         console.log("Going to drop event of unactive switch.");
         ev.preventDefault();
@@ -72,14 +72,14 @@ define(['underscore', 'backbone'],
         this.addProject(switch_data.el, switch_data.value);
       } else {
         this.removeProject(switch_data.el), switch_data.value;
-      } 
+      }
       return true;
     },
 
     addProject: function(el, data){
       console.log("Adding new project");
       this.model.save(
-        {command: "import"}, 
+        {command: "import"},
         {
           beforeSend: function(xhr) {
             xhr.setRequestHeader('X-CSRF-Token',
@@ -95,13 +95,13 @@ define(['underscore', 'backbone'],
       var switch_selector = "#github-repo-switch-" + model.get('github_id');
       var msg = ['<strong> Success! </strong>',
                  'Github project ', model.get('fullname'),
-                 ' is now successfully imported.', 
+                 ' is now successfully imported.',
                  'You can now checkout project\'s page to see state of dependencies.'
                  ].join(' ');
       addRepoLinkLabel(selector, model);
 
       var repo_switch = $(switch_selector).parents(".github-switch");
-      
+
       repo_switch.bootstrapSwitch('setState', true);
       repo_switch.bootstrapSwitch('setActive', true);
       $(switch_selector).parents(".repo-container").find(".repo-notification").html("");
@@ -113,8 +113,8 @@ define(['underscore', 'backbone'],
       var error_msg = "Failure: Cant import project: " + model.get('fullname');
       var switch_selector = "#github-repo-switch-" + model.get('github_id');
       var repo_switch = $(switch_selector).parents(".github-switch");
-      
-      showNotification("alert alert-warning", error_msg);
+
+      showNotification("alert alert-error", error_msg);
       console.debug(error_msg);
       $(switch_selector).parents(".repo-container").find(".repo-notification").html("");
       repo_switch.bootstrapSwitch("setState", false);
@@ -128,7 +128,7 @@ define(['underscore', 'backbone'],
         {command: "remove"},
         {
           beforeSend: function(xhr) {
-            xhr.setRequestHeader('X-CSRF-Token', 
+            xhr.setRequestHeader('X-CSRF-Token',
                                  $('meta[name="csrf-token"]').attr('content'));
           },
           success: this.onRemoveSuccess,
@@ -145,12 +145,12 @@ define(['underscore', 'backbone'],
         'Github project ', model.get('fullname'),
         ' is now successfully removed from your projects.'
       ].join(' ');
-      
+
       console.log("Going to remove label from: "+ selector);
       removeRepoLinkLabel(selector);
       var switch_selector = "#github-repo-switch-" + model.get('github_id');
       var repo_switch = $(switch_selector).parents(".github-switch");
-      
+
       repo_switch.bootstrapSwitch('setState', false);
       repo_switch.bootstrapSwitch('setActive', true);
       showNotification("alert alert-success", msg);
@@ -161,7 +161,7 @@ define(['underscore', 'backbone'],
       var msg = "Fail: Cant remove project";
       var switch_selector = "#github-repo-switch-" + model.get('github_id');
       var repo_switch = $(switch_selector).parents(".github-switch");
-      
+
       repo_switch.bootstrapSwitch('setState', true);
       repo_switch.bootstrapSwitch('setActive', true);
       showNotification("alert alert-warning", msg);
