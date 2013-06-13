@@ -58,7 +58,7 @@ class Github
     if url.nil?
       url =  "#{A_API_URL}/user/repos?page=#{page}&per_page=#{per_page}&access_token=#{user.github_token}"
     end
-    
+
     read_repos(user, url, page, per_page)
   end
 
@@ -114,13 +114,13 @@ class Github
 
     JSON.parse response.body
   end
-  
+
   def self.repo_branch_info(user, repo_name, branch)
     request_headers = {"User-Agent" => A_USER_AGENT}
     url = "#{A_API_URL}/repos/#{repo_name}/branches/#{branch}?access_token=#{user.github_token}"
     response = self.get(url, headers: request_headers)
     if response.code != 200
-      Rails.logger.error "Cant fetch info for #{repo_name} branch `#{branch}`: 
+      Rails.logger.error "Cant fetch info for #{repo_name} branch `#{branch}`:
       #{response.code}\n#{response.message}\n#{response.body}"
       return nil
     end
@@ -134,13 +134,13 @@ class Github
       Rails.logger.error "Cancelling importing: cant read branch info."
       return nil
     end
- 
+
     project_file_info = Github.repo_info user, repo_name, branch_info["commit"]["sha"]
     if project_file_info.nil?
       Rails.logger.error "Cancelling importing: cant read info about project's file."
       return nil
     end
-    
+
     project_file = Github.fetch_file project_file_info["url"], user.github_token
     project_file["name"] = project_file_info["name"]
     project_file["type"] = project_file_info["type"]
@@ -153,7 +153,7 @@ class Github
     page = 1
     loop do
       response  = HTTParty.get("https://api.github.com/user/repos?access_token=#{github_token}&page=#{page}", :headers => {"User-Agent" => A_USER_AGENT } )
-        
+
       repos = JSON.parse( response.body )
       break if ( repos.nil? || repos.empty? )
       repo_names += extract_repo_names( repos )
@@ -220,9 +220,11 @@ class Github
     end
     nil
   end
-  
+
   def self.repo_info(user, project_name, sha)
-    repository_info project_name, sha, user.github_token
+    response = repository_info project_name, sha, user.github_token
+    return nil if response.empty?
+    return response
   end
 
   def self.repository_info(git_project, sha, token)
@@ -232,7 +234,7 @@ class Github
     tree['tree'].each do |file|
       name = file['path']
       result['url'] = file['url']
-      result['name'] = name
+      result['name'] = namer
       type = Project.type_by_filename( name )
       if type
         result['type'] = type
@@ -243,7 +245,13 @@ class Github
   end
 
   def self.fetch_file( url, token )
+    p "fetch_file with url: #{url}"
+
+    return nil if url.nil? || url.empty?
+
     response = HTTParty.get( "#{url}?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT} )
+
+    p "repsonse : #{response}"
 
     if response.code != 200
       Rails.logger.error "Cant fetch file from #{url}:  #{response.code}\n
