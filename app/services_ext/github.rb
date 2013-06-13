@@ -30,6 +30,12 @@ class Github
     json_user
   end
 
+  def self.orga_info(user, orga_name)
+      url = "#{A_API_URL}/orgs/#{orga_name}?access_token=#{user.github_token}"
+      response_body = HTTParty.get(url, headers: {"User-Agent" => A_USER_AGENT}).response.body
+      JSON.parse response_body
+  end
+
   def self.oauth_scopes( token )
     resp = HTTParty.get("https://api.github.com/user?access_token=#{token}", :headers => {"User-Agent" => A_USER_AGENT } )
     resp.headers['x-oauth-scopes']
@@ -37,6 +43,28 @@ class Github
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
     "no_scope"
+  end
+
+=begin
+  Check does user has any personal or organisation repository on Ghub?
+  Returns total count of available repos.
+=end
+  def self.user_total_repos(user)
+    total_repos = 0
+    user_info = Github.user user.github_token
+    
+    total_repos += user_info['public_repos'] if user_info.has_key? 'public_repos'
+    total_repos += user_info['total_private_repos'] if user_info.has_key? 'total_private-repos'
+
+    user_orgs = Github.orga_names(user.github_token) 
+    user_orgs.each do |orga_name|
+      orga_info = Github.orga_info(user, orga_name)
+      total_repos += orga_info['public_repos'] if orga_info.has_key? 'public_repos'
+      total_repos += orga_info['total_private_repos'] if orga_info.has_key? 'total_private_repos'
+     
+    end
+
+    return total_repos
   end
 
   def self.user_repos_changed?( user )
