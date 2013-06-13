@@ -7,17 +7,29 @@
 <div class="span8">
 	<div class="row content_header_def" >
     Select the GitHub Repositories you want to monitor.
+    <div id = "github-menu"></div>
+
   </div>
   <div id = "github-repos" class="content" >
     <div >
       Please enable Javascript to see content of the page.
     </div>
   </div>
+  <div id = "github-pagination"></div>
 </div>
 
+<script id = "github-pagination-template" type = "text/template">
+  <div class = "pagination pagination-centered l_left_padding ">
+    <button class = "btn btn-mini btn-warning btn-block btn-pagination-next"
+      {{= (paging.currentPage >= paging.totalPages) ? " disabled " : ""}}>
+      Show more ({{= paging.currentPage}}/{{= paging.totalPages}})
+    </button>
+  </div>
+</script>
+
 <script id = "github-loading-template" type = "text/template">
-  <div>
-    <div class="{{= classes}}">
+  <div id = "github-loader">
+    <div class="{{= classes }}">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       {{= message }}
     </div>
@@ -30,24 +42,13 @@
 <script id = "github-notification-template" type = "text/template">
   <div class="{{= classes }}">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-    {{=  message }}
+    {{=  content }}
   </div>
 </script>
 
-<script id = "github-table-template" type = "text/template">
-  <table id = "github-repos-table" class = "table table-hover">
-    <tbody></tbody>
-  </table>
-</script>
-
-<script id = "github-table-row-template" type = "text/template">
-  <tr>
-    <td> {{= content}} </td>
-  </tr>
-</script>
 
 <script id = "github-repo-info-template" type = "text/template">
-  <div id = "github-repo-{{= repo.github_id }}">
+  <div id = "github-repo-{{= repo.github_id}}" class = "repo-container">
     <div class = "repo-info row-fluid">
       <div class = "repo-logo span2">
         {{ var logo_path = "/assets/language/" }}
@@ -55,14 +56,10 @@
         <img src = {{= logo_path + logo_name + ".png"}}
           style = "position: relative; left: 25%; right: 25%; height: 72px; " />
       </div>
-      <div class = "repo-info-content span8">
+      <div class = "repo-info-content span10">
         <h5>{{= repo.fullname }}</h5>
         <p> {{= repo.description}} </h5>
-        <div class = "repo-labels"> {{= labels }} </div>
-
-      </div>
-      <div class = "repo-switch span2">
-        {{= github_switch }}
+        <div class = "repo-controls row"></div>
       </div>
     </div>
     <div class = "repo-notification"></div>
@@ -75,30 +72,90 @@
   </span>
 </script>
 
+<script id = "github-repo-urllabel-template" type = "text/template">
+  <span class="">
+    <a href= "{{= url }}">
+      <span class = "{{= classes }}">{{= content }}</span>
+    </a>
+  </span>
+</script>
+
 <script id = "github-repo-switch-template" type = "text/template">
-   <div class = "github_switch switch switch-small pull-right">
-      <input type = "checkbox" class = "input"
-        {{= repo.supported ? "" : " disabled " }}
-        {{= repo.imported ? " checked " : "" }}
-        data-github-id = "{{= repo.github_id }}"
-        data-github-project-id = "{{= repo.project_id }}"
-        data-github-fullname = "{{= repo.fullname }}" />
+  <div class = "github-switch switch">
+    <input
+      id = "{{= 'github-repo-switch-'+ repo.github_id }}"
+      type = "checkbox" class = "input"
+      {{= !repo.supported ? ' disabled ' : '' }}
+      {{= repo.imported ? ' checked ': '' }}
+      data-github-id = "{{= repo.github_id }}"
+      data-github-project-id = "{{= repo.project_id }}"
+      data-github-fullname = "{{= repo.fullname }}" />
   </div>
 </script>
 
-<script id = "github-pagination-template" type = "text/template">
-  <div id= "github_pagination" class = "pagination {{= classes}}">
-    <ul>
-      {{= items }}
-    </ul>
-  </div>
+<script id = "github-repo-select-template" type = "text/template">
+  <select id = "{{= 'github-repo-select-' + repo.github_id}}" class = "span github-repo-select">
+    {{= options}}
+  </select>
 </script>
 
-<script id = "github-pagination-item-template" type = "text/template">
-  <li class = "{{= classes}}">
-    <span href = "#"
-      data-per-page = "{{= paging.per_page}}"
-      data-page = "{{= page }}"
-      >{{= page }}</span>
+<script id = "github-repo-select-option-template" type = "text/template">
+  <option value = "{{= value }}" {{= selected}}>
+    {{= content }}
+  </option>
+</script>
+
+<script id = "github-menu-item-template" type = "text/template">
+  <li>
+      <a href="#org/{{= org.name}}">
+        {{= org.name}} - {{= org.type}}
+      </a>
   </li>
 </script>
+
+<script id = "github-menu-template" type = "text/template">
+  <ul class="nav nav-pills">
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Organizations
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu" id = "github-menu-orgs">Loading...</ul>
+    </li>
+   <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Sort by
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="">
+          <a href="#">Language</a>
+        </li>
+        <li class="">
+          <a href="#">Updated</a>
+        </li>
+        <li class="">
+          <a href="#">...</a>
+        </li>
+      </ul>
+    </li>
+   <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Filter by
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="">
+          <a href="#">Language</a>
+        </li>
+        <li class="">
+          <a href="#">Updated</a>
+        </li>
+        <li class="">
+          <a href="#">...</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</script>
+

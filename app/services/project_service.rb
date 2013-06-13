@@ -69,6 +69,58 @@ class ProjectService
     end
   end
 
+=begin
+  Imports project file from github branches;
+  It's more general version of previous update_from_github
+=end
+  def self.import_from_github(user, repo_name, branch = "master")
+    private_project = Github.private_repo?(user.github_token, repo_name)
+
+    if private_project && !ProjectService.is_allowed_to_add_private_project?(user)
+      flash[:error] = "You selected a private project. Please upgrade your plan to monitor the selected project."
+      return nil
+    end
+
+    github_file = Github.import_from_branch(user, repo_name, branch)
+    if github_file.nil?
+      Rails.logger.error "Cant import project file from #{repo_name} branch #{branch} "
+      return nil
+    end
+
+    s3_info = S3.upload_github_file(github_file, github_file['name'])
+    if s3_info.nil? && !s3_info.has_key?('filename') && !s3_info.has_key?('s3_url')
+      Rails.logger.error "Cant upload file to s3: #{github_file['name']}"
+      return nil
+    end
+
+    parsed_project = create_from_url s3_info['s3_url']
+    parsed_project.update_attributes({name: repo_name,
+                                      project_type: github_file['type'],
+                                      user_id: user.id.to_s,
+                                      source: Project::A_SOURCE_GITHUB,
+                                      github_project: repo_name,
+                                      private_project: private_project,
+                                      github_branch: branch,
+                                      s3_filename: s3_info['filename'],
+                                      url: s3_info['s3_url']} )
+
+    return parsed_project if store_project(parsed_project)
+  end
+
+  def self.is_allowed_to_add_private_project?(user)
+    private_projects = Project.find_private_projects_by_user(user.id)
+    plan = user.plan
+    if plan.nil?
+      error_msg = "Current plan doesnt allow to add private project. Please update your plan."
+      flash[:error] = error_msg
+      return false
+    elsif plan.private_projects > private_projects.count
+      return true
+    else
+      return false
+    end
+  end
+
   def self.create_from_url( url )
     project_type = type_by_filename( url )
     parser = ParserStrategy.parser_for( project_type, url )
@@ -78,6 +130,23 @@ class ProjectService
     Rails.logger.error e.backtrace.first
     project = Project.new
   end
+
+  def self.store_project(project)
+    if project.nil?
+      msg = "Project cant be nil. Some error with importing."
+      Rails.logger.error msg
+    end
+
+    project.make_project_key!
+    if project.dependencies && !project.dependencies.empty? && project.save
+      project.save_dependencies
+      return true
+    else
+      Rails.logger.error "Cant save project: #{project.errors.full_messages.to_json}"
+      return false
+    end
+  end
+
 
   def self.destroy_project project_id
     project = Project.find_by_id( project_id )
