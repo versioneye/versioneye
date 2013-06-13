@@ -146,6 +146,10 @@ class Github
     project_file["type"] = project_file_info["type"]
 
     project_file
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    nil
   end
 
   def self.user_repo_names( github_token )
