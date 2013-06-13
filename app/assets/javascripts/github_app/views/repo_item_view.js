@@ -9,7 +9,7 @@ define(['underscore', 'backbone',
       interpolate: /\{\{\=(.+?)\}\}/g,
         evaluate: /\{\{(.+?)\}\}/g
     };
-    
+
     var GithubRepoItemView = Backbone.View.extend({
       template: _.template($("#github-repo-info-template").html()),
       render: function(){
@@ -21,7 +21,7 @@ define(['underscore', 'backbone',
         var repo_container = this.template({
           repo: this.model.toJSON()
         });
-        
+
         this.$el.html(repo_container);
         this.$el.find(".repo-controls").append(select_view.render().el);
         this.$el.find(".repo-controls").append(switch_view.render().el);
@@ -29,7 +29,6 @@ define(['underscore', 'backbone',
         return this;
       }
     });
-
 
   return GithubRepoItemView;
 });
