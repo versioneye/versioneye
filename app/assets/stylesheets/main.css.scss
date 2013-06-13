@@ -209,18 +209,21 @@ section > ul li {
   margin-bottom: 5px;
 }
 
-/* Used on package detail pages */
+/* Used on package detail pages .. width: 615px; */
 div.content {
   padding: 30px 0px 30px 30px;
   border-left: 1px solid #ddd;
   border-top: 1px solid #ddd;
-  width: 615px;
 }
 
 .content_header_def{
   padding-left: 30px;
   padding-bottom: 15px;
   border-left: 1px solid #DDD;
+}
+
+.l_left_padding {
+  padding-left: 30px;
 }
 
 .flash-container {
@@ -1372,7 +1375,7 @@ h2 + .row {
 }
 
 .repo-container {
-  border-bottom: 1px solid #f3f3f3; 
+  border-bottom: 1px solid #f3f3f3;
   padding: 10px 0px;
 
   &:hover {

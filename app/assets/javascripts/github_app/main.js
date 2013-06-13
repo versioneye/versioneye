@@ -1,5 +1,5 @@
 define(
-	['jQuery', 'underscore', 'backbone', 'moment', 'bootstrap_switch','paginator',
+	['jQuery', 'underscore', 'backbone', 'moment', 'bootstrap_switch', 'paginator',
    '/assets/github_app/views/loading_view',
    '/assets/github_app/views/menu_view',
    '/assets/github_app/views/repo_view',
@@ -50,18 +50,16 @@ define(
             console.log("No changes for repos - i'll wait and poll again.");
           }
         })
-        .always(function(){
-                  setTimeout(pollChanges, 10000);
-        });
+        .always(function(){ setTimeout(pollChanges, 30000); });
   }
-  
-  var prev_org_id = null;
-  var user_repos = new GithubRepoCollection();
-  var repo_view = new GithubRepoView({collection: user_repos});
+
+  var prev_org_id     = null;
+  var user_repos      = new GithubRepoCollection();
+  var repo_view       = new GithubRepoView({collection: user_repos});
   var pagination_view = new GithubPaginationView({collection: user_repos});
-  var menu_items = new GithubMenuCollection();
-  var menu_view = new GithubMenuView({collection: menu_items});
-  
+  var menu_items      = new GithubMenuCollection();
+  var menu_view       = new GithubMenuView({collection: menu_items});
+
   var AppRouter = Backbone.Router.extend({
 		routes: {
 			'user': 'showRepos',

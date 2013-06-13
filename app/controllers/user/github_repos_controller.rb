@@ -1,4 +1,5 @@
 class User::GithubReposController < ApplicationController
+
   before_filter :authenticate
 
   def index
@@ -39,7 +40,6 @@ class User::GithubReposController < ApplicationController
       logger.error "Unknown data object - dont satisfy githubrepo model."
       render nothing: true, status: 400
     end
-
     redirect_to action: create
   end
 
@@ -108,10 +108,8 @@ class User::GithubReposController < ApplicationController
         type: repo[:owner_type]
       }
     end
-
     render json: menu_items
   end
-
 
   def poll_changes
     is_changed = Github.user_repos_changed?(current_user)
@@ -122,7 +120,6 @@ class User::GithubReposController < ApplicationController
                     msg: "Changed - pulled #{current_user.github_repos.all.count} repos"}
       return true
     end
-
     render json: {changed: false}
   end
 
