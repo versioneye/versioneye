@@ -4,7 +4,7 @@ class User::GithubReposController < ApplicationController
   def index
     repos = []
     org_id = params["org_id"]
-    github_repos = current_user.github_repos.all 
+    github_repos = current_user.github_repos.all
     if org_id.nil? or org_id == "user"
       github_repos = github_repos.by_owner_type("user")
     else
@@ -55,8 +55,8 @@ class User::GithubReposController < ApplicationController
       render text: error_msg, status: 400
     end
 
-    case params[:command] 
-    when "import" 
+    case params[:command]
+    when "import"
       project_name = params[:fullname]
       branch = params.has_key?(:branch) ? params[:branch] : "master"
       project = ProjectService.import_from_github(current_user, project_name, branch)
@@ -87,10 +87,10 @@ class User::GithubReposController < ApplicationController
     render json: repo
  end
 
-  def show 
+  def show
     id = params[:id]
     repo = GithubRepo.where(_id: id.to_s).first
-    if repo  
+    if repo
       render json: process_repo(repo)
     else
       error_msg = "No such github repo with id: `#{id}`"
@@ -105,7 +105,7 @@ class User::GithubReposController < ApplicationController
       repo = current_user.github_repos.by_owner_login(owner_login).first
       menu_items << {
         name: repo[:owner_login],
-        type: repo[:owner_type] 
+        type: repo[:owner_type]
       }
     end
 
@@ -119,7 +119,7 @@ class User::GithubReposController < ApplicationController
     if is_changed == true
       updated_repos = GitHubService.cached_user_repos(current_user)
       render json: {changed: true,
-                    msg: "Changed - pulled #{current_user.github_repos.all.count} repos"} 
+                    msg: "Changed - pulled #{current_user.github_repos.all.count} repos"}
       return true
     end
 
@@ -146,14 +146,14 @@ class User::GithubReposController < ApplicationController
 
   private
 =begin
-  adds additional data for each item in repo collection, 
+  adds additional data for each item in repo collection,
   for example is this project already imported etc
 =end
     def process_repo repo
       imported_repos = current_user.projects.by_source(Project::A_SOURCE_GITHUB)
       imported_repo_names  = imported_repos.map(&:github_project).to_set
       supported_langs = Github.supported_languages
-      
+
       repo[:supported] = supported_langs.include? repo["language"]
       repo[:imported] = imported_repo_names.include? repo["fullname"]
       if repo[:imported]
@@ -164,7 +164,7 @@ class User::GithubReposController < ApplicationController
         repo[:project_url] = nil
         repo[:project_id] = nil
       end
-    
+
       repo
     end
 end
