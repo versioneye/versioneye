@@ -17,7 +17,7 @@ define(['underscore', 'backbone', 'paginator'],
     paginator_ui: {
       firstPage: 1,
       currentPage: 1,
-      perPage: 2
+      perPage: 5
     },
     server_api: {
       per_page: function(){return this.perPage;},
