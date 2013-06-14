@@ -44,8 +44,7 @@ class GithubRepo
     when 'organization'
       owner_type = 'organization'
     when 'user'
-      Rails.logger.debug("Adding new repo with userLogin: ")
-      Rails.logger.debug(user[:user_login])
+      Rails.logger.debug("Adding new repo into Cache with userLogin: #{user[:user_login]}")
       if user[:user_login] != repo['owner']['login'] then
         owner_type = 'team'
       else

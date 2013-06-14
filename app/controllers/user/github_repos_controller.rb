@@ -5,7 +5,13 @@ class User::GithubReposController < ApplicationController
   def index
     repos = []
     org_id = params["org_id"]
-    github_repos = current_user.github_repos.all
+
+    if current_user.github_repos.all.count > 0
+      github_repos = current_user.github_repos.all
+    else
+      github_repos = GitHubService.cached_user_repos(current_user)
+    end
+
     if org_id.nil? or org_id == "user"
       github_repos = github_repos.by_owner_type("user")
     else
