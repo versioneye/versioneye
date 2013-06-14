@@ -1,16 +1,16 @@
 define(
-	['jQuery', 'underscore', 'backbone', 'moment', 'bootstrap_switch', 'paginator',
+	['jQuery', 'underscore', 'backbone', 'moment', 'bootstrap_switch',
    '/assets/github_app/views/loading_view',
    '/assets/github_app/views/menu_view',
    '/assets/github_app/views/repo_view',
    '/assets/github_app/views/pagination_view',
+   '/assets/github_app/collections/all_repo_collection',
    '/assets/github_app/collections/repo_collection',
    '/assets/github_app/collections/menu_collection'],
-	function($, _, Backbone, moment, BootstrapSwitch, Paginator,
+	function($, _, Backbone, moment, BootstrapSwitch,
             GithubLoadingView, GithubMenuView, GithubRepoView,
-            GithubPaginationView, GithubRepoCollection, GithubMenuCollection){
-
-
+            GithubPaginationView, GithubAllRepoCollection, 
+            GithubRepoCollection, GithubMenuCollection){
 
   function showNotification(classes, message){
     var flash_template = _.template(jQuery("#github-notification-template").html());
@@ -21,16 +21,18 @@ define(
 
   }
 
-  function update_user_repos(){
-    user_repos.fetch({
-      data: {org_id: user_repos.org_id},
+  function update_all_repos(update_fn){
+    all_repos.fetch({
       cache: false,
-      remove: false,
-      update: true,
+      reset: true,
       success: function(repos, response, options){
         if(repos.length == 0){
+          //TODO: write as template
           $("#github-repos").html("You and your's organizations dont have any Github repositories.");
+          return false
         }
+        console.debug("Got repos: " + repos.length);
+        update_fn();
       },
       error: function(repos, response, options){
         showNotification("alert alert-error", 
@@ -48,8 +50,8 @@ define(
               "alert alert-info",
               "Detected changes on your Github repos - updated view."
             );
-            user_repos.reset();
-            update_user_repos();
+            all_repos.reset();
+            update_all_repos();
           } else {
             console.log("No changes for repos - i'll wait and poll again.");
           }
@@ -57,36 +59,54 @@ define(
         .always(function(){ setTimeout(pollChanges, 30000); });
   }
 
-  var prev_org_id     = null;
-  var user_repos      = new GithubRepoCollection();
-  var repo_view       = new GithubRepoView({collection: user_repos});
-  var pagination_view = new GithubPaginationView({collection: user_repos});
+  var all_repos       = new GithubAllRepoCollection(); //includes all repos
+  var current_repos   = new GithubRepoCollection(); //includes only repos for current view
+  var repo_view       = new GithubRepoView({collection: current_repos});
+  //var pagination_view = new GithubPaginationView({collection: current_repos});
   var menu_items      = new GithubMenuCollection();
   var menu_view       = new GithubMenuView({collection: menu_items});
+
+  var filter_by_org = function(repo){
+    return repo.get("owner_login") == current_repos.org_id;
+  }
+
+  var get_default_org = function(repos){
+    return repos.first().get('user_login');
+  }
 
   var AppRouter = Backbone.Router.extend({
 		routes: {
 			'user': 'showRepos',
 			'org/:org_id': 'showRepos',
-			'*path': 'showRepos'
+      'sort-by/:field/:order': 'sortRepos',
+			'*path': 'showDefaultRepos'
 		},
-		showRepos: function(org_id){
-      org_id = (_.isNull(org_id)) ? "user" : org_id;
-      if(user_repos.org_id !== org_id){
-        console.log("Org id changed - cleaning up & reseting pager.");
-        user_repos.reset();
-        user_repos.org_id = org_id;
-        user_repos.currentPage = 1;
-        prev_org_id = org_id;
-      }
-			console.log("going to show repos for: " + org_id);
-
+    showDefaultRepos: function(){
+ 
 			var loader_view = new GithubLoadingView();
 			loader_view.render();
-
       menu_items.fetch({});
-      update_user_repos();
-		}
+      update_all_repos(function(){
+        current_repos.org_id = get_default_org(all_repos);
+        current_repos.set(all_repos.filter(filter_by_org));
+      });
+    },
+		showRepos: function(org_id){
+      org_id = (_.isNull(org_id)) ? get_default_org(all_repos) : org_id;
+      if(current_repos.org_id !== org_id){
+        console.log("Org id changed - cleaning up & resetting view.");
+        current_repos.org_id = org_id;
+        current_repos.reset();
+      }
+			console.log("going to show repos for: " + org_id);
+      console.log("all repos count: " + all_repos.length);
+	    current_repos.set(all_repos.filter(filter_by_org));
+      console.log("Size of current_repos:" + current_repos.length);
+	  }, 
+
+    sortRepos: function(field, order){
+      console.debug("Sorting by " + field + " order: " + order);
+    }
 	});
 
 	return {init : function(){

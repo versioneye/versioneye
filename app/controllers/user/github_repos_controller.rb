@@ -4,7 +4,6 @@ class User::GithubReposController < ApplicationController
 
   def index
     repos = []
-    org_id = params["org_id"]
 
     if current_user.github_repos.all.count > 0
       github_repos = current_user.github_repos.all
@@ -12,32 +11,14 @@ class User::GithubReposController < ApplicationController
       github_repos = GitHubService.cached_user_repos(current_user)
     end
 
-    if org_id.nil? or org_id == "user"
-      github_repos = github_repos.by_owner_type("user")
-    else
-      github_repos = github_repos.by_owner_login(org_id)
-    end
-
-    github_repos = github_repos.asc(:language).paginate(
-      page: (params[:page] || 1),
-      per_page: (params[:per_page] || 30)
-    )
+    github_repos = github_repos.asc(:language)
     github_repos.each do |repo|
       repos << process_repo(repo)
     end
 
-    repos.sort_by! {|repo| "%s" % repo["language"].to_s}
-    paging = {
-      current_page: github_repos.current_page,
-      per_page: github_repos.per_page,
-      total_entries: github_repos.total_entries,
-      total_pages: github_repos.total_pages
-    }
-
     render json: {
       success: true,
       repos: repos,
-      paging: paging
     }.to_json
   end
 
