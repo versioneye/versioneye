@@ -23,14 +23,18 @@ define(
 
   function update_user_repos(){
     user_repos.fetch({
-      data: {org_id: prev_org_id},
+      data: {org_id: user_repos.org_id},
       cache: false,
       remove: false,
       update: true,
+      success: function(repos, response, options){
+        if(repos.length == 0){
+          $("#github-repos").html("You and your's organizations dont have any Github repositories.");
+        }
+      },
       error: function(repos, response, options){
-        showNotification(
-          "alert alert-warning",
-          "Cant load repos: " + response);
+        showNotification("alert alert-error", 
+                         '<div><i class="icon-info-sign"></i> Cant load your repositoiries due a connectivity issues.</div>');
         $("#github-repos").html("You dont have any github repos or we just cant imported.");
       }
     });
@@ -68,7 +72,7 @@ define(
 		},
 		showRepos: function(org_id){
       org_id = (_.isNull(org_id)) ? "user" : org_id;
-      if(prev_org_id !== org_id){
+      if(user_repos.org_id !== org_id){
         console.log("Org id changed - cleaning up & reseting pager.");
         user_repos.reset();
         user_repos.org_id = org_id;
@@ -89,6 +93,6 @@ define(
 		console.log("Running github app");
 		var app_router = new AppRouter();
 		Backbone.history.start();
-    setTimeout(pollChanges, 1000);
-	}};
+	  setTimeout(pollChanges, 30000); //start polling in 30secs
+  }};
 });

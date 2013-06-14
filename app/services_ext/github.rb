@@ -45,28 +45,6 @@ class Github
     "no_scope"
   end
 
-=begin
-  Check does user has any personal or organisation repository on Ghub?
-  Returns total count of available repos.
-=end
-  def self.user_total_repos(user)
-    total_repos = 0
-    user_info = Github.user user.github_token
-    
-    total_repos += user_info['public_repos'] if user_info.has_key? 'public_repos'
-    total_repos += user_info['total_private_repos'] if user_info.has_key? 'total_private-repos'
-
-    user_orgs = Github.orga_names(user.github_token) 
-    user_orgs.each do |orga_name|
-      orga_info = Github.orga_info(user, orga_name)
-      total_repos += orga_info['public_repos'] if orga_info.has_key? 'public_repos'
-      total_repos += orga_info['total_private_repos'] if orga_info.has_key? 'total_private_repos'
-     
-    end
-
-    return total_repos
-  end
-
   def self.user_repos_changed?( user )
     repo = user.github_repos.all.first
     if repo.nil?
@@ -306,9 +284,16 @@ class Github
       lang.casecmp("Clojure") == 0
     end
 
-    def self.get_message( repositories )
-      p "#---------------", repositories
-      repositories['message']
+=begin
+  Method that checks does Github sent error message
+  Github responses for client errors:
+  {"message": "Problems parsing JSON"}
+=end
+    def self.get_message( data )
+      if data.is_a?(Hash) and data.has_key?('message')
+        Rails.logger.error "Github API sent exception: #{data}"
+        return data['message']
+      end
     rescue => e
       # by default here should be no message or nil
       # We expect that everything is ok and there is no error message
