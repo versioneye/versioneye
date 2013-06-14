@@ -10,10 +10,11 @@ define(['underscore', 'backbone',
 	var GithubRepoView = Backbone.View.extend({
 		el: '#github-repos',
     initialize: function(){
-      var repos = this.collection;
-      repos.on('add', this.addItem, this);
-      repos.on('reset', this.resetView, this);
+      this.collection.on('all', this.addAll, this);
+      this.collection.on('add', this.addItem, this);
+      this.collection.on('reset', this.resetView, this);
     },
+
 		resetView: function(){
       console.debug("Resetting repo view");
       $('.github-switch').bootstrapSwitch('destroy');
@@ -22,7 +23,11 @@ define(['underscore', 'backbone',
       $("#github-repos").empty();
 			return false;
 		},
+    addAll: function(repos){
+      console.log("Fired all event on GithubRepoView");
+    },
 		addItem : function(model){
+      console.log("Going to render item: " + model.toJSON());
 			var itemview = new GithubRepoItemView({model: model});
       var switch_selector = "#github-repo-switch-" + model.get('github_id');
 			$("#github-repos").append(itemview.render().el);
