@@ -13,7 +13,6 @@ define(['underscore', 'backbone',
     var GithubRepoItemView = Backbone.View.extend({
       template: _.template($("#github-repo-info-template").html()),
       render: function(){
-        console.debug("Going to render: " + this.model.toJSON());
         var switch_view = new GithubRepoSwitchView({model: this.model});
         var label_view = new GithubRepoLabelView({model: this.model});
         var select_view = new GithubRepoSelectView({model: this.model});
