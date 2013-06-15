@@ -31,8 +31,7 @@ define(
           $("#github-repos").html("You and your's organizations dont have any Github repositories.");
           return false
         }
-        console.debug("Got repos: " + repos.length);
-        update_fn();
+        update_fn(repos);
       },
       error: function(repos, response, options){
         showNotification("alert alert-error", 
@@ -59,12 +58,17 @@ define(
         .always(function(){ setTimeout(pollChanges, 30000); });
   }
 
+  //TODO: refactor to GithubApp namespace
   var all_repos       = new GithubAllRepoCollection(); //includes all repos
-  var current_repos   = new GithubRepoCollection(); //includes only repos for current view
+  var current_repos   = new GithubRepoCollection([], {allRepos: all_repos}); //includes only repos for current view
   var repo_view       = new GithubRepoView({collection: current_repos});
-  //var pagination_view = new GithubPaginationView({collection: current_repos});
+  var pagination_view = new GithubPaginationView({collection: current_repos});
   var menu_items      = new GithubMenuCollection();
-  var menu_view       = new GithubMenuView({collection: menu_items});
+  var menu_view       = new GithubMenuView({
+                          collection: menu_items, 
+                          currentRepos: current_repos,
+                          allRepos: all_repos
+                        });
 
   var filter_by_org = function(repo){
     return repo.get("owner_login") == current_repos.org_id;
@@ -73,40 +77,45 @@ define(
   var get_default_org = function(repos){
     return repos.first().get('user_login');
   }
+  
+  var initViews = function(repos){
+    menu_items.fetch({});
+    if(_.isNaN(current_repos.org_id)){
+      current_repos.org_id = get_default_org(repos);
+    }
+    console.debug("Initializing view with org-id: " + current_repos.org_id)
+    current_repos.perPage = 5;
+    current_repos.currentPage = 0;
+    current_repos.appendNextPage();
+    pagination_view.render();
+  };
 
   var AppRouter = Backbone.Router.extend({
 		routes: {
 			'user': 'showRepos',
 			'org/:org_id': 'showRepos',
-      'sort-by/:field/:order': 'sortRepos',
 			'*path': 'showDefaultRepos'
 		},
     showDefaultRepos: function(){
- 
 			var loader_view = new GithubLoadingView();
 			loader_view.render();
-      menu_items.fetch({});
-      update_all_repos(function(){
-        current_repos.org_id = get_default_org(all_repos);
-        current_repos.set(all_repos.filter(filter_by_org));
-      });
+      update_all_repos(initViews);
     },
 		showRepos: function(org_id){
-      org_id = (_.isNull(org_id)) ? get_default_org(all_repos) : org_id;
+      org_id = (_.isNaN(org_id)) ? get_default_org(all_repos) : org_id;
       if(current_repos.org_id !== org_id){
         console.log("Org id changed - cleaning up & resetting view.");
         current_repos.org_id = org_id;
+        current_repos.currentPage = 0;
         current_repos.reset();
       }
 			console.log("going to show repos for: " + org_id);
-      console.log("all repos count: " + all_repos.length);
-	    current_repos.set(all_repos.filter(filter_by_org));
-      console.log("Size of current_repos:" + current_repos.length);
-	  }, 
-
-    sortRepos: function(field, order){
-      console.debug("Sorting by " + field + " order: " + order);
-    }
+      if(all_repos.length > 0){
+	      current_repos.appendNextPage();
+      } else {
+        update_all_repos(initViews);
+      }
+    } 
 	});
 
 	return {init : function(){

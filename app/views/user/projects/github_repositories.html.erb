@@ -13,6 +13,7 @@
   <div id = "github-repos" class="content" >
     <div >
       Please enable Javascript to see content of the page.
+      Or just refresh page.
     </div>
   </div>
   <div id = "github-pagination"></div>
@@ -21,6 +22,9 @@
 <script id = "github-pagination-template" type = "text/template">
   <div class = "pagination pagination-centered l_left_padding ">
     <button class = "btn btn-mini btn-warning btn-block btn-pagination-next"
+      data-current-page = "{{= paging.currentPage}}"
+      data-total-pages = "{{= paging.totalPages }}"
+      data-per-page = "{{= paging.perPage }}"
       {{= (paging.currentPage >= paging.totalPages) ? " disabled " : ""}}>
       Show more ({{= paging.currentPage}}/{{= paging.totalPages}})
     </button>
@@ -129,17 +133,24 @@
       </a>
       <ul id = "github-menu-sort" class="dropdown-menu">
         <li class="sort-item">
-          <a href="#sort-by/lang/asc">Language | A-Z</a>
+          <a href= "javascript:void(0)" data-field="language" data-order = "-1">Language</a>
         </li>
         <li class="sort-item">
-          <a href="#sort-by/lang/desc">Language | Z-A</a>
+          <a href= "javascript:void(0)" data-field="updated_at" data-order= "-1">Updated</a>
         </li>
         <li class="sort-item">
-          <a href="#sort-by/updated/desc">Updated | Desc </a>
+          <a href= "javascript:void(0)" data-field="private" data-order= "-1">Visibility</a>
         </li>
         <li class="sort-item">
-          <a href="#sort-by/updated/asc">Updated | Asc</a>
+          <a href= "javascript:void(0)" data-field="imported" data-order= "-1">Imported</a>
         </li>
+        <li class="sort-item">
+          <a href= "javascript:void(0)" data-field="name" data-order= "-1">Name</a>
+        </li>
+        <li class="sort-item">
+          <a href= "javascript:void(0)" data-field="supported" data-order= "-1">Supported</a>
+        </li>
+
       </ul>
     </li>
    <li class="dropdown">
@@ -148,16 +159,55 @@
         <b class="caret"></b>
       </a>
       <ul class="dropdown-menu">
-        <li class="">
-          <a href="#">Language</a>
+        <li class="filter-item">
+          <a href= "javascript:void(0)" data-field="language" data-value="coffeescript">
+            <img src="/assets/language/javascript.png" style= "height: 20px; vertical-align: top;">
+            CoffeeScript
+          </a>
         </li>
-        <li class="">
-          <a href="#">Updated</a>
+        <li class="filter-item">
+          <a href= "javascript:void(0)" data-field="language" data-value="clojure">
+            <img src="/assets/language/clojure.png" style= "height: 20px; vertical-align: top;">
+            Clojure
+          </a>
         </li>
-        <li class="">
-          <a href="#">...</a>
+        <li class="filter-item">
+          <a href= "javascript:void(0)" data-field="language" data-value="java">
+             <img src="/assets/language/java.png" style= "height: 20px; vertical-align: top;">        
+             Java
+          </a>
         </li>
-      </ul>
+        <li class="filter-item">
+          <a href= "javascript:void(0)" data-field="language" data-value="javascript">
+            <img src="/assets/language/javascript.png" style= "height: 20px; vertical-align: top;">        
+            Javascript
+          </a>
+        </li>
+        <li class="filter-item">
+          <a href= "javascript:void(0)" data-field="language" data-value="node.js">
+            <img src="/assets/language/node.js.png" style= "height: 20px; vertical-align: top;">        
+            Node.js
+          </a>
+        </li>
+        <li class="filter-item">
+          <a href= "javascript:void(0)" data-field="language" data-value="php">
+            <img src="/assets/language/php.png" style= "height: 20px; vertical-align: top;">        
+            PHP
+          </a>
+        </li>
+        <li class="filter-item">
+          <a href= "javascript:void(0)" data-field="language" data-value="python">
+             <img src="/assets/language/python.png" style= "height: 20px; vertical-align: top;">        
+            Python
+          </a>
+        </li>
+        <li class="filter-item">
+          <a href= "javascript:void(0)" data-field="language" data-value="ruby">
+            <img src="/assets/language/ruby.png" style= "height: 20px; vertical-align: top;">        
+            Ruby
+          </a>
+        </li>
+    </ul>
     </li>
   </ul>
 </script>
