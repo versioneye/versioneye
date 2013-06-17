@@ -93,31 +93,33 @@ class ComposerParser < CommonParser
       version_splitted = version.split(",")
       prod = Product.new
       prod.versions = product.versions
+      stability = dependency.stability
       version_splitted.each do |verso|
         verso.gsub!(" ", "")
+        stability = VersionTagRecognizer.stability_tag_for verso
         if verso.match(/^>=/)
           verso.gsub!(">=", "")
-          new_range = VersionService.greater_than_or_equal( prod.versions, verso, true )
+          new_range = VersionService.greater_than_or_equal( prod.versions, verso, true, stability )
           prod.versions = new_range
         elsif verso.match(/^>/)
           verso.gsub!(">", "")
-          new_range = VersionService.greater_than( prod.versions, verso, true )
+          new_range = VersionService.greater_than( prod.versions, verso, true, stability )
           prod.versions = new_range
         elsif verso.match(/^<=/)
           verso.gsub!("<=", "")
-          new_range = VersionService.smaller_than_or_equal( prod.versions, verso, true )
+          new_range = VersionService.smaller_than_or_equal( prod.versions, verso, true, stability )
           prod.versions = new_range
         elsif verso.match(/^</)
           verso.gsub!("<", "")
-          new_range = VersionService.smaller_than( prod.versions, verso, true )
+          new_range = VersionService.smaller_than( prod.versions, verso, true, stability )
           prod.versions = new_range
         elsif verso.match(/^!=/)
           verso.gsub!("!=", "")
-          new_range = VersionService.newest_but_not( prod.versions, verso, true)
+          new_range = VersionService.newest_but_not( prod.versions, verso, true, stability)
           prod.versions = new_range
         end
       end
-      highest_version = VersionService.newest_version_from( prod.versions )
+      highest_version = VersionService.newest_version_from( prod.versions, stability )
       if highest_version
         dependency.version_requested = highest_version.version
       else
