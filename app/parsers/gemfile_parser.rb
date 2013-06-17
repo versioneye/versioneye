@@ -147,6 +147,7 @@ class GemfileParser < CommonParser
     gem_name = gem_name.strip
     gem_name = gem_name.gsub('"', '')
     gem_name = gem_name.gsub("'", "")
+    gem_name = gem_name.split(" ").first
     gem_name
   end
 
