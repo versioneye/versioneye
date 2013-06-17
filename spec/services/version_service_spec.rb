@@ -41,6 +41,19 @@ describe VersionService do
       newest.version.should eql("1.1-dev")
     end
 
+    it "returns the newest dev version because the other one is dev-master" do
+      product.versions.push( Version.new({:version => "dev-master" }) )
+      product.versions.push( Version.new({:version => "1.1-dev"  }) )
+      newest = VersionService.newest_version( product.versions, VersionTagRecognizer::A_STABILITY_DEV )
+      newest.version.should eql("1.1-dev")
+    end
+
+    it "returns the dev-master because it is the only one" do
+      product.versions.push( Version.new({:version => "dev-master" }) )
+      newest = VersionService.newest_version( product.versions, VersionTagRecognizer::A_STABILITY_DEV )
+      newest.version.should eql("dev-master")
+    end
+
   end
 
   describe "newest_version_number" do
@@ -302,5 +315,6 @@ describe VersionService do
     end
 
   end
+
 
 end

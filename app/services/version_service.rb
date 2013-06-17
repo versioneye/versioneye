@@ -5,6 +5,7 @@ class VersionService
     return nil if versions.nil? || versions.empty?
     filtered = Array.new
     versions.each do |version|
+      next if version.version.eql?("dev-master")
       if VersionTagRecognizer.does_it_fit_stability? version.version, stability
         filtered << version
       end
