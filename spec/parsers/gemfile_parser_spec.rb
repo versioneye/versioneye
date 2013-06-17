@@ -58,11 +58,17 @@ describe GemfileParser do
       product13 = ProductFactory.create_for_gemfile("govkit", "1.0.0")
       product13.save
 
+      product14 = ProductFactory.create_for_gemfile("libnotify", "1.0.0")
+      product14.save
+
+      product15 = ProductFactory.create_for_gemfile("growl", "3.3.3")
+      product15.save
+
 
       parser  = GemfileParser.new
       project = parser.parse("http://s3.amazonaws.com/veye_test_env/Gemfile")
       project.should_not be_nil
-      project.dependencies.size.should eql(14)
+      project.dependencies.size.should eql(16)
 
       dep_1 = project.dependencies.first
       dep_1.name.should eql("rails")
@@ -151,6 +157,19 @@ describe GemfileParser do
       dep_14.version_requested.should eql("0.11.3")
       dep_14.version_current.should eql("0.11.3")
       dep_14.comperator.should eql("=")
+
+      dep_15 = project.dependencies[14]
+      dep_15.name.should eql("libnotify")
+      dep_15.version_requested.should eql("1.0.0")
+      dep_15.version_current.should eql("1.0.0")
+      dep_15.comperator.should eql("=")
+
+      dep_16 = project.dependencies[15]
+      dep_16.name.should eql("growl")
+      dep_16.version_requested.should eql("3.3.3")
+      dep_16.version_current.should eql("3.3.3")
+      dep_16.comperator.should eql("=")
+
     end
 
   end
