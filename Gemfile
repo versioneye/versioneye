@@ -55,5 +55,3 @@ group :test do
   gem 'debugger'
   gem 'database_cleaner'  , '1.0.1'
 end
-
-# gem 'puma'              , '2.0.1'
