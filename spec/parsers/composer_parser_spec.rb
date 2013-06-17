@@ -92,11 +92,28 @@ describe ComposerParser do
       product_17.versions.push( Version.new({ :version => "2.2.1"       }) )
       product_17.save
 
+      product_18 = ProductFactory.create_for_composer("symfony/http-foundation", "1.0.0")
+      product_18.versions.push( Version.new({ :version => "2.0.0"       }) )
+      product_18.versions.push( Version.new({ :version => "2.1.0"       }) )
+      product_18.versions.push( Version.new({ :version => "2.2.0"       }) )
+      product_18.versions.push( Version.new({ :version => "2.3.x-dev"   }) )
+      product_18.versions.push( Version.new({ :version => "dev-master"  }) )
+      product_18.save
+
+      product_19 = ProductFactory.create_for_composer("symfony/http-kernel_2", "1.0.0")
+      product_19.versions.push( Version.new({ :version => "2.0.0"       }) )
+      product_19.versions.push( Version.new({ :version => "2.1.0"       }) )
+      product_19.versions.push( Version.new({ :version => "2.2.0"       }) )
+      product_19.versions.push( Version.new({ :version => "2.3-dev"   }) )
+      product_19.versions.push( Version.new({ :version => "2.4-dev"   }) )
+      product_19.versions.push( Version.new({ :version => "dev-master"  }) )
+      product_19.save
+
 
       parser  = ComposerParser.new
       project = parser.parse("http://s3.amazonaws.com/veye_test_env/composer.json")
       project.should_not be_nil
-      project.dependencies.size.should eql(17)
+      project.dependencies.size.should eql(19)
 
 
       dep_01 = fetch_by_name(project.dependencies, "symfony/symfony")
@@ -206,6 +223,20 @@ describe ComposerParser do
       dep_17.version_requested.should eql("2.2.1")
       dep_17.version_current.should   eql("2.2.1")
       dep_17.comperator.should eql("~")
+
+      dep_18 = fetch_by_name(project.dependencies, "symfony/http-foundation")
+      dep_18.name.should eql("symfony/http-foundation")
+      dep_18.version_label.should eql(">=2.1,<2.4-dev")
+      dep_18.version_requested.should eql("2.3.x-dev")
+      dep_18.version_current.should   eql("2.3.x-dev")
+      dep_18.comperator.should eql("=")
+
+      dep_19 = fetch_by_name(project.dependencies, "symfony/http-kernel_2")
+      dep_19.name.should              eql("symfony/http-kernel_2")
+      dep_19.version_label.should     eql(">=2.1,<2.4-dev")
+      dep_19.version_requested.should eql("2.3-dev")
+      dep_19.version_current.should   eql("2.4-dev")
+      dep_19.comperator.should        eql("=")
     end
 
   end

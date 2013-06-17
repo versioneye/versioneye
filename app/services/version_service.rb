@@ -94,7 +94,7 @@ class VersionService
 
 
   # TODO write test for it
-  def self.newest_but_not( versions, value, range=false)
+  def self.newest_but_not( versions, value, range=false, stability = "stable")
     filtered_versions = Array.new
     versions.each do |version|
       if !version.version.match(/^#{value}/)
@@ -102,12 +102,12 @@ class VersionService
       end
     end
     return filtered_versions if range
-    newest = VersionService.newest_version_from(filtered_versions)
+    newest = VersionService.newest_version_from(filtered_versions, stability)
     return get_newest_or_value(newest, value)
   end
 
 
-  def self.greater_than( versions, value, range = false)
+  def self.greater_than( versions, value, range = false, stability = "stable")
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.bigger?(version.version, value)
@@ -115,12 +115,13 @@ class VersionService
       end
     end
     return filtered_versions if range
-    newest = VersionService.newest_version_from(filtered_versions)
+    newest = VersionService.newest_version_from(filtered_versions, stability)
     return get_newest_or_value(newest, value)
   end
 
 
-  def self.greater_than_or_equal( versions, value, range = false)
+  def self.greater_than_or_equal( versions, value, range = false, stability = "stable")
+    p "greater_than_or_equal #{value} - #{stability}"
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.bigger_or_equal?(version.version, value)
@@ -128,12 +129,13 @@ class VersionService
       end
     end
     return filtered_versions if range
-    newest = VersionService.newest_version_from(filtered_versions)
+    newest = VersionService.newest_version_from(filtered_versions, stability)
     return get_newest_or_value(newest, value)
   end
 
 
-  def self.smaller_than( versions, value, range = false)
+  def self.smaller_than( versions, value, range = false, stability = "stable")
+    p "smaller_than #{value} - #{stability}"
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.smaller?(version.version, value)
@@ -141,12 +143,12 @@ class VersionService
       end
     end
     return filtered_versions if range
-    newest = VersionService.newest_version_from(filtered_versions)
+    newest = VersionService.newest_version_from(filtered_versions, stability)
     return get_newest_or_value(newest, value)
   end
 
 
-  def self.smaller_than_or_equal( versions, value, range = false)
+  def self.smaller_than_or_equal( versions, value, range = false, stability = "stable")
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.smaller_or_equal?(version.version, value)
@@ -154,7 +156,7 @@ class VersionService
       end
     end
     return filtered_versions if range
-    newest = VersionService.newest_version_from(filtered_versions)
+    newest = VersionService.newest_version_from(filtered_versions, stability)
     return get_newest_or_value(newest, value)
   end
 
