@@ -43,12 +43,8 @@ define(['underscore', 'backbone'],
     filterByField: function(field_name, value){
       console.debug("Filtering org: " + this.org_id + ' by field ' + field_name + ' with value ' + value);
       var filtered_repos = this.onlyOrgRepos().filter(function(repo){return repo.get(field_name) == value}, this);
-      console.log("Filtered repos: " + filtered_repos.length);
-
-      this.currentPage = 0;
-      //this.allRepos.set(filtered_repos);
-      this.reset();
-      this.addNewItems(filtered_repos);
+      
+      return filtered_repos;
     },
     onlyOrgRepos: function(){
       console.log("Filtering orgs by: " + this.org_id);
@@ -56,10 +52,10 @@ define(['underscore', 'backbone'],
       return org_repos;
     },
     addNewItems: function(new_repos){
-      this.totalPages = Math.ceil(new_repos.length / this.perPage);
       var since = (this.currentPage * this.perPage);
       console.log("Going to add next items since: " + since); 
-      
+      this.totalPages = Math.ceil(new_repos.length/ this.perPage);
+ 
       var next_slice = new_repos.slice(since, since + this.perPage);
       this.add(next_slice, {update: true});
     },
@@ -68,12 +64,12 @@ define(['underscore', 'backbone'],
         this.currentPage = to_page; //move to page
       }
       if(_.isNaN(this.currentPage) || _.isUndefined(this.currentPage)){ 
+        console.debug("RepoCollection has no currentPage defined.");
         this.currentPage = 0;
       } 
       
       var org_repos = this.onlyOrgRepos(); 
       this.addNewItems(org_repos); 
-      this.currentPage += 1;
       
       return this;
     }
