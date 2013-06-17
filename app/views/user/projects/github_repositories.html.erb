@@ -25,8 +25,8 @@
       data-current-page = "{{= paging.currentPage}}"
       data-total-pages = "{{= paging.totalPages }}"
       data-per-page = "{{= paging.perPage }}"
-      {{= (paging.currentPage >= paging.totalPages) ? " disabled " : ""}}>
-      Show more ({{= paging.currentPage}}/{{= paging.totalPages}})
+      {{= (paging.currentPage  >= (paging.totalPages - 1)) ? " disabled " : ""}}>
+      Show more ({{= (paging.currentPage + 1)}}/{{= paging.totalPages}})
     </button>
   </div>
 </script>

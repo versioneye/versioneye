@@ -45,18 +45,21 @@ define(['underscore', 'backbone'],
       var filter_item = $(ev.target).parents(".filter-item");
       var filter_data = $(ev.target).data();
 
+      this.currentRepos.currentPage = 0;
+      this.currentRepos.reset();
+
       if(filter_item.hasClass('active')){
         //removing the current filter
         $(ev.target).find('.checker').remove();
         filter_item.removeClass('active');
-        this.currentRepos.reset();
         this.allRepos.fetchAll();
         this.currentRepos.appendNextPage(0); //restore organization view
       } else {
         //going to add a filter
         filter_item.addClass('active');
         $(ev.target).append(checker_template({}));
-        this.currentRepos.filterByField(filter_data['field'], filter_data['value']);
+        var filtered_repos = this.currentRepos.filterByField(filter_data['field'], filter_data['value']);
+        this.currentRepos.addNewItems(filtered_repos);
       }
       return true;
     }

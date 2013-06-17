@@ -10,14 +10,18 @@ define(['underscore', 'backbone',
 	var GithubRepoView = Backbone.View.extend({
 		el: '#github-repos',
     initialize: function(){
-      this.collection.on('all', this.addAll, this);
       this.collection.on('add', this.addItem, this);
       this.collection.on('reset', this.resetView, this);
       this.collection.on('change', this.onChange, this);
-      this.collection.on('sort', this.resetView, this);
+      this.collection.on('sort', this.render, this);
     },
 
     render: function(){
+      console.log("Rendering all items in RepoCollection");  
+      $('.github-switch').bootstrapSwitch('destroy');
+      $('.github-switch').remove();
+      $("#github-repos").empty();
+    
       this.collection.each(function(repo){
         this.addItem(repo);
       }, this);
@@ -28,7 +32,7 @@ define(['underscore', 'backbone',
       $('.github-switch').remove();
       $("#github-loader").remove();
       $("#github-repos").empty();
-      this.render();
+      //this.render();
 			return false;
 		},
 

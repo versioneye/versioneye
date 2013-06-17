@@ -17,30 +17,10 @@ define(
     $(".flash-container").html(flash_template({
       classes: classes,
       content: message
-    })).fadeIn(400).delay(3000).fadeOut(800);
+    })).fadeIn(400).delay(6000).fadeOut(800);
 
   }
-
-  function update_all_repos(update_fn){
-    all_repos.fetch({
-      cache: false,
-      reset: true,
-      success: function(repos, response, options){
-        if(repos.length == 0){
-          //TODO: write as template
-          $("#github-repos").html("You and your's organizations dont have any Github repositories.");
-          return false
-        }
-        update_fn(repos);
-      },
-      error: function(repos, response, options){
-        showNotification("alert alert-error", 
-                         '<div><i class="icon-info-sign"></i> Cant load your repositoiries due a connectivity issues.</div>');
-        $("#github-repos").html("You dont have any github repos or we just cant imported.");
-      }
-    });
-  }
-
+  
   function pollChanges(){
     var jqxhr = $.ajax("/user/poll/github_repos")
         .done(function(data, status, jqxhr){
@@ -49,8 +29,7 @@ define(
               "alert alert-info",
               "Detected changes on your Github repos - updated view."
             );
-            all_repos.reset();
-            update_all_repos();
+            all_repos.fetchAll(initViews);
           } else {
             console.log("No changes for repos - i'll wait and poll again.");
           }
@@ -62,7 +41,10 @@ define(
   var all_repos       = new GithubAllRepoCollection(); //includes all repos
   var current_repos   = new GithubRepoCollection([], {allRepos: all_repos}); //includes only repos for current view
   var repo_view       = new GithubRepoView({collection: current_repos});
-  var pagination_view = new GithubPaginationView({collection: current_repos});
+  var pagination_view = new GithubPaginationView({
+                              collection: Backbone.Collection.extend({}),      
+                              currentRepos: current_repos
+                        });
   var menu_items      = new GithubMenuCollection();
   var menu_view       = new GithubMenuView({
                           collection: menu_items, 
@@ -70,23 +52,19 @@ define(
                           allRepos: all_repos
                         });
 
-  var filter_by_org = function(repo){
-    return repo.get("owner_login") == current_repos.org_id;
-  }
-
   var get_default_org = function(repos){
-    return repos.first().get('user_login');
+    var repo = repos.first();
+    return repo.get('user_login');
   }
   
   var initViews = function(repos){
     menu_items.fetch({});
-    if(_.isNaN(current_repos.org_id)){
+    if(_.isNaN(current_repos.org_id) || _.isUndefined(current_repos.org_id)){
       current_repos.org_id = get_default_org(repos);
     }
     console.debug("Initializing view with org-id: " + current_repos.org_id)
     current_repos.perPage = 5;
-    current_repos.currentPage = 0;
-    current_repos.appendNextPage();
+    current_repos.appendNextPage(0);
     pagination_view.render();
   };
 
@@ -99,21 +77,23 @@ define(
     showDefaultRepos: function(){
 			var loader_view = new GithubLoadingView();
 			loader_view.render();
-      update_all_repos(initViews);
+      all_repos.fetchAll(initViews);
     },
 		showRepos: function(org_id){
-      org_id = (_.isNaN(org_id)) ? get_default_org(all_repos) : org_id;
+      if(_.isNaN(org_id) || _.isUndefined(org_id)){
+        org_id = get_default_org(all_repos);
+      }
+
       if(current_repos.org_id !== org_id){
         console.log("Org id changed - cleaning up & resetting view.");
         current_repos.org_id = org_id;
-        current_repos.currentPage = 0;
         current_repos.reset();
       }
 			console.log("going to show repos for: " + org_id);
-      if(all_repos.length > 0){
-	      current_repos.appendNextPage();
+      if(all_repos.length){
+	      current_repos.appendNextPage(0);
       } else {
-        update_all_repos(initViews);
+        all_repos.fetchAll(initViews);
       }
     } 
 	});
