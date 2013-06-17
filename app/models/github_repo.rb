@@ -15,11 +15,11 @@ class GithubRepo
   field :homepage    , type: String
   field :size        , type: Integer
   field :etag        , type: String
-  field :created_at  , type: DateTime
-  field :updated_at  , type: DateTime #when github repo was updated
-  field :pushed_at   , type: DateTime
-  field :imported_at , type: DateTime
-  field :refreshed_at, type: DateTime #when this doc updated
+  field :created_at  , type: DateTime, :default => DateTime.now
+  field :updated_at  , type: DateTime, :default => DateTime.now #when github repo was updated
+  field :pushed_at   , type: DateTime, :default => DateTime.now
+  field :imported_at , type: DateTime, :default => DateTime.now
+  field :refreshed_at, type: DateTime, :default => DateTime.now #when this doc updated
 
   belongs_to :user
 
