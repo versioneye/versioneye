@@ -155,7 +155,11 @@ class User
   end
 
   def self.find_by_email(email)
-    User.where(email: /^#{email}$/i).shift
+    user = User.where(email: email).shift
+    if user.nil?
+      user = User.where(email: /^#{email}$/i).shift
+    end
+    user
   end
 
   def self.find_by_id( id )
