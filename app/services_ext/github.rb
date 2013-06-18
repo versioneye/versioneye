@@ -27,13 +27,13 @@ class Github
     url = 'https://api.github.com/user?access_token=' + URI.escape( token )
     response_body = HTTParty.get(url, :headers => {"User-Agent" => A_USER_AGENT } ).response.body
     json_user = JSON.parse response_body
-    json_user
+    catch_github_exception json_user
   end
 
   def self.orga_info(user, orga_name)
-      url = "#{A_API_URL}/orgs/#{orga_name}?access_token=#{user.github_token}"
-      response_body = HTTParty.get(url, headers: {"User-Agent" => A_USER_AGENT}).response.body
-      JSON.parse response_body
+    url = "#{A_API_URL}/orgs/#{orga_name}?access_token=#{user.github_token}"
+    response_body = HTTParty.get(url, headers: {"User-Agent" => A_USER_AGENT}).response.body
+    catch_github_exception JSON.parse(response_body)
   end
 
   def self.oauth_scopes( token )
@@ -78,9 +78,8 @@ class Github
   def self.read_repos(user, url, page = 1, per_page = 30)
     request_headers = {"User-Agent" => A_USER_AGENT}
     response = self.get(url, headers: request_headers)
-    data = JSON.parse response.body
-    if data.is_a?(Hash) or response.code != 200
-      Rails.logger.error("Github returned error for: #{url}\n#{response.message}\n#{data}")
+    data = catch_github_exception JSON.parse(response.body)
+    if data.nil?
       data = []
     end
 
@@ -112,26 +111,14 @@ class Github
     request_headers = {"User-Agent" => A_USER_AGENT}
     url = "#{A_API_URL}/repos/#{repo_name}/branches?access_token=#{user.github_token}"
     response = self.get(url, headers: request_headers)
-    if response.code != 200
-      Rails.logger.error "Cant fetch branches for #{repo_name}:#{response.code}\n
-      #{response.headers}\n#{response.message}\n#{response.data}"
-      return nil
-    end
-
-    JSON.parse response.body
+    catch_github_exception JSON.parse(response.body)
   end
 
   def self.repo_branch_info(user, repo_name, branch)
     request_headers = {"User-Agent" => A_USER_AGENT}
     url = "#{A_API_URL}/repos/#{repo_name}/branches/#{branch}?access_token=#{user.github_token}"
     response = self.get(url, headers: request_headers)
-    if response.code != 200
-      Rails.logger.error "Cant fetch info for #{repo_name} branch `#{branch}`:
-      #{response.code}\n#{response.message}\n#{response.body}"
-      return nil
-    end
-
-    JSON.parse response.body
+    catch_github_exception JSON.parse(response.body)
   end
 
   def self.import_from_branch(user, repo_name, branch)
@@ -163,10 +150,10 @@ class Github
     repo_names = Array.new
     page = 1
     loop do
-      body    = HTTParty.get("https://api.github.com/user/repos?access_token=#{github_token}&page=#{page}", :headers => {"User-Agent" => A_USER_AGENT } ).response.body
-      repos   = JSON.parse( body )
-      message = get_message( repos )
-      break if ( repos.nil? || repos.empty? || !message.nil? )
+      body    = HTTParty.get("#{A_API_URL}/user/repos?access_token=#{github_token}&page=#{page}", 
+                             :headers => {"User-Agent" => A_USER_AGENT } ).response.body
+      repos =  catch_github_exception JSON.parse(body)
+      break if (repos.nil? || repos.empty?)
       repo_names += extract_repo_names( repos )
       page       += 1
     end
@@ -190,8 +177,9 @@ class Github
     repo_names = Array.new
     page = 1
     loop do
-      body = HTTParty.get("https://api.github.com/orgs/#{organisation_name}/repos?access_token=#{github_token}&page=#{page}", :headers => {"User-Agent" => A_USER_AGENT} ).response.body
-      repos = JSON.parse( body )
+      body = HTTParty.get("#{A_API_URL}/orgs/#{organisation_name}/repos?access_token=#{github_token}&page=#{page}", 
+                          :headers => {"User-Agent" => A_USER_AGENT} ).response.body
+      repos = catch_github_exception JSON.parse(body)
       break if ( repos.nil? || repos.empty? )
       repo_names += extract_repo_names( repos )
       page += 1
@@ -200,11 +188,11 @@ class Github
   end
 
   def self.orga_names( github_token )
-    body = HTTParty.get("https://api.github.com/user/orgs?access_token=#{github_token}", :headers => {"User-Agent" => A_USER_AGENT} ).response.body
-    organisations = JSON.parse( body )
-    message = get_message( organisations )
+    body = HTTParty.get("#{A_API_URL}/user/orgs?access_token=#{github_token}", 
+                        :headers => {"User-Agent" => A_USER_AGENT} ).response.body
+    organisations = catch_github_exception JSON.parse( body )
     names = Array.new
-    if organisations.nil? || organisations.empty? || !message.nil?
+    if organisations.nil? || organisations.empty?
       return names
     end
     organisations.each do |organisation|
@@ -212,10 +200,16 @@ class Github
     end
     names
   end
+
   def self.private_repo?( github_token, name )
-    body = HTTParty.get("https://api.github.com/repos/#{name}?access_token=#{github_token}", :headers => {"User-Agent" => A_USER_AGENT} ).response.body
-    repo = JSON.parse( body )
-    repo['private']
+    body = HTTParty.get("#{A_API_URL}/repos/#{name}?access_token=#{github_token}", 
+                        :headers => {"User-Agent" => A_USER_AGENT} ).response.body
+    repo = catch_github_exception JSON.parse(body)
+    unless repo.nil? and !repo.is_a(Hash) 
+      return repo['private']
+    end
+
+    false
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
@@ -286,13 +280,17 @@ class Github
 
 =begin
   Method that checks does Github sent error message
+  If yes, then it'll log it and return nil
+  Otherwise it sends object itself
   Github responses for client errors:
   {"message": "Problems parsing JSON"}
 =end
-    def self.get_message( data )
+    def self.catch_github_exception(data)
       if data.is_a?(Hash) and data.has_key?('message')
-        Rails.logger.error "Github API sent exception: #{data}"
-        return data['message']
+        Rails.logger.error "Catched exception in response from Github API: #{data}"
+        return nil
+      else
+        return data
       end
     rescue => e
       # by default here should be no message or nil
@@ -303,11 +301,11 @@ class Github
     end
 
     def self.extract_repo_names( repos )
-      message = get_message( repos )
       repo_names = Array.new
-      if repos.nil? || repos.empty? || !message.nil?
+      if repos.nil? || repos.empty?
         return repo_names
       end
+
       repos.each do |repo|
         lang = repo['language']
         repo_names << repo['full_name'] if self.language_supported?( lang )
