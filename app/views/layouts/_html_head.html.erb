@@ -8,6 +8,17 @@
   <%= csrf_meta_tag %>
   <%= stylesheet_link_tag "application" %>
 
+  <script type="text/javascript">
+    var _mfq = _mfq || [];
+    (function () {
+      var mf = document.createElement("script");
+      mf.type = "text/javascript";
+      mf.async = true;
+      mf.src = "//cdn.mouseflow.com/projects/c69fa55c-76aa-42c3-a2d6-50ec31f563a2.js";
+      document.getElementsByTagName("head")[0].appendChild(mf);
+    })();
+  </script>
+
   <% if @page.eql?("project_new") %>
     <%= javascript_include_tag "application_project_new", :defer => false, :async => false %>
   <% elsif @product || @project %>
