@@ -193,7 +193,7 @@ class Product
   ######## START VERSIONS ###################
 
   def sorted_versions
-    Naturalsorter::Sorter.sort_version_by_method_desc( versions, "version" )
+    Naturalsorter::Sorter.sort_version_by_method( versions, "version", false )
   end
 
   def version_by_number( searched_version )
