@@ -2,6 +2,7 @@ class ComposerParser < CommonParser
 
   # Parser for composer.json files from composer, packagist.org. PHP
   # http://getcomposer.org/doc/01-basic-usage.md
+  # https://igor.io/2013/02/07/composer-stability-flags.html
   #
   def parse ( url )
     data = self.fetch_data( url )
