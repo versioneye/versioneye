@@ -6,8 +6,13 @@ describe User do
 
     it "allows the email with plus" do
       user = UserFactory.create_new
+      user.username = "hanz"
       user.email = "hans@tanz.de"
       user.save.should be_true
+      user_db_1 = User.find_by_username("hanz")
+      user_db_1.should_not be_nil
+      user_db_2 = User.find_by_email("hans@tanz.de")
+      user_db_2.should_not be_nil
     end
 
     it "allows the email with plus" do
@@ -20,6 +25,17 @@ describe User do
       user = UserFactory.create_new
       user.email = "hans+banz@tanz+franz.de"
       user.save.should be_true
+    end
+
+    it "allows the email with plus" do
+      user = UserFactory.create_new
+      user.username = "joschi"
+      user.email = "jochen+versioneye@schalanda.name"
+      user.save.should be_true
+      user_db_1 = User.find_by_username("joschi")
+      user_db_1.should_not be_nil
+      user_db_2 = User.find_by_email("jochen\+versioneye@schalanda.name")
+      user_db_2.should_not be_nil
     end
 
     it "doesnt save because incorrect email" do

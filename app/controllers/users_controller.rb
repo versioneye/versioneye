@@ -164,7 +164,7 @@ class UsersController < ApplicationController
     user = User.by_verification(@verification).first
     if @verification.nil? or user.nil?
       render text: "Verification code is wrong, malformed or doesnt exist. If
-      it's mistake, please send feedback to our customer support.", 
+      it's mistake, please send feedback to our customer support.",
              layout: "application"
       return false
     end
@@ -172,10 +172,10 @@ class UsersController < ApplicationController
   end
 
   def update_password
-    
+
     has_failure = false
     password = params[:password]
-    password2 = params[:password2] 
+    password2 = params[:password2]
     verification_code = params[:verification]
 
     user = User.by_verification(verification_code).first
@@ -183,11 +183,11 @@ class UsersController < ApplicationController
     if user.nil?
       flash[:error] = "Wrong verification code. If it's mistake, please send feedback to our customer support."
       has_failure = true
-    elsif password.empty? or password != password2  
+    elsif password.empty? or password != password2
       flash[:error] = "Passwords dont match."
       has_failure = true
     end
-    
+
     unless user.update_password(verification_code, password)
       has_failure = true
       flash[:error] = "Cant save new password:\n #{user.errors.full_messages.to_sentence}"
@@ -196,7 +196,7 @@ class UsersController < ApplicationController
       redirect_to :back
       return false
     end
-    
+
     user.verification = nil
     user.save
 
