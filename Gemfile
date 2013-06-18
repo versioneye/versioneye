@@ -49,11 +49,11 @@ end
 group :test do
   gem 'turn'              , :require => false
   gem "rspec-rails"       , "~> 2.0"
+  gem 'rspec-mocks'       , '~> 2.10'
   gem 'capybara'          , '2.1.0'
   gem 'selenium-webdriver', '2.32.1'
   gem 'fakeweb'           , '1.3.0'
   gem 'debugger'
   gem 'database_cleaner'  , '1.0.1'
+  gem 'factory_girl'
 end
-
-# gem 'puma'              , '2.0.1'

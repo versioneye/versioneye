@@ -8,6 +8,8 @@ class User::GithubReposController < ApplicationController
     if current_user.github_repos.all.count > 0
       github_repos = current_user.github_repos.all
     else
+      Rails.logger.debug("Going to fill GithubRepo cache for user: #{current_user.fullname} 
+                         (id: #{current_user.id.to_s})")
       github_repos = GitHubService.cached_user_repos(current_user)
     end
 
@@ -40,6 +42,7 @@ class User::GithubReposController < ApplicationController
     if params[:command].nil? or params[:fullname].nil?
       error_msg = "Wrong command (`#{params[:command]}`) or project fullname is missing."
       render text: error_msg, status: 400
+      return false
     end
 
     case params[:command]

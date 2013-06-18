@@ -14,7 +14,6 @@ describe "Create Project from file uplaod" do
     post sessions_path, {:session => {:email => @user1.email, :password => "12345"}}, "HTTPS" => "on"
     assert_response 302
     response.should redirect_to( new_user_project_path )
-
     get new_user_project_path, nil, "HTTPS" => "on"
     assert_response :success
     response.body.should match("Create a new project")
