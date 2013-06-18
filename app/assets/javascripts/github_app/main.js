@@ -63,6 +63,7 @@ define(
       current_repos.org_id = get_default_org(repos);
     }
     console.debug("Initializing view with org-id: " + current_repos.org_id)
+    current_repos.reset();
     current_repos.perPage = 5;
     current_repos.appendNextPage(0);
     pagination_view.render();
