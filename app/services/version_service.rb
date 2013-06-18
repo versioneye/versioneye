@@ -121,7 +121,6 @@ class VersionService
 
 
   def self.greater_than_or_equal( versions, value, range = false, stability = "stable")
-    p "greater_than_or_equal #{value} - #{stability}"
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.bigger_or_equal?(version.version, value)
@@ -135,7 +134,6 @@ class VersionService
 
 
   def self.smaller_than( versions, value, range = false, stability = "stable")
-    p "smaller_than #{value} - #{stability}"
     filtered_versions = Array.new
     versions.each do |version|
       if Naturalsorter::Sorter.smaller?(version.version, value)
