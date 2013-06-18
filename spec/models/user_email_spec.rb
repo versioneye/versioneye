@@ -16,6 +16,12 @@ describe User do
       user.save.should be_true
     end
 
+    it "allows the email with plus" do
+      user = UserFactory.create_new
+      user.email = "hans+banz@tanz+franz.de"
+      user.save.should be_true
+    end
+
     it "doesnt save because incorrect email" do
       user = UserFactory.create_new
       user.email = "hans@tanz"
