@@ -11,7 +11,7 @@ class VersionService
       end
     end
     filtered = versions if filtered.empty?
-    sorted = Naturalsorter::Sorter.sort_version_by_method_desc( filtered, "version" )
+    sorted = Naturalsorter::Sorter.sort_version_by_method( filtered, "version", false )
     sorted.first
   end
 
