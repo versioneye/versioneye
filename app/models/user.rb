@@ -67,15 +67,15 @@ class User
   validates_length_of :fullname, minimum: 2, maximum: 50, :message => "fullname length is not ok"
 
   validates_format_of :username, with: /^[a-zA-Z0-9]+$/
-  validates_format_of :email,    with: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+  validates_format_of :email,    with: /^.+@.+\.[a-zA-Z]{2,4}$/
 
   before_validation :downcase_email
 
   scope :by_verification, ->(code){where(verification: code)}
-  scope :follows_none, where(:product_ids.empty?)
-  scope :follows_equal, ->(n){where(:product_ids.count.eq(n))}
-  scope :follows_least, ->(n){where(:product_ids.count >= n)}
-  scope :follows_max, ->(n){where(:product_ids.count <= n)}
+  scope :follows_none   , where(:product_ids.empty?)
+  scope :follows_equal  , ->(n){where(:product_ids.count.eq(n))}
+  scope :follows_least  , ->(n){where(:product_ids.count >= n)}
+  scope :follows_max    , ->(n){where(:product_ids.count <= n)}
 
   attr_accessor :password, :new_username
   attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :datenerhebung, :verification, :terms, :datenerhebung
