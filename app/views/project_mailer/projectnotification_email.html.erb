@@ -19,7 +19,8 @@
             <th style="font-weight: bold;">Current Version</th>
           </tr>
         </thead>
-        <% @dependencies.each do |dep| %>
+        <% @dependencies.each do |key, val| %>
+          <% dep = val %>
           <tr >
             <td style="border-bottom: 1px dotted gray; padding: 5px;">
               <% product = Product.find_by_key( dep.prod_key ) %>
