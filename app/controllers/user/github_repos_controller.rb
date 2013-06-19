@@ -12,7 +12,7 @@ class User::GithubReposController < ApplicationController
                          (id: #{current_user.id.to_s})")
       github_repos = GitHubService.cached_user_repos(current_user)
     end
-
+    
     github_repos = github_repos.asc(:language)
     github_repos.each do |repo|
       repos << process_repo(repo)
@@ -22,6 +22,9 @@ class User::GithubReposController < ApplicationController
       success: true,
       repos: repos,
     }.to_json
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
   end
 
   def update

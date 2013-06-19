@@ -24,6 +24,8 @@ class Github
   end
 
   def self.user( token )
+    return nil? if token.to_s.empty?
+
     url = 'https://api.github.com/user?access_token=' + URI.escape( token )
     response_body = HTTParty.get(url, :headers => {"User-Agent" => A_USER_AGENT } ).response.body
     json_user = JSON.parse response_body
@@ -216,8 +218,10 @@ class Github
     return false
   end
 
+  #TODO: add tests
   def self.get_repo_sha(git_project, token)
-    heads = JSON.parse HTTParty.get("https://api.github.com/repos/#{git_project}/git/refs/heads?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT}  ).response.body
+    heads = JSON.parse HTTParty.get("#{A_API_URL}/repos/#{git_project}/git/refs/heads?access_token=" + URI.escape(token), 
+                                    :headers => {"User-Agent" => A_USER_AGENT}  ).response.body
     heads.each do |head|
       if head['url'].match(/heads\/master$/)
         return head['object']['sha']
@@ -232,6 +236,7 @@ class Github
     return response
   end
 
+  #TODO: add tests
   def self.repository_info(git_project, sha, token)
     result = Hash.new
     url = "https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)

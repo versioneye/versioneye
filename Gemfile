@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby "1.9.3"
+ruby "2.0.0"
 
 gem 'rails'             , '3.2.13'
 gem 'jquery-rails'      , '2.2.1'
@@ -48,9 +48,11 @@ end
 
 group :test do
   gem 'turn'              , :require => false
+  gem 'rspec'             , '~> 2.13'
   gem "rspec-rails"       , "~> 2.0"
   gem 'rspec-mocks'       , '~> 2.10'
   gem 'capybara'          , '2.1.0'
+  gem 'capybara-firebug'  , '~> 1.3'
   gem 'selenium-webdriver', '2.32.1'
   gem 'fakeweb'           , '1.3.0'
   gem 'debugger'
