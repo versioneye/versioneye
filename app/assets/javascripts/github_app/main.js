@@ -18,7 +18,6 @@ define(
       classes: classes,
       content: message
     })).fadeIn(400).delay(6000).fadeOut(800);
-
   }
   
   function pollChanges(){
@@ -38,7 +37,9 @@ define(
   }
 
   //TODO: refactor to GithubApp namespace
-  var all_repos       = new GithubAllRepoCollection(); //includes all repos
+  var all_repos       = new GithubAllRepoCollection({})//includes all repos
+  all_repos.showNotification = showNotification;
+
   var current_repos   = new GithubRepoCollection([], {allRepos: all_repos}); //includes only repos for current view
   var repo_view       = new GithubRepoView({collection: current_repos});
   var pagination_view = new GithubPaginationView({

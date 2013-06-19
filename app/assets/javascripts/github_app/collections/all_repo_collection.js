@@ -1,6 +1,15 @@
 define(['underscore', 'backbone'],
   function(_, Backbone){
 
+  function showNotification(classes, message){
+    var flash_template = _.template(jQuery("#github-notification-template").html());
+    $(".flash-container").html(flash_template({
+      classes: classes,
+      content: message
+    })).fadeIn(400).delay(6000).fadeOut(800);
+  }
+  
+
 	var GithubRepoModel = Backbone.Model.extend({
     urlRoot: "/user/github_repos"
   });
@@ -28,8 +37,8 @@ define(['underscore', 'backbone'],
         reset: true,
         success: function(repos, response, options){
           if(repos.length == 0){
-            //TODO: write as template
-            $("#github-repos").html("You and your's organizations dont have any Github repositories.");
+            var no_repo_template = _.template($("#github-no-repo-template").html());
+            $("#github-repos").html(no_repo_template({}));
             return false
           }
          if(_.isFunction(update_fn)){update_fn(repos);}
@@ -37,7 +46,7 @@ define(['underscore', 'backbone'],
         error: function(repos, response, options){
           showNotification("alert alert-error", 
                            '<div><i class="icon-info-sign"></i> Cant load your repositoiries due a connectivity issues.</div>');
-          $("#github-repos").html("You dont have any github repos or we just cant imported.");
+          $("#github-repos").html("Connection issues - cant read data from Github.");
         }
       });
      }

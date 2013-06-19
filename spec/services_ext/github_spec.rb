@@ -154,6 +154,11 @@ describe Github do
                               company: "VersionEye"}.to_json}]
 )
     end
+
+    it "should return nil when user dont have github token" do
+      Github.user(nil).should be_nil
+    end
+
     it "should return nil when bad credentials" do
       Github.user("123").should be_nil
     end
