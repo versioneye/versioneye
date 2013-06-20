@@ -40,6 +40,10 @@ define(['underscore', 'backbone'],
       sort_params['order'] = -1 * parseInt(sort_params['order']);
       return false;
     },
+    removePrevSelection: function(){
+      $('.filter-item').removeClass("active");
+      $('.filter-item').find('.checker').remove();
+    },
     onFilterItem: function(ev){
       var checker_template = _.template('<i class="icon-ok checker" style="padding-left: 5px;"></i>');
       var filter_item = $(ev.target).parents(".filter-item");
@@ -48,10 +52,8 @@ define(['underscore', 'backbone'],
       this.currentRepos.currentPage = 0;
       this.currentRepos.reset();
 
+      this.removePrevSelection();
       if(filter_item.hasClass('active')){
-        //removing the current filter
-        $(ev.target).find('.checker').remove();
-        filter_item.removeClass('active');
         this.allRepos.fetchAll();
         this.currentRepos.appendNextPage(0); //restore organization view
       } else {

@@ -1,20 +1,5 @@
 require 'spec_helper'
 
-FactoryGirl.define do
-  factory :user do
-    terms true
-    datenerhebung true
-    salt "sugar"
-    password "12345"
-    github_token "random-token-bla-bla"
-    encrypted_password Digest::SHA2.hexdigest("sugar--12345") 
-  end
-
-  factory :github_repo do
-    cached_at 5.minutes.ago
-  end
-end
-
 describe "Getting data from github_repos_controller" do
   let(:user) {create(:user, username: "pupujuku", fullname: "Pupu Juku", email: "juku@pupu.com")}
 

@@ -58,4 +58,5 @@ group :test do
   gem 'debugger'
   gem 'database_cleaner'  , '1.0.1'
   gem 'factory_girl'
+  gem 'factory_girl_rails'
 end
