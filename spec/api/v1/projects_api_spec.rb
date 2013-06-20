@@ -1,18 +1,73 @@
 require 'spec_helper'
 require 'rest_client'
 
+#TODO: refactor out to factory/product
+
+FactoryGirl.define do
+
+  sequence :version_counter do |n|
+    "1.#{n}.4"
+  end
+  factory :version do
+    version {generate(:version_counter)}
+    link "https://versioneye.com"
+    license "MIT"
+    description "nam-nam"
+    created_at 5.minutes.ago
+  end
+
+  factory :product do
+    language "ruby"
+    license "MIT"
+    licenseLink "https://mit.org"
+
+    factory :product_with_versions do
+      ignore do
+        versions_count 5
+      end
+
+      after(:create) do |product, evaluator|
+        evaluator.versions_count.times do |n|
+          product.versions << FactoryGirl.build(:version)
+        end
+      end
+    end
+  end
+end
+
+FactoryGirl.find_definitions
+
 describe VersionEye::ProjectsApi do
 
   let( :root_uri    ) { "/api/v1" }
   let( :project_uri ) { "/api/v1/projects" }
   let( :test_user   ) { UserFactory.create_new(90) }
   let( :user_api    ) { ApiFactory.create_new test_user }
-  let( :file_path   ) { "#{Rails.root}/spec/files/maven-1.0.1.pom" }
+  let( :file_path   ) { "#{Rails.root}/spec/files/Gemfile.lock" }
   let( :test_file   ) { Rack::Test::UploadedFile.new(file_path, "text/xml") }
+ 
+  let(:project_key) {"rubygem_gemfile_lock_1"}
+  let(:project_name) {"Gemfile.lock"}
+  let(:product1) {create(:product_with_versions, versions_count: 4, name: "daemons", 
+                         prod_key: "daemons", version: "1.1.4", license: "MIT")}
+  let(:product2) {create(:product_with_versions, versions_count: 7, name: "eventmachine", 
+                         prod_key: "eventmachine", version: "1.1.4", license: "MIT")}
+  let(:product3) {create(:product_with_versions, versions_count: 3, name: "rack", 
+                         prod_key: "rack", version: "1.3.4", license: "MIT")}
+  let(:product4) {create(:product_with_versions, versions_count: 2, name: "rack-protection", 
+                         prod_key: "rack-protection", version: "1.3.4", license: "MIT")}
+  let(:product5) {create(:product_with_versions, versions_count: 5, name: "sinatra",
+                         prod_key: "sinatra", version: "1.3.3", license: "MIT")}
+  let(:product6) {create(:product_with_versions, versions_count: 4, name: "thin", 
+                         prod_key: "thin", version: "1.3.1", license: "MIT")}
+  let(:product7) {create(:product_with_versions, versions_count: 4, name: "tilt", 
+                         prod_key: "tilt", version: "1.3.3", license: "MIT")}
 
-  describe "Unauthorized user shouldnt have access" do
-    before(:each) do
-      delete "#{root_uri}/sessions"
+  describe "Unauthorized user shouldnt have access, " do
+   
+    it "returns 401, when user tries to fetch list of project" do
+      get "#{project_uri}.json"
+      response.status.should eq(401)
     end
 
     it "return 401, when user tries to get project info" do
@@ -21,7 +76,7 @@ describe VersionEye::ProjectsApi do
     end
 
     it "returns 401, when user tries to upload file" do
-      post project_uri, {upload: test_file, multipart:true, send_file: true}, "HTTPS" => "on"
+      post project_uri + '.json', {upload: test_file, multipart:true, send_file: true}, "HTTPS" => "on"
       response.status.should eq(401)
     end
 
@@ -34,7 +89,7 @@ describe VersionEye::ProjectsApi do
 
   describe "Uploading new project as authorized user" do
     include Rack::Test::Methods
-
+    
     it "fails, when upload-file is missing" do
       response = post project_uri, {:api_key => user_api.api_key}, "HTTPS" => "on"
       response.status.should eq(403)
@@ -47,7 +102,7 @@ describe VersionEye::ProjectsApi do
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
-
+      
       response.status.should eq(201)
     end
   end
@@ -66,63 +121,42 @@ describe VersionEye::ProjectsApi do
   describe "Accessing existing project as authorized user" do
     include Rack::Test::Methods
 
-    before(:each) do
-
-      # TODO Create Test DATA here. Fill DB with test data.
-
-      file_path =  "#{Rails.root}/spec/files/Gemfile.lock"
-      test_file = Rack::Test::UploadedFile.new(file_path, "text/xml")
-      response  = post project_uri, {
+    before :each do
+      response = post project_uri, {
         upload:    test_file,
         api_key:   user_api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
-
+      
       response.status.should eq(201)
-      @project_info = JSON.parse response.body
     end
 
     it "returns correct project info for existing project" do
-      project_key = @project_info["project_key"]
-
       response = get "#{project_uri}/#{project_key}.json", {
         api_key: user_api.api_key
       }
+      
       response.status.should eq(200)
       project_info2 = JSON.parse response.body
       project_info2["project_key"].should eq(project_key)
-      project_info2["name"].should eq(@project_info["name"])
+      project_info2["name"].should eq(project_name)
       project_info2["source"].should eq("upload")
       project_info2["dependencies"].count.should eql(7)
     end
 
     it "return correct licence info for existing project" do
-      project_key = @project_info["project_key"]
       response = get "#{project_uri}/#{project_key}/licenses.json"
       response.status.should eql(200)
 
       data = JSON.parse response.body
+      
       data["success"].should be_true
-      MIT_licences = data["licenses"]["MIT"].map {|x| x['name']}
-      MIT_licences = MIT_licences.to_set
-      MIT_licences.include?("daemons").should be_true
-      MIT_licences.include?("rack").should be_true
-      MIT_licences.include?("tilt").should be_true
-
-      ruby_licences = data["licenses"]["Ruby"].map {|x| x['name']}
-      ruby_licences = ruby_licences.to_set
-      ruby_licences.include?("eventmachine").should be_true
-      ruby_licences.include?("thin").should be_true
-
-      unknown_licences = data["licenses"]["unknown"].map {|x| x['name']}
-      unknown_licences = unknown_licences.to_set
-      unknown_licences.include?("rack-protection").should be_true
-      unknown_licences.include?("sinatra").should be_true
+      data['licenses']['unknown'].first['name'].should eql("daemons") 
    end
 
     it "deletes existing project successfully" do
-      response = delete "#{project_uri}/#{@project_info['project_key']}.json"
+      response = delete "#{project_uri}/#{project_key}.json"
       response.status.should eql(200)
       msg = JSON.parse response.body
       msg["success"].should be_true
