@@ -20,19 +20,19 @@ class GithubRepo
   field :size        , type: Integer
   field :etag        , type: String
   field :branches    , type: Array
-  field :created_at  , type: DateTime
-  field :updated_at  , type: DateTime #when github repo was updated
-  field :pushed_at   , type: DateTime
-  field :cached_at , type: DateTime
-  field :refreshed_at, type: DateTime #when this doc updated
+  field :created_at  , type: DateTime, :default => DateTime.new
+  field :updated_at  , type: DateTime, :default => DateTime.new #when github repo was updated
+  field :pushed_at   , type: DateTime, :default => DateTime.new
+  field :cached_at   , type: DateTime, :default => DateTime.new
+  field :refreshed_at, type: DateTime, :default => DateTime.new #when this doc updated
 
   belongs_to :user
 
-  scope :by_language, ->(lang){where(language: lang)}
-  scope :by_user, ->(user){where(user_id: user._id)}
+  scope :by_language   , ->(lang){where(language: lang)}
+  scope :by_user       , ->(user){where(user_id: user._id)}
   scope :by_owner_login, ->(login){where(owner_login: login)}
-  scope :by_owner_type, ->(type_name){where(owner_type: type_name)}
-  scope :by_org, ->(org_name){where(owner_login: org_name, owner_type: "organization")}
+  scope :by_owner_type , ->(type_name){where(owner_type: type_name)}
+  scope :by_org        , ->(org_name){where(owner_login: org_name, owner_type: "organization")}
 
   def self.add_new(user, repo, etag = nil)
     return false if repo.nil? || repo.empty?
