@@ -57,6 +57,6 @@ group :test do
   gem 'fakeweb'           , '1.3.0'
   gem 'debugger'
   gem 'database_cleaner'  , '1.0.1'
-  gem 'factory_girl'
-  gem 'factory_girl_rails'
+  gem 'factory_girl'      , "~> 4.0"
+  gem 'factory_girl_rails', "~> 4.0"
 end
