@@ -2,20 +2,6 @@ require 'spec_helper'
 
 FakeWeb.allow_net_connect = false
 
-FactoryGirl.define do
-  factory :user do
-    terms true
-    datenerhebung true
-    salt "sugar"
-    password "12345"
-    encrypted_password Digest::SHA2.hexdigest("sugar--12345")
-  end
-
-  factory :github_repo do
-    cached_at 5.minutes.ago
-  end
-end
-
 describe Github do
 
   let(:user_without_token) {create(:user, username: "pupujuku", 
