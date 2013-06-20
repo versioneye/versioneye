@@ -11,11 +11,12 @@ require.config({
         'jQuery': {
             exports: '$'
         },
-        'backbone': {
-            exports: 'Backbone'
-        },
         'underscore': {
             exports: '_'
+        },
+        'backbone': {
+            deps: ['underscore', 'jQuery'],
+            exports: 'Backbone'
         },
         'paginator' : {
           exports: 'Backbone.Paginator'
