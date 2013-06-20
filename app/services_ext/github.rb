@@ -152,7 +152,7 @@ class Github
     repo_names = Array.new
     page = 1
     loop do
-      body    = HTTParty.get("#{A_API_URL}/user/repos?access_token=#{github_token}&page=#{page}", 
+      body    = HTTParty.get("#{A_API_URL}/user/repos?access_token=#{github_token}&page=#{page}",
                              :headers => {"User-Agent" => A_USER_AGENT } ).response.body
       repos =  catch_github_exception JSON.parse(body)
       break if (repos.nil? || repos.empty?)
@@ -179,7 +179,7 @@ class Github
     repo_names = Array.new
     page = 1
     loop do
-      body = HTTParty.get("#{A_API_URL}/orgs/#{organisation_name}/repos?access_token=#{github_token}&page=#{page}", 
+      body = HTTParty.get("#{A_API_URL}/orgs/#{organisation_name}/repos?access_token=#{github_token}&page=#{page}",
                           :headers => {"User-Agent" => A_USER_AGENT} ).response.body
       repos = catch_github_exception JSON.parse(body)
       break if ( repos.nil? || repos.empty? )
@@ -190,7 +190,7 @@ class Github
   end
 
   def self.orga_names( github_token )
-    body = HTTParty.get("#{A_API_URL}/user/orgs?access_token=#{github_token}", 
+    body = HTTParty.get("#{A_API_URL}/user/orgs?access_token=#{github_token}",
                         :headers => {"User-Agent" => A_USER_AGENT} ).response.body
     organisations = catch_github_exception JSON.parse( body )
     names = Array.new
@@ -204,10 +204,10 @@ class Github
   end
 
   def self.private_repo?( github_token, name )
-    body = HTTParty.get("#{A_API_URL}/repos/#{name}?access_token=#{github_token}", 
+    body = HTTParty.get("#{A_API_URL}/repos/#{name}?access_token=#{github_token}",
                         :headers => {"User-Agent" => A_USER_AGENT} ).response.body
     repo = catch_github_exception JSON.parse(body)
-    unless repo.nil? and !repo.is_a(Hash) 
+    unless repo.nil? and !repo.is_a(Hash)
       return repo['private']
     end
 
@@ -220,7 +220,7 @@ class Github
 
   #TODO: add tests
   def self.get_repo_sha(git_project, token)
-    heads = JSON.parse HTTParty.get("#{A_API_URL}/repos/#{git_project}/git/refs/heads?access_token=" + URI.escape(token), 
+    heads = JSON.parse HTTParty.get("#{A_API_URL}/repos/#{git_project}/git/refs/heads?access_token=" + URI.escape(token),
                                     :headers => {"User-Agent" => A_USER_AGENT}  ).response.body
     heads.each do |head|
       if head['url'].match(/heads\/master$/)
