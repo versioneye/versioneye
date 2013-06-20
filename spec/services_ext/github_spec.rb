@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-FakeWeb.allow_net_connect = false
-
 describe Github do
 
   let(:user_without_token) {create(:user, username: "pupujuku", 
@@ -129,6 +127,8 @@ describe Github do
  
   describe "getting user information via API" do
     before :each do
+      FakeWeb.allow_net_connect = false
+
       FakeWeb.register_uri(:get, %r|https://api\.github\.com/user*|, 
                            [{:body => {"message"=>"Bad credentials"}.to_json},
                             {:body => {
@@ -139,6 +139,11 @@ describe Github do
                               name: "monalisa octocat",
                               company: "VersionEye"}.to_json}]
 )
+    end
+    
+    after :each do
+      FakeWeb.allow_net_connect = 
+      FakeWeb.clean_registry
     end
 
     it "should return nil when user dont have github token" do
