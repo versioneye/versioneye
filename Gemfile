@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+ruby "1.9.3"
 
 gem 'rails'             , '3.2.13'
 gem 'jquery-rails'      , '2.2.1'
@@ -53,5 +54,5 @@ group :test do
   gem 'fakeweb'           , '1.3.0'
   gem 'debugger'
   gem 'database_cleaner'  , '1.0.1'
-  gem 'factory_girl'      , '4.2.0' 
+  gem 'factory_girl'      , '4.2.0'
 end
