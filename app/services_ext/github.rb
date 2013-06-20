@@ -24,7 +24,7 @@ class Github
   end
 
   def self.user( token )
-    return nil? if token.to_s.empty?
+    return nil if token.to_s.empty?
 
     url = 'https://api.github.com/user?access_token=' + URI.escape( token )
     response_body = HTTParty.get(url, :headers => {"User-Agent" => A_USER_AGENT } ).response.body
