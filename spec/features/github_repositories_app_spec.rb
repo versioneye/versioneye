@@ -124,10 +124,11 @@ describe "frontend APP for importing Github repositories", :js => true do
       using_wait_time 5 do
         page.should have_text(repo1.fullname)
         page.should have_selector('select')
-        find("#github-repos").should have_css(".repo-container")
-        page.should have_css(switch_selector)
+        page.should have_xpath('//div[@id="github-repos"]/div/div[@class="repo-container"]')
+        page.should have_xpath('//div[@class="switch"]')
       end
-
+      
+      page.click_button("Off")
       page.check switch_selector
       page.should have_content("Please wait!")
  
@@ -142,7 +143,8 @@ describe "frontend APP for importing Github repositories", :js => true do
       
       page.should_not have_content('Please enable Javascript to see content of the page.')
       switch_selector = "#github-repo-switch-#{repo1.github_id}"
-     
+      
+      p find(:css, switch_selector).text
       page.should have_css(switch_selector)
       page.check switch_selector
 
