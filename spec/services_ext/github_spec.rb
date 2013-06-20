@@ -142,7 +142,7 @@ describe Github do
     end
     
     after :each do
-      FakeWeb.allow_net_connect = 
+      FakeWeb.allow_net_connect = true
       FakeWeb.clean_registry
     end
 
