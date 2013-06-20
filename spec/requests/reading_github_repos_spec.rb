@@ -20,6 +20,11 @@ describe "Getting data from github_repos_controller" do
     repo2.save
   end
 
+  after :each do
+    FakeWeb.clean_registry
+    FakeWeb.allow_net_connect = true
+  end
+
   describe "getting list of repos" do
     it "should return list of repos when repos are already cached" do
       user.github_repos.all.count.should > 0 #factory should fill GithubRepo
