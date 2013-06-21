@@ -4,17 +4,5 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require jquery
-//= require jquery_ujs
-//= require jquery_ui_1_8_17_custom_min
-//= require jquery_textbox_hinter
-//= require bootstrap.min
-//= require bootstrap_fileupload
-
-//= require google
-//= require gmap
-//= require twitter
-
-//= require custom
-//= require custom_feedback
-//= require custom_update_language
+//= require libs/underscore-min
+//= require payment

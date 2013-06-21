@@ -4,7 +4,6 @@ class Settings::CreditcardController < ApplicationController
   force_ssl if Rails.env.production?
 
   def index
-    @page = "cc"
     plan = cookies.signed[:plan_selected]
     if plan
       @plan_name_id = plan
