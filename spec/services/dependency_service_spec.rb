@@ -33,14 +33,14 @@ describe DependencyService do
       product.versions.push Version.new({ :verison => "1.0" })
       product.save
 
-      dependency = Dependency.new
-      dependency.version = "100000.2"
+      dependency              = Dependency.new
+      dependency.version      = "100000.2"
       dependency.dep_prod_key = product.prod_key
       DependencyService.outdated?( dependency ).should be_false
     end
 
     it "is not outdated, because unknown dep" do
-      dependency = Dependency.new
+      dependency         = Dependency.new
       dependency.version = "0.1"
       DependencyService.outdated?( dependency ).should be_false
     end
@@ -62,10 +62,10 @@ describe DependencyService do
       prod_3 = ProductFactory.create_new(3)
       prod_4 = ProductFactory.create_new(4)
 
-      dep_1 = DependencyFacotry.create_dependency(product, prod_1)
-      dep_2 = DependencyFacotry.create_dependency(product, prod_2)
-      dep_3 = DependencyFacotry.create_dependency(product, prod_3)
-      dep_4 = DependencyFacotry.create_dependency(product, prod_4)
+      dep_1 = DependencyFacotry.create_new(product, prod_1)
+      dep_2 = DependencyFacotry.create_new(product, prod_2)
+      dep_3 = DependencyFacotry.create_new(product, prod_3)
+      dep_4 = DependencyFacotry.create_new(product, prod_4)
 
       product.dependencies(nil).size.should eq(4)
       DependencyService.dependencies_outdated?( product.dependencies(nil) ).should be_false
@@ -84,10 +84,10 @@ describe DependencyService do
       prod_3 = ProductFactory.create_new(3)
       prod_4 = ProductFactory.create_new(4)
 
-      dep_1 = DependencyFacotry.create_dependency(product, prod_1)
-      dep_2 = DependencyFacotry.create_dependency(product, prod_2)
-      dep_3 = DependencyFacotry.create_dependency(product, prod_3)
-      dep_4 = DependencyFacotry.create_dependency(product, prod_4)
+      dep_1 = DependencyFacotry.create_new(product, prod_1)
+      dep_2 = DependencyFacotry.create_new(product, prod_2)
+      dep_3 = DependencyFacotry.create_new(product, prod_3)
+      dep_4 = DependencyFacotry.create_new(product, prod_4)
       dep_4.version = "0.0"
       dep_4.save
 

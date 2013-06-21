@@ -1,6 +1,6 @@
 class SubmittedUrlFactory
 
-  def self.create_new(extra_data = nil, save_db = true)  
+  def self.create_new(extra_data = nil, save_db = true)
     random_id = Random.rand(1..100)
     new_url = "http://www.#{self.name}.com/#{random_id}"
     new_message = "dummy_data_#{random_id}"

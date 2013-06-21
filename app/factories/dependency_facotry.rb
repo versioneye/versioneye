@@ -1,6 +1,6 @@
 class DependencyFacotry
 
-  def self.create_dependency(product, dep_product, store = true)
+  def self.create_new(product, dep_product, store = true)
     dependency              = Dependency.new
     dependency.name         = dep_product.name
     dependency.version      = dep_product.version

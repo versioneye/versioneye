@@ -25,7 +25,6 @@ class Dependency
   field :language    , type: String,  :default => Product::A_LANGUAGE_RUBY
   field :known       , type: Boolean
 
-
   def self.find_by_key_and_version(prod_key, version)
     Dependency.all(conditions: { prod_key: prod_key, prod_version: version } )
   end

@@ -3,11 +3,7 @@ require 'spec_helper'
 describe "follow and unfollow" do
 
   let(:prod_key){ "json_goba" }
-  let(:user){
-    user = UserFactory.default
-    user.save
-    user
-  }
+  let(:user){ FactoryGirl.create(:default_user) }
 
   def init_product
     product = Product.new

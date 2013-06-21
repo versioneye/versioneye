@@ -16,8 +16,7 @@ describe "submit a versioncomment" do
     product.versions.push(version)
     product.save
 
-    user = UserFactory.default
-    user.save
+    user = FactoryGirl.create(:default_user)
 
     post "/sessions", {:session => {:email => user.email, :password => user.password}}, "HTTPS" => "on"
     assert_response 302
