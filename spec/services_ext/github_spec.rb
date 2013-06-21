@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Github do
 
-  let(:user_without_token) {create(:user, username: "pupujuku", 
+  let(:user_without_token) {create(:user, username: "pupujuku",
                                    fullname: "Pupu Juku", email: "juku@pupu.com")}
-  let(:user_with_token) {create(:user, username: "aitaleida", 
+  let(:user_with_token) {create(:user, username: "aitaleida",
                                 fullname: "Leida Aita", email: "leida@aita.com",
                                 github_token: "12345")}
   let(:repo1) {create(:github_repo, user_id: user_with_token.id.to_s,
@@ -124,12 +124,12 @@ describe Github do
     ].to_json
   }
 
- 
+
   describe "getting user information via API" do
     before :each do
       FakeWeb.allow_net_connect = false
 
-      FakeWeb.register_uri(:get, %r|https://api\.github\.com/user*|, 
+      FakeWeb.register_uri(:get, %r|https://api\.github\.com/user*|,
                            [{:body => {"message"=>"Bad credentials"}.to_json},
                             {:body => {
                               login: "octocat",
@@ -140,7 +140,7 @@ describe Github do
                               company: "VersionEye"}.to_json}]
 )
     end
-    
+
     after :each do
       FakeWeb.allow_net_connect = true
       FakeWeb.clean_registry
@@ -221,7 +221,7 @@ describe Github do
 
     it "returns proper hash with information" do
       Github.orga_info(user_without_token, "versioneye").should be_nil
-      
+
       org_info = Github.orga_info(user_with_token, "versioneye")
 
       org_info.should_not be_nil
@@ -251,15 +251,15 @@ describe Github do
 
     it "should response hash-map where 'repos' are empty array when user has wrong credentials" do
       response = Github.read_repos(user_without_token, url_start)
-      
+
       response.should_not be_nil
       response.has_key?(:repos).should be_true
       response[:repos].empty?.should be_true
     end
 
     it "should parse correctly url from response header" do
-       response = Github.read_repos(user_without_token, url_start) 
-       
+       response = Github.read_repos(user_without_token, url_start)
+
        response = Github.read_repos(user_with_token, url_start)
        response.should_not be_nil
        response.has_key?(:paging).should be_true
@@ -272,7 +272,7 @@ describe Github do
     before :each do
       FakeWeb.clean_registry
       FakeWeb.register_uri(
-        :get, 
+        :get,
         %r|https://api\.github\.com/repos/versioneye/spec/branches*|,
         [
           {body: {message: "Bad credentials"}.to_json},
@@ -292,11 +292,11 @@ describe Github do
 
     it "should correct name of branch of given repositories" do
       Github.repo_branches(user_without_token, "versioneye/spec").should be_nil
-      
+
       branches = Github.repo_branches(user_with_token, "versioneye/spec")
       branches.should_not be_nil
       branches.count.should eql(1)
-      
+
       branches.first.has_key?('name').should be_true
       branches.first['name'].should eql('master')
       branches.first['commit']['sha'].should eql("6dcb09b5b57875f334f61aebed695e2e4193db5e")
@@ -322,7 +322,7 @@ describe Github do
 
     it "should return proper data when user uses correct info" do
       Github.repo_branch_info(user_without_token, "versioneye/spec", "master").should be_nil
- 
+
       branch_info = Github.repo_branch_info(user_with_token, "versioneye/spec", "master")
       branch_info.should_not be_nil
       branch_info['name'].should eql('master')
@@ -379,7 +379,7 @@ describe Github do
 
     it "should return array with correct names" do
       Github.repo_names_for_orga(user_without_token.github_token, "versioneye").empty?.should be_true
-     
+
       names = Github.repo_names_for_orga(user_with_token.github_token, "versioneye")
       names.empty?.should be_false
       names.first.should eql('versioneye/spec1')
@@ -414,7 +414,7 @@ describe Github do
 
     it "should return list with right names" do
       Github.orga_names(user_without_token.github_token).empty?.should be_true
-      
+
       names = Github.orga_names(user_with_token.github_token)
       names.empty?.should be_false
       names.first.should eql('versioneye')
@@ -435,11 +435,11 @@ describe Github do
 
     it "should return false when github raises exception" do
       Github.private_repo?(user_without_token.github_token, "versioneye").should be_false
-    end 
+    end
 
     it "should be true when everything goes as planned and fakeweb returns correct response" do
       Github.private_repo?(user_without_token.github_token, "versioneye").should be_false
-      
+
       Github.private_repo?(user_without_token.github_token, "versioneye").should be_true
     end
   end
