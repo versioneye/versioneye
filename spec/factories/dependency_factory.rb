@@ -1,5 +1,6 @@
 
 FactoryGirl.define do
+
   factory :dependency do
     name "spec_prod2"
     version "0.1.1"
@@ -8,5 +9,6 @@ FactoryGirl.define do
     prod_version "0.1"
     known true
   end
+
 end
 

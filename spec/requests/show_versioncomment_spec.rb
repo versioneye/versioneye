@@ -16,8 +16,7 @@ describe "show_versioncomment" do
     product.versions.push(version)
     product.save
 
-    user = UserFactory.default
-    user.save
+    user = FactoryGirl.create(:default_user)
 
     comment = Versioncomment.new
     comment.user_id = user.id
