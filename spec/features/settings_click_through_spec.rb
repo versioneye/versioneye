@@ -44,9 +44,7 @@ describe "Settings click throgh" do
 
       click_link "Payments"
       page.should have_content("Payment History")
-      using_wait_time 5 do
-        page.should have_content("You dont have any Payment history")
-      end
+      page.should have_content("You dont have any Payment history")
 
       click_link "Connect"
       page.should have_content("Connect with GitHub")
