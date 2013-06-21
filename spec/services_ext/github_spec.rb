@@ -142,8 +142,8 @@ describe Github do
     end
 
     after :each do
-      FakeWeb.allow_net_connect = true
       FakeWeb.clean_registry
+      FakeWeb.allow_net_connect = true
     end
 
     it "should return nil when user dont have github token" do
