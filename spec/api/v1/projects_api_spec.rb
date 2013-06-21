@@ -1,42 +1,6 @@
 require 'spec_helper'
 require 'rest_client'
 
-#TODO: refactor out to factory/product
-
-FactoryGirl.define do
-
-  sequence :version_counter do |n|
-    "1.#{n}.4"
-  end
-  factory :version do
-    version {generate(:version_counter)}
-    link "https://versioneye.com"
-    license "MIT"
-    description "nam-nam"
-    created_at 5.minutes.ago
-  end
-
-  factory :product do
-    language "ruby"
-    license "MIT"
-    licenseLink "https://mit.org"
-
-    factory :product_with_versions do
-      ignore do
-        versions_count 5
-      end
-
-      after(:create) do |product, evaluator|
-        evaluator.versions_count.times do |n|
-          product.versions << FactoryGirl.build(:version)
-        end
-      end
-    end
-  end
-end
-
-FactoryGirl.find_definitions
-
 describe VersionEye::ProjectsApi do
 
   let( :root_uri    ) { "/api/v1" }
