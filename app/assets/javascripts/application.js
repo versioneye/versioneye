@@ -8,13 +8,19 @@
 //= require jquery_ujs
 //= require jquery_ui_1_8_17_custom_min
 //= require bootstrap.min
-//
+//= require bootstrap_fileupload
 //= require jquery_textbox_hinter
-//= require moowheel/mootools-1.2-core-nc
-//= require moowheel/mootools-1.2-more
-//= require moowheel/canvastext
-//= require moowheel/excanvas
-//= require moowheel/dependencywheel
+
 //= require google
+//= require gmap
+//= require twitter
+
 //= require custom
+//= require custom_feedback
+//= require custom_update_language
+
+//= require libs/require
+//= require libs/moment.min
+
+//= require custom_github
 //= require custom_feedback

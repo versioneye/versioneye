@@ -4,12 +4,6 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require jquery
-//= require jquery_ujs
-//= require bootstrap.min
-
-//= require google
-
 //= require swagger/lib/jquery-1.8.0.min
 //= require custom_feedback
 //= require swagger/lib/jquery.slideto.min
