@@ -14,7 +14,6 @@ describe "Create Project from file uplaod" do
     post sessions_path, {:session => {:email => @user1.email, :password => "12345"}}, "HTTPS" => "on"
     assert_response 302
     response.should redirect_to( new_user_project_path )
-
     get new_user_project_path, nil, "HTTPS" => "on"
     assert_response :success
     response.body.should match("Create a new project")
@@ -28,10 +27,11 @@ describe "Create Project from file uplaod" do
     response.should redirect_to( user_project_path( project ) )
 
     get user_project_path( project ), nil, "HTTPS" => "on"
-    response.body.should match("Dependencies are Outdated")
+    response.body.should match("Project:")
     response.body.should match("rails")
     response.body.should match("jquery-rails")
     response.body.should match("therubyracer")
+    response.body.should match("Dependencies are outdated")
   end
 
 end

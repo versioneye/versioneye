@@ -1,3 +1,35 @@
+require.config({
+    paths: {
+        'jQuery': '/assets/libs/jquery-2.0.1.min',
+        'underscore': '/assets/libs/underscore-min',
+        'backbone': '/assets/libs/backbone-min',
+        'moment': '/assets/libs/moment.min',
+        'bootstrap_switch': '/assets/libs/bootstrap_switch',
+        'paginator': '/assets/libs/backbone.paginator.min'
+    },
+    shim: {
+        'jQuery': {
+            exports: '$'
+        },
+        'underscore': {
+            exports: '_'
+        },
+        'backbone': {
+            deps: ['underscore', 'jQuery'],
+            exports: 'Backbone'
+        },
+        'paginator' : {
+          exports: 'Backbone.Paginator'
+        }
+    }
+});
+
+require(["jQuery","underscore", "backbone","/assets/github_app/main"],
+  function($, _, Backbone, githubApp) {
+    console.log("Loading required modules...");
+
+    githubApp.init();
+});
 
 jQuery(document).ready(function(){
   jQuery('#q').tbHinter({
@@ -9,7 +41,7 @@ jQuery(document).ready(function(){
     jQuery( "#tabs" ).tabs();
   }
 
-  show_github_repos();
+  //show_github_repos();
 }); // end-of-ready
 
 

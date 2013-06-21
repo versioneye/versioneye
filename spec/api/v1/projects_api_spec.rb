@@ -45,26 +45,26 @@ describe VersionEye::ProjectsApi do
   let( :user_api    ) { ApiFactory.create_new test_user }
   let( :file_path   ) { "#{Rails.root}/spec/files/Gemfile.lock" }
   let( :test_file   ) { Rack::Test::UploadedFile.new(file_path, "text/xml") }
- 
+
   let(:project_key) {"rubygem_gemfile_lock_1"}
   let(:project_name) {"Gemfile.lock"}
-  let(:product1) {create(:product_with_versions, versions_count: 4, name: "daemons", 
+  let(:product1) {create(:product_with_versions, versions_count: 4, name: "daemons",
                          prod_key: "daemons", version: "1.1.4", license: "MIT")}
-  let(:product2) {create(:product_with_versions, versions_count: 7, name: "eventmachine", 
+  let(:product2) {create(:product_with_versions, versions_count: 7, name: "eventmachine",
                          prod_key: "eventmachine", version: "1.1.4", license: "MIT")}
-  let(:product3) {create(:product_with_versions, versions_count: 3, name: "rack", 
+  let(:product3) {create(:product_with_versions, versions_count: 3, name: "rack",
                          prod_key: "rack", version: "1.3.4", license: "MIT")}
-  let(:product4) {create(:product_with_versions, versions_count: 2, name: "rack-protection", 
+  let(:product4) {create(:product_with_versions, versions_count: 2, name: "rack-protection",
                          prod_key: "rack-protection", version: "1.3.4", license: "MIT")}
   let(:product5) {create(:product_with_versions, versions_count: 5, name: "sinatra",
                          prod_key: "sinatra", version: "1.3.3", license: "MIT")}
-  let(:product6) {create(:product_with_versions, versions_count: 4, name: "thin", 
+  let(:product6) {create(:product_with_versions, versions_count: 4, name: "thin",
                          prod_key: "thin", version: "1.3.1", license: "MIT")}
-  let(:product7) {create(:product_with_versions, versions_count: 4, name: "tilt", 
+  let(:product7) {create(:product_with_versions, versions_count: 4, name: "tilt",
                          prod_key: "tilt", version: "1.3.3", license: "MIT")}
 
   describe "Unauthorized user shouldnt have access, " do
-   
+
     it "returns 401, when user tries to fetch list of project" do
       get "#{project_uri}.json"
       response.status.should eq(401)
@@ -89,7 +89,7 @@ describe VersionEye::ProjectsApi do
 
   describe "Uploading new project as authorized user" do
     include Rack::Test::Methods
-    
+
     it "fails, when upload-file is missing" do
       response = post project_uri, {:api_key => user_api.api_key}, "HTTPS" => "on"
       response.status.should eq(403)
@@ -102,7 +102,7 @@ describe VersionEye::ProjectsApi do
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
-      
+
       response.status.should eq(201)
     end
   end
@@ -128,7 +128,7 @@ describe VersionEye::ProjectsApi do
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
-      
+
       response.status.should eq(201)
     end
 
@@ -136,7 +136,7 @@ describe VersionEye::ProjectsApi do
       response = get "#{project_uri}/#{project_key}.json", {
         api_key: user_api.api_key
       }
-      
+
       response.status.should eq(200)
       project_info2 = JSON.parse response.body
       project_info2["project_key"].should eq(project_key)
@@ -150,9 +150,12 @@ describe VersionEye::ProjectsApi do
       response.status.should eql(200)
 
       data = JSON.parse response.body
-      
+
       data["success"].should be_true
-      data['licenses']['unknown'].first['name'].should eql("daemons") 
+      unknown_licences = data["licenses"]["unknown"].map {|x| x['name']}
+      unknown_licences = unknown_licences.to_set
+      unknown_licences.include?("rack-protection").should be_true
+      unknown_licences.include?("sinatra").should be_true
    end
 
     it "deletes existing project successfully" do
