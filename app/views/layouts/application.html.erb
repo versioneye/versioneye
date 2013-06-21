@@ -1,67 +1,67 @@
 <!DOCTYPE html>
 <% if @product %>
-	<html xmlns:fb="https://graph.facebook.com/schema/og/" itemscope itemtype="http://schema.org/SoftwareApplication" lang="en" >
-<% else %> 
-	<html xmlns:fb="https://graph.facebook.com/schema/og/" lang="en" >
+  <html xmlns:fb="https://graph.facebook.com/schema/og/" itemscope itemtype="http://schema.org/SoftwareApplication" lang="en" >
+<% else %>
+  <html xmlns:fb="https://graph.facebook.com/schema/og/" lang="en" >
 <% end %>
 
 <head >
 
-	<meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
 
-	<% if @product %>
-		<% if @product.language.eql?("Ruby") %>
-			<title><%= @product.name %> : <%= @product.version %> - Track GEM versions at VersionEye</title>
-		<% elsif @product.language.eql?("Java") %>
-			<title><%= @product.name %> : <%= @product.version %> - Track your JARs at VersionEye</title>
-		<% elsif @product.language.eql?("Node.JS") %>
-			<title><%= @product.name %> : <%= @product.version %> - Track your NPM libraries at VersionEye</title>
-		<% elsif @product.language.eql?("PHP") %>
-			<title><%= @product.name %> : <%= @product.version %> - Track your PHP libraries at VersionEye</title>
-		<% else %>	
-			<title><%= @product.name %> : <%= @product.version %> - Track your libraries at VersionEye</title>
-		<% end %>
-		<meta name="name"     itemprop="name"     content="<%= @product.name %>" />
-		<meta name="softwareversion" itemprop="softwareversion"  content="<%= @product.version %>" />
-		<meta name="version" itemprop="version"  content="<%= @product.version %>" />
-		<meta name="keywords" itemprop="keywords" content="<%= @product.name %>, <%= @product.language %>, <%= @product.prod_type %>" />
-		<meta name="url" itemprop="url" content="<%= Settings.server_url %>/package/<%= @product.to_param %>/version/<%= @product.version %>" />
-		<% if !@product.description.nil? && !@product.description.empty? %> 
-			<meta name="description" itemprop="description" content="<%= @product.description[0, 145] %>..." />
-		<% end %>
-	<% else %>
-		<title><%= yield(:title) %></title>
-	<% end %>
+  <% if @product %>
+    <% if @product.language.eql?("Ruby") %>
+      <title><%= @product.name %> : <%= @product.version %> - Track GEM versions at VersionEye</title>
+    <% elsif @product.language.eql?("Java") %>
+      <title><%= @product.name %> : <%= @product.version %> - Track your JARs at VersionEye</title>
+    <% elsif @product.language.eql?("Node.JS") %>
+      <title><%= @product.name %> : <%= @product.version %> - Track your NPM libraries at VersionEye</title>
+    <% elsif @product.language.eql?("PHP") %>
+      <title><%= @product.name %> : <%= @product.version %> - Track your PHP libraries at VersionEye</title>
+    <% else %>
+      <title><%= @product.name %> : <%= @product.version %> - Track your libraries at VersionEye</title>
+    <% end %>
+    <meta name="name"     itemprop="name"     content="<%= @product.name %>" />
+    <meta name="softwareversion" itemprop="softwareversion"  content="<%= @product.version %>" />
+    <meta name="version" itemprop="version"  content="<%= @product.version %>" />
+    <meta name="keywords" itemprop="keywords" content="<%= @product.name %>, <%= @product.language %>, <%= @product.prod_type %>" />
+    <meta name="url" itemprop="url" content="<%= Settings.server_url %>/package/<%= @product.to_param %>/version/<%= @product.version %>" />
+    <% if !@product.description.nil? && !@product.description.empty? %>
+      <meta name="description" itemprop="description" content="<%= @product.description[0, 145] %>..." />
+    <% end %>
+  <% else %>
+    <title><%= yield(:title) %></title>
+  <% end %>
 
-	<%= render 'layouts/html_head' %>
+  <%= render 'layouts/html_head' %>
 
 </head>
 
 <body>
-	
-	<%= render 'layouts/header' %>
-	
-	<section class="container flash-container" >
-		<% flash.each do |key, value| %>
-			<div class="alert flash <%= key %>">
-  				<button type="button" class="close" data-dismiss="alert">×</button>
-				<%= value %>
-			</div>
-		<% end %>
-	</section>
-	
-	<section class="container">
-		<%= render 'layouts/searchbar' %>
-		<div class="well-white row">
-			<%= yield %>
-		</div>
-	</section>
 
-	<%= render 'layouts/footer' %>
-	<aside class = "visible-desktop">
-		<%= render 'shared/social_buttons' %>
-	</aside>
-	<%= debug(params) if Rails.env.development? %>
+  <%= render 'layouts/header' %>
+
+  <section class="container flash-container" >
+    <% flash.each do |key, value| %>
+      <div class="alert flash <%= key %>">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= value %>
+      </div>
+    <% end %>
+  </section>
+
+  <section class="container">
+    <%= render 'layouts/searchbar' %>
+    <div class="well-white row">
+      <%= yield %>
+    </div>
+  </section>
+
+  <%= render 'layouts/footer' %>
+  <aside class = "visible-desktop">
+    <%= render 'shared/social_buttons' %>
+  </aside>
+  <%= debug(params) if Rails.env.development? %>
 
 </body>
 

@@ -5,6 +5,7 @@
   <!--[if lt IE 9]>
     <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+
   <%= csrf_meta_tag %>
   <%= stylesheet_link_tag "application" %>
 
@@ -20,27 +21,46 @@
   </script>
 
   <% if @page.eql?("LandingPage")  %>
-    <%= javascript_include_tag "application_lp",          :defer => false, :async => false %>
+
+    <%= javascript_include_tag "application_lp",            :defer => false, :async => false %>
+
   <% else %>
-    <%= javascript_include_tag "application",     :defer => true, :async => true %>
+
+    <%= javascript_include_tag "application",               :defer => false, :async => false %>
+
     <% if @product || @project %>
+
       <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
       <%= javascript_include_tag "application_product",     :defer => false, :async => false %>
+
     <% elsif @page.eql?("profile") %>
+
       <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
-    <% elsif @page.eql?("statistics") %>
+
+    <% elsif current_page?( statistics_path ) %>
+
       <%= javascript_include_tag "application_statistics",  :defer => false, :async => false %>
-    <% elsif @page.eql?("cc") %>
+
+    <% elsif current_page?( settings_payments_path )   ||
+             current_page?( settings_creditcard_path ) ||
+             current_page?( url_for(:controller => 'settings/payments', :action => 'receipt') )  %>
+
       <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
       <script type="text/javascript">
           Stripe.setPublishableKey('<%= Settings.stripe_public_key %>');
       </script>
+      <%= javascript_include_tag "application_payment",  :defer => false, :async => false %>
+
+    <% elsif current_page?( user_projects_github_repositories_path ) %>
+
+      <%= javascript_include_tag "application_github",  :defer => false, :async => false %>
+
     <% elsif current_page?(api_path) %>
+
       <%= javascript_include_tag "application_swagger",     :defer => false %>
       <link href='css/swagger/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
       <link href='assets/swagger/screen.css'          media='screen' rel='stylesheet' type='text/css'/>
+
     <% end %>
 
   <% end %>
-
-
