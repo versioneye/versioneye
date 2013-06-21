@@ -1,7 +1,7 @@
 
-function validateEmail(elementValue){  
-	var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;  
-	var result = emailPattern.test(elementValue);  
+function validateEmail(elementValue){
+	var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+	var result = emailPattern.test(elementValue);
 	if (result == false){
 		alert('The E-Mail Address is not valid! Please type in a valid E-Mail Address');
 	}
@@ -9,7 +9,7 @@ function validateEmail(elementValue){
 }
 
 function textCounter(field, cntfield, maxlimit) {
-	if (field.value.length > maxlimit) 
+	if (field.value.length > maxlimit)
 		field.value = field.value.substring(0, maxlimit);
 	else
 		cntfield.innerHTML = maxlimit - field.value.length;
@@ -17,16 +17,16 @@ function textCounter(field, cntfield, maxlimit) {
 
 function load_dialog_feedback(){
 	if (jQuery('#dialog_feedback').modal){
-		jQuery('#dialog_feedback').modal({keyboard : true});	
+		jQuery('#dialog_feedback').modal({keyboard : true});
 	} else {
 		cancel_button = document.getElementById("love_icon");
-		cancel_button.click(); 
+		cancel_button.click();
 	}
 }
 
-function validateFeedbackForm(){	
+function validateFeedbackForm(){
   var result = true
-	var fullname = jQuery('[name="fb_fullname"]').val();	
+	var fullname = jQuery('[name="fb_fullname"]').val();
 	if (fullname == "" || fullname == null){
 		alert('Please type in your Name.')
 		result = false
@@ -34,7 +34,7 @@ function validateFeedbackForm(){
 	var email = jQuery('[name="fb_email"]').val();
 
 	result = validateEmail(email);
-	var feedback = jQuery('[name="feedback"]').val();	
+	var feedback = jQuery('[name="feedback"]').val();
 	if (feedback == "" || feedback == null){
 		alert('Please type in your Feedback.')
 		result = false
@@ -44,9 +44,9 @@ function validateFeedbackForm(){
 		if (jQuery('#dialog_feedback').modal){
 			jQuery('#dialog_feedback').modal('hide');
 		} else {
-			// Fallback solution. Used on API page. 
+			// Fallback solution. Used on API page.
 			cancel_button = document.getElementById("feedback_dialog_cancel");
-			cancel_button.click(); 
+			cancel_button.click();
 		}
 	}
 	return result;

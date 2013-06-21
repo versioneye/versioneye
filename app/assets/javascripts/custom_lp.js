@@ -8,10 +8,6 @@ jQuery(document).ready(function() {
 
 });
 
-function load_video(){
-  jQuery('#dialog_video').modal({keyboard : true});
-}
-
 function regulate_height(){
   myHeight = window.innerHeight;
   if (myHeight > 410) {
