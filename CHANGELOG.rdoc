@@ -8,6 +8,7 @@ We are using the semantic versioning. Check out this: http://semver.org/
 * <b>Python</b>: We improved the parser for requirement.txt and added support for pip.log.
 * <b>RSS</b>: BugFix and test case for fav. RSS feed.
 * <b>GitHub View</b>: We developed a single page application for dealing with GitHub Repositories.
+* <b>Branches</b>: You can now even select which branch you want to monitor!
 * <b>Password Reset</b>: We changed the password reset process. We don't send out clear text passwords anymore!
 * <b>dev-master</b>: dev-master is not countet as newest if there are other ones.
 
