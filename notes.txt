@@ -1,1 +1,17 @@
 
+
+
+Continuous Updating is an agile technique to keep your software projects up-to-date. Learn more about:
+Which dependencies do I use in my software project?
+Which dependencies are outdated?
+When should I update?
+How do I ensure that my project is still running with the updated versions?
+Why should I update?
+What are the advantages of Continuous Updating?
+And how can I automate the process?
+These are some of the questions I will answer in this session.
+
+
+
+Robert studied computer science in Germany from 2000 - 2005. In 2008 he founded his first Software Consultant Company PLOIN. He build up the company and sold it 2010 with profits to Reutax AG. His next venture was the StartUp WildGigs in San Francisco / Silicon Valley, there he worked as Chief Architect for one year. 2012 Robert moved back to Germany and founded VersionEye, the tech StartUp for Continuous Updating.
+
