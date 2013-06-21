@@ -15,4 +15,5 @@
 //= require custom
 //= require custom_feedback
 
+//= require libs/underscore-min
 //= require settings
