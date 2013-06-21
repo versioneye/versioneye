@@ -1,6 +1,14 @@
 require 'spec_helper'
 
 describe "SignUp with GitHub" do
+  before :each do
+    FakeWeb.allow_net_connect = false
+  end
+  
+  after :each do
+    FakeWeb.clean_registry
+    FakeWeb.allow_net_connect = true
+  end
 
   it "signup a new user with GitHub" do
     get signup_path, nil, "HTTPS" => "on"

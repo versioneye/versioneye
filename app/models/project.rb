@@ -19,22 +19,26 @@ class Project
   A_PERIOD_WEEKLY = "weekly"
   A_PERIOD_DAILY  = "daily"
 
-  field :name           , type: String
-  field :description    , type: String
-  field :license        , type: String
-  field :project_type   , type: String,  :default => A_TYPE_MAVEN2
-  field :language       , type: String
-  field :project_key    , type: String
-  field :period         , type: String,  :default => A_PERIOD_WEEKLY
-  field :email          , type: String
-  field :url            , type: String
-  field :source         , type: String,  :default => A_SOURCE_UPLOAD
-  field :s3_filename    , type: String
-  field :github_project , type: String
-  field :dep_number     , type: Integer
-  field :out_number     , type: Integer, :default => 0
-  field :unknown_number , type: Integer, :default => 0
-  field :public         , type: Boolean, :default => false  # visible for everybody
+
+  field :name       , type: String
+  field :description, type: String
+  field :license    , type: String
+
+  field :project_type  , type: String, :default => A_TYPE_MAVEN2
+  field :language      , type: String
+  field :project_key   , type: String
+  field :period        , type: String, :default => A_PERIOD_WEEKLY
+  field :email         , type: String
+  field :url           , type: String
+  field :source        , type: String, :default => A_SOURCE_UPLOAD
+  field :s3_filename   , type: String
+  field :github_project, type: String
+  field :github_branch , type: String
+  field :dep_number    , type: Integer
+  field :out_number    , type: Integer, default: 0
+  field :unknown_number, type: Integer, default: 0
+  field :public        , type: Boolean, :default => false   # visible for everybody
+
   field :private_project, type: Boolean, :default => false  # private project from GitHub
   field :api_created    , type: Boolean, :default => false  # this project was created through the VersionEye API
 

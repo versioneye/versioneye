@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+
 describe VersionEye::ProductsApi do
 
   let( :product_uri ) { "/api/v1/products" }

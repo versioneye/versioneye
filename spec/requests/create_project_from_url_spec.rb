@@ -26,7 +26,7 @@ describe "Create Project from URL" do
     response.should redirect_to( user_project_path( project ) )
 
     get user_project_path( project ), nil, "HTTPS" => "on"
-    response.body.should match("Dependencies are Outdated")
+    response.body.should match("Dependencies are outdated")
     response.body.should match("rails")
     response.body.should match("jquery-rails")
     response.body.should match("therubyracer")

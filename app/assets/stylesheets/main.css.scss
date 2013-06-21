@@ -209,18 +209,31 @@ section > ul li {
   margin-bottom: 5px;
 }
 
-/* Used on package detail pages */
+/* Used on package detail pages .. width: 615px; */
 div.content {
   padding: 30px 0px 30px 30px;
   border-left: 1px solid #ddd;
   border-top: 1px solid #ddd;
-  width: 615px;
 }
 
 .content_header_def{
   padding-left: 30px;
   padding-bottom: 15px;
   border-left: 1px solid #DDD;
+}
+
+.l_left_padding {
+  padding-left: 30px;
+}
+
+.flash-container {
+    overflow: auto;
+    position: fixed;
+    top: 0;
+    right: 10%;
+    left: 10%;
+    width: 70%;
+    z-index: 200;
 }
 
 /* -----------------------
@@ -231,6 +244,12 @@ div.content {
   margin: 60px 0px 60px 0px;
 }
 
+#github-menu {
+  .dropdown.open .dropdown-toggle {
+    background: #afafaf !important;
+    color: #FFFFFF;
+  }
+}
 
 /* Jumbotrons
 -------------------------------------------------- */
@@ -1356,4 +1375,13 @@ h2 + .row {
 
 .dialog_badge_group{
   padding-bottom: 15px;
+}
+
+.repo-container {
+  border-bottom: 1px solid #f3f3f3;
+  padding: 10px 0px;
+
+  &:hover {
+    background-color: #fafafa;
+  };
 }
