@@ -92,8 +92,9 @@ define(
         current_repos.reset();
       }
 			console.log("going to show repos for: " + org_id);
-      if(all_repos.length){
-	      current_repos.appendNextPage(0);
+      if(all_repos.length && !_.isEmpty(all_repos.first().toJSON())){
+        console.debug("All_repos still have some repos: " + all_repos.length);
+       	current_repos.appendNextPage(0);
       } else {
         all_repos.fetchAll(initViews);
       }

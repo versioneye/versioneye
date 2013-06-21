@@ -52,10 +52,12 @@ define(['underscore', 'backbone'],
       return org_repos;
     },
     addNewItems: function(new_repos){
+      console.debug(new_repos.length);
+      
       var since = (this.currentPage * this.perPage);
       console.log("Going to add next items since: " + since); 
       this.totalPages = Math.ceil(new_repos.length/ this.perPage);
- 
+      
       var next_slice = new_repos.slice(since, since + this.perPage);
       this.add(next_slice, {update: true});
     },
@@ -68,6 +70,9 @@ define(['underscore', 'backbone'],
         this.currentPage = 0;
       } 
       
+      if(_.isNaN(this.perPage) || _.isUndefined(this.perPage)){
+        this.perPage = 5;
+      }
       var org_repos = this.onlyOrgRepos(); 
       this.addNewItems(org_repos); 
       

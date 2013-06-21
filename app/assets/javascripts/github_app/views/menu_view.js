@@ -51,13 +51,13 @@ define(['underscore', 'backbone'],
 
       this.currentRepos.currentPage = 0;
       this.currentRepos.reset();
-
-      this.removePrevSelection();
       if(filter_item.hasClass('active')){
+        this.removePrevSelection();
         this.allRepos.fetchAll();
         this.currentRepos.appendNextPage(0); //restore organization view
       } else {
         //going to add a filter
+        this.removePrevSelection();
         filter_item.addClass('active');
         $(ev.target).append(checker_template({}));
         var filtered_repos = this.currentRepos.filterByField(filter_data['field'], filter_data['value']);
