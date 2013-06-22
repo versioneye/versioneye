@@ -1,43 +1,37 @@
 <!DOCTYPE html>
-<% if @product %>
-	<html xmlns:fb="https://graph.facebook.com/schema/og/" itemscope itemtype="http://schema.org/SoftwareApplication"  >
-<% else %> 
-	<html xmlns:fb="https://graph.facebook.com/schema/og/">
-<% end %>
+<html xmlns:fb="https://graph.facebook.com/schema/og/" >
 
 <head >
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<% if @product %> 
-	<title>Visual : <%= @product.name %> : <%= @product.version %></title>
-	<meta name="name"     itemprop="name"     content="<%= @product.name %>">
-	<meta name="softwareversion" itemprop="softwareversion"  content="<%= @product.version %>">
-	<meta name="version" itemprop="version"  content="<%= @product.version %>">
-	<meta name="keywords" itemprop="keywords" content="<%= @product.name %>, <%= @product.language %>, <%= @product.prod_type %>" />
-	<meta name="url" itemprop="url" content="<%= Settings.server_url %>/package/<%= @product.to_param %>" />
-	<% if !@product.description.nil? && !@product.description.empty? %> 
-	<meta name="description" itemprop="description" content="<%= @product.description %>" />
-	<% end %>	
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<% if @product %>
+  <title>Visual : <%= @product.name %> : <%= @product.version %></title>
+  <meta name="softwareversion" content="<%= @product.version %>">
+  <meta name="version"         content="<%= @product.version %>">
+  <meta name="keywords"        content="<%= @product.name %>, <%= @product.language %>, <%= @product.prod_type %>" />
+  <% if !@product.description.nil? && !@product.description.empty? %>
+    <meta name="description"   content="<%= @product.description %>" />
+  <% end %>
 <% end %>
 
-	<%= render 'layouts/html_head' %>
+  <%= render 'layouts/html_head' %>
 
 </head>
 
 <body>
-	<%= render 'layouts/header' %>
-	<div class="container" style="text-align: center;" id="container">
-		<section class="round" id="section" >
-			<% flash.each do |key, value| %>
-				<div class="flash <%= key %>"><%= value %></div>
-			<% end %>
-			<%= yield %>
-		</section>
-		<%= render 'layouts/footer' %>
-		<%= debug(params) if Rails.env.development? %>
-		<br/>
-		<br/>
-	</div>
-	<%= render 'shared/social_buttons' %>
+  <%= render 'layouts/header' %>
+  <div class="container" style="text-align: center;" id="container">
+    <section class="round" id="section" >
+      <% flash.each do |key, value| %>
+        <div class="flash <%= key %>"><%= value %></div>
+      <% end %>
+      <%= yield %>
+    </section>
+    <%= render 'layouts/footer' %>
+    <%= debug(params) if Rails.env.development? %>
+    <br/>
+    <br/>
+  </div>
+  <%= render 'shared/social_buttons' %>
 </body>
 
 </html>

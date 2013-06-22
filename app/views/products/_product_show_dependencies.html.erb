@@ -1,6 +1,5 @@
 
-<div class="boxContainer" id="dependencies" itemprop="requirements" itemscope="" itemtype="http://schema.org/ItemList">
-  <meta name="name" content="Requirements" itemprop="name" />
+<div class="boxContainer" id="dependencies" >
   <% if @product.prod_type.eql?( Project::A_TYPE_MAVEN2 ) %>
     <%= render "product_show_dependencies_maven2" %>
   <% elsif @product.prod_type.eql?( Project::A_TYPE_RUBYGEMS )  %>
@@ -33,17 +32,17 @@
   function render_wheel(){
     canvas_container = document.getElementById("canvas-container")
     if (canvas_container){
-      var wheel = new DependencyWheel.Remote(false, canvas_container, { 
+      var wheel = new DependencyWheel.Remote(false, canvas_container, {
         url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/dependencies.json?scope=<%= @product.main_scope %>',
-        width: "605", 
+        width: "605",
         height: "605",
         infoBox: "infoBox",
         infoNumber: "runtime_recursive_number",
         canvas_id: "canvas",
         canvas_hover_id: "canvas_hover",
-        product_key: "<%= @product.to_param%>", 
+        product_key: "<%= @product.to_param%>",
         product_version: "<%= @product.version_to_url_param%>",
-        product_name: "<%= @product.name%>", 
+        product_name: "<%= @product.name%>",
         version: "<%= @product.version%>",
         data_border: 70,
         show_label: false,
@@ -51,7 +50,7 @@
         scope: "<%= @product.main_scope %>",
         container_id: "canvas-container",
         onItemClick: function(item, event){
-          key = item.id; 
+          key = item.id;
           key = key.replace(/\//g, "--");
           key = key.replace(/\./g, "~" );
           version = item.version;

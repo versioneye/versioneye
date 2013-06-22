@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<% if @product %>
-  <html xmlns:fb="https://graph.facebook.com/schema/og/" itemscope itemtype="http://schema.org/SoftwareApplication" lang="en" >
-<% else %>
-  <html xmlns:fb="https://graph.facebook.com/schema/og/" lang="en" >
-<% end %>
+<html xmlns:fb="https://graph.facebook.com/schema/og/" lang="en" >
 
 <head >
 
@@ -21,13 +17,11 @@
     <% else %>
       <title><%= @product.name %> : <%= @product.version %> - Track your libraries at VersionEye</title>
     <% end %>
-    <meta name="name"     itemprop="name"     content="<%= @product.name %>" />
-    <meta name="softwareversion" itemprop="softwareversion"  content="<%= @product.version %>" />
-    <meta name="version" itemprop="version"  content="<%= @product.version %>" />
-    <meta name="keywords" itemprop="keywords" content="<%= @product.name %>, <%= @product.language %>, <%= @product.prod_type %>" />
-    <meta name="url" itemprop="url" content="<%= Settings.server_url %>/package/<%= @product.to_param %>/version/<%= @product.version %>" />
+    <meta name="softwareversion" content="<%= @product.version %>" />
+    <meta name="version"         content="<%= @product.version %>" />
+    <meta name="keywords"        content="<%= @product.language %>, <%= @product.name %>, <%= @product.prod_type %>" />
     <% if !@product.description.nil? && !@product.description.empty? %>
-      <meta name="description" itemprop="description" content="<%= @product.description[0, 145] %>..." />
+      <meta name="description" content="<%= @product.description[0, 145] %>..." />
     <% end %>
   <% else %>
     <title><%= yield(:title) %></title>

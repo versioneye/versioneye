@@ -24,14 +24,14 @@
       </div>
     </form>
   </div>
-  <div id="headline_1" class="jumbotron" style="margin-top: 10px;">
+  <div id="headline_2" class="jumbotron" style="margin-top: 10px;">
     <div class="row" style="text-align: center; vertical-align: middle;">
       <% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
           <% @langs = @lang.split(",") %>
           <% @languages.each do |language| %>
             <% langname = language.downcase.gsub(/\./, "") %>
             <div class="icon_<%= langname %>_small_container" >
-              <span id="icon_<%= langname %>" class="icon_<%= langname %> small on" alt="<%= langname %>" title="<%= langname %>">&nbsp;</span>
+              <span id="icon_<%= langname %>" class="icon_<%= langname %> small on" title="<%= langname %>">&nbsp;</span>
             </div>
           <% end %>
       <% end %>

@@ -1,43 +1,41 @@
 <div class="div-row">
-	<div class="div-cell ">
-		<h2 class="lp_head">
-			Newest Versions
-		</h2>
-		<div style="padding-top: 10px; padding-bottom: 10px" >
-			Check out the latest versions. 
-		</div>
-	</div>
-	<div class="div-cell " style="width: 20px"></div>
-	<div class="div-cell ">
-		<h2 class="lp_head">
-			Hottest Libraries
-		</h2>
-		<div style="padding-top: 10px; padding-bottom: 10px">
-			Check out the most followed software libraries.
-		</div>
-	</div>
+  <div class="div-cell ">
+    <h2 class="lp_head">
+      Newest Versions
+    </h2>
+    <div style="padding-top: 10px; padding-bottom: 10px" >
+      Check out the latest versions.
+    </div>
+  </div>
+  <div class="div-cell " style="width: 20px"></div>
+  <div class="div-cell ">
+    <h2 class="lp_head">
+      Hottest Libraries
+    </h2>
+    <div style="padding-top: 10px; padding-bottom: 10px">
+      Check out the most followed software libraries.
+    </div>
+  </div>
 </div>
 
-<div class="div-row">		
+<div class="div-row">
 
-	<div class="div-cell lp_half_box" style="margin-right: 5px; vertical-align: top;" >
-		<div class="searchResults" id="newest" style="padding: 10px; vertical-align: top;" itemprop="itemList" itemscope="" itemtype="http://schema.org/ItemList" >
-			<meta itemprop="name" content="Newest Versions"  />
-			<% if !@newest.nil? %>
-				<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @newest, :prefix => "newest", :name_limit => 33 } %>
-			<% end %>
-		</div>
-	</div>
-	
-	<div class="div-cell " style="width: 10px"></div>
-	
-	<div class="div-cell lp_half_box" style="margin-left: 5px; vertical-align: top;">
-		<div class="searchResults" id="hottest" style="padding: 10px;" itemprop="itemList" itemscope="" itemtype="http://schema.org/ItemList" >
-			<meta itemprop="name" content="Hottest Libraries"  />
-			<% if !@hotest.nil? %>
-				<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @hotest, :prefix => "hottest", :name_limit => 33 } %>
-			<% end %>
-		</div>
-	</div>
+  <div class="div-cell lp_half_box" style="margin-right: 5px; vertical-align: top;" >
+    <div class="searchResults" id="newest" style="padding: 10px; vertical-align: top;" >
+      <% if !@newest.nil? %>
+        <%= render :partial => "products/show_search_results_iterator", :locals => { :products => @newest, :prefix => "newest", :name_limit => 33 } %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="div-cell " style="width: 10px"></div>
+
+  <div class="div-cell lp_half_box" style="margin-left: 5px; vertical-align: top;">
+    <div class="searchResults" id="hottest" style="padding: 10px;" >
+      <% if !@hotest.nil? %>
+        <%= render :partial => "products/show_search_results_iterator", :locals => { :products => @hotest, :prefix => "hottest", :name_limit => 33 } %>
+      <% end %>
+    </div>
+  </div>
 
 </div>
