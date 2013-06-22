@@ -2,17 +2,17 @@
 	<% if !language.nil? && !language.empty? %>
 		<% if !link.nil? %>
 			<a href="<%= link %>">
-				<div class="icon_<%= language.gsub(".", "").downcase %> on" 
-					 id="<%= link %>_<%= language.downcase %>_icon" 
-					 title = "<%= title %>" itemprop = "image" ></div>
+				<div class="icon_<%= language.gsub(".", "").downcase %> on"
+					 id="<%= link %>_<%= language.downcase %>_icon"
+					 title = "<%= title %>" ></div>
 			</a>
 		<% else %>
-			<div class="icon_<%= language.gsub(".", "").downcase %> on" 
-					 title = "<%= title %>" itemprop = "image" ></div>
+			<div class="icon_<%= language.gsub(".", "").downcase %> on"
+					 title = "<%= title %>" ></div>
 		<% end %>
 	<% else %>
 		<div class="eye_off"></div>
-	<% end %>									
+	<% end %>
 <% else %>
-	<img itemprop="image" src="<%= icon %>" width="57" height="57" />
+	<img src="<%= icon %>" width="57" height="57" />
 <% end %>

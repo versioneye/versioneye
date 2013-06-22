@@ -34,7 +34,6 @@ describe "submit a versioncomment" do
 
     get "/package/json_gobi/version/1~0"
 
-    assert_tag :tag => "div", :attributes => { :itemprop => "comment"}
     response.body.should include "This is a versioncomment XYZ123"
 
     user.remove

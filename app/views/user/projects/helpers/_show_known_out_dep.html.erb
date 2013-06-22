@@ -2,17 +2,13 @@
 
 <tr class="flash error">
 	<td>
-		
+
 	</td>
   <td>
-    <span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
-      <a itemprop="url" class="#a dep_link" href="<%= product_url(product) %>" >
-        <span itemprop="name" ><%= product.name %></span>
-      </a>
-    </span>
+    <a class="#a dep_link" href="<%= product_url(product) %>" ><%= product.name %></a>
   </td>
   <td>
-    <span itemprop="softwareVersion"><%= dep.version_requested %></span>
+    <span ><%= dep.version_requested %></span>
   </td>
   <td>
     <%= dep.version_current %>

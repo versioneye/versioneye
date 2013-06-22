@@ -2,7 +2,7 @@
   <% user = current_user %>
   <% products.each do |product| %>
     <% next if product.nil? %>
-    <div class="row search-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/SoftwareApplication" >
+    <div class="row search-item" >
 
       <div class="icon56 span2 pull-left">
         <% prog_lang = product.language.downcase.gsub(/\./, "") %>
@@ -10,9 +10,7 @@
       </div>
 
       <div class = "span5">
-        <a itemprop="url" href="<%= product_url(product) %>" class="searchResultLink">
-          <meta itemprop="name" content="<%= product.name %>" />
-          <meta itemprop="softwareVersion" content="<%= product.version %>" />
+        <a href="<%= product_url(product) %>" class="searchResultLink">
           <span ><%= product.name_version(name_limit) %></span>
         </a><br/>
         <% if product.prod_type == "Maven2" %>

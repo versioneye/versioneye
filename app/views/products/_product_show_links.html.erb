@@ -9,15 +9,15 @@
 <div class="box content" id="relatedLinks" >
   <% if !links.empty? %>
     <% links.each do |link| %>
-      <a itemprop="publishingPrinciples" href="<%= link.get_link %>" target="new"><%= link.name %></a><br/>
+      <a href="<%= link.get_link %>" target="new"><%= link.name %></a><br/>
     <% end %>
   <% end %>
   <% if !version_links.empty? %>
     <% version_links.each do |link| %>
-      <a itemprop="publishingPrinciples" href="<%= link.get_link %>" target="new"><%= link.name %></a><br/>
+      <a href="<%= link.get_link %>" target="new"><%= link.name %></a><br/>
     <% end %>
   <% end %>
-  <% if @product.twitter_name && !@product.twitter_name.empty? %> 
+  <% if @product.twitter_name && !@product.twitter_name.empty? %>
     <a href="https://twitter.com/<%= @product.twitter_name %>" target="_Twitter" >Twitter Page</a>
   <% end %>
 </div>

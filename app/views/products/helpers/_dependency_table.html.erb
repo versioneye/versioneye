@@ -13,23 +13,23 @@
       <tr class="<%= tr_class %>">
         <td>
           <% if dep.known %>
-            <span itemprop="itemListElement" itemtype="http://schema.org/SoftwareApplication" itemscope="" >
-              <a itemprop="url" class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
+            <span >
+              <a class="#a dep_link" href="/package/<%= dep.dep_prod_key_for_url %>/version/<%= dep.version_for_url %>" >
                 <div class="icon_link icon16"></div>
                 <% if dep.group_id && dep.artifact_id %>
-                  <span itemprop="name" ><%= dep.group_id %> : <%= dep.artifact_id %></span>
+                  <span ><%= dep.group_id %> : <%= dep.artifact_id %></span>
                 <% else %>
-                  <span itemprop="name" ><%= dep.name %></span>
+                  <span ><%= dep.name %></span>
                 <% end %>
               </a>
             </span>
           <% else %>
             <div class="icon_link icon16"></div>
-            <span itemprop="name" ><%= dep.name %></span>
+            <span ><%= dep.name %></span>
           <% end %>
         </td>
         <td>
-          <span itemprop="softwareVersion"><%= dep.version %></span>
+          <span ><%= dep.version %></span>
         </td>
         <td>
           <% if dep.known %>
