@@ -12,28 +12,28 @@
 		Times
 	</div>
 	<div class="boxContainer">
-		Start: <%= @crawle.created_at.strftime("%d.%m.%Y %H:%M ") %> <br/> 
+		Start: <%= @crawle.created_at.strftime("%d.%m.%Y %H:%M ") %> <br/>
 		<% if !@crawle.updated_at.nil? %>
 			Stop: <%= @crawle.updated_at.strftime("%d.%m.%Y %H:%M ") %><br/>
 		<% end %>
 		<% if !@crawle.duration.nil? %>
 			Duration: <%= @crawle.duration.strftime("%H:%M:%S") %>
-		<% end %>		
+		<% end %>
 	</div>
 	<% if !@crawle.error_messages.nil? && @crawle.error_messages.count() > 0 %>
 		<div class="boxHeader">
 			Errors - <%= @crawle.error_messages.count() %>
 		</div>
-		<div class="boxContainer" >			
+		<div class="boxContainer" >
 			<table>
 			<% @crawle.error_messages.each do |error|  %>
 				<tr>
 					<td style="vertical-align: top;"><%= error.created_at.strftime("%H:%M") %></td>
-					<td><b><%= error.subject %></b></br>
-					<%= error.errormessage %><br/></td>
+					<td><b><%= error.subject %></b><br />
+					<%= error.errormessage %><br /></td>
 				</tr>
 			<% end %>
-			</table>			
+			</table>
 		</div>
 	<% end %>
 <% end %>
