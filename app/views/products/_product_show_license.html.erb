@@ -6,7 +6,7 @@
 <div class="box content" >
 	<% if !@product.license_info.nil? && !@product.license_info.empty? %>
 		<% if !@product.license_link_info.nil? && !@product.license_link_info.empty? %>
-			<a href="<%= @product.license_link_info %>" target="_LICENSE"><%= @product.license_info %></a>
+			<a href="<%= @product.license_link_info %>" target="license"><%= @product.license_info %></a>
 		<% else %>
 			<%= @product.license %>
 		<% end %>

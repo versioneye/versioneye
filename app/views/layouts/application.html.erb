@@ -17,8 +17,6 @@
     <% else %>
       <title><%= @product.name %> : <%= @product.version %> - Track your libraries at VersionEye</title>
     <% end %>
-    <meta name="softwareversion" content="<%= @product.version %>" />
-    <meta name="version"         content="<%= @product.version %>" />
     <meta name="keywords"        content="<%= @product.language %>, <%= @product.name %>, <%= @product.prod_type %>" />
     <% if !@product.description.nil? && !@product.description.empty? %>
       <meta name="description" content="<%= @product.description[0, 145] %>..." />
