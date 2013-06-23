@@ -1,22 +1,47 @@
 <% title "Github Repositories" %>
 
 <div class="span3" >
-	<%= render "/user/projects/helpers/navi" %>
+  <%= render "/user/projects/helpers/navi" %>
 </div>
 
-<div class="span8">
-	<div class="row content_header_def" >
-    Select the GitHub Repositories you want to monitor.
-    <div id = "github-menu"></div>
 
-  </div>
-  <div id = "github-repos" class="content" >
-    <div >
-      Please enable Javascript to see content of the page. Or just refresh page.
+<% if !current_user.github_account_connected? %>
+
+  <div class="span8">
+    <div class="row content_header_def" >
+      Connect with GitHub to monitor your GitHub Repositories.
+    </div>
+    <div class="content " >
+      <%= render 'shared/login_with_github', :btn => "signup" %>
     </div>
   </div>
-  <div id = "github-pagination"></div>
-</div>
+
+<% else %>
+
+  <div class="span8">
+    <div class="row content_header_def" >
+      <div id = "github-menu" ></div>
+    </div>
+
+    <% if !current_user.github_token.nil? && !current_user.github_scope.eql?("repo") %>
+      <div class="content flash warning" >
+        With the current scope we can fetch only your public repositories. If you want to monitor
+        private repositories you have to grand us access to your private repositories:
+        <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&amp;scope=repo' style="margin-right: 5px;" >
+          Grand access to private repositories
+        </a><br/><br/>
+      </div>
+    <% end %>
+
+    <div id = "github-repos" class="content" >
+      <div >
+        Please enable Javascript to see content of the page. Or just refresh page.
+      </div>
+    </div>
+    <div id = "github-pagination"></div>
+  </div>
+
+<% end %>
 
 <!-- templates for frontend app -->
 
@@ -221,4 +246,3 @@
     </li>
   </ul>
 </script>
-

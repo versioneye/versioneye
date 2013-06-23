@@ -9,7 +9,7 @@
   <%= csrf_meta_tag %>
   <%= stylesheet_link_tag "application" %>
 
-  <% if @page.eql?("LandingPage")  %>
+  <% if current_page?( root_path )  %>
 
     <%= javascript_include_tag "application_lp",            :defer => false, :async => false %>
 
