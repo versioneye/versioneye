@@ -68,7 +68,7 @@
         <% else %>
           <form action="/settings/update_plan" method="POST" >
             <input type="hidden" name="plan" value="02_personal" />
-            <button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+            <button id="personal_button" type="submit" class="btn2 btn2-big pull-right" >Book It</button>
           </form>
         <% end %>
       <% else %>
@@ -108,7 +108,7 @@
         <% else %>
           <form action="/settings/update_plan" method="POST" >
             <input type="hidden" name="plan" value="02_business_small" />
-            <button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+            <button id="business_small_button" type="submit" class="btn2 btn2-big pull-right" >Book It</button>
           </form>
         <% end %>
       <% else %>
@@ -140,7 +140,7 @@
         <% else %>
           <form action="/settings/update_plan" method="POST" >
             <input type="hidden" name="plan" value="02_business_normal" />
-            <button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+            <button id="business_normal_button" type="submit" class="btn2 btn2-big pull-right" >Book It</button>
           </form>
         <% end %>
       <% else %>

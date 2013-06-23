@@ -44,6 +44,23 @@ describe "Payment Process" do
       user.plan.name_id.should eql(Plan.personal_plan.name_id)
 
 
+      ### upgrades the plan to business normal
+
+      visit pricing_path
+      Plan.count.should eq(4)
+      page.should have_content(Plan.free_plan.name)
+      page.should have_content("unlimited public repositories with this plan but no private repositories")
+      page.should have_content("Use the personal plan as an individual person to track your private repositories.")
+      page.should have_content("Use the business plans as an organisation and take advantage of the advanced features")
+
+      click_button "business_normal_button"
+      page.should have_content("We updated your plan successfully")
+      user = User.find_by_email(user.email)
+      user.stripe_token.should_not be_nil
+      user.stripe_customer_id.should_not be_nil
+      user.plan.should_not be_nil
+      user.plan.name_id.should eql(Plan.business_normal_plan.name_id)
+
       ### upgrades the plan to business small
 
       visit settings_plans_path
