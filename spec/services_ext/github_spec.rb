@@ -193,48 +193,6 @@ describe Github do
     end
   end
 
-  describe "getting info about user's organization" do
-    before :each do
-      FakeWeb.register_uri(:get, %r|https://api\.github\.com/orgs/*|,
-                          [{body: {message: "Bad credentials"}.to_json},
-                           {body: {login: "versioneye",
-                                   id: 1,
-                                   url: "https://api.github.com/orgs/github",
-                                   avatar_url: "https://github.com/images/error/octocat_happy.gif",
-                                   name: "versioneye",
-                                   company: "VersionEye",
-                                   location: "Berlin",
-                                   email: "info@versioneye.com",
-                                   public_repos: 2,
-                                   public_gists: 1,
-                                   followers: 20,
-                                   following: 0,
-                                   html_url: "https://github.com/octocat",
-                                   created_at: "2008-01-14T04:33:35Z",
-                                   type: "Organization"}.to_json}
-                          ])
-    end
-
-    it "should return nil when github raises exception" do
-      Github.orga_info(user_without_token, "versioneye").should be_nil
-    end
-
-    it "returns proper hash with information" do
-      Github.orga_info(user_without_token, "versioneye").should be_nil
-
-      org_info = Github.orga_info(user_with_token, "versioneye")
-
-      org_info.should_not be_nil
-      org_info.is_a?(Hash).should be_true
-      org_info.has_key?('login').should be_true
-      org_info['login'].should eql('versioneye')
-      org_info.has_key?('name').should be_true
-      org_info['name'].should eql('versioneye')
-      org_info.has_key?('type').should be_true
-      org_info['type'].should eql('Organization')
-    end
-  end
-
   describe "reading repositories by following links in response headers" do
     let(:url_start) {"https://api.github.com/user/repos"}
     let(:url_page2) {"https://api.github.com/user/repos?page=2"}
