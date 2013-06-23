@@ -19,10 +19,15 @@ define(
         var options = [];
 
         _.each(this.model.get('branches'), function(branch){
+            var selected_branch = "master";
+            var imported_branch = this.model.get('imported_branch');
+            if(!_.isNull(imported_branch)){
+              selected_branch = imported_branch;
+            }
             options.push(this.option_template({
               value: branch,
               content: branch,
-              selected: branch == "master" ? "selected" : ""
+              selected: branch == selected_branch ? "selected" : ""
             }));
         }, this);
         
