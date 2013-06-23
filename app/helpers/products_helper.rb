@@ -1,20 +1,20 @@
 module ProductsHelper
-  
+
   def product_version_path(product)
-    return "/package/0/version" if product.nil? 
+    return "/package/0/version" if product.nil?
     return "/package/#{product.to_param}/version/#{product.version_to_url_param}"
   end
-  
+
   def product_url(product)
-    return "/package/0/" if product.nil? 
+    return "/package/0/" if product.nil?
     return "/package/#{product.to_param}"
   end
-  
+
   def display_follow(product, user)
     return "none" if user.products.include? product
     return "block"
   end
-  
+
   def display_unfollow(product, user)
     return "block" if user.products.include? product
     return "none"
@@ -22,7 +22,7 @@ module ProductsHelper
 
   def do_parse_search_input( query )
     query_empty = query.nil? || query.empty? || query.strip.empty? || query.eql?("Be up-to-date")
-    query = "json" if query_empty 
+    query = "json" if query_empty
     query = query.strip()
     query = query.downcase
     return query
@@ -34,7 +34,6 @@ module ProductsHelper
   end
 
   def get_language_array(lang)
-
     languages = Array.new
     special_languages = {"php" => "PHP",
                           "node.js" =>  "Node.JS",
@@ -87,11 +86,35 @@ module ProductsHelper
     searchlog.search = query
     searchlog.wait = wait
     if products.nil? || products.total_entries == 0
-      searchlog.results = 0  
+      searchlog.results = 0
     else
       searchlog.results = products.total_entries
     end
     searchlog.save
   end
-  
+
+  def check_redirects
+    key           = params[:key]
+    version       = params[:version]
+    version       = "" if version.nil?
+    key_match     = key.match(/\~/)
+    version_match = version.match(/\~/)
+    return nil if key_match.nil? && version_match.nil?
+    path = "/package/"
+    if key_match
+      key_ = key.gsub("\~", "\.")
+      path += "#{key_}"
+    else
+      path += "#{key}"
+    end
+    if version_match
+      version_ = version.gsub("\~", "\.")
+      path += "/version/#{version_}"
+    end
+    if !key_match.nil? || !version_match.nil?
+      redirect_to path
+      return
+    end
+  end
+
 end

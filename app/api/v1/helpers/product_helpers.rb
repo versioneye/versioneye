@@ -4,7 +4,7 @@ module VersionEye
   module ProductHelpers
     def parse_query(query)
         query = query.to_s
-        query = query.strip().downcase 
+        query = query.strip().downcase
         query.gsub!(/\%/, "")
         query
     end
@@ -33,13 +33,13 @@ module VersionEye
             languages << language.capitalize!
           end
         end
-        
+
         languages
       end
     end
 
     def parse_product_key(prod_key)
-      parsed_key = prod_key.to_s.gsub("--", "/").gsub("~", ".")
+      parsed_key = prod_key.to_s.gsub("--", "/")
       HTMLEntities.new.decode parsed_key
     end
 
@@ -51,7 +51,7 @@ module VersionEye
       end
       @current_product
     end
-    
+
     def save_search_log(query, products, start)
       stop = Time.now
       wait = (stop - start) * 1000.0
@@ -59,7 +59,7 @@ module VersionEye
       searchlog.search = query
       searchlog.wait = wait
       if products.nil? || products.total_entries == 0
-        searchlog.results = 0  
+        searchlog.results = 0
       else
         searchlog.results = products.total_entries
       end

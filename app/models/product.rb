@@ -307,17 +307,17 @@ class Product
 
   def self.encode_product_key(prod_key)
     return "0" if prod_key.nil?
-    prod_key.to_s.gsub("/", "--").gsub(".", "~")
+    prod_key.to_s.gsub("/", "--")
   end
 
   def self.encode_prod_key(prod_key)
     return nil if prod_key.nil?
-    prod_key.gsub("/", "--").gsub(".", "~")
+    prod_key.gsub("/", "--")
   end
 
   def self.decode_prod_key(prod_key)
     return nil if prod_key.nil?
-    prod_key.gsub("--", "/").gsub("~", ".")
+    prod_key.gsub("--", "/")
   end
 
   def description_summary

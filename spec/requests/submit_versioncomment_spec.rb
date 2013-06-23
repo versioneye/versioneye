@@ -30,14 +30,10 @@ describe "submit a versioncomment" do
 
     post "/versioncomments", :versioncomment => {:comment => "This is a versioncomment XYZ123", :product_key => product.prod_key, :version => product.version}
     assert_response 302
-    response.should redirect_to("/package/json_gobi/version/1~0")
+    response.should redirect_to("/package/json_gobi/version/1.0")
 
-    get "/package/json_gobi/version/1~0"
-
+    get "/package/json_gobi/version/1.0"
     response.body.should include "This is a versioncomment XYZ123"
-
-    user.remove
-    product.remove
   end
 
 end
