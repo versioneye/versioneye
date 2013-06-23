@@ -107,7 +107,7 @@ class User::ProjectsController < ApplicationController
     success = false
     msg = ""
     if Project.where(_id: id).exists?
-      ProjectService.destroy_project id
+      ProjectService.destroy id
       success = true
     else
       msg = "Cant remove project with id: `#{id}` - it doesnt exist. Please refresh page."
@@ -134,7 +134,7 @@ class User::ProjectsController < ApplicationController
   def reparse
     id = params[:id]
     @project = Project.find_by_id(id)
-    ProjectService.process_project( @project )
+    ProjectService.update( @project )
     flash[:info] = "Project re parse is done."
     redirect_to user_project_path(@project)
   end
@@ -258,7 +258,7 @@ class User::ProjectsController < ApplicationController
         return nil
       end
       sha = Github.get_repo_sha( github_project, current_user.github_token )
-      project_info = Github.repository_info( github_project, sha, current_user.github_token )
+      project_info = Github.project_file_info( github_project, sha, current_user.github_token )
       if project_info.empty?
         flash[:error] = "We couldn't find any project file in the selected project. Please choose another project."
         return nil

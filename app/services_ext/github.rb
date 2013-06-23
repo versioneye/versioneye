@@ -7,35 +7,24 @@ class Github
   A_API_URL = "https://api.github.com"
 
   def self.token( code )
-    domain = 'https://github.com/'
-    uri = 'login/oauth/access_token'
-    query = 'client_id='
-    query += Settings.github_client_id
-    query += '&client_secret='
-    query += Settings.github_client_secret
-    query += '&code=' + code
-    link = "#{domain}#{uri}?#{query}"
-    doc = Nokogiri::HTML( open( URI.encode(link) ) )
+    domain    = 'https://github.com/'
+    uri       = 'login/oauth/access_token'
+    query     = token_query( code )
+    link      = "#{domain}#{uri}?#{query}"
+    doc       = Nokogiri::HTML( open( URI.encode(link) ) )
     p_element = doc.xpath('//body/p')
-    p_string = p_element.text
-    pips = p_string.split("&")
-    token = pips[0].split("=")[1]
+    p_string  = p_element.text
+    pips      = p_string.split("&")
+    token     = pips[0].split("=")[1]
     token
   end
 
   def self.user( token )
     return nil if token.to_s.empty?
-
-    url = 'https://api.github.com/user?access_token=' + URI.escape( token )
+    url           = "#{A_API_URL}/user?access_token=#{URI.escape( token )}"
     response_body = HTTParty.get(url, :headers => {"User-Agent" => A_USER_AGENT } ).response.body
-    json_user = JSON.parse response_body
+    json_user     = JSON.parse response_body
     catch_github_exception json_user
-  end
-
-  def self.orga_info(user, orga_name)
-    url = "#{A_API_URL}/orgs/#{orga_name}?access_token=#{user.github_token}"
-    response_body = HTTParty.get(url, headers: {"User-Agent" => A_USER_AGENT}).response.body
-    catch_github_exception JSON.parse(response_body)
   end
 
   def self.oauth_scopes( token )
@@ -79,8 +68,8 @@ class Github
 
   def self.read_repos(user, url, page = 1, per_page = 30)
     request_headers = {"User-Agent" => A_USER_AGENT}
-    response = self.get(url, headers: request_headers)
-    data = catch_github_exception JSON.parse(response.body)
+    response        = self.get(url, headers: request_headers)
+    data            = catch_github_exception JSON.parse(response.body)
     if data.nil?
       data = []
     end
@@ -123,31 +112,59 @@ class Github
     catch_github_exception JSON.parse(response.body)
   end
 
-  # TODO: Rename it. It's more fetch_project_file_from_branch
-  def self.import_from_branch(user, repo_name, branch = "master")
+
+  def self.project_file_from_branch(user, repo_name, branch = "master")
     branch_info = Github.repo_branch_info user, repo_name, branch
     if branch_info.nil?
       Rails.logger.error "Cancelling importing: cant read branch info."
       return nil
     end
 
-    project_file_info = Github.repo_info user, repo_name, branch_info["commit"]["sha"]
-    if project_file_info.nil?
+    project_file_info = Github.project_file_info( repo_name, branch_info["commit"]["sha"], user.github_token )
+    if project_file_info.nil? || project_file_info.empty?
       Rails.logger.error "Cancelling importing: cant read info about project's file."
       return nil
     end
 
-    project_file = Github.fetch_file project_file_info["url"], user.github_token
-
+    project_file         = Github.fetch_file project_file_info["url"], user.github_token
     project_file["name"] = project_file_info["name"]
     project_file["type"] = project_file_info["type"]
-
     project_file
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
     nil
   end
+
+  # TODO: add tests
+  def self.project_file_info(git_project, sha, token)
+    result = Hash.new
+    url    = "https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)
+    tree   = JSON.parse HTTParty.get( url, :headers => {"User-Agent" => A_USER_AGENT} ).response.body
+    tree['tree'].each do |file|
+      name           = file['path']
+      result['url']  = file['url']
+      result['name'] = name
+      type           = ProjectService.type_by_filename( name )
+      if type
+        result['type'] = type
+        return result
+      end
+    end
+    return Hash.new
+  end
+
+  def self.fetch_file( url, token )
+    return nil if url.nil? || url.empty?
+    response = HTTParty.get( "#{url}?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT} )
+    if response.code != 200
+      Rails.logger.error "Cant fetch file from #{url}:  #{response.code}\n
+        #{response.message}\n#{response.data}"
+      return nil
+    end
+    JSON.parse response.body
+  end
+
 
   def self.user_repo_names( github_token )
     repo_names = Array.new
@@ -231,43 +248,6 @@ class Github
     nil
   end
 
-  # TODO: rename it. It's more about the project_file_info
-  def self.repo_info(user, project_name, sha)
-    response = repository_info project_name, sha, user.github_token
-    return nil if response.empty?
-    return response
-  end
-
-  # TODO: add tests
-  # TODO: Rename it. This is not repository info, it's more project_file_info !
-  def self.repository_info(git_project, sha, token)
-    result = Hash.new
-    url = "https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)
-    tree = JSON.parse HTTParty.get( url, :headers => {"User-Agent" => A_USER_AGENT} ).response.body
-    tree['tree'].each do |file|
-      name = file['path']
-      result['url'] = file['url']
-      result['name'] = name
-      type = ProjectService.type_by_filename( name )
-      if type
-        result['type'] = type
-        return result
-      end
-    end
-    return Hash.new
-  end
-
-  def self.fetch_file( url, token )
-    return nil if url.nil? || url.empty?
-    response = HTTParty.get( "#{url}?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT} )
-    if response.code != 200
-      Rails.logger.error "Cant fetch file from #{url}:  #{response.code}\n
-        #{response.message}\n#{response.data}"
-      return nil
-    end
-    JSON.parse response.body
-  end
-
   def self.supported_languages()
     Set['java', 'ruby', 'python', 'node.js', 'php', 'javascript', 'coffeescript', 'clojure']
   end
@@ -276,14 +256,14 @@ class Github
 
     def self.language_supported?(lang)
       return false if lang.nil?
-      lang.casecmp('Java') == 0 ||
-      lang.casecmp('Ruby') == 0 ||
-      lang.casecmp('Python') == 0 ||
-      lang.casecmp('Node.JS') == 0 ||
+      lang.casecmp('Java')         == 0 ||
+      lang.casecmp('Ruby')         == 0 ||
+      lang.casecmp('Python')       == 0 ||
+      lang.casecmp('Node.JS')      == 0 ||
       lang.casecmp("CoffeeScript") == 0 ||
-      lang.casecmp("JavaScript") == 0 ||
-      lang.casecmp("PHP") == 0 ||
-      lang.casecmp("Clojure") == 0
+      lang.casecmp("JavaScript")   == 0 ||
+      lang.casecmp("PHP")          == 0 ||
+      lang.casecmp("Clojure")      == 0
     end
 
 =begin
@@ -310,10 +290,7 @@ class Github
 
     def self.extract_repo_names( repos )
       repo_names = Array.new
-      if repos.nil? || repos.empty?
-        return repo_names
-      end
-
+      return repo_names if repos.nil? || repos.empty?
       repos.each do |repo|
         lang = repo['language']
         repo_names << repo['full_name'] if self.language_supported?( lang )
@@ -329,6 +306,15 @@ class Github
         links << [matches[2], matches[1]]
       end
       Hash[*links.flatten]
+    end
+
+    def self.token_query( code )
+      query = 'client_id='
+      query += Settings.github_client_id
+      query += '&client_secret='
+      query += Settings.github_client_secret
+      query += '&code=' + code
+      query
     end
 
 end
