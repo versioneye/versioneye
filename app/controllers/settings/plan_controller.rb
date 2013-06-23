@@ -30,7 +30,6 @@ class Settings::PlanController < ApplicationController
       redirect_to settings_plans_path
     else
       flash.now[:info] = "Please update your Credit Card information."
-      @page = "cc"
       cookies.permanent.signed[:plan_selected] = @plan_name_id
       @billing_address = current_user.fetch_or_create_billing_address
       redirect_to settings_creditcard_path
