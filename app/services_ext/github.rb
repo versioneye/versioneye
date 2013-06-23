@@ -38,10 +38,8 @@ class Github
 
   def self.user_repos_changed?( user )
     repo = user.github_repos.all.first
-    if repo.nil?
-      #if user dont have any repos in cache, then force to load data
-      return true
-    end
+    #if user dont have any repos in cache, then force to load data
+    return true if repo.nil?
     headers = {
       "User-Agent" => A_USER_AGENT,
       "If-Modified-Since" => repo[:cached_at].httpdate
@@ -52,17 +50,27 @@ class Github
   end
 
   def self.user_repos(user, url = nil, page = 1, per_page = 30)
-    if url.nil?
-      url =  "#{A_API_URL}/user/repos?page=#{page}&per_page=#{per_page}&access_token=#{user.github_token}"
-    end
-
+    url = "#{A_API_URL}/user/repos?page=#{page}&per_page=#{per_page}&access_token=#{user.github_token}" if url.nil?
     read_repos(user, url, page, per_page)
   end
 
-  def self.user_orga_repos(user, orga_name, url = nil, page = 1, per_page = 30)
-    if url.nil?
-      url = "#{A_API_URL}/orgs/#{orga_name}/repos?access_token=#{user.github_token}"
+  # TODO remove this and use the above method
+  def self.user_repo_names( github_token )
+    repo_names = Array.new
+    page       = 1
+    loop do
+      body  = HTTParty.get("#{A_API_URL}/user/repos?access_token=#{github_token}&page=#{page}",
+                             :headers => {"User-Agent" => A_USER_AGENT } ).response.body
+      repos =  catch_github_exception JSON.parse(body)
+      break if (repos.nil? || repos.empty?)
+      repo_names += extract_repo_names( repos )
+      page       += 1
     end
+    repo_names
+  end
+
+  def self.user_orga_repos(user, orga_name, url = nil, page = 1, per_page = 30)
+    url = "#{A_API_URL}/orgs/#{orga_name}/repos?access_token=#{user.github_token}" if url.nil?
     read_repos(user, url, page, per_page)
   end
 
@@ -70,17 +78,12 @@ class Github
     request_headers = {"User-Agent" => A_USER_AGENT}
     response        = self.get(url, headers: request_headers)
     data            = catch_github_exception JSON.parse(response.body)
-    if data.nil?
-      data = []
-    end
-
+    data            = [] if data.nil?
     data.each do |repo|
       branches = Github.repo_branches(user, repo['full_name']).map {|x| x['name']}
       repo['branches'] = branches
     end
-
     paging_links = parse_paging_links(response.headers)
-
     repos = {
       repos: data,
       paging: {
@@ -95,7 +98,6 @@ class Github
     }
     repos[:paging].merge! paging_links unless paging_links.nil?
     repos
-
   end
 
   def self.repo_branches(user, repo_name)
@@ -111,7 +113,6 @@ class Github
     response = self.get(url, headers: request_headers)
     catch_github_exception JSON.parse(response.body)
   end
-
 
   def self.project_file_from_branch(user, repo_name, branch = "master")
     branch_info = Github.repo_branch_info user, repo_name, branch
@@ -166,19 +167,8 @@ class Github
   end
 
 
-  def self.user_repo_names( github_token )
-    repo_names = Array.new
-    page = 1
-    loop do
-      body    = HTTParty.get("#{A_API_URL}/user/repos?access_token=#{github_token}&page=#{page}",
-                             :headers => {"User-Agent" => A_USER_AGENT } ).response.body
-      repos =  catch_github_exception JSON.parse(body)
-      break if (repos.nil? || repos.empty?)
-      repo_names += extract_repo_names( repos )
-      page       += 1
-    end
-    repo_names
-  end
+
+
 
   def self.orga_repo_names( github_token )
     orga_names = self.orga_names github_token
@@ -225,10 +215,7 @@ class Github
     body = HTTParty.get("#{A_API_URL}/repos/#{name}?access_token=#{github_token}",
                         :headers => {"User-Agent" => A_USER_AGENT} ).response.body
     repo = catch_github_exception JSON.parse(body)
-    unless repo.nil? and !repo.is_a(Hash)
-      return repo['private']
-    end
-
+    return repo['private'] unless repo.nil? and !repo.is_a(Hash)
     false
   rescue => e
     Rails.logger.error e.message
@@ -237,13 +224,11 @@ class Github
   end
 
   # TODO: add tests
-  def self.get_repo_sha(git_project, token)
-    heads = JSON.parse HTTParty.get("#{A_API_URL}/repos/#{git_project}/git/refs/heads?access_token=" + URI.escape(token),
+  def self.repo_sha(repository, token)
+    heads = JSON.parse HTTParty.get("#{A_API_URL}/repos/#{repository}/git/refs/heads?access_token=" + URI.escape(token),
                                     :headers => {"User-Agent" => A_USER_AGENT}  ).response.body
     heads.each do |head|
-      if head['url'].match(/heads\/master$/)
-        return head['object']['sha']
-      end
+      return head['object']['sha'] if head['url'].match(/heads\/master$/)
     end
     nil
   end

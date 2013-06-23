@@ -257,7 +257,7 @@ class User::ProjectsController < ApplicationController
         redirect_to settings_plans_path
         return nil
       end
-      sha = Github.get_repo_sha( github_project, current_user.github_token )
+      sha = Github.repo_sha( github_project, current_user.github_token )
       project_info = Github.project_file_info( github_project, sha, current_user.github_token )
       if project_info.empty?
         flash[:error] = "We couldn't find any project file in the selected project. Please choose another project."
