@@ -66,7 +66,7 @@ class User::GithubReposController < ApplicationController
     when "remove"
       id = params[:project_id]
       if Project.where(_id: id).exists?
-        ProjectService.destroy_project id
+        ProjectService.destroy id
         repo = GithubRepo.find(params[:_id])
         repo = process_repo(repo)
       else
@@ -120,7 +120,7 @@ class User::GithubReposController < ApplicationController
     success = false
     msg = ""
     if Project.where(_id: id).exists?
-      ProjectService.destroy_project id
+      ProjectService.destroy id
       success = true
     else
       msg = "Cant remove project with id: `#{id}` - it doesnt exist. Please refresh page."
