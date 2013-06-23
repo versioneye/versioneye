@@ -14,7 +14,7 @@
           <a href="/users/<%= comment.user.username %>">
             <span ><%= comment.user.fullname %></span>
           </a>
-          at <time date="<%= comment.created_at.strftime("%Y-%m-%dT%") %>"><b><%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %></b></time>
+          at <b><%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %></b>
         </div>
         <div class="user_comment">
           <%= comment.comment %>
