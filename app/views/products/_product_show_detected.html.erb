@@ -5,10 +5,11 @@
         <% last_date = Date.today - @product.last_crawle_date.to_i %>
         <% time_span_text = distance_of_time_in_words(Date.today, last_date) %>
 		<% span_style= "color:orange;" if @product.last_crawle_date.to_i > 90  %>
-		<% span_style= "color:red;" if @product.last_crawle_date.to_i > 180 %> 
-        
+		<% span_style= "color:red;" if @product.last_crawle_date.to_i > 180 %>
+
         <span style="<%= span_style %> font-weight: bold; font-size:18px;">
           <%=  time_span_text %>
         </span>
         ago
+    </span>
 <% end %>
