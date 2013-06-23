@@ -50,8 +50,8 @@ module VersionEye
     end
 
     def create_project( project_type, url, project_name )
-      project = ProjectService.create_from_url( url )
-      project.user_id = current_user.id.to_s
+      project = ProjectService.build_from_url( url )
+      project.user = current_user
       if project.name.nil? || project.name.empty?
         project.name = project_name
       end

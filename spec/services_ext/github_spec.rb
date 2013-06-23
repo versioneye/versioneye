@@ -287,64 +287,6 @@ describe Github do
     end
   end
 
-  describe "user_repo_names" do
-    before :each do
-      FakeWeb.clean_registry
-      FakeWeb.register_uri(
-        :get,
-        %r|https://api\.github\.com/user/repos*|,
-        [
-          {body: {message: "Bad credentials"}.to_json},
-          {body: repo_response1},
-          {body: repo_response2},
-          {body: [].to_json}
-        ])
-    end
-
-    it "should return empty array when user has wrong token" do
-      Github.user_repo_names(user_with_token.github_token).empty?.should be_true
-    end
-
-    it "should return array with correct names when asking responses repeatedly" do
-      Github.user_repo_names(user_with_token.github_token).empty?.should be_true
-      names = Github.user_repo_names(user_with_token.github_token)
-
-      names.should_not be_nil
-      names.empty?.should be_false
-      names.count.should eql(2)
-      names.first.should eql('versioneye/spec1')
-      names.second.should eql('versioneye/spec2')
-    end
-  end
-
-  describe "reading repos names for orga with repo_names_for_orga" do
-    before :each do
-      FakeWeb.clean_registry
-      FakeWeb.register_uri(
-        :get,
-        %r|https://api\.github\.com/orgs/versioneye/repos*|,
-        [
-          {body: {message: "Bad credentials"}.to_json},
-          {body: repo_response1},
-          {body: repo_response2},
-          {body: {message: "Should stop now"}.to_json}
-        ])
-    end
-
-    it "should return empty array when user has wrong token" do
-      Github.repo_names_for_orga(user_without_token.github_token, "versioneye").empty?.should be_true
-    end
-
-    it "should return array with correct names" do
-      Github.repo_names_for_orga(user_without_token.github_token, "versioneye").empty?.should be_true
-
-      names = Github.repo_names_for_orga(user_with_token.github_token, "versioneye")
-      names.empty?.should be_false
-      names.first.should eql('versioneye/spec1')
-      names.second.should eql('versioneye/spec2')
-    end
-  end
-
   describe "reading names of user's organizations with orga_names" do
     before :each do
       FakeWeb.clean_registry

@@ -20,7 +20,7 @@ class ServicesController < ApplicationController
     filename = nil
     filename = S3.upload_fileupload( file )
     url = S3.url_for( filename )
-    project = ProjectService.create_from_url( url )
+    project = ProjectService.build_from_url( url )
     project.name = Project.create_random_value
     project.s3_filename = filename
     project.source = Project::A_SOURCE_UPLOAD

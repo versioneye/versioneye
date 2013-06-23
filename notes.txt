@@ -16,8 +16,6 @@ These are some of the questions I will answer in this session.
 Robert studied computer science in Germany from 2000 - 2005. In 2008 he founded his first Software Consultant Company PLOIN. He build up the company and sold it 2010 with profits to Reutax AG. His next venture was the StartUp WildGigs in San Francisco / Silicon Valley, there he worked as Chief Architect for one year. 2012 Robert moved back to Germany and founded VersionEye, the tech StartUp for Continuous Updating.
 
 
-
-
 <script type="text/javascript">
     var _mfq = _mfq || [];
     (function () {
@@ -28,3 +26,4 @@ Robert studied computer science in Germany from 2000 - 2005. In 2008 he founded 
       document.getElementsByTagName("head")[0].appendChild(mf);
     })();
   </script>
+

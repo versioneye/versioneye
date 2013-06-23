@@ -4,13 +4,12 @@ class GithubController < ApplicationController
 
   def callback
     code = params['code']
-
     if code.nil? || code.empty?
       redirect_to "/signup"
       return
     end
 
-    token = Github.token( code )
+    token     = Github.token( code )
     json_user = Github.user token
 
     if signed_in?
@@ -58,11 +57,11 @@ class GithubController < ApplicationController
         return
       end
       json_user = Github.user( token )
-      user = User.new
-      scopes = Github.oauth_scopes( token )
-      user.update_from_github_json(json_user, token, scopes)
-      user.email = @email
-      user.terms = true
+      user      = User.new
+      scopes    = Github.oauth_scopes( token )
+      user.update_from_github_json( json_user, token, scopes )
+      user.email         = @email
+      user.terms         = true
       user.datenerhebung = true
       user.create_verification
       if user.save
