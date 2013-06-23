@@ -8,7 +8,6 @@ class ProductsController < ApplicationController
     Product::A_LANGUAGE_JAVASCRIPT, Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R]
 
   def index
-    @page = "LandingPage"
     @lang = cookies[:veye_lang]
     if @lang.nil?
       @lang = ""
@@ -22,7 +21,6 @@ class ProductsController < ApplicationController
     @query = do_parse_search_input( params[:q] )
     @groupid = params[:g]
     @lang = get_lang_value( params[:lang] )
-    @page = "search"
     commit = params[:commit]
 
     if ( (@query.nil? || @query.empty?) && (@groupid.nil? || @groupid.empty?) )
@@ -67,7 +65,6 @@ class ProductsController < ApplicationController
 
     @versioncomment = Versioncomment.new
     @versioncommentreply = Versioncommentreply.new
-    @page = "product_show"
   end
 
   def show_visual
