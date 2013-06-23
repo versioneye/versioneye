@@ -4,7 +4,7 @@ class Github
   persistent_connection_adapter
 
   A_USER_AGENT = "www.versioneye.com"
-  A_API_URL = "https://api.github.com"
+  A_API_URL    = "https://api.github.com"
 
   def self.token( code )
     domain    = 'https://github.com/'
@@ -52,21 +52,6 @@ class Github
   def self.user_repos(user, url = nil, page = 1, per_page = 30)
     url = "#{A_API_URL}/user/repos?page=#{page}&per_page=#{per_page}&access_token=#{user.github_token}" if url.nil?
     read_repos(user, url, page, per_page)
-  end
-
-  # TODO remove this and use the above method
-  def self.user_repo_names( github_token )
-    repo_names = Array.new
-    page       = 1
-    loop do
-      body  = HTTParty.get("#{A_API_URL}/user/repos?access_token=#{github_token}&page=#{page}",
-                             :headers => {"User-Agent" => A_USER_AGENT } ).response.body
-      repos =  catch_github_exception JSON.parse(body)
-      break if (repos.nil? || repos.empty?)
-      repo_names += extract_repo_names( repos )
-      page       += 1
-    end
-    repo_names
   end
 
   def self.user_orga_repos(user, orga_name, url = nil, page = 1, per_page = 30)
@@ -166,37 +151,6 @@ class Github
     JSON.parse response.body
   end
 
-
-
-
-
-  def self.orga_repo_names( github_token )
-    orga_names = self.orga_names github_token
-    repo_names = self.repo_names_for_orgas github_token, orga_names
-  end
-
-  def self.repo_names_for_orgas( github_token, organisations )
-    repo_names = Array.new
-    organisations.each do |orga|
-      repo_names += self.repo_names_for_orga( github_token, orga )
-    end
-    repo_names
-  end
-
-  def self.repo_names_for_orga( github_token, organisation_name )
-    repo_names = Array.new
-    page = 1
-    loop do
-      body = HTTParty.get("#{A_API_URL}/orgs/#{organisation_name}/repos?access_token=#{github_token}&page=#{page}",
-                          :headers => {"User-Agent" => A_USER_AGENT} ).response.body
-      repos = catch_github_exception JSON.parse(body)
-      break if ( repos.nil? || repos.empty? )
-      repo_names += extract_repo_names( repos )
-      page += 1
-    end
-    repo_names
-  end
-
   def self.orga_names( github_token )
     body = HTTParty.get("#{A_API_URL}/user/orgs?access_token=#{github_token}",
                         :headers => {"User-Agent" => A_USER_AGENT} ).response.body
@@ -271,16 +225,6 @@ class Github
       Rails.logger.error e.message
       Rails.logger.error e.backtrace.first
       nil
-    end
-
-    def self.extract_repo_names( repos )
-      repo_names = Array.new
-      return repo_names if repos.nil? || repos.empty?
-      repos.each do |repo|
-        lang = repo['language']
-        repo_names << repo['full_name'] if self.language_supported?( lang )
-      end
-      repo_names
     end
 
     def self.parse_paging_links( headers )
