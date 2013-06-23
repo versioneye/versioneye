@@ -8,11 +8,11 @@ class User::GithubReposController < ApplicationController
     if current_user.github_repos.all.count > 0
       github_repos = current_user.github_repos.all
     else
-      Rails.logger.debug("Going to fill GithubRepo cache for user: #{current_user.fullname} 
+      Rails.logger.debug("Going to fill GithubRepo cache for user: #{current_user.fullname}
                          (id: #{current_user.id.to_s})")
       github_repos = GitHubService.cached_user_repos(current_user)
     end
-    
+
     github_repos = github_repos.asc(:language)
     github_repos.each do |repo|
       repos << process_repo(repo)
@@ -51,8 +51,8 @@ class User::GithubReposController < ApplicationController
     case params[:command]
     when "import"
       project_name = params[:fullname]
-      branch = params.has_key?(:branch) ? params[:branch] : "master"
-      project = ProjectService.import_from_github(current_user, project_name, branch)
+      branch       = params.has_key?(:branch) ? params[:branch] : "master"
+      project      = ProjectService.import_from_github(current_user, project_name, branch)
 
       unless project.nil?
         repo = GithubRepo.find(params[:_id])
@@ -75,7 +75,6 @@ class User::GithubReposController < ApplicationController
         render text: error_msg, status: 400
         return false
       end
-
     end
     render json: repo
  end
@@ -140,19 +139,19 @@ class User::GithubReposController < ApplicationController
   for example is this project already imported etc
 =end
     def process_repo repo
-      imported_repos = current_user.projects.by_source(Project::A_SOURCE_GITHUB)
-      imported_repo_names  = imported_repos.map(&:github_project).to_set
-      supported_langs = Github.supported_languages
+      imported_repos      = current_user.projects.by_source(Project::A_SOURCE_GITHUB)
+      imported_repo_names = imported_repos.map(&:github_project).to_set
+      supported_langs     = Github.supported_languages
 
       repo[:supported] = supported_langs.include? repo["language"]
-      repo[:imported] = imported_repo_names.include? repo["fullname"]
+      repo[:imported]  = imported_repo_names.include? repo["fullname"]
       if repo[:imported]
-        project_id = imported_repos.where(github_project: repo["fullname"]).first.id
+        project_id         = imported_repos.where(github_project: repo["fullname"]).first.id
         repo[:project_url] = url_for(controller: 'projects', action: "show", id: project_id)
-        repo[:project_id] = project_id
+        repo[:project_id]  = project_id
       else
         repo[:project_url] = nil
-        repo[:project_id] = nil
+        repo[:project_id]  = nil
       end
 
       repo

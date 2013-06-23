@@ -116,14 +116,15 @@ class Github
     catch_github_exception JSON.parse(response.body)
   end
 
-  def self.repo_branch_info(user, repo_name, branch)
+  def self.repo_branch_info(user, repo_name, branch = "master")
     request_headers = {"User-Agent" => A_USER_AGENT}
     url = "#{A_API_URL}/repos/#{repo_name}/branches/#{branch}?access_token=#{user.github_token}"
     response = self.get(url, headers: request_headers)
     catch_github_exception JSON.parse(response.body)
   end
 
-  def self.import_from_branch(user, repo_name, branch)
+  # TODO: Rename it. It's more fetch_project_file_from_branch
+  def self.import_from_branch(user, repo_name, branch = "master")
     branch_info = Github.repo_branch_info user, repo_name, branch
     if branch_info.nil?
       Rails.logger.error "Cancelling importing: cant read branch info."
@@ -218,7 +219,7 @@ class Github
     return false
   end
 
-  #TODO: add tests
+  # TODO: add tests
   def self.get_repo_sha(git_project, token)
     heads = JSON.parse HTTParty.get("#{A_API_URL}/repos/#{git_project}/git/refs/heads?access_token=" + URI.escape(token),
                                     :headers => {"User-Agent" => A_USER_AGENT}  ).response.body
@@ -230,13 +231,15 @@ class Github
     nil
   end
 
+  # TODO: rename it. It's more about the project_file_info
   def self.repo_info(user, project_name, sha)
     response = repository_info project_name, sha, user.github_token
     return nil if response.empty?
     return response
   end
 
-  #TODO: add tests
+  # TODO: add tests
+  # TODO: Rename it. This is not repository info, it's more project_file_info !
   def self.repository_info(git_project, sha, token)
     result = Hash.new
     url = "https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)

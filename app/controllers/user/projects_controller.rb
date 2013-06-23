@@ -13,24 +13,13 @@ class User::ProjectsController < ApplicationController
   end
 
   def create
-    file = params[:upload]
-    project_url = nil
-    if params[:project]
-      project_url = params[:project][:url]
-    end
-    github_project = params[:github_project]
-
-    if file && !file.empty?
-      project = upload_and_store file
-    elsif project_url && !project_url.empty?
-      project = fetch_and_store project_url
-    elsif github_project && !github_project.empty? && !github_project.eql?("NO_PROJECTS_FOUND")
-      project = fetch_from_github_and_store github_project
-    else
+    project = fetch_project params
+    if project.nil?
       flash[:error] = "Please put in a URL OR select a file from your computer. Or select a GitHub project."
       redirect_to new_user_project_path
       return nil
     end
+
     respond_to do |format|
       format.html {
         if project and project.id
@@ -47,7 +36,6 @@ class User::ProjectsController < ApplicationController
             data: {project_id: project.id}
           }
         else
-          p flash[:error]
           response_msg = {
             success: false,
             msg: flash[:error]
@@ -224,6 +212,19 @@ class User::ProjectsController < ApplicationController
   end
 
   private
+
+    def fetch_project( params )
+      file = params[:upload]
+      project_url = nil
+      if params[:project]
+        project_url = params[:project][:url]
+      end
+      github_project = params[:github_project]
+      return upload_and_store( file )                      if file && !file.empty?
+      return fetch_and_store( project_url )                if project_url && !project_url.empty?
+      return fetch_from_github_and_store( github_project ) if github_project && !github_project.empty? && !github_project.eql?("NO_PROJECTS_FOUND")
+      return nil
+    end
 
     def upload_and_store file
       project = upload file
