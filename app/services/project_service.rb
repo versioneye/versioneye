@@ -32,7 +32,7 @@ class ProjectService
       return nil
     end
     self.update_url( project )
-    new_project = self.create_from_url( project.url )
+    new_project = self.build_from_url( project.url )
     project.update_from( new_project )
     if project.out_number > 0
       ProjectMailer.projectnotification_email( project ).deliver
@@ -98,9 +98,9 @@ class ProjectService
       return nil
     end
 
-    parsed_project = create_from_url s3_info['s3_url']
+    parsed_project = build_from_url s3_info['s3_url']
     parsed_project.update_attributes({name: repo_name,
-                                      project_type: github_file['type'],
+                                      project_type: project_file['type'],
                                       user_id: user.id.to_s,
                                       source: Project::A_SOURCE_GITHUB,
                                       github_project: repo_name,
@@ -113,7 +113,7 @@ class ProjectService
   end
 
 
-  def self.create_from_url( url )
+  def self.build_from_url( url )
     project_type = type_by_filename( url )
     parser       = ParserStrategy.parser_for( project_type, url )
     parser.parse url
@@ -134,17 +134,14 @@ class ProjectService
     project.remove
   end
 
-  def self.is_allowed_to_add_private_project?(user)
-    private_projects = Project.find_private_projects_by_user(user.id)
+  # TODO write test
+  def self.is_allowed_to_add_private_project?( user )
+    private_projects = Project.find_private_projects_by_user( user.id )
     plan = user.plan
-    if plan.nil?
-      error_msg = "Current plan doesnt allow to add private project. Please update your plan."
-      flash[:error] = error_msg
+    if plan.nil? || plan.private_projects <= private_projects.count
       return false
-    elsif plan.private_projects > private_projects.count
-      return true
     else
-      return false
+      return true
     end
   end
 

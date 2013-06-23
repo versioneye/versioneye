@@ -27,7 +27,6 @@ class GitHubService
       Rails.logger.error("Catched Github API exception: #{repo}")
       return true
     end
-
     return false
   rescue => e
     Rails.logger.error "Bad Credentials"
@@ -38,7 +37,7 @@ class GitHubService
 
     def self.cache_user_all_repos(user, orga_names)
       user_info = Github.user(user.github_token)
-      user[:user_login] = user_info['login'] if user_info.is_a?(Hash) 
+      user[:user_login] = user_info['login'] if user_info.is_a?(Hash)
       #load data
       self.cache_user_repos(user)
       orga_names.each {|orga_name| self.cache_user_orga_repos(user, orga_name)}
