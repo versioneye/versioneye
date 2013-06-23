@@ -48,19 +48,16 @@ class ProductsController < ApplicationController
 
   def show
     key      = params[:key]
-    version  = params[:version]
     prod_key = Product.decode_prod_key( key )
     @product = fetch_product prod_key
     if @product.nil?
       flash[:error] = "The requested package is not available."
       return
     end
-    attach_version( @product, version )
+    attach_version( @product, params[:version] )
     if @product.version
       @version   = @product.version_by_number @product.version
-      @downloads = @version.versionarchive
     end
-    @main_dependencies   = @product.dependencies(nil)
     @versioncomment      = Versioncomment.new
     @versioncommentreply = Versioncommentreply.new
   end
@@ -75,7 +72,6 @@ class ProductsController < ApplicationController
     end
     attach_version( @product, params[:version] )
     @version = @product.version_by_number( @product.version )
-    @main_dependencies = @product.dependencies(nil)
     render :layout => 'application_visual'
   end
 

@@ -1,14 +1,14 @@
-
-<% if !@downloads.nil? && !@downloads.empty? %>
+<% downloads = @version.versionarchive %>
+<% if !downloads.nil? && !downloads.empty? %>
   <div class="row well box_download" >
     <div class="span2">
       <h5 class="dep_header">
-        <%= pluralize(@downloads.count, "Download") %>
+        <%= pluralize(downloads.count, "Download") %>
       </h5>
     </div>
     <div class="span5" >
       <ul class="download_list" >
-      <% @downloads.each do |download|  %>
+      <% downloads.each do |download|  %>
         <li >
           <a title = "Download here." href="<%= download.link %>"><span class = "icon_download icon16"></span><%= download.name %></a>
         </li>
