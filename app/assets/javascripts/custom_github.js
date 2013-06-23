@@ -102,10 +102,10 @@ function show_repo_loader(selector, msg){
 
 function addGitHubProject(selected_el, data){
   console.debug("Going to add new Github project: ", data.githubFullname);
-  var selected_item = jQuery(selected_el);
-  var selected_repo_el = "#github-repo-" + data.githubId;
+  var selected_item       = jQuery(selected_el);
+  var selected_repo_el    = "#github-repo-" + data.githubId;
   var repo_label_template = _.template(jQuery("#github-repo-label-template").html());
-  var url_template = _.template('<a href="{{= url}}" >{{= content }}</a>');
+  var url_template        = _.template('<a href="{{= url }}" >{{= content }}</a>');
 
   //stop execution if switch is unactive and state is changed by code
   if (selected_item.parents('.switch').bootstrapSwitch('isActive') != true){

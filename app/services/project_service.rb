@@ -51,6 +51,8 @@ class ProjectService
   # Fetch the project file from GitHub, store it on S3 and
   # update the s3_filename & url in the project instance
   #
+  # TODO consolidate this with import_from_github
+  #
   def self.update_from_github( project )
     github_project = project.github_project
     current_user   = project.user
