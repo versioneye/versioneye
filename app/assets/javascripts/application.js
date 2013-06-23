@@ -13,7 +13,6 @@
 
 //= require google
 //= require gmap
-//= require twitter
 
 //= require custom
 //= require custom_feedback
