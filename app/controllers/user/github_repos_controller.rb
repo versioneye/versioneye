@@ -146,12 +146,14 @@ class User::GithubReposController < ApplicationController
       repo[:supported] = supported_langs.include? repo["language"]
       repo[:imported]  = imported_repo_names.include? repo["fullname"]
       if repo[:imported]
-        project_id         = imported_repos.where(github_project: repo["fullname"]).first.id
-        repo[:project_url] = url_for(controller: 'projects', action: "show", id: project_id)
-        repo[:project_id]  = project_id
+        imported_project         = imported_repos.where(github_project: repo["fullname"]).first
+        repo[:project_url] = url_for(controller: 'projects', action: "show", id: imported_project.id)
+        repo[:project_id]  = imported_project.id
+        repo[:imported_branch] = imported_project[:github_branch]
       else
         repo[:project_url] = nil
         repo[:project_id]  = nil
+        repo[:imported_branch] = nil
       end
 
       repo
