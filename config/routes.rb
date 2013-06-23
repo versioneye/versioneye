@@ -122,7 +122,7 @@ Versioneye::Application.routes.draw do
 
   get '/user/packages/popular_in_my_projects', :to => "user/packages#popular_in_my_projects"
   get '/user/packages/i_follow'              , :to => "user/packages#i_follow"
-  get '/user/projects/github_repositories'   , :to => 'user/projects#github_repositories'
+  get '/user/projects/github_repositories'   , :to => 'user/github_repos#init'
 
   namespace :user do
     resources :projects do

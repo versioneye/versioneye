@@ -394,10 +394,10 @@ describe User do
     end
 
     it "returns only one user, when there's only one user with active project" do
-      user = User.all.first
-      project = Project.new
-      project.user_id = user.id
-      project.name = "test"
+      user                = User.all.first
+      project             = Project.new
+      project.user        = user
+      project.name        = "test"
       project.project_key = "test"
       project.save
       User.active_users.count.should eql(1)
@@ -414,11 +414,11 @@ describe User do
     end
 
     it "returns 2 user,when she commented and he has active project" do
-      she = User.all.first
-      he = User.all.last
-      project = Project.new
-      project.user_id = she.id
-      project.name = "test"
+      she                 = User.all.first
+      he                  = User.all.last
+      project             = Project.new
+      project.user        = she
+      project.name        = "test"
       project.project_key = "test"
       project.save
       Versioncomment.new(user_id: he.id, product_key: "1", version: "1", comment: "1").save
