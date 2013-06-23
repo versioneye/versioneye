@@ -52,7 +52,6 @@ class UsersController < ApplicationController
       if @user.save
         @user.send_verification_email
         User.new_user_email(@user)
-        @page = "user_created"
       else
         flash.now[:error] = t(:general_error)
         render 'new'
@@ -62,16 +61,12 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by_username(params[:id])
-    @page = "profile"
-
     if @user
       @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
-
       @products = Array.new
       if has_permission_to_see_products( @user, current_user ) && !@user.nil?
         @products = @user.products.paginate(:page => params[:page], :per_page => 3)
       end
-
       @comments = Array.new
       if has_permission_to_see_comments( @user, current_user ) && !@user.nil?
         @comments = Versioncomment.find_by_user_id( @user.id ).paginate(:page => params[:page], :per_page => 3)
@@ -88,7 +83,6 @@ class UsersController < ApplicationController
     @products = Array.new
     respond_to do |format|
       format.html {
-        @page = "profile"
         @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
         if has_permission_to_see_products( @user, current_user ) && !@user.nil?
           @products = @user.products.paginate(:page => params[:page])
