@@ -17,11 +17,11 @@ class Version
   field :mistake, type: Boolean
   field :pom, type: String
   field :released_at, type: DateTime
-  field :released_string, type: String 
+  field :released_string, type: String
   field :license, type: String
 
   embedded_in :product
-  
+
   def as_json(parameter=nil)
     {
       :version => self.version,
@@ -31,18 +31,18 @@ class Version
       :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
     }
   end
- 
+
   def self.encode_version(version)
     return nil if version.nil?
-    version.gsub("/", "--").gsub(".", "~")
+    version.gsub("/", "--")
   end
 
   def self.decode_version(version)
     return nil if version.nil?
-    version.gsub("--", "/").gsub("~", ".")
+    version.gsub("--", "/")
   end
 
-  def to_param 
+  def to_param
     val = Version.encode_version(self.version)
     "#{val}".strip
   end
@@ -52,21 +52,21 @@ class Version
   end
 
   def to_url_param
-    self.to_param     
+    self.to_param
   end
-  
+
   def get_decimal_uid
     uid.to_s.to_i(16).to_s(10)
   end
-  
+
   def versionlink
     Versionlink.all(conditions: { prod_key: self.product.prod_key, version_id: self.version}).asc(:name)
   end
-  
+
   def versionchange
     Versionchange.all(conditions: { prod_key: self.product.prod_key, version_id: self.version})
   end
-  
+
   def versionarchive
     Versionarchive.all(conditions: { prod_key: self.product.prod_key, version_id: self.version}).asc(:name)
   end

@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
 
-  before_filter :authenticate, :only   => [:edit, :update]
+  before_filter :authenticate,    :only => [:edit, :update]
+  before_filter :check_redirects, :only => [:show]
   #before_filter :force_http
 
   @@languages = [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
@@ -46,24 +47,21 @@ class ProductsController < ApplicationController
   end
 
   def show
-    key = Product.decode_prod_key params[:key]
-    @product = Product.find_by_key( key )
-    if @product.nil?
-      @product = Product.find_by_key_case_insensitiv( key )
-    end
+    key      = params[:key]
+    version  = params[:version]
+    prod_key = Product.decode_prod_key( key )
+    @product = fetch_product prod_key
     if @product.nil?
       flash[:error] = "The requested package is not available."
       return
     end
-
-    attach_version( @product, params[:version] )
+    attach_version( @product, version )
     if @product.version
-      @version = @product.version_by_number @product.version
+      @version   = @product.version_by_number @product.version
       @downloads = @version.versionarchive
     end
-    @main_dependencies = @product.dependencies(nil)
-
-    @versioncomment = Versioncomment.new
+    @main_dependencies   = @product.dependencies(nil)
+    @versioncomment      = Versioncomment.new
     @versioncommentreply = Versioncommentreply.new
   end
 
@@ -83,9 +81,8 @@ class ProductsController < ApplicationController
 
   def badge
     prod_key = Product.decode_prod_key params[:key]
-    path = "app/assets/images/badges"
-    badge = "unknown"
-    @product = Product.find_by_key(prod_key)
+    badge    = "unknown"
+    @product = fetch_product prod_key
     unless @product.nil?
       version = Version.decode_version params[:version]
       if !version.nil? && !version.empty?
@@ -97,7 +94,7 @@ class ProductsController < ApplicationController
         badge = "up-to-date"
       end
     end
-    send_file "#{path}/dep_#{badge}.png", :type => "images/png", :disposition => 'inline'
+    send_file "app/assets/images/badges/dep_#{badge}.png", :type => "images/png", :disposition => 'inline'
   end
 
   def edit
@@ -195,6 +192,14 @@ class ProductsController < ApplicationController
   end
 
   private
+
+    def fetch_product( key )
+      product = Product.find_by_key( key )
+      if product.nil?
+        product = Product.find_by_key_case_insensitiv( key )
+      end
+      product
+    end
 
     def add_status_comment(product, user, type)
       comment = Versioncomment.new
