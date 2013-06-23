@@ -3,7 +3,6 @@ class ServicesController < ApplicationController
   def index
     refer_name = params['refer']
     check_refer( refer_name )
-    @page = "project_new"
     @project = Project.new
   end
 
