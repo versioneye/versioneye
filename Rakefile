@@ -51,7 +51,7 @@ task :do_work => :environment do
 			puts "STOP to send out the notification E-Mails."
 
 			puts "START to send out daily project notification E-Mails."
-			ProjectService.update_dependencies( Project::A_PERIOD_DAILY )
+			ProjectService.update_all( Project::A_PERIOD_DAILY )
 			puts "STOP to send out daily project notification E-Mails."
 
 			if Time.now.hour == start_hour && Time.now.min == start_minute
@@ -67,7 +67,7 @@ task :do_work => :environment do
 			puts "STOP to send out the verification reminder E-Mails."
 
 			puts "START to send out weekly project notification E-Mails."
-			ProjectService.update_dependencies( Project::A_PERIOD_WEEKLY )
+			ProjectService.update_all( Project::A_PERIOD_WEEKLY )
 			puts "STOP to send out weekly project notification E-Mails."
 
 			if Time.now.hour == weekly_hour && Time.now.min == weekly_minute

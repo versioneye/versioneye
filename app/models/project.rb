@@ -24,16 +24,16 @@ class Project
   field :description, type: String
   field :license    , type: String
 
-  field :project_type  , type: String, :default => A_TYPE_MAVEN2
+  field :project_type  , type: String,  :default => A_TYPE_MAVEN2
   field :language      , type: String
   field :project_key   , type: String
-  field :period        , type: String, :default => A_PERIOD_WEEKLY
+  field :period        , type: String,  :default => A_PERIOD_WEEKLY
   field :email         , type: String
   field :url           , type: String
-  field :source        , type: String, :default => A_SOURCE_UPLOAD
+  field :source        , type: String,  :default => A_SOURCE_UPLOAD
   field :s3_filename   , type: String
   field :github_project, type: String   # Repository name at GitHub
-  field :github_branch , type: String
+  field :github_branch , type: String,  :default => "master" # Branch     name at GitHub
   field :dep_number    , type: Integer
   field :out_number    , type: Integer, :default => 0
   field :unknown_number, type: Integer, :default => 0
@@ -138,9 +138,13 @@ class Project
   end
 
   def update_from new_project
-    self.overwrite_dependencies( new_project.dependencies )
+    return nil if new_project.nil?
+    if !new_project.dependencies.nil? && !new_project.dependencies.empty?
+      self.overwrite_dependencies( new_project.dependencies )
+    end
     self.description    = new_project.description
     self.license        = new_project.license
+    self.url            = new_project.url
     self.s3_filename    = new_project.s3_filename
     self.dep_number     = new_project.dep_number
     self.out_number     = new_project.out_number

@@ -2,8 +2,8 @@ class ProjectService
 
   def self.type_by_filename( filename )
     trimmed_name = filename.split("?")[0]
-    return Project::A_TYPE_RUBYGEMS if trimmed_name.match(/Gemfile$/) or trimmed_name.match(/Gemfile.lock$/)
-    return Project::A_TYPE_COMPOSER if trimmed_name.match(/composer.json$/) or trimmed_name.match(/composer.lock$/)
+    return Project::A_TYPE_RUBYGEMS if trimmed_name.match(/Gemfile$/)          or trimmed_name.match(/Gemfile.lock$/)
+    return Project::A_TYPE_COMPOSER if trimmed_name.match(/composer.json$/)    or trimmed_name.match(/composer.lock$/)
     return Project::A_TYPE_PIP      if trimmed_name.match(/requirements.txt$/) or trimmed_name.match(/setup.py$/) or trimmed_name.match(/pip.log$/)
     return Project::A_TYPE_NPM      if trimmed_name.match(/package.json$/)
     return Project::A_TYPE_GRADLE   if trimmed_name.match(/.gradle$/)
@@ -12,35 +12,30 @@ class ProjectService
     return nil
   end
 
-  def self.update_dependencies( period )
-    projects = Project.all()
-    projects.each do |project|
-      if project.period.eql?( period )
-        self.process_project ( project )
-      end
+  def self.store( project )
+    if project.nil?
+      Rails.logger.error "Project cant be nil. Some error with importing."
+      return nil
+    end
+    project.make_project_key!
+    if project.dependencies && !project.dependencies.empty? && project.save
+      project.save_dependencies
+      return true
+    else
+      Rails.logger.error "Cant save project: #{project.errors.full_messages.to_json}"
+      return false
     end
   end
 
-  def self.process_project( project )
+  def self.update( project )
     if project.nil? || project.user_id.nil?
       return nil
     end
-    if project.source.eql?( Project::A_SOURCE_GITHUB )
-      self.update_from_github( project )
-    end
-    if project.s3_filename && !project.s3_filename.empty?
-      project.url = S3.url_for( project.s3_filename )
-    end
+    self.update_url( project )
     new_project = self.create_from_url( project.url )
-    if new_project.dependencies && !new_project.dependencies.empty?
-      project.overwrite_dependencies( new_project.dependencies )
-      project.out_number = new_project.out_number
-      project.dep_number = new_project.dep_number
-      project.unknown_number = new_project.unknown_number
-      project.save
-      if project.out_number > 0
-        ProjectMailer.projectnotification_email( project ).deliver
-      end
+    project.update_from( new_project )
+    if project.out_number > 0
+      ProjectMailer.projectnotification_email( project ).deliver
     end
   rescue => e
     Rails.logger.error e.message
@@ -48,50 +43,58 @@ class ProjectService
     nil
   end
 
-  # Fetch the project file from GitHub, store it on S3 and
-  # update the s3_filename & url in the project instance
-  #
-  # TODO consolidate this with import_from_github
-  #
-  def self.update_from_github( project )
-    github_project = project.github_project
-    current_user   = project.user
-    sha = Github.get_repo_sha( github_project, current_user.github_token )
-    project_info = Github.repository_info( github_project, sha, current_user.github_token )
-    if project_info.empty?
-      return nil
+  def self.update_all( period )
+    projects = Project.all()
+    projects.each do |project|
+      if project.period.eql?( period )
+        self.update ( project )
+      end
     end
-    file = Github.fetch_file( project_info['url'], current_user.github_token )
-    s3_infos = S3.upload_github_file( file, project_info['name'] )
+  end
+
+  def self.update_url( project )
+    if project.source.eql?( Project::A_SOURCE_GITHUB )
+      self.update_project_file_from_github( project )
+    end
+    if project.s3_filename && !project.s3_filename.empty?
+      project.url = S3.url_for( project.s3_filename )
+    end
+  end
+
+  def self.update_project_file_from_github( project )
+    project_file = Github.project_file_from_branch( project.user, project.github_project, project.github_branch )
+    return nil if project_file.nil? || project_file.empty?
+    s3_info  = S3.upload_github_file( project_file, project_file['name'] )
     if s3_infos['filename'] && s3_infos['s3_url']
       S3.delete( project.s3_filename )
       project.s3_filename = s3_infos['filename']
-      project.url = s3_infos['s3_url']
+      project.url         = s3_infos['s3_url']
       project.save
     end
   end
 
 =begin
-  Imports project file from github branches;
-  It's more general version of previous update_from_github
+  This methods is doing 3 things
+   - Importing a project_file from GitHub
+   - Parsing the project_file to a new project
+   - Storing the new project to DB
 =end
   def self.import_from_github(user, repo_name, branch = "master")
     private_project = Github.private_repo?(user.github_token, repo_name)
-
     if private_project && !ProjectService.is_allowed_to_add_private_project?(user)
       flash[:error] = "You selected a private project. Please upgrade your plan to monitor the selected project."
       return nil
     end
 
-    github_file = Github.import_from_branch(user, repo_name, branch)
-    if github_file.nil?
+    project_file = Github.project_file_from_branch( user, repo_name, branch )
+    if project_file.nil?
       Rails.logger.error "Cant import project file from #{repo_name} branch #{branch} "
       return nil
     end
 
-    s3_info = S3.upload_github_file(github_file, github_file['name'])
+    s3_info = S3.upload_github_file( project_file, project_file['name'] )
     if s3_info.nil? && !s3_info.has_key?('filename') && !s3_info.has_key?('s3_url')
-      Rails.logger.error "Cant upload file to s3: #{github_file['name']}"
+      Rails.logger.error "Cant upload file to s3: #{project_file['name']}"
       return nil
     end
 
@@ -106,7 +109,29 @@ class ProjectService
                                       s3_filename: s3_info['filename'],
                                       url: s3_info['s3_url']} )
 
-    return parsed_project if store_project(parsed_project)
+    return parsed_project if store( parsed_project )
+  end
+
+
+  def self.create_from_url( url )
+    project_type = type_by_filename( url )
+    parser       = ParserStrategy.parser_for( project_type, url )
+    parser.parse url
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    project = Project.new
+  end
+
+  def self.destroy project_id
+    project = Project.find_by_id( project_id )
+    if project.s3_filename && !project.s3_filename.empty?
+      S3.delete( project.s3_filename )
+    end
+    project.dependencies.each do |dep|
+      dep.remove
+    end
+    project.remove
   end
 
   def self.is_allowed_to_add_private_project?(user)
@@ -121,44 +146,6 @@ class ProjectService
     else
       return false
     end
-  end
-
-  def self.create_from_url( url )
-    project_type = type_by_filename( url )
-    parser = ParserStrategy.parser_for( project_type, url )
-    parser.parse url
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
-    project = Project.new
-  end
-
-  def self.store_project(project)
-    if project.nil?
-      msg = "Project cant be nil. Some error with importing."
-      Rails.logger.error msg
-    end
-
-    project.make_project_key!
-    if project.dependencies && !project.dependencies.empty? && project.save
-      project.save_dependencies
-      return true
-    else
-      Rails.logger.error "Cant save project: #{project.errors.full_messages.to_json}"
-      return false
-    end
-  end
-
-
-  def self.destroy_project project_id
-    project = Project.find_by_id( project_id )
-    if project.s3_filename && !project.s3_filename.empty?
-      S3.delete( project.s3_filename )
-    end
-    project.dependencies.each do |dep|
-      dep.remove
-    end
-    project.remove
   end
 
 end
