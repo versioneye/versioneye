@@ -1,12 +1,12 @@
 module ProductsHelper
 
   def product_version_path(product)
-    return "/package/0/version" if product.nil?
-    return "/package/#{product.to_param}/version/#{product.version_to_url_param}"
+    return "/package/0/0" if product.nil?
+    return "/package/#{product.to_param}/#{product.version_to_url_param}"
   end
 
   def product_url(product)
-    return "/package/0/" if product.nil?
+    return "/package/0" if product.nil?
     return "/package/#{product.to_param}"
   end
 
@@ -107,7 +107,7 @@ module ProductsHelper
     path  += "#{key__}"
     if version_match || !version.to_s.empty?
       version_ = check_tilde version
-      path += "/version/#{version_}"
+      path += "/#{version_}"
     end
     if !key_match_1.nil? || !key_match_2.nil? || !version_match.nil?
       redirect_to path

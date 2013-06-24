@@ -198,12 +198,12 @@ class ProductsController < ApplicationController
     end
 
     def add_status_comment(product, user, type)
-      comment = Versioncomment.new
-      comment.user_id = user.id
+      comment             = Versioncomment.new
+      comment.user_id     = user.id
       comment.product_key = product.prod_key
-      comment.prod_name = product.name
-      comment.language = product.language
-      comment.version = product.version
+      comment.prod_name   = product.name
+      comment.language    = product.language
+      comment.version     = product.version
       if type.eql?("description")
         comment.comment = "UPDATE: #{user.fullname} updated the description"
         comment.update_type = type
