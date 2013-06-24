@@ -19,7 +19,7 @@
             </td>
             <td style = "vertical-align: middle;">
               <% product_url    = "#{@link}#{product.to_param}" %>
-              <% product_url   += "/version/#{version.to_param}" unless version.nil? %>
+              <% product_url   += "/#{version.to_param}" unless version.nil? %>
               <% product_title  = "#{product.name}".strip %>
               <% product_title += " (#{version.version})" unless version.nil? %>
 
