@@ -6,7 +6,7 @@ describe VersionEye::ProductsApi do
   let( :product_uri ) { "/api/v1/products" }
 
   def encode_prod_key(prod_key)
-    prod_key.gsub("/", "--")
+    prod_key.gsub("/", ":")
   end
 
   def fill_db_with_products
