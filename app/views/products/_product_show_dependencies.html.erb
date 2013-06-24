@@ -22,7 +22,7 @@
     <h5>
       <%= @product.name %> has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive <%= @product.main_scope %> dependencies
     </h5>
-    <a href="/package_visual/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>">
+    <a href="/package_visual/<%= @product.to_param%>/<%= @product.version_to_url_param %>">
       See visual page
     </a>
   </div>
@@ -33,7 +33,7 @@
     canvas_container = document.getElementById("canvas-container")
     if (canvas_container){
       var wheel = new DependencyWheel.Remote(false, canvas_container, {
-        url: '/package/<%= @product.to_param%>/version/<%= @product.version_to_url_param %>/dependencies.json?scope=<%= @product.main_scope %>',
+        url: '/package/<%= @product.to_param%>/<%= @product.version_to_url_param %>/dependencies.json?scope=<%= @product.main_scope %>',
         width: "605",
         height: "605",
         infoBox: "infoBox",
@@ -56,7 +56,7 @@
           version = item.version;
           version = version.replace(/\//g, "--");
           version = version.replace(/\./g, "~" );
-          window.location.href = "/package/" + key + "/version/" + version;
+          window.location.href = "/package/" + key + "/" + version;
         }
       } );
     }

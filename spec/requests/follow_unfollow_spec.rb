@@ -50,7 +50,7 @@ describe "follow and unfollow" do
       subscribers.size.should eq(1)
       subscribers.first.email.should eql( user.email )
 
-      get "/package/json_goba/version/1.0"
+      get "/package/json_goba/1.0"
       assert_tag :tag => "button", :attributes => { :class => "btn2 btn-large btn-warning", :type => "submit" }
       response.body.should match("1 Followers")
     end
@@ -71,7 +71,7 @@ describe "follow and unfollow" do
       assert_response 302
       response.should redirect_to("/package/#{prod_key}")
 
-      get "/package/json_goba/version/1.0"
+      get "/package/json_goba/1.0"
       assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-success", :type => "submit" }
       response.body.should match("0 Followers")
 

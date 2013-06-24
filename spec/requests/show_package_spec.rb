@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "search" do
 
-  it "show detail page for a package" do 
+  it "show detail page for a package" do
   	product = Product.new
   	product.versions = Array.new
     product.name = "json"
@@ -24,14 +24,14 @@ describe "search" do
     assert_response :success
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"
-    
+
     assert_tag :tag => "section", :attributes => { :class => "container"}
     assert_tag :tag => "ul", :attributes => { :class => "nav pull-right"}
 
     product.remove
   end
 
-  it "show visual page for a package" do 
+  it "show visual page for a package" do
     product = Product.new
     product.versions = Array.new
     product.name = "json_g"
@@ -49,11 +49,11 @@ describe "search" do
     results.should_not be_nil
     results.size.should eq(1)
 
-    get "/package_visual/json_g/version/1~0"
+    get "/package_visual/json_g/1~0"
     assert_response :success
     # assert_select "form[action=?]", "/search"
     # assert_select "input[name=?]", "q"
-    
+
     assert_tag :tag => "h1", :attributes => { :style => "margin-bottom: 5px;"}
 
     product.remove
