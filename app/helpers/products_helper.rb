@@ -97,24 +97,32 @@ module ProductsHelper
     key           = params[:key]
     version       = params[:version]
     version       = "" if version.nil?
-    key_match     = key.match(/\~/)
+    key_match_1   = key.match(/\~/)
+    key_match_2   = key.match(/.+\-\-.+/)
     version_match = version.match(/\~/)
-    return nil if key_match.nil? && version_match.nil?
-    path = "/package/"
-    if key_match
-      key_ = key.gsub("\~", "\.")
-      path += "#{key_}"
-    else
-      path += "#{key}"
-    end
-    if version_match
-      version_ = version.gsub("\~", "\.")
+    return nil if key_match_1.nil? && key_match_2.nil? && version_match.nil?
+    path  = "/package/"
+    key_  = check_tilde key
+    key__ = check_group_sep key_
+    path  += "#{key__}"
+    if version_match || !version.to_s.empty?
+      version_ = check_tilde version
       path += "/version/#{version_}"
     end
-    if !key_match.nil? || !version_match.nil?
+    if !key_match_1.nil? || !key_match_2.nil? || !version_match.nil?
       redirect_to path
       return
     end
+  end
+
+  def check_tilde key
+    return key.gsub("\~", "\.") if key.match(/\~/)
+    return key
+  end
+
+  def check_group_sep key
+    return key.gsub("--", ":") if key.match(/.+\-\-.+/)
+    return key
   end
 
 end
