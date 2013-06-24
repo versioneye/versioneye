@@ -3,14 +3,18 @@
 Here we track our changes. Because the app is already online since 1 year we start bey version 1.0.0.
 We are using the semantic versioning. Check out this: http://semver.org/
 
+== 1.2.0
+
+* <b>URLs</b>: Alowing now dots in rails params
+
 == 1.1.0
 
-* <b>Python</b>: We improved the parser for requirement.txt and added support for pip.log.
-* <b>RSS</b>: BugFix and test case for fav. RSS feed.
-* <b>GitHub View</b>: We developed a single page application for dealing with GitHub Repositories.
+* <b>GitHub View</b>: We developed a single page application for dealing with GitHub Repositories. Watch the movie here.
 * <b>Branches</b>: You can now even select which branch you want to monitor!
 * <b>Password Reset</b>: We changed the password reset process. We don't send out clear text passwords anymore!
-* <b>dev-master</b>: dev-master is not countet as newest if there are other ones.
+* <b>PHP dev-master</b>: dev-master is not countet as newest if there are other ones.
+* <b>Python</b>: We improved the parser for requirement.txt and added support for pip.log.
+* <b>RSS</b>: BugFix and test case for fav. RSS feed.
 
 == 1.0.0
 
