@@ -14,6 +14,17 @@ describe "Redirect Old Paths" do
     product.versions.push( Version.new({:version => "1.0" }) )
     product.save
 
+    product_2               = Product.new
+    product_2.name          = "hibernate-core"
+    product_2.name_downcase = "hibernate-core"
+    product_2.prod_key      = "org.hibernate/hibernate-core"
+    product_2.prod_type     = "Maven2"
+    product_2.language      = "Java"
+    product_2.version       = "1.0"
+    product_2.versions      = Array.new
+    product_2.versions.push( Version.new({:version => "1.0" }) )
+    product_2.save
+
     get "/package/json~gobi"
     response.should redirect_to("/package/json.gobi")
 
@@ -25,6 +36,12 @@ describe "Redirect Old Paths" do
 
     get "/package/json.gobi/version/1~0"
     response.should redirect_to("/package/json.gobi/version/1.0")
+
+    get "/package/json~gobi/version/1.0"
+    response.should redirect_to("/package/json.gobi/version/1.0")
+
+    get "/package/org~hibernate--hibernate-core/version/1~0"
+    response.should redirect_to("/package/org.hibernate:hibernate-core/version/1.0")
 
     get "/package/json.gobi/version/1.0"
     assert_response :success

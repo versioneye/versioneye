@@ -113,7 +113,7 @@ Versioneye::Application.routes.draw do
   get   '/package_visual/:key/version/:version',        :to => 'products#show_visual'
 
   resources :versioncomments
-  get   '/vc/:id',                       :to => 'versioncomments#show'
+  get   '/vc/:id', :to => 'versioncomments#show'
 
   resources :versioncommentreplies
 

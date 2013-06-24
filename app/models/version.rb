@@ -34,12 +34,12 @@ class Version
 
   def self.encode_version(version)
     return nil if version.nil?
-    version.gsub("/", "--")
+    version.gsub("/", ":")
   end
 
   def self.decode_version(version)
     return nil if version.nil?
-    version.gsub("--", "/")
+    version.gsub(":", "/")
   end
 
   def to_param
