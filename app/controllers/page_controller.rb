@@ -2,9 +2,16 @@ class PageController < ApplicationController
 
   def routing_error
     path = request.fullpath
+    match = false
+    if path.match(/\/version\//)
+      path.gsub!("/version/", "/")
+      match = true
+    end
     if path.match(/\/product\//)
       path.gsub!("product", "package")
-    else
+      match = true
+    end
+    if match == false
       logger.error "Routing error for path: #{params[:path]}"
       path = "/"
     end
