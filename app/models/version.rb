@@ -4,29 +4,27 @@ class Version
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes
 
-  # self.collection_name = 'people'
-
-  field :uid, type: String
-  field :version, type: String
-  field :link, type: String
-  field :downloads, type: Integer
-  field :authors, type: String
-  field :description, type: String
-  field :summary, type: String
-  field :prerelease, type: Boolean
-  field :mistake, type: Boolean
-  field :pom, type: String
-  field :released_at, type: DateTime
+  field :uid            , type: String
+  field :version        , type: String
+  field :link           , type: String
+  field :downloads      , type: Integer
+  field :authors        , type: String
+  field :description    , type: String
+  field :summary        , type: String
+  field :prerelease     , type: Boolean
+  field :mistake        , type: Boolean
+  field :pom            , type: String
+  field :released_at    , type: DateTime
   field :released_string, type: String
-  field :license, type: String
+  field :license        , type: String
 
   embedded_in :product
 
   def as_json(parameter=nil)
     {
-      :version => self.version,
-      :uid => self.get_decimal_uid,
-      :link => self.link,
+      :version    => self.version,
+      :uid        => self.get_decimal_uid,
+      :link       => self.link,
       :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
       :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
     }
