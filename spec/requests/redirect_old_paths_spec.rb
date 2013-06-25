@@ -28,6 +28,12 @@ describe "Redirect Old Paths" do
     get "/package/json~gobi/version/1~1"
     response.should redirect_to("/package/json~gobi/1~1")
 
+    get "/package_visual/json~gobi/version/1~1"
+    response.should redirect_to("/package_visual/json~gobi/1~1")
+
+    get "/package_visual/json~gobi/1~1"
+    response.should redirect_to("/package_visual/json.gobi/1.1")
+
     get "/package/json~gobi"
     response.should redirect_to("/package/json.gobi")
 

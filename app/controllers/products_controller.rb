@@ -1,7 +1,8 @@
 class ProductsController < ApplicationController
 
-  before_filter :authenticate,    :only => [:edit, :update]
-  before_filter :check_redirects, :only => [:show]
+  before_filter :authenticate                  , :only => [:edit, :update]
+  before_filter :check_redirects_package       , :only => [:show]
+  before_filter :check_redirects_package_visual, :only => [:show_visual]
   #before_filter :force_http
 
   @@languages = [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
@@ -64,7 +65,7 @@ class ProductsController < ApplicationController
 
   def show_visual
     key = Product.decode_prod_key( params[:key] )
-    @product = Product.find_by_key( key )
+    @product = fetch_product prod_key
     if @product.nil?
       flash[:error] = "The requested package is not available."
       redirect_to products_path(@product)
