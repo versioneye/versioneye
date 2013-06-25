@@ -93,7 +93,15 @@ module ProductsHelper
     searchlog.save
   end
 
-  def check_redirects
+  def check_redirects_package
+    check_redirects( "package" )
+  end
+
+  def check_redirects_package_visual
+    check_redirects( "package_visual" )
+  end
+
+  def check_redirects( directory = "package" )
     key           = params[:key]
     version       = params[:version]
     version       = "" if version.nil?
@@ -101,7 +109,7 @@ module ProductsHelper
     key_match_2   = key.match(/.+\-\-.+/)
     version_match = version.match(/\~/)
     return nil if key_match_1.nil? && key_match_2.nil? && version_match.nil?
-    path  = "/package/"
+    path  = "/#{directory}/"
     key_  = check_tilde key
     key__ = check_group_sep key_
     path  += "#{key__}"
