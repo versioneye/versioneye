@@ -1,5 +1,5 @@
-define(['underscore', 'backbone', 'paginator'],
-  function(_, Backbone, Paginator){
+define(['underscore', 'backbone'],
+  function(_, Backbone){
 
 	_.templateSettings = {
 		interpolate: /\{\{\=(.+?)\}\}/g,
