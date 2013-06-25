@@ -93,11 +93,16 @@ Versioneye::Application.routes.draw do
   get   '/product/symfony--symfony/version/:version'      , :to => redirect('/package/php:symfony:symfony/%{version}')
 
   get   '/search'                            , :to => 'products#search'
+
   get   '/package/name'                      , :to => 'products#autocomplete_product_name'
   post  '/package/follow'                    , :to => 'products#follow'
   post  '/package/unfollow'                  , :to => 'products#unfollow'
   post  '/package/image_path'                , :to => 'dependency_wheel#image_path'
   post  '/package/upload_image'              , :to => 'dependency_wheel#upload_image'
+
+  get   '/package/:key/badge.png'         ,  :to => 'products#badge',  :constraints => { :key => /[^\/]+/ }
+  get   '/package/:key/:version/badge.png',  :to => 'products#badge',  :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+
   get   '/package/:key'                      , :to => 'products#show', :as => 'products', :constraints => { :key => /[^\/]+/ }
   get   '/package/:key/edit'                 , :to => 'products#edit',                    :constraints => { :key => /[^\/]+/ }
   post  '/package/:key/update'               , :to => 'products#update',                  :constraints => { :key => /[^\/]+/ }
@@ -107,8 +112,7 @@ Versioneye::Application.routes.draw do
   get   '/package/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/package_visual/:key/:version'      , :to => 'products#show_visual',             :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
-  get   '/package/:key/badge',                          :to => 'products#badge',  :constraints => { :key => /[^\/]+/ }
-  get   '/package/:key/:version/badge',         :to => 'products#badge',  :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+
 
   get   '/package_visual/:key/:version',        :to => 'products#show_visual'
 
