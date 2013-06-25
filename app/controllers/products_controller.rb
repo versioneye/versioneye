@@ -64,7 +64,7 @@ class ProductsController < ApplicationController
   end
 
   def show_visual
-    key = Product.decode_prod_key( params[:key] )
+    prod_key = Product.decode_prod_key( params[:key] )
     @product = fetch_product prod_key
     if @product.nil?
       flash[:error] = "The requested package is not available."
