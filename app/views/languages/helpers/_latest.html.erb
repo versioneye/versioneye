@@ -1,0 +1,15 @@
+<div id = "latest-products-container" class = "media">
+
+  <h4> Latest updated libraries </h4>
+  <% @latest_products.each do |prod| %>
+    <div class = "media-body product-item">
+      <h5 class = "media-heading"> 
+        <a href = "<%= products_path(key: prod.prod_key) %>"><%= prod.name %></a> 
+        <small> -  latest version <%= prod.version %> 
+          has been detected  <%= time_ago_in_words(prod.updated_at) %> ago 
+        </small>
+      </h5>
+      <p> <%= prod.description %> </p>
+    </div>
+  <% end %>
+</div>

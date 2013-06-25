@@ -85,6 +85,9 @@ Versioneye::Application.routes.draw do
 
   end
 
+  #language specific routes
+  get '/ruby', :to => 'languages/ruby#index'
+
   # Legacy paths. Keep them alive for Google
   get   '/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.0.pdf', :to => redirect("/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.1.pdf")
   get   '/product/symfony--symfony'                       , :to => redirect("/package/php:symfony:symfony")

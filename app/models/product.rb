@@ -1,3 +1,5 @@
+#for indexing use task: rake db:mongoid:create_indexes
+
 class Product
 
   require 'will_paginate/array'
@@ -50,15 +52,22 @@ class Product
 
   field :reindex, type: Boolean, default: true
 
+  index [[:followers, Mongo::DESCENDING]]
+  index [[:updated_at, Mongo::DESCENDING]]
+
   embeds_many :versions
   embeds_many :repositories
+  has_many :product_security_notifications
+
   has_and_belongs_to_many :users
   # versionarchives
   # versionlinks
   # versionchanges
   # versioncomments
-
+  
   attr_accessor :in_my_products, :version_uid, :last_crawle_date, :released_days_ago
+
+  scope :by_language, ->(lang){where(language: lang)}
 
   def delete
     false
