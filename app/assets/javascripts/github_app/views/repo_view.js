@@ -44,8 +44,8 @@ define(['underscore', 'backbone',
 			var itemview = new GithubRepoItemView({model: model});
   		$("#github-repos").append(itemview.render().el);
   
-      var switch_selector = "#github-repo-switch-" + model.get('github_id');
-			$(switch_selector).parent().bootstrapSwitch();
+      //var switch_selector = "#github-repo-switch-" + model.get('github_id');
+			//$(switch_selector).parent().bootstrapSwitch();
     }, 
     onChange: function(){
       console.debug("RepoView catched change on collection.");
