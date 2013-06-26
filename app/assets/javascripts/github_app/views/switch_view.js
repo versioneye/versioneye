@@ -14,23 +14,7 @@ define(['underscore', 'backbone'],
     })).fadeIn(400).delay(6000).fadeOut(800);
   }
 
-
-  var addRepoLinkLabel = function(selector, model){
-    var url_label_template = _.template(jQuery("#github-repo-urllabel-template").html());
-    $(selector).find('.repo-labels').append(url_label_template({
-      classes: "label label-info repo-homepage",
-      url: model.get("project_url"),
-      content: '<i class="icon-home"></i> Project\'s page'
-    }));
-  }
-
-  var removeRepoLinkLabel = function(selector){
-    $(selector).find('.repo-homepage').remove();
-  }
-
-
   var GithubRepoSwitchView = Backbone.View.extend({
-    className: "span3",
     template: _.template($("#github-repo-switch-template").html()),
     events: {
       "switch-change .switch" : "onSwitchChange"
@@ -38,15 +22,28 @@ define(['underscore', 'backbone'],
 
     initialize: function(options){
       this.parent = options.parent;
+      this.branch = options.branch;
     },
 
     render: function(){
-      this.$el.html(this.template({repo: this.model.toJSON()}));
+      this.$el.html(this.template({
+        repo: this.model.toJSON(),
+        branch: this.branch,
+        switch_id: this.getModelSwitchId()
+      }));
       return this;
     },
 
+    getModelSwitchId: function(){
+      var id =  "github-repo-switch-" + this.model.get('github_id'); 
+      if(this.branch){
+        id += "-" + this.branch;
+      }
+
+      return id;
+    },
+
     onSwitchChange: function(ev, switch_data){
-      console.debug(switch_data);
       is_switch_active = switch_data.el.parents('.switch').bootstrapSwitch("isActive");
 
       if(!is_switch_active){
@@ -68,7 +65,7 @@ define(['underscore', 'backbone'],
       });
 
       if(switch_data.value){
-        switch_data.el.parents(".repo-container").find(".repo-notification").html(loading_info);
+        this.showRepoNotification(loading_info);
         this.addProject(switch_data.el, switch_data.value);
       } else {
         this.removeProject(switch_data.el), switch_data.value;
@@ -76,69 +73,103 @@ define(['underscore', 'backbone'],
       return true;
     },
 
+    switchOnActivate : function(){
+      var switch_selector = "#" + this.getModelSwitchId();
+      var repo_switch = $(switch_selector).parents(".github-switch");
+      
+      repo_switch.bootstrapSwitch('setState', true);
+      repo_switch.bootstrapSwitch('setActive', true);
+    },
+
+    switchOffActivate: function(){
+      var switch_selector = "#" + this.getModelSwitchId();
+      var repo_switch = $(switch_selector).parents(".github-switch");
+      
+      repo_switch.bootstrapSwitch("setState", false);
+      repo_switch.bootstrapSwitch('setActive', true);
+
+    },
+
     addProject: function(el, data){
       console.log("Adding new project");
+      var current_switch = this;
       this.model.save(
-        {command: "import"},
+        {
+          command: "import",
+          command_data: el.data()
+        },
         {
           beforeSend: function(xhr) {
             xhr.setRequestHeader('X-CSRF-Token',
                                  $('meta[name="csrf-token"]').attr('content'));
           },
-          success: this.onAddSuccess,
-          error: this.onAddFailure
+          success: function(model, xhr, options){
+            var that_switch = current_switch; 
+            that_switch.onAddSuccess(model)
+          },
+          error: function(model, xhr, options){
+            var that_switch = current_switch;
+            that_switch.onAddFailure(model);
+          }
         });
     },
 
-    onAddSuccess: function(model, xhr, options){
-      var selector = "#github-repo-" + model.get("github_id");
-      var switch_selector = "#github-repo-switch-" + model.get('github_id');
+    onAddSuccess: function(model){
       var msg = ['<strong> Success! </strong>',
                  'Github project ', model.get('fullname'),
                  ' is now successfully imported.',
                  'You can now checkout project\'s page to see state of dependencies.'
                  ].join(' ');
-      addRepoLinkLabel(selector, model);
-
-      var repo_switch = $(switch_selector).parents(".github-switch");
-
-      repo_switch.bootstrapSwitch('setState', true);
-      repo_switch.bootstrapSwitch('setActive', true);
-      $(switch_selector).parents(".repo-container").find(".repo-notification").html("");
+      
+      var command_data = model.get('command_data');
+      $(this.el).find('.input').data('githubProjectId', command_data['githubProjectId']);
+      this.addProjectLink();
+      this.switchOnActivate();
+      this.showRepoNotification("");
       showNotification("alert alert-success", msg);
       return true;
     },
 
-    onAddFailure: function(model, xhr, options){
+    onAddFailure: function(model){
       var error_msg = "Failure: Cant import project: " + model.get('fullname');
-      var switch_selector = "#github-repo-switch-" + model.get('github_id');
-      var repo_switch = $(switch_selector).parents(".github-switch");
-
-      showNotification("alert alert-error", error_msg);
+      
       console.debug(error_msg);
-      $(switch_selector).parents(".repo-container").find(".repo-notification").html("");
-      repo_switch.bootstrapSwitch("setState", false);
-      repo_switch.bootstrapSwitch('setActive', true);
+      showNotification("alert alert-error", error_msg);
+      this.showRepoNotification("");
+      this.switchOffActivate();
+
+      $(this.el).find(".repo-notification").html("");
       return false;
     },
 
     removeProject: function(el, data){
       console.log("Removing selected project.");
+
+      var current_switch = this;
       this.model.save(
-        {command: "remove"},
+        {
+          command: "remove",
+          command_data: el.data()
+        },
         {
           beforeSend: function(xhr) {
             xhr.setRequestHeader('X-CSRF-Token',
                                  $('meta[name="csrf-token"]').attr('content'));
           },
-          success: this.onRemoveSuccess,
-          error: this.onRemoveFailure
+          success: function(model, xhr, options){
+            var that_switch = current_switch;
+            that_switch.onRemoveSuccess(model);
+          },
+          error: function(model, xhr, options){
+            var that_switch = current_switch;
+            that_switch.onRemoveFailure(model);
+          }
         }
       );
       return false;
     },
 
-   onRemoveSuccess: function(model, xhr, options){
+   onRemoveSuccess: function(model){
       var selector = "#github-repo-" + model.get("github_id");
       var msg = [
         '<strong>Success!</strong>',
@@ -146,27 +177,33 @@ define(['underscore', 'backbone'],
         ' is now successfully removed from your projects.'
       ].join(' ');
 
-      console.log("Going to remove label from: "+ selector);
-      removeRepoLinkLabel(selector);
-      var switch_selector = "#github-repo-switch-" + model.get('github_id');
-      var repo_switch = $(switch_selector).parents(".github-switch");
-
-      repo_switch.bootstrapSwitch('setState', false);
-      repo_switch.bootstrapSwitch('setActive', true);
+      this.removeProjectLink();
+      this.switchOffActivate();
       showNotification("alert alert-success", msg);
 
       return true;
    },
    onRemoveFailure: function(model, xhr, options){
       var msg = "Fail: Cant remove project";
-      var switch_selector = "#github-repo-switch-" + model.get('github_id');
-      var repo_switch = $(switch_selector).parents(".github-switch");
 
-      repo_switch.bootstrapSwitch('setState', true);
-      repo_switch.bootstrapSwitch('setActive', true);
+      this.switchOnActivate();
       showNotification("alert alert-warning", msg);
 
       return false;
+    },
+    
+    addProjectLink: function(){
+      new_title = "Added: " + this.branch;
+      $(this.el).parents(".repo-control-item").find('.item-title').html(new_title);
+    },
+
+    removeProjectLink: function(){
+      new_title = "Removed: " + this.branch;
+      $(this.el).parents(".repo-control-item").find('.item-title').html(new_title);
+    },
+
+    showRepoNotification: function(msg){
+      $(this.el).parents('.repo-container').find(".repo-notification").html(msg);
     }
   });
 

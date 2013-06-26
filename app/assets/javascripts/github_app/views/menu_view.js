@@ -3,7 +3,7 @@ define(['underscore', 'backbone'],
 
 	_.templateSettings = {
 		interpolate: /\{\{\=(.+?)\}\}/g,
-	    evaluate: /\{\{(.+?)\}\}/g
+	     evaluate: /\{\{(.+?)\}\}/g
 	};
 
 	var GithubMenuView =  Backbone.View.extend({
@@ -17,6 +17,7 @@ define(['underscore', 'backbone'],
       this.allRepos = options.allRepos;
     },
     events: {
+      "click li.org-item": "onOrgItem",
       "click li.sort-item": "onSortItem",
       "click li.filter-item": "onFilterItem"
     },
@@ -32,6 +33,12 @@ define(['underscore', 'backbone'],
       }, this)
       return this;
     },
+
+    onOrgItem: function(ev){
+      console.debug('User clicked on org-item - cleaning filtering.');
+      this.removePrevSelection();
+    },
+
     onSortItem: function(ev){
       console.debug("catched event on Sort button");
       sort_params = $(ev.target).data();

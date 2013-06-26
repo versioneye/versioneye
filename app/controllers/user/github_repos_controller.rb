@@ -49,12 +49,16 @@ class User::GithubReposController < ApplicationController
       render text: error_msg, status: 400
       return false
     end
+    
+    command_data = params[:command_data]
+
 
     case params[:command]
     when "import"
       project_name = params[:fullname]
-      branch       = params.has_key?(:branch) ? params[:branch] : "master"
+      branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : "master"
       project      = ProjectService.import_from_github(current_user, project_name, branch)
+      command_data[:githubProjectId] = project._id.to_s
 
       unless project.nil?
         repo = GithubRepo.find(params[:_id])
@@ -66,7 +70,8 @@ class User::GithubReposController < ApplicationController
         return false
       end
     when "remove"
-      id = params[:project_id]
+      id = command_data[:githubProjectId]
+
       if Project.where(_id: id).exists?
         ProjectService.destroy id
         repo = GithubRepo.find(params[:_id])
@@ -78,6 +83,8 @@ class User::GithubReposController < ApplicationController
         return false
       end
     end
+
+    repo[:command_data] = command_data
     render json: repo
  end
 
@@ -135,7 +142,7 @@ class User::GithubReposController < ApplicationController
 
   private
 =begin
-  adds additional data for each item in repo collection,
+  adds additional metadata for each item in repo collection,
   for example is this project already imported etc
 =end
     def process_repo repo
@@ -144,16 +151,19 @@ class User::GithubReposController < ApplicationController
       supported_langs     = Github.supported_languages
 
       repo[:supported] = supported_langs.include? repo["language"]
-      repo[:imported]  = imported_repo_names.include? repo["fullname"]
-      if repo[:imported]
-        imported_project         = imported_repos.where(github_project: repo["fullname"]).first
-        repo[:project_url] = url_for(controller: 'projects', action: "show", id: imported_project.id)
-        repo[:project_id]  = imported_project.id
-        repo[:imported_branch] = imported_project[:github_branch]
-      else
-        repo[:project_url] = nil
-        repo[:project_id]  = nil
-        repo[:imported_branch] = nil
+      repo[:imported_branches] = {}
+
+      if imported_repo_names.include?(repo["fullname"])
+        imported_branches = imported_repos.where(github_project: repo["fullname"])
+        imported_branches.each do |imported_project|
+          project_info = {
+            project_url: url_for(controller: 'projects', action: "show", id: imported_project.id),
+            project_id:  imported_project.id,
+            created_at: imported_project[:created_at]
+          }
+
+          repo[:imported_branches][imported_project[:github_branch]] = project_info
+        end
       end
 
       repo
