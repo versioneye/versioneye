@@ -25,26 +25,40 @@ class Dependency
   field :language    , type: String,  :default => Product::A_LANGUAGE_RUBY
   field :known       , type: Boolean
 
-  def self.find_by_key_and_version(prod_key, version)
-    Dependency.all(conditions: { prod_key: prod_key, prod_version: version } )
+  def self.find_by_lang_key_and_version( lang, prod_key, version)
+    Dependency.all(conditions: { language: lang, prod_key: prod_key, prod_version: version } )
   end
 
-  def self.find_by_key_version_scope(prod_key, version, scope)
-    Dependency.all(conditions: { prod_key: prod_key, prod_version: version, scope: scope } )
+  def self.find_by_lang_key_version_scope(lang, prod_key, version, scope)
+    Dependency.all(conditions: { language: lang, prod_key: prod_key, prod_version: version, scope: scope } )
   end
 
-  def self.find_by(prod_key, prod_version, name, version, dep_prod_key)
-    dependencies = Dependency.where(prod_key: prod_key, prod_version: prod_version, name: name, version: version, dep_prod_key: dep_prod_key)
+  def self.find_by(language, prod_key, prod_version, name, version, dep_prod_key)
+    dependencies = Dependency.where(language: language, prod_key: prod_key, prod_version: prod_version, name: name, version: version, dep_prod_key: dep_prod_key)
     return nil if dependencies.nil? || dependencies.empty?
     dependencies[0]
   end
 
   def product
-    Product.find_by_key( dep_prod_key )
+    product = Product.fetch_product( language, dep_prod_key )
+    if product.nil? && language.eql?(Product::A_LANGUAGE_PHP) && (dep_prod_key.eql?( "php/php" ) || dep_prod_key.eql?( "php" ) )
+      product = Product.fetch_product( Product::A_LANGUAGE_C, dep_prod_key )
+    end
+    product
   end
 
   def parent_product
-    Product.find_by_key( prod_key )
+    Product.fetch_product( language, prod_key )
+  end
+
+  def language_escaped
+    if self.language.eql? Product::A_LANGUAGE_NODEJS
+      return "nodejs"
+    end
+    if language.eql?(Product::A_LANGUAGE_PHP) && (dep_prod_key.eql?( "php/php" ) || dep_prod_key.eql?( "php" ) )
+      return Product::A_LANGUAGE_C.downcase
+    end
+    return language.downcase
   end
 
   def update_known
@@ -57,11 +71,9 @@ class Dependency
     self.save()
   end
 
-
   def update_known_if_nil
     self.update_known() if self.known.nil?
   end
-
 
   def version_parsed
     return "0" if version.nil?
@@ -79,7 +91,7 @@ class Dependency
 
   def gem_version_parsed
     version_string = String.new(version)
-    product        = Product.find_by_key(self.dep_prod_key)
+    product        = Product.fetch_product( self.language, self.dep_prod_key )
     dependency     = Projectdependency.new
     parser         = GemfileParser.new
     parser.parse_requested_version(version_string, dependency, product)
@@ -87,8 +99,12 @@ class Dependency
   end
 
   def packagist_version_parsed
+    lang = self.language
+    if self.dep_prod_key.eql?("php/php") or self.dep_prod_key.eql?("php")
+      lang = Product::A_LANGUAGE_C
+    end
     version_string = String.new(version)
-    product        = Product.find_by_key(self.dep_prod_key)
+    product        = Product.fetch_product( lang, self.dep_prod_key )
     dependency     = Projectdependency.new
     parser         = ComposerParser.new
     parser.parse_requested_version(version_string, dependency, product)
@@ -97,7 +113,7 @@ class Dependency
 
   def npm_version_parsed
     version_string = String.new( version )
-    product        = Product.find_by_key(self.dep_prod_key)
+    product        = Product.fetch_product( self.language, self.dep_prod_key )
     dependency     = Projectdependency.new
     parser         = PackageParser.new
     parser.parse_requested_version( version_string, dependency, product )

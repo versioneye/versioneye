@@ -1,34 +1,43 @@
 class CircleElement
 
+  require 'debugger'
+
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :prod_key, type: String
-  field :prod_version, type: String
-  field :prod_scope, type: String
-  field :dep_prod_key, type: String
-  field :version, type: String
-  field :text, type: String
-  field :connections_string, type: String
+  field :language           , type: String
+  field :prod_key           , type: String
+  field :prod_version       , type: String
+  field :prod_scope         , type: String
+  field :dep_prod_key       , type: String
+  field :version            , type: String
+  field :text               , type: String
+  field :connections_string , type: String
   field :dependencies_string, type: String
-  field :level, type: Integer
+  field :level              , type: Integer
 
   attr_accessor :connections, :dependencies
 
+  # Deprecated
   def self.fetch_circle(prod_key, version, scope)
     CircleElement.where(prod_key: prod_key, prod_version: version, prod_scope: scope)
   end
 
-  def init
-    self.connections = Array.new
-    self.dependencies = Array.new
-    self.text = ""
-    self.dep_prod_key = ""
-    self.level = 1
+  def self.fetch_circle(language, prod_key, version, scope)
+    CircleElement.where(language: language, prod_key: prod_key, prod_version: version, prod_scope: scope)
   end
 
-  def self.store_circle(circle, prod_key, version, scope)
+  def init
+    self.connections  = Array.new
+    self.dependencies = Array.new
+    self.text         = ""
+    self.dep_prod_key = ""
+    self.level        = 1
+  end
+
+  def self.store_circle(circle, lang, prod_key, version, scope)
     circle.each do |key, element|
+      element.language = lang
       element.prod_key = prod_key
       element.prod_version = version
       element.prod_scope = scope
@@ -38,40 +47,42 @@ class CircleElement
     end
   end
 
-
-  def self.dependency_circle(prod_key, version, scope)
+  def self.dependency_circle(lang, prod_key, version, scope)
     if scope == nil
       scope = main_scope
     end
     if version.nil? || version.empty?
-      product = Product.find_by_key prod_key
+      product = Product.fetch_product lang, prod_key
       version = product.version
     end
     hash = Hash.new
     dependencies = Array.new
     if scope.eql?("all")
-      dependencies = Dependency.find_by_key_and_version(prod_key, version)
+      dependencies = Dependency.find_by_lang_key_and_version( lang, prod_key, version )
     else
-      dependencies = Dependency.find_by_key_version_scope(prod_key, version, scope)
+      dependencies = Dependency.find_by_lang_key_version_scope( lang, prod_key, version, scope )
     end
     dependencies.each do |dep|
       next if dep.name.nil? || dep.name.empty?
       element = CircleElement.new
       element.init
       element.dep_prod_key = dep.dep_prod_key
-      element.version = dep.version_parsed
-      element.level = 0
+      element.language     = lang
+      element.version      = dep.version_parsed
+      element.level        = 0
       self.attach_label_to_element(element, dep)
       hash[dep.dep_prod_key] = element
     end
-    return self.fetch_deps(1, hash, Hash.new)
+    return self.fetch_deps(1, hash, Hash.new, lang)
+  rescue => e
+    Rails.logger.error e
   end
 
-  def self.fetch_deps(deep, hash, parent_hash)
+  def self.fetch_deps(deep, hash, parent_hash, lang)
     return hash if hash.empty?
     new_hash = Hash.new
     hash.each do |prod_key, element|
-      product = Product.find_by_key( prod_key )
+      product = Product.find_by_lang_key( lang, prod_key )
       if product.nil?
         next
       end
@@ -91,19 +102,20 @@ class CircleElement
           new_element = CircleElement.new
           new_element.init
           new_element.dep_prod_key = dep.dep_prod_key
+          new_element.language = lang
           new_element.level = deep
           attach_label_to_element(new_element, dep)
           new_element.connections << "#{element.dep_prod_key}"
           new_element.version = dep.version_parsed
           new_hash[dep.dep_prod_key] = new_element
         end
-        element.connections << "#{key}"
+        element.connections  << "#{key}"
         element.dependencies << "#{key}"
       end
     end
     parent_merged = hash.merge(parent_hash)
     deep += 1
-    rec_hash = self.fetch_deps(deep, new_hash, parent_merged)
+    rec_hash = self.fetch_deps(deep, new_hash, parent_merged, lang)
     merged_hash = parent_merged.merge(rec_hash)
     return merged_hash
   end

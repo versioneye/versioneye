@@ -131,24 +131,4 @@ describe GemfileParser do
 
   end
 
-  describe "fetch_product" do
-
-    it "fetches the product easy" do
-      product = ProductFactory.create_new
-      prod = @parser.fetch_product( product.prod_key )
-      prod.should_not be_nil
-      prod.prod_key.should eql( product.prod_key )
-      product.remove
-    end
-
-    it "fetches the product easy" do
-      product = ProductFactory.create_new
-      prod = @parser.fetch_product( product.prod_key.upcase )
-      prod.should_not be_nil
-      prod.prod_key.should eql( product.prod_key )
-      product.remove
-    end
-
-  end
-
 end

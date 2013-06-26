@@ -31,7 +31,7 @@ class GemfilelockParser < GemfileParser
       version = version_match.gsub("(", "").gsub(")", "")
       dependency = Projectdependency.new
 
-      product = Product.find_by_key(name)
+      product = Product.fetch_product( Product::A_LANGUAGE_RUBY, name )
       if product
         dependency.prod_key = product.prod_key
       else

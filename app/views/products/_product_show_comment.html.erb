@@ -10,14 +10,15 @@
 	    </div>
 			<div class = "controls-group">
 				<%= f.text_area :comment,
-					:class => "input span7", :style => "width: 600px;", 
+					:class => "input span7", :style => "width: 600px;",
 					:maxlength => "1000", :rows => 5, :cols => 70,
 					:onKeyUp => "textCounter(this, document.getElementById('counter'), 1000)"  %>
 				<span class = "help-block pull-right">
 					<small> Characters left: <span id="counter">1000</span></small>
 				</span>
+				<%= f.hidden_field :language,    :value => @product.language %>
 				<%= f.hidden_field :product_key, :value => @product.prod_key %>
-				<%= f.hidden_field :version, :value => @product.version %>
+				<%= f.hidden_field :version,     :value => @product.version %>
 			</div>
 			<div class = "controls-group">
 				<div class = "pull-left">

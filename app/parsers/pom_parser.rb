@@ -21,6 +21,7 @@ class PomParser < CommonParser
 
   def fetch_dependency(node, properties, project)
     dependency = Projectdependency.new
+    dependency.language = Product::A_LANGUAGE_JAVA
     node.children.each do |child|
       if child.name.casecmp("groupId") == 0
         dependency.group_id = child.text.strip

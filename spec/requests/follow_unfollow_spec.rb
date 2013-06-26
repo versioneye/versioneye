@@ -3,19 +3,21 @@ require 'spec_helper'
 describe "follow and unfollow" do
 
   let(:prod_key){ "json_goba" }
+  let(:prod_lang){ "Ruby" }
+  let(:version){"1.0"}
   let(:user){ FactoryGirl.create(:default_user) }
 
   def init_product
     product = Product.new
-    product.versions = Array.new
-    product.name = prod_key
+    product.versions      = Array.new
+    product.name          = prod_key
     product.name_downcase = prod_key
-    product.prod_key = prod_key
-    product.prod_type = "RubyGem"
-    product.language = "Ruby"
-    product.version = "1.0"
-    version = Version.new
-    version.version = "1.0"
+    product.prod_key      = prod_key
+    product.prod_type     = "RubyGem"
+    product.language      = Product::A_LANGUAGE_RUBY
+    product.version       = "1.0"
+    version               = Version.new
+    version.version       = "1.0"
     product.versions.push(version)
     product.save
     product
@@ -24,7 +26,7 @@ describe "follow and unfollow" do
   context "logged out" do
     it "fetches product page successfully" do
       init_product
-      get "/package/#{prod_key}"
+      get "/#{prod_lang}/#{prod_key}/#{version}"
       assert_response :success
       assert_tag :tag => "button", :attributes => { :class => "btn2 btn2-big", :type => "submit" }
     end
@@ -40,24 +42,24 @@ describe "follow and unfollow" do
 
     it "does follow successfully" do
       init_product
-      post "/package/follow", :product_key => prod_key
+      post "/package/follow", :product_key => prod_key, :product_lang => prod_lang
       assert_response 302
-      response.should redirect_to( "/package/#{prod_key}" )
+      response.should redirect_to( "/#{prod_lang.downcase}/#{prod_key}/#{version}" )
       response.body.should_not match( "An error occured" )
 
-      prod = Product.find_by_key( prod_key )
+      prod = Product.fetch_product( prod_lang, prod_key )
       subscribers = prod.users
       subscribers.size.should eq(1)
       subscribers.first.email.should eql( user.email )
 
-      get "/package/json_goba/1.0"
+      get "/ruby/json_goba/1.0"
       assert_tag :tag => "button", :attributes => { :class => "btn2 btn-large btn-warning", :type => "submit" }
       response.body.should match("1 Followers")
     end
 
     it "fetches the i follow page successfully" do
       init_product
-      post "/package/follow", :product_key => prod_key
+      post "/package/follow", :product_key => prod_key, :product_lang => prod_lang
       get user_packages_i_follow_path
       assert_response :success
       assert_tag :tag => "div", :attributes => { :class => "row search-item" }
@@ -66,16 +68,16 @@ describe "follow and unfollow" do
 
     it "unfollows successfully" do
       init_product
-      post "/package/follow",   :product_key => prod_key
-      post "/package/unfollow", :product_key => prod_key, :src_hidden => "detail"
+      post "/package/follow",   :product_key => prod_key, :product_lang => prod_lang
+      post "/package/unfollow", :product_key => prod_key, :product_lang => prod_lang, :src_hidden => "detail"
       assert_response 302
-      response.should redirect_to("/package/#{prod_key}")
+      response.should redirect_to( "/#{prod_lang.downcase}/#{prod_key}/#{version}" )
 
-      get "/package/json_goba/1.0"
+      get "/ruby/json_goba/1.0"
       assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-success", :type => "submit" }
       response.body.should match("0 Followers")
 
-      prod = Product.find_by_key( prod_key )
+      prod = Product.fetch_product( prod_lang, prod_key )
       subscribers = prod.users
       subscribers.size.should eq(0)
     end

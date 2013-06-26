@@ -8,6 +8,7 @@ class Projectdependency
 
   A_SECONDS_PER_DAY = 5184000
 
+  field :language   , type: String
   field :prod_key   , type: String
   field :ext_link   , type: String # Link to external package. For example zip file on GitHub / Google Code.
 
@@ -30,11 +31,12 @@ class Projectdependency
 
 
   def product
-    Product.find_by_key(self.prod_key)
+    Product.find_by_key( self.prod_key )
   end
 
+  # TODO change the logic, use language & prod_key to load product
   def find_or_init_product
-    product = Product.find_by_key(prod_key) if self.prod_key
+    product = Product.fetch_product( language, prod_key) if self.prod_key
     product = init_product if product.nil?
     product
   end
@@ -68,17 +70,6 @@ class Projectdependency
     self.outdated
   end
 
-  def link
-    if self.prod_key
-      key = Product.encode_product_key( prod_key )
-      return "/package/#{key}"
-    elsif self.ext_link
-      return self.ext_link
-    else
-      return "#"
-    end
-  end
-
   private
 
     def init_product
@@ -100,7 +91,7 @@ class Projectdependency
     #
     def update_version_current
       return false if self.prod_key.nil?
-      product = Product.find_by_key self.prod_key
+      product = Product.fetch_product self.language, self.prod_key
       return false if product.nil?
       newest_version       = VersionService.newest_version_number( product.versions, self.stability )
       self.version_current = newest_version

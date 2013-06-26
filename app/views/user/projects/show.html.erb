@@ -216,7 +216,7 @@
                   <h5 class="dep_header"><%= licence %></h5>
                   <p>
                     <% products.each do |product| %>
-                      <a href = "<%= product_url(product) %>" style= "text-decoration: none;">
+                      <a href = "<%= product_version_path(product) %>" style= "text-decoration: none;">
                         <span class = "label label-success" style = "margin-left :5px;">
                           <%= product.name %>
                         </span>

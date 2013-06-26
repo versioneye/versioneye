@@ -13,6 +13,7 @@ class Product
   A_LANGUAGE_R          = "R"
   A_LANGUAGE_JAVASCRIPT = "JavaScript"
   A_LANGUAGE_CLOJURE    = "Clojure"
+  A_LANGUAGE_C          = "C"
 
   field :name         , type: String
   field :name_downcase, type: String
@@ -53,10 +54,10 @@ class Product
   embeds_many :versions
   embeds_many :repositories
   has_and_belongs_to_many :users
-  # versionarchives
-  # versionlinks
-  # versionchanges
-  # versioncomments
+
+  # has_and_belongs_to_many :versionarchives
+  # has_and_belongs_to_many :versionlinks
+  # has_and_belongs_to_many :versioncomments
 
   attr_accessor :in_my_products, :version_uid, :last_crawle_date, :released_days_ago
 
@@ -144,11 +145,17 @@ class Product
     Mongoid::Criteria.new(Product, {_id: -1})
   end
 
+  # TODO double check this
   def self.find_by_key(searched_key)
     return nil if searched_key.nil? || searched_key.strip == ""
     result = Product.where(prod_key: searched_key)
     return nil if (result.nil? || result.empty?)
     return result[0]
+  end
+
+  def self.find_by_lang_key(language, searched_key)
+    return nil if searched_key.nil? || searched_key.empty? || language.nil? || language.empty?
+    Product.where(language: language, prod_key: searched_key).shift
   end
 
   # This is slow !! Searches by regex are always slower than exact searches!
@@ -157,6 +164,29 @@ class Product
     result = Product.all(conditions: {prod_key: /^#{searched_key}$/i})
     return nil if (result.nil? || result.empty?)
     return result[0]
+  end
+
+  # This is slow !! Searches by regex are always slower than exact searches!
+  def self.find_by_lang_key_case_insensitiv(language, searched_key)
+    return nil if searched_key.nil? || searched_key.empty? || language.nil? || language.empty?
+    result = Product.all(conditions: {prod_key: /^#{searched_key}$/i, language: /^#{language}$/i})
+    return nil if (result.nil? || result.empty?)
+    return result[0]
+  end
+
+  def self.fetch_product( lang, key )
+    if lang.eql?("nodejs")
+      lang = A_LANGUAGE_NODEJS
+    end
+    if lang.eql?("package")
+      product = Product.find_by_key( key )
+      return product if product
+    end
+    product = Product.find_by_lang_key( lang, key )
+    if product.nil?
+      product = Product.find_by_lang_key_case_insensitiv( lang, key )
+    end
+    product
   end
 
   def self.find_by_keys(product_keys)
@@ -210,7 +240,7 @@ class Product
   ######## END VERSIONS ###################
 
   def comments
-    Versioncomment.find_by_prod_key_and_version(self.prod_key, self.version)
+    Versioncomment.find_by_prod_key_and_version(self.language, self.prod_key, self.version)
   end
 
   def license_info
@@ -232,11 +262,11 @@ class Product
 
   def dependencies(scope = nil)
     scope = main_scope if scope == nil
-    Dependency.find_by_key_version_scope(prod_key, version, scope)
+    Dependency.find_by_lang_key_version_scope(language, prod_key, version, scope)
   end
 
   def all_dependencies
-    Dependency.find_by_key_and_version(prod_key, version)
+    Dependency.find_by_lang_key_and_version( language, prod_key, version)
   end
 
   def self.random_product
@@ -245,11 +275,11 @@ class Product
   end
 
   def http_links
-    Versionlink.all(conditions: { prod_key: self.prod_key, version_id: nil, link: /^http*/}).asc(:name)
+    Versionlink.all(conditions: { language: language, prod_key: self.prod_key, version_id: nil, link: /^http*/}).asc(:name)
   end
 
   def http_version_links
-    Versionlink.all(conditions: { prod_key: self.prod_key, version_id: self.version, link: /^http*/ }).asc(:name)
+    Versionlink.all(conditions: { language: language, prod_key: self.prod_key, version_id: self.version, link: /^http*/ }).asc(:name)
   end
 
   def self.get_hotest( count )
@@ -318,6 +348,13 @@ class Product
   def self.decode_prod_key(prod_key)
     return nil if prod_key.nil?
     prod_key.gsub(":", "/")
+  end
+
+  def self.decode_language( language )
+    return nil if language.nil?
+    return A_LANGUAGE_NODEJS if language.match(/^node/i)
+    return A_LANGUAGE_PHP if language.match(/^php/i)
+    return language.capitalize
   end
 
   def description_summary

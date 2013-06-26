@@ -5,10 +5,12 @@ describe Projectdependency do
   before(:each) do
     user = UserFactory.create_new
     @project = ProjectFactory.create_new( user )
+    @project.language = Product::A_LANGUAGE_RUBY
     @product          = Product.new
     @product.name     = "gomezify"
     @product.prod_key = "gomezify"
     @product.versions = Array.new
+    @product.language = Product::A_LANGUAGE_RUBY
     version           = Version.new
     version.version   = "1.0"
     @product.versions.push(version)
@@ -64,12 +66,14 @@ describe Projectdependency do
       version_01         = Version.new
       version_01.version = "2.2.1"
       product.versions.push( version_01 )
+      product.language   = Product::A_LANGUAGE_PHP
       product.save
 
       dep                   = Projectdependency.new
       dep.prod_key          = product.prod_key
       dep.version_requested = "2.2.x-dev"
       dep.stability         = "dev"
+      dep.language          = Product::A_LANGUAGE_PHP
 
       dep.outdated?.should be_false
       dep.version_current.should eql("2.2.x-dev")
@@ -81,11 +85,13 @@ describe Projectdependency do
       version_01         = Version.new
       version_01.version = "3.2.13.rc2"
       product.versions.push( version_01 )
+      product.language   = Product::A_LANGUAGE_RUBY
       product.save
 
       dep                   = Projectdependency.new
       dep.prod_key          = "rails"
       dep.version_requested = "3.2.13.rc2"
+      dep.language          = Product::A_LANGUAGE_RUBY
       dep.stability         = VersionTagRecognizer.stability_tag_for dep.version_requested
       dep.outdated?.should be_true
     end

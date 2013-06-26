@@ -10,7 +10,7 @@
       </div>
 
       <div class = "span5">
-        <a href="<%= product_url(product) %>" class="searchResultLink">
+        <a href="<%= product_version_path(product) %>" class="searchResultLink">
           <span ><%= product.name_version(name_limit) %></span>
         </a><br/>
         <% if product.prod_type == "Maven2" %>
@@ -25,20 +25,22 @@
 
           <div class = "pull-right" id="follow_<%=product.to_param%>" style="display: <%= display_follow(product, user) %>">
             <%= form_tag("/package/follow", :remote => true) do  %>
-              <input  name="product_key" type="hidden" value="<%= product.to_param %>" />
+              <input  name="product_key"  type="hidden" value="<%= product.to_param %>" />
+              <input  name="product_lang" type="hidden" value="<%= product.language %>"/>
               <button type="submit" class="btn2 btn-big" >Follow</button>
             <% end %>
           </div>
 
           <div class = "pull-right" id="unfollow_<%=product.to_param%>" style="display: <%= display_unfollow(product, user) %>">
             <%= form_tag("/package/unfollow", :remote => true) do  %>
-              <input  name="product_key" type="hidden" value="<%= product.to_param %>" />
+              <input  name="product_key"  type="hidden" value="<%= product.to_param %>" />
+              <input  name="product_lang" type="hidden" value="<%= product.language %>"/>
               <button type="submit" class="btn btn-warning btn-big" >Unfollow</button>
             <% end %>
           </div>
 
         <% else %>
-          <button id="button_<%= product.prod_key %>" type="submit" class="btn2 btn-medium" onclick="load_dialog_follow('<%= product.name %>', '<%= product.prod_key %>');" >Follow</button>
+          <button id="button_<%= product.prod_key %>" type="submit" class="btn2 btn-medium" onclick="load_dialog_follow('<%= product.name %>', '<%= product.prod_key %>', '<%= product.language %>');" >Follow</button>
         <% end %>
       </div>
 

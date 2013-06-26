@@ -75,12 +75,10 @@
             pinit: false,
             onItemClick: function(item, event){
               key = item.id;
-              key = key.replace(/\//g, "--");
-              key = key.replace(/\./g, "~" );
+              key = key.replace(/\//g, ":");
               version = item.version;
-              version = version.replace(/\//g, "--");
-              version = version.replace(/\./g, "~" );
-              window.location.href = "/package/" + key + "/" + version;
+              version = version.replace(/\//g, ":");
+              window.location.href = "/<%= @project.language.downcase %>/" + key + "/" + version;
             }
           } );
         }

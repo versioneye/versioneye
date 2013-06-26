@@ -11,9 +11,9 @@ class ProductService
   end
 
 
-  def self.follow(prod_key, user)
+  def self.follow language, prod_key, user
     result = false
-    product = Product.find_by_key prod_key
+    product = Product.fetch_product language, prod_key
     if product && user && !product.users.include?( user )
       product.users.push user
       product.followers += 1
@@ -23,9 +23,9 @@ class ProductService
   end
 
 
-  def self.unfollow(prod_key, user)
+  def self.unfollow language, prod_key, user
     result = false
-    product = Product.find_by_key prod_key
+    product = Product.fetch_product language, prod_key
     if product && user && product.users.include?( user )
       product.users.delete(user)
       product.followers -= 1

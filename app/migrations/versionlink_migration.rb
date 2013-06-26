@@ -1,67 +1,33 @@
 class VersionlinkMigration
 
-  def self.run_all_converts
-    self.convert_git_to_https
-    self.convert_www_to_http
-    self.convert_githubcom_to_http
-    self.convert_git_at_githubcom_to_http
+  def self.set_languages
+    Versionlink.where(:prod_key => /^php/i).update_all(        language: Product::A_LANGUAGE_PHP    )
+    Versionlink.where(:prod_key => /^Ruby/i).update_all(       language: Product::A_LANGUAGE_RUBY   )
+    Versionlink.where(:prod_key => /^Python/i).update_all(     language: Product::A_LANGUAGE_PYTHON )
+    Versionlink.where(:prod_key => /^pip/i).update_all(        language: Product::A_LANGUAGE_PYTHON )
+    Versionlink.where(:prod_key => /^Node/i).update_all(       language: Product::A_LANGUAGE_NODEJS )
+    Versionlink.where(:prod_key => /^npm/i).update_all(        language: Product::A_LANGUAGE_NODEJS )
+    Versionlink.where(:prod_key => /^Java/i).update_all(       language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:prod_key => /^R/i).update_all(          language: Product::A_LANGUAGE_R )
+    Versionlink.where(:prod_key => /^JavaScript/i).update_all( language: Product::A_LANGUAGE_JAVASCRIPT )
+    Versionlink.where(:prod_key => /^Clojure/i).update_all(    language: Product::A_LANGUAGE_CLOJURE )
   end
 
-  def self.convert_git_to_https
-    links = Versionlink.all(conditions: {link: /^git:\/\/github.com.*.git$/ })
-    links.each do |link| 
-      new_link = link.link.gsub("git://github.com", "https://github.com").gsub(".git", "")
-      save_new_link link, new_link  
+  def self.set_languages_slow
+    if Versionlink.where(:link => nil).count > 0
+      Versionlink.where(:link => nil).remove()
+    end
+    links = Versionlink.where(:language => nil)
+    links.each do |link|
+      product = Product.find_by_key( link.prod_key )
+      if product.nil?
+        link.remove
+        p "remove link : #{link.prod_key} - #{link.name} - #{link.link}"
+      else
+        link.language = product.language
+        link.save
+      end
     end
   end
 
-  def self.convert_www_to_http
-    links = Versionlink.all(conditions: {link: /^www.*/ })
-    links.each do |link| 
-      new_link = "http://#{link.link}"
-      save_new_link link, new_link
-    end
-  end
-
-  def self.convert_githubcom_to_http
-    links = Versionlink.all(conditions: {link: /^github.com*/ })
-    links.each do |link| 
-      new_link = "http://#{link.link}"
-      save_new_link link, new_link
-    end
-  end
-
-  def self.convert_git_at_githubcom_to_http
-    links = Versionlink.all(conditions: {link: /^git\@github.com*/ })
-    links.each do |link| 
-      new_link = link.link.gsub("git@github.com:", "https://github.com/").gsub(".git", "")
-      save_new_link link, new_link
-    end
-  end
-
-  private 
-
-    def self.save_new_link link, new_link
-      new_link_is_valid = self.link_ok? new_link
-      if new_link_is_valid
-        resp = Versionlink.create_versionlink link.prod_key, link.version_id, new_link, link.name
-        if !resp.nil? 
-          Rails.logger.info "added: #{new_link} - #{link.prod_key} - #{link.version_id}" 
-        end
-      end 
-    end
-
-    def self.link_ok? link
-      url = URI.parse( link )
-      req = Net::HTTP.new(url.host, url.port)
-      req.use_ssl = true
-      req.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      res = req.request_head(url.path)
-      res.code.to_i == 200
-    rescue => e 
-      Rails.logger.error e.message
-      Rails.logger.error e.backtrace.first
-      return false 
-    end 
-
-end 
+end

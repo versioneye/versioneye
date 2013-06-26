@@ -4,21 +4,21 @@ class VersioncommentrepliesController < ApplicationController
 
   def create
     user = current_user
-    @versioncomment = Versioncomment.find_by_id(params[:comment_id])
-    @versioncommentreply = Versioncommentreply.new(params[:versioncommentreply])
-    @versioncommentreply.user_id = user.id
+    @versioncomment               = Versioncomment.find_by_id(params[:comment_id])
+    @versioncommentreply          = Versioncommentreply.new(params[:versioncommentreply])
+    @versioncommentreply.user_id  = user.id
     @versioncommentreply.fullname = user.fullname
     @versioncommentreply.username = user.username
 
     @versioncomment.versioncommentreplys << @versioncommentreply
 
     prod_key = @versioncomment.product_key
-    ver = @versioncomment.version
-    @product = Product.find_by_key(prod_key)
+    version  = @versioncomment.version
+    @product = Product.fetch_product( @versioncomment.language, prod_key )
     @versioncomment.prod_name = @product.name
     @versioncomment.language = @product.language
-    attach_version(@product, ver)
-    saved = false;
+    attach_version(@product, version)
+ saved = false;
     if @versioncomment.save
       saved = true
       send_comment_reply_mails(user, @versioncomment)

@@ -85,32 +85,7 @@ Versioneye::Application.routes.draw do
 
   end
 
-  # Legacy paths. Keep them alive for Google
-  get   '/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.0.pdf', :to => redirect("/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.1.pdf")
-  get   '/product/symfony--symfony'                       , :to => redirect("/package/php:symfony:symfony")
-  get   '/package/symfony--symfony'                       , :to => redirect("/package/php:symfony:symfony")
-  get   '/package/symfony--symfony/version/:version'      , :to => redirect('/package/php:symfony:symfony/%{version}')
-  get   '/product/symfony--symfony/version/:version'      , :to => redirect('/package/php:symfony:symfony/%{version}')
 
-  get   '/search'                            , :to => 'products#search'
-  get   '/package/name'                      , :to => 'products#autocomplete_product_name'
-  post  '/package/follow'                    , :to => 'products#follow'
-  post  '/package/unfollow'                  , :to => 'products#unfollow'
-  post  '/package/image_path'                , :to => 'dependency_wheel#image_path'
-  post  '/package/upload_image'              , :to => 'dependency_wheel#upload_image'
-  get   '/package/:key'                      , :to => 'products#show', :as => 'products', :constraints => { :key => /[^\/]+/ }
-  get   '/package/:key/edit'                 , :to => 'products#edit',                    :constraints => { :key => /[^\/]+/ }
-  post  '/package/:key/update'               , :to => 'products#update',                  :constraints => { :key => /[^\/]+/ }
-  post  '/package/:key/delete_link'          , :to => 'products#delete_link',             :constraints => { :key => /[^\/]+/ }
-  get   '/package/:key/:version'             , :to => 'products#show', :as => "package_version", :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
-  post  '/package/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
-  get   '/package/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
-  get   '/package_visual/:key/:version'      , :to => 'products#show_visual',             :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
-
-  get   '/package/:key/badge',                          :to => 'products#badge',  :constraints => { :key => /[^\/]+/ }
-  get   '/package/:key/:version/badge',         :to => 'products#badge',  :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
-
-  get   '/package_visual/:key/:version',        :to => 'products#show_visual'
 
   resources :versioncomments
   get   '/vc/:id', :to => 'versioncomments#show'
@@ -195,6 +170,42 @@ Versioneye::Application.routes.draw do
   get   'sitemap_00_2.xml',        :to => 'page#sitemap_2'
   get   'sitemap_00_3.xml',        :to => 'page#sitemap_3'
   get   'sitemap_00_4.xml',        :to => 'page#sitemap_4'
+
+  # Legacy paths. Keep them alive for Google
+  get   '/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.0.pdf', :to => redirect("/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.1.pdf")
+  get   '/product/symfony--symfony'                       , :to => redirect("/php/php:symfony:symfony")
+  get   '/package/symfony--symfony'                       , :to => redirect("/php/php:symfony:symfony")
+  get   '/package/symfony--symfony/version/:version'      , :to => redirect('/php/php:symfony:symfony/%{version}')
+  get   '/product/symfony--symfony/version/:version'      , :to => redirect('/php/php:symfony:symfony/%{version}')
+
+  get   '/search', :to => 'products#search'
+
+  get   '/package/name'        , :to => 'products#autocomplete_product_name'
+  post  '/package/follow'      , :to => 'products#follow'
+  post  '/package/unfollow'    , :to => 'products#unfollow'
+  post  '/package/image_path'  , :to => 'dependency_wheel#image_path'
+  post  '/package/upload_image', :to => 'dependency_wheel#upload_image'
+
+
+  get   '/package_visual/:key'                 , :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/ }
+  get   '/package_visual/:key/version/:version', :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/package_visual/:key/:version'        , :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+
+  # TODO rewrite old routes for /package/:key/:version/badge to new paths
+  get   '/:lang/:key/badge',                  :to => 'products#badge',  :constraints => { :key => /[^\/]+/ }
+  get   '/:lang/:key/:version/badge',         :to => 'products#badge',  :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+
+  # TODO rewrite old routes for /package_visual/:key/:version to new paths
+  get   '/:lang/:key/visual_dependencies'         , :to => 'products#show_visual', :constraints => { :key => /[^\/]+/ }
+  get   '/:lang/:key/:version/visual_dependencies', :to => 'products#show_visual', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+
+  get   '/:lang/:key'                      , :to => 'products#show', :as => 'products', :constraints => { :key => /[^\/]+/ }
+  get   '/:lang/:key/edit'                 , :to => 'products#edit',                    :constraints => { :key => /[^\/]+/ }
+  post  '/:lang/:key/update'               , :to => 'products#update',                  :constraints => { :key => /[^\/]+/ }
+  post  '/:lang/:key/delete_link'          , :to => 'products#delete_link',             :constraints => { :key => /[^\/]+/ }
+  get   '/:lang/:key/:version'             , :to => 'products#show', :as => "package_version", :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  post  '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
   #default action
   get   '*path',        :to => 'page#routing_error'

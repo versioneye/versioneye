@@ -7,10 +7,11 @@ class Versioncomment
 
   field :user_id, type: String
 
+  field :language   , type: String
   field :product_key, type: String
-  field :prod_name, type: String
-  field :language, type: String
-  field :version, type: String
+  field :prod_name  , type: String
+  field :language   , type: String
+  field :version    , type: String
 
   field :comment, type: String
   field :update_type, type: String
@@ -40,16 +41,16 @@ class Versioncomment
     Versioncomment.where(user_id: user_id).distinct(:product_key)
   end
 
-  def self.count_by_user_id(user_id)
+  def self.count_by_user_id( user_id )
     Versioncomment.where(user_id: user_id).count()
   end
 
-  def self.find_by_prod_keys(prod_keys)
+  def self.find_by_prod_keys( prod_keys )
     Versioncomment.all( conditions: {:product_key.in => prod_keys}).desc(:created_at)
   end
 
-  def self.find_by_prod_key_and_version(prod_key, version)
-    Versioncomment.all( conditions: {product_key: prod_key, version: version} ).asc(:created_at)
+  def self.find_by_prod_key_and_version(language, prod_key, version)
+    Versioncomment.all( conditions: {language: language, product_key: prod_key, version: version} ).asc(:created_at)
   end
 
   def user
@@ -69,7 +70,13 @@ class Versioncomment
   end
 
   def product
-    product = Product.find_by_key(self.product_key)
+    product = nil
+    if self.language
+      product = Product.find_by_lang_key( self.language, self.product_key)
+    end
+    if product.nil?
+      product = Product.find_by_key( self.product_key )
+    end
     if !product.nil?
       product.version = self.version
     end

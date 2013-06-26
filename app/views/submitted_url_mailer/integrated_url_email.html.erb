@@ -10,7 +10,7 @@
     </p>
     <p>
       You can find more information on the package page:
-      <%= link_to @product.name, "http://www.versioneye.com/package/#{@product.to_param}" %>
+      <%= link_to @product.name, "http://www.versioneye.com/#{@product.language.downcase}/#{@product.to_param}" %>
     </p>
     <p>
       Best regards, <br/>

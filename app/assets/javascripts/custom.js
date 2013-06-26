@@ -117,9 +117,10 @@ function confirmAction(){
   }
 }
 
-function load_dialog_follow(product_name, prod_key){
+function load_dialog_follow(product_name, prod_key, prod_lang){
   document.getElementById('product_to_follow').innerHTML = product_name;
-  setCookie("prod_key", prod_key, 1);
+  setCookie( "prod_key" , prod_key,  1 );
+  setCookie( "prod_lang", prod_lang, 1 )
   jQuery('#dialog_follow').modal({keyboard : true});
 }
 
