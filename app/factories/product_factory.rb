@@ -32,7 +32,7 @@ class ProductFactory
         :group_id      => group_id,
         :artifact_id   => artifact_id,
         :prod_key      => "#{group_id}/#{artifact_id}",
-        :language      => "Java",
+        :language      => Product::A_LANGUAGE_JAVA,
         :prod_type     => Project::A_TYPE_MAVEN2,
         :version       => version
       })
@@ -46,7 +46,7 @@ class ProductFactory
     product.name = name
     product.name_downcase = name.downcase
     product.prod_key = "php/#{name}"
-    product.language = "PHP"
+    product.language = Product::A_LANGUAGE_PHP
     version_obj = Version.new
     version_obj.version = version
     product.versions.push(version_obj)
@@ -61,7 +61,7 @@ class ProductFactory
     product.name = name
     product.name_downcase = name.downcase
     product.prod_key = name
-    product.language = "Ruby"
+    product.language = Product::A_LANGUAGE_RUBY
     version_obj = Version.new
     version_obj.version = version
     product.versions.push(version_obj)
@@ -75,7 +75,7 @@ class ProductFactory
     product = Product.new name: name,
                           name_downcase: name.downcase,
                           prod_key: "pip/#{name}",
-                          language: "Python",
+                          language: Product::A_LANGUAGE_PYTHON,
                           prod_type: Project::A_TYPE_PIP,
                           version: version
 

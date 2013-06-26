@@ -53,7 +53,7 @@ class PackagistCrawler
   end
 
   def self.get_product name
-    product = Product.find_by_key "php/#{name}"
+    product = Product.find_by_lang_key( Product::A_LANGUAGE_PHP, name )
     return product if product
     Rails.logger.info " -- New Product - #{name}"
     product = Product.new
@@ -63,7 +63,7 @@ class PackagistCrawler
 
   def self.update_product product, package
     name = package['name']
-    product.prod_key = "php/#{name}"
+    product.prod_key = name
     product.name = name
     product.name_downcase = name.downcase
     product.description = package['description']
@@ -73,9 +73,9 @@ class PackagistCrawler
   end
 
   def self.update_packagist_link product, packagist_page
-    versionlink = Versionlink.find_by(product.prod_key, packagist_page)
+    versionlink = Versionlink.find_by( Product::A_LANGUAGE_PHP, product.prod_key, packagist_page )
     return nil if versionlink
-    versionlink = Versionlink.new({:name => "Packagist Page", :link => packagist_page, :prod_key => product.prod_key})
+    versionlink = Versionlink.new({:name => "Packagist Page", :link => packagist_page, :prod_key => product.prod_key, :language => Product::A_LANGUAGE_PHP })
     versionlink.save
   end
 
@@ -99,7 +99,7 @@ class PackagistCrawler
     CrawlerUtils.create_newest product, version_number
     CrawlerUtils.create_notifications product, version_number
 
-    Versionlink.create_versionlink product.prod_key, version_number, version_obj['homepage'], "Homepage"
+    Versionlink.create_versionlink product.language, product.prod_key, version_number, version_obj['homepage'], "Homepage"
 
     PackagistCrawler.create_developers version_obj['authors'], product, version_number
     PackagistCrawler.create_download product, version_number, version_obj
@@ -116,7 +116,7 @@ class PackagistCrawler
       dist_url = dist['url']
       dist_type = dist['type']
       dist_name = "#{product.name}.#{dist_type}"
-      Versionlink.create_versionlink product.prod_key, version_number, dist_url, dist_name
+      Versionlink.create_versionlink product.language, product.prod_key, version_number, dist_url, dist_name
     end
   end
 
@@ -142,13 +142,13 @@ class PackagistCrawler
       if require_version.strip.eql?("self.version")
         require_version = version_number
       end
-      dep_prod_key = "php/#{require_name}"
-      dep = Dependency.find_by(product.prod_key, version_number, require_name, require_version, dep_prod_key)
+      dep_prod_key = require_name
+      dep = Dependency.find_by( Product::A_LANGUAGE_PHP, product.prod_key, version_number, require_name, require_version, dep_prod_key )
       if dep.nil?
         dependency = Dependency.new({:name => require_name, :version => require_version,
           :dep_prod_key => dep_prod_key, :prod_key => product.prod_key,
           :prod_version => version_number, :scope => scope, :prod_type => Project::A_TYPE_COMPOSER,
-          :language => "PHP"})
+          :language => Product::A_LANGUAGE_PHP })
         dependency.save
         dependency.update_known
         Rails.logger.info " -- Create new dependency: #{dependency.prod_key}:#{dependency.prod_version} -> #{dependency.dep_prod_key}:#{dependency.version}"
@@ -163,12 +163,13 @@ class PackagistCrawler
         author_email = author['email']
         author_homepage = author['homepage']
         author_role = author['role']
-        devs = Developer.find_by product.prod_key, version_number, author_name
+        devs = Developer.find_by Product::A_LANGUAGE_PHP, product.prod_key, version_number, author_name
         if devs && !devs.empty?
           next
         end
         developer = Developer.new({:prod_key => product.prod_key,
-          :version => version_number, :name => author_name, :email => author_email,
+          :language => Product::A_LANGUAGE_PHP, :version => version_number,
+          :name => author_name, :email => author_email,
           :homepage => author_homepage, :role => author_role})
         developer.save
       end

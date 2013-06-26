@@ -29,16 +29,13 @@ describe "Redirect Old Paths" do
     response.should redirect_to("/package/json~gobi/1~1")
 
     get "/package_visual/json~gobi/version/1~1"
-    response.should redirect_to("/package_visual/json~gobi/1~1")
-
-    get "/package_visual/json~gobi/1~1"
-    response.should redirect_to("/package_visual/json.gobi/1.1")
+    response.should redirect_to("/ruby/json.gobi/1~1/visual_dependencies")
 
     get "/package/json~gobi"
     response.should redirect_to("/package/json.gobi")
 
     get "/product/json~gobi/1~0"
-    response.should redirect_to("/package/json~gobi/1~0")
+    response.should redirect_to("/package/json.gobi/1.0")
 
     get "/package/json~gobi/1~0"
     response.should redirect_to("/package/json.gobi/1.0")

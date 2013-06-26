@@ -94,7 +94,7 @@ class UsersController < ApplicationController
       format.rss {
         if has_permission_to_see_products( @user, current_user ) && !@user.nil?
           # load the 30 newest notifications
-          @notifications = Notification.by_user_id(@user.id)
+          @notifications = Notification.by_user_id( @user.id )
         end
         render  :layout => false
       }

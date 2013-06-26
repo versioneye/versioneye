@@ -8,9 +8,9 @@
     <% @product.sorted_versions.each do |version|  %>
       <div>
       <% if VersionTagRecognizer.release?(version.version) %>
-        <a href="/package/<%=@product.to_param%>/<%=version.to_url_param%>"><%=version.version%></a>
+        <a href="<%=product_version_path( @product, version.version )%>"><%=version.version%></a>
       <% else %>
-        <a style="color: brown" href="/package/<%=@product.to_param%>/<%=version.to_url_param%>"><%=version.version%></a>
+        <a style="color: brown" href="<%=product_version_path( @product, version.version )%>"><%=version.version%></a>
       <% end %>
       </div>
     <% end %>

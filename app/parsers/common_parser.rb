@@ -42,12 +42,6 @@ class CommonParser
     nil
   end
 
-  def fetch_product( prod_key )
-    product = Product.find_by_key(prod_key)
-    product = Product.find_by_key_case_insensitiv(prod_key) if product.nil?
-    product
-  end
-
   def do_replacements_for_github(url)
     if url.match(/^https:\/\/github.com\//)
       url = url.gsub("https://github.com", "https://raw.github.com")

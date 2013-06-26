@@ -41,7 +41,7 @@ class ComposerParser < CommonParser
   end
 
   def process_dependency( key, value, project, data )
-    product    = fetch_product( "php/#{key}" )
+    product    = Product.fetch_product( Product::A_LANGUAGE_PHP, "php/#{key}" )
     dependency = init_projectdependency( key, product )
     parse_requested_version( value, dependency, product )
     if product.nil?
@@ -240,8 +240,9 @@ class ComposerParser < CommonParser
   private
 
     def init_projectdependency( key, product )
-      dependency      = Projectdependency.new
-      dependency.name = key
+      dependency          = Projectdependency.new
+      dependency.name     = key
+      dependency.language = Product::A_LANGUAGE_PHP
       if product
         dependency.prod_key        = product.prod_key
         dependency.version_current = product.version

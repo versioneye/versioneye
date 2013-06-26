@@ -57,16 +57,4 @@ class Version
     uid.to_s.to_i(16).to_s(10)
   end
 
-  def versionlink
-    Versionlink.all(conditions: { prod_key: self.product.prod_key, version_id: self.version}).asc(:name)
-  end
-
-  def versionchange
-    Versionchange.all(conditions: { prod_key: self.product.prod_key, version_id: self.version})
-  end
-
-  def versionarchive
-    Versionarchive.all(conditions: { prod_key: self.product.prod_key, version_id: self.version}).asc(:name)
-  end
-
 end

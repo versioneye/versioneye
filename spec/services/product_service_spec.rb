@@ -8,9 +8,9 @@ describe ProductService do
     let(:user)   { UserFactory.create_new(34) }
 
     it "creates a follower" do
-      response = ProductService.follow product.prod_key, user
+      response = ProductService.follow product.language, product.prod_key, user
       response.should be_true
-      prod = Product.find_by_key( product.prod_key )
+      prod = Product.fetch_product( product.language, product.prod_key )
       prod.users.count.should eq(1)
       prod.followers.should eq(1)
       subscribers = prod.users
@@ -20,11 +20,11 @@ describe ProductService do
     end
 
     it "destroys a followers" do
-      response = ProductService.follow   product.prod_key, user
+      response = ProductService.follow   product.language, product.prod_key, user
       response.should be_true
-      response = ProductService.unfollow product.prod_key, user
+      response = ProductService.unfollow product.language, product.prod_key, user
       response.should be_true
-      prod = Product.find_by_key( product.prod_key )
+      prod = Product.fetch_product( product.language, product.prod_key )
       prod.followers.should eq(0)
       subscribers = prod.users
       subscribers.size.should eq(0)
@@ -32,7 +32,7 @@ describe ProductService do
     end
 
     it "destroys returns error because product does not exist" do
-      unfollow = ProductService.unfollow "_does_not_exist_", user
+      unfollow = ProductService.unfollow "lang", "_does_not_exist_", user
       unfollow.should be_false
     end
 

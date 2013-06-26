@@ -58,7 +58,7 @@
       </h4>
     </div>
     <div style="text-align: center;">
-      <a href="/package/<%=@product.to_param%>/<%=@version.to_url_param%>">See more details</a>
+      <a href="/<%=@product.language.downcase%>/<%=@product.to_param%>/<%=@version.to_url_param%>">See more details</a>
     </div>
     <br/>
     <br/>
@@ -68,7 +68,7 @@
         if (scope == null){
           scope = "all"
         }
-        uri = "/package/<%= @product.to_param%>/<%= @product.version_to_url_param %>/dependencies.json?scope=" + scope;
+        uri = "/<%= @product.language.downcase %>/<%= @product.to_param%>/<%= @product.version_to_url_param %>/dependencies.json?scope=" + scope;
         var wheel = new DependencyWheel.Remote(false, document.getElementById("canvas-container"), {
           url: uri,
           width: "940",
@@ -90,12 +90,10 @@
           scope: scope,
           onItemClick: function(item, event){
             key = item.id;
-            key = key.replace(/\//g, "--");
-            key = key.replace(/\./g, "~" );
+            key = key.replace(/\//g, ":");
             version = item.version;
-            version = version.replace(/\//g, "--");
-            version = version.replace(/\./g, "~" );
-            window.location.href = "/package/" + key + "/" + version;
+            version = version.replace(/\//g, ":");
+            window.location.href = "/<%= @product.language.downcase %>/" + key + "/" + version;
           }
         } );
       }

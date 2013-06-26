@@ -19,7 +19,7 @@ class PackageParser < CommonParser
   end
 
   def parse_line( key, value, project )
-    product    = fetch_product( "npm/#{key}" )
+    product    = Product.fetch_product( Product::A_LANGUAGE_NODEJS, "npm/#{key}" )
     dependency = init_dependency( product, key )
     parse_requested_version( value, dependency, product )
     project.out_number     += 1 if dependency.outdated?
@@ -144,13 +144,13 @@ class PackageParser < CommonParser
       else
         dependency.version_requested = version
       end
-      dependency.comperator = "="
+      dependency.comperator    = "="
       dependency.version_label = version
 
     else
       dependency.version_requested = version
-      dependency.comperator = "="
-      dependency.version_label = version
+      dependency.comperator        = "="
+      dependency.version_label     = version
     end
 
   end
@@ -179,8 +179,9 @@ class PackageParser < CommonParser
   end
 
   def init_dependency( product, name )
-    dependency = Projectdependency.new
-    dependency.name = name
+    dependency          = Projectdependency.new
+    dependency.name     = name
+    dependency.language = Product::A_LANGUAGE_NODEJS
     if product
       dependency.prod_key        = product.prod_key
       dependency.version_current = product.version

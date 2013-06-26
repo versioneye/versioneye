@@ -9,7 +9,7 @@ describe "search" do
     product.name_downcase = "json"
     product.prod_key = "json"
     product.prod_type = "RubyGem"
-    product.language = "Ruby"
+    product.language = Product::A_LANGUAGE_RUBY
     product.version = "1.0"
     version = Version.new
     version.version = "1.0"
@@ -20,7 +20,7 @@ describe "search" do
     results.should_not be_nil
     results.size.should eq(1)
 
-    get "/package/json"
+    get "/ruby/json/1.0"
     assert_response :success
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"
@@ -38,7 +38,7 @@ describe "search" do
     product.name_downcase = "json_g"
     product.prod_key = "json_g"
     product.prod_type = "RubyGem"
-    product.language = "Ruby"
+    product.language = Product::A_LANGUAGE_RUBY
     product.version = "1.0"
     version = Version.new
     version.version = "1.0"
@@ -49,7 +49,7 @@ describe "search" do
     results.should_not be_nil
     results.size.should eq(1)
 
-    get "/package_visual/json_g/1~0"
+    get "/ruby/json_g/1.0/visual_dependencies"
     assert_response :success
     # assert_select "form[action=?]", "/search"
     # assert_select "input[name=?]", "q"

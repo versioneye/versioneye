@@ -1,13 +1,18 @@
 module ProductsHelper
 
-  def product_version_path(product)
-    return "/package/0/0" if product.nil?
-    return "/package/#{product.to_param}/#{product.version_to_url_param}"
+  def product_version_path( product, version = nil )
+    return "/0/0/0" if product.nil? || product.prod_key.nil?
+    lang = product.language.gsub("\.", "")
+    if version.nil?
+      version = product.version_to_url_param
+    end
+    return "/#{lang.downcase}/#{product.to_param}/#{version}"
   end
 
   def product_url(product)
-    return "/package/0" if product.nil?
-    return "/package/#{product.to_param}"
+    return "/0/0" if product.nil? || product.prod_key.nil?
+    lang = product.language.gsub("\.", "")
+    return "/#{lang.downcase}/#{product.to_param}"
   end
 
   def display_follow(product, user)

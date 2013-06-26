@@ -18,7 +18,7 @@ xml.rss :version => "2.0" do
       safe_prod_key = Product.encode_prod_key product.prod_key
       version_id = notification.version_id
       safe_version_key = Product.encode_prod_key version_id
-      product_url = url_for package_version_url( safe_prod_key, safe_version_key )
+      product_url = url_for package_version_url( product.language.downcase, safe_prod_key, safe_version_key )
       notification_message = %Q[
         VersionEye detected version (#{version_id}) of #{product.name} (#{product.language} Library).
         #{product.description_summary}

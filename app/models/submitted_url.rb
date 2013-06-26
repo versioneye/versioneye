@@ -29,7 +29,7 @@ class SubmittedUrl
   def self.find_by_id(id)
     return nil if id.nil?
     id = id.to_s
-    return self.find(id.to_s) if self.where(_id: id.to_s).exists? 
+    return self.find(id.to_s) if self.where(_id: id.to_s).exists?
   end
 
   def user
@@ -42,12 +42,13 @@ class SubmittedUrl
     end
   end
 
+  # TODO change the logic, use language & prod_key to load product
   def update_integration_status
     resource = self.product_resource
     prod_key = resource.prod_key unless resource.nil? or resource.prod_key.nil?
-    @product =  Product.find_by_key(prod_key)
-    self.integrated = true unless @product.nil?  
-    
+    @product = Product.find_by_key(prod_key)
+    self.integrated = true unless @product.nil?
+
     if self.save and not @product.nil?
       @submitted_url = self
       SubmittedUrlMailer.integrated_url_email(@submitted_url, @product).deliver
@@ -58,7 +59,7 @@ class SubmittedUrl
     end
     return false
   end
-  
+
   def url_guessed
     if !url.match(/https:\/\/github.com\//).nil?
       new_url = url.gsub("https://github.com/", "https://api.github.com/repos/")

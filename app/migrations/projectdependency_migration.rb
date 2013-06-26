@@ -1,14 +1,19 @@
 class ProjectdependencyMigration
 
   # Migrate project_id string to project_id objectID.
-  def self.migrate_project_ids
+  def self.set_languages
+    z = 0
     Projectdependency.all.each do |dep|
-      if dep.project_id && dep.project_id.is_a?( String )
-        project = dep.project
-        dep.project = project
-        dep.save
+      project = dep.project
+      if project.nil?
+        p "No project found for dep : #{dep.project_id} - #{dep.name} - #{dep.prod_key} "
+        next
       end
+      dep.language = project.language
+      dep.save
+      z += 1
     end
+    p "#{z} updated"
   end
 
 end

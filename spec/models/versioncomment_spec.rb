@@ -3,24 +3,26 @@ require 'spec_helper'
 describe Versioncomment do
 
   before(:each) do
-    @product = Product.new
-    @product.name = "name"
+    @product          = Product.new
+    @product.name     = "name"
     @product.prod_key = "gasgagasgj8623_junit/junit"
+    @product.language = Product::A_LANGUAGE_JAVA
     @product.save
 
-    @user = User.new
-    @user.fullname = "Hans Tanz"
-    @user.username = "hanstanz"
-    @user.email = "hans@tanz.de"
-    @user.password = "password"
-    @user.salt = "salt"
-    @user.terms = true
+    @user               = User.new
+    @user.fullname      = "Hans Tanz"
+    @user.username      = "hanstanz"
+    @user.email         = "hans@tanz.de"
+    @user.password      = "password"
+    @user.salt          = "salt"
+    @user.terms         = true
     @user.datenerhebung = true
     @user.save
 
-    @vc = Versioncomment.new
-    @vc.user_id = @user.id
-    @vc.product_key = @product.id
+    @vc             = Versioncomment.new
+    @vc.user_id     = @user.id
+    @vc.product_key = @product.prod_key
+    @vc.language    = @product.language
   end
 
   describe "save" do
@@ -76,7 +78,7 @@ describe Versioncomment do
   describe "find_by_prod_key_and_version" do
 
     it "returns an empty array" do
-      vc = Versioncomment.find_by_prod_key_and_version("asfgasg", "a")
+      vc = Versioncomment.find_by_prod_key_and_version("rub", "asfgasg", "a")
       vc.should be_empty
     end
 
@@ -84,7 +86,7 @@ describe Versioncomment do
       @vc.comment = "Jo. Voll geil eh!"
       @vc.version = "1.0"
       @vc.save
-      vcs = Versioncomment.find_by_prod_key_and_version(@product.id, "1.0")
+      vcs = Versioncomment.find_by_prod_key_and_version( @product.language, @product.prod_key, "1.0" )
       vcs.should_not be_empty
       vcs.size.should eql(1)
       vcs[0].id.should eql(@vc.id)

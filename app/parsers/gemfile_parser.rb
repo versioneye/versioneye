@@ -23,7 +23,7 @@ class GemfileParser < CommonParser
     return nil if gem_name.nil?
 
     version    = fetch_version  ( line_elements )
-    product    = fetch_product  ( gem_name )
+    product    = Product.fetch_product Product::A_LANGUAGE_RUBY, gem_name
     dependency = init_dependency( product, gem_name )
 
     parse_requested_version( version, dependency, product )

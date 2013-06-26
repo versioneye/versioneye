@@ -37,6 +37,7 @@ class GradleParser < CommonParser
         :artifact_id => row[2],
         :name => row[2],
         :version_requested => version,
+        :language => Product::A_LANGUAGE_JAVA,
         :comperator => "="
       })
 

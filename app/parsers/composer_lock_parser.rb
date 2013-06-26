@@ -15,14 +15,15 @@ class ComposerLockParser < ComposerParser
   def process_package project, package
     dependency = Projectdependency.new
     dependency.name = package["name"]
+    dependency.language = Product::A_LANGUAGE_PHP
 
-    product = self.fetch_product "#{@@group_id}/#{dependency.name}"
+    product = Product.fetch_product Product::A_LANGUAGE_PHP, "#{@@group_id}/#{dependency.name}"
     dependency.prod_key = product.prod_key if product
 
-    version = self.fetch_package_version(package)
+    version = self.fetch_package_version( package )
     self.parse_requested_version(version, dependency, product)
 
-    project.out_number += 1 if dependency.outdated?
+    project.out_number     += 1 if dependency.outdated?
     project.unknown_number += 1 unless product
 
     project.projectdependencies.push dependency
@@ -45,9 +46,9 @@ class ComposerLockParser < ComposerParser
     version
   end
 
-  def fetch_project_dependencies(url)
+  def fetch_project_dependencies( url )
     return nil if url.nil?
-    response = self.fetch_response(url)
+    response = self.fetch_response( url )
     data = JSON.parse(response.body)
     return nil if data.nil?  or data['packages'].nil?
     data['packages']

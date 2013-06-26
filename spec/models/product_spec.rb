@@ -224,6 +224,26 @@ describe Product do
 
   end
 
+  describe "find_by_lang_key" do
+
+    it "return nil. Because input is nil" do
+      result = described_class.find_by_lang_key(nil, nil)
+      result.should be_nil
+    end
+
+    it "return nil. Because input is empty" do
+      product1 = ProductFactory.create_for_gemfile("bee", "1.4.0")
+      product1.versions.push( Version.new({version: "1.4.0"}) )
+      product1.save
+      result = described_class.find_by_lang_key( Product::A_LANGUAGE_JAVA, "bee" )
+      result.should be_nil
+      result = described_class.find_by_lang_key( Product::A_LANGUAGE_RUBY, "bee" )
+      result.should_not be_nil
+      result.prod_key.should eql("bee")
+    end
+
+  end
+
   describe "http_links" do
 
     it "returns an empty array" do

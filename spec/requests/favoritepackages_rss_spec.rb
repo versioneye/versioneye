@@ -7,10 +7,10 @@ describe "UsersController" do
     user1.save
 
     product = ProductFactory.create_new(103)
-    follow  = ProductService.follow(product.prod_key, user1)
+    follow  = ProductService.follow(product.language, product.prod_key, user1)
     follow.should be_true
 
-    product = Product.find_by_key( product.prod_key )
+    product = Product.fetch_product( product.language, product.prod_key )
 
     created = CrawlerUtils.create_notifications product, "1.0.0"
     created.should eq(1)

@@ -12,6 +12,7 @@ describe DependencyService do
       dependency.version      = "0.1"
       dependency.dep_prod_key = product.prod_key
       dependency.prod_type    = product.prod_type
+      dependency.language     = product.language
       DependencyService.outdated?( dependency ).should be_true
     end
 
@@ -25,6 +26,7 @@ describe DependencyService do
       dependency.version      = product.version
       dependency.dep_prod_key = product.prod_key
       dependency.prod_type    = product.prod_type
+      dependency.language     = product.language
       DependencyService.outdated?( dependency ).should be_false
     end
 
@@ -35,6 +37,7 @@ describe DependencyService do
 
       dependency              = Dependency.new
       dependency.version      = "100000.2"
+      dependency.language     = product.language
       dependency.dep_prod_key = product.prod_key
       DependencyService.outdated?( dependency ).should be_false
     end

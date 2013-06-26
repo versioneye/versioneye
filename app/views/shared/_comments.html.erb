@@ -4,12 +4,12 @@
     <div class="row search-item" >
 
       <div class="span1" style="width:60px; text-align: left;">
-        <%= render :partial => "/shared/language_icons", :locals => {:language => comment.language, :icon => nil, :link => "/package/#{comment.prod_key_url}/#{comment.version_url}", :title => ":-)" } %>
+        <%= render :partial => "/shared/language_icons", :locals => {:language => comment.language, :icon => nil, :link => "/#{@product.language.downcase}/#{comment.prod_key_url}/#{comment.version_url}", :title => ":-)" } %>
       </div>
 
       <div class="span6" style="width: 505px;">
         <div class="row">
-          <a href="/package/<%= comment.prod_key_url %>/<%= comment.version_url %>"
+          <a href="/<%= @product.language.downcase%>/<%= comment.prod_key_url %>/<%= comment.version_url %>"
              class="searchResultLink"><%= comment_product.name_and_version %></a><br/>
           <a href="/users/<%= comment.user.username %>">
             <span ><%= comment.user.fullname %></span>

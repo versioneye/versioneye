@@ -22,7 +22,7 @@ class PythonSetupParser < RequirementsParser
     comparator = extract_comparator requirement
     package, version = requirement.split comparator
 
-    product = fetch_product "pip/#{package}"
+    product = Product.fetch_product Product::A_LANGUAGE_PYTHON, "pip/#{package}"
 
     if version.nil? && !product.nil?
       version = product.version

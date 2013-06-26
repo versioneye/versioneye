@@ -6,8 +6,8 @@
 	<body>
 		<p>Hello <%= @follower.fullname %></p>
 		<p>
-			<a href="http://www.versioneye.com/users/<%= @user.username %>"><%= @user.fullname %></a> wrote a comment on 
-			<a href="http://www.versioneye.com/package/<%= @prod.to_param %>"><%= @prod.name %></a><br/>
+			<a href="http://www.versioneye.com/users/<%= @user.username %>"><%= @user.fullname %></a> wrote a comment on
+			<a href="http://www.versioneye.com/<%= @prod.language.downcase %>/<%= @prod.to_param %>"><%= @prod.name %></a><br/>
 			You can see the comment here: <a href="<%= @commentlink %>"><%= @commentlink %></a>
 		</p>
 		<p>
