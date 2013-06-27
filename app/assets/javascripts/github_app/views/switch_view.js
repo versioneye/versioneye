@@ -123,7 +123,7 @@ define(['underscore', 'backbone'],
       
       var command_data = model.get('command_data');
       $(this.el).find('.input').data('githubProjectId', command_data['githubProjectId']);
-      this.addProjectLink();
+      this.updateRepoTitle();
       this.switchOnActivate();
       this.showRepoNotification("");
       showNotification("alert alert-success", msg);
@@ -169,7 +169,7 @@ define(['underscore', 'backbone'],
       return false;
     },
 
-   onRemoveSuccess: function(model){
+    onRemoveSuccess: function(model){
       var selector = "#github-repo-" + model.get("github_id");
       var msg = [
         '<strong>Success!</strong>',
@@ -177,13 +177,13 @@ define(['underscore', 'backbone'],
         ' is now successfully removed from your projects.'
       ].join(' ');
 
-      this.removeProjectLink();
+      this.updateRepoTitle();
       this.switchOffActivate();
       showNotification("alert alert-success", msg);
 
       return true;
-   },
-   onRemoveFailure: function(model, xhr, options){
+    },
+    onRemoveFailure: function(model, xhr, options){
       var msg = "Fail: Cant remove project";
 
       this.switchOnActivate();
@@ -191,14 +191,9 @@ define(['underscore', 'backbone'],
 
       return false;
     },
-    
-    addProjectLink: function(){
-      new_title = "Added: " + this.branch;
-      $(this.el).parents(".repo-control-item").find('.item-title').html(new_title);
-    },
 
-    removeProjectLink: function(){
-      new_title = "Removed: " + this.branch;
+    updateRepoTitle: function(){
+      new_title = this.parent.renderTitle();
       $(this.el).parents(".repo-control-item").find('.item-title').html(new_title);
     },
 

@@ -85,24 +85,23 @@
   </div>
 </script>
 
-
 <script id = "github-repo-info-template" type = "text/template">
   <div id = "github-repo-{{= repo.github_id}}" class = "repo-container">
     <div class = "repo-info row-fluid">
-      <div class = "repo-logo span3">
+      <div class = "repo-logo span2">
         {{ var logo_path = "/assets/language/" }}
         {{ var logo_name = (repo.supported) ? repo.language : "ruby_bw" }}
         <img src = {{= logo_path + logo_name + ".png"}}
           style = "position: relative; left: 25%; right: 25%; height: 72px; " />
-        <div class ="repo-labels"></div>
-      </div>
-      <div class = "repo-info-content span9">
+        </div>
+      <div class = "repo-info-content span10">
         <h5>{{= repo.fullname }}</h5>
-        <p> {{= repo.description}} </h5>
-        <div class = "repo-controls row"></div>
+        <div class ="repo-labels"></div>
+         <p> {{= repo.description }} </h5>
       </div>
     </div>
-    <div class = "repo-notification"></div>
+   <div class = "repo-controls row"></div>
+   <div class = "repo-notification"></div>
   </div>
 </script>
 
@@ -122,7 +121,8 @@
 
 <script id = "github-repo-control-template" type = "text/template">
   <span class="help-block">
-    This project has {{= branches.length }} branches. 
+    This project has {{= branches.length }} branches.
+    {{= (imported_branches.length) ? " and you're tracking " + imported_branches.length + "of them." : ""}}
     {{=  (branches.length > 2) ? "Scroll down to see all of them" : "" }}
   </span>
 </script>
