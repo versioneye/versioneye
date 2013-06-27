@@ -16,9 +16,9 @@ define([
         this.branch = options.branch;
       },
       renderTitle: function(){
-        not_imported_tmpl = _.template("{{= branch }}");
+        not_imported_tmpl = _.template("<strong> {{= branch }} </strong>");
         imported_tmpl = _.template([
-          '{{= branch }}', 
+          '<strong>{{= branch }}</strong>', 
           '- <a href="{{= url}}"> projects page </a>',
           ', imported {{= moment(imported).fromNow() }}'
         ].join(' '));
@@ -28,7 +28,6 @@ define([
        
         if(_.has(imported_branches, this.branch)){
           var imported_branch = imported_branches[this.branch];
-          console.debug(imported_branch);
           content = imported_tmpl({
             branch: this.branch,
             url: imported_branch.project_url,
@@ -44,6 +43,7 @@ define([
         this.$el.html(this.template({branch: this.branch}));
         var switch_view = new GithubRepoSwitchView({
           model: this.model, 
+          parent: this,
           branch: this.branch
         });
 

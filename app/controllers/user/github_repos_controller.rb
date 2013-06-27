@@ -15,7 +15,7 @@ class User::GithubReposController < ApplicationController
       github_repos = GitHubService.cached_user_repos(current_user)
     end
 
-    github_repos = github_repos.asc(:language)
+    github_repos = github_repos.desc(:updated_at)
     github_repos.each do |repo|
       repos << process_repo(repo)
     end
