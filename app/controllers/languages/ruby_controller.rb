@@ -20,6 +20,7 @@ class Languages::RubyController < ApplicationController
       @vulnerabilities << SecurityNotification.find(notif.security_notification_id)
     end
 
+    @feeds = LanguageFeed.by_language(@lang).map(&:url)
     render template: "languages/index"
   end
   

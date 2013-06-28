@@ -1417,6 +1417,22 @@ h2 + .row {
   }
 }
 
+.media-list {
+  height: 340px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  & li.media {
+  border-top: 1px solid #f3f3f3;
+  padding: 5px 0px;
+  margin: 0px;
+
+    &:hover {
+      background-color: #fafafa;
+    };
+  }
+}
+
 .repo-container {
   border-bottom: 1px solid #f3f3f3;
   padding: 10px 0px;
