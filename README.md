@@ -4,12 +4,12 @@ This is the source code for the web application <http://www.versioneye.com>.
 
 This is the stack in this project:
 
- - Ruby on Rails
- - MongoDB
- - Memcache
- - ElasticSearch
- - Amazon S3
- - Postmarkapp (Email)
+ * Ruby on Rails
+ * MongoDB
+ * Memcache
+ * ElasticSearch
+ * Amazon S3
+ * Postmarkapp (Email)
 
 To start the application you need Ruby 1.9.3 and a running MongoDB instance.
 
