@@ -1,7 +1,5 @@
 class Searchlog
 
-  # TODO safe somewhere else ?
-
   include Mongoid::Document
   include Mongoid::Timestamps
 
