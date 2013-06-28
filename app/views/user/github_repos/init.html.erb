@@ -85,23 +85,23 @@
   </div>
 </script>
 
-
 <script id = "github-repo-info-template" type = "text/template">
   <div id = "github-repo-{{= repo.github_id}}" class = "repo-container">
     <div class = "repo-info row-fluid">
       <div class = "repo-logo span2">
         {{ var logo_path = "/assets/language/" }}
         {{ var logo_name = (repo.supported) ? repo.language : "ruby_bw" }}
-        <img src = {{= logo_path + logo_name + ".png"}}
-          style = "position: relative; left: 25%; right: 25%; height: 72px; " />
+        <img src   = {{= logo_path + logo_name + ".png"}}
+             style = "position: relative; left: 25%; right: 25%; height: 72px; " />
       </div>
       <div class = "repo-info-content span10">
         <h5>{{= repo.fullname }}</h5>
-        <p> {{= repo.description}} </h5>
+        <div class ="repo-labels"></div>
+        <div> {{= repo.description }} </div>
         <div class = "repo-controls row"></div>
+        <div class = "repo-notification"></div>
       </div>
     </div>
-    <div class = "repo-notification"></div>
   </div>
 </script>
 
@@ -119,16 +119,32 @@
   </span>
 </script>
 
+<script id = "github-repo-control-template" type = "text/template">
+  <span class="help-block">
+    This project has {{= branches.length }} branches.
+    {{= (imported_branches.length) ? " and you're tracking " + imported_branches.length + "of them." : ""}}
+    {{=  (branches.length > 2) ? "Scroll down to see all of them" : "" }}
+  </span>
+</script>
+
+<script id = "github-repo-control-item-template" type = "text/template">
+  <div class = "row-fluid">
+    <div class = "span3 item-switch"></div>
+    <div class = "span8 item-title"> {{= branch }} </div>
+  </div>
+</script>
+
 <script id = "github-repo-switch-template" type = "text/template">
   <div class = "github-switch switch">
     <input
-      id = "{{= 'github-repo-switch-'+ repo.github_id }}"
+      id = "{{= switch_id }}"
       type = "checkbox" class = "input"
       {{= !repo.supported ? ' disabled ' : '' }}
-      {{= repo.imported ? ' checked ': '' }}
+      {{= (_.has(repo.imported_branches, branch)) ? ' checked ': '' }}
       data-github-id = "{{= repo.github_id }}"
-      data-github-project-id = "{{= repo.project_id }}"
-      data-github-fullname = "{{= repo.fullname }}" />
+      data-github-project-id = "{{= (_.has(repo.imported_branches, branch)) ? repo.imported_branches[branch].project_id : null }}"
+      data-github-fullname = "{{= repo.fullname }}"
+      data-github-branch = "{{= branch }}" />
   </div>
 </script>
 
@@ -145,7 +161,7 @@
 </script>
 
 <script id = "github-menu-item-template" type = "text/template">
-  <li>
+  <li class = "org-item">
       <a href="#org/{{= org.name}}">
         {{= org.name}} - {{= org.type}}
       </a>
