@@ -91,17 +91,17 @@
       <div class = "repo-logo span2">
         {{ var logo_path = "/assets/language/" }}
         {{ var logo_name = (repo.supported) ? repo.language : "ruby_bw" }}
-        <img src = {{= logo_path + logo_name + ".png"}}
-          style = "position: relative; left: 25%; right: 25%; height: 72px; " />
-        </div>
+        <img src   = {{= logo_path + logo_name + ".png"}}
+             style = "position: relative; left: 25%; right: 25%; height: 72px; " />
+      </div>
       <div class = "repo-info-content span10">
         <h5>{{= repo.fullname }}</h5>
         <div class ="repo-labels"></div>
-         <p> {{= repo.description }} </h5>
+        <div> {{= repo.description }} </div>
+        <div class = "repo-controls row"></div>
+        <div class = "repo-notification"></div>
       </div>
     </div>
-   <div class = "repo-controls row"></div>
-   <div class = "repo-notification"></div>
   </div>
 </script>
 
@@ -129,8 +129,8 @@
 
 <script id = "github-repo-control-item-template" type = "text/template">
   <div class = "row-fluid">
+    <div class = "span3 item-switch"></div>
     <div class = "span8 item-title"> {{= branch }} </div>
-    <div class = "span4 item-switch"></div>
   </div>
 </script>
 
@@ -143,7 +143,7 @@
       {{= (_.has(repo.imported_branches, branch)) ? ' checked ': '' }}
       data-github-id = "{{= repo.github_id }}"
       data-github-project-id = "{{= (_.has(repo.imported_branches, branch)) ? repo.imported_branches[branch].project_id : null }}"
-      data-github-fullname = "{{= repo.fullname }}" 
+      data-github-fullname = "{{= repo.fullname }}"
       data-github-branch = "{{= branch }}" />
   </div>
 </script>
