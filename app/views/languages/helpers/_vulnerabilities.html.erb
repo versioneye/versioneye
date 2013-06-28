@@ -1,24 +1,26 @@
 <% unless @vulnerabilities.nil?  or @vulnerabilities.empty? %>
   <h4> Vulnerabilities </h4>
-  <div class = "media">
+  <ul class = "media-list">
 
     <% @vulnerabilities.each do |issue|  %>
-      <div class = "media-body product-item">
-        <h5> 
-          <%= issue['entry-id'] %>
-          <small> - <%= time_ago_in_words(issue['modified']) %> </small>
-        </h5>
-        <p> <%= issue['summary'] %> </p>
-        <div class = "product-labels">
-          <span class = "label label-info">Score: <%= issue['metrics']['score'] %></span>
-          <span class = "label label-info">Access-vector: <%= issue['metrics']['access-vector'] %></span>
-          <span class = "label label-info">Confidentiality impact: <%= issue['metrics']['confidentiality-impact'] %></span>
-          <a href = "<%= issue['source-path'] %>" >
-            <span class = "label label-success">Source</span>
-          </a>
+      <li class = "media">
+        <div class = "media-body">
+          <h5> 
+            <%= issue['entry-id'] %>
+            <small> - <%= time_ago_in_words(issue['modified']) %> </small>
+          </h5>
+          <p> <%= issue['summary'] %> </p>
+          <div class = "product-labels">
+            <span class = "label label-info">Score: <%= issue['metrics']['score'] %></span>
+            <span class = "label label-info">Access-vector: <%= issue['metrics']['access-vector'] %></span>
+            <span class = "label label-info">Confidentiality impact: <%= issue['metrics']['confidentiality-impact'] %></span>
+            <a href = "<%= issue['source-path'] %>" >
+              <span class = "label label-success">Source</span>
+            </a>
+         </div>
        </div>
-      </div>
+     </li>
     <% end %>
 
-  </div>
+  </ul>
 <% end %>
