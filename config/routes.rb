@@ -25,6 +25,17 @@ Versioneye::Application.routes.draw do
   get    '/signout',               :to => 'sessions#destroy'
 
 
+  #language specific routes
+  get '/clojure'        , :to => 'languages/clojure#index'
+  get '/coffeescript'   , :to => 'languages/coffeescript#index'
+  get '/javascript'     , :to => 'languages/javascript#index'
+  get '/java'           , :to => 'languages/java#index'
+  get '/php'            , :to => 'languages/php#index'
+  get '/python'         , :to => 'languages/python#index'
+  get '/nodejs'         , :to => 'languages/nodejs#index'
+  get '/ruby'           , :to => 'languages/ruby#index'
+
+
   get   '/users/christian.weyand',                    :to => redirect('/users/christianweyand')
   resources :users, :key => :username do
     member do
@@ -84,10 +95,6 @@ Versioneye::Application.routes.draw do
     get  'receipt/:invoice_id' , :to => 'payments#receipt', :as => 'receipt'
 
   end
-
-  #language specific routes
-  get '/ruby', :to => 'languages/ruby#index'
-
   # Legacy paths. Keep them alive for Google
   get   '/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.0.pdf', :to => redirect("/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.1.pdf")
   get   '/product/symfony--symfony'                       , :to => redirect("/package/php:symfony:symfony")
