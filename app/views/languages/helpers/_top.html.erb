@@ -4,7 +4,7 @@
   <% @top_products.each do |prod| %>
     <div class = "media-body product-item">
       <h5 class = "media-heading"> 
-        <a href = "<%= products_path(key: prod.prod_key) %>"><%= prod.name %></a> 
+        <a href = "<%= products_path(key: prod.to_param) %>"><%= prod.name %></a> 
         <small> &nbsp; - has <%= prod.followers %> followers. </small>
       </h5>
       <p> <%= prod.description %> </p>
