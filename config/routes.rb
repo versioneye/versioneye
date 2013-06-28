@@ -85,8 +85,6 @@ Versioneye::Application.routes.draw do
 
   end
 
-
-
   resources :versioncomments
   get   '/vc/:id', :to => 'versioncomments#show'
 

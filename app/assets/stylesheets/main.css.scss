@@ -1377,6 +1377,16 @@ h2 + .row {
   padding-bottom: 15px;
 }
 
+.repo-controls .nav {
+  max-height: 90px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  & li:hover {
+    background-color: #dfdfdf;
+  };
+}
+
 .repo-container {
   border-bottom: 1px solid #f3f3f3;
   padding: 10px 0px;
