@@ -34,7 +34,6 @@ class Projectdependency
     Product.find_by_key( self.prod_key )
   end
 
-  # TODO change the logic, use language & prod_key to load product
   def find_or_init_product
     product = Product.fetch_product( language, prod_key) if self.prod_key
     product = init_product if product.nil?
