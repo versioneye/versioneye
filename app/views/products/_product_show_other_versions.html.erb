@@ -4,7 +4,7 @@
       <%= pluralize(@product.versions.count, "Versions") %>
     </h5>
   </div>
-  <div class="box content" >
+  <div class="box content scrollable-box" style = "min-height: 1em; max-height: 14em;" >
     <% @product.sorted_versions.each do |version|  %>
       <div>
       <% if VersionTagRecognizer.release?(version.version) %>
