@@ -3,8 +3,8 @@ class Developer
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :language        , type: String
-  field :prod_key        , type: String  # TODO_cv
+  field :language        , type: String  # TODO set language
+  field :prod_key        , type: String  # TODO_vc
   field :version         , type: String
   field :developer       , type: String
   field :name            , type: String

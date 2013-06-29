@@ -1,14 +1,10 @@
 class ProductMigration
 
-  def self.remove_npm_circles
-    products = Product.where(language: Product::A_LANGUAGE_NODEJS)
+  def self.update_php_prod_keys
+    products = Product.where(:prod_key => /^php\//i)
     products.each do |product|
-      elements = CircleElement.where(prod_key: product.prod_key)
-      if elements && !elements.empty?
-        elements.each do |circle|
-          circle.remove()
-        end
-      end
+      product.prod_key = product.prod_key.gsub("php\/", "")
+      product.save
     end
   end
 

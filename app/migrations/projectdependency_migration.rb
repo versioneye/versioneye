@@ -7,6 +7,7 @@ class ProjectdependencyMigration
       project = dep.project
       if project.nil?
         p "No project found for dep : #{dep.project_id} - #{dep.name} - #{dep.prod_key} "
+        dep.remove
         next
       end
       dep.language = project.language
@@ -14,6 +15,14 @@ class ProjectdependencyMigration
       z += 1
     end
     p "#{z} updated"
+  end
+
+  def self.update_php_prod_keys
+    elements = Projectdependency.where(:prod_key => /^php\//i)
+    elements.each do |element|
+      element.prod_key = element.prod_key.gsub("php\/", "")
+      element.save
+    end
   end
 
 end
