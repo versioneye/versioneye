@@ -1380,7 +1380,7 @@ h2 + .row {
 .repo-controls .nav {
   max-height: 90px;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   & li:hover {
     background-color: #dfdfdf;
