@@ -3,14 +3,14 @@ class Event
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :type, type: String  # new_version, user_follow_user, user_follow_product, verison_comment, 
-  
-  field :prod_name, type: String
-  field :prod_version, type: String
-  field :prod_key, type: String
-  field :prod_type, type: String
+  field :type, type: String  # new_version, user_follow_user, user_follow_product, verison_comment,
+
+  field :prod_name    , type: String
+  field :prod_version , type: String
+  field :prod_key     , type: String # TODO_cv
+  field :prod_type    , type: String
   field :prod_group_id, type: String
-  
+
   field :follower_id, type: String
   field :followed_id, type: String
 

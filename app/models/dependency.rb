@@ -15,10 +15,10 @@ class Dependency
   field :version     , type: String   # version of the dependency. This is the unfiltered version string. It is not parsed yet.
   field :group_id    , type: String   # groupd_id of the dependency
   field :artifact_id , type: String   # artifact_id of the dependency
-  field :dep_prod_key, type: String   # prod_key of the dependency (Foreign Key)
+  field :dep_prod_key, type: String   # prod_key of the dependency (Foreign Key) # TODO_cv
   field :scope       , type: String   # scope of the dependency
 
-  field :prod_key    , type: String   # This dependency belongs to this prod_key
+  field :prod_key    , type: String   # This dependency belongs to this prod_key  # TODO_cv
   field :prod_version, type: String   # This dependency belongs to this version of prod_key
 
   field :prod_type   , type: String,  :default => Project::A_TYPE_RUBYGEMS

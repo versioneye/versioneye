@@ -4,7 +4,7 @@ class Versionlink
   include Mongoid::Timestamps
 
   field :language  , type: String
-  field :prod_key  , type: String
+  field :prod_key  , type: String # TODO_vc
   field :version_id, type: String
   field :link      , type: String
   field :name      , type: String
