@@ -1,7 +1,5 @@
 class CircleElement
 
-  require 'debugger'
-
   include Mongoid::Document
   include Mongoid::Timestamps
 
