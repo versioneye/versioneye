@@ -20,14 +20,14 @@ class PackagistCrawler
     return nil if name.nil? || name.empty?
     Rails.logger.info "Crawle #{name}"
 
-    resource = "http://packagist.org/packages/#{name}.json"
-    pack = JSON.parse HTTParty.get( resource ).response.body
-    package = pack['package']
+    resource     = "http://packagist.org/packages/#{name}.json"
+    pack         = JSON.parse HTTParty.get( resource ).response.body
+    package      = pack['package']
     package_name = package['name']
-    versions = package['versions']
+    versions     = package['versions']
     return nil if versions.nil? || versions.empty?
 
-    product = PackagistCrawler.get_product package_name
+    product = PackagistCrawler.init_product package_name
     PackagistCrawler.update_product product, package
 
     packagist_page = "http://packagist.org/packages/#{package_name}"
@@ -44,6 +44,7 @@ class PackagistCrawler
         PackagistCrawler.create_new_version product, version_number, version_obj, crawl
       else
         PackagistCrawler.create_dependencies product, version_number, version_obj
+        PackagistCrawler.create_download     product, version_number, version_obj
       end
     end
   rescue => e
@@ -52,23 +53,21 @@ class PackagistCrawler
     PackagistCrawler.store_error crawl, e.message, e.backtrace, name
   end
 
-  def self.get_product name
+  def self.init_product name
     product = Product.find_by_lang_key( Product::A_LANGUAGE_PHP, name )
     return product if product
     Rails.logger.info " -- New Product - #{name}"
-    product = Product.new
-    product.reindex = true
-    product
+    Product.new({:reindex => true})
   end
 
   def self.update_product product, package
-    name = package['name']
-    product.prod_key = name
-    product.name = name
+    name                  = package['name']
+    product.prod_key      = name
+    product.name          = name
     product.name_downcase = name.downcase
-    product.description = package['description']
-    product.prod_type = Project::A_TYPE_COMPOSER
-    product.language  = Product::A_LANGUAGE_PHP
+    product.description   = package['description']
+    product.prod_type     = Project::A_TYPE_COMPOSER
+    product.language      = Product::A_LANGUAGE_PHP
     product.save
   end
 
@@ -80,15 +79,15 @@ class PackagistCrawler
   end
 
   def self.create_new_version product, version_number, version_obj, crawl
-    db_version = Version.new
-    db_version.version = version_number
-    db_version.released_string = version_obj['time']
-    db_version.released_at = DateTime.parse(version_obj['time'])
-    license = version_obj['license']
+    version_db                 = Version.new
+    version_db.version         = version_number
+    version_db.released_string = version_obj['time']
+    version_db.released_at     = DateTime.parse(version_obj['time'])
+    license                    = version_obj['license']
     if license && !license.empty?
-      db_version.license = license[0]
+      version_db.license = license[0]
     end
-    product.versions.push db_version
+    product.versions.push version_db
     product.reindex = true
     product.save
 

@@ -1,23 +1,26 @@
 class CrawlerUtils
 
   def self.create_newest product, version_number
+    results = Newest.where(:language => product.language, :prod_key => product.prod_key, :version => version_number)
+    return nil if results && !results.empty?
     newest = Newest.new
-    newest.name = product.name
-    newest.prod_key = product.prod_key
-    newest.prod_type = product.prod_type
+    newest.name       = product.name
+    newest.language   = product.language
+    newest.prod_key   = product.prod_key
+    newest.version    = version_number
+    newest.prod_type  = product.prod_type
     newest.product_id = product._id.to_s
-    newest.version = version_number
     newest.save
   end
 
   def self.create_notifications product, version_number
     new_notifications = 0
-    followers = product.users
-    return new_notifications if followers.nil? || followers.empty?
-    followers.each do |follower|
-      notification = Notification.new
-      notification.user = follower
-      notification.product = product
+    subscribers = product.users
+    return new_notifications if subscribers.nil? || subscribers.empty?
+    subscribers.each do |subscriber|
+      notification            = Notification.new
+      notification.user       = subscriber
+      notification.product    = product
       notification.version_id = version_number
       if notification.save
         new_notifications += 1
