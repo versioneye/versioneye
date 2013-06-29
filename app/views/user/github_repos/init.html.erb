@@ -95,7 +95,9 @@
              style = "position: relative; left: 25%; right: 25%; height: 72px; " />
       </div>
       <div class = "repo-info-content span10">
-        <h5>{{= repo.fullname }}</h5>
+        <a href= "http://www.github.com/{{= repo.fullname}}" target="_blank">
+          <h5>{{= repo.fullname }}</h5>
+        </a>
         <div class ="repo-labels"></div>
         <div> {{= repo.description }} </div>
         <div class = "repo-controls row"></div>
