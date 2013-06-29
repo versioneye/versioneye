@@ -2,19 +2,11 @@ require 'spec_helper'
 
 describe CrawlerUtils do
 
-  before :each do
-    Newest.destroy_all
-    Notification.destroy_all
-  end
-
-  after :each do
-    Newest.destroy_all
-    Notification.destroy_all
-  end
-
   it "create_newest" do
     Newest.count.should eq(0)
     product = ProductFactory.create_new
+    CrawlerUtils.create_newest product, "1.0.0"
+    Newest.count.should eq(1)
     CrawlerUtils.create_newest product, "1.0.0"
     Newest.count.should eq(1)
   end
