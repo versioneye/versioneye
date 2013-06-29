@@ -1377,6 +1377,11 @@ h2 + .row {
   padding-bottom: 15px;
 }
 
+.scrollable-box {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .repo-controls .nav {
   max-height: 90px;
   overflow-x: hidden;

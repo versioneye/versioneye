@@ -44,7 +44,7 @@ class User::GithubReposController < ApplicationController
 =end
   def create
     "unified update method for Backbone models"
-    if params[:command].nil? or params[:fullname].nil?
+    if params[:command].nil? or params[:fullname].nil? or params[:command_data].nil?
       error_msg = "Wrong command (`#{params[:command]}`) or project fullname is missing."
       render text: error_msg, status: 400
       return false
@@ -58,9 +58,8 @@ class User::GithubReposController < ApplicationController
       project_name = params[:fullname]
       branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : "master"
       project      = ProjectService.import_from_github(current_user, project_name, branch)
-      command_data[:githubProjectId] = project._id.to_s
-
       unless project.nil?
+        command_data[:githubProjectId] = project._id.to_s
         repo = GithubRepo.find(params[:_id])
         repo = process_repo(repo)
       else
