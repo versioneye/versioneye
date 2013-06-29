@@ -112,12 +112,13 @@ class PackagistCrawler
 
   def self.create_download product, version_number, version_obj
     dist = version_obj['dist']
-    if dist && !dist.empty?
-      dist_url = dist['url']
-      dist_type = dist['type']
-      dist_name = "#{product.name}.#{dist_type}"
-      Versionlink.create_versionlink product.language, product.prod_key, version_number, dist_url, dist_name
-    end
+    return nil if dist.nil? || dist.empty?
+    dist_url  = dist['url']
+    dist_type = dist['type']
+    dist_name = "#{product.name}.#{dist_type}"
+    archive = Versionarchive.new({:language => Product::A_LANGUAGE_PHP, :prod_key => product.prod_key,
+      :version_id => version_number, :name => dist_name, :link => dist_url})
+    Versionarchive.create_archive_if_not_exist( archive )
   end
 
   def self.create_dependencies product, version_number, version_obj

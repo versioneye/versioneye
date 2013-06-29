@@ -22,4 +22,18 @@ class Versionarchive
     Versionarchive.all(conditions: { language: lang, prod_key: prod_key, version_id: version}).asc(:name)
   end
 
+  def self.create_archive_if_not_exist archive
+    return nil if archive.link.nil? || archive.link.empty?
+    if archive.link.match(/^http.*/).nil?
+      archive.link = "http://#{archive.link}"
+    end
+    archives = Versionarchive.where(:language => archive.language, :prod_key => archive.prod_key,
+      :version_id => archive.version_id, :link => archive.link )
+    if archives && !archives.empty?
+      Rails.logger.info "-- archive exist already"
+      return nil
+    end
+    archive.save
+  end
+
 end
