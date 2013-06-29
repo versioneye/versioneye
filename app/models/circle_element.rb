@@ -9,7 +9,7 @@ class CircleElement
   field :prod_key           , type: String
   field :prod_version       , type: String
   field :prod_scope         , type: String
-  field :dep_prod_key       , type: String
+  field :dep_prod_key       , type: String # TODO_cv
   field :version            , type: String
   field :text               , type: String
   field :connections_string , type: String

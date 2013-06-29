@@ -91,6 +91,7 @@ class Project
     outdated_dependencies
   end
 
+  # TODO refactor with language
   def known_dependencies
     knows_deps = Array.new
     self.projectdependencies.each do |dep|

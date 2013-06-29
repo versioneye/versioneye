@@ -4,7 +4,7 @@ class Developer
   include Mongoid::Timestamps
 
   field :language        , type: String
-  field :prod_key        , type: String
+  field :prod_key        , type: String  # TODO_cv
   field :version         , type: String
   field :developer       , type: String
   field :name            , type: String

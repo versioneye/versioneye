@@ -8,9 +8,9 @@ class Plan
   A_PLAN_BUSINESS_SMALL  = "02_business_small"
   A_PLAN_BUSINESS_NORMAL = "02_business_normal"
 
-  field :name_id, type: String
-  field :name, type: String
-  field :price, type: String
+  field :name_id         , type: String
+  field :name            , type: String
+  field :price           , type: String
   field :private_projects, type: Integer
 
   has_many :users

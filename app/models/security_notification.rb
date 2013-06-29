@@ -1,10 +1,11 @@
 class SecurityNotification
+
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :cve_id, type: String
-  field :summary, type: String
-  field :published, type: DateTime
+  field :cve_id       , type: String
+  field :summary      , type: String
+  field :published    , type: DateTime
   field :last_modified, type: DateTime
 
   field :score

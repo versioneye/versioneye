@@ -9,7 +9,7 @@ class Projectdependency
   A_SECONDS_PER_DAY = 5184000
 
   field :language   , type: String
-  field :prod_key   , type: String
+  field :prod_key   , type: String # TODO_vc
   field :ext_link   , type: String # Link to external package. For example zip file on GitHub / Google Code.
 
   field :name       , type: String

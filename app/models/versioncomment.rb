@@ -8,7 +8,7 @@ class Versioncomment
   field :user_id, type: String
 
   field :language   , type: String
-  field :product_key, type: String
+  field :product_key, type: String # TODO_vc
   field :prod_name  , type: String
   field :language   , type: String
   field :version    , type: String
