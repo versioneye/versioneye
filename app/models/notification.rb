@@ -14,7 +14,7 @@ class Notification
   validates_presence_of :product_id, :message => "Product is mandatory!"
 
   scope :all_not_sent, where(sent_email: false)
-  scope :by_user, ->(user){where(user_id: user.id)}
+  scope :by_user     , ->(user){where(user_id: user.id)}
   scope :by_user_id  , ->(user_id){where(user_id: user_id).desc(:created_at).limit(30)}
 
 
