@@ -43,20 +43,16 @@ class Versionlink
 
   def self.create_versionlink language, prod_key, version_number, link, name
     return nil if link.nil? || link.empty?
+    if link.match(/^http.*/).nil? && link.match(/^git.*/).nil?
+      link = "http://#{link}"
+    end
     versionlinks = Versionlink.find_version_link(language, prod_key, version_number, link)
     if versionlinks && !versionlinks.empty?
       Rails.logger.info "-- link exist already : #{prod_key} - #{version_number} - #{link} - #{name}"
       return nil
     end
-    versionlink = Versionlink.new
-    versionlink.name = name
-    versionlink.link = link
-    if versionlink.link.match(/^http.*/).nil? && versionlink.link.match(/^git.*/).nil?
-      versionlink.link = "http://#{versionlink.link}"
-    end
-    versionlink.language   = language
-    versionlink.prod_key   = prod_key
-    versionlink.version_id = version_number
+    versionlink = Versionlink.new({:name => name, :link => link, :language => language,
+      :prod_key => prod_key, :version_id => version_number })
     versionlink.save
   end
 
