@@ -40,6 +40,7 @@ describe "Importing github repo as new project via github_repos_controller" do
     it "should raise exception when user tries to import not existing repo" do
       ProjectService.should_receive(:import_from_github).and_return(nil)
       repo1['command'] = "import"
+      repo1['command_data'] = {'githubBranch' => 'master'}
 
       post user_github_repos_path, repo1.as_document
       response.status.should eql(503)
@@ -51,6 +52,7 @@ describe "Importing github repo as new project via github_repos_controller" do
       project1.projectdependencies.size.should > 0
       ProjectService.should_receive(:import_from_github).and_return(project1)
       repo1['command'] = "import"
+      repo1['command_data'] = {'githubBranch' =>  'master'}
 
       post user_github_repos_path, repo1.as_document
       response.status.should eql(200)
@@ -61,7 +63,8 @@ describe "Importing github repo as new project via github_repos_controller" do
 
       ProjectService.should_receive( :destroy ).and_return(true)
       repo1['command'] = 'remove'
-      repo1['project_id'] = project1._id.to_s
+      repo1['command_data'] = {'githubProjectId' => project1._id.to_s}
+
       post user_github_repos_path, repo1.as_document
 
       response.status.should eql(200)
