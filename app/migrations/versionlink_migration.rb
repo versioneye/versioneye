@@ -13,9 +13,7 @@ class VersionlinkMigration
   end
 
   def self.set_languages_slow
-    if Versionlink.where(:link => nil).count > 0
-      Versionlink.where(:link => nil).remove()
-    end
+    self.remove_nil_links
     links = Versionlink.where(:language => nil)
     links.each do |link|
       product = Product.find_by_key( link.prod_key )
@@ -36,5 +34,13 @@ class VersionlinkMigration
       element.save
     end
   end
+
+  private
+
+    def self.remove_nil_links
+      Versionlink.where(:link => nil).remove()
+    rescue => e
+      p e
+    end
 
 end
