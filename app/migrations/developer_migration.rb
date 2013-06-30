@@ -8,7 +8,11 @@ class DeveloperMigration
     Developer.where(:prod_key => /^R\//i).update_all(          language: Product::A_LANGUAGE_R )
     Developer.where(:prod_key => /^JavaScript\//i).update_all( language: Product::A_LANGUAGE_JAVASCRIPT )
     Developer.where(:prod_key => /^Clojure\//i).update_all(    language: Product::A_LANGUAGE_CLOJURE )
+    Developer.where(:prod_key => /^[0-9a-z\_\-]+$/i).update_all(           language: Product::A_LANGUAGE_RUBY )
     Developer.where(:prod_key => /^[a-z]+\.[a-z\.]+\/[a-z]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
+    Developer.where(:prod_key => /^[a-z]+\.[a-z\.]+\/[a-z]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
+    Developer.where(:prod_key => /^[0-9a-z]+[\-\.\_]+[0-9a-z]+\/[0-9a-z]+[\-\.\_]+[0-9a-z]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
+    Developer.where(:prod_key => /^[0-9a-z]+[\-\.\_]+[0-9a-z\-\.\_]+\/[0-9a-z]+[\-\.\_]+[0-9a-z\-\.\_]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
   end
 
   def self.set_languages_slow

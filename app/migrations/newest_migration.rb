@@ -1,19 +1,21 @@
 class NewestMigration
 
   def self.set_languages
-    Newest.where(:prod_key => /^php\//i).update_all(        language: Product::A_LANGUAGE_PHP    )
-    Newest.where(:prod_key => /^pip\//i).update_all(        language: Product::A_LANGUAGE_PYTHON )
-    Newest.where(:prod_key => /^Node\//i).update_all(       language: Product::A_LANGUAGE_NODEJS )
-    Newest.where(:prod_key => /^npm\//i).update_all(        language: Product::A_LANGUAGE_NODEJS )
-    Newest.where(:prod_key => /^R\//i).update_all(          language: Product::A_LANGUAGE_R )
-    Newest.where(:prod_key => /^JavaScript\//i).update_all( language: Product::A_LANGUAGE_JAVASCRIPT )
-    Newest.where(:prod_key => /^Clojure\//i).update_all(    language: Product::A_LANGUAGE_CLOJURE )
-    Newest.where(:prod_key => /^org\./i).update_all(        language: Product::A_LANGUAGE_JAVA )
-    Newest.where(:prod_key => /^com\./i).update_all(        language: Product::A_LANGUAGE_JAVA )
-    Newest.where(:prod_key => /^de\./i).update_all(         language: Product::A_LANGUAGE_JAVA )
-    Newest.where(:prod_key => /^dom4j\./i).update_all(      language: Product::A_LANGUAGE_JAVA )
-    Newest.where(:prod_key => /^[a-z]+\.[a-z]+\.[a-z]*/i).update_all( language: Product::A_LANGUAGE_JAVA )
+    Newest.where(:prod_key => /^php\//i).update_all(          language: Product::A_LANGUAGE_PHP    )
+    Newest.where(:prod_key => /^pip\//i).update_all(          language: Product::A_LANGUAGE_PYTHON )
+    Newest.where(:prod_key => /^Node\//i).update_all(         language: Product::A_LANGUAGE_NODEJS )
+    Newest.where(:prod_key => /^npm\//i).update_all(          language: Product::A_LANGUAGE_NODEJS )
+    Newest.where(:prod_key => /^R\//i).update_all(            language: Product::A_LANGUAGE_R )
+    Newest.where(:prod_key => /^JavaScript\//i).update_all(   language: Product::A_LANGUAGE_JAVASCRIPT )
+    Newest.where(:prod_key => /^Clojure\//i).update_all(      language: Product::A_LANGUAGE_CLOJURE )
+    Newest.where(:prod_key => /^[0-9a-z\_\-]+$/i).update_all( language: Product::A_LANGUAGE_RUBY )
     Newest.where(:prod_key => /^[a-z]+\.[a-z\.]+\/[a-z]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
+    Newest.where(:prod_key => /^[0-9a-z]+[\-\.\_]+[0-9a-z]+\/[0-9a-z]+[\-\.\_]+[0-9a-z]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
+    Newest.where(:prod_key => /^[0-9a-z]+[\-\.\_]+[0-9a-z\-\.\_]+\/[0-9a-z]+[\-\.\_]+[0-9a-z\-\.\_]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
+    Newest.where(:prod_key => /^org\./i).update_all(          language: Product::A_LANGUAGE_JAVA )
+    Newest.where(:prod_key => /^com\./i).update_all(          language: Product::A_LANGUAGE_JAVA )
+    Newest.where(:prod_key => /^de\./i).update_all(           language: Product::A_LANGUAGE_JAVA )
+    Newest.where(:prod_key => /^dom4j\./i).update_all(        language: Product::A_LANGUAGE_JAVA )
   end
 
   def self.set_languages_slow

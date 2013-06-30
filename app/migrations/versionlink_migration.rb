@@ -9,7 +9,18 @@ class VersionlinkMigration
     Versionlink.where(:prod_key => /^R\//i).update_all(          language: Product::A_LANGUAGE_R )
     Versionlink.where(:prod_key => /^JavaScript\//i).update_all( language: Product::A_LANGUAGE_JAVASCRIPT )
     Versionlink.where(:prod_key => /^Clojure\//i).update_all(    language: Product::A_LANGUAGE_CLOJURE )
-    Versionlink.where(:prod_key => /^[a-z]+\.[a-z\.]+\/[a-z]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:prod_key => /^[0-9a-z\_\-]+$/i).update_all( language: Product::A_LANGUAGE_RUBY )
+    Versionlink.where(:link     => /rubygems\.org/i).update_all( language: Product::A_LANGUAGE_RUBY )
+    Versionlink.where(:link     => /hibernate\.org/i).update_all(                 language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:link     => /maven\.springframework\.org/i).update_all(    language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:link     => /appfuse\.org/i).update_all(                   language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:link     => /repo\.jfrog\.org/i).update_all(               language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:link     => /repo\.typesafe\.com/i).update_all(            language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:link     => /repository\.jboss\.org/i).update_all(         language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:link     => /search\.maven\.org/i).update_all(             language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:link     => /gradle\.artifactoryonline\.com/i).update_all( language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:link     => /jakarta\.apache/i).update_all(                language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:prod_key => /^[a-z]+\.[a-z\.]+\/[a-z]+/i).update_all(      language: Product::A_LANGUAGE_JAVA )
   end
 
   def self.set_languages_slow
@@ -38,7 +49,7 @@ class VersionlinkMigration
   private
 
     def self.remove_nil_links
-      Versionlink.where(:link => nil).remove()
+      Versionlink.where(:link => nil).delete_all()
     rescue => e
       p e
     end
