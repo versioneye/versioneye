@@ -27,14 +27,17 @@ module VersionEye
 
       desc "detailed information for specific package", {
           notes: %q[
+                    **Important!** On 30th June 2013 we changed all products keys. Now all product keys for Api/V1 has to include also language
+                    of library. All prod_keys should follow format lang/group_id.sub_group/artifact_id and when you follow encoding rules then
+                    final presentation of product key has to be lang--group_id~~sub_group--artifact_id. Yes, it's ugly and version2 has much better
+                    more simplified interface.
+                    \\
                     NB! If there are some special characters in `prod_key`,
                     you must replace it to make it URL safe!
-
-                    Special characters such as `/` and `.` should
-                    be replaced with tokens `--` for back-slash and
-                    `~` for points.
-
-                    For example `junit/junit` has to be transormed to  `junit--junit`.
+                    It means you must replace all slashes `/` in product key
+                    with colon `:` and due to routing limitations of grape framework it's also required to replace all points `.` with tilde `~`. 
+                    \\
+                    For example Clojure package `yummy.json/json` has to be transformed to  `clojure--yummy~json--json`.
                     \\
                     It will respond with 404, when given product with given product doesnt exists and it will respond with 302, when you didnt encode product-key correctly.
                 ]
@@ -42,18 +45,14 @@ module VersionEye
 
       params do
         requires :prod_key, :type => String,
-                            :desc => %Q[ Product specific key.
-                                         NB! check implementation notes about handling
-                                         special characters and preventing 302.
-                                        ]
+                            :regexp => /[\w|~|-]+/,
+                            :desc => %Q["Encoded product key, replace all `.` & `/`-s"]
       end
       get '/:prod_key' do
-
-        prod_key = parse_product_key(params[:prod_key])
-        product = Product.find_by_key prod_key
+        product = fetch_product(params[:prod_key])
 
         if product.nil?
-          error_msg = "No such package with product key: `#{prod_key}`."
+          error_msg = "No such package for #{params[:lang]} with product key: `#{params[:prod_key]}`."
           error! error_msg, 404
         end
 
@@ -109,11 +108,11 @@ module VersionEye
                     NB! If there are some special characters in `prod_key`,
                     you must replace it to make it URL safe!
 
-                    Special characters such as `/` and `.` should
-                    be replaced with tokens `--` for back-slash and
-                    `~` for points.
+                    Special character such as `/` should
+                    be replaced with token `--` and points `.` should be replaced 
+                    with `~`.
 
-                    For example `junit/junit` has to be transormed to  `junit--junit`.
+                    For example `junit/junit` has to be transformed to  `java--junit--junit`.
                     \\
                     It will respond with 404, when given product with given product doesnt exists.
                 ]
@@ -143,7 +142,7 @@ module VersionEye
                     you must replace it to make it URL safe!
 
                     Special characters such as `/` and `.` should
-                    be replaced with tokens `--` for back-slash and
+                    be replaced with characters `:` for slash and
                     `~` for points".
 
                     For example `junit/junit` has to be transormed to  `junit--junit`.
