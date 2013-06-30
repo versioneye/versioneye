@@ -4,6 +4,11 @@ class ProductMigration
     products = Product.where(:prod_key => /^php\//i)
     products.each do |product|
       product.prod_key = product.prod_key.gsub("php\/", "")
+      prod = Product.find_by_key( product.prod_key )
+      if prod
+        prod.remove
+        p "Remove dublicate #{prod.prod_key}"
+      end
       product.save
     end
   end

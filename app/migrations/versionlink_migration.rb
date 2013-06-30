@@ -21,10 +21,13 @@ class VersionlinkMigration
     Versionlink.where(:link     => /gradle\.artifactoryonline\.com/i).update_all( language: Product::A_LANGUAGE_JAVA )
     Versionlink.where(:link     => /jakarta\.apache/i).update_all(                language: Product::A_LANGUAGE_JAVA )
     Versionlink.where(:prod_key => /^[a-z]+\.[a-z\.]+\/[a-z]+/i).update_all(      language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:prod_key => /^[0-9a-z]+[\-\.\_]+[0-9a-z]+\/[0-9a-z]+[\-\.\_]+[0-9a-z]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:prod_key => /^[0-9a-z]+[\-\.\_]+[0-9a-z\-\.\_]+\/[0-9a-z\-\.\_]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
   end
 
   def self.set_languages_slow
     self.remove_nil_links
+    self.remove_zip_links
     links = Versionlink.where(:language => nil)
     links.each do |link|
       product = Product.find_by_key( link.prod_key )
@@ -50,6 +53,13 @@ class VersionlinkMigration
 
     def self.remove_nil_links
       Versionlink.where(:link => nil).delete_all()
+    rescue => e
+      p e
+    end
+
+    def self.remove_zip_links
+      Versionlink.where(:prod_key => /^php\//i, :name => /\.zip$/i).delete_all()
+      Versionlink.where(:language => Product::A_LANGUAGE_PHP, :name => /\.zip$/i).delete_all()
     rescue => e
       p e
     end
