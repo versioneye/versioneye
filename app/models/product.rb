@@ -245,7 +245,7 @@ class Product
 
   def language_esc
     return "nodejs" if language.eql?(A_LANGUAGE_NODEJS)
-    return language
+    return language.downcase
   end
 
   def license_info

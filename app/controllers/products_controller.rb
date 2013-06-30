@@ -46,11 +46,10 @@ class ProductsController < ApplicationController
       flash[:error] = "The requested package is not available."
       return
     end
-    if version.nil?
-      redirect_to package_version_path(@product.language.downcase, @product.to_param, @product.version)
+    if version.nil? || ( attach_version( @product, version ) == false )
+      redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
       return
     end
-    attach_version( @product, version )
     if @product.version
       @version   = @product.version_by_number @product.version
     end
@@ -77,13 +76,17 @@ class ProductsController < ApplicationController
   def show_visual
     lang = Product.decode_language( params[:lang] )
     key  = Product.decode_prod_key( params[:key]  )
+    version  = params[:version]
     @product = Product.fetch_product lang, key
     if @product.nil?
       flash[:error] = "The requested package is not available."
-      redirect_to package_version_path(@product.language.downcase, @product.to_param, @product.version)
+      redirect_to "/"
       return
     end
-    attach_version( @product, params[:version] )
+    if version.nil? || ( attach_version( @product, version ) == false )
+      redirect_to visual_dependencies_path( @product.language_esc.downcase, @product.to_param, @product.version )
+      return
+    end
     @version = @product.version_by_number( @product.version )
     render :layout => 'application_visual'
   end

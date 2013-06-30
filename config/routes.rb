@@ -195,7 +195,7 @@ Versioneye::Application.routes.draw do
 
   # TODO rewrite old routes for /package_visual/:key/:version to new paths
   get   '/:lang/:key/visual_dependencies'         , :to => 'products#show_visual', :constraints => { :key => /[^\/]+/ }
-  get   '/:lang/:key/:version/visual_dependencies', :to => 'products#show_visual', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/:lang/:key/:version/visual_dependencies', :to => 'products#show_visual', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'visual_dependencies'
 
   get   '/:lang/:key'                      , :to => 'products#show', :as => 'products', :constraints => { :key => /[^\/]+/ }
   get   '/:lang/:key/edit'                 , :to => 'products#edit',                    :constraints => { :key => /[^\/]+/ }
