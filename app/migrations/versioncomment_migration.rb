@@ -1,6 +1,7 @@
 class VersioncommentMigration
 
   def self.set_languages
+    Versioncomment.where(:product_key => /^[a-z]+\.[a-z\.]+\/[a-z]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
     Versioncomment.where(:product_key => /^php\//i).update_all(        language: Product::A_LANGUAGE_PHP    )
     Versioncomment.where(:product_key => /^Python\//i).update_all(     language: Product::A_LANGUAGE_PYTHON )
     Versioncomment.where(:product_key => /^pip\//i).update_all(        language: Product::A_LANGUAGE_PYTHON )
@@ -9,7 +10,6 @@ class VersioncommentMigration
     Versioncomment.where(:product_key => /^R\//i).update_all(          language: Product::A_LANGUAGE_R )
     Versioncomment.where(:product_key => /^JavaScript\//i).update_all( language: Product::A_LANGUAGE_JAVASCRIPT )
     Versioncomment.where(:product_key => /^Clojure\//i).update_all(    language: Product::A_LANGUAGE_CLOJURE )
-    Versioncomment.where(:product_key => /^[a-z]+\.[a-z\.]+\/[a-z]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
   end
 
   def self.set_languages_slow
