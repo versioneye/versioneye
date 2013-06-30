@@ -1,15 +1,10 @@
 class VersionlinkMigration
 
   def self.set_languages
-    Versionlink.where(:prod_key => /^php\//i).update_all(        language: Product::A_LANGUAGE_PHP    )
-    Versionlink.where(:prod_key => /^Python\//i).update_all(     language: Product::A_LANGUAGE_PYTHON )
-    Versionlink.where(:prod_key => /^pip\//i).update_all(        language: Product::A_LANGUAGE_PYTHON )
-    Versionlink.where(:prod_key => /^Node\//i).update_all(       language: Product::A_LANGUAGE_NODEJS )
-    Versionlink.where(:prod_key => /^npm\//i).update_all(        language: Product::A_LANGUAGE_NODEJS )
-    Versionlink.where(:prod_key => /^R\//i).update_all(          language: Product::A_LANGUAGE_R )
-    Versionlink.where(:prod_key => /^JavaScript\//i).update_all( language: Product::A_LANGUAGE_JAVASCRIPT )
-    Versionlink.where(:prod_key => /^Clojure\//i).update_all(    language: Product::A_LANGUAGE_CLOJURE )
-    Versionlink.where(:prod_key => /^[0-9a-z\_\-]+$/i).update_all( language: Product::A_LANGUAGE_RUBY )
+    Versionlink.where(:prod_key => /^[a-z]+\.[a-z\.]+\/[a-z]+/i).update_all(      language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:prod_key => /^[0-9a-z]+[\-\.\_]+[0-9a-z]+\/[0-9a-z]+[\-\.\_]+[0-9a-z]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
+    Versionlink.where(:prod_key => /^[0-9a-z]+[\-\.\_]+[0-9a-z\-\.\_]+\/[0-9a-z\-\.\_]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
+
     Versionlink.where(:link     => /rubygems\.org/i).update_all( language: Product::A_LANGUAGE_RUBY )
     Versionlink.where(:link     => /hibernate\.org/i).update_all(                 language: Product::A_LANGUAGE_JAVA )
     Versionlink.where(:link     => /maven\.springframework\.org/i).update_all(    language: Product::A_LANGUAGE_JAVA )
@@ -20,9 +15,16 @@ class VersionlinkMigration
     Versionlink.where(:link     => /search\.maven\.org/i).update_all(             language: Product::A_LANGUAGE_JAVA )
     Versionlink.where(:link     => /gradle\.artifactoryonline\.com/i).update_all( language: Product::A_LANGUAGE_JAVA )
     Versionlink.where(:link     => /jakarta\.apache/i).update_all(                language: Product::A_LANGUAGE_JAVA )
-    Versionlink.where(:prod_key => /^[a-z]+\.[a-z\.]+\/[a-z]+/i).update_all(      language: Product::A_LANGUAGE_JAVA )
-    Versionlink.where(:prod_key => /^[0-9a-z]+[\-\.\_]+[0-9a-z]+\/[0-9a-z]+[\-\.\_]+[0-9a-z]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
-    Versionlink.where(:prod_key => /^[0-9a-z]+[\-\.\_]+[0-9a-z\-\.\_]+\/[0-9a-z\-\.\_]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
+
+    Versionlink.where(:prod_key => /^php\//i).update_all(        language: Product::A_LANGUAGE_PHP    )
+    Versionlink.where(:prod_key => /^Python\//i).update_all(     language: Product::A_LANGUAGE_PYTHON )
+    Versionlink.where(:prod_key => /^pip\//i).update_all(        language: Product::A_LANGUAGE_PYTHON )
+    Versionlink.where(:prod_key => /^Node\//i).update_all(       language: Product::A_LANGUAGE_NODEJS )
+    Versionlink.where(:prod_key => /^npm\//i).update_all(        language: Product::A_LANGUAGE_NODEJS )
+    Versionlink.where(:prod_key => /^R\//i).update_all(          language: Product::A_LANGUAGE_R )
+    Versionlink.where(:prod_key => /^JavaScript\//i).update_all( language: Product::A_LANGUAGE_JAVASCRIPT )
+    Versionlink.where(:prod_key => /^Clojure\//i).update_all(    language: Product::A_LANGUAGE_CLOJURE )
+    Versionlink.where(:prod_key => /^[0-9a-z\_\-]+$/i).update_all( language: Product::A_LANGUAGE_RUBY )
   end
 
   def self.set_languages_slow
