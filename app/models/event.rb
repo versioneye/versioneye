@@ -7,7 +7,7 @@ class Event
 
   field :prod_name    , type: String
   field :prod_version , type: String
-  field :prod_key     , type: String # TODO_vc
+  field :prod_key     , type: String
   field :language     , type: String
   field :prod_type    , type: String
   field :prod_group_id, type: String

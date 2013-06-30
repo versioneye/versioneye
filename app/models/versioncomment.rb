@@ -8,7 +8,7 @@ class Versioncomment
   field :user_id, type: String
 
   field :language   , type: String
-  field :product_key, type: String # TODO_vc
+  field :product_key, type: String
   field :prod_name  , type: String
   field :language   , type: String
   field :version    , type: String
@@ -25,7 +25,7 @@ class Versioncomment
 
   scope :by_user, ->(user){ where(user_id: user.id) }
 
-  def self.find_by_id(id)
+  def self.find_by_id( id )
     Versioncomment.find( id )
   rescue => e
     Rails.logger.error e.message
@@ -45,6 +45,7 @@ class Versioncomment
     Versioncomment.where(user_id: user_id).count()
   end
 
+  # TODO double check this
   def self.find_by_prod_keys( prod_keys )
     Versioncomment.all( conditions: {:product_key.in => prod_keys}).desc(:created_at)
   end
@@ -58,11 +59,11 @@ class Versioncomment
   end
 
   def prod_key_url
-    Product.encode_product_key(self.product_key)
+    Product.encode_product_key( self.product_key )
   end
 
   def version_url
-    Product.encode_product_key(self.version)
+    Product.encode_product_key( self.version )
   end
 
   def name_and_version
