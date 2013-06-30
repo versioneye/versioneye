@@ -167,8 +167,8 @@ class PackagistCrawler
         if devs && !devs.empty?
           next
         end
-        developer = Developer.new({:prod_key => product.prod_key,
-          :language => Product::A_LANGUAGE_PHP, :version => version_number,
+        developer = Developer.new({:language => Product::A_LANGUAGE_PHP,
+          :prod_key => product.prod_key, :version => version_number,
           :name => author_name, :email => author_email,
           :homepage => author_homepage, :role => author_role})
         developer.save

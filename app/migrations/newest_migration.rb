@@ -16,6 +16,7 @@ class NewestMigration
     Newest.where(:prod_key => /^com\./i).update_all(          language: Product::A_LANGUAGE_JAVA )
     Newest.where(:prod_key => /^de\./i).update_all(           language: Product::A_LANGUAGE_JAVA )
     Newest.where(:prod_key => /^dom4j\./i).update_all(        language: Product::A_LANGUAGE_JAVA )
+    Newest.where(:prod_key => /^[0-9a-z]+[\-\.\_]+[0-9a-z\-\.\_]+\/[0-9a-z\-\.\_]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
   end
 
   def self.set_languages_slow
@@ -36,6 +37,11 @@ class NewestMigration
     elements = Newest.where(:prod_key => /^php\//i)
     elements.each do |element|
       element.prod_key = element.prod_key.gsub("php\/", "")
+      results = Newest.where(:prod_key => element.prod_key, :version => element.version )
+      if results && !results.empty?
+        p "remove dublicate newest entry: #{element.prod_key} - #{element.version}"
+        element.remove
+      end
       element.save
     end
   end

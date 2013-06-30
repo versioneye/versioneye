@@ -13,6 +13,7 @@ class DeveloperMigration
     Developer.where(:prod_key => /^[a-z]+\.[a-z\.]+\/[a-z]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
     Developer.where(:prod_key => /^[0-9a-z]+[\-\.\_]+[0-9a-z]+\/[0-9a-z]+[\-\.\_]+[0-9a-z]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
     Developer.where(:prod_key => /^[0-9a-z]+[\-\.\_]+[0-9a-z\-\.\_]+\/[0-9a-z]+[\-\.\_]+[0-9a-z\-\.\_]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
+    Developer.where(:prod_key => /^[0-9a-z]+[\-\.\_]+[0-9a-z\-\.\_]+\/[0-9a-z\-\.\_]+/i).update_all( language: Product::A_LANGUAGE_JAVA )
   end
 
   def self.set_languages_slow
