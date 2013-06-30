@@ -33,7 +33,7 @@
     canvas_container = document.getElementById("canvas-container")
     if (canvas_container){
       var wheel = new DependencyWheel.Remote(false, canvas_container, {
-        url: '/<%= @product.language.downcase%>/<%= @product.to_param%>/<%= @product.version_to_url_param %>/dependencies.json?scope=<%= @product.main_scope %>',
+        url: '/<%= @product.language_esc.downcase%>/<%= @product.to_param%>/<%= @product.version_to_url_param %>/dependencies.json?scope=<%= @product.main_scope %>',
         width: "605",
         height: "605",
         infoBox: "infoBox",
