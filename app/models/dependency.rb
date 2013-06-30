@@ -30,7 +30,11 @@ class Dependency
   end
 
   def self.find_by_lang_key_version_scope(lang, prod_key, version, scope)
-    Dependency.all(conditions: { language: lang, prod_key: prod_key, prod_version: version, scope: scope } )
+    if scope
+      return Dependency.where( language: lang, prod_key: prod_key, prod_version: version, scope: scope )
+    else
+      return Dependency.where( language: lang, prod_key: prod_key, prod_version: version )
+    end
   end
 
   def self.find_by(language, prod_key, prod_version, name, version, dep_prod_key)

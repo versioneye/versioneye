@@ -243,6 +243,11 @@ class Product
     Versioncomment.find_by_prod_key_and_version(self.language, self.prod_key, self.version)
   end
 
+  def language_esc
+    return "nodejs" if language.eql?(A_LANGUAGE_NODEJS)
+    return language
+  end
+
   def license_info
     if self.license.nil? || self.license.empty? || self.license.eql?("unknown")
       return self.license_manual
@@ -262,7 +267,7 @@ class Product
 
   def dependencies(scope = nil)
     scope = main_scope if scope == nil
-    Dependency.find_by_lang_key_version_scope(language, prod_key, version, scope)
+    Dependency.find_by_lang_key_version_scope( language, prod_key, version, scope )
   end
 
   def all_dependencies
@@ -316,13 +321,13 @@ class Product
   end
 
   def main_scope
-    if self.language.eql?("Ruby")
+    if self.language.eql?( Product::A_LANGUAGE_RUBY )
       return Dependency::A_SCOPE_RUNTIME
-    elsif self.language.eql?("Java")
+    elsif self.language.eql?( Product::A_LANGUAGE_JAVA )
       return Dependency::A_SCOPE_COMPILE
-    elsif self.language.eql?("Node.JS")
+    elsif self.language.eql?( Product::A_LANGUAGE_NODEJS )
       return Dependency::A_SCOPE_COMPILE
-    elsif self.language.eql?("PHP")
+    elsif self.language.eql?( Product::A_LANGUAGE_PHP )
       return Dependency::A_SCOPE_REQUIRE
     end
   end
