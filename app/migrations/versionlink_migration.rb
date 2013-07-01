@@ -51,6 +51,22 @@ class VersionlinkMigration
     end
   end
 
+  def self.update_pip_prod_keys
+    elements = Versionlink.where(:prod_key => /^pip\//i)
+    elements.each do |element|
+      element.prod_key = element.prod_key.gsub("pip\/", "")
+      element.save
+    end
+  end
+
+  def self.update_npm_prod_keys
+    elements = Versionlink.where(:prod_key => /^npm\//i)
+    elements.each do |element|
+      element.prod_key = element.prod_key.gsub("npm\/", "")
+      element.save
+    end
+  end
+
   private
 
     def self.remove_nil_links

@@ -25,4 +25,20 @@ class ProjectdependencyMigration
     end
   end
 
+  def self.update_pip_prod_keys
+    elements = Projectdependency.where(:prod_key => /^pip\//i)
+    elements.each do |element|
+      element.prod_key = element.prod_key.gsub("pip\/", "")
+      element.save
+    end
+  end
+
+  def self.update_npm_prod_keys
+    elements = Projectdependency.where(:prod_key => /^npm\//i)
+    elements.each do |element|
+      element.prod_key = element.prod_key.gsub("npm\/", "")
+      element.save
+    end
+  end
+
 end
