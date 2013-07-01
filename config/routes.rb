@@ -172,13 +172,6 @@ Versioneye::Application.routes.draw do
   get   'sitemap_00_3.xml',        :to => 'page#sitemap_3'
   get   'sitemap_00_4.xml',        :to => 'page#sitemap_4'
 
-  # Legacy paths. Keep them alive for Google
-  get   '/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.0.pdf', :to => redirect("/docs/VersionEye_NUTZUNGSBEDINGUNGEN_de_V1.1.pdf")
-  get   '/product/symfony--symfony'                       , :to => redirect("/php/php:symfony:symfony")
-  get   '/package/symfony--symfony'                       , :to => redirect("/php/php:symfony:symfony")
-  get   '/package/symfony--symfony/version/:version'      , :to => redirect('/php/php:symfony:symfony/%{version}')
-  get   '/product/symfony--symfony/version/:version'      , :to => redirect('/php/php:symfony:symfony/%{version}')
-
   get   '/search', :to => 'products#search'
 
   get   '/package/name'        , :to => 'products#autocomplete_product_name'
@@ -187,16 +180,21 @@ Versioneye::Application.routes.draw do
   post  '/package/image_path'  , :to => 'dependency_wheel#image_path'
   post  '/package/upload_image', :to => 'dependency_wheel#upload_image'
 
+  # Rewriting old legacy paths
+  get   '/package/:key'                 , :to => 'page#legacy_route'
+  get   '/product/:key'                 , :to => 'page#legacy_route'
+  get   '/package/:key/version/:version', :to => 'page#legacy_route'
+  get   '/product/:key/version/:version', :to => 'page#legacy_route'
+  get   '/package/:key/:version'        , :to => 'page#legacy_route', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/product/:key/:version'        , :to => 'page#legacy_route', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
   get   '/package_visual/:key'                 , :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/ }
   get   '/package_visual/:key/version/:version', :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/package_visual/:key/:version'        , :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
-  # TODO rewrite old routes for /package/:key/:version/badge to new paths
   get   '/:lang/:key/badge',                  :to => 'products#badge',  :constraints => { :key => /[^\/]+/ }
   get   '/:lang/:key/:version/badge',         :to => 'products#badge',  :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
-  # TODO rewrite old routes for /package_visual/:key/:version to new paths
   get   '/:lang/:key/visual_dependencies'         , :to => 'products#show_visual', :constraints => { :key => /[^\/]+/ }
   get   '/:lang/:key/:version/visual_dependencies', :to => 'products#show_visual', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'visual_dependencies'
 
@@ -208,7 +206,6 @@ Versioneye::Application.routes.draw do
   post  '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
-  #default action
   get   '*path',        :to => 'page#routing_error'
 
 end

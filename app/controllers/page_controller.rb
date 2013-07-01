@@ -2,20 +2,43 @@ class PageController < ApplicationController
 
   def routing_error
     path = request.fullpath
-    match = false
     if path.match(/\/version\//)
       path.gsub!("/version/", "/")
-      match = true
+      redirect_to path
     end
-    if path.match(/\/product\//)
-      path.gsub!("product", "package")
-      match = true
+    redirect_to "/"
+  end
+
+  def legacy_route
+    key     = params[:key]
+    version = params[:version]
+    key = key.gsub("~", ".").gsub("--", "/").gsub(":", "/")
+    if version
+      version = version.gsub("~", ".").gsub("--", "/").gsub(":", "/")
     end
-    if match == false
-      logger.error "Routing error for path: #{params[:path]}"
-      path = "/"
+    product = Product.find_by_key key
+    if product
+      version = product.version if version.nil?
+      redirect_to package_version_path( product.language_esc, product.to_param, version )
+      return
     end
-    redirect_to path
+    language = ""
+    if key.match(/^npm\//)
+      key = key.gsub("npm\/", "")
+      language = Product::A_LANGUAGE_NODEJS
+    elsif key.match(/^pip\//)
+      key = key.gsub("pip\/", "")
+      language = Product::A_LANGUAGE_PYTHON
+    elsif key.match(/^php\//)
+      key = key.gsub("php\/", "")
+      language = Product::A_LANGUAGE_PHP
+    end
+    if language.empty?
+      redirect_to "/"
+    else
+      redirect_to "/#{language}/#{key}"
+    end
+    return
   end
 
   def disclaimer
