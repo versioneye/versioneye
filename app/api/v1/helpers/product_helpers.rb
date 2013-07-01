@@ -37,18 +37,18 @@ module VersionEye
         languages
       end
     end
-    
+
     def parse_language(lang)
       special_languages = {
         "pip" => "Python",
-        "npm" => "Javascript",
+        "npm" => "Node.JS",
         "php" => "PHP",
         "node.js" =>  "Node.JS",
         "nodejs" => "Node.JS"
       }
-      
+
       parsed_lang = lang.downcase
-     
+
       if special_languages.has_key?(parsed_lang)
         parsed_lang = special_languages[parsed_lang]
       else
@@ -68,17 +68,28 @@ module VersionEye
       HTMLEntities.new.decode parsed_key
     end
 
-    def fetch_product(encoded_prod_key)
+    def fetch_product( encoded_prod_key )
+      if encoded_prod_key.match(/\-\-/).nil?
+        key = encoded_prod_key.gsub("~", ".").gsub(":", "/")
+        product = Product.find_by_key( key )
+        if product
+          return product
+        else
+          error! "Wrong product key: `#{params[:prod_key]}` dont exists.", 404
+          return
+        end
+      end
+
       lang, prod_key = encoded_prod_key.split("--", 2)
-      lang = parse_language(lang)
+      lang = parse_language( lang )
       prod_key = parse_product_key(prod_key)
-      
+
       p "#-- fetch_product: #{lang} #{prod_key}"
-      @current_product = Product.fetch_product(lang, prod_key)
-      if @current_product.nil?
+      current_product = Product.fetch_product( lang, prod_key )
+      if current_product.nil?
         error! "Wrong product key: `#{params[:prod_key]}` dont exists.", 404
       end
-      @current_product
+      current_product
     end
 
     def save_search_log(query, products, start)
