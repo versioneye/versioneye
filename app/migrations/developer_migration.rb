@@ -22,7 +22,7 @@ class DeveloperMigration
     developers.each do |developer|
       product = Product.find_by_key( developer.prod_key )
       if product.nil?
-        # developer.remove
+        developer.remove
         p "developer without project: #{developer.prod_key} - #{developer.name}"
       else
         developer.language = product.language

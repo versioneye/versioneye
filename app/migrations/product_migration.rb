@@ -17,7 +17,7 @@ class ProductMigration
     products = Product.where(:prod_key => /^pip\//i)
     products.each do |product|
       product.prod_key = product.prod_key.gsub("pip\/", "")
-      prod = Product.find_by_key( product.prod_key )
+      prod = Product.fetch_product( "Python", product.prod_key )
       if prod
         prod.remove
         p "Remove dublicate #{prod.prod_key}"
@@ -30,7 +30,7 @@ class ProductMigration
     products = Product.where(:prod_key => /^npm\//i)
     products.each do |product|
       product.prod_key = product.prod_key.gsub("npm\/", "")
-      prod = Product.find_by_key( product.prod_key )
+      prod = Product.fetch_product( "Node\.JS", product.prod_key )
       if prod
         prod.remove
         p "Remove dublicate #{prod.prod_key}"

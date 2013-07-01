@@ -2,7 +2,7 @@ class Deployment
 
   def self.migrate
     self.step_1
-    self.step_1
+    self.step_2
     self.update_php
     self.update_pip
     self.update_npm
