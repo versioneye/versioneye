@@ -1,4 +1,4 @@
-<% title  "API documentation" %>
+<% title  "#{@version} API documentation" %>
 
 <div id='header' >
   <div class="swagger-ui-wrap" style="float: none;">
@@ -34,25 +34,19 @@
 </div>
 
 <script type="text/javascript">
-    <% @current_user = current_user %>
-    <% user_api = Api.where(user_id: @current_user.id).shift if @current_user %>
-    <% api_key = "Log in to get your own api token" %>  
-    <% api_key = user_api.api_key unless user_api.nil? %> 
     jQuery(function () {
         window.swaggerUi = new SwaggerUi({
-            discoveryUrl: "/api/v1/swagger_doc.json",
-            apiKey:"<%= api_key %>",
+          discoveryUrl: "<%= @api_url %>/swagger_doc.json",
+            apiKey:"<%= @api_key %>",
             dom_id:"swagger-ui-container",
             supportHeaderParams: false,
             debug: false,
             supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
             docExpansion: "list",
             onComplete: function(swaggerApi, swaggerUi){
-                if(console) {
+              if(console) {
                     console.log("Loaded SwaggerUI")
-                    console.log(swaggerApi);
-                    console.log(swaggerUi);
-                }
+              }
               $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
             },
             onFailure: function(data) {
@@ -66,5 +60,4 @@
         window.swaggerUi.load();
     });
     $ == jQuery;
-
 </script>
