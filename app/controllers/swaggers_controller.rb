@@ -4,7 +4,7 @@ class SwaggersController < ApplicationController
 #FIX: rails cant find API model
   def index
     @current_user = current_user
-    user_api = nil #Api.where(user_id: @current_user.id).shift if @current_user
+    user_api = Api.where(user_id: @current_user.id).shift if @current_user
     @api_key = "Log in to get your own api token"
     @api_key = user_api.api_key unless user_api.nil?
     @version = 'v1'
@@ -13,7 +13,7 @@ class SwaggersController < ApplicationController
 
   def index2
     @current_user = current_user
-    user_api = nil #Api.where(user_id: @current_user.id).shift if @current_user
+    user_api = Api.where(user_id: @current_user.id).shift if @current_user
     @api_key = "Log in to get your own api token"
     @api_key = user_api.api_key unless user_api.nil?
     @version = 'v2'

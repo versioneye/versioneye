@@ -40,6 +40,8 @@ module VersionEye
     
     def parse_language(lang)
       special_languages = {
+        "pip" => "Python",
+        "npm" => "Javascript",
         "php" => "PHP",
         "node.js" =>  "Node.JS",
         "nodejs" => "Node.JS"
@@ -70,6 +72,8 @@ module VersionEye
       lang, prod_key = encoded_prod_key.split("--", 2)
       lang = parse_language(lang)
       prod_key = parse_product_key(prod_key)
+      
+      p "#-- fetch_product: #{lang} #{prod_key}"
       @current_product = Product.fetch_product(lang, prod_key)
       if @current_product.nil?
         error! "Wrong product key: `#{params[:prod_key]}` dont exists.", 404
