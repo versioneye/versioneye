@@ -3,7 +3,7 @@
 Versioneye::Application.routes.draw do
 
   mount V1::Versioneye::API => '/api'
-  mount V2::API => '/api2'
+#  mount V2::API => '/api2'
 
 
   root :to => "products#index"
