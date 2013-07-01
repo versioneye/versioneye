@@ -47,4 +47,30 @@ class NewestMigration
     end
   end
 
+  def self.update_pip_prod_keys
+    elements = Newest.where(:prod_key => /^pip\//i)
+    elements.each do |element|
+      element.prod_key = element.prod_key.gsub("pip\/", "")
+      results = Newest.where(:prod_key => element.prod_key, :version => element.version )
+      if results && !results.empty?
+        p "remove dublicate newest entry: #{element.prod_key} - #{element.version}"
+        element.remove
+      end
+      element.save
+    end
+  end
+
+  def self.update_npm_prod_keys
+    elements = Newest.where(:prod_key => /^npm\//i)
+    elements.each do |element|
+      element.prod_key = element.prod_key.gsub("npm\/", "")
+      results = Newest.where(:prod_key => element.prod_key, :version => element.version )
+      if results && !results.empty?
+        p "remove dublicate newest entry: #{element.prod_key} - #{element.version}"
+        element.remove
+      end
+      element.save
+    end
+  end
+
 end

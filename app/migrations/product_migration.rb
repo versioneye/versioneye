@@ -13,6 +13,32 @@ class ProductMigration
     end
   end
 
+  def self.update_pip_prod_keys
+    products = Product.where(:prod_key => /^pip\//i)
+    products.each do |product|
+      product.prod_key = product.prod_key.gsub("pip\/", "")
+      prod = Product.find_by_key( product.prod_key )
+      if prod
+        prod.remove
+        p "Remove dublicate #{prod.prod_key}"
+      end
+      product.save
+    end
+  end
+
+  def self.update_npm_prod_keys
+    products = Product.where(:prod_key => /^npm\//i)
+    products.each do |product|
+      product.prod_key = product.prod_key.gsub("npm\/", "")
+      prod = Product.find_by_key( product.prod_key )
+      if prod
+        prod.remove
+        p "Remove dublicate #{prod.prod_key}"
+      end
+      product.save
+    end
+  end
+
   def self.update_followers
     products = Product.where( :"user_ids.0" => {"$exists"=>true} )
     products.each do |product|

@@ -37,4 +37,20 @@ class VersionarchiveMigration
     end
   end
 
+  def self.update_pip_prod_keys
+    archs = Versionarchive.where(:prod_key => /^pip\//i)
+    archs.each do |arch|
+      arch.prod_key = arch.prod_key.gsub("pip\/", "")
+      arch.save
+    end
+  end
+
+  def self.update_npm_prod_keys
+    archs = Versionarchive.where(:prod_key => /^npm\//i)
+    archs.each do |arch|
+      arch.prod_key = arch.prod_key.gsub("npm\/", "")
+      arch.save
+    end
+  end
+
 end

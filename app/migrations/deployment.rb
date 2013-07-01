@@ -4,6 +4,8 @@ class Deployment
     self.step_1
     self.step_1
     self.update_php
+    self.update_pip
+    self.update_npm
     # db.products.dropIndex( { "prod_key": 1 } )
     # db.products.ensureIndex( { "prod_key": 1, "language": 1 } )
     # db.products.ensureIndex( { "prod_key": 1, "language": 1 }, { unique: true } )
@@ -70,6 +72,58 @@ class Deployment
 
     p "Update PHP prod_keys Dependency "
     DependencyMigration.update_php_prod_keys
+  end
+
+  def self.update_pip
+    p "Update PIP prod_keys"
+    ProductMigration.update_pip_prod_keys
+
+    p "Update PIP prod_keys VersionArchive"
+    VersionarchiveMigration.update_pip_prod_keys
+
+    p "Update PIP prod_keys Versioncomment"
+    VersioncommentMigration.update_pip_prod_keys
+
+    p "Update PIP prod_keys Versionlink"
+    VersionlinkMigration.update_pip_prod_keys
+
+    p "Update PIP prod_keys Projectdependency "
+    ProjectdependencyMigration.update_pip_prod_keys
+
+    p "Update PIP prod_keys Newest "
+    NewestMigration.update_pip_prod_keys
+
+    p "Update PIP prod_keys Developer "
+    DeveloperMigration.update_pip_prod_keys
+
+    p "Update PIP prod_keys Dependency "
+    DependencyMigration.update_pip_prod_keys
+  end
+
+  def self.update_npm
+    p "Update npm prod_keys"
+    ProductMigration.update_npm_prod_keys
+
+    p "Update npm prod_keys VersionArchive"
+    VersionarchiveMigration.update_npm_prod_keys
+
+    p "Update npm prod_keys Versioncomment"
+    VersioncommentMigration.update_npm_prod_keys
+
+    p "Update npm prod_keys Versionlink"
+    VersionlinkMigration.update_npm_prod_keys
+
+    p "Update npm prod_keys Projectdependency "
+    ProjectdependencyMigration.update_npm_prod_keys
+
+    p "Update npm prod_keys Newest "
+    NewestMigration.update_npm_prod_keys
+
+    p "Update npm prod_keys Developer "
+    DeveloperMigration.update_npm_prod_keys
+
+    p "Update npm prod_keys Dependency "
+    DependencyMigration.update_npm_prod_keys
   end
 
 end
