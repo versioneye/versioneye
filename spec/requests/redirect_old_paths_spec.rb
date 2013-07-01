@@ -26,31 +26,22 @@ describe "Redirect Old Paths" do
     product_2.save
 
     get "/package/json~gobi/version/1~1"
-    response.should redirect_to("/package/json~gobi/1~1")
+    response.should redirect_to("/ruby/json.gobi/1.1")
 
     get "/package_visual/json~gobi/version/1~1"
     response.should redirect_to("/ruby/json.gobi/1~1/visual_dependencies")
 
     get "/package/json~gobi"
-    response.should redirect_to("/package/json.gobi")
+    response.should redirect_to("/ruby/json.gobi/1.0")
 
     get "/product/json~gobi/1~0"
-    response.should redirect_to("/package/json.gobi/1.0")
-
-    get "/package/json~gobi/1~0"
-    response.should redirect_to("/package/json.gobi/1.0")
-
-    get "/package/json~gobi/1.0"
-    response.should redirect_to("/package/json.gobi/1.0")
+    response.should redirect_to("/ruby/json.gobi/1.0")
 
     get "/package/json.gobi/1~0"
-    response.should redirect_to("/package/json.gobi/1.0")
+    response.should redirect_to("/ruby/json.gobi/1.0")
 
     get "/package/org~hibernate--hibernate-core/1~0"
-    response.should redirect_to("/package/org.hibernate:hibernate-core/1.0")
-
-    get "/package/json.gobi/1.0"
-    assert_response :success
+    response.should redirect_to("/java/org.hibernate:hibernate-core/1.0")
   end
 
 end
