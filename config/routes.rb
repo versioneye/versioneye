@@ -1,10 +1,7 @@
-#require_relative '../app/api/v1/versioneye'
 
 Versioneye::Application.routes.draw do
 
-  mount V1::Versioneye::API => '/api'
-#  mount V2::API => '/api2'
-
+  mount VersionEye::API => '/api'
 
   root :to => "products#index"
 

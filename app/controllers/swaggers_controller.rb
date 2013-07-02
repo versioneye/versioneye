@@ -13,8 +13,8 @@ class SwaggersController < ApplicationController
 
   def index2
     @current_user = current_user
-    user_api = Api.where(user_id: @current_user.id).shift if @current_user
-    @api_key = "Log in to get your own api token"
+    user_api = nil #Api.where(user_id: @current_user.id).shift if @current_user
+    @api_key = "" #"Log in to get your own api token"
     @api_key = user_api.api_key unless user_api.nil?
     @version = 'v2'
     @api_url = "/api2/#{@version}"
