@@ -23,9 +23,9 @@ gem 'tire'              , '0.6.0'
 gem 'json'              , '1.8.0'
 gem 'dalli'             , '2.6.4'   # memcache library
 gem 'kgio'              , '2.8.0'   # 20% performance boost for dalli
-gem 'grape'             , '0.2.6'
+gem 'grape'             , '0.5.0'
 gem 'grape-entity'      , '0.2.0'
-gem 'grape-swagger'     , git: "https://github.com/timgluz/grape-swagger.git"
+gem 'grape-swagger'     , :github => "timgluz/grape-swagger", :branch => "refactoring" #git: "https://github.com/timgluz/grape-swagger.git"
 gem 'htmlentities'      , '4.3.1'
 
 group :development do
