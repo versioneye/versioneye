@@ -4,9 +4,10 @@ class PageController < ApplicationController
     path = request.fullpath
     if path.match(/\/version\//)
       path.gsub!("/version/", "/")
-      redirect_to path
+    else
+      path = "/"
     end
-    redirect_to "/"
+    redirect_to path
   end
 
   def legacy_route

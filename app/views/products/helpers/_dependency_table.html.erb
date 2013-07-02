@@ -32,7 +32,7 @@
           <span ><%= dep.version %></span>
         </td>
         <td>
-          <% if dep.known %>
+          <% if dep.known && dep.product %>
             <%= VersionService.newest_version( dep.product.versions ).version %>
           <% else %>
             UNKNOWN
