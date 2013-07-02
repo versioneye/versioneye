@@ -28,7 +28,7 @@ class CircleElement
     self.connections  = Array.new
     self.dependencies = Array.new
     self.text         = ""
-    self.dep_prod_key = ""
+    self.prod_key     = ""
     self.level        = 1
   end
 
@@ -42,15 +42,14 @@ class CircleElement
       element.dependencies_string = element.dependencies_as_string
       element.save
     end
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
   end
 
   def self.dependency_circle(lang, prod_key, version, scope)
     if scope == nil
       scope = main_scope
-    end
-    if version.nil? || version.empty?
-      product = Product.fetch_product lang, prod_key
-      version = product.version
     end
     hash = Hash.new
     dependencies = Array.new
@@ -63,16 +62,18 @@ class CircleElement
       next if dep.name.nil? || dep.name.empty?
       element = CircleElement.new
       element.init
-      element.dep_prod_key = dep.dep_prod_key
-      element.language     = lang
-      element.version      = dep.version_parsed
-      element.level        = 0
+      element.prod_key = dep.dep_prod_key
+      element.language = lang
+      element.version  = dep.version_parsed
+      element.level    = 0
       self.attach_label_to_element(element, dep)
       hash[dep.dep_prod_key] = element
     end
+    p " --- hash: #{hash.count}"
     return self.fetch_deps(1, hash, Hash.new, lang)
   rescue => e
-    Rails.logger.error e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
   end
 
   def self.fetch_deps(deep, hash, parent_hash, lang)
@@ -91,20 +92,20 @@ class CircleElement
         if dep.name.nil? || dep.name.empty?
           next
         end
-        key = dep.dep_prod_key
+        key = dep.prod_key
         ele = self.get_element_from_hash(new_hash, hash, parent_hash, key)
         if ele
-          ele.connections << "#{element.dep_prod_key}"
+          ele.connections << "#{element.prod_key}"
         else
           new_element = CircleElement.new
           new_element.init
-          new_element.dep_prod_key = dep.dep_prod_key
+          new_element.prod_key = dep.prod_key
           new_element.language = lang
           new_element.level = deep
           attach_label_to_element(new_element, dep)
-          new_element.connections << "#{element.dep_prod_key}"
+          new_element.connections << "#{element.prod_key}"
           new_element.version = dep.version_parsed
-          new_hash[dep.dep_prod_key] = new_element
+          new_hash[dep.prod_key] = new_element
         end
         element.connections  << "#{key}"
         element.dependencies << "#{key}"
@@ -115,6 +116,9 @@ class CircleElement
     rec_hash = self.fetch_deps(deep, new_hash, parent_merged, lang)
     merged_hash = parent_merged.merge(rec_hash)
     return merged_hash
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
   end
 
 
@@ -141,7 +145,7 @@ class CircleElement
   def as_json(options = {})
     {
       :text => self.text,
-      :id => self.dep_prod_key,
+      :id => self.prod_key,
       :connections => self.connections
     }
   end
@@ -153,7 +157,7 @@ class CircleElement
       resp += "\"connections\": [#{dep.connections_as_string}],"
       resp += "\"dependencies\": [#{dep.dependencies_as_string}],"
       resp += "\"text\": \"#{dep.text}\","
-      resp += "\"id\": \"#{dep.dep_prod_key}\","
+      resp += "\"id\": \"#{dep.prod_key}\","
       resp += "\"version\": \"#{dep.version}\""
       resp += "},"
     end
@@ -169,7 +173,7 @@ class CircleElement
       resp += "\"connections\": [#{element.connections_string}],"
       resp += "\"dependencies\": [#{element.dependencies_string}],"
       resp += "\"text\": \"#{element.text}\","
-      resp += "\"id\": \"#{element.dep_prod_key}\","
+      resp += "\"id\": \"#{element.prod_key}\","
       resp += "\"version\": \"#{element.version}\""
       resp += "},"
     end

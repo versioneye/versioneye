@@ -44,11 +44,7 @@ class Dependency
   end
 
   def product
-    product = Product.fetch_product( language, dep_prod_key )
-    if product.nil? && language.eql?(Product::A_LANGUAGE_PHP) && (dep_prod_key.eql?( "php/php" ) || dep_prod_key.eql?( "php" ) )
-      product = Product.fetch_product( Product::A_LANGUAGE_C, dep_prod_key )
-    end
-    product
+    Product.fetch_product( language, dep_prod_key )
   end
 
   def parent_product
@@ -58,9 +54,6 @@ class Dependency
   def language_escaped
     if self.language.eql? Product::A_LANGUAGE_NODEJS
       return "nodejs"
-    end
-    if language.eql?(Product::A_LANGUAGE_PHP) && (dep_prod_key.eql?( "php/php" ) || dep_prod_key.eql?( "php" ) )
-      return Product::A_LANGUAGE_C.downcase
     end
     return language.downcase
   end
