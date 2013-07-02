@@ -212,10 +212,10 @@ class Product
       :name => self.name,
       :description => self.description ? self.description : "" ,
       :description_manual => self.description_manual ? self.description_manual : "" ,
-      :language => self.language,
       :followers => self.followers,
       :group_id => self.group_id ? self.group_id : "",
       :prod_key => self.prod_key,
+      :language => self.language,
       :prod_type => self.prod_type
     }
   end
