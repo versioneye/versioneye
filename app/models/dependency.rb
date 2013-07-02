@@ -11,18 +11,20 @@ class Dependency
   A_SCOPE_REQUIRE = "require"
   A_SCOPE_TEST    = "test"
 
-  field :name        , type: String   # name of the dependency
-  field :version     , type: String   # version of the dependency. This is the unfiltered version string. It is not parsed yet.
-  field :group_id    , type: String   # groupd_id of the dependency
-  field :artifact_id , type: String   # artifact_id of the dependency
-  field :dep_prod_key, type: String   # prod_key of the dependency (Foreign Key)
-  field :scope       , type: String   # scope of the dependency
-
+  # This attributes describe to which product
+  # this dependency belongs to. Parent!
+  field :prod_type   , type: String,  :default => Project::A_TYPE_RUBYGEMS
+  field :language    , type: String,  :default => Product::A_LANGUAGE_RUBY
   field :prod_key    , type: String   # This dependency belongs to this prod_key
   field :prod_version, type: String   # This dependency belongs to this version of prod_key
 
-  field :prod_type   , type: String,  :default => Project::A_TYPE_RUBYGEMS
-  field :language    , type: String,  :default => Product::A_LANGUAGE_RUBY
+  # This attributes describe the dependency itself!
+  field :dep_prod_key, type: String   # prod_key of the dependency (Foreign Key)
+  field :version     , type: String   # version of the dependency. This is the unfiltered version string. It is not parsed yet.
+  field :name        , type: String
+  field :group_id    , type: String
+  field :artifact_id , type: String
+  field :scope       , type: String
   field :known       , type: Boolean
 
   def self.find_by_lang_key_and_version( lang, prod_key, version)

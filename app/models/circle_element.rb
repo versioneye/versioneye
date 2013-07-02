@@ -3,10 +3,17 @@ class CircleElement
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  # This attributes describe to which product
+  # this circle_element belongs to. Parent!
+  # This fields are only important if you wanan store the
+  # instance to DB. Otherwise they can be empty!
   field :language           , type: String
   field :prod_key           , type: String
   field :prod_version       , type: String
   field :prod_scope         , type: String
+
+  # This attributes describe the circle_element itself!
+  field :dep_prod_key       , type: String
   field :version            , type: String
   field :text               , type: String
   field :connections_string , type: String
@@ -14,11 +21,6 @@ class CircleElement
   field :level              , type: Integer
 
   attr_accessor :connections, :dependencies
-
-  # Deprecated
-  def self.fetch_circle(prod_key, version, scope)
-    CircleElement.where(prod_key: prod_key, prod_version: version, prod_scope: scope)
-  end
 
   def self.fetch_circle(language, prod_key, version, scope)
     CircleElement.where(language: language, prod_key: prod_key, prod_version: version, prod_scope: scope)
@@ -28,17 +30,18 @@ class CircleElement
     self.connections  = Array.new
     self.dependencies = Array.new
     self.text         = ""
-    self.prod_key     = ""
+    self.dep_prod_key = ""
+    self.version      = ""
     self.level        = 1
   end
 
   def self.store_circle(circle, lang, prod_key, version, scope)
     circle.each do |key, element|
-      element.language = lang
-      element.prod_key = prod_key
-      element.prod_version = version
-      element.prod_scope = scope
-      element.connections_string = element.connections_as_string
+      element.language            = lang
+      element.prod_key            = prod_key
+      element.prod_version        = version
+      element.prod_scope          = scope
+      element.connections_string  = element.connections_as_string
       element.dependencies_string = element.dependencies_as_string
       element.save
     end
@@ -62,14 +65,12 @@ class CircleElement
       next if dep.name.nil? || dep.name.empty?
       element = CircleElement.new
       element.init
-      element.prod_key = dep.dep_prod_key
-      element.language = lang
-      element.version  = dep.version_parsed
-      element.level    = 0
+      element.dep_prod_key = dep.dep_prod_key
+      element.version      = dep.version_parsed
+      element.level        = 0
       self.attach_label_to_element(element, dep)
       hash[dep.dep_prod_key] = element
     end
-    p " --- hash: #{hash.count}"
     return self.fetch_deps(1, hash, Hash.new, lang)
   rescue => e
     Rails.logger.error e.message
@@ -92,20 +93,19 @@ class CircleElement
         if dep.name.nil? || dep.name.empty?
           next
         end
-        key = dep.prod_key
+        key = dep.dep_prod_key
         ele = self.get_element_from_hash(new_hash, hash, parent_hash, key)
         if ele
-          ele.connections << "#{element.prod_key}"
+          ele.connections << "#{element.dep_prod_key}"
         else
           new_element = CircleElement.new
           new_element.init
-          new_element.prod_key = dep.prod_key
-          new_element.language = lang
-          new_element.level = deep
+          new_element.dep_prod_key   = dep.dep_prod_key
+          new_element.level          = deep
           attach_label_to_element(new_element, dep)
-          new_element.connections << "#{element.prod_key}"
-          new_element.version = dep.version_parsed
-          new_hash[dep.prod_key] = new_element
+          new_element.connections    << "#{element.dep_prod_key}"
+          new_element.version        = dep.version_parsed
+          new_hash[dep.dep_prod_key] = new_element
         end
         element.connections  << "#{key}"
         element.dependencies << "#{key}"
@@ -144,8 +144,8 @@ class CircleElement
 
   def as_json(options = {})
     {
-      :text => self.text,
-      :id => self.prod_key,
+      :text        => self.text,
+      :id          => self.dep_prod_key,
       :connections => self.connections
     }
   end
@@ -157,7 +157,7 @@ class CircleElement
       resp += "\"connections\": [#{dep.connections_as_string}],"
       resp += "\"dependencies\": [#{dep.dependencies_as_string}],"
       resp += "\"text\": \"#{dep.text}\","
-      resp += "\"id\": \"#{dep.prod_key}\","
+      resp += "\"id\": \"#{dep.dep_prod_key}\","
       resp += "\"version\": \"#{dep.version}\""
       resp += "},"
     end
@@ -173,7 +173,7 @@ class CircleElement
       resp += "\"connections\": [#{element.connections_string}],"
       resp += "\"dependencies\": [#{element.dependencies_string}],"
       resp += "\"text\": \"#{element.text}\","
-      resp += "\"id\": \"#{element.prod_key}\","
+      resp += "\"id\": \"#{element.dep_prod_key}\","
       resp += "\"version\": \"#{element.version}\""
       resp += "},"
     end
