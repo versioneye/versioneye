@@ -8,7 +8,9 @@
 <div class="span3">
 
   <%= render "extended_search" %>
-  <%= render "/shared/github_ad" %>
+  <% if signed_in? == false %>
+    <%= render "/shared/github_ad" %>
+  <% end %>
 
 </div>
 <div class="span8" >
