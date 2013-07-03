@@ -10,13 +10,12 @@ class ProjectMailer < ActionMailer::Base
       @dependencies[dep.name] = dep
     end
     @project_name = project.name
-    @link         = "#{Settings.server_url}/package/"
     @projectlink  = "#{Settings.server_url}/user/projects/#{project.id}"
     email = Project.email_for(project, @user)
     mail(
-      :to => email,
+      :to      => email,
       :subject => "Project Notification for #{project.name}",
-      :tag => "project_notification"
+      :tag     => "project_notification"
       )
   end
 

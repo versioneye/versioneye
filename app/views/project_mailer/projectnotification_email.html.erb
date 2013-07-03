@@ -28,7 +28,7 @@
               <img src= "http://www.versioneye.com/assets/language/<%= product.language.downcase %>.png" style = "width: 48px; height: 48px;"/>
             </td>
             <td style = "vertical-align: middle; border-bottom: 1px dotted gray; padding: 5px;">
-              <a href="<%=@link%><%= product.to_param %>"><%= product.name %></a>
+              <a href="<%=Settings.server_url%>/<%= product.language_esc %>/<%= product.to_param %>"><%= product.name %></a>
             </td>
             <td style = "vertical-align: middle; border-bottom: 1px dotted gray; padding: 5px;">
               <%= dep.version_requested %>
