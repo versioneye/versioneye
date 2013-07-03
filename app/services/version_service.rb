@@ -47,24 +47,26 @@ class VersionService
   def self.version_tilde_newest( versions, value )
     value = value.gsub("~", "")
     value = value.gsub(" ", "")
-    new_st = "#{value}"
-    if value.match(/./)
-      splits    = value.split(".")
-      new_end   = splits.size - 2
-      new_slice = splits[0..new_end]
-      new_st    = new_slice.join(".")
-    end
-    starter = "#{new_st}."
-    versions_group1 = self.versions_start_with( versions, starter )
-    versions_filtered = Array.new
-    versions_group1.each do |version|
-      if Naturalsorter::Sorter.bigger_or_equal?(version.version, value)
-        versions_filtered.push(version)
-      end
-    end
-    VersionService.newest_version_from( versions_filtered )
+    upper_border = self.tile_border( value )
+    greater_than = self.greater_than_or_equal( versions, value, true  )
+    range = self.smaller_than( greater_than, upper_border, true )
+    VersionService.newest_version_from( range )
   end
 
+  def self.tile_border( value )
+    if value.match(/\./).nil? && value.match(/^[0-9]+$/)
+      return value.to_i + 1
+    elsif value.match(/\./) && value.match(/^[0-9]+\.[0-9]+$/)
+      nums  = value.split(".")
+      up    = nums.first.to_i + 1
+      return "#{up}.0"
+    elsif value.match(/\./) && value.match(/^[0-9]+\.[0-9]+\.[0-9]+$/)
+      nums = value.split(".")
+      up   = nums[1].to_i + 1
+      return "#{nums[0]}.#{up}"
+    end
+    nil
+  end
 
   def self.version_range( versions, start, stop)
     # get all versions from range ( >=start <=stop )
