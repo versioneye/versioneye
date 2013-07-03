@@ -165,6 +165,15 @@ describe VersionService do
 
   end
 
+  describe "version_tilde_newest" do
+    it "returns the right value 2.0.0" do
+      VersionService.tile_border( "1.2" ).should eql("2.0")
+    end
+    it "returns the right value 2.0.0" do
+      VersionService.tile_border( "1.2.1" ).should eql("1.3")
+    end
+  end
+
   describe "get_version_range" do
 
     it "returns the right range" do
