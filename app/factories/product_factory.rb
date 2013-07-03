@@ -45,7 +45,7 @@ class ProductFactory
     product = Product.new
     product.name = name
     product.name_downcase = name.downcase
-    product.prod_key = "php/#{name}"
+    product.prod_key = name
     product.language = Product::A_LANGUAGE_PHP
     version_obj = Version.new
     version_obj.version = version
@@ -74,7 +74,7 @@ class ProductFactory
   def self.create_for_pip(name, version)
     product = Product.new name: name,
                           name_downcase: name.downcase,
-                          prod_key: "pip/#{name}",
+                          prod_key: name,
                           language: Product::A_LANGUAGE_PYTHON,
                           prod_type: Project::A_TYPE_PIP,
                           version: version

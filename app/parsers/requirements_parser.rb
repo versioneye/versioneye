@@ -46,7 +46,7 @@ class RequirementsParser < CommonParser
       dependency.version_label = version.strip
     end
 
-    product = Product.fetch_product Product::A_LANGUAGE_PYTHON, "pip/#{package}"
+    product = Product.fetch_product Product::A_LANGUAGE_PYTHON, package
     if product
       dependency.prod_key = product.prod_key
     else

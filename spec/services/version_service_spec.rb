@@ -154,13 +154,13 @@ describe VersionService do
 
     it "returns the right value" do
       product.versions = Array.new
-      product.versions.push( Version.new({:version => "1.0"}) )
-      product.versions.push( Version.new({:version => "1.2"}) )
-      product.versions.push( Version.new({:version => "1.3"}) )
-      product.versions.push( Version.new({:version => "1.4"}) )
-      product.versions.push( Version.new({:version => "2.0"}) )
-      tilde_version = VersionService.version_tilde_newest(product.versions, "1")
-      tilde_version.version.should eql("1.4")
+      product.versions.push( Version.new({:version => "2.0.0"}) )
+      product.versions.push( Version.new({:version => "2.2.0"}) )
+      product.versions.push( Version.new({:version => "2.3.0"}) )
+      product.versions.push( Version.new({:version => "2.3.1"}) )
+      product.versions.push( Version.new({:version => "3.0.0"}) )
+      tilde_version = VersionService.version_tilde_newest( product.versions, "~2.1" )
+      tilde_version.version.should eql("2.3.1")
     end
 
   end
