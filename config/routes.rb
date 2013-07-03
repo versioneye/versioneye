@@ -181,12 +181,14 @@ Versioneye::Application.routes.draw do
   post  '/package/upload_image', :to => 'dependency_wheel#upload_image'
 
   # Rewriting old legacy paths
-  get   '/package/:key'                 , :to => 'page#legacy_route'
-  get   '/product/:key'                 , :to => 'page#legacy_route'
-  get   '/package/:key/version/:version', :to => 'page#legacy_route'
-  get   '/product/:key/version/:version', :to => 'page#legacy_route'
-  get   '/package/:key/:version'        , :to => 'page#legacy_route', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
-  get   '/product/:key/:version'        , :to => 'page#legacy_route', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/package/:key'                       , :to => 'page#legacy_route'
+  get   '/product/:key'                       , :to => 'page#legacy_route'
+  get   '/package/:key/badge'                 , :to => 'page#legacy_badge_route'
+  get   '/package/:key/version/:version'      , :to => 'page#legacy_route'
+  get   '/package/:key/version/:version/badge', :to => 'page#legacy_badge_route'
+  get   '/product/:key/version/:version'      , :to => 'page#legacy_route'
+  get   '/package/:key/:version'              , :to => 'page#legacy_route', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/product/:key/:version'              , :to => 'page#legacy_route', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
   get   '/package_visual/:key'                 , :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/ }
   get   '/package_visual/:key/version/:version', :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
