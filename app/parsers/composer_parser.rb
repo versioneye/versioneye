@@ -41,7 +41,7 @@ class ComposerParser < CommonParser
   end
 
   def process_dependency( key, value, project, data )
-    product    = Product.fetch_product( Product::A_LANGUAGE_PHP, "php/#{key}" )
+    product    = Product.fetch_product( Product::A_LANGUAGE_PHP, key )
     dependency = init_projectdependency( key, product )
     parse_requested_version( value, dependency, product )
     if product.nil?
@@ -190,9 +190,7 @@ class ComposerParser < CommonParser
       # Approximately greater than -> Pessimistic Version Constraint
       version.gsub!("~", "")
       version.gsub!(" ", "")
-      starter         = VersionService.version_approximately_greater_than_starter( version )
-      versions        = VersionService.versions_start_with( product.versions, starter )
-      highest_version = VersionService.newest_version_from( versions )
+      highest_version = VersionService.version_tilde_newest( product.versions, version )
       if highest_version
         dependency.version_requested = highest_version.version
       else

@@ -88,8 +88,12 @@ describe ComposerParser do
       product_16.versions.push( Version.new({ :version => "2.2.0"       }) )
       product_16.save
 
-      product_17 = ProductFactory.create_for_composer("symfony/config", "2.2.1")
+      product_17 = ProductFactory.create_for_composer("symfony/config", "3.0.0")
       product_17.versions.push( Version.new({ :version => "2.2.1"       }) )
+      product_17.versions.push( Version.new({ :version => "2.2.2"       }) )
+      product_17.versions.push( Version.new({ :version => "2.2.4"       }) )
+      product_17.versions.push( Version.new({ :version => "2.3.1"       }) )
+      product_17.versions.push( Version.new({ :version => "3.0.0"       }) )
       product_17.save
 
       product_18 = ProductFactory.create_for_composer("symfony/http-foundation", "1.0.0")
@@ -220,8 +224,8 @@ describe ComposerParser do
       dep_17 = fetch_by_name(project.dependencies, "symfony/config")
       dep_17.name.should eql("symfony/config")
       dep_17.version_label.should eql("~2.2")
-      dep_17.version_requested.should eql("2.2.1")
-      dep_17.version_current.should   eql("2.2.1")
+      dep_17.version_requested.should eql("2.3.1")
+      dep_17.version_current.should   eql("3.0.0")
       dep_17.comperator.should eql("~")
 
       dep_18 = fetch_by_name(project.dependencies, "symfony/http-foundation")

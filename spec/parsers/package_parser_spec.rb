@@ -15,7 +15,7 @@ describe PackageParser do
       product1 = Product.new
       product1.name = name1
       product1.name_downcase = name1
-      product1.prod_key = "npm/connect-redis"
+      product1.prod_key = "connect-redis"
       product1.language = Product::A_LANGUAGE_NODEJS
       product1.version = "1.3.0"
       product1.save
@@ -28,7 +28,7 @@ describe PackageParser do
       product2 = Product.new
       product2.name = name2
       product2.name_downcase = name2
-      product2.prod_key = "npm/redis"
+      product2.prod_key = "redis"
       product2.language = Product::A_LANGUAGE_NODEJS
       product2.version = "1.3.0"
       product2.save
@@ -41,7 +41,7 @@ describe PackageParser do
       product3 = Product.new
       product3.name = name3
       product3.name_downcase = "memcache"
-      product3.prod_key = "npm/memcache"
+      product3.prod_key = "memcache"
       product3.language = Product::A_LANGUAGE_NODEJS
       product3.version = "1.4.0"
       product3.save
@@ -54,7 +54,7 @@ describe PackageParser do
       product4 = Product.new
       product4.name = name4
       product4.name_downcase = name4
-      product4.prod_key = "npm/mongo"
+      product4.prod_key = "mongo"
       product4.language = Product::A_LANGUAGE_NODEJS
       product4.version = "1.1.7"
       product4.save
@@ -67,7 +67,7 @@ describe PackageParser do
       product5 = Product.new
       product5.name = name5
       product5.name_downcase = name5
-      product5.prod_key = "npm/mongoid"
+      product5.prod_key = "mongoid"
       product5.language = Product::A_LANGUAGE_NODEJS
       product5.version = "1.1.7"
       product5.save
@@ -80,7 +80,7 @@ describe PackageParser do
       product6 = Product.new
       product6.name = name6
       product6.name_downcase = name6
-      product6.prod_key = "npm/express"
+      product6.prod_key = "express"
       product6.language = Product::A_LANGUAGE_NODEJS
       product6.version = "2.4.7"
       product6.save
@@ -99,7 +99,7 @@ describe PackageParser do
       product7 = Product.new
       product7.name = name7
       product7.name_downcase = name7
-      product7.prod_key = "npm/fs-ext"
+      product7.prod_key = "fs-ext"
       product7.language = Product::A_LANGUAGE_NODEJS
       product7.version = "2.4.7"
       product7.save
@@ -118,7 +118,7 @@ describe PackageParser do
       product8 = Product.new
       product8.name = name8
       product8.name_downcase = name8
-      product8.prod_key = "npm/jade"
+      product8.prod_key = "jade"
       product8.language = Product::A_LANGUAGE_NODEJS
       product8.version = "2.4.7"
       product8.save
@@ -137,7 +137,7 @@ describe PackageParser do
       product9 = Product.new
       product9.name = name9
       product9.name_downcase = name9
-      product9.prod_key = "npm/mailer"
+      product9.prod_key = "mailer"
       product9.language = Product::A_LANGUAGE_NODEJS
       product9.version = "0.7.0"
       product9.save
@@ -162,7 +162,7 @@ describe PackageParser do
       product10 = Product.new
       product10.name = name10
       product10.name_downcase = name10
-      product10.prod_key = "npm/markdown"
+      product10.prod_key = "markdown"
       product10.language = Product::A_LANGUAGE_NODEJS
       product10.version = "0.4.0"
       product10.save
@@ -181,7 +181,7 @@ describe PackageParser do
       product11 = Product.new
       product11.name = name11
       product11.name_downcase = name11
-      product11.prod_key = "npm/mu2"
+      product11.prod_key = "mu2"
       product11.language = Product::A_LANGUAGE_NODEJS
       product11.version = "0.6.0"
       product11.save
@@ -200,7 +200,7 @@ describe PackageParser do
       product12 = Product.new
       product12.name = name12
       product12.name_downcase = name12
-      product12.prod_key = "npm/pg"
+      product12.prod_key = "pg"
       product12.language = Product::A_LANGUAGE_NODEJS
       product12.version = "0.6.6"
       product12.save
@@ -219,7 +219,7 @@ describe PackageParser do
       product13 = Product.new
       product13.name = name13
       product13.name_downcase = name13
-      product13.prod_key = "npm/pg_connect"
+      product13.prod_key = "pg_connect"
       product13.language = Product::A_LANGUAGE_NODEJS
       product13.version = "0.6.9"
       product13.save

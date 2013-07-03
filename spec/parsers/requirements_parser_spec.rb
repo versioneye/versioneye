@@ -15,7 +15,7 @@ describe RequirementsParser do
       product = Product.new
       product.name = name
       product.name_downcase = name
-      product.prod_key = "pip/South"
+      product.prod_key = "South"
       product.language = Product::A_LANGUAGE_PYTHON
       product.version = "1.0.0"
       product.save
@@ -34,7 +34,7 @@ describe RequirementsParser do
       product2 = Product.new
       product2.name = name2
       product2.name_downcase = name2
-      product2.prod_key = "pip/amqplib"
+      product2.prod_key = "amqplib"
       product2.language = Product::A_LANGUAGE_PYTHON
       product2.version = "2.0.0"
       product2.save
@@ -53,7 +53,7 @@ describe RequirementsParser do
       product3 = Product.new
       product3.name = name3
       product3.name_downcase = "django"
-      product3.prod_key = "pip/django"
+      product3.prod_key = "django"
       product3.language = Product::A_LANGUAGE_PYTHON
       product3.version = "1.4.0"
       product3.save
@@ -72,7 +72,7 @@ describe RequirementsParser do
       product4 = Product.new
       product4.name = name4
       product4.name_downcase = name4
-      product4.prod_key = "pip/PIL"
+      product4.prod_key = "PIL"
       product4.language = Product::A_LANGUAGE_PYTHON
       product4.version = "1.1.7"
       product4.save
@@ -85,7 +85,7 @@ describe RequirementsParser do
       product5 = Product.new
       product5.name = name5
       product5.name_downcase = name5
-      product5.prod_key = "pip/jsmin"
+      product5.prod_key = "jsmin"
       product5.language = Product::A_LANGUAGE_PYTHON
       product5.version = "1.1.7"
       product5.save

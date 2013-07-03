@@ -35,7 +35,6 @@ class VersionService
     return newest_version_number( versions_filtered, stability )
   end
 
-
   def self.version_approximately_greater_than_starter(value)
     if value.match(/\.0$/)
       new_end = value.length - 2
@@ -45,17 +44,17 @@ class VersionService
     end
   end
 
-
   def self.version_tilde_newest( versions, value )
+    value = value.gsub("~", "")
+    value = value.gsub(" ", "")
     new_st = "#{value}"
     if value.match(/./)
-      splits = value.split(".")
-      new_end = splits.size - 2
+      splits    = value.split(".")
+      new_end   = splits.size - 2
       new_slice = splits[0..new_end]
-      new_st = new_slice.join(".")
+      new_st    = new_slice.join(".")
     end
     starter = "#{new_st}."
-
     versions_group1 = self.versions_start_with( versions, starter )
     versions_filtered = Array.new
     versions_group1.each do |version|

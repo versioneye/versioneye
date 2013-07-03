@@ -151,13 +151,17 @@ describe Dependency do
       version.version = "2.3"
       product.versions.push(version)
 
+      version = Version.new
+      version.version = "3.0"
+      product.versions.push(version)
+
       product.save
 
       dependency = Dependency.new
       dependency.language = product.language
       dependency.version = "~2.2"
       dependency.dep_prod_key = product.prod_key
-      dependency.packagist_version_parsed().should eql("2.2.9")
+      dependency.packagist_version_parsed().should eql("2.3")
 
       dependency.version = "~2.0"
       dependency.dep_prod_key = product.prod_key
