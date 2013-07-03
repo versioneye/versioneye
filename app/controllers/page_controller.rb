@@ -11,35 +11,55 @@ class PageController < ApplicationController
   end
 
   def legacy_route
+    path = "/"
     key     = params[:key]
     version = params[:version]
-    key = key.gsub("~", ".").gsub("--", "/").gsub(":", "/")
+    key = parse_param key
     if version
-      version = version.gsub("~", ".").gsub("--", "/").gsub(":", "/")
+      version = parse_param version
     end
     product = Product.find_by_key key
     if product
       version = product.version if version.nil?
-      redirect_to package_version_path( product.language_esc, product.to_param, version )
-      return
-    end
-    language = ""
-    if key.match(/^npm\//)
-      key = key.gsub("npm\/", "")
-      language = Product::A_LANGUAGE_NODEJS
-    elsif key.match(/^pip\//)
-      key = key.gsub("pip\/", "")
-      language = Product::A_LANGUAGE_PYTHON
-    elsif key.match(/^php\//)
-      key = key.gsub("php\/", "")
-      language = Product::A_LANGUAGE_PHP
-    end
-    if language.empty?
-      redirect_to "/"
+      path = "/#{product.language_esc}/#{product.to_param}/#{version}"
     else
-      redirect_to "/#{language}/#{key}"
+      hash = fetch_lang_and_key( key )
+      language = hash['language']
+      key = hash['key']
+      if !language.empty?
+        product = Product.fetch_product language, key
+        if product
+          path = "/#{product.language_esc}/#{product.to_param}/#{version}"
+        end
+      end
     end
-    return
+    redirect_to path.gsub("//", "/")
+  end
+
+  def legacy_badge_route
+    path    = "/"
+    key     = params[:key]
+    version = params[:version]
+    key     = parse_param key
+    if version
+      version = parse_param version
+    end
+    product = Product.find_by_key key
+    if product
+      version = product.version if version.nil?
+      path    = "/#{product.language_esc}/#{product.to_param}/#{version}/badge.png"
+    else
+      hash     = fetch_lang_and_key( key )
+      language = hash['language']
+      key      = hash['key']
+      if !language.empty?
+        product = Product.fetch_product language, key
+        if product
+          path = "/#{product.language_esc}/#{product.to_param}/#{version}/badge.png"
+        end
+      end
+    end
+    redirect_to path.gsub("//", "/")
   end
 
   def disclaimer
@@ -88,5 +108,29 @@ class PageController < ApplicationController
   def sitemap_4
     redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_00_4.xml'
   end
+
+  private
+
+    def parse_param key
+      key.gsub("~", ".").gsub("--", "/").gsub(":", "/")
+    end
+
+    def fetch_lang_and_key( key )
+      language = ""
+      if key.match(/^npm\//)
+        key = key.gsub("npm\/", "")
+        language = Product::A_LANGUAGE_NODEJS
+      elsif key.match(/^pip\//)
+        key = key.gsub("pip\/", "")
+        language = Product::A_LANGUAGE_PYTHON
+      elsif key.match(/^php\//)
+        key = key.gsub("php\/", "")
+        language = Product::A_LANGUAGE_PHP
+      end
+      hash = Hash.new
+      hash['key'] = key
+      hash['language'] = language
+      return hash
+    end
 
 end

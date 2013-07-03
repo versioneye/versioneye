@@ -25,6 +25,19 @@ describe "Redirect Old Paths" do
     product_2.versions.push( Version.new({:version => "1.0" }) )
     product_2.save
 
+    product_3               = Product.new
+    product_3.name          = "ocramius/proxy-manager"
+    product_3.name_downcase = "ocramius/proxy-manager"
+    product_3.prod_key      = "ocramius/proxy-manager"
+    product_3.prod_type     = "Packgist"
+    product_3.language      = "PHP"
+    product_3.version       = "1.0"
+    product_3.versions      = Array.new
+    product_3.versions.push( Version.new({:version => "1.0" }) )
+    product_3.save
+
+
+
     get "/package/json~gobi/version/1~1"
     response.should redirect_to("/ruby/json.gobi/1.1")
 
@@ -39,6 +52,9 @@ describe "Redirect Old Paths" do
 
     get "/package/json.gobi/1~0"
     response.should redirect_to("/ruby/json.gobi/1.0")
+
+    get "https://www.versioneye.com/package/php--ocramius--proxy-manager/badge.png"
+    response.should redirect_to("https://www.versioneye.com/php/ocramius:proxy-manager/badge.png")
 
     get "/package/org~hibernate--hibernate-core/1~0"
     response.should redirect_to("/java/org.hibernate:hibernate-core/1.0")
