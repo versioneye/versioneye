@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html lang="en" >
+
+<head >
+
+  <meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Package</title>
+
+    <link href="http://localhost:3000/favicon.ico" rel="shortcut icon"  />
+  <!--[if lt IE 8]>
+    <meta http-equiv="REFRESH" content="0;url=http://www.versioneye.com/oldbrowser.html" />
+  <![endif]-->
+  <!--[if lt IE 9]>
+    <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <meta content="authenticity_token" name="csrf-param" />
+<meta content="fJKl7h6l12u9ntoqMrIFEG2moHeq8YPDE5hBWQ/9ZFM=" name="csrf-token" />
+  <link href="/assets/application.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+<link href="/assets/bootstrap.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+<link href="/assets/bootstrap_responsive.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+<link href="/assets/bootstrap_switch.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+<link href="/assets/bootstrap_upload.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+<link href="/assets/main.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+<link href="/assets/product.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+<link href="/assets/user.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+
+
+    <script src="/assets/jquery.js?body=1" type="text/javascript"></script>
+<script src="/assets/jquery_ujs.js?body=1" type="text/javascript"></script>
+<script src="/assets/jquery_textbox_hinter.js?body=1" type="text/javascript"></script>
+<script src="/assets/bootstrap.min.js?body=1" type="text/javascript"></script>
+<script src="/assets/bootstrap_fileupload.js?body=1" type="text/javascript"></script>
+<script src="/assets/google.js?body=1" type="text/javascript"></script>
+<script src="/assets/gmap.js?body=1" type="text/javascript"></script>
+<script src="/assets/custom.js?body=1" type="text/javascript"></script>
+<script src="/assets/custom_feedback.js?body=1" type="text/javascript"></script>
+<script src="/assets/custom_update_language.js?body=1" type="text/javascript"></script>
+<script src="/assets/application.js?body=1" type="text/javascript"></script>
+
+
+
+
+</head>
+
+<body>
+
+  <header style="z-index: 100;">
+  <div class="navbar navbar-static-top dark-bg">
+    <div class = "container row">
+      <div class="span4 brand-container" style="margin-left: 0; padding-left: 0; height: 50px;">
+        <span class="pull-left icon_beta"></span>
+        <a href="/"><span class="logo"></span></a>
+      </div>
+
+      <div class = "span7 pull-right">
+        <ul class="nav pull-right">
+        <!-- menu for logged-in user -->
+            <li class="divider-vertical"></li>
+            <li>
+              <a href="/pricing">Pricing</a>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <a href="/user/packages/i_follow">Packages I follow</a>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <a href="/user/projects">
+                My Projects
+              </a>
+            </li>
+            <li class="divider-vertical"></li>
+            <li class ="dropdown">
+              <a class = "dropdown-toggle"
+                data-toggle = "dropdown" href = "#">
+                <span class = "img-profile32" style="zoom: 0.85"></span>
+                 Test User
+                 <b class = "caret"></b>
+              </a>
+              <ul class = "dropdown-menu">
+                <li >
+                  <a href="/settings/profile">
+                    Settings
+                  </a>
+                </li>
+                <li>
+                  <a href="/users/TestUser" >
+                    Profile
+                  </a>
+                </li>
+                <li>
+                  <a href="/search?q=submit_new_resource_108">Submit New Resource</a>
+                </li>
+                <li>
+                  <a href="JavaScript: load_dialog_feedback()">Feedback</a>
+                </li>
+                <li class = "divider"></li>
+                <li>
+                  <a href="/signout">
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <!-- menu for admin -->
+              <li class= "divider-vertical"></li>
+              <li class= "dropdown">
+                <a class = "dropdown-toggle" data-toggle= "dropdown" href= "#">
+                  Admin
+                  <b class = "caret"></b>
+                </a>
+                <ul class= "dropdown-menu">
+                  <li><a href="/admin/crawles">Crawls</a></li>
+                  <li><a href="/admin/error_messages">ErrorMessages</a></li>
+                  <li><a href="/admin/submitted_urls">Submitted URLs</a></li>
+                </ul>
+              </li>
+
+
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+
+  <section class="container flash-container" >
+      <div class="alert flash error">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+        The requested package is not available.
+      </div>
+  </section>
+
+  <section class="container">
+    <div class="row" style="margin-top:20px; margin-bottom: 20px;" >
+  <div class="span6" >
+    <h1 class="page-title" >
+        Package
+    </h1>
+  </div>
+  <div class="span4 pull-right">
+    <form id="form" action="/search" method="GET">
+      <div class="input-append pull-right" >
+          <input name="q" type="text" value="" />
+          <button class="btn">
+            <span class="icon_search"></span>
+          </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+    <div class="well-white row">
+      
+
+  Package not found!
+
+
+    </div>
+  </section>
+
+  <footer class="footer">
+	<div class="container row">
+		<hr/>
+	</div>
+	<div class="container row">
+		<div class="span2" >
+			<h5 class="dep_header">VersionEye</h5>
+			<ul class="footer-links">
+				<li><a href="/about">About</a></li>
+				<li><a href="/about">Team</a></li>
+				<li><a href="/statistics">Statistics</a></li>
+				<li><a href="JavaScript: load_dialog_feedback()">Feedback</a></li>
+					<li><a href="/services">Services</a></li>
+					<li><a href="/pricing">Pricing</a></li>
+			</ul>
+		</div>
+		<div class="span3" >
+			<h5 class="dep_header">Legal</h5>
+			<ul class="footer-links">
+				<li><a href="/imprint">Imprint</a></li>
+				<li><a href="/terms">Conditions of Use</a></li>
+				<li><a href="/dataprivacy">Data protection provisions </a></li>
+				<li><a href="/disclaimer">Disclaimer</a></li>
+			</ul>
+		</div>
+		<div class="span2" >
+			<h5 class="dep_header">Community</h5>
+			<ul class="footer-links">
+				<li><a href="http://versioneye.wordpress.com/" target="new_Blog">Blog</a></li>
+				<li><a href="https://twitter.com/VersionEye" target="new_Twitter">Twitter</a></li>
+				<li><a href="https://plus.google.com/108971109832540479545" rel="publisher" target="new_GPlus">Google+</a></li>
+				<li><a href="https://www.facebook.com/pages/VersionEye/295350293845442"  target="new_FB">Facebook</a></li>
+				<li><a href="https://www.youtube.com/user/VersionEye/videos" target="new_YT">YouTube</a></li>
+				<li><a href="https://vimeo.com/37203548"  target="new_Vimeo">Vimeo</a></li>
+				<li><a href="http://pinterest.com/versioneye/pins/"  target="new_Pinterest">Pinterest</a></li>
+				<li><a href="https://alpha.app.net/versioneye"  target="new_AppNet">App.net</a></li>
+			</ul>
+		</div>
+		<div class="span2" >
+			<h5 class="dep_header">API</h5>
+			<ul class="footer-links">
+				<li><a href="/apijson">JSON API</a></li>
+			</ul>
+		</div>
+		<div class = "span2 pull-left">
+			<span class = "logo_eye_text"></span>
+		</div>
+	</div>
+</footer>
+  <aside class = "visible-desktop">
+    <div class="socialbuttons visible-desktop">
+  <div>
+    <a href="http://versioneye.wordpress.com" target="new_tab_for_blog" title="Blog" >
+      <div class="btn-social btn-wordpress rounded" ></div>
+    </a>
+  </div>
+  <div>
+    <a href="https://twitter.com/VersionEye" target="new_Twitter" title="Twitter" >
+      <div class="btn-social btn-twitter rounded" ></div>
+    </a>
+  </div>
+  <div>
+    <a href="https://www.facebook.com/pages/VersionEye/295350293845442" target="new_FB" title="Facebook" >
+      <div class="btn-social btn-facebook rounded" ></div>
+    </a>
+  </div>
+  <div>
+    <a href="https://plus.google.com/u/0/108971109832540479545/posts" target="new_GP" title="Google+" >
+      <div class="btn-social btn-googleplus rounded" ></div>
+    </a>
+  </div>
+  <div>
+    <a href="http://pinterest.com/versioneye/pins/" target="new_Pinterest" title="Pinterest" >
+      <div class="btn-social btn-pinterest rounded" ></div>
+    </a>
+  </div>
+  <div>
+    <a href="https://www.youtube.com/user/VersionEye/videos" title="YouTube" target="new_YT" >
+      <div class="btn-social btn-youtube rounded" ></div>
+    </a>
+  </div>
+  <div>
+    <a href="#dialog_feedback" id="love_icon" role="button" data-toggle="modal">
+      <div class="btn-social btn-like rounded" ></div>
+    </a>
+  </div>
+</div>
+
+<div id="dialog_feedback" class = "modal hide fade">
+	<div class = "modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Feedback</h3>
+	</div>
+
+	<form accept-charset="UTF-8" action="/feedback.js" class="form-horizontal" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="fJKl7h6l12u9ntoqMrIFEG2moHeq8YPDE5hBWQ/9ZFM=" /></div>
+		<div class = "modal-body">
+
+			<div class="control-group">	
+				<label class="control-label" for="fb_fullname">Full Name</label>
+				<div class="controls">
+						<input class="input-xlarge" id="fb_fullname" name="fb_fullname" type="text" value="Test User" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="fb_email">E-Mail</label>
+				<div class="controls">
+						<input class="input-xlarge" id="fb_email" name="fb_email" type="text" value="admin@versioneye.com" />
+				</div>
+			</div>
+		
+			<div class="control-group">
+				<label class="control-label" for="feedback">Feedback</label>
+				<div class="controls">
+					<textarea class="input-xlarge" id="feedback" maxlength="1000" name="feedback" onKeyUp="textCounter(this, document.getElementById(&#x27;feedback_counter&#x27;), 1000)">
+</textarea>
+					<br />
+					<span id="feedback_counter" class="help-block">max:1000</span>
+				</div>
+			</div>
+
+		</div>
+		<div class="modal-footer">
+			<button id="feedback_dialog_cancel" type="button" class="btn btn-large" data-dismiss="modal" aria-hidden="true">Cancel</button>
+			<button type="submit" class="btn btn-large btn-primary" onClick="return validateFeedbackForm()" >Send</button>
+		</div>
+</form>
+</div>
+
+
+  </aside>
+  <pre class='debug_dump'>--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+controller: products
+action: show
+lang: css
+key: swagger
+version: hightlight.default.css
+</pre>
+
+</body>
+
+</html>

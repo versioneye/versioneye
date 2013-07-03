@@ -22,7 +22,6 @@ module V1
     mount UsersApiV1
 
     add_swagger_documentation :base_path => ENV['API_BASE_PATH'],
-                              :api_version => "v1",
                               :markdown => true,
                               :hide_documentation_path => true
     before do
@@ -35,3 +34,4 @@ module V1
     end
   end
 end
+

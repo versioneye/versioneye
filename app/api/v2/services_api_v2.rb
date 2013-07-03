@@ -1,7 +1,7 @@
 require 'grape'
 
-module VersionEye
-  class ServicesApi < Grape::API
+module V2
+  class ServicesApiV2 < Grape::API
 
     resource :services do
       desc "Answers to request with basic pong."

@@ -1,6 +1,5 @@
 
 module UserHelpers
-
   def make_comment_response(user, page_nr, page_size)
     comments =  Versioncomment.by_user(user).paginate(page: page_nr, per_page: page_size)
 
@@ -9,10 +8,10 @@ module UserHelpers
       comments[index][:product] = Product.find_by_key cmd.product_key
     end
 
-    paging = make_paging_object(comments) 
+    paging = make_paging_object(comments)
     user_comments = Api.new comments: comments,
                              paging: paging
-    present user_comments, with: Entities::VersionCommentEntities
+    present user_comments, with: EntitiesV2::VersionCommentEntities
   end
 
 
@@ -22,7 +21,7 @@ module UserHelpers
                               favorites: favorites,
                               paging: make_paging_object(favorites)
 
-    present user_favorites, with: Entities::UserFollowEntities
+    present user_favorites, with: EntitiesV2::UserFollowEntities
   end
 
 end

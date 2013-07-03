@@ -1,0 +1,40 @@
+/* line 2, ../../app/assets/stylesheets/product.css.scss */
+.rating_cell {
+  width: 170px;
+  padding: 5px;
+}
+
+/* line 8, ../../app/assets/stylesheets/product.css.scss */
+.rating_description_cell {
+  width: 170px;
+  padding: 5px;
+}
+
+/* line 13, ../../app/assets/stylesheets/product.css.scss */
+.product_header {
+  height: 75px;
+  text-align: left;
+}
+
+/* line 18, ../../app/assets/stylesheets/product.css.scss */
+.versioncomment_reply_section {
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+/* line 23, ../../app/assets/stylesheets/product.css.scss */
+.versioncomment_reply_section .meta-text-small {
+  padding-top: 5px;
+}
+
+/* line 27, ../../app/assets/stylesheets/product.css.scss */
+.versioncomment_reply_section .reply {
+  padding-bottom: 25px;
+  border-bottom: 0px;
+}
+
+/* line 32, ../../app/assets/stylesheets/product.css.scss */
+.versioncomment_reply_link_section {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
