@@ -138,7 +138,7 @@ class ProjectsApiV1 < Grape::API
     get '/:project_key/licenses' do
       authorized?
 
-      @project = ProjectsApi.fetch_project @current_user, params[:project_key]
+      @project = ProjectsApiV1.fetch_project @current_user, params[:project_key]
       error!("Project `#{params[:project_key]}` dont exists", 400) if @project.nil?
 
       licenses = {}

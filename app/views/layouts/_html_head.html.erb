@@ -46,7 +46,7 @@
 
       <%= javascript_include_tag "application_github",  :defer => false, :async => false %>
 
-    <% elsif current_page?(api_path) or current_page?(api2_path) %>
+    <% elsif current_page?(version_eye_api_path) %>
 
       <%= javascript_include_tag "application_swagger",     :defer => false %>
       <link href='css/swagger/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>

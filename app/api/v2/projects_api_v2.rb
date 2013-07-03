@@ -1,13 +1,12 @@
 require 'grape'
+require 'entities_v2'
 
 require_relative 'helpers/project_helpers.rb'
 require_relative 'helpers/session_helpers.rb'
 
-require_relative 'entities/project_entity.rb'
-require_relative 'entities/project_dependency_entity.rb'
+module V2
 
-module VersionEye
-  class ProjectsApi < Grape::API
+  class ProjectsApiV2 < Grape::API
     helpers ProjectHelpers
     helpers SessionHelpers
 
@@ -31,7 +30,7 @@ module VersionEye
       get do
         authorized?
         @user_projects = Project.by_user(@current_user)
-        present @user_projects, with: Entities::ProjectEntity
+        present @user_projects, with: EntitiesV2::ProjectEntity
       end
 
       desc "show the project's information", {
@@ -48,7 +47,7 @@ module VersionEye
         if project.nil?
           error! "Project `#{params[:project_key]}` dont exists", 400
         end
-        present project, with: Entities::ProjectEntity, type: :full
+        present project, with: EntitiesV2::ProjectEntity, type: :full
       end
 
 
@@ -75,7 +74,7 @@ module VersionEye
           error! "Cant save uploaded file. Probably our fileserver got cold.", 500
         end
 
-        present @project, with: Entities::ProjectEntity, :type => :full
+        present @project, with: EntitiesV2::ProjectEntity, :type => :full
       end
 
 
@@ -109,7 +108,7 @@ module VersionEye
         end
 
         @project.update_from new_project
-        present @project, with: Entities::ProjectEntity, :type => :full
+        present @project, with: EntitiesV2::ProjectEntity, :type => :full
       end
 
 
@@ -141,7 +140,7 @@ module VersionEye
       get '/:project_key/licenses' do
         authorized?
 
-        @project = ProjectsApi.fetch_project @current_user, params[:project_key]
+        @project = ProjectsApiV2.fetch_project @current_user, params[:project_key]
         error!("Project `#{params[:project_key]}` dont exists", 400) if @project.nil?
 
         licenses = {}
@@ -169,5 +168,4 @@ module VersionEye
     end
 
   end
-
 end

@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/timgluz/grape-swagger.git
-  revision: 43c40763f8d2329244c638a451b0c0cd3129283e
+  revision: a3dac8f375d940ecffd3287f9eff16be578bb6c9
   branch: refactoring
   specs:
     grape-swagger (0.6.0)

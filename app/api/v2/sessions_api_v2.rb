@@ -3,7 +3,7 @@ require 'grape'
 require_relative 'helpers/session_helpers.rb'
 
 module V2
-  class V2SessionsApi < Grape::API
+  class SessionsApiV2 < Grape::API
     helpers SessionHelpers
 
     resource :sessions do

@@ -43,9 +43,9 @@ module ProductHelpers
       "node.js" =>  "Node.JS",
       "nodejs" => "Node.JS"
     }
-    
+
     parsed_lang = lang.downcase
-   
+
     if special_languages.has_key?(parsed_lang)
       parsed_lang = special_languages[parsed_lang]
     else
