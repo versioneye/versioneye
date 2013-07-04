@@ -56,7 +56,7 @@ class Project
   end
 
   def self.find_by_id( id )
-    Project.find(id)
+    Project.find( id )
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
