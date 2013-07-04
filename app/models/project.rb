@@ -146,7 +146,9 @@ class Project
     self.description    = new_project.description
     self.license        = new_project.license
     self.url            = new_project.url
-    self.s3_filename    = new_project.s3_filename
+    if new_project.s3_filename
+      self.s3_filename  = new_project.s3_filename
+    end
     self.dep_number     = new_project.dep_number
     self.out_number     = new_project.out_number
     self.unknown_number = new_project.unknown_number
