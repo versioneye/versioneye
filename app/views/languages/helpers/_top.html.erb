@@ -1,0 +1,13 @@
+<div id = "top-products-container" class = "media">
+
+  <h4> Most followed libraries </h4>
+  <% @top_products.each do |prod| %>
+    <div class = "media-body product-item">
+      <h5 class = "media-heading"> 
+        <a href = "<%= products_path(key: prod.prod_key) %>"><%= prod.name %></a> 
+        <small> &nbsp; - has <%= prod.followers %> followers. </small>
+      </h5>
+      <p> <%= prod.description %> </p>
+    </div>
+  <% end %>
+</div>
