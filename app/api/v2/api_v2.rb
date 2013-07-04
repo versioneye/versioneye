@@ -11,6 +11,7 @@ module V2
   class ApiV2 < Grape::API
 
     version "v2", :using => :path
+    format :json
     default_format :json
 
     #rescue_from :all #comment out if you want to see RAILS error pages & debug on cmd-line

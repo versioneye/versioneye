@@ -14,7 +14,7 @@ module V2
     resource :me do
       desc "shows profile of authorized user", {
         notes: %q[
-            On Swagger, you can create session by adding additional parameter :api_key
+            On Swagger, you can create session by adding additional parameter :api_key.
         ]
       }
       get do
@@ -45,7 +45,7 @@ module V2
       end
 
       desc "show unread notifications of authorized user", {
-        notes: "It will show version updates that's not yet sent by email."
+        notes: "It will show your's latest notifications. Currently it returns just latest 30 notifications."
       }
       get '/notifications' do
         authorized?
