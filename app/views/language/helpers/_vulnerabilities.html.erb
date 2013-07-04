@@ -1,5 +1,6 @@
+<h4> Vulnerabilities </h4>
+
 <% unless @vulnerabilities.nil?  or @vulnerabilities.empty? %>
-  <h4> Vulnerabilities </h4>
   <ul class = "media-list">
 
     <% @vulnerabilities.each do |issue|  %>
@@ -21,6 +22,10 @@
        </div>
      </li>
     <% end %>
-
   </ul>
+<% else %>
+  <p>
+    <strong> Good news! </strong>
+    We have not detect any vulnerabilities for <%= @lang %>. Happy coding!
+  </p>
 <% end %>

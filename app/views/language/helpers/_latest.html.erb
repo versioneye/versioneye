@@ -4,7 +4,7 @@
   <% @latest_products.each do |prod| %>
     <div class = "media-body product-item">
       <h5 class = "media-heading"> 
-        <a href = "<%= products_path(key: prod.prod_key) %>"><%= prod.name %></a> 
+        <a href = "<%= products_path(lang: prod.language, key: Product.encode_prod_key(prod.prod_key)) %>"><%= prod.name %></a> 
         <small> -  latest version <%= prod.version %> 
           has been detected  <%= time_ago_in_words(prod.updated_at) %> ago 
         </small>

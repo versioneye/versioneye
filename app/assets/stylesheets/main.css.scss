@@ -1391,13 +1391,14 @@ h2 + .row {
     background-color: #dfdfdf;
   };
 
-.media-body.product-item {
-  border-top: 1px solid #f3f3f3;
-  padding: 5px 0px;
+  .media-body.product-item {
+    border-top: 1px solid #f3f3f3;
+    padding: 5px 0px;
 
-  &:hover {
-    background-color: #fafafa;
-  };
+    &:hover {
+      background-color: #fafafa;
+    };
+  }
 }
 
 #followers-container {

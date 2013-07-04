@@ -27,17 +27,6 @@ Versioneye::Application.routes.draw do
   get    '/signout',               :to => 'sessions#destroy'
 
 
-  #language specific routes
-  get '/clojure'        , :to => 'languages/clojure#index'
-  get '/coffeescript'   , :to => 'languages/coffeescript#index'
-  get '/javascript'     , :to => 'languages/javascript#index'
-  get '/java'           , :to => 'languages/java#index'
-  get '/php'            , :to => 'languages/php#index'
-  get '/python'         , :to => 'languages/python#index'
-  get '/nodejs'         , :to => 'languages/nodejs#index'
-  get '/ruby'           , :to => 'languages/ruby#index'
-
-
   get   '/users/christian.weyand',                    :to => redirect('/users/christianweyand')
   resources :users, :key => :username do
     member do
@@ -204,6 +193,8 @@ Versioneye::Application.routes.draw do
   get   '/package_visual/:key/version/:version', :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/package_visual/:key/:version'        , :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
+
+  get   '/:lang',                             :to => 'language#show'
   get   '/:lang/:key/badge',                  :to => 'products#badge',  :constraints => { :key => /[^\/]+/ }
   get   '/:lang/:key/:version/badge',         :to => 'products#badge',  :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 

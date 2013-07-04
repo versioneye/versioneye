@@ -1,25 +1,25 @@
-<% title "Ruby" %>
+<% title @lang %>
 
 <section class = "">
   <div class = "row">
     <div class = "span5">
-      <%= render "languages/helpers/top" %>
+      <%= render "language/helpers/top" %>
     </div>
     <div class = "span5 offset1">
-      <%= render "languages/helpers/latest" %>
+      <%= render "language/helpers/latest" %>
     </div>
   </div>
 
   <div class = "row">
-    <%=  render "languages/helpers/followers" %> 
+    <%=  render "language/helpers/followers" %> 
   </div>
 
   <div class = "row">
     <div class = "span5">
-      <%= render "languages/helpers/vulnerabilities" %>
+      <%= render "language/helpers/vulnerabilities" %>
     </div>
     <div class = "span5 offset1">
-      <%= render "languages/helpers/newsfeed" %>
+      <%= render "language/helpers/newsfeed" %>
     </div>
   </div>
 </section>
