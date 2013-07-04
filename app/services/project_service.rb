@@ -64,7 +64,7 @@ class ProjectService
   def self.update_project_file_from_github( project )
     project_file = Github.project_file_from_branch( project.user, project.github_project, project.github_branch )
     return nil if project_file.nil? || project_file.empty?
-    s3_info  = S3.upload_github_file( project_file, project_file['name'] )
+    s3_infos = S3.upload_github_file( project_file, project_file['name'] )
     if s3_infos['filename'] && s3_infos['s3_url']
       S3.delete( project.s3_filename )
       project.s3_filename = s3_infos['filename']
