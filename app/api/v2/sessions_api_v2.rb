@@ -2,10 +2,10 @@ require 'grape'
 
 require_relative 'helpers/session_helpers.rb'
 
-module VersionEye
-  class SessionsApi < Grape::API
+module V2
+  class SessionsApiV2 < Grape::API
     helpers SessionHelpers
-    
+
     resource :sessions do
       desc "returns session info for authorized users", {
         notes: %q[If current user has active session, then this
@@ -15,7 +15,7 @@ module VersionEye
       }
       get do
         authorized?
-        
+
         user_api = Api.where(user_id: @current_user.id).shift
         {
           :fullname => @current_user.fullname,

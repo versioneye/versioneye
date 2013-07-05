@@ -1,10 +1,7 @@
-#require_relative '../app/api/v1/versioneye'
 
 Versioneye::Application.routes.draw do
 
-  mount V1::Versioneye::API => '/api'
-#  mount V2::API => '/api2'
-
+  mount VersionEye::API => '/api'
 
   root :to => "products#index"
 
@@ -157,7 +154,6 @@ Versioneye::Application.routes.draw do
 
 
   get   '/api',                 :to => 'swaggers#index'
-  get   '/api2',                :to => 'swaggers#index2'
   get   '/swaggers',            :to => redirect('/api')
   get   '/apijson',             :to => redirect('/api')
   get   '/apijson_tools',       :to => redirect('/api')
