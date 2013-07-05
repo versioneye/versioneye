@@ -1,17 +1,12 @@
 require 'grape'
-require_relative 'entities/user_entity.rb'
-require_relative 'entities/user_follow_entity.rb'
-require_relative 'entities/product_entity.rb'
-require_relative 'entities/version_comment_entity.rb'
-require_relative 'entities/user_notification_entity.rb'
+require 'entities_v2'
 
 require_relative 'helpers/session_helpers.rb'
 require_relative 'helpers/paging_helpers.rb'
 require_relative 'helpers/user_helpers.rb'
 
-module VersionEye
-  class UsersApi < Grape::API
-
+module V2
+  class UsersApiV2 < Grape::API
     helpers SessionHelpers
     helpers PagingHelpers
     helpers UserHelpers
@@ -19,7 +14,7 @@ module VersionEye
     resource :me do
       desc "shows profile of authorized user", {
         notes: %q[
-            On Swagger, you can create session by adding additional parameter :api_key
+            On Swagger, you can create session by adding additional parameter :api_key.
         ]
       }
       get do
@@ -28,7 +23,7 @@ module VersionEye
           :new => Notification.by_user_id(@current_user.id).all_not_sent.count,
           :total => Notification.by_user_id(@current_user.id).count
         }
-        present @current_user, with: Entities::UserDetailedEntity
+        present @current_user, with: EntitiesV2::UserDetailedEntity
       end
 
       desc "shows favorite packages for authorized user"
@@ -50,7 +45,7 @@ module VersionEye
       end
 
       desc "show unread notifications of authorized user", {
-        notes: "It will show version updates that's not yet sent by email."
+        notes: "It will show your's latest notifications. Currently it returns just latest 30 notifications."
       }
       get '/notifications' do
         authorized?
@@ -60,8 +55,8 @@ module VersionEye
         temp_notice[:user_info] = @current_user
         temp_notice[:unread] = unread_notifications.count
         temp_notice[:notifications] = unread_notifications
-      
-        present temp_notice, with: Entities::UserNotificationEntity
+
+        present temp_notice, with: EntitiesV2::UserNotificationEntity
       end
     end
 
@@ -77,7 +72,7 @@ module VersionEye
       get '/:username' do
           authorized?
           @user = User.find_by_username(params[:username])
-          present @user, with: Entities::UserEntity
+          present @user, with: EntitiesV2::UserEntity
       end
 
       desc "show users' favorite packages"

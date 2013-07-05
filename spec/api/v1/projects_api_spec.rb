@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'rest_client'
 
-describe VersionEye::ProjectsApi do
+describe ProjectsApiV1 do
 
   let( :root_uri    ) { "/api/v1" }
   let( :project_uri ) { "/api/v1/projects" }
@@ -49,7 +49,7 @@ describe VersionEye::ProjectsApi do
 
     it "fails, when upload-file is missing" do
       response = post project_uri, {:api_key => user_api.api_key}, "HTTPS" => "on"
-      response.status.should eq(403)
+      response.status.should eq(400)
     end
 
     it "returns 201 and project info, when upload was successfully" do

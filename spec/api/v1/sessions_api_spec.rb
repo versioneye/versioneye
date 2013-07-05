@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe VersionEye::SessionsApi do
+describe SessionsApiV1 do
   describe "handling new sessions" do
     before(:each) do
       @sessions_url = "/api/v1/sessions"
 
-      @test_user = UserFactory.create_new 999 
+      @test_user = UserFactory.create_new 999
       @user_api = Api.new user_id: @test_user.id,
                           api_key: Api.generate_api_key
       @user_api.save
@@ -18,7 +18,7 @@ describe VersionEye::SessionsApi do
 
     it "returns error when api token is missing" do
       post @sessions_url
-      response.status.should == 403
+      response.status.should == 400 #403
     end
 
     it "returns error when user submitted wrong token" do

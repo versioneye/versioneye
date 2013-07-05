@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe VersionEye::UsersApi do
+describe UsersApiV1 do
   before(:each) do
     @root_uri = "/api/v1"
     @me_uri = "#{@root_uri}/me"
