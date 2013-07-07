@@ -26,7 +26,6 @@ gem 'kgio'              , '2.8.0'   # 20% performance boost for dalli
 gem 'grape'             , '0.5.0'
 gem 'grape-entity'      , '0.2.0'
 gem 'grape-swagger'     , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
-# gem 'grape-swagger'     , git: "https://github.com/timgluz/grape-swagger.git"
 gem 'htmlentities'      , '4.3.1'
 
 group :development do
