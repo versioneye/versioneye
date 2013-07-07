@@ -11,7 +11,7 @@
 }
 
 .product_header{
-  font-size: 32px;
+  font-size: 30px;
   vertical-align: middle;
   text-align: left;
   padding-bottom: 15px;
@@ -28,6 +28,10 @@
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   height: 19px;
+}
+
+h1.product{
+  display: inline;
 }
 
 .versioncomment_reply_section{
