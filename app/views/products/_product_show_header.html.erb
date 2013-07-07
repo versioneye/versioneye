@@ -9,7 +9,7 @@
           <input name="product_key"  type="hidden" value="<%= @product.to_param %>"/>
           <input name="product_lang" type="hidden" value="<%= @product.language %>"/>
           <button type="submit" class="btn2 btn-large btn-warning" >Unfollow</button>
-          <h1 class="product"><%= @product.name %></h1> <span class="product_header_small_text">and you will <b>not</b> receive notifications about new new versions anymore!</span>
+          <h1 class="product"><%= @product.name %></h1> <span class="product_header_small_text">and you will <b>not</b> receive notifications about new versions anymore!</span>
         <% end %>
       <% else %>
         <%= form_tag("/package/follow", :style=>"margin: 0;") do  %>
