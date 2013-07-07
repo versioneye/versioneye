@@ -1,4 +1,4 @@
-<% title  "Package" %>
+<% title  "" %>
 
 <% if @product.nil? %>
 
@@ -20,8 +20,6 @@
     <%= render 'products/product_show_r' %>
   <% elsif @product.prod_type.eql? Project::A_TYPE_GITHUB %>
     <%= render 'products/product_show_github' %>
-  <% elsif @product.prod_type.eql? "opa" %>
-    <%= render 'products/product_show_opa' %>
   <% end %>
 
 <% end %>
