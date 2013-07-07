@@ -34,7 +34,7 @@ describe "Computer Language Filter" do
 
       find(:xpath, '//button[contains(@id, "button_json2")]' ).click
       using_wait_time 3 do
-        page.should have_content("Sign In and Follow")
+        page.should have_content("Follow")
         page.should have_content("to get notified about new versions.")
       end
 
