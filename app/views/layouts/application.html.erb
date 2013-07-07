@@ -51,9 +51,7 @@
   </section>
 
   <%= render 'layouts/footer' %>
-  <aside class = "visible-desktop">
-    <%= render 'shared/social_buttons' %>
-  </aside>
+  <%= render 'feedback/dialog_feedback' %>
   <%= debug(params) if Rails.env.development? %>
 
 </body>
