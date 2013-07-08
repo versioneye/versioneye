@@ -10,7 +10,7 @@
       <ul class="download_list" >
       <% downloads.each do |download|  %>
         <li >
-          <a title = "Download here." href="<%= download.link %>"><span class = "icon_download icon16"></span><%= download.name %></a>
+          <a title = "Download here." href="<%= download.link %>"><%= download.name %></a>
         </li>
       <% end %>
       </ul>
