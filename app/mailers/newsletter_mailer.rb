@@ -6,7 +6,7 @@ class NewsletterMailer < ActionMailer::Base
     @user = user
     mail(
       :to => @user.email,
-      :subject => "New Features - Single Page App for GitHub & Support for Branches",
+      :subject => "New Features - New URLs, New Badges & Improved GitHub Single Page App!",
       :tag => "newsletter"
       )
   end
