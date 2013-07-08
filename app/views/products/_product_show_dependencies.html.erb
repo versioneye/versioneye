@@ -11,7 +11,8 @@
   <% end %>
 </div>
 
-<% if !@product.dependencies.empty? %>
+<% dependencies = @product.dependencies %>
+<% if !dependencies.empty? && dependencies.count > 2 %>
 
 <div class="box well" style="padding-top: 0; margin-top: 0;">
   <div id="canvas-container"></div>
