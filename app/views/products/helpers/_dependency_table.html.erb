@@ -15,7 +15,6 @@
           <% if dep.known %>
             <span >
               <a class="#a dep_link" href="/<%= dep.language_escaped %>/<%= dep.dep_prod_key_for_url %>/<%= dep.version_for_url %>" >
-                <span class="icon_link icon16"></span>
                 <% if dep.group_id && dep.artifact_id %>
                   <span ><%= dep.group_id %> : <%= dep.artifact_id %></span>
                 <% else %>
