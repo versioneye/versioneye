@@ -40,7 +40,10 @@
 $gradient_start: #7F0200;
 $gradient_end: #610003;
 $link_color: #7575FF;
+/*
 $text_yellow: #FBB21C;
+*/
+$text_yellow: gray;
 $text_casual: #616970;
 
 $link_hover: #FBB21C;
@@ -302,7 +305,7 @@ div.content_no_head {
 
 .download_list{
   list-style: none;
-  padding: 0 15px 0 15px;
+  padding: 0 0px 0 0px;
   margin: 0;
   vertical-align: middle;
 }
