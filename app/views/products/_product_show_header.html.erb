@@ -43,11 +43,15 @@
 
   <% end %>
 
-  <div class="product_badges_line" >
-    <%= render :partial => "shared/dependency_badge", :locals => { :project => @product } %>
-    <ul class="list-social pull-right" >
-      <%= render 'shared/share_buttons' %>
-    </ul>
+  <div class="product_badges_line row" >
+    <div class="span4">
+      <ul class="list-social" >
+        <%= render 'shared/share_buttons' %>
+      </ul>
+    </div>
+    <div class="pull-right span4" style="text-align: right;">
+      <%= render :partial => "shared/dependency_badge", :locals => { :project => @product } %>
+    </div>
   </div>
 
 </div>
