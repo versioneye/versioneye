@@ -1,6 +1,6 @@
 class User::ProjectsController < ApplicationController
 
-  before_filter :authenticate        , :except => [:show, :badge]
+  before_filter :authenticate        , :except => [:show]
   before_filter :new_project_redirect, :only   => [:index]
 
   def index
