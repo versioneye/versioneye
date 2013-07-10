@@ -22,6 +22,8 @@ define(['underscore', 'backbone'],
 
 			var labels = [];
 			var timeago = moment(repo.updated_at).fromNow();
+      var commit_timeago = moment(repo.pushed_at).fromNow();
+
 			var label_models = [
 				{classes: "repo-type label label-warning",
 				 content: type_label_template({
@@ -33,7 +35,10 @@ define(['underscore', 'backbone'],
 				}, {
 				 classes: "repo-updated label",
 				 content: "<strong>updated: &nbsp;</strong>" + timeago
-				}
+				}, {
+          classes: "repo-pushed label",
+          content: "<strong>last commit:&nbsp;<strong>" + commit_timeago
+        }
 			]
 
 			if(repo.project_url){

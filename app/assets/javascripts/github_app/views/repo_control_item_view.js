@@ -41,6 +41,7 @@ define([
       },
       render: function(){
         this.$el.html(this.template({branch: this.branch}));
+
         var switch_view = new GithubRepoSwitchView({
           model: this.model, 
           parent: this,
@@ -52,6 +53,5 @@ define([
         return this;
       }
     });
-
     return GithubRepoControlItemView;
   });
