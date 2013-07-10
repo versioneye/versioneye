@@ -14,14 +14,14 @@ xml.rss :version => "2.0" do
 
     @notifications ||= []
     @notifications.each do |notification|
-      product = notification.product
-      safe_prod_key = Product.encode_prod_key product.prod_key
-      version_id = notification.version_id
+      product          = notification.product
+      safe_prod_key    = Product.encode_prod_key product.prod_key
+      version_id       = notification.version_id
       safe_version_key = Product.encode_prod_key version_id
-      product_url = url_for package_version_url( product.language.downcase, safe_prod_key, safe_version_key )
+      product_url      = url_for package_version_url( product.language_esc, safe_prod_key, safe_version_key )
       notification_message = %Q[
         VersionEye detected version (#{version_id}) of #{product.name} (#{product.language} Library).
-        #{product.description_summary}
+        #{product.description_summary}.
       ]
       xml.item do
         xml.title "#{product.name} : #{version_id}".capitalize
