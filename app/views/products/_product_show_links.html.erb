@@ -12,9 +12,11 @@
       <%= pluralize( hash.count, "Link" ) %>
     </h5>
   </div>
-  <% hash.each do |key, value| %>
-    <a href="<%= key %>" target="new"><%= value %></a><br/>
-  <% end %>
+  <div class="box content">
+    <% hash.each do |key, value| %>
+      <a href="<%= key %>" target="new"><%= value %></a><br/>
+    <% end %>
+  </div>
 <% else %>
   <div class="box header"><h5>0 Links</h5></div>
 <% end %>
