@@ -10,7 +10,7 @@ describe "Submit a Comment to specific package" do
     visit signin_path
     fill_in 'session[email]',    :with => @user.email
     fill_in 'session[password]', :with => @user.password
-    click_button 'Sign In'
+    find('#sign_in_button').click
     page.should have_content("My Projects")
   end
 
