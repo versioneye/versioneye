@@ -203,8 +203,9 @@ class GemfileParser < CommonParser
   end
 
   def init_dependency( product, gem_name )
-    dependency = Projectdependency.new
-    dependency.name = gem_name
+    dependency          = Projectdependency.new
+    dependency.name     = gem_name
+    dependency.language = Product::A_LANGUAGE_RUBY
     if product
       dependency.prod_key        = product.prod_key
       dependency.version_current = product.version
