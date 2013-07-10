@@ -38,6 +38,7 @@ class GemfilelockParser < GemfileParser
         unknowns += 1
       end
       dependency.name = name
+      dependency.language = Product::A_LANGUAGE_RUBY
       parse_requested_version(version, dependency, product)
 
       dep = deps[name]
