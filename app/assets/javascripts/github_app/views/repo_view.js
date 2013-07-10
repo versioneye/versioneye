@@ -32,7 +32,6 @@ define(['underscore', 'backbone',
       $('.github-switch').remove();
       $("#github-loader").remove();
       $("#github-repos").empty();
-      //this.render();
 			return false;
 		},
 
@@ -42,10 +41,7 @@ define(['underscore', 'backbone',
 		addItem : function(model){
       console.log("Going to render item: " + model.get('fullname'));
 			var itemview = new GithubRepoItemView({model: model});
-  		$("#github-repos").append(itemview.render().el);
-  
-      //var switch_selector = "#github-repo-switch-" + model.get('github_id');
-			//$(switch_selector).parent().bootstrapSwitch();
+  		$("#github-repos").append(itemview.render().el); 
     }, 
     onChange: function(){
       console.debug("RepoView catched change on collection.");
