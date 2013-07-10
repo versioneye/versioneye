@@ -44,7 +44,8 @@ class LeinParser < CommonParser
         :artifact_id => name,
         :name => name,
         :version_requested => version,
-        :comperator => "="
+        :comperator => "=",
+        :language => Product::A_LANGUAGE_CLOJURE
       })
       product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
       if product
