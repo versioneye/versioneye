@@ -7,7 +7,7 @@ define(['underscore', 'backbone'],
   };
 
   var showNotification = function(classes, message){
-    var flash_template = _.template(jQuery("#github-notification-template").html());
+    var flash_template = _.template($("#github-notification-template").html());
     $(".flash-container").html(flash_template({
       classes: classes,
       content: message
