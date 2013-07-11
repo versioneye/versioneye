@@ -25,7 +25,7 @@ gem 'dalli'             , '2.6.4'   # memcache library
 gem 'kgio'              , '2.8.0'   # 20% performance boost for dalli
 gem 'grape'             , '0.2.6'
 gem 'grape-entity'      , '0.2.0'
-gem 'grape-swagger'     , git: "https://github.com/timgluz/grape-swagger.git"
+gem 'grape-swagger'     , '0.6.0' #, git: "https://github.com/timgluz/grape-swagger.git"
 gem 'htmlentities'      , '4.3.1'
 
 group :development do

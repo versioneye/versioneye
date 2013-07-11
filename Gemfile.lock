@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/timgluz/grape-swagger.git
-  revision: f5c4ad55f8b67edd5342d886b481a83fc7060b00
-  specs:
-    grape-swagger (0.3.0)
-      grape (~> 0.2.0)
-      kramdown
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -120,6 +112,9 @@ GEM
     grape-entity (0.2.0)
       activesupport
       multi_json (>= 1.3.2)
+    grape-swagger (0.6.0)
+      grape (>= 0.2.0)
+      kramdown
     gravatar_image_tag (1.1.3)
     hashie (1.2.0)
     hashr (0.0.22)
@@ -157,7 +152,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.0)
     kgio (2.8.0)
-    kramdown (1.0.2)
+    kramdown (1.1.0)
     libv8 (3.11.8.17)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -328,7 +323,7 @@ DEPENDENCIES
   fakeweb (= 1.3.0)
   grape (= 0.2.6)
   grape-entity (= 0.2.0)
-  grape-swagger!
+  grape-swagger (= 0.6.0)
   gravatar_image_tag (= 1.1.3)
   htmlentities (= 4.3.1)
   httparty (= 0.11.0)
