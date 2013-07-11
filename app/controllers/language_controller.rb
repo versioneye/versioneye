@@ -18,10 +18,7 @@ class LanguageController < ApplicationController
 
     #pick random followers from population
     @followers = population.sample(24)
-    @vulnerabilities = [] 
-    ProductSecurityNotification.by_language(@lang).each do |notif|
-      @vulnerabilities << SecurityNotification.find(notif.security_notification_id)
-    end
+    @vulnerabilities = SecurityNotification.by_language(@lang)
 
     @feeds = LanguageFeed.by_language(@lang).map(&:url)
     render template: "language/show"
