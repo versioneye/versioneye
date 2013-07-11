@@ -9,6 +9,7 @@
 //= require jquery_textbox_hinter
 //= require bootstrap.min
 //= require bootstrap_fileupload
+//= require libs/bootstrap-maxlength.min
 
 //= require google
 //= require gmap

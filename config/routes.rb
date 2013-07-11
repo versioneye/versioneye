@@ -107,6 +107,8 @@ Versioneye::Application.routes.draw do
     resources :github_repos
     get '/menu/github_repos', :to => 'github_repos#show_menu_items'
     get '/poll/github_repos', :to => 'github_repos#poll_changes'
+
+    resource :testimonials
   end
 
   post  '/services/choose_plan',  :to => 'services#choose_plan'
