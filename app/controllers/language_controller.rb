@@ -18,7 +18,9 @@ class LanguageController < ApplicationController
 
     #pick random followers from population
     @followers = population.sample(24)
-    @vulnerabilities = SecurityNotification.by_language(@lang)
+    
+    lang_pattern = Regexp.new(@lang.downcase, true)
+    @vulnerabilities = SecurityNotification.all.in(languages: [lang_pattern]).desc(:modified).limit(30)
 
     @feeds = LanguageFeed.by_language(@lang).map(&:url)
     render template: "language/show"

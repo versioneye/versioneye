@@ -6,8 +6,10 @@
     <% @vulnerabilities.each do |issue|  %>
       <li class = "media">
         <div class = "media-body">
-          <h5> 
-            <%= issue['entry-id'] %>
+          <h5>
+            <a href= "<%= issue['source-path'] %>" target= "_blank">
+              <%= issue['entry-id'] %>
+            </a>
             <small> - <%= time_ago_in_words(issue['modified']) %> </small>
           </h5>
           <p> <%= issue['summary'] %> </p>
@@ -15,7 +17,7 @@
             <span class = "label label-info">Score: <%= issue['metrics']['score'] %></span>
             <span class = "label label-info">Access-vector: <%= issue['metrics']['access-vector'] %></span>
             <span class = "label label-info">Confidentiality impact: <%= issue['metrics']['confidentiality-impact'] %></span>
-            <a href = "<%= issue['source-path'] %>" >
+            <a href = "<%= issue['source-path'] %>" target = "_blank">
               <span class = "label label-success">Source</span>
             </a>
          </div>
