@@ -53,6 +53,15 @@ class Product
 
   embeds_many :versions
   embeds_many :repositories
+
+  index(
+    [
+      [:updated_at, Mongo::DESCENDING]
+    ],
+    [
+      [:updated_at, Mongo::DESCENDING],
+      [:language, Mongo::DESCENDING]
+    ])
   has_and_belongs_to_many :users
 
   # has_and_belongs_to_many :versionarchives
@@ -63,6 +72,12 @@ class Product
 
   def delete
     false
+  end
+
+  def self.supported_languages
+    Set[ A_LANGUAGE_RUBY, A_LANGUAGE_PYTHON, A_LANGUAGE_NODEJS, 
+         A_LANGUAGE_JAVA, A_LANGUAGE_PHP, A_LANGUAGE_R, A_LANGUAGE_JAVASCRIPT,
+         A_LANGUAGE_CLOJURE]
   end
 
   # languages have to be an array of strings.
@@ -353,6 +368,10 @@ class Product
   def self.decode_prod_key(prod_key)
     return nil if prod_key.nil?
     prod_key.gsub(":", "/")
+  end
+
+  def self.encode_language(language)
+    return language.gsub("\.", "").downcase
   end
 
   def self.decode_language( language )
