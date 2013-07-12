@@ -2,26 +2,32 @@
 <section class="container">
   <div id="headline_1" class="jumbotron" style="text-align: center;">
     <h1><span style ="">Continuous Updating</span></h1>
-    <p>Follow your libraries and get notified about new versions. Save Time and Money. It's easy.</p>
+    <p style="font-weigth: none; line-height: 1.5;">Follow your libraries and get notified about new versions</p>
   </div>
 </section>
 
 <section id="search_section" class="container" style="padding-bottom: 65px;" >
-  <div id="search_bar" class="search-container" >
+  <div id="search_bar" style="text-align: center;" >
     <form id="form" action="/search" method="GET" style="padding: 0; margin:0;" >
-      <input id="lang" name="lang" class="hide" type="hidden" value="<%= @lang %>" />
-      <div class="row">
-        <div class = "span5 pull-left ">
-          <div class = "input-prepend ">
-            <input id="q" class = "input large" name="q" type="text" value="<%= @query %>" />
-          </div>
-        </div>
-        <div class = "span2 pull-right" style="width: 100px;" >
-          <button type="submit" class="btn2 btn2-big pull-right" >
-            Search
-          </button>
-        </div>
-      </div>
+      <input id="q"    name="q"    class="input" type="text"   value="<%= @query %>" style="
+  margin: 0;
+  padding-left: 15px;
+  font-size: 28px;
+  height: 50px;
+  width: 500px;
+  margin-right: -1px;
+  -webkit-border-radius: 10px 0px 0px 10px;
+  -moz-border-radius: 10px 0px 0px 10px;
+  border-radius: 10px 0px 0px 10px;" /><button class="btn btn-primary" style="
+  height: 60px;
+  margin-left: 0px;
+  font-size: 20px;
+  -webkit-border-radius: 0px 10px 10px 0px;
+  -moz-border-radius: 0px 10px 10px 0px;
+  border-radius: 0px 10px 10px 0px;
+  ">
+        Search
+      </button>
     </form>
   </div>
   <div id="headline_2" class="jumbotron" style="margin-top: 10px;">
