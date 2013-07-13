@@ -826,8 +826,30 @@ div.content_no_head {
 /* Misc
 -------------------------------------------------- */
 
+#search_bar {
+
+  & #q {
+    background: white !important;
+  }
+
+  & .input-huge {
+    height: 45px;
+    font-size: 25px;
+  }
+
+  & .btn-huge {
+    height: 55px;
+    min-width: 70px;
+  }
+
+  & .input-append input {
+    border-radius: 8px 0 0 8px;
+  }
+}
+
 #q {
   color: $text_yellow;
+
 }
 
 .search-form {
