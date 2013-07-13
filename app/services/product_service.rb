@@ -39,9 +39,9 @@ class ProductService
     Product.supported_languages.each do |lang|
       stats << {
         title: lang.downcase,
-        value: Product.all.where(:language => lang,
-                                 :updated_at.gte => dt_since,
-                                 :updated_at.lt => dt_to).count
+        value: Newest.where(:language => lang,
+                            :created_at.gte => dt_since,
+                            :created_at.lt => dt_to).count
       }
     end
 
