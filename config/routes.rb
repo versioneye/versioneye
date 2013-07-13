@@ -161,8 +161,6 @@ Versioneye::Application.routes.draw do
   get   '/apijson_tools',       :to => redirect('/api')
   get   '/apijson_libs',        :to => redirect('/api')
 
-  get   '/newest/version',        :to => 'latest_releases#index'
-  get   '/current/version',       :to => 'latest_releases#index'
   get   '/latest/version',        :to => 'latest_releases#index'
   get   '/latest/version/:lang',  :to => 'latest_releases#show'
 

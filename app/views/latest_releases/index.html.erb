@@ -1,5 +1,6 @@
 <% title "Latest releases" %>
-<div class = "language-menu">
+
+<div class = "language-menu" style = "padding-bottom: 30px;">
   <div class = "row-fluid">
     <% @supported_languages.each do |lang| %>
       <% lang = Product.encode_language(lang) %>
@@ -12,19 +13,12 @@
   </div>
 </div>
 
-<div class = "release-list">
-  <h3> <%= @latest_releases.count(true) || "" %> latest release</h3>
-  <div class = "row-fluid">
-      <%= render partial: "release_list_item", collection: @latest_releases %>
-  </div>
-</div>
-
 <div class = "release-stat row-fluid">
   <div class = "span3">
-    <%= render partial: "stats_table", locals: {stats: @stats_today} %>
+    <%= render partial: "stats_table", locals: {stats: @stats_yesterday} %>
   </div>
   <div class = "span3">
-    <%= render partial: "stats_table", locals: {stats: @stats_yesterday} %>
+    <%= render partial: "stats_table", locals: {stats: @stats_today} %>
   </div>
   <div class = "span3">
     <%= render partial: "stats_table", locals: {stats: @stats_week} %>
@@ -32,7 +26,12 @@
   <div class = "span3">
     <%= render partial: "stats_table", locals: {stats: @stats_month} %>
   </div>
-
 </div>
 
+<div class = "release-list">
+  <h3> <%= @latest_releases.count || "" %> latest release</h3>
+  <div class = "row-fluid">
+    <%= render partial: "release_list_item", collection: @latest_releases, locals: {columns: 2} %>
+  </div>
+</div>
 
