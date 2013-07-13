@@ -26,7 +26,14 @@ module V2
         track_apikey
       end
 
-      desc "show users projects"
+      desc "show users projects", {
+        notes: %q[
+
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+
+            ]
+      }
       get do
         authorized?
         @user_projects = Project.by_user(@current_user)
@@ -51,7 +58,14 @@ module V2
       end
 
 
-      desc "upload project file"
+      desc "upload project file", {
+        notes: %q[
+
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+
+            ]
+      }
       params do
         requires :upload, type: Hash, desc: "Project file - [maven.pom, Gemfile ...]"
       end
@@ -78,7 +92,14 @@ module V2
       end
 
 
-      desc "update project with new file"
+      desc "update project with new file", {
+        notes: %q[
+
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+
+            ]
+      }
       params do
         requires :project_key, :type => String, :desc => "Project specific identificator"
         requires :project_file, type: Hash, desc: "Project file - [maven.pom, Gemfile ...]"
@@ -112,7 +133,14 @@ module V2
       end
 
 
-      desc "delete given project"
+      desc "delete given project", {
+        notes: %q[
+
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+
+            ]
+      }
       params do
         requires :project_key, :type => String, :desc => "Delete project file"
       end
@@ -133,7 +161,14 @@ module V2
       end
 
 
-      desc "get grouped view of licences for dependencies"
+      desc "get grouped view of licences for dependencies", {
+        notes: %q[
+
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+
+            ]
+      }
       params do
         requires :project_key, :type => String, :desc => "Project specific identifier"
       end
