@@ -228,7 +228,7 @@ class ProductsController < ApplicationController
         url: product.to_url_path
       }
     end
-    
+
     respond_to do |format|
       format.json { render :json => results }
     end
