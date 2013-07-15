@@ -1,18 +1,5 @@
 <% title "Latest releases" %>
 
-<div class = "language-menu" style = "padding-bottom: 30px;">
-  <div class = "row-fluid">
-    <% @supported_languages.each do |lang| %>
-      <% lang = Product.encode_language(lang) %>
-      <div class = "span1">
-        <a href = "/latest/version/<%= lang %>" title= "Go to language specific page.">
-          <img src = "/assets/language/<%= lang %>.png" />
-        </a>
-      </div>
-    <% end %>
-  </div>
-</div>
-
 <div class = "release-stat row-fluid">
   <div class = "span3">
     <%= render partial: "stats_table", locals: {stats: @stats_yesterday} %>
@@ -35,3 +22,19 @@
   </div>
 </div>
 
+<div class = "language-menu" style = "padding-top: 30px;">
+  <h3>Filter by Language</h3>
+  <div>
+    Click on icon to see lanuage specific latest versions.
+  </div>
+  <div class = "row-fluid">
+    <% @supported_languages.each do |lang| %>
+      <% lang = Product.encode_language(lang) %>
+      <div class = "span1">
+        <a href = "/latest/version/<%= lang %>" title= "Go to language specific page.">
+          <img src = "/assets/language/<%= lang %>.png" />
+        </a>
+      </div>
+    <% end %>
+  </div>
+</div>
