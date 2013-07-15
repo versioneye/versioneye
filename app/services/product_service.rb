@@ -91,4 +91,13 @@ class ProductService
     dt_to = DateTime.now
     to_stats_container("Last 30 days", updates_since_to(dt_since, dt_to))
   end
+
+  def self.stats_last_month_releases
+    month_ago = Date.today << 1
+    to_stats_container(
+      "Last month", 
+      updates_since_to(month_ago.at_beginning_of_month,
+                       month_ago.at_end_of_month)
+    )
+  end
 end
