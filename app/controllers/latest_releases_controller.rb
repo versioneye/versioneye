@@ -5,9 +5,9 @@ class LatestReleasesController < ApplicationController
     @supported_languages = Product.supported_languages
     @latest_releases = Newest.balanced_newest(20)
     @stats_today = ProductService.stats_today_releases 
-    @stats_yesterday = ProductService.stats_yesterday_releases
     @stats_week = ProductService.stats_current_week_releases
     @stats_month = ProductService.stats_current_month_releases
+    @stats_last_month = ProductService.stats_last_month_releases
   end
 
   def show
