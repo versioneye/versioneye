@@ -220,7 +220,7 @@ class ProductsController < ApplicationController
     # products.sort! { |x,y| y[:followers] <=> x[:followers] }
     products.each do |product|
       results << {
-        value: product[:name_downcase],
+        value: "#{product[:name_downcase]}-#{product[:language]}",
         name: product[:name],
         language: Product.encode_language(product[:language]),
         description: product.short_summary,
