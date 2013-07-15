@@ -6,21 +6,18 @@
   </div>
 </section>
 
-<section id="search_section" class="container" style="padding-bottom: 65px;" >
+<section id="search_section" class="container search_container" >
   <div id="search_bar" style="text-align: center;" >
-
     <form id="form" action="/search" method="GET" style="padding: 0; margin:0;" >
-      <div class = "input-append">
-        <input id = "q" name = "q" class = "span7 input-huge" type = "text" />
-        <button class = "btn btn-primary btn-huge" type = "submit" >
-          <i class = "icon-search icon-white"></i>
-          &nbsp;Search
+      <div class="input-append">
+        <input id="q" name="q" class="span7 input-huge" type="text" />
+        <button class="btn btn-primary btn-huge" type="submit" >
+          <i class="icon-search icon-white"></i>&nbsp;Search
         </button>
       </div>
     </form>
-
   </div>
-  <div id="headline_2" class="jumbotron" style="margin-top: 10px;">
+  <div class="jumbotron" style="margin-top: 10px;">
     <div class="row" style="text-align: center; vertical-align: middle;">
       <% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
           <% @langs = @lang.split(",") %>
@@ -35,83 +32,31 @@
   </div>
 </section>
 
-<section id="features" class="container" style="background-color: white; padding-top: 50px; padding-bottom:30px;" >
-    <div class="row-fluid" >
-      <div class="span3 well1">
-        <span class = "icon_package off marketing-icon"></span>
-        <span class = "icon_package on  marketing-icon"></span>
-        <h5>Package support</h5>
-        <p>
-          VersionEye has support for 7 package managers
-          including Maven, Bundler, Lein and more.
-        </p>
-        <a href="/services">Find out more</a>
-      </div>
-      <div class="span3 well1">
-        <span class="icon_gitcat off marketing-icon"></span>
-        <span class="icon_gitcat on  marketing-icon"></span>
-        <h5>GitHub integration</h5>
-        <p>
-          Monitor your GitHub repositories
-          to be notified about outdated dependencies.
-        </p>
-        <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd'>Login via GitHub</a>
-      </div>
-      <div class="span3 well1">
-        <span class="icon_freeprice off marketing-icon"></span>
-        <span class="icon_freeprice on  marketing-icon"></span>
-        <h5>SignUp free</h5>
-        <p>
-          Monitoring public repositories is free. Only
-          private GitHub repositories are fee-based.
-        </p>
-        <a href="/signup">Register for free</a>
-      </div>
-      <div class="span3 well1">
-        <span class="icon_dependency off marketing-icon"></span>
-        <span class="icon_dependency on marketing-icon"></span>
-        <h5>Visualizing dependendencies</h5>
-        <p>
-          VersionEye visualises recursive dependencies and
-          makes complexity visible.
-        </p>
-        <a href="/ruby/rails/3.2.13">Watch example</a>
-      </div>
-    </div>
-  </section>
 
+<section id="features" class="container" >
+  <div class="well-white">
 
-  <section id="try" class="container" style="padding-top: 50px; padding-bottom:30px;" >
-  <div class = "row col2-left-l col2-right-r" >
-  <div class=" row ">
-    <div class="span3" style="font-size: 20px; line-height: 150%; font-weight: bold;" >
-      Try VersionEye now! Simply upload a file.
-    </div>
-    <div class = "span8">
-      <div style="margin-bottom: 10px;">(pom.xml, Gemfile, Gemfile.lock, requirements.txt, setup.py, package,json,
-        composer.json, composer.lock, dependency.gradle, project.clj)
-      </div>
-      <%= form_for services_path, :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
-        <div style="padding-bottom: 20px;">
-          <div class = "fileupload fileupload-new" data-provides="fileupload">
-            <span class = "btn btn-file">
-              <span class = "fileupload-new"> Select project file </span>
-              <span class = "fileupload-exists"> Change file </span>
-              <%= file_field 'upload', 'datafile', :class => "" %>
-            </span>
-            <span class = "fileupload-preview"></span>
-            <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
-          </div>
-          <button type="submit" class="btn2" >Upload</button>
-        </div>
-      <% end %>
-    </div>
+    <%= render "/products/helpers/what_is_versioneye" %>
+
+    <div class="hr_row col2-left-l col2-right-r"><hr /></div>
+
+    <%= render "/products/helpers/support_for_packagemanagers" %>
+
+    <div class="hr_row col2-left-l col2-right-r"><hr /></div>
+
+    <%= render "/products/helpers/integration_points" %>
+
   </div>
-</div>
 </section>
 
 
-  <section id="reasons" class=" container" style="background-color: white; padding-top: 50px; padding-bottom:30px;" >
+<section id="try" class="container" >
+  <%= render "/products/helpers/file_upload" %>
+</section>
+
+
+<section id="reasons" class="container" >
+  <div class="well-white">
     <div class="marketing" >
       <h2 class="casual">Because Software Libraries don't update themselves</h2>
       <p>They just become out-dated!</p>
@@ -124,6 +69,19 @@
       <h2 class="casual">Because Software Developers are wasting time with ..</h2>
       <p>looking manually for updates. Save Time and Money by automating this process.</p>
     </div>
-  </section>
+  </div>
+</section>
 
-<br/><br/><br/><br/>
+
+<section id="reasons" class="container" >
+  <div class="row col2-left-l col2-right-r" >
+    <div class  = "marketing">
+      <h2>Why not register today? It's free!</h2>
+      <p>
+        You can also <%= link_to "view our subscription plans", :controller => "services", :action => "pricing" %> .
+      </p>
+    </div>
+  </div>
+</section>
+
+<br/><br/>
