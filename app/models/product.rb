@@ -354,12 +354,20 @@ class Product
     return nil if prod_key.nil?
     prod_key.gsub(":", "/")
   end
+  
+  def self.encode_language(language)
+    language.gsub("\.", "").downcase
+  end
 
   def self.decode_language( language )
     return nil if language.nil?
     return A_LANGUAGE_NODEJS if language.match(/^node/i)
     return A_LANGUAGE_PHP if language.match(/^php/i)
     return language.capitalize
+  end
+
+  def to_url_path
+    "/#{Product.encode_language(language)}/#{Product.encode_prod_key(prod_key)}"
   end
 
   def description_summary

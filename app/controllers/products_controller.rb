@@ -214,11 +214,23 @@ class ProductsController < ApplicationController
   end
 
   def autocomplete_product_name
-    lang      = get_lang_value( params )
-    languages = lang.split(",")
-    @products = Product.find_by_name(params[:term], languages, 10).paginate(:page => 1)
+    term = params[:term] || "nothing"
+    results = []
+    products = Product.find_by_name(term).desc(:followers).limit(5)
+    products.each do |product|
+      results << {
+        value: product[:name_downcase],
+        name: product[:name],
+        language: Product.encode_language(product[:language]),
+        description: product.short_summary,
+        prod_key: product[:prod_key],
+        version: product[:version],
+        url: product.to_url_path
+      }
+    end
+
     respond_to do |format|
-      format.json { render :json => @products.as_json(:only => [:name]) }
+      format.json { render :json => results }
     end
   end
 

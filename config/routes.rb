@@ -170,11 +170,12 @@ Versioneye::Application.routes.draw do
 
   get   '/search', :to => 'products#search'
 
-  get   '/package/name'        , :to => 'products#autocomplete_product_name'
-  post  '/package/follow'      , :to => 'products#follow'
-  post  '/package/unfollow'    , :to => 'products#unfollow'
-  post  '/package/image_path'  , :to => 'dependency_wheel#image_path'
-  post  '/package/upload_image', :to => 'dependency_wheel#upload_image'
+  get   '/package/autocomplete'   , :to => 'products#autocomplete_product_name'
+  get   '/package/name'           , :to => 'products#autocomplete_product_name'
+  post  '/package/follow'         , :to => 'products#follow'
+  post  '/package/unfollow'       , :to => 'products#unfollow'
+  post  '/package/image_path'     , :to => 'dependency_wheel#image_path'
+  post  '/package/upload_image'   , :to => 'dependency_wheel#upload_image'
 
   # Rewriting old legacy paths
   get   '/package/:key'                       , :to => 'page#legacy_route'
