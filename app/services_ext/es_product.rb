@@ -39,7 +39,6 @@ class EsProduct
     #   products = Product.all().skip(skip).limit(bulk)
     #   Tire.index( Settings.elasticsearch_product_index ).bulk_store products.to_a
     # end
-
     Product.all.each do |product|
       index product
     end
