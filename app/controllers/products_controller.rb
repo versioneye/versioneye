@@ -217,6 +217,7 @@ class ProductsController < ApplicationController
     term = params[:term] || "nothing"
     results = []
     products = ProductService.search(term) # Product.find_by_name(term).desc(:followers).limit(5)
+    # products.sort! { |x,y| y[:followers] <=> x[:followers] }
     products.each do |product|
       results << {
         value: product[:name_downcase],
