@@ -40,7 +40,7 @@ function initialize_searchbox(){
               '<a href = "{{ url }}">',
                 '<strong>{{ name }}</strong>',
                '</a>',
-             '- {{ description }}',
+             ' - {{ description }}',
            '</p>',
       '</div>'
     ].join('')
