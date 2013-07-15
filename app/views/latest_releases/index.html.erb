@@ -2,9 +2,6 @@
 
 <div class = "release-stat row-fluid">
   <div class = "span3">
-    <%= render partial: "stats_table", locals: {stats: @stats_yesterday} %>
-  </div>
-  <div class = "span3">
     <%= render partial: "stats_table", locals: {stats: @stats_today} %>
   </div>
   <div class = "span3">
@@ -12,6 +9,9 @@
   </div>
   <div class = "span3">
     <%= render partial: "stats_table", locals: {stats: @stats_month} %>
+  </div>
+  <div class = "span3">
+    <%= render partial: "stats_table", locals: {stats: @stats_last_month} %>
   </div>
 </div>
 
