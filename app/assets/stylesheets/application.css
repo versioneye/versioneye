@@ -9,6 +9,7 @@
  *= require bootstrap_switch
  *= require bootstrap_upload
  *= require main
+ *= require typeahead.js-bootstrap
  *= require product
  *= require user
 */

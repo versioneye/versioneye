@@ -9,6 +9,8 @@
 //= require jquery_textbox_hinter
 //= require jquery_ui_1_8_17_custom_min
 //= require bootstrap.min
+//= require libs/hogan-2.0.0
+//= require libs/typeahead.min
 //= require google
 
 //= require custom_lp

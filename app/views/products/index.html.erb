@@ -8,27 +8,17 @@
 
 <section id="search_section" class="container" style="padding-bottom: 65px;" >
   <div id="search_bar" style="text-align: center;" >
+   
     <form id="form" action="/search" method="GET" style="padding: 0; margin:0;" >
-      <input id="q"    name="q"    class="input" type="text"   value="<%= @query %>" style="
-  margin: 0;
-  padding-left: 15px;
-  font-size: 28px;
-  height: 50px;
-  width: 500px;
-  margin-right: -1px;
-  -webkit-border-radius: 10px 0px 0px 10px;
-  -moz-border-radius: 10px 0px 0px 10px;
-  border-radius: 10px 0px 0px 10px;" /><button class="btn btn-primary" style="
-  height: 60px;
-  margin-left: 0px;
-  font-size: 20px;
-  -webkit-border-radius: 0px 10px 10px 0px;
-  -moz-border-radius: 0px 10px 10px 0px;
-  border-radius: 0px 10px 10px 0px;
-  ">
-        Search
-      </button>
+      <div class = "input-append">
+        <input id = "q" name = "q" class = "span7 input-huge" type = "text" />
+        <button class = "btn btn-primary btn-huge" type = "submit" >
+          <i class = "icon-search icon-white"></i> 
+          &nbsp;Search 
+        </button> 
+      </div>
     </form>
+
   </div>
   <div id="headline_2" class="jumbotron" style="margin-top: 10px;">
     <div class="row" style="text-align: center; vertical-align: middle;">
