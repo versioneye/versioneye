@@ -657,6 +657,10 @@ div.content_no_head {
 
 .footer {
 
+  background-color: white;
+  padding-top: 15px;
+  border-top: 1px solid #eeeeee;
+
   & h4 { color: $text_casual;}
   & p {
     margin-bottom: 0;
@@ -845,6 +849,10 @@ div.content_no_head {
   & .input-append input {
     border-radius: 4px 0 0 4px;
   }
+}
+
+.search_container{
+  padding-bottom: 65px;
 }
 
 #q {
