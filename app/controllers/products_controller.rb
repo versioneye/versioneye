@@ -216,7 +216,7 @@ class ProductsController < ApplicationController
   def autocomplete_product_name
     term = params[:term] || "nothing"
     results = []
-    products = Product.find_by_name(term).desc(:followers).limit(5)
+    products = ProductService.search(term) # Product.find_by_name(term).desc(:followers).limit(5)
     products.each do |product|
       results << {
         value: product[:name_downcase],
