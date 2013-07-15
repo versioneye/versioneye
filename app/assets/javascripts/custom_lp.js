@@ -4,7 +4,7 @@ jQuery(document).ready(function() {
 	jQuery('#q').tbHinter({
 		text: "search for a software library"
 	});
-  
+
   initialize_searchbox();
 });
 
