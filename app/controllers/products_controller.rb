@@ -218,6 +218,7 @@ class ProductsController < ApplicationController
     results = []
     products = ProductService.search(term) # Product.find_by_name(term).desc(:followers).limit(5)
     # products.sort! { |x,y| y[:followers] <=> x[:followers] }
+    index = 0
     products.each do |product|
       results << {
         value: "#{product[:name_downcase]}-#{product[:language]}",
@@ -228,6 +229,8 @@ class ProductsController < ApplicationController
         version: product[:version],
         url: product.to_url_path
       }
+      index += 1
+      break if index > 9
     end
 
     respond_to do |format|
