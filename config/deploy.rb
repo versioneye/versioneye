@@ -5,7 +5,7 @@ load "deploy/assets"
 require "bundler/capistrano"
 
 set :application, "versioneye"
-set :repository , "git@github.com:versioneye/versioneye.git"
+set :repository , "https://github.com/versioneye/versioneye.git"
 
 set :scm, :git
 
