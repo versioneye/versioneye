@@ -53,3 +53,31 @@ Robert studied computer science in Germany from 2000 - 2005. In 2008 he founded 
 2013-07-14T14:59:50.188270+00:00 app[web.2]:   app/models/dependency.rb:85:in `version_parsed'
 2013-07-14T14:59:50.188270+00:00 app[web.2]:   app/models/dependency.rb:127:in `version_for_url'
 
+
+Gem::Installer::ExtensionBuildError: ERROR: Failed to build gem native extension.
+
+    /usr/bin/ruby1.9.1 extconf.rb
+checking for asprintf()... yes
+checking for ruby/st.h... yes
+checking for ruby/regex.h... yes
+checking for ruby/encoding.h... yes
+creating Makefile
+
+make "DESTDIR="
+sh: 1: make: not found
+
+
+Gem files will remain installed in /usr/lib/ruby/gems/1.9.1/gems/bson_ext-1.7.0 for inspection.
+Results logged to /usr/lib/ruby/gems/1.9.1/gems/bson_ext-1.7.0/ext/cbson/gem_make.out
+
+An error occurred while installing bson_ext (1.7.0), and Bundler cannot continue.
+Make sure that `gem install bson_ext -v '1.7.0'` succeeds before bundling.
+
+
+apt-get install make
+apt-get install g++
+gem update --system
+gem install bundler
+
+
+
