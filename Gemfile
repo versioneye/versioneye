@@ -19,7 +19,7 @@ gem 'aws-s3'            , '0.6.3', :require => 'aws/s3'
 gem 'nokogiri'          , '1.6.0'
 gem 'stripe'            , '1.8.3'
 gem 'thin'              , '1.5.1'
-# gem 'unicorn'           , '4.6.3'
+gem 'unicorn'           , '4.6.3'
 gem 'tire'              , '0.6.0'
 gem 'json'              , '1.8.0'
 gem 'dalli'             , '2.6.4'   # memcache library
