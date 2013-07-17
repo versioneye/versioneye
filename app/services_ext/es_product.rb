@@ -18,7 +18,6 @@ class EsProduct
       }
     end
   end
-  # , :settings => { :number_of_shards => 1 }
 
   def self.clean_all
     Tire.index( Settings.elasticsearch_product_index ).delete
@@ -75,6 +74,10 @@ class EsProduct
       index product
     end
     self.refresh
+  end
+
+  def self.remove( product )
+    Tire.index( Settings.elasticsearch_product_index ).remove( product.id )
   end
 
   # langs: need to be an Array !
