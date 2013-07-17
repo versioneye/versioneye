@@ -49,7 +49,6 @@
   </div>
 </section>
 
-
 <section id="try" class="container" >
   <%= render "/products/helpers/file_upload" %>
 </section>
@@ -58,16 +57,16 @@
 <section id="reasons" class="container" >
   <div class="well-white">
     <div class="marketing" >
-      <h2 class="casual">Because Software Libraries don't update themselves</h2>
+      <h2 class="casual">Because software libraries don't update themselves</h2>
       <p>They just become out-dated!</p>
     </div>
     <div class="marketing" >
-      <h2 class="casual">Because Software Libraries are not like iPhone Apps</h2>
+      <h2 class="casual">Because software libraries are not like iPhone apps</h2>
       <p>They are passive! They don't tell you that they are out-dated!</p>
     </div>
     <div class="marketing" >
-      <h2 class="casual">Because Software Developers are wasting time with ..</h2>
-      <p>looking manually for updates. Save Time and Money by automating this process.</p>
+      <h2 class="casual">Because software developers are wasting time with ..</h2>
+      <p>looking manually for updates. Save time and money by automating this process.</p>
     </div>
   </div>
 </section>
@@ -76,9 +75,12 @@
 <section id="reasons" class="container" >
   <div class="row col2-left-l col2-right-r" >
     <div class  = "marketing">
-      <h2>Why not register today? It's free!</h2>
+      <h2>Register today. It's free!</h2>
+      <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0;") do  %>
+        <button type="submit" class="btn btn-success" >Sign Up Now</button>
+      <% end %>
       <p>
-        You can also <%= link_to "view our subscription plans", :controller => "services", :action => "pricing" %> .
+        Or have a look at our <%= link_to "subscription plans", :controller => "services", :action => "pricing" %> .
       </p>
     </div>
   </div>
