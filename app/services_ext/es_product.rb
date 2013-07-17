@@ -5,7 +5,7 @@ class EsProduct
       create :mappings => {
         :product => {
           :properties => {
-            :_id                => { :type => 'string', :analyzer => 'keyword', :include_in_all => false },
+            :_id  => { :type => 'string', :analyzer => 'keyword', :include_in_all => false },
             :name => { :type => 'multi_field', :fields => {
                 :name => {:type => 'string', :analyzer => 'snowball', :boost => 100},
                 :untouched => {:type => 'string', :analyzer => 'keyword' }

@@ -109,13 +109,12 @@ Versioneye::Application.routes.draw do
     get '/poll/github_repos', :to => 'github_repos#poll_changes'
   end
 
-  post  '/services/choose_plan',  :to => 'services#choose_plan'
-  resources :services do
-    member do
-      get  'recursive_dependencies'
-      post 'recursive_dependencies'
-    end
-  end
+  post  '/services/choose_plan'               ,  :to => 'services#choose_plan'
+  post  '/services'                           ,  :to => 'services#create'
+  get   '/services/:id'                       ,  :to => 'services#show', :as => 'service'
+  get   '/services/:id/recursive_dependencies',  :to => 'services#recursive_dependencies'
+  post  '/services/:id/recursive_dependencies',  :to => 'services#recursive_dependencies'
+
   get   '/pricing',            :to => 'services#pricing'
   get   '/news',               :to => 'news#news'
   get   '/mynews',             :to => 'news#mynews'
