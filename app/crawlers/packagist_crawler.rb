@@ -56,7 +56,7 @@ class PackagistCrawler
   def self.init_product name
     product = Product.find_by_lang_key( Product::A_LANGUAGE_PHP, name )
     return product if product
-    Rails.logger.info " -- New Product - #{name}"
+    Rails.logger.info " -- New PHP Package - #{name}"
     Product.new({:reindex => true})
   end
 
@@ -91,7 +91,7 @@ class PackagistCrawler
     product.reindex = true
     product.save
 
-    Rails.logger.info " -- Product: #{product.prod_key} -- Version: #{version_number}"
+    Rails.logger.info " -- PHP Package: #{product.prod_key} -- with new version: #{version_number}"
 
     VersionService.update_version_data( product )
 
@@ -151,7 +151,7 @@ class PackagistCrawler
           :language => Product::A_LANGUAGE_PHP })
         dependency.save
         dependency.update_known
-        Rails.logger.info " -- Create new dependency: #{dependency.prod_key}:#{dependency.prod_version} -> #{dependency.dep_prod_key}:#{dependency.version}"
+        Rails.logger.info " -- Create new dependency: #{dependency.prod_key}:#{dependency.prod_version} depends on #{dependency.dep_prod_key}:#{dependency.version}"
       end
     end
   end
@@ -159,10 +159,10 @@ class PackagistCrawler
   def self.create_developers authors, product, version_number
     if authors && !authors.empty?
       authors.each do |author|
-        author_name = author['name']
-        author_email = author['email']
+        author_name     = author['name']
+        author_email    = author['email']
         author_homepage = author['homepage']
-        author_role = author['role']
+        author_role     = author['role']
         devs = Developer.find_by Product::A_LANGUAGE_PHP, product.prod_key, version_number, author_name
         if devs && !devs.empty?
           next
