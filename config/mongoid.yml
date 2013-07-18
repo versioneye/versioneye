@@ -15,7 +15,6 @@ test:
     pool_size: 20
     pool_timeout: 10.0
 
-
 production:
     host: localhost
     database: veye_prod
