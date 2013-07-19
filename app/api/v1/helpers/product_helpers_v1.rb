@@ -10,7 +10,7 @@ module ProductHelpersV1
     "node.js" =>  "Node.JS",
     "nodejs" => "Node.JS"
   }
-  
+
   def parse_query(query)
       query = query.to_s
       query = query.strip().downcase
@@ -71,7 +71,7 @@ module ProductHelpersV1
       if product
         return product
       else
-        error! "Wrong product key: `#{params[:prod_key]}` dont exists.", 404
+        error! "Wrong product key: `#{params[:prod_key]}` don't exists.", 404
         return
       end
     end
@@ -83,7 +83,7 @@ module ProductHelpersV1
     p "#-- fetch_product: #{lang} #{prod_key}"
     current_product = Product.fetch_product( lang, prod_key )
     if current_product.nil?
-      error! "Wrong product key: `#{params[:prod_key]}` dont exists.", 404
+      error! "Wrong product key: `#{params[:prod_key]}` don't exists.", 404
     end
     current_product
   end

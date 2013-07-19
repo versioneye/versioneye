@@ -38,7 +38,7 @@ class Github
 
   def self.user_repos_changed?( user )
     repo = user.github_repos.all.first
-    #if user dont have any repos in cache, then force to load data
+    #if user don't have any repos in cache, then force to load data
     return true if repo.nil?
     headers = {
       "User-Agent" => A_USER_AGENT,

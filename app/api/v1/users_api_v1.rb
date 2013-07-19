@@ -55,7 +55,7 @@ class UsersApiV1 < Grape::API
       temp_notice[:user_info] = @current_user
       temp_notice[:unread] = unread_notifications.count
       temp_notice[:notifications] = unread_notifications
-    
+
       present temp_notice, with: EntitiesV1::UserNotificationEntity
     end
   end
@@ -83,7 +83,7 @@ class UsersApiV1 < Grape::API
     get '/:username/favorites' do
        authorized?
        @user = User.find_by_username(params[:username])
-       error!("User with username `#{params[:username]}` dont exists.", 400) if @user.nil?
+       error!("User with username `#{params[:username]}` don't exists.", 400) if @user.nil?
 
        make_favorite_response(@user, params[:page], 30)
     end
@@ -97,7 +97,7 @@ class UsersApiV1 < Grape::API
       authorized?
 
       @user = User.find_by_username params[:username]
-      error!("User #{params[:username]} dont exists", 400) if @user.nil?
+      error!("User #{params[:username]} don't exists", 400) if @user.nil?
 
       make_comment_response(@user, params[:page], 30)
     end
