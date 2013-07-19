@@ -178,7 +178,7 @@ class UsersController < ApplicationController
       flash[:error] = "Wrong verification code. If it's mistake, please send feedback to our customer support."
       has_failure = true
     elsif password.empty? or password != password2
-      flash[:error] = "Passwords dont match."
+      flash[:error] = "Passwords don't match."
       has_failure = true
     end
 

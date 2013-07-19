@@ -52,7 +52,7 @@ module V2
         project_key = params[:project_key]
         project = fetch_project_by_key_and_user(project_key, current_user)
         if project.nil?
-          error! "Project `#{params[:project_key]}` dont exists", 400
+          error! "Project `#{params[:project_key]}` don't exists", 400
         end
         present project, with: EntitiesV2::ProjectEntity, type: :full
       end
@@ -109,7 +109,7 @@ module V2
 
         @project = fetch_project_by_key_and_user( params[:project_key], current_user )
         if @project.nil?
-          error! "Project `#{params[:project_key]}` dont exists", 400
+          error! "Project `#{params[:project_key]}` don't exists", 400
         end
 
         if params[:project_file].nil?
@@ -153,7 +153,7 @@ module V2
         if project.nil? or not destroy_project(project.id)
           project = Project.by_user(@current_user).where(_id: proj_key).shift
           if project.nil?
-            error! "Deletion failed because you dont have such project: #{proj_key}", 500
+            error! "Deletion failed because you don't have such project: #{proj_key}", 500
           end
         end
 
@@ -176,7 +176,7 @@ module V2
         authorized?
 
         @project = ProjectsApiV2.fetch_project @current_user, params[:project_key]
-        error!("Project `#{params[:project_key]}` dont exists", 400) if @project.nil?
+        error!("Project `#{params[:project_key]}` don't exists", 400) if @project.nil?
 
         licenses = {}
 
