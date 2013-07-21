@@ -17,7 +17,7 @@
         </div>
       <% else %>
         <div class="span9" style="line-height: 1.2; width: 760px;">
-          <h1 class="product"><%= @product.name %></h1> to get notified about new versions!
+          Follow <h1 class="product"> <%= @product.name %> </h1> to get notified about new versions!
         </div>
         <div class="span2 pull-right" style="width: 105px; text-align: right;">
           <%= form_tag("/package/follow", :style=>"margin: 0;") do  %>
