@@ -1,5 +1,9 @@
 class LanguageController < ApplicationController
 
+  @@languages = [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
+    Product::A_LANGUAGE_PYTHON, Product::A_LANGUAGE_PHP, Product::A_LANGUAGE_NODEJS,
+    Product::A_LANGUAGE_JAVASCRIPT, Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R]
+
   def show
     sample_size           = 24
     max_population_size   = 10 * sample_size
@@ -8,6 +12,7 @@ class LanguageController < ApplicationController
     @top_products    = Product.by_language(@lang).desc(:followers).limit(10)
     @latest_products = Newest.by_language(@lang).desc(:created_at).limit(10)
     @followers = []
+    @languages = @@languages
 
     #build sample population of followers
     population = []

@@ -1,0 +1,12 @@
+
+
+  <% if @languages && !@languages.empty? && @lang %>
+    <h4>Check out other languages at VersionEye</h4>
+      <% @languages.each do |language| %>
+        <% langname = language.downcase.gsub(/\./, "") %>
+        <% next if language.eql?(@lang) %>
+        <div onclick="document.location.href='<%=language%>'" class="icon_<%= langname %>_small_container" style="cursor: pointer;" >
+            <span  id="icon_<%= langname %>" class="icon_<%= langname %> small on" title="<%= langname %>">&nbsp;</span>
+        </div>
+      <% end %>
+  <% end %>
