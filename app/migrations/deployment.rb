@@ -1,14 +1,11 @@
 class Deployment
 
   def self.migrate
-    self.step_1
-    self.step_2
-    self.update_php
-    self.update_pip
-    self.update_npm
-    # db.products.dropIndex( { "prod_key": 1 } )
-    # db.products.ensureIndex( { "prod_key": 1, "language": 1 } )
-    # db.products.ensureIndex( { "prod_key": 1, "language": 1 }, { unique: true } )
+    ProductMigration.update_r_prod_keys
+    VersionarchiveMigration.update_r_prod_keys
+    VersionlinkMigration.update_r_prod_keys
+    Developer.update_r_prod_keys
+    NewestMigration.update_r_prod_keys
   end
 
   def self.step_1
