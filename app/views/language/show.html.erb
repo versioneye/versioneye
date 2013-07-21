@@ -11,9 +11,10 @@
   </div>
 
   <div class = "row">
-    <%=  render "language/helpers/followers" %> 
+    <%=  render "language/helpers/followers" %>
   </div>
 
+<% if 1 == 2 %>
   <div class = "row">
     <div class = "span5">
       <%= render "language/helpers/vulnerabilities" %>
@@ -22,4 +23,6 @@
       <%= render "language/helpers/newsfeed" %>
     </div>
   </div>
+<% end %>
+
 </section>
