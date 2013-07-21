@@ -4,7 +4,7 @@ class Deployment
     ProductMigration.update_r_prod_keys
     VersionarchiveMigration.update_r_prod_keys
     VersionlinkMigration.update_r_prod_keys
-    Developer.update_r_prod_keys
+    DeveloperMigration.update_r_prod_keys
     NewestMigration.update_r_prod_keys
   end
 
