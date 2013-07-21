@@ -39,6 +39,24 @@ class ProductMigration
     end
   end
 
+  def self.update_r_prod_keys
+    products = Product.where(:prod_key => /^r\//i, :language => "R")
+    p "matched products: #{products.count}"
+    products.each do |product|
+      product.prod_key = product.prod_key.gsub("r\/", "")
+      prod = Product.fetch_product( "R", product.prod_key )
+      if prod
+        if prod.users
+          product.users = prod.users
+        end
+        prod.remove
+        p "Remove dublicate #{prod.prod_key}"
+      end
+      p "save #{product.prod_key}"
+      product.save
+    end
+  end
+
   def self.update_followers
     products = Product.where( :"user_ids.0" => {"$exists"=>true} )
     products.each do |product|
