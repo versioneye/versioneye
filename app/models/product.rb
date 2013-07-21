@@ -58,7 +58,7 @@ class Product
 
   embeds_many :versions
   embeds_many :repositories
-  has_many :product_security_notifications
+  # has_many :product_security_notifications
 
   has_and_belongs_to_many :users
 
@@ -363,7 +363,7 @@ class Product
     return nil if prod_key.nil?
     prod_key.gsub(":", "/")
   end
-  
+
   def self.encode_language(language)
     language.gsub("\.", "").downcase
   end
@@ -398,7 +398,8 @@ class Product
 
   def show_dependency_badge?
     self.language.eql?(A_LANGUAGE_JAVA) or self.language.eql?(A_LANGUAGE_PHP) or
-    self.language.eql?(A_LANGUAGE_RUBY) or self.language.eql?(A_LANGUAGE_NODEJS)
+    self.language.eql?(A_LANGUAGE_RUBY) or self.language.eql?(A_LANGUAGE_NODEJS) or
+    self.language.eql?(A_LANGUAGE_CLOJURE)
   end
 
   private
