@@ -31,4 +31,5 @@ class LanguageController < ApplicationController
     # render template: "language/show"
 
   end
+
 end
