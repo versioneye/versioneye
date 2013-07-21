@@ -1,13 +1,58 @@
 
-<div class = "well row box_snippet" >
+<h5 class="desc_header">Maven</h5>
+<div class = "well" >
   <h5 class="dep_header">pom.xml snippet</h5>
-  <div class="span7" style="width: 575px; margin-bottom: 0;">
-    <pre class = "prettyprint" style = "background-color: #fff; margin-bottom: 0;"><code class = "lang-xml">
-&lt;dependency&gt;
+  <div class="row">
+    <div class="span7" style="width: 575px; margin-bottom: 0;">
+      <pre class="prettyprint"><code>&lt;dependency&gt;
     &lt;groupId&gt;<b><%= @product.group_id %></b>&lt;/groupId&gt;
     &lt;artifactId&gt;<b><%= @product.artifact_id %></b>&lt;/artifactId&gt;
     &lt;version&gt;<b><%= @product.version %></b>&lt;/version&gt;
-&lt;/dependency&gt;
-    </code></pre>
+&lt;/dependency&gt;</code></pre>
+    </div>
   </div>
+
+  <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.version ) %>
+  <% if !downloads.nil? && !downloads.empty? %>
+
+    <div class="row">
+      <hr/>
+    </div>
+
+    <div class="row">
+      <div class="span2">
+        <h5 class="dep_header" style="margin-top: 0;">
+          <%= pluralize(downloads.count, "Download") %>
+        </h5>
+      </div>
+      <div class="span5" >
+        <ul class="download_list" >
+        <% downloads.each do |download|  %>
+          <li >
+            <a title = "Download here." href="<%= download.link %>"><%= download.name %></a>
+          </li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+
+  <% end %>
+
+  <div class="row">
+    <hr/>
+  </div>
+
+  <div class="row">
+    <div class="span2">
+      <h5 class="dep_header" style="margin-top: 0;">
+        <%= pluralize(@product.repositories.count, "Repository") %>
+      </h5>
+    </div>
+    <div class="span5" style="width: 430px;">
+      <% @product.repositories.each do |repo| %>
+        <div><a href="<%= repo.src %>" target="new" ><%= repo.src %></a> </div>
+      <% end %>
+    </div>
+  </div>
+
 </div>

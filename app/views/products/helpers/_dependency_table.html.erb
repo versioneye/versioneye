@@ -1,16 +1,31 @@
 
-  <table class="dependency_table" style="width: 570px;">
+  <% if @product.language.eql?( Product::A_LANGUAGE_JAVA ) %>
+    <% font_size = "12" %>
+  <% else %>
+    <% font_size = "14" %>
+  <% end %>
+  <table class="dependency_table" style="width: 570px; font-size: <%=font_size%>px;">
     <thead>
       <tr>
-        <th class="name_col"></th>
-        <th class="version_col">Required</th>
         <th class="version_col">Current</th>
+        <th class="version_col">Required</th>
+        <th class="name_col"></th>
       </tr>
     </thead>
     <% dependencies.each do |dep| %>
       <% dep.update_known_if_nil() %>
       <% tr_class = "flash warn" if DependencyService.outdated?( dep ) %>
       <tr class="<%= tr_class %>">
+        <td>
+          <% if dep.known && dep.product %>
+            <%= VersionService.newest_version( dep.product.versions ).version %>
+          <% else %>
+            UNKNOWN
+          <% end %>
+        </td>
+        <td>
+          <span ><%= dep.version %></span>
+        </td>
         <td>
           <% if dep.known %>
             <span >
@@ -23,18 +38,7 @@
               </a>
             </span>
           <% else %>
-            <span class="icon_link icon16"></span>
             <span ><%= dep.name %></span>
-          <% end %>
-        </td>
-        <td>
-          <span ><%= dep.version %></span>
-        </td>
-        <td>
-          <% if dep.known && dep.product %>
-            <%= VersionService.newest_version( dep.product.versions ).version %>
-          <% else %>
-            UNKNOWN
           <% end %>
         </td>
       </tr>

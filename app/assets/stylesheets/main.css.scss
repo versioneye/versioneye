@@ -99,8 +99,8 @@ h5.desc_header{
 }
 
 h5.dep_header{
-  padding: 0 0 0px 0;
-  margin: 10px 0px;
+  padding: 0;
+  margin: 10px 0;
   color: $text_casual;
   font-size: 14px;
   font-weight: normal;
@@ -146,6 +146,10 @@ h3 code {
   border-bottom: 1px solid #dddddd;
 }
 
+pre.prettyprint{
+  background-color: #fff;
+  margin-bottom: 0;
+}
 
 /* Tweak navbar brand link to be super sleek
 -------------------------------------------------- */
@@ -550,7 +554,6 @@ div.content_no_head {
 }
 */
 .release_box{
-  margin-top: 30px;
   margin-bottom: 30px;
 }
 
@@ -907,6 +910,11 @@ div.content_no_head {
   margin-left: 30px;
 }
 
+.l-top-down-30{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
 .search-item {
   padding: 10px 10px 10px 10px;
   border-bottom: 1px dotted #DDD;
@@ -1127,19 +1135,9 @@ h2 + .row {
           border-radius: 4px;
 }
 
-.box_snippet{
-  margin-bottom: 30px;
-}
-
-.box_repos{
-  margin-bottom: 30px;
-}
-
 .mute {
-
   color : #999;
 }
-
 
 .thumbnails {
 

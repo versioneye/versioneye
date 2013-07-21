@@ -52,7 +52,7 @@ class CircleElement
 
   def self.dependency_circle(lang, prod_key, version, scope)
     if scope == nil
-      scope = main_scope
+      scope = Dependency.main_scope( lang )
     end
     hash = Hash.new
     dependencies = Array.new
