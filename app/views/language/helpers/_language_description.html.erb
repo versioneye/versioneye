@@ -1,10 +1,47 @@
 
 <% if @lang.eql?( Product::A_LANGUAGE_RUBY ) %>
 
+  <small>What Wikipedia is saying about Ruby ... </small><br/>
   Ruby is a dynamic, reflective, general-purpose object-oriented programming language
   that combines syntax inspired by Perl with Smalltalk-like features. It was also
   influenced by Eiffel and Lisp.[8] Ruby was first designed and developed in the
-  mid-1990s by Yukihiro "Matz" Matsumoto in Japan.<br/>
-  Read more <a href="http://en.wikipedia.org/wiki/Ruby_(programming_language)" target="wiki_page">here</a>
+  mid-1990s by Yukihiro "Matz" Matsumoto in Japan.
+  <br/>Read more <a href="http://en.wikipedia.org/wiki/Ruby_(programming_language)" target="wiki_page">here</a>
+
+<% elsif @lang.eql?( Product::A_LANGUAGE_JAVA ) %>
+
+  <small>What Wikipedia is saying about Java ... </small><br/>
+  Java is a general-purpose, concurrent, class-based, object-oriented computer programming language that is specifically designed to have as few implementation dependencies as possible. It is intended to let application developers "write once, run anywhere" (WORA), meaning that code that runs on one platform does not need to be recompiled to run on another. Java applications are typically compiled to bytecode (class file) that can run on any Java virtual machine (JVM) regardless of computer architecture.
+  <br/>Read more <a href="http://en.wikipedia.org/wiki/Java_(programming_language)" target="wiki_page">here</a>
+
+<% elsif @lang.eql?( Product::A_LANGUAGE_PHP ) %>
+
+  <small>What Wikipedia is saying about PHP ... </small><br/>
+  PHP is a server-side scripting language designed for web development but also used as a general-purpose programming language. PHP is now installed on more than 244 million websites and 2.1 million web servers. Originally created by Rasmus Lerdorf in 1995, the reference implementation of PHP is now produced by The PHP Group. While PHP originally stood for Personal Home Page, it now stands for PHP: Hypertext Preprocessor, a recursive acronym.
+  <br/>Read more <a href="http://en.wikipedia.org/wiki/PHP" target="wiki_page">here</a>
+
+<% elsif @lang.eql?( Product::A_LANGUAGE_PYTHON ) %>
+
+  <small>What Wikipedia is saying about Python ... </small><br/>
+  Python is a widely used general-purpose, high-level programming language. Its design philosophy emphasizes code readability, and its syntax allows programmers to express concepts in fewer lines of code than would be possible in languages such as C. The language provides constructs intended to enable clear programs on both a small and large scale.
+  <br/>Read more <a href="http://en.wikipedia.org/wiki/Python_(programming_language)" target="wiki_page">here</a>
+
+<% elsif @lang.eql?( Product::A_LANGUAGE_NODEJS ) %>
+
+  <small>What Wikipedia is saying about Node.JS ... </small><br/>
+  Node.js is a server-side software system designed for writing scalable Internet applications, notably web servers. Programs are written on the server side in JavaScript, using event-driven, asynchronous I/O to minimize overhead and maximize scalability.
+  <br/>Read more <a href="http://en.wikipedia.org/wiki/Nodejs" target="wiki_page">here</a>
+
+<% elsif @lang.eql?( Product::A_LANGUAGE_CLOJURE ) %>
+
+  <small>What Wikipedia is saying about Clojure ... </small><br/>
+  Clojure (pronounced like "closure") is a dialect of the Lisp programming language created by Rich Hickey. It is a functional general-purpose language. Its focus on programming with immutable values and explicit progression-of-time constructs are intended to facilitate the development of more robust programs, particularly multithreaded ones.
+  <br/>Read more <a href="http://en.wikipedia.org/wiki/Clojure" target="wiki_page">here</a>
+
+<% elsif @lang.eql?( Product::A_LANGUAGE_R ) %>
+
+  <small>What Wikipedia is saying about R ... </small><br/>
+  R is a free software programming language and a software environment for statistical computing and graphics. The R language is widely used among statisticians and data miners for developing statistical software and data analysis. Polls and surveys of data miners are showing R's popularity has increased substantially in recent years.
+  <br/>Read more <a href="http://en.wikipedia.org/wiki/R_programming_language" target="wiki_page">here</a>
 
 <% end %>
