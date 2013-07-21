@@ -210,7 +210,7 @@ class Product
   end
 
   def self.find_by_group_and_artifact(group, artifact)
-    Product.where( group_id: group, artifact_id: artifact )[0]
+    Product.where( group_id: group, artifact_id: artifact ).shift
   end
 
   ######## ELASTIC SEARCH MAPPING ###################
@@ -275,7 +275,7 @@ class Product
   end
 
   def dependencies(scope = nil)
-    scope = main_scope if scope == nil
+    scope = Dependency.main_scope(self.language) if scope == nil
     Dependency.find_by_lang_key_version_scope( language, prod_key, version, scope )
   end
 
@@ -330,15 +330,7 @@ class Product
   end
 
   def main_scope
-    if self.language.eql?( Product::A_LANGUAGE_RUBY )
-      return Dependency::A_SCOPE_RUNTIME
-    elsif self.language.eql?( Product::A_LANGUAGE_JAVA )
-      return Dependency::A_SCOPE_COMPILE
-    elsif self.language.eql?( Product::A_LANGUAGE_NODEJS )
-      return Dependency::A_SCOPE_COMPILE
-    elsif self.language.eql?( Product::A_LANGUAGE_PHP )
-      return Dependency::A_SCOPE_REQUIRE
-    end
+    Dependency.main_scope( self.language )
   end
 
   def self.downcase_array(arr)

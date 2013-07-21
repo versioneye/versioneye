@@ -1,18 +1,13 @@
+<h5 class="desc_header"> GEM </h5>
+
 <div class = "well box_snippet" >
 
-  <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.version ) %>
-  <% if !downloads.nil? && !downloads.empty? %>
-    <div class="row" style="margin-bottom: 5px;" >
-      <div class="span2" >
-        <h5 class="dep_header"><%= pluralize(downloads.count, "Download") %></h5>
-      </div>
-      <div class="span5 download_area" style="width: 409px;" >
-        <% downloads.each do |download|  %>
-          <a title="<%= download.name %> download" href="<%= download.link %>"><%= download.name %></a>
-        <% end %>
-      </div>
+  <div class="row" style="margin-bottom: 5px;">
+    <div class="span2">
+      <h5 class="dep_header">Gemfile entry</h5>
     </div>
-  <% end %>
+    <div class="span5" style="width: 430px; margin-bottom: 0;"><pre class = "prettyprint" style="background-color: #fff; margin-bottom: 0;"><code>gem '<%= @product.name %>', '<%= @version.version %>'</code></pre></div>
+  </div>
 
   <div class="row" style="margin-bottom: 5px;">
     <div class="span2">
@@ -22,11 +17,18 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="span2">
-      <h5 class="dep_header">Gemfile entry</h5>
+  <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.version ) %>
+  <% if !downloads.nil? && !downloads.empty? %>
+    <div class="row"  >
+      <div class="span2" >
+        <h5 class="dep_header">Download</h5>
+      </div>
+      <div class="span5 download_area" style="width: 409px;" >
+        <% downloads.each do |download|  %>
+          <a title="<%= download.name %> download" href="<%= download.link %>"><%= download.name %></a>
+        <% end %>
+      </div>
     </div>
-    <div class="span5" style="width: 430px; margin-bottom: 0;"><pre class = "prettyprint" style="background-color: #fff; margin-bottom: 0;"><code>gem '<%= @product.name %>', '<%= @version.version %>'</code></pre></div>
-  </div>
+  <% end %>
 
 </div>

@@ -4,7 +4,7 @@ describe "SignUp with GitHub" do
   before :each do
     FakeWeb.allow_net_connect = false
   end
-  
+
   after :each do
     FakeWeb.clean_registry
     FakeWeb.allow_net_connect = true
@@ -13,7 +13,7 @@ describe "SignUp with GitHub" do
   it "signup a new user with GitHub" do
     get signup_path, nil, "HTTPS" => "on"
     assert_response :success
-    assert_tag :tag => "span", :attributes => { :class => "btn_github login" }
+    assert_tag :tag => "button", :attributes => { :class => "btn btn-github btn-large btn-signin" }
 
     FakeWeb.register_uri(:get, "https://github.com/login/oauth/access_token?client_id=#{Settings.github_client_id}&client_secret=#{Settings.github_client_secret}&code=123", :body => "token=token_123")
     FakeWeb.register_uri(:get, "https://api.github.com/user?access_token=token_123", :body => "{\"id\": 1, \"email\": \"test@test.de\"}")

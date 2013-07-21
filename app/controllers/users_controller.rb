@@ -8,14 +8,6 @@ class UsersController < ApplicationController
   force_ssl :only => [:new, :create, :activate] if Rails.env.production?
   # before_filter :force_http , :only => [:show, :favoritepackages, :comments]
 
-  def home
-    if signed_in?
-      redirect_to user_path current_user
-    else
-      redirect_to root_path
-    end
-  end
-
   def index
     @users = User.find_all(params[:page])
   end

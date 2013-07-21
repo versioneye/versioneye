@@ -67,6 +67,10 @@ class DependencyWheelController < ApplicationController
       else
         return false
       end
+    rescue => e
+      Rails.logger.error e.message
+      Rails.logger.error e.backtrace.first
+      return false
     end
 
 end
