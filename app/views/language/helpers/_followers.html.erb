@@ -1,22 +1,26 @@
 <div id  = "followers-container">
-  <h4> They like <%= @lang.to_s.capitalize %> too. </h4>
-  <ul class = "nav nav-followers">
-    <% @followers.each do |user| %>
-      <li class = "follower-item">
-      <% if !user.nil? && !user.email.nil? %>
-        <a href="<%= user_path(user) %>">
-          <div style="width: 68px; height:68px; overflow: hidden;">
-            <%=  gravatar_image_tag(user.email, 
-                                    :alt => user.fullname,
-                                    :title => user.fullname, 
-                                    :style => "width: 68px;", 
-                                    :gravatar => {:size => 68, 
-                                                  :default => "#{Settings.server_url}/profile_icon.png" }) %>
-            </div>
-          </a>
-        <% end %>
+  <% if @followers && !@followers.empty? %>
+    <h4> They like <%= @lang.to_s.capitalize %> too. </h4>
+    <ul class = "nav nav-followers">
+      <% @followers.each do |user| %>
+        <li class = "follower-item">
+        <% if !user.nil? && !user.email.nil? %>
+          <a href="<%= user_path(user) %>">
+            <div style="width: 68px; height:68px; overflow: hidden;">
+              <%=  gravatar_image_tag(user.email,
+                                      :alt => user.fullname,
+                                      :title => user.fullname,
+                                      :style => "width: 68px;",
+                                      :gravatar => {:size => 68,
+                                                    :default => "#{Settings.server_url}/profile_icon.png" }) %>
+              </div>
+            </a>
+          <% end %>
 
-      </li>
-    <% end %>
-  </ul>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <h4> Nobody likes <%= @lang.to_s.capitalize %> :-( </h4>
+  <% end %>
 </div>
