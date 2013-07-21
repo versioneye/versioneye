@@ -56,7 +56,7 @@ class Project
   end
 
   def self.find_by_id( id )
-    Project.find(id)
+    Project.find( id )
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
@@ -69,9 +69,8 @@ class Project
   end
 
   def show_dependency_badge?
-    self.public and
-    (self.language.eql?(Product::A_LANGUAGE_JAVA) or self.language.eql?(Product::A_LANGUAGE_PHP) or
-     self.language.eql?(Product::A_LANGUAGE_RUBY) or self.language.eql?(Product::A_LANGUAGE_NODEJS) )
+    self.language.eql?(Product::A_LANGUAGE_JAVA) or self.language.eql?(Product::A_LANGUAGE_PHP) or
+    self.language.eql?(Product::A_LANGUAGE_RUBY) or self.language.eql?(Product::A_LANGUAGE_NODEJS)
   end
 
   # TODO test this
@@ -146,7 +145,9 @@ class Project
     self.description    = new_project.description
     self.license        = new_project.license
     self.url            = new_project.url
-    self.s3_filename    = new_project.s3_filename
+    if new_project.s3_filename
+      self.s3_filename  = new_project.s3_filename
+    end
     self.dep_number     = new_project.dep_number
     self.out_number     = new_project.out_number
     self.unknown_number = new_project.unknown_number

@@ -92,10 +92,10 @@ class User::ProjectsController < ApplicationController
 
   def reparse
     id = params[:id]
-    @project = Project.find_by_id(id)
-    ProjectService.update( @project )
+    project = Project.find_by_id( id )
+    ProjectService.update( project )
     flash[:info] = "Project re parse is done."
-    redirect_to user_project_path(@project)
+    redirect_to user_project_path( project )
   end
 
   def destroy

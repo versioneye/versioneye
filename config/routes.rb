@@ -1,10 +1,7 @@
-#require_relative '../app/api/v1/versioneye'
 
 Versioneye::Application.routes.draw do
 
-  mount V1::Versioneye::API => '/api'
-#  mount V2::API => '/api2'
-
+  mount VersionEye::API => '/api'
 
   root :to => "products#index"
 
@@ -137,13 +134,12 @@ Versioneye::Application.routes.draw do
     get '/poll/github_repos', :to => 'github_repos#poll_changes'
   end
 
-  post  '/services/choose_plan',  :to => 'services#choose_plan'
-  resources :services do
-    member do
-      get  'recursive_dependencies'
-      post 'recursive_dependencies'
-    end
-  end
+  post  '/services/choose_plan'               ,  :to => 'services#choose_plan'
+  post  '/services'                           ,  :to => 'services#create'
+  get   '/services/:id'                       ,  :to => 'services#show', :as => 'service'
+  get   '/services/:id/recursive_dependencies',  :to => 'services#recursive_dependencies'
+  post  '/services/:id/recursive_dependencies',  :to => 'services#recursive_dependencies'
+
   get   '/pricing',            :to => 'services#pricing'
   get   '/news',               :to => 'news#news'
   get   '/mynews',             :to => 'news#mynews'
@@ -182,7 +178,6 @@ Versioneye::Application.routes.draw do
 
 
   get   '/api',                 :to => 'swaggers#index'
-  get   '/api2',                :to => 'swaggers#index2'
   get   '/swaggers',            :to => redirect('/api')
   get   '/apijson',             :to => redirect('/api')
   get   '/apijson_tools',       :to => redirect('/api')
@@ -199,11 +194,12 @@ Versioneye::Application.routes.draw do
 
   get   '/search', :to => 'products#search'
 
-  get   '/package/name'        , :to => 'products#autocomplete_product_name'
-  post  '/package/follow'      , :to => 'products#follow'
-  post  '/package/unfollow'    , :to => 'products#unfollow'
-  post  '/package/image_path'  , :to => 'dependency_wheel#image_path'
-  post  '/package/upload_image', :to => 'dependency_wheel#upload_image'
+  get   '/package/autocomplete'   , :to => 'products#autocomplete_product_name'
+  get   '/package/name'           , :to => 'products#autocomplete_product_name'
+  post  '/package/follow'         , :to => 'products#follow'
+  post  '/package/unfollow'       , :to => 'products#unfollow'
+  post  '/package/image_path'     , :to => 'dependency_wheel#image_path'
+  post  '/package/upload_image'   , :to => 'dependency_wheel#upload_image'
 
   # Rewriting old legacy paths
   get   '/package/:key'                       , :to => 'page#legacy_route'

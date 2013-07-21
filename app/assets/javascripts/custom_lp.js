@@ -2,10 +2,10 @@
 jQuery(document).ready(function() {
 
 	jQuery('#q').tbHinter({
-		text: "json",
-		styleclass: "lp_searchfield_hint"
+		text: "search for a software library"
 	});
 
+  initialize_searchbox();
 });
 
 function regulate_height(){
@@ -21,4 +21,28 @@ function regulate_height(){
     document.getElementById("search_section").style.cssText = "padding-bottom: 65px";
   }
   setTimeout( function(){ regulate_height() }  , 1000 );
+}
+
+function initialize_searchbox(){
+  console.log("Initializing searchbox");
+  var $ = jQuery;
+  $('input#q').typeahead({
+    name: 'autocomplete',
+    limit: 10,
+    remote: {
+      url: "/package/autocomplete?term=%QUERY"
+    },
+    engine: Hogan,
+    template: [
+      '<div>',
+          '<img src="/assets/language/{{ language }}.png" class = "pull-left" style = "height: 2.0em;" />',
+          '<p>',
+              '<a href = "{{ url }}">',
+                '<strong>{{ name }}</strong>',
+               '</a>',
+             ' - {{ description }}',
+           '</p>',
+      '</div>'
+    ].join('')
+  });
 }

@@ -6,7 +6,7 @@ define(['underscore', 'backbone'],
   });
   var GithubRepoCollection = Backbone.Collection.extend({
     model: GithubRepoModel,
-    sortKey: 'id',
+    sortKey: 'pushed_at',
     sortOrder: -1,
     initialize:  function(model, options){
       this.allRepos = options.allRepos;
@@ -23,7 +23,7 @@ define(['underscore', 'backbone'],
       };
 
       var sort_val = repo.get(this.sortKey);
-      if(this.sortKey == "updated_at"){
+      if(this.sortKey == "updated_at" || this.sortKey == 'pushed_at'){
         sort_val = new Date(sort_val).valueOf();
       }
 

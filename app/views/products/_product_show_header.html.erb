@@ -1,31 +1,57 @@
 <div class="row">
-  <div class="span9" >
-    
-    <div class="span1 icon_package_header" >
-      <% prog_lang = @product.language.downcase.gsub(/\./, "") %>
-      <span class="icon_<%= prog_lang %> on " ></span>
+
+  <% if signed_in? %>
+
+    <div class="product_header row">
+      <% if @product['user_ids'].include? current_user.id %>
+        <div class="span2" style="width: 105px;">
+          <%= form_tag("/package/unfollow", :style=>"margin: 0;") do  %>
+            <input name="src_hidden"   type="hidden" value="detail"/>
+            <input name="product_key"  type="hidden" value="<%= @product.to_param %>"/>
+            <input name="product_lang" type="hidden" value="<%= @product.language %>"/>
+            <button type="submit" class="btn2 btn-large btn-warning" >Unfollow</button>
+          <% end %>
+        </div>
+        <div class="span9" style="line-height: 1.2">
+          <h1 class="product"><%= @product.name %></h1> <span class="product_header_small_text">and you will <b>not</b> receive notifications about new versions anymore!</span>
+        </div>
+      <% else %>
+        <div class="span2" style="width: 105px;">
+          <%= form_tag("/package/follow", :style=>"margin: 0;") do  %>
+            <input  name="product_key"  type="hidden" value="<%= @product.to_param %>"/>
+            <input  name="product_lang" type="hidden" value="<%= @product.language %>"/>
+            <button type="submit" class="btn btn-large btn-primary" >Follow</button>
+          <% end %>
+        </div>
+        <div class="span9" style="line-height: 1.2">
+          <h1 class="product"><%= @product.name %></h1> to get notified about new versions!
+        </div>
+      <% end %>
     </div>
-    
-    <div class="span7">
-      <div class="row span8 pull-left ">
-        <h3 class="no_margin">
-          <%= @product.name_and_version %>
-        </h3>
+
+  <% else %>
+
+    <%= render 'shared/dialog_follow' %>
+    <div class="product_header row">
+      <div class="span2" style="width: 105px;">
+        <button type="submit" class="btn btn-large btn-primary" onclick="load_dialog_follow('<%= @product.name %>', '<%= @product.prod_key %>', '<%= @product.language %>');">Follow</button>
       </div>
-      <div class="row span8 pull-left ">
-        <div class="span3">
-          <%= render :partial => "shared/dependency_badge", :locals => { :project => @product } %> 
-        </div>
-        <div class="span5 pull-right">
-          <ul class="list-social pull-right" >
-            <%= render 'shared/share_buttons' %>
-          </ul>
-        </div>
+      <div class="span9" style="line-height: 1.2">
+        <h1 class="product"><%= @product.name %></h1>&nbsp;for&nbsp;<span style="font-weight: bold; color: black;" >FREE</span> to get notified about new versions!
       </div>
     </div>
 
+  <% end %>
+
+  <div class="product_badges_line row" >
+    <div class="span4">
+      <ul class="list-social" >
+        <%= render 'shared/share_buttons' %>
+      </ul>
+    </div>
+    <div class="pull-right span4" style="text-align: right;">
+      <%= render :partial => "shared/dependency_badge", :locals => { :project => @product } %>
+    </div>
   </div>
-  <div class="span2 pull-right" >
-    <%= render 'products/product_show_bigfollow' %>
-  </div>
+
 </div>

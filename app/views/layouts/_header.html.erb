@@ -1,18 +1,16 @@
 <header style="z-index: 100;">
-  <div class="navbar navbar-static-top dark-bg">
-    <div class = "container row">
+  <div class="navbar navbar-static-top">
+    <div class = "container row" >
       <div class="span4 brand-container" style="margin-left: 0; padding-left: 0; height: 50px;">
-        <span class="pull-left icon_beta"></span>
-        <a href="/"><span class="logo"></span></a>
+        <div style="margin-top: 15px;" class="pull-left">
+          <a href="/" ><%= image_tag "logos/versioneye-transparent.png" %></a>
+        </div>
+        <span class="icon_beta" style="margin-left: 80px;"></span>
       </div>
 
       <div class = "span7 pull-right">
         <ul class="nav pull-right">
           <% if !signed_in? %>
-            <li>
-              <%= link_to "Services", "/services" %>
-            </li>
-            <li class="divider-vertical"></li>
             <li>
               <%= link_to "Pricing", "/pricing" %>
             </li>
@@ -82,12 +80,18 @@
               </li>
             <% end %>
           <% else %>
-
             <li class="divider-vertical"></li>
-            <li><%= link_to t(:page_header_signin), signin_path %></li>
+            <li style="font-weight: bold; font-size: 16px;">
+              <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0;") do  %>
+                <button type="submit" class="btn btn-success" ><%= t(:page_header_signup) %></button>
+              <% end %>
+            </li>
             <li class="divider-vertical"></li>
-            <li style="font-weight: bold; font-size: 16px;"><%= link_to t(:page_header_signup), signup_path, :style => "color: #fbb21c" %></li>
-
+            <li>
+              <%= form_tag(signin_path, :method => "GET", :style=>"margin: 0;") do  %>
+                <button type="submit" class="btn" ><%= t(:page_header_signin) %></button>
+              <% end %>
+            </li>
           <% end %>
 
           <% if 1 == 2 %>

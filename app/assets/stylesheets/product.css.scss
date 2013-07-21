@@ -1,35 +1,57 @@
 
 .rating_cell{
-	width: 170px;
-	padding: 5px;
+  width: 170px;
+  padding: 5px;
 
 }
 
 .rating_description_cell{
-	width: 170px;
-	padding: 5px;
+  width: 170px;
+  padding: 5px;
 }
 
 .product_header{
-	height: 75px;
-	text-align: left;
+  font-size: 30px;
+  vertical-align: middle;
+  text-align: left;
+  padding-bottom: 15px;
+}
+
+.product_header_small_text{
+  font-size: 14px;
+}
+
+.product_badges_line{
+  vertical-align: middle;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  height: 19px;
+}
+
+h1.product{
+  display: inline;
+  padding: 0;
+  font-family: "Droid Sans";
+  color: black;
 }
 
 .versioncomment_reply_section{
-	padding-left: 20px;
-	padding-top: 20px;
+  padding-left: 20px;
+  padding-top: 20px;
 }
 
 .versioncomment_reply_section .meta-text-small{
-	padding-top: 5px;
+  padding-top: 5px;
 }
 
 .versioncomment_reply_section .reply{
-	padding-bottom: 25px;
-	border-bottom: 0px;
+  padding-bottom: 25px;
+  border-bottom: 0px;
 }
 
 .versioncomment_reply_link_section{
-	padding-top: 5px;
-	padding-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }

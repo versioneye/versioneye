@@ -184,7 +184,7 @@
                 </thead>
 
                 <% licences = {} %>
-                <% @project.dependencies.each do |dep| %>
+                <% @project.dependencies.sort { |a, b| b.outdated.to_s <=> a.outdated.to_s }.each do |dep| %>
                   <% product = dep.find_or_init_product %>
                   <% dep.outdated? %>
 

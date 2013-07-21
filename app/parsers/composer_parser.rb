@@ -53,13 +53,13 @@ class ComposerParser < CommonParser
   end
 
   def update_project( project, data )
-    name = data['name']
-    description = data['description']
-    license = data['license']
-    project.name = name if name
+    name                = data['name']
+    description         = data['description']
+    license             = data['license']
+    project.name        = name if name
     project.description = description if description
-    project.license = license if license
-    project.dep_number = project.dependencies.size
+    project.license     = license if license
+    project.dep_number  = project.dependencies.size
   end
 
   # It is important that this method is NOT writing into the database!

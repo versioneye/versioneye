@@ -31,7 +31,7 @@ class User::GithubReposController < ApplicationController
 
   def update
     if params[:github_id].nil? and params[:fullname].nil?
-      logger.error "Unknown data object - dont satisfy githubrepo model."
+      logger.error "Unknown data object - don't satisfy githubrepo model."
       render nothing: true, status: 400
     end
     redirect_to action: create
@@ -49,15 +49,14 @@ class User::GithubReposController < ApplicationController
       render text: error_msg, status: 400
       return false
     end
-    
-    command_data = params[:command_data]
 
+    command_data = params[:command_data]
 
     case params[:command]
     when "import"
       project_name = params[:fullname]
       branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : "master"
-      project      = ProjectService.import_from_github(current_user, project_name, branch)
+      project      = ProjectService.import_from_github( current_user, project_name, branch )
       unless project.nil?
         command_data[:githubProjectId] = project._id.to_s
         repo = GithubRepo.find(params[:_id])
