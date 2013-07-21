@@ -10,6 +10,8 @@ class Newest
   field :prod_type , type: String
   field :product_id, type: String
 
+  scope :by_language, ->(lang){where(language: lang)}
+
 
   def product
     Product.fetch_product self.language, self.prod_key
