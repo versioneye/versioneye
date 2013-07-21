@@ -1,6 +1,7 @@
 class S3
 
   def self.url_for filename
+    return nil if filename.nil? || filename.empty?
     AWS::S3::S3Object.url_for(filename, Settings.s3_projects_bucket, :authenticated => true)
   end
 
@@ -9,6 +10,7 @@ class S3
   end
 
   def self.delete filename
+    return nil if filename.nil? || filename.empty?
     AWS::S3::S3Object.delete filename, Settings.s3_projects_bucket
   end
 
@@ -25,7 +27,7 @@ class S3
   end
 
   def self.upload_github_file(file, filename)
-    file_bin = file['content']
+    file_bin     = file['content']
     random_value = Project.create_random_value
     new_filename = "#{random_value}_#{filename}"
     AWS::S3::S3Object.store(
@@ -33,10 +35,10 @@ class S3
       Base64.decode64(file_bin),
       Settings.s3_projects_bucket,
       :access => "private")
-    url = S3.url_for(new_filename)
-    result = Hash.new
+    url                = S3.url_for( new_filename )
+    result             = Hash.new
     result['filename'] = new_filename
-    result['s3_url'] = url
+    result['s3_url']   = url
     result
   end
 

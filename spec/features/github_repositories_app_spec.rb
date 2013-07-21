@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "frontend APP for importing Github repositories", :js => true do
-  let(:user_without_token) {(create(:user, username: "notoken", 
+  let(:user_without_token) {(create(:user, username: "notoken",
                                     fullname: "No Token No",
                                     email: 'notoken@pupu.com'))}
 
@@ -9,12 +9,12 @@ describe "frontend APP for importing Github repositories", :js => true do
                       email: 'juku@pupu.com', github_id: "123",
                       github_token: "asgasgasgas", github_scope: "repo"))}
 
-  let(:repo1) {create(:github_repo, user_id: user.id.to_s, 
+  let(:repo1) {create(:github_repo, user_id: user.id.to_s,
                       github_id: 1, branches: ['master'],
                       language: 'ruby',
                       fullname: "spec/repo1", user_login: "a",
                       owner_login: "a", owner_type: "user")}
-  let(:repo2) {create(:github_repo, user_id: user.id.to_s, 
+  let(:repo2) {create(:github_repo, user_id: user.id.to_s,
                       github_id: 2, branches: ['master'],
                       language: 'ruby',
                       fullname: "spec/repo2", user_login: "a",
@@ -35,7 +35,7 @@ describe "frontend APP for importing Github repositories", :js => true do
       fill_in 'session[email]', with: user_without_token.email
       fill_in 'session[password]', with: user_without_token.password
 
-      click_button 'Sign In'
+      find('#sign_in_button').click
       page.should have_content('My Projects')
     end
 
@@ -62,7 +62,7 @@ describe "frontend APP for importing Github repositories", :js => true do
       fill_in 'session[email]', with: user.email
       fill_in 'session[password]', with: user.password
 
-      click_button 'Sign In'
+      find('#sign_in_button').click
       page.should have_content('My Projects')
     end
 
@@ -89,7 +89,7 @@ describe "frontend APP for importing Github repositories", :js => true do
       visit user_projects_github_repositories_path
 
       page.should_not have_content('Please enable Javascript to see content of the page.')
-      
+
       page.should have_content( repo1.fullname )
       page.should have_content( repo2.fullname )
     end

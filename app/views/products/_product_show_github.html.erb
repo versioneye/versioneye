@@ -10,9 +10,12 @@
 	<%= render 'products/product_show_links' %>
 	<%= render 'products/product_show_twitter_follow' %>
 	<%= render 'products/product_show_other_versions' %>
+	<% if signed_in? == false %>
+    <%= render "/shared/github_ad" %>
+  <% end %>
 
 </div>
-<div class="span8 content" >
+<div class="span8 content_no_content" >
 
 	<%= render 'products/product_show_description' %>
 	<%= render 'products/product_show_downloads' %>

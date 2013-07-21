@@ -1,62 +1,45 @@
 <footer class="footer">
-	<div class="container row">
-		<hr/>
-	</div>
-	<div class="container row">
-		<div class="span2" >
-			<h5 class="dep_header">VersionEye</h5>
-			<ul class="footer-links">
-				<li><%= link_to t(:page_footer_about), about_path %></li>
-				<li><%= link_to t(:page_footer_team), about_path %></li>
-				<li><%= link_to t(:page_footer_statistics), statistics_path %></li>
-				<li><a href="JavaScript: load_dialog_feedback()">Feedback</a></li>
-				<% if signed_in? %>
-					<li><%= link_to "Services", "/services" %></li>
-					<li><%= link_to "Pricing", "/pricing" %></li>
-				<% end %>
-			</ul>
-		</div>
-		<div class="span3" >
-			<h5 class="dep_header">Legal</h5>
-			<ul class="footer-links">
-				<li><%= link_to "Imprint", imprint_path %></li>
-				<li><%= link_to "Conditions of Use", terms_path %></li>
-				<li><%= link_to "Data protection provisions ", dataprivacy_path %></li>
-				<li><%= link_to "Disclaimer", disclaimer_path %></li>
-			</ul>
-		</div>
-		<% if 1 == 2 %>
-		<div class="span3" >
-			<h5 class="dep_header">Recht</h5>
-			<ul class="footer-links">
-				<li><%= link_to "Impressum", impressum_path %></li>
-				<li><%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path %></li>
-				<li><%= link_to "Datenschutzbestimmungen", datenschutz_path %></li>
-				<li><%= link_to "Haftungsausschluss", disclaimer_path %></li>
-			</ul>
-		</div>
-		<% end %>
-		<div class="span2" >
-			<h5 class="dep_header">Community</h5>
-			<ul class="footer-links">
-				<li><a href="http://versioneye.wordpress.com/" target="new_Blog">Blog</a></li>
-				<li><a href="https://twitter.com/VersionEye" target="new_Twitter">Twitter</a></li>
-				<li><a href="https://plus.google.com/108971109832540479545" rel="publisher" target="new_GPlus">Google+</a></li>
-				<li><a href="https://www.facebook.com/pages/VersionEye/295350293845442"  target="new_FB">Facebook</a></li>
-				<li><a href="https://www.youtube.com/user/VersionEye/videos" target="new_YT">YouTube</a></li>
-				<li><a href="https://vimeo.com/37203548"  target="new_Vimeo">Vimeo</a></li>
-				<li><a href="http://pinterest.com/versioneye/pins/"  target="new_Pinterest">Pinterest</a></li>
-				<li><a href="https://alpha.app.net/versioneye"  target="new_AppNet">App.net</a></li>
-			</ul>
-		</div>
-		<div class="span2" >
-			<h5 class="dep_header">API</h5>
-			<ul class="footer-links">
-				<li><%= link_to "JSON API", apijson_path %></li>
-			</ul>
-		</div>
-		<div class = "span2 pull-left">
-			<span class = "logo_eye_text"></span>
-		</div>
-	</div>
+
+  <div class="container row" style="text-align: center; margin-bottom: 10px; font-size: 14px;">
+    <%= link_to t(:page_footer_about), about_path %> |
+    <%= link_to t(:page_footer_team), about_path %> |
+    <%= link_to t(:page_footer_statistics), statistics_path %> |
+    <a href="JavaScript: load_dialog_feedback()">Feedback</a> |
+    <a href="http://versioneye.wordpress.com/" target="new_Blog">Company Blog</a> |
+    <%= link_to "API v2", version_eye_api_path(version: "v2") %>
+  </div>
+
+  <div class="container row" style="text-align: center; margin-bottom: 20px; font-size: 11px;">
+    <%= link_to "Imprint", imprint_path, :style=>"color: gray;" %> |
+    <%= link_to "Conditions of Use", terms_path, :style=>"color: gray;" %> |
+    <%= link_to "Data protection provisions ", dataprivacy_path, :style=>"color: gray;" %> |
+    <%= link_to "Disclaimer", disclaimer_path, :style=>"color: gray;" %>
+  </div>
+
+  <div class="container row" style="text-align: center; margin-bottom: 20px;">
+
+    <a href="https://twitter.com/VersionEye" class="footer_link_margin" target="new_Twitter" title="Twitter" ><i class="icon-twitter footer_social_icon" ></i></a>
+
+    <a href="https://www.facebook.com/pages/VersionEye/295350293845442" class="footer_link_margin" target="new_FB" title="Facebook" ><i class="icon-facebook footer_social_icon" ></i></a>
+
+    <a href="https://plus.google.com/u/0/108971109832540479545/posts" class="footer_link_margin" target="new_GP" title="Google+" ><i class="icon-google-plus footer_social_icon" ></i></a>
+
+    <a href="https://www.youtube.com/user/VersionEye/videos" class="footer_link_margin" title="YouTube" target="new_YT" ><i class="icon-youtube footer_social_icon" ></i></a>
+
+    <a href="http://pinterest.com/versioneye/pins/" class="footer_link_margin" target="new_Pinterest" title="Pinterest" ><i class="icon-pinterest footer_social_icon" ></i></a>
+
+  </div>
+
 </footer>
+
+<% if 1 == 2 %>
+  <div class="span3" >
+    <h5 class="dep_header">Recht</h5>
+    <ul class="footer-links">
+      <li><%= link_to "Impressum", impressum_path %></li>
+      <li><%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path %></li>
+      <li><%= link_to "Datenschutzbestimmungen", datenschutz_path %></li>
+      <li><%= link_to "Haftungsausschluss", disclaimer_path %></li>
+    </ul>
+  </div>
+<% end %>

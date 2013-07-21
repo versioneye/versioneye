@@ -6,6 +6,15 @@
     <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 
+<% if !signed_in? %>
+  <script type="text/javascript">
+    setTimeout(function(){var a=document.createElement("script");
+    var b=document.getElementsByTagName("script")[0];
+    a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0017/7708.js?"+Math.floor(new Date().getTime()/3600000);
+    a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+  </script>
+<% end %>
+
   <%= csrf_meta_tag %>
   <%= stylesheet_link_tag "application" %>
 
@@ -46,7 +55,7 @@
 
       <%= javascript_include_tag "application_github",  :defer => false, :async => false %>
 
-    <% elsif current_page?(api_path) or current_page?(api2_path) %>
+    <% elsif current_page?(version_eye_api_path) %>
 
       <%= javascript_include_tag "application_swagger",     :defer => false %>
       <link href='css/swagger/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>

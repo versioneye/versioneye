@@ -34,8 +34,9 @@
     <% end %>
 
     <div id = "github-repos" class="content" >
-      <div >
-        Please enable Javascript to see content of the page. Or just refresh page.
+      <div>
+        <strong>Please wait!</strong> We are still loading assets from Heroku.
+        <img src = "/assets/loadingbar.gif" style = "margin-left: 25%; margin-right: 25%;"/>
       </div>
     </div>
     <div id = "github-pagination"></div>
@@ -49,7 +50,7 @@
   <div class = "notification">
     <strong>No repositories!</strong>
     <p>
-      Both You and yours organizations dont have any Github repositories.
+      Both You and yours organizations don`t have any Github repositories.
     </p>
   </div>
 </script>
@@ -100,7 +101,10 @@
         </a>
         <div class ="repo-labels"></div>
         <div> {{= repo.description }} </div>
-        <div class = "repo-controls row"></div>
+        <div class = "repo-controls-container">
+          <div class = "repo-controls-info"></div>
+          <div class = "repo-controls row hide" style = "padding-top: 10px;"></div>
+        </div>
         <div class = "repo-notification"></div>
       </div>
     </div>
@@ -121,19 +125,27 @@
   </span>
 </script>
 
-<script id = "github-repo-control-template" type = "text/template">
-  <span class="help-block">
-    This project has {{= branches.length }} branches.
-    {{= (imported_branches.length) ? " and you're tracking " + imported_branches.length + "of them." : ""}}
-    {{=  (branches.length > 2) ? "Scroll down to see all of them" : "" }}
-  </span>
-</script>
-
 <script id = "github-repo-control-item-template" type = "text/template">
   <div class = "row-fluid">
     <div class = "span3 item-switch"></div>
     <div class = "span8 item-title"> {{= branch }} </div>
   </div>
+</script>
+
+<script id = "github-repo-control-info-template" type = "text/template">
+  <p>
+    This repo has {{= branches.length }} branches.
+    {{ if(imported_branches.length){ }}
+      We are monitoring {{= imported_branches.length }} of them :
+      <i> {{= imported_branches }} </i>.
+    {{  } else { }}
+        We are monitoring none of them. But we are happy to monitor it.
+    {{  } }}
+  </p>
+
+  <button class = "control-info-toggle btn btn-mini btn-block btn">
+    Show branches
+  </button>
 </script>
 
 <script id = "github-repo-switch-template" type = "text/template">
@@ -212,7 +224,13 @@
         <b class="caret"></b>
       </a>
       <ul class="dropdown-menu">
-        <li class="filter-item">
+         <li class="filter-item">
+          <a href= "javascript:void(0)" data-field="private" data-value="true">
+            <i class="icon-lock" style= "height: 20px; vertical-align: top;"></i>
+            Only private projects
+          </a>
+        </li>
+       <li class="filter-item">
           <a href= "javascript:void(0)" data-field="language" data-value="coffeescript">
             <img src="/assets/language/javascript.png" style= "height: 20px; vertical-align: top;">
             CoffeeScript

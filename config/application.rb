@@ -1,6 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
-# require 'rails/all' # commented out because of mongodb. 
+# require 'rails/all' # commented out because of mongodb.
 
 require "action_controller/railtie"
 require "action_mailer/railtie"
@@ -21,9 +21,24 @@ if defined?(Bundler)
 end
 
 
+class Settings
+    # raw_config = File.read("#{::Rails.root.to_s}/config/settings.yml")
+    raw_config = File.read("config/settings.yml")
+    erb_config = ERB.new(raw_config).result
+    settings = YAML.load(erb_config)[::Rails.env]
+
+    if settings
+        settings.each { |name, value|
+            instance_variable_set("@#{name}", value)
+            self.class.class_eval { attr_reader name.intern }
+        }
+    end
+end
+
+
 module Versioneye
   class Application < Rails::Application
-    
+
     Mongoid.load!("config/mongoid.yml")
 
     # Configure the default encoding used in templates for Ruby 1.9.
@@ -41,10 +56,10 @@ module Versioneye
     config.assets.initialize_on_precompile = false
 
     # http://groups.google.com/group/mongoid/browse_thread/thread/df278a11dba4d331?pli=1
-    # config.generators do |g| 
-    #   g.orm :active_record 
+    # config.generators do |g|
+    #   g.orm :active_record
     # end
-    
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -69,7 +84,7 @@ module Versioneye
     # config.i18n.default_locale = :en
 
     # http://www.edgerails.info/articles/what-s-new-in-edge-rails/2011/04/21/activerecord-identity-map/index.html
-    # config.active_record.identity_map = true    
-    
+    # config.active_record.identity_map = true
+
   end
 end

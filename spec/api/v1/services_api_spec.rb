@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe VersionEye::ServicesApi do
+describe ServicesApiV1 do
   describe "GET /v1/services/ping" do
     it "answers `pong`" do
       get '/api/v1/services/ping.json'

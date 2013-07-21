@@ -13,11 +13,11 @@ class LanguageController < ApplicationController
     population = []
     User.skip(start_collecting_from).each do |user|
       population << user if user.products.where(language: @lang).exists?
-      break if population.count >= 256
+      break if population.count >= 100
     end
 
     #pick random followers from population
-    @followers = population.sample(24)
+    @followers = population.sample(12)
 
     # lang_pattern = Regexp.new(@lang.downcase, true)
     # @vulnerabilities = SecurityNotification.all.in(languages: [lang_pattern]).desc(:modified).limit(30)

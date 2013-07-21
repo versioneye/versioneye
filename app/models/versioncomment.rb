@@ -73,7 +73,7 @@ class Versioncomment
   def product
     product = nil
     if self.language
-      product = Product.find_by_lang_key( self.language, self.product_key)
+      product = Product.fetch_product( self.language, self.product_key)
     end
     if product.nil?
       product = Product.find_by_key( self.product_key )

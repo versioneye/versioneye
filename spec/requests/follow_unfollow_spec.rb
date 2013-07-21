@@ -28,7 +28,7 @@ describe "follow and unfollow" do
       init_product
       get "/#{prod_lang}/#{prod_key}/#{version}"
       assert_response :success
-      assert_tag :tag => "button", :attributes => { :class => "btn2 btn2-big", :type => "submit" }
+      assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-primary", :type => "submit" }
     end
   end
 
@@ -74,7 +74,7 @@ describe "follow and unfollow" do
       response.should redirect_to( "/#{prod_lang.downcase}/#{prod_key}/#{version}" )
 
       get "/ruby/json_goba/1.0"
-      assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-success", :type => "submit" }
+      assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-primary", :type => "submit" }
       response.body.should match("0 Followers")
 
       prod = Product.fetch_product( prod_lang, prod_key )
