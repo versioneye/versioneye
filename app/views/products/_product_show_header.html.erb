@@ -34,7 +34,7 @@
     <%= render 'shared/dialog_follow' %>
     <div class="product_header row">
       <div class="span9" style="line-height: 1.2; width: 760px;">
-        Follow <h1 class="product"><%= @product.name %></h1>&nbsp;for&nbsp;<span style="font-weight: bold; color: black;" >free</span> to get notified about new versions!
+        Follow <h1 class="product"> <%= @product.name %> </h1>&nbsp; for &nbsp;<span style="font-weight: bold; color: black;" >free</span> to get notified about new versions!
       </div>
       <div class="span2 pull-right" style="width: 105px; text-align: right;">
         <button type="submit" class="btn btn-large btn-primary" onclick="load_dialog_follow('<%= @product.name %>', '<%= @product.prod_key %>', '<%= @product.language %>');">Follow</button>
