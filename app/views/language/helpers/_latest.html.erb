@@ -2,7 +2,7 @@
 
   <h4> Latest updated libraries </h4>
   <% @latest_products.each do |prod| %>
-    <% if prod %>
+    <% if prod && prod.product %>
       <div class = "media-body product-item">
         <h5 class = "media-heading">
           <a href = "<%= products_path(lang: prod.language, key: Product.encode_prod_key(prod.prod_key)) %>"><%= prod.name %></a><br/>
