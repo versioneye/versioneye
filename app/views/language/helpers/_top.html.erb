@@ -6,7 +6,6 @@
     <div class = "media-body product-item">
       <h5 class = "media-heading">
         <%= count %> <a href = "<%= products_path(key: prod.to_param) %>"><%= prod.name %></a>
-        <small> &nbsp; - has <%= prod.followers %> followers. </small>
       </h5>
       <p> <%= prod.short_summary %> </p>
     </div>
