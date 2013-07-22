@@ -4,10 +4,6 @@ class LatestReleasesController < ApplicationController
   def index
     @supported_languages = Product.supported_languages
     @latest_releases = Newest.balanced_newest(20)
-    @stats_today = ProductService.stats_today_releases 
-    @stats_week = ProductService.stats_current_week_releases
-    @stats_month = ProductService.stats_current_month_releases
-    @stats_last_month = ProductService.stats_last_month_releases
   end
 
   def show
@@ -17,5 +13,27 @@ class LatestReleasesController < ApplicationController
       :language => @lang,
       :updated_at.gte => 30.days.ago.at_midnight
     ).desc(:updated_at).paginate(page: page, per_page: 30) 
+  end
+
+  def stats_today
+    render json: NewestDailyCount.stats_today
+  end
+
+  def stats_current_week
+    render json: NewestDailyCount.stats_current_week
+  end
+
+  def stats_current_month
+    render json: NewestDailyCount.stats_current_month
+  end
+
+  def stats_last_month
+    render json: NewestDailyCount.stats_last_month
+  end
+
+  def timeline_30days
+    lang = "clojure"
+    lang = params[:lang] if params.has_key?(:lang)
+    render json: NewestDailyCount.language_30days_timeline(lang)
   end
 end
