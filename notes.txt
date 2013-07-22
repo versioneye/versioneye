@@ -1,4 +1,6 @@
 
+/usr/bin/unicorn -D -E production -c /var/www/versioneye/releases/current/unicorn.conf.rb
+
 Continuous Updating is an agile technique to keep your software projects up-to-date. Learn more about:
 Which dependencies do I use in my software project?
 Which dependencies are outdated?
