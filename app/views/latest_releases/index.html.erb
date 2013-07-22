@@ -1,19 +1,6 @@
 <% title "Latest releases" %>
 
-<div class = "release-stat row-fluid">
-  <div class = "span3">
-    <%= render partial: "stats_table", locals: {stats: @stats_today} %>
-  </div>
-  <div class = "span3">
-    <%= render partial: "stats_table", locals: {stats: @stats_week} %>
-  </div>
-  <div class = "span3">
-    <%= render partial: "stats_table", locals: {stats: @stats_month} %>
-  </div>
-  <div class = "span3">
-    <%= render partial: "stats_table", locals: {stats: @stats_last_month} %>
-  </div>
-</div>
+<%= render partial: "latest_plots" %>
 
 <div class = "release-list">
   <h3> <%= @latest_releases.count || "" %> latest release</h3>
