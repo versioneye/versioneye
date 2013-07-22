@@ -8,7 +8,7 @@
         <%= count %> <a href = "<%= products_path(key: prod.to_param) %>"><%= prod.name %></a>
         <small> &nbsp; - has <%= prod.followers %> followers. </small>
       </h5>
-      <p> <%= prod.description %> </p>
+      <p> <%= prod.short_summary %> </p>
     </div>
     <% count += 1 %>
   <% end %>
