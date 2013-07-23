@@ -1,14 +1,14 @@
 class NotificationMailer < ActionMailer::Base
 
   default from: "\"VersionEye\" <notify@versioneye.com>"
-  
+
   def new_version_email(user, notifications)
     @user = user
     @notifications = notifications
-    @link =  "#{Settings.server_url}/package/"
+    @link =  "#{Settings.server_url}/"
     names = first_names notifications
     mail(
-      :to => @user.email, 
+      :to => @user.email,
       :subject => "Update: #{names}",
       :tag => "notification_new_version"
       )
@@ -23,22 +23,22 @@ class NotificationMailer < ActionMailer::Base
       )
   end
 
-  private 
+  private
 
     def first_names notifications
-      names = Array.new 
-      max = 2 
-      max = 1 if notifications.size == 2 
-      max = 0 if notifications.size == 1  
+      names = Array.new
+      max = 2
+      max = 1 if notifications.size == 2
+      max = 0 if notifications.size == 1
       (0..max).each do |num|
         notification = notifications[num]
-        names.push notification.product.name 
+        names.push notification.product.name
       end
       result = names.join(", ")
-      if notifications.size > 3 
+      if notifications.size > 3
         result = "#{result} ..."
       end
       result
     end
-  
+
 end
