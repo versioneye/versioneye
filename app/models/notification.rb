@@ -47,6 +47,9 @@ class Notification
       return true
     end
     return false
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
   end
 
   def self.remove_notifications user
