@@ -216,23 +216,24 @@ class ProductsController < ApplicationController
   def autocomplete_product_name
     term = params[:term] || "nothing"
     results = []
-    products = ProductService.search(term) # Product.find_by_name(term).desc(:followers).limit(5)
-    # products.sort! { |x,y| y[:followers] <=> x[:followers] }
+    products = ProductService.search(term) 
     index = 0
     products.each do |product|
       results << {
-        value: "#{product[:name_downcase]}-#{product[:language]}",
+        value: "#{product[:name_downcase]}-#{product[:language].downcase}",
         name: product[:name],
         language: Product.encode_language(product[:language]),
         description: product.short_summary,
         prod_key: product[:prod_key],
         version: product[:version],
+        followers: product[:followers],
         url: product.to_url_path
       }
       index += 1
       break if index > 9
     end
 
+    results.sort_by! {|item| -1 * item[:followers]}
     respond_to do |format|
       format.json { render :json => results }
     end
