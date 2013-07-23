@@ -5,6 +5,7 @@ define([require], function(require){
     this.width = settings.width || 960;
     this.height = settings.height || 300;
     this.dataset = settings.dataset || []
+    this.url = settings.url || "/"
     this.xScaler = d3.time.scale().range([0, this.width - (this.margin.left + this.margin.right)]),
     this.yScaler = d3.scale.linear().range([this.height - (this.margin.top + this.margin.bottom), 0]),
     this.dateParser = d3.time.format("%Y-%m-%d").parse,

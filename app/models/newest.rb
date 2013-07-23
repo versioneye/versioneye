@@ -10,6 +10,7 @@ class Newest
   field :prod_type , type: String
   field :product_id, type: String
 
+  attr_accessible :name, :version, :language, :prod_key, :prod_type, :product_id, :created_at
 
   index(
     [

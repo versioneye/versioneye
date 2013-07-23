@@ -16,24 +16,32 @@ class LatestReleasesController < ApplicationController
   end
 
   def stats_today
+    NewestDailyCount.update_counts
     render json: NewestDailyCount.stats_today
   end
 
   def stats_current_week
+    NewestDailyCount.update_counts
     render json: NewestDailyCount.stats_current_week
   end
 
   def stats_current_month
+    NewestDailyCount.update_counts
     render json: NewestDailyCount.stats_current_month
   end
 
   def stats_last_month
+    NewestDailyCount.update_counts
     render json: NewestDailyCount.stats_last_month
   end
 
   def timeline_30days
     lang = "clojure"
     lang = params[:lang] if params.has_key?(:lang)
+    lang = lang.gsub("\.", "")
+    lang = "node.js" if lang == "nodejs"
+
+    NewestDailyCount.update_counts #can i run it as prefilter? 
     render json: NewestDailyCount.language_30days_timeline(lang)
   end
 end
