@@ -62,9 +62,9 @@ task :do_work => :environment do
 		# -- WEEKLY JOBS ----
 		if day == weekly_day && hour == weekly_hour && minute == weekly_minute
 
-			puts "START to send out the verification reminder E-Mails."
-			User.send_verification_reminders
-			puts "STOP to send out the verification reminder E-Mails."
+			# puts "START to send out the verification reminder E-Mails."
+			# User.send_verification_reminders
+			# puts "STOP to send out the verification reminder E-Mails."
 
 			puts "START to send out weekly project notification E-Mails."
 			ProjectService.update_all( Project::A_PERIOD_WEEKLY )
