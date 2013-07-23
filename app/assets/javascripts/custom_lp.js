@@ -29,6 +29,7 @@ function initialize_searchbox(){
   $('input#q').typeahead({
     name: 'autocomplete',
     limit: 10,
+    allowDuplicates: true,
     remote: {
       url: "/package/autocomplete?term=%QUERY"
     },
