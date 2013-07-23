@@ -26,8 +26,9 @@ define([require], function(require){
         ].join(' ');
       },
       caretCell: function(t1){
-        return ['<i class = "icon-caret-up" style = "color:',
-                (parseInt(t1) < 0) ? "red" : "green",
+        var is_pos = parseInt(t1) >= 0;
+        return ['<i class = "icon-caret-', (is_pos) ? "up": "down", '" style = "color:',
+                (is_pos) ? "green" : "red",
                 ';"></i>'
               ].join('');
       }
