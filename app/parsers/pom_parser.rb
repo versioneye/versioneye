@@ -77,11 +77,12 @@ class PomParser < CommonParser
     end
   end
 
-  def parse_requested_version(version, dependency, product)
-    if (version.nil? || version.empty?)
+  def parse_requested_version(version_number, dependency, product)
+    if (version_number.nil? || version_number.empty?)
       self.update_requested_with_current(dependency, product)
       return
     end
+    version = String.new(version_number)
     version = version.strip
     version = version.gsub('"', '')
     version = version.gsub("'", "")
