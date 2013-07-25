@@ -21,11 +21,11 @@ require(
 		sumplot3.loadAndRender("/latest/version/stats/current_month.json");
   	sumplot4 = new SummaryPlot({selector: "#summary-plots .plot4"});
 		sumplot4.loadAndRender("/latest/version/stats/last_month.json");
-  
+
     // -- timeline
     timeline1 = new Timeline({
-      selector: "#area3", 
-      width: 925, 
+      selector: "#area3",
+      width: 890,
       url: "/latest/version/timeline_30"
     });
 		timeline1.loadAndRender("/latest/version/timeline_30");

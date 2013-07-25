@@ -12,7 +12,7 @@ class LatestReleasesController < ApplicationController
     @latest_releases = Newest.where(
       :language => @lang,
       :updated_at.gte => 30.days.ago.at_midnight
-    ).desc(:updated_at).paginate(page: page, per_page: 30) 
+    ).desc(:updated_at).paginate(page: page, per_page: 30)
   end
 
   def stats_today
@@ -41,7 +41,7 @@ class LatestReleasesController < ApplicationController
     lang = lang.gsub("\.", "")
     lang = "node.js" if lang == "nodejs"
 
-    NewestDailyCount.update_counts #can i run it as prefilter? 
+    NewestDailyCount.update_counts #can i run it as prefilter?
     render json: NewestDailyCount.language_30days_timeline(lang)
   end
 end
