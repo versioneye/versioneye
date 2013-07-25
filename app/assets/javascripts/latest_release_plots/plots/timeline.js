@@ -2,7 +2,7 @@ define([require], function(require){
   function Timeline(settings){
     this.selector = settings.selector || "#area3";
     this.margin = settings.margin || {top: 30, right: 10, bottom: 30, left: 10};
-    this.width = settings.width || 960;
+    this.width = settings.width || 940;
     this.height = settings.height || 300;
     this.dataset = settings.dataset || []
     this.url = settings.url || "/"
