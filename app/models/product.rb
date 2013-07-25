@@ -371,11 +371,7 @@ class Product
   end
 
   def self.encode_language(language)
-<<<<<<< HEAD
-    return language.gsub("\.", "").downcase
-=======
     language.gsub("\.", "").downcase
->>>>>>> master
   end
 
   def self.decode_language( language )
