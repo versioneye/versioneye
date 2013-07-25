@@ -29,6 +29,7 @@ gem 'grape-entity'      , '0.2.0'
 gem 'grape-swagger'     , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
 gem 'htmlentities'      , '4.3.1'
 gem 'capistrano'        , '2.15.5'
+gem 'whenever'          , '0.8.4'
 
 group :development do
   gem 'libv8'         , '~> 3.11.8'
