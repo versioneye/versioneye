@@ -1,8 +1,17 @@
-<%= form_for @user_testimonial, url: {action: "create"}, html: {class: "form"} do |f| %>
-  <%= f.text_field :title %>
+<div style= "width: 520px; margin: 10px 25%;">
+  <%= form_for @user_testimonial, url: {action: "create"}, html: {class: "form form-horizontal"} do |f| %>
+    <% @f = f %>
+    <fieldset style = "padding: 0px 45px;">
+      <legend> Testimonial </legend>
+      <p>TODO: text why it's good idea to submit your testimonial</p>
 
-  <%= f.text_field :content %>
+      <% if @user.nil? %>
+        <%= render partial: 'shared/login_options_horizontal' %>
+      <% else %>
+        <%= render partial: 'user/testimonials/helpers/testimonial_form' %>
+      <% end %>
 
+    </fieldset>
+  <% end %>
+</div>
 
-
-<% end %>

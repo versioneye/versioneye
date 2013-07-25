@@ -1,13 +1,13 @@
 
 <div class = "control-group">
-  <%= f.hidden_field :_id %>
+  <%= @f.hidden_field :_id %>
 </div>
 <div class = "control-group">
   <label class = "control-label" for = "testimonial[title]"> 
     Current position/title 
   </label>
   <div class = "controls">
-    <%= f.text_field :title, class: "input-xlarge" %>
+    <%= @f.text_field :title, class: "input-xlarge" %>
   </div>
 </div>
 <div class = "control-group">
@@ -15,7 +15,7 @@
     Testimonial
   </label>
   <div class = "controls">
-    <%= f.text_area :content, size: "60x3", class: "input-xlarge limit255", maxlength: "140" %>
+    <%= @f.text_area :content, size: "60x3", class: "input-xlarge limit255", maxlength: "140" %>
   </div>
 </div>
 <div class = "control-group">
