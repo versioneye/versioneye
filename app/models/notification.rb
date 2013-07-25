@@ -40,7 +40,7 @@ class Notification
 
   def self.send_unsend_notifications user
     notifications = self.unsent_user_notifications user
-    if !notifications.nil? && !notifications.empty?
+    if notifications && !notifications.empty?
       notifications.sort_by {|notice| [notice.product.language]}
       NotificationMailer.new_version_email( user, notifications ).deliver
       Rails.logger.info "send notifications for user #{user.fullname} start"
