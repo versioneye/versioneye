@@ -20,7 +20,7 @@ class Newest
       [:updated_at, Mongo::DESCENDING],
       [:language, Mongo::DESCENDING]
     ])
- index(
+  index(
     [
       [:updated_at, Mongo::DESCENDING]
     ],
@@ -49,7 +49,7 @@ class Newest
     Product.supported_languages.each do |lang|
       newest.concat Newest.where(language: lang).desc(:created_at).limit(per_lang)
     end
-
     newest.shuffle.first(count)
   end
+
 end

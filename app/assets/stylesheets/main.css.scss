@@ -58,7 +58,7 @@ $text_hover: #a0b8cf;
 -------------------------------------------------- */
 body {
   background-color: #fafafa;
-  font-size: 12px;
+  font-size: 14px;
   color: $text_casual;
   font-family: "Droid Sans", "Droid Serif", Helvetica;
 }
@@ -99,8 +99,8 @@ h5.desc_header{
 }
 
 h5.dep_header{
-  padding: 0 0 10px 0;
-  margin: 0;
+  padding: 0;
+  margin: 10px 0;
   color: $text_casual;
   font-size: 14px;
   font-weight: normal;
@@ -146,6 +146,10 @@ h3 code {
   border-bottom: 1px solid #dddddd;
 }
 
+pre.prettyprint{
+  background-color: #fff;
+  margin-bottom: 0;
+}
 
 /* Tweak navbar brand link to be super sleek
 -------------------------------------------------- */
@@ -196,15 +200,21 @@ h3 code {
 
 
 .navbar .nav > li > a {
-  color: #0088cc;
+  color: black;
+  font-size: 14px;
   font-weight: bold;
   padding: 10px 0px 0px 0px;
 }
 
 .navbar .nav > li > a:hover {
-  color: #005580;
+  color: #0088cc;
 }
 
+.navbar-static-top {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
 
 
 
@@ -515,7 +525,7 @@ div.content_no_head {
 
 }
 
-
+/**
 .well1:hover {
   background-color: #ffffff;
   border: 1px solid #DBD7D7;
@@ -542,9 +552,8 @@ div.content_no_head {
     height: 62px;
   }
 }
-
+*/
 .release_box{
-  margin-top: 30px;
   margin-bottom: 30px;
 }
 
@@ -651,6 +660,10 @@ div.content_no_head {
 
 .footer {
 
+  background-color: white;
+  padding-top: 15px;
+  border-top: 1px solid #eeeeee;
+
   & h4 { color: $text_casual;}
   & p {
     margin-bottom: 0;
@@ -681,9 +694,17 @@ div.content_no_head {
 
 }
 
-.highlight_hint{
-  font-weight:bold;
-  color: black;
+.footer_social_icon{
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.footer_social_icon:hover{
+  text-decoration: none;
+}
+
+.footer_link_margin{
+  margin-right: 10px;
 }
 
 
@@ -819,75 +840,36 @@ div.content_no_head {
 
 /* Misc
 -------------------------------------------------- */
-  /*Searchcontainer*/
-  .search-container {
-    padding: 20px 20px;
-    list-style: none;
-    opacity: 0.98;
-    height: 42px; /* + padding = 76px */
-    background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5);
-    background-image: -ms-linear-gradient(top, #ffffff, #f5f5f5);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f5f5f5));
-    background-image: -webkit-linear-gradient(top, #ffffff, #f5f5f5);
-    background-image: -o-linear-gradient(top, #ffffff, #f5f5f5);
-    background-image: linear-gradient(top, #ffffff, #f5f5f5);
-    background-repeat: repeat-x;
-    border: 1px solid #ddd;
-    -webkit-border-radius: 10px;
-       -moz-border-radius: 10px;
-            border-radius: 10px;
-    filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
-    -webkit-box-shadow: inset 0 1px 0 #ffffff;
-       -moz-box-shadow: inset 0 1px 0 #ffffff;
-            box-shadow: inset 0 1px 0 #ffffff;
 
-  & form {
-    margin: 0px;
+#search_bar {
+
+  & #q {
+    background: white !important;
   }
 
-  & li {
-      display: inline-block;
-      *display: inline;
-      text-shadow: 0 1px 0 #ffffff;
-      *zoom: 1;
-    }
-
-  & input {
-      color : $text_yellow;
-      font-size: 19px;
-      height: 32px;
-      width: 668px;
-      padding-left: 112px;
-      text-align: center;
-      -webkit-border-radius: 4px 4px 4px 4px;
-      -moz-border-radius: 4px 4px 4px 4px;
-      border-radius: 4px 4px 4px 4px;
-    }
-
-  & .btn-group > button {
-    background: transparent;
+  & .input-huge {
+    height: 45px;
+    font-size: 25px;
   }
 
-  & .lang {
-      text-align:center;
-      width: 40px;
-      height: 40px;
-      margin: 0px;
-      padding: 0px 5px 0px 5px;
-      border: 0px;
+  & .btn-huge {
+    height: 55px;
+    min-width: 70px;
+    padding: 15px;
   }
 
-  & .divider {
-    &.right {
-      border-right: 1px #ddd solid;
-      padding-right: 30px;
-    }
+  & .input-append input {
+    border-radius: 4px 0 0 4px;
   }
+}
 
+.search_container{
+  padding-bottom: 65px;
 }
 
 #q {
   color: $text_yellow;
+
 }
 
 .search-form {
@@ -925,12 +907,13 @@ div.content_no_head {
   }
 }
 
-.search-container .active a {
-  color: #333333;
-}
-
 .l-left-margin{
   margin-left: 30px;
+}
+
+.l-top-down-30{
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .search-item {
@@ -1039,8 +1022,6 @@ h2 + .row {
 }
 
 
-
-
 /* Fake the :focus state to demo it */
 .focused {
   border-color: rgba(82,168,236,.8);
@@ -1144,19 +1125,20 @@ h2 + .row {
   margin-bottom: 30px;
 }
 
-.box_snippet{
-  margin-bottom: 30px;
-}
-
-.box_repos{
-  margin-bottom: 30px;
+.download_area{
+  background-color: #fff;
+  margin-bottom: 0;
+  padding: 9.5px;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
 }
 
 .mute {
-
   color : #999;
 }
-
 
 .thumbnails {
 
@@ -1409,6 +1391,62 @@ h2 + .row {
   & li:hover {
     background-color: #efefef;
   };
+
+  .media-body.product-item {
+    border-top: 1px solid #f3f3f3;
+    padding: 5px 0px;
+
+    &:hover {
+      background-color: #fafafa;
+    };
+  }
+}
+
+#followers-container {
+  & .nav-followers:before,
+  & .nav-followers:after {
+      display: table;
+      line-height: 0;
+      content: "";
+  }
+
+  & .nav-followers:after {
+      clear: both;
+  }
+
+  & .nav-followers > li {
+      float: left;
+  }
+
+  & .nav-followers > li > a {
+    border-radius: 2px 2px 2px 2px;
+    margin: 2px 0px;
+    padding: 2px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+  }
+
+  & .nav-followers > li > a:hover {
+    border-color: #fbb21c;
+    background-color: #fbb21c;
+  }
+}
+
+.media-list {
+  height: 340px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  & li.media {
+  border-top: 1px solid #f3f3f3;
+  padding: 5px 0px;
+  margin: 0px;
+
+    &:hover {
+      background-color: #fafafa;
+    };
+  }
 }
 
 .repo-container {
@@ -1416,7 +1454,7 @@ h2 + .row {
   padding: 10px 0px;
 
   &:hover {
-    background-color: #fafafa;
+    background-color: #f3f3f3;
   };
 }
 
@@ -1426,5 +1464,9 @@ h2 + .row {
   &:hover {
     background-color: #fafafa;
   };
+}
+
+.btn-signin {
+  width: 250px !important;
 }
 

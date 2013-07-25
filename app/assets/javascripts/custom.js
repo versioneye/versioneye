@@ -14,8 +14,7 @@ var values = [{ label: "Choice1", va: "value1" }, { label: "Choice2", va: "value
 
 jQuery(document).ready(function(){
   jQuery('#q').tbHinter({
-    text: "json",
-    styleclass: "lp_searchfield_hint"
+    text: "Search for a software library"
   });
 
   if(jQuery("#payment-form").length){

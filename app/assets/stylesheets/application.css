@@ -11,6 +11,9 @@
  *= require font-awesome
 
  *= require main
+ *= require typeahead.js-bootstrap
+ *= require font-awesome
+ *= require social-buttons
  *= require product
  *= require user
 */

@@ -2,109 +2,87 @@
 <section class="container">
   <div id="headline_1" class="jumbotron" style="text-align: center;">
     <h1><span style ="">Continuous Updating</span></h1>
-    <p>Follow your libraries and get notified about new versions. Save Time and Money. It's easy.</p>
+    <p style="font-weigth: none; line-height: 1.5;">Follow your libraries and get notified about new versions</p>
   </div>
 </section>
 
-<section id="search_section" class="container" style="padding-bottom: 65px;" >
-  <div id="search_bar" class="search-container" >
+<section id="search_section" class="container search_container" >
+  <div id="search_bar" style="text-align: center;" >
     <form id="form" action="/search" method="GET" style="padding: 0; margin:0;" >
-      <input id="lang" name="lang" class="hide" type="hidden" value="<%= @lang %>" />
-      <div class="row">
-        <div class = "span5 pull-left ">
-          <div class = "input-prepend ">
-            <input id="q" class = "input large" name="q" type="text" value="<%= @query %>" />
-          </div>
-        </div>
-        <div class = "span2 pull-right" style="width: 100px;" >
-          <button type="submit" class="btn2 btn2-big pull-right" >
-            Search
-          </button>
-        </div>
+      <div class="input-append">
+        <input id="q" name="q" class="span7 input-huge" type="text" />
+        <button class="btn btn-primary btn-huge" type="submit" >
+          <i class="icon-search icon-white"></i>&nbsp;Search
+        </button>
       </div>
     </form>
   </div>
-  <div id="headline_2" class="jumbotron" style="margin-top: 10px;">
-    <div class="row" style="text-align: center; vertical-align: middle;">
-      <% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
-          <% @langs = @lang.split(",") %>
-          <% @languages.each do |language| %>
-            <% langname = language.downcase.gsub(/\./, "") %>
-            <div class="icon_<%= langname %>_small_container" >
-              <span id="icon_<%= langname %>" class="icon_<%= langname %> small on" title="<%= langname %>">&nbsp;</span>
-            </div>
-          <% end %>
-      <% end %>
+  <div class="row" style="text-align: center; vertical-align: middle;" >
+    <% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
+        <% @langs = @lang.split(",") %>
+        <% @languages.each do |language| %>
+          <% langname = language.downcase.gsub(/\./, "") %>
+          <div onclick="document.location.href='<%=language%>'" class="icon_<%= langname %>_small_container" style="cursor: pointer;" >
+              <span  id="icon_<%= langname %>" class="icon_<%= langname %> small on" title="<%= langname %>">&nbsp;</span>
+          </div>
+        <% end %>
+    <% end %>
+  </div>
+</section>
+
+
+<section id="features" class="container" >
+  <div class="well-white">
+
+    <%= render "/products/helpers/what_is_versioneye" %>
+
+    <div class="hr_row col2-left-l col2-right-r"><hr /></div>
+
+    <%= render "/products/helpers/support_for_packagemanagers" %>
+
+    <div class="hr_row col2-left-l col2-right-r"><hr /></div>
+
+    <%= render "/products/helpers/integration_points" %>
+
+  </div>
+</section>
+
+
+<section id="try" class="container" >
+  <%= render "/products/helpers/file_upload" %>
+</section>
+
+
+<section id="reasons" class="container" >
+  <div class="well-white">
+    <div class="marketing" >
+      <h2 class="casual">Because software libraries don't update themselves</h2>
+      <p>They just become out-dated!</p>
+    </div>
+    <div class="marketing" >
+      <h2 class="casual">Because software libraries are not like iPhone apps</h2>
+      <p>They are passive! They don't tell you that they are out-dated!</p>
+    </div>
+    <div class="marketing" >
+      <h2 class="casual">Because software developers are wasting time with ..</h2>
+      <p>looking manually for updates. Save time and money by automating this process.</p>
     </div>
   </div>
 </section>
 
-  <section class="container" >
-    <hr class="separator_eye" />
-  </section>
 
-  <section id="reasons" class=" container" >
-    <div class="marketing" >
-      <h2 class="casual">Because Software Libraries don't update themselves</h2>
-      <p>They just become out-dated!</p>
+<section id="register_today" class="container" >
+  <div class="row col2-left-l col2-right-r" >
+    <div class  = "marketing">
+      <h2>Register today. It's free!</h2>
+      <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0;") do  %>
+        <button type="submit" class="btn btn-large btn-success" >Sign Up Now</button>
+      <% end %>
+      <p>
+        Or have a look at our <%= link_to "subscription plans", :controller => "services", :action => "pricing" %> .
+      </p>
     </div>
-    <div class="marketing" >
-      <h2 class="casual">Because Software Libraries are not like iPhone Apps</h2>
-      <p>They are passive! They don't tell you that they are out-dated!</p>
-    </div>
-    <div class="marketing" >
-      <h2 class="casual">Because Software Developers are wasting time with ..</h2>
-      <p>looking manually for updates. Save Time and Money by automating this process.</p>
-    </div>
-  </section>
+  </div>
+</section>
 
-  <section class="container" >
-    <hr class="separator_eye" />
-  </section>
-
-  <section id="features" class="container" >
-    <div class="row-fluid" >
-      <div class="span3 well1">
-        <span class = "icon_package off marketing-icon"></span>
-        <span class = "icon_package on  marketing-icon"></span>
-        <h5>Package support</h5>
-        <p>
-          VersionEye has support for various package managers
-          including Maven, Bundler, Lein and more.
-        </p>
-        <a href="/services">Find out more</a>
-      </div>
-      <div class="span3 well1">
-        <span class="icon_gitcat off marketing-icon"></span>
-        <span class="icon_gitcat on  marketing-icon"></span>
-        <h5>GitHub integration</h5>
-        <p>
-          Monitor your private GitHub repositories
-          to be notified about outdated dependencies.
-        </p>
-        <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd'>Login via GitHub</a>
-      </div>
-      <div class="span3 well1">
-        <span class="icon_freeprice off marketing-icon"></span>
-        <span class="icon_freeprice on  marketing-icon"></span>
-        <h5>SignUp free</h5>
-        <p>
-          Monitoring public repositories is free. Only
-          private GitHub repositories are fee-based.
-        </p>
-        <a href="/signup">Register for free</a>
-      </div>
-      <div class="span3 well1">
-        <span class="icon_dependency off marketing-icon"></span>
-        <span class="icon_dependency on marketing-icon"></span>
-        <h5>Visualizing dependendencies</h5>
-        <p>
-          VersionEye visualises recursive dependencies and
-          makes complexity visible.
-        </p>
-        <a href="/ruby/rails/3.2.13">Watch example</a>
-      </div>
-    </div>
-  </section>
-
-<br/><br/><br/><br/>
+<br/><br/>

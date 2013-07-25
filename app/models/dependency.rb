@@ -46,6 +46,9 @@ class Dependency
   end
 
   def product
+    if group_id && artifact_id
+      return Product.find_by_group_and_artifact( group_id, artifact_id )
+    end
     Product.fetch_product( language, dep_prod_key )
   end
 
@@ -71,7 +74,19 @@ class Dependency
   end
 
   def update_known_if_nil
-    self.update_known() if self.known.nil?
+    self.update_known() if self.known.nil? || self.known == false
+  end
+
+  def self.main_scope( language )
+    if language.eql?( Product::A_LANGUAGE_RUBY )
+      return A_SCOPE_RUNTIME
+    elsif language.eql?( Product::A_LANGUAGE_JAVA ) || language.eql?( Product::A_LANGUAGE_CLOJURE )
+      return A_SCOPE_COMPILE
+    elsif language.eql?( Product::A_LANGUAGE_NODEJS )
+      return A_SCOPE_COMPILE
+    elsif language.eql?( Product::A_LANGUAGE_PHP )
+      return A_SCOPE_REQUIRE
+    end
   end
 
   def version_parsed

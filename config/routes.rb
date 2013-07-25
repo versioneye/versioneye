@@ -23,8 +23,6 @@ Versioneye::Application.routes.draw do
   get    '/signin',                :to => 'sessions#new'
   get    '/signout',               :to => 'sessions#destroy'
 
-
-  get   '/users/christian.weyand',                    :to => redirect('/users/christianweyand')
   resources :users, :key => :username do
     member do
       get 'favoritepackages'
@@ -39,8 +37,6 @@ Versioneye::Application.routes.draw do
   post  '/resetpassword',                :to => 'users#resetpassword'
   get   '/updatepassword/:verification', :to => 'users#show_update_password'
   post  '/updatepassword',               :to => 'users#update_password'
-  get   '/home',                         :to => 'users#home'
-
 
   namespace :settings do
 
@@ -84,9 +80,8 @@ Versioneye::Application.routes.draw do
 
   end
 
-  resources :versioncomments
   get   '/vc/:id', :to => 'versioncomments#show'
-
+  resources :versioncomments
   resources :versioncommentreplies
 
   get '/user/packages/popular_in_my_projects', :to => "user/packages#popular_in_my_projects"
@@ -111,13 +106,12 @@ Versioneye::Application.routes.draw do
     resource :testimonials
   end
 
-  post  '/services/choose_plan',  :to => 'services#choose_plan'
-  resources :services do
-    member do
-      get  'recursive_dependencies'
-      post 'recursive_dependencies'
-    end
-  end
+  post  '/services/choose_plan'               ,  :to => 'services#choose_plan'
+  post  '/services'                           ,  :to => 'services#create'
+  get   '/services/:id'                       ,  :to => 'services#show', :as => 'service'
+  get   '/services/:id/recursive_dependencies',  :to => 'services#recursive_dependencies'
+  post  '/services/:id/recursive_dependencies',  :to => 'services#recursive_dependencies'
+
   get   '/pricing',            :to => 'services#pricing'
   get   '/news',               :to => 'news#news'
   get   '/mynews',             :to => 'news#mynews'
@@ -176,26 +170,29 @@ Versioneye::Application.routes.draw do
 
   get   '/search', :to => 'products#search'
 
-  get   '/package/name'        , :to => 'products#autocomplete_product_name'
-  post  '/package/follow'      , :to => 'products#follow'
-  post  '/package/unfollow'    , :to => 'products#unfollow'
-  post  '/package/image_path'  , :to => 'dependency_wheel#image_path'
-  post  '/package/upload_image', :to => 'dependency_wheel#upload_image'
+  get   '/package/autocomplete'   , :to => 'products#autocomplete_product_name'
+  get   '/package/name'           , :to => 'products#autocomplete_product_name'
+  post  '/package/follow'         , :to => 'products#follow'
+  post  '/package/unfollow'       , :to => 'products#unfollow'
+  post  '/package/image_path'     , :to => 'dependency_wheel#image_path'
+  post  '/package/upload_image'   , :to => 'dependency_wheel#upload_image'
 
   # Rewriting old legacy paths
-  get   '/package/:key'                       , :to => 'page#legacy_route'
-  get   '/product/:key'                       , :to => 'page#legacy_route'
-  get   '/package/:key/badge'                 , :to => 'page#legacy_badge_route'
-  get   '/package/:key/version/:version'      , :to => 'page#legacy_route'
-  get   '/package/:key/version/:version/badge', :to => 'page#legacy_badge_route'
-  get   '/product/:key/version/:version'      , :to => 'page#legacy_route'
-  get   '/package/:key/:version'              , :to => 'page#legacy_route', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
-  get   '/product/:key/:version'              , :to => 'page#legacy_route', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/package/:key'                       , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/ }
+  get   '/product/:key'                       , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/ }
+  get   '/package/:key/badge'                 , :to => 'page#legacy_badge_route', :constraints => { :key => /[^\/]+/ }
+  get   '/package/:key/version/:version'      , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/package/:key/version/:version/badge', :to => 'page#legacy_badge_route', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/product/:key/version/:version'      , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/package/:key/:version'              , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/product/:key/:version'              , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
   get   '/package_visual/:key'                 , :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/ }
   get   '/package_visual/:key/version/:version', :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/package_visual/:key/:version'        , :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
+
+  get   '/:lang',                             :to => 'language#show'
   get   '/:lang/:key/badge',                  :to => 'products#badge',  :constraints => { :key => /[^\/]+/ }
   get   '/:lang/:key/:version/badge',         :to => 'products#badge',  :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 

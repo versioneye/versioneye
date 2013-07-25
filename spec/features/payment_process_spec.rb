@@ -5,7 +5,7 @@ describe "Payment Process" do
   describe "Empty Payment History", :js => true do
     it "shows correct message when there's no history" do
       visit "/settings/payments"
-      have_css "#payment_history", text: "You dont have any Payment history"
+      have_css "#payment_history", text: "t have any Payment history"
     end
   end
 

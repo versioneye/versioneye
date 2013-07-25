@@ -1,4 +1,6 @@
 <% btn ||= "login" %>
-<a href='javascript:var popupWindow = window.open(oauth_facebook_link, "popupWindow", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, menubar=1, resizable=1, width="+winWidth+",height="+winHeigh+"top="+top+", left="+left);' style="margin-right: 5px;" >
-	<span class="btn_facebook <%= btn %>"></span>
-</a>
+<button onclick='var popupWindow = window.open(oauth_facebook_link, "popupWindow", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, menubar=1, resizable=1, width="+winWidth+",height="+winHeigh+"top="+top+", left="+left);' class="btn btn-facebook btn-large btn-signin">
+  <i class = "icon-facebook"></i>
+  | Login with Facebook
+</button>
+

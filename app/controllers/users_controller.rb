@@ -8,14 +8,6 @@ class UsersController < ApplicationController
   force_ssl :only => [:new, :create, :activate] if Rails.env.production?
   # before_filter :force_http , :only => [:show, :favoritepackages, :comments]
 
-  def home
-    if signed_in?
-      redirect_to user_path current_user
-    else
-      redirect_to root_path
-    end
-  end
-
   def index
     @users = User.find_all(params[:page])
   end
@@ -178,7 +170,7 @@ class UsersController < ApplicationController
       flash[:error] = "Wrong verification code. If it's mistake, please send feedback to our customer support."
       has_failure = true
     elsif password.empty? or password != password2
-      flash[:error] = "Passwords dont match."
+      flash[:error] = "Passwords don't match."
       has_failure = true
     end
 
