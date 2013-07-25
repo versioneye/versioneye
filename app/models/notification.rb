@@ -35,6 +35,8 @@ class Notification
       end
     end
     NotificationMailer.status( count ).deliver
+    Rails.logger.info "Send out #{count} emails"
+    p "Send out #{count} emails"
     count
   end
 
