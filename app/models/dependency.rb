@@ -74,7 +74,7 @@ class Dependency
   end
 
   def update_known_if_nil
-    self.update_known() if self.known.nil?
+    self.update_known() if self.known.nil? || self.known == false
   end
 
   def self.main_scope( language )
