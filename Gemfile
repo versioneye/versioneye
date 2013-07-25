@@ -19,6 +19,7 @@ gem 'aws-s3'            , '0.6.3', :require => 'aws/s3'
 gem 'nokogiri'          , '1.6.0'
 gem 'stripe'            , '1.8.3'
 gem 'thin'              , '1.5.1'
+gem 'unicorn'           , '4.6.3'
 gem 'tire'              , '0.6.0'
 gem 'json'              , '1.8.0'
 gem 'dalli'             , '2.6.4'   # memcache library
@@ -27,6 +28,8 @@ gem 'grape'             , '0.5.0'
 gem 'grape-entity'      , '0.2.0'
 gem 'grape-swagger'     , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
 gem 'htmlentities'      , '4.3.1'
+gem 'capistrano'        , '2.15.5'
+gem 'whenever'          , '0.8.4'
 
 group :development do
   gem 'libv8'         , '~> 3.11.8'

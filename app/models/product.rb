@@ -1,3 +1,5 @@
+#for indexing use task: rake db:mongoid:create_indexes
+
 class Product
 
   require 'will_paginate/array'
@@ -51,6 +53,9 @@ class Product
 
   field :reindex, type: Boolean, default: true
 
+  index [[:followers, Mongo::DESCENDING]]
+  index [[:updated_at, Mongo::DESCENDING]]
+
   embeds_many :versions
   embeds_many :repositories
 
@@ -62,6 +67,7 @@ class Product
       [:updated_at, Mongo::DESCENDING],
       [:language, Mongo::DESCENDING]
     ])
+
   has_and_belongs_to_many :users
 
   # has_and_belongs_to_many :versionarchives
@@ -70,12 +76,14 @@ class Product
 
   attr_accessor :in_my_products, :version_uid, :last_crawle_date, :released_days_ago
 
+  scope :by_language, ->(lang){where(language: lang)}
+
   def delete
     false
   end
 
   def self.supported_languages
-    Set[ A_LANGUAGE_RUBY, A_LANGUAGE_PYTHON, A_LANGUAGE_NODEJS, 
+    Set[ A_LANGUAGE_RUBY, A_LANGUAGE_PYTHON, A_LANGUAGE_NODEJS,
          A_LANGUAGE_JAVA, A_LANGUAGE_PHP, A_LANGUAGE_R, A_LANGUAGE_JAVASCRIPT,
          A_LANGUAGE_CLOJURE]
   end
@@ -216,7 +224,7 @@ class Product
   end
 
   def self.find_by_group_and_artifact(group, artifact)
-    Product.where( group_id: group, artifact_id: artifact )[0]
+    Product.where( group_id: group, artifact_id: artifact ).shift
   end
 
   ######## ELASTIC SEARCH MAPPING ###################
@@ -281,7 +289,7 @@ class Product
   end
 
   def dependencies(scope = nil)
-    scope = main_scope if scope == nil
+    scope = Dependency.main_scope(self.language) if scope == nil
     Dependency.find_by_lang_key_version_scope( language, prod_key, version, scope )
   end
 
@@ -336,15 +344,7 @@ class Product
   end
 
   def main_scope
-    if self.language.eql?( Product::A_LANGUAGE_RUBY )
-      return Dependency::A_SCOPE_RUNTIME
-    elsif self.language.eql?( Product::A_LANGUAGE_JAVA )
-      return Dependency::A_SCOPE_COMPILE
-    elsif self.language.eql?( Product::A_LANGUAGE_NODEJS )
-      return Dependency::A_SCOPE_COMPILE
-    elsif self.language.eql?( Product::A_LANGUAGE_PHP )
-      return Dependency::A_SCOPE_REQUIRE
-    end
+    Dependency.main_scope( self.language )
   end
 
   def self.downcase_array(arr)
@@ -371,7 +371,11 @@ class Product
   end
 
   def self.encode_language(language)
+<<<<<<< HEAD
     return language.gsub("\.", "").downcase
+=======
+    language.gsub("\.", "").downcase
+>>>>>>> master
   end
 
   def self.decode_language( language )
@@ -379,6 +383,10 @@ class Product
     return A_LANGUAGE_NODEJS if language.match(/^node/i)
     return A_LANGUAGE_PHP if language.match(/^php/i)
     return language.capitalize
+  end
+
+  def to_url_path
+    "/#{Product.encode_language(language)}/#{Product.encode_prod_key(prod_key)}"
   end
 
   def description_summary
@@ -400,7 +408,8 @@ class Product
 
   def show_dependency_badge?
     self.language.eql?(A_LANGUAGE_JAVA) or self.language.eql?(A_LANGUAGE_PHP) or
-    self.language.eql?(A_LANGUAGE_RUBY) or self.language.eql?(A_LANGUAGE_NODEJS)
+    self.language.eql?(A_LANGUAGE_RUBY) or self.language.eql?(A_LANGUAGE_NODEJS) or
+    self.language.eql?(A_LANGUAGE_CLOJURE)
   end
 
   private

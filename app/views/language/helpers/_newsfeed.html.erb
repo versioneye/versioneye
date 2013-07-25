@@ -1,0 +1,20 @@
+<h4> Latest <%= @lang %> news </h4>
+
+<ul id = "language-newsfeed" class = "media-list" data-feeds = "<%= @feeds.join(',') %>">
+</ul>
+
+<script id = "language-newsfeed-item-template" type  = "text/template">
+<li class = "media">
+  <a class = "pull-left"></a>
+  <div class = "media-body">
+    <h5 class = "media-heading">
+      {{= entry.title }} 
+      <small> - {{= moment(entry.publishedDate).fromNow() }}</small>
+    </h5>
+    <p> 
+      {{= entry.contentSnippet }} 
+      <span class = ""><a href = "{{= entry.link }}"> &nbsp; read more</a></span>
+    </p>
+  </div>
+</li>
+</script>

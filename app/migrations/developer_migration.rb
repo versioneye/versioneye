@@ -55,4 +55,14 @@ class DeveloperMigration
     end
   end
 
+  def self.update_r_prod_keys
+    elements = Developer.where(:prod_key => /^r\//i)
+    p "#{elements.count} developers matching the R package regex."
+    elements.each do |element|
+      element.prod_key = element.prod_key.gsub("r\/", "")
+      element.save
+      p "save #{element.prod_key}"
+    end
+  end
+
 end

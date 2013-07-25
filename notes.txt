@@ -1,4 +1,6 @@
 
+/usr/bin/unicorn -D -E production -c /var/www/versioneye/releases/current/unicorn.conf.rb
+
 Continuous Updating is an agile technique to keep your software projects up-to-date. Learn more about:
 Which dependencies do I use in my software project?
 Which dependencies are outdated?
@@ -26,4 +28,58 @@ Robert studied computer science in Germany from 2000 - 2005. In 2008 he founded 
 
 
  - Truncate CircleElements
+
+
+/app/vendor/bundle/ruby/1.9.1/gems/naturalsorter-2.0.6/lib/versioncmp.rb:169:in `replace_leading_v'
+2013-07-14T14:59:50.182499+00:00 app[web.2]:   Rendered products/helpers/_dependency_table.html.erb (40.5ms)
+2013-07-14T14:59:50.183284+00:00 app[web.2]:   Rendered products/_product_show_dependencies_npm.html.erb (64.8ms)
+2013-07-14T14:59:50.183284+00:00 app[web.2]:   Rendered products/_product_show_dependencies.html.erb (65.0ms)
+2013-07-14T14:59:50.183434+00:00 app[web.2]:   Rendered products/_product_show_npm.html.erb (132.8ms)
+2013-07-14T14:59:50.183535+00:00 app[web.2]:   Rendered products/show.html.erb within layouts/application (133.2ms)
+2013-07-14T14:59:50.183976+00:00 app[web.2]: Completed 500 Internal Server Error in 220ms
+2013-07-14T14:59:50.187901+00:00 app[web.2]:
+2013-07-14T14:59:50.187901+00:00 app[web.2]: ActionView::Template::Error (undefined method `match' for nil:NilClass):
+2013-07-14T14:59:50.187901+00:00 app[web.2]:     14:         <td>
+2013-07-14T14:59:50.187901+00:00 app[web.2]:     15:           <% if dep.known %>
+2013-07-14T14:59:50.187901+00:00 app[web.2]:     16:             <span >
+2013-07-14T14:59:50.187901+00:00 app[web.2]:     17:               <a class="#a dep_link" href="/<%= dep.language_escaped %>/<%= dep.dep_prod_key_for_url %>/<%= dep.version_for_url %>" >
+2013-07-14T14:59:50.187901+00:00 app[web.2]:     18:                 <% if dep.group_id && dep.artifact_id %>
+2013-07-14T14:59:50.187901+00:00 app[web.2]:     19:                   <span ><%= dep.group_id %> : <%= dep.artifact_id %></span>
+2013-07-14T14:59:50.187901+00:00 app[web.2]:     20:                 <% else %>
+2013-07-14T14:59:50.187901+00:00 app[web.2]:   app/services/version_service.rb:140:in `block in smaller_than'
+2013-07-14T14:59:50.188270+00:00 app[web.2]:   app/services/version_service.rb:139:in `each'
+2013-07-14T14:59:50.188270+00:00 app[web.2]:   app/services/version_service.rb:139:in `smaller_than'
+2013-07-14T14:59:50.188270+00:00 app[web.2]:   app/services/version_service.rb:52:in `version_tilde_newest'
+2013-07-14T14:59:50.188270+00:00 app[web.2]:   app/parsers/package_parser.rb:111:in `parse_requested_version'
+2013-07-14T14:59:50.188270+00:00 app[web.2]:   app/models/dependency.rb:118:in `npm_version_parsed'
+2013-07-14T14:59:50.188270+00:00 app[web.2]:   app/models/dependency.rb:85:in `version_parsed'
+2013-07-14T14:59:50.188270+00:00 app[web.2]:   app/models/dependency.rb:127:in `version_for_url'
+
+
+Gem::Installer::ExtensionBuildError: ERROR: Failed to build gem native extension.
+
+    /usr/bin/ruby1.9.1 extconf.rb
+checking for asprintf()... yes
+checking for ruby/st.h... yes
+checking for ruby/regex.h... yes
+checking for ruby/encoding.h... yes
+creating Makefile
+
+make "DESTDIR="
+sh: 1: make: not found
+
+
+Gem files will remain installed in /usr/lib/ruby/gems/1.9.1/gems/bson_ext-1.7.0 for inspection.
+Results logged to /usr/lib/ruby/gems/1.9.1/gems/bson_ext-1.7.0/ext/cbson/gem_make.out
+
+An error occurred while installing bson_ext (1.7.0), and Bundler cannot continue.
+Make sure that `gem install bson_ext -v '1.7.0'` succeeds before bundling.
+
+
+apt-get install make
+apt-get install g++
+gem update --system
+gem install bundler
+
+
 

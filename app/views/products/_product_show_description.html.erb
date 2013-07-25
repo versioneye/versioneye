@@ -1,24 +1,26 @@
 <% if (@product.description && !@product.description.empty?) || (@product.description_manual && !@product.description_manual.empty?) %>
 
 	<h5 class="desc_header"> Description </h5>
-	
-	<p>
-		<% if @product.description && @product.description.include?("\n") %>
-			<%= @product.description.gsub!("\n", "<br/>").html_safe %>
-		<% else %>
-			<%= @product.description %>
-		<% end %>
-	</p>
 
-	<% if @product.description_manual && !@product.description_manual.empty? %>
+	<div style="margin-bottom: 30px;" >
 		<p>
-			<small>[ manual entry ]: </small>
-			<% if @product.description_manual.include? "\n" %>
-				<%= @product.description_manual.gsub!("\n", "<br/>").html_safe %>
+			<% if @product.description && @product.description.include?("\n") %>
+				<%= @product.description.gsub!("\n", "<br/>").html_safe %>
 			<% else %>
-				<%= @product.description_manual %>
+				<%= @product.description %>
 			<% end %>
 		</p>
-	<% end %>	
+
+		<% if @product.description_manual && !@product.description_manual.empty? %>
+			<p>
+				<small>[ manual entry ]: </small>
+				<% if @product.description_manual.include? "\n" %>
+					<%= @product.description_manual.gsub!("\n", "<br/>").html_safe %>
+				<% else %>
+					<%= @product.description_manual %>
+				<% end %>
+			</p>
+		<% end %>
+	</div>
 
 <% end %>

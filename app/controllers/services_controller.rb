@@ -11,18 +11,18 @@ class ServicesController < ApplicationController
 
     if (file.nil? || file.empty?)
       flash[:error] = "No file selected. Please select a file from your computer."
-      redirect_to services_path
+      redirect_to "/"
       return nil
     end
 
-    orig_filename =  file['datafile'].original_filename
-    filename = nil
-    filename = S3.upload_fileupload( file )
-    url = S3.url_for( filename )
-    project = ProjectService.build_from_url( url )
-    project.name = Project.create_random_value
+    orig_filename       =  file['datafile'].original_filename
+    filename            = nil
+    filename            = S3.upload_fileupload( file )
+    url                 = S3.url_for( filename )
+    project             = ProjectService.build_from_url( url )
+    project.name        = Project.create_random_value
     project.s3_filename = filename
-    project.source = Project::A_SOURCE_UPLOAD
+    project.source      = Project::A_SOURCE_UPLOAD
     project.make_project_key!
 
     if !project.dependencies.nil? && !project.dependencies.empty? && project.save
@@ -35,6 +35,8 @@ class ServicesController < ApplicationController
   rescue => e
     logger.error "ERROR Message:   #{e.message}"
     logger.error "ERROR backtrace: #{e.backtrace}"
+    flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye team."
+    redirect_to "/"
   end
 
   def show

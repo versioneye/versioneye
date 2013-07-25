@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Create Project from file uplaod on the service page - guest area" do
 
   it "create a project from file upload as singned in user." do
-    get services_path
+    get root_path
     assert_response :success
     response.body.should match("What is VersionEye")
 

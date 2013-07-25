@@ -26,7 +26,14 @@ module V2
         track_apikey
       end
 
-      desc "show users projects"
+      desc "show users projects", {
+        notes: %q[
+
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+
+            ]
+      }
       get do
         authorized?
         @user_projects = Project.by_user(@current_user)
@@ -45,13 +52,20 @@ module V2
         project_key = params[:project_key]
         project = fetch_project_by_key_and_user(project_key, current_user)
         if project.nil?
-          error! "Project `#{params[:project_key]}` dont exists", 400
+          error! "Project `#{params[:project_key]}` don't exists", 400
         end
         present project, with: EntitiesV2::ProjectEntity, type: :full
       end
 
 
-      desc "upload project file"
+      desc "upload project file", {
+        notes: %q[
+
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+
+            ]
+      }
       params do
         requires :upload, type: Hash, desc: "Project file - [maven.pom, Gemfile ...]"
       end
@@ -78,7 +92,14 @@ module V2
       end
 
 
-      desc "update project with new file"
+      desc "update project with new file", {
+        notes: %q[
+
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+
+            ]
+      }
       params do
         requires :project_key, :type => String, :desc => "Project specific identificator"
         requires :project_file, type: Hash, desc: "Project file - [maven.pom, Gemfile ...]"
@@ -88,7 +109,7 @@ module V2
 
         @project = fetch_project_by_key_and_user( params[:project_key], current_user )
         if @project.nil?
-          error! "Project `#{params[:project_key]}` dont exists", 400
+          error! "Project `#{params[:project_key]}` don't exists", 400
         end
 
         if params[:project_file].nil?
@@ -112,7 +133,14 @@ module V2
       end
 
 
-      desc "delete given project"
+      desc "delete given project", {
+        notes: %q[
+
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+
+            ]
+      }
       params do
         requires :project_key, :type => String, :desc => "Delete project file"
       end
@@ -125,7 +153,7 @@ module V2
         if project.nil? or not destroy_project(project.id)
           project = Project.by_user(@current_user).where(_id: proj_key).shift
           if project.nil?
-            error! "Deletion failed because you dont have such project: #{proj_key}", 500
+            error! "Deletion failed because you don't have such project: #{proj_key}", 500
           end
         end
 
@@ -133,7 +161,14 @@ module V2
       end
 
 
-      desc "get grouped view of licences for dependencies"
+      desc "get grouped view of licences for dependencies", {
+        notes: %q[
+
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: "?api_key=666_your_api_key_666"
+
+            ]
+      }
       params do
         requires :project_key, :type => String, :desc => "Project specific identifier"
       end
@@ -141,7 +176,7 @@ module V2
         authorized?
 
         @project = ProjectsApiV2.fetch_project @current_user, params[:project_key]
-        error!("Project `#{params[:project_key]}` dont exists", 400) if @project.nil?
+        error!("Project `#{params[:project_key]}` don't exists", 400) if @project.nil?
 
         licenses = {}
 

@@ -67,6 +67,15 @@ class VersionlinkMigration
     end
   end
 
+  def self.update_r_prod_keys
+    elements = Versionlink.where(:prod_key => /^r\//i)
+    p "#{elements.count} links are matching the R package regex"
+    elements.each do |element|
+      element.prod_key = element.prod_key.gsub("r\/", "")
+      element.save
+    end
+  end
+
   private
 
     def self.remove_nil_links

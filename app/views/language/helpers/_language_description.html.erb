@@ -1,0 +1,36 @@
+<% if @lang.eql?( Product::A_LANGUAGE_RUBY ) %>
+
+  Ruby is a dynamic, general-purpose programming language with a focus on productivity and simplicity. It combines an elegant syntax inspired by Perl that is both easy to read and write with Smalltalk-like features. 
+  <br/>Read more <a href="http://en.wikipedia.org/wiki/Ruby_(programming_language)" target="wiki_page">here</a>
+
+<% elsif @lang.eql?( Product::A_LANGUAGE_JAVA ) %>
+
+  Java is a very popular general-purpose computer programming language. It is specially designed to have as few implementation dependencies as possible. Java allows application developers to run code on one platform. This means that it doesn't need to be recompiled to run on another. 
+  <br/>Read more <a href="http://en.wikipedia.org/wiki/Java_(programming_language)" target="wiki_page">here</a>
+
+<% elsif @lang.eql?( Product::A_LANGUAGE_PHP ) %>
+
+  PHP is a widely used scripting language that is designed for web development and can be embedded into HTML. 
+  <br/>Read more <a href="http://en.wikipedia.org/wiki/PHP" target="wiki_page">here</a>
+
+<% elsif @lang.eql?( Product::A_LANGUAGE_PYTHON ) %>
+
+  Python is a general-purpose programming language that allows you to integrate your systems more effectively and work more quickly. It is widely used and its syntax allows coders to express concepts in fewer lines of code than would be possible in other programming languages. Python provides constructs intended to enable clear programs on a large and small scale. 
+  <br/>Read more <a href="http://en.wikipedia.org/wiki/Python_(programming_language)" target="wiki_page">here</a>
+
+<% elsif @lang.eql?( Product::A_LANGUAGE_NODEJS ) %>
+
+  Node.js is a programming language designed for easily writing scalable network applications. It is built on Chrome's JavaScript runtime and uses an event-driven, asynchronous I/O model to maximize scalability and efficiency and minimize overhead. 
+  <br/>Read more <a href="http://en.wikipedia.org/wiki/Nodejs" target="wiki_page">here</a>
+
+<% elsif @lang.eql?( Product::A_LANGUAGE_CLOJURE ) %>
+
+  Clojure is a dynamic general-purpose language. It is combining the interactive development and approachability of a scripting language with a solid and efficient infrastructure, particulary for multithreaded programming.
+  <br/>Read more <a href="http://en.wikipedia.org/wiki/Clojure" target="wiki_page">here</a>
+
+<% elsif @lang.eql?( Product::A_LANGUAGE_R ) %>
+
+  The programming language R is a free software and a software environment for graphics and statistical computing. R is mostly used among statisticians and data miners for developing data analysis and statistical software. Surveys have shown that R's popularity is increasing substantially in recent years.
+  <br/>Read more <a href="http://en.wikipedia.org/wiki/R_programming_language" target="wiki_page">here</a>
+
+<% end %>

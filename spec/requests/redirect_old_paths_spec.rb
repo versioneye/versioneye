@@ -36,8 +36,6 @@ describe "Redirect Old Paths" do
     product_3.versions.push( Version.new({:version => "1.0" }) )
     product_3.save
 
-
-
     get "/package/json~gobi/version/1~1"
     response.should redirect_to("/ruby/json.gobi/1.1")
 

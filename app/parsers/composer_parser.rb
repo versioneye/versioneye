@@ -72,6 +72,7 @@ class ComposerParser < CommonParser
     version = version.strip
     version = version.gsub('"', '')
     version = version.gsub("'", "")
+    version = version.gsub(/^v/, "")
 
     dependency.version_label = String.new(version)
 
