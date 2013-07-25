@@ -55,3 +55,19 @@ For tests we are using
 We are using RSpec for all kind of tests! Even for acceptance Tests. In the past we used RSpec togehter with webrat. But because webrat is not maintained anymore we moved to capybara. All new acceptance tests have to be written in capybara and placed in `spec/features`. If JavaScript is required for the test we use selenium as webdriver for capybara.
 
 You can run all tests with the "rspec" command. Before you run the tests you should switch to test environment! You can do that by exporting the RAISL_ENV like this: `export RAILS_ENV=test`.
+
+## Rake
+
+Our rake tasks are organized in `lib/tasks/versioneye.rake`. In this file we have 2 important tasks. 
+
+```
+rake versioneye:daily_jobs
+```
+
+This will execute all jobs we have to run daily. For example sending out the daily new verison notification emails and so on. 
+
+```
+rake versioneye:weekly_jobs
+```
+
+This task will execute all jobs we have to run once a week. For example sending out the weekly project notifications. 
