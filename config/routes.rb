@@ -122,6 +122,10 @@ Versioneye::Application.routes.draw do
       post '/approve',            :to => 'submitted_urls#approve'
       post '/decline',            :to => 'submitted_urls#decline'
     end
+    resource :testimonials do
+      put '/approve', :to => 'testimonials#approve'
+      put '/decline', :to => 'testimonials#decline'
+    end
     resources :error_messages
     resources :crawles
     get   '/crawles',             :to => 'crawles#index'
