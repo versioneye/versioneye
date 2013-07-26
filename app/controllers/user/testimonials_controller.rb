@@ -7,19 +7,19 @@ class User::TestimonialsController < ApplicationController
 
   def show
     @user = current_user
-    @testimonial = Testimonial.new
-    @testimonial = Testimonial.find_by_id(params[:id]) if params.has_key?(:id)
+    @testimonial = @user.testimonial || Testimonial.new
   end
 
   def create
     new_testimonial = Testimonial.new(params[:testimonial])
     new_testimonial.user_id = current_user.id
-    if new_testimonial.save
+
+    if new_testimonial.save(validate: false)
       flash[:success] = "Your testimonial is added successfully!"
     else
       flash[:error] = "Our database refused to save your testimonial."
     end
-    redirect_to action: 'show', id: new_testimonial.id
+    redirect_to action: 'show'
   end
 
   def update
@@ -34,7 +34,7 @@ class User::TestimonialsController < ApplicationController
     else
       flash[:error] = "Sorry! Cant save your updates."
     end
-    redirect_to action: 'show', id: testimonial.id
+    redirect_to action: 'show'
   end
 
 end

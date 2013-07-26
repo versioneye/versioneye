@@ -1,0 +1,34 @@
+<div class = "media <%= !testimonial[:moderated] ? 'warning' : '' %>">
+  <a class = "pull-left" href = "<%= user_path(testimonial.user) %>">
+    <img src = "http://placekitten.com/g/48/48" />
+  </a>
+  <div class = "media-body">
+    <div class = "row-fluid">
+      <div class = "span9"> 
+        <h5 class = "media-heading">
+          <%= testimonial.user[:fullname].to_s.capitalize %>
+          <small>
+            posted 
+            <span>
+              <%= time_ago_in_words(testimonial[:updated_at]) %>
+            </span>
+            ago.
+
+            <% if testimonial[:moderated] %>
+              And this testimonial is  
+              <span class = "<%= testimonial[:approved] ? 'success' : 'error' %>">
+                approved: <%= testimonial[:approved] %>
+              </span>
+            <% else %>
+              <strong> Not moderated yet! </strong>
+            <% end %>
+          </small>
+        </h5>
+        <p> <%= testimonial[:content] %> </p>
+      </div>
+      <div class = "span3">
+          <%= render partial: "testimonial_admin_form", locals: {testimonial: testimonial} %>
+      </div>
+    </div>
+  </div>
+</div>

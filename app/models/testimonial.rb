@@ -1,4 +1,5 @@
 class Testimonial
+  require 'will_paginate/array'
 
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -7,11 +8,28 @@ class Testimonial
   field :title   , type: String
   field :company , type: String
   field :approved, type: Boolean, :default => false
+  field :moderated, type: Boolean, :default => false
 
   belongs_to :user
 
+  index [[:moderated, Mongo::DESCENDING]]
+
   def self.find_by_id(the_id)
-    UserTestimonial.all.where(_id: the_id).first
+    Testimonial.all.where(_id: the_id).first
   end
 
+  def self.dummy_data
+    p "#-- generating dummy testimonials"
+    counter = 0
+    n = Testimonial.all.count
+
+    User.all.skip(n).each do |user|
+      Testimonial.create content: "Boom-boom, i am Daddy Cool!",
+                        title: "Mr.President",
+                        company: "Rich daddy",
+                        user_id: user.id
+      return if counter > 10
+      counter += 1
+    end
+  end
 end
