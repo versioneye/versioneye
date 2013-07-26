@@ -32,8 +32,7 @@ gem 'capistrano'        , '2.15.5'
 gem 'whenever'          , '0.8.4'
 
 group :development do
-  # gem 'libv8'         , '3.16.14.1'
-  gem 'therubyracer'  , '0.11.4' # , :platforms => :ruby, :require => 'v8'
+  gem 'therubyracer'  , '0.11.4'
   gem 'psych'
   gem 'irbtools'
   gem 'terminal-notifier'
