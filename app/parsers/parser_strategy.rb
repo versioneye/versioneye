@@ -3,7 +3,11 @@ class ParserStrategy
   def self.parser_for( project_type, url )
     case project_type
       when Project::A_TYPE_MAVEN2
-        return PomParser.new
+        if url.match(/pom.json/)
+          return PomJsonParser.new
+        else
+          return PomParser.new
+        end
       when Project::A_TYPE_PIP
         if url.match(/requirements.txt/) || url.match(/pip.log/)
           return RequirementsParser.new

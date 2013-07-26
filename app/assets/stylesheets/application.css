@@ -8,7 +8,12 @@
  *= require bootstrap_responsive
  *= require bootstrap_switch
  *= require bootstrap_upload
+ *= require font-awesome
+
  *= require main
+ *= require typeahead.js-bootstrap
+ *= require font-awesome
+ *= require social-buttons
  *= require product
  *= require user
 */

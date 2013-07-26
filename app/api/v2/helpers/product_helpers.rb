@@ -36,7 +36,7 @@ module ProductHelpers
       languages
     end
   end
-  
+
   def parse_language(lang)
     special_languages = {
       "php" => "PHP",
@@ -70,7 +70,7 @@ module ProductHelpers
     prod_key = parse_product_key(prod_key)
     @current_product = Product.fetch_product(lang, prod_key)
     if @current_product.nil?
-      error! "Wrong product key: `#{params[:prod_key]}` dont exists.", 404
+      error! "Wrong product key: `#{params[:prod_key]}` don't exists.", 404
     end
     @current_product
   end

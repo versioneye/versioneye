@@ -35,17 +35,19 @@ class GemfileParser < CommonParser
 
   # It is important that this method is not writing into the database!
   #
-  def parse_requested_version(version, dependency, product)
-    if (version.nil? || version.empty?)
+  def parse_requested_version(version_number, dependency, product)
+    if (version_number.nil? || version_number.empty?)
       self.update_requested_with_current(dependency, product)
       return
     end
 
     if product.nil?
-      dependency.version_requested = version
-      dependency.version_label     = version
+      dependency.version_requested = version_number
+      dependency.version_label     = version_number
       return
     end
+
+    version = String.new( version_number )
 
     if version.match(/^=/)
       # Equals

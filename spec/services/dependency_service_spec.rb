@@ -30,6 +30,21 @@ describe DependencyService do
       DependencyService.outdated?( dependency ).should be_false
     end
 
+    it "is not outdated, because it's a range" do
+      product = ProductFactory.create_new(187, :gemfile)
+      product.versions.push( Version.new({:version => "1.0.0"}) )
+      product.version = "1.0.0"
+      product.save
+
+      dependency              = Dependency.new
+      dependency.version      = ">= 0.9.0"
+      dependency.dep_prod_key = product.prod_key
+      dependency.prod_type    = product.prod_type
+      dependency.language     = product.language
+      DependencyService.outdated?( dependency ).should be_false
+      dependency.version.should eql(">= 0.9.0")
+    end
+
     it "is not outdated, because it's higher" do
       product = ProductFactory.create_new(1)
       product.versions.push Version.new({ :verison => "1.0" })

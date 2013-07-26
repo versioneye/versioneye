@@ -61,6 +61,9 @@
       <link href='css/swagger/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
       <link href='assets/swagger/screen.css'          media='screen' rel='stylesheet' type='text/css'/>
 
+    <% elsif current_page?(latest_version_path) %>
+      <link rel="stylesheet" href="/assets/latest_release_plots.css">
+      <script data-main="/assets/latest_release_plots/main.js" src="/assets/libs/require.js"></script>
     <% end %>
 
   <% end %>

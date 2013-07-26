@@ -31,7 +31,7 @@ class User::GithubReposController < ApplicationController
 
   def update
     if params[:github_id].nil? and params[:fullname].nil?
-      logger.error "Unknown data object - dont satisfy githubrepo model."
+      logger.error "Unknown data object - don't satisfy githubrepo model."
       render nothing: true, status: 400
     end
     redirect_to action: create

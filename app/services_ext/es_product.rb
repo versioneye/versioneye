@@ -5,7 +5,7 @@ class EsProduct
       create :mappings => {
         :product => {
           :properties => {
-            :_id                => { :type => 'string', :analyzer => 'keyword', :include_in_all => false },
+            :_id  => { :type => 'string', :analyzer => 'keyword', :include_in_all => false },
             :name => { :type => 'multi_field', :fields => {
                 :name => {:type => 'string', :analyzer => 'snowball', :boost => 100},
                 :untouched => {:type => 'string', :analyzer => 'keyword' }
@@ -18,7 +18,6 @@ class EsProduct
       }
     end
   end
-  # , :settings => { :number_of_shards => 1 }
 
   def self.clean_all
     Tire.index( Settings.elasticsearch_product_index ).delete
@@ -39,7 +38,6 @@ class EsProduct
     #   products = Product.all().skip(skip).limit(bulk)
     #   Tire.index( Settings.elasticsearch_product_index ).bulk_store products.to_a
     # end
-
     Product.all.each do |product|
       index product
     end
@@ -75,6 +73,10 @@ class EsProduct
       index product
     end
     self.refresh
+  end
+
+  def self.remove( product )
+    Tire.index( Settings.elasticsearch_product_index ).remove( product.id )
   end
 
   # langs: need to be an Array !

@@ -2,7 +2,7 @@ class GitHubService
 
 =begin
   Returns github repos for user;
-  If user dont have yet any github repos
+  If user don't have yet any github repos
      or there's been any change on user's github account,
   then trys to read from github
   else it returns cached results from GitHubRepos collection.

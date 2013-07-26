@@ -55,20 +55,20 @@ class User
   has_and_belongs_to_many :products
   # *** RELATIONS END ***
 
-  validates_presence_of :username, :message => "Username is mandatory!"
-  validates_presence_of :fullname, :message => "Fullname is mandatory!"
-  validates_presence_of :email, :message => "E-Mail is mandatory!"
+  validates_presence_of :username          , :message => "Username is mandatory!"
+  validates_presence_of :fullname          , :message => "Fullname is mandatory!"
+  validates_presence_of :email             , :message => "E-Mail is mandatory!"
   validates_presence_of :encrypted_password, :message => "Encrypted_password is mandatory!"
-  validates_presence_of :salt, :message => "Salt is mandatory!"
+  validates_presence_of :salt              , :message => "Salt is mandatory!"
 
   validates_uniqueness_of :username, :message => "Username exist already."
-  validates_uniqueness_of :email, :message => "E-Mail exist already."
+  validates_uniqueness_of :email   , :message => "E-Mail exist already."
 
   validates_length_of :username, minimum: 2, maximum: 50, :message => "username length is not ok"
   validates_length_of :fullname, minimum: 2, maximum: 50, :message => "fullname length is not ok"
 
   validates_format_of :username, with: /^[a-zA-Z0-9]+$/
-  validates_format_of :email,    with: /^.+@.+\.[a-zA-Z]{2,4}$/
+  validates_format_of :email   , with: /^.+@.+\.[a-zA-Z]{2,4}$/
 
   before_validation :downcase_email
 
