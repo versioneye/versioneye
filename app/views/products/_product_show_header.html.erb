@@ -4,16 +4,16 @@
 
     <div class="product_header row">
       <% if @product['user_ids'].include? current_user.id %>
-        <div class="span2" style="width: 105px;">
-          <%= form_tag("/package/unfollow", :style=>"margin: 0;") do  %>
+        <div class="span9" style="line-height: 1.2">
+          <span class="product_header_small_text">Unfollow</span> <h1 class="product"><%= @product.name %></h1> <span class="product_header_small_text">and you will <b>not</b> receive notifications about new versions anymore!</span>
+        </div>
+        <div class="span2 pull-right" style="width: 105px;">
+          <%= form_tag("/package/unfollow", :style=>"margin: 0; text-align: right;") do  %>
             <input name="src_hidden"   type="hidden" value="detail"/>
             <input name="product_key"  type="hidden" value="<%= @product.to_param %>"/>
             <input name="product_lang" type="hidden" value="<%= @product.language %>"/>
             <button type="submit" class="btn2 btn-large btn-warning" >Unfollow</button>
           <% end %>
-        </div>
-        <div class="span9" style="line-height: 1.2">
-          <h1 class="product"><%= @product.name %></h1> <span class="product_header_small_text">and you will <b>not</b> receive notifications about new versions anymore!</span>
         </div>
       <% else %>
         <div class="span9" style="line-height: 1.2; width: 760px;">
