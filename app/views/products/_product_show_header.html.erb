@@ -16,15 +16,15 @@
           <h1 class="product"><%= @product.name %></h1> <span class="product_header_small_text">and you will <b>not</b> receive notifications about new versions anymore!</span>
         </div>
       <% else %>
-        <div class="span2" style="width: 105px;">
+        <div class="span9" style="line-height: 1.2; width: 760px;">
+          Follow <h1 class="product"> <%= @product.name %> </h1> to get notified about new versions!
+        </div>
+        <div class="span2 pull-right" style="width: 105px; text-align: right;">
           <%= form_tag("/package/follow", :style=>"margin: 0;") do  %>
             <input  name="product_key"  type="hidden" value="<%= @product.to_param %>"/>
             <input  name="product_lang" type="hidden" value="<%= @product.language %>"/>
             <button type="submit" class="btn btn-large btn-primary" >Follow</button>
           <% end %>
-        </div>
-        <div class="span9" style="line-height: 1.2">
-          <h1 class="product"><%= @product.name %></h1> to get notified about new versions!
         </div>
       <% end %>
     </div>
@@ -33,11 +33,11 @@
 
     <%= render 'shared/dialog_follow' %>
     <div class="product_header row">
-      <div class="span2" style="width: 105px;">
-        <button type="submit" class="btn btn-large btn-primary" onclick="load_dialog_follow('<%= @product.name %>', '<%= @product.prod_key %>', '<%= @product.language %>');">Follow</button>
+      <div class="span9" style="line-height: 1.2; width: 760px;">
+        Follow <h1 class="product"> <%= @product.name %> </h1>&nbsp; for &nbsp;<span style="font-weight: bold; color: black;" >free</span> to get notified about new versions!
       </div>
-      <div class="span9" style="line-height: 1.2">
-        <h1 class="product"><%= @product.name %></h1>&nbsp;for&nbsp;<span style="font-weight: bold; color: black;" >FREE</span> to get notified about new versions!
+      <div class="span2 pull-right" style="width: 105px; text-align: right;">
+        <button type="submit" class="btn btn-large btn-primary" onclick="load_dialog_follow('<%= @product.name %>', '<%= @product.prod_key %>', '<%= @product.language %>');">Follow</button>
       </div>
     </div>
 

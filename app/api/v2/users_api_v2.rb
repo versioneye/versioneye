@@ -67,7 +67,7 @@ module V2
 
       desc "shows profile of given user_id"
       params do
-        requires :username, :type => String, :desc => "username" 
+        requires :username, :type => String, :desc => "username"
       end
       get '/:username' do
           authorized?
@@ -83,7 +83,7 @@ module V2
       get '/:username/favorites' do
          authorized?
          @user = User.find_by_username(params[:username])
-         error!("User with username `#{params[:username]}` dont exists.", 400) if @user.nil?
+         error!("User with username `#{params[:username]}` don't exists.", 400) if @user.nil?
 
          make_favorite_response(@user, params[:page], 30)
       end
@@ -97,8 +97,8 @@ module V2
         authorized?
 
         @user = User.find_by_username params[:username]
-        error!("User #{params[:username]} dont exists", 400) if @user.nil?
-        
+        error!("User #{params[:username]} don't exists", 400) if @user.nil?
+
         make_comment_response(@user, params[:page], 30)
       end
     end

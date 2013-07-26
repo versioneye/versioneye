@@ -7,7 +7,7 @@ class ProjectService
     return Project::A_TYPE_PIP      if trimmed_name.match(/requirements.txt$/) or trimmed_name.match(/setup.py$/) or trimmed_name.match(/pip.log$/)
     return Project::A_TYPE_NPM      if trimmed_name.match(/package.json$/)
     return Project::A_TYPE_GRADLE   if trimmed_name.match(/.gradle$/)
-    return Project::A_TYPE_MAVEN2   if trimmed_name.match(/pom.xml$/)
+    return Project::A_TYPE_MAVEN2   if trimmed_name.match(/pom.xml$/) or trimmed_name.match(/pom.json$/)
     return Project::A_TYPE_LEIN     if trimmed_name.match(/project.clj$/)
     return nil
   end
@@ -111,7 +111,6 @@ class ProjectService
 
     return parsed_project if store( parsed_project )
   end
-
 
   def self.build_from_url( url )
     project_type = type_by_filename( url )

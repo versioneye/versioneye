@@ -29,10 +29,7 @@ class Versionarchive
     end
     archives = Versionarchive.where(:language => archive.language, :prod_key => archive.prod_key,
       :version_id => archive.version_id, :link => archive.link )
-    if archives && !archives.empty?
-      Rails.logger.info "-- archive exist already"
-      return nil
-    end
+    return nil if archives && !archives.empty?
     archive.save
   end
 

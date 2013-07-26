@@ -33,5 +33,71 @@ class ProductService
     end
     result
   end
+ 
+  def self.updates_since_to(dt_since, dt_to)
+    stats = []
+    Product.supported_languages.each do |lang|
+      stats << {
+        title: lang.downcase,
+        value: Newest.where(:language => lang,
+                            :created_at.gte => dt_since,
+                            :created_at.lt => dt_to).count
+      }
+    end
 
+    stats
+  end
+  
+  def self.to_stats_container(title, stats)
+    {
+      title: title || "",
+      total: stats.inject(0) {|acc, item| acc += item[:value]},
+      values: stats
+    }
+  end
+
+  def self.stats_today_releases
+    dt_since = Date.today.at_midnight
+    dt_to = DateTime.now
+    to_stats_container("Today", updates_since_to(dt_since, dt_to))
+  end
+
+  def self.stats_yesterday_releases
+    dt_since = 1.day.ago.at_midnight
+    dt_to = Date.today.at_midnight
+    to_stats_container("Yesterday", updates_since_to(dt_since, dt_to))
+  end
+
+  def self.stats_current_week_releases
+    dt_since = Date.today.at_beginning_of_week
+    dt_to = DateTime.now
+    to_stats_container("Current week", updates_since_to(dt_since, dt_to))
+  end
+
+  def self.stats_current_month_releases
+    dt_since = Date.today.at_beginning_of_month
+    dt_to = DateTime.now
+    to_stats_container("Current month", updates_since_to(dt_since, dt_to))
+  end
+
+  def self.stats_last_7days_releases
+    dt_since = 7.days.ago.at_midnight
+    dt_to = DateTime.now
+    to_stats_container("Last 7 days", updates_since_to(dt_since, dt_to))
+  end
+
+  def self.stats_last_30days_releases
+    dt_since = 30.days.ago.at_midnight
+    dt_to = DateTime.now
+    to_stats_container("Last 30 days", updates_since_to(dt_since, dt_to))
+  end
+
+  def self.stats_last_month_releases
+    month_ago = Date.today << 1
+    to_stats_container(
+      "Last month", 
+      updates_since_to(month_ago.at_beginning_of_month,
+                       month_ago.at_end_of_month)
+    )
+  end
 end

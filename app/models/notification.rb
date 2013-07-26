@@ -35,17 +35,23 @@ class Notification
       end
     end
     NotificationMailer.status( count ).deliver
+    Rails.logger.info "Send out #{count} emails"
+    p "Send out #{count} emails"
     count
   end
 
   def self.send_unsend_notifications user
     notifications = self.unsent_user_notifications user
-    if !notifications.nil? && !notifications.empty?
+    if notifications && !notifications.empty?
       notifications.sort_by {|notice| [notice.product.language]}
       NotificationMailer.new_version_email( user, notifications ).deliver
       Rails.logger.info "send notifications for user #{user.fullname} start"
       return true
     end
+    return false
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     return false
   end
 

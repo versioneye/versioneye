@@ -53,4 +53,13 @@ class VersionarchiveMigration
     end
   end
 
+  def self.update_r_prod_keys
+    archs = Versionarchive.where(:prod_key => /^r\//i)
+    p "#{archs.count} matching the R package regex "
+    archs.each do |arch|
+      arch.prod_key = arch.prod_key.gsub("r\/", "")
+      arch.save
+    end
+  end
+
 end

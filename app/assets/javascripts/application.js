@@ -17,3 +17,8 @@
 //= require custom
 //= require custom_feedback
 //= require custom_update_language
+
+//= require libs/underscore-min
+//= require libs/moment.min
+//= require libs/jquery.feeds.min
+//= require custom_language

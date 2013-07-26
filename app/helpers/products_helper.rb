@@ -26,7 +26,7 @@ module ProductsHelper
   end
 
   def do_parse_search_input( query )
-    query_empty = query.nil? || query.empty? || query.strip.empty? || query.eql?("Be up-to-date")
+    query_empty = query.nil? || query.empty? || query.strip.empty? || query.eql?("search for a software library")
     query = "json" if query_empty
     query = query.strip()
     query = query.downcase

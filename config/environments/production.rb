@@ -5,9 +5,9 @@ Versioneye::Application.configure do
   config.cache_classes = true
   config.action_controller.perform_caching = false
   config.cache_store = :dalli_store, Settings.memcache_servers,{
-    :username => Settings.memcache_username, :password => Settings.memcache_password, 
+    :username => Settings.memcache_username, :password => Settings.memcache_password,
     :namespace => 'veye', :expires_in => 1.day, :compress => true }
-  
+
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
 
@@ -48,7 +48,7 @@ Versioneye::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( *.css *.js )
+  config.assets.precompile += %w( *.css *.scss *.js )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -65,8 +65,8 @@ Versioneye::Application.configure do
 
   config.action_mailer.delivery_method   = :postmark
   config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
-  
-  # config.action_mailer.delivery_method = :smtp  
+
+  # config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = {
   #    :address              => ",
   #    :port                 => 587,
@@ -79,7 +79,7 @@ Versioneye::Application.configure do
   ENV['API_BASE_PATH'] = "https://www.versioneye.com/api"
 
   Stripe.api_key = Settings.stripe_secret_key
-  
+
   if Settings.aws_s3_access_key_id && Settings.aws_s3_secret_access_key
       AWS::S3::Base.establish_connection!(
         :access_key_id     => Settings.aws_s3_access_key_id,

@@ -73,4 +73,17 @@ class NewestMigration
     end
   end
 
+  def self.update_r_prod_keys
+    elements = Newest.where(:prod_key => /^r\//i)
+    elements.each do |element|
+      element.prod_key = element.prod_key.gsub("r\/", "")
+      results = Newest.where(:prod_key => element.prod_key, :version => element.version )
+      if results && !results.empty?
+        p "remove dublicate newest entry: #{element.prod_key} - #{element.version}"
+        element.remove
+      end
+      element.save
+    end
+  end
+
 end
