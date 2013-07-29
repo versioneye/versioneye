@@ -9,6 +9,8 @@ set :repository , "https://github.com/versioneye/versioneye.git"
 
 set :scm, :git
 
+set :ssh_options, {:forward_agent => true}
+
 set :deploy_to, "/var/www/versioneye"
 
 role :web, "yunicon_app"                      # Your HTTP server, Apache/etc
