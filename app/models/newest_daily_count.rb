@@ -1,6 +1,8 @@
 class NewestDailyCount
+
   include Mongoid::Document
-  
+  include Mongoid::Timestamps
+
   field :language, type: String
   field :date, type: DateTime
   field :value, type: Integer
@@ -12,10 +14,10 @@ class NewestDailyCount
       [:language, Mongo::DESCENDING]
     ]
   )
- 
+
   def self.inc_dummy_version(prod)
     latest_release = Newest.where(language: prod[:language], prod_key: prod[:prod_key]).desc(:created_at).first
-    
+
     unless latest_release.nil?
       version_numbers = latest_release[:version].to_s.split(".")
     else
@@ -44,7 +46,7 @@ class NewestDailyCount
           product_id: prod[:_id].to_s,
           created_at: (ndays - nday).days.ago #start from oldest to keep version numbers incremental
         })
-        begin  
+        begin
           newest.save
         rescue
           p "no dummy data for: #{prod[:prod_key]}"
@@ -54,19 +56,19 @@ class NewestDailyCount
   end
 
   def self.update_counts
-    if NewestDailyCount.all.count == 0 
+    if NewestDailyCount.all.count == 0
       until_release_date = Newest.all.asc(:created_at).first[:created_at].to_date
     else
       until_release_date = NewestDailyCount.all.desc(:date).first[:date].to_date
     end
-    
-    ndays = (Date.today - until_release_date).numerator
+
+    ndays = (Date.today - (until_release_date - 1) ).numerator
     ndays.times do |n|
       #return if n > 30 #comment out if you want calc stats just for last 30 days
       lang_counts = ProductService.updates_since_to((n+1).days.ago.at_midnight,
                                                     n.days.ago.at_midnight)
-      lang_counts.each {|row| NewestDailyCount.create!(language: row[:title], 
-                                                       value: row[:value], 
+      lang_counts.each {|row| NewestDailyCount.create!(language: row[:title],
+                                                       value: row[:value],
                                                        date: n.days.ago.at_midnight)}
     end
 
@@ -81,7 +83,7 @@ class NewestDailyCount
     end
     rows.sort_by {|row| row[:title]}
   end
- 
+
   def self.group_stats(rows)
     stats = {}
     rows.each do |row|
@@ -99,7 +101,7 @@ class NewestDailyCount
                                   :date.lt => dt_to)
     allow_grouping ? self.group_stats(rows) : rows
   end
-  
+
   def self.today_releases
     dt_since = Date.today.at_midnight
     dt_to = DateTime.now
@@ -140,7 +142,7 @@ class NewestDailyCount
     NewestDailyCount.since_to(month_ago.at_beginning_of_month,
                              month_ago.at_end_of_month)
   end
-  
+
   def self.two_months_ago_releases
     two_months_ago = Date.today << 2
     NewestDailyCount.since_to(two_months_ago.at_beginning_of_month,
@@ -152,7 +154,7 @@ class NewestDailyCount
   def self.stats_today
     t0_stats = self.today_releases
     t1_stats = self.yesterday_releases
-    self.to_response(t0_stats, t1_stats) 
+    self.to_response(t0_stats, t1_stats)
   end
 
   def self.stats_current_week

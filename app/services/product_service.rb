@@ -33,7 +33,7 @@ class ProductService
     end
     result
   end
- 
+
   def self.updates_since_to(dt_since, dt_to)
     stats = []
     Product.supported_languages.each do |lang|
@@ -44,10 +44,9 @@ class ProductService
                             :created_at.lt => dt_to).count
       }
     end
-
     stats
   end
-  
+
   def self.to_stats_container(title, stats)
     {
       title: title || "",
@@ -95,7 +94,7 @@ class ProductService
   def self.stats_last_month_releases
     month_ago = Date.today << 1
     to_stats_container(
-      "Last month", 
+      "Last month",
       updates_since_to(month_ago.at_beginning_of_month,
                        month_ago.at_end_of_month)
     )
