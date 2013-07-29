@@ -1,5 +1,5 @@
 class Admin::TestimonialsController < ApplicationController
-  #before_filter :admin_user
+  before_filter :admin_user
 
   def index
   end
@@ -49,4 +49,12 @@ class Admin::TestimonialsController < ApplicationController
     
     testimonial
   end
+  
+  private 
+  
+    def admin_user
+      redirect_to(root_path) unless signed_in_admin?
+    end
+
+
 end
