@@ -55,6 +55,7 @@ class Product
 
   index [[:followers, Mongo::DESCENDING]]
   index [[:updated_at, Mongo::DESCENDING]]
+  index [[:created_at, Mongo::DESCENDING]]
 
   embeds_many :versions
   embeds_many :repositories
