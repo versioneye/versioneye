@@ -155,13 +155,16 @@ Versioneye::Application.routes.draw do
   get   '/apijson_tools',       :to => redirect('/api')
   get   '/apijson_libs',        :to => redirect('/api')
 
-  get   '/latest/version',                      :to => 'latest_releases#index'
-  get   '/latest/version/stats/today',          :to => 'latest_releases#stats_today'
-  get   '/latest/version/stats/current_week',   :to => 'latest_releases#stats_current_week'
-  get   '/latest/version/stats/current_month',  :to => 'latest_releases#stats_current_month'
-  get   '/latest/version/stats/last_month',     :to => 'latest_releases#stats_last_month'
-  get   '/latest/version/timeline_30',          :to => 'latest_releases#timeline_30days'
-  get   '/latest/version/:lang',                :to => 'latest_releases#show'
+  get   '/package/latest',                      :to => 'latest_releases#index'
+  get   '/package/latest/stats/:timespan',      :to => 'latest_releases#stats'
+  get   '/package/latest/timeline_30',          :to => 'latest_releases#lang_timeline30'
+  get   '/package/latest/:lang',                :to => 'latest_releases#show'
+
+  get   '/package/novel',                      :to => 'novel_releases#index'
+  get   '/package/novel/stats/:timespan',      :to => 'novel_releases#stats'
+  get   '/package/novel/timeline_30',          :to => 'novel_releases#lang_timeline30'
+  get   '/package/novel/:lang',                :to => 'novel_releases#show'
+
 
   get   'sitemap_00_1.xml',        :to => 'page#sitemap_1'
   get   'sitemap_00_2.xml',        :to => 'page#sitemap_2'
