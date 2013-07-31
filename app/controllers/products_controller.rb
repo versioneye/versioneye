@@ -10,6 +10,11 @@ class ProductsController < ApplicationController
     Product::A_LANGUAGE_JAVASCRIPT, Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R]
 
   def index
+    @ab = params['ab']
+    if @ab.nil?
+      ab_array = ["a", "b"]
+      @ab = ab_array[Random.rand(2)]
+    end
     @lang = cookies[:veye_lang]
     if @lang.nil?
       @lang = ""
@@ -216,7 +221,7 @@ class ProductsController < ApplicationController
   def autocomplete_product_name
     term = params[:term] || "nothing"
     results = []
-    products = ProductService.search(term) 
+    products = ProductService.search(term)
     index = 0
     products.each do |product|
       results << {

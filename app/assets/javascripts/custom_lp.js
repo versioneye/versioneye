@@ -5,6 +5,11 @@ jQuery(document).ready(function() {
 		text: "search for a software library"
 	});
 
+  jQuery('#learn_more').on('click', function (e) {
+    $.scrollTo($('#learn_more'), 600,  {easing:'easeOutCubic'});
+    return false;
+  });
+
   initialize_searchbox();
 });
 

@@ -1,37 +1,28 @@
 
-<section class="container">
-  <div id="headline_1" class="jumbotron" style="text-align: center;">
-    <h1><span style ="">Continuous Updating</span></h1>
-    <p style="font-weigth: none; line-height: 1.5;">Follow your libraries and get notified about new versions</p>
-  </div>
-</section>
 
-<section id="search_section" class="container search_container" >
-  <div id="search_bar" style="text-align: center;" >
-    <form id="form" action="/search" method="GET" style="padding: 0; margin:0;" >
-      <div class="input-append">
-        <input id="q" name="q" class="span7 input-huge" type="text" />
-        <button class="btn btn-primary btn-huge" type="submit" >
-          <i class="icon-search icon-white"></i>&nbsp;Search
-        </button>
-      </div>
-    </form>
-  </div>
-  <div class="row" style="text-align: center; vertical-align: middle;" >
-    <% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
-        <% @langs = @lang.split(",") %>
-        <% @languages.each do |language| %>
-          <% langname = language.downcase.gsub(/\./, "") %>
-          <div onclick="document.location.href='<%=language%>'" class="icon_<%= langname %>_small_container" style="cursor: pointer;" >
-              <span  id="icon_<%= langname %>" class="icon_<%= langname %> small on" title="<%= langname %>">&nbsp;</span>
-          </div>
-        <% end %>
+<div class="container l_lp_first_page" id="search_container" >
+  <div class="l_lp_first_content" >
+    <% if @ab.eql?("a") %>
+      <%= render "/products/helpers/file_upload" %>
+    <% else %>
+      <%= render "/products/helpers/big_search" %>
     <% end %>
   </div>
-</section>
+  <div class="row col2-left-l col2-right-r l_bottom_down" >
+    <div class="span3" ></div>
+    <div class="span7">
+      <% if @ab.eql?("a") %>
+        <a href="/?ab=b" >Search <i class="icon-search"></i></a> |
+      <% else %>
+        <a href="/?ab=a" >File upload <i class="icon-upload"></i></a> |
+      <% end %>
 
+      <a id="learn_more" href="#">Learn more <i class="icon-arrow-down"></i></a>
+    </div>
+  </div>
+</div>
 
-<section id="features" class="container" >
+<div id="features" class="container">
   <div class="well-white">
 
     <%= render "/products/helpers/what_is_versioneye" %>
@@ -45,15 +36,9 @@
     <%= render "/products/helpers/integration_points" %>
 
   </div>
-</section>
+</div>
 
-
-<section id="try" class="container" >
-  <%= render "/products/helpers/file_upload" %>
-</section>
-
-
-<section id="reasons" class="container" >
+<div id="reasons" class="container" >
   <div class="well-white">
     <div class="marketing" >
       <h2 class="casual">Because software libraries don't update themselves</h2>
@@ -68,10 +53,9 @@
       <p>looking manually for updates. Save time and money by automating this process.</p>
     </div>
   </div>
-</section>
+</div>
 
-
-<section id="register_today" class="container" >
+<div id="register_today" class="container" >
   <div class="row col2-left-l col2-right-r" >
     <div class  = "marketing">
       <h2>Register today. It's free!</h2>
@@ -83,6 +67,8 @@
       </p>
     </div>
   </div>
-</section>
+</div>
 
 <br/><br/>
+
+
