@@ -1,3 +1,4 @@
+kill -s USR2 12113
 
 /usr/bin/unicorn -D -E production -c /var/www/versioneye/releases/current/unicorn.conf.rb
 
