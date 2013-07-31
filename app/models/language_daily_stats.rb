@@ -19,7 +19,9 @@ class LanguageDailyStats
   )
 
   def self.inc_dummy_version(prod)
-    latest_release = Newest.where(language: prod[:language], prod_key: prod[:prod_key]).desc(:created_at).first
+    latest_release = Newest.where(
+      language: prod[:language], 
+      prod_key: prod[:prod_key]).desc(:created_at).first
 
     unless latest_release.nil?
       version_numbers = latest_release[:version].to_s.split(".")
@@ -88,25 +90,28 @@ class LanguageDailyStats
   end
   
   def self.metric_last_updated_time(metric)
-    if self.all.count == 0
+    until_release_date = Date.tomorrow
+    
+    if self.all.count == 0 and Newest.all.count > 0
       Rails.logger.debug("Going to add metrics for all updates")
       until_release_date = Newest.all.asc(:created_at).first[:created_at]
-    else
-      until_release_date = self.where("metrics.#{metric}" => 0).desc(:date).first[:date]
+    elsif self.all.count > 0 
+      row = self.where(:"metrics.#{metric}".gt =>  0).desc(:date).first
+      until_release_date = row[:date] unless row.nil?
       Rails.logger.debug("Going to add metrics only for last #{Date.today - until_release_date.to_date} days")
     end
-    
+
     until_release_date.at_midnight.to_date
   end
 
   def self.metric_not_updated_in_days(metric)
     until_release_date = self.metric_last_updated_time(metric)
-    ndays = (Date.today - until_release_date).numerator
+    ndays = (Date.today - until_release_date).numerator + 1 
     ndays 
   end
 
   def self.reset_day_stat_metrics(day_stats, metric)
-    day_stats.each {|lang, metrics| day_stats[lang]["metrics"][metric] = 0}
+    day_stats.each {|lang, row| row.update_attribute("metrics.#{metric}", 0) }
   end
 
   def self.update_counts
@@ -114,22 +119,23 @@ class LanguageDailyStats
     
     latest_products = Product.where(:created_at.gte => ndays.ago.at_midnight) 
     ndays.times do |n|
-      #Rails.logger.debug
-      p("Counting language_daily_stats: #{n}/#{ndays}")
+      Rails.logger.debug("Counting language_daily_stats: #{n + 1}/#{ndays}")
       that_day = n.days.ago.at_beginning_of_day
       
       that_day_stats = self.get_language_stats(that_day)
       if that_day == Date.today
         #clean previous countings for today to prevent double counting
+
         that_day_stats = self.reset_day_stat_metrics(that_day_stats, 'new_version')
         that_day_stats = self.reset_day_stat_metrics(that_day_stats, 'novel_package')
+
       end
 
       that_day_releases = Newest.since_to(n.days.ago.at_midnight, (n-1).days.ago.at_midnight)
       next if that_day_releases.nil?
 
       that_day_releases.each do |row|
-        prod_info = latest_products.where(language: row[:language], prod_key: row[:prod_key]).first
+        prod_info = latest_products.where(language: row[:language], prod_key: row[:prod_key]).asc(:created_at).first
         if prod_info
           p "#{prod_info[:created_at]} == #{row[:created_at]}"
           is_released_on_same_day = (prod_info[:created_at].at_midnight ==  row[:created_at].at_midnight)
@@ -169,67 +175,78 @@ class LanguageDailyStats
     stats
   end
 
-  def self.since_to(dt_since, dt_to, allow_grouping = true)
-    rows = self.where(:date.gte => dt_since, :date.lt => dt_to)
-    rows = self.group_by_language(rows) if allow_grouping
-    rows
+  def self.since_to(dt_since, dt_to)
+    self.where(:date.gte => dt_since, :date.lt => dt_to).desc(:date)
   end
 
   def self.today_stats
     dt_since = Date.today.at_midnight
     dt_to = DateTime.now
-    self.since_to(dt_since, dt_to)
-  end
+    rows = self.since_to(dt_since, dt_to)
+    self.group_by_language(rows)
+ end
 
   def self.yesterday_stats
     dt_since = 1.day.ago.at_midnight
     dt_to = Date.today.at_midnight
-    self.since_to(dt_since, dt_to)
-  end
+    rows = self.since_to(dt_since, dt_to)
+    self.group_by_language(rows)
+ end
   def self.current_week_stats
     dt_since = Date.today.at_beginning_of_week
     dt_to = DateTime.now
-    self.since_to(dt_since, dt_to)
+    rows = self.since_to(dt_since, dt_to)
+    self.group_by_language(rows)
   end
 
   def self.last_week_stats
     dt_monday = Date.today.at_beginning_of_week
     dt_prev_monday = dt_monday - 7
-    p "#{dt_prev_monday} -- #{dt_monday}"
-    self.since_to(dt_prev_monday, dt_monday)
+    rows = self.since_to(dt_prev_monday, dt_monday)
+    self.group_by_language(rows)
   end
 
   def self.current_month_stats
     dt_since = Date.today.at_beginning_of_month
     dt_to = DateTime.now
-    self.since_to(dt_since, dt_to)
+    rows = self.since_to(dt_since, dt_to)
+    self.group_by_language(rows)
   end
 
   def self.last_30_days_stats(lang)
-    #NB! it doesnt count today releases
-    today = Date.today
-    self.since_to(30.days.ago.at_midnight, today, false).where(language: lang).asc(:date)
+    self.since_to(30.days.ago.at_midnight, Date.tomorrow.at_midnight).where(language: lang).asc(:date)
   end
 
   def self.last_month_stats
     month_ago = Date.today << 1
-    self.since_to(month_ago.at_beginning_of_month, month_ago.at_end_of_month)
+    rows = self.since_to(month_ago.at_beginning_of_month, Date.today.at_beginning_of_month)
+    self.group_by_language(rows)
   end
 
   def self.two_months_ago_stats
+    month_ago = Date.today << 1
     two_months_ago = Date.today << 2
-    self.since_to(two_months_ago.at_beginning_of_month, two_months_ago.at_end_of_month)
+    rows = self.since_to(two_months_ago.at_beginning_of_month, month_ago.at_beginning_of_month)
+    self.group_by_language(rows)
   end
 
   #-- response helpers
 
   def self.to_metric_response(metric, t0_stats, t1_stats)
     rows = []
-    
-    t0_stats.each do |lang, metrics|
-      rows << {title: lang, 
-               value: metrics[metric], 
-               t1: metrics[metric] - t1_stats[lang][metric]}
+      
+    Product.supported_languages.each do |lang|
+      t0_metric_value = 0
+      t1_metric_value = 0
+
+      t0_metric_value = t0_stats[lang][metric] if t0_stats.has_key?(lang)
+      t1_metric_value = t1_stats[lang][metric] if t1_stats.has_key?(lang)
+
+      rows << {
+        title: lang, 
+        value: t0_metric_value, 
+        t1: t0_metric_value - t0_metric_value
+      }
     end
     rows.sort_by {|row| row[:title]}
   end

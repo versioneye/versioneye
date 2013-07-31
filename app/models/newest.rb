@@ -39,14 +39,14 @@ class Newest
     Newest.all().desc( :created_at ).limit( count )
   end
 
-  def self.since_to(dt_since, dt_to, allow_grouping = true)
-    self.where(:created_at.gte => dt_since, :created_at.lt => dt_to)
+  def self.since_to(dt_since, dt_to)
+    self.where(:created_at.gte => dt_since, :created_at.lt => dt_to).desc(:created_at)
   end
 
   def self.balanced_newest(count)
     newest = []
     Product.supported_languages.each do |lang|
-      newest.concat Newest.where(language: lang).desc(:created_at).limit(per_lang)
+      newest.concat Newest.where(language: lang).desc(:created_at).limit(count)
     end
     newest.shuffle.first(count)
   end
@@ -59,6 +59,5 @@ class Newest
     end
     newest.shuffle.first(count)
   end
-
-
 end
+
