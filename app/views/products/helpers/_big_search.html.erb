@@ -1,5 +1,4 @@
 
-
 <div id="search_section" class="search_container" >
   <div id="search_bar" style="text-align: center;" >
     <form id="form" action="/search" method="GET" style="padding: 0; margin:0;" >
@@ -13,8 +12,7 @@
   </div>
   <div class="row" style="text-align: center; vertical-align: middle;" >
     <span class="search_icons round4" >
-    <% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
-        <% @langs = @lang.split(",") %>
+    <% if !@languages.nil? && !@languages.empty? %>
         <% @languages.each do |language| %>
           <% langname = language.downcase.gsub(/\./, "") %>
           <div onclick="document.location.href='<%=language%>'" class="icon_<%= langname %>_small_container" style="cursor: pointer;" >

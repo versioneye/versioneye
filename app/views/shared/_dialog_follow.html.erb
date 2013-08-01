@@ -4,13 +4,23 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Follow</h3>
   </div>
-  <div class="modal-body">
-    <p style="font-size: 18px; padding-bottom: 10px;">
+  <div class="modal-body" style="text-align: center; padding: 20px;">
+
+    <p style="font-size: 18px; padding: 0; margin: 0;">
       Follow
       <span id="product_to_follow" style="font-weight: bold; font-size: 20px;"></span>
       to get notified about new versions.
     </p>
-		<%= render 'shared/login_options_horizontal' %>
+
+    <div style="padding: 20px 0;">
+      <%= render 'shared/login_with_github' %>
+      <%= render 'shared/login_with_twitter' %>
+    </div>
+
+    <div>
+      Or <a href="/signup">sign up</a> with your <a href="/signup">email addres</a>. We keep it secure!
+    </div>
+
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
