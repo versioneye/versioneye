@@ -54,14 +54,13 @@
 
 <div id="register_today" class="container" >
   <div class="row well-white" >
-    <div style="text-align: center;">
-      <h2>Register today. It's free!</h2>
-      <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0;") do  %>
-        <button type="submit" class="btn btn-large btn-success" >Sign Up Now</button>
-      <% end %>
-      <p style="padding: 10px 0;">
-        Or have a look at our <%= link_to "subscription plans", :controller => "services", :action => "pricing" %> .
-      </p>
+    <div style="text-align: left;">
+      <div class="span5 col2-left" >
+        <%= render 'users/signup_form' %>
+      </div>
+      <div class="span5 col2-right pull-right" >
+        <%= render 'shared/social_media_login' %>
+      </div>
     </div>
   </div>
 </div>
