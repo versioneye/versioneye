@@ -97,17 +97,24 @@
            data-count="horizontal" >Twitter</a>
            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
       </li>
-      <li class="list-cell share-on-icon">
-        <iframe src="https://www.facebook.com/plugins/like.php?href=<%=Settings.server_url%>/services/<%=@project_id%>&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=25" style="border:none; width:100px; height:25px" ></iframe>
-      </li>
       <li class="list-cell share-on-icon" >
         <div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="<%= Settings.server_url %>/services/<%= @project_id %>" style="width: 90px;"></div>
       </li>
     </ul>
   </div>
 
-  <div style="text-align: center; padding-top: 30px;">
-    <%= render 'services/subscription' %>
+  <hr/>
+
+  <div style="padding-top: 30px;">
+    <div class="marketing" >
+      <h2 class="casual">Be smart and automate</h2>
+      <p>VersionEye can monitor your project on GitHub and notify you about out-dated dependencies.</p>
+      <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd'  >
+        <span class="btn btn-large btn-primary">Login with GitHub</span>
+      </a>
+    </div>
+
   </div>
+
 
 <% end %>
