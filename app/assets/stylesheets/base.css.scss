@@ -8,7 +8,7 @@ http://pcdn.500px.net/40490694/9eaf2484aa1c29c61183b997208a0c601fbe833c/5.jpg
 body,html{
     height:100%;
     background-color: #fafafa;
-    background-image: url("http://pcdn.500px.net/39448436/8d176a30efa4d2fc9298d2aebb20f8e2756cc1f6/2048.jpg");
+    background-image: url("/assets/bg/2048.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
@@ -96,4 +96,15 @@ h3 code {
   font-size: 16px;
   text-align: center;
   padding: 20px;
+}
+
+.opacity_section {
+  background-color: gray;
+  opacity: 0.8;
+  padding: 10px;
+  color: white;
+}
+
+.opacity_section a{
+  color: white;
 }
