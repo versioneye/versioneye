@@ -16,6 +16,7 @@ class ProductsController < ApplicationController
       ab_array = ["a", "b"]
       @ab = "a" # ab_array[Random.rand(2)]
     end
+    @languages = @@languages
     render :layout => 'application_lp'
   end
 
