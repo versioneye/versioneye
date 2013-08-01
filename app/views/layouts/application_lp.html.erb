@@ -18,16 +18,7 @@
 
     <%= render 'layouts/header' %>
 
-    <% if flash && !flash.empty? %>
-      <section class = "container flash-container">
-        <% flash.each do |key, value| %>
-          <div class="alert">
-              <button type="button" class="close" data-dismiss="alert">×</button>
-            <%= value %>
-          </div>
-        <% end %>
-      </section>
-    <% end %>
+    <%= render 'shared/messages' %>
 
     <%= yield %>
 
