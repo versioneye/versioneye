@@ -16,12 +16,6 @@ class ProductsController < ApplicationController
       ab_array = ["a", "b"]
       @ab = "a" # ab_array[Random.rand(2)]
     end
-    @lang = cookies[:veye_lang]
-    if @lang.nil?
-      @lang = ""
-      cookies[:veye_lang] = ""
-    end
-    @languages = @@languages
     render :layout => 'application_lp'
   end
 
