@@ -34,14 +34,7 @@
 
   <%= render 'layouts/header' %>
 
-  <section class="container flash-container" >
-    <% flash.each do |key, value| %>
-      <div class="alert flash <%= key %>">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-        <%= value %>
-      </div>
-    <% end %>
-  </section>
+  <%= render 'shared/messages' %>
 
   <section class="container" style="margin-top: 50px;">
     <%= render 'layouts/searchbar' %>

@@ -1,7 +1,7 @@
 
 .l_bottom_down {
   position: absolute;
-  bottom: 5%;
+  bottom: 7%;
 }
 
 .l_lp_first_page{
@@ -13,4 +13,28 @@
 .l_lp_first_content{
   width: 100%;
   position:absolute; top:30%;
+}
+
+.l_left_padding {
+  padding-left: 30px;
+}
+
+.col2-left {
+  padding-left: 30px;
+  padding-top: 30px;
+}
+
+.col2-right {
+  padding-right: 30px;
+  padding-top: 30px;
+}
+
+.col2-left-l {
+  padding-left: 30px;
+  padding-top: 0px;
+}
+
+.col2-right-r {
+  padding-right: 30px;
+  padding-top: 0px;
 }

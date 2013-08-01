@@ -13,7 +13,7 @@ class ProductsController < ApplicationController
     @ab = params['ab']
     if @ab.nil?
       ab_array = ["a", "b"]
-      @ab = ab_array[Random.rand(2)]
+      @ab = "a" # ab_array[Random.rand(2)]
     end
     @lang = cookies[:veye_lang]
     if @lang.nil?

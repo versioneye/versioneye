@@ -40,7 +40,9 @@
           </div>
 
         <% else %>
-          <button id="button_<%= product.prod_key %>" type="submit" class="btn2 btn-medium" onclick="load_dialog_follow('<%= product.name %>', '<%= product.prod_key %>', '<%= product.language %>');" >Follow</button>
+
+          <button id="button_<%= product.prod_key %>" type="submit" class="btn btn-success btn-medium" onclick="load_dialog_follow('<%= product.name %>', '<%= product.prod_key %>', '<%= product.language %>');" >Follow</button>
+
         <% end %>
       </div>
 

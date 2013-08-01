@@ -1,12 +1,24 @@
 
+/*
+http://pcdn.500px.net/40490694/9eaf2484aa1c29c61183b997208a0c601fbe833c/5.jpg
+*/
+
 /* Body and structure
 -------------------------------------------------- */
 body,html{
     height:100%;
+    background-color: #fafafa;
+    background-image: url("http://pcdn.500px.net/39448436/8d176a30efa4d2fc9298d2aebb20f8e2756cc1f6/2048.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 body {
-  background-color: #fafafa;
   font-size: 14px;
   color: $text_casual;
   font-family: "Droid Sans", "Droid Serif", Helvetica;
@@ -64,4 +76,18 @@ h3 {
 h3 code {
   font-size: 14px;
   font-weight: normal;
+}
+
+.flash-container {
+    overflow: auto;
+    position: fixed;
+    top: 86px !important;
+    width: 940px;
+    z-index: 2000;
+}
+
+.round4{
+  -webkit-border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px;
 }
