@@ -10,6 +10,7 @@ class ProductsController < ApplicationController
     Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R]
 
   def index
+    @user = User.new
     @ab = params['ab']
     if @ab.nil?
       ab_array = ["a", "b"]
