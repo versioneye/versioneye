@@ -8,11 +8,13 @@
 <div class="span3">
 
   <%= render "extended_search" %>
+
   <% if signed_in? == false %>
     <%= render "/shared/github_ad" %>
   <% end %>
 
 </div>
+
 <div class="span8" >
   <div class="row content_header_def" >
     <% if @products && !@products.empty? %>
