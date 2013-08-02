@@ -64,10 +64,10 @@ h5.dep_header{
 h1.page-title  {
   font-family: "Droid Serif", "Droid";
   font-size: 25px;
-  color: $text_casual;
+  color: white;
   margin: 0;
 }
-
+/* color: $text_casual; */
 
 h3 {
   font-family: "Droid Sans";
@@ -109,3 +109,8 @@ h3 code {
 .opacity_section a{
   color: white;
 }
+
+.opacity_weak{
+  opacity: 0.98;
+}
+
