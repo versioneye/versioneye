@@ -35,7 +35,12 @@
 
   <%= render 'shared/messages' %>
 
-  <section class="container" style="margin-top: 50px;">
+  <% if !signed_in? && current_page?( search_path )  %>
+    <%= render 'shared/dialog_follow' %>
+    <%= render 'shared/dialog_login_feature' %>
+  <% end %>
+
+  <section class="container opacity_weak" style="margin-top: 50px;">
     <%= render 'layouts/searchbar' %>
     <div class="well-white row">
       <%= yield %>
