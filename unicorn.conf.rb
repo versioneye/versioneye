@@ -71,7 +71,7 @@ before_fork do |server, worker|
   # # will then kill off the old master process with a SIGQUIT.
   # Check out http://codelevy.com/2010/02/09/getting-started-with-unicorn
   #
-  old_pid = RAILS_ROOT + '/pids/unicorn.pid.oldbin'
+  old_pid = Rails.root + '/pids/unicorn.pid.oldbin'
   if File.exists?(old_pid) && server.pid != old_pid
     begin
       sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU
