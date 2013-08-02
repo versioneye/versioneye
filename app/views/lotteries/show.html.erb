@@ -1,0 +1,13 @@
+<div class = "">
+  <%= render partial: "carousel" %>
+</div>
+<h3>Welcome to VersionEye lottery <%= @user.nil? ? "!" : ", #{@user[:fullname].capitalize}!" %></h3>
+<p class = "lead"> Create account, sign in, follow 3 packages and get lucky! </p>
+<p> BLA-BLA: What and when you will win </p>
+
+<p>Sign in to take it what's yours!</p>
+<% if @user.nil? %>
+  <%= render partial: "login" %>
+<% else %>
+  <a href = "/lottery/lucky" class = "btn btn-success pull-right"> Goto lottery and take what's yours! </a>
+<% end %>

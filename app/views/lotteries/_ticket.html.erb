@@ -1,0 +1,14 @@
+
+<li class = "media" style = "li.media:hover {background: #23f1f2;};">
+  <a class="pull-left" href="#">
+      <i class="media-object icon-trophy" style= "font-size: 48px;"></i>
+  </a>
+  <div>
+    <h5> Lucky ticket nr.<%= ticket_counter +1 %> <small> status: <%= ticket[:active] ? 'active' : 'finished' %></small></h5>
+    Selected products:
+    <% ticket[:selection].each do |prod_key| %>
+      <% prod = Product.find_by_key(Product.decode_prod_key(prod_key)) %>
+      <a href = "<%= prod.to_url_path %>" target = "_blank"> <%= prod.name %> </a>
+    <% end %>
+  </div>
+</li>

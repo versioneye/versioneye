@@ -21,18 +21,28 @@ class UsersController < ApplicationController
   end
 
   def create
+    redirect_url = params[:redirect_url]
+
     @user = User.new(params[:user])
+    @user[:terms] = true if Set["1", "on", "true"].include? params[:user][:terms] 
+
     if !User.email_valid?(@user.email)
       flash.now[:error] = t(:page_signup_error_email)
+      redirect_to :back unless redirect_url.nil? 
+
       render 'new'
     elsif @user.fullname.nil? || @user.fullname.empty?
       flash.now[:error] = t(:page_signup_error_fullname)
+      redirect_to :back unless redirect_url.nil? 
       render 'new'
     elsif @user.password.nil? || @user.password.empty? || @user.password.size < 5
       flash.now[:error] = t(:page_signup_error_password)
+      redirect_to :back unless redirect_url.nil? 
+     
       render 'new'
     elsif @user.terms != true
       flash.now[:error] = t(:page_signup_error_terms)
+      redirect_to :back unless redirect_url.nil? 
       render 'new'
     else
       @user = User.new(params[:user])
@@ -44,9 +54,12 @@ class UsersController < ApplicationController
       if @user.save
         @user.send_verification_email
         User.new_user_email(@user)
+        if params.has_key?(:redirect_url)
+          redirect_to "#{redirect_url}?verification=#{@user.verification}"
+        end
       else
         flash.now[:error] = t(:general_error)
-        render 'new'
+        redirect_to :back 
       end
     end
   end
