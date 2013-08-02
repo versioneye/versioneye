@@ -1,0 +1,15 @@
+<h3>Select at least 3 libraries.</h3>
+<form action = "/lottery/lucky" method = "post">
+  <div class="btn-group lottery-buttons" data-toggle="buttons">
+    <% @products.each do |product| %>
+      <label class="btn lottery-btn btn-primary col-4 col-4">
+        <input type="checkbox" name = "products[]" value = "<%= "#{product.to_param}" %>">
+        <img src = "/assets/language/<%= Product.encode_language(product[:language]) %>.png" class = "img-responsive"> <%= product.name %>
+      </label>
+    <% end %>
+  </div>
+
+  <div class = "lottery-controls">
+    <input type = "submit" class = "btn lottery-submit-btn btn-success col-12 col-lg-12 hide" value = "You're ready to submit your request for Fortuna" />
+  </div>
+</form>

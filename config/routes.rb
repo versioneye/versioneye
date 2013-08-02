@@ -30,6 +30,7 @@ Versioneye::Application.routes.draw do
       get 'users_location'
     end
   end
+
   get   '/created', :to => 'users#created'
   get   '/signup',                       :to => 'users#new'
   get   '/users/activate/:verification', :to => 'users#activate'
@@ -37,6 +38,14 @@ Versioneye::Application.routes.draw do
   post  '/resetpassword',                :to => 'users#resetpassword'
   get   '/updatepassword/:verification', :to => 'users#show_update_password'
   post  '/updatepassword',               :to => 'users#update_password'
+
+  resource :lottery do
+    get '/verify',    :to => "lotteries#show_verification"
+    get '/signin',   :to => "lotteries#show_signin"
+    get '/lucky',     :to => "lotteries#show_lottery"
+    post '/lucky',    :to => "lotteries#new_lottery"
+    get '/thankyou',  :to => "lotteries#show_thankyou"
+  end
 
   namespace :settings do
 
