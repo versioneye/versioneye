@@ -13,12 +13,12 @@ class LotteriesController < ApplicationController
   def show_verification
     verification = params[:verification]
     p "#-- User verification: #{verification}"
-    if User.activate!(verification) and UserEmail.activate!(verification)
-      flash.now[:success] = "Congratulation. Your Account is activated. Please Sign In."
+    if User.activate!(verification)
+      flash[:success] = "Congratulation. Your Account is activated. Please Sign In."
       redirect_to "/lottery/signin" and return
     end
     
-    flash.now[:error] = "Sorry! Verification failed."
+    flash[:error] = "Sorry! Verification failed."
     redirect_to "/lottery" #if failed, move back to lottery landing page
   end
 
