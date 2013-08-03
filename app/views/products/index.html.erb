@@ -1,7 +1,7 @@
 
 <div class="container" id="login" >
   <div class="pull-right opacity_section" style="margin-left: 1px;" >
-    <a href="/signin" >Sign In <i class="icon-signin"></i></a>
+    <a id="signin" href="/signin" >Sign In <i class="icon-signin"></i></a>
   </div>
   <div class="pull-right opacity_section" >
     <% if @ab.eql?("a") %>
@@ -20,31 +20,60 @@
       <%= render "/products/helpers/big_search" %>
     <% end %>
   </div>
-  <div class="l_bottom_down row" style="text-align: center; width: 100%;" >
-    <span class="opacity_section" style="margin-right: auto; margin-left: auto;">
-      <a id="learn_more" href="#" >What is VersionEye <i class="icon-arrow-down"></i></a>
+  <div class="l_bottom_down l_lp_next_link" >
+    <span class="opacity_section centered" >
+      <a id="what_is_versioneye_link" href="#" >What is VersionEye <i class="icon-arrow-down"></i></a>
     </span>
   </div>
 </div>
 
-<div id="features" class="container opacity_weak">
-  <div class="well-white">
-
+<div id="what_is_versioneye" class="container l_lp_first_page opacity_weak">
+  <div class="well-white l_lp_well_margin" >
     <%= render "/products/helpers/what_is_versioneye" %>
-
-    <div class="hr_row col2-left-l col2-right-r"><hr /></div>
-
-    <%= render "/products/helpers/support_for_packagemanagers" %>
-
-    <div class="hr_row col2-left-l col2-right-r"><hr /></div>
-
-    <%= render "/products/helpers/integration_points" %>
-
+  </div>
+  <div class="l_lp_next_link">
+    <span class="opacity_section" >
+      <a id="packagemanagers_link" href="#" >Package Managers <i class="icon-arrow-down"></i></a>
+    </span>
   </div>
 </div>
 
-<div id="reasons" class="container opacity_weak" >
-  <div class="well-white">
+<div id="packagemanagers" class="container l_lp_first_page opacity_weak">
+  <div class="well-white l_lp_well_margin" >
+    <%= render "/products/helpers/support_for_packagemanagers" %>
+  </div>
+  <div class="l_lp_next_link" >
+    <span class="opacity_section centered" >
+      <a id="integration_link" href="#" >Integration <i class="icon-arrow-down"></i></a>
+    </span>
+  </div>
+</div>
+
+<div id="integration" class="container l_lp_first_page opacity_weak">
+  <div class="well-white l_lp_well_margin" >
+    <%= render "/products/helpers/integration_points" %>
+  </div>
+  <div class="l_lp_next_link" >
+    <span class="opacity_section" >
+      <a id="api_link" href="#" >API <i class="icon-arrow-down"></i></a>
+    </span>
+  </div>
+</div>
+
+<div id="api" class="container l_lp_first_page opacity_weak">
+  <div class="well-white l_lp_well_margin" >
+    <%= render "/products/helpers/api_and_addons" %>
+  </div>
+  <div class="l_lp_next_link" >
+    <span class="opacity_section" >
+      <a id="reasons_link" href="#" >Why? <i class="icon-arrow-down"></i></a>
+    </span>
+  </div>
+</div>
+
+
+<div id="reasons" class="container l_lp_first_page opacity_weak" >
+  <div class="well-white l_lp_well_margin">
     <div class="marketing" >
       <h2 class="casual">Because software libraries don't update themselves</h2>
       <p>They just become out-dated!</p>
@@ -58,10 +87,15 @@
       <p>looking manually for updates. Save time and money by automating this process.</p>
     </div>
   </div>
+  <div class="l_lp_next_link" >
+    <span class="opacity_section" >
+      <a id="signup_link" href="#" >Sign up for free! <i class="icon-arrow-down"></i></a>
+    </span>
+  </div>
 </div>
 
 <div id="register_today" class="container opacity_weak" >
-  <div class="row well-white" >
+  <div class="well-white row l_lp_well_margin" >
     <div style="text-align: left;">
       <div class="span5 col2-left" >
         <%= render 'users/signup_form' %>
@@ -70,5 +104,10 @@
         <%= render 'shared/social_media_login' %>
       </div>
     </div>
+  </div>
+  <div class="l_lp_next_link" style="height: 50px;" >
+    <span class="opacity_section centered" >
+      <a id="back_to_top" href="#" >Back to the top <i class="icon-arrow-up"></i></a>
+    </span>
   </div>
 </div>
