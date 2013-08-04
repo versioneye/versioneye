@@ -1,4 +1,5 @@
 class User::TestimonialsController < ApplicationController
+
   before_filter :authenticate, only: [:create, :update]
 
   def index
@@ -6,8 +7,12 @@ class User::TestimonialsController < ApplicationController
   end
 
   def show
-    @user = current_user
-    @testimonial = @user.testimonial || Testimonial.new
+    if signed_in?
+      @user = current_user
+      @testimonial = @user.testimonial || Testimonial.new
+    else
+      @testimonial = Testimonial.new
+    end
   end
 
   def create

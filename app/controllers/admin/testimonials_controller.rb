@@ -1,4 +1,5 @@
 class Admin::TestimonialsController < ApplicationController
+
   before_filter :admin_user
 
   def index
@@ -30,7 +31,7 @@ class Admin::TestimonialsController < ApplicationController
     else
       flash[:error] = "Error! Cant save updates! #{testimonial.errors.full_messages.to_sentence}"
     end
-    redirect_to :back and return 
+    redirect_to :back and return
   end
 
   private
@@ -46,12 +47,12 @@ class Admin::TestimonialsController < ApplicationController
       flash[:error] = "Cant approve given testimonial, because it doesnt exist anymore."
       redirect_to :back and return
     end
-    
+
     testimonial
   end
-  
-  private 
-  
+
+  private
+
     def admin_user
       redirect_to(root_path) unless signed_in_admin?
     end
