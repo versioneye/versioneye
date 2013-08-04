@@ -49,6 +49,7 @@ class User
   belongs_to :plan
   has_one    :billing_address
   has_one    :user_notification_setting
+  has_one    :testimonial
   has_many   :projects
   has_many   :github_repos
   has_and_belongs_to_many :products

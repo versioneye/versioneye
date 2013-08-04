@@ -3,11 +3,19 @@
   <%= f.hidden_field :_id %>
 </div>
 <div class = "control-group">
-  <label class = "control-label" for = "testimonial[title]"> 
-    Current position/title 
+  <label class = "control-label" for = "testimonial[title]">
+    Title
   </label>
   <div class = "controls">
     <%= f.text_field :title, class: "input-xlarge" %>
+  </div>
+</div>
+<div class = "control-group">
+  <label class = "control-label" for = "testimonial[title]">
+    Company
+  </label>
+  <div class = "controls">
+    <%= f.text_field :company, class: "input-xlarge" %>
   </div>
 </div>
 <div class = "control-group">
@@ -20,7 +28,7 @@
 </div>
 <div class = "control-group">
   <div class = "controls">
-    <button type = "submit" class = "btn btn-primary pull-right"> Submit </button>
+    <button type = "submit" class = "btn btn-primary"> Submit </button>
   </div>
 </div>
 
