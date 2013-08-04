@@ -1,0 +1,79 @@
+
+/* Marketing section of Overview
+-------------------------------------------------- */
+
+.marketing {
+  margin: 0px 0px 45px 0px;
+  text-align: center;
+  color: #5a5a5a;
+
+  & h1 {
+    font-weight: 200;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+
+  & h2 {
+    font-weight: 200;
+    margin-bottom: 5px;
+    &.casual {
+      color: $text_casual;
+    }
+  }
+
+  & p {
+    font-size: 20px;
+    line-height: 1.5;
+  }
+
+  & img {
+    display: block;
+    margin: 0 auto 30px;
+  }
+
+}
+
+.marketing_exp{
+  padding-top: 20px;
+}
+
+.package_manager{
+  height: 70px;
+  margin-right: 10px;
+}
+
+.package_managers_icon{
+  margin: 0px 20px 0px 0px;
+  width: 50px;
+}
+
+h5.marketing {
+  color: $text_yellow;
+  font-family: "Droid Sans";
+  margin: 0px 0px 20px 0px;
+  text-align: left;
+}
+
+.marketing {
+  margin-bottom: 40px;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 25px;
+  color: #999;
+}
+
+.integration_icon{
+  text-align: left;
+  width: 72px;
+}
+
+.integration_header{
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.integration_desc{
+  height: 70px;
+}
+
+

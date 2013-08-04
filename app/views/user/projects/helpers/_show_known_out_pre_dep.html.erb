@@ -3,16 +3,17 @@
 
   </td>
   <td>
+    <%= dep.version_current %>
+  </td>
+  <td>
+    <span ><%= dep.version_requested %></span>
+  </td>
+  <td>
     <span >
       <a class="#a dep_link" href="<%= product_version_path(product) %>" >
         <span ><%= product.name %></span>
       </a>
     </span>
   </td>
-  <td>
-    <span ><%= dep.version_requested %></span>
-  </td>
-  <td>
-    <%= dep.version_current %>
-  </td>
+
 </tr>

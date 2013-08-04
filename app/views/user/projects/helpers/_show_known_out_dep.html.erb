@@ -5,12 +5,13 @@
 
 	</td>
   <td>
-    <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" ><%= product.name %></a>
+    <%= dep.version_current %>
   </td>
   <td>
     <span ><%= dep.version_requested %></span>
   </td>
   <td>
-    <%= dep.version_current %>
+    <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" ><%= product.name %></a>
   </td>
+
 </tr>

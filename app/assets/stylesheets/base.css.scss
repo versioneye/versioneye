@@ -1,0 +1,119 @@
+
+/*
+http://pcdn.500px.net/40490694/9eaf2484aa1c29c61183b997208a0c601fbe833c/5.jpg
+2048.jpg
+*/
+
+/* Body and structure
+-------------------------------------------------- */
+body,html{
+    height:100%;
+    background-color: #fafafa;
+    background-image: url("/assets/bg/awesome_berlin_night.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+  font-size: 14px;
+  color: $text_casual;
+  font-family: "Droid Sans", "Droid Serif", Helvetica;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $text_yellow;
+  font-family: "Droid Sans";
+}
+
+h1, h2 {
+  font-family: "Droid Serif";
+  font-size: 30px;
+}
+
+.no_margin{
+  margin: 0;
+}
+
+h5.desc_header{
+  padding: 0 0 10px 0;
+  margin: 0;
+  color: $text_casual;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+h5.dep_header{
+  padding: 0;
+  margin: 10px 0;
+  color: $text_casual;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+
+h1.page-title  {
+  font-family: "Droid Serif", "Droid";
+  font-size: 25px;
+  color: white;
+  margin: 0;
+}
+/* color: $text_casual; */
+
+h3 {
+  font-family: "Droid Sans";
+  font-size: 21pt;
+}
+
+h3 code {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.flash-container {
+    overflow: auto;
+    position: fixed;
+    top: 80px !important;
+    width: 940px;
+    z-index: 2000;
+}
+
+.round4{
+  -webkit-border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px;
+}
+
+.modal-body{
+  font-size: 16px;
+  text-align: center;
+  padding: 20px;
+}
+
+.opacity_section {
+  background-color: gray;
+  opacity: 0.8;
+  padding: 10px;
+  color: white;
+}
+
+.opacity_section a{
+  color: white;
+}
+
+.opacity_weak{
+  opacity: 0.98;
+}
+
+.centered{
+  margin: 0 auto;
+}

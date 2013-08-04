@@ -5,6 +5,41 @@ jQuery(document).ready(function() {
 		text: "search for a software library"
 	});
 
+  jQuery('#what_is_versioneye_link').on('click', function (e) {
+    $.scrollTo($('#what_is_versioneye'), 600,  {easing:'easeOutCubic'});
+    return false;
+  });
+
+  jQuery('#packagemanagers_link').on('click', function (e) {
+    $.scrollTo($('#packagemanagers'), 800,  {easing:'easeOutCubic'});
+    return false;
+  });
+
+  jQuery('#integration_link').on('click', function (e) {
+    $.scrollTo($('#integration'), 800,  {easing:'easeOutCubic'});
+    return false;
+  });
+
+  jQuery('#api_link').on('click', function (e) {
+    $.scrollTo($('#api'), 800,  {easing:'easeOutCubic'});
+    return false;
+  });
+
+  jQuery('#reasons_link').on('click', function (e) {
+    $.scrollTo($('#reasons'), 800,  {easing:'easeOutCubic'});
+    return false;
+  });
+
+  jQuery('#signup_link').on('click', function (e) {
+    $.scrollTo($('#register_today'), 800,  {easing:'easeOutCubic'});
+    return false;
+  });
+
+  jQuery('#back_to_top').on('click', function (e) {
+    $.scrollTo($('#login'), 1000,  {easing:'easeOutCubic'});
+    return false;
+  });
+
   initialize_searchbox();
 });
 

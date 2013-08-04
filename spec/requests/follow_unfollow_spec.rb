@@ -54,7 +54,7 @@ describe "follow and unfollow" do
 
       get "/ruby/json_goba/1.0"
       assert_tag :tag => "button", :attributes => { :class => "btn2 btn-large btn-warning", :type => "submit" }
-      response.body.should match("1 Followers")
+      response.body.should match("Followers")
     end
 
     it "fetches the i follow page successfully" do
@@ -75,7 +75,7 @@ describe "follow and unfollow" do
 
       get "/ruby/json_goba/1.0"
       assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-primary", :type => "submit" }
-      response.body.should match("0 Followers")
+      response.body.should match("Followers")
 
       prod = Product.fetch_product( prod_lang, prod_key )
       subscribers = prod.users

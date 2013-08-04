@@ -20,9 +20,9 @@ class User::TestimonialsController < ApplicationController
     new_testimonial.user_id = current_user.id
 
     if new_testimonial.save(validate: false)
-      flash[:success] = "Your testimonial is added successfully!"
+      flash[:success] = "Many Thanks for your testimonial. Your feedback is highly appreciated."
     else
-      flash[:error] = "Our database refused to save your testimonial."
+      flash[:error] = "Ups. Something went wrong. Please reach out to the VersionEye Team and help them to improve the product."
     end
     redirect_to action: 'show'
   end
@@ -30,14 +30,14 @@ class User::TestimonialsController < ApplicationController
   def update
     testimonial = Testimonial.find_by_id(params[:testimonial][:_id])
     if testimonial.nil?
-      flash[:error] = "Cant update - someone stole id of your testimony."
+      flash[:error] = "Ups. Something went wrong. Please reach out to the VersionEye Team and help them to improve the product."
       redirect_to :back and return
     end
     testimonial.update_attributes!(params[:testimonial])
     if testimonial.save
-      flash[:success] = "Your's testimonial is now updated."
+      flash[:success] = "Many Thanks for your testimonial. Your feedback is highly appreciated."
     else
-      flash[:error] = "Sorry! Cant save your updates."
+      flash[:error] = "Ups. Something went wrong. Please reach out to the VersionEye Team and help them to improve the product."
     end
     redirect_to action: 'show'
   end

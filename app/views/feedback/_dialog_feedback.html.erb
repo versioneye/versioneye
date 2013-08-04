@@ -6,9 +6,9 @@
 
 <% if signed_in? %>
 	<%= form_tag("/feedback.js", :method => "post", :remote => true, :class => "form-horizontal") do  %>
-		<div class = "modal-body">
+		<div class = "modal-body" style="text-align: left;">
 
-			<div class="control-group">	
+			<div class="control-group">
 				<%= label_tag(:fb_fullname, "Full Name", :class => "control-label") %>
 				<div class="controls">
 					<% if signed_in? %>
@@ -29,7 +29,7 @@
 					<% end %>
 				</div>
 			</div>
-		
+
 			<div class="control-group">
 				<%= label_tag(:feedback, nil, :class => "control-label") %>
 				<div class="controls">
@@ -46,13 +46,21 @@
 		</div>
 	<% end %>
 <% else %>
-	<div class = "modal-body">
-		<div>
-			Please login to give us feedback or contact us on Twitter <a href="https://twitter.com/VersionEye" target="new_Twitter">@VersionEye</a><br/><br/>
+	<div class = "modal-body" >
+
+		<div >
+			Please login to give us feedback or contact us on Twitter <a href="https://twitter.com/VersionEye" target="new_Twitter">@VersionEye</a>
 		</div>
-		<div>
-			<%= render "shared/login_options_horizontal" %>
-		</div>
+
+		<div style="padding: 20px 0;">
+      <%= render 'shared/login_with_github' %>
+      <%= render 'shared/login_with_twitter' %>
+    </div>
+
+    <div>
+      Or <a href="/signup">sign up</a> with your <a href="/signup">email address</a>. We keep it secure!
+    </div>
+
 	</div>
 	<div class="modal-footer">
 		<button id="feedback_dialog_cancel" type="button" class="btn btn-large" data-dismiss="modal" aria-hidden="true">Cancel</button>
