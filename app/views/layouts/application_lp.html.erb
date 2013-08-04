@@ -1,38 +1,29 @@
 <!DOCTYPE html>
-<html >
+<html lang="en">
 
-	<head >
+  <head >
 
-		<title>VersionEye - Notification System for Software Packages</title>
+    <title>VersionEye - Notification System for Software Packages</title>
 
-		<meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
-		<meta name="author"      content="VersionEye GmbH" />
-		<meta name="keywords"    content="Java, Ruby, Python, Node.JS, JavaScript, PHP, Software Packages" />
-		<meta name="description" content="Notification System for Software Packages. Follow your Packages and get notified about new versions." />
+    <meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="author"      content="VersionEye GmbH" />
+    <meta name="keywords"    content="Java, Ruby, Python, Node.JS, JavaScript, PHP, Software Packages" />
+    <meta name="description" content="Notification System for Software Packages. Follow your Packages and get notified about new versions." />
 
-		<%= render 'layouts/html_head' %>
+    <%= render 'layouts/html_head' %>
 
-	</head>
+  </head>
 
-	<body>
+  <body >
 
-		<%= render 'layouts/header' %>
+    <%= render 'shared/messages' %>
 
-		<section class = "container flash-container">
-			<% flash.each do |key, value| %>
-				<div class="alert">
-  					<button type="button" class="close" data-dismiss="alert">×</button>
-					<%= value %>
-				</div>
-			<% end %>
-		</section>
+    <%= yield %>
 
-		<%= yield %>
+    <%= render 'feedback/dialog_feedback' %>
+    <%= render 'layouts/footer' %>
+    <%= debug(params) if Rails.env.development? %>
 
-		<%= render 'feedback/dialog_feedback' %>
-		<%= render 'layouts/footer' %>
-		<%= debug(params) if Rails.env.development? %>
-
-	</body>
+  </body>
 
 </html>

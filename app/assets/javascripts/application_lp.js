@@ -13,6 +13,8 @@
 //= require libs/hogan-2.0.0
 //= require libs/typeahead.min
 //= require google
+//= require jquery.easing
+//= require jquery.scrollto
 
 //= require custom_lp
 //= require custom_feedback

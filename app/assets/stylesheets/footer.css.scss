@@ -1,0 +1,54 @@
+
+
+/* Footer
+-------------------------------------------------- */
+
+.footer {
+
+  background-color: white;
+  padding-top: 15px;
+  border-top: 1px solid #eeeeee;
+
+  & h4 { color: $text_casual;}
+  & p {
+    margin-bottom: 0;
+    color: $text_casual;
+  }
+
+}
+
+.footer-links {
+  margin: 10px 0;
+  & li {
+    display: block;
+    margin: 5px 0px 5px 0px;
+  }
+
+  & a {
+    font-size: 13px;
+    color: $text_link;
+    text-decoration: none;
+
+    & :hover {
+      color: $text_hover;
+    }
+    &:visited {
+      color: $text_link;
+    }
+  }
+
+}
+
+.footer_social_icon{
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.footer_social_icon:hover{
+  text-decoration: none;
+}
+
+.footer_link_margin{
+  margin-right: 10px;
+}
+

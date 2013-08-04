@@ -10,14 +10,14 @@ gem 'bson_ext'          , '1.7.0'
 gem 'mongo'             , '1.7.0'
 gem 'mongoid'           , '2.5.0'
 gem 'naturalsorter'     , '2.0.6'
-gem 'postmark-rails'    , '0.5.0'
+gem 'postmark-rails'    , '0.5.1'
 gem 'httparty'          , '0.11.0'
 gem 'persistent_httparty'
 gem 'oauth'             , '0.4.7'
-gem 'twitter_oauth'     , '0.4.93'
+gem 'twitter_oauth'     , '0.4.94'
 gem 'aws-s3'            , '0.6.3', :require => 'aws/s3'
 gem 'nokogiri'          , '1.6.0'
-gem 'stripe'            , '1.8.3'
+gem 'stripe'            , '1.8.4'
 gem 'thin'              , '1.5.1'
 gem 'unicorn'           , '4.6.3'
 gem 'tire'              , '0.6.0'
@@ -30,10 +30,10 @@ gem 'grape-swagger'     , :path => "vendor/gems" # , :github => "timgluz/grape-s
 gem 'htmlentities'      , '4.3.1'
 gem 'capistrano'        , '2.15.5'
 gem 'whenever'          , '0.8.4'
+gem 'bourbon'           , '3.1.8'
 
 group :development do
-  gem 'libv8'         , '~> 3.11.8'
-  gem 'therubyracer' #, '0.11.14', :platforms => :ruby, :require => 'v8'
+  gem 'therubyracer'  , '0.11.4'
   gem 'psych'
   gem 'irbtools'
   gem 'terminal-notifier'
@@ -51,9 +51,9 @@ end
 
 group :test do
   gem 'turn'              , :require => false
-  gem 'rspec'             , '~> 2.13'
+  gem 'rspec'             , '2.14.1'
   gem "rspec-rails"       , "~> 2.0"
-  gem 'rspec-mocks'       , '~> 2.10'
+  gem 'rspec-mocks'       , '2.14.1'
   gem 'capybara'          , '2.1.0'
   gem 'capybara-firebug'  , '~> 1.3'
   gem 'selenium-webdriver', '2.33.0'

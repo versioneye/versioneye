@@ -5,9 +5,11 @@ load "deploy/assets"
 require "bundler/capistrano"
 
 set :application, "versioneye"
-set :repository , "https://github.com/versioneye/versioneye.git"
+set :repository , "git@github.com:versioneye/versioneye.git"
 
 set :scm, :git
+
+set :ssh_options, {:forward_agent => true}
 
 set :deploy_to, "/var/www/versioneye"
 

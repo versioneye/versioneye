@@ -7,13 +7,14 @@ class ProductsController < ApplicationController
 
   @@languages = [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
     Product::A_LANGUAGE_PYTHON, Product::A_LANGUAGE_PHP, Product::A_LANGUAGE_NODEJS,
-    Product::A_LANGUAGE_JAVASCRIPT, Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R]
+    Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R]
 
   def index
-    @lang = cookies[:veye_lang]
-    if @lang.nil?
-      @lang = ""
-      cookies[:veye_lang] = ""
+    @user = User.new
+    @ab = params['ab']
+    if @ab.nil?
+      ab_array = ["a", "b"]
+      @ab = "a" # ab_array[Random.rand(2)]
     end
     @languages = @@languages
     render :layout => 'application_lp'
@@ -216,7 +217,7 @@ class ProductsController < ApplicationController
   def autocomplete_product_name
     term = params[:term] || "nothing"
     results = []
-    products = ProductService.search(term) 
+    products = ProductService.search(term)
     index = 0
     products.each do |product|
       results << {

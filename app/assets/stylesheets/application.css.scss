@@ -1,0 +1,66 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *
+*/
+
+@font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans'), local('DroidSans'),
+    url('/fonts/DroidSans.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/DroidSans.woff') format('woff'),
+    url('/fonts/DroidSans.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Droid Serif';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Serif'), local('DroidSerif'),
+    url('/fonts/DroidSerif.woff') format('woff'),
+    url('/fonts/DroidSerif.ttf') format('truetype'),
+    url('/fonts/DroidSerif.svg') format('svg');
+}
+
+$gradient_start: #7F0200;
+$gradient_end: #610003;
+$link_color: #7575FF;
+/*
+$text_yellow: #FBB21C;
+*/
+$text_yellow: gray;
+$text_casual: #616970;
+
+$link_hover: #FBB21C;
+$link_color: #FDFDFD;
+$link_visited: #FDFDFD;
+
+$text_link: #669acb;
+$text_hover: #a0b8cf;
+
+@import "bourbon";
+@import "bootstrap";
+@import "bootstrap_responsive";
+@import "bootstrap_switch";
+@import "bootstrap_upload";
+@import "font-awesome";
+@import "sprite.css.scss";
+@import "colorschema.css.scss";
+
+@import "layout";
+@import "base";
+@import "well";
+@import "search";
+@import "marketing";
+@import "social_media_login";
+@import "header";
+@import "footer";
+
+@import "main";
+@import "typeahead.js-bootstrap";
+@import "social-buttons";
+@import "product";
+@import "user";
