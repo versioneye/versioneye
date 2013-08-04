@@ -8,6 +8,7 @@
 
       <% if @user.nil? %>
         <%= render partial: 'shared/login_options_horizontal' %>
+        Or <a href="/signup">sign up</a> with your <a href="/signup">email address</a>.
       <% else %>
         <%= render partial: 'user/testimonials/helpers/testimonial_form', :locals => {:f => f} %>
       <% end %>
