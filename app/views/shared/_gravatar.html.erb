@@ -2,23 +2,25 @@
 <% user_link = "" %>
 <% image_size = 200 %>
 <% change_link = true %>
+<% classes ||= "round" %>
+<% user ||= @user %>
 
 <% change_link = show_link if !show_link.nil?  %>
-<% user_link = user_path(@user) unless @user.nil? %>
+<% user_link = user_path(user) unless user.nil? %>
 <% image_size = size.to_i unless size.nil? %>
-<% if @user.nil? %>
+<% if user.nil? %>
   <img src= "<%= "/assets/profile_icon.png" %>" 
        width= "<%= image_size %>" height= "<%= image_size %>" alt = "missing @user var" />
 <% else %>
-  <%= link_to( gravatar_image_tag(@user.email, 
-                                 :alt => @user.fullname, 
-                                 :class => "round", 
+  <%= link_to( gravatar_image_tag(user.email, 
+                                 :alt => user.fullname, 
+                                 :class => classes, 
                                  :gravatar => { :size => image_size, 
                                                 :default => "#{Settings.server_url}/profile_icon.png" }), 
   user_link) %>
 
-  <br/>
-  <% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) && change_link %>
+  <% if signed_in? && current_user.id.to_s.eql?(user.id.to_s) && change_link %>
+    <br />
     <a href="http://gravatar.com/emails">Change profile picture</a><br/>
   <% end %>
 
