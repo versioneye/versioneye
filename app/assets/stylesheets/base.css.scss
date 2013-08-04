@@ -9,14 +9,6 @@ http://pcdn.500px.net/40490694/9eaf2484aa1c29c61183b997208a0c601fbe833c/5.jpg
 body,html{
     height:100%;
     background-color: #fafafa;
-    background-image: url("/assets/bg/awesome_berlin_night.jpg");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
 }
 
 body {
@@ -64,10 +56,9 @@ h5.dep_header{
 h1.page-title  {
   font-family: "Droid Serif", "Droid";
   font-size: 25px;
-  color: white;
+  color: $text_casual;
   margin: 0;
 }
-/* color: $text_casual; */
 
 h3 {
   font-family: "Droid Sans";
