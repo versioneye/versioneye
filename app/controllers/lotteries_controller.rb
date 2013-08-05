@@ -26,15 +26,16 @@ class LotteriesController < ApplicationController
   end
 
   def show_lottery
-    @products = []
-    12.times do |i|
-      @products << Product.random_product
-    end
+    @products = Product.all.desc(:followers).limit(12)
+    
     render template: "/lotteries/show_lottery"
   end
 
   def show_thankyou
     @tickets = Lottery.by_user(current_user)
+    @deadline = Date.new(2013, 8, 26)
+    @today = Date.today
+
     render template: "/lotteries/show_thankyou"
   end
 
