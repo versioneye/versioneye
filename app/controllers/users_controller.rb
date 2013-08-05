@@ -24,33 +24,38 @@ class UsersController < ApplicationController
     redirect_url = params[:redirect_url]
 
     @user = User.new(params[:user])
-    @user[:terms] = true if Set["1", "on", "true"].include? params[:user][:terms] 
+    if Set["1", "on", "true"].include? params[:user][:terms]
+      @user[:terms] = true 
+    else 
+      @user[:terms] = false
+    end
+
+    @user[:datenerhebung] = @user[:terms]
 
     if !User.email_valid?(@user.email)
-      flash.now[:error] = t(:page_signup_error_email)
-      redirect_to :back unless redirect_url.nil? 
+      flash[:error] = t(:page_signup_error_email)
+      redirect_to :back and return unless redirect_url.nil? 
 
       render 'new'
     elsif @user.fullname.nil? || @user.fullname.empty?
-      flash.now[:error] = t(:page_signup_error_fullname)
-      redirect_to :back unless redirect_url.nil? 
+      flash[:error] = t(:page_signup_error_fullname)
+      redirect_to :back and return unless redirect_url.nil? 
       render 'new'
     elsif @user.password.nil? || @user.password.empty? || @user.password.size < 5
-      flash.now[:error] = t(:page_signup_error_password)
-      redirect_to :back unless redirect_url.nil? 
+      flash[:error] = t(:page_signup_error_password)
+      redirect_to :back and return unless redirect_url.nil? 
      
       render 'new'
     elsif @user.terms != true
-      flash.now[:error] = t(:page_signup_error_terms)
-      redirect_to :back unless redirect_url.nil? 
+      flash[:error] = t(:page_signup_error_terms)
+      redirect_to :back and return unless redirect_url.nil? 
       render 'new'
     else
-      @user = User.new(params[:user])
-      @user.datenerhebung = true
       @user.create_username
       @user.create_verification
       refer_name = cookies.signed[:veye_refer]
       check_refer( refer_name, @user )
+      
       if @user.save
         @user.send_verification_email
         User.new_user_email(@user)
@@ -58,7 +63,7 @@ class UsersController < ApplicationController
           redirect_to "#{redirect_url}?verification=#{@user.verification}"
         end
       else
-        flash.now[:error] = t(:general_error)
+        flash[:error] = "#{t(:general_error)} - #{@user.errors.full_messages.to_sentence}"
         redirect_to :back 
       end
     end
