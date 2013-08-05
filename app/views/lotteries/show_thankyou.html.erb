@@ -2,18 +2,15 @@
 <div>
 	<h4> Thank you! </h4>
 	<p class = "lead"> Our Fortuna has now your ticket</p>
-  <p> We hope you'll be the luckiest hacker in world very soon. We stop Fortuna's wheel on 26th August,
-    it's already <%= (@deadline == @today) ? 'today' : "in #{(@deadline - Date.today).numerator} days." %>
+  <p> We hope you'll be the luckiest hacker in the world very soon. We stop Fortuna's wheel on October 31st.
+    It's already <%= (@deadline == @today) ? 'today' : "in #{(@deadline - Date.today).numerator} days" %>.
   </p>
   <p>
-      TODO: when there's deadline;
-      What happens next bla-bla;
-      visit our pages bla-bla;
-      Have a question?
-      Have a nice day!
+      As next you will receive an email confirmation. The winner will be anounced via our newsletter and on
+      <a href="http://www.versioneye.com">www.versioneye.com</a>.
+      Contact us on Twitter if you have any questions. <a href="https://Twitter.com/VersionEye">@VersionEye</a
   </p>
+  <ul class="nav">
+    <%= render :partial => "ticket", :collection => @tickets %>
+  </ul>
 </div>
-
-<ul class = "media-list">
-  <%= render partial: "ticket", collection: @tickets %>
-</ul>

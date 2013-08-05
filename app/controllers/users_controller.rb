@@ -21,53 +21,64 @@ class UsersController < ApplicationController
   end
 
   def create
-    redirect_url = params[:redirect_url]
-
     @user = User.new(params[:user])
     if Set["1", "on", "true"].include? params[:user][:terms]
-      @user[:terms] = true 
-    else 
+      @user[:terms] = true
+    else
       @user[:terms] = false
     end
 
     @user[:datenerhebung] = @user[:terms]
 
-    if !User.email_valid?(@user.email)
-      flash[:error] = t(:page_signup_error_email)
-      redirect_to :back and return unless redirect_url.nil? 
-
-      render 'new'
-    elsif @user.fullname.nil? || @user.fullname.empty?
-      flash[:error] = t(:page_signup_error_fullname)
-      redirect_to :back and return unless redirect_url.nil? 
-      render 'new'
-    elsif @user.password.nil? || @user.password.empty? || @user.password.size < 5
-      flash[:error] = t(:page_signup_error_password)
-      redirect_to :back and return unless redirect_url.nil? 
-     
-      render 'new'
-    elsif @user.terms != true
-      flash[:error] = t(:page_signup_error_terms)
-      redirect_to :back and return unless redirect_url.nil? 
-      render 'new'
-    else
+    if UserService.valid_user?(@user, flash, t)
       @user.create_username
       @user.create_verification
+
       refer_name = cookies.signed[:veye_refer]
       check_refer( refer_name, @user )
-      
+
       if @user.save
         @user.send_verification_email
         User.new_user_email(@user)
-        if params.has_key?(:redirect_url)
-          redirect_to "#{redirect_url}?verification=#{@user.verification}"
-        end
       else
         flash[:error] = "#{t(:general_error)} - #{@user.errors.full_messages.to_sentence}"
-        redirect_to :back 
+        redirect_to :back and return
       end
+    else
+      flash[:error] = t(flash[:error])
+      redirect_to :back and return
     end
   end
+
+  def create_mobile
+    @user = User.new(params[:user])
+    if Set["1", "on", "true"].include? params[:user][:terms]
+      @user[:terms] = true
+    else
+      @user[:terms] = false
+    end
+
+    @user[:datenerhebung] = @user[:terms]
+
+    if UserService.valid_user?(@user, flash, t)
+      @user.create_username
+      @user.create_verification
+
+      if @user.save
+        @user.send_verification_email
+        User.new_user_email(@user)
+        sign_in @user
+        redirect_to "/lottery/lucky"
+      else
+        flash[:error] = "#{t(:general_error)} - #{@user.errors.full_messages.to_sentence}"
+        redirect_to :back and return
+      end
+    else
+      flash[:error] = t(flash[:error])
+      redirect_to :back and return
+    end
+  end
+
 
   def show
     @user = User.find_by_username(params[:id])

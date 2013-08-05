@@ -16,30 +16,30 @@ class LotteriesController < ApplicationController
       flash[:success] = "Congratulation. Your Account is activated. Please Sign In."
       redirect_to "/lottery/signin" and return
     end
-    
+
     flash[:error] = "Sorry! Verification failed."
     redirect_to "/lottery" #if failed, move back to lottery landing page
   end
 
   def show_signin
-    render template: "lotteries/_signin_form"  
+    render template: "lotteries/_signin_form"
   end
 
   def show_lottery
     @products = Product.all.desc(:followers).limit(12)
-    
+
     render template: "/lotteries/show_lottery"
   end
 
   def show_thankyou
     @tickets = Lottery.by_user(current_user)
-    @deadline = Date.new(2013, 8, 26)
+    @deadline = Date.new(2013, 10, 31)
     @today = Date.today
 
     render template: "/lotteries/show_thankyou"
   end
 
-  def new_lottery 
+  def new_lottery
     product_keys = params[:products] || []
     failed = []
     product_keys.each do |prod_key|
@@ -55,7 +55,7 @@ class LotteriesController < ApplicationController
       flash[:error] = "Unlucky selection; Cant follow #{failed.join(',')}. Please try again."
       redirect_to :back  and return true
     end
-   
+
     lottery = Lottery.new user_id: current_user.id,
                           selection: product_keys
 
