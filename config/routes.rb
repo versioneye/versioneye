@@ -23,6 +23,7 @@ Versioneye::Application.routes.draw do
   get    '/signin',                :to => 'sessions#new'
   get    '/signout',               :to => 'sessions#destroy'
 
+  post '/users/mobile',            :to => 'users#create_mobile'
   resources :users, :key => :username do
     member do
       get 'favoritepackages'
