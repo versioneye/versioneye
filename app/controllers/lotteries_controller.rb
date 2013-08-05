@@ -35,31 +35,24 @@ class LotteriesController < ApplicationController
     @tickets = Lottery.by_user(current_user)
     @deadline = Date.new(2013, 10, 31)
     @today = Date.today
-
     render template: "/lotteries/show_thankyou"
   end
 
   def new_lottery
     product_keys = params[:products] || []
-    failed = []
+    
     product_keys.each do |prod_key|
       prod_key = Product.decode_prod_key(prod_key)
       prod = Product.find_by_key(prod_key)
       result = ProductService.follow(prod[:language], prod_key, current_user)
-
-      failed << prod_key unless result #remember failed follow
-    end
-
-    #go back when user failed to follow some  products
-    unless failed.empty?
-      flash[:error] = "Unlucky selection; Cant follow #{failed.join(',')}. Please try again."
-      redirect_to :back  and return true
     end
 
     lottery = Lottery.new user_id: current_user.id,
                           selection: product_keys
 
     lottery.save
+ 
+    UserMailer.new_ticket(current_user, lottery).deliver
     redirect_to "/lottery/thankyou"
   end
 end
