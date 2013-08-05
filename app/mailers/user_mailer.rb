@@ -63,5 +63,14 @@ class UserMailer < ActionMailer::Base
       :tag => "new_user"
       )
   end
-
+  
+  def new_ticket(user, ticket)
+    @fullname = user[:fullname]
+    @ticket = ticket
+    mail(
+      :to => user[:email],
+      :subject => "VersionEye's lottery confirmation",
+      :tag => "new_lottery"
+    )
+  end
 end
