@@ -9,10 +9,22 @@ class User::TestimonialsController < ApplicationController
   def show
     if signed_in?
       @user = current_user
-      @testimonial = @user.testimonial || Testimonial.new
-    else
-      @testimonial = Testimonial.new
+      if @user.testimonial
+        redirect_to edit_user_testimonials_path and return
+      end
     end
+
+    redirect_to new_user_testimonials_path
+  end
+
+  def new
+    @user = current_user
+    @testimonial = Testimonial.new
+  end
+
+  def edit
+    @user = current_user
+    @testimonial = current_user.testimonial
   end
 
   def create
@@ -21,7 +33,7 @@ class User::TestimonialsController < ApplicationController
 
     if new_testimonial.save(validate: false)
       flash.now[:success] = "Many Thanks for your testimonial. Your feedback is highly appreciated."
-      @testimonial = testimonial.content
+      @testimonial = new_testimonial.content
       render "tweet"
       return
     else
