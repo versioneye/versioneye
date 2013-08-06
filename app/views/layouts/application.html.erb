@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en" >
 
 <head >
@@ -34,16 +33,14 @@
 
   <%= render 'layouts/header' %>
 
-  <section class="container flash-container" >
-    <% flash.each do |key, value| %>
-      <div class="alert flash <%= key %>">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-        <%= value %>
-      </div>
-    <% end %>
-  </section>
+  <%= render 'shared/messages' %>
 
-  <section class="container">
+  <% if !signed_in? && current_page?( search_path )  %>
+    <%= render 'shared/dialog_follow' %>
+    <%= render 'shared/dialog_login_feature' %>
+  <% end %>
+
+  <section class="container opacity_weak" style="margin-top: 50px;">
     <%= render 'layouts/searchbar' %>
     <div class="well-white row">
       <%= yield %>

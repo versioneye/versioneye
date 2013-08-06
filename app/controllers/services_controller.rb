@@ -10,7 +10,7 @@ class ServicesController < ApplicationController
     file = params[:upload]
 
     if (file.nil? || file.empty?)
-      flash[:error] = "No file selected. Please select a file from your computer."
+      flash[:error] = "No file selected. Please select a project file from your computer."
       redirect_to "/"
       return nil
     end
@@ -62,7 +62,7 @@ class ServicesController < ApplicationController
       end
       hash[dep.prod_key] = element
     end
-    circle = CircleElement.fetch_deps(1, hash, Hash.new)
+    circle = CircleElement.fetch_deps(1, hash, Hash.new, project.language)
     respond_to do |format|
       format.json {
         resp = CircleElement.generate_json_for_circle_from_hash(circle)

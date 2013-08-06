@@ -51,6 +51,9 @@ GEM
     boson (1.2.4)
     boson-more (0.2.2)
       boson (>= 1.2.0)
+    bourbon (3.1.8)
+      sass (>= 3.2.0)
+      thor
     bson (1.7.1)
     bson_ext (1.7.0)
       bson (~> 1.7.0)
@@ -170,7 +173,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     method_locator (0.0.4)
-    method_source (0.8.1)
+    method_source (0.8.2)
     methodfinder (1.2.5)
     mime-types (1.23)
     mini_portile (0.5.1)
@@ -258,7 +261,7 @@ GEM
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
     rubyzip (0.9.9)
-    sass (3.2.9)
+    sass (3.2.10)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -336,6 +339,7 @@ PLATFORMS
 
 DEPENDENCIES
   aws-s3 (= 0.6.3)
+  bourbon (= 3.1.8)
   bson_ext (= 1.7.0)
   capistrano (= 2.15.5)
   capybara (= 2.1.0)

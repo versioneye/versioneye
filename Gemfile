@@ -30,6 +30,7 @@ gem 'grape-swagger'     , :path => "vendor/gems" # , :github => "timgluz/grape-s
 gem 'htmlentities'      , '4.3.1'
 gem 'capistrano'        , '2.15.5'
 gem 'whenever'          , '0.8.4'
+gem 'bourbon'           , '3.1.8'
 
 group :development do
   gem 'therubyracer'  , '0.11.4'

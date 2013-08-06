@@ -1,0 +1,39 @@
+
+body,html{
+    height:100%;
+    background-color: #fafafa;
+    background-image: url("/assets/bg/awesome_berlin_night.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.l_lp_first_page{
+  height: 100%;
+  position:relative;
+  min-height: 400px;
+}
+
+.l_bottom_down {
+  position: absolute;
+  bottom: 80px;
+}
+
+.l_lp_well_margin{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.l_lp_first_content{
+  width: 100%;
+  position:absolute; top:20%;
+}
+
+.l_lp_next_link{
+  text-align: center;
+  width: 100%;
+}
