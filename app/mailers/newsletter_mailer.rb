@@ -6,7 +6,7 @@ class NewsletterMailer < ActionMailer::Base
     @user = user
     mail(
       :to => @user.email,
-      :subject => "New Features - VersionEye launches language pages",
+      :subject => "New Features - Testimonials and Lottery",
       :tag => "newsletter"
       )
   end

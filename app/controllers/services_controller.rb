@@ -30,7 +30,6 @@ class ServicesController < ApplicationController
     else
       flash[:error] = "Ups. An error occured. Something is wrong with your file."
     end
-    @project_id = project.id
     redirect_to service_path( project.id )
   rescue => e
     logger.error "ERROR Message:   #{e.message}"
