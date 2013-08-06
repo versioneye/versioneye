@@ -138,6 +138,8 @@ class User
   end
 
   def self.activate!(verification)
+    return false if verification.nil?
+
     user = User.where(verification: verification)[0]
     if user
       user.verification = nil

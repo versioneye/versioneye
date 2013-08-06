@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	</head>
+	<body>
+		<p>Hello, <%= @fullname %>.</p>
+    <p>
+        Thank you for your request. I sent this e-mail as confirmation that you're
+        now signed up to VersionEye lottery and VersionEye's team will contact you
+        when you'll turn out to be the one of the luckiest.
+    </p>
+    <p>
+      Your ticket with id <%= @ticket[:_id].to_s %> had selection:
+      <%= @ticket[:selection].join(', ') %>
+    </p>
+
+		<p>
+      Regards, <br />
+      VersionEye's Fortuna
+      <a href="http://www.versioneye.com">http://www.versioneye.com</a><br />
+		</p>
+	</body>
+</html>
