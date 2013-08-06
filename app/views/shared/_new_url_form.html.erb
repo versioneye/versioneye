@@ -15,7 +15,7 @@
       <%= label_tag :message, nil, :class => "control-label" %>
       <div class = "controls">
         <%= text_area_tag :message, nil, :size => "29x4", :class => "span5",
-            :maxlength => "255", 
+            :maxlength => "255",
             :onKeyUp => "textCounter(this, document.getElementById('new_url_counter'), 255)" %>
           <br />
           <span id="new_url_counter" class="help-block label-danger">max:255</span>
@@ -39,5 +39,9 @@
   </div>
 
   <%= render "shared/login_options_horizontal" %>
+
+  <div style = "padding: 15px 30px;">
+    Or <a href="/signup">sign up</a> with your <a href="/signup">email address</a>.
+  </div>
 
 <% end %>

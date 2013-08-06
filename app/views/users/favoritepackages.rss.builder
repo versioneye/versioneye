@@ -15,6 +15,7 @@ xml.rss :version => "2.0" do
     @notifications ||= []
     @notifications.each do |notification|
       product          = notification.product
+      next if product.nil?
       safe_prod_key    = Product.encode_prod_key product.prod_key
       version_id       = notification.version_id
       safe_version_key = Product.encode_prod_key version_id

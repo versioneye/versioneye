@@ -1,48 +1,49 @@
 <% title "File Upload" %>
 
 <% if @project %>
-<div>
-  <div class="tab-pane active" style="display: inline-block; width: 530px; margin-left: 174px;">
-    <div style="font-size: 16px; margin-bottom: 20px;">
-      <%= pluralize(@project.dep_number, "Dependency") %>,
-      <span style="color: <%= outdated_color(@project)%>; font-weight: bold;" ><%= @project.out_number %> Outdated</span>,
-      <span style="color: <%= unknown_color(@project)%>; font-weight: bold;" ><%= @project.unknown_number %> Unknown</span>
-    </div>
-    <div class="dependencies" id="dependencies" >
-      <% if @project.dependencies && @project.dependencies.size > 0 %>
 
-        <table class="dependency_table" style="width: 570px;">
-          <thead>
-            <tr>
-              <th class="icon_col" ></th>
-              <th class="version_col">Current</th>
-              <th class="version_col">Locked</th>
-              <th class="name_col_after_icon"></th>
-            </tr>
-          </thead>
+  <div>
+    <div class="tab-pane active" style="display: inline-block; width: 530px; margin-left: 174px;">
+      <div style="font-size: 16px; margin-bottom: 20px;">
+        <span style="color: <%= outdated_color(@project)%>; font-weight: bold;" ><%= @project.out_number %></span> of
+        <%= pluralize(@project.dep_number, "Dependency") %>  dependencies are outdated and
+        <span style="color: <%= unknown_color(@project)%>; font-weight: bold;" ><%= @project.unknown_number %></span> are unknown.
+      </div>
+      <div class="dependencies" id="dependencies" >
+        <% if @project.dependencies && @project.dependencies.size > 0 %>
 
-          <% @project.dependencies.each do |dep| %>
-            <% product = dep.find_or_init_product %>
-            <% dep.outdated? %>
+          <table class="dependency_table" style="width: 570px;">
+            <thead>
+              <tr>
+                <th class="icon_col" ></th>
+                <th class="version_col">Current</th>
+                <th class="version_col">Locked</th>
+                <th class="name_col_after_icon"></th>
+              </tr>
+            </thead>
 
-            <% if dep.unknown? %>
-              <%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
-            <% elsif dep.outdated and dep.release != false  %>
-              <%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
-            <% elsif dep.outdated and dep.release == false %>
-              <%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep} %>
-            <% else %>
-              <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
+            <% @project.dependencies.sort { |a, b| b.outdated.to_s <=> a.outdated.to_s }.each do |dep| %>
+              <% product = dep.find_or_init_product %>
+              <% dep.outdated? %>
+
+              <% if dep.unknown? %>
+                <%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
+              <% elsif dep.outdated and dep.release != false  %>
+                <%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
+              <% elsif dep.outdated and dep.release == false %>
+                <%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep} %>
+              <% else %>
+                <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
+              <% end %>
+
             <% end %>
 
-          <% end %>
+          </table>
 
-        </table>
-
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
 
   <% if !@project.project_type.eql?( Project::A_TYPE_PIP ) %>
     <div id="canvas-demo-container" style="display: inline-block;"></div>
@@ -96,17 +97,24 @@
            data-count="horizontal" >Twitter</a>
            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
       </li>
-      <li class="list-cell share-on-icon">
-        <iframe src="https://www.facebook.com/plugins/like.php?href=<%=Settings.server_url%>/services/<%=@project_id%>&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=25" style="border:none; width:100px; height:25px" ></iframe>
-      </li>
       <li class="list-cell share-on-icon" >
         <div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="<%= Settings.server_url %>/services/<%= @project_id %>" style="width: 90px;"></div>
       </li>
     </ul>
   </div>
 
-  <div style="text-align: center; padding-top: 30px;">
-    <%= render 'services/subscription' %>
+  <hr/>
+
+  <div style="padding-top: 30px;">
+    <div class="marketing" >
+      <h2 class="casual">Be smart and automate</h2>
+      <p>VersionEye can monitor your project on GitHub and notify you about out-dated dependencies.</p>
+      <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd'  >
+        <span class="btn btn-large btn-primary">Login with GitHub</span>
+      </a>
+    </div>
+
   </div>
+
 
 <% end %>
