@@ -28,6 +28,11 @@ class LotteriesController < ApplicationController
   end
 
   def libraries
+    if Lottery.by_user(current_user).count > 0
+      flash[:success] = "You already have a ticket."
+      redirect_to thankyou_lottery_path and return
+    end
+
     @products = Product.all.desc(:followers).limit(12)
     render template: "/lotteries/libraries"
   end
