@@ -113,15 +113,14 @@ class LanguageDailyStats
 
   def self.update_counts
     ndays = self.metric_not_updated_in_days('new_version')
-    latest_products = Product.where(:created_at.gte => ndays.ago.at_midnight)
     ndays.times do |n|
       Rails.logger.debug("Counting language_daily_stats: #{n + 1} / #{ndays}")
       p "Counting language_daily_stats: #{n + 1}/#{ndays}"
-      self.update_count_for_one_day( n, latest_products )
+      self.update_count_for_one_day( n )
     end
   end
 
-  def self.update_count_for_one_day( n, latest_products )
+  def self.update_count_for_one_day( n )
     that_day = n.days.ago.at_beginning_of_day
     that_day_stats = self.get_language_stats(that_day)
     if that_day == Date.today
@@ -131,15 +130,13 @@ class LanguageDailyStats
     end
     that_day_releases = Newest.since_to(n.days.ago.at_midnight, (n-1).days.ago.at_midnight)
     return if that_day_releases.nil?
-    self.process_day_releases( that_day_releases, that_day_stats, latest_products )
+    self.process_day_releases( that_day_releases, that_day_stats )
   end
 
-  def self.process_day_releases( that_day_releases, that_day_stats, latest_products )
+  def self.process_day_releases( that_day_releases, that_day_stats )
     that_day_releases.each do |row|
-      prod_info = latest_products.where(language: row[:language], prod_key: row[:prod_key]).asc(:created_at).first
-
-      is_released_on_same_day = self.fetch_released_on_day( prod_info )
-
+      prod_info = Product.where(language: row[:language], prod_key: row[:prod_key]).asc(:created_at).first
+      is_released_on_same_day = self.fetch_released_on_day( row, prod_info )
       if that_day_stats.has_key?(row[:language])
         self.update_row( row, that_day_stats, is_released_on_same_day )
       end
@@ -160,9 +157,9 @@ class LanguageDailyStats
     p msg
   end
 
-  def self.fetch_released_on_day( prod_info )
-    return (prod_info[:created_at].at_midnight ==  row[:created_at].at_midnight) if prod_info
-    return false if prod_info.nil?
+  def self.fetch_released_on_day( row, prod_info )
+    return (prod_info[:created_at].at_midnight == row[:created_at].at_midnight) if prod_info
+    return false
   end
 
   #-- query helpers
