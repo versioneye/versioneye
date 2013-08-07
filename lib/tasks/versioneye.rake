@@ -30,9 +30,11 @@ namespace :versioneye do
     ProjectService.update_all( Project::A_PERIOD_DAILY )
     puts "STOP to send out daily project notification E-Mails."
 
-    puts "START to NewestDailyCount.update_counts"
-    NewestDailyCount.update_counts
-    puts "STOP to NewestDailyCount.update_counts"
+    puts "START to LanguageDailyStats.update_counts"
+    LanguageDailyStats.update_counts
+    puts "STOP to LanguageDailyStats.update_counts"
+
+
   end
 
   desc "excute weekly jobs"
