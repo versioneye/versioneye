@@ -115,7 +115,8 @@ class LanguageDailyStats
     ndays = self.metric_not_updated_in_days('new_version')
     latest_products = Product.where(:created_at.gte => ndays.ago.at_midnight)
     ndays.times do |n|
-      Rails.logger.debug("Counting language_daily_stats: #{n + 1}/#{ndays}")
+      Rails.logger.debug("Counting language_daily_stats: #{n + 1} / #{ndays}")
+      p "Counting language_daily_stats: #{n + 1}/#{ndays}"
       self.update_count_for_one_day( n, latest_products )
     end
   end
@@ -182,35 +183,35 @@ class LanguageDailyStats
 
   def self.today_stats
     dt_since = Date.today.at_midnight
-    dt_to = DateTime.now
-    rows = self.since_to(dt_since, dt_to)
+    dt_to    = DateTime.now
+    rows     = self.since_to(dt_since, dt_to)
     self.group_by_language(rows)
  end
 
   def self.yesterday_stats
     dt_since = 1.day.ago.at_midnight
-    dt_to = Date.today.at_midnight
-    rows = self.since_to(dt_since, dt_to)
+    dt_to    = Date.today.at_midnight
+    rows     = self.since_to(dt_since, dt_to)
     self.group_by_language(rows)
  end
   def self.current_week_stats
     dt_since = Date.today.at_beginning_of_week
-    dt_to = DateTime.now
-    rows = self.since_to(dt_since, dt_to)
+    dt_to    = DateTime.now
+    rows     = self.since_to(dt_since, dt_to)
     self.group_by_language(rows)
   end
 
   def self.last_week_stats
-    dt_monday = Date.today.at_beginning_of_week
+    dt_monday      = Date.today.at_beginning_of_week
     dt_prev_monday = dt_monday - 7
-    rows = self.since_to(dt_prev_monday, dt_monday)
+    rows           = self.since_to(dt_prev_monday, dt_monday)
     self.group_by_language(rows)
   end
 
   def self.current_month_stats
     dt_since = Date.today.at_beginning_of_month
-    dt_to = DateTime.now
-    rows = self.since_to(dt_since, dt_to)
+    dt_to    = DateTime.now
+    rows     = self.since_to(dt_since, dt_to)
     self.group_by_language(rows)
   end
 
@@ -220,14 +221,14 @@ class LanguageDailyStats
 
   def self.last_month_stats
     month_ago = Date.today << 1
-    rows = self.since_to(month_ago.at_beginning_of_month, Date.today.at_beginning_of_month)
+    rows      = self.since_to(month_ago.at_beginning_of_month, Date.today.at_beginning_of_month)
     self.group_by_language(rows)
   end
 
   def self.two_months_ago_stats
-    month_ago = Date.today << 1
+    month_ago      = Date.today << 1
     two_months_ago = Date.today << 2
-    rows = self.since_to(two_months_ago.at_beginning_of_month, month_ago.at_beginning_of_month)
+    rows           = self.since_to(two_months_ago.at_beginning_of_month, month_ago.at_beginning_of_month)
     self.group_by_language(rows)
   end
 
