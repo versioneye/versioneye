@@ -873,6 +873,20 @@ h2 + .row {
   }
 }
 
+#top-products-container.media,
+#latest-products-container.media {
+    & .media-body {
+      border-top: 1px solid #f3f3f3;
+      padding: 5px 0px;
+      margin: 0px;
+      font-size: 0.85em;
+
+        &:hover {
+          background-color: #fafafa;
+        };
+    }
+}
+
 .repo-container {
   border-bottom: 1px solid #f3f3f3;
   padding: 10px 0px;
