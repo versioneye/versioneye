@@ -1,11 +1,6 @@
 kill -s USR2 12113
 
-<div class="container" style="width: 100%; height: 100%; margin: auto; display: block; position: relative">
-  <div id="headline_1" class="jumbotron" style="text-align: center;">
-    <h1><span style ="">Continuous Updating</span></h1>
-    <p style="font-weigth: none; line-height: 1.5;">Follow your libraries and get notified about new versions</p>
-  </div>
-</div>
+https://github.com/libgit2/rugged
 
 /usr/bin/unicorn -D -E production -c /var/www/versioneye/releases/current/unicorn.conf.rb
 
