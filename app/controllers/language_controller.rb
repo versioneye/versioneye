@@ -16,6 +16,7 @@ class LanguageController < ApplicationController
     @latest_products = Newest.by_language(@lang).desc(:created_at).limit(10)
     @followers = []
     @languages = @@languages
+    @language = Language.where(name: @lang).first
 
     #build sample population of followers
     population = []

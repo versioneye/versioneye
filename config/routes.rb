@@ -128,9 +128,8 @@ Versioneye::Application.routes.draw do
   get   '/hotnews',            :to => 'news#hotnews'
 
   namespace :admin do
-    resources :language do
-      #get '/', :to => "language#index"
-    end
+    
+    resources :language
     resources :submitted_urls do
       post '/approve',            :to => 'submitted_urls#approve'
       post '/decline',            :to => 'submitted_urls#decline'
