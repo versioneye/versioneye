@@ -21,7 +21,7 @@ worker_processes 4
 
 # Help ensure your application will always spawn in the symlinked
 # "current" directory that Capistrano sets up.
-working_directory "/var/www/versioneye/releases/current" # available in 0.94.0+
+working_directory "/var/www/versioneye/current" # available in 0.94.0+
 
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
@@ -32,7 +32,7 @@ listen 8080, :tcp_nopush => true
 timeout 60
 
 # feel free to point this anywhere accessible on the filesystem
-pid "/var/www/versioneye/releases/current/pids/unicorn.pid"
+pid "/var/www/versioneye/current/pids/unicorn.pid"
 
 # By default, the Unicorn logger will write to stderr.
 # Additionally, ome applications/frameworks log to stderr or stdout,
@@ -69,7 +69,9 @@ before_fork do |server, worker|
   # # thundering herd (especially in the "preload_app false" case)
   # # when doing a transparent upgrade.  The last worker spawned
   # # will then kill off the old master process with a SIGQUIT.
-  old_pid = RAILS_ROOT + '/pids/unicorn.pid.oldbin'
+  # Check out http://codelevy.com/2010/02/09/getting-started-with-unicorn
+  #
+  old_pid = Rails.root + '/pids/unicorn.pid.oldbin'
   if File.exists?(old_pid) && server.pid != old_pid
     begin
       sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU
@@ -77,7 +79,7 @@ before_fork do |server, worker|
     rescue Errno::ENOENT, Errno::ESRCH
     end
   end
-  #
+
   # Throttle the master from forking too quickly by sleeping.  Due
   # to the implementation of standard Unix signal handlers, this
   # helps (but does not completely) prevent identical, repeated signals

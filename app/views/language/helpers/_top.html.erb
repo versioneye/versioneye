@@ -5,7 +5,8 @@
   <% @top_products.each do |prod| %>
     <div class = "media-body product-item">
       <h5 class = "media-heading">
-        <%= count %> <a href = "<%= products_path(key: prod.to_param) %>"><%= prod.name %></a>
+        <%= count %>. <a href = "<%= products_path(key: prod.to_param) %>"><%= prod.name %></a>
+        <span class = "pull-right"><%= render partial: "shared/product_follow_mini", locals: {product: prod, user: current_user} %></span>
       </h5>
       <p> <%= prod.short_summary %> </p>
     </div>

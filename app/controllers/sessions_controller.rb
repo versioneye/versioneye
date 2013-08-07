@@ -6,18 +6,22 @@ class SessionsController < ApplicationController
   end
 
   def create
+    redirect_url = params[:redirect_url]
+
     user = User.authenticate(params[:session][:email],
                              params[:session][:password])
     if user.nil?
       flash[:error] = "Invalid email/password combination."
       @title = "Sign in"
-      redirect_to "/signin"
+      redirect_to :back and return
     elsif !user.activated?
       flash[:error] = "Your Account is not active. Please validate your E-Mail address by clicking the verification link in the verification E-Mail."
-      redirect_to "/signin"
+      redirect_to :back and return
     else
       sign_in user
-      if user.projects.empty?
+      if redirect_url
+        redirect_to  redirect_url
+      elsif user.projects.empty?
         redirect_back_or( new_user_project_path )
       else
         redirect_back_or( user_projects_path )

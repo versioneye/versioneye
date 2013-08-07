@@ -23,6 +23,7 @@ Versioneye::Application.routes.draw do
   get    '/signin',                :to => 'sessions#new'
   get    '/signout',               :to => 'sessions#destroy'
 
+  post '/users/mobile',            :to => 'users#create_mobile'
   resources :users, :key => :username do
     member do
       get 'favoritepackages'
@@ -30,6 +31,7 @@ Versioneye::Application.routes.draw do
       get 'users_location'
     end
   end
+
   get   '/created', :to => 'users#created'
   get   '/signup',                       :to => 'users#new'
   get   '/users/activate/:verification', :to => 'users#activate'
@@ -37,6 +39,14 @@ Versioneye::Application.routes.draw do
   post  '/resetpassword',                :to => 'users#resetpassword'
   get   '/updatepassword/:verification', :to => 'users#show_update_password'
   post  '/updatepassword',               :to => 'users#update_password'
+
+  resource :lottery do
+    get  '/verify',    :to => "lotteries#show_verification"
+    get  '/signin',    :to => "lotteries#show_signin"
+    get  '/libraries', :to => "lotteries#libraries"
+    post '/follow',    :to => "lotteries#follow"
+    get  '/thankyou',  :to => "lotteries#thankyou"
+  end
 
   namespace :settings do
 
@@ -121,6 +131,10 @@ Versioneye::Application.routes.draw do
     resources :submitted_urls do
       post '/approve',            :to => 'submitted_urls#approve'
       post '/decline',            :to => 'submitted_urls#decline'
+    end
+    resource :testimonials do
+      put '/approve', :to => 'testimonials#approve'
+      put '/decline', :to => 'testimonials#decline'
     end
     resources :error_messages
     resources :crawles
