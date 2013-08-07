@@ -16,14 +16,15 @@
 <% end %>
 
   <%= csrf_meta_tag %>
-  <%= stylesheet_link_tag "application" %>
 
   <% if current_page?( root_path )  %>
 
+    <%= stylesheet_link_tag "application_lp" %>
     <%= javascript_include_tag "application_lp",            :defer => false, :async => false %>
 
   <% else %>
 
+    <%= stylesheet_link_tag "application" %>
     <%= javascript_include_tag "application",               :defer => false, :async => false %>
 
     <% if @product || @project %>

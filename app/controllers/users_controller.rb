@@ -22,34 +22,62 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    if !User.email_valid?(@user.email)
-      flash.now[:error] = t(:page_signup_error_email)
-      render 'new'
-    elsif @user.fullname.nil? || @user.fullname.empty?
-      flash.now[:error] = t(:page_signup_error_fullname)
-      render 'new'
-    elsif @user.password.nil? || @user.password.empty? || @user.password.size < 5
-      flash.now[:error] = t(:page_signup_error_password)
-      render 'new'
-    elsif @user.terms != true
-      flash.now[:error] = t(:page_signup_error_terms)
-      render 'new'
+    if Set["1", "on", "true"].include? params[:user][:terms]
+      @user[:terms] = true
     else
-      @user = User.new(params[:user])
-      @user.datenerhebung = true
+      @user[:terms] = false
+    end
+
+    @user[:datenerhebung] = @user[:terms]
+
+    if UserService.valid_user?(@user, flash, t)
       @user.create_username
       @user.create_verification
+
       refer_name = cookies.signed[:veye_refer]
       check_refer( refer_name, @user )
+
       if @user.save
         @user.send_verification_email
         User.new_user_email(@user)
       else
-        flash.now[:error] = t(:general_error)
-        render 'new'
+        flash[:error] = "#{t(:general_error)} - #{@user.errors.full_messages.to_sentence}"
+        redirect_to :back and return
       end
+    else
+      flash[:error] = t(flash[:error])
+      redirect_to :back and return
     end
   end
+
+  def create_mobile
+    @user = User.new(params[:user])
+    if Set["1", "on", "true"].include? params[:user][:terms]
+      @user[:terms] = true
+    else
+      @user[:terms] = false
+    end
+
+    @user[:datenerhebung] = @user[:terms]
+
+    if UserService.valid_user?(@user, flash, t)
+      @user.create_username
+      @user.create_verification
+      if @user.save
+        @user.send_verification_email
+        User.new_user_email(@user)
+        sign_in @user
+        redirect_to "/lottery/libraries"
+      else
+        flash[:error] = "#{t(:general_error)} - #{@user.errors.full_messages.to_sentence}"
+        redirect_to :back and return
+      end
+    else
+      flash[:error] = t(flash[:error])
+      redirect_to :back and return
+    end
+  end
+
 
   def show
     @user = User.find_by_username(params[:id])

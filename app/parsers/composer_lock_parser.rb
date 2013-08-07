@@ -17,7 +17,7 @@ class ComposerLockParser < ComposerParser
     dependency.name = package["name"]
     dependency.language = Product::A_LANGUAGE_PHP
 
-    product = Product.fetch_product Product::A_LANGUAGE_PHP, "#{@@group_id}/#{dependency.name}"
+    product = Product.fetch_product Product::A_LANGUAGE_PHP, dependency.name
     dependency.prod_key = product.prod_key if product
 
     version = self.fetch_package_version( package )
