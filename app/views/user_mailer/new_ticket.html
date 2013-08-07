@@ -56,9 +56,8 @@
       if you should win.
     </p>
     <p>
-      Here's your ticket id <%= @ticket[:_id].to_s %> and those are the libraries you're following now:
-      <%= @ticket[:selection].join(', ') %>
-      <% @ticket.selection.each do |prod_key| %>
+      Here's your ticket id <%= @ticket[:_id].to_s %> and those are the libraries you're following now:<br/>
+      <% @ticket[:selection].each do |prod_key| %>
         <% prod_key = Product.decode_prod_key(prod_key) %>
         <% product  = Product.find_by_key(prod_key) %>
         <% product_url    = "http://www.versioneye.com/#{product.language_esc}/#{product.to_param}" %>
