@@ -41,11 +41,11 @@ Versioneye::Application.routes.draw do
   post  '/updatepassword',               :to => 'users#update_password'
 
   resource :lottery do
-    get '/verify',    :to => "lotteries#show_verification"
-    get '/signin',   :to => "lotteries#show_signin"
-    get '/lucky',     :to => "lotteries#show_lottery"
-    post '/lucky',    :to => "lotteries#new_lottery"
-    get '/thankyou',  :to => "lotteries#show_thankyou"
+    get  '/verify',    :to => "lotteries#show_verification"
+    get  '/signin',    :to => "lotteries#show_signin"
+    get  '/libraries', :to => "lotteries#libraries"
+    post '/follow',    :to => "lotteries#follow"
+    get  '/thankyou',  :to => "lotteries#thankyou"
   end
 
   namespace :settings do

@@ -63,12 +63,11 @@ class UsersController < ApplicationController
     if UserService.valid_user?(@user, flash, t)
       @user.create_username
       @user.create_verification
-
       if @user.save
         @user.send_verification_email
         User.new_user_email(@user)
         sign_in @user
-        redirect_to "/lottery/lucky"
+        redirect_to "/lottery/libraries"
       else
         flash[:error] = "#{t(:general_error)} - #{@user.errors.full_messages.to_sentence}"
         redirect_to :back and return
