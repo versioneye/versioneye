@@ -115,28 +115,25 @@ class LanguageDailyStats
     ndays = self.metric_not_updated_in_days('new_version')
     latest_products = Product.where(:created_at.gte => ndays.ago.at_midnight)
     ndays.times do |n|
-      self.process_something
+      Rails.logger.debug("Counting language_daily_stats: #{n + 1}/#{ndays}")
+      self.update_count_for_one_day( n, latest_products )
     end
   end
 
   def self.update_count_for_one_day( n, latest_products )
-    Rails.logger.debug("Counting language_daily_stats: #{n + 1}/#{ndays}")
     that_day = n.days.ago.at_beginning_of_day
-
     that_day_stats = self.get_language_stats(that_day)
     if that_day == Date.today
       #clean previous countings for today to prevent double counting
       that_day_stats = self.reset_day_stat_metrics(that_day_stats, 'new_version')
       that_day_stats = self.reset_day_stat_metrics(that_day_stats, 'novel_package')
     end
-
     that_day_releases = Newest.since_to(n.days.ago.at_midnight, (n-1).days.ago.at_midnight)
-    next if that_day_releases.nil?
-
-    self.process_day_releases( that_day_releases, that_day_stats )
+    return if that_day_releases.nil?
+    self.process_day_releases( that_day_releases, that_day_stats, latest_products )
   end
 
-  def self.process_day_releases( that_day_releases, that_day_stats )
+  def self.process_day_releases( that_day_releases, that_day_stats, latest_products )
     that_day_releases.each do |row|
       prod_info = latest_products.where(language: row[:language], prod_key: row[:prod_key]).asc(:created_at).first
 
