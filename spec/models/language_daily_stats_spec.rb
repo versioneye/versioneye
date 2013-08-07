@@ -173,7 +173,7 @@ describe LanguageDailyStats do
     end
 
     it "should return correct stats for current week" do
-      stats =  LanguageDailyStats.last_week_stats
+      stats = LanguageDailyStats.last_week_stats
 
       stats.should_not be_nil
       stats.empty?.should be_false
@@ -192,6 +192,7 @@ describe LanguageDailyStats do
     end
 
     it "should return correct stats for current week" do
+      p "#{Newest.all.count} / #{Newest.count}"
       stats =  LanguageDailyStats.current_month_stats
 
       stats.should_not be_nil
