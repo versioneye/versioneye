@@ -185,9 +185,16 @@ describe LanguageDailyStats do
 
   describe "current_month_stats" do
     before :each do
+      @total_counts = 13
       today_ruby_products.first.save
-      yesterday_ruby_products.first.save
-      lastweek_ruby_products.first.save
+      if Date.today.day > 1
+        yesterday_ruby_products.first.save
+        @total_counts += 17
+      end
+      if Date.today.day > 7
+        lastweek_ruby_products.first.save
+        @total_counts += 19
+      end
       LanguageDailyStats.update_counts
     end
 
@@ -199,7 +206,7 @@ describe LanguageDailyStats do
       stats.empty?.should be_false
       stats.has_key?("Ruby").should be_true
       stats["Ruby"].has_key?("new_version")
-      stats["Ruby"]["new_version"].should eq(13 + 17 + 19)
+      stats["Ruby"]["new_version"].should eq(@total_counts)
     end
   end
 
