@@ -2,32 +2,32 @@ require 'spec_helper'
 
 describe LanguageDailyStats do
   let(:today_ruby_products){
-    FactoryGirl.create_list(:newest, 13, 
+    FactoryGirl.create_list(:newest, 13,
                              name: FactoryGirl.generate(:product_name_generator),
                              language: "Ruby",
                              version: FactoryGirl.generate(:version_generator),
                              created_at: Date.today.at_midnight)}
-  
+
   let(:yesterday_ruby_products){
-    FactoryGirl.create_list(:newest, 17, 
+    FactoryGirl.create_list(:newest, 17,
                              name: FactoryGirl.generate(:product_name_generator),
                              version: FactoryGirl.generate(:version_generator),
                              created_at: 1.days.ago.at_midnight)}
-  
+
   let(:lastweek_ruby_products){
-    FactoryGirl.create_list(:newest, 19, 
+    FactoryGirl.create_list(:newest, 19,
                              name: FactoryGirl.generate(:product_name_generator),
                              version: FactoryGirl.generate(:version_generator),
                              created_at: 7.days.ago.at_midnight)}
 
   let(:lastmonth_ruby_products){
-    FactoryGirl.create_list(:newest, 23, 
+    FactoryGirl.create_list(:newest, 23,
                              name: FactoryGirl.generate(:product_name_generator),
                              version: FactoryGirl.generate(:version_generator),
                              created_at: (Date.today << 1).at_midnight)}
-  
+
   let(:twomonth_ruby_products){
-    FactoryGirl.create_list(:newest, 29, 
+    FactoryGirl.create_list(:newest, 29,
                              name: FactoryGirl.generate(:product_name_generator),
                              version: FactoryGirl.generate(:version_generator),
                              created_at: (Date.today << 2).at_midnight)}
@@ -42,7 +42,7 @@ describe LanguageDailyStats do
     end
 
     it "should return 0 when newest collection is empty and there's no daily_counts" do
-       LanguageDailyStats.metric_not_updated_in_days('new_version').should == 0   
+       LanguageDailyStats.metric_not_updated_in_days('new_version').should == 0
     end
 
     it "should return 1 when last updat was today" do
@@ -139,7 +139,7 @@ describe LanguageDailyStats do
 
     it "should return all ruby project" do
       stats = LanguageDailyStats.yesterday_stats
-      
+
       stats.should_not be_nil
       stats.count.should > 0
       stats.has_key?("Ruby").should be_true
@@ -147,7 +147,7 @@ describe LanguageDailyStats do
       stats["Ruby"]["new_version"].should eq(17)
     end
   end
-  
+
   describe "current_week_stats" do
     before :each do
       today_ruby_products.first.save
@@ -157,7 +157,7 @@ describe LanguageDailyStats do
 
     it "should return correct stats for current week" do
       stats =  LanguageDailyStats.current_week_stats
-      
+
       stats.should_not be_nil
       stats.empty?.should be_false
       stats.has_key?("Ruby").should be_true
@@ -165,7 +165,7 @@ describe LanguageDailyStats do
       stats["Ruby"]["new_version"].should eq(30)
     end
   end
-  
+
   describe "last_week_stats" do
     before :each do
       lastweek_ruby_products.first.save
@@ -174,7 +174,7 @@ describe LanguageDailyStats do
 
     it "should return correct stats for current week" do
       stats =  LanguageDailyStats.last_week_stats
-      
+
       stats.should_not be_nil
       stats.empty?.should be_false
       stats.has_key?("Ruby").should be_true
@@ -182,7 +182,7 @@ describe LanguageDailyStats do
       stats["Ruby"]["new_version"].should eq(19)
     end
   end
- 
+
   describe "current_month_stats" do
     before :each do
       today_ruby_products.first.save
@@ -193,7 +193,7 @@ describe LanguageDailyStats do
 
     it "should return correct stats for current week" do
       stats =  LanguageDailyStats.current_month_stats
-      
+
       stats.should_not be_nil
       stats.empty?.should be_false
       stats.has_key?("Ruby").should be_true
@@ -210,7 +210,7 @@ describe LanguageDailyStats do
 
     it "should return correct stats for current week" do
       stats =  LanguageDailyStats.last_month_stats
-      
+
       stats.should_not be_nil
       stats.empty?.should be_false
       stats.has_key?("Ruby").should be_true
@@ -227,7 +227,7 @@ describe LanguageDailyStats do
 
     it "should return correct stats for current week" do
       stats =  LanguageDailyStats.two_months_ago_stats
-      
+
       stats.should_not be_nil
       stats.empty?.should be_false
       stats.has_key?("Ruby").should be_true
