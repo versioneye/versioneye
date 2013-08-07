@@ -62,7 +62,7 @@
         <% product  = Product.find_by_key(prod_key) %>
         <% product_url    = "http://www.versioneye.com/#{product.language_esc}/#{product.to_param}" %>
         <% product_title  = "#{product.name}".strip %>
-        <a href="<%= product_url %>"><%= product_title %></a><br/>
+        * <a href="<%= product_url %>"><%= product_title %></a><br/>
       <% end %>
     </p>
 
