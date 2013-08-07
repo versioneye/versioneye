@@ -1,3 +1,9 @@
+<div>
+  <div class = "btn-group">
+    <a class = "btn btn-primary" href = "<%= new_admin_language_path %>"><i class="icon-file-alt"></i>&nbsp;Add new language</a>
+    <a class = "btn btn-primary" href = ""><i class="icon-upload-alt"></i>&nbsp;Import from JSON</a>
+  </div>
+</div>
 <div class = "row-fluid">
   <%= render partial: "language/helpers/language_block", collection: @languages %>
 </div>
