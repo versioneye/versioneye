@@ -115,7 +115,6 @@ class LanguageDailyStats
     ndays = self.metric_not_updated_in_days('new_version')
     ndays.times do |n|
       Rails.logger.debug("Counting language_daily_stats: #{n + 1} / #{ndays}")
-      p "Counting language_daily_stats: #{n + 1}/#{ndays}"
       self.update_count_for_one_day( n )
     end
   end

@@ -3,18 +3,18 @@ require 'spec_helper'
 describe "Getting data from github_repos_controller" do
   let(:user) {create(:user, username: "pupujuku", fullname: "Pupu Juku", email: "juku@pupu.com")}
 
-  let(:repo1) {create(:github_repo, user_id: user.id.to_s, github_id: 1, fullname: "spec/repo1", 
+  let(:repo1) {create(:github_repo, user_id: user.id.to_s, github_id: 1, fullname: "spec/repo1",
                       user_login: "a", owner_login: "versioneye", owner_type: "user")}
-  let(:repo2) {create(:github_repo, user_id: user.id.to_s, github_id: 2, fullname: "spec/repo2", 
+  let(:repo2) {create(:github_repo, user_id: user.id.to_s, github_id: 2, fullname: "spec/repo2",
                       user_login: "a", owner_login: "versioneye", owner_type: "user")}
 
   before :each do
     GithubRepo.delete_all
-    
+
     get signin_path, nil, "HTTPS" => "on"
     post sessions_path, {session: {email: user.email, password: "12345"}}, "HTTPS" => "on"
     assert_response 302
-    response.should redirect_to(new_user_project_path)
+    response.should redirect_to( user_packages_i_follow_path )
 
     repo1.save
     repo2.save
@@ -28,21 +28,21 @@ describe "Getting data from github_repos_controller" do
   describe "getting list of repos" do
     it "should return list of repos when repos are already cached" do
       user.github_repos.all.count.should > 0 #factory should fill GithubRepo
-      
+
       get user_github_repos_path
       response.status.should eql(200)
 
       response_data = JSON.parse response.body
       response_data.has_key?('repos').should be_true
       response_data['repos'].count.should eq(user.github_repos.count)
-      
+
       resp_repo1, resp_repo2 = response_data['repos']
 
       resp_repo1['fullname'].should eq(repo1['fullname'])
       resp_repo1['user_id'].should eq(user.id.to_s)
- 
+
       resp_repo2['fullname'].should eq(repo2['fullname'])
-      resp_repo2['user_id'].should eq(user.id.to_s) 
+      resp_repo2['user_id'].should eq(user.id.to_s)
     end
   end
 
@@ -73,7 +73,7 @@ describe "Getting data from github_repos_controller" do
       FakeWeb.register_uri(:get, %r|https://api\.github\.com/user/orgs*|, :body => [].to_json)
     end
 
-    it "should fill cache of repos and then return list of repos" do      
+    it "should fill cache of repos and then return list of repos" do
       get user_github_repos_path
       response.status.should eql(200)
 
@@ -82,7 +82,7 @@ describe "Getting data from github_repos_controller" do
       user.github_repos.all.count.should > 0 #caching should fill GithubRepo
       response_data.has_key?('repos').should be_true
       response_data['repos'].count.should eql(user.github_repos.count)
-      
+
       resp_repo1 = response_data['repos'].first
 
       resp_repo1['fullname'].should eq("octocat/Hello-World")
