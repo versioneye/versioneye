@@ -27,7 +27,7 @@
             <%= form_tag("/package/follow", :remote => true) do  %>
               <input  name="product_key"  type="hidden" value="<%= product.to_param %>" />
               <input  name="product_lang" type="hidden" value="<%= product.language %>"/>
-              <button type="submit" class="btn btn-success btn-medium" >Follow</button>
+              <button id="button_<%= product.prod_key %>" type="submit" class="btn btn-success btn-medium" >Follow</button>
             <% end %>
           </div>
 
