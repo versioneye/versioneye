@@ -5,13 +5,15 @@ https://github.com/libgit2/rugged
 /usr/bin/unicorn -D -E production -c /var/www/versioneye/releases/current/unicorn.conf.rb
 
 
-rspec ./spec/features/computer_language_filter_spec.rb:23 # Computer Language Filter the computer language filter uses the language filter without errors
-rspec ./spec/features/lottery_authorization_spec.rb:7 # lottery authorization login with existing user credentials should login with correct credentials and redirect to lottery page
-rspec ./spec/features/lottery_authorization_spec.rb:23 # lottery authorization signup as new user should signup with user data and redirect to lottery page
-rspec ./spec/requests/registraiton_activation_login_spec.rb:21 # registration no user don't sign_up because something is missing
-rspec ./spec/requests/registraiton_activation_login_spec.rb:30 # registration no user don't sign_up because email is not valid
-rspec ./spec/requests/registraiton_activation_login_spec.rb:45 # registration with user login not successfully, because not activated
-rspec ./spec/requests/registraiton_activation_login_spec.rb:76 # registration with user login not successfully, because password is wrong
+Failure/Error: post "/sessions", {:session => {:email => "test@test.de", :password => "test123asfgas"}}, "HTTPS" => "on"
+     ActionController::RedirectBackError:
+       No HTTP_REFERER was set in the request to this action, so redirect_to :back could not be called successfully. If this is a test, make sure to specify request.env["HTTP_REFERER"].
+
+
+
+
+- BlogPost about why we removed Facebook login
+-
 
 
 
