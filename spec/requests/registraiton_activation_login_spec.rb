@@ -23,7 +23,8 @@ describe "registration" do
       assert_response :success
 
       post "/users", {:user => {:fullname => "test123", :email => "test_bad@test.de", :password => "test123", :terms => "0", :datenerhebung => "0"}}, "HTTPS" => "on"
-      assert_response :success
+      assert_response 302
+      response.should redirect_to( signup_path )
       User.all.count.should eq(0)
     end
 
@@ -32,7 +33,8 @@ describe "registration" do
       assert_response :success
 
       post "/users", {:user => {:fullname => "test123", :email => "test_bad@test.", :password => "test123", :terms => "1", :datenerhebung => "1"}}, "HTTPS" => "on"
-      assert_response :success
+      assert_response 302
+      response.should redirect_to( signup_path )
       User.all.count.should eq(0)
     end
 
@@ -50,6 +52,7 @@ describe "registration" do
       get "/signin", nil, "HTTPS" => "on"
       assert_response :success
 
+      @request.env['HTTPS_REFERER'] = '/signin'
       post "/sessions", {:session => {:email => user.email, :password => user.password}}, "HTTPS" => "on"
       assert_response 302
       response.should redirect_to("/signin")
