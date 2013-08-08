@@ -37,7 +37,7 @@ describe "follow and unfollow" do
     before :each do
       post "/sessions", {:session => {:email => user.email, :password => user.password}}, "HTTPS" => "on"
       assert_response 302
-      response.should redirect_to( new_user_project_path )
+      response.should redirect_to( user_packages_i_follow_path )
     end
 
     it "does follow successfully" do

@@ -70,7 +70,7 @@ describe "SignUp with GitHub" do
 
     post "/sessions", {:session => {:email => user.email, :password => "12345" }}, "HTTPS" => "on"
     assert_response 302
-    response.should redirect_to( new_user_project_path )
+    response.should redirect_to( user_packages_i_follow_path )
 
     FakeWeb.register_uri(:get, "https://github.com/login/oauth/access_token?client_id=#{Settings.github_client_id}&client_secret=#{Settings.github_client_secret}&code=123", :body => "token=token_123")
     FakeWeb.register_uri(:get, "https://api.github.com/user?access_token=token_123", :body => "{\"id\": 1585858, \"email\": \"#{user.email}\"}")

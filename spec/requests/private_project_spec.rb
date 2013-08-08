@@ -38,7 +38,7 @@ describe "Private Project" do
 
     post "/sessions", {:session => {:email => @user2.email, :password => "12345"}}, "HTTPS" => "on"
     assert_response 302
-    response.should redirect_to( new_user_project_path )
+    response.should redirect_to( user_packages_i_follow_path )
 
     get "/user/projects/#{@project._id.to_s}"
     assert_response 302
