@@ -52,8 +52,7 @@ describe "registration" do
       get "/signin", nil, "HTTPS" => "on"
       assert_response :success
 
-      @request.env['HTTPS_REFERER'] = '/signin'
-      post "/sessions", {:session => {:email => user.email, :password => user.password}}, "HTTPS" => "on"
+      post "/sessions", {:session => {:email => user.email, :password => user.password}}, {"HTTPS" => "on", 'HTTP_REFERER' => '/signin'}
       assert_response 302
       response.should redirect_to("/signin")
     end
@@ -68,7 +67,7 @@ describe "registration" do
       get "/signin", nil, "HTTPS" => "on"
       assert_response :success
 
-      post "/sessions", {:session => {:email => user.email, :password => user.password}}, "HTTPS" => "on"
+      post "/sessions", {:session => {:email => user.email, :password => user.password}} , "HTTPS" => "on"
       assert_response 302
       response.should redirect_to( new_user_project_path )
 
@@ -80,7 +79,7 @@ describe "registration" do
       get "/signin", nil, "HTTPS" => "on"
       assert_response :success
 
-      post "/sessions", {:session => {:email => "test@test.de", :password => "test123asfgas"}}, "HTTPS" => "on"
+      post "/sessions", {:session => {:email => "test@test.de", :password => "test123asfgas"}}, {"HTTPS" => "on", 'HTTP_REFERER' => '/signin'}
       assert_response 302
       response.should redirect_to("/signin")
     end
