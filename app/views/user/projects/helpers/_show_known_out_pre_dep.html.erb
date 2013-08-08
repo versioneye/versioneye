@@ -16,4 +16,10 @@
     </span>
   </td>
 
+  <% if follow_link.eql?("true") %>
+    <td>
+      <%= render partial: "shared/product_follow_mini", locals: {product: product, user: current_user} %>
+    </td>
+  <% end %>
+
 </tr>
