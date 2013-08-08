@@ -3,7 +3,7 @@
 <% if @project %>
 
   <div>
-    <div class="tab-pane active" style="display: inline-block; width: 530px; margin-left: 174px;">
+    <div class="tab-pane active" style="display: inline-block; width: 670px; margin-left: 104px;">
       <div style="font-size: 16px; margin-bottom: 20px;">
         <span style="color: <%= outdated_color(@project)%>; font-weight: bold;" ><%= @project.out_number %></span> of
         <%= pluralize(@project.dep_number, "Dependency") %>  dependencies are outdated and
@@ -12,13 +12,14 @@
       <div class="dependencies" id="dependencies" >
         <% if @project.dependencies && @project.dependencies.size > 0 %>
 
-          <table class="dependency_table" style="width: 570px;">
+          <table class="dependency_table" style="width: 670px;">
             <thead>
               <tr>
                 <th class="icon_col" ></th>
                 <th class="version_col">Current</th>
                 <th class="version_col">Locked</th>
                 <th class="name_col_after_icon"></th>
+                <th class="follow_col" style="width:50px;"></th>
               </tr>
             </thead>
 
@@ -27,18 +28,18 @@
               <% dep.outdated? %>
 
               <% if dep.unknown? %>
-                <%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
+                <%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep, :follow_link => "true"} %>
               <% elsif dep.outdated and dep.release != false  %>
-                <%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
+                <%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep, :follow_link => "true"} %>
               <% elsif dep.outdated and dep.release == false %>
-                <%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep} %>
+                <%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep, :follow_link => "true"} %>
               <% else %>
-                <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
+                <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep, :follow_link => "true"} %>
               <% end %>
-
             <% end %>
 
           </table>
+
 
         <% end %>
       </div>
