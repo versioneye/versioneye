@@ -6,7 +6,7 @@
 
 <% else %>
 
-  <% if @product.prod_type.eql? Project::A_TYPE_MAVEN2 %>
+  <% if @product.prod_type.eql? Project::A_TYPE_MAVEN2 or @product.language.eql?("Java") or @product.language.eql?("Clojure") %>
     <%= render 'products/product_show_maven' %>
   <% elsif @product.prod_type.eql? Project::A_TYPE_RUBYGEMS %>
     <%= render 'products/product_show_gems' %>
