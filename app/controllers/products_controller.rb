@@ -42,7 +42,11 @@ class ProductsController < ApplicationController
     lang     = Product.decode_language( params[:lang] )
     prod_key = Product.decode_prod_key( params[:key]  )
     version  = params[:version]
-    @product = Product.fetch_product lang, prod_key
+    @product = fetch_product lang, prod_key
+    if @product && !lang.eql?( @product.language )
+      redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
+      return
+    end
     if @product.nil?
       flash[:error] = "The requested package is not available."
       return
@@ -241,6 +245,14 @@ class ProductsController < ApplicationController
   end
 
   private
+
+    def fetch_product( lang, prod_key )
+      product = Product.fetch_product lang, prod_key
+      if product.nil? && lang.eql?( Product::A_LANGUAGE_CLOJURE )
+        product = Product.fetch_product Product::A_LANGUAGE_JAVA, prod_key
+      end
+      product
+    end
 
     def add_status_comment(product, user, type)
       comment             = Versioncomment.new
