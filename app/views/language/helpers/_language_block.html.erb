@@ -2,7 +2,7 @@
 <% language ||= language_block %>
 
 <div>
-  <img class = "img centered" src = "/assets/language/<%= language[:param_name].to_s.downcase %>.png" />
+  <img class = "img centered" src = "/assets/language/<%= Product.encode_language(language[:name]) %>.png" />
   <table class = "table table-hover no-borders" style = "font-size: 0.85em;">
     <tbody>
       <tr>
