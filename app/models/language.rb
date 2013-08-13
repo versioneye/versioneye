@@ -3,7 +3,6 @@ class Language
   include Mongoid::Timestamps  
   
   field :name, type: String
-  field :param_name, type: String
 
   field :description, type: String
   field :supported_managers, type: String
@@ -21,4 +20,5 @@ class Language
   field :irc, type: String
   field :twitter_name, type: String
 
+  scope :by_language, ->(lang){where(name: Product.encode_language(lang))}
 end

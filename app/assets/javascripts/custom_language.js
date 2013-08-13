@@ -1,3 +1,24 @@
+function init_plots(){
+  require(["/assets/libs/d3.v3.min", "/assets/plots/timebar"],
+          function(d3, Timebar){
+    console.debug("Plot dependencies are now loaded.")
+    timebar1 = new Timebar({
+      selector: "#plot_latest",
+      width: 610,
+      height: 80,
+      bar: {width: 10}});
+    timebar1.loadAndRender("/package/latest/timeline30.json");
+
+    timebar1 = new Timebar({
+      selector: "#plot_novel",
+      width: 610,
+      height: 80,
+      bar: {width: 10}
+    });
+    timebar1.loadAndRender("/package/novel/timeline30.json");
+  });
+}
+
 function init_newsfeed(selector){
   var feeds_urls = $(selector).data('feeds').split(',');
   var feeds_keys = _.range(1, feeds_urls.length + 1);
@@ -29,6 +50,10 @@ jQuery(document).ready(function(){
   if(jQuery("#language-newsfeed").length){
     console.debug("Initializing language newsfeed.");
     init_newsfeed("#language-newsfeed");
+  }
+
+  if(jQuery("#plot_latest").length){
+    init_plots();
   }
 
 });

@@ -21,7 +21,6 @@ class Admin::LanguageController < ApplicationController
 
   def create
     new_lang = Language.new(params[:language])
-    new_lang[:param_name] = Product.encode_language(new_lang[:name])
 
     if new_lang.save
       flash[:success] = "Language is added successfully."
@@ -44,8 +43,38 @@ class Admin::LanguageController < ApplicationController
       redirect_to :back
     end
   end
-  
+ 
+  def upload_json
+    docs = JSON::parse(params[:json_file].read)
+    docs.each do |doc|
+      doc = whitelisted_language_doc_fields(doc)
+      next if doc.nil?
+
+      current_doc = Language.by_language(doc["name"]).shift
+      if current_doc.nil?
+        new_doc = Language.new doc
+      else
+        current_doc.update_attributes(doc)
+      end
+      new_doc.save!
+    end
+
+    flash[:success] = "Uploaded successfully"
+    redirect_to :back
+  end
+
+  def download_json
+    render json: Language.all.to_json
+  end
+ 
   private
+  
+  def whitelisted_language_doc_fields(doc)
+    doc.slice("name", "description", "irc", "irc_url", "supported_managers", 
+              "latest_version", "stable_version", "licence", "licence_url",
+              "main_url", "wiki_url", "repo_url", "issue_url", "mailinglist_url",
+              "irc_url", "irc", "twitter_name")
+  end
 
   def admin_user
     redirect_to(root_path) unless signed_in_admin?

@@ -37,7 +37,8 @@ class LanguageController < ApplicationController
   end
   
   def show_block
-    language = Language.where(param_name: params[:lang]).first
+    lang = Product.decode_language(params[:lang])
+    language = Language.where(name: lang).first
     render partial: "language/helpers/language_block", locals: {language: language}
   end
 
@@ -52,6 +53,7 @@ class LanguageController < ApplicationController
 
   def create
     new_lang = Language.new(params[:language])
+    new_lang[:name] = Product.decode_language(params[:lang])
     new_lang[:param_name] = Product.encode_language(new_lang[:name])
 
     if new_lang.save
@@ -74,5 +76,14 @@ class LanguageController < ApplicationController
       flash[:error] = "Cant save updates."
       redirect_to :back
     end
+  end
+
+  def random30
+    rows = []
+    30.times do |n|
+      rows << {"date" => n.days.ago.strftime("%d-%m-%Y"), "value" => Random.rand(1000)}
+    end
+
+    render json: rows
   end
 end

@@ -3,9 +3,9 @@
   <p><%= @language[:description] %></p>
   <br />
   <h5> New versions for last 30 days </h5>
-  <img src = "/assets/language/timeline.png" class = "img centered" /> <br />
+  <div id = "plot_latest"></div>
   <h5> Novel packages for last 30 days</h5>
-  <img src = "/assets/language/timeline.png" class = "img centered" />
+  <div id = "plot_novel"></div>
 </div>
 <div class = "span4">
   <%= render partial: "language/helpers/language_block", locals: {language: @language} %>
