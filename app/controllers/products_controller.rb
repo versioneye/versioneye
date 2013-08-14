@@ -239,6 +239,7 @@ class ProductsController < ApplicationController
     end
 
     results.sort_by! {|item| -1 * item[:followers]}
+    
     respond_to do |format|
       format.json { render :json => results }
     end

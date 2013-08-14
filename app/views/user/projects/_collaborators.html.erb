@@ -1,0 +1,38 @@
+<h5> Project collaborators </h5>
+
+<p>
+  Add more project collaboratora and be happy!
+</p>
+
+<div>
+  <%= form_tag(user_project_collaborators_path(project_id: params[:id]),  class: "form-inline") do%>
+    <%= text_field_tag "collaborator[email]", '' , class: "span6", id: "collaborator_email", autocomplete: "off" %>
+    <%= submit_tag "Add collaborator", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+<script>
+  jQuery(document).ready(function(){
+    console.debug("Collaborators autocomplete is initialized.");
+
+    jQuery("input#collaborator_email").typeahead({
+      name: "contacts",
+      remote: {
+        url: "/users/autocomplete?term=%QUERY"
+      },
+      engine: Hogan,
+      template: [
+        '<div>',
+          '<p>',
+            '<i class="icon-male">&nbsp;</i>',
+            '<strong>{{ fullname }}</strong> ( {{ username }} ) - {{ email }}',
+          '</p>',
+        '</div>'
+      ].join('')
+    });
+  });
+</script>
+
+<div>
+  <%= render partial: "collaborator" , collection: @collaborators %>
+</div>

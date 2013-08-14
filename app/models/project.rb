@@ -47,6 +47,7 @@ class Project
 
   belongs_to :user
   has_many   :projectdependencies
+  has_many   :collaborators, class_name: "ProjectCollaborator"
 
   scope :by_user  , ->(user)  { where(user_id: user.id) }
   scope :by_source, ->(source){ where(source:  source ) }

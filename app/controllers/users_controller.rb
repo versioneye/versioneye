@@ -218,6 +218,27 @@ class UsersController < ApplicationController
     redirect_to signin_path
   end
 
+  def autocomplete
+    term = params[:term]
+    if term.nil? 
+      render json: [] and return
+    end
+
+    results = []
+    matched_users = UserService.search(term)
+    matched_users.each_with_index do |user, i|
+      results << {
+        value: user[:email],
+        fullname: user[:fullname],
+        email: user[:email],
+        username: user[:username]
+      }
+      break if i > 9
+    end
+
+    render json: results
+  end
+
   def destroy
     User.find_by_username(params[:id]).delete_user
     flash[:success] = "User deleted"

@@ -402,6 +402,19 @@ class User
     self.billing_address
   end
 
+
+  #-- ElasticSearch mapping ------------------
+  def to_indexed_json
+    {
+      _id: self[:_id].to_s,
+      _type: "user",
+      fullname: self[:fullname],
+      username: self[:username],
+      prev_fullname: self[:prev_fullname],
+      email: self[:email]
+    }
+  end
+
   private
 
     def create_random_token(length = 25)
