@@ -1,0 +1,35 @@
+
+<% user = nil %>
+<% user = collaborator.user if collaborator[:active] %>
+
+<div class = "media-body">
+  <div class = "row-fluid">
+    <div class  = "span9">
+      <%= render partial: 'shared/gravatar', locals: {size: 48, show_link: false, user: user, classes: "pull-left"} %>
+      <% if user %>
+        <strong> <%= user[:fullname] %></strong>,
+        <small>(<%= user[:email] %>)</small>,
+        added <%= time_ago_in_words(collaborator[:created_at]) %> ago.
+      <% else %>
+        User with email(<em> <%= collaborator[:invitation_email] %> </em>) dont exist. Please invite him/her!
+      <% end %>
+    </div>
+    <div class = "span3">
+      <div class = "btn-group">
+        <%= button_to('Remove',
+         "/user/projects/#{params[:id]}/collaborators/#{collaborator[:_id].to_s}/delete",
+          :confirm => "Are you sure?", :class => "btn btn-mini btn-danger" ) %>
+
+        <!-- invitation button -->
+        <% unless user %>
+          <%= button_to 'Invite', {
+            url: "",
+          }, {
+            class: "btn btn-mini btn-success"
+          } %>
+        <% end %>
+       </div>
+    </div>
+  </div>
+</div>
+

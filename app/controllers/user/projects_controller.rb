@@ -34,6 +34,8 @@ class User::ProjectsController < ApplicationController
   def show
     id = params[:id]
     @project = Project.find_by_id( id )
+    @collaborators = @project.collaborators 
+
     if @project && @project.public == false
       return if authenticate == false
       redirect_to(root_path) unless current_user?(@project.user)
