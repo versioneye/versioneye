@@ -5,10 +5,10 @@
   </div>
   <div class="pull-right opacity_section" style="margin-left: 1px;" >
     <% unless current_user %>
-      <a id="signin" href="/signin" ><i class="icon-signin"></i>Sign in</a>
+      <a id="signin" href="/signin" ><i class="icon-signin"></i>&nbsp;Sign in</a>
     <% else %>
       <a id="signin" href="<%= user_projects_path %>">
-        <i class = "icon-archive"></i> Projects
+        <i class = "icon-archive"></i>&nbsp;Projects
       </a>
     <% end %>
   </div>
