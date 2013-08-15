@@ -5,7 +5,7 @@ class UserService
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
-    return nil
+    return []
   end
 
   def self.create_random_token(length = 25)

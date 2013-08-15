@@ -101,13 +101,8 @@ Versioneye::Application.routes.draw do
   get '/user/projects/github_repositories'   , :to => 'user/github_repos#init'
 
   namespace :user do
+    
     resources :projects do 
-      resources :collaborators  do
-        member do
-          post 'invite'
-          post 'delete'
-        end
-      end
       member do
         get  'badge'
         post 'save_period'
@@ -115,8 +110,18 @@ Versioneye::Application.routes.draw do
         post 'save_visibility'
         post 'reparse'
         post 'update_name'
+        post 'add_collaborator'
       end
     end
+
+    resources :collaborations do
+      post 'approve'
+      post 'delete'
+      post 'invite'
+      post 'save_period'
+      post 'save_email'
+    end
+
     resources :github_repos
     get '/menu/github_repos', :to => 'github_repos#show_menu_items'
     get '/poll/github_repos', :to => 'github_repos#poll_changes'

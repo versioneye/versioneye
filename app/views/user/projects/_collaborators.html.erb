@@ -5,7 +5,7 @@
 </p>
 
 <div>
-  <%= form_tag(user_project_collaborators_path(project_id: params[:id]),  class: "form-inline") do%>
+  <%= form_tag(add_collaborator_user_project_path(id: params[:id]),  class: "form-inline") do%>
     <%= text_field_tag "collaborator[email]", '' , class: "span6", id: "collaborator_email", autocomplete: "off" %>
     <%= submit_tag "Add collaborator", class: "btn btn-primary" %>
   <% end %>
@@ -33,6 +33,6 @@
   });
 </script>
 
-<div>
+<div class = "media">
   <%= render partial: "collaborator" , collection: @collaborators %>
 </div>
