@@ -43,6 +43,31 @@ class UserMailer < ActionMailer::Base
       )
   end
 
+  def collaboration_invitation(collaborator)
+    @caller = collaborator.caller
+    @owner = collaborator.owner
+    @project = collaborator.project
+
+    mail(
+      :to => collaborator[:invitation_email],
+      :subject => "Invitation to project collabration",
+      :tag => "collaboration"
+    )
+  end
+
+  def new_collaboration(collaborator)
+    @caller = collborator.caller
+    @project = collaborator.project
+    @callee = collaborator.user
+    @collaboration = collaborator
+
+    mail(
+      :to => @callee[:email],
+      :subject => "#{@caller[:fullname]} added you as collaborator.",
+      :tag => "collaboration"
+    )
+  end
+
   def reset_password(user)
     @user = user
     @url = "#{Settings.server_url_https}/updatepassword/#{@user.verification}"

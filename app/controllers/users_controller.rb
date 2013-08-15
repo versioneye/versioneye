@@ -224,19 +224,8 @@ class UsersController < ApplicationController
       render json: [] and return
     end
 
-    results = []
     matched_users = UserService.search(term)
-    matched_users.each_with_index do |user, i|
-      results << {
-        value: user[:email],
-        fullname: user[:fullname],
-        email: user[:email],
-        username: user[:username]
-      }
-      break if i > 9
-    end
-
-    render json: results
+    render json: format_autocompletion(matched_users)
   end
 
   def destroy
@@ -246,6 +235,22 @@ class UsersController < ApplicationController
   end
 
   private
+    def format_autocompletion(matched_users)
+      results = []
+      return results if matched_users.nil?
+
+      matched_users.each_with_index do |user, i|
+        results << {
+          value: user[:email],
+          fullname: user[:fullname],
+          email: user[:email],
+          username: user[:username]
+        }
+        break if i > 9
+      end
+      
+      results
+    end
 
     def correct_user
       @user = User.find_by_username(params[:id])

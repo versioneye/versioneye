@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>Hello, </p>
+    <p>
+      <%= @caller[:fullname] %> wants to add as project collaborator for his/her project <%= @project[:name] %>,
+      but sadly you're not VersionEye user yet. 
+      It'll be great if you can make <%= @caller[:fullname] %> happier and accept his/her invitation.
+    </p>
+
+    <p>
+        Little reminder how to accept <%= @caller[:fullname] %>'s invitation. <br />
+        1. <a href="<%= signup_url %>">Sign up </a><br />
+        2. Activate your account <br />
+        3. Select "Collaborations" on left nav-bar.
+        4. Click "Approve".
+    </p>
+    <p>
+      Our signup page: <a href = "<%= signup_url %>"><%= signup_url %></a>
+    </p>
+    <p>
+      Thanks for joining and have a great day!
+    </p>
+    <p>
+      Your VersionEye Team
+    </p>
+  </body>
+</html>
