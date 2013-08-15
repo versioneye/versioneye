@@ -19,7 +19,7 @@ You will find downloads and tutorials to MongoDB here: <http://www.mongodb.org/>
 
 ## ElasticSearch
 
-We are using ElasticSearch for better search results. You can find downloads and tutorials to ElasticSearch here: <http://www.elasticsearch.org/>. The connection to the ElasticSearch Server is configured in `config/settings.yml`. If you start the rails console you can re-index the whole MongoDB with: 
+We are using ElasticSearch for better search results. You can find downloads and tutorials to ElasticSearch here: <http://www.elasticsearch.org/>. The connection to the ElasticSearch Server is configured in `config/settings.yml`. If you start the rails console you can re-index the whole MongoDB with:
 
 ```
 EsProduct.reset
@@ -33,7 +33,7 @@ You can also use the application without ElasticSearch, if that is to much troub
 For uploading files a connection to Amazon S3 is mandatory. You can find the configuration for Amazon S3 in "config/config.yml". Please add here your "aws_s3_access_key_id" and your "aws_s3_secret_access_key" and don't commit it back! With that all file uploads will work fine.
 
 You can use the fake-s3 GEM to simulate S3 offline: <https://github.com/jubos/fake-s3>.
-You can start the fake-s3 service like this: 
+You can start the fake-s3 service like this:
 
 ```
 fakes3 -r /tmp -p 4567
@@ -51,7 +51,7 @@ For sending out emails we use <https://postmarkapp.com/>. Here we use the postma
 
 ## Configuration
 
-VersionEye is using many 3rd part services in the Internet. Services like GitHub, Twitter, Facebook, Amazon, Postmark and so on. All Access Tokens and Access Keys are centralized in `config/settings.yml`. If some keys are missing just add your own and don't commit it back. Inside the application you can access all values over the "Settings" class like this: 
+VersionEye is using many 3rd part services in the Internet. Services like GitHub, Twitter, Facebook, Amazon, Postmark and so on. All Access Tokens and Access Keys are centralized in `config/settings.yml`. If some keys are missing just add your own and don't commit it back. Inside the application you can access all values over the "Settings" class like this:
 
 ```
 Settings.github_client_id
@@ -71,16 +71,16 @@ You can run all tests with the "rspec" command. Before you run the tests you sho
 
 ## Rake
 
-Our rake tasks are organized in `lib/tasks/versioneye.rake`. In this file we have 2 important tasks. 
+Our rake tasks are organized in `lib/tasks/versioneye.rake`. In this file we have 2 important tasks.
 
 ```
 rake versioneye:daily_jobs
 ```
 
-This will execute all jobs we have to run daily. For example sending out the daily new verison notification emails and so on. 
+This will execute all jobs we have to run daily. For example sending out the daily new verison notification emails and so on.
 
 ```
 rake versioneye:weekly_jobs
 ```
 
-This task will execute all jobs we have to run once a week. For example sending out the weekly project notifications. 
+This task will execute all jobs we have to run once a week. For example sending out the weekly project notifications.
