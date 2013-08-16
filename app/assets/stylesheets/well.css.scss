@@ -18,6 +18,20 @@
     background-color: whiteSmoke;
     color: $text_casual;
   }
+
+  & .button_to {
+    display: inline-block;
+
+    & input {
+      background-color: white;
+    }
+  }
+
+  & .language_block {
+    max-height: 440px;
+    overflow-y: auto;
+    margin: 0;
+  }
 }
 
 .well {

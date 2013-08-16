@@ -138,6 +138,11 @@ Versioneye::Application.routes.draw do
   get   '/hotnews',            :to => 'news#hotnews'
 
   namespace :admin do
+
+    post  '/language/upload',  :to => 'language#upload_json'
+    get  '/language/download', :to => 'language#download_json'
+    resources :language 
+
     resources :submitted_urls do
       post '/approve',            :to => 'submitted_urls#approve'
       post '/decline',            :to => 'submitted_urls#decline'
@@ -187,6 +192,8 @@ Versioneye::Application.routes.draw do
 
   get   '/search', :to => 'products#search'
 
+  get   '/package/latest/timeline30',          :to => 'language#random30'
+  get   '/package/novel/timeline30',           :to => 'language#random30'
   get   '/package/autocomplete'   , :to => 'products#autocomplete_product_name'
   get   '/package/name'           , :to => 'products#autocomplete_product_name'
   post  '/package/follow'         , :to => 'products#follow'
@@ -207,7 +214,6 @@ Versioneye::Application.routes.draw do
   get   '/package_visual/:key'                 , :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/ }
   get   '/package_visual/:key/version/:version', :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/package_visual/:key/:version'        , :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
-
 
   get   '/:lang',                             :to => 'language#show'
   get   '/:lang/:key/badge',                  :to => 'products#badge',  :constraints => { :key => /[^\/]+/ }

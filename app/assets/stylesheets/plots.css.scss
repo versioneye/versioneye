@@ -1,0 +1,47 @@
+.table-condensed th,
+.table-condensed td {
+    padding: 2px 5px;
+}
+
+td.plot div:hover {
+    background: steelblue;
+}
+
+svg {
+  font-size: 12px;
+
+  .bar {
+    fill: steelblue;
+
+    &:hover {
+      fill: #2061c5;
+    }
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: steelblue;
+    shape-rendering: crispEdges;
+  }
+
+  .x.axis path {
+    display: none;
+  }
+
+  .line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+
+  .overlay {
+    fill: none;
+    pointer-events: all;
+  }
+
+  .focus circle {
+    fill: white;
+    stroke: steelblue;
+  }
+}
