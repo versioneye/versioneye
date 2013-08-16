@@ -1,5 +1,6 @@
 class LatestReleasesController < ApplicationController
-  caches_action :index
+
+  # caches_action :index
 
   def index
     @supported_languages = Product.supported_languages
@@ -22,9 +23,10 @@ class LatestReleasesController < ApplicationController
   end
 
   def lang_timeline30
-    lang = "clojure"
+    lang = "php"
     lang = params[:lang] if params.has_key?(:lang)
- 
+    p "lang: #{lang}"
+    p params
     lang = Product.decode_language(lang)
     render json: LanguageDailyStats.versions_timeline30(lang)
   end

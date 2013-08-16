@@ -1,9 +1,10 @@
 class NovelReleasesController < ApplicationController
-  caches_action :index
+
+  # caches_action :index
 
   def index
     @supported_languages = Product.supported_languages
-    @latest_releases = Newest.balanced_novel(20)
+    @latest_releases     = Newest.balanced_novel(20)
   end
 
   def show
@@ -24,7 +25,7 @@ class NovelReleasesController < ApplicationController
   def lang_timeline30
     lang = "clojure"
     lang = params[:lang] if params.has_key?(:lang)
- 
+
     lang = Product.decode_language(lang)
     render json: LanguageDailyStats.novel_releases_timeline30(lang)
   end
