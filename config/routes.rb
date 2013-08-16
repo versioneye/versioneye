@@ -141,7 +141,7 @@ Versioneye::Application.routes.draw do
 
     post  '/language/upload',  :to => 'language#upload_json'
     get  '/language/download', :to => 'language#download_json'
-    resources :language 
+    resources :language
 
     resources :submitted_urls do
       post '/approve',            :to => 'submitted_urls#approve'
