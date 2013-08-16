@@ -37,13 +37,26 @@ class Admin::LanguageController < ApplicationController
     old_language.update_attributes!(updated_language)
     if old_language.save
       flash[:success] = "Language is now updated."
-      redirect_to admin_language_path
+      redirect_to admin_language_index_path
     else
       flash[:error] = "Cant save updates."
       redirect_to :back
     end
   end
- 
+
+  def destroy
+    lang = Language.by_language(params[:id]).shift
+    p "deleting language:", lang
+    if lang.nil?
+      flash[:error] = "Failure: cant delete language `#{params[:id]}`."
+    else
+      lang.delete
+      flash[:success] = "Success: #{lang[:name]} is now removed."
+    end
+
+    redirect_to :back
+  end
+
   def upload_json
     docs = JSON::parse(params[:json_file].read)
     docs.each do |doc|
