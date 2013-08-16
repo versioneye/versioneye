@@ -1,11 +1,18 @@
 <% if @language %>
   <div class  = "span8">
+    <br />
+    <br />
+    <br />
     <p><%= @language[:description] %></p>
     <br />
-    <h5> New versions for last 30 days </h5>
-    <div id = "plot_latest"></div>
-    <h5> Novel packages for last 30 days</h5>
-    <div id = "plot_novel"></div>
+    <br />
+    Charts are coming soon.
+    <% if 1 == 2 %>
+      <h5> New versions for last 30 days </h5>
+      <div id = "plot_latest"></div>
+      <h5> Novel packages for last 30 days</h5>
+      <div id = "plot_novel"></div>
+    <% end %>
   </div>
   <div class = "span4">
     <%= render partial: "language/helpers/language_block", locals: {language: @language} %>
