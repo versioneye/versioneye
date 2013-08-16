@@ -1,4 +1,5 @@
 class EsUser
+
   def self.create_index_with_mappings
     Tire.index(Settings.elasticsearch_user_index) do
       create :mappings => {
@@ -8,7 +9,7 @@ class EsUser
             :fullname => {type: 'string', analyzer: 'snowball', boost: 200},
             :email => {type: 'multi_field', :fields => {
               :email => {type: 'string', analyzer: 'snowball', boost: 100},
-              :exact_email => {type: 'string', analyzer: 'keyword'} 
+              :exact_email => {type: 'string', analyzer: 'keyword'}
             }}
           }
         }
