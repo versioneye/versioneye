@@ -28,5 +28,4 @@ class UserService
     end
     return true;
   end
-
 end

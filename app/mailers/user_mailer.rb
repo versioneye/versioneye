@@ -56,7 +56,7 @@ class UserMailer < ActionMailer::Base
   end
 
   def new_collaboration(collaborator)
-    @caller = collborator.caller
+    @caller = collaborator.caller
     @project = collaborator.project
     @callee = collaborator.user
     @collaboration = collaborator
