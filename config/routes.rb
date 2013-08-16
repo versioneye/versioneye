@@ -50,12 +50,12 @@ Versioneye::Application.routes.draw do
 
   get   '/package/latest',                      :to => 'latest_releases#index'
   get   '/package/latest/stats/:timespan',      :to => 'latest_releases#stats'
-  get   '/package/latest/timeline_30',          :to => 'latest_releases#lang_timeline30'
+  get   '/package/latest/timeline30',          :to => 'latest_releases#lang_timeline30'
   get   '/package/latest/:lang',                :to => 'latest_releases#show'
 
   get   '/package/novel',                      :to => 'novel_releases#index'
   get   '/package/novel/stats/:timespan',      :to => 'novel_releases#stats'
-  get   '/package/novel/timeline_30',          :to => 'novel_releases#lang_timeline30'
+  get   '/package/novel/timeline30',          :to => 'novel_releases#lang_timeline30'
   get   '/package/novel/:lang',                :to => 'novel_releases#show'
 
   namespace :settings do
@@ -192,8 +192,6 @@ Versioneye::Application.routes.draw do
 
   get   '/search', :to => 'products#search'
 
-  get   '/package/latest/timeline30',          :to => 'language#random30'
-  get   '/package/novel/timeline30',           :to => 'language#random30'
   get   '/package/autocomplete'   , :to => 'products#autocomplete_product_name'
   get   '/package/name'           , :to => 'products#autocomplete_product_name'
   post  '/package/follow'         , :to => 'products#follow'
@@ -230,6 +228,6 @@ Versioneye::Application.routes.draw do
   post  '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
-  get   '*path',        :to => 'page#routing_error'
+  # get   '*path',        :to => 'page#routing_error'
 
 end
