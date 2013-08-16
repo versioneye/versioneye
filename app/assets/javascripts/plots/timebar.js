@@ -1,16 +1,16 @@
 define([require], function(require){
+
   function Timebar(settings){
     this.selector = settings.selector || "#area4";
-    this.margin = settings.margin || {top: 30, right: 10, bottom: 30, left: 10};
-    this.width = settings.width || 960;
-    this.height = settings.height || 300;
-    this.dataset = settings.dataset || [];
-    this.bar = settings.bar || {width: 10};
+    this.margin   = settings.margin || {top: 20, right: 10, bottom: 5, left: 10};
+    this.width    = settings.width || 960;
+    this.height   = settings.height || 300;
+    this.dataset  = settings.dataset || [];
+    this.bar      = settings.bar || {width: 10};
 
-    this.xScaler = d3.time.scale()
-      .rangeRound([0, this.width - this.margin.left - this.margin.right]);
-    this.yScaler = d3.scale.linear().range([this.height - (this.margin.top + this.margin.bottom), 0]);
-    this.dateParser = d3.time.format("%d-%m-%Y").parse;
+    this.xScaler    = d3.time.scale().rangeRound([0, this.width]);
+    this.yScaler    = d3.scale.linear().range([this.height - this.margin.top , 0]);
+    this.dateParser = d3.time.format("%Y-%m-%d").parse;
     this.bisectDate = d3.bisector(function(d){return d.date;}).left;
   }
 
@@ -24,6 +24,7 @@ define([require], function(require){
 
       //-- preprocess data
       data.forEach(function(d){
+        d.value = +d.value;
         d.date = thisPlot.dateParser(d.date);
       });
 
@@ -45,18 +46,18 @@ define([require], function(require){
     //-- render content
     console.debug(thisPlot.xScaler);
     var timebarCanvas = thisPlot.initCanvas();
-    timebarCanvas.selectAll(".bar")
+    timebarCanvas.select("g").selectAll(".bar")
       .data(thisPlot.dataset)
       .enter().append("rect").attr({
         "class" : "bar",
         "x": function(d){return thisPlot.xScaler(d.date);},
         "width": thisPlot.bar.width,
-        "y": function(d){return thisPlot.yScaler(d.value);},
-        "height": function(d){return (thisPlot.height - thisPlot.margin.bottom) - thisPlot.yScaler(d.value);}
+        "y": function(d){return thisPlot.yScaler(d.value) ;},
+        "height": function(d){return thisPlot.height  - thisPlot.margin.top - thisPlot.yScaler(d.value) ;}
       });
 
     //-- add axis
-    thisPlot.addAxisX(timebarCanvas);
+    //thisPlot.addAxisX(timebarCanvas);
     thisPlot.addFocusator(timebarCanvas);
   };
 
@@ -87,7 +88,7 @@ define([require], function(require){
     timebarCanvas.append("g")
       .attr({
         "class": "x axis",
-        "transform": "translate(0," + (thisPlot.height - thisPlot.margin.bottom) + ")",
+        "transform": "translate(0," + (thisPlot.height - thisPlot.margin.bottom + 5) + ")",
         "fill": "steelblue"
       })
       .call(xAxis);
@@ -121,8 +122,8 @@ define([require], function(require){
 
       var d1 = (i < data.length) ? data[i] : data[data.length - 1];
       var d = (x0 - d0.date > d1.date - x0) ? d1 : d0;
-      var X = thisPlot.xScaler(d.date) - thisPlot.bar.width,
-          Y = thisPlot.yScaler(d.value);
+      var X = thisPlot.xScaler(d.date) ,
+          Y = thisPlot.yScaler(d.value) ;
 
       focus.attr("transform", "translate(" + X + "," + Y + ")");
       focus.select("text").text(d.value);
