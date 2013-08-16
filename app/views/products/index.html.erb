@@ -4,13 +4,19 @@
     <%= image_tag "logos/versioneye-transparent.png" %>
   </div>
   <div class="pull-right opacity_section" style="margin-left: 1px;" >
-    <a id="signin" href="/signin" >Sign In <i class="icon-signin"></i></a>
+    <% unless current_user %>
+      <a id="signin" href="/signin" ><i class="icon-signin">&nbsp;</i>Sign in</a>
+    <% else %>
+      <a id="signin" href="<%= user_projects_path %>">
+        <i class = "icon-archive">&nbsp;</i>Projects
+      </a>
+    <% end %>
   </div>
   <div class="pull-right opacity_section" >
     <% if @ab.eql?("a") %>
-      <a href="/?ab=b" >Search <i class="icon-search"></i></a>
+      <a href="/?ab=b" ><i class="icon-search">&nbsp;</i>Search</a>
     <% else %>
-      <a href="/?ab=a" >File upload <i class="icon-upload"></i></a>
+      <a href="/?ab=a" ><i class="icon-upload">&nbsp;</i>File upload</a>
     <% end %>
   </div>
 </div>

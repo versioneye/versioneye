@@ -6,7 +6,7 @@ define([require], function(require){
     this.width = settings.width || 200;
     this.fontSize = settings.fontSize || 12;
     this.titleWidth = settings.titleWidth || 100;
-    this.bar = settings.bar || {maxWidth: 100, minWidth: 20};
+    this.bar = settings.bar || {maxWidth: 100};
     this.dataset = settings.dataset || [];
     this.icon = settings.icon || {path: '/assets/language', height: 20};
 
@@ -26,8 +26,9 @@ define([require], function(require){
         ].join(' ');
       },
       caretCell: function(t1){
-        return ['<i class = "icon-caret-up" style = "color:',
-                (parseInt(t1) < 0) ? "red" : "green",
+        var is_pos = parseInt(t1) >= 0;
+        return ['<i class = "icon-caret-', (is_pos) ? "up": "down", '" style = "color:',
+                (is_pos) ? "green" : "red",
                 ';"></i>'
               ].join('');
       }

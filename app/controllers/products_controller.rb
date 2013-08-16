@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
     @ab = params['ab']
     if @ab.nil?
       ab_array = ["a", "b"]
-      @ab = "b" # ab_array[Random.rand(2)]
+      @ab = "a" # ab_array[Random.rand(2)]
     end
     @languages = @@languages
     render :layout => 'application_lp'
@@ -42,7 +42,11 @@ class ProductsController < ApplicationController
     lang     = Product.decode_language( params[:lang] )
     prod_key = Product.decode_prod_key( params[:key]  )
     version  = params[:version]
-    @product = Product.fetch_product lang, prod_key
+    @product = fetch_product lang, prod_key
+    if @product && !lang.eql?( @product.language )
+      redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
+      return
+    end
     if @product.nil?
       flash[:error] = "The requested package is not available."
       return
@@ -217,10 +221,20 @@ class ProductsController < ApplicationController
   def autocomplete_product_name
     term = params[:term] || "nothing"
     results = []
-    products = ProductService.search(term)
-    index = 0
-    products.each do |product|
-      results << {
+    products = EsProduct.autocomplete(term)
+ 
+    products.each_with_index do |product, index|
+      results << format_autocomplete(product)
+      break if index > 9
+    end
+
+    render :json => results
+  end
+
+  private
+
+    def format_autocomplete(product)
+      {
         value: "#{product[:name_downcase]}-#{product[:language].downcase}",
         name: product[:name],
         language: Product.encode_language(product[:language]),
@@ -230,17 +244,16 @@ class ProductsController < ApplicationController
         followers: product[:followers],
         url: product.to_url_path
       }
-      index += 1
-      break if index > 9
+     
     end
 
-    results.sort_by! {|item| -1 * item[:followers]}
-    respond_to do |format|
-      format.json { render :json => results }
+    def fetch_product( lang, prod_key )
+      product = Product.fetch_product lang, prod_key
+      if product.nil? && lang.eql?( Product::A_LANGUAGE_CLOJURE )
+        product = Product.fetch_product Product::A_LANGUAGE_JAVA, prod_key
+      end
+      product
     end
-  end
-
-  private
 
     def add_status_comment(product, user, type)
       comment             = Versioncomment.new

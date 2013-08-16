@@ -1,0 +1,19 @@
+<h5> <%= stats[:title] || "" %> 
+  <small>(<%= stats[:total] %>)</small>
+</h5>
+
+<table class = "table table-condensed table-hover">
+  <tbody>
+    <% stats[:values].each do |metric| %>
+      <tr>
+        <td>
+          <a href = "/latest/version/<%= metric[:title] %>" title = "Language specific list">
+            <img src = "/assets/language/<%= metric[:title] %>.png" style="height: 15px;"/>
+            <%= metric[:title] %>
+          </a>
+        </td>
+        <td><%= metric[:value] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

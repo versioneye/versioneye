@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
       if redirect_url
         redirect_to  redirect_url
       elsif user.projects.empty?
-        redirect_back_or( new_user_project_path )
+        redirect_back_or( user_packages_i_follow_path )
       else
         redirect_back_or( user_projects_path )
       end

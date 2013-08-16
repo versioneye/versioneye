@@ -1,9 +1,11 @@
-<% title "Latest releases" %>
+<% title "Novel packages" %>
 
 <%= render partial: "latest_plots" %>
 
 <div class = "release-list">
-  <h3> <%= @latest_releases.count || "" %> latest release</h3>
+  <h3> <%= @latest_releases.count || "" %> novel packages</h3>
+  <p> Novel packages are software libraries, which version we detect first time. </p>
+
   <div class = "row-fluid">
     <%= render partial: "release_list_item", collection: @latest_releases, locals: {columns: 2} %>
   </div>
@@ -18,7 +20,7 @@
     <% @supported_languages.each do |lang| %>
       <% lang = Product.encode_language(lang) %>
       <div class = "span1">
-        <a href = "/package/latest/<%= lang %>" title= "Go to language specific page.">
+        <a href = "/package/novel/<%= lang %>" title= "Go to language specific page.">
           <img src = "/assets/language/<%= lang %>.png" />
         </a>
       </div>
