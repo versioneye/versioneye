@@ -5,18 +5,18 @@
   </div>
   <div class="pull-right opacity_section" style="margin-left: 1px;" >
     <% unless current_user %>
-      <a id="signin" href="/signin" ><i class="icon-signin"></i>&nbsp;Sign in</a>
+      <a id="signin" href="/signin" ><i class="icon-signin">&nbsp;</i>Sign in</a>
     <% else %>
       <a id="signin" href="<%= user_projects_path %>">
-        <i class = "icon-archive"></i>&nbsp;Projects
+        <i class = "icon-archive">&nbsp;</i>Projects
       </a>
     <% end %>
   </div>
   <div class="pull-right opacity_section" >
     <% if @ab.eql?("a") %>
-      <a href="/?ab=b" ><i class="icon-search"></i> Search</a>
+      <a href="/?ab=b" ><i class="icon-search">&nbsp;</i>Search</a>
     <% else %>
-      <a href="/?ab=a" ><i class="icon-upload"> File upload</i></a>
+      <a href="/?ab=a" ><i class="icon-upload">&nbsp;</i>File upload</a>
     <% end %>
   </div>
 </div>
