@@ -48,6 +48,16 @@ Versioneye::Application.routes.draw do
     get  '/thankyou',  :to => "lotteries#thankyou"
   end
 
+  get   '/package/latest',                      :to => 'latest_releases#index'
+  get   '/package/latest/stats/:timespan',      :to => 'latest_releases#stats'
+  get   '/package/latest/timeline_30',          :to => 'latest_releases#lang_timeline30'
+  get   '/package/latest/:lang',                :to => 'latest_releases#show'
+
+  get   '/package/novel',                      :to => 'novel_releases#index'
+  get   '/package/novel/stats/:timespan',      :to => 'novel_releases#stats'
+  get   '/package/novel/timeline_30',          :to => 'novel_releases#lang_timeline30'
+  get   '/package/novel/:lang',                :to => 'novel_releases#show'
+
   namespace :settings do
 
     get  'profile'             , :to => 'profile#index'
@@ -168,16 +178,6 @@ Versioneye::Application.routes.draw do
   get   '/apijson',             :to => redirect('/api')
   get   '/apijson_tools',       :to => redirect('/api')
   get   '/apijson_libs',        :to => redirect('/api')
-
-  get   '/package/latest',                      :to => 'latest_releases#index'
-  get   '/package/latest/stats/:timespan',      :to => 'latest_releases#stats'
-  get   '/package/latest/timeline_30',          :to => 'latest_releases#lang_timeline30'
-  get   '/package/latest/:lang',                :to => 'latest_releases#show'
-
-  get   '/package/novel',                      :to => 'novel_releases#index'
-  get   '/package/novel/stats/:timespan',      :to => 'novel_releases#stats'
-  get   '/package/novel/timeline_30',          :to => 'novel_releases#lang_timeline30'
-  get   '/package/novel/:lang',                :to => 'novel_releases#show'
 
 
   get   'sitemap_00_1.xml',        :to => 'page#sitemap_1'
