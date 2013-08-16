@@ -35,7 +35,7 @@ class LanguageController < ApplicationController
     # render template: "language/show"
 
   end
-  
+
   def show_block
     lang = Product.decode_language(params[:lang])
     language = Language.where(name: lang).first
