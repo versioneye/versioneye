@@ -106,7 +106,8 @@ class User::ProjectsController < ApplicationController
     
     new_collaborator = ProjectCollaborator.new project_id: project[:_id].to_s,
                                                caller_id: current_user[:_id].to_s,
-                                               owner_id: project[:user_id].to_s
+                                               owner_id: project[:user_id].to_s,
+                                               email: collaborator_info[:email]
     
     if user.nil?
       #activate invitation
@@ -118,7 +119,11 @@ class User::ProjectsController < ApplicationController
       new_collaborator[:user_id] = user[:_id].to_s
     end
 
-    new_collaborator.save
+    unless new_collaborator.save
+      flash[:error] = "Failure: cant add new collaborator - #{new_collaborator.errors.full_messages.to_sentence}"
+      redirect_to :back and return
+    end
+
     project.collaborators << new_collaborator
     UserMailer.new_collaboration(new_collaborator).deliver if new_collaborator[:active]
     

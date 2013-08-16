@@ -46,7 +46,7 @@ class EsUser
   end
 
   def self.index_all
-    User.all.each {|user| self.index(user) }
+    User.live_users.each {|user| self.index(user) }
     self.refresh
   end
 

@@ -20,6 +20,15 @@ class ProjectCollaborator
   field :email, type: String
   
   belongs_to :project
+  
+  validates_presence_of :project_id
+  validates_presence_of :owner_id
+  validates_presence_of :caller_id
+  validates_presence_of :email
+
+  validates_format_of :email   , with: /^.+@.+\.[a-zA-Z]{2,4}$/
+
+  before_validation :downcase_email
 
   scope :by_user, ->(user){ any_of({user_id: user.id.to_s}, 
                                    {invitation_email: user[:email]}) }
@@ -65,4 +74,10 @@ class ProjectCollaborator
   def not_accepted?(current_user)
     not accepted?(current_user)
   end
+
+  private
+    def downcase_email
+      self.email = "#{self.email}".downcase
+    end
+
 end
