@@ -35,7 +35,7 @@
       </tr>
       <tr style = "border: 0;">
         <td colspan = "2">
-           <a href = "/admin/language/<%= language[:param_name] %>/edit" class = "btn btn-mini btn-link"> Edit </a>
+           <a href = "/admin/language/<%= Product.encode_language(language[:name]) %>/edit" class = "btn btn-mini btn-link"> Edit </a>
         </td>
       </tr>
     </tbody>
