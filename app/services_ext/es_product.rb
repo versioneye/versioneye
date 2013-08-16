@@ -147,5 +147,19 @@ class EsProduct
     end
   end
 
+  def self.autocomplete(term, results_per_page = 10)
+    q = term || "*"
+    s = Tire.search(
+          Settings.elasticsearch_product_index,
+          load: true,
+          search_type: 'dfs_query_and_fetch',
+          size: results_per_page
+    ) do |search|
+        search.query { |query| query.string "#{ q }*"}
+        search.sort {by :followers, 'desc'}
+      end
+    
+    s.results
+  end
 end
 

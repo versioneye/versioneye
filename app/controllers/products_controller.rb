@@ -221,10 +221,20 @@ class ProductsController < ApplicationController
   def autocomplete_product_name
     term = params[:term] || "nothing"
     results = []
-    products = ProductService.search(term)
-    index = 0
-    products.each do |product|
-      results << {
+    products = EsProduct.autocomplete(term)
+ 
+    products.each_with_index do |product, index|
+      results << format_autocomplete(product)
+      break if index > 9
+    end
+
+    render :json => results
+  end
+
+  private
+
+    def format_autocomplete(product)
+      {
         value: "#{product[:name_downcase]}-#{product[:language].downcase}",
         name: product[:name],
         language: Product.encode_language(product[:language]),
@@ -234,17 +244,8 @@ class ProductsController < ApplicationController
         followers: product[:followers],
         url: product.to_url_path
       }
-      index += 1
-      break if index > 9
+     
     end
-
-    results.sort_by! {|item| -1 * item[:followers]}
-    respond_to do |format|
-      format.json { render :json => results }
-    end
-  end
-
-  private
 
     def fetch_product( lang, prod_key )
       product = Product.fetch_product lang, prod_key
