@@ -193,13 +193,13 @@
                   <% licences[key] << product %>
 
                   <% if dep.unknown? %>
-                    <%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep} %>
+                    <%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep, :follow_link => "false"} %>
                   <% elsif dep.outdated and dep.release == true  %>
-                    <%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep} %>
+                    <%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep, :follow_link => "false"} %>
                   <% elsif dep.outdated and dep.release == false %>
-                    <%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep} %>
+                    <%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep, :follow_link => "false"} %>
                   <% else %>
-                    <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep} %>
+                    <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep, :follow_link => "false"} %>
                   <% end %>
 
                 <% end %>

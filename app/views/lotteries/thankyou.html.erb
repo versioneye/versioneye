@@ -6,9 +6,9 @@
     It's already <%= (@deadline == @today) ? 'today' : "in #{(@deadline - Date.today).numerator} days" %>.
   </p>
   <p>
-      As next you will receive an email confirmation. The winner will be anounced via our newsletter and on
-      <a href="http://www.versioneye.com">www.versioneye.com</a>.
-      Contact us on Twitter if you have any questions. <a href="https://Twitter.com/VersionEye">@VersionEye</a
+    As next you will receive an email confirmation. The winner will be anounced via our newsletter and on
+    <a href="http://www.versioneye.com">www.versioneye.com</a>.
+    Contact us on Twitter if you have any questions. <a href="https://Twitter.com/VersionEye">@VersionEye</a
   </p>
   <ul class="nav">
     <%= render :partial => "ticket", :collection => @tickets %>

@@ -1,13 +1,15 @@
 define([require], function(require){
   function Timeline(settings){
     this.selector = settings.selector || "#area3";
-    this.margin = settings.margin || {top: 30, right: 10, bottom: 30, left: 10};
-    this.width = settings.width || 960;
+    this.margin = settings.margin || {top: 20, right: 10, bottom: 30, left: 10};
+    this.padding = settings.padding || {top: 5, right: 0, bottom: 0, left: 0};
+    this.width = settings.width || 940;
     this.height = settings.height || 300;
     this.dataset = settings.dataset || []
+    this.url = settings.url || "/"
     this.xScaler = d3.time.scale().range([0, this.width - (this.margin.left + this.margin.right)]),
-    this.yScaler = d3.scale.linear().range([this.height - (this.margin.top + this.margin.bottom), 0]),
-    this.dateParser = d3.time.format("%d-%b-%Y").parse,
+    this.yScaler = d3.scale.linear().range([this.height - (this.margin.top + this.margin.bottom), this.padding.top]),
+    this.dateParser = d3.time.format("%Y-%m-%d").parse,
     this.bisectDate = d3.bisector(function(d){return d.date;}).left,
     this.strokeScaler = d3.scale.category10();
   };
@@ -113,12 +115,9 @@ define([require], function(require){
 
     d3.selectAll(".lang-timeline-btn").on("click", function(ev){
       var lang = d3.select(this).attr("data-lang"),
-          source_url = "/example.json";
-
-      if(lang == "ruby" || lang == "java"){
-        source_url = "/" + lang + ".json";
-      }
-
+          source_url = thisPlot.url + '?lang=' + lang;
+      d3.selectAll(".lang-timeline-btn").classed("active", false);
+      d3.select(this).classed("active", true);
       d3.select(thisPlot.selector).select("svg").remove();
       thisPlot.loadAndRender(source_url);
     });

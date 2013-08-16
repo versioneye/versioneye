@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "frontend APP for importing Github repositories", :js => true do
+
   let(:user_without_token) {(create(:user, username: "notoken",
                                     fullname: "No Token No",
                                     email: 'notoken@pupu.com'))}
@@ -63,7 +64,7 @@ describe "frontend APP for importing Github repositories", :js => true do
       fill_in 'session[password]', with: user.password
 
       find('#sign_in_button').click
-      page.should have_content('My Projects')
+      page.should have_content('Packages I follow')
     end
 
     after :each do

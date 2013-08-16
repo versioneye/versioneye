@@ -14,4 +14,10 @@
     <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" ><%= product.name %></a>
   </td>
 
+  <% if follow_link.eql?("true") %>
+    <td>
+      <%= render partial: "shared/product_follow_mini", locals: {product: product, user: current_user} %>
+    </td>
+  <% end %>
+
 </tr>

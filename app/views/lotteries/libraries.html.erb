@@ -7,7 +7,8 @@
     </div>
   <% end %>
 </div>
-<form action = "/lottery/lucky" method = "post">
+<form action = "/lottery/follow" method = "post">
+
   <div class="btn-group lottery-buttons" data-toggle="buttons">
     <% @products.each do |product| %>
       <label class="btn lottery-btn btn-primary col-12 col-lg-6">
@@ -20,4 +21,5 @@
   <div class = "lottery-controls" style="margin-top: 10px;">
     <input type = "submit" class = "btn btn-large lottery-submit-btn lottery-btn btn-success col-12 col-lg-12 hide" value = "Submit your request to Fortuna" />
   </div>
+
 </form>
