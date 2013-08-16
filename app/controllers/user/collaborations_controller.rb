@@ -19,7 +19,7 @@ class User::CollaborationsController < ApplicationController
   end
 
   def delete
-    
+
     collab_id = params[:id]
     collab_id ||= params[:collaboration_id]
 
@@ -29,7 +29,7 @@ class User::CollaborationsController < ApplicationController
       redirect_to :back and return
     end
 
-    if collaborator.owner.id == current_user.id or (!collaborator.nil? and collaborator.user.id == current_user.id)  
+    if collaborator.owner.id == current_user.id or (!collaborator.nil? and collaborator.user.id == current_user.id)
       flash[:success] = "Collaborator is now removed."
       collaborator.delete
     else
