@@ -20,5 +20,5 @@ class Language
   field :irc, type: String
   field :twitter_name, type: String
 
-  scope :by_language, ->(lang){where(name: Product.encode_language(lang))}
+  scope :by_language, ->(lang){where(name: Product.decode_language(lang))}
 end

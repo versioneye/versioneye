@@ -1,7 +1,7 @@
 
 <% language ||= language_block %>
 
-<div class = "span4">
+<div class = "span4 language_block">
   <img class = "img centered" src = "/assets/language/<%= Product.encode_language(language[:name]) %>.png" />
   <table class = "table table-hover no-borders" style = "font-size: 0.85em;">
     <tbody>
@@ -35,7 +35,16 @@
       </tr>
       <tr style = "border: 0;">
         <td colspan = "2">
-           <a href = "/admin/language/<%= Product.encode_language(language[:name]) %>/edit" class = "btn btn-mini btn-link"> Edit </a>
+          <% encoded_language = Product.encode_language(language[:name]) %>
+          <a href = "<%= edit_admin_language_path(id: encoded_language) %>" class = "btn btn-mini btn-link"> Edit </a>
+          | 
+          <%= button_to "Delete", 
+                admin_language_path(id: encoded_language), 
+                method: :delete, 
+                data: {confirm: "Are you sure?"},
+                class: "btn btn-mini btn-link",
+                style: "background-color: white;"
+              %>
         </td>
       </tr>
     </tbody>
