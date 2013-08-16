@@ -5,9 +5,11 @@ function init_plots(){
     timebar1 = new Timebar({
       selector: "#plot_latest",
       width: 610,
-      height: 80,
+      height: 140,
       bar: {width: 10}});
-    timebar1.loadAndRender("/package/latest/timeline30.json");
+
+    var lang = jQuery("#language").data("language");
+    timebar1.loadAndRender("/package/latest/timeline30.json?lang=" + lang);
 
     timebar1 = new Timebar({
       selector: "#plot_novel",
@@ -15,7 +17,7 @@ function init_plots(){
       height: 80,
       bar: {width: 10}
     });
-    timebar1.loadAndRender("/package/novel/timeline30.json");
+    timebar1.loadAndRender("/package/novel/timeline30.json?lang=" + lang);
   });
 }
 

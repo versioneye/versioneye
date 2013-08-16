@@ -23,7 +23,7 @@ class NovelReleasesController < ApplicationController
   end
 
   def lang_timeline30
-    lang = "clojure"
+    lang = "php"
     lang = params[:lang] if params.has_key?(:lang)
 
     lang = Product.decode_language(lang)
