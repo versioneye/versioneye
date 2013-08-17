@@ -4,18 +4,17 @@ function init_plots(){
     console.debug("Plot dependencies are now loaded.")
     timebar1 = new Timebar({
       selector: "#plot_latest",
-      width: 610,
-      height: 140,
-      bar: {width: 10}});
+      width: 595,
+      height: 140
+    });
 
     var lang = jQuery("#language").data("language");
     timebar1.loadAndRender("/package/latest/timeline30.json?lang=" + lang);
 
     timebar1 = new Timebar({
       selector: "#plot_novel",
-      width: 610,
-      height: 80,
-      bar: {width: 10}
+      width: 595,
+      height: 80
     });
     timebar1.loadAndRender("/package/novel/timeline30.json?lang=" + lang);
   });
