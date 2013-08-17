@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
     else
       sign_in user
       if redirect_url
-        redirect_to  redirect_url
+        redirect_to redirect_url
       elsif user.projects.empty?
         redirect_back_or( user_packages_i_follow_path )
       else
