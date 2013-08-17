@@ -50,12 +50,12 @@ Versioneye::Application.routes.draw do
 
   get   '/package/latest',                      :to => 'latest_releases#index'
   get   '/package/latest/stats/:timespan',      :to => 'latest_releases#stats'
-  get   '/package/latest/timeline30',          :to => 'latest_releases#lang_timeline30'
+  get   '/package/latest/timeline30',           :to => 'latest_releases#lang_timeline30'
   get   '/package/latest/:lang',                :to => 'latest_releases#show'
 
   get   '/package/novel',                      :to => 'novel_releases#index'
   get   '/package/novel/stats/:timespan',      :to => 'novel_releases#stats'
-  get   '/package/novel/timeline30',          :to => 'novel_releases#lang_timeline30'
+  get   '/package/novel/timeline30',           :to => 'novel_releases#lang_timeline30'
   get   '/package/novel/:lang',                :to => 'novel_releases#show'
 
   namespace :settings do
