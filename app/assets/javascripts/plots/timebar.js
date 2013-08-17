@@ -2,14 +2,17 @@ define([require], function(require){
 
   function Timebar(settings){
     this.selector = settings.selector || "#area4";
-    this.margin   = settings.margin || {top: 20, right: 10, bottom: 5, left: 10};
+    this.margin   = settings.margin || {top: 0, right: 10, bottom: 0, left: 10};
     this.width    = settings.width || 960;
     this.height   = settings.height || 300;
     this.dataset  = settings.dataset || [];
-    this.bar      = settings.bar || {width: 10};
+
+    var maxHeight = this.height - (this.margin.top + this.margin.bottom);
+    this.bar      = {width: 10, maxHeight: maxHeight};
+    this.fontSize = settings.fontSize || 11;
 
     this.xScaler    = d3.time.scale().rangeRound([0, this.width]);
-    this.yScaler    = d3.scale.linear().range([this.height - this.margin.top , 0]);
+    this.yScaler    = d3.scale.linear().range([this.bar.maxHeight , 0]);
     this.dateParser = d3.time.format("%Y-%m-%d").parse;
     this.bisectDate = d3.bisector(function(d){return d.date;}).left;
   }
@@ -42,23 +45,40 @@ define([require], function(require){
 
     //-- update scalers
     thisPlot.xScaler.domain([new Date(data[0].date), d3.time.day.offset(new Date(data[data.length - 1].date), 1)]);
-    thisPlot.yScaler.domain(d3.extent(data, function(d){return d.value;}));
+    thisPlot.yScaler.domain([0, d3.max(data, function(d){return d.value;})]);
+    //thisPlot.yScaler.domain(d3.extent(data, function(d){return d.value;}));
     //-- render content
     console.debug(thisPlot.xScaler);
     var timebarCanvas = thisPlot.initCanvas();
-    timebarCanvas.select("g").selectAll(".bar")
+    var timebar = timebarCanvas.select("g")
+
+    thisPlot.bar.width = (thisPlot.width / thisPlot.dataset.length);
+    timebar.selectAll(".bar")
       .data(thisPlot.dataset)
-      .enter().append("rect").attr({
-        "class" : "bar",
-        "x": function(d){return thisPlot.xScaler(d.date);},
-        "width": thisPlot.bar.width,
-        "y": function(d){return thisPlot.yScaler(d.value) ;},
-        "height": function(d){return thisPlot.height  - thisPlot.margin.top - thisPlot.yScaler(d.value) ;}
-      });
+      .enter()
+        .append("rect")
+          .attr({
+            "class" : "bar",
+            "x": function(d){return thisPlot.xScaler(d.date);},
+            "width": thisPlot.bar.width - 1 ,
+            "y": function(d){return thisPlot.yScaler(d.value) ;},
+            "height": function(d){return thisPlot.bar.maxHeight -  thisPlot.yScaler(d.value) ;}
+          });
+
+    timebar.selectAll(".barValues")
+      .data(thisPlot.dataset)
+      .enter()
+      .append("text")
+          .attr({
+            "x" : function(d){return thisPlot.xScaler(d.date) + thisPlot.bar.width/2.0 ;},
+            "y" : function(d){return thisPlot.yScaler(d.value) + thisPlot.fontSize;},
+            "fill" : "white",
+            "text-anchor" : "middle"
+          })
+          .text(function(d){return d.value});
 
     //-- add axis
-    //thisPlot.addAxisX(timebarCanvas);
-    thisPlot.addFocusator(timebarCanvas);
+    thisPlot.addAxisX(timebarCanvas);
   };
 
   Timebar.prototype.initCanvas = function(){
@@ -96,38 +116,5 @@ define([require], function(require){
     return timebarCanvas;
   };
 
-  Timebar.prototype.addFocusator = function(timebarCanvas){
-    var thisPlot = this;
-    var focus = timebarCanvas.append("g")
-                  .attr({
-                    "class": "focus",
-                    "fill": "blue"
-                  })
-                  .style("display", "none");
-
-    focus.append("text")
-      .style({"font-size": "11"});
-
-    //-- info box
-    timebarCanvas
-          .on("mouseover", function(ev){focus.style("display", null);})
-          .on("mouseout", function(){focus.style("display", "none");})
-          .on("mousemove", mousemove);
-
-    function mousemove() {
-      var x0 = thisPlot.xScaler.invert(d3.mouse(this)[0]),
-          data = thisPlot.dataset,
-          i = thisPlot.bisectDate(data, x0, 1),
-          d0 = data[i - 1];
-
-      var d1 = (i < data.length) ? data[i] : data[data.length - 1];
-      var d = (x0 - d0.date > d1.date - x0) ? d1 : d0;
-      var X = thisPlot.xScaler(d.date) ,
-          Y = thisPlot.yScaler(d.value) ;
-
-      focus.attr("transform", "translate(" + X + "," + Y + ")");
-      focus.select("text").text(d.value);
-    }
-  };
   return Timebar;
 });
