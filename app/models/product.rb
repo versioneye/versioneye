@@ -70,6 +70,7 @@ class Product
     ])
 
   has_and_belongs_to_many :users
+  # has_and_belongs_to_many :licenses
 
   # has_and_belongs_to_many :versionarchives
   # has_and_belongs_to_many :versionlinks
