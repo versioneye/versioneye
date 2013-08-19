@@ -4,7 +4,7 @@ class License
   include Mongoid::Timestamps
 
   field :name         , type: String
-  field :identifier   , type: String
+  field :identiy      , type: String
   field :url          , type: String
   field :comments     , type: String
   field :distributions, type: String
