@@ -26,11 +26,11 @@ class LicenseMigration
         license.save
         p "create license #{license.name} - #{license.url} for #{license.prod_key} : #{license.version}"
       end
-      product.license = nil
-      product.licenseLink = nil
-      product.license_manual = nil
-      product.licenseLink_manual = nil
-      product.save
+      # product.license = nil
+      # product.licenseLink = nil
+      # product.license_manual = nil
+      # product.licenseLink_manual = nil
+      # product.save
     end
   end
 
