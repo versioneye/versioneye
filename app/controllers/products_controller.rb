@@ -222,7 +222,7 @@ class ProductsController < ApplicationController
     term = params[:term] || "nothing"
     results = []
     products = EsProduct.autocomplete(term)
- 
+
     products.each_with_index do |product, index|
       results << format_autocomplete(product)
       break if index > 9
@@ -244,7 +244,7 @@ class ProductsController < ApplicationController
         followers: product[:followers],
         url: product.to_url_path
       }
-     
+
     end
 
     def fetch_product( lang, prod_key )
