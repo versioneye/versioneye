@@ -73,8 +73,8 @@ define(['underscore', 'backbone'],
       if(_.isNaN(this.perPage) || _.isUndefined(this.perPage)){
         this.perPage = 5;
       }
-      var org_repos = this.onlyOrgRepos(); 
-      this.addNewItems(org_repos); 
+      var org_repos = this.onlyOrgRepos();
+      this.addNewItems(org_repos);
       
       return this;
     }

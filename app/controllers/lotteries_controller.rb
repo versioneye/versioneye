@@ -30,9 +30,8 @@ class LotteriesController < ApplicationController
   end
 
   def libraries
-    if Lottery.by_user(current_user).count > 0
-      flash[:success] = "You already have a ticket."
-      redirect_to thankyou_lottery_path and return
+    unless valid_ticket?
+      redirect_to "/lottery/thankyou" and return
     end
 
     @products = Product.all.desc(:followers).limit(12)
@@ -47,12 +46,20 @@ class LotteriesController < ApplicationController
   end
 
   def follow
-    product_keys = params[:products] || []
-    # TODO parse langauge and prod_key
-    product_keys.each do |prod_key|
+    unless valid_ticket?
+      redirect_to "/lottery/thankyou" and return
+    end
+
+    product_tokens = params[:products] || []
+    product_keys = []
+
+    product_tokens.each do |prod_token|
+      language, prod_key = prod_token.split(',')
+      language = Product.decode_language(language)
       prod_key = Product.decode_prod_key(prod_key)
-      prod     = Product.find_by_key(prod_key) # TODO Product.fetch_product(language, prod_key)
-      result   = ProductService.follow(prod[:language], prod_key, current_user)
+      product_keys << prod_key
+
+      ProductService.follow(language, prod_key, current_user)
     end
 
     lottery = Lottery.new user_id: current_user.id, selection: product_keys
@@ -64,4 +71,12 @@ class LotteriesController < ApplicationController
     Rails.logger.error e
   end
 
+  private
+  def valid_ticket?
+    if Lottery.by_user(current_user).count > 0
+      flash[:error] = "You already have a ticket."
+      return false
+    end
+    return true
+  end
 end
