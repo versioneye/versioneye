@@ -13,6 +13,7 @@
     <% @products.each do |product| %>
       <label class="btn lottery-btn btn-primary col-12 col-lg-6">
         <input type="checkbox" name = "products[]" value = "<%= "#{product.to_param}" %>">
+        <!-- TODO add language to the value -->
         <img src = "/assets/language/<%= Product.encode_language(product[:language]) %>.png" class = "img-responsive" /> <%= product.name %>
       </label>
     <% end %>

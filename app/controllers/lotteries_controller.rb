@@ -48,11 +48,11 @@ class LotteriesController < ApplicationController
 
   def follow
     product_keys = params[:products] || []
-
+    # TODO parse langauge and prod_key
     product_keys.each do |prod_key|
       prod_key = Product.decode_prod_key(prod_key)
-      prod = Product.find_by_key(prod_key)
-      result = ProductService.follow(prod[:language], prod_key, current_user)
+      prod     = Product.find_by_key(prod_key) # TODO Product.fetch_product(language, prod_key)
+      result   = ProductService.follow(prod[:language], prod_key, current_user)
     end
 
     lottery = Lottery.new user_id: current_user.id, selection: product_keys
@@ -60,6 +60,8 @@ class LotteriesController < ApplicationController
 
     UserMailer.new_ticket(current_user, lottery).deliver
     redirect_to "/lottery/thankyou"
+  rescue => e
+    Rails.logger.error e
   end
 
 end
