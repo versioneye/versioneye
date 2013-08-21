@@ -186,19 +186,21 @@
   <ul class="nav nav-pills">
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        Organizations
+        <i class = "icon-group">&nbsp;</i>Organizations
         <b class="caret"></b>
       </a>
       <ul class="dropdown-menu" id = "github-menu-orgs">Loading...</ul>
     </li>
    <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        Sort by
+        <i class = "icon-sort-by-alphabet">&nbsp;</i>Sort by
         <b class="caret"></b>
       </a>
       <ul id = "github-menu-sort" class="dropdown-menu">
         <li class="sort-item">
-          <a href= "javascript:void(0)" data-field="language" data-order = "-1">Language</a>
+          <a href= "javascript:void(0)" data-field="language" data-order = "-1">
+            Language
+          </a>
         </li>
         <li class="sort-item">
           <a href= "javascript:void(0)" data-field="updated_at" data-order= "-1">Updated</a>
@@ -220,7 +222,7 @@
     </li>
    <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        Filter by
+        <i class = "icon-filter">&nbsp;</i>Filter by
         <b class="caret"></b>
       </a>
       <ul class="dropdown-menu">
@@ -278,7 +280,16 @@
             Ruby
           </a>
         </li>
-    </ul>
+      </ul>
+    </li>
+    <li class = "dropdown">
+      <form class = "form" id = "github-repo-search">
+        <div class = "input-append">
+          <input  type = "text" class = "span2" id = "github-search-term" class = "search-box" 
+            name = "github_search" placeholder = "filter by name">
+          <button class = "btn" id = "github-search-btn" type = "button"> <i class = "icon-search">&nbsp;</i></button>
+        </div>
+      </div>
     </li>
   </ul>
 </script>
