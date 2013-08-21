@@ -44,12 +44,20 @@ define(['underscore', 'backbone'],
          if(_.isFunction(update_fn)){update_fn(repos);}
         },
         error: function(repos, response, options){
-          showNotification("alert alert-error", 
+          showNotification("alert alert-error",
                            '<div><i class="icon-info-sign"></i> Cant load your repositoiries due a connectivity issues.</div>');
           $("#github-repos").html("Connection issues - cant read data from Github.");
         }
       });
-     }
+    },
+    matchByName: function(search_term){
+      var matched_repos = this.filter(function(repo){
+        return repo.get("name").indexOf(search_term) >= 0;
+      },
+      this);
+
+      return matched_repos;
+    }
    });
 
   return GithubAllRepoCollection;
