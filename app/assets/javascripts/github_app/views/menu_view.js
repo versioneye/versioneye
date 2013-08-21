@@ -19,7 +19,9 @@ define(['underscore', 'backbone'],
     events: {
       "click li.org-item": "onOrgItem",
       "click li.sort-item": "onSortItem",
-      "click li.filter-item": "onFilterItem"
+      "click li.filter-item": "onFilterItem",
+      "click #github-search-btn": "onSearchItem",
+      "submit #github-repo-search" : "onSearchItem"
     },
     render: function(){
       console.log("Rendering menu...");
@@ -42,7 +44,7 @@ define(['underscore', 'backbone'],
     onSortItem: function(ev){
       console.debug("catched event on Sort button");
       sort_params = $(ev.target).data();
-      
+
       this.currentRepos.sortByField(sort_params['field'], sort_params['order']);
       sort_params['order'] = -1 * parseInt(sort_params['order']);
       return false;
@@ -70,6 +72,18 @@ define(['underscore', 'backbone'],
         var filtered_repos = this.currentRepos.filterByField(filter_data['field'], filter_data['value']);
         this.currentRepos.addNewItems(filtered_repos);
       }
+      return true;
+    },
+    onSearchItem: function(ev){
+      ev.preventDefault();
+      var search_term = $("#github-search-term").val();
+      var search_matches = this.allRepos.matchByName(search_term);
+
+      console.debug("user is searching: " + search_term);
+      this.removePrevSelection();
+      this.currentRepos.reset();
+      this.currentRepos.addNewItems(search_matches);
+
       return true;
     }
   });
