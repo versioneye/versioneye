@@ -20,6 +20,13 @@ module V2
       project
     end
 
+    def self.fetch_license_info( package )
+      return "unknown" if package.nil?
+      licenses = package.licenses
+      return "unknown" if licenses.nil? || licenses.empty?
+      licenses.map{|a| a.name}.join(", ")
+    end
+
     resource :projects do
 
       before do
@@ -184,7 +191,7 @@ module V2
           package_url = nil
           unless dep[:prod_key].nil?
             package = Product.find_by_key dep[:prod_key]
-            license = package.license_info
+            license = ProjectsApiV2.fetch_license_info( package )
           end
 
           license ||= "unknown"
