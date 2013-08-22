@@ -222,8 +222,8 @@
                     <tr>
                       <td><a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></td>
                       <td>
-                        <% if license.url && !license.url.empty? %>
-                          <a href="<%= license.url %> "><%= license.name %> </a>
+                        <% if license.link && !license.link.empty? %>
+                          <a href="<%= license.link %> "><%= license.name %> </a>
                         <% else %>
                           <%= license.name %>
                         <% end %>
@@ -233,7 +233,7 @@
                 <% else %>
                   <tr class="flash warning">
                     <td><a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></td>
-                    <td> UNKNOWN </td>
+                    <td> unknown </td>
                   </tr>
                 <% end %>
               <% end %>
