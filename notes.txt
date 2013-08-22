@@ -10,11 +10,7 @@ Failure/Error: post "/sessions", {:session => {:email => "test@test.de", :passwo
        No HTTP_REFERER was set in the request to this action, so redirect_to :back could not be called successfully. If this is a test, make sure to specify request.env["HTTP_REFERER"].
 
 
-
-
 - BlogPost about why we removed Facebook login
--
-
 
 
 Continuous Updating is an agile technique to keep your software projects up-to-date. Learn more about:
