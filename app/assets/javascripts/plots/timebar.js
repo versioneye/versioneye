@@ -79,6 +79,7 @@ define([require], function(require){
 
     //-- add axis
     thisPlot.addAxisX(timebarCanvas);
+    thisPlot.addTooltip(timebarCanvas);
   };
 
   Timebar.prototype.initCanvas = function(){
@@ -96,6 +97,30 @@ define([require], function(require){
     return timebarCanvas;
   };
 
+  Timebar.prototype.addTooltip = function(timebarCanvas){
+    var tooltip = d3.select("body").append("div")
+                    .attr("class", "tooltip")
+                    .style("opacity", 0);
+    var dateFormatter = d3.time.format("%A, %e.%B");
+
+    d3.selectAll(".bar")
+        .on("mouseover", function(d){
+          tooltip.transition()
+                  .duration(200)
+                  .style({
+                    "opacity": 0.9,
+                    "left": (d3.event.pageX) + "px",
+                    "top" : (d3.event.pageY) + "px"
+                  })
+                  .text(dateFormatter(d.date));
+        })
+        .on("mouseout", function(d){
+          tooltip.transition()
+                  .duration(500)
+                  .style("opacity", 0);
+        });
+
+  };
   Timebar.prototype.addAxisX = function(timebarCanvas){
     var thisPlot = this,
       xAxis = d3.svg.axis()
