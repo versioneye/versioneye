@@ -18,6 +18,13 @@ class ProjectsApiV1 < Grape::API
     project
   end
 
+  def self.fetch_license_info( package )
+    return "unknown" if package.nil?
+    licenses = package.licenses
+    return "unknown" if licenses.nil? || licenses.empty?
+    licenses.map{|a| a.name}.join(", ")
+  end
+
   resource :projects do
 
     before do
@@ -147,7 +154,7 @@ class ProjectsApiV1 < Grape::API
         package_url = nil
         unless dep[:prod_key].nil?
           package = Product.find_by_key dep[:prod_key]
-          license = package.license_info
+          license = ProjectsApiV1.fetch_license_info( package )
         end
 
         license ||= "unknown"

@@ -17,4 +17,14 @@ class License
     Product.fetch_product(self.language, self.prod_key)
   end
 
+  def self.for_product( product )
+    License.where(:language => product.language, :prod_key => product.prod_key, :version => product.version)
+  end
+
+  def link
+    return url if url && !url.empty?
+    return "http://choosealicense.com/licenses/mit/" if name.match(/^#{name}$/i)
+    return nil
+  end
+
 end

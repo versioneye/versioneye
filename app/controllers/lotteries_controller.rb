@@ -7,7 +7,7 @@ class LotteriesController < ApplicationController
   before_filter :authenticate, :only => [:libraries, :follow, :thankyou]
 
   def index
-    render text: "Uhh, sry but you shouldnt see this."
+    render text: "Uhh, sorry but you shouldnt see this."
   end
 
   def show
@@ -58,7 +58,6 @@ class LotteriesController < ApplicationController
       language = Product.decode_language(language)
       prod_key = Product.decode_prod_key(prod_key)
       product_keys << prod_key
-
       ProductService.follow(language, prod_key, current_user)
     end
 
@@ -67,14 +66,18 @@ class LotteriesController < ApplicationController
 
     UserMailer.new_ticket(current_user, lottery).deliver
     redirect_to "/lottery/thankyou"
+  rescue => e
+    Rails.logger.error e
   end
 
   private
-  def valid_ticket?
-    if Lottery.by_user(current_user).count > 0
-      flash[:error] = "You already have a ticket."
-      return false
+
+    def valid_ticket?
+      if Lottery.by_user(current_user).count > 0
+        flash[:error] = "You already have a ticket."
+        return false
+      end
+      return true
     end
-    return true
-  end
+
 end

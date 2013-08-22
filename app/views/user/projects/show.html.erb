@@ -168,6 +168,7 @@
           </li>
         </ul>
 
+        <% products = Array.new %>
         <div class="tab-content" style="width: 100%;" >
           <div id="dependencies" class="tab-pane active" style="width: 617px;" >
             <% if @project.dependencies && @project.dependencies.size > 0 %>
@@ -183,14 +184,9 @@
                   </tr>
                 </thead>
 
-                <% licences = {} %>
                 <% @project.dependencies.sort { |a, b| b.outdated.to_s <=> a.outdated.to_s }.each do |dep| %>
                   <% product = dep.find_or_init_product %>
                   <% dep.outdated? %>
-
-                  <% if product.license_info.nil? then key = "unknown" else key  = product.license_info end %>
-                  <% licences[key] = []  unless licences.key? key %>
-                  <% licences[key] << product %>
 
                   <% if dep.unknown? %>
                     <%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep, :follow_link => "false"} %>
@@ -202,6 +198,9 @@
                     <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep, :follow_link => "false"} %>
                   <% end %>
 
+                  <% product.version = dep.version_requested %>
+                  <% products << product %>
+
                 <% end %>
               </table>
 
@@ -209,23 +208,36 @@
           </div>
 
           <div id="licenses" class="tab-pane">
-            <% if licences %>
-              <% licences = licences.sort_by {|key, vals| -vals.length} %>
-              <% licences.each do |licence, products| %>
-                <div class="row search-item" >
-                  <h5 class="dep_header"><%= licence %></h5>
-                  <p>
-                    <% products.each do |product| %>
-                      <a href = "<%= product_version_path(product) %>" style= "text-decoration: none;">
-                        <span class = "label label-success" style = "margin-left :5px;">
-                          <%= product.name %>
-                        </span>
-                      </a>
-                    <% end %>
-                  </p>
-                </div>
+            <table class="dependency_table" style="width: 617px;">
+              <thead>
+                <tr>
+                  <th width="300px" ></th>
+                  <th >License</th>
+                </tr>
+              </thead>
+              <% products.each do |product| %>
+                <% licenses = product.licenses %>
+                <% if licenses && !licenses.empty? %>
+                  <% licenses.each do |license| %>
+                    <tr>
+                      <td><a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></td>
+                      <td>
+                        <% if license.link && !license.link.empty? %>
+                          <a href="<%= license.link %> "><%= license.name %> </a>
+                        <% else %>
+                          <%= license.name %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% else %>
+                  <tr class="flash warning">
+                    <td><a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></td>
+                    <td> unknown </td>
+                  </tr>
+                <% end %>
               <% end %>
-            <% end %>
+            </table>
           </div>
 
           <script>

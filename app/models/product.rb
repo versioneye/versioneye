@@ -274,15 +274,18 @@ class Product
   end
 
   def license_info
-    if self.license.nil? || self.license.empty? || self.license.eql?("unknown")
-      return self.license_manual
-    end
-    return self.license
+    licenses = self.licenses
+    return "unknown" if licenses.nil? || licenses.empty?
+    licenses.map{|a| a.name}.join(", ")
   end
 
   def license_link_info
     return self.licenseLink_manual unless self.licenseLink
     return self.licenseLink
+  end
+
+  def licenses
+    License.for_product( self )
   end
 
   def update_used_by_count( persist = true )
