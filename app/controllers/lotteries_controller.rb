@@ -7,7 +7,7 @@ class LotteriesController < ApplicationController
   before_filter :authenticate, :only => [:libraries, :follow, :thankyou]
 
   def index
-    render text: "Uhh, sry but you shouldnt see this."
+    render text: "Uhh, sorry but you shouldnt see this."
   end
 
   def show
