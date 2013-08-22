@@ -168,6 +168,7 @@
           </li>
         </ul>
 
+        <% products = Array.new %>
         <div class="tab-content" style="width: 100%;" >
           <div id="dependencies" class="tab-pane active" style="width: 617px;" >
             <% if @project.dependencies && @project.dependencies.size > 0 %>
@@ -197,6 +198,9 @@
                     <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep, :follow_link => "false"} %>
                   <% end %>
 
+                  <% product.version = dep.version_requested %>
+                  <% products << product %>
+
                 <% end %>
               </table>
 
@@ -211,13 +215,12 @@
                   <th >License</th>
                 </tr>
               </thead>
-              <% @project.dependencies.each do |dep| %>
-                <% product = dep.find_or_init_product %>
+              <% products.each do |product| %>
                 <% licenses = product.licenses %>
                 <% if licenses && !licenses.empty? %>
                   <% licenses.each do |license| %>
                     <tr>
-                      <td><a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" ><%= product.name %></a></td>
+                      <td><a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></td>
                       <td>
                         <% if license.url && !license.url.empty? %>
                           <a href="<%= license.url %> "><%= license.name %> </a>
@@ -229,7 +232,7 @@
                   <% end %>
                 <% else %>
                   <tr class="flash warning">
-                    <td><a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" ><%= product.name %></a></td>
+                    <td><a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></td>
                     <td> UNKNOWN </td>
                   </tr>
                 <% end %>
