@@ -36,11 +36,6 @@ class Product
   field :last_release      , type: Integer, default: 0
   field :used_by_count     , type: Integer, default: 0
 
-  field :license           , type: String
-  field :licenseLink       , type: String
-  field :license_manual    , type: String
-  field :licenseLink_manual, type: String
-
   field :version     , type: String
   field :version_link, type: String
 
@@ -53,7 +48,7 @@ class Product
 
   field :reindex, type: Boolean, default: true
 
-  index [[:followers, Mongo::DESCENDING]]
+  index [[:followers,  Mongo::DESCENDING]]
   index [[:updated_at, Mongo::DESCENDING]]
   index [[:created_at, Mongo::DESCENDING]]
 
@@ -277,11 +272,6 @@ class Product
     licenses = self.licenses
     return "unknown" if licenses.nil? || licenses.empty?
     licenses.map{|a| a.name}.join(", ")
-  end
-
-  def license_link_info
-    return self.licenseLink_manual unless self.licenseLink
-    return self.licenseLink
   end
 
   def licenses
