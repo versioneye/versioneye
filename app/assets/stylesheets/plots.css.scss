@@ -7,6 +7,19 @@ td.plot div:hover {
     background: steelblue;
 }
 
+.tooltip {
+  position: absolute;
+  text-align: center;
+  color: white;
+  width: 60px;
+  min-height: 20px;
+  padding: 2px;
+  font-size: 11px;
+  background-color: steelblue;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
 svg {
   font-size: 12px;
 

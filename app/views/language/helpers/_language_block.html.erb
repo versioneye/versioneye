@@ -1,10 +1,19 @@
 
 <% language ||= language_block %>
+<% language_key = LanguageDailyStats.language_to_sym(language[:name]) %>
 
 <div>
   <img class = "img centered" src = "/assets/language/<%= Product.encode_language(language[:name]) %>.png" />
   <table class = "table table-hover no-borders" style = "font-size: 0.85em;">
     <tbody>
+      <tr>
+        <td>Packages</td>
+        <td><%= @today_stats[language_key.to_s]["total_package"] || 0 %></td>
+      </tr>
+      <tr>
+        <td>Artifacts</td>
+        <td><%= @today_stats[language_key.to_s]["total_artifact"] || 0 %></td>
+      </tr>
       <tr>
         <td>Package Manager</td>
         <td><%= language[:supported_managers] %></td>
@@ -20,6 +29,13 @@
       <tr>
         <td>Licence </td>
         <td><a href = "<%= language[:licence_url] %>" target = "_blank"><%= language[:licence] %></a></td>
+      </tr>
+      <tr>
+        <td>Releases</td>
+        <td>
+          <%= link_to "Latest releases", package_latest_path %> <br />
+          <%= link_to "Novel packages", package_novel_path %>
+        </td>
       </tr>
       <tr>
         <td>Links </td>
