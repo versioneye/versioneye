@@ -25,8 +25,6 @@ class LatestReleasesController < ApplicationController
   def lang_timeline30
     lang = "php"
     lang = params[:lang] if params.has_key?(:lang)
-    p "lang: #{lang}"
-    p params
     lang = Product.decode_language(lang)
     render json: LanguageDailyStats.versions_timeline30(lang)
   end
