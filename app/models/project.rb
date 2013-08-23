@@ -16,9 +16,9 @@ class Project
   A_SOURCE_URL    = "url"
   A_SOURCE_GITHUB = "github"
 
-  A_PERIOD_WEEKLY = "weekly"
-  A_PERIOD_DAILY  = "daily"
-
+  A_PERIOD_MONTHLY = "monthly"
+  A_PERIOD_WEEKLY  = "weekly"
+  A_PERIOD_DAILY   = "daily"
 
   field :name       , type: String
   field :description, type: String
