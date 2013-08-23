@@ -19,7 +19,7 @@ class LanguageDailyStats
 
   index(
     [:date, Mongo::DESCENDING],
-    [:date, Mongo::DESCENDING]  
+    [:date, Mongo::DESCENDING]
   )
 
   def self.inc_dummy_version(prod)
@@ -80,7 +80,7 @@ class LanguageDailyStats
       self.update_day_stats(n)
     end
   end
- 
+
   def initialize_metrics_tables
     Product.supported_languages.each do |lang|
       lang_key = LanguageDailyStats.language_to_sym(lang)
@@ -99,7 +99,7 @@ class LanguageDailyStats
   def self.initialize_day_document(that_day)
     day_string = self.to_date_string(that_day)
     self.where(date_string: day_string).delete_all #remove previous  document
-    
+
     new_doc  = self.new date: that_day.at_midnight
     new_doc[:date_string] = self.to_date_string(that_day)
     new_doc.initialize_metrics_tables
@@ -130,7 +130,7 @@ class LanguageDailyStats
     if Product.supported_languages.include?(release[:language])
       prod_info = Product.fetch_product(release[:language], release[:prod_key])
       metric_key = LanguageDailyStats.language_to_sym(release[:language])
-      
+
       self.inc_version(metric_key)
       self.inc_novel(metric_key) if LanguageDailyStats.novel?(release, prod_info)
     else
@@ -151,10 +151,10 @@ class LanguageDailyStats
     that_day = self[:date]
     Product.supported_languages.each do |lang|
       n_artifacts = 0
-      Product.by_language(lang).where(:created_at.lt => that_day.at_midnight).each do |prod| 
+      Product.by_language(lang).where(:created_at.lt => that_day.at_midnight).each do |prod|
         n_artifacts += prod.versions.where(:created_at.lt => that_day.at_midnight).count
       end
-      
+
       language_key = LanguageDailyStats.language_to_sym(lang)
       self.inc_total_artifact(language_key, n_artifacts)
     end
@@ -181,7 +181,7 @@ class LanguageDailyStats
       return false
     end
 
-    if release_info.attributes.has_key?(:created_at) and release_info.attributes.has_key?(:created_at) 
+    if release_info.attributes.has_key?(:created_at) and release_info.attributes.has_key?(:created_at)
       product_date = self.to_date_string(prod_info[:created_at])
       release_date = self.to_date_string(release_info[:created_at])
       return release_date == product_date
@@ -202,7 +202,7 @@ class LanguageDailyStats
     stats = {}
     docs.each do |doc|
       doc_stats = doc.only_metrics
-      stats.merge!(doc_stats) do |lang_key, doc1, doc2| 
+      stats.merge!(doc_stats) do |lang_key, doc1, doc2|
         doc1 ||= {}
         doc1.merge(doc2) {|metric, oldval, newval| oldval + newval}
       end
@@ -322,7 +322,7 @@ class LanguageDailyStats
     rows = self.last_30_days_stats
     results = []
     return results if rows.nil?
-    
+
     lang_key = LanguageDailyStats.language_to_sym(lang)
     rows.each do |row|
       results << {
