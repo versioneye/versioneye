@@ -62,6 +62,22 @@ class PageController < ApplicationController
     redirect_to path.gsub("//", "/")
   end
 
+  def show_visual_old
+    key      = params[:key]
+    version  = params[:version]
+    prod_key = key.gsub(":", "/").gsub("~", ".").gsub("--", "/")
+    product  = Product.find_by_key( prod_key )
+    new_path = "/"
+    if product
+      new_path += "#{product.language.downcase}/#{product.to_param}"
+      if version
+        new_path += "/#{version}"
+      end
+      new_path += "/visual_dependencies"
+    end
+    redirect_to new_path
+  end
+
   def disclaimer
     redirect_to "http://www.disclaimer.de/disclaimer.htm?farbe=FFFFFF/000000/000000/000000"
   end
