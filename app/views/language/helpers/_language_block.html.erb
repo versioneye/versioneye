@@ -8,11 +8,11 @@
     <tbody>
       <tr>
         <td>Packages</td>
-        <td><%= @today_stats[language_key.to_s]["total_package"] || 0 %></td>
+        <td><%= @latest_stats[language_key.to_s]["total_package"] || 0 %></td>
       </tr>
       <tr>
         <td>Artifacts</td>
-        <td><%= @today_stats[language_key.to_s]["total_artifact"] || 0 %></td>
+        <td><%= @latest_stats[language_key.to_s]["total_artifact"] || 0 %></td>
       </tr>
       <tr>
         <td>Package Manager</td>
