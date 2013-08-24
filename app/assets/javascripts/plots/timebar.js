@@ -48,7 +48,6 @@ define([require], function(require){
     thisPlot.yScaler.domain([0, d3.max(data, function(d){return d.value;})]);
     //thisPlot.yScaler.domain(d3.extent(data, function(d){return d.value;}));
     //-- render content
-    console.debug(thisPlot.xScaler);
     var timebarCanvas = thisPlot.initCanvas();
     var timebar = timebarCanvas.select("g")
 

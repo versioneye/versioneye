@@ -96,21 +96,21 @@ class LanguageDailyStats
     that_day.strftime("%Y-%m-%d")
   end
 
-  def self.new_document(that_day)
+  def self.new_document(that_day, save = false)
     day_string = self.to_date_string(that_day)
     self.where(date_string: day_string).delete_all #remove previous  document
 
     new_doc  = self.new date: that_day.at_midnight
     new_doc[:date_string] = self.to_date_string(that_day)
     new_doc.initialize_metrics_tables
-    new_doc.save
-
+    
+    new_doc.save if save
     new_doc
   end
 
   def self.update_day_stats( n )
     that_day = n.days.ago.at_beginning_of_day
-    that_day_doc = self.new_document(that_day)
+    that_day_doc = self.new_document(that_day, true)
     that_day_doc.count_releases
     that_day_doc.count_language_packages
     that_day_doc.count_language_artifacts
@@ -220,6 +220,11 @@ class LanguageDailyStats
   end
 
   #-- query helpers
+  def self.latest_stats
+    doc = self.all.last
+    self.doc_metrics(doc)
+  end
+
   def self.since_to(dt_since, dt_to)
     self.where(:date.gte => dt_since, :date.lt => dt_to).desc(:date)
   end
