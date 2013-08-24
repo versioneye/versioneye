@@ -56,7 +56,7 @@ group :test do
   gem 'rspec-mocks'       , '2.14.1'
   gem 'capybara'          , '2.1.0'
   gem 'capybara-firebug'  , '~> 1.3'
-  gem 'selenium-webdriver', '2.33.0'
+  gem 'selenium-webdriver', '2.35.0'
   gem 'fakeweb'           , '1.3.0'
   gem 'debugger'
   gem 'database_cleaner'  , '1.0.1'
