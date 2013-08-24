@@ -96,7 +96,7 @@ class LanguageDailyStats
     that_day.strftime("%Y-%m-%d")
   end
 
-  def self.initialize_day_document(that_day)
+  def self.new_document(that_day)
     day_string = self.to_date_string(that_day)
     self.where(date_string: day_string).delete_all #remove previous  document
 
@@ -110,7 +110,7 @@ class LanguageDailyStats
 
   def self.update_day_stats( n )
     that_day = n.days.ago.at_beginning_of_day
-    that_day_doc = self.initialize_day_document(that_day)
+    that_day_doc = self.new_document(that_day)
     that_day_doc.count_releases
     that_day_doc.count_language_packages
     that_day_doc.count_language_artifacts
@@ -190,18 +190,26 @@ class LanguageDailyStats
     false
   end
 
-  def only_metrics
+  def metrics
     doc = self.attributes
     langs_keys = []
     Product.supported_languages.each {|lang| langs_keys << LanguageDailyStats.language_to_sym(lang)}
-
     doc.keep_if {|key, val| langs_keys.include?(key.to_sym)}
+  end
+  
+  #shows only metrics of Stats doc 
+  def self.doc_metrics(doc)
+    if doc.nil?
+      Rails.logger.warn("It tried to read not existing todays stat - returning new empty doc.")
+      doc = self.new_document(Date.today)
+    end  
+    doc.metrics
   end
 
   def self.combine_docs(docs)
     stats = {}
     docs.each do |doc|
-      doc_stats = doc.only_metrics
+      doc_stats = LanguageDailyStats.doc_metrics(doc)
       stats.merge!(doc_stats) do |lang_key, doc1, doc2|
         doc1 ||= {}
         doc1.merge(doc2) {|metric, oldval, newval| oldval + newval}
@@ -210,6 +218,7 @@ class LanguageDailyStats
 
     stats
   end
+
   #-- query helpers
   def self.since_to(dt_since, dt_to)
     self.where(:date.gte => dt_since, :date.lt => dt_to).desc(:date)
@@ -217,12 +226,14 @@ class LanguageDailyStats
 
   def self.today_stats
     dt_string = LanguageDailyStats.to_date_string(Date.today)
-    self.where(date_string: dt_string).shift.only_metrics
+    doc = self.where(date_string: dt_string).shift
+    self.doc_metrics(doc)
   end
 
   def self.yesterday_stats
     dt_string = LanguageDailyStats.to_date_string(1.day.ago)
-    self.where(date_string: dt_string).shift.only_metrics
+    doc = self.where(date_string: dt_string).shift
+    self.doc_metrics(doc)
   end
 
   def self.current_week_stats
