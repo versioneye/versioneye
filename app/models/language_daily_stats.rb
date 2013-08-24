@@ -103,7 +103,7 @@ class LanguageDailyStats
     new_doc  = self.new date: that_day.at_midnight
     new_doc[:date_string] = self.to_date_string(that_day)
     new_doc.initialize_metrics_tables
-    
+
     new_doc.save if save
     new_doc
   end
@@ -196,13 +196,13 @@ class LanguageDailyStats
     Product.supported_languages.each {|lang| langs_keys << LanguageDailyStats.language_to_sym(lang)}
     doc.keep_if {|key, val| langs_keys.include?(key.to_sym)}
   end
-  
-  #shows only metrics of Stats doc 
+
+  #shows only metrics of Stats doc
   def self.doc_metrics(doc)
     if doc.nil?
       Rails.logger.warn("It tried to read not existing todays stat - returning new empty doc.")
       doc = self.new_document(Date.today)
-    end  
+    end
     doc.metrics
   end
 
@@ -221,7 +221,7 @@ class LanguageDailyStats
 
   #-- query helpers
   def self.latest_stats
-    doc = self.all.last
+    doc = LanguageDailyStats.where(:"Ruby.total_artifact".gt => 0).desc(:date).first
     self.doc_metrics(doc)
   end
 
