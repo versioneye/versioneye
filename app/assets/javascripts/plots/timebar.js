@@ -8,7 +8,7 @@ define([require], function(require){
     this.dataset  = settings.dataset || [];
 
     var maxHeight = this.height - (this.margin.top + this.margin.bottom);
-    this.bar      = {width: 10, maxHeight: maxHeight};
+    this.bar      = {width: 10, maxHeight: maxHeight, padding: 2};
     this.fontSize = settings.fontSize || 11;
 
     this.xScaler    = d3.time.scale().rangeRound([0, this.width]);
@@ -52,7 +52,7 @@ define([require], function(require){
     var timebarCanvas = thisPlot.initCanvas();
     var timebar = timebarCanvas.select("g")
 
-    thisPlot.bar.width = (thisPlot.width / thisPlot.dataset.length);
+    thisPlot.bar.width = Math.round(thisPlot.width / (thisPlot.dataset.length * 1.0))  - thisPlot.bar.padding;
     timebar.selectAll(".bar")
       .data(thisPlot.dataset)
       .enter()
@@ -60,7 +60,7 @@ define([require], function(require){
           .attr({
             "class" : "bar",
             "x": function(d){return thisPlot.xScaler(d.date);},
-            "width": thisPlot.bar.width - 1 ,
+            "width": thisPlot.bar.width,
             "y": function(d){return thisPlot.yScaler(d.value) ;},
             "height": function(d){return thisPlot.bar.maxHeight -  thisPlot.yScaler(d.value) ;}
           });
@@ -109,7 +109,7 @@ define([require], function(require){
                   .duration(200)
                   .style({
                     "opacity": 0.9,
-                    "left": (d3.event.pageX) + "px",
+                    "left": (d3.event.pageX - 10) + "px",
                     "top" : (d3.event.pageY) + "px"
                   })
                   .text(dateFormatter(d.date));
