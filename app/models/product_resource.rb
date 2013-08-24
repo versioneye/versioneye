@@ -9,7 +9,7 @@ class ProductResource
   field :crawled      , type: Boolean, default: false
   field :prod_key     , type: String
   field :prod_type    , type: String
-  field :language     , type: String # TODO_vc
+  field :language     , type: String
 
   has_one :submitted_url, autosave: true
 
