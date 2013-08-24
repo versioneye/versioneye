@@ -85,86 +85,6 @@ class Product
          A_LANGUAGE_CLOJURE]
   end
 
-  # languages have to be an array of strings.
-  def self.find_by(query, description = nil, group_id = nil, languages=nil, limit=300)
-    searched_name = nil
-    if query
-      searched_name = String.new( query.gsub(" ", "-") )
-    end
-    result1 = Product.find_all(searched_name, description, group_id, languages, limit, nil)
-
-    if searched_name.nil? || searched_name.empty?
-      return result1
-    end
-
-    prod_keys = Array.new
-    if result1 && !result1.empty?
-      prod_keys = result1.map{|w| "#{w.prod_key}"}
-    end
-    result2 = Product.find_all(searched_name, description, group_id, languages, limit, prod_keys)
-    result = result1 + result2
-    return result
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
-    Mongoid::Criteria.new(Product, {_id: -1})
-  end
-
-  # languages have to be an array of strings.
-  def self.find_all(searched_name, description, group_id, languages=nil, limit=300, exclude_keys)
-    query = Mongoid::Criteria.new(Product)
-    if searched_name && !searched_name.empty?
-      if exclude_keys
-        query = Product.find_by_name_exclude(searched_name, exclude_keys)
-      else
-        query = Product.find_by_name(searched_name)
-      end
-    elsif description && !description.empty?
-      query = Product.find_by_description(description)
-    elsif group_id && !group_id.empty?
-      return Product.where(group_id: /^#{group_id}/).desc(:followers).asc(:name).limit(limit)
-    else
-      return Mongoid::Criteria.new(Product, {_id: -1})
-    end
-    query = add_to_query(query, group_id, languages)
-    query = query.desc(:followers).asc(:name).limit(limit)
-    return query
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
-    Mongoid::Criteria.new(Product, {_id: -1})
-  end
-
-  def self.find_by_name(searched_name)
-    if (searched_name.nil? || searched_name.strip == "")
-      return nil
-    end
-    Product.where(name_downcase: /^#{searched_name}/)
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
-    Mongoid::Criteria.new(Product, {_id: -1})
-  end
-
-  def self.find_by_name_exclude(searched_name, prod_keys)
-    if (searched_name.nil? || searched_name.strip == "")
-      return nil
-    end
-    Product.all(conditions: { name_downcase: /#{searched_name}/, :prod_key.nin => prod_keys})
-  end
-
-  def self.find_by_description(description)
-    if (description.nil? || description.strip == "")
-      return Mongoid::Criteria.new(Product, {_id: -1})
-    end
-    query = Product.all(conditions: {"$or" => [ {"description" => /#{description}/i}, {"description_manual" => /#{description}/i} ] })
-    query
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
-    Mongoid::Criteria.new(Product, {_id: -1})
-  end
-
   # TODO double check this
   def self.find_by_key(searched_key)
     return nil if searched_key.nil? || searched_key.strip == ""
@@ -176,14 +96,6 @@ class Product
   def self.find_by_lang_key(language, searched_key)
     return nil if searched_key.nil? || searched_key.empty? || language.nil? || language.empty?
     Product.where(language: language, prod_key: searched_key).shift
-  end
-
-  # This is slow !! Searches by regex are always slower than exact searches!
-  def self.find_by_key_case_insensitiv(searched_key)
-    return nil if searched_key.nil? || searched_key.strip == ""
-    result = Product.all(conditions: {prod_key: /^#{searched_key}$/i})
-    return nil if (result.nil? || result.empty?)
-    return result[0]
   end
 
   # This is slow !! Searches by regex are always slower than exact searches!
@@ -410,23 +322,6 @@ class Product
       return "" if text.nil?
       return "#{text[0..size]}..." if text.size > size
       return text[0..size]
-    end
-
-    def self.add_description_to_query(query, description)
-      if (description && !description.empty?)
-        query = query.where("$or" => [ {"description" => /#{description}/i}, {"description_manual" => /#{description}/i} ] )
-      end
-      query
-    end
-
-    def self.add_to_query(query, group_id, languages)
-      if (group_id && !group_id.empty?)
-        query = query.where(group_id: /^#{group_id}/i)
-      end
-      if languages && !languages.empty?
-        query = query.in(language: languages)
-      end
-      query
     end
 
 end

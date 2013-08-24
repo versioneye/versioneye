@@ -16,7 +16,7 @@ describe "search" do
     product.versions.push(version)
     product.save
 
-    results = Product.find_by_name( "json" )
+    results = MongoProduct.find_by_name( "json" )
     results.should_not be_nil
     results.size.should eq(1)
 
@@ -45,7 +45,7 @@ describe "search" do
     product.versions.push(version)
     product.save
 
-    results = Product.find_by_name( "json_g" )
+    results = MongoProduct.find_by_name( "json_g" )
     results.should_not be_nil
     results.size.should eq(1)
 
