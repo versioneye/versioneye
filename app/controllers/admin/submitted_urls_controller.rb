@@ -1,7 +1,7 @@
 class Admin::SubmittedUrlsController < ApplicationController
 
   before_filter :admin_user
-  
+
   def index
     @show_state = params[:by_state]
     @users = {}
@@ -20,8 +20,8 @@ class Admin::SubmittedUrlsController < ApplicationController
       @submitted_urls = SubmittedUrl.as_unchecked
     end
     @submitted_urls = @submitted_urls.desc(:created_at).paginate(page: params[:page], per_page: 10)
-    @submitted_urls.each do |item| 
-      user_id = item.user_id 
+    @submitted_urls.each do |item|
+      user_id = item.user_id
       @users[user_id] = User.find_by_id(user_id) unless user_id.nil?
     end
   end
@@ -36,7 +36,8 @@ class Admin::SubmittedUrlsController < ApplicationController
                                          :resource_type => params[:resource_type],
                                          :submitted_url => submitted_url)
       if new_resource.save
-        submitted_url[:declined] = false
+        submitted_url.declined = false
+        submitted_url.product_resource = new_resource
         submitted_url.save
         flash[:success] = "Resource was accepted successfully"
         SubmittedUrlMailer.approved_url_email(submitted_url).deliver
@@ -54,7 +55,7 @@ class Admin::SubmittedUrlsController < ApplicationController
     else
       submitted_url.declined = true
       submitted_url.declined_message = params[:declined_message]
-      if submitted_url.save 
+      if submitted_url.save
         flash[:notice] = "Url is now declined."
         SubmittedUrlMailer.declined_url_email(submitted_url).deliver
       else
@@ -76,8 +77,8 @@ class Admin::SubmittedUrlsController < ApplicationController
     redirect_to :back
   end
 
-  private 
-  
+  private
+
     def admin_user
       redirect_to(root_path) unless signed_in_admin?
     end

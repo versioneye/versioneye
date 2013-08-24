@@ -18,13 +18,6 @@ class ProjectsApiV1 < Grape::API
     project
   end
 
-  def self.fetch_license_info( package )
-    return "unknown" if package.nil?
-    licenses = package.licenses
-    return "unknown" if licenses.nil? || licenses.empty?
-    licenses.map{|a| a.name}.join(", ")
-  end
-
   resource :projects do
 
     before do
@@ -152,12 +145,12 @@ class ProjectsApiV1 < Grape::API
 
       @project.dependencies.each do |dep|
         package_url = nil
+        license = "unknown"
         unless dep[:prod_key].nil?
-          package = Product.find_by_key dep[:prod_key]
-          license = ProjectsApiV1.fetch_license_info( package )
+          product = Product.fetch_product( dep.language, dep.prod_key )
+          license = product.license_info
         end
 
-        license ||= "unknown"
         licenses[license] ||= []
 
         prod_info = {
