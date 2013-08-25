@@ -134,11 +134,12 @@ class UsersController < ApplicationController
 
   def activate
     verification = params[:verification]
-    if User.activate!(verification)
+    source       = params[:source] # TODO if coming from GitHub show different page
+    if User.activate!( verification )
       flash.now[:success] = "Congratulation. Your Account is activated. Please Sign In."
       return
     end
-    if UserEmail.activate!(verification)
+    if UserEmail.activate!( verification )
       flash.now[:success] = "Congratulation. Your E-Mail Address is now verified."
       return
     end

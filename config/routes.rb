@@ -32,13 +32,13 @@ Versioneye::Application.routes.draw do
     end
   end
 
-  get   '/created', :to => 'users#created'
-  get   '/signup',                       :to => 'users#new'
-  get   '/users/activate/:verification', :to => 'users#activate'
-  get   '/iforgotmypassword',            :to => 'users#iforgotmypassword'
-  post  '/resetpassword',                :to => 'users#resetpassword'
-  get   '/updatepassword/:verification', :to => 'users#show_update_password'
-  post  '/updatepassword',               :to => 'users#update_password'
+  get   '/created'                             , :to => 'users#created'
+  get   '/signup'                              , :to => 'users#new'
+  get   '/users/activate/:source/:verification', :to => 'users#activate'
+  get   '/iforgotmypassword'                   , :to => 'users#iforgotmypassword'
+  post  '/resetpassword'                       , :to => 'users#resetpassword'
+  get   '/updatepassword/:verification'        , :to => 'users#show_update_password'
+  post  '/updatepassword'                      , :to => 'users#update_password'
 
   resource :lottery do
     get  '/verify',    :to => "lotteries#show_verification"
