@@ -135,14 +135,22 @@ class UsersController < ApplicationController
   def activate
     verification = params[:verification]
     source       = params[:source] # TODO if coming from GitHub show different page
+
+    user = User.where(verification: verification)[0]
     if User.activate!( verification )
-      flash.now[:success] = "Congratulation. Your Account is activated. Please Sign In."
+      flash.now[:success] = "Congratulation. Your Account is activated."
+      if source.eql?("github")
+        sign_in user
+        redirect_to user_packages_i_follow_path
+      end
       return
     end
+
     if UserEmail.activate!( verification )
       flash.now[:success] = "Congratulation. Your E-Mail Address is now verified."
       return
     end
+
     flash.now[:error] = "The activation code could not be found. Maybe your Account is already activated."
   end
 

@@ -24,8 +24,13 @@ class GithubController < ApplicationController
 
     user = get_user_for_token( json_user, token )
     if !user.nil?
-      sign_in user
-      redirect_back_or( "/user/projects" )
+      if user.activated?
+        sign_in user
+        redirect_back_or( user_packages_i_follow_path )
+      else
+        flash[:error] = "Your account is not activated. Did you click the verification link in the email we send you?"
+        redirect_to signin_path
+      end
       return
     else
       cookies.permanent.signed[:github_token] = token
@@ -68,7 +73,6 @@ class GithubController < ApplicationController
         user.send_verification_email
         User.new_user_email(user)
         cookies.delete(:github_token)
-        sign_in user
         render 'create'
       else
         flash.now[:error] = "An error occured. Please contact the VersionEye Team."
