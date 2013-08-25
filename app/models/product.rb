@@ -85,7 +85,6 @@ class Product
          A_LANGUAGE_CLOJURE]
   end
 
-  # TODO double check this
   def self.find_by_key(searched_key)
     return nil if searched_key.nil? || searched_key.strip == ""
     result = Product.where(prod_key: searched_key)
