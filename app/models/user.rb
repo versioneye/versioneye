@@ -388,6 +388,12 @@ class User
     self.email = "#{random}_#{self.email}"
     self.prev_fullname = self.fullname
     self.fullname = "Deleted"
+    self.github_id = nil
+    self.github_token = nil
+    self.github_scope = nil
+    self.twitter_id = nil
+    self.twitter_token = nil
+    self.twitter_secret = nil
     self.products.clear
     self.save
   end

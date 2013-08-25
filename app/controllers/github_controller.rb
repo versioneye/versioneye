@@ -23,7 +23,7 @@ class GithubController < ApplicationController
     end
 
     user = get_user_for_token( json_user, token )
-    if !user.nil?
+    if user
       if user.activated?
         sign_in user
         redirect_back_or( user_packages_i_follow_path )
