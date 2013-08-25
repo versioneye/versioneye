@@ -58,7 +58,7 @@ describe "registration" do
     end
 
     it "activates successfully" do
-      get "/users/activate/#{user.verification}", nil, "HTTPS" => "on"
+      get "/users/activate/email/#{user.verification}", nil, "HTTPS" => "on"
       assert_response 200
       user.verification.should be_nil
     end
