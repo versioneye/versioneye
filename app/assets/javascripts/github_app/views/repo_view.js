@@ -17,11 +17,11 @@ define(['underscore', 'backbone',
     },
 
     render: function(){
-      console.log("Rendering all items in RepoCollection");  
+      console.log("Rendering all items in RepoCollection");
       $('.github-switch').bootstrapSwitch('destroy');
       $('.github-switch').remove();
       $("#github-repos").empty();
-    
+
       this.collection.each(function(repo){
         this.addItem(repo);
       }, this);
@@ -41,8 +41,8 @@ define(['underscore', 'backbone',
 		addItem : function(model){
       console.log("Going to render item: " + model.get('fullname'));
 			var itemview = new GithubRepoItemView({model: model});
-  		$("#github-repos").append(itemview.render().el); 
-    }, 
+  		$("#github-repos").append(itemview.render().el);
+    },
     onChange: function(){
       console.debug("RepoView catched change on collection.");
     }
