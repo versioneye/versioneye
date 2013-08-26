@@ -27,10 +27,10 @@ en:
     page_header_signin: "Sign In"
     helpers:
         label:
-            user:  
+            user:
                 fullname: "Full Name"
                 username: "Username"
-                email: "E-Mail"
+                email: "Email"
                 password: "Password"
-                
+
 

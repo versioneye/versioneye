@@ -81,7 +81,7 @@ function render_statistics(data){
     configure_container("#" + chart_container, ChartConfig.width, ChartConfig.height);
 
     chart.setDataArray(data);
-    chart.setTitle("Projects per Languages");
+    chart.setTitle("Projects per language");
     chart.setTitleFontSize(15);
     chart.setAxisReversed(true);
 
