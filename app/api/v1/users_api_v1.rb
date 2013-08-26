@@ -35,7 +35,7 @@ class UsersApiV1 < Grape::API
       make_favorite_response(@current_user, params[:page], 30)
     end
 
-    desc "show comments of authorized user"
+    desc "shows comments of authorized user"
     params do
       optional :page, type: Integer, desc: "page number for pagination"
     end
@@ -44,7 +44,7 @@ class UsersApiV1 < Grape::API
       make_comment_response(@current_user, params[:page], 30)
     end
 
-    desc "show unread notifications of authorized user", {
+    desc "shows unread notifications of authorized user", {
       notes: "It will show version updates that's not yet sent by email."
     }
     get '/notifications' do
@@ -75,7 +75,7 @@ class UsersApiV1 < Grape::API
         present @user, with: EntitiesV1::UserEntity
     end
 
-    desc "show users' favorite packages"
+    desc "shows user`s favorite packages"
     params do
       requires :username, :type => String, :desc => "username"
       optional :page, :type => Integer, :desc => "Pagination number"
@@ -88,7 +88,7 @@ class UsersApiV1 < Grape::API
        make_favorite_response(@user, params[:page], 30)
     end
 
-    desc "show users' comments"
+    desc "shows user`s comments"
     params do
       requires :username, type: String, desc: "VersionEye users' nickname"
       optional :page, type: Integer, desc: "pagination number"

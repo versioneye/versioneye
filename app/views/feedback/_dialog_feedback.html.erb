@@ -20,7 +20,7 @@
 			</div>
 
 			<div class="control-group">
-				<%= label_tag(:fb_email, "E-Mail", :class => "control-label") %>
+				<%= label_tag(:fb_email, "Email", :class => "control-label") %>
 				<div class="controls">
 					<% if signed_in? %>
 						<%= text_field_tag :fb_email, current_user.email, :class => "input-xlarge" %>
