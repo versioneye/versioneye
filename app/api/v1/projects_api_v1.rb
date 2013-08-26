@@ -24,14 +24,14 @@ class ProjectsApiV1 < Grape::API
       track_apikey
     end
 
-    desc "show users projects"
+    desc "shows user projects"
     get do
       authorized?
       @user_projects = Project.by_user(@current_user)
       present @user_projects, with: EntitiesV1::ProjectEntity
     end
 
-    desc "show the project's information", {
+    desc "shows the project's information", {
       notes: %q[ It shows detailed info of your project. ]
     }
     params do
