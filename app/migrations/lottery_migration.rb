@@ -19,8 +19,8 @@ class LotteryMigration
         prod_key = selection
       end
 
-      prod = Product.decode_prod_key(prod_key)
-      prod = Product.find_by_key(prod_key)
+      prod_key = Product.decode_prod_key(prod_key)
+      prod     = Product.find_by_key(prod_key)
       unless prod.nil?
         new_selections << {language: prod[:language], prod_key: prod[:prod_key]}
       else
