@@ -138,12 +138,14 @@ class UsersController < ApplicationController
 
     user = User.where(verification: verification)[0]
     if User.activate!( verification )
-      flash.now[:success] = "Congratulation. Your Account is activated."
+      message = "Congratulation. Your Account is activated."
       if source.eql?("github")
         sign_in user
+        flash.now[:success] = message
         redirect_to user_packages_i_follow_path
+      else
+        flash[:success] = message
       end
-      return
     end
 
     if UserEmail.activate!( verification )
