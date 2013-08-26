@@ -26,7 +26,7 @@ module V2
         track_apikey
       end
 
-      desc "show users projects", {
+      desc "shows user`s projects", {
         notes: %q[
 
               To use this resource you need either an active session or you have to append
@@ -40,7 +40,7 @@ module V2
         present @user_projects, with: EntitiesV2::ProjectEntity
       end
 
-      desc "show the project's information", {
+      desc "shows the project's information", {
         notes: %q[ It shows detailed info of your project. ]
       }
       params do
