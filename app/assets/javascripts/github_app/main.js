@@ -9,7 +9,7 @@ define(
    '/assets/github_app/collections/menu_collection'],
 	function(_, Backbone, moment, BootstrapSwitch,
             GithubLoadingView, GithubMenuView, GithubRepoView,
-            GithubPaginationView, GithubAllRepoCollection, 
+            GithubPaginationView, GithubAllRepoCollection,
             GithubRepoCollection, GithubMenuCollection){
 
   function showNotification(classes, message){
@@ -19,14 +19,15 @@ define(
       content: message
     })).fadeIn(400).delay(6000).fadeOut(800);
   }
-  
+
   function pollChanges(){
     var jqxhr = $.ajax("/user/poll/github_repos")
         .done(function(data, status, jqxhr){
           if(data.changed){
+            all_repos.reset();
             showNotification(
               "alert alert-info",
-              "Detected changes on your Github repos - updated view."
+              "Detected changes on your Github repos - resetted view."
             );
             all_repos.fetchAll(initViews);
           } else {
@@ -37,18 +38,18 @@ define(
   }
 
   //TODO: refactor to GithubApp namespace
-  var all_repos       = new GithubAllRepoCollection({})//includes all repos
+  var all_repos       = new GithubAllRepoCollection({})//includes all repos ~ client-side cache
   all_repos.showNotification = showNotification;
 
   var current_repos   = new GithubRepoCollection([], {allRepos: all_repos}); //includes only repos for current view
   var repo_view       = new GithubRepoView({collection: current_repos});
   var pagination_view = new GithubPaginationView({
-                              collection: Backbone.Collection.extend({}),      
+                              collection: Backbone.Collection.extend({}),
                               currentRepos: current_repos
                         });
   var menu_items      = new GithubMenuCollection();
   var menu_view       = new GithubMenuView({
-                          collection: menu_items, 
+                          collection: menu_items,
                           currentRepos: current_repos,
                           allRepos: all_repos
                         });
@@ -57,7 +58,7 @@ define(
     var repo = repos.first();
     return repo.get('user_login');
   }
-  
+
   var initViews = function(repos){
     menu_items.fetch({});
     if(_.isNaN(current_repos.org_id) || _.isUndefined(current_repos.org_id)){
@@ -98,7 +99,7 @@ define(
       } else {
         all_repos.fetchAll(initViews);
       }
-    } 
+    }
 	});
 
 	return {init : function(){
