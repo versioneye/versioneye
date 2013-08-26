@@ -182,9 +182,11 @@ class LanguageDailyStats
     end
 
     if release_info.attributes.has_key?('created_at') and release_info.attributes.has_key?('created_at')
-      product_date = self.to_date_string(prod_info[:created_at])
-      release_date = self.to_date_string(release_info[:created_at])
-      return release_date == product_date
+      unless prod_info[:created_at].nil? or release_info[:created_at].nil?
+        product_date = self.to_date_string(prod_info[:created_at])
+        release_date = self.to_date_string(release_info[:created_at])
+        return release_date == product_date
+      end
     end
 
     false
