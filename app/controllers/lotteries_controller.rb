@@ -57,7 +57,7 @@ class LotteriesController < ApplicationController
       language, prod_key = prod_token.split(',')
       language = Product.decode_language(language)
       prod_key = Product.decode_prod_key(prod_key)
-      product_keys << prod_key
+      product_keys << {language: language, prod_key: prod_key}
       ProductService.follow(language, prod_key, current_user)
     end
 
