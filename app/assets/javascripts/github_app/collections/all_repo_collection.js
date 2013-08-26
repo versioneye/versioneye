@@ -8,7 +8,6 @@ define(['underscore', 'backbone'],
       content: message
     })).fadeIn(400).delay(6000).fadeOut(800);
   }
-  
 
 	var GithubRepoModel = Backbone.Model.extend({
     urlRoot: "/user/github_repos"

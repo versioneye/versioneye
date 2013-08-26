@@ -3,6 +3,7 @@ class User::GithubReposController < ApplicationController
   before_filter :authenticate
 
   def init
+    render "init", layout: "application"
   end
 
   def index
