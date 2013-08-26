@@ -1,12 +1,17 @@
-<div class="sidebar" >	
-	<%= render "news/navi" %>
-</div>	
-<div class="content">
-	<h1>News</h1>
-	<p>
-		Comments to the hottest packages from the community.
-	</p>	
-	<% if !@comments.nil? && !@comments.empty? %>
-		<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => true } %> 
-	<% end %>
+
+<div class="span3" >
+  <%= render "news/navi" %>
+</div>
+<div class="span8">
+
+  <div class="span8 content_header_def" >
+    Comments to the hottest packages from the community.
+  </div>
+
+  <div class="span8 content" >
+    <% if !@comments.nil? && !@comments.empty? %>
+      <%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => true } %>
+    <% end %>
+  </div>
+
 </div>
