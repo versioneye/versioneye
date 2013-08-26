@@ -150,7 +150,7 @@ class ProductMigration
       skip = i * pack
       products = Product.all().skip(skip).limit(pack)
       products.each do |product|
-        uri = "package/#{product.to_param}"
+        uri = "#{product.language_esc}/#{product.to_param}/#{product.version_to_url_param}"
         uris << uri
       end
       if uris.count > 49000
