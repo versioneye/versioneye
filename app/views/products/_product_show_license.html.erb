@@ -8,9 +8,9 @@
 	<% if licenses && !licenses.empty? %>
 		<% licenses.each do |license| %>
 			<% if license.url && !license.url.empty? %>
-				<a href="<%= license.url %>" target="license"><%= license.name %></a>
+				<a href="<%= license.url %>" target="license"><%= license.name %></a><br/>
 			<% else %>
-				<%= license.name %>
+				<%= license.name %><br/>
 			<% end %>
 		<% end %>
 	<% else %>
