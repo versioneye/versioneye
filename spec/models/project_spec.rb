@@ -119,4 +119,42 @@ describe Project do
     end
   end
 
+  describe "visible_for_user?" do
+    before(:each) do
+      @test_user = UserFactory.create_new 1023
+      @test_user.nil?.should be_false
+      @test_project = ProjectFactory.create_new @test_user
+      @test_project.public = false
+      @test_project.save
+    end
+
+    after(:each) do
+      @test_user.remove
+      @test_project.remove
+    end
+
+    it "project factory generated project_key passes validation" do
+      col_user = UserFactory.create_new 1024
+      collaborator = ProjectCollaborator.new(:project_id => @test_project._id,
+                                             :owner_id => @test_user._id,
+                                             :caller_id => @test_user._id )
+      collaborator.save
+      @test_project.collaborators << collaborator
+      @test_project.visible_for_user?( col_user ).should be_false
+      @test_project.visible_for_user?( nil ).should be_false
+      @test_project.visible_for_user?( @test_user ).should be_true
+      @test_project.public = true
+      @test_project.save
+      @test_project.visible_for_user?( col_user ).should be_true
+      @test_project.public = false
+      @test_project.save
+      @test_project.visible_for_user?( col_user ).should be_false
+      @test_project.visible_for_user?( @test_user ).should be_true
+      collaborator.user_id = col_user._id
+      collaborator.save
+      @test_project.visible_for_user?( col_user ).should be_true
+      @test_project.visible_for_user?( @test_user ).should be_true
+    end
+  end
+
 end

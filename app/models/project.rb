@@ -82,6 +82,14 @@ class Project
     return false
   end
 
+  def collaborator( user )
+    return nil if collaborators.nil? || collaborators.empty?
+    collaborators.each do |collaborator|
+      return collaborator if user._id.to_s.eql?( collaborator.user_id.to_s )
+    end
+    return nil
+  end
+
   def outdated?
     self.projectdependencies.each do |dep|
       return true if dep.outdated?
@@ -177,14 +185,6 @@ class Project
     value = ""
     20.times { value << chars[rand(chars.size)] }
     value
-  end
-
-  def collaborator( user )
-    return nil if collaborators.nil? || collaborators.empty?
-    collaborators.each do |collaborator|
-      return collaborator if user._id.to_s.eql?( collaborator.user_id.to_s )
-    end
-    return nil
   end
 
 end
