@@ -34,7 +34,9 @@ class User::ProjectsController < ApplicationController
   def show
     id = params[:id]
     @project = Project.find_by_id( id )
-    if @project && @project.public == false
+    @collaborators = @project.collaborators
+
+    unless @project.visible_for_user?(current_user)
       return if authenticate == false
       redirect_to(root_path) unless current_user?(@project.user)
     end
@@ -88,6 +90,44 @@ class User::ProjectsController < ApplicationController
     project.update_from new_project
     flash[:success] = "ReUpload was successful."
     redirect_to user_project_path( project )
+  end
+
+
+  def add_collaborator
+    collaborator_info = params[:collaborator]
+    project = Project.find_by_id params[:id]
+
+    if project.nil?
+      flash[:error] = "Failure: Cant add collaborator - wrong project id."
+      redirect_to :back and return
+    end
+
+    user = User.find_by_username(collaborator_info[:username])
+
+    new_collaborator = ProjectCollaborator.new project_id: project[:_id].to_s,
+                                               caller_id: current_user[:_id].to_s,
+                                               owner_id: project[:user_id].to_s
+
+    if user.nil?
+      # activate invitation
+      new_collaborator[:invitation_email] = collaborator_info[:username]
+      new_collaborator[:invitation_code] = UserService.create_random_token
+    else
+      # add to collaborator
+      new_collaborator[:active]  = true
+      new_collaborator[:user_id] = user[:_id].to_s
+    end
+
+    unless new_collaborator.save
+      flash[:error] = "Failure: cant add new collaborator - #{new_collaborator.errors.full_messages.to_sentence}"
+      redirect_to :back and return
+    end
+
+    project.collaborators << new_collaborator
+    UserMailer.new_collaboration(new_collaborator).deliver if new_collaborator[:active]
+
+    flash[:success] = "We added a new collaborator to the project."
+    redirect_to :back
   end
 
   def reparse

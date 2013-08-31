@@ -22,4 +22,7 @@
 //= require libs/underscore-min
 //= require libs/moment.min
 //= require libs/jquery.feeds.min
+//= require libs/hogan-2.0.0
+//= require libs/typeahead.min
+
 //= require custom_language

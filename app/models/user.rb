@@ -73,6 +73,7 @@ class User
   before_validation :downcase_email
 
   scope :by_verification, ->(code){where(verification: code)}
+  scope :live_users   , where(verification: nil, deleted: false)
   scope :follows_none   , where(:product_ids.empty?)
   scope :follows_equal  , ->(n){where(:product_ids.count.eq(n))}
   scope :follows_least  , ->(n){where(:product_ids.count >= n)}
@@ -405,6 +406,19 @@ class User
       self.billing_address.save
     end
     self.billing_address
+  end
+
+
+  #-- ElasticSearch mapping ------------------
+  def to_indexed_json
+    {
+      _id: self[:_id].to_s,
+      _type: "user",
+      fullname: self[:fullname],
+      username: self[:username],
+      prev_fullname: self[:prev_fullname],
+      email: self[:email]
+    }
   end
 
   private
