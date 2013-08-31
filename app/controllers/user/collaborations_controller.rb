@@ -15,11 +15,9 @@ class User::CollaborationsController < ApplicationController
       flash[:error] = "Wrong collaboration, or this collaboration is now remove."
       render text: "Contributions doesnt exist anymore.", layout: "application"
     end
-
   end
 
   def delete
-
     collab_id = params[:id]
     collab_id ||= params[:collaboration_id]
 

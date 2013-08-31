@@ -1,14 +1,12 @@
 class ProjectCollaborator
+
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_PERIOD_WEEKLY = "weekly"
-  A_PERIOD_DAILY  = "daily"
-
   field :project_id, type: String
-  field :user_id, type: String
-  field :owner_id, type: String
-  field :caller_id, type: String #another contributor can add more contributors
+  field :user_id, type: String   # the user who is added as collaborator
+  field :owner_id, type: String  # the owner of the project
+  field :caller_id, type: String # another contributor can add more contributors
 
   field :active, type: Boolean, default: false
 
@@ -16,21 +14,15 @@ class ProjectCollaborator
   field :invitation_code, type: String
   field :invitation_sent, type: Boolean, default: false
 
-  field :period, type: String, default: A_PERIOD_WEEKLY
-  field :email, type: String
-  
+  field :period, type: String, default: Project::A_PERIOD_WEEKLY
+
   belongs_to :project
-  
+
   validates_presence_of :project_id
   validates_presence_of :owner_id
   validates_presence_of :caller_id
-  validates_presence_of :email
 
-  validates_format_of :email   , with: /^.+@.+\.[a-zA-Z]{2,4}$/
-
-  before_validation :downcase_email
-
-  scope :by_user, ->(user){ any_of({user_id: user.id.to_s}, 
+  scope :by_user, ->(user){ any_of({user_id: user.id.to_s},
                                    {invitation_email: user[:email]}) }
 
   def self.find_by_id(id)
@@ -54,16 +46,14 @@ class ProjectCollaborator
   end
 
   def owner?(current_user)
-    return false if current_user.nil? or !current_user.has_attribute?(:_id) 
-    
+    return false if current_user.nil? or !current_user.has_attribute?(:_id)
     self.owner_id == current_user.id.to_s
   end
 
   def current?(user)
     return false if user.nil?
     return false if self[:user_id].nil?
-
-    self[:user_id].to_s == user[:_id].to_s 
+    self[:user_id].to_s == user[:_id].to_s
   end
 
   def accepted?(current_user)
@@ -74,10 +64,5 @@ class ProjectCollaborator
   def not_accepted?(current_user)
     not accepted?(current_user)
   end
-
-  private
-    def downcase_email
-      self.email = "#{self.email}".downcase
-    end
 
 end
