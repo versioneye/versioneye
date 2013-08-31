@@ -56,13 +56,13 @@ class VersionService
 
   def self.tile_border( value )
     return value if value.to_s.size == 1
-    if value.match(/\./).nil? && value.match(/^[0-9\-\_a-zA-Z]+$/)
+    if value.match(/\./).nil? && value.match(/^[0-9\-\_a-zA-Z]*$/)
       return value.to_i + 1
-    elsif value.match(/\./) && value.match(/^[0-9]+\.[0-9\-\_a-zA-Z]+$/)
+    elsif value.match(/\./) && value.match(/^[0-9]+\.[0-9\-\_a-zA-Z]*$/)
       nums  = value.split(".")
       up    = nums.first.to_i + 1
       return "#{up}.0"
-    elsif value.match(/\./) && value.match(/^[0-9]+\.[0-9]+\.[0-9\-\_a-zA-Z]+$/)
+    elsif value.match(/\./) && value.match(/^[0-9]+\.[0-9]+\.[0-9\-\_a-zA-Z]*$/)
       nums = value.split(".")
       up   = nums[1].to_i + 1
       return "#{nums[0]}.#{up}"
