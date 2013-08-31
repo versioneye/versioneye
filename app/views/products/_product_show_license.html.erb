@@ -4,11 +4,14 @@
 	</h5>
 </div>
 <div class="box content" >
-	<% if !@product.license_info.nil? && !@product.license_info.empty? %>
-		<% if !@product.license_link_info.nil? && !@product.license_link_info.empty? %>
-			<a href="<%= @product.license_link_info %>" target="license"><%= @product.license_info %></a>
-		<% else %>
-			<%= @product.license %>
+	<% licenses = @product.licenses %>
+	<% if licenses && !licenses.empty? %>
+		<% licenses.each do |license| %>
+			<% if license.url && !license.url.empty? %>
+				<a href="<%= license.url %>" target="license"><%= license.name %></a><br/>
+			<% else %>
+				<%= license.name %><br/>
+			<% end %>
 		<% end %>
 	<% else %>
 		UNKNOWN

@@ -24,12 +24,8 @@ class Versionlink
     if self.language
       product = Product.find_by_lang_key( self.language, self.prod_key )
     end
-    if product.nil?
-      product = Product.find_by_key( self.prod_key )
-    end
-    if !product.nil?
-      product.version = self.version_id
-    end
+    return nil if product.nil?
+    product.version = self.version_id
     product
   end
 

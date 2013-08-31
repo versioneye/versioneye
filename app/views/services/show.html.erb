@@ -2,49 +2,65 @@
 
 <% if @project %>
 
-  <div>
-    <div class="tab-pane active" style="display: inline-block; width: 670px; margin-left: 104px;">
-      <div style="font-size: 16px; margin-bottom: 20px;">
-        <span style="color: <%= outdated_color(@project)%>; font-weight: bold;" ><%= @project.out_number %></span> of
-        <%= pluralize(@project.dep_number, "Dependency") %>  dependencies are outdated and
-        <span style="color: <%= unknown_color(@project)%>; font-weight: bold;" ><%= @project.unknown_number %></span> are unknown.
-      </div>
-      <div class="dependencies" id="dependencies" >
-        <% if @project.dependencies && @project.dependencies.size > 0 %>
+      <div style = "margin-top: 20px; margin-left: 104px; width: 675px;" >
 
-          <table class="dependency_table" style="width: 670px;">
-            <thead>
-              <tr>
-                <th class="icon_col" ></th>
-                <th class="version_col">Current</th>
-                <th class="version_col">Locked</th>
-                <th class="name_col_after_icon"></th>
-                <th class="follow_col" style="width:50px;"></th>
-              </tr>
-            </thead>
+        <ul class = "nav nav-tabs" style="margin-bottom: 0" id="projectTabs">
+          <li class = "active">
+            <a href = "#dependencies" data-toggle="tab">Dependencies</a>
+          </li>
+          <li>
+            <a href = "#licenses" data-toggle="tab">Licenses</a>
+          </li>
+        </ul>
 
-            <% @project.dependencies.sort { |a, b| b.outdated.to_s <=> a.outdated.to_s }.each do |dep| %>
-              <% product = dep.find_or_init_product %>
-              <% dep.outdated? %>
+        <% products = Array.new %>
+        <div class="tab-content" style="width: 100%;" >
+          <div id="dependencies" class="tab-pane active" style="width: 617px;" >
+            <% if @project.dependencies && @project.dependencies.size > 0 %>
 
-              <% if dep.unknown? %>
-                <%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep, :follow_link => "true"} %>
-              <% elsif dep.outdated and dep.release != false  %>
-                <%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep, :follow_link => "true"} %>
-              <% elsif dep.outdated and dep.release == false %>
-                <%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep, :follow_link => "true"} %>
-              <% else %>
-                <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep, :follow_link => "true"} %>
-              <% end %>
+              <table class="dependency_table" style="width: 670px;">
+                <thead>
+                  <tr>
+                    <th class="icon_col" ></th>
+                    <th class="version_col">Current</th>
+                    <th class="version_col">Locked</th>
+                    <th class="name_col_after_icon"></th>
+                    <th class="follow_col" style="width:50px;"></th>
+                  </tr>
+                </thead>
+                <% @project.dependencies.sort { |a, b| b.outdated.to_s <=> a.outdated.to_s }.each do |dep| %>
+                  <% product = dep.find_or_init_product %>
+                  <% dep.outdated? %>
+                  <% if dep.unknown? %>
+                    <%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep, :follow_link => "true"} %>
+                  <% elsif dep.outdated and dep.release != false  %>
+                    <%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep, :follow_link => "true"} %>
+                  <% elsif dep.outdated and dep.release == false %>
+                    <%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep, :follow_link => "true"} %>
+                  <% else %>
+                    <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep, :follow_link => "true"} %>
+                  <% end %>
+                  <% product.version = dep.version_requested %>
+                  <% products << product %>
+                <% end %>
+              </table>
+
             <% end %>
+          </div>
 
-          </table>
+          <div id="licenses" class="tab-pane">
+            <%= render :partial => "shared/product_license_table", :locals => {:products => products, :width => "670"} %>
+          </div>
 
+          <script>
+            $(function () {
+              $('#projectTabs a:first').tab('show');
+            });
+          </script>
 
-        <% end %>
+        </div>
       </div>
-    </div>
-  </div>
+
 
   <% if !@project.project_type.eql?( Project::A_TYPE_PIP ) %>
     <div id="canvas-demo-container" style="display: inline-block;"></div>
@@ -117,5 +133,10 @@
 
   </div>
 
+  <script>
+    $(function () {
+      $('depTabs a:first').tab('show');
+    });
+  </script>
 
 <% end %>

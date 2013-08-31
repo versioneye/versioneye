@@ -36,84 +36,25 @@ describe LanguageDailyStats do
     LanguageDailyStats.delete_all
   end
 
-  describe "metric_not_updated_in_days" do
-    after :each do
-      LanguageDailyStats.delete_all
-    end
-
-    it "should return 0 when newest collection is empty and there's no daily_counts" do
-       LanguageDailyStats.metric_not_updated_in_days('new_version').should == 0
-    end
-
-    it "should return 1 when last updat was today" do
-      today_ruby_products.first.save
-      LanguageDailyStats.update_counts
-      LanguageDailyStats.metric_not_updated_in_days('new_version').should eq(1)
-    end
-
-    it "should return 2 when last update was yesterday" do
-      yesterday_ruby_products.first.save
-      LanguageDailyStats.update_counts
-      LanguageDailyStats.metric_not_updated_in_days('new_version').should eq(2)
-    end
-
-    it "should return 8 when last update was in last week" do
-      lastweek_ruby_products.first.save
-      LanguageDailyStats.update_counts
-      LanguageDailyStats.metric_not_updated_in_days('new_version').should eq(8)
-    end
-
-    it "should be bigger than 30 when last update was in last month" do
-      lastmonth_ruby_products.first.save
-      LanguageDailyStats.update_counts
-      LanguageDailyStats.metric_not_updated_in_days('new_version').should > 30
-    end
-
-    it "should be bigger when last update was in 2months ago month" do
-      twomonth_ruby_products.first.save
-      LanguageDailyStats.update_counts
-      LanguageDailyStats.metric_not_updated_in_days('new_version').should > 60
-    end
-
-    it "should be 1 when metrics was  updated today, yesterday and 2months ago month" do
-      today_ruby_products.first.save
-      yesterday_ruby_products.first.save
-      twomonth_ruby_products.first.save
-      LanguageDailyStats.update_counts
-      LanguageDailyStats.metric_not_updated_in_days('new_version').should == 1
-    end
-
-
-    it "should be 2 when update db as data from yesterday and 2months ago month" do
-      yesterday_ruby_products.first.save
-      twomonth_ruby_products.first.save
-      LanguageDailyStats.update_counts
-      LanguageDailyStats.metric_not_updated_in_days('new_version').should == 2
-    end
-
-  end
-
   describe "today_stats" do
     before :each do
       today_ruby_products.first.save
     end
 
-
    it "should return all ruby project" do
       LanguageDailyStats.update_counts
       stats = LanguageDailyStats.today_stats
       stats.should_not be_nil
-      stats.count.should > 0
-      stats.has_key?("Ruby").should be_true
-      stats["Ruby"].has_key?("new_version")
-      stats["Ruby"]["new_version"].should eq(13)
+      stats.has_key?('Ruby').should be_true
+      stats['Ruby'].has_key?("new_version")
+      stats['Ruby']["new_version"].should eq(13)
     end
 
     #important! It catches double counting today
     it "shoulnt double count today's metrics" do
       yesterday_ruby_products.first.save
       twomonth_ruby_products.first.save
-      LanguageDailyStats.update_counts
+      LanguageDailyStats.update_counts(61)
 
       stats = LanguageDailyStats.today_stats
       stats.should_not be_nil
@@ -129,7 +70,7 @@ describe LanguageDailyStats do
     before :each do
       today_ruby_products.first.save
       yesterday_ruby_products.first.save
-      LanguageDailyStats.update_counts
+      LanguageDailyStats.update_counts(2)
     end
 
     after :each do
@@ -141,7 +82,6 @@ describe LanguageDailyStats do
       stats = LanguageDailyStats.yesterday_stats
 
       stats.should_not be_nil
-      stats.count.should > 0
       stats.has_key?("Ruby").should be_true
       stats["Ruby"].has_key?("new_version")
       stats["Ruby"]["new_version"].should eq(17)
@@ -152,7 +92,7 @@ describe LanguageDailyStats do
     before :each do
       today_ruby_products.first.save
       yesterday_ruby_products.first.save
-      LanguageDailyStats.update_counts
+      LanguageDailyStats.update_counts(3)
     end
 
     it "should return correct stats for current week" do
@@ -169,7 +109,7 @@ describe LanguageDailyStats do
   describe "last_week_stats" do
     before :each do
       lastweek_ruby_products.first.save
-      LanguageDailyStats.update_counts
+      LanguageDailyStats.update_counts(14)
     end
 
     it "should return correct stats for current week" do
@@ -195,7 +135,7 @@ describe LanguageDailyStats do
         lastweek_ruby_products.first.save
         @total_counts += 19
       end
-      LanguageDailyStats.update_counts
+      LanguageDailyStats.update_counts(15)
     end
 
     it "should return correct stats for current week" do
@@ -213,7 +153,7 @@ describe LanguageDailyStats do
   describe "last_month_stats" do
     before :each do
       lastmonth_ruby_products.first.save
-      LanguageDailyStats.update_counts
+      LanguageDailyStats.update_counts(32)
     end
 
     it "should return correct stats for current week" do
@@ -230,13 +170,14 @@ describe LanguageDailyStats do
   describe "two_months_ago_stats" do
     before :each do
       twomonth_ruby_products.first.save
-      LanguageDailyStats.update_counts
+      LanguageDailyStats.update_counts(64)
     end
 
     it "should return correct stats for current week" do
       stats =  LanguageDailyStats.two_months_ago_stats
 
       stats.should_not be_nil
+      p stats
       stats.empty?.should be_false
       stats.has_key?("Ruby").should be_true
       stats["Ruby"].has_key?("new_version")

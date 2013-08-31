@@ -62,22 +62,6 @@ class ProductsController < ApplicationController
     @versioncommentreply = Versioncommentreply.new
   end
 
-  def show_visual_old
-    key      = params[:key]
-    version  = params[:version]
-    prod_key = key.gsub(":", "/").gsub("~", ".").gsub("--", "/")
-    product  = Product.find_by_key( prod_key )
-    new_path = "/"
-    if product
-      new_path += "#{product.language.downcase}/#{product.to_param}"
-      if version
-        new_path += "/#{version}"
-      end
-      new_path += "/visual_dependencies"
-    end
-    redirect_to new_path
-  end
-
   def show_visual
     lang = Product.decode_language( params[:lang] )
     key  = Product.decode_prod_key( params[:key]  )
@@ -221,31 +205,44 @@ class ProductsController < ApplicationController
   def autocomplete_product_name
     term = params[:term] || "nothing"
     results = []
-    products = ProductService.search(term)
-    index = 0
-    products.each do |product|
-      results << {
-        value: "#{product[:name_downcase]}-#{product[:language].downcase}",
-        name: product[:name],
-        language: Product.encode_language(product[:language]),
-        description: product.short_summary,
-        prod_key: product[:prod_key],
-        version: product[:version],
-        followers: product[:followers],
-        url: product.to_url_path
-      }
-      index += 1
+    products = EsProduct.autocomplete(term)
+
+    products.each_with_index do |product, index|
+      results << format_autocomplete(product)
       break if index > 9
     end
 
-    results.sort_by! {|item| -1 * item[:followers]}
-    
-    respond_to do |format|
-      format.json { render :json => results }
-    end
+    render :json => results
   end
 
   private
+
+    def format_autocomplete(product)
+      term = params[:term] || "nothing"
+      results = []
+      products = ProductService.search(term)
+      index = 0
+      products.each do |product|
+        results << {
+          value: "#{product[:name_downcase]}-#{product[:language].downcase}",
+          name: product[:name],
+          language: Product.encode_language(product[:language]),
+          description: product.short_summary,
+          prod_key: product[:prod_key],
+          version: product[:version],
+          followers: product[:followers],
+          url: product.to_url_path
+        }
+        index += 1
+        break if index > 9
+      end
+
+      results.sort_by! {|item| -1 * item[:followers]}
+
+      respond_to do |format|
+        format.json { render :json => results }
+      end
+    end
 
     def fetch_product( lang, prod_key )
       product = Product.fetch_product lang, prod_key

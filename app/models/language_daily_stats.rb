@@ -3,19 +3,23 @@ class LanguageDailyStats
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :language, type: String
   field :date, type: DateTime
-  field :metrics, type: Hash
-  field :novel, type: Boolean, default: false
+  field :date_string, type: String #format: %Y-%m-%d
+
+  field :Clojure, type: Hash
+  field :Java, type: Hash
+  field :Javascript, type: Hash
+  field :Nodejs, type: Hash
+  field :Php, type: Hash
+  field :Python, type: Hash
+  field :R, type: Hash
+  field :Ruby, type: Hash
 
   attr_accessible :language, :date, :metrics
 
   index(
     [:date, Mongo::DESCENDING],
-    [
-      [:date, Mongo::DESCENDING],
-      [:language, Mongo::DESCENDING]
-    ]
+    [:date, Mongo::DESCENDING]
   )
 
   def self.inc_dummy_version(prod)
@@ -61,116 +65,167 @@ class LanguageDailyStats
   end
 
   def self.initial_metrics_table
+    #metrics table for every language
     {
-      "new_version" => 0,
-      "novel_package" => 0,
+      "new_version" => 0,   #new versions publised
+      "novel_package" => 0, #new libraries published
+      "total_package" => 0, #total packages upto this date
+      "total_artifact" => 0 #total artifacts upto this date
     }
   end
 
-  def self.get_or_create_doc(language, date, clean_prev_metrics = false)
-    date_at = date.at_midnight
-    stats_doc = self.where(language: language, date: date_at).first
-    if stats_doc.nil? or clean_prev_metrics
-      Rails.logger.debug("Created new language stats doc: #{language}:#{date_at}")
-      stats_doc = self.new language: language,
-                           date: date_at,
-                           metrics: self.initial_metrics_table()
-      stats_doc.save!
-    end
-    stats_doc
-  end
-
-  def self.get_language_stats(date, clean_prev_metrics = false)
-    stats = {}
-    Product.supported_languages.each do |lang|
-      stats[lang] = self.get_or_create_doc(lang, date, clean_prev_metrics)
-    end
-    stats
-  end
-
-  def self.metric_last_updated_time(metric)
-    until_release_date = Date.tomorrow
-    if self.all.count == 0 and Newest.all.count > 0
-      Rails.logger.debug("Going to add metrics for all updates")
-      until_release_date = Newest.all.asc(:created_at).first[:created_at]
-    elsif self.all.count > 0
-      row = self.where(:"metrics.#{metric}".gt =>  0).desc(:date).first
-      until_release_date = row[:date] unless row.nil?
-      Rails.logger.debug("Going to add metrics only for last #{Date.today - until_release_date.to_date} days")
-    end
-    until_release_date.at_midnight.to_date
-  end
-
-  def self.metric_not_updated_in_days(metric)
-    until_release_date = self.metric_last_updated_time(metric)
-    ndays = (Date.today - until_release_date).numerator + 1
-    ndays
-  end
-
-  def self.reset_day_stat_metrics(day_stats, metric)
-    day_stats.each {|lang, row| row.update_attribute("metrics.#{metric}", 0) }
-  end
-
-  def self.update_counts
-    ndays = self.metric_not_updated_in_days('new_version')
+  def self.update_counts(ndays = 1, skip = 0)
+    ndays += skip
     ndays.times do |n|
       Rails.logger.debug("Counting language_daily_stats: #{n + 1} / #{ndays}")
-      self.update_count_for_one_day( n )
+      self.update_day_stats(n)
     end
   end
 
-  def self.update_count_for_one_day( n )
+  def initialize_metrics_tables
+    Product.supported_languages.each do |lang|
+      lang_key = LanguageDailyStats.language_to_sym(lang)
+      self[lang_key] = LanguageDailyStats.initial_metrics_table
+    end
+  end
+
+  def self.language_to_sym(lang)
+    Product.encode_language(lang).capitalize.to_sym
+  end
+
+  def self.to_date_string(that_day)
+    that_day.strftime("%Y-%m-%d")
+  end
+
+  def self.new_document(that_day, save = false)
+    day_string = self.to_date_string(that_day)
+    self.where(date_string: day_string).delete_all #remove previous  document
+
+    new_doc  = self.new date: that_day.at_midnight
+    new_doc[:date_string] = self.to_date_string(that_day)
+    new_doc.initialize_metrics_tables
+
+    new_doc.save if save
+    new_doc
+  end
+
+  def self.update_day_stats( n )
     that_day = n.days.ago.at_beginning_of_day
-    that_day_stats = self.get_language_stats(that_day)
-    if that_day == Date.today
-      #clean previous countings for today to prevent double counting
-      that_day_stats = self.reset_day_stat_metrics(that_day_stats, 'new_version')
-      that_day_stats = self.reset_day_stat_metrics(that_day_stats, 'novel_package')
-    end
-    that_day_releases = Newest.since_to(n.days.ago.at_midnight, (n-1).days.ago.at_midnight)
-    return if that_day_releases.nil?
-    self.process_day_releases( that_day_releases, that_day_stats )
+    that_day_doc = self.new_document(that_day, true)
+    that_day_doc.count_releases
+    that_day_doc.count_language_packages
+    that_day_doc.count_language_artifacts
   end
 
-  def self.process_day_releases( that_day_releases, that_day_stats )
-    that_day_releases.each do |row|
-      prod_info = Product.where(language: row[:language], prod_key: row[:prod_key]).asc(:created_at).first
-      is_released_on_same_day = self.fetch_released_on_day( row, prod_info )
-      if that_day_stats.has_key?(row[:language])
-        self.update_row( row, that_day_stats, is_released_on_same_day )
+  def count_releases
+    that_day = self[:date]
+    that_day_releases = Newest.since_to(that_day.at_midnight, (that_day + 1.day).at_midnight)
+    return if that_day_releases.nil?
+
+    that_day_releases.each do |release|
+      self.count_release(release)
+    end
+  end
+
+  def count_release(release)
+    if Product.supported_languages.include?(release[:language])
+      prod_info = Product.fetch_product(release[:language], release[:prod_key])
+      metric_key = LanguageDailyStats.language_to_sym(release[:language])
+
+      self.inc_version(metric_key)
+      self.inc_novel(metric_key) if LanguageDailyStats.novel?(release, prod_info)
+    else
+      Rails.logger.error("Product #{release[:prod_key]} misses language or language are not supported.")
+    end
+  end
+
+  def count_language_packages
+    that_day = self[:date]
+    Product.supported_languages.each do |lang|
+      lang_total = Product.by_language(lang).where(:created_at.lt => that_day.at_midnight).count
+      language_key = LanguageDailyStats.language_to_sym(lang)
+      self.inc_total_package(language_key, lang_total)
+    end
+  end
+
+  def count_language_artifacts
+    that_day = self[:date]
+    Product.supported_languages.each do |lang|
+      n_artifacts = 0
+      Product.by_language(lang).where(:created_at.lt => that_day.at_midnight).each do |prod|
+        n_artifacts += prod.versions.where(:created_at.lt => that_day.at_midnight).count
+      end
+
+      language_key = LanguageDailyStats.language_to_sym(lang)
+      self.inc_total_artifact(language_key, n_artifacts)
+    end
+  end
+
+  def inc_version(metric_key, val = 1)
+     self.inc("#{metric_key}.new_version", val)
+  end
+
+  def inc_novel(metric_key, val =  1)
+    self.inc("#{metric_key}.novel_package", val)
+  end
+
+  def inc_total_package(metric_key, val =  1)
+    self.inc("#{metric_key}.total_package", val)
+  end
+
+  def inc_total_artifact(metric_key, val = 1)
+    self.inc("#{metric_key}.total_artifact", val)
+  end
+
+  def self.novel?( release_info, prod_info)
+    if release_info.nil? or prod_info.nil?
+      return false
+    end
+
+    if release_info.attributes.has_key?('created_at') and release_info.attributes.has_key?('created_at')
+      unless prod_info[:created_at].nil? or release_info[:created_at].nil?
+        product_date = self.to_date_string(prod_info[:created_at])
+        release_date = self.to_date_string(release_info[:created_at])
+        return release_date == product_date
       end
     end
+
+    false
   end
 
-  def self.update_row( row, that_day_stats, is_released_on_same_day )
-    that_day_stats[row[:language]].inc("metrics.new_version", 1)
-    if is_released_on_same_day
-      #TODO: find better stragegy - super slow!!
-      that_day_stats[row[:language]].inc("metrics.novel_package", 1)
-      row.update_attribute(:novel, true)
-      p "."
+  def metrics
+    doc = self.attributes
+    langs_keys = []
+    Product.supported_languages.each {|lang| langs_keys << LanguageDailyStats.language_to_sym(lang)}
+    doc.keep_if {|key, val| langs_keys.include?(key.to_sym)}
+  end
+
+  #shows only metrics of Stats doc
+  def self.doc_metrics(doc)
+    if doc.nil?
+      Rails.logger.warn("It tried to read not existing todays stat - returning new empty doc.")
+      doc = self.new_document(Date.today)
     end
-  rescue
-    msg =  "Failed to update counts for #{row.to_json} - probably misses language"
-    Rails.logger.error(msg)
-    p msg
+    doc.metrics
   end
 
-  def self.fetch_released_on_day( row, prod_info )
-    return (prod_info[:created_at].at_midnight == row[:created_at].at_midnight) if prod_info
-    return false
+  def self.combine_docs(docs)
+    stats = {}
+    docs.each do |doc|
+      doc_stats = LanguageDailyStats.doc_metrics(doc)
+      stats.merge!(doc_stats) do |lang_key, doc1, doc2|
+        doc1 ||= {}
+        doc1.merge(doc2) {|metric, oldval, newval| oldval + newval}
+      end
+    end
+
+    stats
   end
 
   #-- query helpers
-
-  def self.group_by_language(rows)
-    stats = {}
-    rows.each do |row|
-      stats[row[:language]] ||= self.initial_metrics_table
-      stats[row[:language]].merge!(row.metrics) {|key, oldval, newval| oldval + newval}
-    end
-
-    stats
+  def self.latest_stats
+    doc = LanguageDailyStats.where(:"Ruby.total_artifact".gt => 0).desc(:date).first
+    self.doc_metrics(doc)
   end
 
   def self.since_to(dt_since, dt_to)
@@ -178,54 +233,54 @@ class LanguageDailyStats
   end
 
   def self.today_stats
-    dt_since = Date.today.at_midnight
-    dt_to    = DateTime.now
-    rows     = self.since_to(dt_since, dt_to)
-    self.group_by_language(rows)
- end
+    dt_string = LanguageDailyStats.to_date_string(Date.today)
+    doc = self.where(date_string: dt_string).shift
+    self.doc_metrics(doc)
+  end
 
   def self.yesterday_stats
-    dt_since = 1.day.ago.at_midnight
-    dt_to    = Date.today.at_midnight
-    rows     = self.since_to(dt_since, dt_to)
-    self.group_by_language(rows)
- end
+    dt_string = LanguageDailyStats.to_date_string(1.day.ago)
+    doc = self.where(date_string: dt_string).shift
+    self.doc_metrics(doc)
+  end
+
   def self.current_week_stats
     dt_since = Date.today.at_beginning_of_week
     dt_to    = DateTime.now
-    rows     = self.since_to(dt_since, dt_to)
-    self.group_by_language(rows)
+    rows = self.since_to(dt_since, dt_to)
+    self.combine_docs(rows)
   end
 
   def self.last_week_stats
     dt_monday      = Date.today.at_beginning_of_week
     dt_prev_monday = dt_monday - 7
-    rows           = self.since_to(dt_prev_monday, dt_monday)
-    self.group_by_language(rows)
+    rows = self.since_to(dt_prev_monday, dt_monday)
+    self.combine_docs(rows)
   end
+
 
   def self.current_month_stats
     dt_since = Date.today.at_beginning_of_month
     dt_to    = DateTime.now
-    rows     = self.since_to(dt_since, dt_to)
-    self.group_by_language(rows)
+    rows = self.since_to(dt_since, dt_to)
+    self.combine_docs(rows)
   end
 
-  def self.last_30_days_stats(lang)
-    self.since_to(30.days.ago.at_midnight, Date.tomorrow.at_midnight).where(language: lang).asc(:date)
+  def self.last_30_days_stats
+    self.since_to(15.days.ago.at_midnight, Date.tomorrow.at_midnight).asc(:date)
   end
 
   def self.last_month_stats
     month_ago = Date.today << 1
     rows      = self.since_to(month_ago.at_beginning_of_month, Date.today.at_beginning_of_month)
-    self.group_by_language(rows)
+    self.combine_docs(rows)
   end
 
   def self.two_months_ago_stats
     month_ago      = Date.today << 1
     two_months_ago = Date.today << 2
     rows           = self.since_to(two_months_ago.at_beginning_of_month, month_ago.at_beginning_of_month)
-    self.group_by_language(rows)
+    self.combine_docs(rows)
   end
 
   #-- response helpers
@@ -234,16 +289,20 @@ class LanguageDailyStats
     rows = []
 
     Product.supported_languages.each do |lang|
-      t0_metric_value = 0
-      t1_metric_value = 0
+      lang_key = LanguageDailyStats.language_to_sym(lang).to_s
 
-      t0_metric_value = t0_stats[lang][metric] if t0_stats.has_key?(lang)
-      t1_metric_value = t1_stats[lang][metric] if t1_stats.has_key?(lang)
+      t0_metric_value = t0_stats[lang_key][metric] if t0_stats.has_key?(lang_key)
+      t1_metric_value = t1_stats[lang_key][metric] if t1_stats.has_key?(lang_key)
+      if t0_metric_value and t1_metric_value
+        diff = t0_metric_value - t1_metric_value
+      else
+        diff  = 0
+      end
 
       rows << {
         title: lang,
-        value: t0_metric_value,
-        t1: t0_metric_value - t0_metric_value
+        value: t0_metric_value || 0,
+        t1: diff
       }
     end
     rows.sort_by {|row| row[:title]}
@@ -279,14 +338,16 @@ class LanguageDailyStats
   end
 
   def self.language_timeline30(lang, metric)
-    rows = self.last_30_days_stats(lang)
+    rows = self.last_30_days_stats
     results = []
     return results if rows.nil?
 
+    lang_key = LanguageDailyStats.language_to_sym(lang)
     rows.each do |row|
       results << {
-        value: row["metrics"][metric],
-        date: row[:date].strftime('%Y-%m-%d')
+        title: lang,
+        value: row[lang_key][metric],
+        date: row[:date_string]
       }
     end
     results

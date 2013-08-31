@@ -3,20 +3,27 @@
   <div class="pull-left" style="padding-top: 10px;">
     <%= image_tag "logos/versioneye-transparent.png" %>
   </div>
-  <div class="pull-right opacity_section" style="margin-left: 1px;" >
+
     <% unless current_user %>
-      <a id="signin" href="/signin" ><i class="icon-signin"></i>Sign in</a>
+      <div class="pull-right opacity_section" style="margin-left: 1px;" >
+        <a id="signin" href="/signin" ><i class="icon-signin">&nbsp;</i>Sign in</a>
+      </div>
+      <div class="pull-right opacity_section" style="margin-left: 1px;" >
+        <a id="signup" href="/signup" ><i class="icon-thumbs-up">&nbsp;</i>Sign up</a>
+      </div>
     <% else %>
-      <a id="signin" href="<%= user_projects_path %>">
-        <i class = "icon-archive"></i> Projects
-      </a>
+      <div class="pull-right opacity_section" style="margin-left: 1px;" >
+        <a id="signin" href="<%= user_projects_path %>">
+          <i class = "icon-archive">&nbsp;</i>Projects
+        </a>
+      </div>
     <% end %>
-  </div>
+
   <div class="pull-right opacity_section" >
     <% if @ab.eql?("a") %>
-      <a href="/?ab=b" ><i class="icon-search"></i> Search</a>
+      <a href="/?ab=b" ><i class="icon-search">&nbsp;</i>Search</a>
     <% else %>
-      <a href="/?ab=a" ><i class="icon-upload"> File upload</i></a>
+      <a href="/?ab=a" ><i class="icon-upload">&nbsp;</i>File upload</a>
     <% end %>
   </div>
 </div>
@@ -92,7 +99,7 @@
       <p>They are passive! They don't tell you that they are out-dated!</p>
     </div>
     <div class="marketing" >
-      <h2 class="casual">Because software developers are wasting time with ..</h2>
+      <h2 class="casual">Because software developers are wasting time with ...</h2>
       <p>looking manually for updates. Save time and money by automating this process.</p>
     </div>
   </div>

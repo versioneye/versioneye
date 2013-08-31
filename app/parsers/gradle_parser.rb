@@ -36,13 +36,9 @@ class GradleParser < CommonParser
         :group_id => row[1],
         :artifact_id => row[2],
         :name => row[2],
-        :version_requested => version,
         :language => Product::A_LANGUAGE_JAVA,
         :comperator => "="
       })
-
-      dependency.stability = VersionTagRecognizer.stability_tag_for version
-      VersionTagRecognizer.remove_minimum_stability version
 
       product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
       if product
@@ -50,6 +46,12 @@ class GradleParser < CommonParser
       else
         unknowns += 1
       end
+
+      parse_requested_version( version, dependency, product )
+
+      dependency.stability = VersionTagRecognizer.stability_tag_for version
+      VersionTagRecognizer.remove_minimum_stability version
+
       out_number += 1 if dependency.outdated?
       data << dependency
     end
@@ -57,7 +59,6 @@ class GradleParser < CommonParser
     return {:unknown_number => unknowns, :out_number => out_number, :projectdependencies => data}
   end
 
-  # TODO use this method in this class to parse the version strings
   def parse_requested_version(version, dependency, product)
     if (version.nil? || version.empty?)
       self.update_requested_with_current(dependency, product)
@@ -71,7 +72,20 @@ class GradleParser < CommonParser
       dependency.version_requested = version
       dependency.version_label = version
 
-    # TODO implement more cases
+    elsif version.match(/\.\+$/i) or version.match(/\.$/i)
+      # Newest available static version
+      # http://www.gradle.org/docs/current/userguide/dependency_management.html#sec:dependency_resolution
+      ver = version.gsub("+", "")
+      starter = ver.gsub(" ", "")
+      versions        = VersionService.versions_start_with( product.versions, starter )
+      highest_version = VersionService.newest_version_from( versions )
+      if highest_version
+        dependency.version_requested = highest_version.version
+      else
+        dependency.version_requested = ver
+      end
+      dependency.comperator = "="
+      dependency.version_label = "#{ver}+"
 
     else
       dependency.version_requested = version

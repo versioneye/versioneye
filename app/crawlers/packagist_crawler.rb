@@ -88,16 +88,13 @@ class PackagistCrawler
     version_db.version         = version_number
     version_db.released_string = version_obj['time']
     version_db.released_at     = DateTime.parse(version_obj['time'])
-    license                    = version_obj['license']
-    if license && !license.empty?
-      version_db.license = license[0]
-    end
     product.versions.push version_db
     product.reindex = true
     product.save
 
     self.logger.info " -- PHP Package: #{product.prod_key} -- with new version: #{version_number}"
 
+    self.create_license( product, version_number, version_obj )
     VersionService.update_version_data( product )
 
     CrawlerUtils.create_newest product, version_number
@@ -178,6 +175,16 @@ class PackagistCrawler
           :homepage => author_homepage, :role => author_role})
         developer.save
       end
+    end
+  end
+
+  def self.create_license( product, version_number, version_obj )
+    license = version_obj['license']
+    return nil if license.nil? || license.empty?
+    license.each do |license_name|
+      license_obj = License.new({ :language => product.language, :prod_key => product.prod_key,
+        :version => version_number, :name => license_name })
+      license_obj.save
     end
   end
 

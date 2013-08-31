@@ -27,8 +27,8 @@ require(
     timeline1 = new Timeline({
       selector: "#area3",
       width: 890,
-      url: "/package/latest/timeline_30"
+      url: "/package/latest/timeline30"
     });
-		timeline1.loadAndRender("/package/latest/timeline_30");
+		timeline1.loadAndRender("/package/latest/timeline30");
 	}
 );

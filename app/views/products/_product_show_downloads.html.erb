@@ -2,11 +2,11 @@
 <% if !downloads.nil? && !downloads.empty? %>
   <div class="row well box_download" >
     <div class="span2">
-      <h5 class="dep_header">
+      <h5 class="dep_header" style="margin-top: 0px;">
         <%= pluralize(downloads.count, "Download") %>
       </h5>
     </div>
-    <div class="span5" >
+    <div class="span5 download_area" >
       <ul class="download_list" >
       <% downloads.each do |download|  %>
         <li >

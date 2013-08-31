@@ -56,7 +56,8 @@ describe SubmittedUrl do
       @product               = ProductFactory.create_new(:maven)
       @resource_with_product = ProductResourceFactory.create_new({
                                   :submitted_url => @submitted_url2,
-                                  :prod_key => @product.prod_key})
+                                  :prod_key => @product.prod_key,
+                                  :language => @product.language})
     end
 
     after(:each) do

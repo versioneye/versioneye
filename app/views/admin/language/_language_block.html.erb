@@ -1,0 +1,52 @@
+
+<% language ||= language_block %>
+
+<div class = "span4 language_block">
+  <img class = "img centered" src = "/assets/language/<%= Product.encode_language(language[:name]) %>.png" />
+  <table class = "table table-hover no-borders" style = "font-size: 0.85em;">
+    <tbody>
+      <tr>
+        <td> Supported <br/> package managers</td>
+        <td>&nbsp; <%= language[:supported_managers] %></td>
+      </tr>
+      <tr>
+        <td> Latest version </td>
+        <td>&nbsp; <%= language[:latest_version] %> </td>
+      </tr>
+      <tr>
+        <td> Stable version </td>
+        <td>&nbsp; <%= language[:stable_version] %> </td>
+      </tr>
+      <tr>
+        <td> Licence </td>
+        <td>&nbsp; <a href = "<%= language[:licence_url] %>" target = "_blank"><%= language[:licence] %></a></td>
+      </tr>
+      <tr>
+        <td> Links </td>
+        <td>
+          <a href = "<%= language[:main_url] %>" target = "_blank">Homepage</a><br/>
+          <a href = "<%= language[:wiki_url] %>" target = "_blank">Wikipedia article</a><br/>
+          <a href = "<%= language[:repo_url] %>" target = "_blank">Github repository</a><br/>
+          <a href = "<%= language[:issues_url] %>" target = "_blank">Issues</a></dd>
+          <a href = "<%= language[:mailinglist_url] %>" target = "_blank">Mailing list</a><br/>
+          <a href = "<%= language[:irc_url] %>" target = "_blank"><%= language[:irc] %></a><br/>
+          <a href = "https://twitter.com/<%= language[:twitter] %>" target = "_blank"><%= language[:twitter] %></a><br />
+        </td>
+      </tr>
+      <tr style = "border: 0;">
+        <td colspan = "2">
+          <% encoded_language = Product.encode_language(language[:name]) %>
+          <a href = "<%= edit_admin_language_path(id: encoded_language) %>" class = "btn btn-mini btn-link"> Edit </a>
+          | 
+          <%= button_to "Delete", 
+                admin_language_path(id: encoded_language), 
+                method: :delete, 
+                data: {confirm: "Are you sure?"},
+                class: "btn btn-mini btn-link",
+                style: "background-color: white;"
+              %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

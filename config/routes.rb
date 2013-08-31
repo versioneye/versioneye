@@ -34,13 +34,13 @@ Versioneye::Application.routes.draw do
     end
   end
 
-  get   '/created', :to => 'users#created'
-  get   '/signup',                       :to => 'users#new'
-  get   '/users/activate/:verification', :to => 'users#activate'
-  get   '/iforgotmypassword',            :to => 'users#iforgotmypassword'
-  post  '/resetpassword',                :to => 'users#resetpassword'
-  get   '/updatepassword/:verification', :to => 'users#show_update_password'
-  post  '/updatepassword',               :to => 'users#update_password'
+  get   '/created'                             , :to => 'users#created'
+  get   '/signup'                              , :to => 'users#new'
+  get   '/users/activate/:source/:verification', :to => 'users#activate'
+  get   '/iforgotmypassword'                   , :to => 'users#iforgotmypassword'
+  post  '/resetpassword'                       , :to => 'users#resetpassword'
+  get   '/updatepassword/:verification'        , :to => 'users#show_update_password'
+  post  '/updatepassword'                      , :to => 'users#update_password'
 
   resource :lottery do
     get  '/verify',    :to => "lotteries#show_verification"
@@ -49,6 +49,16 @@ Versioneye::Application.routes.draw do
     post '/follow',    :to => "lotteries#follow"
     get  '/thankyou',  :to => "lotteries#thankyou"
   end
+
+  get   '/package/latest',                      :to => 'latest_releases#index'
+  get   '/package/latest/stats/:timespan',      :to => 'latest_releases#stats'
+  get   '/package/latest/timeline30',           :to => 'latest_releases#lang_timeline30'
+  get   '/package/latest/:lang',                :to => 'latest_releases#show'
+
+  get   '/package/novel',                      :to => 'novel_releases#index'
+  get   '/package/novel/stats/:timespan',      :to => 'novel_releases#stats'
+  get   '/package/novel/timeline30',           :to => 'novel_releases#lang_timeline30'
+  get   '/package/novel/:lang',                :to => 'novel_releases#show'
 
   namespace :settings do
 
@@ -141,6 +151,11 @@ Versioneye::Application.routes.draw do
   get   '/hotnews',            :to => 'news#hotnews'
 
   namespace :admin do
+
+    post  '/language/upload',  :to => 'language#upload_json'
+    get  '/language/download', :to => 'language#download_json'
+    resources :language
+
     resources :submitted_urls do
       post '/approve',            :to => 'submitted_urls#approve'
       post '/decline',            :to => 'submitted_urls#decline'
@@ -165,6 +180,7 @@ Versioneye::Application.routes.draw do
 
   get   '/about',               :to => 'page#about'
   get   '/impressum',           :to => 'page#impressum'
+  get   '/faq',                 :to => 'page#faq'
   get   '/imprint',             :to => 'page#imprint'
   get   '/nutzungsbedingungen', :to => 'page#nutzungsbedingungen'
   get   '/terms',               :to => 'page#terms'
@@ -181,16 +197,6 @@ Versioneye::Application.routes.draw do
   get   '/apijson',             :to => redirect('/api')
   get   '/apijson_tools',       :to => redirect('/api')
   get   '/apijson_libs',        :to => redirect('/api')
-
-  get   '/package/latest',                      :to => 'latest_releases#index'
-  get   '/package/latest/stats/:timespan',      :to => 'latest_releases#stats'
-  get   '/package/latest/timeline_30',          :to => 'latest_releases#lang_timeline30'
-  get   '/package/latest/:lang',                :to => 'latest_releases#show'
-
-  get   '/package/novel',                      :to => 'novel_releases#index'
-  get   '/package/novel/stats/:timespan',      :to => 'novel_releases#stats'
-  get   '/package/novel/timeline_30',          :to => 'novel_releases#lang_timeline30'
-  get   '/package/novel/:lang',                :to => 'novel_releases#show'
 
 
   get   'sitemap_00_1.xml',        :to => 'page#sitemap_1'
@@ -217,10 +223,9 @@ Versioneye::Application.routes.draw do
   get   '/package/:key/:version'              , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/product/:key/:version'              , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
-  get   '/package_visual/:key'                 , :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/ }
-  get   '/package_visual/:key/version/:version', :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
-  get   '/package_visual/:key/:version'        , :to => 'products#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
-
+  get   '/package_visual/:key'                 , :to => 'page#show_visual_old', :constraints => { :key => /[^\/]+/ }
+  get   '/package_visual/:key/version/:version', :to => 'page#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/package_visual/:key/:version'        , :to => 'page#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
   get   '/:lang',                             :to => 'language#show'
   get   '/:lang/:key/badge',                  :to => 'products#badge',  :constraints => { :key => /[^\/]+/ }
@@ -237,6 +242,6 @@ Versioneye::Application.routes.draw do
   post  '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
-  get   '*path',        :to => 'page#routing_error'
+  # get   '*path',        :to => 'page#routing_error'
 
 end

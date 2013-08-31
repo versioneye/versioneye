@@ -8,5 +8,7 @@ class Lottery
   field :won, type: Boolean, default: false
   field :prize, type: String
 
+  field :migrated, default: false
+
   scope :by_user, ->(user){where(user_id: user[:_id].to_s)}
 end

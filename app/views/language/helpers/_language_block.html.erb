@@ -1,0 +1,54 @@
+
+<% language ||= language_block %>
+<% language_key = LanguageDailyStats.language_to_sym(language[:name]) %>
+
+<div>
+  <img class = "img centered" src = "/assets/language/<%= Product.encode_language(language[:name]) %>.png" />
+  <table class = "table table-hover no-borders" style = "font-size: 0.85em;">
+    <tbody>
+      <tr>
+        <td>Packages</td>
+        <td><%= @latest_stats[language_key.to_s]["total_package"] || 0 %></td>
+      </tr>
+      <tr>
+        <td>Artifacts</td>
+        <td><%= @latest_stats[language_key.to_s]["total_artifact"] || 0 %></td>
+      </tr>
+      <tr>
+        <td>Package Manager</td>
+        <td><%= language[:supported_managers] %></td>
+      </tr>
+      <tr>
+        <td>Latest version </td>
+        <td><%= language[:latest_version] %> </td>
+      </tr>
+      <tr>
+        <td>Stable version </td>
+        <td><%= language[:stable_version] %> </td>
+      </tr>
+      <tr>
+        <td>Licence </td>
+        <td><a href = "<%= language[:licence_url] %>" target = "_blank"><%= language[:licence] %></a></td>
+      </tr>
+      <tr>
+        <td>Releases</td>
+        <td>
+          <%= link_to "Latest releases", package_latest_path %> <br />
+          <%= link_to "Novel packages", package_novel_path %>
+        </td>
+      </tr>
+      <tr>
+        <td>Links </td>
+        <td>
+          <a href = "<%= language[:main_url] %>" target = "_blank">Homepage</a><br/>
+          <a href = "<%= language[:wiki_url] %>" target = "_blank">Wikipedia article</a><br/>
+          <a href = "<%= language[:repo_url] %>" target = "_blank">Github repository</a><br/>
+          <a href = "<%= language[:issues_url] %>" target = "_blank">Issues</a><br />
+          <a href = "<%= language[:mailinglist_url] %>" target = "_blank">Mailing list</a><br/>
+          <a href = "<%= language[:irc_url] %>" target = "_blank"><%= language[:irc] %></a><br/>
+          <a href = "https://twitter.com/<%= language[:twitter].to_s.sub("@", "") %>" target = "_blank"><%= language[:twitter] %></a><br />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
