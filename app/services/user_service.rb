@@ -1,5 +1,17 @@
 class UserService
 
+  def self.search(term)
+    EsUser.search(term)
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    return []
+  end
+
+  def self.create_random_token(length = 25)
+    SecureRandom.urlsafe_base64(length)
+  end
+
   def self.valid_user?(user, flash, t)
     if !User.email_valid?(user.email)
       flash[:error] = "page_signup_error_email"
@@ -16,5 +28,4 @@ class UserService
     end
     return true;
   end
-
 end
