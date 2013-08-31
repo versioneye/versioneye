@@ -15,7 +15,8 @@ class UserMailer < ActionMailer::Base
 
   def verification_email(user, verification, email)
     @user = user
-    @verificationlink = "#{Settings.server_url_https}/users/activate/#{verification}"
+    source = fetch_source( user )
+    @verificationlink = "#{Settings.server_url_https}/users/activate/#{source}/#{verification}"
     mail(
       :to => email,
       :subject => "Verification",
@@ -88,7 +89,7 @@ class UserMailer < ActionMailer::Base
       :tag => "new_user"
       )
   end
-  
+
   def new_ticket(user, ticket)
     @fullname = user[:fullname]
     @ticket = ticket
@@ -98,4 +99,12 @@ class UserMailer < ActionMailer::Base
       :tag => "new_lottery"
     )
   end
+
+  def fetch_source( user )
+    source = "email"
+    source = "twitter" if user.twitter_id
+    source = "github"  if user.github_id
+    source
+  end
+
 end

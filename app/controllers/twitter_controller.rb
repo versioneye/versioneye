@@ -1,14 +1,14 @@
 class TwitterController < ApplicationController
 
-  def forward 
+  def forward
     oauth = oauth_consumer
     url = "https://www.versioneye.com/auth/twitter/callback"
     request_token = oauth.get_request_token(:oauth_callback => url)
     session[:token] = request_token.token
     session[:secret] = request_token.secret
     redirect_to request_token.authorize_url
-  rescue => e 
-    logger.error e 
+  rescue => e
+    logger.error e
     logger.error e.backtrace.first
     flash[:error] = "An error occured. Please contact the VersionEye Team."
     redirect_to "/signup"
@@ -21,7 +21,7 @@ class TwitterController < ApplicationController
       return
     end
 
-    oauth = oauth_consumer    
+    oauth = oauth_consumer
     access_token = fetch_access_token( oauth, session[:token], session[:secret], oauth_verifier)
     session[:token] = nil
     session[:secret] = nil
@@ -31,11 +31,11 @@ class TwitterController < ApplicationController
     if signed_in?
       update_current_user(current_user, json_user, access_token)
       redirect_to settings_connect_path
-      return 
-    end 
+      return
+    end
 
     twitter_user_id = json_user['id']
-    user = nil 
+    user = nil
     if twitter_user_id
       user = User.find_by_twitter_id( twitter_user_id )
     end
@@ -48,22 +48,22 @@ class TwitterController < ApplicationController
     end
   end
 
-  def new 
+  def new
     @email = ""
     @terms = false
   end
 
-  def create    
+  def create
     @email = params[:email]
     @terms = params[:terms]
-    
+
     if !User.email_valid?(@email)
       flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
       render 'new'
     elsif !@terms.eql?("1")
       flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
       render 'new'
-    else    
+    else
       oauth = oauth_consumer
       access_token = session[:access_token]
       user_info = fetch_json_user( oauth, access_token )
@@ -82,10 +82,9 @@ class TwitterController < ApplicationController
       if user.save
         user.send_verification_email
         User.new_user_email(user)
-        sign_in user
         session[:access_token] = nil
         render 'create'
-      else 
+      else
         flash.now[:error] = "An error occured. Please contact the VersionEye Team."
         logger.error "An error occured. Please contact the VersionEye Team."
         render 'new'
@@ -93,13 +92,13 @@ class TwitterController < ApplicationController
     end
   end
 
-  private 
+  private
 
     def oauth_consumer
-      OAuth::Consumer.new(Settings.twitter_consumer_key, 
-                          Settings.twitter_consumer_secret, 
-                          :site => "https://api.twitter.com", 
-                          :request_token_path => '/oauth/request_token', 
+      OAuth::Consumer.new(Settings.twitter_consumer_key,
+                          Settings.twitter_consumer_secret,
+                          :site => "https://api.twitter.com",
+                          :request_token_path => '/oauth/request_token',
                           :authorize_path     => '/oauth/authorize',
                           :access_token_path  => '/oauth/access_token')
     end
@@ -117,9 +116,9 @@ class TwitterController < ApplicationController
     def update_twitter_status(token, secret)
       logger.info "---- update_twitter_status ------------------"
       client = TwitterOAuth::Client.new(
-                  :consumer_key => Settings.twitter_consumer_key, 
-                  :consumer_secret => Settings.twitter_consumer_secret, 
-                  :token => token, 
+                  :consumer_key => Settings.twitter_consumer_key,
+                  :consumer_secret => Settings.twitter_consumer_secret,
+                  :token => token,
                   :secret => secret)
       if client.authorized?
         client.update("I just signed up @VersionEye to keep track of my software libraries.")
@@ -130,7 +129,7 @@ class TwitterController < ApplicationController
       user.twitter_id = json_user['id']
       user.twitter_token = access_token.token
       user.twitter_secret = access_token.secret
-      user.save 
+      user.save
     end
 
 end

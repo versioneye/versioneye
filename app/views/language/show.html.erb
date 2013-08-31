@@ -2,13 +2,10 @@
 <% title "#{@lang} at VersionEye - Continuous Updating" %>
 <% page_header @lang %>
 
-
-
+<div id = "language" class = "hide" data-language = "<%= Product.encode_language(@lang) %>"></div>
 <section class = "">
-  <div class = "row" >
+  <div class = "row-fluid" >
     <%=  render "language/helpers/language_description" %>
-    <br/>
-    <br/>
   </div>
 
   <div class = "row">

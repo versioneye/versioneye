@@ -15,15 +15,25 @@
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 
   & input {
-    background-color: whiteSmoke;
+    /*background-color: whiteSmoke;*/
     color: $text_casual;
   }
+
   & input.btn {
     color: white;
   }
 
   & .button_to {
     display: inline-block;
+
+    & input {
+      background-color: white;
+    }
+  }
+
+  & .language_block {
+    max-height: 440px;
+    overflow-y: auto;
     margin: 0;
   }
 }

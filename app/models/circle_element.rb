@@ -85,9 +85,8 @@ class CircleElement
       if product.nil?
         next
       end
-      if (element.version && !element.version.eql?("") && !element.version.eql?("0"))
-        product.version = element.version
-      end
+      valid_version = ( element.version && !element.version.eql?("") && !element.version.eql?("0") && product.version_by_number( element.version ) )
+      product.version = element.version if valid_version
       dependencies = product.dependencies(nil)
       dependencies.each do |dep|
         if dep.name.nil? || dep.name.empty?

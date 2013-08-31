@@ -33,8 +33,6 @@ namespace :versioneye do
     puts "START to LanguageDailyStats.update_counts"
     LanguageDailyStats.update_counts
     puts "STOP to LanguageDailyStats.update_counts"
-
-
   end
 
   desc "excute weekly jobs"
@@ -42,6 +40,13 @@ namespace :versioneye do
     puts "START to send out weekly project notification E-Mails."
     ProjectService.update_all( Project::A_PERIOD_WEEKLY )
     puts "STOP to send out weekly project notification E-Mails."
+  end
+
+  desc "excute monthly jobs"
+  task :monthly_jobs => :environment do
+    puts "START to send out monthly project notification emails."
+    ProjectService.update_all( Project::A_PERIOD_MONTHLY )
+    puts "STOP to send out monthly project notification emails."
   end
 
   desc "update version data globally"

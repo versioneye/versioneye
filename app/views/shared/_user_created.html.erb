@@ -1,34 +1,34 @@
-<% title "Congratulation" %>
+<% title "Congratulations" %>
 
 <p>
-	VersionEye will send you an E-Mail with an verification link. Please click the verification link in the E-Mail to validate your E-Mail address. We will activate your Account as soon as your E-Mail address is validated. 
+	VersionEye will send you an email with a verification link.
+	Please click on the verification link to validate your
+	email address and your account will be activated immediately.
 </p>
 <br/>
 <p>
-	Follow us on Twitter to get notified about new Features. <br/>
+	We've always got more updates and new features coming, so keep
+	your eye on the VersionEye Blog: <a href="http://versioneye.wordpress.com">http://versioneye.wordpress.com</a>
+	or follow <a href="https://twitter.com/VersionEye">@VersionEye</a> on Twitter for the latest.<br/>
 	<br/>
-	<span >
+	<span>
 		<%= render "shared/follow_versioneye" %>
-	</span>	
+	</span>
 </p>
 <br/>
 <p>
-	Tweet about VersionEye and help us to get more users.<br/>
+	You can also tweet about VersionEye, so that more people become aware of our service.<br/>
 	<br/>
-	<a href="https://twitter.com/share" 
-	   class="twitter-share-button" 
-	   data-url="http://www.versioneye.com" 
-	   data-text="I just signed up @VersionEye to keep track of my software libraries." 
+	<a href="https://twitter.com/share"
+	   class="twitter-share-button"
+	   data-url="http://www.versioneye.com"
+	   data-text="I just signed up @VersionEye to keep track of my software libraries."
 	   data-count="horizontal" >Twitter</a>
 	   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </p>
+<p>
+	<br/>
+	<br/>
+	Thanks for using VersionEye!
+</p>
 <br/>
-<% if 1 == 2 %>
-	<div class="boxContainer">
-		Set Up your Credit Card and your Plan.<br/>
-		<br/>
-		<%= form_tag("/settings/creditcard", :method => "get") do  %>
-			<button type="submit" class="btn btn-large btn-primary" >Continue</button>
-		<% end %>
-	</div>
-<% end %>

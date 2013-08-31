@@ -62,11 +62,30 @@ class PageController < ApplicationController
     redirect_to path.gsub("//", "/")
   end
 
+  def show_visual_old
+    key      = params[:key]
+    version  = params[:version]
+    prod_key = key.gsub(":", "/").gsub("~", ".").gsub("--", "/")
+    product  = Product.find_by_key( prod_key )
+    new_path = "/"
+    if product
+      new_path += "#{product.language.downcase}/#{product.to_param}"
+      if version
+        new_path += "/#{version}"
+      end
+      new_path += "/visual_dependencies"
+    end
+    redirect_to new_path
+  end
+
   def disclaimer
     redirect_to "http://www.disclaimer.de/disclaimer.htm?farbe=FFFFFF/000000/000000/000000"
   end
 
   def contact
+  end
+
+  def faq
   end
 
   def about
@@ -94,16 +113,22 @@ class PageController < ApplicationController
   end
 
   def sitemap_1
-    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_00_1.xml'
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_1.xml'
   end
   def sitemap_2
-    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_00_2.xml'
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_2.xml'
   end
   def sitemap_3
-    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_00_3.xml'
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_3.xml'
   end
   def sitemap_4
-    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_00_4.xml'
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_4.xml'
+  end
+  def sitemap_5
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_5.xml'
+  end
+  def sitemap_5
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap_6.xml'
   end
 
   private

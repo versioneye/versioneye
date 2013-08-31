@@ -24,14 +24,14 @@ class ProjectsApiV1 < Grape::API
       track_apikey
     end
 
-    desc "show users projects"
+    desc "shows user projects"
     get do
       authorized?
       @user_projects = Project.by_user(@current_user)
       present @user_projects, with: EntitiesV1::ProjectEntity
     end
 
-    desc "show the project's information", {
+    desc "shows the project's information", {
       notes: %q[ It shows detailed info of your project. ]
     }
     params do
@@ -145,12 +145,12 @@ class ProjectsApiV1 < Grape::API
 
       @project.dependencies.each do |dep|
         package_url = nil
+        license = "unknown"
         unless dep[:prod_key].nil?
-          package = Product.find_by_key dep[:prod_key]
-          license = package.license_info
+          product = Product.fetch_product( dep.language, dep.prod_key )
+          license = product.license_info
         end
 
-        license ||= "unknown"
         licenses[license] ||= []
 
         prod_info = {

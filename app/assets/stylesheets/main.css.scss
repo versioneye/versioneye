@@ -908,6 +908,18 @@ h2 + .row {
   width: 250px !important;
 }
 
+
 .tab-content {
   padding-top: 15px;
 }
+
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tab-pane{
+  padding-top: 10px;
+}
+

@@ -53,9 +53,9 @@ define(['underscore', 'backbone'],
     },
     addNewItems: function(new_repos){
       console.debug(new_repos.length);
-      
+
       var since = (this.currentPage * this.perPage);
-      console.log("Going to add next items since: " + since); 
+      console.log("Going to add next items since: " + since);
       this.totalPages = Math.ceil(new_repos.length/ this.perPage);
       
       var next_slice = new_repos.slice(since, since + this.perPage);
@@ -65,16 +65,16 @@ define(['underscore', 'backbone'],
       if(!_.isNaN(to_page) && !_.isUndefined(to_page)){
         this.currentPage = to_page; //move to page
       }
-      if(_.isNaN(this.currentPage) || _.isUndefined(this.currentPage)){ 
+      if(_.isNaN(this.currentPage) || _.isUndefined(this.currentPage)){
         console.debug("RepoCollection has no currentPage defined.");
         this.currentPage = 0;
-      } 
+      }
       
       if(_.isNaN(this.perPage) || _.isUndefined(this.perPage)){
         this.perPage = 5;
       }
-      var org_repos = this.onlyOrgRepos(); 
-      this.addNewItems(org_repos); 
+      var org_repos = this.onlyOrgRepos();
+      this.addNewItems(org_repos);
       
       return this;
     }

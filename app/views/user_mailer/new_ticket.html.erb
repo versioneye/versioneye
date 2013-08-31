@@ -28,7 +28,7 @@
           display: block;
           height: 0;">
         <div style="float: left; margin: 0; padding: 0;">
-          <a href="http://wwww.versioneye.com"><img src="http://www.versioneye.com/assets/header_logo_os.png" /></a>
+          <a href="http://www.versioneye.com"><img src="http://www.versioneye.com/assets/header_logo_os.png" /></a>
         </div>
         <div style="float:left; margin-top: 13px; margin-left: 5px;">
           <a href="http://www.versioneye.com"><img src="http://www.versioneye.com/assets/eye_off.png" /></a>
@@ -58,9 +58,8 @@
     <p>
       Here's your ticket id <%= @ticket[:_id].to_s %> and those are the libraries you're following now:<br/>
       <br/>
-      <% @ticket[:selection].each do |prod_key| %>
-        <% prod_key = Product.decode_prod_key(prod_key) %>
-        <% product  = Product.find_by_key(prod_key) %>
+      <% @ticket[:selection].each do |selection| %>
+        <% product  = Product.fetch_product(selection[:language], selection[:prod_key]) %>
         <% product_url    = "http://www.versioneye.com/#{product.language_esc}/#{product.to_param}" %>
         <% product_title  = "#{product.name}".strip %>
         - <a href="<%= product_url %>"><%= product_title %></a><br/>

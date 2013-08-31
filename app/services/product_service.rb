@@ -7,7 +7,7 @@ class ProductService
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
     Rails.logger.info  "Dam. We don't give up. Not yet! Start alternative search on awesome MongoDB."
-    Product.find_by(q, "", group_id, languages, 300).paginate(:page => page_count)
+    MongoProduct.find_by(q, "", group_id, languages, 300).paginate(:page => page_count)
   end
 
 

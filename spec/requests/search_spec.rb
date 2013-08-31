@@ -23,7 +23,7 @@ describe "search" do
     product.versions.push( Version.new({:version => "1.0"}) )
     product.save
 
-    results = Product.find_by_name( "json" )
+    results = MongoProduct.find_by_name( "json" )
     results.should_not be_nil
     results.size.should eq(1)
 
@@ -66,7 +66,7 @@ describe "search" do
     product2.versions.push(version2)
     product2.save
 
-    results = Product.find_by_name( "junit" )
+    results = MongoProduct.find_by_name( "junit" )
     results.should_not be_nil
     results.size.should eq(2)
 

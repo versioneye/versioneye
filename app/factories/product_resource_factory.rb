@@ -11,11 +11,11 @@ class ProductResourceFactory
 
     resource_data.merge!(extra_data) unless extra_data.nil?
     new_resource = ProductResource.new(resource_data)
-  
+
     new_resource.save if save_db
     return new_resource
   end
-  
+
   def self.init_db
     self.store_resource("php/php-src");
     self.store_resource("jquery/jquery");
@@ -41,7 +41,7 @@ class ProductResourceFactory
     github_api = "https://api.github.com/repos/"
     resource_01_url = "#{github_api}#{name}"
     resource_01 = ProductResource.new({
-      :url => resource_01_url, 
+      :url => resource_01_url,
       :name => name,
       :resource_type => Project::A_TYPE_GITHUB
       })

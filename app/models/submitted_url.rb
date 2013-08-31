@@ -42,11 +42,13 @@ class SubmittedUrl
     end
   end
 
-  # TODO change the logic, use language & prod_key to load product
   def update_integration_status
     resource = self.product_resource
-    prod_key = resource.prod_key unless resource.nil? or resource.prod_key.nil?
-    @product = Product.find_by_key(prod_key)
+    @product = nil
+    if resource && !resource.prod_key.nil?
+      @product = Product.fetch_product( resource.language, resource.prod_key )
+    end
+
     self.integrated = true unless @product.nil?
 
     if self.save and not @product.nil?

@@ -1,0 +1,61 @@
+.table-condensed th,
+.table-condensed td {
+    padding: 2px 5px;
+}
+
+td.plot div:hover {
+    background: steelblue;
+}
+
+.tooltip {
+  position: absolute;
+  text-align: center;
+  color: white;
+  width: 60px;
+  min-height: 20px;
+  padding: 2px;
+  font-size: 11px;
+  background-color: steelblue;
+  border: 1px solid white;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+svg {
+  font-size: 12px;
+
+  .bar {
+    fill: steelblue;
+
+    &:hover {
+      fill: lightsteelblue;
+    }
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: steelblue;
+    shape-rendering: crispEdges;
+  }
+
+  .x.axis path {
+    display: none;
+  }
+
+  .line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+
+  .overlay {
+    fill: none;
+    pointer-events: all;
+  }
+
+  .focus circle {
+    fill: white;
+    stroke: steelblue;
+  }
+}

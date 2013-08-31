@@ -31,7 +31,7 @@ class Projectdependency
 
 
   def product
-    Product.find_by_key( self.prod_key )
+    Product.fetch_product( self.language, self.prod_key )
   end
 
   def find_or_init_product

@@ -75,12 +75,8 @@ class Versioncomment
     if self.language
       product = Product.fetch_product( self.language, self.product_key)
     end
-    if product.nil?
-      product = Product.find_by_key( self.product_key )
-    end
-    if !product.nil?
-      product.version = self.version
-    end
+    return nil if product.nil?
+    product.version = self.version
     product
   end
 
