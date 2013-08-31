@@ -30,7 +30,7 @@ class ProjectCollaborator
   end
 
   def self.collaborator?(project_id, user_id)
-    self.where(project_id: project_id.to_s, user_id: user_id.to_s).exists?
+    self.where(project_id: project_id, user_id: user_id.to_s).exists?
   end
 
   def user
