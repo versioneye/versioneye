@@ -416,7 +416,6 @@ class User
       _type: "user",
       fullname: self[:fullname],
       username: self[:username],
-      prev_fullname: self[:prev_fullname],
       email: self[:email]
     }
   end
