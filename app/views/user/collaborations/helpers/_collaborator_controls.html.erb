@@ -6,10 +6,7 @@
     )
 %>
 
-<% if collaboration[:active] %>
-  <a href = "<%= user_collaboration_path(id: collaboration[:_id].to_s) %>" class = "btn btn-mini btn-primary button_to">Configure</a>
-
-<% else %>
+<% if collaboration[:active] == false %>
   <%= button_to(
         'Approve',
         user_collaboration_delete_path(collaboration_id: collaboration[:_id].to_s),

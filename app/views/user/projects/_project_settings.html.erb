@@ -39,5 +39,11 @@
       </div>
     </form>
   </div>
+<% else %>
+  <% collaboration = @project.collaborator( current_user ) %>
+  <% if !collaboration.nil? %>
+    <%= render :partial => "/user/collaborations/helpers/project_settings", :locals => { :collaboration => collaboration } %>
+  <% end %>
 <% end %>
+
 

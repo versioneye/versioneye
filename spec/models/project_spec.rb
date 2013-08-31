@@ -92,4 +92,31 @@ describe Project do
     end
   end
 
+  describe "collaborator" do
+    before(:each) do
+      @test_user = UserFactory.create_new 10021
+      @test_user.nil?.should be_false
+      @test_project = ProjectFactory.create_new @test_user
+    end
+
+    after(:each) do
+      @test_user.remove
+      @test_project.remove
+    end
+
+    it "project factory generated project_key passes validation" do
+      col_user = UserFactory.create_new 10022
+      collaborator = ProjectCollaborator.new(:project_id => @test_project._id,
+                                             :owner_id => @test_user._id,
+                                             :caller_id => @test_user._id )
+      collaborator.save
+      @test_project.collaborators << collaborator
+      @test_project.collaborator(col_user).should be_nil
+      collaborator.user_id = col_user._id
+      collaborator.save
+      collaborator_db = @test_project.collaborator( col_user )
+      collaborator_db.should_not be_nil
+    end
+  end
+
 end
