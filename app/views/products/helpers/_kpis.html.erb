@@ -1,0 +1,44 @@
+
+<div class="row" >
+  <div class="flash info" style="margin-bottom: 5px;" >
+    <b>Latest:</b> <%= @current_version.version %>
+  </div>
+
+  <div class="flash info" style="margin-bottom: 5px;">
+    <b>Current:</b> <%= @product.version %>
+  </div>
+
+  <% last_date = nil %>
+  <% time_in_words = nil %>
+  <% css_class = "info" %>
+  <% if @product.released_days_ago %>
+    <% last_date = Date.today - @product.released_days_ago %>
+    <% time_in_words = distance_of_time_in_words(Date.today, last_date) %>
+    <% if @product.released_days_ago > 90 %>
+      <% css_class = "warn" %>
+    <% elsif @product.released_days_ago > 180 %>
+      <% css_class = "error" %>
+    <% end %>
+  <% end %>
+  <div class="flash <%= css_class %>" style="margin-bottom: 5px;" >
+    <b>Released:</b>
+    <% if time_in_words.nil? %>
+      N/A
+    <% else %>
+      <%= time_in_words %> ago
+    <% end %>
+  </div>
+
+  <div class="flash info" style="margin-bottom: 5px;" >
+    <b>Avg. Rel. Time:</b>
+  </div>
+
+  <div class="flash success" style="margin-bottom: 5px;" >
+    <b>References:</b>
+  </div>
+
+  <div class="flash info" style="margin-bottom: 5px;">
+    <b>Dependencies:</b>
+  </div>
+
+</div>

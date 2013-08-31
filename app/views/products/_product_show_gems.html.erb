@@ -3,8 +3,20 @@
 	<%= render 'products/product_show_header' %>
 </div>
 
-<div class="span3 " >
+<div class="span8" style="padding-top: 20px;" >
 
+	<%= render 'products/product_show_description' %>
+	<%= render 'products/product_show_dependencies' %>
+	<%= render 'products/product_show_gem_install' %>
+	<%= render 'products/product_show_comments' %>
+	<%= render 'products/product_show_comment' %>
+
+</div>
+<div class="span3 pull-right" style="padding-top: 20px;">
+
+	<%= render 'products/helpers/follow' %>
+	<%= render 'products/helpers/kpis' %>
+	<%= render 'products/helpers/share' %>
 	<%= render 'products/product_show_followers' %>
 	<%= render 'products/product_show_authors' %>
 	<%= render 'products/product_show_license' %>
@@ -14,15 +26,5 @@
 	<% if signed_in? == false %>
     <%= render "/shared/github_ad" %>
   <% end %>
-
-</div>
-<div class="span8 content_no_head">
-
-	<%= render 'products/product_show_description' %>
-	<%= render 'products/product_show_release_time' %>
-	<%= render 'products/product_show_dependencies' %>
-	<%= render 'products/product_show_gem_install' %>
-	<%= render 'products/product_show_comments' %>
-	<%= render 'products/product_show_comment' %>
 
 </div>

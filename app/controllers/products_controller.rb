@@ -58,6 +58,7 @@ class ProductsController < ApplicationController
     if @product.version
       @version   = @product.version_by_number @product.version
     end
+    @current_version     = VersionService.newest_version( @product.versions )
     @versioncomment      = Versioncomment.new
     @versioncommentreply = Versioncommentreply.new
   end
