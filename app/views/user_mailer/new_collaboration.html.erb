@@ -6,20 +6,43 @@
   <body>
     <p>Hello, <%= @callee[:fullname] %></p>
     <p>
-      <%= @caller[:fullname] %> just added you as project collaborator of his/her project <%= @project[:name] %>.
-      Now you can keep eye on his/her project, get notifications and you can even update that project file.
+      <%= @caller[:fullname] %> just added you as project collaborator to his/her project <%= @project[:name] %>.
+      Now you will get email notifications to this project.
     </p>
 
     <p>
-        You can check this project <a href = "<%= user_projects_url(id: @project[:_id].to_s) %>" >here</a>
+        Check out the project <a href = "<%= user_projects_url(id: @project[:_id].to_s) %>" >here</a>
     </p>
     <p>
         To change your collaboration settings, <a href = "<%= user_collaboration_url(id: @collaboration[:_id].to_s) %>" > click here.</a>
     </p>
 
-    <p>
-      Regards, <br />
-      Your VersionEye Team
-    </p>
+
+    Best regards, <br/>
+    Your VersionEye Team<br/>
+    <a href="http://www.versioneye.com">http://www.versioneye.com</a>
+    <br/>
+    </div>
+      <div style="-moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px;
+        text-align: left;
+          margin-top: 15px;
+        padding: 20px;
+          width: 650px;
+          margin-left: auto;
+          margin-right: auto;
+          clear: both;
+        background-color: white;
+        font-size: 12px;
+        color: #808080;
+        word-wrap:break-word;" >
+        VersionEye GmbH | Invalidenstrasse 50/51 | 10557 Berlin | Germany |
+E-Mail: contact [at] versioneye.com | Amtsgericht: Berlin / Charlottenburg | Handelsregister: Berlin, HRB 144242 B | USt-IdNr.: DE282045007 | CEO: Robert Reiz<br/>
+<a href="https://www.versioneye.com/imprint">Imprint</a> / <a href="https://www.versioneye.com/impressum">Impressum</a>. Unsubscribe here: <a href="https://www.versioneye.com/settings/notifications">Notification Center</a>
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
   </body>
 </html>

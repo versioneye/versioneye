@@ -24,7 +24,7 @@ Versioneye::Application.routes.draw do
   get    '/signout',               :to => 'sessions#destroy'
 
   post '/users/mobile',            :to => 'users#create_mobile'
-  
+
   get '/users/autocomplete', :to => 'users#autocomplete'
   resources :users, :key => :username do
     member do
@@ -111,8 +111,8 @@ Versioneye::Application.routes.draw do
   get '/user/projects/github_repositories'   , :to => 'user/github_repos#init'
 
   namespace :user do
-    
-    resources :projects do 
+
+    resources :projects do
       member do
         get  'badge'
         post 'save_period'

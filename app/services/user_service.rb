@@ -1,5 +1,5 @@
 class UserService
-  
+
   def self.search(term)
     EsUser.search(term)
   rescue => e

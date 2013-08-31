@@ -1,12 +1,12 @@
 
 <p>
-  Add a project collaborator by adding his email address.
+  Add a project collaborator by adding his username or email address.
 </p>
 
 <div>
   <%= form_tag(add_collaborator_user_project_path(id: params[:id]),  class: "form-inline", style: "vertical-align:top;") do %>
     <div class="input-append">
-      <input id="collaborator_email" name="collaborator[email]" class="span6 input" type="text" autocomplete="off" />
+      <input id="collaborator_username" name="collaborator[username]" class="span6 input" type="text" autocomplete="off" />
       <button class="btn btn-primary" type="submit" >
         Add collaborator
       </button>
@@ -18,7 +18,7 @@
   jQuery(document).ready(function(){
     console.debug("Collaborators autocomplete is initialized.");
 
-    jQuery("input#collaborator_email").typeahead({
+    jQuery("input#collaborator_username").typeahead({
       name: "contacts",
       remote: {
         url: "/users/autocomplete?term=%QUERY"

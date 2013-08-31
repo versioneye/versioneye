@@ -6,11 +6,8 @@ class EsUser
         :user => {
           :properties => {
             :_id => {type: 'string', analyzer: 'keyword', include_in_all: false},
-            :fullname => {type: 'string', analyzer: 'snowball', boost: 200},
-            :email => {type: 'multi_field', :fields => {
-              :email => {type: 'string', analyzer: 'snowball', boost: 100},
-              :exact_email => {type: 'string', analyzer: 'keyword'}
-            }}
+            :fullname => {type: 'string', analyzer: 'snowball', boost: 1},
+            :username => {type: 'string', analyzer: 'snowball', boost: 100}
           }
         }
       }

@@ -197,7 +197,6 @@ class UsersController < ApplicationController
   end
 
   def update_password
-
     has_failure = false
     password = params[:password]
     password2 = params[:password2]
@@ -231,7 +230,7 @@ class UsersController < ApplicationController
 
   def autocomplete
     term = params[:term]
-    if term.nil? 
+    if term.nil?
       render json: [] and return
     end
 
@@ -246,20 +245,21 @@ class UsersController < ApplicationController
   end
 
   private
+
     def format_autocompletion(matched_users)
       results = []
       return results if matched_users.nil?
 
       matched_users.each_with_index do |user, i|
+        next if user.username.eql?("admino") || user.fullname.eql?("Administrator")
         results << {
-          value: user[:email],
+          value: user[:username],
           fullname: user[:fullname],
-          email: user[:email],
           username: user[:username]
         }
         break if i > 9
       end
-      
+
       results
     end
 

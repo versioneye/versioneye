@@ -11,7 +11,7 @@
       <% if user %>
         <p>
           <strong> <%= user[:fullname] %></strong>
-          <small>(<%= user[:email] %>)</small>
+          <small>(<%= user[:username] %>)</small>
           added <%= time_ago_in_words(collaborator[:created_at]) %> ago.
         </p>
       <% else %>
