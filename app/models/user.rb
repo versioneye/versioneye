@@ -412,11 +412,11 @@ class User
   #-- ElasticSearch mapping ------------------
   def to_indexed_json
     {
-      _id: self[:_id].to_s,
-      _type: "user",
-      fullname: self[:fullname],
-      username: self[:username],
-      email: self[:email]
+      :_id => self.id.to_s,
+      :_type => "user",
+      :fullname => self[:fullname],
+      :username => self[:username],
+      :email => self[:email]
     }
   end
 
