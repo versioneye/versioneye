@@ -45,6 +45,7 @@ class VersionService
   end
 
   def self.version_tilde_newest( versions, value )
+    return nil if value.nil?
     value = value.gsub("~", "")
     value = value.gsub(" ", "")
     upper_border = self.tile_border( value )

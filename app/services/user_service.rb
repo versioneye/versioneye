@@ -1,7 +1,7 @@
 class UserService
 
   def self.search(term)
-    EsUser.search(term)
+    EsUser.search( term )
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first

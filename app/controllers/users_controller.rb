@@ -233,9 +233,8 @@ class UsersController < ApplicationController
     if term.nil?
       render json: [] and return
     end
-
     matched_users = UserService.search(term)
-    render json: format_autocompletion(matched_users)
+    render json: format_autocompletion( matched_users )
   end
 
   def destroy

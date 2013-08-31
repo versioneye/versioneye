@@ -106,7 +106,8 @@ class PackageParser < CommonParser
     elsif version.match(/^~/)
       # Tilde Version Ranges -> Pessimistic Version Constraint
       # ~1.2.3 = >=1.2.3 <1.3.0
-      ver = version.gsub("~", "")
+      ver = version.gsub("\>", "")
+      ver = ver.gsub("~", "")
       ver = ver.gsub(" ", "")
       highest_version = VersionService.version_tilde_newest(product.versions, ver)
       if highest_version
