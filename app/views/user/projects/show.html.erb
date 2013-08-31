@@ -7,7 +7,7 @@
   <% title "Project: #{@project.name}" %>
 
   <div class="span3" >
-    <%= render "/user/projects/helpers/navi" %>
+    <%= render "/user/helpers/navi" %>
   </div>
 
   <div class="span8">
@@ -162,10 +162,16 @@
       <div style = "margin-top: 20px;">
         <ul class = "nav nav-tabs" style="margin-bottom: 0" id="projectTabs">
           <li class = "active">
-            <a href = "#dependencies" data-toggle="tab">Dependencies</a>
+          <a href = "#dependencies" data-toggle="tab"><i class = "icon-puzzle-piece">&nbsp;</i>Dependencies</a>
           </li>
           <li>
-            <a href = "#licenses" data-toggle="tab">Licenses</a>
+          <a href = "#licenses" data-toggle="tab"><i class = "icon-tasks">&nbsp;</i>Licenses</a>
+          </li>
+          <li>
+            <a href = "#collaborators" data-toggle = "tab"><i class = "icon-group">&nbsp;</i>Collaborators</a>
+          </li>
+          <li>
+            <a href = "#settings" data-toggle = "tab"><i class = "icon-cogs">&nbsp;</i>Settings </a>
           </li>
         </ul>
 
@@ -212,6 +218,13 @@
             <%= render :partial => "shared/product_license_table", :locals => {:products => products, :width => "615"} %>
           </div>
 
+          <div id = "collaborators" class = "tab-pane" style = "min-height: 360px;">
+            <%= render partial: "collaborators" %>
+          </div>
+
+          <div id = "settings" class = "tab-pane">
+            <%=  render partial: "project_settings" %>
+          </div>
           <script>
             $(function () {
               $('#projectTabs a:first').tab('show');

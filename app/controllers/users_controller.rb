@@ -134,7 +134,7 @@ class UsersController < ApplicationController
 
   def activate
     verification = params[:verification]
-    source       = params[:source] # TODO if coming from GitHub show different page
+    source       = params[:source]
 
     user = User.where(verification: verification)[0]
     if User.activate!( verification )
@@ -142,7 +142,7 @@ class UsersController < ApplicationController
       if source.eql?("github")
         sign_in user
         flash.now[:success] = message
-        redirect_to user_packages_i_follow_path
+        redirect_to user_packages_i_follow_path and return
       else
         flash[:success] = message
       end
@@ -197,7 +197,6 @@ class UsersController < ApplicationController
   end
 
   def update_password
-
     has_failure = false
     password = params[:password]
     password2 = params[:password2]
@@ -229,6 +228,16 @@ class UsersController < ApplicationController
     redirect_to signin_path
   end
 
+  def autocomplete
+    term = params[:term]
+    if term.nil?
+      render json: [] and return
+    end
+
+    matched_users = UserService.search(term)
+    render json: format_autocompletion(matched_users)
+  end
+
   def destroy
     User.find_by_username(params[:id]).delete_user
     flash[:success] = "User deleted"
@@ -236,6 +245,23 @@ class UsersController < ApplicationController
   end
 
   private
+
+    def format_autocompletion(matched_users)
+      results = []
+      return results if matched_users.nil?
+
+      matched_users.each_with_index do |user, i|
+        next if user.username.eql?("admino") || user.fullname.eql?("Administrator")
+        results << {
+          value: user[:username],
+          fullname: user[:fullname],
+          username: user[:username]
+        }
+        break if i > 9
+      end
+
+      results
+    end
 
     def correct_user
       @user = User.find_by_username(params[:id])
