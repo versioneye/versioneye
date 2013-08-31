@@ -1,6 +1,6 @@
 class User::ProjectsController < ApplicationController
 
-  before_filter :authenticate        , :except => [:show, :badge]
+  before_filter :authenticate        , :except => [:show, :badge] ## TODO check if other logged in user can access.
   before_filter :new_project_redirect, :only   => [:index]
 
   def index

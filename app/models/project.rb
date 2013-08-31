@@ -179,4 +179,12 @@ class Project
     value
   end
 
+  def collaborator( user )
+    return nil if collaborators.nil? || collaborators.empty?
+    collaborators.each do |collaborator|
+      return collaborator if user._id.to_s.eql?( collaborator.user_id.to_s )
+    end
+    return nil
+  end
+
 end
