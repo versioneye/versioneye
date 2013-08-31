@@ -54,6 +54,7 @@ class VersionService
   end
 
   def self.tile_border( value )
+    return value if value.to_s.size == 1
     if value.match(/\./).nil? && value.match(/^[0-9]+$/)
       return value.to_i + 1
     elsif value.match(/\./) && value.match(/^[0-9]+\.[0-9]+$/)

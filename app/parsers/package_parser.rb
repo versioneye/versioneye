@@ -152,7 +152,6 @@ class PackageParser < CommonParser
       dependency.comperator        = "="
       dependency.version_label     = version
     end
-
   end
 
   def init_project( url, data )
