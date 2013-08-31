@@ -6,12 +6,9 @@
   <body>
     <p>Hello, <%= @callee[:fullname] %></p>
     <p>
-      <%= @caller[:fullname] %> just added you as project collaborator to his/her project <%= @project[:name] %>.
+      <%= @caller[:fullname] %> just added you as project collaborator to his/her project
+      <a href="https://www.versioneye.com/user/projects/<%= @project[:_id].to_s %>" ><%= @project[:name] %></a>.
       Now you will get email notifications to this project.
-    </p>
-
-    <p>
-        Check out the project <a href="https://www.versioneye.com/user/projects/<%= @project[:_id].to_s %>" >here</a>
     </p>
     <p>
         To change your collaboration settings, <a href = "http://www.versioneye.com/user/collaborations" > click here.</a>
