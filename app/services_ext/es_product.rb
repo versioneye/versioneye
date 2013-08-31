@@ -158,7 +158,7 @@ class EsProduct
         search.query { |query| query.string "#{ q }*"}
         search.sort {by :followers, 'desc'}
       end
-    
+
     s.results
   end
 end
