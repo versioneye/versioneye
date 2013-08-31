@@ -134,7 +134,7 @@ class UsersController < ApplicationController
 
   def activate
     verification = params[:verification]
-    source       = params[:source] # TODO if coming from GitHub show different page
+    source       = params[:source]
 
     user = User.where(verification: verification)[0]
     if User.activate!( verification )
@@ -142,7 +142,7 @@ class UsersController < ApplicationController
       if source.eql?("github")
         sign_in user
         flash.now[:success] = message
-        redirect_to user_packages_i_follow_path
+        redirect_to user_packages_i_follow_path and return
       else
         flash[:success] = message
       end

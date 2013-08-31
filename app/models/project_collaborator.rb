@@ -4,15 +4,15 @@ class ProjectCollaborator
   include Mongoid::Timestamps
 
   field :project_id, type: String
-  field :user_id, type: String   # the user who is added as collaborator
-  field :owner_id, type: String  # the owner of the project
-  field :caller_id, type: String # another contributor can add more contributors
+  field :user_id   , type: String # the user who is added as collaborator
+  field :owner_id  , type: String # the owner of the project
+  field :caller_id , type: String # another contributor can add more contributors
 
   field :active, type: Boolean, default: false
 
   field :invitation_email, type: String
-  field :invitation_code, type: String
-  field :invitation_sent, type: Boolean, default: false
+  field :invitation_code , type: String
+  field :invitation_sent , type: Boolean, default: false
 
   field :period, type: String, default: Project::A_PERIOD_WEEKLY
 
