@@ -9,7 +9,6 @@ describe Project do
     @user.email = "hans@tanz.de"
     @user.password = "password"
     @user.salt = "salt"
-    @user.fb_id = "asggffffffff"
     @user.terms = true
     @user.datenerhebung = true
     @user.save
@@ -65,11 +64,6 @@ describe Project do
       @test_project = ProjectFactory.create_new @test_user
     end
 
-    after(:each) do
-      @test_user.remove
-      @test_project.remove
-    end
-
     it "project factory generated project_key passes validation" do
       @test_project.errors.full_messages.empty?.should be_true
     end
@@ -89,6 +83,66 @@ describe Project do
       new_project.make_project_key!
       new_project.project_key.should eql(project_key)
       new_project.remove
+    end
+  end
+
+  describe "collaborator" do
+    before(:each) do
+      @test_user = UserFactory.create_new 10021
+      @test_user.nil?.should be_false
+      @test_project = ProjectFactory.create_new @test_user
+    end
+
+    it "project factory generated project_key passes validation" do
+      col_user = UserFactory.create_new 10022
+      collaborator = ProjectCollaborator.new(:project_id => @test_project._id,
+                                             :owner_id => @test_user._id,
+                                             :caller_id => @test_user._id )
+      collaborator.save
+      @test_project.collaborators << collaborator
+      @test_project.collaborator(col_user).should be_nil
+      collaborator.user_id = col_user._id
+      collaborator.save
+      collaborator_db = @test_project.collaborator( col_user )
+      collaborator_db.should_not be_nil
+    end
+  end
+
+  describe "visible_for_user?" do
+    before(:each) do
+      @test_user = UserFactory.create_new 1023
+      @test_user.nil?.should be_false
+      @test_project = ProjectFactory.create_new @test_user
+      @test_project.public = false
+      @test_project.save
+    end
+
+    after(:each) do
+      @test_user.remove
+      @test_project.remove
+    end
+
+    it "project factory generated project_key passes validation" do
+      col_user = UserFactory.create_new 1024
+      collaborator = ProjectCollaborator.new(:project_id => @test_project._id,
+                                             :owner_id => @test_user._id,
+                                             :caller_id => @test_user._id )
+      collaborator.save
+      @test_project.collaborators << collaborator
+      @test_project.visible_for_user?( col_user ).should be_false
+      @test_project.visible_for_user?( nil ).should be_false
+      @test_project.visible_for_user?( @test_user ).should be_true
+      @test_project.public = true
+      @test_project.save
+      @test_project.visible_for_user?( col_user ).should be_true
+      @test_project.public = false
+      @test_project.save
+      @test_project.visible_for_user?( col_user ).should be_false
+      @test_project.visible_for_user?( @test_user ).should be_true
+      collaborator.user_id = col_user._id
+      collaborator.save
+      @test_project.visible_for_user?( col_user ).should be_true
+      @test_project.visible_for_user?( @test_user ).should be_true
     end
   end
 

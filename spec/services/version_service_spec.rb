@@ -172,6 +172,15 @@ describe VersionService do
     it "returns the right value 2.0.0" do
       VersionService.tile_border( "1.2.1" ).should eql("1.3")
     end
+    it "returns the right value 2.0.0" do
+      VersionService.tile_border( "1.2.1-1" ).should eql("1.3")
+    end
+    it "returns the right value 2.0.0" do
+      VersionService.tile_border( "1.2.1_1" ).should eql("1.3")
+    end
+    it "returns the right value 2.0.0" do
+      VersionService.tile_border( "1.2.1_RC" ).should eql("1.3")
+    end
   end
 
   describe "get_version_range" do

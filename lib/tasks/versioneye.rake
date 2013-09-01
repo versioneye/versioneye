@@ -22,6 +22,11 @@ namespace :versioneye do
     EsProduct.index_newest
     puts "STOP reindex newest products for elastic search"
 
+    puts "START reindex users for elastic search"
+    EsUser.reset
+    EsUser.index_all
+    puts "STOP reindex uses for elastic search"
+
     puts "START to send out the notification E-Mails."
     Notification.send_notifications
     puts "STOP to send out the notification E-Mails."

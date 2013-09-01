@@ -1,8 +1,8 @@
 .twitter-typeahead .tt-query,
 .twitter-typeahead .tt-hint {
   margin-bottom: 0;
-  color: #ddd;
-  background: white;
+  color: #616970;
+  background: white !important;
 }
 
 .tt-dropdown-menu {

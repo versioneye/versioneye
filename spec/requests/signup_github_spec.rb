@@ -40,7 +40,7 @@ describe "SignUp with GitHub" do
 
     get "/auth/github/callback?code=123"
     assert_response 302
-    response.should redirect_to( user_projects_path )
+    response.should redirect_to( user_packages_i_follow_path )
 
     user_db = User.find_by_email( user.email )
     user_db.github_token.should eql("token_123")
@@ -54,7 +54,7 @@ describe "SignUp with GitHub" do
 
     get "/auth/github/callback?code=123"
     assert_response 302
-    response.should redirect_to( user_projects_path )
+    response.should redirect_to( user_packages_i_follow_path )
 
     user_db = User.find_by_email( user.email )
     user_db.github_token.should eql("token_123")

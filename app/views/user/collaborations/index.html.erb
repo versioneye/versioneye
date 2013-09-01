@@ -1,0 +1,19 @@
+<% title "My collaborations" %>
+
+<div class="span3" >
+  <%= render "/user/helpers/navi" %>
+</div>
+
+<div class="span8">
+
+  <div class="row content_header_def" >
+    You're included as collaborator in  <b><%= pluralize( @projects.count, "Project") %></b>.
+  </div>
+
+  <div class="span8 content" >
+    <div id="projects" >
+      <%= render partial: "/user/collaborations/helpers/project" , collection: @projects %>
+    </div>
+  </div>
+
+</div>

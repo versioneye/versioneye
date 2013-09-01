@@ -134,18 +134,22 @@ class UsersController < ApplicationController
 
   def activate
     verification = params[:verification]
-    source       = params[:source] # TODO if coming from GitHub show different page
+    source       = params[:source]
 
+    message = "Congratulation. Your Account is activated."
     user = User.where(verification: verification)[0]
-    if User.activate!( verification )
-      message = "Congratulation. Your Account is activated."
-      if source.eql?("github")
-        sign_in user
-        flash.now[:success] = message
-        redirect_to user_packages_i_follow_path
-      else
-        flash[:success] = message
-      end
+    activated = User.activate!( verification )
+
+    if activated && github_source?( source )
+      sign_in user
+      flash.now[:success] = message
+      redirect_to user_packages_i_follow_path
+      return
+    end
+
+    if activated
+      flash[:success] = message
+      return
     end
 
     if UserEmail.activate!( verification )
@@ -197,7 +201,6 @@ class UsersController < ApplicationController
   end
 
   def update_password
-
     has_failure = false
     password = params[:password]
     password2 = params[:password2]
@@ -229,13 +232,49 @@ class UsersController < ApplicationController
     redirect_to signin_path
   end
 
+  def autocomplete
+    term = params[:term]
+    if term.nil?
+      render json: [] and return
+    end
+    matched_users = UserService.search(term)
+    render json: format_autocompletion( matched_users )
+  end
+
+  # Only for Admins!
   def destroy
-    User.find_by_username(params[:id]).delete_user
-    flash[:success] = "User deleted"
+    user = User.find_by_username(params[:id])
+    if user.nil?
+      flash[:error] = "User could't find in the database."
+    else
+      UserService.delete user
+      flash[:success] = "User deleted"
+    end
     redirect_to users_path
   end
 
   private
+
+    def github_source?( source )
+      !source.nil? && !source.empty? && source.eql?("github")
+    end
+
+    def format_autocompletion(matched_users)
+      results = []
+      return results if matched_users.nil?
+
+      matched_users.each_with_index do |user, i|
+        next if user.username.eql?("admino") || user.fullname.eql?("Administrator")
+        results << {
+          value: user[:username],
+          fullname: user[:fullname],
+          username: user[:username]
+        }
+        break if i > 9
+      end
+
+      results
+    end
 
     def correct_user
       @user = User.find_by_username(params[:id])
