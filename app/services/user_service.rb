@@ -28,4 +28,30 @@ class UserService
     end
     return true;
   end
+
+  def self.delete( user )
+    Notification.remove_notifications( user )
+    random = create_random_value
+    user.deleted = true
+    user.email = "#{random}_#{user.email}"
+    user.prev_fullname = user.fullname
+    user.fullname = "Deleted"
+    user.username = "#{random}_#{user.username}"
+    user.github_id = nil
+    user.github_token = nil
+    user.github_scope = nil
+    user.twitter_id = nil
+    user.twitter_token = nil
+    user.twitter_secret = nil
+    user.products.clear
+    user.save
+  end
+
+  def self.create_random_value
+    chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    value = ""
+    10.times { value << chars[rand(chars.size)] }
+    value
+  end
+
 end

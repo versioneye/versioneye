@@ -15,8 +15,7 @@ class Settings::DeleteController < ApplicationController
       return
     end
     user.password = password
-    Notification.remove_notifications( user )
-    user.delete_user
+    UserService.delete user
     sign_out
     redirect_to "/"
   end
