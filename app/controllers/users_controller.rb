@@ -136,16 +136,20 @@ class UsersController < ApplicationController
     verification = params[:verification]
     source       = params[:source]
 
+    message = "Congratulation. Your Account is activated."
     user = User.where(verification: verification)[0]
-    if User.activate!( verification )
-      message = "Congratulation. Your Account is activated."
-      if source.eql?("github")
-        sign_in user
-        flash.now[:success] = message
-        redirect_to user_packages_i_follow_path and return
-      else
-        flash[:success] = message
-      end
+    activated = User.activate!( verification )
+
+    if activated && github_source?( source )
+      sign_in user
+      flash.now[:success] = message
+      redirect_to user_packages_i_follow_path
+      return
+    end
+
+    if activated
+      flash[:success] = message
+      return
     end
 
     if UserEmail.activate!( verification )
@@ -244,6 +248,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+    def github_source?( source )
+      !source.nil? && !source.empty? && source.eql?("github")
+    end
 
     def format_autocompletion(matched_users)
       results = []
