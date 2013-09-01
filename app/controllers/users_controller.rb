@@ -241,9 +241,15 @@ class UsersController < ApplicationController
     render json: format_autocompletion( matched_users )
   end
 
+  # Only for Admins!
   def destroy
-    User.find_by_username(params[:id]).delete_user
-    flash[:success] = "User deleted"
+    user = User.find_by_username(params[:id])
+    if user.nil?
+      flash[:error] = "User could't find in the database."
+    else
+      UserService.delete user
+      flash[:success] = "User deleted"
+    end
     redirect_to users_path
   end
 

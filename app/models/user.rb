@@ -383,22 +383,6 @@ class User
     username
   end
 
-  def delete_user
-    random = create_random_value
-    self.deleted = true
-    self.email = "#{random}_#{self.email}"
-    self.prev_fullname = self.fullname
-    self.fullname = "Deleted"
-    self.github_id = nil
-    self.github_token = nil
-    self.github_scope = nil
-    self.twitter_id = nil
-    self.twitter_token = nil
-    self.twitter_secret = nil
-    self.products.clear
-    self.save
-  end
-
   def fetch_or_create_billing_address
     if self.billing_address.nil?
       self.billing_address = BillingAddress.new
