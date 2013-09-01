@@ -9,7 +9,6 @@ describe Project do
     @user.email = "hans@tanz.de"
     @user.password = "password"
     @user.salt = "salt"
-    @user.fb_id = "asggffffffff"
     @user.terms = true
     @user.datenerhebung = true
     @user.save
@@ -65,11 +64,6 @@ describe Project do
       @test_project = ProjectFactory.create_new @test_user
     end
 
-    after(:each) do
-      @test_user.remove
-      @test_project.remove
-    end
-
     it "project factory generated project_key passes validation" do
       @test_project.errors.full_messages.empty?.should be_true
     end
@@ -97,11 +91,6 @@ describe Project do
       @test_user = UserFactory.create_new 10021
       @test_user.nil?.should be_false
       @test_project = ProjectFactory.create_new @test_user
-    end
-
-    after(:each) do
-      @test_user.remove
-      @test_project.remove
     end
 
     it "project factory generated project_key passes validation" do
