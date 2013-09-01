@@ -10,7 +10,6 @@ describe User do
     @user.email = "hans@tanz.de"
     @user.password = "password"
     @user.salt = "salt"
-    @user.fb_id = "asggffffffff"
     @user.github_id = "github_id_123"
     @user.terms = true
     @user.datenerhebung = true
@@ -191,18 +190,6 @@ describe User do
     end
   end
 
-  describe "find_by_fb_id" do
-    it "doesn't find by fb_id" do
-      User.find_by_fb_id("agfasgasfgasfg").should be_nil
-    end
-    it "does find by email" do
-      user = User.find_by_fb_id("asggffffffff")
-      user.should_not be_nil
-      user.fb_id.eql?(@user.fb_id).should be_true
-      user.id.eql?(@user.id).should be_true
-    end
-  end
-
   describe "find_by_github_id" do
     it "doesn't find by github id" do
       User.find_by_github_id("agfgasasgasfgasfg").should be_nil
@@ -310,24 +297,6 @@ describe User do
       user.fullname = "Robert Reiz"
       user.create_username
       user.username.size.should > 12
-    end
-
-  end
-
-  describe "update_from_fb_json" do
-
-    it "updates and saves" do
-      json_user = Hash.new
-      json_user["name"] = "hans super tanz"
-      json_user["username"] = "hanzpanztanz"
-      json_user["email"] = "hans@panz.de"
-      json_user["id"] = "asgasgasgasg"
-      user = User.new
-      user.update_from_fb_json(json_user, "token_asgasg")
-      user.terms = true
-      user.datenerhebung = true
-      user.save.should be_true
-      user.remove
     end
 
   end

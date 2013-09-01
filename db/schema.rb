@@ -50,7 +50,6 @@ ActiveRecord::Schema.define(:version => 20120301021814) do
     t.string   "salt",                                                       :null => false
     t.boolean  "admin",                             :default => false
     t.string   "fb_id",              :limit => 100
-    t.string   "fb_token"
     t.string   "verification"
     t.string   "privacy_products",                  :default => "everybody"
     t.string   "privacy_comments",                  :default => "everybody"
