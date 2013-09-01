@@ -27,29 +27,51 @@ class ProjectService
     end
   end
 
-  def self.update( project )
+  def self.update_all( period )
+    update_projects period
+    update_collaborators_projects period
+  end
+
+  def self.update_projects( period )
+    projects = Project.by_period( period )
+    projects.each do |project|
+      self.update( project, true )
+    end
+  end
+
+  def self.update_collaborators_projects( period )
+    collaborators = ProjectCollaborator.by_period( period )
+    collaborators.each do |collaborator|
+      project = collaborator.project
+      user    = collaborator.user
+      if project.nil? || user.nil?
+        collaborator.remove
+        next
+      end
+      project = self.update( project, false )
+      if project.out_number > 0
+        p "send out email notification to collaborator #{user.fullname} for #{project.name}."
+        ProjectMailer.projectnotification_email( project, user ).deliver
+      end
+    end
+  end
+
+  def self.update( project, send_email = false  )
     if project.nil? || project.user_id.nil?
       return nil
     end
     self.update_url( project )
     new_project = self.build_from_url( project.url )
     project.update_from( new_project )
-    if project.out_number > 0
+    if send_email && project.out_number > 0
+      p "send out email notification for project: #{project.name} to user #{project.user.fullname}"
       ProjectMailer.projectnotification_email( project ).deliver
     end
+    project
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
     nil
-  end
-
-  def self.update_all( period )
-    projects = Project.all()
-    projects.each do |project|
-      if project.period.eql?( period )
-        self.update ( project )
-      end
-    end
   end
 
   def self.update_url( project )
