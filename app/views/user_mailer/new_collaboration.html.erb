@@ -4,7 +4,7 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <p>Hello, <%= @callee[:fullname] %></p>
+    <p>Hey <%= @callee[:fullname] %>,</p>
     <p>
       <%= @caller[:fullname] %> just added you as project collaborator to his/her project
       <a href="https://www.versioneye.com/user/projects/<%= @project[:_id].to_s %>" ><%= @project[:name] %></a>.
