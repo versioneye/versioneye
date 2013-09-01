@@ -9,7 +9,6 @@ describe User do
     @user.email = "hans@tanz.de"
     @user.password = "password"
     @user.salt = "salt"
-    @user.fb_id = "asggffffffff"
     @user.github_id = "github_id_123"
     @user.terms = true
     @user.datenerhebung = true

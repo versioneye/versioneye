@@ -90,7 +90,7 @@ class Dependency
   end
 
   def version_parsed
-    return "0" if version.nil?
+    return "unknown" if version.nil? || version.empty?
     abs_version = String.new(version)
     if prod_type.eql?( Project::A_TYPE_RUBYGEMS )
       abs_version = String.new( gem_version_parsed )
@@ -140,7 +140,10 @@ class Dependency
 
   def version_for_url
     url_param = version_parsed
-    Version.encode_version( url_param )
+    ver = Version.encode_version( url_param )
+  rescue => e
+    Rails.logger.error e.message
+    return self.version
   end
 
 end

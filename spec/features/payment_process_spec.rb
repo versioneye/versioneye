@@ -49,9 +49,9 @@ describe "Payment Process" do
       visit pricing_path
       Plan.count.should eq(4)
       page.should have_content(Plan.free_plan.name)
-      page.should have_content("unlimited public repositories with this plan but no private repositories")
-      page.should have_content("Use the personal plan as an individual person to track your private repositories.")
-      page.should have_content("Use the business plans as an organisation and take advantage of the advanced features")
+      page.should have_content("You can monitor unlimited public, but no private repositories.")
+      page.should have_content("Use the personal plan to track your private repositories.")
+      page.should have_content("Use the business plans as an organization and take advantage of the advanced features.")
 
       click_button "business_normal_button"
       page.should have_content("We updated your plan successfully")

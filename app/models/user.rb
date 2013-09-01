@@ -31,9 +31,6 @@ class User
   # TODO refactor this in facebook_account, twitter_account
   # create own models for that und connect them to user
 
-  field :fb_id   , type: String
-  field :fb_token, type: String
-
   field :twitter_id    , type: String
   field :twitter_token , type: String
   field :twitter_secret, type: String
@@ -73,13 +70,14 @@ class User
   before_validation :downcase_email
 
   scope :by_verification, ->(code){where(verification: code)}
+  scope :live_users   , where(verification: nil, deleted: false)
   scope :follows_none   , where(:product_ids.empty?)
   scope :follows_equal  , ->(n){where(:product_ids.count.eq(n))}
   scope :follows_least  , ->(n){where(:product_ids.count >= n)}
   scope :follows_max    , ->(n){where(:product_ids.count <= n)}
 
   attr_accessor :password, :new_username
-  attr_accessible :fullname, :username, :email, :password, :new_username, :fb_id, :fb_token, :terms, :datenerhebung, :verification, :terms, :datenerhebung
+  attr_accessible :fullname, :username, :email, :password, :new_username, :terms, :datenerhebung, :verification, :terms, :datenerhebung
 
 
   def save
@@ -207,15 +205,6 @@ class User
     self.encrypted_password == encrypt(submitted_password)
   end
 
-  def self.find_by_fb_id(fb_id)
-    users = User.where(fb_id: fb_id)
-    if users && users.size > 1
-      return nil
-    else
-      users[0]
-    end
-  end
-
   def self.find_by_twitter_id(twitter_id)
     users = User.where(twitter_id: twitter_id)
     if users && users.size > 1
@@ -317,23 +306,6 @@ class User
     return save
   end
 
-  def update_from_fb_json(json_user, token)
-    self.fullname = json_user['name']
-    self.username = json_user['username']
-    self.email = json_user['email']
-    self.verification = nil
-    self.fb_id = json_user['id']
-    self.fb_token = token
-    self.password = create_random_value
-    if self.username.nil? || self.username.empty?
-      self.username = create_random_value
-    end
-    self.username = replacements_for_username( self.username )
-    if self.fullname.nil? || self.fullname.empty?
-      self.fullname = self.username
-    end
-  end
-
   def update_from_twitter_json(json_user, token, secret)
     self.fullname = json_user['name']
     self.username = json_user['screen_name']
@@ -382,22 +354,6 @@ class User
     username
   end
 
-  def delete_user
-    random = create_random_value
-    self.deleted = true
-    self.email = "#{random}_#{self.email}"
-    self.prev_fullname = self.fullname
-    self.fullname = "Deleted"
-    self.github_id = nil
-    self.github_token = nil
-    self.github_scope = nil
-    self.twitter_id = nil
-    self.twitter_token = nil
-    self.twitter_secret = nil
-    self.products.clear
-    self.save
-  end
-
   def fetch_or_create_billing_address
     if self.billing_address.nil?
       self.billing_address = BillingAddress.new
@@ -405,6 +361,17 @@ class User
       self.billing_address.save
     end
     self.billing_address
+  end
+
+  #-- ElasticSearch mapping ------------------
+  def to_indexed_json
+    {
+      :_id => self.id.to_s,
+      :_type => "user",
+      :fullname => self[:fullname],
+      :username => self[:username],
+      :email => self[:email]
+    }
   end
 
   private

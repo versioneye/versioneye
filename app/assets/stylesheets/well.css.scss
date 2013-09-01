@@ -19,12 +19,12 @@
     color: $text_casual;
   }
 
+  & input.btn {
+    color: white;
+  }
+
   & .button_to {
     display: inline-block;
-
-    & input {
-      background-color: white;
-    }
   }
 
   & .language_block {

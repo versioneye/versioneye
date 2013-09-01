@@ -1,5 +1,17 @@
 class UserService
 
+  def self.search(term)
+    EsUser.search( term )
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    return []
+  end
+
+  def self.create_random_token(length = 25)
+    SecureRandom.urlsafe_base64(length)
+  end
+
   def self.valid_user?(user, flash, t)
     if !User.email_valid?(user.email)
       flash[:error] = "page_signup_error_email"
@@ -15,6 +27,37 @@ class UserService
       return false;
     end
     return true;
+  end
+
+  def self.delete( user )
+    Notification.remove_notifications( user )
+    collaborators = ProjectCollaborator.by_user( user )
+    if !collaborators.nil? && !collaborators.empty?
+      collaborators.each do |project_collaborator|
+        project_collaborator.remove
+      end
+    end
+    random = create_random_value
+    user.deleted = true
+    user.email = "#{random}_#{user.email}"
+    user.prev_fullname = user.fullname
+    user.fullname = "Deleted"
+    user.username = "#{random}_#{user.username}"
+    user.github_id = nil
+    user.github_token = nil
+    user.github_scope = nil
+    user.twitter_id = nil
+    user.twitter_token = nil
+    user.twitter_secret = nil
+    user.products.clear
+    user.save
+  end
+
+  def self.create_random_value
+    chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    value = ""
+    10.times { value << chars[rand(chars.size)] }
+    value
   end
 
 end

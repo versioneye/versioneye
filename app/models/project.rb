@@ -47,9 +47,11 @@ class Project
 
   belongs_to :user
   has_many   :projectdependencies
+  has_many   :collaborators, class_name: "ProjectCollaborator"
 
   scope :by_user  , ->(user)  { where(user_id: user.id) }
   scope :by_source, ->(source){ where(source:  source ) }
+  scope :by_period, ->(period){ where(period:  period ) }
 
   def dependencies
     self.projectdependencies
@@ -63,7 +65,6 @@ class Project
     nil
   end
 
-  # TODO double check this
   def self.find_private_projects_by_user user_id
     Project.all(conditions: { user_id: user_id, private_project: true } )
   end
@@ -73,8 +74,23 @@ class Project
     self.language.eql?(Product::A_LANGUAGE_RUBY) or self.language.eql?(Product::A_LANGUAGE_NODEJS)
   end
 
-  # TODO test this
-  #
+  def visible_for_user?(user)
+    return true if self[:public]
+    return false if user.nil?
+
+    is_collaborator = ProjectCollaborator.collaborator?(self[:_id], user[:_id])
+    return true if self.user_id.to_s == user[:_id].to_s or is_collaborator
+    return false
+  end
+
+  def collaborator( user )
+    return nil if collaborators.nil? || collaborators.empty?
+    collaborators.each do |collaborator|
+      return collaborator if user._id.to_s.eql?( collaborator.user_id.to_s )
+    end
+    return nil
+  end
+
   def outdated?
     self.projectdependencies.each do |dep|
       return true if dep.outdated?

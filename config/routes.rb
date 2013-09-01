@@ -24,6 +24,8 @@ Versioneye::Application.routes.draw do
   get    '/signout',               :to => 'sessions#destroy'
 
   post '/users/mobile',            :to => 'users#create_mobile'
+
+  get '/users/autocomplete', :to => 'users#autocomplete'
   resources :users, :key => :username do
     member do
       get 'favoritepackages'
@@ -109,6 +111,7 @@ Versioneye::Application.routes.draw do
   get '/user/projects/github_repositories'   , :to => 'user/github_repos#init'
 
   namespace :user do
+
     resources :projects do
       member do
         get  'badge'
@@ -117,8 +120,18 @@ Versioneye::Application.routes.draw do
         post 'save_visibility'
         post 'reparse'
         post 'update_name'
+        post 'add_collaborator'
       end
     end
+
+    resources :collaborations do
+      post 'approve'
+      post 'delete'
+      post 'invite'
+      post 'save_period'
+      post 'save_email'
+    end
+
     resources :github_repos
     get '/menu/github_repos', :to => 'github_repos#show_menu_items'
     get '/poll/github_repos', :to => 'github_repos#poll_changes'
@@ -186,10 +199,12 @@ Versioneye::Application.routes.draw do
   get   '/apijson_libs',        :to => redirect('/api')
 
 
-  get   'sitemap_00_1.xml',        :to => 'page#sitemap_1'
-  get   'sitemap_00_2.xml',        :to => 'page#sitemap_2'
-  get   'sitemap_00_3.xml',        :to => 'page#sitemap_3'
-  get   'sitemap_00_4.xml',        :to => 'page#sitemap_4'
+  get   'sitemap_1.xml',        :to => 'page#sitemap_1'
+  get   'sitemap_2.xml',        :to => 'page#sitemap_2'
+  get   'sitemap_3.xml',        :to => 'page#sitemap_3'
+  get   'sitemap_4.xml',        :to => 'page#sitemap_4'
+  get   'sitemap_5.xml',        :to => 'page#sitemap_4'
+  get   'sitemap_6.xml',        :to => 'page#sitemap_4'
 
   get   '/search', :to => 'products#search'
 

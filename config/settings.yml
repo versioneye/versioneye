@@ -16,6 +16,7 @@ development:
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
   elasticsearch_url: localhost:9200
   elasticsearch_product_index: product
+  elasticsearch_user_index: user
   memcache_servers: ["127.0.0.1:11211"]
   memcache_username:
   memcache_password:
@@ -38,6 +39,7 @@ test:
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
   elasticsearch_url: localhost:9200
   elasticsearch_product_index: /product_test
+  elasticsearch_user_index: /user_test
   memcache_servers: ["127.0.0.1:11211"]
   memcache_username:
   memcache_password:
@@ -60,6 +62,7 @@ production:
   stripe_secret_key: <%= ENV['STRIPE_SECRET_KEY'] %>
   elasticsearch_url: <%= ENV['ELASTICSEARCH_URL'] %>
   elasticsearch_product_index: <%= ENV['ELASTICSEARCH_PRODUCT_INDEX'] %>
+  elasticsearch_user_index: <%= ENV['ELASTICSEARCH_USER_INDEX'] %>
   memcache_servers: <%= ENV['MEMCACHE_SERVERS'] %>
   memcache_username: <%= ENV['MEMCACHE_USERNAME'] %>
   memcache_password: <%= ENV['MEMCACHE_PASSWORD'] %>

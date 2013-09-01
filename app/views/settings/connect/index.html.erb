@@ -1,6 +1,6 @@
 
 <div class="span3" >
-	<%= render "settings/navi" %>
+  <%= render "settings/navi" %>
 </div>
 
 <div class="span8" >
@@ -11,58 +11,44 @@
 
   <div class="span8 content" >
 
-  	<p>
-  		Connect your VersionEye Account with other Networks. In that way you can login
-			with your Twitter, GitHub or Facebook Account.
-  	</p>
+    <p>
+      Connect your VersionEye account with other networks. In that way you can login
+      with your GitHub or Twitter account.
+    </p>
 
-  	<hr />
+    <hr />
 
-  	<div class="row" >
-			<div class="span1" style="width: 80px;"><label>Twitter</label></div>
-			<div class="span4" >
-				<% if @user.twitter_token && @user.twitter_secret %>
-					<span style="color: green">Connected</span>
-					<%= link_to "[ disconnect ]", settings_disconnect_path(:service => "twitter"), :confirm => "Are you sure?", :class => "meta-text-small" %>
-				<% else %>
-					<a href="/auth/twitter/forward" >
-						Connect with Twitter
-					</a>
-				<% end %>
-			</div>
-		</div>
+    <div class="row" >
+      <div class="span1" style="width: 80px;"><label>Twitter</label></div>
+      <div class="span4" >
+        <% if @user.twitter_token && @user.twitter_secret %>
+          <span style="color: green">Connected</span>
+          <%= link_to "[ disconnect ]", settings_disconnect_path(:service => "twitter"), :confirm => "Are you sure?", :class => "meta-text-small" %>
+        <% else %>
+          <a href="/auth/twitter/forward" >
+            Connect with Twitter
+          </a>
+        <% end %>
+      </div>
+    </div>
 
-		<div class="row" >
-			<div class="span1" style="width: 80px;"><label>GitHub</label></div>
-			<div class="span4" >
-				<% if @user.github_token %>
-					<span style="color: green">Connected</span>
-					<%= link_to "[ disconnect ]", settings_disconnect_path(:service => "github"), :confirm => "Are you sure?", :class => "meta-text-small" %>
-					<% scopes = current_user.github_scope %>
-					<% if scopes && !scopes.empty? %>
-						scopes: [<%= scopes %>]
-					<% end %>
-				<% else %>
-					<a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd'  >
-						Connect with GitHub
-					</a>
-				<% end %>
-			</div>
-		</div>
-
-		<div class="row" >
-			<div class="span1" style="width: 80px;"><label>Facebook</label></div>
-			<div class="span4" >
-				<% if @user.fb_token %>
-					<span style="color: green">Connected</span>
-					<%= link_to "[ disconnect ]", settings_disconnect_path(:service => "facebook"), :confirm => "Are you sure?", :class => "meta-text-small" %>
-				<% else %>
-					<a href='javascript:var popupWindow = window.open(oauth_facebook_link, "popupWindow", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, menubar=1, resizable=1, width="+winWidth+",height="+winHeigh+"top="+top+", left="+left);' style="margin-right: 5px;" >
-						Connect with Facebook
-					</a>
-				<% end %>
-			</div>
-		</div>
+    <div class="row" >
+      <div class="span1" style="width: 80px;"><label>GitHub</label></div>
+      <div class="span4" >
+        <% if @user.github_token %>
+          <span style="color: green">Connected</span>
+          <%= link_to "[ disconnect ]", settings_disconnect_path(:service => "github"), :confirm => "Are you sure?", :class => "meta-text-small" %>
+          <% scopes = current_user.github_scope %>
+          <% if scopes && !scopes.empty? %>
+            scopes: [<%= scopes %>]
+          <% end %>
+        <% else %>
+          <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd'  >
+            Connect with GitHub
+          </a>
+        <% end %>
+      </div>
+    </div>
 
   </div>
 </div>
