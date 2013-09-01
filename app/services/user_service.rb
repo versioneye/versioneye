@@ -31,6 +31,12 @@ class UserService
 
   def self.delete( user )
     Notification.remove_notifications( user )
+    collaborators = ProjectCollaborator.by_user( user )
+    if !collaborators.nil? && !collaborators.empty?
+      collaborators.each do |project_collaborator|
+        project_collaborator.remove
+      end
+    end
     random = create_random_value
     user.deleted = true
     user.email = "#{random}_#{user.email}"
