@@ -22,6 +22,7 @@ class ProjectCollaborator
   validates_presence_of :owner_id
   validates_presence_of :caller_id
 
+  scope :by_period, ->(period){ where(period:  period ) }
   scope :by_user, ->(user){ any_of({user_id: user.id.to_s},
                                    {invitation_email: user[:email]}) }
 
