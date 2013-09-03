@@ -1,15 +1,28 @@
+function init_plots(){
+  require(["/assets/libs/d3.v3.min", "/assets/plots/horizontalBarChart"],
+          function(d3, BarChart){
+    console.debug("Going to render D3 plots.");
+    jQuery("#plot_latest").html("");
+
+    barChart = new BarChart({
+      selector: "#plot_latest",
+      width: 777,
+      height: 400,
+      title: "Projects per language"
+    });
+
+    barChart.loadAndRender("/statistics/proglangs");
+
+  });
+}
+
+
 jQuery(document).ready(function() {
 
     jQuery('#q').tbHinter({
         text: "json"
     });
 
-    //get list of popular languages and draw awesome plots
-    jQuery.get(
-            "/statistics/proglangs.json", null,
-            function(data, status, jqXHR){ render_statistics(data); },
-            "json"
-    );
     //period filtering: "/statistics/langtrends.json?starts=2012-04&ends=2012-06"
     jQuery.get(
             "/statistics/langtrends.json", null,
@@ -66,40 +79,6 @@ function print_legend(selector, color_map){
     jQuery(selector).append(legend_html.join(""));
 }
 
-
-// ---------------------------------------------------------------
-function render_statistics(data){
-    //renders awesome summery plots
-    ChartConfig.domain_code = "aa7843dd73cc5af13f5b53855cf92ac0";
-    var chart_container = "chart_container_projects";
-    var chart = new JSChart(chart_container, "bar", ChartConfig.domain_code);
-    if ((data == undefined) || data.length == 0 ){
-        console.log("Error:render_statistics - empty dataset!");
-        return null;
-    }
-
-    configure_container("#" + chart_container, ChartConfig.width, ChartConfig.height);
-
-    chart.setDataArray(data);
-    chart.setTitle("Projects per language");
-    chart.setTitleFontSize(15);
-    chart.setAxisReversed(true);
-
-    chart.setAxisNameX("", false);
-    chart.setAxisNameY("", false);
-    chart.setAxisPaddingLeft(ChartConfig.left_padding);
-    chart.setAxisPaddingRight(ChartConfig.right_padding);
-
-    chart.setAxisValuesFontSizeX(ChartConfig.font_size);
-    chart.setAxisValuesFontFamily(ChartConfig.font_family);
-    chart.setLabelFontFamily(ChartConfig.font_family);
-    chart.setBarValuesFontSize(ChartConfig.font_size);
-    //chart.setBarSpacingRatio(5); //change spacing between bars
-    chart.setBarOpacity(0.8);
-
-    chart.draw();
-    chart.resize(ChartConfig.width, ChartConfig.height);
-}
 
 function render_trends(language_map){
 
