@@ -59,5 +59,11 @@ class Newest
     end
     newest.shuffle.first(count)
   end
+
+  def language_esc
+    return "nodejs" if language.eql?(Product::A_LANGUAGE_NODEJS)
+    return language.downcase
+  end
+
 end
 

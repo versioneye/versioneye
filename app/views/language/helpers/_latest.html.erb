@@ -4,7 +4,7 @@
     <% if prod && prod.product %>
       <div class = "media-body product-item">
         <h5 class = "media-heading">
-           <%= i + 1 %>. <a href = "<%= products_path(lang: prod.language, key: Product.encode_prod_key(prod.prod_key)) %>"><%= prod.name %></a>
+           <%= i + 1 %>. <a href = "<%= products_path(lang: prod.language_esc, key: Product.encode_product_key(prod.prod_key) ) %>"><%= prod.name %></a>
           <span class = "pull-right"><%= render partial: "shared/product_follow_mini", locals: {product: prod, user: current_user} %></span>
         </h5>
         <p> <%= prod.product.short_summary %> </p>

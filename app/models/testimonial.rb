@@ -7,6 +7,7 @@ class Testimonial
   field :content , type: String
   field :title   , type: String
   field :company , type: String
+  field :homepage, type: String
   field :approved, type: Boolean, :default => false
   field :moderated, type: Boolean, :default => false
 
