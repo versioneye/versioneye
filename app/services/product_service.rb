@@ -16,6 +16,7 @@ class ProductService
     product = Product.fetch_product language, prod_key
     if product && user && !product.users.include?( user )
       product.users.push user
+      product.followers = 0 if product.followers.nil?
       product.followers += 1
       result = product.save
     end
@@ -28,6 +29,7 @@ class ProductService
     product = Product.fetch_product language, prod_key
     if product && user && product.users.include?( user )
       product.users.delete(user)
+      product.followers = 0 if product.followers.nil?
       product.followers -= 1
       result = product.save
     end
