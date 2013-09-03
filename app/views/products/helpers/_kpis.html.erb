@@ -2,7 +2,12 @@
 <div class="row" >
 
   <div class="flash info" style="margin-bottom: 5px;" >
-    <b>Latest:</b> <%= @current_version.version %>
+    <b>Latest:</b>
+    <% if @current_version && !@current_version.version.eql?(@product.version) %>
+      <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/<%= @current_version.version %>" ><%= @current_version.version %></a>
+    <% else %>
+      <%= @current_version.version %>
+    <% end %>
   </div>
 
   <div class="flash info" style="margin-bottom: 5px;">
@@ -11,27 +16,46 @@
 
   <% last_date = nil %>
   <% time_in_words = nil %>
-  <% css_class = "info" %>
+  <% rel_text = "" %>
+  <% days_ago = @product.released_days_ago %>
   <% if @product.released_days_ago %>
     <% last_date = Date.today - @product.released_days_ago %>
     <% time_in_words = distance_of_time_in_words(Date.today, last_date) %>
-    <% if @product.released_days_ago > 90 %>
-      <% css_class = "warn" %>
-    <% elsif @product.released_days_ago > 180 %>
-      <% css_class = "error" %>
-    <% end %>
+    <% rel_text = "This artifact was released #{time_in_words} ago on #{@version.created_at.strftime("%b %d, %Y - %I:%m %p")}" %>
+  <% else %>
+    <% last_date = DateTime.now.to_date - @product.created_at.to_date %>
+    <% time_in_words = distance_of_time_in_words(Date.today, @version.created_at) %>
+    <% days_ago = last_date.to_i %>
+    <% rel_text = "We don't have any information about the release date of this artifact, but we detected it #{time_in_words} ago on #{@version.created_at.strftime("%b %d, %Y - %I:%m %p")}" %>
   <% end %>
-  <div class="flash <%= css_class %>" style="margin-bottom: 5px;" >
-    <b>Released:</b>
-    <% if time_in_words.nil? %>
-      N/A
-    <% else %>
-      <%= time_in_words %> ago
-    <% end %>
+  <% rel_bg = "success" if days_ago < 30  %>
+  <% rel_bg = ""        if days_ago >= 30 && days_ago <= 90  %>
+  <% rel_bg = "info"    if days_ago > 90  && days_ago <= 180  %>
+  <% rel_bg = "error"   if days_ago > 180 %>
+  <div class="flash <%= rel_bg %>" style="margin-bottom: 5px;" >
+    <b title="<%= rel_text %>" >Released:</b>
+    <span title="<%= rel_text %>">
+      <% if time_in_words.nil? %>
+        N/A
+      <% else %>
+        <%= time_in_words %> ago
+      <% end %>
+    </span>
   </div>
 
-  <div class="flash info" style="margin-bottom: 5px;" >
-    <b>Avg. Rel. Time:</b>
+
+  <% average_release_time = VersionService.average_release_time( @product.versions ) %>
+  <% if average_release_time.nil? %>
+    <% average_release_time = VersionService.estimated_average_release_time( @product.versions ) %>
+  <% end %>
+  <% art_bg = "success" if average_release_time <= 31  %>
+  <% art_bg = ""      if average_release_time > 31 and average_release_time <= 62  %>
+  <% art_bg = "info"  if average_release_time > 62 and average_release_time <= 124  %>
+  <% art_bg = "error" if average_release_time > 124 %>
+  <% art_text = "In average every #{average_release_time} days a new version comes out for this project." %>
+  <div class="flash <%= art_bg %>" style="margin-bottom: 5px;" >
+    <b title="<%= art_text %>" >Avg. Rel. Time:</b>
+    <span title="<%= art_text %>"> <%= average_release_time %> days </span>
   </div>
 
   <% references = @product.used_by_count %>
@@ -45,8 +69,8 @@
   </div>
 
   <% main_dep_count = @product.dependencies(nil).count %>
-  <% dep_bg = "success" if main_dep_count <= 5  %>
-  <% dep_bg = "" if main_dep_count > 5 and main_dep_count < 15  %>
+  <% dep_bg = "success" if main_dep_count <= 9  %>
+  <% dep_bg = "" if main_dep_count > 9 and main_dep_count < 15  %>
   <% dep_bg = "info" if main_dep_count >= 15 and main_dep_count < 30  %>
   <% dep_bg = "error" if main_dep_count >= 30 %>
   <% scope = Dependency.main_scope(@product.language) %>
