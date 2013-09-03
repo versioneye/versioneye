@@ -120,7 +120,7 @@ define(['underscore', 'backbone'],
                  ' is now successfully imported.',
                  'You can now checkout project\'s page to see state of dependencies.'
                  ].join(' ');
-      
+
       var command_data = model.get('command_data');
       $(this.el).find('.input').data('githubProjectId', command_data['githubProjectId']);
       this.updateRepoTitle();
@@ -131,8 +131,9 @@ define(['underscore', 'backbone'],
     },
 
     onAddFailure: function(model){
-      var error_msg = "Failure: Cant import project: " + model.get('fullname');
-      
+      var error_msg = "Failure: Cant import project: " + model.get('fullname')  + ".";
+      error_msg += "Reasons: cant find file of supported package manager or issues with Github service.";
+
       console.debug(error_msg);
       showNotification("alert alert-error", error_msg);
       this.showRepoNotification("");
