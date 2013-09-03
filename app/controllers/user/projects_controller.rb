@@ -103,6 +103,11 @@ class User::ProjectsController < ApplicationController
 
     user = User.find_by_username(collaborator_info[:username])
 
+    if user and ProjectCollaborator.collaborator?(project[:_id].to_s, user[:_id].to_s)
+      flash[:error] = "Warning: #{user[:fullname]} is already a collaborator in your project."
+      redirect_to :back and return
+    end
+
     new_collaborator = ProjectCollaborator.new project_id: project[:_id].to_s,
                                                caller_id: current_user[:_id].to_s,
                                                owner_id: project[:user_id].to_s
