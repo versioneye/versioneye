@@ -21,7 +21,8 @@ define(['underscore', 'backbone'],
       "click li.sort-item": "onSortItem",
       "click li.filter-item": "onFilterItem",
       "click #github-search-btn": "onSearchItem",
-      "submit #github-repo-search" : "onSearchItem"
+      "submit #github-repo-search" : "onSearchItem",
+      "keyup #github-repo-search": "onSearchItem"
     },
     render: function(){
       console.log("Rendering menu...");
@@ -77,6 +78,11 @@ define(['underscore', 'backbone'],
     onSearchItem: function(ev){
       ev.preventDefault();
       var search_term = $("#github-search-term").val();
+      if(search_term.length < 2){
+        console.debug("Search term too short, going to skip.");
+        return 1;
+      }
+      
       var search_matches = this.allRepos.matchByName(search_term);
 
       console.debug("user is searching: " + search_term);
