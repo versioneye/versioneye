@@ -58,4 +58,22 @@ svg {
     fill: white;
     stroke: steelblue;
   }
+
+  .tick {
+    stroke: grey;
+    & line {
+      opacity: 0.2;
+    }
+  }
+
+  .barTitle {
+    font-weight: bold;
+    fill: grey
+  }
+  .plotTitle {
+    text-anchor: middle;
+    font-size: 20px;
+    font-weight: bold;
+    fill: grey;
+  }
 }

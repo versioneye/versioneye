@@ -11,11 +11,12 @@ class StatisticsController < ApplicationController
       stats = StatisticService.language_project_count
       Rails.cache.write("lang_stat", stats)
     end
-    respond_to do |format|
-      format.json{
-        render :json => stats.sort {|a, b| b[1] <=> a[1]}
-      }
+    results = []
+    stats.each do |row|
+      results << {name: row[0], value: row[1]}
     end
+      
+    render json: results
   end
 
   def langtrends
