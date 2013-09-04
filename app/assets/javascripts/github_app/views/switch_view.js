@@ -35,7 +35,7 @@ define(['underscore', 'backbone'],
     },
 
     getModelSwitchId: function(){
-      var id =  "github-repo-switch-" + this.model.get('github_id'); 
+      var id =  "github-repo-switch-" + this.model.get('github_id');
       if(this.branch){
         id += "-" + this.branch;
       }
@@ -76,7 +76,7 @@ define(['underscore', 'backbone'],
     switchOnActivate : function(){
       var switch_selector = "#" + this.getModelSwitchId();
       var repo_switch = $(switch_selector).parents(".github-switch");
-      
+
       repo_switch.bootstrapSwitch('setState', true);
       repo_switch.bootstrapSwitch('setActive', true);
     },
@@ -84,7 +84,7 @@ define(['underscore', 'backbone'],
     switchOffActivate: function(){
       var switch_selector = "#" + this.getModelSwitchId();
       var repo_switch = $(switch_selector).parents(".github-switch");
-      
+
       repo_switch.bootstrapSwitch("setState", false);
       repo_switch.bootstrapSwitch('setActive', true);
 
@@ -104,7 +104,7 @@ define(['underscore', 'backbone'],
                                  $('meta[name="csrf-token"]').attr('content'));
           },
           success: function(model, xhr, options){
-            var that_switch = current_switch; 
+            var that_switch = current_switch;
             that_switch.onAddSuccess(model)
           },
           error: function(model, xhr, options){
@@ -132,7 +132,7 @@ define(['underscore', 'backbone'],
 
     onAddFailure: function(model){
       var error_msg = "Failure: Cant import project: " + model.get('fullname')  + ".";
-      error_msg += "Reasons: cant find file of supported package manager or issues with Github service.";
+      error_msg += " Reasons: cant find file of supported package manager or issues with Github service.";
 
       console.debug(error_msg);
       showNotification("alert alert-error", error_msg);
