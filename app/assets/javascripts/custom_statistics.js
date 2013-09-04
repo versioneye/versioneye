@@ -1,6 +1,8 @@
 function init_plots(){
-  require(["/assets/libs/d3.v3.min", "/assets/plots/horizontalBarChart"],
-          function(d3, BarChart){
+  require(["/assets/libs/d3.v3.min",
+           "/assets/plots/horizontalBarChart",
+           "/assets/plots/multiTimeline"],
+          function(d3, BarChart, MultiTimeline){
     console.debug("Going to render D3 plots.");
     jQuery("#plot_latest").html("");
 
@@ -13,6 +15,15 @@ function init_plots(){
 
     barChart.loadAndRender("/statistics/proglangs");
 
+    jQuery("#plot_trends").html("");
+    trends = new MultiTimeline({
+      selector: "#plot_trends",
+      legend: {selector: "#plot_trends_legend"},
+      width: 777,
+      height: 400,
+      title: "Number of projects over time"
+    });
+    trends.loadAndRender("/statistics/langtrends");
   });
 }
 
@@ -23,13 +34,13 @@ jQuery(document).ready(function() {
         text: "json"
     });
 
-    //period filtering: "/statistics/langtrends.json?starts=2012-04&ends=2012-06"
+    /*period filtering: "/statistics/langtrends.json?starts=2012-04&ends=2012-06"
     jQuery.get(
             "/statistics/langtrends.json", null,
             function(data, status, jqXHR){ render_trends(data); },
             "json"
     );
-
+    */
 });
 
 var ChartConfig = {
