@@ -63,7 +63,7 @@
   <% ref_bg = ""      if references >= 100 and references < 500  %>
   <% ref_bg = "info"  if references > 0 and references < 100  %>
   <% ref_bg = "error" if references == 0 %>
-  <% ref_text = "#{references} artifacts are referencing this package" %>
+  <% ref_text = "#{references} artifacts are referencing this project" %>
   <div class="flash <%= ref_bg %>" style="margin-bottom: 5px;" >
     <b title="<%= ref_text %>">References:</b> <span title="<%= ref_text %>"><%= references %></span>
   </div>
