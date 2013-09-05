@@ -16,7 +16,7 @@
 
   <% last_date = nil %>
   <% time_in_words = nil %>
-  <% rel_text = "" %>
+  <% rel_text = "info" %>
   <% days_ago = @product.released_days_ago %>
   <% if @product.released_days_ago %>
     <% last_date = Date.today - @product.released_days_ago %>
@@ -29,8 +29,8 @@
     <% rel_text = "We don't have any information about the release date of this artifact, but we detected it #{time_in_words} ago on #{@version.created_at.strftime("%b %d, %Y - %I:%m %p")}" %>
   <% end %>
   <% rel_bg = "success" if days_ago < 30  %>
-  <% rel_bg = ""        if days_ago >= 30 && days_ago <= 90  %>
-  <% rel_bg = "info"    if days_ago > 90  && days_ago <= 180  %>
+  <% rel_bg = "info"        if days_ago >= 30 && days_ago <= 90  %>
+  <% rel_bg = "warn"    if days_ago > 90  && days_ago <= 180  %>
   <% rel_bg = "error"   if days_ago > 180 %>
   <div class="flash <%= rel_bg %>" style="margin-bottom: 5px;" >
     <b title="<%= rel_text %>" >Released:</b>
@@ -43,25 +43,32 @@
     </span>
   </div>
 
-
   <% average_release_time = VersionService.average_release_time( @product.versions ) %>
   <% if average_release_time.nil? %>
     <% average_release_time = VersionService.estimated_average_release_time( @product.versions ) %>
   <% end %>
-  <% art_bg = "success" if average_release_time <= 31  %>
-  <% art_bg = ""      if average_release_time > 31 and average_release_time <= 62  %>
-  <% art_bg = "info"  if average_release_time > 62 and average_release_time <= 124  %>
+  <% art_bg = "info" if average_release_time == 0  %>
+  <% art_bg = "success" if average_release_time > 0 && average_release_time <= 31  %>
+  <% art_bg = "info"  if average_release_time > 31 && average_release_time <= 62  %>
+  <% art_bg = "warn"  if average_release_time > 62 && average_release_time <= 124  %>
   <% art_bg = "error" if average_release_time > 124 %>
   <% art_text = "In average every #{average_release_time} days a new version comes out for this project." %>
+  <% art_text = "Not Available" if average_release_time == 0 %>
   <div class="flash <%= art_bg %>" style="margin-bottom: 5px;" >
     <b title="<%= art_text %>" >Avg. Rel. Time:</b>
-    <span title="<%= art_text %>"> <%= average_release_time %> days </span>
+    <span title="<%= art_text %>">
+      <% if average_release_time == 0 %>
+       N/A
+      <% else %>
+        <%= average_release_time %> days
+      <% end %>
+    </span>
   </div>
 
   <% references = @product.used_by_count %>
   <% ref_bg = "success" if references >= 500  %>
-  <% ref_bg = ""      if references >= 100 and references < 500  %>
-  <% ref_bg = "info"  if references > 0 and references < 100  %>
+  <% ref_bg = "info"      if references >= 100 and references < 500  %>
+  <% ref_bg = "warn"  if references > 0 and references < 100  %>
   <% ref_bg = "error" if references == 0 %>
   <% ref_text = "#{references} artifacts are referencing this project" %>
   <div class="flash <%= ref_bg %>" style="margin-bottom: 5px;" >
@@ -70,8 +77,8 @@
 
   <% main_dep_count = @product.dependencies(nil).count %>
   <% dep_bg = "success" if main_dep_count <= 9  %>
-  <% dep_bg = "" if main_dep_count > 9 and main_dep_count < 15  %>
-  <% dep_bg = "info" if main_dep_count >= 15 and main_dep_count < 30  %>
+  <% dep_bg = "info" if main_dep_count > 9 and main_dep_count < 15  %>
+  <% dep_bg = "warn" if main_dep_count >= 15 and main_dep_count < 30  %>
   <% dep_bg = "error" if main_dep_count >= 30 %>
   <% scope = Dependency.main_scope(@product.language) %>
   <% title_text = "#{main_dep_count} direct #{scope} dependencies" %>
