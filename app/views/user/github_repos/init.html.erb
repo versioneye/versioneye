@@ -156,7 +156,7 @@
     <input
       id = "{{= switch_id }}"
       type = "checkbox" class = "input"
-      {{= !repo.supported ? ' disabled ' : '' }}
+      {{ !repo.supported ? ' disabled ' : '' }}
       {{= (_.has(repo.imported_branches, branch)) ? ' checked ': '' }}
       data-github-id = "{{= repo.github_id }}"
       data-github-project-id = "{{= (_.has(repo.imported_branches, branch)) ? repo.imported_branches[branch].project_id : null }}"
