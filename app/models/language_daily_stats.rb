@@ -18,7 +18,6 @@ class LanguageDailyStats
   attr_accessible :language, :date, :metrics
 
   index(
-    [:date, Mongo::DESCENDING],
     [:date, Mongo::DESCENDING]
   )
 
@@ -223,8 +222,9 @@ class LanguageDailyStats
   end
 
   #-- query helpers
-  def self.latest_stats
-    doc = LanguageDailyStats.where(:"Ruby.total_artifact".gt => 0).desc(:date).first
+  def self.latest_stats(lang = "Ruby")
+    lang_key = LanguageDailyStats.language_to_sym(lang)
+    doc = LanguageDailyStats.where(:"#{lang_key.to_s}.total_artifact".gt => 0).desc(:date).first
     self.doc_metrics(doc)
   end
 

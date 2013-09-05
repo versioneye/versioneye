@@ -58,16 +58,16 @@ class User::GithubReposController < ApplicationController
       project_name = params[:fullname]
       branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : "master"
       project      = ProjectService.import_from_github( current_user, project_name, branch )
-      unless project.nil?
-        command_data[:githubProjectId] = project._id.to_s
-        repo = GithubRepo.find(params[:_id])
-        repo = process_repo(repo)
-      else
-        error_msg = "Cant import given project: #{project_name}."
-        Rails.logger.error error_msg
+      if project.is_a?(String)
+        error_msg = project
+        Rails.logger.error("#{project_name} - #{error_msg}")
         render text: error_msg, status: 503
         return false
       end
+
+      command_data[:githubProjectId] = project._id.to_s
+      repo = GithubRepo.find(params[:_id])
+      repo = process_repo(repo)
     when "remove"
       id = command_data[:githubProjectId]
 
