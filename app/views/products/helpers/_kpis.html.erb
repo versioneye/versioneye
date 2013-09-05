@@ -2,7 +2,7 @@
 <div class="row" >
 
   <div class="flash info" style="margin-bottom: 5px;" >
-    <b>Latest:</b>
+    <b>Current:</b>
     <% if @current_version && !@current_version.version.eql?(@product.version) %>
       <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/<%= @current_version.version %>" ><%= @current_version.version %></a>
     <% else %>
@@ -11,7 +11,7 @@
   </div>
 
   <div class="flash info" style="margin-bottom: 5px;">
-    <b>Current:</b> <%= @product.version %>
+    <b>This:</b> <%= @product.version %>
   </div>
 
   <% last_date = nil %>
