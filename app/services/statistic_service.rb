@@ -60,23 +60,26 @@ class StatisticService
 
     start_date = Date.new(2012, 4) if (start_date.nil? or not start_date.instance_of? Date)
     end_date = Date.today if (end_date.nil? or not end_date.instance_of? Date)
-    results = {}
-    xlabels = []
-    first_run = true
-    A_STAT_LANGUAGES.each do |lang|
-      lang_vals = []
-      i = 0
-      iter_date = start_date
-      while iter_date < end_date
-        xlabels << "#{Date::ABBR_MONTHNAMES[iter_date.month]}/#{iter_date.year}" if first_run
-        ncount = Product.where(language: lang, created_at: {"$lt" => iter_date}).count
-        lang_vals << [i += 1, ncount]
-        iter_date = iter_date >> 1
+    results = []
+    n_months = StatisticService.diff_in_months(start_date, end_date)
+
+    n_months.times do |i|
+      curr_date = start_date >> i
+      stats = { date: curr_date.strftime("%Y-%m-%d")}
+      A_STAT_LANGUAGES.each do |lang|
+        ncount = Product.where(language: lang, created_at: {"$lt" => curr_date}).count
+        encoded_lang = Product.encode_language(lang).to_s
+        stats.merge!({encoded_lang => ncount})
       end
-      results[lang] = lang_vals.clone
-      first_run = false;
+
+      results << stats
     end
-    return {:xlabels => xlabels, :data => results}
+
+
+    return results
   end
 
+  def self.diff_in_months(date1, date2)
+    (date2.year*12+date2.month) - (date1.year*12+date1.month)
+  end
 end

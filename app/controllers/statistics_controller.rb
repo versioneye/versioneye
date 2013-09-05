@@ -1,6 +1,6 @@
 class StatisticsController < ApplicationController
 
-  caches_action :proglangs, :langtrends
+  #caches_action :proglangs, :langtrends
 
   def index
   end
@@ -11,11 +11,12 @@ class StatisticsController < ApplicationController
       stats = StatisticService.language_project_count
       Rails.cache.write("lang_stat", stats)
     end
-    respond_to do |format|
-      format.json{
-        render :json => stats.sort {|a, b| b[1] <=> a[1]}
-      }
+    results = []
+    stats.each do |row|
+      results << {name: row[0], value: row[1]}
     end
+
+    render json: results
   end
 
   def langtrends
@@ -24,11 +25,6 @@ class StatisticsController < ApplicationController
       stats = StatisticService.language_project_trend
       Rails.cache.write("lang_trend", stats)
     end
-    respond_to do |format|
-      format.json {
-        render :json => stats
-      }
-    end
+    render json: stats
   end
-
 end
