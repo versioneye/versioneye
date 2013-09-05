@@ -52,7 +52,7 @@
   <% art_bg = "info"  if average_release_time > 31 && average_release_time <= 62  %>
   <% art_bg = "warn"  if average_release_time > 62 && average_release_time <= 124  %>
   <% art_bg = "error" if average_release_time > 124 %>
-  <% art_text = "In average every #{average_release_time} days a new version comes out for this project." %>
+  <% art_text = "In average this dev team is releasing a new version every #{average_release_time} days." %>
   <% art_text = "Not Available" if average_release_time == 0 %>
   <div class="flash <%= art_bg %>" style="margin-bottom: 5px;" >
     <b title="<%= art_text %>" >Avg. Rel. Time:</b>

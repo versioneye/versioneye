@@ -1,6 +1,18 @@
 
 <h5 class="desc_header"> Dependencies </h5>
 
+<div class="boxContainer" style="margin-bottom: 30px;" id="dependencies" >
+  <% if @product.prod_type.eql?( Project::A_TYPE_MAVEN2 ) %>
+    <%= render "product_show_dependencies_maven2" %>
+  <% elsif @product.prod_type.eql?( Project::A_TYPE_RUBYGEMS )  %>
+    <%= render "product_show_dependencies_rubygems" %>
+  <% elsif @product.prod_type.eql?( Project::A_TYPE_NPM )  %>
+    <%= render "product_show_dependencies_npm" %>
+  <% elsif @product.prod_type.eql?(Project::A_TYPE_COMPOSER)  %>
+    <%= render "product_show_dependencies_packagist" %>
+  <% end %>
+</div>
+
 <% dependencies = @product.dependencies %>
 <% if !dependencies.empty? && dependencies.count > 2 %>
 
@@ -55,15 +67,3 @@
 </script>
 
 <% end %>
-
-<div class="boxContainer" style="margin-bottom: 30px;" id="dependencies" >
-  <% if @product.prod_type.eql?( Project::A_TYPE_MAVEN2 ) %>
-    <%= render "product_show_dependencies_maven2" %>
-  <% elsif @product.prod_type.eql?( Project::A_TYPE_RUBYGEMS )  %>
-    <%= render "product_show_dependencies_rubygems" %>
-  <% elsif @product.prod_type.eql?( Project::A_TYPE_NPM )  %>
-    <%= render "product_show_dependencies_npm" %>
-  <% elsif @product.prod_type.eql?(Project::A_TYPE_COMPOSER)  %>
-    <%= render "product_show_dependencies_packagist" %>
-  <% end %>
-</div>
