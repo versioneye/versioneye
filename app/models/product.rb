@@ -39,10 +39,6 @@ class Product
   field :version     , type: String
   field :version_link, type: String
 
-  field :like_overall, type: Integer, default: 0
-  field :like_docu   , type: Integer, default: 0
-  field :like_support, type: Integer, default: 0
-
   field :icon        , type: String
   field :twitter_name, type: String
 
