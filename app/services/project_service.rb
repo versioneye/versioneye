@@ -104,32 +104,36 @@ class ProjectService
   def self.import_from_github(user, repo_name, branch = "master")
     private_project = Github.private_repo?(user.github_token, repo_name)
     if private_project && !ProjectService.is_allowed_to_add_private_project?(user)
-      flash[:error] = "You selected a private project. Please upgrade your plan to monitor the selected project."
-      return nil
+      error_msg = "You selected a private project. Please upgrade your plan to monitor the selected project."
+      return error_msg
     end
 
     project_file = Github.project_file_from_branch( user, repo_name, branch )
     if project_file.nil?
+      error_msg = "Didnt find any project file of supported project managers."
       Rails.logger.error "Cant import project file from #{repo_name} branch #{branch} "
-      return nil
+      return error_msg
     end
 
     s3_info = S3.upload_github_file( project_file, project_file['name'] )
     if s3_info.nil? && !s3_info.has_key?('filename') && !s3_info.has_key?('s3_url')
+      error_msg = "Connectivity issues - cant import project file for parsing."
       Rails.logger.error "Cant upload file to s3: #{project_file['name']}"
-      return nil
+      return error_msg
     end
 
     parsed_project = build_from_url s3_info['s3_url']
-    parsed_project.update_attributes({name: repo_name,
-                                      project_type: project_file['type'],
-                                      user_id: user.id.to_s,
-                                      source: Project::A_SOURCE_GITHUB,
-                                      github_project: repo_name,
-                                      private_project: private_project,
-                                      github_branch: branch,
-                                      s3_filename: s3_info['filename'],
-                                      url: s3_info['s3_url']} )
+    parsed_project.update_attributes({
+      name: repo_name,
+      project_type: project_file['type'],
+      user_id: user.id.to_s,
+      source: Project::A_SOURCE_GITHUB,
+      github_project: repo_name,
+      private_project: private_project,
+      github_branch: branch,
+      s3_filename: s3_info['filename'],
+      url: s3_info['s3_url']
+    })
 
     return parsed_project if store( parsed_project )
   end

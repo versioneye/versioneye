@@ -108,8 +108,9 @@ define(['underscore', 'backbone'],
             that_switch.onAddSuccess(model)
           },
           error: function(model, xhr, options){
+            console.debug(xhr);
             var that_switch = current_switch;
-            that_switch.onAddFailure(model);
+            that_switch.onAddFailure(model, xhr);
           }
         });
     },
@@ -130,9 +131,9 @@ define(['underscore', 'backbone'],
       return true;
     },
 
-    onAddFailure: function(model){
+    onAddFailure: function(model, xhr){
       var error_msg = "Failure: Cant import project: " + model.get('fullname')  + ".";
-      error_msg += " Reasons: cant find file of supported package manager or issues with Github service.";
+      error_msg += xhr.responseText;
 
       console.debug(error_msg);
       showNotification("alert alert-error", error_msg);
