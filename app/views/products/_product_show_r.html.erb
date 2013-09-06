@@ -3,8 +3,17 @@
 	<%= render 'products/product_show_header' %>
 </div>
 
-<div class="span3 " >
+<div class="span8 content_head_top" >
+	<%= render 'products/product_show_description' %>
+	<%= render 'products/product_show_downloads' %>
+	<%= render 'products/product_show_comments' %>
+	<%= render 'products/product_show_comment' %>
+</div>
 
+<div class="span3 pull-right content_head_top" >
+	<%= render 'products/helpers/follow' %>
+  <%= render 'products/helpers/kpis' %>
+  <%= render 'products/helpers/share' %>
 	<%= render 'products/product_show_followers' %>
 	<%= render 'products/product_show_license' %>
 	<%= render 'products/product_show_links' %>
@@ -13,14 +22,4 @@
 	<% if signed_in? == false %>
     <%= render "/shared/github_ad" %>
   <% end %>
-
-</div>
-<div class="span8 content_no_head">
-
-	<%= render 'products/product_show_description' %>
-	<%= render 'products/product_show_release_time' %>
-	<%= render 'products/product_show_downloads' %>
-	<%= render 'products/product_show_comments' %>
-	<%= render 'products/product_show_comment' %>
-
 </div>

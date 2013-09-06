@@ -14,31 +14,20 @@
     <b>This:</b> <%= @product.version %>
   </div>
 
-  <% last_date = nil %>
-  <% time_in_words = nil %>
+
   <% rel_text = "info" %>
   <% days_ago = @product.released_days_ago %>
-  <% if @product.released_days_ago %>
-    <% last_date = Date.today - @product.released_days_ago %>
-    <% time_in_words = distance_of_time_in_words(Date.today, last_date) %>
-    <% rel_text = "This artifact was released #{time_in_words} ago on #{@version.created_at.strftime("%b %d, %Y - %I:%m %p")}" %>
-  <% else %>
-    <% last_date = DateTime.now.to_date - @product.created_at.to_date %>
-    <% time_in_words = distance_of_time_in_words(Date.today, @version.created_at) %>
-    <% days_ago = last_date.to_i %>
-    <% rel_text = "We don't have any information about the release date of this artifact, but we detected it #{time_in_words} ago on #{@version.created_at.strftime("%b %d, %Y - %I:%m %p")}" %>
-  <% end %>
   <% rel_bg = "success" if days_ago < 30  %>
-  <% rel_bg = "info"        if days_ago >= 30 && days_ago <= 90  %>
+  <% rel_bg = "info"    if days_ago >= 30 && days_ago <= 90  %>
   <% rel_bg = "warn"    if days_ago > 90  && days_ago <= 180  %>
   <% rel_bg = "error"   if days_ago > 180 %>
   <div class="flash <%= rel_bg %>" style="margin-bottom: 5px;" >
-    <b title="<%= rel_text %>" >Released:</b>
-    <span title="<%= rel_text %>">
-      <% if time_in_words.nil? %>
+    <b title="<%= @product.released_ago_text %>" >Released:</b>
+    <span title="<%= @product.released_ago_text %>">
+      <% if @product.released_ago_in_words.nil? %>
         N/A
       <% else %>
-        <%= time_in_words %> ago
+        <%= @product.released_ago_in_words %> ago
       <% end %>
     </span>
   </div>
@@ -47,13 +36,16 @@
   <% if average_release_time.nil? %>
     <% average_release_time = VersionService.estimated_average_release_time( @product.versions ) %>
   <% end %>
-  <% art_bg = "info" if average_release_time == 0  %>
-  <% art_bg = "success" if average_release_time > 0 && average_release_time <= 31  %>
-  <% art_bg = "info"  if average_release_time > 31 && average_release_time <= 62  %>
-  <% art_bg = "warn"  if average_release_time > 62 && average_release_time <= 124  %>
-  <% art_bg = "error" if average_release_time > 124 %>
-  <% art_text = "In average this dev team is releasing a new version every #{average_release_time} days." %>
   <% art_text = "Not Available" if average_release_time == 0 %>
+  <% art_bg = "info" %>
+  <% if !average_release_time.nil? && average_release_time > 0 %>
+    <% art_bg = "success" if average_release_time > 0 && average_release_time <= 31  %>
+    <% art_bg = "info"  if average_release_time > 31 && average_release_time <= 62  %>
+    <% art_bg = "warn"  if average_release_time > 62 && average_release_time <= 124  %>
+    <% art_bg = "error" if average_release_time > 124 %>
+    <% art_text = "In average this dev team is releasing a new version every #{average_release_time} days." %>
+  <% end %>
+
   <div class="flash <%= art_bg %>" style="margin-bottom: 5px;" >
     <b title="<%= art_text %>" >Avg. Rel. Time:</b>
     <span title="<%= art_text %>">

@@ -67,8 +67,8 @@ class Product
   # has_and_belongs_to_many :versionlinks
   # has_and_belongs_to_many :versioncomments
 
-  attr_accessor :in_my_products, :version_uid, :last_crawle_date, :released_days_ago
-  attr_accessor :dependencies_cache
+  attr_accessor :released_days_ago, :released_ago_in_words, :released_ago_text
+  attr_accessor :version_uid, :in_my_products, :dependencies_cache
 
   scope :by_language, ->(lang){where(language: lang)}
 
@@ -156,7 +156,7 @@ class Product
 
   def version_by_number( searched_version )
     versions.each do |version|
-      return version if version.version.eql?(searched_version)
+      return version if version.version.eql?( searched_version )
     end
     nil
   end

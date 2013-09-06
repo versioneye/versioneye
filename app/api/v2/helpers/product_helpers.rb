@@ -1,6 +1,7 @@
 require 'htmlentities'
 
 module ProductHelpers
+
   def parse_query(query)
       query = query.to_s
       query = query.strip().downcase
