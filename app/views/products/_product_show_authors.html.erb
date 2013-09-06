@@ -1,10 +1,23 @@
-<% if @product.authors %>
-	<div class="box header">
-		<h5>
-			Authors
-		</h5>
-	</div>
-	<div class="box content" >
-		<%= @product.authors %>
-	</div>
+
+<% authors = @product.developers %>
+<% if authors && !authors.empty? %>
+  <div class="box header">
+    <h5>
+      Authos
+    </h5>
+  </div>
+  <div class="box content" >
+    <% authors.each do |author| %>
+      <div style="border-bottom: 1px dotted gray;"><%= author.name %></div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="box header">
+    <h5>
+      Authos
+    </h5>
+  </div>
+  <div class="box content" >
+    <%= @product.authors %>
+  </div>
 <% end %>

@@ -186,6 +186,10 @@ class Product
     License.for_product( self )
   end
 
+  def developers
+    Developer.find_by self.language, self.prod_key, version
+  end
+
   def update_used_by_count( persist = true )
     self.used_by_count = Dependency.where(:dep_prod_key => self.prod_key).count
     self.save if persist
