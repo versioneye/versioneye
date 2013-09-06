@@ -1,0 +1,22 @@
+
+<div class="row" style="padding-bottom: 20px;">
+  <% if signed_in? %>
+    <% if @product['user_ids'].include? current_user.id %>
+      <%= form_tag("/package/unfollow", :style=>"margin: 0;") do  %>
+        <input name="src_hidden"   type="hidden" value="detail"/>
+        <input name="product_key"  type="hidden" value="<%= @product.to_param %>"/>
+        <input name="product_lang" type="hidden" value="<%= @product.language %>"/>
+        <button type="submit" class="btn2 btn-large btn-warning" style="width: 100%" >Unfollow</button>
+      <% end %>
+    <% else %>
+      <%= form_tag("/package/follow", :style=>"margin: 0;") do  %>
+        <input  name="product_key"  type="hidden" value="<%= @product.to_param %>"/>
+        <input  name="product_lang" type="hidden" value="<%= @product.language %>"/>
+        <button type="submit" class="btn btn-large btn-primary" style="width: 100%" >Follow</button>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= render 'shared/dialog_follow' %>
+    <button type="submit" class="btn btn-large btn-primary" style="width: 100%" onclick="load_dialog_follow('<%= @product.name %>', '<%= @product.prod_key %>', '<%= @product.language %>');">Follow</button>
+  <% end %>
+</div>

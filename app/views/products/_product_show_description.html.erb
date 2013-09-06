@@ -2,7 +2,7 @@
 
 	<h5 class="desc_header"> Description </h5>
 
-	<div style="margin-bottom: 30px;" >
+	<div style="margin-bottom: 20px;" >
 		<p>
 			<% if @product.description && @product.description.include?("\n") %>
 				<%= @product.description.gsub!("\n", "<br/>").html_safe %>
