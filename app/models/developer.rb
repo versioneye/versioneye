@@ -19,4 +19,8 @@ class Developer
     Developer.where( language: language, prod_key: prod_key, version: version, name: name )
   end
 
+  def self.find_by language, prod_key, version
+    Developer.where( language: language, prod_key: prod_key, version: version )
+  end
+
 end

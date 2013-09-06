@@ -68,6 +68,7 @@ class Product
   # has_and_belongs_to_many :versioncomments
 
   attr_accessor :in_my_products, :version_uid, :last_crawle_date, :released_days_ago
+  attr_accessor :dependencies_cache
 
   scope :by_language, ->(lang){where(language: lang)}
 
@@ -185,14 +186,22 @@ class Product
     License.for_product( self )
   end
 
+  def developers
+    Developer.find_by self.language, self.prod_key, version
+  end
+
   def update_used_by_count( persist = true )
     self.used_by_count = Dependency.where(:dep_prod_key => self.prod_key).count
     self.save if persist
   end
 
   def dependencies(scope = nil)
+    dependencies_cache = Hash.new if dependencies_cache.nil?
     scope = Dependency.main_scope(self.language) if scope == nil
-    Dependency.find_by_lang_key_version_scope( language, prod_key, version, scope )
+    if dependencies_cache[scope].nil?
+      dependencies_cache[scope] = Dependency.find_by_lang_key_version_scope( language, prod_key, version, scope )
+    end
+    return dependencies_cache[scope]
   end
 
   def all_dependencies

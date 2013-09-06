@@ -1,19 +1,19 @@
 <div class="box header">
-	<h5>
-		License
-	</h5>
+  <h5>
+    License
+  </h5>
 </div>
 <div class="box content" >
-	<% licenses = @product.licenses %>
-	<% if licenses && !licenses.empty? %>
-		<% licenses.each do |license| %>
-			<% if license.url && !license.url.empty? %>
-				<a href="<%= license.url %>" target="license"><%= license.name %></a><br/>
-			<% else %>
-				<%= license.name %><br/>
-			<% end %>
-		<% end %>
-	<% else %>
-		UNKNOWN
-	<% end %>
+  <% licenses = @product.licenses %>
+  <% if licenses && !licenses.empty? %>
+    <% licenses.each do |license| %>
+      <% if license.url && !license.url.empty? %>
+        <a href="<%= license.url %>" target="license"><%= license.name %></a><br/>
+      <% else %>
+        <%= license.name %><br/>
+      <% end %>
+    <% end %>
+  <% else %>
+    UNKNOWN
+  <% end %>
 </div>
