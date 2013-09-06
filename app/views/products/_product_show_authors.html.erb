@@ -11,7 +11,7 @@
       <div style="border-bottom: 1px dotted gray;"><%= author.name %></div>
     <% end %>
   </div>
-<% else %>
+<% elsif @product.authors && !@product.authors.empty? %>
   <div class="box header">
     <h5>
       Authos
