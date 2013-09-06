@@ -35,6 +35,11 @@ class Version
     version.gsub("/", ":")
   end
 
+  def released_or_detected
+    return released_at if released_at
+    return created_at
+  end
+
   def self.decode_version(version)
     return nil if version.nil?
     version.gsub(":", "/")

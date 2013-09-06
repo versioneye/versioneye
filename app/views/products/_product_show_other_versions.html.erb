@@ -7,12 +7,18 @@
   <div class="box content scrollable-box" style = "min-height: 1em; max-height: 14em;" >
     <% @product.sorted_versions.each do |version|  %>
       <div>
-      <% if VersionTagRecognizer.release?(version.version) %>
-        <a href="<%=product_version_path( @product, version.version )%>"><%=version.version%></a>
-      <% else %>
-        <a style="color: brown" href="<%=product_version_path( @product, version.version )%>"><%=version.version%></a>
-      <% end %>
+        <% if VersionTagRecognizer.release?(version.version) %>
+          <a href="<%=product_version_path( @product, version.version )%>"><%=version.version%></a>
+        <% else %>
+          <a style="color: brown" href="<%=product_version_path( @product, version.version )%>"><%=version.version%></a>
+        <% end %>
+        <span class="" style="font-size: 11px; color: gray;" >(<%= version.released_or_detected.strftime("%b %d, %Y") %>)</span>
       </div>
     <% end %>
   </div>
+  <% if @product.language.eql?(Product::A_LANGUAGE_JAVA) %>
+    <div style="margin-top: 10px; font-size: 12px;">
+      For Maven based packages currently we don't have the real release dates. We can only show the date we detected a specific version.
+    </div>
+  <% end %>
 <% end %>
