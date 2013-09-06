@@ -15,12 +15,12 @@ class Developer
   field :role            , type: String
   field :timezone        , type: String
 
-  def self.find_by language, prod_key, version, name
-    Developer.where( language: language, prod_key: prod_key, version: version, name: name )
-  end
-
-  def self.find_by language, prod_key, version
-    Developer.where( language: language, prod_key: prod_key, version: version )
+  def self.find_by language, prod_key, version, name = nil
+    if name.nil?
+      return Developer.where( language: language, prod_key: prod_key, version: version, name: name )
+    else
+      return Developer.where( language: language, prod_key: prod_key, version: version )
+    end
   end
 
 end

@@ -18,17 +18,20 @@ describe "Submit a Comment to specific package" do
 
     it "submits a comment" do
       product               = Product.new
-      product.versions      = Array.new
       product.name          = "json_gobi"
       product.name_downcase = "json_gobi"
       product.prod_key      = "json_gobi"
       product.prod_type     = "RubyGem"
       product.language      = "Ruby"
       product.version       = "1.0"
-      version               = Version.new
-      version.version       = "1.0"
-      product.versions.push(version)
       product.save
+      version               = Version.new({:version => "1.0"})
+      product.versions.push version
+
+      version               = product.versions.first
+
+      version.updated_at.should_not be_nil
+      version.created_at.should_not be_nil
 
       visit "/ruby/json_gobi"
 

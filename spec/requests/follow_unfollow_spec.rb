@@ -16,10 +16,10 @@ describe "follow and unfollow" do
     product.prod_type     = "RubyGem"
     product.language      = Product::A_LANGUAGE_RUBY
     product.version       = "1.0"
+    product.save
     version               = Version.new
     version.version       = "1.0"
     product.versions.push(version)
-    product.save
     product
   end
 
@@ -54,7 +54,7 @@ describe "follow and unfollow" do
 
       get "/ruby/json_goba/1.0"
       assert_tag :tag => "button", :attributes => { :class => "btn2 btn-large btn-warning", :type => "submit" }
-      response.body.should match("Followers")
+      response.body.should match(prod_key)
     end
 
     it "fetches the i follow page successfully" do
@@ -75,7 +75,7 @@ describe "follow and unfollow" do
 
       get "/ruby/json_goba/1.0"
       assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-primary", :type => "submit" }
-      response.body.should match("Followers")
+      response.body.should match(prod_key)
 
       prod = Product.fetch_product( prod_lang, prod_key )
       subscribers = prod.users
