@@ -33,7 +33,6 @@ gem 'whenever'          , '0.8.4'
 gem 'bourbon'           , '3.1.8'
 
 group :development do
-  gem 'therubyracer'  , '0.11.4'
   gem 'psych'
   gem 'irbtools'
   gem 'terminal-notifier'
@@ -42,6 +41,7 @@ group :development do
 end
 
 group :assets do
+  gem 'therubyracer'  , '0.12.0'
   gem 'sass'          , :require => 'sass'
   gem 'sass-rails'    , "3.2.6"
   gem 'coffee-rails'  , "3.2.2"
