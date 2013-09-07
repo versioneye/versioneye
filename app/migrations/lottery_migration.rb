@@ -24,7 +24,7 @@ class LotteryMigration
       unless prod.nil?
         new_selections << {language: prod[:language], prod_key: prod[:prod_key]}
       else
-        p "Error: Cant migrate ticket #{ticket[:_id].to_s} . Didnt find product for: #{prod_key}"
+        p "Error: Cant migrate ticket #{ticket[:_id].to_s} . Didn't find product for: #{prod_key}"
 
         ticket[:migrated] = false
         ticket.save
