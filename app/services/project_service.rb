@@ -110,15 +110,15 @@ class ProjectService
 
     project_file = Github.project_file_from_branch( user, repo_name, branch )
     if project_file.nil?
-      error_msg = "Didnt find any project file of supported project managers."
-      Rails.logger.error "Cant import project file from #{repo_name} branch #{branch} "
+      error_msg = " Didn't find any project file of a supported package manager."
+      Rails.logger.error " Can't import project file from #{repo_name} branch #{branch} "
       return error_msg
     end
 
     s3_info = S3.upload_github_file( project_file, project_file['name'] )
     if s3_info.nil? && !s3_info.has_key?('filename') && !s3_info.has_key?('s3_url')
       error_msg = "Connectivity issues - cant import project file for parsing."
-      Rails.logger.error "Cant upload file to s3: #{project_file['name']}"
+      Rails.logger.error " Can't upload file to s3: #{project_file['name']}"
       return error_msg
     end
 
