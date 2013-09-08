@@ -13,11 +13,7 @@ class GithubController < ApplicationController
     json_user = Github.user token
 
     if signed_in?
-      user = current_user
-      user.github_id = json_user['id']
-      user.github_token = token
-      user.github_scope = Github.oauth_scopes( token )
-      user.save
+      update_user_scope( json_user, token )
       redirect_to settings_connect_path
       return
     end
@@ -82,6 +78,15 @@ class GithubController < ApplicationController
   end
 
   private
+
+    def update_user_scope(json_user, token)
+      user = current_user
+      user.github_id = json_user['id']
+      user.github_token = token
+      user.github_scope = Github.oauth_scopes( token )
+      user.github_repos.delete_all
+      user.save
+    end
 
     def get_user_for_token(json_user, token)
       user = User.find_by_github_id( json_user['id'] )
