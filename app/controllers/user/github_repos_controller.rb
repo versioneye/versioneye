@@ -9,11 +9,11 @@ class User::GithubReposController < ApplicationController
   def index
     repos = []
 
-    if current_user.github_repos.all.count > 0
-      github_repos = current_user.github_repos.all
-    else
+    if current_user.github_repos.all.count == 0
       Rails.logger.debug("Going to fill GithubRepo cache for user: #{current_user.fullname} (id: #{current_user.id.to_s})")
       github_repos = GitHubService.cached_user_repos(current_user)
+    else
+      github_repos = current_user.github_repos.all
     end
 
     github_repos = github_repos.desc(:updated_at)
@@ -112,7 +112,7 @@ class User::GithubReposController < ApplicationController
   end
 
   def poll_changes
-    is_changed = Github.user_repos_changed?(current_user)
+    is_changed = Github.user_repos_changed?( current_user )
     if is_changed == true
       updated_repos = GitHubService.cached_user_repos(current_user)
       render json: {changed: true, msg: "Changed - pulled #{current_user.github_repos.all.count} repos"}
