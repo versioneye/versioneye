@@ -33,11 +33,10 @@
   </div>
 
   <div class="boxHeader">
-    License
+    Licenses
   </div>
   <div class="boxContainer">
     <%= form_tag("/#{@product.language.downcase}/#{@product.to_param}/update", :method => "post") do  %>
-
       <div style="display:table-row;">
         <div class="labelCelMiddle" style="width: 80px;">
           <%= label_tag(:license, "Name") %>
@@ -45,15 +44,15 @@
         <div class="inputCel" style="width: 450px;">
           <%= text_field_tag :license, @product.license_manual, :class => "round", :style=>"width: 420px;" %>
         </div>
-        </div>
-        <div style="display:table-row;">
+      </div>
+      <div style="display:table-row;">
         <div class="labelCelMiddle" style="width: 80px;">
           <%= label_tag(:licenseLink, "Link") %>
         </div>
         <div class="inputCel" style="width: 450px;">
           <%= text_field_tag :licenseLink, @product.licenseLink_manual, :class => "round", :style=>"width: 420px;" %>
         </div>
-        </div>
+      </div>
       <div style="display:table-row;">
         <div class="labelCelMiddle" style="width: 80px;">
           &nbsp;
