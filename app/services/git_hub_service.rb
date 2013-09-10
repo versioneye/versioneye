@@ -1,5 +1,20 @@
 class GitHubService
 
+  def self.update_all_repos()
+    User.where(:github_scope => "repo" ).each do |user|
+      update_repos_for_user user
+    end
+  end
+
+  def self.update_repos_for_user( user )
+    p user.fullname
+    user.github_repos.delete_all
+    GitHubService.cached_user_repos user
+    p " - #{user.github_repos.count}"
+  rescue => e
+    p e
+  end
+
 =begin
   Returns github repos for user;
   If user don't have yet any github repos
