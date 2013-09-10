@@ -84,6 +84,8 @@ class GithubController < ApplicationController
       user.github_id = json_user['id']
       user.github_token = token
       user.github_scope = Github.oauth_scopes( token )
+      # next line is mandatory otherwise the private repos don't get
+      # fetched immediately. Bu questions ask me (reiz).
       user.github_repos.delete_all
       user.save
     end

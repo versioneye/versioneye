@@ -3,9 +3,11 @@ class Versionlink
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  # Belongs to the product with this attributes
   field :language  , type: String
   field :prod_key  , type: String
   field :version_id, type: String
+
   field :link      , type: String
   field :name      , type: String
   field :manual    , type: Boolean, :default => false
