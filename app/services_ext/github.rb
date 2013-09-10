@@ -65,10 +65,16 @@ class Github
     data            = catch_github_exception JSON.parse(response.body)
     data            = [] if data.nil?
     data.each do |repo|
-      next if repo['full_name'].nil? || repo['full_name'].empty?
-      branches = Github.repo_branches(user, repo['full_name']).map {|x| x['name']}
-      repo['branches'] = branches
+      next if repo.nil? or repo['full_name'].to_s.empty?
+      branch_docs = Github.repo_branches(user, repo['full_name'])
+      if branch_docs and branch_docs.nil?
+        branches = branch_docs.map {|x| x['name']}
+        repo['branches'] = branches
+      else
+        repo['branches'] = ["master"]
+      end
     end
+
     paging_links = parse_paging_links(response.headers)
     repos = {
       repos: data,
