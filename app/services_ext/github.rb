@@ -65,7 +65,7 @@ class Github
     data            = catch_github_exception JSON.parse(response.body)
     data            = [] if data.nil?
     data.each do |repo|
-      next if repo['full_name'].nil?
+      next if repo['full_name'].nil? || repo['full_name'].empty?
       branches = Github.repo_branches(user, repo['full_name']).map {|x| x['name']}
       repo['branches'] = branches
     end
