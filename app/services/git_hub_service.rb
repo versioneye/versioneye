@@ -1,7 +1,7 @@
 class GitHubService
 
   def self.update_all_repos()
-    User.where(:github_scope => "repo" ).each do |user|
+    User.live_users.where(:github_scope => "repo" ).each do |user|
       update_repos_for_user user
     end
   end
