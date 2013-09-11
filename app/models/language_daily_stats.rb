@@ -76,7 +76,8 @@ class LanguageDailyStats
   def self.update_counts(ndays = 1, skip = 0)
     ndays += skip
     ndays.times do |n|
-      Rails.logger.debug("Counting language_daily_stats: #{n + 1} / #{ndays}")
+      next if n < skip
+      Rails.logger.debug( "Counting language_daily_stats: #{n + 1} / #{ndays}" )
       self.update_day_stats(n)
     end
   end
