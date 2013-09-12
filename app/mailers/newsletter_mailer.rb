@@ -6,7 +6,7 @@ class NewsletterMailer < ActionMailer::Base
     @user = user
     mail(
       :to => @user.email,
-      :subject => "New Features - Maven Plugin & Language Pages",
+      :subject => "New Features - KPIs & Statistics & Collaborators",
       :tag => "newsletter"
       )
   end
