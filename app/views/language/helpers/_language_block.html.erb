@@ -3,7 +3,7 @@
 <% language_key = LanguageDailyStats.language_to_sym(language[:name]) %>
 
 <div>
-  <img class = "img centered" src = "/assets/language/<%= Product.encode_language(language[:name]) %>.png" />
+  <img class="img centered" src="/assets/language/<%= Product.encode_language(language[:name]) %>.png" alt="<%= Product.encode_language(language[:name]) %>" />
   <table class = "table table-hover no-borders" style = "font-size: 0.85em;">
     <tbody>
       <tr>

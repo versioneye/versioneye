@@ -59,7 +59,7 @@ define(['underscore', 'backbone'],
       var notification_template = _.template($("#github-notification-template").html());
       var loading_info = notification_template({
         classes: "alert alert-info",
-        content: ['<img src="/assets/loadingbar2.gif" style = "height: 20px;">',
+        content: ['<img src="/assets/loadingbar2.gif" style="height: 20px;" alt="loading" >',
           '<strong>Please wait!</strong> We are still importing data from Github.',
           'It may take up-to 4seconds. But we are almost there.'].join(' ')
       });

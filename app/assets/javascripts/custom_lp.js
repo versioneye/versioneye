@@ -71,7 +71,7 @@ function initialize_searchbox(){
     engine: Hogan,
     template: [
       '<div>',
-          '<img src="/assets/language/{{ language }}.png" class = "pull-left" style = "height: 2.0em;" />',
+          '<img src="/assets/language/{{ language }}.png" alt="{{ language }}" class = "pull-left" style = "height: 2.0em;" />',
           '<p>',
               '<a href = "{{ url }}">',
                 '<strong>{{ name }}</strong>',
