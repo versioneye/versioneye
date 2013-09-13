@@ -14,7 +14,7 @@
       <label class="btn lottery-btn btn-primary col-12 col-lg-6">
         <% encoded_lang = Product.encode_language(product[:language]) %>
         <input type="checkbox" name = "products[]" value = "<%= "#{encoded_lang},#{product.to_param}" %>">
-        <img src = "/assets/language/<%= encoded_lang %>.png" class = "img-responsive" /> <%= product.name %>
+        <img src="/assets/language/<%= encoded_lang %>.png" alt="<%= encoded_lang %>" class="img-responsive" /> <%= product.name %>
       </label>
     <% end %>
   </div>

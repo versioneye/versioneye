@@ -1,4 +1,4 @@
-<h5> <%= stats[:title] || "" %> 
+<h5> <%= stats[:title] || "" %>
   <small>(<%= stats[:total] %>)</small>
 </h5>
 
@@ -8,7 +8,7 @@
       <tr>
         <td>
           <a href = "/latest/version/<%= metric[:title] %>" title = "Language specific list">
-            <img src = "/assets/language/<%= metric[:title] %>.png" style="height: 15px;"/>
+            <img src="/assets/language/<%= metric[:title] %>.png" alt="<%= metric[:title] %>" style="height: 15px;"/>
             <%= metric[:title] %>
           </a>
         </td>
