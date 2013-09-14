@@ -52,7 +52,7 @@ class ProductMigration
 
   def self.update_followers( product )
     return nil if product.followers == product.user_ids.count
-    product.followers = products.user_ids.count
+    product.followers = product.user_ids.count
     product.save
   end
 
