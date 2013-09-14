@@ -1,8 +1,8 @@
 <% if !@product.versions.nil? && @product.versions.length > 1 %>
   <div class="box header">
-    <h5>
+    <h3 class="side_header">
       <%= pluralize(@product.versions.count, "Versions") %>
-    </h5>
+    </h3>
   </div>
   <div class="box content scrollable-box" style = "min-height: 1em; max-height: 14em;" >
     <% @product.sorted_versions.each do |version|  %>

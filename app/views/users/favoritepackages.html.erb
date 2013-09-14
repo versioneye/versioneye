@@ -12,22 +12,22 @@
 	<div class="span3" >
 		<%= render "users/navi" %>
 	</div>
-	
+
 	<div class="span8 content">
-		<% if !@products.nil? %>	
+		<% if !@products.nil? %>
 
 			<div >
-				<h5 class="desc_header">
-					Follows <%= pluralize(@products.total_entries, "Package") %> 
+				<h2 class="section_header">
+					Follows <%= pluralize(@products.total_entries, "Package") %>
 					<a href="<%= url_for(favoritepackages_user_url(@user)) %>.rss"><%= image_tag "rss.png", :title => "Subscribe via RSS", :alt => "Subscribe via RSS" %></a>
-				</h5>
-			</div>		
+				</h2>
+			</div>
 
 			<% if !signed_in? %>
-				<%= render 'shared/dialog_follow' %>	
+				<%= render 'shared/dialog_follow' %>
 			<% end %>
 			<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
-			<% if !@products.nil? && !@products.empty? %> 
+			<% if !@products.nil? && !@products.empty? %>
 				<div style="margin-top: 20px; text-align: right;">
 					<%= will_paginate @products %>
 				</div>

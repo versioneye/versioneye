@@ -8,9 +8,9 @@
     <% hash[link.link] = link.name %>
   <% end %>
   <div class="box header">
-    <h5>
+    <h3 class="side_header">
       <%= pluralize( hash.count, "Link" ) %>
-    </h5>
+    </h3>
   </div>
   <div class="box content">
     <% hash.each do |key, value| %>
@@ -18,7 +18,7 @@
     <% end %>
   </div>
 <% else %>
-  <div class="box header"><h5>0 Links</h5></div>
+  <div class="box header"><h3 class="side_header">0 Links</h3></div>
 <% end %>
 
 <% if @product.twitter_name && !@product.twitter_name.empty? %>

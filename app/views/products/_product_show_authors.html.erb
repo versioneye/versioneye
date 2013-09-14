@@ -2,9 +2,9 @@
 <% authors = @product.developers %>
 <% if authors && !authors.empty? %>
   <div class="box header">
-    <h5>
+    <h3 class="side_header">
       Authos
-    </h5>
+    </h3>
   </div>
   <div class="box content" >
     <% authors.each do |author| %>
@@ -13,9 +13,9 @@
   </div>
 <% elsif @product.authors && !@product.authors.empty? %>
   <div class="box header">
-    <h5>
+    <h3 class="side_header">
       Authos
-    </h5>
+    </h3>
   </div>
   <div class="box content" >
     <%= @product.authors %>
