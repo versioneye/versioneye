@@ -1,9 +1,9 @@
 <% comments = @product.comments %>
 <% if !comments.nil? && !comments.empty? %>
   <div class="box">
-    <h5 class="desc_header">
+    <h2 class="section_header">
       <%= pluralize(comments.count, "Comments") %>
-    </h5>
+    </h2>
   </div>
   <div class="row" style="margin-bottom: 20px;" >
     <% comments.each do |comment|  %>

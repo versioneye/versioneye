@@ -11,19 +11,19 @@
 	<div class="span3" >
 		<%= render "users/navi" %>
 	</div>
-	
+
 	<div class="span8 content">
-		<% if !@comments.nil? %>	
+		<% if !@comments.nil? %>
 			<div>
-				<h5 class="desc_header">
+				<h2 class="section_header">
 					<%= pluralize(@count, "Comment") %>
-				</h5>
-			</div>	
+				</h2>
+			</div>
 			<% if !@comments.nil? && !@comments.empty? %>
-				<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %> 
+				<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %>
 				<div style="margin-top: 20px;" class="pull-right">
 					<%= will_paginate @comments %>
-				</div>	
+				</div>
 			<% end %>
 		<% end %>
 	</div>
