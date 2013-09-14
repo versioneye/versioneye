@@ -27,10 +27,10 @@ class Product
   field :artifact_id, type: String
   field :parent_id  , type: String
 
-  field :authors           , type: String
+  field :authors           , type: String # TODO this hase to be remove in the long run
   field :description       , type: String
   field :description_manual, type: String
-  field :link              , type: String
+  field :link              , type: String # TODO this hase to be remove in the long run
   field :downloads         , type: Integer
   field :followers         , type: Integer, default: 0
   field :last_release      , type: Integer, default: 0
@@ -39,7 +39,7 @@ class Product
   field :version     , type: String
   field :version_link, type: String
 
-  field :icon        , type: String
+  field :icon        , type: String # TODO this hase to be remove in the long run
   field :twitter_name, type: String
 
   field :reindex, type: Boolean, default: true
