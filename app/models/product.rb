@@ -191,7 +191,9 @@ class Product
   end
 
   def update_used_by_count( persist = true )
-    self.used_by_count = Dependency.where(:dep_prod_key => self.prod_key).count
+    count = Dependency.where(:dep_prod_key => self.prod_key).count
+    return nil if count == self.used_by_count
+    self.used_by_count = count
     self.save if persist
   end
 
