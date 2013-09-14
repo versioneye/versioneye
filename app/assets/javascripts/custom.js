@@ -121,6 +121,7 @@ function load_dialog_follow(product_name, prod_key, prod_lang){
   setCookie( "prod_key" , prod_key,  1 );
   setCookie( "prod_lang", prod_lang, 1 )
   jQuery('#dialog_follow').modal({keyboard : true});
+  ga('send', 'pageview', "http://www.versioneye.com?follow_dialog="+ prod_lang +"/"+ prod_key);
 }
 
 function exchangeImage(id, image){
