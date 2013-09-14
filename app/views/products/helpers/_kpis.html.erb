@@ -85,3 +85,9 @@
   </div>
 
 </div>
+
+<% if signed_in_admin? %>
+  <div  >
+    <%= link_to "edit", product_edit_path %>
+  </div>
+<% end %>

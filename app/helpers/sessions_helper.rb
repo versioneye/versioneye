@@ -20,15 +20,15 @@ module SessionsHelper
   end
 
   def current_user?(user)
-    return false if user.nil? 
-    return nil if current_user.nil? 
+    return false if user.nil?
+    return nil if current_user.nil?
     user.username.eql? current_user.username
   end
 
   def signed_in?
     !current_user.nil?
   end
-  
+
   def signed_in_admin?
     signed_in? && current_user.admin?
   end
@@ -36,7 +36,7 @@ module SessionsHelper
   def authenticate
     return true if signed_in?
     deny_access
-    return false 
+    return false
   end
 
   def deny_access
@@ -53,7 +53,7 @@ module SessionsHelper
     locale = "en"
     if (locale && !locale.empty?)
       I18n.locale = locale
-    elsif I18n.locale.nil? 
+    elsif I18n.locale.nil?
       I18n.locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
     end
   rescue => e

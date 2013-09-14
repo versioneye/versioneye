@@ -182,8 +182,8 @@ class Product
     licenses.map{|a| a.name}.join(", ")
   end
 
-  def licenses
-    License.for_product( self )
+  def licenses(ignore_version = false )
+    License.for_product( self, ignore_version )
   end
 
   def developers

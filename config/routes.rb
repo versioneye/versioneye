@@ -237,9 +237,12 @@ Versioneye::Application.routes.draw do
   get   '/:lang/:key/:version/visual_dependencies', :to => 'products#show_visual', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'visual_dependencies'
 
   get   '/:lang/:key'                      , :to => 'products#show', :as => 'products', :constraints => { :key => /[^\/]+/ }
-  get   '/:lang/:key/edit'                 , :to => 'products#edit',                    :constraints => { :key => /[^\/]+/ }
+  get   '/:lang/:key/edit'                 , :to => 'products#edit',                    :constraints => { :key => /[^\/]+/ }, :as => 'product_edit'
+  get   '/:lang/:key/edit_links'           , :to => 'products#edit_links',              :constraints => { :key => /[^\/]+/ }, :as => 'product_edit_links'
+  get   '/:lang/:key/edit_licenses'        , :to => 'products#edit_licenses',           :constraints => { :key => /[^\/]+/ }, :as => 'product_edit_licenses'
   post  '/:lang/:key/update'               , :to => 'products#update',                  :constraints => { :key => /[^\/]+/ }
   post  '/:lang/:key/delete_link'          , :to => 'products#delete_link',             :constraints => { :key => /[^\/]+/ }
+  post  '/:lang/:key/delete_license'       , :to => 'products#delete_license',          :constraints => { :key => /[^\/]+/ }
   get   '/:lang/:key/:version'             , :to => 'products#show', :as => "package_version", :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   post  '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }

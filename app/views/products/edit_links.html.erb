@@ -1,0 +1,90 @@
+<div class="span3" >
+  <%= render "products/helpers/edit_navi" %>
+</div>
+
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    Edit <%= @product.name %>
+  </div>
+
+  <div class="span8 content" >
+
+    <div class="boxContainer">
+      <%= form_tag("/#{@product.language.downcase}/#{@product.to_param}/update", :method => "post") do  %>
+        <div style="display:table-row;">
+          <div class="labelCelMiddle" style="width: 80px;">
+            <%= label_tag(:label, "Label") %>
+          </div>
+          <div class="inputCel" style="width: 450px;">
+            <%= text_field_tag :link_name, "", :class => "round", :style=>"width: 420px;" %>
+          </div>
+        </div>
+        <div style="display:table-row;">
+          <div class="labelCelMiddle" style="width: 80px;">
+            <%= label_tag(:link, "URL") %>
+          </div>
+          <div class="inputCel" style="width: 450px;">
+            <%= text_field_tag :link_url, "", :class => "round", :style=>"width: 420px;" %>
+          </div>
+        </div>
+        <div style="display:table-row;">
+          <div class="labelCelMiddle" style="width: 80px;">
+            &nbsp;
+          </div>
+          <div class="inputCel" style="width: 450px;">
+            <button type="submit" class="btn btn-large btn-primary" >Add</button>
+          </div>
+        </div>
+      <% end %>
+      <br/>
+      <% version_links = @product.http_links %>
+      <% if !version_links.empty? %>
+        <table>
+          <colgroup>
+            <col width="80px;"></col>
+            <col width="*"></col>
+          </colgroup>
+        <% version_links.each do |link| %>
+          <% if link.manual  %>
+            <%= form_tag("/#{@product.language.downcase}/#{@product.to_param}/delete_link", :method => "post") do  %>
+            <tr>
+              <td>
+                <button type="submit" class="btn btn-danger" >Delete</button>
+              </td>
+              <td>
+                <input id="link_url" name="link_url" type="hidden" value="<%= link.get_link %>" />
+                <a href="<%= link.get_link %>" target="new"><%= link.name %></a>
+              </td>
+            </tr>
+            <% end %>
+          <% end %>
+        <% end %>
+        </table>
+        <br/>
+        <br/>
+      <% end %>
+    </div>
+
+
+      <div class="boxContainer">
+        <%= form_tag("/#{@product.language.downcase}/#{@product.to_param}/update", :method => "post") do  %>
+          <div style="display:table-row;">
+            <div class="labelCelMiddle" style="width: 80px;">
+              <%= label_tag(:twitter_name, "Twitter ID") %>
+            </div>
+            <div class="inputCel" style="width: 450px;">
+              <%= text_field_tag :twitter_name, @product.twitter_name, :class => "round", :style=>"width: 420px;" %>
+            </div>
+          </div>
+          <div >
+            <div class="inputCel" style="width: 450px;">
+              <button type="submit" class="btn btn-large btn-primary" >Save</button>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+    <div>
+
+</div>
