@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
 
-  before_filter :authenticate                  , :only => [:edit, :update]
+  before_filter :authenticate                  , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license]
+  before_filter :admin_user                    , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license]
   before_filter :check_redirects_package       , :only => [:show]
   before_filter :check_redirects_package_visual, :only => [:show_visual]
   #before_filter :force_http
@@ -106,15 +107,28 @@ class ProductsController < ApplicationController
     @product = Product.fetch_product lang, key
   end
 
+  def edit_links
+    lang     = Product.decode_language( params[:lang] )
+    key      = Product.decode_prod_key params[:key]
+    @product = Product.fetch_product lang, key
+  end
+
+  def edit_licenses
+    lang     = Product.decode_language( params[:lang] )
+    key      = Product.decode_prod_key params[:key]
+    @product = Product.fetch_product lang, key
+  end
+
   def update
-    description  = params[:description_manual]
-    license      = params[:license]
-    licenseLink  = params[:licenseLink]
-    twitter_name = params[:twitter_name]
-    link_url     = params[:link_url]
-    link_name    = params[:link_name]
-    lang         = Product.decode_language( params[:lang] )
-    key          = Product.decode_prod_key params[:key]
+    description    = params[:description_manual]
+    license        = params[:license]
+    licenseLink    = params[:licenseLink]
+    licenseVersion = params[:licenseVersion]
+    twitter_name   = params[:twitter_name]
+    link_url       = params[:link_url]
+    link_name      = params[:link_name]
+    lang           = Product.decode_language( params[:lang] )
+    key            = Product.decode_prod_key params[:key]
     @product = Product.fetch_product lang, key
     if @product.nil? || !current_user.admin
       flash[:success] = "An error occured. Please try again later."
@@ -127,18 +141,18 @@ class ProductsController < ApplicationController
       add_status_comment(@product, current_user, "description")
       flash[:success] = "Description updated."
     elsif license && !license.empty?
-      @product.license_manual = license
-      @product.licenseLink_manual = licenseLink
-      @product.save
-      add_status_comment(@product, current_user, "license")
+      license = License.new({:name => license, :url => licenseLink, :language => @product.language, :prod_key => @product.prod_key, :version => licenseVersion})
+      license.save
+      add_status_comment(@product, current_user, "license", license)
       flash[:success] = "License updated."
     elsif twitter_name && !twitter_name.empty?
       @product.twitter_name = twitter_name
       @product.save
       add_status_comment(@product, current_user, "twitter")
       flash[:success] = "Twitter name updated."
-    elsif link_url && !link_url.empty?
+    elsif link_url && !link_url.empty? &&
       versionlink = Versionlink.new
+      versionlink.language = @product.language
       versionlink.prod_key = @product.prod_key
       versionlink.link = link_url
       versionlink.name = link_name
@@ -158,6 +172,19 @@ class ProductsController < ApplicationController
     if versionlink && versionlink.manual
       versionlink.remove
       flash[:success] = "Link removed."
+    end
+    redirect_to package_version_path(@product.language.downcase, @product.to_param, @product.version)
+  end
+
+  def delete_license
+    license_id = params[:license_id]
+    lang     = Product.decode_language( params[:lang] )
+    key      = Product.decode_prod_key params[:key]
+    @product = Product.fetch_product lang, key
+    license = License.find( license_id )
+    if license
+      license.remove
+      flash[:success] = "License removed."
     end
     redirect_to package_version_path(@product.language.downcase, @product.to_param, @product.version)
   end
@@ -237,7 +264,7 @@ class ProductsController < ApplicationController
       product
     end
 
-    def add_status_comment(product, user, type)
+    def add_status_comment(product, user, type, license = "")
       comment             = Versioncomment.new
       comment.user_id     = user.id
       comment.product_key = product.prod_key
@@ -248,13 +275,17 @@ class ProductsController < ApplicationController
         comment.comment = "UPDATE: #{user.fullname} updated the description"
         comment.update_type = type
       elsif type.eql?("license")
-        comment.comment = "UPDATE: #{user.fullname} updated the license to #{@product.license_manual}"
+        comment.comment = "UPDATE: #{user.fullname} updated the license to #{license}"
         comment.update_type = type
       elsif type.eql?("twitter")
         comment.comment = "UPDATE: #{user.fullname} updated the Twitter name to #{@product.twitter_name}"
         comment.update_type = type
       end
       comment.save
+    end
+
+    def admin_user
+      redirect_to(root_path) unless current_user.admin?
     end
 
 end
