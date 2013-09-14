@@ -15,7 +15,7 @@
       <div class="control-group">
         <%= label_tag :new_email, "New E-Mail", :class => "control-label", :for => "new_email" %>
         <div class="controls">
-          <%= text_field_tag :email, "", :id => "new_email" %> <button type="submit" class="btn2 btn2-large">Add</button>
+          <%= text_field_tag :email, "", :id => "new_email" %> <button type="submit" class="btn btn-primary">Add</button>
         </div>
       </div>
     <% end %>
@@ -46,7 +46,7 @@
           <div class="span1" style="width: 80px;">
             <%= form_tag(settings_delete_email_path, :method => "post") do  %>
               <input type="hidden" name="email" value="<%= user_email.email %>" />
-              <button type="submit" class="btn2 btn2-danger" >Delete</button>
+              <button type="submit" class="btn btn-danger" >Delete</button>
             <% end %>
           </div>
           <div class="span3" style="padding-top: 7px;">
@@ -67,7 +67,7 @@
             <% if user_email.verified? %>
               <%= form_tag(settings_make_email_default_path, :method => "post") do  %>
                 <input type="hidden" name="email" value="<%= user_email.email %>" />
-                <button type="submit" class="btn2 btn2-large" >Make Default</button>
+                <button type="submit" class="btn btn-primary" >Make Default</button>
               <% end %>
             <% end %>
           </div>
