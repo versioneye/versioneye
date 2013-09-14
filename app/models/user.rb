@@ -70,7 +70,7 @@ class User
   before_validation :downcase_email
 
   scope :by_verification, ->(code){where(verification: code)}
-  scope :live_users   , where(verification: nil, deleted: false)
+  scope :live_users     , where(verification: nil, deleted: false)
   scope :follows_none   , where(:product_ids.empty?)
   scope :follows_equal  , ->(n){where(:product_ids.count.eq(n))}
   scope :follows_least  , ->(n){where(:product_ids.count >= n)}
