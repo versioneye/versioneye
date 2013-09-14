@@ -14,7 +14,7 @@ namespace :versioneye do
     PackagistCrawler.crawl
     puts "STOP to crawl packagist.org"
 
-    puts "START update meta data on products."
+    puts "START update meta data on products. Update followers, version and used_by_count"
     ProductMigration.update_meta_data_global
     puts "STOP  update meta data on products."
 

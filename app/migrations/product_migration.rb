@@ -45,6 +45,7 @@ class ProductMigration
       products.each do |product|
         VersionService.update_version_data( product, false )
         product.update_used_by_count( false )
+        product.followers = product.user_ids.count
         product.save
       end
     end
