@@ -1,6 +1,6 @@
 <div id  = "followers-container">
   <% if @followers && !@followers.empty? %>
-    <h4> They like <%= @lang.to_s.capitalize %> too. </h4>
+    <h2 class="section_header"> They like <%= @lang.to_s.capitalize %> too. </h2>
     <ul class = "nav nav-followers">
       <% @followers.each do |user| %>
         <li class = "follower-item">
@@ -21,6 +21,6 @@
       <% end %>
     </ul>
   <% else %>
-    <h4> Follow <%= @lang.to_s.capitalize %>'s packages to support your favorite ecosystem. </h4>
+    <h2> Follow <%= @lang.to_s.capitalize %>'s packages to support your favorite ecosystem. </h2>
   <% end %>
 </div>
