@@ -43,12 +43,17 @@ class ProductMigration
       skip = i * page
       products = Product.all().skip(skip).limit(page)
       products.each do |product|
-        VersionService.update_version_data( product, false )
-        product.update_used_by_count( false )
-        product.followers = product.user_ids.count
-        product.save
+        VersionService.update_version_data( product, true )
+        product.update_used_by_count( true )
+        self.update_followers( product )
       end
     end
+  end
+
+  def self.update_followers( product )
+    return nil if product.followers == product.user_ids.count
+    product.followers = products.user_ids.count
+    product.save
   end
 
   def self.update_version_data_global
