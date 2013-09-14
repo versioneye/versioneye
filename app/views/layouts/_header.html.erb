@@ -19,10 +19,6 @@
           <% if signed_in? %>
             <li class="divider-vertical"></li>
             <li>
-              <%= link_to "Pricing", "/pricing" %>
-            </li>
-            <li class="divider-vertical"></li>
-            <li>
               <%= link_to "Packages I follow",  :controller => 'user/packages', :action => "i_follow" %>
             </li>
             <li class="divider-vertical"></li>
