@@ -84,6 +84,21 @@
     <b title="<%= title_text %>">Dependencies:</b> <span title="<%= title_text %>"><%= main_dep_count %></span>
   </div>
 
+  <div class="flash info" style="margin-bottom: 5px;">
+    <b title="<%= title_text %>">Language:</b>
+    <% if @product.language.eql?(Product::A_LANGUAGE_RUBY) ||
+          @product.language.eql?(Product::A_LANGUAGE_JAVA) ||
+          @product.language.eql?(Product::A_LANGUAGE_PHP) ||
+          @product.language.eql?(Product::A_LANGUAGE_CLOJURE) ||
+          @product.language.eql?(Product::A_LANGUAGE_NODEJS) ||
+          @product.language.eql?(Product::A_LANGUAGE_PYTHON) ||
+          @product.language.eql?(Product::A_LANGUAGE_R) %>
+      <a href="/<%= @product.language_esc %>" alt="<%= @product.language_esc %>" title="<%= @product.language_esc %>"><%= @product.language %></a>
+    <% else %>
+      <%= @product.language %>
+    <% end %>
+  </div>
+
 </div>
 
 <% if signed_in_admin? %>
