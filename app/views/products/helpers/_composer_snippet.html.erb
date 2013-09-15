@@ -1,5 +1,4 @@
 
-
 <h2 class="section_header">Composer</h2>
 <div class = "well" >
 
@@ -12,7 +11,7 @@
 
   <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.version ) %>
   <% if !downloads.nil? && !downloads.empty? %>
-    <div class="row"  >
+    <div class="row" style="margin-bottom: 5px;" >
       <div class="span2" >
         <h5 class="dep_header">Download</h5>
       </div>
@@ -23,6 +22,25 @@
       </div>
     </div>
   <% end %>
+
+  <div class="row" style="margin-bottom: 5px;">
+    <div class="span2">
+
+    </div>
+    <div class="span5" style="width: 430px; margin-bottom: 0;">
+      <% if signed_in? %>
+        <% if !@product['user_ids'].include? current_user.id %>
+          <%= form_tag("/package/follow", :style=>"margin: 0;") do  %>
+            <input  name="product_key"  type="hidden" value="<%= @product.to_param %>"/>
+            <input  name="product_lang" type="hidden" value="<%= @product.language %>"/>
+            <button type="submit" class="btn btn-large btn-success" style="width: 100%" >Notify me about new versions</button>
+          <% end %>
+        <% end %>
+      <% else %>
+        <button type="submit" class="btn btn-large btn-success" style="width: 100%" onclick="load_dialog_follow('<%= @product.name %>', '<%= @product.prod_key %>', '<%= @product.language %>');">Notify me about new versions</button>
+      <% end %>
+    </div>
+  </div>
 
 </div>
 
