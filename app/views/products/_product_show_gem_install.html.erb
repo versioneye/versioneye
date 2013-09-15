@@ -19,7 +19,7 @@
 
   <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.version ) %>
   <% if !downloads.nil? && !downloads.empty? %>
-    <div class="row"  >
+    <div class="row" style="margin-bottom: 5px;" >
       <div class="span2" >
         <h5 class="dep_header">Download</h5>
       </div>
@@ -30,5 +30,14 @@
       </div>
     </div>
   <% end %>
+
+  <div class="row" style="margin-bottom: 5px;">
+    <div class="span2">
+
+    </div>
+    <div class="span5" style="width: 430px; margin-bottom: 0;">
+      <%= render "products/helpers/notify_me" %>
+    </div>
+  </div>
 
 </div>
