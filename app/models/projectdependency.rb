@@ -93,9 +93,13 @@ class Projectdependency
       product = Product.fetch_product self.language, self.prod_key
       return false if product.nil?
       newest_version       = VersionService.newest_version_number( product.versions, self.stability )
-      self.version_current = newest_version
-      self.release         = VersionTagRecognizer.release? self.version_current
-      self.save()
+      return false if newest_version.nil? || newest_version.empty?
+      if self.version_current.nil? || self.version_current.empty? || !self.version_current.eql( newest_version )
+        self.version_current = newest_version
+        self.release         = VersionTagRecognizer.release? self.version_current
+        self.muted = false
+        self.save()
+      end
     end
 
 end
