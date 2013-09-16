@@ -232,6 +232,7 @@ class ProductsController < ApplicationController
 
   def autocomplete_product_name
     term = params[:term] || "nothing"
+    term.gsub!(/\W/, "?") #replace all not-prinable chars with ?
     results = []
     products = EsProduct.autocomplete(term)
     products.each_with_index do |product, index|
@@ -245,7 +246,7 @@ class ProductsController < ApplicationController
 
     def format_autocomplete(product)
       {
-        value: "#{product[:name_downcase]}-#{product[:language].downcase}",
+        value: "#{product[:name_downcase]}",
         name: product[:name],
         language: Product.encode_language(product[:language]),
         description: product.short_summary,
