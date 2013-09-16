@@ -1,6 +1,6 @@
-<% if 1 == 2 %>
+<% if dep.nil? or dep.unknown? %>
   <span>&nbsp;</span>
-<% elsif dep[:muted] != false %>
+<% elsif dep[:muted] == false %>
   <button class = "btn btn-link btn-mini btn-mute-version mute-off"
           title = "Mute alerts for this version"
           data-project-id = "<%= dep.project[:_id].to_s %>"
@@ -9,7 +9,7 @@
     <i class = "dep-icon icon-volume-up"></i>
   </button>
 
-<% elsif dep[:muted] != true %>
+<% elsif dep[:muted] == true %>
   <button class = "btn btn-link btn-mini btn-mute-version mute-on"
           title = "Allow notification for this version."
           data-project-id = "<%= dep.project[:_id].to_s %>"
