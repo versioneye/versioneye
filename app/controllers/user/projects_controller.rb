@@ -206,7 +206,32 @@ class User::ProjectsController < ApplicationController
     redirect_to user_project_path(@project)
   end
 
+  def mute_dependency
+    render update_project_dependency(params, {muted: true})
+  end
+
+  def demute_dependency
+    render update_project_dependency(params, {muted: false})
+  end
+
   private
+    def update_project_dependency(params, update_map)
+      project_id = params[:id]
+      lang = Product.decode_language(params[:language])
+      prod_key = Product.decode_prod_key(params[:prod_key])
+      project = Project.find_by_id(project_id)
+      if project.nil?
+        return {text: "project with id `#{project_id}` doesnt exists", status: 400}
+      end
+
+      dep = project.projectdependencies.where(language: lang, prod_key: prod_key).first
+      if dep.nil?
+        return {text: "Projects doesnt have dependency with product: `#{lang}/#{prod_key}`", status: 400}
+      end
+
+      dep.update_attributes(update_map)
+      return {json: params}
+    end
 
     def fetch_project( params )
       file        = params[:upload]

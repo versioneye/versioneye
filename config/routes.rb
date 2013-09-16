@@ -121,6 +121,8 @@ Versioneye::Application.routes.draw do
         post 'reparse'
         post 'update_name'
         post 'add_collaborator'
+        post 'mute_dependency'
+        post 'demute_dependency'
       end
     end
 
