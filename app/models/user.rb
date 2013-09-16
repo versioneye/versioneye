@@ -65,7 +65,7 @@ class User
   validates_length_of :fullname, minimum: 2, maximum: 50, :message => "fullname length is not ok"
 
   validates_format_of :username, with: /^[a-zA-Z0-9]+$/
-  validates_format_of :email   , with: /^.+@.+\.[a-zA-Z]{2,4}$/
+  validates_format_of :email   , with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
 
   before_validation :downcase_email
 

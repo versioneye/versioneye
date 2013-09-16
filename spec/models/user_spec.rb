@@ -82,7 +82,7 @@ describe User do
 
   describe "save" do
     it "saves a new user in the db" do
-      email = "hans2@tanz.de"
+      email = "h+ans2@tanz.de"
       user = User.new
       user.fullname = "Hans Tanz"
       user.username = "hanstanz2"
@@ -92,7 +92,7 @@ describe User do
       user.terms = true
       user.datenerhebung = true
       user.save
-      db_user = User.find_by_email( "hans2@TANZ.de" )
+      db_user = User.find_by_email( email )
       db_user.should_not be_nil
       user.remove
     end
@@ -112,7 +112,7 @@ describe User do
       db_user.remove
     end
     it "dosn't save. Because username is unique" do
-      email = "hans2@tanz.de"
+      email = "h+ans+2@ta+nz.de"
       user = User.new
       user.fullname = "Hans Tanz"
       user.username = "hanstanz"
