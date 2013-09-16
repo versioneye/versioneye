@@ -57,6 +57,12 @@ class Project
     self.projectdependencies
   end
 
+  def unmuted_dependencies
+    deps = self.projectdependencies
+    return nil if deps.nil?
+    deps.any_in(muted: [false, nil])
+  end
+
   def self.find_by_id( id )
     Project.find( id )
   rescue => e

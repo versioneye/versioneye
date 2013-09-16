@@ -1,0 +1,17 @@
+<% if @project.dependencies && @project.dependencies.size > 0 %>
+<% deps = @project.dependencies.sort { |a, b| b.outdated.to_s <=> a.outdated.to_s } %>
+  <table class="dependency_table" style="width: 617px;">
+    <thead>
+      <tr>
+        <th style= "width: 1em;">&nbsp;</th>
+        <th class="version_col">Current</th>
+        <th class="version_col">Locked</th>
+        <th class="name_col_after_icon">Product</th>
+        <th class= "">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "/user/projects/helpers/project_dependency_row", collection: deps, as: :dep %>
+    </tbody>
+  </table>
+<% end %>

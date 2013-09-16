@@ -1,0 +1,40 @@
+<% product = dep.find_or_init_product %>
+<% dep.outdated? %>
+
+<% if dep.unknown? %>
+  <% status_class = "info" %>
+<% elsif dep.outdated and dep.release == true  %>
+  <% status_class = "warn" %>
+<% elsif dep.outdated and dep.release == false %>
+  <% status_class = "error" %>
+<% else %>
+  <% status_class = "info" %>
+<% end %>
+
+<tr class="flash <%= status_class %>">
+  <td>
+    <div>
+      <%= render partial: "/user/projects/helpers/project_mute_button",
+                 locals: {dep: dep, product: product} %>
+    <div>
+  </td>
+  <td>
+    <%= dep.version_current || "UNKNOWN" %>
+  </td>
+  <td>
+    <span ><%= dep.version_requested || "UNKNOWN" %></span>
+  </td>
+  <td>
+    <span >
+      <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" >
+        <span><%= product.name %></span>
+      </a>
+    </span>
+  </td>
+  <td>
+    <% unless dep.unknown? %>
+        <%= render partial: "shared/product_follow_mini",
+                   locals: {product: product, user: current_user} %>
+    <% end %>
+  </td>
+</tr>

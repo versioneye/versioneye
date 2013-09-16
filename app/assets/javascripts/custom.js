@@ -89,6 +89,11 @@ jQuery(document).ready(function(){
   if (window.render_wheel_require_dev) {
     render_wheel_require_dev();
   }
+
+
+  if(jQuery(".btn-mute-version").length > 0){
+    jQuery(".btn-mute-version").on("click", toggleProjectDependencyMute);
+  }
 }); // end-of-ready
 
 function stripeResponseHandler(status, response) {
@@ -161,4 +166,71 @@ function setCookie(name, value, days){
   var date = new Date();
   new_date = new Date(date.getFullYear(), date.getMonth(), date.getDate()+days);
   document.cookie = name +"=" + value + ";expires=" + new_date + ";path=/";
+}
+
+function showMuteLoader(btn){
+  console.debug("Loading");
+  btn.addClass("disabled");
+  btn.find("i.dep-icon").addClass("icon-spin");
+}
+
+function hideMuteLoader(btn){
+  console.debug("Hiding loader.");
+  btn.removeClass("disabled");
+  btn.find("i.dep-icon").removeClass("icon-spin");
+}
+
+function muteProjectDependency(btn){
+  console.debug("Going to mute dependency.");
+  showMuteLoader(btn);
+
+  var api_url = "/user/projects/" + btn.data('projectId') + "/mute_dependency";
+  var dep_data = {
+    "language": btn.data('language'),
+    "proj_key": btn.data('projKey')
+  };
+
+  var jqxhr = jQuery.post(api_url, dep_data)
+    .done(function(data){
+      console.debug(data);
+      btn.removeClass("mute-off").addClass("mute-on");
+      btn.find("i.dep-icon").removeClass("icon-volume-up").addClass("icon-volume-off");
+    })
+    .fail(function(){console.error("Failed");})
+    .always(function(){hideMuteLoader(btn);});
+}
+
+function demuteProjectDependency(btn){
+  console.debug("Going to de-mute dependency");
+  showMuteLoader(btn);
+
+  var api_url = "/user/projects/" + btn.data('projectId') + "/demute_dependency";
+  var dep_data = {
+    "language": btn.data('language'),
+    "prod_key": btn.data('prodKey')
+  };
+  var jqxhr = jQuery.post(api_url, dep_data)
+    .done(function(data){
+      console.debug(data);
+      btn.removeClass("mute-on").addClass("mute-off");
+      btn.find("i.dep-icon").removeClass("icon-volume-off").addClass("icon-volume-up")
+    })
+    .fail(function(){console.error("Failed");})
+    .always(function(){hideMuteLoader(btn);});
+}
+
+function toggleProjectDependencyMute(ev){
+  var btn = jQuery(ev.currentTarget);
+
+  if(btn.hasClass("disabled")){
+    console.debug("Going to ignore: Click on disabled button");
+  } else if(btn.hasClass("mute-on")){
+    demuteProjectDependency(btn);
+  } else if(btn.hasClass("mute-off")){
+    muteProjectDependency(btn);
+  } else {
+    console.debug("Hmm, mute button misses classes. Going to ignore that");
+  }
+
+  return false;
 }

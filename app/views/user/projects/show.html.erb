@@ -175,46 +175,15 @@
           </li>
         </ul>
 
-        <% products = Array.new %>
         <div class="tab-content" style="width: 100%;" >
           <div id="dependencies" class="tab-pane active" style="width: 617px;" >
-            <% if @project.dependencies && @project.dependencies.size > 0 %>
-
-              <table class="dependency_table" style="width: 617px;">
-
-                <thead>
-                  <tr>
-                    <th class="icon_col" ></th>
-                    <th class="version_col">Current</th>
-                    <th class="version_col">Locked</th>
-                    <th class="name_col_after_icon"></th>
-                  </tr>
-                </thead>
-
-                <% @project.dependencies.sort { |a, b| b.outdated.to_s <=> a.outdated.to_s }.each do |dep| %>
-                  <% product = dep.find_or_init_product %>
-                  <% dep.outdated? %>
-
-                  <% if dep.unknown? %>
-                    <%= render :partial => "/user/projects/helpers/show_unknown_dep",   :locals => {:product => product, :dep => dep, :follow_link => "false"} %>
-                  <% elsif dep.outdated and dep.release == true  %>
-                    <%= render :partial => "/user/projects/helpers/show_known_out_dep", :locals => {:product => product, :dep => dep, :follow_link => "false"} %>
-                  <% elsif dep.outdated and dep.release == false %>
-                    <%= render :partial => "/user/projects/helpers/show_known_out_pre_dep", :locals => {:product => product, :dep => dep, :follow_link => "false"} %>
-                  <% else %>
-                    <%= render :partial => "/user/projects/helpers/show_known_ok_dep",  :locals => {:product => product, :dep => dep, :follow_link => "false"} %>
-                  <% end %>
-
-                  <% product.version = dep.version_requested %>
-                  <% products << product %>
-
-                <% end %>
-              </table>
-
-            <% end %>
+            <%= render partial: "project_dependency_table" %>
           </div>
 
           <div id="licenses" class="tab-pane">
+            <% products = Array.new %>
+            <%# product.version = dep.version_requested %>
+            <%# products << product %>
             <%= render :partial => "shared/product_license_table", :locals => {:products => products, :width => "615"} %>
           </div>
 
