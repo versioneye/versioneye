@@ -11,7 +11,7 @@
 //= require bootstrap.min
 //= require bootstrap_fileupload
 //= require libs/hogan-2.0.0
-//= require libs/typeahead.min
+//= require libs/typeahead
 //= require google
 //= require jquery.easing
 //= require jquery.scrollto
