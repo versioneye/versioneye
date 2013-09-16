@@ -187,7 +187,7 @@ function muteProjectDependency(btn){
   var api_url = "/user/projects/" + btn.data('projectId') + "/mute_dependency";
   var dep_data = {
     "language": btn.data('language'),
-    "proj_key": btn.data('projKey')
+    "prod_key": btn.data('prodKey')
   };
 
   var jqxhr = jQuery.post(api_url, dep_data)
