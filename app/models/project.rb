@@ -90,8 +90,10 @@ class Project
     return false
   end
 
+  # TODO write test for that.
   def collaborator( user )
     return nil if user.nil?
+    return user if self.user.username.eql?( user.username )
     return nil if collaborators.nil? || collaborators.empty?
     collaborators.each do |collaborator|
       return collaborator if user._id.to_s.eql?( collaborator.user_id.to_s )
