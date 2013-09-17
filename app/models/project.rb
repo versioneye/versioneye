@@ -57,6 +57,7 @@ class Project
     self.projectdependencies
   end
 
+  # TODO write test for this!
   def unmuted_dependencies
     deps = self.projectdependencies
     return nil if deps.nil?

@@ -56,7 +56,7 @@ class ProjectService
     end
   end
 
-  def self.update( project, send_email = false  )
+  def self.update( project, send_email = false )
     if project.nil? || project.user_id.nil?
       return nil
     end
