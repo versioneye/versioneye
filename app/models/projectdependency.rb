@@ -8,6 +8,7 @@ class Projectdependency
 
   A_SECONDS_PER_DAY = 5184000
 
+  # This project dependency refers to the product with the given language and prod_key
   field :language   , type: String
   field :prod_key   , type: String
   field :ext_link   , type: String # Link to external package. For example zip file on GitHub / Google Code.
@@ -24,9 +25,9 @@ class Projectdependency
   field :release          , type: Boolean
   field :stability        , type: String, :default => VersionTagRecognizer::A_STABILITY_STABLE
 
-  field :outdated         , type: Boolean
+  field :outdated           , type: Boolean
   field :outdated_updated_at, type: DateTime, :default => Time.now
-  field :muted            , type: Boolean, default: false
+  field :muted              , type: Boolean, default: false
 
   belongs_to :project
 
