@@ -1,48 +1,48 @@
 class UserEmail
 
-	include Mongoid::Document
-	include Mongoid::Timestamps
+  include Mongoid::Document
+  include Mongoid::Timestamps
 
-	field :user_id, type: String
-	field :email, type: String
-	field :verification, type: String 
+  field :user_id     , type: String
+  field :email       , type: String
+  field :verification, type: String
 
-	validates_format_of :email,    with: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+  validates_format_of :email, with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
 
-	def verified?
-		self.verification.nil?
-	end
+  def verified?
+    self.verification.nil?
+  end
 
-	def create_verification
-		random = create_random_value
-		self.verification = secure_hash("#{random}--#{email}")
-	end
+  def create_verification
+    random = create_random_value
+    self.verification = secure_hash("#{random}--#{email}")
+  end
 
-	def self.find_by_email(email)
-		UserEmail.where( email: /^#{email}$/i )[0]
-	end
+  def self.find_by_email(email)
+    UserEmail.where( email: /^#{email}$/i )[0]
+  end
 
-	def self.activate!(verification)
-		user_email = UserEmail.where(verification: verification)[0]
-		if user_email 
-			user_email.verification = nil
-			user_email.save
-			return true
-	    end
-	    return false
-	end
+  def self.activate!(verification)
+    user_email = UserEmail.where(verification: verification)[0]
+    if user_email
+      user_email.verification = nil
+      user_email.save
+      return true
+      end
+      return false
+  end
 
-	private 
+  private
 
-		def create_random_value
-			chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-			value = ""
-			10.times { value << chars[rand(chars.size)] }
-			value
-		end
+    def create_random_value
+      chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+      value = ""
+      10.times { value << chars[rand(chars.size)] }
+      value
+    end
 
-		def secure_hash(string)
-			Digest::SHA2.hexdigest(string)
-		end
+    def secure_hash(string)
+      Digest::SHA2.hexdigest(string)
+    end
 
 end
