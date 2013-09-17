@@ -5,13 +5,14 @@ describe User do
   describe "email" do
 
     it "allows the email with plus" do
+      email = "firstname.lastname+foobar@googlemail.com"
       user = UserFactory.create_new
       user.username = "hanz"
-      user.email = "hans@tanz.de"
+      user.email = email
       user.save.should be_true
       user_db_1 = User.find_by_username("hanz")
       user_db_1.should_not be_nil
-      user_db_2 = User.find_by_email("hans@tanz.de")
+      user_db_2 = User.find_by_email(email)
       user_db_2.should_not be_nil
     end
 
@@ -23,7 +24,7 @@ describe User do
 
     it "allows the email with plus" do
       user = UserFactory.create_new
-      user.email = "hans+banz@tanz+franz.de"
+      user.email = "hans+banz@tanzfranz.de"
       user.save.should be_true
     end
 
