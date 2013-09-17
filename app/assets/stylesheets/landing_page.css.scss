@@ -5,7 +5,7 @@ body,html{
     background-image: url("/assets/bg/2048.jpg");
     background-repeat: no-repeat;
     background-position: center center;
-    background-attachment: fixed;
+    background-attachment: absolute;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
