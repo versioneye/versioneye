@@ -52,6 +52,14 @@ class Projectdependency
     return update_outdated!
   end
 
+  def release?
+    if self.release.nil?
+      self.release = VersionTagRecognizer.release? self.version_current
+      self.save
+    end
+    self.release
+  end
+
   def update_outdated!
     update_version_current
 
@@ -95,7 +103,7 @@ class Projectdependency
       return false if product.nil?
       newest_version       = VersionService.newest_version_number( product.versions, self.stability )
       return false if newest_version.nil? || newest_version.empty?
-      if self.version_current.nil? || self.version_current.empty? || !self.version_current.eql( newest_version )
+      if self.version_current.nil? || self.version_current.empty? || !self.version_current.eql?( newest_version )
         self.version_current = newest_version
         self.release         = VersionTagRecognizer.release? self.version_current
         self.muted = false
