@@ -1,11 +1,11 @@
 <% product = dep.find_or_init_product %>
-<% dep.outdated? %>
 
+<% status_class = "info" %>
 <% if dep.unknown? %>
   <% status_class = "info" %>
-<% elsif dep.outdated and dep.release == false  %>
+<% elsif dep.outdated and dep.release? == false  %>
   <% status_class = "warn" %>
-<% elsif dep.outdated and dep.release == true %>
+<% elsif dep.outdated and dep.release? == true %>
   <% status_class = "error" %>
 <% else %>
   <% status_class = "info" %>
