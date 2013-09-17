@@ -11,10 +11,10 @@ describe "search" do
     product.prod_type = "RubyGem"
     product.language = Product::A_LANGUAGE_RUBY
     product.version = "1.0"
+    product.save
     version = Version.new
     version.version = "1.0"
     product.versions.push(version)
-    product.save
 
     results = MongoProduct.find_by_name( "json" )
     results.should_not be_nil
@@ -40,10 +40,10 @@ describe "search" do
     product.prod_type = "RubyGem"
     product.language = Product::A_LANGUAGE_RUBY
     product.version = "1.0"
+    product.save
     version = Version.new
     version.version = "1.0"
     product.versions.push(version)
-    product.save
 
     results = MongoProduct.find_by_name( "json_g" )
     results.should_not be_nil
