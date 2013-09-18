@@ -19,7 +19,7 @@ class UserEmail
   end
 
   def self.find_by_email(email)
-    UserEmail.where( email: /^#{email}$/i )[0]
+    UserEmail.where(email: email).shift
   end
 
   def self.activate!(verification)
