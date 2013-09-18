@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
       @title = "Sign in"
       redirect_to :back and return
     elsif !user.activated?
-      flash[:error] = "Your Account is not active. Please validate your E-Mail address by clicking the verification link in the verification E-Mail."
+      flash[:error] = "Your Account is not active. Please validate your email address by clicking the verification link in the verification E-Mail."
       redirect_to :back and return
     else
       sign_in user
