@@ -153,7 +153,7 @@ class UsersController < ApplicationController
     end
 
     if UserEmail.activate!( verification )
-      flash.now[:success] = "Congratulation. Your E-Mail Address is now verified."
+      flash.now[:success] = "Congratulation. Your email address is now verified."
       return
     end
 
