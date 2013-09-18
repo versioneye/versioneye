@@ -188,11 +188,14 @@
 
           <div id="licenses" class="tab-pane">
             <% products = Array.new %>
-            <% deps.each do |dep| %>
-              <% product = dep.find_or_init_product %>
-              <% product.version = dep.version_requested %>
-              <% products << product %>
+            <% unless deps.nil? %>
+              <% deps.each do |dep| %>
+                <% product = dep.find_or_init_product %>
+                <% product.version = dep.version_requested %>
+                <% products << product %>
+              <% end %>
             <% end %>
+
             <%= render :partial => "shared/product_license_table", :locals => {:products => products, :width => "615"} %>
           </div>
 
