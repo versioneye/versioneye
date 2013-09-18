@@ -28,8 +28,8 @@ class UserEmail
       user_email.verification = nil
       user_email.save
       return true
-      end
-      return false
+    end
+    return false
   end
 
   private
