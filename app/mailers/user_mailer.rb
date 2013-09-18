@@ -26,7 +26,7 @@ class UserMailer < ActionMailer::Base
 
   def verification_email_only(user, verification, email)
     @user = user
-    @verificationlink = "#{Settings.server_url_https}/users/activate/#{verification}"
+    @verificationlink = "#{Settings.server_url_https}/users/activate/email/#{verification}"
     mail(
       :to => email,
       :subject => "Verification",
