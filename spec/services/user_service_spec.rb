@@ -22,7 +22,7 @@ describe UserService do
       Notification.count.should eql(0)
       NotificationFactory.create_new user, true
       Notification.count.should eql(1)
-      UserService.delete user
+      UserService.delete(user).should be_true
       Notification.count.should eql(0)
       user.fullname.should eql("Deleted")
       user.email.should_not eql(email)
