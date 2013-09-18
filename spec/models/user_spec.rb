@@ -6,7 +6,7 @@ describe User do
     User.destroy_all
     @user = User.new
     @user.fullname = "Hans Tanz"
-    @user.username = "hanstanz"
+    @user.username = "hans_tanz"
     @user.email = "hans@tanz.de"
     @user.password = "password"
     @user.salt = "salt"
@@ -14,7 +14,6 @@ describe User do
     @user.terms = true
     @user.datenerhebung = true
     @user.save
-
     UserFactory.create_defaults
   end
 
@@ -183,7 +182,7 @@ describe User do
       User.find_by_username("agfasgasfgasfg").should be_nil
     end
     it "does find by username" do
-      user = User.find_by_username("hanstanz")
+      user = User.find_by_username("hans_tanz")
       user.should_not be_nil
       user.username.eql?(@user.username).should be_true
       user.id.eql?(@user.id).should be_true
