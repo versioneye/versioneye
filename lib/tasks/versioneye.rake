@@ -36,7 +36,7 @@ namespace :versioneye do
     puts "STOP to send out daily project notification E-Mails."
 
     puts "START to LanguageDailyStats.update_counts"
-    LanguageDailyStats.update_counts(1)
+    LanguageDailyStats.update_counts(2)
     puts "STOP to LanguageDailyStats.update_counts"
   end
 
