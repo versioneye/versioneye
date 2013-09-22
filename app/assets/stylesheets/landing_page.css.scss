@@ -30,7 +30,15 @@ body,html{
 
 .l_lp_first_content{
   width: 100%;
-  position:absolute; top:20%;
+  position:absolute;
+  top: 20%;
+}
+
+.l_lp_header{
+  width: 100%;
+  text-align: center;
+  position:absolute;
+  top: 10%;
 }
 
 .l_lp_next_link{
