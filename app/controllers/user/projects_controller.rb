@@ -21,7 +21,7 @@ class User::ProjectsController < ApplicationController
     if project and project.id
       redirect_to user_project_path( project._id )
     else
-      flash[:error] = "Cant import that project from Github: unparseable project file or issues with filestorage. Please send issue to versioneye."
+      flash[:error] = "Can't import that project from Github: unparseable project file or issues with filestorage. Please send issue to versioneye."
       redirect_to :back
     end
   rescue => e
@@ -97,7 +97,7 @@ class User::ProjectsController < ApplicationController
     project = Project.find_by_id params[:id]
 
     if project.nil?
-      flash[:error] = "Failure: Cant add collaborator - wrong project id."
+      flash[:error] = "Failure: Can't add collaborator - wrong project id."
       redirect_to :back and return
     end
 
@@ -123,7 +123,7 @@ class User::ProjectsController < ApplicationController
     end
 
     unless new_collaborator.save
-      flash[:error] = "Failure: cant add new collaborator - #{new_collaborator.errors.full_messages.to_sentence}"
+      flash[:error] = "Failure: can't add new collaborator - #{new_collaborator.errors.full_messages.to_sentence}"
       redirect_to :back and return
     end
 
@@ -150,7 +150,7 @@ class User::ProjectsController < ApplicationController
       ProjectService.destroy id
       success = true
     else
-      msg = "Cant remove project with id: `#{id}` - it doesnt exist. Please refresh page."
+      msg = "Can't remove project with id: `#{id}` - it doesnt exist. Please refresh page."
       Rails.logger.error msg
     end
     respond_to do |format|

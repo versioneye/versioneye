@@ -29,7 +29,7 @@ class Admin::SubmittedUrlsController < ApplicationController
   def approve
     submitted_url = SubmittedUrl.find_by_id params[:submitted_url_id]
     if submitted_url.nil?
-      flash[:error] = "Cant approve: id of SubmittedUrl is missing."
+      flash[:error] = "Can't approve: id of SubmittedUrl is missing."
     else
       new_resource = ProductResource.new(:url => params[:url],
                                          :name => params[:name],
@@ -51,7 +51,7 @@ class Admin::SubmittedUrlsController < ApplicationController
   def decline
     submitted_url = SubmittedUrl.find_by_id params[:submitted_url_id]
     if submitted_url.nil?
-      flash[:error] = "Cant decline: id of SubmittedUrl is missing."
+      flash[:error] = "Can't decline: id of SubmittedUrl is missing."
     else
       submitted_url.declined = true
       submitted_url.declined_message = params[:declined_message]
@@ -69,7 +69,7 @@ class Admin::SubmittedUrlsController < ApplicationController
     item_id = (params[:id] or params[:submitted_url_id])
     submitted_url = SubmittedUrl.find_by_id item_id
     if submitted_url.nil?
-      flash[:error] = "Cant delete: id of SubmittedUrl is missing."
+      flash[:error] = "Can't delete: id of SubmittedUrl is missing."
     else
       submitted_url.delete
       flash[:notice] = "Submitted Url is now deleted."

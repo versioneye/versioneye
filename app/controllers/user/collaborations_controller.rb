@@ -31,7 +31,7 @@ class User::CollaborationsController < ApplicationController
       flash[:success] = "Collaborator is now removed."
       collaborator.delete
     else
-      flash[:error] = "You cant remove other peoples."
+      flash[:error] = "You can not remove other peoples."
     end
 
     redirect_to :back and return

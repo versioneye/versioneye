@@ -60,7 +60,7 @@ class User::GithubReposController < ApplicationController
       project      = ProjectService.import_from_github( current_user, project_name, branch )
       p "#-- project: #{project}"
       if project.nil?
-        error_msg = "Cant save project"
+        error_msg = "Can't save project"
         Rails.logger.error("#{project_name} - #{error_msg}")
         render text: error_msg, status: 503
         return false
@@ -83,7 +83,7 @@ class User::GithubReposController < ApplicationController
         repo = GithubRepo.find(params[:_id])
         repo = process_repo(repo)
       else
-        error_msg = "Cant remove project with id: `#{id}` - it doesnt exist. Please refresh page."
+        error_msg = "Can't remove project with id: `#{id}` - it doesnt exist. Please refresh page."
         Rails.logger.error error_msg
         render text: error_msg, status: 400
         return false
@@ -136,7 +136,7 @@ class User::GithubReposController < ApplicationController
       ProjectService.destroy id
       success = true
     else
-      msg = "Cant remove project with id: `#{id}` - it doesnt exist. Please refresh page."
+      msg = "Can't remove project with id: `#{id}` - it doesnt exist. Please refresh page."
       Rails.logger.error msg
     end
     respond_to do |format|

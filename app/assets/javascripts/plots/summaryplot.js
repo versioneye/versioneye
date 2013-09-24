@@ -79,7 +79,7 @@ define([require],function(require){
 
       d3.json(source_url, function(error, data){
         if(error){
-          console.error("Cant load data, quit rendering" + error);
+          console.error("Can not load data, quit rendering" + error);
           return 0;
         }
 

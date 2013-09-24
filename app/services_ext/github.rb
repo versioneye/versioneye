@@ -109,13 +109,13 @@ class Github
   def self.project_file_from_branch(user, repo_name, branch = "master")
     branch_info = Github.repo_branch_info user, repo_name, branch
     if branch_info.nil?
-      Rails.logger.error "Cancelling importing: cant read branch info."
+      Rails.logger.error "Cancelling importing: can't read branch info."
       return nil
     end
 
     project_file_info = Github.project_file_info( repo_name, branch_info["commit"]["sha"], user.github_token )
     if project_file_info.nil? || project_file_info.empty?
-      Rails.logger.error "Cancelling importing: cant read info about project's file."
+      Rails.logger.error "Cancelling importing: can't read info about project's file."
       return nil
     end
 
@@ -151,7 +151,7 @@ class Github
     return nil if url.nil? || url.empty?
     response = HTTParty.get( "#{url}?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT} )
     if response.code != 200
-      Rails.logger.error "Cant fetch file from #{url}:  #{response.code}\n
+      Rails.logger.error "Can't fetch file from #{url}:  #{response.code}\n
         #{response.message}\n#{response.data}"
       return nil
     end

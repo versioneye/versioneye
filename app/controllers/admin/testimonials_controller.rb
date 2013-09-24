@@ -17,7 +17,7 @@ class Admin::TestimonialsController < ApplicationController
     if testimonial.save
       flash[:notice] = "Success! Testimonial is now accepted."
     else
-      flash[:error] = "Error! Cant save updates! #{testimonial.errors.full_messages.to_sentence}"
+      flash[:error] = "Error! Can't save updates! #{testimonial.errors.full_messages.to_sentence}"
     end
     redirect_to :back and return
   end
@@ -29,7 +29,7 @@ class Admin::TestimonialsController < ApplicationController
     if testimonial.save
       flash[:notice] = "Success! Testimonial is now banned."
     else
-      flash[:error] = "Error! Cant save updates! #{testimonial.errors.full_messages.to_sentence}"
+      flash[:error] = "Error! Can't save updates! #{testimonial.errors.full_messages.to_sentence}"
     end
     redirect_to :back and return
   end
@@ -38,13 +38,13 @@ class Admin::TestimonialsController < ApplicationController
 
   def get_testimonial(params)
     unless params[:testimonial] and params[:testimonial][:id]
-      flash[:error] = "Cant approve given testimonial, because request didnt have testimonial id"
+      flash[:error] = "Can't approve given testimonial, because request didnt have testimonial id"
       redirect_to :back and return
     end
 
     testimonial = Testimonial.find_by_id(params[:testimonial][:id])
     if testimonial.nil?
-      flash[:error] = "Cant approve given testimonial, because it doesnt exist anymore."
+      flash[:error] = "Can not approve given testimonial, because it doesnt exist anymore."
       redirect_to :back and return
     end
 
