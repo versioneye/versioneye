@@ -36,7 +36,7 @@ function render_payment_history(selector, data){
 
 function render_fail_invoice(selector, data){
   var template = _.template(jQuery("#fail_invoice_template").html());
-  jQuery(selector).html(template({message: "Cant read payment history from Payment service"}));
+  jQuery(selector).html(template({message: "Can not read payment history from Payment service"}));
 }
 
 jQuery(document).ready(function(){

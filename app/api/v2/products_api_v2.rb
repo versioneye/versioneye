@@ -21,17 +21,17 @@ module V2
 
     desc "search packages", {
       notes: %q[
-                
-              It returns same results as our SaaS application. But you get it as JSON objects - 
+
+              It returns same results as our SaaS application. But you get it as JSON objects -
               the result is an JSON array of product objects and it's good way to find out products keys.
-            
+
               #### Requirements for arguments
-              
+
                * The search term must contain at least 2 characters.
                  Otherwise service will respond with status 400 - bad request.
-               * Languages should be empty or commaseparated list of string 
+               * Languages should be empty or commaseparated list of string
                * Paging variable `page` should be positive integer
-              
+
               When there's no match for query, then result's array will be just empty JSON array.
 
               #### Response codes
@@ -46,7 +46,7 @@ module V2
                       :desc => %q[Filter results by programming languages;
                                 It has to be comma-separated list of languages.
                                 For example, if you want to search Java: then just
-                                java or if you want to search packages for Java, Ruby and NodeJS 
+                                java or if you want to search packages for Java, Ruby and NodeJS
                                 , then use java,ruby,nodejs.
                               ]
       optional :g, :type => String, :desc => "Specify group-id for Java projects"
@@ -59,7 +59,7 @@ module V2
       group_id = params[:g]
       lang     = get_language_param(params[:lang])
       page_nr  = params[:page]
-      page_nr  = nil if page_nr.to_i < 1 #will_paginate cant handle 0
+      page_nr  = nil if page_nr.to_i < 1 #will_paginate can't handle 0
       if query.length < 2
         error! "Search term was too short.", 400
       end
@@ -80,20 +80,20 @@ module V2
 
     desc "detailed information for specific package", {
       notes: %q[
-                
-                **NB!** If there are any special characters in `prod_key`, 
+
+                **NB!** If there are any special characters in `prod_key`,
                 you must replace them by using 2 simple encodig rules to make product key URL safe!
-                
+
                 It means you must replace all slashes `/` in product key
                 with colon `:` and due to routing limitations of current Grape framework,
-                it's also required to replace all points `.` with tilde `~`. 
-                
+                it's also required to replace all points `.` with tilde `~`.
+
                 For example Clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
                 #### Notes about status codes
-                  
+
                   * API returns 404, when the product with given product key doesnt exists.
-                  
+
                   * Response 302 means that you didnt encode prod_key correctly.* (Replace all dots & ) *
             ]
       }
@@ -124,7 +124,7 @@ module V2
                 And all dots `.` should be replaced by tilde `~`.
 
                 For example `junit/junit` has to be transformed to  `junit:junit`.
-                
+
                 #### Notes about status codes
 
                 It will respond with 404, when given product with given product doesnt exists.
@@ -152,7 +152,7 @@ module V2
 
       desc "follow your favorite software package", {
         notes: %q[
-                  It's good for bookmarking and getting notifications for specific library.          
+                  It's good for bookmarking and getting notifications for specific library.
 
                   NB! If there are some special characters in `prod_key`,
                   you must replace it to make it URL safe!
@@ -164,7 +164,7 @@ module V2
                   For example `junit/junit` has to be transormed to  `junit--junit`.
 
                   #### Notes about status codes
-                  
+
                   It will respond 404, when you are using wrong product key or encode it uncorrectly.
               ]
         }

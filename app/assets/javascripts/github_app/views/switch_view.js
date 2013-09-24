@@ -132,7 +132,7 @@ define(['underscore', 'backbone'],
     },
 
     onAddFailure: function(model, xhr){
-      var error_msg = "Failure: Cant import project: " + model.get('fullname')  + ".";
+      var error_msg = "Failure: Can not import project: " + model.get('fullname')  + ".";
       error_msg += xhr.responseText;
 
       console.debug(error_msg);
@@ -186,7 +186,7 @@ define(['underscore', 'backbone'],
       return true;
     },
     onRemoveFailure: function(model, xhr, options){
-      var msg = "Fail: Cant remove project";
+      var msg = "Fail: Can not remove project";
 
       this.switchOnActivate();
       showNotification("alert alert-warning", msg);

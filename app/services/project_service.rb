@@ -14,7 +14,7 @@ class ProjectService
 
   def self.store( project )
     if project.nil?
-      Rails.logger.error "Project cant be nil. Some error with importing."
+      Rails.logger.error "Project can't be nil. Some error with importing."
       return nil
     end
     project.make_project_key!
@@ -22,7 +22,7 @@ class ProjectService
       project.save_dependencies
       return true
     else
-      Rails.logger.error "Cant save project: #{project.errors.full_messages.to_json}"
+      Rails.logger.error "Can't save project: #{project.errors.full_messages.to_json}"
       return false
     end
   end
@@ -117,7 +117,7 @@ class ProjectService
 
     s3_info = S3.upload_github_file( project_file, project_file['name'] )
     if s3_info.nil? && !s3_info.has_key?('filename') && !s3_info.has_key?('s3_url')
-      error_msg = "Connectivity issues - cant import project file for parsing."
+      error_msg = "Connectivity issues - can't import project file for parsing."
       Rails.logger.error " Can't upload file to s3: #{project_file['name']}"
       return error_msg
     end

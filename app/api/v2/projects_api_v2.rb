@@ -85,7 +85,7 @@ module V2
 
         @project = upload_and_store( project_file )
         if @project.nil?
-          error! "Cant save uploaded file. Probably our fileserver got cold.", 500
+          error! "Can't save uploaded file. Probably our fileserver got cold.", 500
         end
 
         present @project, with: EntitiesV2::ProjectEntity, :type => :full
@@ -125,7 +125,7 @@ module V2
 
         new_project = upload project_file
         if new_project.nil?
-          error! "Cant save uploaded file. Probably our fileserver got cold.", 500
+          error! "Can't save uploaded file. Probably our fileserver got cold.", 500
         end
 
         @project.update_from new_project
@@ -147,7 +147,7 @@ module V2
       delete '/:project_key' do
         authorized?
         proj_key = params[:project_key]
-        error!("Project key cant be empty", 400) if proj_key.nil? or proj_key.empty?
+        error!("Project key can't be empty", 400) if proj_key.nil? or proj_key.empty?
 
         project = Project.by_user(@current_user).where(project_key: proj_key).shift
         if project.nil? or not destroy_project(project.id)

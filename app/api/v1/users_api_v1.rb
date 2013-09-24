@@ -51,7 +51,7 @@ class UsersApiV1 < Grape::API
       authorized?
 
       unread_notifications = Notification.by_user(@current_user).desc(:created_at).limit(30)
-      temp_notice = Notification.new #grape cant handle plain Hashs w.o to_json
+      temp_notice = Notification.new #grape can't handle plain Hashs w.o to_json
       temp_notice[:user_info] = @current_user
       temp_notice[:unread] = unread_notifications.count
       temp_notice[:notifications] = unread_notifications

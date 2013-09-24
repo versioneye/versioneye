@@ -83,7 +83,7 @@ define([require], function(require){
     var thisPlot = this;
     d3.json(url, function(error, data){
       if(error){
-        console.error("Cant load data from " + url + "for SummaryTable");
+        console.error("Can not load data from " + url + "for SummaryTable");
         console.error(error);
         return 1;
       }

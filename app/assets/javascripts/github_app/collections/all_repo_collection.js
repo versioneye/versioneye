@@ -44,8 +44,8 @@ define(['underscore', 'backbone'],
         },
         error: function(repos, response, options){
           showNotification("alert alert-error",
-                           '<div><i class="icon-info-sign"></i> Cant load your repositoiries due a connectivity issues.</div>');
-          $("#github-repos").html("Connection issues - cant read data from Github.");
+                           '<div><i class="icon-info-sign"></i> Can not load your repositoiries due a connectivity issues.</div>');
+          $("#github-repos").html("Connection issues - can not read data from Github.");
         }
       });
     },
