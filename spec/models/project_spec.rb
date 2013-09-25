@@ -155,4 +155,41 @@ describe Project do
     end
   end
 
+  describe "unmuted_dependencies" do
+    it "returns muted and unmuted dependencies" do
+      user = UserFactory.create_new 1066
+      user.nil?.should be_false
+      project = ProjectFactory.create_new user
+      project.public = false
+      project.save
+
+      product_1 = ProductFactory.create_new 1
+      product_2 = ProductFactory.create_new 2
+      product_3 = ProductFactory.create_new 3
+
+      dep_1 = ProjectdependencyFactory.create_new project, product_1
+      dep_2 = ProjectdependencyFactory.create_new project, product_2
+      dep_3 = ProjectdependencyFactory.create_new project, product_3
+
+      unmuted = project.unmuted_dependencies
+      unmuted.should_not be_nil
+      unmuted.count.should eq(3)
+
+      dep_3.muted = true
+      dep_3.save
+
+      unmuted = project.unmuted_dependencies
+      unmuted.should_not be_nil
+      unmuted.count.should eq(2)
+
+      muted = project.muted_dependencies
+      muted.should_not be_nil
+      muted.count.should eq(1)
+      muted.first._id.should eql(dep_3._id)
+
+      user.remove
+      project.remove
+    end
+  end
+
 end
