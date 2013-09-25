@@ -69,7 +69,7 @@ class BowerParser < CommonParser
   end
 
   def parse_line( key, value, project )
-    product    = Product.fetch_product( Product::A_LANGUAGE_BOWER, key )
+    product    = Product.fetch_product( Product::A_LANGUAGE_JAVASCRIPT, key )
     dependency = init_dependency( product, key )
     parse_requested_version( value, dependency, product )
     project.out_number     += 1 if dependency.outdated?
