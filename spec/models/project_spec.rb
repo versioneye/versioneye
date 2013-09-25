@@ -94,17 +94,26 @@ describe Project do
     end
 
     it "project factory generated project_key passes validation" do
-      col_user = UserFactory.create_new 10022
+      col_user     = UserFactory.create_new 10022
       collaborator = ProjectCollaborator.new(:project_id => @test_project._id,
                                              :owner_id => @test_user._id,
                                              :caller_id => @test_user._id )
       collaborator.save
       @test_project.collaborators << collaborator
-      @test_project.collaborator(col_user).should be_nil
+      @test_project.collaborator( col_user ).should be_nil
+      @test_project.collaborator( @test_user ).should be_nil
+      @test_project.collaborator( nil ).should be_nil
+
+      @test_project.collaborator?( col_user ).should be_false
+      @test_project.collaborator?( nil ).should be_false
+      @test_project.collaborator?( @test_user ).should be_true
+
       collaborator.user_id = col_user._id
       collaborator.save
       collaborator_db = @test_project.collaborator( col_user )
       collaborator_db.should_not be_nil
+      collaborator_db.user.username.should eql( col_user.username )
+      @test_project.collaborator?( col_user ).should be_true
     end
   end
 
