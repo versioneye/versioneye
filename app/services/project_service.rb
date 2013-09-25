@@ -57,9 +57,7 @@ class ProjectService
   end
 
   def self.update( project, send_email = false )
-    if project.nil? || project.user_id.nil?
-      return nil
-    end
+    return nil if project.nil? || project.user_id.nil?
     self.update_url( project )
     new_project = self.build_from_url( project.url )
     project.update_from( new_project )

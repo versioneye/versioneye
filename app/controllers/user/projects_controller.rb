@@ -14,7 +14,7 @@ class User::ProjectsController < ApplicationController
   def create
     project = fetch_project params
     if project.nil?
-      flash[:error] = "Please put in a URL OR select a file from your computer. Or select a GitHub project."
+      flash[:error] = "Please put in a URL OR select a file from your computer." if flash[:error].nil?
       redirect_to new_user_project_path
       return nil
     end
@@ -246,8 +246,9 @@ class User::ProjectsController < ApplicationController
 
     def upload_and_store file
       project = upload file
-      store_project project
-      project
+      stored = store_project(project)
+      return project if stored
+      return nil if not stored
     end
 
     def upload file
@@ -264,8 +265,9 @@ class User::ProjectsController < ApplicationController
       project_name   = project_url.split("/").last
       project        = build_project( project_url, project_name )
       project.source = Project::A_SOURCE_URL
-      store_project project
-      project
+      stored = store_project(project)
+      return project if stored
+      return nil if not stored
     end
 
     def build_project( url, project_name )
@@ -280,8 +282,10 @@ class User::ProjectsController < ApplicationController
     def store_project( project )
       if ProjectService.store project
         flash[:success] = "Project was created successfully."
+        return true
       else
-        flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."
+        flash[:error] = "An error occured. Something is wrong with your file. Please contact the VersionEye Team on Twitter."
+        return false
       end
     end
 
