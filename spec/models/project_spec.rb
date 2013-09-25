@@ -174,6 +174,7 @@ describe Project do
       unmuted = project.unmuted_dependencies
       unmuted.should_not be_nil
       unmuted.count.should eq(3)
+      project.muted_prod_keys.should be_empty
 
       dep_3.muted = true
       dep_3.save
@@ -182,6 +183,11 @@ describe Project do
       unmuted.should_not be_nil
       unmuted.count.should eq(2)
 
+      prod_keys = project.muted_prod_keys
+      prod_keys.should_not be_empty
+      prod_keys.count.should eq(1)
+      prod_keys.first.should eql("#{dep_3.language}_#{dep_3.prod_key}_#{dep_3.version_current}")
+
       muted = project.muted_dependencies
       muted.should_not be_nil
       muted.count.should eq(1)
@@ -189,6 +195,69 @@ describe Project do
 
       user.remove
       project.remove
+    end
+  end
+
+  describe "overwrite_dependencies" do
+    it "overwrites dependencies" do
+      user = UserFactory.create_new 1066
+      user.nil?.should be_false
+      project = ProjectFactory.create_new user
+      project.save
+
+      product_1 = ProductFactory.create_new 1
+      product_2 = ProductFactory.create_new 2
+      product_3 = ProductFactory.create_new 3
+
+      dep_1 = ProjectdependencyFactory.create_new project, product_1
+      dep_1.version_current = "2.0.0"
+      dep_1.version_requested = "1.0.0"
+      dep_1.save
+      dep_2 = ProjectdependencyFactory.create_new project, product_2
+      dep_2.version_current = "2.0.0"
+      dep_2.version_requested = "1.0.0"
+      dep_2.muted = true
+      dep_2.save
+      dep_3 = ProjectdependencyFactory.create_new project, product_3
+      dep_3.version_current = "2.0.0"
+      dep_3.version_requested = "1.0.0"
+      dep_3.muted = true
+      dep_3.save
+
+      unmuted = project.unmuted_dependencies
+      unmuted.count.should eq(1)
+
+      dep_4 = Projectdependency.new
+      dep_4.language = dep_1.language
+      dep_4.prod_key = dep_1.prod_key
+      dep_4.version_current = "2.0.0"
+      dep_4.version_requested = "1.0.0"
+      dep_4.save
+      dep_5 = Projectdependency.new
+      dep_5.language = dep_2.language
+      dep_5.prod_key = dep_2.prod_key
+      dep_5.version_current = "2.1.0"   # Current version goes 1 up. That will reset the muted to false!
+      dep_5.version_requested = "1.0.0"
+      dep_5.save
+      dep_6 = Projectdependency.new
+      dep_6.language = dep_3.language
+      dep_6.prod_key = dep_3.prod_key
+      dep_6.version_current = "2.0.0"
+      dep_6.version_requested = "1.0.0"
+      dep_6.save
+      new_deps = Array.new
+      new_deps.push dep_4
+      new_deps.push dep_5
+      new_deps.push dep_6
+
+      project.overwrite_dependencies( new_deps )
+
+      unmuted = project.unmuted_dependencies
+      unmuted.count.should eq(2)
+
+      muted = project.muted_dependencies
+      muted.count.should eq(1)
+      muted.first.prod_key.should eql( dep_6.prod_key )
     end
   end
 
