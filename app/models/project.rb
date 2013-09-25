@@ -64,6 +64,13 @@ class Project
     deps.any_in(muted: [false, nil])
   end
 
+  # TODO write test for this!
+  def muted_dependencies
+    deps = self.projectdependencies
+    return nil if deps.nil?
+    deps.any_in(muted: [true])
+  end
+
   def self.find_by_id( id )
     Project.find( id )
   rescue => e
@@ -116,7 +123,6 @@ class Project
     outdated_dependencies
   end
 
-  # TODO refactor with language
   def known_dependencies
     knows_deps = Array.new
     self.projectdependencies.each do |dep|
@@ -137,9 +143,22 @@ class Project
     end
   end
 
+  # TODO add test for this
+  def muted_prod_keys
+    muted_prod_keys = Array.new
+    muted_deps = muted_dependencies
+    muted_deps.each do |dep|
+      muted_prod_keys.push dep.prod_key
+    end
+    muted_prod_keys
+  end
+
+  # TODO write test for that. Specially for the muted stuff!
   def overwrite_dependencies( new_dependencies )
+    muted_keys = muted_prod_keys
     remove_dependencies
     new_dependencies.each do |dep|
+      dep.muted = true if muted_keys.include?( dep.prod_key )
       projectdependencies.push dep
       dep.save
     end
