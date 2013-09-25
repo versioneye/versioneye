@@ -30,15 +30,22 @@ class BowerParser < CommonParser
         (?:(#{prerelease_info}))?)?)?
       )
     }
-    xrange_version = "^#{gtlt} \\s* #{ign}#{xrange}$" 
+    asterisk_version = "^#{ign} \\s* #{xrange}$" #1.* or 1.2.x
+    xrange_version = "^#{gtlt} \\s* #{ign}#{xrange}$" # '> 1.*'
     tilde_version = "^\\s* #{tilde} \\s* #{xrange}$"
     caret_version = "^\\s* #{caret} \\s* #{xrange}$"
-    hyphen_version = "^\\s* \\s* #{xrange} \\s+ - \\s+ #{xrange} \\s* $"
+    hyphen_version = %Q[
+      ^\\s* \\s* 
+      (?<start> #{xrange}) 
+        \\s+ - \\s+ 
+      (?<end> #{xrange}) \\s* $
+    ]
     star_version = "(<|>)?=?\\s*\\*"
     #initialize set of rules 
     @rules = {
       main_version: Regexp.new(main_version, Regexp::EXTENDED),
       full_version: Regexp.new(full_version, Regexp::EXTENDED),
+      asterisk_version: Regexp.new(asterisk_version, Regexp::EXTENDED),
       xrange_version: Regexp.new(xrange_version, Regexp::EXTENDED),
       tilde_version: Regexp.new(tilde_version, Regexp::EXTENDED),
       caret_version: Regexp.new(caret_version, Regexp::EXTENDED),
@@ -84,13 +91,24 @@ class BowerParser < CommonParser
       version_data = {version: product.version, label: "*", comperator: "="}
     elsif (m = version.match(self.rules[:main_version]))
       version_data = {version: m[:version], label: m[:version], comperator: "="}
-    elsif version.match(self.rules[:xrange_version])
+    elsif (m = version.match(self.rules[:asterisk_version]))
+      ver = ver.gsub(/[\s|x]+/i)
+      versions = VersionService.versions_start_with(product.versions, ver)
+      highest_version = VersionService.newest_version_from(versions)
+      version_data = {version: highest_version.version || version, 
+                      label: m[:version], 
+                      comperator: "="}
+    elsif (m = version.match(self.rules[:xrange_version]))
       ver = m[:version]
       case m[:comperator]
-      when "<": newest = VersionService.smaller_than(product.versions, ver)
-      when "<=": newest = VersionService.smaller_than_equal(product.versions, ver)
-      when ">": newest = VersionService.greater_than(product.versions, ver)
-      when ">=": newest = VersionService.greater_than_equal(product.versions, ver)
+      when "<" 
+        newest = VersionService.smaller_than(product.versions, ver)
+      when "<="
+        newest = VersionService.smaller_than_equal(product.versions, ver)
+      when ">"
+        newest = VersionService.greater_than(product.versions, ver)
+      when ">="
+        newest = VersionService.greater_than_equal(product.versions, ver)
       end
       if newest
         version_data = {version: newest.version, label: ver, comperator: m[:comperator]}
@@ -98,15 +116,32 @@ class BowerParser < CommonParser
         Rails.debug.error("Couldnt find latest versions for #{product[:name]} using version: `#{ver}`")
         version_data = {version: version, label: ver, comperator: m[:comperator]}
       end
-    elsif version.match(self.rules[:tilde_version])
-      #TODO
-    elsif version.match(self.rules[:caret_version])
-      #TODO
-    elsif version.match(self.rules[:hyphen_version])
-      #TODO
+    elsif (m = version.match(self.rules[:tilde_version]))
+      highest_version = VersionService.version_tilde_newest(product.versions, m[:version])
+      version_data = {version: highest_version.version || m[:version], label: m[:version], comperator: "~"}
+    elsif (m = version.match(self.rules[:caret_version]))
+      if m[:version] =~ /0\.0\.\d+/ 
+        version_data = {version: m[:version], label: m[:version], comperator: "="}
+      else
+        highest_version = VersionService.version_tilde_newest(product.versions, m[:version])
+        version_data = {
+          version: highest_version.version || m[:version], 
+          label: m[:version], 
+          comperator: "^"
+        }
+      end
+
+    elsif (m = version.match(self.rules[:hyphen_version]))
+      version_range = VersionService.version_range(product.versions, m[:start], m[:end])
+      highest_version = VersionService.newest_version_from(version_range)
+      version_data = {
+        version: highest_version.version || m[:end],
+        label: version,
+        comperator: "="
+      }
     else
       Rails.debug.error("Version `#{version}` for #{product[:name]} doesnt match with any rules. Probably misformed.")
-
+      version_data = { version: product.version, label: "*", comperator: "="}
     end
 
     dependency.version_requested = version_data[:version]
@@ -129,7 +164,7 @@ class BowerParser < CommonParser
 
   def fetch_dependencies( data )
     dependencies = data['dependencies']
-    dev_dependencies = data['devDependencies']
+    dev_dependencies = data['devDependencies'] #Shouldnt be separated?
     if dev_dependencies
       if dependencies.nil?
         dependencies = dev_dependencies

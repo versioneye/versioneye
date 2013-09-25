@@ -73,7 +73,6 @@ describe BowerParser do
     it "matches star versions correctly" do
       "> *".match(parser.rules[:star_version]).should_not be_nil
       "<= *".match(parser.rules[:star_version]).should_not be_nil
-
     end
   end
 end
