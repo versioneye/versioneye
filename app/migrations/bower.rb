@@ -110,7 +110,15 @@ class Bower
   end
 
   def self.read_info_from_github(source_url, filename = "bower.json")
-    info = {version: "*", license: "unknown", dependencies: {}, url: source_url, private_repo: false}
+    info = {
+      version: "*", 
+      license: "unknown", 
+      dependencies: {}, 
+      url: source_url, 
+      private_repo: false,
+      group_id: nil, #github user name
+      artifact_id: nil, #github repo name
+    }
     
     unless source_url =~ /^git:\/\/github\.com/i
       p "warning: going to ignore #{source_url} - its not github repo, cant read bower.json"
@@ -123,6 +131,8 @@ class Bower
     p "#-- #{source_url}, #{owner}, #{repo}"
     repo.gsub!(/\.git$/, "")
     info[:name] = repo
+    info[:group_id] = owner
+    info[:artifact_id] = repo
 
     url = "#{Github::A_API_URL}/repos/#{owner}/#{repo}/contents/#{filename}"
     admin = User.find_by_email "timgluz@gmail.com"
