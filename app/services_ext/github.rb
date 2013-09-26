@@ -6,6 +6,10 @@ class Github
   A_USER_AGENT = "www.versioneye.com"
   A_API_URL    = "https://api.github.com"
 
+  def self.api_url 
+    A_API_URL
+  end
+
   def self.token( code )
     domain    = 'https://github.com/'
     uri       = 'login/oauth/access_token'
@@ -156,6 +160,19 @@ class Github
       return nil
     end
     JSON.parse response.body
+  end
+
+  def self.fetch_raw_file( url, token )
+    return nil if url.nil? || url.empty?
+    response = HTTParty.get( "#{url}?access_token=" + URI.escape(token), 
+                            :headers => {"User-Agent" => A_USER_AGENT,
+                                         "Accept" => "application/vnd.github.VERSION.raw"} )
+    if response.code != 200
+      Rails.logger.error "Cant fetch file from #{url}:  #{response.code}\n
+        #{response.message}\n#{response}"
+      return nil
+    end
+    response.body
   end
 
   def self.orga_names( github_token )
