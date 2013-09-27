@@ -2,6 +2,16 @@ require 'spec_helper'
 
 describe BowerParser do
   let(:parser){ BowerParser.new }
+  let(:prod1){FactoryGirl.create(:product_with_versions, name: "search", version: "3.0")}
+  let(:prod2){FactoryGirl.create(:product_with_versions, name: "jquery", version: "3.0")}
+  let(:prod3){FactoryGirl.create(:product_with_versions, name: "bootstrap", version: "3.0")}
+  let(:prod4){FactoryGirl.create(:product_with_versions, name: "emberjs", version: "3.0")}
+  let(:prod5){FactoryGirl.create(:product_with_versions, name: "websocket", version: "3.0")}
+  let(:prod6){FactoryGirl.create(:product_with_versions, name: "validator", version: "3.0")}
+  let(:prod7){FactoryGirl.create(:product_with_versions, name: "scss", version: "3.0")}
+  let(:filepath){"/veye/bower.json"}
+  let(:host){"https://s3-eu-west-1.amazonaws.com"}
+
 
   context "testing correctness of parser rules" do
     it "matches all main versions correctly" do
@@ -73,6 +83,25 @@ describe BowerParser do
     it "matches star versions correctly" do
       "> *".match(parser.rules[:star_version]).should_not be_nil
       "<= *".match(parser.rules[:star_version]).should_not be_nil
+    end
+  end
+
+  context "parsing project file from url" do
+    it "parses project file from given url correctly " do
+      parser = BowerParser.new
+      project = parser.parse("#{host}#{filepath}")
+      
+      p "#-------------", project
+      project.should_not be_nil
+      project.dependencies.size.should eql(7)
+
+      dep1 = project.dependencies[0]
+      dep1.name.should eql(prod1[:name])
+      dep1.version_requested.should eql("1.5")
+      dep1.version_current.should eql("3.0")
+      dep1.comperator.should eql("=")
+
+      #TODO: finish it - do i need to test correctness of range of match
     end
   end
 end
