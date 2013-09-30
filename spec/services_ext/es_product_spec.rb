@@ -26,7 +26,9 @@ describe EsProduct do
       {:name => "club-mate-cnet",   :language => "c#",   :group_id => "net.microsoft.crap"},
       {:name => "bad.mate.jar",     :language => "mate", :group_id => "club.mate.org"},
       {:name => "good.mate.jar",    :language => "mate", :group_id => "club.mate.org"},
-      {:name => "superb_mate.jar",  :language => "mate", :group_id => "club.mate.org"}
+      {:name => "superb_mate.jar",  :language => "mate", :group_id => "club.mate.org"},
+      {:name => "json_nodejs",  :language => "Node.JS", :group_id => ""}
+
     ]
     @products = Array.new
     @prods.each do |prod|
@@ -133,6 +135,12 @@ describe EsProduct do
       sleep 4
       EsProduct.search("club-mate", nil, ["Java"]).count.should eql(3)
     end
+    
+    it "test language filtering does decodes language name correctly"  do
+      sleep 4
+      EsProduct.search("json_nodejs", nil, ["nodejs"]).count.should eql(1)
+    end
+
 
     # it "test, does language filtering is case insensitive" do
     #   sleep 4
