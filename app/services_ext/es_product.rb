@@ -106,8 +106,11 @@ class EsProduct
       # search.sort { by [{'name.untouched' => 'asc'}] }
 
       if langs and !langs.empty?
-        # langs_dwoncase = Product.downcase_array langs
-        search.filter :terms, :language => langs
+        decoded_langs = [] 
+        langs.each do |lang|
+          decoded_langs << Product.decode_language(lang)
+        end
+        search.filter :terms, :language => decoded_langs
       end
 
       search.query do |query|
