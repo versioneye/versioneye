@@ -176,7 +176,7 @@ class Project
     project_key_text.gsub!(/[\s|\W|\_]+/, "_")
 
     similar_projects = Project.by_user(self.user).where(
-                        name: self.name,
+                        project_key: Regexp.new("#{project_key_text}"),
                         project_type: self.project_type
                       )
     project_nr += similar_projects.count unless similar_projects.nil?
