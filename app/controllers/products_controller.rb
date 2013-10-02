@@ -190,11 +190,12 @@ class ProductsController < ApplicationController
   end
 
   def follow
-    @prod_lang_param = params[:product_lang]
+    lang_param = params[:product_lang]
     @prod_key_param  = params[:product_key]
     product_key      = Product.decode_prod_key @prod_key_param
-    language         = Product.decode_language @prod_lang_param
+    language         = Product.decode_language lang_param
     follow           = ProductService.follow language, product_key, current_user
+    @prod_lang_param = Product.language_escape language
     respond_to do |format|
       format.js
       format.html {
@@ -209,11 +210,12 @@ class ProductsController < ApplicationController
 
   def unfollow
     src_hidden       = params[:src_hidden]
-    @prod_lang_param = Product.decode_language( params[:product_lang] )
+    lang_param       = params[:product_lang]
     @prod_key_param  = params[:product_key]
-    language         = Product.decode_language @prod_lang_param
+    language         = Product.decode_language lang_param
     product_key      = Product.decode_prod_key @prod_key_param
     unfollow         = ProductService.unfollow language, product_key, current_user
+    @prod_lang_param = Product.language_escape language
     respond_to do |format|
       format.js
       format.html {

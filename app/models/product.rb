@@ -171,9 +171,14 @@ class Product
     Versioncomment.find_by_prod_key_and_version(self.language, self.prod_key, self.version)
   end
 
-  def language_esc
-    return "nodejs" if language.eql?(A_LANGUAGE_NODEJS)
-    return language.downcase
+  def language_esc(lang = nil)
+    lang = self.language if lang.nil?
+    Product.language_escape lang
+  end
+
+  def self.language_escape(lang)
+    return "nodejs" if lang.eql?(A_LANGUAGE_NODEJS)
+    return lang.downcase
   end
 
   def license_info
