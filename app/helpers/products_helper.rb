@@ -17,6 +17,11 @@ module ProductsHelper
     return "/#{lang.downcase}/#{product.to_param}"
   end
 
+  def user_follows?(product, user)
+    return true if user.products.include?(product)
+    return false
+  end
+
   def display_follow(product, user)
     return "none" if user.products.include? product
     return "block"

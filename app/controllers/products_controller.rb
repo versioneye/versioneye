@@ -198,6 +198,7 @@ class ProductsController < ApplicationController
     @prod_lang_param = Product.language_escape language
     respond_to do |format|
       format.js
+      format.json {render json: {success: follow}}
       format.html {
         if !follow
           flash.now[:error] = "An error occured. Please try again later and contact the VersionEye Team."
@@ -218,6 +219,7 @@ class ProductsController < ApplicationController
     @prod_lang_param = Product.language_escape language
     respond_to do |format|
       format.js
+      format.json {render json: {success: unfollow}}
       format.html {
           if !unfollow
             flash.now[:error] = "An error occured. Please try again later."

@@ -1,17 +1,19 @@
 <% if signed_in? %>
-  <div class = "pull-right" id="follow_<%= product.to_param %>" style="display: <%= display_follow(product, user) %>">
-    <%= form_tag("/package/follow", :remote => true) do  %>
-      <input  name="product_key"  type="hidden" value="<%= product.to_param %>" />
-      <input  name="product_lang" type="hidden" value="<%= product.language %>"/>
-      <button type="submit" class="btn btn-mini btn-link" ><i class="icon-check-empty"></i>&nbsp;Follow</button>
-    <% end %>
-  </div>
-  <div class = "pull-right" id="unfollow_<%= product.to_param %>" style="display: <%= display_unfollow(product, user) %>">
-    <%= form_tag("/package/unfollow", :remote => true) do  %>
-      <input  name="product_key"  type="hidden" value="<%= product.to_param %>" />
-      <input  name="product_lang" type="hidden" value="<%= product.language %>"/>
-      <button type="submit" class="btn btn-mini btn-link" ><i class="icon-check"></i>&nbsp;Unfollow</button>
-    <% end %>
+  <div class = "pull-right">
+    <%# form_tag("/package/follow") %>
+    <button type="submit"
+            class="btn btn-mini btn-link btn-follow-product"
+            data-follow-state = "<%= user_follows?(product, user)%>"
+            data-product-key  = "<%= product.to_param %>"
+            data-product-lang = "<%= product[:language] %>">
+      <% if user_follows?(product, user) %>
+        <i class="follow-icon icon-check">&nbsp;</i>
+        <span class = "btn-title">Unfollow</span>
+      <% else %>
+        <i class="follow-icon icon-check-empty">&nbsp;</i>
+        <span class = "btn-title">Follow</span>
+      <% end %>
+    </button>
   </div>
 <% else %>
   <button id="button_<%= product.prod_key %>" type="submit" class="btn btn-mini btn-link" onclick="load_dialog_follow('<%= product.name %>', '<%= product.prod_key %>', '<%= product.language %>');" ><i class="icon-check-empty"></i>&nbsp;Follow</button>
