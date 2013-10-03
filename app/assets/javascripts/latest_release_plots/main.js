@@ -4,8 +4,8 @@ require(
 	function(d3, SummaryPlot, SummaryTable, Timeline){
 		console.debug("Rendering plots for latest releases");
     // -- summary tables
-		sumtable1 = new SummaryTable({selector: "#summary-tables .plot1", caption: "Today"});
-		sumtable1.loadAndRender("/package/latest/stats/today.json");
+		sumtable1 = new SummaryTable({selector: "#summary-tables .plot1", caption: "Yesterday"});
+		sumtable1.loadAndRender("/package/latest/stats/yesterday.json");
 		sumtable2 = new SummaryTable({selector: "#summary-tables .plot2", caption: "Current week"});
 		sumtable2.loadAndRender("/package/latest/stats/current_week.json");
 		sumtable3 = new SummaryTable({selector: "#summary-tables .plot3", caption: "Current month"});
@@ -15,7 +15,7 @@ require(
 
     // -- summary plots
 		sumplot1 = new SummaryPlot({selector: "#summary-plots .plot1"});
-		sumplot1.loadAndRender("/package/latest/stats/today.json");
+		sumplot1.loadAndRender("/package/latest/stats/yesterday.json");
   	sumplot2 = new SummaryPlot({selector: "#summary-plots .plot2"});
 		sumplot2.loadAndRender("/package/latest/stats/current_week.json");
     sumplot3 = new SummaryPlot({selector: "#summary-plots .plot3"});
