@@ -12,6 +12,14 @@ class Api
                       length: {minimum: 20, maximum: 20},
                       uniqueness: true
 
+  def create_new(user)
+    new_api = Api.new(user_id: user[:_id].to_s)
+    new_api.generate_api_key!
+
+    new_api.save
+    new_api
+  end
+
   def self.generate_api_key(length = 20)
     # TODO As SecureRandom generated string is always 2 * length, we use twice smaller length
     length = (length / 2.0).round
