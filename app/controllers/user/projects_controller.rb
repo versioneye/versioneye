@@ -94,6 +94,11 @@ class User::ProjectsController < ApplicationController
 
   def add_collaborator
     collaborator_info = params[:collaborator]
+    if collaborator_info[:username].to_s.empty?
+      flash[:error] = "You have to type in a name or an email address!"
+      redirect_to :back and return
+    end
+
     project = Project.find_by_id params[:id]
 
     if project.nil?
