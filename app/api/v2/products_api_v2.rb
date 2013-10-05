@@ -85,10 +85,9 @@ module V2
                 you must replace them by using 2 simple encodig rules to make product key URL safe!
 
                 It means you must replace all slashes `/` in product key
-                with colon `:` and due to routing limitations of current Grape framework,
-                it's also required to replace all points `.` with tilde `~`.
+                with colon `:`.
 
-                For example Clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
+                For example Clojure package `yummy.json/json` has to be transformed to  `yummy.json:json`.
 
                 #### Notes about status codes
 
@@ -121,7 +120,6 @@ module V2
                 you must replace it to make it URL safe!
 
                 Special character such as `/` should be replaced with colon `:`.
-                And all dots `.` should be replaced by tilde `~`.
 
                 For example `junit/junit` has to be transformed to  `junit:junit`.
 
@@ -157,11 +155,10 @@ module V2
                   NB! If there are some special characters in `prod_key`,
                   you must replace it to make it URL safe!
 
-                  Special characters such as `/` and `.` should
-                  be replaced with characters `:` for slash and
-                  `~` for points".
+                  Special characters such as `/` should
+                  be replaced with characters `:` for slash.
 
-                  For example `junit/junit` has to be transormed to  `junit--junit`.
+                  For example `junit/junit` has to be transormed to  `junit:junit`.
 
                   #### Notes about status codes
 
