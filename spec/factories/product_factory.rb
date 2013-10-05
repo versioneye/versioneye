@@ -5,10 +5,11 @@ FactoryGirl.define do
   end
 
   factory :product do
-    name "spec_main_product"
-    prod_key "spec_product_key"
+    name { generate(:product_name) }
+    prod_key { generate(:product_name) }
     language "Ruby"
     version "0.1"
+    
 
     factory :product_with_deps do
       ignore do

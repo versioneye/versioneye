@@ -35,6 +35,7 @@ class Product
   field :followers         , type: Integer, default: 0
   field :last_release      , type: Integer, default: 0
   field :used_by_count     , type: Integer, default: 0
+  #field :license           , type: String, default: "unknown" #legacy
 
   field :version     , type: String
   field :version_link, type: String
