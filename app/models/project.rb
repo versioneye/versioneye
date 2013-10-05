@@ -52,6 +52,7 @@ class Project
   scope :by_user  , ->(user)  { where(user_id: user.id) }
   scope :by_source, ->(source){ where(source:  source ) }
   scope :by_period, ->(period){ where(period:  period ) }
+  scope :by_github, ->(reponame){ where(source: A_SOURCE_GITHUB, github_project: reponame)}
 
   def dependencies
     self.projectdependencies
