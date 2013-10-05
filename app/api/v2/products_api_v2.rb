@@ -101,7 +101,7 @@ module V2
       requires :lang, :type => String, :desc => %Q["Name of programming language"]
       requires :prod_key, :type => String,
                           :regexp => /[\w|:|~|-|\.]+/,
-                          :desc => %Q["Encoded product key, replace all `.` & `/`-s"]
+                          :desc => %Q["Encoded product key, replace all `/` with `:`"]
     end
     get '/:lang/:prod_key' do
       product = fetch_product(params[:lang], params[:prod_key])
