@@ -70,4 +70,16 @@ module ProjectHelpers
     return success
   end
 
+  def add_dependency_licences(project)
+    project.dependencies.each do |dep|
+      prod = dep.product
+      if prod.nil? == false and dep.unknown? == false
+        dep[:license] = prod[:license]
+      else
+        dep[:license] = 'unknown'
+      end
+    end
+
+    project
+  end
 end
