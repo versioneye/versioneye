@@ -11,4 +11,7 @@ module EntitiesV2
   require_relative 'entities/user_notification_entity.rb'
 
   require_relative 'entities/version_comment_entity.rb'
+
+  require_relative 'entities/repo_entity.rb'
+  require_relative 'entities/repo_project_entity.rb'
 end
