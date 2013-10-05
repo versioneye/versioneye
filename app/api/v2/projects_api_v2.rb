@@ -54,6 +54,7 @@ module V2
         if project.nil?
           error! "Project `#{params[:project_key]}` don't exists", 400
         end
+        project = add_dependency_licences(project)
         present project, with: EntitiesV2::ProjectEntity, type: :full
       end
 
@@ -87,7 +88,8 @@ module V2
         if @project.nil?
           error! "Can't save uploaded file. Probably our fileserver got cold.", 500
         end
-
+        
+        @project = add_dependency_licences(@project)
         present @project, with: EntitiesV2::ProjectEntity, :type => :full
       end
 
@@ -129,6 +131,8 @@ module V2
         end
 
         @project.update_from new_project
+        project = add_dependency_licences(project)
+
         present @project, with: EntitiesV2::ProjectEntity, :type => :full
       end
 
