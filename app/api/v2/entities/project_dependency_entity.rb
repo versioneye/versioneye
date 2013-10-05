@@ -6,6 +6,7 @@ module EntitiesV2
     expose :prod_key
     expose :group_id
     expose :artifact_id
+    expose :license
 
     expose :version_current
     expose :version_requested
