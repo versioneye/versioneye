@@ -1,5 +1,4 @@
 class GithubRepo
-
   require 'will_paginate/array'
 
   include Mongoid::Document
@@ -33,6 +32,8 @@ class GithubRepo
   scope :by_owner_login, ->(login){where(owner_login: login)}
   scope :by_owner_type , ->(type_name){where(owner_type: type_name)}
   scope :by_org        , ->(org_name){where(owner_login: org_name, owner_type: "organization")}
+  scope :by_fullname   , ->(fullname){where(fullname: fullname)}
+
 
   def self.add_new(user, repo, etag = nil)
     return false if repo.nil? || repo.empty?
