@@ -77,7 +77,7 @@ module ProjectHelpers
     project.dependencies.each do |dep|
       prod = dep.product
       if prod.nil? == false and dep.unknown? == false
-        dep[:license] = prod[:license]
+        dep[:license] = prod.license
       else
         dep[:license] = 'unknown'
       end
