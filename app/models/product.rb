@@ -188,6 +188,8 @@ class Product
     licenses.map{|a| a.name}.join(", ")
   end
 
+  # An artifact (product + version) can have multiple licenses
+  # at the same time. That's not a bug!
   def licenses(ignore_version = false )
     License.for_product( self, ignore_version )
   end
