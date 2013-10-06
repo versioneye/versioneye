@@ -183,18 +183,9 @@ class Product
   end
 
   def license_info
-    licenses = self.licenses(true)
+    licenses = self.licenses(false)
     return "unknown" if licenses.nil? || licenses.empty?
     licenses.map{|a| a.name}.join(", ")
-  end
-
-  # Returns latest license name
-  def license
-    license = licenses(true).desc(:created_at).first
-    return "unknown" if license.nil?
-    return "unknown" if license[:name].nil?
-
-    return license[:name]
   end
 
   # An artifact (product + version) can have multiple licenses
