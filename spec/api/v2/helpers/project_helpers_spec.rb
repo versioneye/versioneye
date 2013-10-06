@@ -33,12 +33,6 @@ describe ProjectHelpers do
 
       dep2 = project_after.dependencies[1]
       dep2.product.should_not be_nil
-
-      p License.all.to_a
-      p dep2.product
-      p dep2.product.licenses.to_a
-      p dep2.product.license
-
       dep2.product.license.should_not be_nil
       dep2.product.license.should eql("MIT")
     end
