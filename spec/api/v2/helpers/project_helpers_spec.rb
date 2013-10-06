@@ -28,13 +28,13 @@ describe ProjectHelpers do
 
       dep1 = project_after.dependencies[0]
       dep1.product.should_not be_nil
-      dep1.product.license.should_not be_nil
-      dep1.product.license.should eql("unknown")
+      dep1.product.license_info.should_not be_nil
+      dep1.product.license_info.should eql("unknown")
 
       dep2 = project_after.dependencies[1]
       dep2.product.should_not be_nil
-      dep2.product.license.should_not be_nil
-      dep2.product.license.should eql("MIT")
+      dep2.product.license_info.should_not be_nil
+      dep2.product.license_info.should eql("MIT, unknown")
     end
   end
 end

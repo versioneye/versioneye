@@ -183,11 +183,10 @@ class Product
   end
 
   def license_info
-    licenses = self.licenses
+    licenses = self.licenses(true)
     return "unknown" if licenses.nil? || licenses.empty?
     licenses.map{|a| a.name}.join(", ")
   end
-
 
   # Returns latest license name
   def license
