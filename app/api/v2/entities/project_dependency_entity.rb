@@ -12,8 +12,8 @@ module EntitiesV2
     expose :version_requested
 
     expose :comperator, :as => :comparator
-    expose :unknown?, :as => :unknown
-    expose :outdated?, :as => :outdated
-    expose :release, :as => :stable
+    expose :unknown?  , :as => :unknown
+    expose :outdated? , :as => :outdated
+    expose :release   , :as => :stable
   end
 end
