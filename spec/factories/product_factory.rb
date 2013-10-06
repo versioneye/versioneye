@@ -9,7 +9,6 @@ FactoryGirl.define do
     prod_key { generate(:product_name) }
     language "Ruby"
     version "0.1"
-    
 
     factory :product_with_deps do
       ignore do

@@ -9,6 +9,21 @@ FactoryGirl.define do
     comperator "="
     outdated false
     ext_link ""
+
+    factory :projectdependency_with_licenses do
+      ignore do
+        license_count 1
+      end
+
+      after(:create) do |dep, evaluator|
+        FactoryGirl.create_list(
+          :license, evaluator.license_count,
+          language: dep[:language],
+          prod_key: dep[:prod_key],
+          version: dep[:version]
+        )
+      end
+    end
   end
 end
 

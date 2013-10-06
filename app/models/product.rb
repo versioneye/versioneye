@@ -188,6 +188,15 @@ class Product
     licenses.map{|a| a.name}.join(", ")
   end
 
+#returns latest license name
+  def license
+    license = licenses(true).desc(:created_at).first
+    return "unknown" if license.nil?
+    return "unknown" if license[:name].nil?
+
+    return license[:name]
+  end
+
   def licenses(ignore_version = false )
     License.for_product( self, ignore_version )
   end
