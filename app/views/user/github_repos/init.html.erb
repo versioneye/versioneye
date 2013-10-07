@@ -19,7 +19,7 @@
 <% else %>
 
   <div class="span8">
-    <div class="row content_header_def" >
+    <div class="row content_header_def" style = "padding-bottom: 0px;" >
       <div id = "github-menu" ></div>
     </div>
 
@@ -186,7 +186,7 @@
 </script>
 
 <script id = "github-menu-template" type = "text/template">
-  <ul class="nav nav-pills">
+  <ul class="nav nav-pills" style = "padding-bottom: 0px; margin-bottom: 0px;">
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         <i class = "icon-group">&nbsp;</i>Organizations
@@ -285,14 +285,21 @@
         </li>
       </ul>
     </li>
+    <li >
+      <button id = "refresh-github-data" class = "btn btn-link">
+        <i class = "icon-refresh">&nbsp;</i>
+        Update data
+      </button>
+    </li>
     <li class = "dropdown">
       <form class = "form" id = "github-repo-search">
         <div class = "input-append">
-          <input  type = "text" class = "span2" id = "github-search-term" class = "search-box"
+          <input  type = "text" class = "span4" id = "github-search-term" class = "search-box"
             name = "github_search" placeholder = "filter by name">
-          <button class = "btn" id = "github-search-btn" type = "button"> <i class = "icon-search">&nbsp;</i></button>
+          <button class = "btn" id = "github-search-btn" type = "button"> <i class = "icon-search">&nbsp;</i> Filter</button>
         </div>
       </div>
     </li>
+
   </ul>
 </script>
