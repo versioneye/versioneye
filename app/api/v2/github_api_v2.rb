@@ -3,18 +3,22 @@ require 'entities_v2'
 
 require_relative 'helpers/session_helpers'
 require_relative 'helpers/paging_helpers'
+require_relative 'helpers/product_helpers'
 
 module V2
   class GithubApiV2 < Grape::API
     
     helpers SessionHelpers
     helpers PagingHelpers
+    helpers ProductHelpers
 
     resource :github do 
       before do
         track_apikey
       end
 
+      #TODO: add paging
+      #TODO: add filters
       #-- GET '/' -------------------------------------------------------------
       desc "lists your's github repos",
             {
@@ -23,8 +27,9 @@ module V2
       params do
         optional :page, type: String, desc: "The page number for a pagination."
         optional :org, type: String, desc: "Filter repositories by organization"
+        optional :page, type: String, default: "1", desc: "Number of page"
+        optional :organization, type: String, desc: "TODO:"
       end
-
       get '/' do
         authorized?
         user = current_user
@@ -47,33 +52,69 @@ module V2
 
 
       #-- GET '/:repo_key' ----------------------------------------------------
-      desc "shows the detailed information of repository",
-        {
-          notes: %q[comment]
-        }
+      desc "shows the detailed information of repository", {
+        notes: %q[TODO: add me]
+      }
       params do
-        requires :repo_key, type: String, desc: "decoded repo name with optional branch info."
+        requires :repo_key, type: String, desc: "encoded repo name with optional branch info."
       end
       get '/:repo_key' do
         authorized?
         user = current_user
-        
-        repo_fullname = params[:repo_key].to_s.gsub(":", "/").gsub("~", ".")
+        repo_fullname = decode_prod_key(params[:repo_key])
+
         repo = user.github_repos.by_fullname(repo_fullname).first
-        repo_projects = Project.by_user(user).by_github(repo_fullname)       
-        
-        p repo.to_json, repo_projects.to_json
+        repo_projects = Project.by_user(user).by_github(repo_fullname).to_a       
         unless repo 
           repo = {}
         end
-        #TODO: fixit
-        response_data = { github: repo, projects: repo_projects }
-        present response_data, with: EntitiesV2::RepoProjectEntity
-
+        present :repo, repo, with: EntitiesV2::RepoEntity
+        present :imported_projects, repo_projects, with: EntitiesV2::ProjectEntity
       end
 
-      #-- GET '/:'
-    end
+      #-- POST '/:repo_key' --------------------------------------------------
+      desc "imports project file from github", {
+        notes: %q[TODO: add me]
+      }
+      params do
+        requires :repo_key, type: String, desc: "encoded repo name with optional branch info"
+        optional :branch, type: String, default: "master", desc: "the name of branch"
+      end
+      post '/:repo_key' do
+        authorized?
+        user = current_user
+        repo_name = decode_prod_key(params[:repo_key])
+        branch = params[:branch]
+
+        repo = user.github_repos.by_fullname(repo_name).first
+        project = ProjectService.import_from_github(user, repo_name, branch)
+
+        present :repo, repo, with: EntitiesV2::RepoEntity
+        present :project, project, with: EntitiesV2::ProjectEntity
+      end
+
+      #-- DELETE '/:repo_key' -------------------------------------------------
+      desc "remove imported project", {
+        notes: %q[TODO: add me]
+      }
+      params do
+        requires :repo_key, type: String, desc: "encoded repo-key with optional brnach info"
+        optional :branch, type: String, default: "master", desc: "to specify branch"
+      end
+      delete '/:repo_key' do
+        authorized?
+        user = current_user
+        repo_name = decode_prod_key(params[:repo_key])
+        branch = params[:branch]
+
+        p "#--------", repo_name, branch
+
+        project = Project.by_user(user).by_github(repo_name).where(github_branch: branch).shift
+        error!("Project doesnt exists", 400) if project.nil?
+        ProjectService.destroy project[:_id].to_s
+        present :success, true
+      end
+    end #end of resource block
   end
 end
 
