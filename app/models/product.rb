@@ -35,6 +35,7 @@ class Product
   field :followers         , type: Integer, default: 0
   field :last_release      , type: Integer, default: 0
   field :used_by_count     , type: Integer, default: 0
+  #field :license           , type: String, default: "unknown" #legacy
 
   field :version     , type: String
   field :version_link, type: String
@@ -182,11 +183,13 @@ class Product
   end
 
   def license_info
-    licenses = self.licenses
+    licenses = self.licenses(false)
     return "unknown" if licenses.nil? || licenses.empty?
     licenses.map{|a| a.name}.join(", ")
   end
 
+  # An artifact (product + version) can have multiple licenses
+  # at the same time. That's not a bug!
   def licenses(ignore_version = false )
     License.for_product( self, ignore_version )
   end
