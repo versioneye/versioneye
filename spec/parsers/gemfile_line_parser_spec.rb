@@ -90,6 +90,14 @@ describe GemfileParser do
       @parser.fetch_version( elements ).should eql("")
     end
 
+    it "returns the right empty string because there is not version, only a group" do
+      line = "gem 'rspec',     :group => [:test, :development]"
+      elements = @parser.fetch_line_elements( line )
+      version = @parser.fetch_version( elements )
+      p version
+      version.should be_empty
+    end
+
   end
 
   describe "init_project" do
