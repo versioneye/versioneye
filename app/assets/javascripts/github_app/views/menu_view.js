@@ -15,6 +15,7 @@ define(['underscore', 'backbone'],
       this.collection.on('all', this.render, this);
       this.currentRepos = options.currentRepos;
       this.allRepos = options.allRepos;
+      this.checkChanges = options.checkChanges;
     },
     events: {
       "click li.org-item": "onOrgItem",
@@ -22,7 +23,8 @@ define(['underscore', 'backbone'],
       "click li.filter-item": "onFilterItem",
       "click #github-search-btn": "onSearchItem",
       "submit #github-repo-search" : "onSearchItem",
-      "keyup #github-repo-search": "onSearchItem"
+      "keyup #github-repo-search": "onSearchItem",
+      "click #refresh-github-data": "onCheckChanges"
     },
     render: function(){
       console.log("Rendering menu...");
@@ -82,7 +84,7 @@ define(['underscore', 'backbone'],
         console.debug("Search term too short, going to skip.");
         return 1;
       }
-      
+
       var search_matches = this.allRepos.matchByName(search_term);
 
       console.debug("user is searching: " + search_term);
@@ -90,6 +92,11 @@ define(['underscore', 'backbone'],
       this.currentRepos.reset();
       this.currentRepos.addNewItems(search_matches);
 
+      return true;
+    },
+
+    onCheckChanges: function(ev){
+      this.checkChanges(true);
       return true;
     }
   });
