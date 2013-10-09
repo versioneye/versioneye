@@ -38,7 +38,7 @@ module V2
         end
 
         if user.github_repos.all.count == 0
-          repos = GithubService.cached_user_repos(user)
+          repos = GitHubService.cached_user_repos(user)
         else
           repos = user.github_repos.all
         end
@@ -87,7 +87,8 @@ module V2
         branch = params[:branch]
 
         repo = user.github_repos.by_fullname(repo_name).first
-        project = ProjectService.import_from_github(user, repo_name, branch)
+        ProjectService.import_from_github(user, repo_name, branch)
+        project = Project.by_user(current_user).by_github(repo_name).where(github_branch: branch).first
 
         present :repo, repo, with: EntitiesV2::RepoEntity
         present :project, project, with: EntitiesV2::ProjectEntity
@@ -107,13 +108,15 @@ module V2
         repo_name = decode_prod_key(params[:repo_key])
         branch = params[:branch]
 
-        p "#--------", repo_name, branch
-
         project = Project.by_user(user).by_github(repo_name).where(github_branch: branch).shift
         error!("Project doesnt exists", 400) if project.nil?
         ProjectService.destroy project[:_id].to_s
         present :success, true
       end
+
+      #TODO: add sync to update data
+      #TODO: add update (delete+import)
+      #todo: search on github
     end #end of resource block
   end
 end
