@@ -27,13 +27,13 @@ define(
           all_repos.reset();
           showNotification(
             "alert alert-info",
-            "Re-imported all your repos."
+            "We just reimported all your repositories successfully!"
           );
           all_repos.fetchAll(initViews);
         } else {
           showNotification(
               "alert alert-info",
-              "Detected no changes on your Github repos."
+              "We could not detect any changes on your Github repositories."
           );
           console.log("No changes for repos - i'll wait and poll again.");
         }
@@ -51,14 +51,14 @@ define(
           all_repos.reset();
           showNotification(
             "alert alert-info",
-            "Detected changes on your Github repos - resetted view."
+            "We detected some changes on your Github repositories and updated the view here."
           );
           all_repos.fetchAll(initViews);
         } else {
           if(show_all == true){
             showNotification(
               "alert alert-info",
-              "Detected no changes on your Github repos."
+              "We could not detect any changes on your Github repositories."
             );
           }
           console.log("No changes for repos - i'll wait and poll again.");
