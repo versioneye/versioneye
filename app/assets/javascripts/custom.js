@@ -307,3 +307,12 @@ function toggleProjectDependencyMute(ev){
 
   return false;
 }
+
+function preventSubmit(id, name){
+  element = document.getElementById(id)
+  if (element.value == ""){
+    alert("The " + name + " input field can't be empty!")
+    return false;
+  }
+  return true;
+}

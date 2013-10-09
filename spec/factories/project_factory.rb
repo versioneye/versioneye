@@ -12,10 +12,11 @@ FactoryGirl.define do
 
       after(:build) do |project, evaluator|
         prod_name = FactoryGirl.generate(:product_name)
-        deps = FactoryGirl.create_list(:projectdependency, evaluator.deps_count,
-                                       name: prod_name,
-                                       prod_key: prod_name,
-                                       language: "Ruby")
+        deps =  FactoryGirl.create_list(
+          :projectdependency_with_licenses,
+          evaluator.deps_count,
+          language: project[:language]
+        )
         project.projectdependencies = deps
         project.make_project_key!
       end
