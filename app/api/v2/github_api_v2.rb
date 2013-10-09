@@ -7,14 +7,17 @@ require_relative 'helpers/product_helpers'
 
 module V2
   class GithubApiV2 < Grape::API
-    
+
     helpers SessionHelpers
     helpers PagingHelpers
     helpers ProductHelpers
+    helpers CacheHelpers
+    helpers SearchHelpers
 
     resource :github do
       before do
         track_apikey
+        init_cache({expires_in: 300})
       end
 
       #-- GET '/' -------------------------------------------------------------
@@ -84,6 +87,35 @@ module V2
         present msg
       end
 
+      #-- GET '/github/search' ------------------------------------------------
+      desc "search github repositories on github", {
+        notes: %q[
+          "This api allows you to search github repositories on github."
+        ]
+      }
+      params do
+        requires :q, type: String, desc: "search term"
+        optional :langs, type: String, desc: "filter results by languages"
+        optional :users, type: String, desc: "comma-separated list of usernames"
+        optional :page, type: Integer, default: 1, desc: "pagination number"
+      end
+      get '/search' do
+        authorized?
+        user = current_user
+        github_connected?(user)
+
+        page = params[:page]
+        per_page = 30
+        q = params[:q].to_s
+        results = []
+
+        search_results = Github.search(q, params[:langs], params[:users], page, per_page)
+        total_count = search_results['total_count']
+        results = process_search_results(search_results)
+
+        present :results, results
+        present :paging, list_to_paging(results, page, total_count, per_page), with: EntitiesV2::PagingEntity
+      end
       #-- GET '/:repo_key' ----------------------------------------------------
       desc "shows the detailed information for the repository", {
         notes: %q[
@@ -174,9 +206,6 @@ module V2
         present :success, true
       end
 
-
-
-      #todo: search on github
     end #end of resource block
   end
 end
