@@ -137,12 +137,18 @@
 
 <script id = "github-repo-control-info-template" type = "text/template">
   <p>
-    This repo has {{= branches.length }} branches.
+
+    {{ if (branches.length == 1) { }}
+      There is 1 branch in this repository.
+    {{  } else { }}
+      This repository has {{= branches.length }} branches.
+    {{  } }}
+
     {{ if(imported_branches.length){ }}
       We are monitoring {{= imported_branches.length }} of them :
       <i> {{= imported_branches }} </i>.
     {{  } else { }}
-        We are monitoring none of them. But we are happy to monitor it.
+        We are monitoring none of them.
     {{  } }}
   </p>
 
