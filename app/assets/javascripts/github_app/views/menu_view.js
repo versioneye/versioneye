@@ -15,7 +15,7 @@ define(['underscore', 'backbone'],
       this.collection.on('all', this.render, this);
       this.currentRepos = options.currentRepos;
       this.allRepos = options.allRepos;
-      this.checkChanges = options.checkChanges;
+      this.fetchAll = options.fetchAll;
     },
     events: {
       "click li.org-item": "onOrgItem",
@@ -96,7 +96,24 @@ define(['underscore', 'backbone'],
     },
 
     onCheckChanges: function(ev){
-      this.checkChanges(true);
+      btn = jQuery(ev.currentTarget);
+
+      if(btn.hasClass("disabled")){
+        console.debug("Ignoring event on disabled button.");
+        return false;
+      }
+
+      btn.addClass("disabled");
+      btn.find("span.btn-title").text("Please wait...");
+      btn.find(".btn-icon").addClass("icon-spin");
+
+      var restore_state = function(){
+        var btn = btn;
+        btn.find(".btn-icon").removeClass("icon-spin");
+        btn.find("span.btn-title").text("Reimport all data");
+        btn.removeClass("disabled");
+      }
+      this.fetchAll(restore_state);
       return true;
     }
   });

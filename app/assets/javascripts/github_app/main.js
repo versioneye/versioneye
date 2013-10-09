@@ -20,6 +20,27 @@ define(
     })).fadeIn(400).delay(6000).fadeOut(800);
   }
 
+  function fetchAll(cb){
+    var jqxhr = $.ajax("/user/github/fetch_all")
+      .done(function(data, status, jqxhr){
+        if(data.changed){
+          all_repos.reset();
+          showNotification(
+            "alert alert-info",
+            "Re-imported all your repos."
+          );
+          all_repos.fetchAll(initViews);
+        } else {
+          showNotification(
+              "alert alert-info",
+              "Detected no changes on your Github repos."
+          );
+          console.log("No changes for repos - i'll wait and poll again.");
+        }
+      })
+      .always(cb);
+  }
+
   function checkChanges(show_all){
     if(_.isUndefined(show_all)){
       show_all = false;
@@ -66,7 +87,7 @@ define(
                           collection: menu_items,
                           currentRepos: current_repos,
                           allRepos: all_repos,
-                          checkChanges: checkChanges
+                          fetchAll: fetchAll
                         });
 
   var have_checked_cache = false;
