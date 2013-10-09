@@ -67,7 +67,7 @@ class Github
     data.each do |repo|
       next if repo.nil? or repo['full_name'].to_s.empty?
       branch_docs = Github.repo_branches(user, repo['full_name'])
-      if branch_docs and branch_docs.nil?
+      if branch_docs and !branch_docs.nil?
         branches = branch_docs.map {|x| x['name']}
         repo['branches'] = branches
       else
