@@ -30,6 +30,13 @@ class User::GithubReposController < ApplicationController
     Rails.logger.error e.backtrace.first
   end
 
+  def fetch_all
+    current_user
+    GithubRepo.by_user(current_user).delete_all
+    GitHubService.cached_user_repos(current_user)
+    render json: {changed: true, success: true}
+  end
+
   def update
     if params[:github_id].nil? and params[:fullname].nil?
       logger.error "Unknown data object - don't satisfy githubrepo model."

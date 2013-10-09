@@ -135,6 +135,7 @@ Versioneye::Application.routes.draw do
     end
 
     resources :github_repos
+    get '/github/fetch_all',  :to => 'github_repos#fetch_all'
     get '/menu/github_repos', :to => 'github_repos#show_menu_items'
     get '/poll/github_repos', :to => 'github_repos#poll_changes'
 
