@@ -12,23 +12,30 @@ module V2
     helpers PagingHelpers
     helpers ProductHelpers
 
-    resource :github do 
+    resource :github do
       before do
         track_apikey
       end
 
-      #TODO: add paging
-      #TODO: add filters
       #-- GET '/' -------------------------------------------------------------
-      desc "lists your's github repos",
-            {
-              notes: %q[text]
-            }
+      desc "lists your's github repos", {
+        notes: %q[
+          It shows all repositories you and your's organization have hosted on Github.
+
+          This enpoint expects that you have github account already connected and tokens
+          are still valid. If not, then please visit **settings page**.
+          to update your github credentials.
+
+          **PS** If it's shows old data, then you can use `github/sync` endpoint
+          to import the latest changes.
+        ]
+      }
       params do
-        optional :page, type: String, desc: "The page number for a pagination."
-        optional :org, type: String, desc: "Filter repositories by organization"
-        optional :page, type: String, default: "1", desc: "Number of page"
-        optional :organization, type: String, desc: "TODO:"
+        optional :lang, type: String, desc: "Filter by language"
+        optional :private, type: Boolean, desc: "Filter by visibility"
+        optional :org_name, type: String, desc: "Filter by name of organization"
+        optional :org_type, type: String, desc: "Filter by type of organization"
+        optional :page, type: String, default: '1', desc: "Number of page"
       end
       get '/' do
         authorized?
@@ -37,23 +44,41 @@ module V2
           error! "Github account is not connected. Check your settings on versioneye.com", 401
         end
 
+        page = params[:page].to_i
+        query_filters = {}
+        query_filters[:language] = params[:lang] unless params[:lang].nil?
+        query_filters[:private] = params[:private] unless params[:private].nil?
+        query_filters[:owner_login] = params[:org_name] unless params[:org_name].nil?
+        query_filters[:owner_type] = params[:org_type] unless params[:org_type].nil?
+
+        p query_filters
+
         if user.github_repos.all.count == 0
-          repos = GitHubService.cached_user_repos(user)
-        else
-          repos = user.github_repos.all
-        end
-        
-        repos.each do |repo|
-          repo[:repo_key] = repo[:fullname].to_s.gsub("/", ":").gsub(".", "~")
+          #try to import users repos when there's no repos.
+          GitHubService.cached_user_repos(user)
         end
 
-        present repos, with: EntitiesV2::RepoEntity
+        repos = user.github_repos.where(query_filters).paginate(per_page: 30, page: page)
+        repos.each do |repo|
+          repo[:repo_key] = encode_prod_key(repo[:fullname])
+        end
+        paging = make_paging_object(repos)
+
+        present :repos,  repos, with: EntitiesV2::RepoEntity
+        present :paging, paging, with: EntitiesV2::PagingEntity
       end
 
 
       #-- GET '/:repo_key' ----------------------------------------------------
-      desc "shows the detailed information of repository", {
-        notes: %q[TODO: add me]
+      desc "shows the detailed information for the repository", {
+        notes: %q[
+          Due the limits of our current API framework, the repo key has to be
+          encoded as url-safe string. That means all '/' has to be replaced with
+          colons ':' and '.' has to be replaced with '~'.
+
+          For example,  repository with fullname `versioneye/veye` has to transformed
+          to `versioneye:veye`.
+        ]
       }
       params do
         requires :repo_key, type: String, desc: "encoded repo name with optional branch info."
@@ -64,8 +89,8 @@ module V2
         repo_fullname = decode_prod_key(params[:repo_key])
 
         repo = user.github_repos.by_fullname(repo_fullname).first
-        repo_projects = Project.by_user(user).by_github(repo_fullname).to_a       
-        unless repo 
+        repo_projects = Project.by_user(user).by_github(repo_fullname).to_a
+        unless repo
           repo = {}
         end
         present :repo, repo, with: EntitiesV2::RepoEntity
@@ -74,7 +99,16 @@ module V2
 
       #-- POST '/:repo_key' --------------------------------------------------
       desc "imports project file from github", {
-        notes: %q[TODO: add me]
+        notes: %q[
+          You can use this API to import your github repo as project.
+
+          Due the limits of our current API framework, the repo key has to be
+          encoded as url-safe string. That means all '/' has to be replaced with
+          colons ':' and '.' has to be replaced with '~'.
+
+          For example,  repository with fullname `versioneye/veye` has to transformed
+          to `versioneye:veye`.
+        ]
       }
       params do
         requires :repo_key, type: String, desc: "encoded repo name with optional branch info"
@@ -96,7 +130,14 @@ module V2
 
       #-- DELETE '/:repo_key' -------------------------------------------------
       desc "remove imported project", {
-        notes: %q[TODO: add me]
+        notes: %q[
+          Due the limits of our current API framework, the repo key has to be
+          encoded as url-safe string. That means all '/' has to be replaced with
+          colons ':' and '.' has to be replaced with '~'.
+
+          For example,  repository with fullname `versioneye/veye` has to transformed
+          to `versioneye:veye`.
+        ]
       }
       params do
         requires :repo_key, type: String, desc: "encoded repo-key with optional brnach info"
@@ -115,7 +156,7 @@ module V2
       end
 
       #TODO: add sync to update data
-      #TODO: add update (delete+import)
+
       #todo: search on github
     end #end of resource block
   end
