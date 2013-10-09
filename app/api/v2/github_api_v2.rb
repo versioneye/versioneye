@@ -40,9 +40,7 @@ module V2
       get '/' do
         authorized?
         user = current_user
-        if !user.github_account_connected?
-          error! "Github account is not connected. Check your settings on versioneye.com", 401
-        end
+        github_connected?(user)
 
         page = params[:page].to_i
         query_filters = {}
@@ -50,8 +48,6 @@ module V2
         query_filters[:private] = params[:private] unless params[:private].nil?
         query_filters[:owner_login] = params[:org_name] unless params[:org_name].nil?
         query_filters[:owner_type] = params[:org_type] unless params[:org_type].nil?
-
-        p query_filters
 
         if user.github_repos.all.count == 0
           #try to import users repos when there's no repos.
@@ -68,6 +64,25 @@ module V2
         present :paging, paging, with: EntitiesV2::PagingEntity
       end
 
+      #-- GET '/github/sync' --------------------------------------------------
+      desc "re-load github data", {
+        notes: %q[Reimports data from Github.]
+      }
+      params do; end
+      get '/sync' do
+        authorized?
+        user = current_user
+        github_connected?(user)
+
+        msg = {changed: false}
+        is_changed = Github.user_repos_changed?(user)
+        if is_changed == true
+          updated_repos = GitHubService.cached_user_repos(user)
+          msg =  {changed: true, msg: "Changed - pulled #{user.github_repos.all.count} repos"}
+        end
+
+        present msg
+      end
 
       #-- GET '/:repo_key' ----------------------------------------------------
       desc "shows the detailed information for the repository", {
@@ -86,8 +101,9 @@ module V2
       get '/:repo_key' do
         authorized?
         user = current_user
-        repo_fullname = decode_prod_key(params[:repo_key])
+        github_connected?(user)
 
+        repo_fullname = decode_prod_key(params[:repo_key])
         repo = user.github_repos.by_fullname(repo_fullname).first
         repo_projects = Project.by_user(user).by_github(repo_fullname).to_a
         unless repo
@@ -117,9 +133,10 @@ module V2
       post '/:repo_key' do
         authorized?
         user = current_user
+        github_connected?(user)
+
         repo_name = decode_prod_key(params[:repo_key])
         branch = params[:branch]
-
         repo = user.github_repos.by_fullname(repo_name).first
         ProjectService.import_from_github(user, repo_name, branch)
         project = Project.by_user(current_user).by_github(repo_name).where(github_branch: branch).first
@@ -146,6 +163,8 @@ module V2
       delete '/:repo_key' do
         authorized?
         user = current_user
+        github_connected?(user)
+
         repo_name = decode_prod_key(params[:repo_key])
         branch = params[:branch]
 
@@ -155,7 +174,7 @@ module V2
         present :success, true
       end
 
-      #TODO: add sync to update data
+
 
       #todo: search on github
     end #end of resource block
