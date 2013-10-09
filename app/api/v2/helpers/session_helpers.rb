@@ -1,6 +1,6 @@
 
 module SessionHelpers
-  def authorized? 
+  def authorized?
     @api_key = header['api_key']
     @api_key = params[:api_key] 
     cookies[:api_key] = @api_key unless @api_key.nil?
@@ -8,7 +8,7 @@ module SessionHelpers
     if @current_user.nil?
       error! "Not authorized request.", 401
     end
-    @current_user  
+    @current_user
   end
 
   def authorize(token)
@@ -16,16 +16,22 @@ module SessionHelpers
     if @current_user.nil?
       error! "Not valid API token", 531
     end
-    cookies[:api_key] = token 
+    cookies[:api_key] = token
     @current_user
   end
 
-  def current_user 
+  def current_user
     cookie_token = cookies[:api_key]
     @current_user = authorize(cookie_token) unless cookie_token.nil?
     @current_user
   end
 
+  def github_connected?(user)
+    if !user.github_account_connected?
+      error! "Github account is not connected. Check your settings on versioneye.com", 401
+    end
+    true
+  end
   def clear_session
     cookies[:api_key] = nil
     cookies.delete :api_key
