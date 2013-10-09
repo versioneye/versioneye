@@ -184,7 +184,6 @@ class Github
     return false
   end
 
-  # TODO: add tests
   def self.repo_sha(repository, token)
     heads = JSON.parse HTTParty.get("#{A_API_URL}/repos/#{repository}/git/refs/heads?access_token=" + URI.escape(token),
                                     :headers => {"User-Agent" => A_USER_AGENT}  ).response.body
@@ -192,6 +191,37 @@ class Github
       return head['object']['sha'] if head['url'].match(/heads\/master$/)
     end
     nil
+  end
+
+  def self.search(q, langs = nil, users = nil, page = 1, per_page = 30)
+    search_term = "#{q}"
+    if langs
+      langs.gsub!(/\s+/, '')
+      search_term += "+language:#{langs}"
+    end
+
+    if users
+      u = []
+      tokens = users.split(",")
+      tokens.each do |user|
+        user.strip!
+        user += "@#{user}" unless user =~ /@/
+        u <<  user
+      end
+      search_term += " #{u.join(',')}"
+    end
+
+    search_term.gsub!(/\s+/, '+')
+    pagination_data = "page=#{page}&per_page=#{per_page}"
+    body = HTTParty.get(
+      "#{A_API_URL}/search/repositories?q=#{search_term}&#{pagination_data}",
+      headers: {
+        "User-Agent" => "A_USER_AGENT",
+        "Accept" => "application/vnd.github.preview"
+      }
+    ).response.body
+
+    JSON.parse(body)
   end
 
   def self.supported_languages()
