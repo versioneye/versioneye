@@ -11,6 +11,7 @@ class GitHubService
     user.github_repos.delete_all
     GitHubService.cached_user_repos user
     p " - #{user.github_repos.count}"
+    user.github_repos.all
   rescue => e
     p e
   end
