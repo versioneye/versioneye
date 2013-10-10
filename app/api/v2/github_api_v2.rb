@@ -46,6 +46,8 @@ module V2
         github_connected?(user)
 
         page = params[:page].to_i
+        page = 1 if page < 1
+
         query_filters = {}
         query_filters[:language] = params[:lang] unless params[:lang].nil?
         query_filters[:private] = params[:private] unless params[:private].nil?
@@ -71,16 +73,26 @@ module V2
       desc "re-load github data", {
         notes: %q[Reimports data from Github.]
       }
-      params do; end
+      params do
+        optional :force, type: String, default: 'false', desc: "remove previous data and import again"
+      end
       get '/sync' do
         authorized?
         user = current_user
         github_connected?(user)
-
         msg = {changed: false}
-        is_changed = Github.user_repos_changed?(user)
-        if is_changed == true
-          updated_repos = GitHubService.cached_user_repos(user)
+        allowed_params = Set.new [true, 'true', 't', 'T', 1 , '1']
+
+        if allowed_params.include? params[:force]
+          p "Re-imports everything"
+          repos = GitHubService.update_repos_for_user(user)
+        end
+
+        if Github.user_repos_changed?(user) 
+          repos = GitHubService.cached_user_repos(user)
+        end
+
+        if repos
           msg =  {changed: true, msg: "Changed - pulled #{user.github_repos.all.count} repos"}
         end
 
