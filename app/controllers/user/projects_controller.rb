@@ -219,6 +219,23 @@ class User::ProjectsController < ApplicationController
     render update_project_dependency(params, {muted: false})
   end
 
+
+  def show_project_file
+    proj_id = params[:id]
+    project = Project.find_by_id proj_id
+    if project.nil?
+      render text: "File doesnt exists."
+    end
+
+    file_url = S3.url_for(project[:s3_filename])
+    @project_name = project[:s3_filename].split("_").last
+    @project_file = HTTParty.get file_url
+    render inline: %Q[
+                      <% title @project_name %>
+                      <pre class="pre-scrollable"><code><%= @project_file.body %></code></pre>
+                    ],
+                    layout: true
+  end
   private
     def update_project_dependency(params, update_map)
       project_id = params[:id]

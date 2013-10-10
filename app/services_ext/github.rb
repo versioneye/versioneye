@@ -119,6 +119,7 @@ class Github
       return nil
     end
 
+
     project_file         = Github.fetch_file project_file_info["url"], user.github_token
     project_file["name"] = project_file_info["name"]
     project_file["type"] = project_file_info["type"]
