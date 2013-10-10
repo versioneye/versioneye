@@ -4,7 +4,13 @@ class User::CollaborationsController < ApplicationController
   def index
     collaborations = ProjectCollaborator.by_user(current_user)
     @projects = []
-    collaborations.each {|collab| @projects << collab.project}
+    collaborations.each do |collab|
+      if collab.project
+        @projects << collab.project
+      else
+        Rails.logger.error "Collaborated project doesnt exists: `#{collab.to_json}`"
+      end
+    end
   end
 
   def show
