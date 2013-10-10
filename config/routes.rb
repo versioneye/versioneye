@@ -123,6 +123,7 @@ Versioneye::Application.routes.draw do
         post 'add_collaborator'
         post 'mute_dependency'
         post 'demute_dependency'
+        get 'show_project_file'
       end
     end
 
