@@ -6,7 +6,9 @@ class User::CollaborationsController < ApplicationController
     @projects = []
     collaborations.each do |collab|
       if collab.project
-        @projects << collab.project
+        project = collab.project
+        @projects << project if project
+        # TODO if project does not exist remove collab instance from collection!
       else
         Rails.logger.error "Collaborated project doesnt exists: `#{collab.to_json}`"
       end
