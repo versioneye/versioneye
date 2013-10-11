@@ -186,11 +186,12 @@ module V2
         repo_name = decode_prod_key(params[:repo_key])
         branch = params[:branch]
         repo = user.github_repos.by_fullname(repo_name).first
-        ProjectService.import_from_github(user, repo_name, branch)
-        project = Project.by_user(current_user).by_github(repo_name).where(github_branch: branch).first
+        project = ProjectService.import_from_github(user, repo_name, branch)
+        projects = Project.by_user(current_user).by_github(repo_name).to_a
 
         present :repo, repo, with: EntitiesV2::RepoEntity
-        present :project, project, with: EntitiesV2::ProjectEntity
+        present :project_key, project[:project_key]
+        present :imported_projects, projects, with: EntitiesV2::ProjectEntity
       end
 
       #-- DELETE '/:repo_key' -------------------------------------------------
