@@ -1,6 +1,8 @@
 module SearchHelpers
   def process_search_results(raw_results)
     results = []
+    return results if raw_results['items'].nil?
+
     raw_results['items'].each  do |item|
       results << {
         id: item['id'],
