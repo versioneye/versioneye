@@ -15,6 +15,8 @@ module EntitiesV2
   end
 
   class RepoEntityDetailed < RepoEntity
+    expose :git_url,  :documentation => {type: "string", desc: "scm uri"}
+    expose :html_url, :documentation => {type: "string", desc: "www uri"}
     expose :created_at, :documentation => {type: "Date", desc: "the date of creation"}
     expose :cached_at, :documentation => {type: "Date", desc: "the date of last sync"}
     expose :size, :documentation => {type: "integer", desc: "the size of repo"}

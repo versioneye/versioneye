@@ -157,7 +157,7 @@ module V2
         unless repo
           repo = {}
         end
-        present :repo, repo, with: EntitiesV2::RepoEntity
+        present :repo, repo, with: EntitiesV2::RepoEntityDetailed
         present :imported_projects, repo_projects, with: EntitiesV2::ProjectEntity
       end
 

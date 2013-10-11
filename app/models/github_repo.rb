@@ -16,6 +16,10 @@ class GithubRepo
   field :fork        , type: Boolean, default: false
   field :github_url  , type: String
   field :homepage    , type: String
+  field :git_url     , type: String
+  field :html_url    , type: String
+  field :forks       , type: Integer
+  field :watchers    , type: Integer
   field :size        , type: Integer
   field :etag        , type: String
   field :branches    , type: Array
@@ -70,6 +74,10 @@ class GithubRepo
       fork: repo['fork'],
       github_url: repo['url'],
       homepage: repo['homepage'],
+      git_url: repo['git_url'],
+      html_url: repo['html_url'],
+      forks: repo['forks'],
+      watchers: repo['watchers'],
       size: repo['size'],
       etag: etag.to_s,
       branches: repo['branches'],
