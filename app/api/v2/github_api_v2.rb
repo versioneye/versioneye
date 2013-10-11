@@ -119,8 +119,12 @@ module V2
         page = params[:page]
         per_page = 30
         q = params[:q].to_s
-        results = []
 
+        if q.nil? or q.empty?
+          error! "Search term is unspecified", 400
+        end
+
+        results = []
         search_results = Github.search(q, params[:langs], params[:users], page, per_page)
         total_count = search_results['total_count']
         results = process_search_results(search_results)
