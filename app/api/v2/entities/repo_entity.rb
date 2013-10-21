@@ -12,6 +12,7 @@ module EntitiesV2
     expose :private, :documentation     => {type: "boolean", desc: "the flag of visibility"}
     expose :fork, :documentation        => {type: "boolean", desc: "the flag of origin"}
     expose :branches, :documentation    => {type: "array", desc: "list of branches"}
+    expose :imported_projects, :documentation => {type: "array", desc: "List of imported project's keys"}
   end
 
   class RepoEntityDetailed < RepoEntity
