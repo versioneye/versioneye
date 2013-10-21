@@ -6,6 +6,8 @@ class NotificationMailer < ActionMailer::Base
     @user = user
     @notifications = notifications
     @link =  "#{Settings.server_url}/"
+    @user_product_index = ProjectService.user_product_index_map(user)
+
     names = first_names notifications
     mail(
       :to => @user.email,

@@ -49,7 +49,7 @@ class Project
   has_many   :projectdependencies
   has_many   :collaborators, class_name: "ProjectCollaborator"
 
-  scope :by_user  , ->(user)  { where(user_id: user.id) }
+  scope :by_user  , ->(user)  { where(user_id: user[:_id].to_s) }
   scope :by_source, ->(source){ where(source:  source ) }
   scope :by_period, ->(period){ where(period:  period ) }
 
