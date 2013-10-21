@@ -5,6 +5,28 @@ class LeinParser < CommonParser
     content = self.fetch_response(url).body
     return nil if content.nil?
 
+    xml_content = transform_to_xml content
+
+    doc = Nokogiri::HTML(xml_content)
+    dep_items = doc.xpath('//div[@attr="dependencies"]')
+
+    if dep_items.nil? or dep_items.empty?
+      dep_items = []
+    else
+      dep_items = dep_items.first.children
+    end
+
+    deps = self.build_dependencies dep_items     
+    project              = Project.new deps
+    project.project_type = Project::A_TYPE_LEIN
+    project.language     = Product::A_LANGUAGE_CLOJURE
+    project.url          = url
+    project.dep_number   = project.dependencies.size
+
+    project
+  end
+
+  def transform_to_xml(content)
     #transform to xml
     content = content.gsub /[\;]+.*/, '' #remove clojure comments
     content = content.gsub /[\s]+/, ' ' #replace reduntant whitespaces
@@ -20,22 +42,16 @@ class LeinParser < CommonParser
     end
     content = '<project>' + content + '</project>'
 
-    doc = Nokogiri::XML content
-    deps = self.build_dependencies doc.xpath('/project/div[@attr="dependencies"]').children
-    project              = Project.new deps
-    project.project_type = Project::A_TYPE_LEIN
-    project.language     = Product::A_LANGUAGE_CLOJURE
-    project.url          = url
-    project.dep_number   = project.dependencies.size
-    project
+    content
   end
 
   def build_dependencies(matches)
     data = []
     unknowns, out_number = 0, 0
+    p matches
     matches.each do |item|
       next if item.text.length < 2  #if dependency element is empty
-      _, group_id, name, version =  item.text.scan(/((\S+)\/)?(\S+)\s+\"(\S+)\"/)[0]
+      _, group_id, name, version = item.text.scan(/((\S+)\/)?(\S+)\s+\"(\S+)\"/)[0]
       group_id = name if group_id.nil?
       scope, _ = item.text.scan(/:scope\s+\"(\S+)\"/)[0]
       dependency = Projectdependency.new({
@@ -47,6 +63,7 @@ class LeinParser < CommonParser
         :comperator => "=",
         :language => Product::A_LANGUAGE_CLOJURE
       })
+
       product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
       if product
         dependency.prod_key = product.prod_key
