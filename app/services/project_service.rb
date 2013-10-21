@@ -168,4 +168,20 @@ class ProjectService
     end
   end
 
+  #returns reverse index map {:product_key [project_key1, project_key2, ...]}
+  def self.user_product_index_map(user)
+    indexes = {}
+    user_projects = Project.by_user(user)
+    return indexes if user_projects.nil?
+
+    user_projects.each do |proj|
+      proj.dependencies.each do |dep|
+        prod_key = dep[:prod_key]
+        indexes[prod_key] = [] unless indexes.has_key?(prod_key)
+        indexes[prod_key] << proj[:project_key]
+      end
+    end
+
+    indexes
+  end
 end
