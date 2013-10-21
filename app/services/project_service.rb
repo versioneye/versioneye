@@ -176,9 +176,10 @@ class ProjectService
 
     user_projects.each do |proj|
       proj.dependencies.each do |dep|
-        prod_key = dep[:prod_key]
-        indexes[prod_key] = [] unless indexes.has_key?(prod_key)
-        indexes[prod_key] << proj[:project_key]
+        next if dep.nil? or dep.product.nil?
+        prod_id = dep.product.id.to_s
+        indexes[prod_id] = [] unless indexes.has_key?(prod_id)
+        indexes[prod_id] << proj[:project_key]
       end
     end
 
