@@ -39,6 +39,7 @@ module V2
         optional :org_name, type: String, desc: "Filter by name of organization"
         optional :org_type, type: String, desc: "Filter by type of organization"
         optional :page, type: String, default: '1', desc: "Number of page"
+        optional :only_imported, type: Boolean, default: false, desc: "Show only imported repositories"
       end
       get '/' do
         authorized?
@@ -59,8 +60,18 @@ module V2
           GitHubService.cached_user_repos(user)
         end
 
-        repos = user.github_repos.where(query_filters).paginate(per_page: 30, page: page)
+        unless params[:only_imported]
+          repos = user.github_repos.where(query_filters).paginate(per_page: 30, page: page)
+        else
+          imported_projects = Project.by_user(user).where(source: Project::A_SOURCE_GITHUB)
+          repo_names = imported_projects.map {|proj| proj[:github_project]}
+          repos = user.github_repos.any_in(fullname: repo_names.to_a).paginate(per_page: 30, page: page)
+        end
+        
         repos.each do |repo|
+          imported_projects = Project.by_user(user).by_github(repo[:fullname]).to_a
+          proj_keys = imported_projects.map {|proj| proj[:project_key]}
+          repo[:imported_projects] = proj_keys.to_a
           repo[:repo_key] = encode_prod_key(repo[:fullname])
         end
         paging = make_paging_object(repos)
@@ -185,6 +196,12 @@ module V2
 
         repo_name = decode_prod_key(params[:repo_key])
         branch = params[:branch]
+        
+        project = Project.by_user(user).by_github(repo_name).where(github_branch: branch).shift
+        if project
+          error!("Project for  #{repo_name} / #{branch} already exists.\
+                 Remove previous project or use different branch ", 400) if project.nil?
+        end
         repo = user.github_repos.by_fullname(repo_name).first
         project = ProjectService.import_from_github(user, repo_name, branch)
         projects = Project.by_user(current_user).by_github(repo_name).to_a
