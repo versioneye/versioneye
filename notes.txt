@@ -1,5 +1,10 @@
 kill -s USR2 12113
 
+
+http://sdarchitect.wordpress.com/2013/10/16/understanding-devops-part-6-continuous-deployment/
+http://www.prweb.com/
+
+
 https://github.com/libgit2/rugged
 
 /usr/bin/unicorn -D -E production -c /var/www/versioneye/releases/current/unicorn.conf.rb
