@@ -93,9 +93,9 @@ describe "GithubApiV2" do
       repo.should_not be_nil
       repo.has_key?('repo').should be_true
       repo['repo']['fullname'].should eql("spec/repo1")
-      repo.has_key?('project').should be_true
+      repo.has_key?('imported_projects').should be_true
 
-      project = repo['project']
+      project = repo['imported_projects'].first
       project["name"].should eql("spec_projectX")
     end
 

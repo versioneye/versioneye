@@ -205,9 +205,8 @@ module V2
         repo = user.github_repos.by_fullname(repo_name).first
         project = ProjectService.import_from_github(user, repo_name, branch)
         projects = Project.by_user(current_user).by_github(repo_name).to_a
-
+     
         present :repo, repo, with: EntitiesV2::RepoEntity
-        present :project_key, project[:project_key]
         present :imported_projects, projects, with: EntitiesV2::ProjectEntity
       end
 
