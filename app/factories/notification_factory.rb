@@ -2,7 +2,7 @@ class NotificationFactory
 
   def self.create_new(user = nil, save = true)
     user = UserFactory.create_new if user.nil?
-    random_product = Product.random_product
+    random_product = ProductFactory.create_new(1, :gemfile)
     new_message = Notification.new  user_id: user.id,
                                     product_id: random_product.id,
                                     version_id: random_product.versions.last.id,

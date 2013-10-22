@@ -48,7 +48,6 @@ class LeinParser < CommonParser
   def build_dependencies(matches)
     data = []
     unknowns, out_number = 0, 0
-    p matches
     matches.each do |item|
       next if item.text.length < 2  #if dependency element is empty
       _, group_id, name, version = item.text.scan(/((\S+)\/)?(\S+)\s+\"(\S+)\"/)[0]
