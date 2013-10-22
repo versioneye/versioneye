@@ -26,9 +26,13 @@
   </td>
   <td>
     <span >
-      <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" >
+      <% unless dep.unknown? %>
+        <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" >
+          <span><%= product.name %></span>
+        </a>
+      <% else %>
         <span><%= product.name %></span>
-      </a>
+      <% end %>
     </span>
   </td>
   <td>
