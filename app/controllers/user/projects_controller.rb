@@ -38,13 +38,13 @@ class User::ProjectsController < ApplicationController
     @project = project
     @sorted_deps = sort_dependencies_by_rank(project)
     @collaborators = project.collaborators
-    
+
     unless project.visible_for_user?(current_user)
       return if authenticate == false
       redirect_to(root_path) unless current_user?(project.user)
     end
   end
- 
+
   def badge
     id = params[:id]
     @project = Project.find_by_id(id)
@@ -239,8 +239,8 @@ class User::ProjectsController < ApplicationController
                     ],
                     layout: true
   end
-  
-private  
+
+private
   def add_dependency_classes(project)
     deps = project.dependencies
     return project if deps.nil? or deps.empty?
@@ -259,14 +259,14 @@ private
         dep[:status_rank] = 3
       end
     end
-    
+
     project
   end
 
   def sort_dependencies_by_rank(project)
     deps = project.dependencies
     return project if deps.nil? or deps.empty?
-    deps.sort_by {|dep| dep[:status_rank] } 
+    deps.sort_by {|dep| dep[:status_rank] }
   end
    def update_project_dependency(params, update_map)
       project_id = params[:id]
