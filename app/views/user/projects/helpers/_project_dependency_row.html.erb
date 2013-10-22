@@ -1,17 +1,5 @@
 <% product = dep.find_or_init_product %>
-
-<% status_class = "success" %>
-<% if dep.unknown? %>
-  <% status_class = "info" %>
-<% elsif dep.outdated and dep.release? == false  %>
-  <% status_class = "warn" %>
-<% elsif dep.outdated and dep.release? == true %>
-  <% status_class = "error" %>
-<% else %>
-  <% status_class = "success" %>
-<% end %>
-
-<tr class="flash <%= status_class %>">
+<tr class="flash <%= dep[:status_class] || 'info' %>">
   <td>
     <div>
       <%= render partial: "/user/projects/helpers/project_mute_button",

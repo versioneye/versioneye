@@ -33,15 +33,18 @@ class User::ProjectsController < ApplicationController
 
   def show
     id = params[:id]
-    @project = Project.find_by_id( id )
-    @collaborators = @project.collaborators
-
-    unless @project.visible_for_user?(current_user)
+    project = Project.find_by_id( id )
+    project = add_dependency_classes(project)
+    @project = project
+    @sorted_deps = sort_dependencies_by_rank(project)
+    @collaborators = project.collaborators
+    
+    unless project.visible_for_user?(current_user)
       return if authenticate == false
-      redirect_to(root_path) unless current_user?(@project.user)
+      redirect_to(root_path) unless current_user?(project.user)
     end
   end
-
+ 
   def badge
     id = params[:id]
     @project = Project.find_by_id(id)
@@ -236,8 +239,36 @@ class User::ProjectsController < ApplicationController
                     ],
                     layout: true
   end
-  private
-    def update_project_dependency(params, update_map)
+  
+private  
+  def add_dependency_classes(project)
+    deps = project.dependencies
+    return project if deps.nil? or deps.empty?
+    deps.each do |dep|
+      if dep.unknown?
+        dep[:status_class] = "info"
+        dep[:status_rank] = 4
+      elsif dep.outdated and dep.release? == false
+        dep[:status_class] = "warn"
+        dep[:status_rank] = 2
+      elsif dep.outdated and dep.release? == true
+        dep[:status_class] = "error"
+        dep[:status_rank] = 1
+      else
+        dep[:status_class] = "success"
+        dep[:status_rank] = 3
+      end
+    end
+    
+    project
+  end
+
+  def sort_dependencies_by_rank(project)
+    deps = project.dependencies
+    return project if deps.nil? or deps.empty?
+    deps.sort_by {|dep| dep[:status_rank] } 
+  end
+   def update_project_dependency(params, update_map)
       project_id = params[:id]
       lang = Product.decode_language(params[:language])
       prod_key = Product.decode_prod_key(params[:prod_key])
