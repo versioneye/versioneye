@@ -1,3 +1,5 @@
+![Tests](https://www.codeship.io/projects/de2efdb0-1d42-0131-839e-26fabeabc570/status)
+
 # VersionEye
 
 This is the source code for the web application <http://www.versioneye.com>.
