@@ -8,7 +8,7 @@ class Developer
   field :prod_key        , type: String
   field :version         , type: String
 
-  field :developer       , type: String # This is the username of the developer!
+  field :developer       , type: String # This is the username of the developer! Legacy. The name is taken from maven. The very first implementation.
   field :name            , type: String # This is the real name of the developer!
   field :email           , type: String
   field :homepage        , type: String
