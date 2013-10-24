@@ -1,5 +1,4 @@
 class GithubRepo
-
   require 'will_paginate/array'
 
   include Mongoid::Document
@@ -17,6 +16,10 @@ class GithubRepo
   field :fork        , type: Boolean, default: false
   field :github_url  , type: String
   field :homepage    , type: String
+  field :git_url     , type: String
+  field :html_url    , type: String
+  field :forks       , type: Integer
+  field :watchers    , type: Integer
   field :size        , type: Integer
   field :etag        , type: String
   field :branches    , type: Array
@@ -33,6 +36,8 @@ class GithubRepo
   scope :by_owner_login, ->(login){where(owner_login: login)}
   scope :by_owner_type , ->(type_name){where(owner_type: type_name)}
   scope :by_org        , ->(org_name){where(owner_login: org_name, owner_type: "organization")}
+  scope :by_fullname   , ->(fullname){where(fullname: fullname)}
+
 
   def self.add_new(user, repo, etag = nil)
     return false if repo.nil? || repo.empty?
@@ -69,6 +74,10 @@ class GithubRepo
       fork: repo['fork'],
       github_url: repo['url'],
       homepage: repo['homepage'],
+      git_url: repo['git_url'],
+      html_url: repo['html_url'],
+      forks: repo['forks'],
+      watchers: repo['watchers'],
       size: repo['size'],
       etag: etag.to_s,
       branches: repo['branches'],
