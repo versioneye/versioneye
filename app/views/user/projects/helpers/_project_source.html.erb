@@ -10,13 +10,13 @@
     <% if project.source.eql? "github" %>
       <a href="https://github.com/<%= project.github_project%>/tree/<%= project.github_branch %>">
         GitHub <%= project.github_branch %> branch
-        <br />
       </a>.
+      <% if 1 == 2 %>
+        #  TODO fetch correct filename and show it here with absolute link to file, only for projects based on github repositories.
+        <%= link_to "this project file", show_project_file_user_project_path(project) %> for parsing.
+      <% end %>
     <% elsif project.source.eql? "url" %>
       <a href="<%= project.url%>">URL</a>.
     <% else %>
       file upload.
     <% end %>
-
- We used
-<%= link_to "this project file", show_project_file_user_project_path(project) %> for parsing.

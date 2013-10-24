@@ -33,7 +33,6 @@ class Product
   field :link              , type: String # TODO this hase to be remove in the long run
   field :downloads         , type: Integer
   field :followers         , type: Integer, default: 0
-  field :last_release      , type: Integer, default: 0
   field :used_by_count     , type: Integer, default: 0
   #field :license           , type: String, default: "unknown" #legacy
 
@@ -83,6 +82,7 @@ class Product
          A_LANGUAGE_CLOJURE]
   end
 
+  # legacy, still used by fall back search
   def self.find_by_key(searched_key)
     return nil if searched_key.nil? || searched_key.strip == ""
     result = Product.where(prod_key: searched_key)
@@ -90,6 +90,7 @@ class Product
     return result[0]
   end
 
+  # TOOD R.R. check this
   def self.find_by_lang_key(language, searched_key)
     return nil if searched_key.nil? || searched_key.empty? || language.nil? || language.empty?
     Product.where(language: language, prod_key: searched_key).shift
@@ -118,6 +119,7 @@ class Product
     product
   end
 
+  # TODO R.R. check this
   def self.find_by_keys(product_keys)
     Product.where(:prod_key.in => product_keys)
   end
@@ -136,16 +138,16 @@ class Product
   ######## ELASTIC SEARCH MAPPING ###################
   def to_indexed_json
     {
-      :_id => self.id.to_s,
-      :_type => "product",
-      :name => self.name,
-      :description => self.description ? self.description : "" ,
-      :description_manual => self.description_manual ? self.description_manual : "" ,
-      :followers => self.followers,
-      :group_id => self.group_id ? self.group_id : "",
-      :prod_key => self.prod_key,
-      :language => self.language,
-      :prod_type => self.prod_type
+      :_id                => self.id.to_s,
+      :_type              => "product",
+      :name               => self.name,
+      :description        => self.description.to_s,
+      :description_manual => self.description_manual.to_s,
+      :followers          => self.followers,
+      :group_id           => self.group_id.to_s,
+      :prod_key           => self.prod_key,
+      :language           => self.language,
+      :prod_type          => self.prod_type
     }
   end
 
