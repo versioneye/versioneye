@@ -35,6 +35,7 @@ gem 'bourbon'           , '3.1.8'
 gem 'cocoapods-core'    , '0.26.2'
 
 group :development do
+  gem 'pry'
   gem 'psych'
   gem 'irbtools'
   gem 'terminal-notifier'
