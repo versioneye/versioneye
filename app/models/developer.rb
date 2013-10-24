@@ -3,11 +3,13 @@ class Developer
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  # This developer belongs to the product with this attributes
   field :language        , type: String
   field :prod_key        , type: String
   field :version         , type: String
-  field :developer       , type: String
-  field :name            , type: String
+
+  field :developer       , type: String # This is the username of the developer!
+  field :name            , type: String # This is the real name of the developer!
   field :email           , type: String
   field :homepage        , type: String
   field :organization    , type: String
