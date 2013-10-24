@@ -216,6 +216,10 @@ GEM
     postmark-rails (0.5.1)
       actionmailer (>= 3.0.0)
       postmark (~> 1.0)
+    pry (0.9.12.2)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
     psych (2.0.0)
     rack (1.4.5)
     rack-accept (0.4.5)
@@ -276,6 +280,7 @@ GEM
       multi_json (~> 1.0)
       rubyzip
       websocket (~> 1.0.4)
+    slop (3.4.6)
     spoon (0.0.4)
       ffi
     sprockets (2.2.2)
@@ -376,6 +381,7 @@ DEPENDENCIES
   oauth (= 0.4.7)
   persistent_httparty
   postmark-rails (= 0.5.1)
+  pry
   psych
   rails (= 3.2.13)
   rspec (= 2.14.1)
