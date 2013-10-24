@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "frontend APP for importing Github repositories", :js => true do
 
-  let(:user_without_token) {(create(:user, username: "notoken",
+  let(:user_without_token) {(create(:default_user, username: "notoken",
                                     fullname: "No Token No",
                                     email: 'notoken@pupu.com'))}
 
