@@ -32,6 +32,8 @@ gem 'capistrano'        , '2.15.5'
 gem 'whenever'          , '0.8.4'
 gem 'bourbon'           , '3.1.8'
 
+gem 'cocoapods-core'    , '0.26.2'
+
 group :development do
   gem 'psych'
   gem 'irbtools'
