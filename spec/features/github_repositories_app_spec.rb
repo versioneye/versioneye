@@ -23,7 +23,7 @@ describe "frontend APP for importing Github repositories", :js => true do
   let(:project1) {build(:project_with_deps, deps_count: 3,
                       name: "spec_projectX", user_id: user.id.to_s)}
 
-  describe "as authoized user without github token" do
+  describe "as authorized user without github token" do
     before :each do
       FakeWeb.allow_net_connect = %r[^https?://127\.0\.0\.1]
       FakeWeb.register_uri(
@@ -44,7 +44,7 @@ describe "frontend APP for importing Github repositories", :js => true do
       FakeWeb.allow_net_connect = true
     end
 
-    it "show button for connecting Github account, when token is missing" do
+    it "shows button for connecting Github account, when token is missing" do
       visit user_projects_github_repositories_path
       page.should have_content("Connect with GitHub to monitor your GitHub Repositories")
     end
