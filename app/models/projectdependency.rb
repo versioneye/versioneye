@@ -37,6 +37,10 @@ class Projectdependency
 
   def find_or_init_product
     product = Product.fetch_product( language, prod_key) if self.prod_key
+    if product.nil?
+      #fix when clojure project is using Java library
+      product = Product.find_by_group_and_artifact self.group_id, self.artifact_id
+    end
     product = init_product if product.nil?
     product
   end

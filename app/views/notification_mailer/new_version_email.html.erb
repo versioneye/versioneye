@@ -29,7 +29,17 @@
 
               <% notification.sent_email = true %>
               <% notification.save %>
+              <% prod_id = product.id.to_s %>
+              <% if @user_product_index.has_key?(prod_id) %>
+                <br /> <strong> Used in: &nbsp;</strong>  
+                <% proj_keys = @user_product_index[prod_id] %>
+                <% links = [] %>
+                <% proj_keys.each do |proj_key| %>
+                  <%= link_to(proj_key.to_s, user_project_url(id: proj_key)) %>, &nbsp;
+                <% end %>
+              <% end %>
             </td>
+
           </tr>
         <% end %>
       </table>

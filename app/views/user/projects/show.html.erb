@@ -178,18 +178,14 @@
         </ul>
 
         <div class="tab-content" style="width: 100%;" >
-          <% if @project.dependencies && @project.dependencies.size > 0 %>
-            <% deps = @project.dependencies.sort { |a, b| b.outdated.to_s <=> a.outdated.to_s } %>
-          <% end %>
-
           <div id="dependencies" class="tab-pane active" style="width: 617px;" >
-            <%= render partial: "project_dependency_table", locals: {deps: deps} %>
+            <%= render partial: "project_dependency_table", locals: {deps: @sorted_deps} %>
           </div>
 
           <div id="licenses" class="tab-pane">
             <% products = Array.new %>
-            <% unless deps.nil? %>
-              <% deps.each do |dep| %>
+            <% unless @sorted_deps.nil? %>
+              <% @sorted_deps.each do |dep| %>
                 <% product = dep.find_or_init_product %>
                 <% product.version = dep.version_requested %>
                 <% products << product %>
