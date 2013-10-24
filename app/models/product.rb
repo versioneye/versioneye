@@ -16,6 +16,7 @@ class Product
   A_LANGUAGE_JAVASCRIPT = "JavaScript"
   A_LANGUAGE_CLOJURE    = "Clojure"
   A_LANGUAGE_C          = "C"
+  A_LANGUAGE_OBJECTIVEC = "Objective-C"
 
   field :name         , type: String
   field :name_downcase, type: String
@@ -80,7 +81,7 @@ class Product
   def self.supported_languages
     Set[ A_LANGUAGE_RUBY, A_LANGUAGE_PYTHON, A_LANGUAGE_NODEJS,
          A_LANGUAGE_JAVA, A_LANGUAGE_PHP, A_LANGUAGE_R, A_LANGUAGE_JAVASCRIPT,
-         A_LANGUAGE_CLOJURE]
+         A_LANGUAGE_CLOJURE, A_LANGUAGE_OBJECTIVEC]
   end
 
   def self.find_by_key(searched_key)
