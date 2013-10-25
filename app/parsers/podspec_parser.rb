@@ -59,15 +59,15 @@ class PodSpecParser < CommonParser
 
 
   def version podspec
-    v = podspec["version"]
+    v = podspec.version
     version = Version.new({
       :version => v,
-      :license => podspec["license"]["type"],
+      :license => podspec.license[:type],
       # TODO get release date through github api
       # repository => version tag
       #:released_at =>
       })
-    version.save
+    version
   end
 
 
@@ -87,11 +87,9 @@ class PodSpecParser < CommonParser
     authors = [*podspec["author"]].concat( podspec["authors"] )
     authors.each do |name, email|
       developer = Developer.new({
-
         :language => @@language,
         :prod_key => prod_key,
         :version  => v,
-
         :name     => name,
         :email    => email,
         })
