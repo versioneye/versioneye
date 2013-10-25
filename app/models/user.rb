@@ -224,7 +224,7 @@ class User
   end
 
   def github_account_connected?
-    self.github_id && !self.github_id.empty? && self.github_token && !self.github_token.empty?
+    !self.github_id.to_s.empty? && !self.github_token.to_s.empty?
   end
 
   def self.follows_max(n)

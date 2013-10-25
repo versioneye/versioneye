@@ -60,10 +60,20 @@ module ProductHelpers
     return parsed_lang
   end
 
-  def parse_product_key(prod_key)
+  def encode_prod_key(prod_key)
+    encoded_key = prod_key.to_s.gsub("/", ":").gsub(".", "~")
+    HTMLEntities.new.encode(encoded_key, :named)
+  end
+
+  def decode_prod_key(prod_key)
     parsed_key = prod_key.to_s.gsub(":", "/")
     parsed_key = parsed_key.gsub("~", ".")
     HTMLEntities.new.decode parsed_key
+  end
+
+  def parse_product_key(prod_key)
+    #TODO: it's now logacy function- refactor dependent modules
+    decode_prod_key(prod_key)
   end
 
   def fetch_product(lang, prod_key)

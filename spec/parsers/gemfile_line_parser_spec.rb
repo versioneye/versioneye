@@ -58,7 +58,7 @@ describe GemfileParser do
 
   end
 
-  describe "fetch_verison" do
+  describe "fetch_version" do
 
     it "returns the right version" do
       line = "gem 'will_paginate'     , '<= 3.0.3'"
