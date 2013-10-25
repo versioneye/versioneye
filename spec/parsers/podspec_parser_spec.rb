@@ -11,13 +11,14 @@ describe PodSpecParser do
   # end
 
   before :each do
-    @podspec = PodSpecParser.load_spec './fixtures/files/podspec/twitter-text-objc.podspec'
+    @parser = PodSpecParser.new
+    @podspec = @parser.load_spec './spec/fixtures/files/podspec/twitter-text-objc.podspec'
   end
 
   describe '#version' do
     it "should convert the version" do
-      version = PodSpecParser.version @podspec
-      version.should.be_kind_of Version 
+      version = @parser.version @podspec
+      version.should be_a(Version) 
     end
 
     # it "should convert the license" do

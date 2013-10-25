@@ -62,15 +62,15 @@ class PodSpecParser < CommonParser
 
 
   def version podspec
-    v = podspec["version"]
+    v = podspec.version
     version = Version.new({
       :version => v, 
-      :license => podspec["license"]["type"],
+      :license => podspec.license[:type],
       # TODO get release date through github api
       # repository => version tag
       #:released_at =>  
       })
-    version.save
+    version
   end
 
 
