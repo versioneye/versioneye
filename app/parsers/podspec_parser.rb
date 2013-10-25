@@ -24,8 +24,8 @@ class PodSpecParser < CommonParser
 
   def get_product spec
     product = Product.find_by_lang_key(Product::A_LANGUAGE_OBJECTIVEC, spec.name)
-    
-    unless product 
+
+    unless product
       product = Product.new
     end
 
@@ -48,16 +48,13 @@ class PodSpecParser < CommonParser
     product.update_attributes()
 
     product.description = spec.summary
-    #product.authors = [*spec.author].concat(spec.authors).join(', ')
 
     product.save
   end
 
 
   def dependencies podspec
-
     deps = []
-
     podspec.dependencies.each do |pod_dep|
       deps << Dependency.new({
         :language      => @@language,
@@ -65,11 +62,10 @@ class PodSpecParser < CommonParser
         :prod_key      => podspec.name,
         :prod_version  => podspec.version,
 
-        :dep_prod_key  => pod_dep.to_s,  
+        :dep_prod_key  => pod_dep.to_s, 
         :version       => pod_dep.version,
         })
       end
-
     deps
   end
 
@@ -80,7 +76,7 @@ class PodSpecParser < CommonParser
       :license => podspec.license[:type],
       # TODO get release date through github api
       # repository => version tag
-      #:released_at =>  
+      #:released_at =>
       })
   end
 
@@ -96,6 +92,7 @@ class PodSpecParser < CommonParser
   def developers podspec
     developers = []
 
+
     podspec.authors.each do |name, email|
       developers << Developer.new({
         :language => @@language,
@@ -103,7 +100,7 @@ class PodSpecParser < CommonParser
         :version  => podspec.version,
 
         :name     => name,
-        :email    => email,  
+        :email    => email,
         })
     end
 
@@ -113,9 +110,8 @@ class PodSpecParser < CommonParser
   def versionlinks podspec
     [Versionlink.new({
       :name => 'Homepage',
-      :link => podspec.homepage, 
+      :link => podspec.homepage,
       })]
-    
   end
 
 end
