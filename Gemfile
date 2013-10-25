@@ -36,6 +36,8 @@ gem 'cocoapods-core'    , '0.26.2'
 
 group :development do
   gem 'pry'
+  gem 'guard-rspec', require: false
+  gem 'guard-rails'
   gem 'psych'
   gem 'irbtools'
   gem 'terminal-notifier'
