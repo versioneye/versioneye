@@ -8,7 +8,7 @@ class Versionlink
   field :prod_key  , type: String
   field :version_id, type: String
 
-  field :link      , type: String
+  field :link      , type: String # this is a URL
   field :name      , type: String
   field :manual    , type: Boolean, :default => false
 
