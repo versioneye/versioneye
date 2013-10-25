@@ -7,18 +7,20 @@ class PodSpecParser < CommonParser
   @@language  = Product::A_LANGUAGE_OBJECTIVEC
   @@prod_type = Project::A_TYPE_COCOAPODS
 
-  file = '/Users/anjaresmer/Code/cocoapods-specs/twitter-text-objc/1.6.1/twitter-text-objc.podspec'
 
-  def parse ( url )
+  def parse ( file )
     spec = load_spec file
     
-    prod = get_product spec
-    update_product prod, spec
+    product = get_product spec
+
+    update_product product, spec
   end
+
 
   def load_spec file
     Pod::Spec.from_file(file)
   end
+
 
   def get_product spec
     product = Product.find_by_lang_key(Product::A_LANGUAGE_OBJECTIVEC, spec.name)
@@ -30,7 +32,8 @@ class PodSpecParser < CommonParser
     product
   end
 
-  def update_product product, spec
+
+  def update_product product, podspec
 
     prod_key = spec.name
     product.update_attributes({
@@ -44,16 +47,30 @@ class PodSpecParser < CommonParser
 
     product.update_attributes()
 
-    attr = spec.attributes_hash
-
     product.description = spec.summary
-    product.authors = [*spec.author].concat(spec.authors).join(', ')
+    #product.authors = [*spec.author].concat(spec.authors).join(', ')
 
     product.save
   end
 
-  def update_dependencies product, spec
 
+  def dependencies podspec
+
+    deps = []
+
+    podspec.dependencies.each do |pod_dep|
+      deps << Dependency.new({
+        :language      => @@language,
+        :prod_type     => @@prod_type,
+        :prod_key      => podspec.name,
+        :prod_version  => podspec.version,
+
+        :dep_prod_key  => pod_dep.to_s,  
+        :version       => pod_dep.version,
+        })
+      end
+
+    deps
   end
 
 
@@ -91,6 +108,14 @@ class PodSpecParser < CommonParser
     end
 
     developers
+  end
+
+  def versionlinks podspec
+    [Versionlink.new({
+      :name => 'Homepage',
+      :link => podspec.homepage, 
+      })]
+    
   end
 
 end
