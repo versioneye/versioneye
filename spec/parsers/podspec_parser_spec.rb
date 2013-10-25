@@ -26,18 +26,32 @@ describe PodSpecParser do
     end
   end
 
-  # describe '#repository' do
-  #   it "should return a git repository" do
-  #   end
+  describe '#repository' do
+    let(:repo) { parser.repository podspec}
 
-  #   it "should warn if there are other repositories" do
-  #   end
-  # end
+    it "should return a git repository" do
+      repo.should be_a Repository
+      repo.repo_type.should eq 'git'
+      repo.repo_source.should eq 'https://github.com/twitter/twitter-text-objc.git'
+    end
 
-  # describe '#developers' do
-  #   it "should be empty without developers" do
-  #     #PodSpecParser.developers(nil)
-  #   end
-  # end
+    it "should warn if there are other repositories" do
+      # TODO
+    end
+  end
+
+  describe '#developers' do
+    let (:devs) {parser.developers podspec}
+    it "should have developers" do
+      devs.should be_a Array
+      devs.size.should eq 1
+      dev = devs[0]
+      dev.should be_a Developer
+      dev.language.should eq Product::A_LANGUAGE_OBJECTIVEC
+      dev.prod_key.should eq "twitter-text-objc"
+      dev.name.should eq "Twitter, Inc."
+      dev.email.should eq "opensource@twitter.com"
+    end
+  end
 
 end
