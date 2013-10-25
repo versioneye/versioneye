@@ -10,19 +10,20 @@ describe PodSpecParser do
 
   # end
 
-  before :each do
-    @parser = PodSpecParser.new
-    @podspec = @parser.load_spec './spec/fixtures/files/podspec/twitter-text-objc.podspec'
-  end
+  let (:parser)  {PodSpecParser.new}
+  let (:podspec) {parser.load_spec './spec/fixtures/files/podspec/twitter-text-objc.podspec'}
 
   describe '#version' do
+    let(:version) { parser.version podspec}
+    
     it "should convert the version" do
-      version = @parser.version @podspec
-      version.should be_a(Version) 
+      version.should be_a(Version)
+      version.version.should eq "1.6.1" 
     end
 
-    # it "should convert the license" do
-    # end
+    it "should convert the license" do
+      version.license.should eq "Apache License, Version 2.0"
+    end
   end
 
   # describe '#repository' do
