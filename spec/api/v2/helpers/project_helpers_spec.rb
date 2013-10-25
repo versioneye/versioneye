@@ -2,14 +2,15 @@ require 'spec_helper'
 
 describe ProjectHelpers do
   let(:helper) { V2::ProjectsApiV2.new }
-  let(:product1) {create(:product, name: "spec_product2", prod_key: "spec_product2")}
-  let(:product2) {create(:product, name: "spec_product3", prod_key: "spec_product3")}
+  let(:product1) {create(:product, name: "spec_product1", prod_key: "spec_product1")}
+  let(:product2) {create(:product, name: "spec_product2", prod_key: "spec_product2")}
 
   let(:project) {create(:project_with_deps, deps_count: 2)}
-  let(:licence2) {create(:license, name: "MIT", prod_key: "spec_product3")}
+  let(:licence2) {create(:license, name: "MIT", prod_key: "spec_product2")}
 
   describe "add_dependency_licences" do
     before :each do
+      FactoryGirl.reload
       helper.extend(ProjectHelpers)
       product1.save
       product2.save
@@ -30,11 +31,14 @@ describe ProjectHelpers do
       project_after.dependencies.size.should eq(2)
 
       dep1 = project_after.dependencies[0]
+
+      dep1.should_not be_nil
       dep1.product.should_not be_nil
       dep1.product.license_info.should_not be_nil
       dep1.product.license_info.should eql("unknown")
 
       dep2 = project_after.dependencies[1]
+      dep2.should_not be_nil
       dep2.product.should_not be_nil
       dep2.product.license_info.should_not be_nil
       dep2.product.license_info.should eql("MIT")
