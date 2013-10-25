@@ -16,7 +16,6 @@ class PodSpecParser < CommonParser
     update_product prod, spec
   end
 
-
   def load_spec file
     Pod::Spec.from_file(file)
   end
@@ -47,9 +46,6 @@ class PodSpecParser < CommonParser
 
     attr = spec.attributes_hash
 
-
-
-
     product.description = spec.summary
     product.authors = [*spec.author].concat(spec.authors).join(', ')
 
@@ -62,61 +58,39 @@ class PodSpecParser < CommonParser
 
 
   def version podspec
-    v = podspec.version
-    version = Version.new({
-      :version => v, 
+    Version.new({
+      :version => podspec.version, 
       :license => podspec.license[:type],
       # TODO get release date through github api
       # repository => version tag
       #:released_at =>  
       })
-    version
   end
 
 
   def repository podspec
-    log
-    git_repo = Repository.new({
-      :repo_type => "git",
-      :repo_source => podspec["source"]["git"]
+    Repository.new({
+      :repo_type => 'git',
+      :repo_source => podspec.source[:git]
       })
-    git_repo.save
   end
 
 
   def developers podspec
     developers = []
 
-    authors = [*podspec["author"]].concat( podspec["authors"] ) 
-    authors.each do |name, email|
-      developer = Developer.new({
+    podspec.authors.each do |name, email|
+      developers << Developer.new({
         :language => @@language,
-        :prod_key => prod_key,
-        :version  => v,
+        :prod_key => podspec.name,
+        :version  => podspec.version,
 
         :name     => name,
         :email    => email,  
         })
-      developer.save
-      developers << developer
     end
 
     developers
   end
-
-
-  # TODO I just copied this and don't know how it works yet
-  # dependency for project
-  def init_dependency( product, pod_name )
-    dependency          = Projectdependency.new
-    dependency.name     = pod_name
-    dependency.language = Product::A_LANGUAGE_OBJECTIVEC
-    if product
-      dependency.prod_key        = product.prod_key
-      dependency.version_current = product.version
-    end
-    dependency
-  end
-
 
 end
