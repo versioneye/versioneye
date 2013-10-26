@@ -1,18 +1,20 @@
 require 'cocoapods-core'
 
+# Parser for CocoaPods podspec
+# http://docs.cocoapods.org/specification.html
 class PodSpecParser < CommonParser
-
-  # Parser for CocoaPods podspec
 
   @@language  = Product::A_LANGUAGE_OBJECTIVEC
   @@prod_type = Project::A_TYPE_COCOAPODS
 
 
-  def parse ( file )
-    podspec = load_spec file
-    
-    product = get_product podspec
+  def parse( url )
+    # TODO implement me!
+  end
 
+  def parse_file ( file )
+    podspec = load_spec file
+    product = get_product podspec
     update_product product, podspec
   end
 
@@ -27,6 +29,17 @@ class PodSpecParser < CommonParser
 
     unless product
       product = Product.new
+      prod_key = podspec.name
+      product.update_attributes({
+        :reindex       => true,
+        :prod_key      => prod_key,
+        :name          => podspec.name,
+        :name_downcase => podspec.name.downcase,
+        :description   => podspec.summary,
+        :language      => @@language,
+        :prod_type     => @@prod_type,
+      })
+      product.save
     end
 
     product
@@ -34,48 +47,37 @@ class PodSpecParser < CommonParser
 
 
   def update_product product, podspec
-
-    prod_key = podspec.name
-    product.update_attributes({
-      :reindex       => true,
-      :prod_key      => prod_key,
-      :name          => podspec.name,
-      :name_downcase => podspec.name.downcase,
-      :language      => @@language,
-      :prod_type     => @@prod_type,
-    })
-
-    product.description = podspec.summary
-
-    product.dependencies = dependencies podspec
-
-    product.versions.push(version podspec)
-    product.repository    = repository podspec
-    product.developers    = developers podspec
-    product.versionlinks  = versionlinks podspec
+    create_dependencies podspec
+    product.versions.push( version(podspec) ) # TODO check if exist already
+    create_repository( podspec )
+    create_developers( podspec )
+    create_homepage_link( podspec ) # TODO check if exist already
+    product.save
+    product
   end
 
 
-  def dependencies podspec
-    deps = []
+  def create_dependencies podspec
     podspec.dependencies.each do |pod_dep|
-      deps << Dependency.new({
+      dep = Dependency.find_by_lang_key_and_version(@@language, podspec.name, podspec.version)
+      next if dep
+      dep = Dependency.new({
         :language      => @@language,
         :prod_type     => @@prod_type,
         :prod_key      => podspec.name,
         :prod_version  => podspec.version,
 
-        :dep_prod_key  => pod_dep.to_s, 
+        :dep_prod_key  => pod_dep.to_s,
         :version       => pod_dep.version,
         })
-      end
-    deps
+      dep.save
+    end
   end
 
 
   def version podspec
     Version.new({
-      :version => podspec.version, 
+      :version => podspec.version,
       :license => podspec.license[:type],
       # TODO get release date through github api
       # repository => version tag
@@ -84,6 +86,13 @@ class PodSpecParser < CommonParser
   end
 
 
+  def create_repository podspec
+    repo = repository(podspec)
+    unless product.repositories.member?( repo )
+      product.repositories.push( repo )
+    end
+  end
+
   def repository podspec
     Repository.new({
       :repo_type => 'git',
@@ -91,30 +100,33 @@ class PodSpecParser < CommonParser
       })
   end
 
-
-  def developers podspec
-    developers = []
-
-
+  def create_developers podspec
     podspec.authors.each do |name, email|
-      developers << Developer.new({
+      developer = Developer.find_by( @@language, podspec.name, podspec.version, name )
+      next if developer
+      developer = Developer.new({
         :language => @@language,
         :prod_key => podspec.name,
         :version  => podspec.version,
 
         :name     => name,
-        :email    => email,
+        :email    => email
         })
+      developer.save
     end
-
-    developers
   end
 
-  def versionlinks podspec
-    [Versionlink.new({
-      :name => 'Homepage',
-      :link => podspec.homepage,
-      })]
+  def create_homepage_link podspec
+    versionlink = Versionlink.new({
+      :language   => @@language,
+      :prod_key   => podspec.name,
+      :version_id => podspec.version,
+
+      :name       => 'Homepage',
+      :link       => podspec.homepage
+      })
+    versionlink.save
+    versionlink
   end
 
 end

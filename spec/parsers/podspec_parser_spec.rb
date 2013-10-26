@@ -9,10 +9,10 @@ describe PodSpecParser do
 
     describe '#version' do
       let(:version) { parser.version podspec}
-      
+
       it "should convert the version" do
         version.should be_a(Version)
-        version.version.should eq "3.1.1" 
+        version.version.should eq "3.1.1"
       end
 
       it "should convert the license" do
@@ -76,10 +76,10 @@ describe PodSpecParser do
 
     describe '#version' do
       let(:version) { parser.version podspec}
-      
+
       it "should convert the version" do
         version.should be_a(Version)
-        version.version.should eq "1.6.1" 
+        version.version.should eq "1.6.1"
       end
 
       it "should convert the license" do
@@ -136,7 +136,5 @@ describe PodSpecParser do
       end
     end
   end
-
-
 
 end

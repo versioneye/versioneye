@@ -9,9 +9,10 @@ class CocoaPodsCrawler < GitCrawler
   def crawl
     setup
     update
+    parser = PodSpecParser.new
     all_spec_files do |filepath|
       # parse every podspec file
-      product = PodSpecParser.new().parse filepath
+      product = parser.parse_file filepath
       product.save
     end
   end
