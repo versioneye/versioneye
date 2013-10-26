@@ -154,6 +154,9 @@ class ProjectService
     project.dependencies.each do |dep|
       dep.remove
     end
+    project.collaborators.each do |collaborator|
+      collaborator.remove
+    end
     project.remove
   end
 
