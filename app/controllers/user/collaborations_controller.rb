@@ -9,7 +9,7 @@ class User::CollaborationsController < ApplicationController
         @projects << collab.project
       else
         Rails.logger.error "Collaborated project doesnt exists: `#{collab.to_json}`"
-        # TODO if project does not exist remove collab instance from collection!
+        collab.remove
       end
     end
   end
