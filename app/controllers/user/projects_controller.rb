@@ -222,53 +222,36 @@ class User::ProjectsController < ApplicationController
     render update_project_dependency(params, {muted: false})
   end
 
+  private
 
-  def show_project_file
-    proj_id = params[:id]
-    project = Project.find_by_id proj_id
-    if project.nil?
-      render text: "File doesnt exists."
-    end
-
-    file_url = S3.url_for(project[:s3_filename])
-    @project_name = project[:s3_filename].split("_").last
-    @project_file = HTTParty.get file_url
-    render inline: %Q[
-                      <% title @project_name %>
-                      <pre class="pre-scrollable"><code><%= @project_file.body %></code></pre>
-                    ],
-                    layout: true
-  end
-
-private
-  def add_dependency_classes(project)
-    deps = project.dependencies
-    return project if deps.nil? or deps.empty?
-    deps.each do |dep|
-      if dep.unknown?
-        dep[:status_class] = "info"
-        dep[:status_rank] = 4
-      elsif dep.outdated and dep.release? == false
-        dep[:status_class] = "warn"
-        dep[:status_rank] = 2
-      elsif dep.outdated and dep.release? == true
-        dep[:status_class] = "error"
-        dep[:status_rank] = 1
-      else
-        dep[:status_class] = "success"
-        dep[:status_rank] = 3
+    def add_dependency_classes(project)
+      deps = project.dependencies
+      return project if deps.nil? or deps.empty?
+      deps.each do |dep|
+        if dep.unknown?
+          dep[:status_class] = "info"
+          dep[:status_rank] = 4
+        elsif dep.outdated and dep.release? == false
+          dep[:status_class] = "warn"
+          dep[:status_rank] = 2
+        elsif dep.outdated and dep.release? == true
+          dep[:status_class] = "error"
+          dep[:status_rank] = 1
+        else
+          dep[:status_class] = "success"
+          dep[:status_rank] = 3
+        end
       end
+      project
     end
 
-    project
-  end
+    def sort_dependencies_by_rank(project)
+      deps = project.dependencies
+      return project if deps.nil? or deps.empty?
+      deps.sort_by {|dep| dep[:status_rank] }
+    end
 
-  def sort_dependencies_by_rank(project)
-    deps = project.dependencies
-    return project if deps.nil? or deps.empty?
-    deps.sort_by {|dep| dep[:status_rank] }
-  end
-   def update_project_dependency(params, update_map)
+    def update_project_dependency(params, update_map)
       project_id = params[:id]
       lang = Product.decode_language(params[:language])
       prod_key = Product.decode_prod_key(params[:prod_key])
