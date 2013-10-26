@@ -2,18 +2,18 @@ require 'cocoapods-core'
 
 class PodSpecParser < CommonParser
 
-  # Parser for CocoaPods specs
+  # Parser for CocoaPods podspec
 
   @@language  = Product::A_LANGUAGE_OBJECTIVEC
   @@prod_type = Project::A_TYPE_COCOAPODS
 
 
   def parse ( file )
-    spec = load_spec file
+    podspec = load_spec file
     
-    product = get_product spec
+    product = get_product podspec
 
-    update_product product, spec
+    update_product product, podspec
   end
 
 
@@ -22,8 +22,8 @@ class PodSpecParser < CommonParser
   end
 
 
-  def get_product spec
-    product = Product.find_by_lang_key(Product::A_LANGUAGE_OBJECTIVEC, spec.name)
+  def get_product podspec
+    product = Product.find_by_lang_key(Product::A_LANGUAGE_OBJECTIVEC, podspec.name)
 
     unless product
       product = Product.new
@@ -35,21 +35,24 @@ class PodSpecParser < CommonParser
 
   def update_product product, podspec
 
-    prod_key = spec.name
+    prod_key = podspec.name
     product.update_attributes({
       :reindex       => true,
       :prod_key      => prod_key,
-      :name          => spec.name,
-      :name_downcase => spec.name.downcase,
+      :name          => podspec.name,
+      :name_downcase => podspec.name.downcase,
       :language      => @@language,
       :prod_type     => @@prod_type,
     })
 
-    product.update_attributes()
+    product.description = podspec.summary
 
-    product.description = spec.summary
+    product.dependencies = dependencies podspec
 
-    product.save
+    product.versions.push(version podspec)
+    product.repository    = repository podspec
+    product.developers    = developers podspec
+    product.versionlinks  = versionlinks podspec
   end
 
 

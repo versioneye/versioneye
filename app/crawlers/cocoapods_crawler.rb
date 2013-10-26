@@ -6,11 +6,20 @@ class CocoaPodsCrawler < GitCrawler
     super "https://github.com/CocoaPods/Specs.git", "~/cocoapods-specs"
   end
 
-  # traverse directory, search for .podspec files
-  def spec_files
-    Dir.glob "**/*.podspec" do |file|
+  def crawl
+    setup
+    update
+    all_spec_files do |filepath|
       # parse every podspec file
-      PodSpecParser.parse file
+      product = PodSpecParser.new().parse filepath
+      product.save
+    end
+  end
+
+  # traverse directory, search for .podspec files
+  def all_spec_files(&block)
+    Dir.glob "**/*.podspec" do |filepath|
+      block.call filepath
     end
   end
 
