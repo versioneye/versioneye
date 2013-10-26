@@ -8,9 +8,7 @@
     <% end %>
 
     <% if project.source.eql? "github" %>
-      <a href="https://github.com/<%= project.github_project%>/tree/<%= project.github_branch %>">
-        GitHub <%= project.github_branch %> branch
-      </a>.
+      <a href="https://github.com/<%= project.github_project%>/tree/<%= project.github_branch %>">GitHub <%= project.github_branch %> branch</a>.
 
       <% filename = project[:s3_filename].to_s.gsub(/\S+\_/, "") %>
       We parsed this file:
