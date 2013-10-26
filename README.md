@@ -96,4 +96,4 @@ This task will execute all jobs we have to run once a week. For example sending 
 
 VersionEye's model currently looks like this (2013-10-23):
 
-![VersionEye Model](https://github.com/versioneye/versioneye/tree/master/doc/versioneye-model.png)
+![VersionEye Model](https://github.com/versioneye/versioneye/raw/master/doc/versioneye-model.png)
