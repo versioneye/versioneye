@@ -4,6 +4,9 @@
 
 This is the source code for the web application <http://www.versioneye.com>.
 
+
+## VersionEye Stack
+
 This is the stack in this project:
 
  * Ruby on Rails
@@ -15,11 +18,11 @@ This is the stack in this project:
 
 To start the application you need Ruby 1.9.3 and a running MongoDB instance.
 
-## MongoDB
+### MongoDB
 
 You will find downloads and tutorials to MongoDB here: <http://www.mongodb.org/>. To acess MongoDB from Ruby we are using mongoid: <http://mongoid.org>. The configuration to the MongoDB is placed at "config/mongoid.yml". You should create "veye_dev" database in your MongoDB instance, in that way you don't have to customize the mongoid.yml file.
 
-## ElasticSearch
+### ElasticSearch
 
 We are using ElasticSearch for better search results. You can find downloads and tutorials to ElasticSearch here: <http://www.elasticsearch.org/>. The connection to the ElasticSearch Server is configured in `config/settings.yml`. If you start the rails console you can re-index the whole MongoDB with:
 
@@ -30,7 +33,7 @@ EsProduct.index_all
 
 You can also use the application without ElasticSearch, if that is to much trouble for you. In `ProductService.search` you just have to comment out everything but the last line. That will use MongoDB for search results.
 
-## Amazon S3
+### Amazon S3
 
 For uploading files a connection to Amazon S3 is mandatory. You can find the configuration for Amazon S3 in "config/config.yml". Please add here your "aws_s3_access_key_id" and your "aws_s3_secret_access_key" and don't commit it back! With that all file uploads will work fine.
 
@@ -42,14 +45,15 @@ fakes3 -r /tmp -p 4567
 ```
 
 
-## Memcache
+### Memcache
 
 For memcache we are using the dalli GEM. It requires at least memcache 1.4. For a little performance boost
 we are using kgio. You can find a quick tutorial to Rails an Memcache on Heroku: <https://devcenter.heroku.com/articles/building-a-rails-3-application-with-the-memcache-addon>.
 
-## Postmarkapp
+### Postmarkapp
 
 For sending out emails we use <https://postmarkapp.com/>. Here we use the postmark-rails GEM : <http://www.versioneye.com/package/postmark-rails> to interact with the postmark API.
+
 
 ## Configuration
 
@@ -86,3 +90,10 @@ rake versioneye:weekly_jobs
 ```
 
 This task will execute all jobs we have to run once a week. For example sending out the weekly project notifications.
+
+
+## Model
+
+VersionEye's model currently looks like this (2013-10-23):
+
+![https://github.com/versioneye/versioneye/tree/master/doc/versioneye-model.png](VersionEye Model)
