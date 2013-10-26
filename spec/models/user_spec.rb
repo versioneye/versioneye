@@ -90,7 +90,7 @@ describe User do
       user.salt = "salt"
       user.terms = true
       user.datenerhebung = true
-      user.save
+      user.save.should be_true
       db_user = User.find_by_email( email )
       db_user.should_not be_nil
       user.remove

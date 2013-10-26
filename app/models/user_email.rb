@@ -7,7 +7,7 @@ class UserEmail
   field :email       , type: String
   field :verification, type: String
 
-  validates_format_of :email, with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
+  validates_format_of :email, with: User::A_EMAIL_REGEX
 
   def verified?
     self.verification.nil?
