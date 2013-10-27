@@ -135,11 +135,11 @@ define(['underscore', 'backbone'],
 
       var error_msg = ""
       if(xhr.status == 404){
-        error_msg = "Server timout. We are facing to many requests. Try later again.";
+        error_msg = "Server timeout. We are facing to many requests. Please Try again later.";
       } else if (xhr.status == 500){
-        error_msg = "Failure: we encountered backend issue. Please contact with us."
+        error_msg = "An error occurred. Please try again later and contact us on Twitter @VersionEye."
       } else {
-        error_msg = "Failure: Can not import project: " + model.get('fullname')  + ".";
+        error_msg = "Can't import project: " + model.get('fullname')  + ".";
         error_msg += xhr.responseText;
       }
       console.debug("We encountered: " + xhr.status + " " + xhr.statusText);
