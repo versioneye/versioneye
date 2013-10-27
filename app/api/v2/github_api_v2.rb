@@ -198,12 +198,6 @@ module V2
         repo_name = decode_prod_key(params[:repo_key])
         branch = params[:branch]
 
-        project = Project.by_user(user).by_github(repo_name).where(github_branch: branch).shift
-        unless project.nil?
-          error!("Project for  #{repo_name} / #{branch} already exists.\
-                 Remove previous project or use different branch ", 400)
-        end
-
         repo = user.github_repos.by_fullname(repo_name).first
         unless repo
           error! "We couldn't finde the repository `#{repo_name}` in your account.", 400
