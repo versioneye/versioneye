@@ -164,10 +164,12 @@ module V2
 
         repo_fullname = decode_prod_key(params[:repo_key])
         repo = user.github_repos.by_fullname(repo_fullname).first
-        repo_projects = Project.by_user(user).by_github(repo_fullname).to_a
+
         unless repo
-          repo = {}
+          error! "You or your's organization dont have such a repository: `#{repo_fullname}`.", 400
         end
+        repo_projects = Project.by_user(user).by_github(repo_fullname).to_a
+
         present :repo, repo, with: EntitiesV2::RepoEntityDetailed
         present :imported_projects, repo_projects, with: EntitiesV2::ProjectEntity
       end
@@ -193,20 +195,24 @@ module V2
         authorized?
         user = current_user
         github_connected?(user)
-
         repo_name = decode_prod_key(params[:repo_key])
         branch = params[:branch]
-        
+
         project = Project.by_user(user).by_github(repo_name).where(github_branch: branch).shift
-        if project
+        unless project.nil?
           error!("Project for  #{repo_name} / #{branch} already exists.\
-                 Remove previous project or use different branch ", 400) if project.nil?
+                 Remove previous project or use different branch ", 400)
         end
+
         repo = user.github_repos.by_fullname(repo_name).first
+        unless repo
+          error! "You or your's organization dont have such a repository: `#{repo_fullname}`.", 400
+        end
+
         project = ProjectService.import_from_github(user, repo_name, branch)
         projects = Project.by_user(current_user).by_github(repo_name).to_a
-     
-        present :repo, repo, with: EntitiesV2::RepoEntity
+
+        present :repo, repo, with: EntitiesV2::RepoEntityDetailed
         present :imported_projects, projects, with: EntitiesV2::ProjectEntity
       end
 
