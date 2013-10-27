@@ -132,9 +132,17 @@ define(['underscore', 'backbone'],
     },
 
     onAddFailure: function(model, xhr){
-      var error_msg = "Failure: Can not import project: " + model.get('fullname')  + ".";
-      error_msg += xhr.responseText;
 
+      var error_msg = ""
+      if(xhr.status == 404){
+        error_msg = "Server timout. We are facing to many requests. Try later again.";
+      } else if (xhr.status == 500){
+        error_msg = "Failure: we encountered backend issue. Please contact with us."
+      } else {
+        error_msg = "Failure: Can not import project: " + model.get('fullname')  + ".";
+        error_msg += xhr.responseText;
+      }
+      console.debug("We encountered: " + xhr.status + " " + xhr.statusText);
       console.debug(error_msg);
       showNotification("alert alert-error", error_msg);
       this.showRepoNotification("");
