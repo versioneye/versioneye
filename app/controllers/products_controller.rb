@@ -98,7 +98,7 @@ class ProductsController < ApplicationController
         badge = "up-to-date"
       end
     end
-    send_file "app/assets/images/badges/dep_#{badge}.png", :type => "images/png", :disposition => 'inline'
+    send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
   end
 
   def edit
