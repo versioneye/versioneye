@@ -1,15 +1,16 @@
 require 'cocoapods-core'
 
 # Parser for CocoaPods podspec
+# this parser is only used by the CocoaPodsCrawler
 # http://docs.cocoapods.org/specification.html
 class PodSpecParser < CommonParser
 
   @@language  = Product::A_LANGUAGE_OBJECTIVEC
   @@prod_type = Project::A_TYPE_COCOAPODS
 
-
+  # the cocoapods spec crawler only works on files 
   def parse( url )
-    # TODO implement me!
+    # not implemented
   end
 
   def parse_file ( file )
@@ -47,11 +48,11 @@ class PodSpecParser < CommonParser
 
 
   def update_product product, podspec
-    create_dependencies podspec
-    product.versions.push( version(podspec) ) # TODO check if exist already
+    add_version(product, podspec)
+    create_dependencies( podspec )
     create_repository( podspec )
     create_developers( podspec )
-    create_homepage_link( podspec ) # TODO check if exist already
+    create_homepage_link( podspec )
     product.save
     product
   end
@@ -75,14 +76,13 @@ class PodSpecParser < CommonParser
   end
 
 
-  def version podspec
-    Version.new({
-      :version => podspec.version,
+  def add_version product, podspec
+    product.add_version( podspec.version, {
       :license => podspec.license[:type],
       # TODO get release date through github api
       # repository => version tag
       #:released_at =>
-      })
+      } )
   end
 
 
@@ -117,16 +117,7 @@ class PodSpecParser < CommonParser
   end
 
   def create_homepage_link podspec
-    versionlink = Versionlink.new({
-      :language   => @@language,
-      :prod_key   => podspec.name,
-      :version_id => podspec.version,
-
-      :name       => 'Homepage',
-      :link       => podspec.homepage
-      })
-    versionlink.save
-    versionlink
+    Versionlink.create_versionlink(@@language, podspec.name, podspec.version, podspec.homepage, 'Homepage')
   end
 
 end

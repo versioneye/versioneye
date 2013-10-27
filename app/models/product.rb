@@ -169,6 +169,14 @@ class Product
     versions.nil? || versions.size == 0 ? true : false
   end
 
+  def add_version(version_string, hash = {})
+    unless version_by_number(version_string)
+      version_hash = {:version => version_string}.merge(hash)
+      version = Version.new(version_hash)
+      versions.push( version )
+    end
+  end
+
   ######## END VERSIONS ###################
 
   def comments
