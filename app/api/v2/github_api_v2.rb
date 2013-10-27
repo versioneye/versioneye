@@ -67,7 +67,7 @@ module V2
           repo_names = imported_projects.map {|proj| proj[:github_project]}
           repos = user.github_repos.any_in(fullname: repo_names.to_a).paginate(per_page: 30, page: page)
         end
-        
+
         repos.each do |repo|
           imported_projects = Project.by_user(user).by_github(repo[:fullname]).to_a
           proj_keys = imported_projects.map {|proj| proj[:project_key]}
@@ -99,7 +99,7 @@ module V2
           repos = GitHubService.update_repos_for_user(user)
         end
 
-        if Github.user_repos_changed?(user) 
+        if Github.user_repos_changed?(user)
           repos = GitHubService.cached_user_repos(user)
         end
 
@@ -166,7 +166,7 @@ module V2
         repo = user.github_repos.by_fullname(repo_fullname).first
 
         unless repo
-          error! "You or your's organization dont have such a repository: `#{repo_fullname}`.", 400
+          error! "We couldn't finde the repository `#{repo_fullname}` in your account.", 400
         end
         repo_projects = Project.by_user(user).by_github(repo_fullname).to_a
 
@@ -206,7 +206,7 @@ module V2
 
         repo = user.github_repos.by_fullname(repo_name).first
         unless repo
-          error! "You or your's organization dont have such a repository: `#{repo_fullname}`.", 400
+          error! "We couldn't finde the repository `#{repo_name}` in your account.", 400
         end
 
         project = ProjectService.import_from_github(user, repo_name, branch)
