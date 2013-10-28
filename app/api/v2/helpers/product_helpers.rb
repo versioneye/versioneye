@@ -66,9 +66,9 @@ module ProductHelpers
   end
 
   def decode_prod_key(prod_key)
-    parsed_key = prod_key.to_s.gsub(":", "/")
+    parsed_key = HTMLEntities.new.decode prod_key
+    parsed_key = parsed_key.to_s.gsub(":", "/")
     parsed_key = parsed_key.gsub("~", ".")
-    HTMLEntities.new.decode parsed_key
   end
 
   def parse_product_key(prod_key)
@@ -78,7 +78,7 @@ module ProductHelpers
 
   def fetch_product(lang, prod_key)
     lang = parse_language(lang)
-    prod_key = parse_product_key(prod_key)
+    prod_key = decode_prod_key(prod_key)
     @current_product = Product.fetch_product(lang, prod_key)
     if @current_product.nil?
       error! "Wrong product key: `#{params[:prod_key]}` don't exists.", 404
