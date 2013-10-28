@@ -75,6 +75,11 @@ describe "GithubApiV2" do
       repos.count.should eql(2)
     end
 
+    it "should raise error when user tries to access repository which doest exists" do
+      get "#{api_path}/pedestal:pedestal", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+      response.status.should eql(400)
+    end
+
     it "should show repo info" do
       get "#{api_path}/#{repo_key1}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
       response.status.should eql(200)
@@ -83,6 +88,11 @@ describe "GithubApiV2" do
       repo.should_not be_nil
       repo.has_key?('repo').should be_true
       repo['repo']['fullname'].should eql("spec/repo1")
+    end
+
+    it "should raise error when user tries to import repository which doesnt exists" do
+      post "#{api_path}/pedestal:pedestal", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+      response.status.should eql(400)
     end
 
     it "should create new object with repo key" do
@@ -99,6 +109,10 @@ describe "GithubApiV2" do
       project["name"].should eql("spec_projectX")
     end
 
+    it "should raise error when user tries to remove repository which doesnt exists" do
+      delete "#{api_path}/pedestal:pedestal", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+      response.status.should eql(400)
+    end
     it "should remove project with repo key" do
       delete "#{api_path}/#{repo_key1}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
       response.status.should eql(200)

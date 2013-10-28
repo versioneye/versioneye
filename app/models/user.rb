@@ -2,6 +2,8 @@ class User
 
   require 'will_paginate/array'
 
+  A_EMAIL_REGEX = /\A([\w\!\#\z\%\&\'\*\+\-\/\=\?\\A\`{\|\}\~]+\.)*[\w\+-]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)\z/i
+
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes
@@ -65,7 +67,7 @@ class User
   validates_length_of :fullname, minimum: 2, maximum: 50, :message => "fullname length is not ok"
 
   validates_format_of :username, with: /^[a-zA-Z0-9_]+$/
-  validates_format_of :email   , with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
+  validates_format_of :email   , :with => A_EMAIL_REGEX, :message => "The email is not valid."
 
   before_validation :downcase_email
 
