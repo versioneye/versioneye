@@ -67,7 +67,7 @@ module V2
           repo_names = imported_projects.map {|proj| proj[:github_project]}
           repos = user.github_repos.any_in(fullname: repo_names.to_a).paginate(per_page: 30, page: page)
         end
-        
+
         repos.each do |repo|
           imported_projects = Project.by_user(user).by_github(repo[:fullname]).to_a
           proj_keys = imported_projects.map {|proj| proj[:project_key]}
@@ -99,7 +99,7 @@ module V2
           repos = GitHubService.update_repos_for_user(user)
         end
 
-        if Github.user_repos_changed?(user) 
+        if Github.user_repos_changed?(user)
           repos = GitHubService.cached_user_repos(user)
         end
 
@@ -164,10 +164,12 @@ module V2
 
         repo_fullname = decode_prod_key(params[:repo_key])
         repo = user.github_repos.by_fullname(repo_fullname).first
-        repo_projects = Project.by_user(user).by_github(repo_fullname).to_a
+
         unless repo
-          repo = {}
+          error! "We couldn't finde the repository `#{repo_fullname}` in your account.", 400
         end
+        repo_projects = Project.by_user(user).by_github(repo_fullname).to_a
+
         present :repo, repo, with: EntitiesV2::RepoEntityDetailed
         present :imported_projects, repo_projects, with: EntitiesV2::ProjectEntity
       end
@@ -193,20 +195,18 @@ module V2
         authorized?
         user = current_user
         github_connected?(user)
-
         repo_name = decode_prod_key(params[:repo_key])
         branch = params[:branch]
-        
-        project = Project.by_user(user).by_github(repo_name).where(github_branch: branch).shift
-        if project
-          error!("Project for  #{repo_name} / #{branch} already exists.\
-                 Remove previous project or use different branch ", 400) if project.nil?
-        end
+
         repo = user.github_repos.by_fullname(repo_name).first
+        unless repo
+          error! "We couldn't finde the repository `#{repo_name}` in your account.", 400
+        end
+
         project = ProjectService.import_from_github(user, repo_name, branch)
         projects = Project.by_user(current_user).by_github(repo_name).to_a
-     
-        present :repo, repo, with: EntitiesV2::RepoEntity
+
+        present :repo, repo, with: EntitiesV2::RepoEntityDetailed
         present :imported_projects, projects, with: EntitiesV2::ProjectEntity
       end
 

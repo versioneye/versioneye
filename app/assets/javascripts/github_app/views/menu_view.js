@@ -128,8 +128,7 @@ define(['underscore', 'backbone'],
 
     trackGA: function(metric){
       try {
-        //ga('send', 'pageview', 'ga_github_check_changes');
-        _gaq.push(['_trackEvent', 'GithubApp', 'UI', metric]);
+        page_view(metric);
       }
       catch (e) {
         console.error("Cant track for google analytics");

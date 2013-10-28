@@ -69,14 +69,12 @@ class User::GithubReposController < ApplicationController
       if project.nil?
         error_msg = "Can't save project"
         Rails.logger.error("#{project_name} - #{error_msg}")
-        render text: error_msg, status: 503
-        return false
+        render text: error_msg, status: 503 and return
       end
       if project.is_a?(String)
         error_msg = project
         Rails.logger.error("#{project_name} - #{error_msg}")
-        render text: error_msg, status: 503
-        return false
+        render text: error_msg, status: 503 and return
       end
 
       command_data[:githubProjectId] = project[:_id].to_s
@@ -92,8 +90,7 @@ class User::GithubReposController < ApplicationController
       else
         error_msg = "Can't remove project with id: `#{id}` - it doesnt exist. Please refresh page."
         Rails.logger.error error_msg
-        render text: error_msg, status: 400
-        return false
+        render text: error_msg, status: 400 and return
       end
     end
 

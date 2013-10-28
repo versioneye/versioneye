@@ -6,7 +6,7 @@ class Projectdependency
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_SECONDS_PER_DAY = 5184000
+  A_SECONDS_PER_DAY = 24 * 60 * 60 # 24h * 60min * 60s = 86400
 
   # This project dependency refers to the product with the given language and prod_key
   field :language   , type: String
