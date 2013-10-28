@@ -2,7 +2,9 @@ require 'cocoapods-core'
 
 # Parser for CocoaPods Podspec
 # this parser is only used by the CocoaPodsCrawler
+#
 # http://docs.cocoapods.org/specification.html
+#
 class PodSpecParser < CommonParser
 
   @@language  = Product::A_LANGUAGE_OBJECTIVEC
@@ -26,16 +28,16 @@ class PodSpecParser < CommonParser
 
 
   def get_product
-    product = Product.find_by_lang_key(Product::A_LANGUAGE_OBJECTIVEC, @podspec.name)
+    product = Product.find_by_lang_key(Product::A_LANGUAGE_OBJECTIVEC, prod_key)
 
     unless product
       product = Product.new
-      prod_key = @podspec.name
+
       product.update_attributes({
         :reindex       => true,
         :prod_key      => prod_key,
         :name          => @podspec.name,
-        :name_downcase => @podspec.name.downcase,
+        :name_downcase => prod_key,
         :description   => @podspec.summary,
         :language      => @@language,
         :prod_type     => @@prod_type,
@@ -60,13 +62,13 @@ class PodSpecParser < CommonParser
 
   def create_dependencies
     @podspec.dependencies.each do |pod_dep|
-      dep = Dependency.find_by_lang_key_and_version(@@language, @podspec.name, @podspec.version)
+      dep = Dependency.find_by_lang_key_and_version(@@language, prod_key, version)
       next if dep
       dep = Dependency.new({
         :language      => @@language,
         :prod_type     => @@prod_type,
-        :prod_key      => @podspec.name,
-        :prod_version  => @podspec.version,
+        :prod_key      => prod_key,
+        :prod_version  => version,
 
         :dep_prod_key  => pod_dep.to_s,
         :version       => pod_dep.version,
@@ -77,7 +79,7 @@ class PodSpecParser < CommonParser
 
 
   def add_version
-    @product.add_version( @podspec.version, {
+    @product.add_version( version, {
       :license => @podspec.license[:type],
       # TODO get release date through github api
       # repository => version tag
@@ -102,12 +104,13 @@ class PodSpecParser < CommonParser
 
   def create_developers
     @podspec.authors.each do |name, email|
-      developer = Developer.find_by( @@language, @podspec.name, @podspec.version, name )
+      developer = Developer.find_by( @@language, prod_key, version, name ).first
       next if developer
+
       developer = Developer.new({
         :language => @@language,
-        :prod_key => @podspec.name,
-        :version  => @podspec.version,
+        :prod_key => prod_key,
+        :version  => version,
 
         :name     => name,
         :email    => email
@@ -117,7 +120,15 @@ class PodSpecParser < CommonParser
   end
 
   def create_homepage_link
-    Versionlink.create_versionlink(@@language, @podspec.name, @podspec.version, @podspec.homepage, 'Homepage')
+    Versionlink.create_versionlink(@@language, prod_key, version, @podspec.homepage, 'Homepage')
+  end
+
+  def prod_key
+    @podspec.name.downcase
+  end
+
+  def version
+    @podspec.version
   end
 
 end
