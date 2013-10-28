@@ -4,19 +4,44 @@ describe PodSpecParser do
 
   describe '#parse_file' do
 
-    product1 = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
   
-    it 'should create on product' do
+    it 'should create a product' do
+      product1 = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
       product1.should_not be_nil
+      product1.language.should eq "Objective-C"
+      product1.prod_key.should eq "reachability"
+      product1.name.should eq "Reachability"
+      product1.versions.size.should eq 1
+
+      version = product1.versions.first
+      version.version.should eq "3.1.1"
+      version.license.should eq "BSD"
+      Versionlink.count.should == 1
+      #version.version_links.size.should eq 1
+
+      Developer.count.should == 1
+      #product1.developers.size.should eq 1
+      #product1.repositories.size.should eq 1
     end
 
 
     describe 'parse same file again' do
 
+      product1b = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
+
       it 'should not create another product' do
+        Product.fetch_product(product1b.language, product1b.prod_key).should be_a Product
       end
 
       it 'should not create another version' do
+        product = Product.fetch_product(product1b.language, product1b.prod_key)
+        product.versions.size.should == 1
+      end
+
+      it 'should not create more developers' do
+      end
+
+      it 'should not create more versionlinks' do
       end
 
     end
