@@ -1,12 +1,13 @@
-require 'spec_helper'
+require 'spec_fast_helper'
 
 describe PodSpecParser do
 
-  let!(:parser)  {PodSpecParser.new}
-
   describe '#parse_file' do
-    it 'should create on product' do
 
+    product1 = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
+  
+    it 'should create on product' do
+      product1.should_not be_nil
     end
 
 
