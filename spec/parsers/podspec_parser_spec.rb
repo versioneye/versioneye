@@ -67,16 +67,39 @@ describe PodSpecParser do
     end
 
     context 'parse other version of the podspec' do
+
+      before :all do
+        DatabaseCleaner.clean
+        @product1a = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
+        @product1b = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability-newer.podspec'
+        @language  = 'Objective-C'
+        @prod_key  = 'reachability'
+      end
+
       it 'should not create another product' do
+        products = Product.where(language:@language, prod_key:@prod_key)
+        products.count.should == 1
+        products.first.should be_a Product
       end
 
       it 'should create another version' do
+        products = Product.where(language:@language, prod_key:@prod_key)
+        versions = products.first.versions
+        versions.size.should == 2
+
+        version_numbers = versions.map(&:version)
+        version_numbers.should include '3.1.1'
+        version_numbers.should include '3.1.2'
+
+        licenses = versions.map(&:license)
+        licenses.should include 'BSD'
+        licenses.should include 'MIT'
+
       end
     end
 
     context 'parse other podspec' do
       it 'should create another product' do
-
       end
     end
 
