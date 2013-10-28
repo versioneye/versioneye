@@ -1,10 +1,20 @@
-require 'spec_fast_helper'
+require 'spec_helper'
+
+# This is the spec for the PodSpecParser which parses Cocoapods .podspec files
+#
+# ATTENTION!
+#
+# I had to remove DatabaseCleaner.clean() in spec/support/database_cleaner.rb
+# so it doesn't clean the database before/after each example.
+# It seems like DatabaseCleaner should only be run for each TestGroup
+#
 
 describe PodSpecParser do
 
   describe '#parse_file' do
 
     context 'parsing a single podspec' do
+
       before :all do
         DatabaseCleaner.clean
       end
@@ -21,11 +31,7 @@ describe PodSpecParser do
         version.version.should eq "3.1.1"
         version.license.should eq "BSD"
         Versionlink.count.should == 1
-        #version.version_links.size.should eq 1
-
         Developer.count.should == 1
-        #product.developers.size.should eq 1
-        #product.repositories.size.should eq 1
       end
     end
 
@@ -99,136 +105,24 @@ describe PodSpecParser do
     end
 
     context 'parse other podspec' do
-      it 'should create another product' do
+
+      before :all do
+        DatabaseCleaner.clean
+        @product1 = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
+        @product2 = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/twitter-text-objc.podspec'
       end
+
+      it 'should exists another product' do
+        Product.count.should == 2
+      end
+
+      it 'should exists another developer' do
+        Developer.count.should == 2
+      end
+
     end
 
   end
 
 end
-
-  # describe '#parse_file' do
-  #   @product = @parser.parser.parse_file('./spec/fixtures/files/podspec/Reachability.podspec')
-
-  #   describe 'is not nil' do
-  #     @product.should_not be_nil
-  #   end
-  # end
-
-  # example 'simple example (Reachability.podspec)' do
-
-  #   let(:product) {parser.parse_file('./spec/fixtures/files/podspec/Reachability.podspec')}
-
-  #   describe 'is not nil' do
-  #     product.should_not be_nil
-  #   end
-
-  #   describe 'it has a version' do
-  #     product.version.should eq "BSD"
-  #   end
-
-  #   describe 'it has a repository' do
-  #     product.repositories.size.should eq '1'
-  #     repo = product.repositories.first
-  #     repo.repo_type.should.eq "git"
-  #     repo.repo_source.should.eq "https://github.com/tonymillion/Reachability.git"
-  #   end
-
-  #   describe 'it should have no dependencies' do
-  #     product.dependencies.size.should eq 0
-  #   end
-
-    # describe '#developers' do
-    #   let (:devs) {parser.developers podspec}
-    #   it "should have developers" do
-    #     devs.should be_a Array
-    #     devs.size.should eq 1
-    #     dev = devs[0]
-    #     dev.should be_a Developer
-    #     dev.language.should eq Product::A_LANGUAGE_OBJECTIVEC
-    #     dev.prod_key.should eq "Reachability"
-    #     dev.name.should eq "Tony Million"
-    #     dev.email.should eq "tonymillion@gmail.com"
-    #   end
-    # end
-
-    # describe '#versionlink' do
-    #   let (:links) {parser.versionlinks podspec}
-
-    #   it "should have a linked homepage" do
-    #     links.size.should eq 1
-    #     link = links[0]
-    #     link.should be_a Versionlink
-    #     link.link.should eq "https://github.com/tonymillion/Reachability"
-    #     link.name = 'Homepage'
-    #   end
-    # end
-  # end
-
-
-  # describe 'twitter podspec' do
-  #   let (:podspec) {parser.load_spec './spec/fixtures/files/podspec/twitter-text-objc.podspec'}
-
-  #   describe '#version' do
-  #     let(:version) { parser.version podspec}
-
-  #     it "should convert the version" do
-  #       version.should be_a(Version)
-  #       version.version.should eq "1.6.1"
-  #     end
-
-  #     it "should convert the license" do
-  #       version.license.should eq "Apache License, Version 2.0"
-  #     end
-  #   end
-
-  #   describe '#repository' do
-  #     let(:repo) { parser.repository podspec}
-
-  #     it "should return a git repository" do
-  #       repo.should be_a Repository
-  #       repo.repo_type.should eq 'git'
-  #       repo.repo_source.should eq 'https://github.com/twitter/twitter-text-objc.git'
-  #     end
-
-  #     it "should warn if there are other repositories" do
-  #       # TODO
-  #     end
-  #   end
-
-  #   describe '#dependencies' do
-  #     let (:dep) {parser.dependencies podspec}
-
-  #     it "should have no dependencies" do
-  #       dep.size.should eq 0
-  #     end
-
-  #   end
-
-  #   describe '#developers' do
-  #     let (:devs) {parser.developers podspec}
-  #     it "should have developers" do
-  #       devs.should be_a Array
-  #       devs.size.should eq 1
-  #       dev = devs[0]
-  #       dev.should be_a Developer
-  #       dev.language.should eq Product::A_LANGUAGE_OBJECTIVEC
-  #       dev.prod_key.should eq "twitter-text-objc"
-  #       dev.name.should eq "Twitter, Inc."
-  #       dev.email.should eq "opensource@twitter.com"
-  #     end
-  #   end
-
-  #   describe '#versionlink' do
-  #     let (:links) {parser.versionlinks podspec}
-
-  #     it "should have a linked homepage" do
-  #       links.size.should eq 1
-  #       link = links[0]
-  #       link.should be_a Versionlink
-  #       link.link.should eq "https://github.com/twitter/twitter-text-objc"
-  #       link.name = 'Homepage'
-  #     end
-  #   end
-  # end
 
