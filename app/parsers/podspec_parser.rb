@@ -79,12 +79,15 @@ class PodSpecParser < CommonParser
 
 
   def add_version
-    @product.add_version( version, {
-      :license => @podspec.license[:type],
-      # TODO get release date through github api
-      # repository => version tag
-      #:released_at =>
-      } )
+    version_numbers = @product.versions.map(&:version)
+    unless version_numbers.member? version
+      @product.add_version( version, {
+        :license => @podspec.license[:type],
+        # TODO get release date through github api
+        # repository => version tag
+        #:released_at =>
+        } )
+    end
   end
 
 
@@ -128,7 +131,7 @@ class PodSpecParser < CommonParser
   end
 
   def version
-    @podspec.version
+    @podspec.version.to_s
   end
 
 end
