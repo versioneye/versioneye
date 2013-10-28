@@ -85,15 +85,15 @@ module V2
                 you must replace them by using 2 simple encodig rules to make product key URL safe!
 
                 It means you must replace all slashes `/` in product key
-                with colon `:`.
+                with colon `:` and dots `.` with tilde `~`.
 
-                For example Clojure package `yummy.json/json` has to be transformed to  `yummy.json:json`.
+                For example Clojure package `yummy.json/json` has to be transformed to  `yummy~json:json`.
 
                 #### Notes about status codes
 
                   * API returns 404, when the product with given product key doesnt exists.
 
-                  * Response 302 means that you didnt encode prod_key correctly.* (Replace all dots & ) *
+                  * Response 302 means that you didnt encode prod_key correctly.* (Replace all dots & slashes ) *
             ]
       }
 
@@ -101,7 +101,7 @@ module V2
       requires :lang, :type => String, :desc => %Q["Name of programming language"]
       requires :prod_key, :type => String,
                           :regexp => /[\w|:|~|-|\.]+/,
-                          :desc => %Q["Encoded product key, replace all `/` with `:`"]
+                          :desc => %Q["Encoded product key, replace all `/` and `.`]
     end
     get '/:lang/:prod_key' do
       product = fetch_product(params[:lang], params[:prod_key])
