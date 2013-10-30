@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# This is the spec for the PodSpecParser which parses Cocoapods .podspec files
+# This is the spec for the PodspecParser which parses Cocoapods .podspec files
 #
 # ATTENTION!
 #
@@ -9,7 +9,7 @@ require 'spec_helper'
 # It seems like DatabaseCleaner should only be run for each TestGroup
 #
 
-describe PodSpecParser do
+describe CocoapodsPodspecParser do
 
   describe '#parse_file' do
 
@@ -19,7 +19,7 @@ describe PodSpecParser do
         # should run before :all
         DatabaseCleaner.clean
 
-        product = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
+        product = CocoapodsPodspecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
         product.should_not be_nil
         product.language.should eq 'Objective-C'
         product.prod_key.should eq 'reachability'
@@ -40,8 +40,8 @@ describe PodSpecParser do
         #should run before all
         DatabaseCleaner.clean
 
-        @product1a = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
-        @product1b = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
+        @product1a = CocoapodsPodspecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
+        @product1b = CocoapodsPodspecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
         @language  = @product1b.language
         @prod_key  = @product1b.prod_key
 
@@ -84,8 +84,8 @@ describe PodSpecParser do
         # should run before :all
         DatabaseCleaner.clean
 
-        @product1a = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
-        @product1b = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability-newer.podspec'
+        @product1a = CocoapodsPodspecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
+        @product1b = CocoapodsPodspecParser.new.parse_file './spec/fixtures/files/podspec/Reachability-newer.podspec'
         @language  = 'Objective-C'
         @prod_key  = 'reachability'
 
@@ -119,8 +119,8 @@ describe PodSpecParser do
 
       it 'should create another product and developer' do
         DatabaseCleaner.clean
-        @product1 = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
-        @product2 = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/twitter-text-objc.podspec'
+        @product1 = CocoapodsPodspecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
+        @product2 = CocoapodsPodspecParser.new.parse_file './spec/fixtures/files/podspec/twitter-text-objc.podspec'
 
         should_create_another_product
         should_create_another_developer

@@ -5,12 +5,13 @@ require 'cocoapods-core'
 #
 # http://docs.cocoapods.org/specification.html
 #
-class PodSpecParser
+
+class CocoapodsPodspecParser
 
   @@language  = Product::A_LANGUAGE_OBJECTIVEC
   @@prod_type = Project::A_TYPE_COCOAPODS
 
-  # the cocoapods spec crawler only works on files 
+  # the cocoapods spec crawler only works on files
   def parse( url )
     # not implemented
   end

@@ -75,4 +75,8 @@ namespace :versioneye do
     puts "STOP to send out verification reminder E-Mails."
   end
 
+  desc "crawl & import Cococapods specs"
+  task :crawl_cocoapods => :environment do
+    CocoapodsCrawler.crawl
+  end
 end

@@ -1,25 +1,39 @@
-require 'gitcrawler'
+require 'git_crawler'
 
-class CocoaPodsCrawler < GitCrawler
+class CocoapodsCrawler < GitCrawler
+
+  def self.crawl
+    self.new.crawl
+  end
 
   def initialize
-    super "https://github.com/CocoaPods/Specs.git", "~/cocoapods-specs"
+    # TODO put config in config file
+    super "https://github.com/CocoaPods/Specs.git", "/Users/anjaresmer/cocoapods-specs"
   end
 
   def crawl
     setup
     update
-    parser = PodSpecParser.new
+
+    i = 0
     all_spec_files do |filepath|
       # parse every podspec file
+      i += 1
+      Rails.logger.info "Parse CocoaPods Spec ##{i}: #{filepath}"
+      parser  = CocoapodsPodspecParser.new
       product = parser.parse_file filepath
-      product.save
+      if product
+        product.save
+      else
+        Rails.logger.warn "NO PRODUCT"
+      end
     end
+
   end
 
   # traverse directory, search for .podspec files
   def all_spec_files(&block)
-    Dir.glob "**/*.podspec" do |filepath|
+    Dir.glob "#{@dir}/**/*.podspec" do |filepath|
       block.call filepath
     end
   end
