@@ -14,10 +14,10 @@ class GemfilelockParser < GemfileParser
     matches = content.scan( dependecies_matcher )
     deps = self.build_dependencies(matches)
     project                     = init_project( url )
-    project.dep_number          = project.dependencies.size
+    project.projectdependencies = deps[:projectdependencies]
     project.unknown_number      = deps[:unknown_number]
     project.out_number          = deps[:out_number]
-    project.projectdependencies = deps[:projectdependencies]
+    project.dep_number          = project.dependencies.size
     project
   end
 

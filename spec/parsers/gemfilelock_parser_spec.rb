@@ -50,6 +50,7 @@ describe GemfilelockParser do
 
       project.should_not be_nil
       project.dependencies.size.should eql(7)
+      project.dep_number.should eql(7)
 
       dep1 = fetch_by_name(project.dependencies, product1.name)
       dep1.name.should eql(product1.name)
