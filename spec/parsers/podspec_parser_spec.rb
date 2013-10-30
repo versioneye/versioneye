@@ -15,21 +15,20 @@ describe PodSpecParser do
 
     context 'parsing a single podspec' do
 
-      before :all do
-        DatabaseCleaner.clean
-      end
-
       it 'should create a product' do
+        # should run before :all
+        DatabaseCleaner.clean
+
         product = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
         product.should_not be_nil
-        product.language.should eq "Objective-C"
-        product.prod_key.should eq "reachability"
-        product.name.should eq "Reachability"
+        product.language.should eq 'Objective-C'
+        product.prod_key.should eq 'reachability'
+        product.name.should eq 'Reachability'
         product.versions.size.should == 1
 
         version = product.versions.first
-        version.version.should eq "3.1.1"
-        version.license.should eq "BSD"
+        version.version.should eq '3.1.1'
+        version.license.should eq 'BSD'
         Versionlink.count.should == 1
         Developer.count.should == 1
       end
@@ -37,35 +36,42 @@ describe PodSpecParser do
 
     context 'parsing the same file again' do
 
-      before :all do
+      it 'should not create another db entry' do
+        #should run before all
         DatabaseCleaner.clean
+
         @product1a = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
         @product1b = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
         @language  = @product1b.language
         @prod_key  = @product1b.prod_key
+
+        should_not_create_another_product
+        should_not_create_another_version
+        should_not_create_more_developers
+        should_not_create_more_versionlinks
       end
 
-      it 'should not create another product' do
+      def should_not_create_another_product
         products = Product.where(language:@language, prod_key:@prod_key)
         products.count.should == 1
         products.first.should be_a Product
       end
 
-      it 'should not create another version' do
+      def should_not_create_another_version
         products = Product.where(language:@language, prod_key:@prod_key)
         versions = products.first.versions
         versions.size.should == 1
         version = versions.first
         version.version.should == '3.1.1'
-        version.license.should eq "BSD"
+        version.license.should eq 'BSD'
       end
 
-      it 'should not create more developers' do
+      def should_not_create_more_developers
         devs = Developer.where(language:@language, prod_key:@prod_key, version:'3.1.1')
         devs.count.should == 1
       end
 
-      it 'should not create more versionlinks' do
+      def should_not_create_more_versionlinks
         links = Versionlink.where(language:@language, prod_key:@prod_key, version_id:'3.1.1')
         links.count.should == 1
       end
@@ -74,21 +80,26 @@ describe PodSpecParser do
 
     context 'parse other version of the podspec' do
 
-      before :all do
+      it 'should create another version not anouther product' do
+        # should run before :all
         DatabaseCleaner.clean
+
         @product1a = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
         @product1b = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability-newer.podspec'
         @language  = 'Objective-C'
         @prod_key  = 'reachability'
+
+        should_not_create_another_product
+        should_create_another_version
       end
 
-      it 'should not create another product' do
+      def should_not_create_another_product
         products = Product.where(language:@language, prod_key:@prod_key)
         products.count.should == 1
         products.first.should be_a Product
       end
 
-      it 'should create another version' do
+      def should_create_another_version
         products = Product.where(language:@language, prod_key:@prod_key)
         versions = products.first.versions
         versions.size.should == 2
@@ -106,17 +117,20 @@ describe PodSpecParser do
 
     context 'parse other podspec' do
 
-      before :all do
+      it 'should create another product and developer' do
         DatabaseCleaner.clean
         @product1 = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
         @product2 = PodSpecParser.new.parse_file './spec/fixtures/files/podspec/twitter-text-objc.podspec'
+
+        should_create_another_product
+        should_create_another_developer
       end
 
-      it 'should exists another product' do
+      def should_create_another_product
         Product.count.should == 2
       end
 
-      it 'should exists another developer' do
+      def should_create_another_developer
         Developer.count.should == 2
       end
 

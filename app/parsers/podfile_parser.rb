@@ -20,6 +20,8 @@ class PodFileParser < CommonParser
   def parse_file file
     @podfile = load_podfile file
     @project = get_project
+    dependencies
+    target_definitions
     @project
   end
 
@@ -34,5 +36,13 @@ class PodFileParser < CommonParser
     project
   end
 
+
+  def dependencies
+    puts "dependencies: #{@podfile.dependencies}"
+  end
+
+  def target_definitions
+    puts "target definitions: #{@podfile.target_definitions}"
+  end
 
 end
