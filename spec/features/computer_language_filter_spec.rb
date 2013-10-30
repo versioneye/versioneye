@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Computer Language Filter" do
 
-  before :all do
+  before :each do
     Product.destroy_all
     prod1 = ProductFactory.create_for_maven(   "junit", "json-test", "1.0.0")
     prod2 = ProductFactory.create_for_maven(   "json",  "jsonJ",     "1.0.0")
