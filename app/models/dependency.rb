@@ -6,6 +6,7 @@ class Dependency
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  # TODO RR check scope provided for maven
   A_SCOPE_COMPILE = "compile"
   A_SCOPE_RUNTIME = "runtime"
   A_SCOPE_REQUIRE = "require"
