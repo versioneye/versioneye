@@ -41,6 +41,8 @@ class CocoapodsPodspecParser
 
 
   def get_product
+    @spec_hash.except! "summary", "description"
+
     product = Product.find_by_lang_key(Product::A_LANGUAGE_OBJECTIVEC, prod_key)
 
     unless product
@@ -67,6 +69,7 @@ class CocoapodsPodspecParser
     create_repository
     create_developers
     create_homepage_link
+    create_screenshot_links
     @product.save
     @product
   rescue => e
@@ -154,7 +157,7 @@ class CocoapodsPodspecParser
   def create_screenshot_links
     @spec_hash.except! "screenshots"
 
-    @podspec.screenshots.to_enum.with_index(1).each do |img_url|
+    @podspec.screenshots.to_enum.with_index(1).each do |img_url, i|
       Versionlink.create_versionlink(@@language, prod_key, version, img_url, "Screenshot #{i}")
     end
   end
