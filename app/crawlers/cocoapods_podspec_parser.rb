@@ -5,7 +5,7 @@ require 'cocoapods-core'
 #
 # http://docs.cocoapods.org/specification.html
 #
-class PodSpecParser < CommonParser
+class PodSpecParser
 
   @@language  = Product::A_LANGUAGE_OBJECTIVEC
   @@prod_type = Project::A_TYPE_COCOAPODS
@@ -17,6 +17,8 @@ class PodSpecParser < CommonParser
 
   def parse_file ( file )
     @podspec = load_spec file
+    return nil unless @podspec
+
     @product = get_product
     update_product
   end
@@ -24,6 +26,10 @@ class PodSpecParser < CommonParser
 
   def load_spec file
     Pod::Spec.from_file(file)
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace
+    nil
   end
 
 
@@ -57,6 +63,10 @@ class PodSpecParser < CommonParser
     create_homepage_link
     @product.save
     @product
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace
+    nil
   end
 
 
