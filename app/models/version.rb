@@ -6,7 +6,7 @@ class Version
 
   field :uid            , type: String
   field :version        , type: String
-  field :link           , type: String
+  field :link           , type: String # TODO remove it
   field :downloads      , type: Integer
   field :authors        , type: String # TODO remove it
   field :description    , type: String # TODO remove it
