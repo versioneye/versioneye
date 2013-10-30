@@ -80,7 +80,27 @@ class CocoapodsPodspecParser
 
 
   def create_dependencies
-    @spec_hash.except! "dependencies", "platforms", "requires_arc", "frameworks", "ios", "osx"
+    @spec_hash.except! *(%w{
+      dependencies
+      platforms
+      requires_arc
+      frameworks
+      ios
+      osx
+      resources
+      subspecs
+      default_subspec
+      vendored_libraries
+      source_files
+      exclude_files
+      compiler_flags
+      xcconfig
+      preserve_paths
+      public_header_files
+      prefix_header_contents
+      header_mappings_dir
+      prepare_command
+      })
 
     @podspec.dependencies.each do |pod_dep|
       dep = Dependency.find_by_lang_key_and_version(@@language, prod_key, version)
