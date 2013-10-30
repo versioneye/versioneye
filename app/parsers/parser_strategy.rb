@@ -41,7 +41,7 @@ class ParserStrategy
       
       when Project::A_TYPE_COCOAPODS
         if url.match(/\.podspec/i)
-          return PodSpecParser.new
+          return CocoapodsPodspecParser.new
         else
           return PodFileParser.new
         end
