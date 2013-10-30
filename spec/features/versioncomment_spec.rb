@@ -2,11 +2,8 @@ require 'spec_helper'
 
 describe "Submit a Comment to specific package" do
 
-  before :all do
-    @user = UserFactory.create_new
-  end
-
   before :each do
+    @user = UserFactory.create_new
     visit signin_path
     fill_in 'session[email]',    :with => @user.email
     fill_in 'session[password]', :with => @user.password

@@ -2,12 +2,9 @@ require 'spec_helper'
 
 describe "Settings click throgh" do
 
-  before :all do
+  before :each do
     @user = UserFactory.create_new
     Plan.create_default_plans
-  end
-
-  before :each do
     visit signin_path
     fill_in 'session[email]',    :with => @user.email
     fill_in 'session[password]', :with => @user.password
