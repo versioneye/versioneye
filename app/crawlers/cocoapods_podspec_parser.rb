@@ -20,8 +20,14 @@ class CocoapodsPodspecParser
     @podspec = load_spec file
     return nil unless @podspec
 
+    @spec_hash = @podspec.to_hash
+
     @product = get_product
     update_product
+
+    Rails.logger.info @spec_hash.to_json unless @spec_hash.except!("name").empty?
+
+    @product
   end
 
 
@@ -39,13 +45,12 @@ class CocoapodsPodspecParser
 
     unless product
       product = Product.new
-
       product.update_attributes({
         :reindex       => true,
         :prod_key      => prod_key,
         :name          => @podspec.name,
         :name_downcase => prod_key,
-        :description   => @podspec.summary,
+        :description   => description,
         :language      => @@language,
         :prod_type     => @@prod_type,
       })
@@ -72,6 +77,8 @@ class CocoapodsPodspecParser
 
 
   def create_dependencies
+    @spec_hash.except! "dependencies", "platforms", "requires_arc", "frameworks", "ios", "osx"
+
     @podspec.dependencies.each do |pod_dep|
       dep = Dependency.find_by_lang_key_and_version(@@language, prod_key, version)
       next if dep
@@ -90,6 +97,8 @@ class CocoapodsPodspecParser
 
 
   def add_version
+    @spec_hash.except! "version", "license"
+
     version_numbers = @product.versions.map(&:version)
     unless version_numbers.member? version
       @product.add_version( version, {
@@ -103,6 +112,8 @@ class CocoapodsPodspecParser
 
 
   def create_repository
+    @spec_hash.except! "source"
+
     repo = repository
     unless @product.repositories.member?( repo )
       @product.repositories.push( repo )
@@ -117,6 +128,8 @@ class CocoapodsPodspecParser
   end
 
   def create_developers
+    @spec_hash.except! "authors"
+
     @podspec.authors.each do |name, email|
       developer = Developer.find_by( @@language, prod_key, version, name ).first
       next if developer
@@ -134,7 +147,16 @@ class CocoapodsPodspecParser
   end
 
   def create_homepage_link
+    @spec_hash.except! "homepage"
     Versionlink.create_versionlink(@@language, prod_key, version, @podspec.homepage, 'Homepage')
+  end
+
+  def create_screenshot_links
+    @spec_hash.except! "screenshots"
+
+    @podspec.screenshots.to_enum.with_index(1).each do |img_url|
+      Versionlink.create_versionlink(@@language, prod_key, version, img_url, "Screenshot #{i}")
+    end
   end
 
   def prod_key
@@ -143,6 +165,16 @@ class CocoapodsPodspecParser
 
   def version
     @podspec.version.to_s
+  end
+
+  def description
+    @spec_hash.except! "summary", "description"
+
+    description = @podspec.summary
+    if @podspec.description
+      description << "\n\n" << @podspec.description
+    end
+    description
   end
 
 end
