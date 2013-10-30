@@ -7,7 +7,7 @@ RSpec.configure do |config|
     DatabaseCleaner.orm = "mongoid"
   end
 
-  config.after(:each) do
+  config.before(:each) do
     DatabaseCleaner.clean
   end
 
