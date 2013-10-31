@@ -17,10 +17,10 @@ gem 'oauth'             , '0.4.7'
 gem 'twitter_oauth'     , '0.4.94'
 gem 'aws-s3'            , '0.6.3', :require => 'aws/s3'
 gem 'nokogiri'          , '1.6.0'
-gem 'stripe'            , '1.8.4'
+gem 'stripe'            , '1.8.8'
 gem 'unicorn'           , '4.6.3'
-gem 'tire'              , '0.6.0'
-gem 'json'              , '1.8.0'
+gem 'tire'              , '0.6.1'
+gem 'json'              , '1.8.1'
 gem 'dalli'             , '2.6.4'   # memcache library
 gem 'kgio'              , '2.8.1'   # 20% performance boost for dalli
 gem 'grape'             , '0.5.0'
