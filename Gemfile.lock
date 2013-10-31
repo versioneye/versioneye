@@ -164,7 +164,7 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.0)
-    kgio (2.8.0)
+    kgio (2.8.1)
     kramdown (1.1.0)
     libv8 (3.16.14.3)
     mail (2.5.4)
@@ -357,7 +357,7 @@ DEPENDENCIES
   irbtools
   jquery-rails (= 2.2.1)
   json (= 1.8.0)
-  kgio (= 2.8.0)
+  kgio (= 2.8.1)
   mongo (= 1.7.0)
   mongoid (= 2.5.0)
   naturalsorter (= 2.0.6)
