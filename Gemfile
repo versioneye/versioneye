@@ -10,7 +10,7 @@ gem 'bson_ext'          , '1.7.0'
 gem 'mongo'             , '1.7.0'
 gem 'mongoid'           , '2.5.0'
 gem 'naturalsorter'     , '2.0.6'
-gem 'postmark-rails'    , '0.5.1'
+gem 'postmark-rails'    , '0.5.2'
 gem 'httparty'          , '0.11.0'
 gem 'persistent_httparty'
 gem 'oauth'             , '0.4.7'
@@ -53,7 +53,7 @@ group :test do
   gem 'turn'              , :require => false
   gem 'rspec'             , '2.14.1'
   gem "rspec-rails"       , "~> 2.0"
-  gem 'rspec-mocks'       , '2.14.1'
+  gem 'rspec-mocks'       , '2.14.4'
   gem 'capybara'          , '2.1.0'
   gem 'capybara-firebug'  , '~> 1.3'
   gem 'selenium-webdriver', '2.35.0'
