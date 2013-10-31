@@ -16,4 +16,25 @@ module ProjectsHelper
 		return ""
 	end
 
+  def add_dependency_classes(project)
+    deps = project.dependencies
+    return project if deps.nil? or deps.empty?
+    deps.each do |dep|
+      if dep.unknown?
+        dep[:status_class] = "info"
+        dep[:status_rank] = 4
+      elsif dep.outdated and dep.release? == false
+        dep[:status_class] = "warn"
+        dep[:status_rank] = 2
+      elsif dep.outdated and dep.release? == true
+        dep[:status_class] = "error"
+        dep[:status_rank] = 1
+      else
+        dep[:status_class] = "success"
+        dep[:status_rank] = 3
+      end
+    end
+    project
+  end
+
 end
