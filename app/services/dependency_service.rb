@@ -1,10 +1,27 @@
 class DependencyService
 
 
+  def self.cache_outdated?( dependency )
+    key = "#{dependency.id.to_s}_outdated?"
+    outdated = Rails.cache.read( key )
+    return outdated if !outdated.nil?
+
+    outdated = self.outdated?( dependency )
+    Rails.cache.write( key, outdated, timeToLive: 6.hour )
+    outdated
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    return false
+  end
+
+
   def self.outdated?( dependency )
     product = dependency.product
     return false if product.nil?
     newest_product_version = VersionService.newest_version_number( product.versions )
+    dependency.current_version = newest_product_version
+    dependency.save
 
     project_dependency = Projectdependency.new
     parser = ParserStrategy.parser_for( dependency.prod_type, "" )
