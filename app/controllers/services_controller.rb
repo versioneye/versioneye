@@ -39,8 +39,9 @@ class ServicesController < ApplicationController
   end
 
   def show
-    id = params[:id]
-    @project = Project.find_by_id(id)
+    id       = params[:id]
+    project  = Project.find_by_id( id )
+    @project = add_dependency_classes( project )
   end
 
   def recursive_dependencies
