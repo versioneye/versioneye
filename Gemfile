@@ -4,7 +4,7 @@ ruby "1.9.3"
 gem 'rails'             , '3.2.13'
 gem 'jquery-rails'      , '2.2.1'
 gem 'execjs'            , '1.4.0'
-gem 'will_paginate'     , '3.0.4'
+gem 'will_paginate'     , '3.0.5'
 gem 'gravatar_image_tag', '1.1.3'
 gem 'bson_ext'          , '1.7.0'
 gem 'mongo'             , '1.7.0'
@@ -59,7 +59,7 @@ group :test do
   gem 'selenium-webdriver', '2.35.0'
   gem 'fakeweb'           , '1.3.0'
   gem 'debugger'
-  gem 'database_cleaner'  , '1.0.1'
+  gem 'database_cleaner'  , '1.2.0'
   gem 'factory_girl'      , '~> 4.0'
   gem 'factory_girl_rails', '~> 4.0'
 end
