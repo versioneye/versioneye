@@ -49,6 +49,9 @@ module ProductsHelper
     return "unknown" if product.nil?
 
     product.version = version
+    dependencies = product.dependencies
+    return "none" if dependencies.nil? || dependencies.empty?
+
     outdated = DependencyService.dependencies_outdated?( product.dependencies )
     badge = "out-of-date" if outdated
     badge = "up-to-date"  if not outdated
