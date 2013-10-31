@@ -83,21 +83,10 @@ class ProductsController < ApplicationController
   end
 
   def badge
-    lang     = Product.decode_language( params[:lang] )
+    language = Product.decode_language( params[:lang] )
     prod_key = Product.decode_prod_key params[:key]
-    badge    = "unknown"
-    @product = Product.fetch_product lang, prod_key
-    unless @product.nil?
-      version = Version.decode_version params[:version]
-      if !version.nil? && !version.empty?
-        @product.version = version
-      end
-      if DependencyService.dependencies_outdated?( @product.dependencies )
-        badge = "out-of-date"
-      else
-        badge = "up-to-date"
-      end
-    end
+    version  = Version.decode_version params[:version]
+    badge    = badge_for_product( language, prod_key, version )
     send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
   end
 
