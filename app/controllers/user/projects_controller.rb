@@ -46,17 +46,9 @@ class User::ProjectsController < ApplicationController
   end
 
   def badge
-    id = params[:id]
-    @project = Project.find_by_id(id)
-    path = "app/assets/images/badges"
-    badge = "unknown"
-    unless @project.nil?
-      if @project.outdated?
-        badge = "out-of-date"
-      else
-        badge = "up-to-date"
-      end
-    end
+    id    = params[:id]
+    badge = badge_for_project( id )
+    path  = "app/assets/images/badges"
     send_file "#{path}/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
   end
 

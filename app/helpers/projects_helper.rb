@@ -37,4 +37,18 @@ module ProjectsHelper
     project
   end
 
+  def badge_for_project( id )
+    badge = Rails.cache.read( id )
+    return badge if badge
+
+    project = Project.find_by_id( id )
+    return "unknown" if project.nil?
+
+    outdated = project.outdated?
+    badge = "out-of-date" if outdated
+    badge = "up-to-date"  if not outdated
+    Rails.cache.write( id, badge, timeToLive: 1.hour)
+    return badge
+  end
+
 end
