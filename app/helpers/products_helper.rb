@@ -40,6 +40,22 @@ module ProductsHelper
     return query
   end
 
+  def badge_for_product( language, prod_key, version )
+    key = "#{language}_#{prod_key}_#{version}"
+    badge = Rails.cache.read( key )
+    return badge if badge
+
+    product = Product.fetch_product language, prod_key
+    return "unknown" if product.nil?
+
+    product.version = version
+    outdated = DependencyService.dependencies_outdated?( product.dependencies )
+    badge = "out-of-date" if outdated
+    badge = "up-to-date"  if not outdated
+    Rails.cache.write( key, badge )
+    return badge
+  end
+
   def get_lang_value( lang )
     lang = "," if lang.nil? || lang.empty?
     lang
