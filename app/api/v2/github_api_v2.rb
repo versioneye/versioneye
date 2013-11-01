@@ -143,6 +143,21 @@ module V2
         present :results, results
         present :paging, list_to_paging(results, page, total_count, per_page), with: EntitiesV2::PagingEntity
       end
+
+      #-- POST '/receive_push' -----------------------------------------------
+      desc "Endpoint to receive git hooks.", {
+        notes: %q[TODO]
+      }
+      params do
+        requires :api_key, type: String, desc: "api token"
+      end
+
+      post '/receive_push' do
+        authorized?
+        present :got, params
+      end
+
+
       #-- GET '/:repo_key' ----------------------------------------------------
       desc "shows the detailed information for the repository", {
         notes: %q[
