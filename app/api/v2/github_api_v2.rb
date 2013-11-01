@@ -144,15 +144,16 @@ module V2
         present :paging, list_to_paging(results, page, total_count, per_page), with: EntitiesV2::PagingEntity
       end
 
-      #-- POST '/receive_push' -----------------------------------------------
-      desc "Endpoint to receive git hooks.", {
-        notes: %q[TODO]
+
+      #-- POST '/hook' -----------------------------------------------
+      desc "GitHub Hook", {
+        notes: %q[This endpoint is registered as service hook on GitHub. It triggers a project re-parse on each git push. ]
       }
       params do
-        requires :api_key, type: String, desc: "api token"
+        requires :api_key,    type: String, desc: "API Token"
+        requires :project_id, type: String, desc: "Project ID"
       end
-
-      post '/receive_push' do
+      post '/hook' do
         authorized?
         present :got, params
       end
