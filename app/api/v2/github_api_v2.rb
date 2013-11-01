@@ -15,10 +15,12 @@ module V2
     helpers SearchHelpers
 
     resource :github do
+
       before do
         track_apikey
         init_cache({expires_in: 300})
       end
+
 
       #-- GET '/' -------------------------------------------------------------
       desc "lists your's github repos", {
@@ -80,6 +82,7 @@ module V2
         present :paging, paging, with: EntitiesV2::PagingEntity
       end
 
+
       #-- GET '/github/sync' --------------------------------------------------
       desc "re-load github data", {
         notes: %q[Reimports data from Github.]
@@ -109,6 +112,7 @@ module V2
 
         present msg
       end
+
 
       #-- GET '/github/search' ------------------------------------------------
       desc "search github repositories on github", {
@@ -145,16 +149,19 @@ module V2
       end
 
 
-      #-- POST '/hook' -----------------------------------------------
+      #-- GET '/hook' -----------------------------------------------
       desc "GitHub Hook", {
         notes: %q[This endpoint is registered as service hook on GitHub. It triggers a project re-parse on each git push. ]
       }
       params do
-        requires :api_key,    type: String, desc: "API Token"
         requires :project_id, type: String, desc: "Project ID"
       end
-      post '/hook' do
+      get '/hook/:project_id' do
         authorized?
+        project = Project.find( params[:project_id] )
+        if project.collaborator?( current_user )
+          ProjectService.update( project, false ) # TODO do this async
+        end
         present :got, params
       end
 
