@@ -62,7 +62,7 @@ class LanguageController < ApplicationController
       flash[:success] = "Language is added successfully."
       redirect_to language_path
     else
-      flash[:error] = "Cant save language: #{new_lang.errors.full_messages.to_sentence}"
+      flash[:error] = "Can not save language: #{new_lang.errors.full_messages.to_sentence}"
       redirect_to :back
     end
   end
@@ -75,7 +75,7 @@ class LanguageController < ApplicationController
       flash[:success] = "Language is now opdated."
       redirect_to "/language/#{old_language[:param_name]}"
     else
-      flash[:error] = "Cant save updates."
+      flash[:error] = "Can not save updates."
       redirect_to :back
     end
   end

@@ -19,7 +19,7 @@
 <% else %>
 
   <div class="span8">
-    <div class="row content_header_def" >
+    <div class="row content_header_def" style = "padding-bottom: 0px;" >
       <div id = "github-menu" ></div>
     </div>
 
@@ -28,7 +28,7 @@
         With the current scope VersionEye can only fetch your public repositories.
         If you want us to monitor your private repositories, you need to grant VersionEye access:
         <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&amp;scope=repo' style="margin-right: 5px;" >
-          Grand access to private repositories.
+          Grant access to private repositories.
         </a><br/>
         Unfortunately, GitHub doesn't have a read-only scope for private repositories currently.
         But we promise you that we don't have any git write operations in our code base.
@@ -137,12 +137,18 @@
 
 <script id = "github-repo-control-info-template" type = "text/template">
   <p>
-    This repo has {{= branches.length }} branches.
+
+    {{ if (branches.length == 1) { }}
+      There is 1 branch in this repository.
+    {{  } else { }}
+      This repository has {{= branches.length }} branches.
+    {{  } }}
+
     {{ if(imported_branches.length){ }}
       We are monitoring {{= imported_branches.length }} of them :
       <i> {{= imported_branches }} </i>.
     {{  } else { }}
-        We are monitoring none of them. But we are happy to monitor it.
+        We are monitoring none of them.
     {{  } }}
   </p>
 
@@ -186,7 +192,7 @@
 </script>
 
 <script id = "github-menu-template" type = "text/template">
-  <ul class="nav nav-pills">
+  <ul class="nav nav-pills" style = "padding-bottom: 0px; margin-bottom: 0px;">
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         <i class = "icon-group">&nbsp;</i>Organizations
@@ -285,14 +291,21 @@
         </li>
       </ul>
     </li>
+    <li >
+      <button id = "refresh-github-data" class = "btn btn-link">
+        <i class = "btn-icon icon-refresh">&nbsp;</i>
+        <span class = "btn-title">Reimport all repositories</span>
+      </button>
+    </li>
     <li class = "dropdown">
       <form class = "form" id = "github-repo-search">
         <div class = "input-append">
-          <input  type = "text" class = "span2" id = "github-search-term" class = "search-box"
+          <input  type = "text" class = "span4" id = "github-search-term" class = "search-box"
             name = "github_search" placeholder = "filter by name">
-          <button class = "btn" id = "github-search-btn" type = "button"> <i class = "icon-search">&nbsp;</i></button>
+          <button class = "btn" id = "github-search-btn" type = "button"> <i class = "icon-search">&nbsp;</i> Filter</button>
         </div>
       </div>
     </li>
+
   </ul>
 </script>

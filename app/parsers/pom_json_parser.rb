@@ -5,7 +5,7 @@ class PomJsonParser < CommonParser
     pom_json = self.fetch_response_body_json( url )
     return nil if pom_json.nil?
     project    = init_project( url )
-    pom_json.each do |json_dep|
+    pom_json['dependencies'].each do |json_dep|
       version     = json_dep['version']
       name        = json_dep['name']
       spliti      = name.split(":")
@@ -19,6 +19,7 @@ class PomJsonParser < CommonParser
       project.projectdependencies.push( dependency )
     end
     project.dep_number = project.dependencies.size
+    project.name = pom_json['name']
     project
   rescue => e
     Rails.logger.error e.message

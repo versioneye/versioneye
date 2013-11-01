@@ -26,7 +26,7 @@ class Admin::LanguageController < ApplicationController
       flash[:success] = "Language is added successfully."
       redirect_to admin_language_index_path
     else
-      flash[:error] = "Cant save language: #{new_lang.errors.full_messages.to_sentence}"
+      flash[:error] = "Can not save language: #{new_lang.errors.full_messages.to_sentence}"
       redirect_to :back
     end
   end
@@ -39,7 +39,7 @@ class Admin::LanguageController < ApplicationController
       flash[:success] = "Language is now updated."
       redirect_to admin_language_index_path
     else
-      flash[:error] = "Cant save updates."
+      flash[:error] = "Can't save updates."
       redirect_to :back
     end
   end
@@ -48,7 +48,7 @@ class Admin::LanguageController < ApplicationController
     lang = Language.by_language(params[:id]).shift
     p "deleting language:", lang
     if lang.nil?
-      flash[:error] = "Failure: cant delete language `#{params[:id]}`."
+      flash[:error] = "Failure: can't delete language `#{params[:id]}`."
     else
       lang.delete
       flash[:success] = "Success: #{lang[:name]} is now removed."
@@ -79,11 +79,11 @@ class Admin::LanguageController < ApplicationController
   def download_json
     render json: Language.all.to_json
   end
- 
+
   private
-  
+
   def whitelisted_language_doc_fields(doc)
-    doc.slice("name", "description", "irc", "irc_url", "supported_managers", 
+    doc.slice("name", "description", "irc", "irc_url", "supported_managers",
               "latest_version", "stable_version", "licence", "licence_url",
               "main_url", "wiki_url", "repo_url", "issue_url", "mailinglist_url",
               "irc_url", "irc", "twitter_name")

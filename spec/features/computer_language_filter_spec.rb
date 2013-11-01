@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Computer Language Filter" do
 
-  before :all do
+  before :each do
     Product.destroy_all
     prod1 = ProductFactory.create_for_maven(   "junit", "json-test", "1.0.0")
     prod2 = ProductFactory.create_for_maven(   "json",  "jsonJ",     "1.0.0")
@@ -55,7 +55,7 @@ describe "Computer Language Filter" do
       page.should have_content("jsonG")
       page.should have_content("jsonC")
 
-      find(:xpath, '//button[contains(@id, "button_json2")]' ).click
+      find(:xpath, '//button[contains(@id, "button_ruby_json2")]' ).click
       page.should_not have_content("to get notified about new versions.")
       page.should     have_content("Unfollow")
 

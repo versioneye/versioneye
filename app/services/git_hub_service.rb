@@ -11,6 +11,7 @@ class GitHubService
     user.github_repos.delete_all
     GitHubService.cached_user_repos user
     p " - #{user.github_repos.count}"
+    user.github_repos.all
   rescue => e
     p e
   end
@@ -67,7 +68,7 @@ class GitHubService
           begin
             GithubRepo.add_new(user, repo, data[:etag])
           rescue
-            Rails.logger.error("Cant add repo to cache: #{repo}")
+            Rails.logger.error("Can't add repo to cache: #{repo}")
           end
         end
         url = data[:paging]["next"]

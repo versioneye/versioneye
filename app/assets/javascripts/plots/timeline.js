@@ -19,7 +19,7 @@ define([require], function(require){
   	//-- load data & draw plot
     d3.json(url, function(error, data){
       if(error){
-        console.error("Cant load for Timeline from url: " + url);
+        console.error("Can not load for Timeline from url: " + url);
         return 1;
       }
       //-- preprocess data

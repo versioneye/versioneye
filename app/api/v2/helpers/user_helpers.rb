@@ -18,5 +18,4 @@ module UserHelpers
                               paging: make_paging_object(favorites)
     present user_favorites, with: EntitiesV2::UserFollowEntities
   end
-
 end

@@ -203,6 +203,14 @@ class LanguageDailyStats
     self.doc_metrics(doc)
   end
 
+  #stats for 2days ago
+  def self.t2_stats
+    dt_string = LanguageDailyStats.to_date_string(2.day.ago)
+    doc = self.where(date_string: dt_string).shift
+    self.doc_metrics(doc)
+  end
+
+
   def self.current_week_stats
     dt_since = Date.today.at_beginning_of_week
     dt_to    = DateTime.now
@@ -272,6 +280,9 @@ class LanguageDailyStats
     when :today
       t1 = self.today_stats
       t2 = self.yesterday_stats
+    when :yesterday
+      t1 = self.yesterday_stats
+      t2 = self.t2_stats
     when :current_week
       t1 = self.current_week_stats
       t2 = self.last_week_stats

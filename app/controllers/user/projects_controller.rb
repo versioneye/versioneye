@@ -14,14 +14,14 @@ class User::ProjectsController < ApplicationController
   def create
     project = fetch_project params
     if project.nil?
-      flash[:error] = "Please put in a URL OR select a file from your computer. Or select a GitHub project."
+      flash[:error] = "Please put in a URL OR select a file from your computer." if flash[:error].nil?
       redirect_to new_user_project_path
       return nil
     end
     if project and project.id
       redirect_to user_project_path( project._id )
     else
-      flash[:error] = "Cant import that project from Github: unparseable project file or issues with filestorage. Please send issue to versioneye."
+      flash[:error] = "Can't import that project from Github: unparseable project file or issues with filestorage. Please send issue to versioneye."
       redirect_to :back
     end
   rescue => e
@@ -33,28 +33,23 @@ class User::ProjectsController < ApplicationController
 
   def show
     id = params[:id]
-    @project = Project.find_by_id( id )
-    @collaborators = @project.collaborators
+    project = Project.find_by_id( id )
+    project = add_dependency_classes( project )
+    @project = project
+    @sorted_deps = sort_dependencies_by_rank(project)
+    @collaborators = project.collaborators
 
-    unless @project.visible_for_user?(current_user)
+    unless project.visible_for_user?(current_user)
       return if authenticate == false
-      redirect_to(root_path) unless current_user?(@project.user)
+      redirect_to(root_path) unless current_user?(project.user)
     end
   end
 
   def badge
-    id = params[:id]
-    @project = Project.find_by_id(id)
-    path = "app/assets/images/badges"
-    badge = "unknown"
-    unless @project.nil?
-      if @project.outdated?
-        badge = "out-of-date"
-      else
-        badge = "up-to-date"
-      end
-    end
-    send_file "#{path}/dep_#{badge}.png", :type => "images/png", :disposition => 'inline'
+    id    = params[:id]
+    badge = badge_for_project( id )
+    path  = "app/assets/images/badges"
+    send_file "#{path}/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
   end
 
   def update_name
@@ -94,10 +89,15 @@ class User::ProjectsController < ApplicationController
 
   def add_collaborator
     collaborator_info = params[:collaborator]
+    if collaborator_info[:username].to_s.empty?
+      flash[:error] = "You have to type in a name or an email address!"
+      redirect_to :back and return
+    end
+
     project = Project.find_by_id params[:id]
 
     if project.nil?
-      flash[:error] = "Failure: Cant add collaborator - wrong project id."
+      flash[:error] = "Failure: Can't add collaborator - wrong project id."
       redirect_to :back and return
     end
 
@@ -123,7 +123,7 @@ class User::ProjectsController < ApplicationController
     end
 
     unless new_collaborator.save
-      flash[:error] = "Failure: cant add new collaborator - #{new_collaborator.errors.full_messages.to_sentence}"
+      flash[:error] = "Failure: can't add new collaborator - #{new_collaborator.errors.full_messages.to_sentence}"
       redirect_to :back and return
     end
 
@@ -150,7 +150,7 @@ class User::ProjectsController < ApplicationController
       ProjectService.destroy id
       success = true
     else
-      msg = "Cant remove project with id: `#{id}` - it doesnt exist. Please refresh page."
+      msg = "Can't remove project with id: `#{id}` - it doesnt exist. Please refresh page."
       Rails.logger.error msg
     end
     respond_to do |format|
@@ -215,6 +215,13 @@ class User::ProjectsController < ApplicationController
   end
 
   private
+
+    def sort_dependencies_by_rank(project)
+      deps = project.dependencies
+      return project if deps.nil? or deps.empty?
+      deps.sort_by {|dep| dep[:status_rank] }
+    end
+
     def update_project_dependency(params, update_map)
       project_id = params[:id]
       lang = Product.decode_language(params[:language])
@@ -246,8 +253,9 @@ class User::ProjectsController < ApplicationController
 
     def upload_and_store file
       project = upload file
-      store_project project
-      project
+      stored = store_project(project)
+      return project if stored
+      return nil if not stored
     end
 
     def upload file
@@ -264,8 +272,9 @@ class User::ProjectsController < ApplicationController
       project_name   = project_url.split("/").last
       project        = build_project( project_url, project_name )
       project.source = Project::A_SOURCE_URL
-      store_project project
-      project
+      stored = store_project(project)
+      return project if stored
+      return nil if not stored
     end
 
     def build_project( url, project_name )
@@ -280,8 +289,10 @@ class User::ProjectsController < ApplicationController
     def store_project( project )
       if ProjectService.store project
         flash[:success] = "Project was created successfully."
+        return true
       else
-        flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye Team by using the Feedback button."
+        flash[:error] = "An error occured. Something is wrong with your file. Please contact the VersionEye Team on Twitter."
+        return false
       end
     end
 

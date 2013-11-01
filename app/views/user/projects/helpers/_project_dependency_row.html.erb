@@ -1,17 +1,5 @@
 <% product = dep.find_or_init_product %>
-
-<% status_class = "success" %>
-<% if dep.unknown? %>
-  <% status_class = "info" %>
-<% elsif dep.outdated and dep.release? == false  %>
-  <% status_class = "warn" %>
-<% elsif dep.outdated and dep.release? == true %>
-  <% status_class = "error" %>
-<% else %>
-  <% status_class = "success" %>
-<% end %>
-
-<tr class="flash <%= status_class %>">
+<tr class="flash <%= dep[:status_class] || 'info' %>">
   <td>
     <div>
       <%= render partial: "/user/projects/helpers/project_mute_button",
@@ -26,9 +14,13 @@
   </td>
   <td>
     <span >
-      <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" >
+      <% unless dep.unknown? %>
+        <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" >
+          <span><%= product.name %></span>
+        </a>
+      <% else %>
         <span><%= product.name %></span>
-      </a>
+      <% end %>
     </span>
   </td>
   <td>

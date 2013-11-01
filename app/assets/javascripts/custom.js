@@ -42,6 +42,12 @@ jQuery(document).ready(function(){
     console.log("Github switches are registered.");
   }
 
+  if(jQuery('.btn-follow-product')){
+    jQuery('.btn-follow-product').on('click', function(ev){
+      toggleProductFollow(ev);
+    });
+  }
+
   if (window.FB){
     FB.init({
           appId:'230574627021570',
@@ -128,6 +134,73 @@ function load_dialog_follow(product_name, prod_key, prod_lang){
   jQuery('#dialog_follow').modal({keyboard : true});
   page_view('ga_follow_dialog='+ prod_lang +'/'+ prod_key)
 }
+
+function toggleProductFollow(ev){
+  var btn = jQuery(ev.currentTarget);
+  var prod_info = btn.data();
+  var follow_url = "/package/follow.json";
+  var unfollow_url = "/package/unfollow.json";
+  var api_url = follow_url;
+  var on_icon = "icon-check";
+  var off_icon = "icon-check-empty";
+  console.debug(prod_info);
+
+  if(prod_info['followState'] == true){
+    api_url = unfollow_url;
+  }
+
+  var dep_data = {
+    src_hidden: "detail",
+    product_lang: prod_info['productLang'],
+    product_key: prod_info['productKey']
+  }
+
+  var onFollowSuccess = function(data){
+    if(data.success == false){
+      console.debug("Following failed - backend issue!");
+      return 1;
+    }
+    console.debug("Followed:" + prod_info['productKey']);
+    btn.data('followState', true);
+    btn.find("span.btn-title").text(" Unfollow")
+    btn.find("i.follow-icon")
+        .removeClass(off_icon).addClass(on_icon);
+  }
+  var onUnfollowSuccess = function(data){
+    if(data.success == false){
+      console.debug("Unfollowing failed - backend issue!");
+      return 1;
+    }
+    console.debug("Unfollowed:" + prod_info['productKey']);
+    btn.data('followState', false);
+    btn.find("i.follow-icon").removeClass(on_icon).addClass(off_icon);
+    btn.find("span.btn-title").text(" Follow");
+  }
+
+  var showFollowLoader = function(){
+    console.debug("Show follow  header");
+    btn.find("i.follow-icon").addClass("icon-spin");
+  }
+  var hideFollowLoader = function(){
+    console.debug("Hide follow loader.");
+    btn.find("i.follow-icon").removeClass("icon-spin");
+  }
+
+  showFollowLoader();
+  var jqxhr = jQuery.post(api_url, dep_data)
+    .done(function(data){
+      console.debug(data);
+      if(prod_info['followState'] == false){
+        onFollowSuccess(data);
+      } else {
+        onUnfollowSuccess(data);
+      }
+    })
+    .fail(function(){console.error("Failed");})
+    .always(function(){hideFollowLoader(btn);});
+}
+
+
 
 function exchangeImage(id, image){
   image_path = "/assets/" + image
@@ -233,4 +306,13 @@ function toggleProjectDependencyMute(ev){
   }
 
   return false;
+}
+
+function preventSubmit(id, name){
+  element = document.getElementById(id)
+  if (element.value == ""){
+    alert("The " + name + " input field can't be empty!")
+    return false;
+  }
+  return true;
 }

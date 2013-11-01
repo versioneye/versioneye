@@ -14,11 +14,11 @@
     </thead>
     <% dependencies.each do |dep| %>
       <% dep.update_known_if_nil() %>
-      <% tr_class = "flash warn" if DependencyService.outdated?( dep ) %>
+      <% tr_class = "flash warn" if DependencyService.cache_outdated?( dep ) %>
       <tr class="<%= tr_class %>">
         <td>
           <% if dep.known && dep.product %>
-            <%= VersionService.newest_version( dep.product.versions ).version %>
+            <%= dep[:current_version] %>
           <% else %>
             UNKNOWN
           <% end %>
