@@ -239,15 +239,6 @@ class User
     User.all.select {|user| user['product_ids'].count == 0}
   end
 
-  def self.active_users
-    User.all.select do |user|
-      (user['product_ids'].count > 0 or
-       Versioncomment.where(user_id: user.id).exists? or
-       Project.where(user_id: user.id).exists?
-      )
-    end
-  end
-
   def self.authenticate(email, submitted_password)
     user = User.where( email: email.downcase )[0]
     return nil  if user.nil? || user.deleted
