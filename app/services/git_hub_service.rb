@@ -1,3 +1,5 @@
+require 'benchmark'
+
 class GitHubService
 
   def self.update_all_repos
@@ -7,13 +9,13 @@ class GitHubService
   end
 
   def self.update_repos_for_user( user )
-    p user.fullname
+    Rails.logger.debug "Importing repos for #{user.fullname}."
     user.github_repos.delete_all
     GitHubService.cached_user_repos user
-    p " - #{user.github_repos.count}"
+    Rails.logger.debug  "Got #{user.github_repos.count} repos for #{user.fullname}."
     user.github_repos.all
   rescue => e
-    p e
+    Rails.logger.error "Cant import repos for #{user.fullname}\n#{e}"
   end
 
 =begin
@@ -66,9 +68,16 @@ class GitHubService
         data[:repos].each do |repo|
           return nil if bad_credentail?( repo )
           begin
-            GithubRepo.add_new(user, repo, data[:etag])
-          rescue
+            time = Benchmark.measure do
+              repo[:projects] = Github.repo_project_files(user, repo['full_name'])
+              GithubRepo.add_new(user, repo, data[:etag])
+            end
+            puts "Reading `#{repo['full_name']}` took: #{time} "
+          rescue => e
             Rails.logger.error("Can't add repo to cache: #{repo}")
+            Rails.logger.error e.message
+            Rails.logger.error e.backtrace.first
+            nil
           end
         end
         url = data[:paging]["next"]
@@ -80,7 +89,7 @@ class GitHubService
       begin
         data = Github.user_orga_repos(user, orga_name, url)
         data[:repos].each do |repo|
-          return nil if bad_credentail?( repo )
+          return nil if bad_credentail?(repo)
           GithubRepo.add_new(user, repo, data[:etag])
         end
         url = data[:paging]["next"]

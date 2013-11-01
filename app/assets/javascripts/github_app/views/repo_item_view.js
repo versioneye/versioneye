@@ -16,7 +16,7 @@ define(['underscore', 'backbone',
       },
       render: function(){
         var control_view = new GithubRepoControlView({model: this.model});
-        var label_view = new GithubRepoLabelView({model: this.model});   
+        var label_view = new GithubRepoLabelView({model: this.model});
         var repo_container = this.template({repo: this.model.toJSON()});
 
         this.$el.html(repo_container);
