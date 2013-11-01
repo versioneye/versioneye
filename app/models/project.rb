@@ -50,19 +50,26 @@ class Project
   has_many   :projectdependencies
   has_many   :collaborators, class_name: "ProjectCollaborator"
 
-  scope :by_user  , ->(user)  { where(user_id: user.id) }
+  scope :by_user  , ->(user)  { where(user_id: user[:_id].to_s) }
+  scope :by_collaborator, ->(user){all_in(_id: ProjectCollaborator.by_user(user).to_a.map(&:project_id))}
   scope :by_source, ->(source){ where(source:  source ) }
   scope :by_period, ->(period){ where(period:  period ) }
+  scope :by_github, ->(reponame){ where(source: A_SOURCE_GITHUB, github_project: reponame)}
 
   def dependencies
     self.projectdependencies
   end
 
-  # TODO write test for this!
   def unmuted_dependencies
     deps = self.projectdependencies
     return nil if deps.nil?
     deps.any_in(muted: [false, nil])
+  end
+
+  def muted_dependencies
+    deps = self.projectdependencies
+    return nil if deps.nil?
+    deps.any_in(muted: [true])
   end
 
   def self.find_by_id( id )
@@ -79,7 +86,8 @@ class Project
 
   def show_dependency_badge?
     self.language.eql?(Product::A_LANGUAGE_JAVA) or self.language.eql?(Product::A_LANGUAGE_PHP) or
-    self.language.eql?(Product::A_LANGUAGE_RUBY) or self.language.eql?(Product::A_LANGUAGE_NODEJS)
+    self.language.eql?(Product::A_LANGUAGE_RUBY) or self.language.eql?(Product::A_LANGUAGE_NODEJS) or
+    self.language.eql?(Product::A_LANGUAGE_CLOJURE)
   end
 
   def visible_for_user?(user)
@@ -91,15 +99,19 @@ class Project
     return false
   end
 
-  # TODO write test for that.
   def collaborator( user )
     return nil if user.nil?
-    return user if !self.user.nil? && self.user.username.eql?( user.username )
     return nil if collaborators.nil? || collaborators.empty?
     collaborators.each do |collaborator|
       return collaborator if user._id.to_s.eql?( collaborator.user_id.to_s )
     end
     return nil
+  end
+
+  def collaborator?( user )
+    return false if user.nil?
+    return true if !self.user.nil? && self.user.username.eql?( user.username )
+    return !collaborator( user ).nil?
   end
 
   def outdated?
@@ -117,7 +129,6 @@ class Project
     outdated_dependencies
   end
 
-  # TODO refactor with language
   def known_dependencies
     knows_deps = Array.new
     self.projectdependencies.each do |dep|
@@ -138,9 +149,21 @@ class Project
     end
   end
 
+  def muted_prod_keys
+    prod_keys = Array.new
+    muted_deps = muted_dependencies
+    muted_deps.each do |dep|
+      prod_keys.push "#{dep.language}_#{dep.prod_key}_#{dep.version_current}"
+    end
+    prod_keys
+  end
+
   def overwrite_dependencies( new_dependencies )
+    muted_keys = muted_prod_keys
     remove_dependencies
     new_dependencies.each do |dep|
+      dep_key = "#{dep.language}_#{dep.prod_key}_#{dep.version_current}"
+      dep.muted = true if muted_keys.include?( dep_key )
       projectdependencies.push dep
       dep.save
     end
@@ -157,7 +180,7 @@ class Project
     project_key_text.gsub!(/[\s|\W|\_]+/, "_")
 
     similar_projects = Project.by_user(self.user).where(
-                        name: self.name,
+                        project_key: Regexp.new("#{project_key_text}"),
                         project_type: self.project_type
                       )
     project_nr += similar_projects.count unless similar_projects.nil?

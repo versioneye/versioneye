@@ -15,6 +15,7 @@ define(['underscore', 'backbone'],
       this.collection.on('all', this.render, this);
       this.currentRepos = options.currentRepos;
       this.allRepos = options.allRepos;
+      this.fetchAll = options.fetchAll;
     },
     events: {
       "click li.org-item": "onOrgItem",
@@ -22,7 +23,8 @@ define(['underscore', 'backbone'],
       "click li.filter-item": "onFilterItem",
       "click #github-search-btn": "onSearchItem",
       "submit #github-repo-search" : "onSearchItem",
-      "keyup #github-repo-search": "onSearchItem"
+      "keyup #github-repo-search": "onSearchItem",
+      "click #refresh-github-data": "onCheckChanges"
     },
     render: function(){
       console.log("Rendering menu...");
@@ -39,6 +41,7 @@ define(['underscore', 'backbone'],
 
     onOrgItem: function(ev){
       console.debug('User clicked on org-item - cleaning filtering.');
+      this.trackGA('ga_github_orgitem');
       this.removePrevSelection();
     },
 
@@ -48,6 +51,9 @@ define(['underscore', 'backbone'],
 
       this.currentRepos.sortByField(sort_params['field'], sort_params['order']);
       sort_params['order'] = -1 * parseInt(sort_params['order']);
+
+      var metric_name = 'ga_github_sort_by_'+ sort_params['field'] + '_' + sort_params['order'];
+      this.trackGA(metric_name);
       return false;
     },
     removePrevSelection: function(){
@@ -73,6 +79,9 @@ define(['underscore', 'backbone'],
         var filtered_repos = this.currentRepos.filterByField(filter_data['field'], filter_data['value']);
         this.currentRepos.addNewItems(filtered_repos);
       }
+
+      var metric = 'ga_github_filter_'+ filter_data['field'] + '_' +  filter_data['value'];
+      this.trackGA(metric);
       return true;
     },
     onSearchItem: function(ev){
@@ -82,7 +91,7 @@ define(['underscore', 'backbone'],
         console.debug("Search term too short, going to skip.");
         return 1;
       }
-      
+
       var search_matches = this.allRepos.matchByName(search_term);
 
       console.debug("user is searching: " + search_term);
@@ -90,7 +99,40 @@ define(['underscore', 'backbone'],
       this.currentRepos.reset();
       this.currentRepos.addNewItems(search_matches);
 
+      this.trackGA('ga_github_search_filter');
       return true;
+    },
+
+    onCheckChanges: function(ev){
+      btn = jQuery(ev.currentTarget);
+
+      if(btn.hasClass("disabled")){
+        console.debug("Ignoring event on disabled button.");
+        return false;
+      }
+
+      btn.addClass("disabled");
+      btn.find("span.btn-title").text("Please wait...");
+      btn.find(".btn-icon").addClass("icon-spin");
+
+      var restore_state = function(){
+        var btn = btn;
+        btn.find(".btn-icon").removeClass("icon-spin");
+        btn.find("span.btn-title").text("Reimport all data");
+        btn.removeClass("disabled");
+      }
+      this.fetchAll(restore_state);
+      this.trackGA('ga_github_check_changes');
+      return true;
+    },
+
+    trackGA: function(metric){
+      try {
+        page_view(metric);
+      }
+      catch (e) {
+        console.error("Cant track for google analytics");
+      }
     }
   });
 

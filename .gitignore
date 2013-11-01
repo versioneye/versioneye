@@ -1,3 +1,4 @@
+.DS_Store
 *.rbc
 *.sassc
 .sass-cache
@@ -21,3 +22,5 @@ pickle-email-*.html
 app/assets/.DS_Store
 app/assets/images/.DS_Store
 webrate.log
+versioneye.sublime-project
+versioneye.sublime-workspace

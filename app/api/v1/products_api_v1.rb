@@ -28,7 +28,7 @@ class  ProductsApiV1 < Grape::API
                   NB! If there are some special characters in `prod_key`,
                   you must replace it to make it URL safe!
                   It means you must replace all slashes `/` in product key
-                  with colon `:` and due to routing limitations of grape framework it's also required to replace all points `.` with tilde `~`. 
+                  with colon `:` and due to routing limitations of grape framework it's also required to replace all points `.` with tilde `~`.
                   \\
                   For example Clojure package `yummy.json/json` has to be transformed to  `clojure--yummy~json--json`.
                   \\
@@ -78,7 +78,7 @@ class  ProductsApiV1 < Grape::API
       group_id = params[:g]
       lang     = get_language_param(params[:lang])
       page_nr  = params[:page]
-      page_nr  = nil if page_nr.to_i < 1 #will_paginate cant handle 0
+      page_nr  = nil if page_nr.to_i < 1 #will_paginate can not handle 0
       if query.length < 2
         error! "Search term was too short.", 400
       end
@@ -102,7 +102,7 @@ class  ProductsApiV1 < Grape::API
                   you must replace it to make it URL safe!
 
                   Special character such as `/` should
-                  be replaced with token `--` and points `.` should be replaced 
+                  be replaced with token `--` and points `.` should be replaced
                   with `~`.
 
                   For example `junit/junit` has to be transformed to  `java--junit--junit`.

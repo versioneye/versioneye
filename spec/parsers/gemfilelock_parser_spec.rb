@@ -42,7 +42,7 @@ describe GemfilelockParser do
       product6 = ProductFactory.create_for_gemfile "tilt", "1.3.3"
       product6.save
 
-      product7 = ProductFactory.create_for_gemfile "thin", "1.3.1"
+      product7 = ProductFactory.create_for_gemfile "thin", "1.3.2"
       product7.save
 
       parser  = GemfilelockParser.new
@@ -50,34 +50,44 @@ describe GemfilelockParser do
 
       project.should_not be_nil
       project.dependencies.size.should eql(7)
+      project.dep_number.should eql(7)
+      project.out_number.should eql(1)
+      project.unknown_number.should eql(0)
 
       dep1 = fetch_by_name(project.dependencies, product1.name)
       dep1.name.should eql(product1.name)
       dep1.version_requested.should eql(product1.version)
+      dep1.outdated.should be_false
 
       dep2 = fetch_by_name(project.dependencies, product2.name)
       dep2.name.should eql(product2.name)
       dep2.version_requested.should eql(product2.version)
+      dep2.outdated.should be_false
 
       dep3 = fetch_by_name(project.dependencies, product3.name)
       dep3.name.should eql(product3.name)
       dep3.version_requested.should eql(product3.version)
+      dep3.outdated.should be_false
 
       dep4 = fetch_by_name(project.dependencies, product4.name)
       dep4.name.should eql(product4.name)
       dep4.version_requested.should eql(product4.version)
+      dep4.outdated.should be_false
 
       dep5 = fetch_by_name(project.dependencies, product5.name)
       dep5.name.should eql(product5.name)
       dep5.version_requested.should eql(product5.version)
+      dep5.outdated.should be_false
 
       dep6 = fetch_by_name(project.dependencies, product6.name)
       dep6.name.should eql(product6.name)
       dep6.version_requested.should eql(product6.version)
+      dep6.outdated.should be_false
 
       dep7 = fetch_by_name(project.dependencies, product7.name)
       dep7.name.should eql(product7.name)
-      dep7.version_requested.should eql(product7.version)
+      dep7.version_requested.should eql("1.3.1")
+      dep7.outdated.should be_true
     end
 
   end

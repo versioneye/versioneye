@@ -15,7 +15,7 @@ class ProjectService
 
   def self.store( project )
     if project.nil?
-      Rails.logger.error "Project cant be nil. Some error with importing."
+      Rails.logger.error "Project can't be nil. Some error with importing."
       return nil
     end
     project.make_project_key!
@@ -23,7 +23,7 @@ class ProjectService
       project.save_dependencies
       return true
     else
-      Rails.logger.error "Cant save project: #{project.errors.full_messages.to_json}"
+      Rails.logger.error "Can't save project: #{project.errors.full_messages.to_json}"
       return false
     end
   end
@@ -58,9 +58,7 @@ class ProjectService
   end
 
   def self.update( project, send_email = false )
-    if project.nil? || project.user_id.nil?
-      return nil
-    end
+    return nil if project.nil? || project.user_id.nil?
     self.update_url( project )
     new_project = self.build_from_url( project.url )
     project.update_from( new_project )
@@ -118,7 +116,7 @@ class ProjectService
 
     s3_info = S3.upload_github_file( project_file, project_file['name'] )
     if s3_info.nil? && !s3_info.has_key?('filename') && !s3_info.has_key?('s3_url')
-      error_msg = "Connectivity issues - cant import project file for parsing."
+      error_msg = "Connectivity issues - can't import project file for parsing."
       Rails.logger.error " Can't upload file to s3: #{project_file['name']}"
       return error_msg
     end
@@ -157,6 +155,9 @@ class ProjectService
     project.dependencies.each do |dep|
       dep.remove
     end
+    project.collaborators.each do |collaborator|
+      collaborator.remove
+    end
     project.remove
   end
 
@@ -171,4 +172,38 @@ class ProjectService
     end
   end
 
+  #returns reverse index map for projects and collaborated projects
+  #{:product_key [project_key1, project_key2, ...]}
+  def self.user_product_index_map(user, add_collaborated = true)
+    indexes = {}
+    user_projects = Project.by_user(user)
+    return indexes if user_projects.nil?
+
+    user_projects.each do |project|
+      next if project.nil?
+
+      project.dependencies.each do |dep|
+        next if dep.nil? or dep.product.nil?
+        prod_id = dep.product[:_id].to_s
+        indexes[prod_id] = [] unless indexes.has_key?(prod_id)
+        indexes[prod_id] << project[:_id].to_s
+      end
+    end
+
+    collaborated_projects = Project.by_collaborator(user)
+    if add_collaborated and !collaborated_projects.nil?
+      collaborated_projects.each do |project|
+        next if project.nil?
+
+        project.dependencies.each do |dep|
+          next if dep.nil? or dep.product.nil?
+          prod_id = dep.product[:_id].to_s
+          indexes[prod_id] = [] unless indexes.has_key?(prod_id)
+          indexes[prod_id] << project[:_id].to_s
+        end
+      end
+    end
+
+    indexes
+  end
 end

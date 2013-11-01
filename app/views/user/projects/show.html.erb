@@ -99,62 +99,6 @@
             </div>
           <% end %>
 
-          <div >
-            <a id="show_settings_links"
-               href="#" onclick="document.getElementById('settings_area').style.display = 'block';
-                                 document.getElementById('show_settings_links').style.display = 'none';
-                                 document.getElementById('hide_settings_links').style.display = 'block'; return false;" >
-              Show Settings
-            </a>
-            <a id="hide_settings_links" style="display: none;"
-               href="#" onclick="document.getElementById('settings_area').style.display = 'none';
-                                 document.getElementById('show_settings_links').style.display = 'block';
-                                 document.getElementById('hide_settings_links').style.display = 'none'; return false;" >
-              Hide Settings
-            </a>
-          </div>
-
-          <div style="display: none" id="settings_area">
-            <form action="<%= save_period_user_project_path(@project) %>" method="post" class="form-horizontal" >
-              <div class="control-group">
-                <label class="control-label" style="width: 200px;" >Monitor it</label>
-                <div class="controls" style="margin-left: 210px;">
-                  <select name="period" style="width: 150px; margin: 0px;" >
-                    <option value="<%= Project::A_PERIOD_DAILY %>"   <%= "selected" if @project.period == Project::A_PERIOD_DAILY   %> >Daily</option>
-                    <option value="<%= Project::A_PERIOD_WEEKLY %>"  <%= "selected" if @project.period == Project::A_PERIOD_WEEKLY  %> >Weekly</option>
-                    <option value="<%= Project::A_PERIOD_MONTHLY %>" <%= "selected" if @project.period == Project::A_PERIOD_MONTHLY %> >Monthly</option>
-                  </select> <button type="submit" class="btn2 btn2-large" >Save</button>
-                </div>
-              </div>
-            </form>
-
-            <form action="<%= save_email_user_project_path(@project) %>" method="post" class="form-horizontal" >
-              <div class="control-group">
-                <label class="control-label" style="width: 200px;" >Send notifications to</label>
-                <div class="controls" style="margin-left: 210px;">
-                  <select name="email" style="width: 150px; margin: 0px;" >
-                    <option value="<%= current_user.email %>"  <%= "selected" if @project.email == current_user.email %> ><%= current_user.email %></option>
-                    <% current_user.emails_verified.each do |user_email| %>
-                      <option value="<%= user_email.email %>" <%= "selected" if @project.email == user_email.email %> ><%= user_email.email %></option>
-                    <% end %>
-                  </select> <button type="submit" class="btn2 btn2-large" >Save</button> <button type="button" onclick="window.location.href='/settings/emails'" class="btn btn-success" >Add E-Mail</button>
-                </div>
-              </div>
-            </form>
-
-            <form action="<%= save_visibility_user_project_path(@project) %>" method="post" class="form-horizontal" >
-              <div class="control-group">
-                <label class="control-label" style="width: 200px;" >This Project is</label>
-                <div class="controls" style="margin-left: 210px;">
-                  <select name="visibility" style="width: 150px; margin: 0px;" >
-                    <option value="private"  <%= "selected" if @project.public == false %> >Private</option>
-                    <option value="public"   <%= "selected" if @project.public == true  %> >Public</option>
-                  </select> <button type="submit" class="btn2 btn2-large" >Save</button>
-                </div>
-              </div>
-            </form>
-          </div>
-
         <% end %>
 
       </div>
@@ -167,7 +111,7 @@
           <li>
           <a href = "#licenses" data-toggle="tab" onclick="page_view('ga_project_licenses')"><i class = "icon-tasks">&nbsp;</i>Licenses</a>
           </li>
-          <% if signed_in? && @project.collaborator( current_user ) %>
+          <% if signed_in? && @project.collaborator?( current_user ) %>
             <li>
               <a href="#collaborators" data-toggle="tab" onclick="page_view('ga_project_collaborators')"><i class = "icon-group">&nbsp;</i>Collaborators</a>
             </li>
@@ -178,18 +122,14 @@
         </ul>
 
         <div class="tab-content" style="width: 100%;" >
-          <% if @project.dependencies && @project.dependencies.size > 0 %>
-            <% deps = @project.dependencies.sort { |a, b| b.outdated.to_s <=> a.outdated.to_s } %>
-          <% end %>
-
           <div id="dependencies" class="tab-pane active" style="width: 617px;" >
-            <%= render partial: "project_dependency_table", locals: {deps: deps} %>
+            <%= render partial: "project_dependency_table", locals: {deps: @sorted_deps} %>
           </div>
 
           <div id="licenses" class="tab-pane">
             <% products = Array.new %>
-            <% unless deps.nil? %>
-              <% deps.each do |dep| %>
+            <% unless @sorted_deps.nil? %>
+              <% @sorted_deps.each do |dep| %>
                 <% product = dep.find_or_init_product %>
                 <% product.version = dep.version_requested %>
                 <% products << product %>
@@ -199,7 +139,7 @@
             <%= render :partial => "shared/product_license_table", :locals => {:products => products, :width => "615"} %>
           </div>
 
-          <% if signed_in? && @project.collaborator( current_user ) %>
+          <% if signed_in? && @project.collaborator?( current_user ) %>
             <div id = "collaborators" class = "tab-pane" style = "min-height: 360px;">
               <%= render partial: "collaborators" %>
             </div>

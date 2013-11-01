@@ -83,22 +83,11 @@ class ProductsController < ApplicationController
   end
 
   def badge
-    lang     = Product.decode_language( params[:lang] )
+    language = Product.decode_language( params[:lang] )
     prod_key = Product.decode_prod_key params[:key]
-    badge    = "unknown"
-    @product = Product.fetch_product lang, prod_key
-    unless @product.nil?
-      version = Version.decode_version params[:version]
-      if !version.nil? && !version.empty?
-        @product.version = version
-      end
-      if DependencyService.dependencies_outdated?( @product.dependencies )
-        badge = "out-of-date"
-      else
-        badge = "up-to-date"
-      end
-    end
-    send_file "app/assets/images/badges/dep_#{badge}.png", :type => "images/png", :disposition => 'inline'
+    version  = Version.decode_version params[:version]
+    badge    = badge_for_product( language, prod_key, version )
+    send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
   end
 
   def edit
@@ -190,13 +179,15 @@ class ProductsController < ApplicationController
   end
 
   def follow
-    @prod_lang_param = params[:product_lang]
+    lang_param = params[:product_lang]
     @prod_key_param  = params[:product_key]
     product_key      = Product.decode_prod_key @prod_key_param
-    language         = Product.decode_language @prod_lang_param
+    language         = Product.decode_language lang_param
     follow           = ProductService.follow language, product_key, current_user
+    @prod_lang_param = Product.language_escape language
     respond_to do |format|
       format.js
+      format.json {render json: {success: follow}}
       format.html {
         if !follow
           flash.now[:error] = "An error occured. Please try again later and contact the VersionEye Team."
@@ -209,13 +200,15 @@ class ProductsController < ApplicationController
 
   def unfollow
     src_hidden       = params[:src_hidden]
-    @prod_lang_param = Product.decode_language( params[:product_lang] )
+    lang_param       = params[:product_lang]
     @prod_key_param  = params[:product_key]
-    language         = Product.decode_language @prod_lang_param
+    language         = Product.decode_language lang_param
     product_key      = Product.decode_prod_key @prod_key_param
     unfollow         = ProductService.unfollow language, product_key, current_user
+    @prod_lang_param = Product.language_escape language
     respond_to do |format|
       format.js
+      format.json {render json: {success: unfollow}}
       format.html {
           if !unfollow
             flash.now[:error] = "An error occured. Please try again later."

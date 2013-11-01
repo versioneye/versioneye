@@ -11,7 +11,7 @@ class PomParser < CommonParser
     doc.xpath('//dependencies/dependency').each do |node|
       fetch_dependency(node, properties, project)
     end
-    project.dep_number = project.dependencies.size
+    project.dep_number = project.projectdependencies.size
     project
   rescue => e
     Rails.logger.error e.message

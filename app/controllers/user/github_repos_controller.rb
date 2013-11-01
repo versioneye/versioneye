@@ -30,6 +30,13 @@ class User::GithubReposController < ApplicationController
     Rails.logger.error e.backtrace.first
   end
 
+  def fetch_all
+    current_user
+    GithubRepo.by_user(current_user).delete_all
+    GitHubService.cached_user_repos(current_user)
+    render json: {changed: true, success: true}
+  end
+
   def update
     if params[:github_id].nil? and params[:fullname].nil?
       logger.error "Unknown data object - don't satisfy githubrepo model."
@@ -60,16 +67,14 @@ class User::GithubReposController < ApplicationController
       project      = ProjectService.import_from_github( current_user, project_name, branch )
       p "#-- project: #{project}"
       if project.nil?
-        error_msg = "Cant save project"
+        error_msg = "Can't save project"
         Rails.logger.error("#{project_name} - #{error_msg}")
-        render text: error_msg, status: 503
-        return false
+        render text: error_msg, status: 503 and return
       end
       if project.is_a?(String)
         error_msg = project
         Rails.logger.error("#{project_name} - #{error_msg}")
-        render text: error_msg, status: 503
-        return false
+        render text: error_msg, status: 503 and return
       end
 
       command_data[:githubProjectId] = project[:_id].to_s
@@ -83,10 +88,9 @@ class User::GithubReposController < ApplicationController
         repo = GithubRepo.find(params[:_id])
         repo = process_repo(repo)
       else
-        error_msg = "Cant remove project with id: `#{id}` - it doesnt exist. Please refresh page."
+        error_msg = "Can't remove project with id: `#{id}` - it doesnt exist. Please refresh page."
         Rails.logger.error error_msg
-        render text: error_msg, status: 400
-        return false
+        render text: error_msg, status: 400 and return
       end
     end
 
@@ -136,7 +140,7 @@ class User::GithubReposController < ApplicationController
       ProjectService.destroy id
       success = true
     else
-      msg = "Cant remove project with id: `#{id}` - it doesnt exist. Please refresh page."
+      msg = "Can't remove project with id: `#{id}` - it doesnt exist. Please refresh page."
       Rails.logger.error msg
     end
     respond_to do |format|

@@ -132,9 +132,17 @@ define(['underscore', 'backbone'],
     },
 
     onAddFailure: function(model, xhr){
-      var error_msg = "Failure: Cant import project: " + model.get('fullname')  + ".";
-      error_msg += xhr.responseText;
 
+      var error_msg = ""
+      if(xhr.status == 404){
+        error_msg = "Server timeout. We are facing to many requests. Please Try again later.";
+      } else if (xhr.status == 500){
+        error_msg = "An error occurred. Please try again later and contact us on Twitter @VersionEye."
+      } else {
+        error_msg = "Can't import project: " + model.get('fullname')  + ".";
+        error_msg += xhr.responseText;
+      }
+      console.debug("We encountered: " + xhr.status + " " + xhr.statusText);
       console.debug(error_msg);
       showNotification("alert alert-error", error_msg);
       this.showRepoNotification("");
@@ -186,7 +194,7 @@ define(['underscore', 'backbone'],
       return true;
     },
     onRemoveFailure: function(model, xhr, options){
-      var msg = "Fail: Cant remove project";
+      var msg = "Fail: Can not remove project";
 
       this.switchOnActivate();
       showNotification("alert alert-warning", msg);

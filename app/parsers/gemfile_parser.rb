@@ -162,6 +162,10 @@ class GemfileParser < CommonParser
         next
       elsif element.match(/^:group/) or element.match(/^group:/)
         next
+      elsif element.match(/^:development/) or element.match(/^development:/)
+        next
+      elsif element.match(/^:test/) or element.match(/^test:/)
+        next
       elsif element.match(/^:platforms/) or element.match(/^platforms:/)
         next
       elsif element.match(/^:engine/) or element.match(/^engine:/)

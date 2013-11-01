@@ -71,7 +71,7 @@ class Github
     data.each do |repo|
       next if repo.nil? or repo['full_name'].to_s.empty?
       branch_docs = Github.repo_branches(user, repo['full_name'])
-      if branch_docs and branch_docs.nil?
+      if branch_docs and !branch_docs.nil?
         branches = branch_docs.map {|x| x['name']}
         repo['branches'] = branches
       else
@@ -113,15 +113,16 @@ class Github
   def self.project_file_from_branch(user, repo_name, branch = "master")
     branch_info = Github.repo_branch_info user, repo_name, branch
     if branch_info.nil?
-      Rails.logger.error "Cancelling importing: cant read branch info."
+      Rails.logger.error "Cancelling importing: can't read branch info."
       return nil
     end
 
     project_file_info = Github.project_file_info( repo_name, branch_info["commit"]["sha"], user.github_token )
     if project_file_info.nil? || project_file_info.empty?
-      Rails.logger.error "Cancelling importing: cant read info about project's file."
+      Rails.logger.error "Cancelling importing: can't read info about project's file."
       return nil
     end
+
 
     project_file         = Github.fetch_file project_file_info["url"], user.github_token
     project_file["name"] = project_file_info["name"]
@@ -155,7 +156,7 @@ class Github
     return nil if url.nil? || url.empty?
     response = HTTParty.get( "#{url}?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT} )
     if response.code != 200
-      Rails.logger.error "Cant fetch file from #{url}:  #{response.code}\n
+      Rails.logger.error "Can't fetch file from #{url}:  #{response.code}\n
         #{response.message}\n#{response.data}"
       return nil
     end
@@ -201,7 +202,6 @@ class Github
     return false
   end
 
-  # TODO: add tests
   def self.repo_sha(repository, token)
     heads = JSON.parse HTTParty.get("#{A_API_URL}/repos/#{repository}/git/refs/heads?access_token=" + URI.escape(token),
                                     :headers => {"User-Agent" => A_USER_AGENT}  ).response.body
@@ -209,6 +209,37 @@ class Github
       return head['object']['sha'] if head['url'].match(/heads\/master$/)
     end
     nil
+  end
+
+  def self.search(q, langs = nil, users = nil, page = 1, per_page = 30)
+    search_term = "#{q}"
+    if langs
+      langs.gsub!(/\s+/, '')
+      search_term += "+language:#{langs}"
+    end
+
+    if users
+      u = []
+      tokens = users.split(",")
+      tokens.each do |user|
+        user.strip!
+        user += "@#{user}" unless user =~ /@/
+        u <<  user
+      end
+      search_term += " #{u.join(',')}"
+    end
+
+    search_term.gsub!(/\s+/, '+')
+    pagination_data = "page=#{page}&per_page=#{per_page}"
+    body = HTTParty.get(
+      "#{A_API_URL}/search/repositories?q=#{search_term}&#{pagination_data}",
+      headers: {
+        "User-Agent" => "A_USER_AGENT",
+        "Accept" => "application/vnd.github.preview"
+      }
+    ).response.body
+
+    JSON.parse(body)
   end
 
   def self.supported_languages()

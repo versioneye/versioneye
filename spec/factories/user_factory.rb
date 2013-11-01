@@ -6,6 +6,8 @@ FactoryGirl.define do
     salt "sugar"
     password "12345"
     github_token "random-token-bla-bla"
+    github_id "12345"
+    github_scope "repo"
     encrypted_password Digest::SHA2.hexdigest("sugar--12345")
   end
 

@@ -20,21 +20,56 @@ define(
     })).fadeIn(400).delay(6000).fadeOut(800);
   }
 
-  function pollChanges(){
+  function fetchAll(cb){
+    var jqxhr = $.ajax("/user/github/fetch_all")
+      .done(function(data, status, jqxhr){
+        if(data.changed){
+          all_repos.reset();
+          showNotification(
+            "alert alert-info",
+            "We just reimported all your repositories successfully!"
+          );
+          all_repos.fetchAll(initViews);
+        } else {
+          showNotification(
+              "alert alert-info",
+              "We could not detect any changes on your Github repositories."
+          );
+          console.log("No changes for repos - i'll wait and poll again.");
+        }
+      })
+      .always(cb);
+  }
+
+  function checkChanges(show_all){
+    if(_.isUndefined(show_all)){
+      show_all = false;
+    }
     var jqxhr = $.ajax("/user/poll/github_repos")
-        .done(function(data, status, jqxhr){
-          if(data.changed){
-            all_repos.reset();
+      .done(function(data, status, jqxhr){
+        if(data.changed){
+          all_repos.reset();
+          showNotification(
+            "alert alert-info",
+            "We detected some changes on your Github repositories and updated the view here."
+          );
+          all_repos.fetchAll(initViews);
+        } else {
+          if(show_all == true){
             showNotification(
               "alert alert-info",
-              "Detected changes on your Github repos - resetted view."
+              "We could not detect any changes on your Github repositories."
             );
-            all_repos.fetchAll(initViews);
-          } else {
-            console.log("No changes for repos - i'll wait and poll again.");
           }
-        })
-        .always(function(){ setTimeout(pollChanges, 30000); });
+          console.log("No changes for repos - i'll wait and poll again.");
+        }
+      });
+  }
+
+  function pollChanges(timeout){
+    timeout = timeout || 15000;
+    console.debug("Going to check changes. After waiting: " + timeout);
+    setTimeout(checkChanges, timeout);
   }
 
   //TODO: refactor to GithubApp namespace
@@ -51,8 +86,11 @@ define(
   var menu_view       = new GithubMenuView({
                           collection: menu_items,
                           currentRepos: current_repos,
-                          allRepos: all_repos
+                          allRepos: all_repos,
+                          fetchAll: fetchAll
                         });
+
+  var have_checked_cache = false;
 
   var get_default_org = function(repos){
     var repo = repos.first();
@@ -106,6 +144,6 @@ define(
 		console.log("Running github app");
 		var app_router = new AppRouter();
 		Backbone.history.start();
-	  setTimeout(pollChanges, 30000); //start polling in 30secs
+	  setTimeout(pollChanges, 2000); //start polling in 2secs
   }};
 });
