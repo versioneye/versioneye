@@ -83,8 +83,5 @@ module Versioneye
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :en
 
-    # http://www.edgerails.info/articles/what-s-new-in-edge-rails/2011/04/21/activerecord-identity-map/index.html
-    # config.active_record.identity_map = true
-
   end
 end
