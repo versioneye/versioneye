@@ -36,7 +36,7 @@
       </div>
     <% end %>
 
-    <div id = "github-repos" class="content" >
+    <div id = "github-repos" class="content row-fluid" >
       <div>
         <strong>Please wait!</strong> We are still loading assets from Heroku.
         <img src = "/assets/loadingbar.gif" style = "margin-left: 25%; margin-right: 25%;"/>
@@ -90,25 +90,31 @@
 </script>
 
 <script id = "github-repo-info-template" type = "text/template">
-  <div id = "github-repo-{{= repo.github_id}}" class = "repo-container">
+  <div id = "github-repo-{{= repo.github_id}}" class = "span6 repo-container">
     <div class = "repo-info row-fluid">
-      <div class = "repo-logo span2">
-        {{ var logo_path = "/assets/language/" }}
-        {{ var logo_name = (repo.supported) ? repo.language : "default" }}
-        <img src   = {{= logo_path + logo_name + ".png"}}
-             style = "position: relative; left: 25%; right: 25%; height: 72px; " />
-      </div>
-      <div class = "repo-info-content span10">
+      <div class = "repo-notification span12"></div>
+      <div class = "repo-info-content span12">
+        <div class = "repo-logo span12">
+          {{ var logo_path = "/assets/language/" }}
+          {{ var logo_name = (repo.supported) ? repo.language : "default" }}
+          <img src   = {{= logo_path + logo_name + ".png"}}
+               style = "position: relative; left: 25%; right: 25%; height: 72px; " />
+        </div>
         <a href= "http://www.github.com/{{= repo.fullname}}" target="_blank">
           <h5>{{= repo.fullname }}</h5>
         </a>
         <div class ="repo-labels"></div>
         <div> {{= repo.description }} </div>
+      </div>
+      <div class = "span12">
         <div class = "repo-controls-container">
           <div class = "repo-controls-info"></div>
-          <div class = "repo-controls row hide" style = "padding-top: 10px;"></div>
+          <div class = "repo-controls row" style = "padding-top: 10px;"></div>
         </div>
-        <div class = "repo-notification"></div>
+      </div>
+      <div class = "span12">
+        <button class = "btn btn-info">Info</button>
+        <button class = "btn btn-info">Project files</button>
       </div>
     </div>
   </div>

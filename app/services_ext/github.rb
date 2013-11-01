@@ -1,7 +1,12 @@
-class Github
+require 'uri'
 
+class Github
   include HTTParty
-  persistent_connection_adapter
+  persistent_connection_adapter({
+                                  name: 'versioneye_github_client',
+                                  pool_size: 64,
+                                  keep_alive: 60
+                                })
 
   A_USER_AGENT = "www.versioneye.com"
   A_API_URL    = "https://api.github.com"
@@ -22,13 +27,14 @@ class Github
   def self.user( token )
     return nil if token.to_s.empty?
     url           = "#{A_API_URL}/user?access_token=#{URI.escape( token )}"
-    response_body = HTTParty.get(url, :headers => {"User-Agent" => A_USER_AGENT } ).response.body
+    response_body = get(url, :headers => {"User-Agent" => A_USER_AGENT } ).response.body
     json_user     = JSON.parse response_body
     catch_github_exception json_user
   end
 
   def self.oauth_scopes( token )
-    resp = HTTParty.get("https://api.github.com/user?access_token=#{token}", :headers => {"User-Agent" => A_USER_AGENT } )
+    resp = get("https://api.github.com/user?access_token=#{token}",
+                :headers => {"User-Agent" => A_USER_AGENT } )
     resp.headers['x-oauth-scopes']
   rescue => e
     Rails.logger.error e.message
@@ -61,18 +67,20 @@ class Github
 
   def self.read_repos(user, url, page = 1, per_page = 30)
     request_headers = {"User-Agent" => A_USER_AGENT}
-    response        = self.get(url, headers: request_headers)
+    response        = get(url, headers: request_headers)
     data            = catch_github_exception JSON.parse(response.body)
     data            = [] if data.nil?
     data.each do |repo|
       next if repo.nil? or repo['full_name'].to_s.empty?
-      branch_docs = Github.repo_branches(user, repo['full_name'])
+      branch_docs = self.repo_branches(user, repo['full_name'])
       if branch_docs and !branch_docs.nil?
         branches = branch_docs.map {|x| x['name']}
         repo['branches'] = branches
       else
         repo['branches'] = ["master"]
       end
+      #adds project files
+      repo['project_files'] = repo_project_files(user, repo['full_name'])
     end
 
     paging_links = parse_paging_links(response.headers)
@@ -95,7 +103,7 @@ class Github
   def self.repo_branches(user, repo_name)
     request_headers = {"User-Agent" => A_USER_AGENT}
     url = "#{A_API_URL}/repos/#{repo_name}/branches?access_token=#{user.github_token}"
-    response = self.get(url, headers: request_headers)
+    response = get(url, headers: request_headers)
     catch_github_exception JSON.parse(response.body)
   end
 
@@ -119,7 +127,6 @@ class Github
       return nil
     end
 
-
     project_file         = Github.fetch_file project_file_info["url"], user.github_token
     project_file["name"] = project_file_info["name"]
     project_file["type"] = project_file_info["type"]
@@ -134,7 +141,7 @@ class Github
   def self.project_file_info(git_project, sha, token)
     result = Hash.new
     url    = "https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)
-    tree   = JSON.parse HTTParty.get( url, :headers => {"User-Agent" => A_USER_AGENT} ).response.body
+    tree   = JSON.parse get( url, :headers => {"User-Agent" => A_USER_AGENT} ).response.body
     tree['tree'].each do |file|
       name           = file['path']
       result['url']  = file['url']
@@ -148,20 +155,77 @@ class Github
     return Hash.new
   end
 
+  def self.repo_branch_tree(user, repo_name, branch = "master", recursive = false)
+    branches = repo_branches(user, repo_name)
+    if branches.nil?
+      Rails.logger.error "Can't read branches for `#{repo_name}`."
+      return
+    end
+
+    branch_shas = Hash[branches.to_a.map {|x| [x['name'], x['commit']['sha']]}]
+    unless branch_shas.has_key?(branch)
+      msg = "Repo `#{repo_name}` doesnt have branch `#{branch}`: #{branch_shas.keys}"
+      Rails.logger.error msg
+      return
+    end
+
+    rec_val = (recursive == true) ? 1 : 0
+    url = "#{A_API_URL}/repos/#{repo_name}/git/trees/#{branch_shas[branch]}?access_token=#{user.github_token}&recursive=#{rec_val}"
+    response = get(url, :headers => {"User-Agent" => A_USER_AGENT} )
+    if response.code != 200
+      msg = "Can't fetch repo tree for `#{repo_name}` from #{url}:  #{response.code}\n#{response.message}\n#{response.body}"
+      Rails.logger.error msg
+      return
+    end
+    JSON.parse response.body
+  end
+
+
+  def self.project_files_from_branch(user, repo_name, branch = "master")
+    tree = repo_branch_tree(user, repo_name, branch)
+    if tree.nil? and !tree.has_key?('tree')
+      msg = "Can't read tree for repo `#{repo_name}` on branch `#{branch}`"
+      Rails.logger.error msg
+    end
+
+    tree['tree'].keep_if {|file| ProjectService.type_by_filename(file['path'].to_s) != nil}
+  end
+
+  #returns all project files in the given repos grouped by branches
+  def self.repo_project_files(user, repo_name)
+    branches = repo_branches(user, repo_name)
+    if branches.nil? or branches.empty?
+      msg = "#{repo_name} doesnt have any branches."
+      Rails.logger.error(msg) and return
+    end
+    project_files = {}
+    branches.each do |branch|
+      branch_name = branch['name']
+      branch_key = encode_db_key(branch_name)
+      branch_files = project_files_from_branch(user, repo_name, branch_name)
+      project_files[branch_key] = branch_files unless branch_files.nil?
+    end
+
+    project_files
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    return
+  end
+
   def self.fetch_file( url, token )
     return nil if url.nil? || url.empty?
-    response = HTTParty.get( "#{url}?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT} )
+    response = get( "#{url}?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT} )
     if response.code != 200
-      Rails.logger.error "Can't fetch file from #{url}:  #{response.code}\n
-        #{response.message}\n#{response.data}"
+      Rails.logger.error "Can't fetch file from #{url}:  #{response.code}\n#{response.message}"
       return nil
     end
     JSON.parse response.body
   end
 
   def self.orga_names( github_token )
-    body = HTTParty.get("#{A_API_URL}/user/orgs?access_token=#{github_token}",
-                        :headers => {"User-Agent" => A_USER_AGENT} ).response.body
+    body = get("#{A_API_URL}/user/orgs?access_token=#{github_token}",
+                :headers => {"User-Agent" => A_USER_AGENT} ).response.body
     organisations = catch_github_exception JSON.parse( body )
     names = Array.new
     if organisations.nil? || organisations.empty?
@@ -174,7 +238,7 @@ class Github
   end
 
   def self.private_repo?( github_token, name )
-    body = HTTParty.get("#{A_API_URL}/repos/#{name}?access_token=#{github_token}",
+    body = get("#{A_API_URL}/repos/#{name}?access_token=#{github_token}",
                         :headers => {"User-Agent" => A_USER_AGENT} ).response.body
     repo = catch_github_exception JSON.parse(body)
     return repo['private'] unless repo.nil? and !repo.is_a(Hash)
@@ -186,12 +250,24 @@ class Github
   end
 
   def self.repo_sha(repository, token)
-    heads = JSON.parse HTTParty.get("#{A_API_URL}/repos/#{repository}/git/refs/heads?access_token=" + URI.escape(token),
-                                    :headers => {"User-Agent" => A_USER_AGENT}  ).response.body
+    heads = JSON.parse get("#{A_API_URL}/repos/#{repository}/git/refs/heads?access_token=" + URI.escape(token),
+                           :headers => {"User-Agent" => A_USER_AGENT}  ).response.body
     heads.each do |head|
       return head['object']['sha'] if head['url'].match(/heads\/master$/)
     end
     nil
+  end
+
+  def self.check_user_ratelimit(user)
+    url = "#{A_API_URL}/rate_limit?access_token=#{user.github_token}"
+    response = get(url, :headers => {"User-Agent" => A_USER_AGENT} )
+    response = JSON.parse response.body
+    response['resources']
+  rescue => e
+    p e.message
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    return nil
   end
 
   def self.search(q, langs = nil, users = nil, page = 1, per_page = 30)
@@ -214,7 +290,7 @@ class Github
 
     search_term.gsub!(/\s+/, '+')
     pagination_data = "page=#{page}&per_page=#{per_page}"
-    body = HTTParty.get(
+    body = get(
       "#{A_API_URL}/search/repositories?q=#{search_term}&#{pagination_data}",
       headers: {
         "User-Agent" => "A_USER_AGENT",
@@ -225,11 +301,23 @@ class Github
     JSON.parse(body)
   end
 
-  def self.supported_languages()
+  def self.supported_languages
     Set['java', 'ruby', 'python', 'node.js', 'php', 'javascript', 'coffeescript', 'clojure']
   end
 
+  def self.support_project_files
+    Set['pom.xml', 'Gemfile', 'Gemfile.lock', 'composer.json', 'composer.lock', 'requirements.txt',
+        'setup.py', 'package.json','bower.json', 'dependency.gradle', 'project.clj']
+  end
+
+  def self.encode_db_key(key_val)
+    URI.escape(key_val, /\.|\$/)
+  end
+  def self.decode_db_key(key_val)
+    URI.unescape key_val
+  end
   private
+
 
     def self.language_supported?(lang)
       return false if lang.nil?
