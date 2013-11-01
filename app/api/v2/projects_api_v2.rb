@@ -40,12 +40,12 @@ module V2
         present @user_projects, with: EntitiesV2::ProjectEntity
       end
 
+
       desc "shows the project's information", {
         notes: %q[ It shows detailed info of your project. ]
       }
       params do
-        requires :project_key,  :type => String,
-                                :desc => "Project specific identificator"
+        requires :project_key, :type => String, :desc => "Project ID"
       end
       get '/:project_key' do
         authorized?
@@ -88,7 +88,7 @@ module V2
         if @project.nil?
           error! "Can't save uploaded file. Probably our fileserver got cold.", 500
         end
-        
+
         @project = add_dependency_licences(@project)
         present @project, with: EntitiesV2::ProjectEntity, :type => :full
       end
