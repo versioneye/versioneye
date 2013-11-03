@@ -162,7 +162,7 @@ module V2
         if project.collaborator?( current_user )
           Thread.new{ ProjectService.update( project, false ) }
         end
-        present :got, params
+        present :success, true
       end
 
 
