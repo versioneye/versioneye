@@ -80,6 +80,10 @@ class Project
     nil
   end
 
+  def filename
+    self.s3_filename.to_s.gsub(/^\S+\_/, "")
+  end
+
   def self.find_private_projects_by_user user_id
     Project.all(conditions: { user_id: user_id, private_project: true } )
   end
