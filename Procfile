@@ -1,2 +1,2 @@
-web:     bundle exec rails server thin -p $PORT -e $RACK_ENV
+web:     bundle exec unicorn_rails -p $PORT -e $RACK_ENV -D
 worker:  bundle exec rake do_work
