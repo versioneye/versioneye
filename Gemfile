@@ -46,7 +46,7 @@ group :assets do
   gem 'sass-rails'    , "3.2.6"
   gem 'coffee-rails'  , "3.2.2"
   gem 'uglifier'
-  gem 'yui-compressor', '0.9.6'
+  gem 'yui-compressor', '0.12.0'
 end
 
 group :test do

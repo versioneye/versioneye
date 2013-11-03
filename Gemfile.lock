@@ -8,10 +8,6 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
-    POpen4 (0.1.4)
-      Platform (>= 0.4.0)
-      open4
-    Platform (0.4.0)
     actionmailer (3.2.13)
       actionpack (= 3.2.13)
       mail (~> 2.5.3)
@@ -194,7 +190,6 @@ GEM
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     oauth (0.4.7)
-    open4 (1.3.0)
     ori (0.1.0)
     paint (0.8.6)
     persistent_http (1.0.5)
@@ -325,8 +320,7 @@ GEM
     xml-simple (1.1.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
-    yui-compressor (0.9.6)
-      POpen4 (>= 0.1.4)
+    yui-compressor (0.12.0)
     zucker (13.1)
 
 PLATFORMS
@@ -384,4 +378,4 @@ DEPENDENCIES
   unicorn (= 4.6.3)
   whenever (= 0.8.4)
   will_paginate (= 3.0.5)
-  yui-compressor (= 0.9.6)
+  yui-compressor (= 0.12.0)
