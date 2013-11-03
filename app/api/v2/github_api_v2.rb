@@ -160,7 +160,7 @@ module V2
         authorized?
         project = Project.find( params[:project_id] )
         if project.collaborator?( current_user )
-          ProjectService.update( project, false ) # TODO do this async
+          Thread.new{ ProjectService.update( project, false ) }
         end
         present :got, params
       end
