@@ -91,30 +91,42 @@
 
 <script id = "github-repo-info-template" type = "text/template">
   <div id = "github-repo-{{= repo.github_id}}" class = "span6 repo-container">
-    <div class = "repo-info row-fluid">
-      <div class = "repo-notification span12"></div>
-      <div class = "repo-info-content span12">
-        <div class = "repo-logo span12">
-          {{ var logo_path = "/assets/language/" }}
-          {{ var logo_name = (repo.supported) ? repo.language : "default" }}
-          <img src   = {{= logo_path + logo_name + ".png"}}
-               style = "position: relative; left: 25%; right: 25%; height: 72px; " />
+    <div class = "repo-notification hide span12"></div>
+    <div id = "slide1" class = "repo-slider current" data-next="slide2">
+      <div class = "repo-info row-fluid">
+        <div class = "repo-info-content span12">
+          <div class = "repo-logo span3">
+            {{ var logo_path = "/assets/language/" }}
+            {{ var logo_name = (repo.supported) ? repo.language : "default" }}
+            <img src   = {{= logo_path + logo_name + ".png"}} style = " height: 72px; " />
+          </div>
+          <div class = "span9">
+            <a href= "http://www.github.com/{{= repo.fullname}}" target="_blank">
+              <h5>{{= repo.fullname }}</h5>
+            </a>
+            <div class ="repo-labels"></div>
+          </div>
+
+          <div class = "span12 repo-desc"> {{= repo.description }} </div>
+          <div class = "span12 repo-controls-info"></div>
         </div>
-        <a href= "http://www.github.com/{{= repo.fullname}}" target="_blank">
-          <h5>{{= repo.fullname }}</h5>
-        </a>
-        <div class ="repo-labels"></div>
-        <div> {{= repo.description }} </div>
+        <div class = "controls">
+          <button class = "btn btn-mini btn-link controls-toggle">
+            <i class = "icon-caret-down"></i> Project files
+          </button>
+        </div>
       </div>
+    </div>
+    <div id = "slide2" class = "repo-slider" data-next="slide1">
       <div class = "span12">
         <div class = "repo-controls-container">
-          <div class = "repo-controls-info"></div>
-          <div class = "repo-controls row" style = "padding-top: 10px;"></div>
+          <div class = "repo-controls"></div>
+          <div class = "controls">
+            <button class = "btn btn-mini btn-link controls-toggle">
+              <i class = "icon-caret-down"></i> Project info
+            </button>
+          </div>
         </div>
-      </div>
-      <div class = "span12">
-        <button class = "btn btn-info">Info</button>
-        <button class = "btn btn-info">Project files</button>
       </div>
     </div>
   </div>
@@ -134,47 +146,56 @@
   </span>
 </script>
 
-<script id = "github-repo-control-item-template" type = "text/template">
-  <div class = "row-fluid">
-    <div class = "span3 item-switch"></div>
-    <div class = "span8 item-title"> {{= branch }} </div>
-  </div>
-</script>
-
 <script id = "github-repo-control-info-template" type = "text/template">
   <p>
 
-    {{ if (branches.length == 1) { }}
-      There is 1 branch in this repository.
+    {{ if (branches.length < 2) { }}
+      There is <strong>{{= branches.length }}</strong> branch in this repository.
     {{  } else { }}
-      This repository has {{= branches.length }} branches.
+      This repository has <strong> {{= branches.length }} </strong> branches.
     {{  } }}
 
-    {{ if(imported_branches.length){ }}
-      We are monitoring {{= imported_branches.length }} of them :
-      <i> {{= imported_branches }} </i>.
+    {{ if(imported_files.length){ }}
+      We are monitoring {{= imported_files.length }} files :
+      <i> {{= _.map(imported_files, function(item){return item;}) }} </i>.
     {{  } else { }}
-        We are monitoring none of them.
+        We are monitoring <em>none</em> of them.
     {{  } }}
   </p>
+</script>
 
-  <button class = "control-info-toggle btn btn-mini btn-block btn">
-    Show branches
-  </button>
+<script id = "github-repo-control-item-template" type = "text/template">
+    <div class = "item-header">
+      <h5>
+        <i class="icon-code-fork"></i>
+        {{= branch }}
+      </h5>
+    </div>
+    <div class = "item-body"></div>
 </script>
 
 <script id = "github-repo-switch-template" type = "text/template">
-  <div class = "github-switch switch">
-    <input
-      id = "{{= switch_id }}"
-      type = "checkbox" class = "input"
-      {{ !repo.supported ? ' disabled ' : '' }}
-      {{= (_.has(repo.imported_branches, branch)) ? ' checked ': '' }}
-      data-github-id = "{{= repo.github_id }}"
-      data-github-project-id = "{{= (_.has(repo.imported_branches, branch)) ? repo.imported_branches[branch].project_id : null }}"
-      data-github-fullname = "{{= repo.fullname }}"
-      data-github-branch = "{{= branch }}" />
+<div class = "row-fluid repo-control">
+  <div class = "span3 item-switch">
+    <div class="onoffswitch">
+      <input type="checkbox" name="{{= switch_id }}"
+              class="onoffswitch-checkbox github-switch"
+              id="{{= switch_id }}"
+              {{= is_imported ? ' checked ': '' }}
+              data-github-id = "{{= repo.github_id }}"
+              data-github-project-id = "{{= project_info['project_id'] }}"
+              data-github-fullname = "{{= repo.fullname }}"
+              data-github-branch = "{{= branch }}"
+              data-github-filename = "{{= filename }}" />
+
+      <label class="onoffswitch-label" for="{{= switch_id }}">
+          <div class="onoffswitch-inner"></div>
+          <div class="onoffswitch-switch"></div>
+      </label>
+    </div>
   </div>
+  <div class = "span9 item-title"> {{= switch_info }} </div>
+</div>
 </script>
 
 <script id = "github-repo-select-template" type = "text/template">
@@ -306,7 +327,7 @@
     <li class = "dropdown">
       <form class = "form" id = "github-repo-search">
         <div class = "input-append">
-          <input  type = "text" class = "span4" id = "github-search-term" class = "search-box"
+          <input type = "text" class = "span4 search-box" id = "github-search-term"
             name = "github_search" placeholder = "filter by name">
           <button class = "btn" id = "github-search-btn" type = "button"> <i class = "icon-search">&nbsp;</i> Filter</button>
         </div>

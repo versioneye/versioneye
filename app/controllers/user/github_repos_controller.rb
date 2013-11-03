@@ -159,20 +159,21 @@ class User::GithubReposController < ApplicationController
       imported_repos      = current_user.projects.by_source(Project::A_SOURCE_GITHUB)
       imported_repo_names = imported_repos.map(&:github_project).to_set
       supported_langs     = Github.supported_languages
-
       repo[:supported] = supported_langs.include? repo["language"]
-      repo[:imported_branches] = {}
+      repo[:imported_files] = []
 
       if imported_repo_names.include?(repo["fullname"])
-        imported_branches = imported_repos.where(github_project: repo["fullname"])
-        imported_branches.each do |imported_project|
+        imported_files = imported_repos.where(github_project: repo["fullname"])
+        imported_files.each do |imported_project|
+          filename = imported_project.filename
           project_info = {
+            branch: imported_project[:github_branch],
+            filename: filename,
             project_url: url_for(controller: 'projects', action: "show", id: imported_project.id),
             project_id:  imported_project.id,
             created_at: imported_project[:created_at]
           }
-
-          repo[:imported_branches][imported_project[:github_branch]] = project_info
+          repo[:imported_files] << project_info
         end
       end
 

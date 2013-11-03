@@ -17,19 +17,65 @@ define(['underscore', 'backbone'],
   var GithubRepoSwitchView = Backbone.View.extend({
     template: _.template($("#github-repo-switch-template").html()),
     events: {
-      "switch-change .switch" : "onSwitchChange"
+      "click .github-switch" : "onSwitchChange"
     },
 
     initialize: function(options){
+      console.debug("Initializing switch: ")
+      console.debug(options);
+
       this.parent = options.parent;
       this.branch = options.branch;
+      this.project_file = options.project_file;
+    },
+
+    renderInfo: function(is_imported, project_info){
+        not_imported_tmpl = _.template("<strong> {{= filename }} </strong>");
+        imported_tmpl = _.template([
+          '- <a href="{{= url}}"> <strong>{{= filename }}</strong> </a>',
+          ', imported {{= moment(imported).fromNow() }}'
+        ].join(' '));
+
+        var content = "";
+        var filename = this.project_file['path'];
+        if(is_imported){
+          content = imported_tmpl({
+            branch: this.branch,
+            filename: filename,
+            url: project_info['project_url'],
+            imported: project_info['created_at']
+          });
+        } else {
+          content = not_imported_tmpl({filename: filename});
+        }
+
+        return content;
     },
 
     render: function(){
+      var is_imported = false;
+      var filename = this.project_file['path'];
+      var project_info = {};
+      var imported_files = this.model.get('imported_files');
+
+      with_same_name = _.where(
+        imported_files,
+        {branch: this.branch, filename: filename}
+      );
+      if(!_.isEmpty(with_same_name)){
+        is_imported = true;
+        project_info = _.first(with_same_name);
+      }
+      //add view
+      var switch_info = this.renderInfo(is_imported, project_info);
       this.$el.html(this.template({
         repo: this.model.toJSON(),
         branch: this.branch,
-        switch_id: this.getModelSwitchId()
+        filename: filename,
+        switch_id: this.getModelSwitchId(),
+        switch_info: switch_info,
+        is_imported: is_imported,
+        project_info: project_info
       }));
       return this;
     },
@@ -43,10 +89,11 @@ define(['underscore', 'backbone'],
       return id;
     },
 
-    onSwitchChange: function(ev, switch_data){
-      is_switch_active = switch_data.el.parents('.switch').bootstrapSwitch("isActive");
+    onSwitchChange: function(ev){
+      var this_switch = $(ev.currentTarget);
+      var switch_data = this_switch.data();
 
-      if(!is_switch_active){
+      if(this_switch.attr('disabled')){
         console.log("Going to drop event of unactive switch.");
         ev.preventDefault();
         ev.stopImmediatePropagation();
@@ -54,7 +101,9 @@ define(['underscore', 'backbone'],
         return false;
       }
 
-      switch_data.el.parents(".switch").bootstrapSwitch('setActive', false);
+      var prev_state = this_switch.attr("checked");
+      this_switch.attr("checked", !prev_state);
+      this_switch.attr("disabled", true);
 
       var notification_template = _.template($("#github-notification-template").html());
       var loading_info = notification_template({
@@ -64,33 +113,33 @@ define(['underscore', 'backbone'],
           'It may take up-to 4seconds. But we are almost there.'].join(' ')
       });
 
-      if(switch_data.value){
+      if(this_switch.attr("checked")){
         this.showRepoNotification(loading_info);
-        this.addProject(switch_data.el, switch_data.value);
+        this.addProject(this_switch);
       } else {
-        this.removeProject(switch_data.el), switch_data.value;
+        this.removeProject(this_switch);
       }
       return true;
     },
 
     switchOnActivate : function(){
       var switch_selector = "#" + this.getModelSwitchId();
-      var repo_switch = $(switch_selector).parents(".github-switch");
+      var repo_switch = $(switch_selector);
 
-      repo_switch.bootstrapSwitch('setState', true);
-      repo_switch.bootstrapSwitch('setActive', true);
+      repo_switch.bootstrapSwitch('checked', true);
+      repo_switch.bootstrapSwitch('disabled', false);
     },
 
     switchOffActivate: function(){
       var switch_selector = "#" + this.getModelSwitchId();
-      var repo_switch = $(switch_selector).parents(".github-switch");
+      var repo_switch = $(switch_selector);
 
-      repo_switch.bootstrapSwitch("setState", false);
-      repo_switch.bootstrapSwitch('setActive', true);
+      repo_switch.attr("checked", false);
+      repo_switch.attr('disabled', false);
 
     },
 
-    addProject: function(el, data){
+    addProject: function(el){
       console.log("Adding new project");
       var current_switch = this;
       this.model.save(
