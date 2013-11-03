@@ -313,10 +313,6 @@ describe User do
   end
 
   describe "follows_least" do
-    it "returns all users, when argument is 0" do
-      User.follows_least(0).count.should eql(User.all.count)
-    end
-
     it "returns nothing, when there's no user with specified number follows" do
       User.follows_least(1).count.should eql(0)
     end

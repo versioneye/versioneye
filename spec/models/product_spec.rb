@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Product do
 
-  let( :product ) { Product.new }
+  let( :product ) { Product.new(:language => Product::A_LANGUAGE_RUBY, :prod_key => "funny_bunny", :version => "1.0.0") }
 
   describe "find_by_key" do
 
@@ -50,17 +50,20 @@ describe Product do
     end
 
     it "returns one link" do
-      link = Versionlink.new
-      link.prod_key = product.prod_key
+      link = Versionlink.new({language: product.language, prod_key: product.prod_key})
       link.link = "http://link.de"
       link.name = "Name"
-      link.save
-      product.http_links.size.should eq(1)
+      link.save.should be_true
+      db_link = Versionlink.find(link.id)
+      db_link.should_not be_nil
+      links = product.http_links
+      links.size.should eq(1)
       link.remove
     end
 
     it "returns an empty array" do
       link = Versionlink.new
+      link.language = product.language
       link.prod_key = product.prod_key
       link.link = "http://link.de"
       link.version_id = "nope"
@@ -71,8 +74,7 @@ describe Product do
     end
 
     it "returns 1 link" do
-      link = Versionlink.new
-      link.prod_key = product.prod_key
+      link = Versionlink.new({language: product.language, prod_key: product.prod_key})
       link.link = "http://link.de"
       link.version_id = "1.1"
       link.name = "Name"

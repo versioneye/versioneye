@@ -27,10 +27,18 @@ module SessionsHelper
 
   def signed_in?
     !current_user.nil?
+  rescue => e
+    Rails.logger.info e.message
+    Rails.logger.error e.backtrace.first
+    false
   end
 
   def signed_in_admin?
     signed_in? && current_user.admin?
+  rescue => e
+    Rails.logger.info e.message
+    Rails.logger.error e.backtrace.first
+    false
   end
 
   def authenticate
@@ -72,6 +80,10 @@ module SessionsHelper
 
     def user_from_remember_token
       User.authenticate_with_salt(*remember_token)
+    rescue => e
+      Rails.logger.info e.message
+      Rails.logger.error e.backtrace.first
+      nil
     end
 
     def remember_token

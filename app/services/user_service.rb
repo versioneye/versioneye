@@ -55,7 +55,7 @@ class UserService
 
   def self.active_users
     User.all.select do |user|
-      (user['product_ids'].count > 0 or
+      ( (!user['product_ids'].nil? && user['product_ids'].count > 0) or
        Versioncomment.where(user_id: user.id).exists? or
        Project.where(user_id: user.id).exists?
       )

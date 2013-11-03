@@ -6,20 +6,18 @@ class LanguageDailyStats
   field :date, type: DateTime
   field :date_string, type: String #format: %Y-%m-%d
 
-  field :Clojure, type: Hash
-  field :Java, type: Hash
+  field :Clojure   , type: Hash
+  field :Java      , type: Hash
   field :Javascript, type: Hash
-  field :Nodejs, type: Hash
-  field :Php, type: Hash
-  field :Python, type: Hash
-  field :R, type: Hash
-  field :Ruby, type: Hash
+  field :Nodejs    , type: Hash
+  field :Php       , type: Hash
+  field :Python    , type: Hash
+  field :R         , type: Hash
+  field :Ruby      , type: Hash
+
+  index({date: -1}, {background: true})
 
   attr_accessible :language, :date, :metrics
-
-  index(
-    [:date, Mongo::DESCENDING]
-  )
 
   def self.initial_metrics_table
     #metrics table for every language
