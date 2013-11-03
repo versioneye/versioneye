@@ -10,6 +10,10 @@ class Github
 
   A_USER_AGENT = "www.versioneye.com"
   A_API_URL    = "https://api.github.com"
+  A_DEFAULT_HEADERS = {
+    "User-Agent" => A_USER_AGENT,
+    "Connection" => "Keep-Alive"
+  }
 
   def self.token( code )
     domain    = 'https://github.com/'
@@ -27,14 +31,14 @@ class Github
   def self.user( token )
     return nil if token.to_s.empty?
     url           = "#{A_API_URL}/user?access_token=#{URI.escape( token )}"
-    response_body = get(url, :headers => {"User-Agent" => A_USER_AGENT } ).response.body
+    response_body = get(url, :headers => A_DEFAULT_HEADERS ).response.body
     json_user     = JSON.parse response_body
     catch_github_exception json_user
   end
 
   def self.oauth_scopes( token )
     resp = get("https://api.github.com/user?access_token=#{token}",
-                :headers => {"User-Agent" => A_USER_AGENT } )
+                :headers => A_DEFAULT_HEADERS)
     resp.headers['x-oauth-scopes']
   rescue => e
     Rails.logger.error e.message
@@ -66,8 +70,7 @@ class Github
   end
 
   def self.read_repos(user, url, page = 1, per_page = 30)
-    request_headers = {"User-Agent" => A_USER_AGENT}
-    response        = get(url, headers: request_headers)
+    response        = get(url, headers: A_DEFAULT_HEADERS)
     data            = catch_github_exception JSON.parse(response.body)
     data            = [] if data.nil?
     data.each do |repo|
@@ -101,16 +104,14 @@ class Github
   end
 
   def self.repo_branches(user, repo_name)
-    request_headers = {"User-Agent" => A_USER_AGENT}
     url = "#{A_API_URL}/repos/#{repo_name}/branches?access_token=#{user.github_token}"
-    response = get(url, headers: request_headers)
+    response = get(url, headers: A_DEFAULT_HEADERS)
     catch_github_exception JSON.parse(response.body)
   end
 
   def self.repo_branch_info(user, repo_name, branch = "master")
-    request_headers = {"User-Agent" => A_USER_AGENT}
     url = "#{A_API_URL}/repos/#{repo_name}/branches/#{branch}?access_token=#{user.github_token}"
-    response = self.get(url, headers: request_headers)
+    response = self.get(url, headers: A_DEFAULT_HEADERS)
     catch_github_exception JSON.parse(response.body)
   end
 
@@ -141,7 +142,7 @@ class Github
   def self.project_file_info(git_project, sha, token)
     result = Hash.new
     url    = "https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)
-    tree   = JSON.parse get( url, :headers => {"User-Agent" => A_USER_AGENT} ).response.body
+    tree   = JSON.parse get(url, :headers => A_DEFAULT_HEADERS).response.body
     tree['tree'].each do |file|
       name           = file['path']
       result['url']  = file['url']
@@ -171,7 +172,7 @@ class Github
 
     rec_val = (recursive == true) ? 1 : 0
     url = "#{A_API_URL}/repos/#{repo_name}/git/trees/#{branch_shas[branch]}?access_token=#{user.github_token}&recursive=#{rec_val}"
-    response = get(url, :headers => {"User-Agent" => A_USER_AGENT} )
+    response = get(url, headers: A_DEFAULT_HEADERS )
     if response.code != 200
       msg = "Can't fetch repo tree for `#{repo_name}` from #{url}:  #{response.code}\n#{response.message}\n#{response.body}"
       Rails.logger.error msg
@@ -215,7 +216,7 @@ class Github
 
   def self.fetch_file( url, token )
     return nil if url.nil? || url.empty?
-    response = get( "#{url}?access_token=" + URI.escape(token), :headers => {"User-Agent" => A_USER_AGENT} )
+    response = get( "#{url}?access_token=" + URI.escape(token), :headers => A_DEFAULT_HEADERS )
     if response.code != 200
       Rails.logger.error "Can't fetch file from #{url}:  #{response.code}\n#{response.message}"
       return nil
@@ -225,7 +226,7 @@ class Github
 
   def self.orga_names( github_token )
     body = get("#{A_API_URL}/user/orgs?access_token=#{github_token}",
-                :headers => {"User-Agent" => A_USER_AGENT} ).response.body
+                :headers => A_DEFAULT_HEADERS ).response.body
     organisations = catch_github_exception JSON.parse( body )
     names = Array.new
     if organisations.nil? || organisations.empty?
@@ -239,7 +240,7 @@ class Github
 
   def self.private_repo?( github_token, name )
     body = get("#{A_API_URL}/repos/#{name}?access_token=#{github_token}",
-                        :headers => {"User-Agent" => A_USER_AGENT} ).response.body
+                        :headers => A_DEFAULT_HEADERS ).response.body
     repo = catch_github_exception JSON.parse(body)
     return repo['private'] unless repo.nil? and !repo.is_a(Hash)
     false
@@ -251,7 +252,7 @@ class Github
 
   def self.repo_sha(repository, token)
     heads = JSON.parse get("#{A_API_URL}/repos/#{repository}/git/refs/heads?access_token=" + URI.escape(token),
-                           :headers => {"User-Agent" => A_USER_AGENT}  ).response.body
+                           :headers => A_DEFAULT_HEADERS).response.body
     heads.each do |head|
       return head['object']['sha'] if head['url'].match(/heads\/master$/)
     end
@@ -260,7 +261,7 @@ class Github
 
   def self.check_user_ratelimit(user)
     url = "#{A_API_URL}/rate_limit?access_token=#{user.github_token}"
-    response = get(url, :headers => {"User-Agent" => A_USER_AGENT} )
+    response = get(url, :headers => A_DEFAULT_HEADERS)
     response = JSON.parse response.body
     response['resources']
   rescue => e
