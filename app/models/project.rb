@@ -80,7 +80,7 @@ class Project
   end
 
   def self.find_private_projects_by_user user_id
-    Project.all(conditions: { user_id: user_id, private_project: true } )
+    Project.where( user_id: user_id, private_project: true )
   end
 
   def show_dependency_badge?

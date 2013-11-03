@@ -28,7 +28,7 @@ class ProjectMigration
   def self.migrate_projects
     users = User.all
     users.each do |user|
-      projects = Project.all(conditions: { user_id: user.id } )
+      projects = Project.where(user_id: user.id)
       projects.each do |project|
         project.user = user
         project.save

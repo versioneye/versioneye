@@ -30,7 +30,7 @@ describe "Submit a Comment to specific package" do
       version.updated_at.should_not be_nil
       version.created_at.should_not be_nil
 
-      visit "/ruby/json_gobi"
+      visit "/ruby/json_gobi/1.0"
 
       fill_in 'versioncomment[comment]', :with => "This is a versioncomment XYZ123"
       click_button 'Save'

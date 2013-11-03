@@ -5,20 +5,20 @@ class Admin::CrawlesController < ApplicationController
   def index
     @exec_groups = Crawle.all().distinct(:exec_group).reverse()
   end
-  
+
   def group
     group = params[:group]
     @exec_groups = Crawle.all().distinct(:exec_group).reverse()
-    @crawles = Crawle.all(conditions: { exec_group: /#{group}/i }).desc(:created_at)
+    @crawles = Crawle.where(exec_group: /#{group}/i).desc(:created_at)
     render "index"
   end
-  
+
   def show
     @crawle = Crawle.find(params['id'])
   end
-  
-  private 
-  
+
+  private
+
     def admin_user
       redirect_to(root_path) unless signed_in_admin?
     end

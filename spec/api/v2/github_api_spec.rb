@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe "GithubApiV2" do
-  let(:user) {create(:user, username: "pupujuku", fullname: "Pupu Juku", email: "juku@pupu.com")}
-  let(:user2) {create(:user, username: "dontshow", fullname: "Don TShow", email: "dont@show.com")}
+
+  let(:user) {create(:user, username: "pupujuku", fullname: "Pupu Juku", email: "juku@pupu.com", terms: true, datenerhebung: true)}
+  let(:user2) {create(:user, username: "dontshow", fullname: "Don TShow", email: "dont@show.com", terms: true, datenerhebung: true)}
 
   let(:user_api) { ApiFactory.create_new(user) }
 

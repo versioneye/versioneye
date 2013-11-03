@@ -32,7 +32,7 @@ class Dependency
   field :current_version, type: String
 
   def self.find_by_lang_key_and_version( lang, prod_key, version)
-    Dependency.all(conditions: { language: lang, prod_key: prod_key, prod_version: version } )
+    Dependency.where( language: lang, prod_key: prod_key, prod_version: version )
   end
 
   def self.find_by_lang_key_version_scope(lang, prod_key, version, scope)

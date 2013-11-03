@@ -14,22 +14,8 @@ class Newest
 
   attr_accessible :name, :version, :language, :prod_key, :prod_type, :product_id, :created_at
 
-  index(
-    [
-      [:updated_at, Mongo::DESCENDING]
-    ],
-    [
-      [:updated_at, Mongo::DESCENDING],
-      [:language, Mongo::DESCENDING]
-    ])
-  index(
-    [
-      [:updated_at, Mongo::DESCENDING]
-    ],
-    [
-      [:updated_at, Mongo::DESCENDING],
-      [:language, Mongo::DESCENDING]
-    ])
+  index({updated_at: -1}, {background: true})
+  index({updated_at: -1, language: -1}, {background: true})
 
   def product
     Product.fetch_product self.language, self.prod_key

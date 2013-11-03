@@ -19,7 +19,7 @@ class Versionarchive
   end
 
   def self.archives(lang, prod_key, version)
-    Versionarchive.all(conditions: { language: lang, prod_key: prod_key, version_id: version}).asc(:name)
+    Versionarchive.where(language: lang, prod_key: prod_key, version_id: version).asc(:name)
   end
 
   def self.create_archive_if_not_exist archive

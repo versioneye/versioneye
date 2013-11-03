@@ -1,6 +1,7 @@
 
 <div class="row" style="padding-bottom: 20px;">
   <% if signed_in? %>
+    <% @product['user_ids'] = Array.new() if @product['user_ids'].nil? %>
     <% if @product['user_ids'].include? current_user.id %>
       <%= form_tag("/package/unfollow", :style=>"margin: 0;") do  %>
         <input name="src_hidden"   type="hidden" value="detail"/>
