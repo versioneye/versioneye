@@ -9,6 +9,7 @@ define(['underscore', 'backbone',
     };
 
     var GithubRepoItemView = Backbone.View.extend({
+      className: "span12",
       template: _.template($("#github-repo-info-template").html()),
       info_template: _.template($('#github-repo-control-info-template').html()),
       events: {

@@ -115,23 +115,36 @@ class Github
     catch_github_exception JSON.parse(response.body)
   end
 
-  def self.project_file_from_branch(user, repo_name, branch = "master")
+  def self.project_file_from_branch(user, repo_name, filename, branch = "master")
     branch_info = Github.repo_branch_info user, repo_name, branch
     if branch_info.nil?
       Rails.logger.error "Cancelling importing: can't read branch info."
       return nil
     end
 
-    project_file_info = Github.project_file_info( repo_name, branch_info["commit"]["sha"], user.github_token )
+    project_file_info = Github.project_file_info( repo_name, filename, branch_info["commit"]["sha"], user.github_token )
     if project_file_info.nil? || project_file_info.empty?
       Rails.logger.error "Cancelling importing: can't read info about project's file."
       return nil
     end
-
-    project_file         = Github.fetch_file project_file_info["url"], user.github_token
+    project_file = fetch_project_from_url(user, project_file_info)
     project_file["name"] = project_file_info["name"]
     project_file["type"] = project_file_info["type"]
+    project_file["branch"] = project_file_info["branch"]
     project_file
+  end
+
+
+  def self.fetch_project_file_directly(user, filename, branch, url)
+    project_file = fetch_project_from_url(user, url)
+    project_file["name"] = filename
+    project_file["type"] = ProjectService.type_by_filename(filename)
+    project_file["branch"] = branch
+    project_file
+  end
+
+  def self.fetch_project_from_url(user, url)
+    Github.fetch_file url, user.github_token
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
@@ -139,7 +152,7 @@ class Github
   end
 
   # TODO: add tests
-  def self.project_file_info(git_project, sha, token)
+  def self.project_file_info(git_project, filename, sha, token)
     result = Hash.new
     url    = "https://api.github.com/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)
     tree   = JSON.parse get(url, :headers => A_DEFAULT_HEADERS).response.body
@@ -148,12 +161,12 @@ class Github
       result['url']  = file['url']
       result['name'] = name
       type           = ProjectService.type_by_filename( name )
-      if type
+      if filename == result['name']
         result['type'] = type
         return result
       end
     end
-    return Hash.new
+    result
   end
 
   def self.repo_branch_tree(user, repo_name, branch = "master", recursive = false)

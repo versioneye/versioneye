@@ -9,7 +9,7 @@ define([
     };
 
     var GithubRepoControlItemView = Backbone.View.extend({
-      tagName: "li",
+      tagName: "tr",
       className: "repo-control-item",
       template: _.template($("#github-repo-control-item-template").html()),
 
@@ -22,9 +22,6 @@ define([
         var target_el = this.$el.find('.item-body');
         var that = this;
         _.each(this.project_files, function(project_file){
-          console.debug("Control item view for:");
-          console.debug(project_file);
-
           var switch_view = new GithubRepoSwitchView({
             model: that.model,
             parent: that,
@@ -32,9 +29,7 @@ define([
             project_file: project_file
           }, this);
 
-          console.debug("Target el: " + target_el);
           target_el.append(switch_view.render().$el);
-
         });
         return this;
       }

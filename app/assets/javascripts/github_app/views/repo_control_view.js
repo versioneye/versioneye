@@ -9,8 +9,8 @@ define([
     };
 
     var GithubRepoControlView = Backbone.View.extend({
-      tagName: "ul",
-      className: "github-repo-control nav nav-stacked",
+      tagName: "table",
+      className: "github-repo-control table table-striped row-fluid",
       render: function(){
         var project_branches = this.model.get('branches') || [];
         var project_files = this.model.get('project_files') || [];
