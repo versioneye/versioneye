@@ -152,9 +152,8 @@
       This repository has <strong> {{= branches.length }} </strong> branches.
     {{  } }}
 
-    {{ if(imported_files.length){ }}
-      We are monitoring {{= imported_files.length }} files :
-      <i> {{= _.map(imported_files, function(item){return item['branch'] +'/'+ item['filename'];}) }} </i>.
+    {{ if(imported_urls.length){ }}
+      We are monitoring {{= imported_urls.length }} files : {{= imported_urls.join(' , ') }}.
     {{  } else { }}
         We are monitoring <em>none</em> of them.
     {{  } }}
