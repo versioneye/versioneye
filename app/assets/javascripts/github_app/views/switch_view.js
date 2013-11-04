@@ -112,7 +112,7 @@ define(['underscore', 'backbone'],
 
       var prev_state = this_switch.attr("checked");
       this_switch.attr("checked", !prev_state);
-      this_switch.attr("disabled", true);
+      this.disableSwitch(this_switch);
 
       var notification_template = _.template($("#github-notification-template").html());
       var loading_info = notification_template({
@@ -130,13 +130,20 @@ define(['underscore', 'backbone'],
       }
       return true;
     },
-
+    disableSwitch: function(this_switch){
+      this_switch.attr("disabled", true);
+      this_switch.parents('.onoffswitch').addClass('disabled');
+    },
+    enableSwitch: function(this_switch){
+      this_switch.attr("disabled", false);
+      this_switch.parents('.onoffswitch').removeClass('disabled');
+    },
     switchOnActivate : function(){
       var switch_selector = "#" + this.getModelSwitchId();
       var repo_switch = $(switch_selector);
 
       repo_switch.attr('checked', true);
-      repo_switch.attr('disabled', false);
+      this.enableSwitch(repo_switch);
     },
 
     switchOffActivate: function(){
@@ -144,8 +151,7 @@ define(['underscore', 'backbone'],
       var repo_switch = $(switch_selector);
 
       repo_switch.attr("checked", false);
-      repo_switch.attr('disabled', false);
-
+      this.enableSwitch(repo_switch);
     },
 
     addProject: function(el){
