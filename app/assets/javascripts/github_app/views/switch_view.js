@@ -280,9 +280,14 @@ define(['underscore', 'backbone'],
 
     updateRepoProjectInfo:  function(model){
       var info_template = _.template($('#github-repo-project-info-template').html());
+      var imported_files = this.model.get('imported_files') || [];
+      var imported_urls = _.map(imported_files, function(item){
+        var url_name = item['branch'] + '/' + item['filename'];
+        return ['<a href="', item['project_url'], '" > ', url_name, ' </a>'].join('');
+      });
       var branch_info = info_template({
-        branches: model.get('branches'),
-        imported_files: model.get('imported_files')
+        branches: this.model.get('branches'),
+        imported_urls: imported_urls
       });
 
       this.$el.parents('.repo-container').find(".repo-project-info").html(branch_info);

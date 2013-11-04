@@ -21,10 +21,14 @@ define(['underscore', 'backbone',
         var repo_container = this.template({repo: this.model.toJSON()});
 
         this.$el.html(repo_container);
-
+        var imported_files = this.model.get('imported_files') || [];
+        var imported_urls = _.map(imported_files, function(item){
+          var url_name = item['branch'] + '/' + item['filename'];
+          return ['<a href="', item['project_url'], '" > ', url_name, ' </a>'].join('');
+        });
         var branch_info = this.info_template({
           branches: this.model.get('branches'),
-          imported_files: this.model.get('imported_files')
+          imported_urls: imported_urls
         });
 
         this.$el.find(".repo-project-info").html(branch_info);
