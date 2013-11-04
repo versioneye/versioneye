@@ -46,6 +46,7 @@ class GithubRepo
       Rails.console.error("Repo #{full_name} is missing owner. Adding as unknown.")
       repo['owner'] = {'type' => "ufo"}
     end
+
     case repo['owner']['type'].to_s.downcase
     when 'organization'
       owner_type = 'organization'
