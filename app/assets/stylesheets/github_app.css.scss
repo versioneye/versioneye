@@ -1,12 +1,12 @@
 .repo-controls {
-  max-height: 220px;
+  max-height: 200px;
   overflow-x: hidden;
   overflow-y: auto;
   font-size: 0.8em;
 }
 
 .repo-container {
-  height: 240px;
+  height: 210px;
   border-bottom: 1px solid #f3f3f3;
   padding: 10px 0px;
   overflow: hidden;
@@ -27,7 +27,7 @@
   & .controls {
     position: absolute;
     right: 0px;
-    bottom: 0px;
+    bottom: -12px;
   }
 
   &.current {
