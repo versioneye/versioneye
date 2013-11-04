@@ -71,11 +71,7 @@ class GitHubService
         data[:repos].each do |repo|
           return nil if bad_credentail?( repo )
           begin
-            time = Benchmark.measure do
-              repo[:projects] = Github.repo_project_files(user, repo['full_name'])
-              GithubRepo.add_new(user, repo, data[:etag])
-            end
-            puts "Reading `#{repo['full_name']}` took: #{time} "
+            GithubRepo.add_new(user, repo, data[:etag])
           rescue => e
             Rails.logger.error("Can't add repo to cache: #{repo}")
             Rails.logger.error e.message
