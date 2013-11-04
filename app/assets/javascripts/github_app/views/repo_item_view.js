@@ -31,7 +31,6 @@ define(['underscore', 'backbone',
         this.$el.find(".repo-controls").append(control_view.render().el);
         this.$el.find(".repo-labels").append(label_view.render().el);
 
-        //this.$el.find(".github-switch").bootstrapSwitch();
         return this;
       },
       toggleBranchView: function(ev){
