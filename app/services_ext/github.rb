@@ -3,10 +3,10 @@ require 'uri'
 class Github
   include HTTParty
   persistent_connection_adapter({
-                                  name: 'versioneye_github_client',
-                                  pool_size: 64,
-                                  keep_alive: 60
-                                })
+    name: 'versioneye_github_client',
+    pool_size: 8,
+    keep_alive: 10
+  })
 
   A_USER_AGENT = "www.versioneye.com"
   A_API_URL    = "https://api.github.com"

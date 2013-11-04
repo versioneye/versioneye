@@ -54,11 +54,14 @@ class GitHubService
   private
 
     def self.cache_user_all_repos(user, orga_names)
+      puts "Going to cache users repositories."
       user_info = Github.user(user.github_token)
       user[:user_login] = user_info['login'] if user_info.is_a?(Hash)
       #load data
-      self.cache_user_repos(user)
-      orga_names.each {|orga_name| self.cache_user_orga_repos(user, orga_name)}
+      Thread.new {self.cache_user_repos(user)}
+      orga_names.each do |orga_name|
+        Thread.new { self.cache_user_orga_repos(user, orga_name) }
+      end
     end
 
     def self.cache_user_repos( user )
@@ -95,5 +98,4 @@ class GitHubService
         url = data[:paging]["next"]
       end while not url.nil?
     end
-
 end
