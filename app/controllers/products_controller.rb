@@ -179,7 +179,7 @@ class ProductsController < ApplicationController
   end
 
   def follow
-    lang_param = params[:product_lang]
+    lang_param       = params[:product_lang]
     @prod_key_param  = params[:product_key]
     product_key      = Product.decode_prod_key @prod_key_param
     language         = Product.decode_language lang_param
@@ -193,7 +193,7 @@ class ProductsController < ApplicationController
           flash.now[:error] = "An error occured. Please try again later and contact the VersionEye Team."
         end
         product = Product.fetch_product( language, product_key )
-        redirect_to package_version_path( product.language.downcase, product.to_param, product.version )
+        redirect_to package_version_path( product.language_esc, product.to_param, product.version )
       }
     end
   end
@@ -215,7 +215,7 @@ class ProductsController < ApplicationController
           end
           if src_hidden.eql? "detail"
             product = Product.fetch_product(language, product_key)
-            redirect_to package_version_path( product.language.downcase, product.to_param, product.version )
+            redirect_to package_version_path( product.language_esc, product.to_param, product.version )
           else
             redirect_to user_path( current_user )
           end
