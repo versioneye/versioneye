@@ -59,13 +59,18 @@ class User::GithubReposController < ApplicationController
     end
 
     command_data = params[:command_data]
+    project_name = params[:fullname]
+    branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : "master"
+    filename     = command_data[:githubFilename]
+    branch_files = params[:project_files][branch]
 
     case params[:command]
     when "import"
-      project_name = params[:fullname]
-      branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : "master"
-      project      = ProjectService.import_from_github( current_user, project_name, branch )
-      p "#-- project: #{project}"
+
+      matching_files = branch_files.keep_if {|file| file['path'] == filename}
+      url = matching_files.first[:url] unless matching_files.empty?
+      puts "#-- Going to import project from: #{url}"
+      project      = ProjectService.import_from_github(current_user, project_name, filename, branch, url)
       if project.nil?
         error_msg = "Can't save project"
         Rails.logger.error("#{project_name} - #{error_msg}")
@@ -80,6 +85,15 @@ class User::GithubReposController < ApplicationController
       command_data[:githubProjectId] = project[:_id].to_s
       repo = GithubRepo.find(params[:_id])
       repo = process_repo(repo)
+      repo[:command_result] = {
+        project_id: project[:_id].to_s,
+        filename: filename,
+        branch: branch,
+        repo: project_name,
+        project_url: url_for(controller: 'projects', action: "show", id: project.id),
+        created_at: project[:created_at]
+      }
+
     when "remove"
       id = command_data[:githubProjectId]
 
@@ -87,6 +101,11 @@ class User::GithubReposController < ApplicationController
         ProjectService.destroy id
         repo = GithubRepo.find(params[:_id])
         repo = process_repo(repo)
+        repo[:command_result] = {
+          filename: filename,
+          branch: branch,
+          repo: project_name
+        }
       else
         error_msg = "Can't remove project with id: `#{id}` - it doesnt exist. Please refresh page."
         Rails.logger.error error_msg
@@ -167,6 +186,7 @@ class User::GithubReposController < ApplicationController
         imported_files.each do |imported_project|
           filename = imported_project.filename
           project_info = {
+            repo: repo["fullname"],
             branch: imported_project[:github_branch],
             filename: filename,
             project_url: url_for(controller: 'projects', action: "show", id: imported_project.id),

@@ -1,32 +1,16 @@
-.repo-controls .nav {
-  max-height: 245px;
+.repo-controls {
+  max-height: 220px;
   overflow-x: hidden;
   overflow-y: auto;
   font-size: 0.8em;
-
-  & .repo-control:hover {
-    background-color: #efefef;
-  };
-
-  .media-body.product-item {
-    border-top: 1px solid #f3f3f3;
-    padding: 5px 0px;
-
-    &:hover {
-      background-color: #fafafa;
-    };
-  }
 }
 
 .repo-container {
-  height: 300px;
+  height: 240px;
   border-bottom: 1px solid #f3f3f3;
   padding: 10px 0px;
   overflow: hidden;
 
-  &:hover {
-    background-color: #fafafa;
-  };
 }
 
 .repo-slider {
@@ -65,9 +49,13 @@
   }
 
   .repo-info .repo-desc {
-    max-height: 220px;
+    max-height: 200px;
     overflow: scroll;
   }
+
+  & .repo-info:hover {
+    background-color: #fafafa;
+  };
 
   .github-repo-control {
     padding: 2px 5px;
