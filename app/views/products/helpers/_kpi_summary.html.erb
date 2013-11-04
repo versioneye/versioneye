@@ -10,8 +10,6 @@
       That is a beginning.
     <% elsif @product.used_by_count >= 100 && @product.used_by_count < 1000 %>
       That is a good sign. If that much other artifacts are referencing it, it must be good and useful.
-    <% elsif @product.used_by_count >= 100 && @product.used_by_count < 1000 %>
-      This is a <b>famous</b> project. If that much other artifacts are referencing it, it must be good and useful.
     <% elsif @product.used_by_count >= 1000 && @product.used_by_count < 10000 %>
       This project is a <b>Rockstar</b>! If that much other artifacts are referencing it, it must be good and useful.
       As a <%= @product.language %> dev you should now this project!
