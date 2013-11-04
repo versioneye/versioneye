@@ -186,6 +186,7 @@ define(['underscore', 'backbone'],
 
       this.$el.find('input').data('githubProjectId', command_result['project_id']);
       this.updateRepoTitle(command_result);
+      this.updateRepoProjectInfo(model);
       this.switchOnActivate();
       this.hideRepoNotification();
       showNotification("alert alert-success", msg);
@@ -253,6 +254,7 @@ define(['underscore', 'backbone'],
       ].join(' ');
 
       this.updateRepoTitle();
+      this.updateRepoProjectInfo(model);
       this.switchOffActivate();
       showNotification("alert alert-success", msg);
       this.hideRepoNotification();
@@ -272,9 +274,18 @@ define(['underscore', 'backbone'],
         console.debug("Going to drop title update for empty command_result.");
         return null;
       }
-      console.debug("Going to change switch title;");
       var new_title = this.renderInfo(project_info);
       this.$el.find(".item-title").html(new_title);
+    },
+
+    updateRepoProjectInfo:  function(model){
+      var info_template = _.template($('#github-repo-project-info-template').html());
+      var branch_info = info_template({
+        branches: model.get('branches'),
+        imported_files: model.get('imported_files')
+      });
+
+      this.$el.parents('.repo-container').find(".repo-project-info").html(branch_info);
     },
 
     showRepoNotification: function(msg){

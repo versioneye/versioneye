@@ -11,7 +11,7 @@ define(['underscore', 'backbone',
     var GithubRepoItemView = Backbone.View.extend({
       className: "span12",
       template: _.template($("#github-repo-info-template").html()),
-      info_template: _.template($('#github-repo-control-info-template').html()),
+      info_template: _.template($('#github-repo-project-info-template').html()),
       events: {
         "click .controls-toggle": "toggleBranchView"
       },
@@ -27,7 +27,7 @@ define(['underscore', 'backbone',
           imported_files: this.model.get('imported_files')
         });
 
-        this.$el.find(".repo-controls-info").html(branch_info);
+        this.$el.find(".repo-project-info").html(branch_info);
         this.$el.find(".repo-controls").append(control_view.render().el);
         this.$el.find(".repo-labels").append(label_view.render().el);
 

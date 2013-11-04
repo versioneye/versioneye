@@ -105,7 +105,7 @@
             <div class ="repo-labels"></div>
           </div>
           <div class = "span12 repo-desc"> {{= repo.description }} </div>
-          <div class = "span12 repo-controls-info"></div>
+          <div class = "span12 repo-project-info"></div>
         </div>
         <div class = "controls">
           <button class = "btn btn-mini btn-link controls-toggle">
@@ -143,7 +143,7 @@
   </span>
 </script>
 
-<script id = "github-repo-control-info-template" type = "text/template">
+<script id = "github-repo-project-info-template" type = "text/template">
   <p>
 
     {{ if (branches.length < 2) { }}
