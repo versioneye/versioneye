@@ -39,7 +39,7 @@ define(['underscore', 'backbone'],
         var content = "";
         var filename = this.project_file['path'];
 
-        if(!_.isNull(project_info) && !_.isNaN(project_info)){
+        if(!_.isNull(project_info) && !_.isUndefined(project_info)){
           console.debug("Rendering switch info with project file.");
           content = imported_tmpl({
             branch: this.branch,
@@ -270,10 +270,6 @@ define(['underscore', 'backbone'],
     },
 
     updateRepoTitle: function(project_info){
-      if(_.isUndefined(project_info)){
-        console.debug("Going to drop title update for empty command_result.");
-        return null;
-      }
       var new_title = this.renderInfo(project_info);
       this.$el.find(".item-title").html(new_title);
     },
