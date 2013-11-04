@@ -8,6 +8,7 @@ class Github
     "User-Agent" => A_USER_AGENT,
     "Connection" => "Keep-Alive"
   }
+
   @@conn = Excon.new(A_API_URL)
 
   def self.token( code )
@@ -25,6 +26,7 @@ class Github
 
   def self.user(token)
     return nil if token.to_s.empty?
+
     path           = "/user?access_token=" + URI.escape( token )
     response      =  @@conn.get(path: path, :headers => A_DEFAULT_HEADERS )
     json_user     = JSON.parse response.body
@@ -81,6 +83,7 @@ class Github
         repo['project_files'] = repo_project_files(user, repo['full_name'])
       end
       puts "Reading `#{repo['full_name']}` took: #{time} "
+
     end
 
     paging_links = parse_paging_links(response.headers)
@@ -188,6 +191,7 @@ class Github
       msg = "Can't fetch repo tree for `#{repo_name}` from #{url}:  #{response.code}\n#{response.message}\n#{response.body}"
       Rails.logger.error msg
       return nil
+
     end
     JSON.parse response.body
   end
@@ -195,6 +199,7 @@ class Github
 
   def self.project_files_from_branch(user, repo_name, branch = "master")
     tree = repo_branch_tree(user, repo_name, branch)
+
     if tree.nil? or !tree.has_key?('tree')
       msg = "Can't read tree for repo `#{repo_name}` on branch `#{branch}`"
       p msg
@@ -255,6 +260,7 @@ class Github
     path = "/repos/#{name}?access_token=#{github_token}"
     response = @@conn.get(path: path, :headers => A_DEFAULT_HEADERS )
     repo = catch_github_exception JSON.parse(response.body)
+
     return repo['private'] unless repo.nil? and !repo.is_a(Hash)
     false
   rescue => e
@@ -267,6 +273,7 @@ class Github
     path = "/repos/#{repository}/git/refs/heads?access_token=" + URI.escape(token)
     response = @@conn.get(path: path, :headers => A_DEFAULT_HEADERS)
     heads = JSON.parse response.body
+
     heads.each do |head|
       return head['object']['sha'] if head['url'].match(/heads\/master$/)
     end
@@ -274,8 +281,10 @@ class Github
   end
 
   def self.check_user_ratelimit(user)
+
     path = "/rate_limit?access_token=#{user.github_token}"
     response = @@conn.get(path: path, :headers => A_DEFAULT_HEADERS)
+
     response = JSON.parse response.body
     response['resources']
   rescue => e
@@ -305,6 +314,7 @@ class Github
 
     search_term.gsub!(/\s+/, '+')
     pagination_data = "page=#{page}&per_page=#{per_page}"
+
     response = @@conn.get(
       "/search/repositories?q=#{search_term}&#{pagination_data}",
       headers: {

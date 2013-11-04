@@ -10,6 +10,7 @@ define(['underscore', 'backbone',
 
     var GithubRepoItemView = Backbone.View.extend({
       className: "spanX",
+
       template: _.template($("#github-repo-info-template").html()),
       info_template: _.template($('#github-repo-project-info-template').html()),
       events: {
