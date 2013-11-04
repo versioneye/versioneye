@@ -5,7 +5,7 @@
 			</h5>
 		</div>
 		<div class="box content" >
-			<% @user['product_ids'] = Array.new if @user['product_ids'].nil? %>
+			<% @user['product_ids'] ||= [] %>
 			<% languages = Product.get_unique_languages_for_product_ids( @user['product_ids'] ) %>
 			<% languages.each do |language| %>
 				<% prog_lang = language.downcase.gsub(/\./, "") %>
