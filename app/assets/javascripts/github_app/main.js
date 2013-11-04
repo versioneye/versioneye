@@ -1,5 +1,5 @@
 define(
-	['underscore', 'backbone', 'moment', 'bootstrap_switch',
+	['underscore', 'backbone', 'moment',
    '/assets/github_app/views/loading_view',
    '/assets/github_app/views/menu_view',
    '/assets/github_app/views/repo_view',
@@ -7,7 +7,7 @@ define(
    '/assets/github_app/collections/all_repo_collection',
    '/assets/github_app/collections/repo_collection',
    '/assets/github_app/collections/menu_collection'],
-	function(_, Backbone, moment, BootstrapSwitch,
+	function(_, Backbone, moment,
             GithubLoadingView, GithubMenuView, GithubRepoView,
             GithubPaginationView, GithubAllRepoCollection,
             GithubRepoCollection, GithubMenuCollection){
