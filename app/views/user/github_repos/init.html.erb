@@ -90,23 +90,20 @@
 </script>
 
 <script id = "github-repo-info-template" type = "text/template">
-  <div id = "github-repo-{{= repo.github_id}}" class = "span6 repo-container">
+  <div id = "github-repo-{{= repo.github_id}}" class = "repo-container">
     <div class = "repo-notification hide span12"></div>
     <div id = "slide1" class = "repo-slider current" data-next="slide2">
       <div class = "repo-info row-fluid">
         <div class = "repo-info-content span12">
-          <div class = "repo-logo span3">
+          <div>
             {{ var logo_path = "/assets/language/" }}
             {{ var logo_name = (repo.supported) ? repo.language : "default" }}
-            <img src   = {{= logo_path + logo_name + ".png"}} style = " height: 72px; " />
-          </div>
-          <div class = "span9">
+            <img  class = "pull-left" src = {{= logo_path + logo_name + ".png"}} style = " height: 72px; " />
             <a href= "http://www.github.com/{{= repo.fullname}}" target="_blank">
               <h5>{{= repo.fullname }}</h5>
             </a>
             <div class ="repo-labels"></div>
           </div>
-
           <div class = "span12 repo-desc"> {{= repo.description }} </div>
           <div class = "span12 repo-controls-info"></div>
         </div>
@@ -157,7 +154,7 @@
 
     {{ if(imported_files.length){ }}
       We are monitoring {{= imported_files.length }} files :
-      <i> {{= _.map(imported_files, function(item){return item;}) }} </i>.
+      <i> {{= _.map(imported_files, function(item){return item['branch'] +'/'+ item['filename'];}) }} </i>.
     {{  } else { }}
         We are monitoring <em>none</em> of them.
     {{  } }}
@@ -165,13 +162,13 @@
 </script>
 
 <script id = "github-repo-control-item-template" type = "text/template">
-    <div class = "item-header">
-      <h5>
-        <i class="icon-code-fork"></i>
-        {{= branch }}
-      </h5>
-    </div>
-    <div class = "item-body"></div>
+  <td class = "item-header span3">
+    <h5>
+      <i class="icon-code-fork"></i>
+      {{= branch }}
+    </h5>
+  </td>
+  <td class = "item-body span9"></td>
 </script>
 
 <script id = "github-repo-switch-template" type = "text/template">
