@@ -102,6 +102,10 @@ class User
     UserMailer.verification_email(self, self.verification, self.email).deliver
   end
 
+  def send_suggestions
+    UserMailer.suggest_packages_email(self).deliver
+  end
+
   def self.send_verification_reminders
     users = User.where( :verification.ne => nil )
     users.each do |user|
@@ -232,12 +236,19 @@ class User
   def self.follows_max(n)
     User.all.select {|user| user['product_ids'].nil? or user['product_ids'].count < n}
   end
+
   def self.follows_least(n)
     User.all.select {|user| !user['product_ids'].nil? and user['product_ids'].count >= n}
   end
+
   def self.non_followers
     User.all.select {|user| user['product_ids'].nil? or user['product_ids'].count == 0}
   end
+
+  class << self
+    alias_method :non_followers :all_inactive_users
+  end
+
 
   def self.authenticate(email, submitted_password)
     user = User.where( email: email.downcase )[0]

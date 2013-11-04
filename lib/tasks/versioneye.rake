@@ -77,9 +77,16 @@ namespace :versioneye do
     puts "STOP to send out verification reminder E-Mails."
   end
 
+
   desc "crawl & import Cococapods specs"
   task :crawl_cocoapods => :environment do
     CocoapodsCrawler.crawl
+
+  desc "send out suggestion emails to inactive users"
+  task :send_suggestions
+    puts "START to send out suggestion emails to inactive users"
+    User.all_inactive_users.each { |user| user.send_suggestions }
+    puts "STOP  to send out suggestion emails to inactive users"
   end
 
 end
