@@ -18,8 +18,7 @@ define(['underscore', 'backbone',
 
     render: function(){
       console.log("Rendering all items in RepoCollection");
-      $('.github-switch').bootstrapSwitch('destroy');
-      $('.github-switch').remove();
+      $('.onoffswitch').remove();
       $("#github-repos").empty();
 
       this.collection.each(function(repo){
@@ -28,8 +27,7 @@ define(['underscore', 'backbone',
     },
 		resetView: function(){
       console.debug("Resetting repo view");
-      $('.github-switch').bootstrapSwitch('destroy');
-      $('.github-switch').remove();
+      $('.onoffswitch').remove();
       $("#github-loader").remove();
       $("#github-repos").empty();
 			return false;
