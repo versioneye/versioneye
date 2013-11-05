@@ -14,7 +14,7 @@
           <% product = notification.product %>
           <% next if product.nil? %>
           <tr>
-            <td>
+            <td style="vertical-align: top;">
               <% version = product.version_by_number( notification.version_id ) %>
               <img src= "http://www.versioneye.com/assets/language/<%= product.language.downcase %>.png" style = "width: 48px; height: 48px;"/>
             </td>
@@ -30,16 +30,16 @@
               <% notification.sent_email = true %>
               <% notification.save %>
 
-              <% prod_id = product[:_id].to_s %>
+              <% prod_id = "#{product.language_esc}_#{product.prod_key}" %>
               <% if @user_product_index.has_key?(prod_id) %>
-                <br /> <strong> Used in: &nbsp;</strong>
+                <div>Used in this projects:</div>
                 <% proj_ids = @user_product_index[prod_id] %>
                 <% links = [] %>
                 <% proj_ids.each_with_index do |proj_id, i| %>
-                  <% project = Project.find_by_id(proj_id) %>
-                  <%= link_to(project[:project_key].to_s, user_project_url(id: proj_id)) %> &nbsp;
-                  <% break if i > 5 %>
+                  <% project = Project.find_by_id( proj_id ) %>
+                   <div> - <%= link_to( project.name, user_project_url( project ) ) %></div>
                 <% end %>
+                <br/>
               <% end %>
             </td>
 
