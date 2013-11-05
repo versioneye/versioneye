@@ -1,5 +1,3 @@
-#for indexing use task: rake db:mongoid:create_indexes
-
 class Product
 
   require 'will_paginate/array'
@@ -45,21 +43,14 @@ class Product
 
   field :reindex, type: Boolean, default: true
 
-  index [[:followers,  Mongo::DESCENDING]]
-  index [[:updated_at, Mongo::DESCENDING]]
-  index [[:created_at, Mongo::DESCENDING]]
+  # For indexing use task: rake db:mongoid:create_indexes
+  index({followers:  -1}, {background: true})
+  index({created_at: -1}, {background: true})
+  index({updated_at: -1}, {background: true})
+  index({updated_at: -1, language: -1}, {background: true})
 
   embeds_many :versions
   embeds_many :repositories
-
-  index(
-    [
-      [:updated_at, Mongo::DESCENDING]
-    ],
-    [
-      [:updated_at, Mongo::DESCENDING],
-      [:language, Mongo::DESCENDING]
-    ])
 
   has_and_belongs_to_many :users
   # has_and_belongs_to_many :licenses
@@ -100,7 +91,7 @@ class Product
   # This is slow !! Searches by regex are always slower than exact searches!
   def self.find_by_lang_key_case_insensitiv(language, searched_key)
     return nil if searched_key.nil? || searched_key.empty? || language.nil? || language.empty?
-    result = Product.all(conditions: {prod_key: /^#{searched_key}$/i, language: /^#{language}$/i})
+    result = Product.where( prod_key: /^#{searched_key}$/i, language: /^#{language}$/i )
     return nil if (result.nil? || result.empty?)
     return result[0]
   end
@@ -235,11 +226,11 @@ class Product
   end
 
   def http_links
-    Versionlink.all(conditions: { language: language, prod_key: self.prod_key, version_id: nil, link: /^http*/}).asc(:name)
+    Versionlink.where(language: language, prod_key: self.prod_key, version_id: nil, link: /^http*/).asc(:name)
   end
 
   def http_version_links
-    Versionlink.all(conditions: { language: language, prod_key: self.prod_key, version_id: self.version, link: /^http*/ }).asc(:name)
+    Versionlink.where(language: language, prod_key: self.prod_key, version_id: self.version, link: /^http*/ ).asc(:name)
   end
 
   def self.get_hotest( count )

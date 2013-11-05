@@ -11,59 +11,11 @@
   <% elsif @product.prod_type.eql?(Project::A_TYPE_COMPOSER)  %>
     <%= render "product_show_dependencies_packagist" %>
   <% end %>
-</div>
 
-<% dependencies = @product.dependencies %>
-<% if !dependencies.empty? && dependencies.count > 2 %>
-
-<div class="box" style="padding-top: 0; margin-bottom: 10px;">
-  <div id="canvas-container"></div>
-  <div class="recursive_info_box" id="infoBox">
-    <span >
-      <a id="pinit" style="display: none;" href="" class="pin-it-button" >
-        <img alt="pint_it_on_pinterest" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" />
-      </a>
-    </span>
-    <h5>
-      <%= @product.name %> has <span style="font-weight: bold;" id="runtime_recursive_number"></span> recursive <%= @product.main_scope %> dependencies
-    </h5>
+  <% dependencies = @product.dependencies %>
+  <% if 1 ==2 && !dependencies.empty? && dependencies.count > 2 %>
     <a href="/<%= @product.language_esc%>/<%= @product.to_param%>/<%= @product.version_to_url_param %>/visual_dependencies">
       See visual page
     </a>
-  </div>
+  <% end %>
 </div>
-
-<script type="text/javascript">
-  function render_wheel(){
-    canvas_container = document.getElementById("canvas-container")
-    if (canvas_container){
-      var wheel = new DependencyWheel.Remote(false, canvas_container, {
-        url: '/<%= @product.language_esc%>/<%= @product.to_param%>/<%= @product.version_to_url_param %>/dependencies.json?scope=<%= @product.main_scope %>',
-        width: "605",
-        height: "605",
-        infoBox: "infoBox",
-        infoNumber: "runtime_recursive_number",
-        canvas_id: "canvas",
-        canvas_hover_id: "canvas_hover",
-        product_key: "<%= @product.to_param%>",
-        product_version: "<%= @product.version_to_url_param%>",
-        product_name: "<%= @product.name%>",
-        version: "<%= @product.version%>",
-        data_border: 70,
-        show_label: false,
-        resize: false,
-        scope: "<%= @product.main_scope %>",
-        container_id: "canvas-container",
-        onItemClick: function(item, event){
-          key = item.id;
-          key = key.replace(/\//g, ":");
-          version = item.version;
-          version = version.replace(/\//g, ":");
-          window.location.href = "/<%= @product.language.downcase%>/" + key + "/" + version;
-        }
-      } );
-    }
-  }
-</script>
-
-<% end %>

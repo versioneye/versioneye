@@ -82,7 +82,7 @@ class User
   attr_accessible :fullname, :username, :email, :password, :new_username, :terms, :datenerhebung, :verification, :terms, :datenerhebung
 
 
-  def save
+  def save(*arg)
     encrypt_password if new_record?
     return false if self.terms == false || self.terms == nil
     return false if self.datenerhebung == false || self.datenerhebung == nil
@@ -103,7 +103,7 @@ class User
   end
 
   def self.send_verification_reminders
-    users = User.all(conditions: {verification: {"$ne" => nil}})
+    users = User.where( :verification.ne => nil )
     users.each do |user|
       user.send_verification_reminder
     end
@@ -174,7 +174,7 @@ class User
   end
 
   def self.find_by_ids( ids )
-    User.all(conditions: {:_id.in => ids})
+    User.where(:id.in => ids)
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
@@ -186,11 +186,11 @@ class User
   end
 
   def emails
-    UserEmail.all(conditions: {user_id: self._id.to_s})
+    UserEmail.where(user_id: self._id.to_s)
   end
 
   def emails_verified
-    UserEmail.all(conditions: {user_id: self._id.to_s, verification: nil})
+    UserEmail.where(user_id: self._id.to_s, verification: nil)
   end
 
   def get_email(email)
@@ -230,22 +230,13 @@ class User
   end
 
   def self.follows_max(n)
-    User.all.select {|user| user['product_ids'].count < n}
+    User.all.select {|user| user['product_ids'].nil? or user['product_ids'].count < n}
   end
   def self.follows_least(n)
-    User.all.select {|user| user['product_ids'].count >= n}
+    User.all.select {|user| !user['product_ids'].nil? and user['product_ids'].count >= n}
   end
   def self.non_followers
-    User.all.select {|user| user['product_ids'].count == 0}
-  end
-
-  def self.active_users
-    User.all.select do |user|
-      (user['product_ids'].count > 0 or
-       Versioncomment.where(user_id: user.id).exists? or
-       Project.where(user_id: user.id).exists?
-      )
-    end
+    User.all.select {|user| user['product_ids'].nil? or user['product_ids'].count == 0}
   end
 
   def self.authenticate(email, submitted_password)

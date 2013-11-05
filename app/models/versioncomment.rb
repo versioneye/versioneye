@@ -47,11 +47,11 @@ class Versioncomment
 
   # TODO double check this
   def self.find_by_prod_keys( prod_keys )
-    Versioncomment.all( conditions: {:product_key.in => prod_keys}).desc(:created_at)
+    Versioncomment.where(:product_key.in => prod_keys).desc(:created_at)
   end
 
   def self.find_by_prod_key_and_version(language, prod_key, version)
-    Versioncomment.all( conditions: {language: language, product_key: prod_key, version: version} ).asc(:created_at)
+    Versioncomment.where(language: language, product_key: prod_key, version: version).asc(:created_at)
   end
 
   def user

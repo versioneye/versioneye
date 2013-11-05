@@ -6,10 +6,11 @@ class Dependency
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_SCOPE_COMPILE = "compile"
-  A_SCOPE_RUNTIME = "runtime"
-  A_SCOPE_REQUIRE = "require"
-  A_SCOPE_TEST    = "test"
+  A_SCOPE_COMPILE  = "compile"
+  A_SCOPE_RUNTIME  = "runtime"
+  A_SCOPE_REQUIRE  = "require"
+  A_SCOPE_PROVIDED = "provided"
+  A_SCOPE_TEST     = "test"
 
   # This attributes describe to which product
   # this dependency belongs to. Parent!
@@ -27,8 +28,11 @@ class Dependency
   field :scope       , type: String
   field :known       , type: Boolean
 
+  # The current version of the product, which this dep is referencing
+  field :current_version, type: String
+
   def self.find_by_lang_key_and_version( lang, prod_key, version)
-    Dependency.all(conditions: { language: lang, prod_key: prod_key, prod_version: version } )
+    Dependency.where( language: lang, prod_key: prod_key, prod_version: version )
   end
 
   def self.find_by_lang_key_version_scope(lang, prod_key, version, scope)

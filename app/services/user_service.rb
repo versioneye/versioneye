@@ -53,6 +53,15 @@ class UserService
     user.save
   end
 
+  def self.active_users
+    User.all.select do |user|
+      ( (!user['product_ids'].nil? && user['product_ids'].count > 0) or
+       Versioncomment.where(user_id: user.id).exists? or
+       Project.where(user_id: user.id).exists?
+      )
+    end
+  end
+
   def self.create_random_value
     chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
     value = ""

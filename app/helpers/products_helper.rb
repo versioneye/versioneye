@@ -18,16 +18,19 @@ module ProductsHelper
   end
 
   def user_follows?(product, user)
+    return false if user.products.nil? || user.products.empty?
     return true if user.products.include?(product)
     return false
   end
 
   def display_follow(product, user)
-    return "none" if user.products.include? product
+    return "block" if user.products.nil? || user.products.empty?
+    return "none"  if user.products.include? product
     return "block"
   end
 
   def display_unfollow(product, user)
+    return "none"  if user.products.nil? || user.products.empty?
     return "block" if user.products.include? product
     return "none"
   end
@@ -38,6 +41,29 @@ module ProductsHelper
     query = query.strip()
     query = query.downcase
     return query
+  end
+
+  def badge_for_product( language, prod_key, version )
+    key = "#{language}_#{prod_key}_#{version}"
+    badge = Rails.cache.read( key )
+    return badge if badge
+
+    product = Product.fetch_product language, prod_key
+    return "unknown" if product.nil?
+
+    product.version = version
+    dependencies = product.dependencies
+    if dependencies.nil? || dependencies.empty?
+      badge = "none"
+      Rails.cache.write( key, badge, timeToLive: 1.hour )
+      return badge
+    end
+
+    outdated = DependencyService.dependencies_outdated?( product.dependencies )
+    badge = "out-of-date" if outdated
+    badge = "up-to-date"  if not outdated
+    Rails.cache.write( key, badge, timeToLive: 1.hour )
+    return badge
   end
 
   def get_lang_value( lang )

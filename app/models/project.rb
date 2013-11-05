@@ -51,6 +51,7 @@ class Project
   has_many   :collaborators, class_name: "ProjectCollaborator"
 
   scope :by_user  , ->(user)  { where(user_id: user[:_id].to_s) }
+  scope :by_collaborator, ->(user){all_in(_id: ProjectCollaborator.by_user(user).to_a.map(&:project_id))}
   scope :by_source, ->(source){ where(source:  source ) }
   scope :by_period, ->(period){ where(period:  period ) }
   scope :by_github, ->(reponame){ where(source: A_SOURCE_GITHUB, github_project: reponame)}
@@ -80,7 +81,7 @@ class Project
   end
 
   def self.find_private_projects_by_user user_id
-    Project.all(conditions: { user_id: user_id, private_project: true } )
+    Project.where( user_id: user_id, private_project: true )
   end
 
   def show_dependency_badge?
