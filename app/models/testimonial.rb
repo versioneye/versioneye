@@ -13,7 +13,8 @@ class Testimonial
 
   belongs_to :user
 
-  index [[:moderated, Mongo::DESCENDING]]
+  index({moderated: -1}, {background: true})
+
 
   def self.find_by_id(the_id)
     Testimonial.all.where(_id: the_id).first
@@ -33,4 +34,5 @@ class Testimonial
       counter += 1
     end
   end
+
 end

@@ -5,8 +5,6 @@ describe ComposerLockParser do
   describe "parse" do
 
     before :each do
-      Product.where().delete
-
       @products = Array.new
 
       @project_file_url = "https://s3.amazonaws.com/veye_test_env/composer.lock"
@@ -50,10 +48,6 @@ describe ComposerLockParser do
       @products.each do |product|
         product.save
       end
-    end
-
-    after :each do
-      Product.where().delete
     end
 
     def fetch_by_name(dependencies, name)

@@ -313,10 +313,6 @@ describe User do
   end
 
   describe "follows_least" do
-    it "returns all users, when argument is 0" do
-      User.follows_least(0).count.should eql(User.all.count)
-    end
-
     it "returns nothing, when there's no user with specified number follows" do
       User.follows_least(1).count.should eql(0)
     end
@@ -340,61 +336,6 @@ describe User do
       user.products.push prod
       User.follows_max(1).count.should eql(User.all.count - 1)
     end
-  end
-
-  describe "active_users" do
-    it "returns 3mpty list, when there's no active users" do
-      User.active_users.count.should eql(0)
-    end
-
-    it "returns one user, when there's only one user following" do
-      user = User.all.first
-      prod = ProductFactory.create_new
-      user.products.push prod
-      User.active_users.count.should eql(1)
-    end
-
-    it "returns one user, when there's only one user who have add comment" do
-      user = User.all.first
-      Versioncomment.new(user_id: user.id, product_key: "1", version: "1", comment: "1").save
-      Versioncomment.new(user_id: user.id, product_key: "2", version: "2", comment: "2").save
-      User.active_users.count.should eql(1)
-    end
-
-    it "returns only one user, when there's only one user with active project" do
-      user                = User.all.first
-      project             = Project.new
-      project.user        = user
-      project.name        = "test"
-      project.project_key = "test"
-      project.save
-      User.active_users.count.should eql(1)
-      Project.delete_all
-    end
-
-    it "returns only one user, even she commented and has active project" do
-      user = User.all.first
-      Project.new(user_id: user.id)
-      Versioncomment.new(user_id: user.id, product_key: "1", version: "1", comment: "1").save
-      User.active_users.count.should eql(1)
-      Project.delete_all
-      Versioncomment.delete_all
-    end
-
-    it "returns 2 user,when she commented and he has active project" do
-      she                 = User.all.first
-      he                  = User.all.last
-      project             = Project.new
-      project.user        = she
-      project.name        = "test"
-      project.project_key = "test"
-      project.save
-      Versioncomment.new(user_id: he.id, product_key: "1", version: "1", comment: "1").save
-      User.active_users.count.should eql(2)
-      Project.delete_all
-      Versioncomment.delete_all
-    end
-
   end
 
 end

@@ -124,7 +124,7 @@ class ProductMigration
 
   def self.improve_ruby_links()
     Product.where(language: "Ruby").each do |product|
-      Versionlink.all(conditions: { prod_key: product.prod_key }).each do |link|
+      Versionlink.where(prod_key: product.prod_key).each do |link|
         if !link.version_id.nil?
           Rails.logger.info "improve link #{product.prod_key} - #{link.link} - #{link.version_id}"
           link.version_id = nil

@@ -172,18 +172,35 @@ class ProjectService
     end
   end
 
-  #returns reverse index map {:product_key [project_key1, project_key2, ...]}
-  def self.user_product_index_map(user)
+  #returns reverse index map for projects and collaborated projects
+  #{:product_key [project_key1, project_key2, ...]}
+  def self.user_product_index_map(user, add_collaborated = true)
     indexes = {}
     user_projects = Project.by_user(user)
     return indexes if user_projects.nil?
 
-    user_projects.each do |proj|
-      proj.dependencies.each do |dep|
+    user_projects.each do |project|
+      next if project.nil?
+
+      project.dependencies.each do |dep|
         next if dep.nil? or dep.product.nil?
-        prod_id = dep.product.id.to_s
+        prod_id = dep.product[:_id].to_s
         indexes[prod_id] = [] unless indexes.has_key?(prod_id)
-        indexes[prod_id] << proj[:project_key]
+        indexes[prod_id] << project[:_id].to_s
+      end
+    end
+
+    collaborated_projects = Project.by_collaborator(user)
+    if add_collaborated and !collaborated_projects.nil?
+      collaborated_projects.each do |project|
+        next if project.nil?
+
+        project.dependencies.each do |dep|
+          next if dep.nil? or dep.product.nil?
+          prod_id = dep.product[:_id].to_s
+          indexes[prod_id] = [] unless indexes.has_key?(prod_id)
+          indexes[prod_id] << project[:_id].to_s
+        end
       end
     end
 

@@ -5,16 +5,17 @@
 			</h5>
 		</div>
 		<div class="box content" >
+			<% @user['product_ids'] ||= [] %>
 			<% languages = Product.get_unique_languages_for_product_ids( @user['product_ids'] ) %>
 			<% languages.each do |language| %>
 				<% prog_lang = language.downcase.gsub(/\./, "") %>
 				<div class="icon_<%= prog_lang %>_big_container">
 					<div class = "icon_<%= prog_lang %> fix_big on" ></div>
 				</div>
-			<% end %>		
+			<% end %>
 		</div>
 
-		<% if @userlinkcollection && !@userlinkcollection.empty? %> 
+		<% if @userlinkcollection && !@userlinkcollection.empty? %>
 			<div class="box header">
 				<h5>
 					<h5>Is on</h5>
