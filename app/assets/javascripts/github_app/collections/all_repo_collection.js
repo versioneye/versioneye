@@ -1,5 +1,6 @@
-define(['underscore', 'backbone'],
-  function(_, Backbone){
+define(['underscore', 'backbone',
+        '/assets/libs/backbone.poller.min',],
+  function(_, Backbone, Poller){
 
   function showNotification(classes, message){
     var flash_template = _.template(jQuery("#github-notification-template").html());
@@ -15,9 +16,29 @@ define(['underscore', 'backbone'],
   var GithubAllRepoCollection = Backbone.Collection.extend({
     model: GithubRepoModel,
     url: "/user/github_repos",
+    initialize: function(options){
+      var poller_options = {
+        delayed: false,
+        condition: function(model){
+          return model.get('task_status') === 'done';
+        }
+      };
+
+      this.poller = Poller.get(this); //registered event is main.js
+    },
+
     parse: function(response){
       if(response.success){
-        if(response.repos.length){
+
+        if(response.task_status === 'done'){
+          console.debug("Got all repos. Stopping poller;");
+          showNotification(
+              "alert alert-success",
+              "Importing your Github repositories is done."
+          );
+          this.poller.stop();
+        }
+        if(!_.isUndefined(response.repos) && !_.isEmpty(response.repos) && !_.isNull(response.repos)){
           console.log("Got " + response.repos.length + " repos.");
           return response.repos;
         } else {
@@ -30,7 +51,17 @@ define(['underscore', 'backbone'],
         return [];
       }
     },
+    clearAll: function(cb){
+      var jqxhr = $.get("/user/github/clear");
+      var that = this;
+      jqxhr.success(function(){
+        console.debug("Going to repoll content.");
+        that.poller.start();
+        cb()
+      });
+    },
     fetchAll: function(update_fn){
+      console.debug("#-- [deprecated] Going to re-fill repo cache");
       this.fetch({
         cache: false,
         reset: true,
@@ -44,7 +75,7 @@ define(['underscore', 'backbone'],
         },
         error: function(repos, response, options){
           showNotification("alert alert-error",
-                           '<div><i class="icon-info-sign"></i> Can not load your repositoiries due a connectivity issues.</div>');
+                           '<div><i class="icon-info-sign"></i> Can not load your repositories due a connectivity issues.</div>');
           $("#github-repos").html("Connection issues - can not read data from Github.");
         }
       });

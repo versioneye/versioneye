@@ -89,6 +89,7 @@ class Github
     end
 
     repo['project_files'] = project_files
+    GithubRepo.add_new(user, repo, "1")
     repo
   end
 
