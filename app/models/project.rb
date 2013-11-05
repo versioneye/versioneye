@@ -11,6 +11,7 @@ class Project
   A_TYPE_MAVEN2   = "Maven2"
   A_TYPE_LEIN     = "Lein"
   A_TYPE_GITHUB   = "GitHub"
+  A_TYPE_R        = "R"
   A_TYPE_COCOAPODS= "CocoaPods"
 
   A_SOURCE_UPLOAD = "upload"
