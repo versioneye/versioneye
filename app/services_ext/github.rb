@@ -2,14 +2,16 @@ require 'uri'
 require 'excon'
 
 class Github
-  A_USER_AGENT = "www.versioneye.com"
+  A_USER_AGENT = "Chrome/28(www.versioneye.com, contact@versioneye.com)"
   A_API_URL    = "https://api.github.com"
+  A_WORKERS_COUNT = 4
   A_DEFAULT_HEADERS = {
     "User-Agent" => A_USER_AGENT,
     "Connection" => "Keep-Alive"
   }
 
   @@conn = Excon.new(A_API_URL)
+  #Excon.defaults[:ssl_verify_peer] = false
 
   def self.token( code )
     domain    = 'https://github.com/'
@@ -64,31 +66,61 @@ class Github
     url = "#{A_API_URL}/orgs/#{orga_name}/repos?access_token=#{user.github_token}" if url.nil?
     read_repos(user, url, page, per_page)
   end
+  def self.read_repo_data(user, repo, try_n = 3)
+    project_files = nil
+    branch_docs = self.repo_branches(user, repo['full_name'])
+    if branch_docs and !branch_docs.nil?
+      branches = branch_docs.map {|x| x['name']}
+      repo['branches'] = branches
+    else
+      repo['branches'] = ["master"]
+    end
+    #adds project files
+    try_n.times do
+      project_files = repo_project_files(user, repo['full_name'], branch_docs)
+      break if project_files
+      p "Trying to read `#{repo['full_name']}` again"
+      sleep 3
+    end
+
+    if project_files.nil?
+      msg = "Cant read project files for repo `#{repo['full_name']}`. Tried to read #{try_n} ntimes."
+      Rails.logger.error msg
+    end
+
+    repo['project_files'] = project_files
+    repo
+  end
+
+  def self.execute_job(workers)
+    workers.each {|worker| worker.join}
+  end
 
   def self.read_repos(user, url, page = 1, per_page = 30)
     response        = Excon.get(url, headers: A_DEFAULT_HEADERS)
     data            = catch_github_exception JSON.parse(response.body)
     data            = [] if data.nil?
+    workers         = []
+    repo_docs       = []
     data.each do |repo|
       next if repo.nil? or repo['full_name'].to_s.empty?
-      time = Benchmark.measure do
-        branch_docs = self.repo_branches(user, repo['full_name'])
-        if branch_docs and !branch_docs.nil?
-          branches = branch_docs.map {|x| x['name']}
-          repo['branches'] = branches
-        else
-          repo['branches'] = ["master"]
-        end
-        #adds project files
-        repo['project_files'] = repo_project_files(user, repo['full_name'])
-      end
-      puts "Reading `#{repo['full_name']}` took: #{time} "
 
+      workers << Thread.new do
+        time = Benchmark.measure do
+          repo_docs << read_repo_data(user, repo)
+        end
+        puts "Reading `#{repo['full_name']}` took: #{time} "
+        sleep 1/100.0
+      end
+      execute_job(workers) if workers.count == A_WORKERS_COUNT
     end
+
+    #execute & wait reduntant tasks
+    execute_job(workers)
 
     paging_links = parse_paging_links(response.headers)
     repos = {
-      repos: data,
+      repos: repo_docs,
       paging: {
         start: page,
         per_page: per_page
@@ -137,6 +169,8 @@ class Github
 
   def self.fetch_project_file_directly(user, filename, branch, url)
     project_file = fetch_project_from_url(user, url)
+    return nil if project_file.nil?
+
     project_file["name"] = filename
     project_file["type"] = ProjectService.type_by_filename(filename)
     project_file["branch"] = branch
@@ -170,58 +204,57 @@ class Github
     result
   end
 
-  def self.repo_branch_tree(user, repo_name, branch = "master", recursive = false)
-    branches = repo_branches(user, repo_name)
-    if branches.nil?
-      Rails.logger.error "Can't read branches for `#{repo_name}`."
-      return
-    end
 
-    branch_shas = Hash[branches.to_a.map {|x| [x['name'], x['commit']['sha']]}]
-    unless branch_shas.has_key?(branch)
-      msg = "Repo `#{repo_name}` doesnt have branch `#{branch}`: #{branch_shas.keys}"
-      Rails.logger.error msg
-      return
-    end
-
+  def self.fetch_repo_branch_tree(user, repo_name, branch_sha, recursive = false)
     rec_val = (recursive == true) ? 1 : 0
-    path = "/repos/#{repo_name}/git/trees/#{branch_shas[branch]}?access_token=#{user.github_token}&recursive=#{rec_val}"
+    path = "/repos/#{repo_name}/git/trees/#{branch_sha}?access_token=#{user.github_token}&recursive=#{rec_val}"
     response = @@conn.get(path: path, headers: A_DEFAULT_HEADERS )
     if response.status != 200
-      msg = "Can't fetch repo tree for `#{repo_name}` from #{url}:  #{response.code}\n#{response.message}\n#{response.body}"
+      msg = "Can't fetch repo tree for `#{repo_name}` from #{url}: #{response.status} #{response.body}"
       Rails.logger.error msg
       return nil
-
     end
     JSON.parse response.body
   end
 
+  def self.project_files_from_branch(user, repo_name, branch_sha, branch = "master", recursive = false, try_n = 3)
+    branch_tree = nil
 
-  def self.project_files_from_branch(user, repo_name, branch = "master")
-    tree = repo_branch_tree(user, repo_name, branch)
+    try_n.times do
+      branch_tree = fetch_repo_branch_tree(user, repo_name, branch_sha)
+      break unless branch_tree.nil?
+      Rails.logger.error "Going to read tree of branch `#{branch}` for #{repo_name} again after little pause."
+      #sleep 3
+    end
 
-    if tree.nil? or !tree.has_key?('tree')
-      msg = "Can't read tree for repo `#{repo_name}` on branch `#{branch}`"
-      p msg
+    if branch_tree.nil? or !branch_tree.has_key?('tree')
+      msg = "Can't read tree for repo `#{repo_name}` on branch `#{branch}`."
       Rails.logger.error msg
       return
     end
 
-    tree['tree'].keep_if {|file| ProjectService.type_by_filename(file['path'].to_s) != nil}
+    branch_tree['tree'].keep_if {|file| ProjectService.type_by_filename(file['path'].to_s) != nil}
   end
 
   #returns all project files in the given repos grouped by branches
-  def self.repo_project_files(user, repo_name)
-    branches = repo_branches(user, repo_name)
+  def self.repo_project_files(user, repo_name, branch_docs = nil)
+    if branch_docs
+      branches = branch_docs
+    else
+      branches = repo_branches(user, repo_name)
+    end
+
     if branches.nil? or branches.empty?
       msg = "#{repo_name} doesnt have any branches."
       Rails.logger.error(msg) and return
     end
+
     project_files = {}
     branches.each do |branch|
       branch_name = branch['name']
       branch_key = encode_db_key(branch_name)
-      branch_files = project_files_from_branch(user, repo_name, branch_name)
+      branch_sha = branch['commit']['sha']
+      branch_files = project_files_from_branch(user, repo_name, branch_sha)
       project_files[branch_key] = branch_files unless branch_files.nil?
     end
 
@@ -235,7 +268,7 @@ class Github
   def self.fetch_file( url, token )
     return nil if url.nil? || url.empty?
     response = Excon.get( "#{url}?access_token=" + URI.escape(token), :headers => A_DEFAULT_HEADERS )
-    if response.code != 200
+    if response.status != 200
       Rails.logger.error "Can't fetch file from #{url}:  #{response.code}\n#{response.message}"
       return nil
     end
@@ -288,7 +321,6 @@ class Github
     response = JSON.parse response.body
     response['resources']
   rescue => e
-    p e.message
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
     return nil

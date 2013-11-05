@@ -120,7 +120,7 @@ class ProjectService
 
     if project_file.nil?
       error_msg = " Didn't find any project file of a supported package manager."
-      Rails.logger.error " Can't import project file from #{repo_name} branch #{branch} "
+      Rails.logger.error " Can't import project file `#{filename}` from #{repo_name} branch #{branch} "
       return error_msg
     end
 
