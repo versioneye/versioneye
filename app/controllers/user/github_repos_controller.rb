@@ -1,40 +1,32 @@
 class User::GithubReposController < ApplicationController
 
   before_filter :authenticate
-
   def init
     render "init", layout: "application"
   end
 
   def index
-    repos = []
 
-    if current_user.github_repos.all.count == 0
-      Rails.logger.debug("Going to fill GithubRepo cache for user: #{current_user.fullname} (id: #{current_user.id.to_s})")
-      github_repos = GitHubService.cached_user_repos(current_user)
-    else
-      github_repos = current_user.github_repos.all
-    end
+    task_status  = GitHubService.cached_user_repos(current_user)
 
-    github_repos = github_repos.desc(:updated_at)
-    github_repos.each do |repo|
-      repos << process_repo(repo)
+    github_repos = GithubRepo.by_user(current_user)
+    if github_repos and github_repos.count > 0
+      github_repos = github_repos.desc(:commited_at)
+      repos = []
+      github_repos.each do |repo|
+        repos << process_repo(repo)
+      end
     end
 
     render json: {
       success: true,
+      task_status: task_status,
       repos: repos,
     }.to_json
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
-  end
-
-  def fetch_all
-    current_user
-    GithubRepo.by_user(current_user).delete_all
-    GitHubService.cached_user_repos(current_user)
-    render json: {changed: true, success: true}
+    render text: "Backend issue - cant import github repositories;", status: 503
   end
 
   def update
@@ -167,6 +159,12 @@ class User::GithubReposController < ApplicationController
       format.json {
         render json: {success: success, project_id: id, msg: msg}}
     end
+  end
+
+  def clear
+    results = GithubRepo.by_user(current_user).delete_all
+
+    render json: {success: !results.nil?, msg: "Cache is cleaned. Ready for import."}
   end
 
   private

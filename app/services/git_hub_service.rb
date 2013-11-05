@@ -1,6 +1,17 @@
 require 'benchmark'
+require 'dalli'
 
 class GitHubService
+  @@memcache_options = {
+    :namespace => "github_app",
+    :compress => true,
+    :expires_in => 1.minute
+  }
+  @@memcache = Dalli::Client.new('localhost:11211', @@memcache_options)
+
+  A_TASK_NIL = nil
+  A_TASK_RUNNING = 'running'
+  A_TASK_DONE = 'done'
 
   def self.update_all_repos
     User.all(:timeout => true).live_users.where(:github_scope => "repo").each do |user|
@@ -24,21 +35,39 @@ class GitHubService
      or there's been any change on user's github account,
   then trys to read from github
   else it returns cached results from GitHubRepos collection.
+  NB! allows only one running task per user;
 =end
   def self.cached_user_repos( user )
+    user_task_key = "#{user[:username]}-#{user[:github_id]}"
+
+    task_status = @@memcache.get(user_task_key)
+
+    if task_status == A_TASK_RUNNING
+      Rails.logger.debug "We are still importing repos for `#{user[:fullname]}.`"
+      return task_status
+    end
+
     if user.github_repos.all.count == 0
       Rails.logger.info "Fetch Repositories from GitHub and cache them in DB."
-      orga_names = Github.orga_names(user.github_token)
-      self.cache_user_all_repos(user, orga_names)
+      task_status = A_TASK_RUNNING
+      @@memcache.set(user_task_key, task_status)
+      Thread.new do
+        orga_names = Github.orga_names(user.github_token)
+        self.cache_user_all_repos(user, orga_names)
+        task_status = A_TASK_DONE
+
+        @@memcache.set(user_task_key, task_status)
+      end
     elsif Github.user_repos_changed?( user )
       Rails.logger.info "Repos are changed - going to re-import all user repos."
       user.github_repos.delete_all
       self.cached_user_repos user
     else
       Rails.logger.info "Nothing is changed - skipping update."
+      task_status = A_TASK_DONE
     end
 
-    GithubRepo.by_user( user )
+    task_status
   end
 
   def self.bad_credentail?(repo)
@@ -72,17 +101,6 @@ class GitHubService
       url = nil
       begin
         data = Github.user_repos(user, url)
-        data[:repos].each do |repo|
-          return nil if bad_credentail?( repo )
-          begin
-            GithubRepo.add_new(user, repo, data[:etag])
-          rescue => e
-            Rails.logger.error("Can't add repo to cache: #{repo}")
-            Rails.logger.error e.message
-            Rails.logger.error e.backtrace.first
-            nil
-          end
-        end
         url = data[:paging]["next"]
       end while not url.nil?
     end
@@ -91,10 +109,6 @@ class GitHubService
       url = nil
       begin
         data = Github.user_orga_repos(user, orga_name, url)
-        data[:repos].each do |repo|
-          return nil if bad_credentail?(repo)
-          GithubRepo.add_new(user, repo, data[:etag])
-        end
         url = data[:paging]["next"]
       end while not url.nil?
     end

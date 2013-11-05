@@ -20,6 +20,10 @@ define(
     })).fadeIn(400).delay(6000).fadeOut(800);
   }
 
+
+  function pollUntilDone(){
+    var poller = Poller.get(collection).start();
+  }
   function fetchAll(cb){
     var jqxhr = $.ajax("/user/github/fetch_all")
       .done(function(data, status, jqxhr){
@@ -72,9 +76,12 @@ define(
     setTimeout(checkChanges, timeout);
   }
 
+
   //TODO: refactor to GithubApp namespace
-  var all_repos       = new GithubAllRepoCollection({})//includes all repos ~ client-side cache
+  //TODO: keep data in browser DB
+  var all_repos       = new GithubAllRepoCollection(); //includes all repos ~ client-side cache
   all_repos.showNotification = showNotification;
+  all_repos.initViews = initViews;
 
   var current_repos   = new GithubRepoCollection([], {allRepos: all_repos}); //includes only repos for current view
   var repo_view       = new GithubRepoView({collection: current_repos});
@@ -87,8 +94,9 @@ define(
                           collection: menu_items,
                           currentRepos: current_repos,
                           allRepos: all_repos,
-                          fetchAll: fetchAll
+                          repoView: repo_view
                         });
+
 
   var have_checked_cache = false;
 
@@ -109,6 +117,15 @@ define(
     pagination_view.render();
   };
 
+  all_repos.poller.on('success', function(repos){
+    console.info('another successful fetch!');
+    if(!_.isUndefined(repos)  && !_.isNull(repos) && !_.isEmpty(repos) && repos.length > 0){
+      initViews(repos);
+      setTimeout(pollChanges, 2000); //start polling changes in 2secs
+    }
+  });
+
+
   var AppRouter = Backbone.Router.extend({
 		routes: {
 			'user': 'showRepos',
@@ -118,7 +135,8 @@ define(
     showDefaultRepos: function(){
 			var loader_view = new GithubLoadingView();
 			loader_view.render();
-      all_repos.fetchAll(initViews);
+      //all_repos.fetchAll(initViews);
+      all_repos.poller.start();
     },
 		showRepos: function(org_id){
       if(_.isNaN(org_id) || _.isUndefined(org_id)){
@@ -144,6 +162,5 @@ define(
 		console.log("Running github app");
 		var app_router = new AppRouter();
 		Backbone.history.start();
-	  setTimeout(pollChanges, 2000); //start polling in 2secs
   }};
 });
