@@ -37,6 +37,7 @@ class GitHubService
     else
       Rails.logger.info "Nothing is changed - skipping update."
     end
+
     GithubRepo.by_user( user )
   end
 
@@ -58,10 +59,13 @@ class GitHubService
       user_info = Github.user(user.github_token)
       user[:user_login] = user_info['login'] if user_info.is_a?(Hash)
       #load data
-      Thread.new {self.cache_user_repos(user)}
+      threads = []
+      threads << Thread.new {self.cache_user_repos(user)}
       orga_names.each do |orga_name|
-        Thread.new { self.cache_user_orga_repos(user, orga_name) }
+        threads << Thread.new { self.cache_user_orga_repos(user, orga_name) }
       end
+
+      threads.each { |worker| worker.join }
     end
 
     def self.cache_user_repos( user )
