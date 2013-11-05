@@ -1,0 +1,43 @@
+<h2 class="section_header"> Pod </h2>
+
+<div class = "well box_snippet" >
+
+  <div class="row" style="margin-bottom: 5px;">
+    <div class="span2">
+      <h5 class="dep_header">Podfile entry</h5>
+    </div>
+    <div class="span5" style="width: 430px; margin-bottom: 0;"><pre class = "prettyprint" style="background-color: #fff; margin-bottom: 0;"><code>gem '<%= @product.name %>', '<%= @version.version %>'</code></pre></div>
+  </div>
+
+  <div class="row" style="margin-bottom: 5px;">
+    <div class="span2">
+      <h5 class="dep_header">Install with Cocoapods</h5>
+    </div>
+    <div class="span5" style="width: 430px; margin-bottom: 0;"><pre class="prettyprint download_area" style="margin-bottom: 0;"><code>cocoapods install <%= @product.name %> --version <%= @version.version %></code></pre>
+    </div>
+  </div>
+
+  <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.version ) %>
+  <% unless downloads.empty? %>
+    <div class="row" style="margin-bottom: 5px;" >
+      <div class="span2" >
+        <h5 class="dep_header">Download</h5>
+      </div>
+      <div class="span5 download_area" style="width: 409px;" >
+        <% downloads.each do |download|  %>
+          <a title="<%= download.name %> download" href="<%= download.link %>"><%= download.name %></a>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row" style="margin-bottom: 5px;">
+    <div class="span2">
+
+    </div>
+    <div class="span5" style="width: 430px; margin-bottom: 0;">
+      <%= render "products/helpers/notify_me" %>
+    </div>
+  </div>
+
+</div>
