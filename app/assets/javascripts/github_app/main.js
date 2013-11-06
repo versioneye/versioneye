@@ -20,10 +20,6 @@ define(
     })).fadeIn(400).delay(6000).fadeOut(800);
   }
 
-
-  function pollUntilDone(){
-    var poller = Poller.get(collection).start();
-  }
   function fetchAll(cb){
     var jqxhr = $.ajax("/user/github/fetch_all")
       .done(function(data, status, jqxhr){
@@ -33,7 +29,7 @@ define(
             "alert alert-info",
             "We just reimported all your repositories successfully!"
           );
-          all_repos.fetchAll(initViews);
+          all_repos.fetchAll();
         } else {
           showNotification(
               "alert alert-info",
@@ -52,7 +48,7 @@ define(
     var jqxhr = $.ajax("/user/poll/github_repos")
       .done(function(data, status, jqxhr){
         if(data.changed){
-          all_repos.reset();
+          all_repos.clearAll(initViews);
           showNotification(
             "alert alert-info",
             "We detected some changes on your Github repositories and updated the view here."
@@ -75,7 +71,6 @@ define(
     console.debug("Going to check changes. After waiting: " + timeout);
     setTimeout(checkChanges, timeout);
   }
-
 
   //TODO: refactor to GithubApp namespace
   //TODO: keep data in browser DB
@@ -110,7 +105,7 @@ define(
     if(_.isNaN(current_repos.org_id) || _.isUndefined(current_repos.org_id)){
       current_repos.org_id = get_default_org(repos);
     }
-    console.debug("Initializing view with org-id: " + current_repos.org_id)
+    console.debug("Initializing view with org-id: " + current_repos.org_id);
     current_repos.reset();
     current_repos.perPage = 10;
     current_repos.appendNextPage(0);
@@ -119,10 +114,33 @@ define(
 
   all_repos.poller.on('success', function(repos){
     console.info('another successful fetch!');
+    var notification_template = _.template($("#github-notification-template").html());
+    var loader_notification = $("#github-loader-notification");
+    loader_notification.empty();
+
+
     if(!_.isUndefined(repos)  && !_.isNull(repos) && !_.isEmpty(repos) && repos.length > 0){
       initViews(repos);
-      setTimeout(pollChanges, 2000); //start polling changes in 2secs
+      loader_notification.html(notification_template({
+        classes: "alert-info",
+        content: [
+          '<i class="icon-spinner icon-spin"></i>',
+          'Loading your github repos. Currently has imported: ' + repos.length
+        ].join(' ')
+      }));
+    } else {
+      loader_notification.html(notification_template({
+        classes: "alert-info",
+        content: [
+          '<i class="icon-spinner icon-spin"></i>',
+          'Loading your github repos. Still no data. Going to ping soon again'
+        ].join(' ')
+      }));
     }
+
+    //loader_notification.removeClass('hide');
+    //loader_notification.show();
+    return true;
   });
 
 
@@ -135,14 +153,12 @@ define(
     showDefaultRepos: function(){
 			var loader_view = new GithubLoadingView();
 			loader_view.render();
-      //all_repos.fetchAll(initViews);
       all_repos.poller.start();
     },
 		showRepos: function(org_id){
       if(_.isNaN(org_id) || _.isUndefined(org_id)){
         org_id = get_default_org(all_repos);
       }
-
       if(current_repos.org_id !== org_id){
         console.log("Org id changed - cleaning up & resetting view.");
         current_repos.org_id = org_id;
@@ -153,7 +169,8 @@ define(
         console.debug("All_repos still have some repos: " + all_repos.length);
        	current_repos.appendNextPage(0);
       } else {
-        all_repos.fetchAll(initViews);
+        //all_repos.fetchAll(initViews);
+        all_repos.poller.start();
       }
     }
 	});
@@ -162,5 +179,6 @@ define(
 		console.log("Running github app");
 		var app_router = new AppRouter();
 		Backbone.history.start();
+    setTimeout(pollChanges, 15000);
   }};
 });

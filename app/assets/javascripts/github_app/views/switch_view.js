@@ -21,9 +21,6 @@ define(['underscore', 'backbone'],
     },
 
     initialize: function(options){
-      console.debug("Initializing switch: ")
-      console.debug(options);
-
       this.parent = options.parent;
       this.branch = options.branch;
       this.project_file = options.project_file;
@@ -40,7 +37,6 @@ define(['underscore', 'backbone'],
         var filename = this.project_file['path'];
 
         if(!_.isNull(project_info) && !_.isUndefined(project_info)){
-          console.debug("Rendering switch info with project file.");
           content = imported_tmpl({
             branch: this.branch,
             filename: filename,
@@ -48,7 +44,6 @@ define(['underscore', 'backbone'],
             imported: project_info['created_at']
           });
         } else {
-          console.debug("Rendering default switch info")
           content = not_imported_tmpl({filename: filename});
         }
         return content;
