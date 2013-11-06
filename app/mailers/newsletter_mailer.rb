@@ -6,7 +6,7 @@ class NewsletterMailer < ActionMailer::Base
     @user = user
     mail(
       :to => @user.email,
-      :subject => "New Features - New API Endpoints and more speed.",
+      :subject => "New Features - OpenSearch + More Speed.",
       :tag => "newsletter"
       )
   end
