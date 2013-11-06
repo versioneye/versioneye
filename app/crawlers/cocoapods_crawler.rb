@@ -8,7 +8,7 @@ class CocoapodsCrawler < GitCrawler
 
   def initialize
     # TODO put config in config file
-    super "https://github.com/CocoaPods/Specs.git", "/Users/anjaresmer/cocoapods-specs"
+    super "https://github.com/CocoaPods/Specs.git", "/Users/robertreiz/workspace/cocoapods-specs"
   end
 
   def crawl
@@ -23,12 +23,12 @@ class CocoapodsCrawler < GitCrawler
       parser  = CocoapodsPodspecParser.new
       product = parser.parse_file filepath
       if product
+        VersionService.update_version_data product, false
         product.save
       else
         Rails.logger.warn "NO PRODUCT"
       end
     end
-
   end
 
   # traverse directory, search for .podspec files
