@@ -302,7 +302,7 @@ class Product
     return A_LANGUAGE_NODEJS if language.match(/^node/i)
     return A_LANGUAGE_PHP if language.match(/^php/i)
     return A_LANGUAGE_JAVASCRIPT if language.match(/^JavaScript/i)
-    return A_LANGUAGE_OBJECTIVEC if language.casecmp("Objective-C")
+    return A_LANGUAGE_OBJECTIVEC if language.match(/^Objective-C/i)
     return language.capitalize
   end
 
