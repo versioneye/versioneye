@@ -1,29 +1,7 @@
 <div class="row" style="border-bottom: 1px solid #ddd">
 
-  <% if signed_in? %>
-
-    <div class="product_header row">
-      <% @product['user_ids'] = Array.new() if @product['user_ids'].nil? %>
-      <% if @product['user_ids'].include? current_user.id %>
-        <div class="span11" style="line-height: 1.2">
-          <span class="product_header_small_text">Unfollow</span> <h1 class="product"><%= @product.name %></h1> <span class="product_header_small_text">and you will <b>not</b> receive notifications about new versions anymore!</span>
-        </div>
-      <% else %>
-        <div class="span11" style="line-height: 1.2;">
-          Follow <h1 class="product"> <%= @product.name %> </h1> to get notified about new versions!
-        </div>
-      <% end %>
-    </div>
-
-  <% else %>
-
-    <%= render 'shared/dialog_follow' %>
-    <div class="product_header row">
-      <div class="span11" style="line-height: 1.2;">
-        Follow <h1 class="product"> <%= @product.name %> </h1> for <span style="font-weight: bold; color: black;" >free</span> to get notified about new versions!
-      </div>
-    </div>
-
-  <% end %>
+  <div class="product_header row">
+    <h1 class="product"> <%= @product.name %> : <%= @version.version %> </h1>
+  </div>
 
 </div>

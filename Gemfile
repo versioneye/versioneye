@@ -29,8 +29,12 @@ gem 'capistrano'        , '2.15.5'
 gem 'whenever'          , '0.8.4'
 gem 'bourbon'           , '3.1.8'
 gem 'ruby_regex'        , '0.1.0'
+gem 'cocoapods-core'    , '0.26.2'
 
 group :development do
+  gem 'pry'
+  gem 'guard-rspec', require: false
+  gem 'guard-rails'
   gem 'psych'
   gem 'irbtools'
   gem 'terminal-notifier'

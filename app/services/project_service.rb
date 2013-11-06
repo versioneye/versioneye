@@ -151,6 +151,7 @@ class ProjectService
     if project.s3_filename && !project.s3_filename.empty?
       S3.delete( project.s3_filename )
     end
+    # TODO remove and replace w project.remove_dependencies
     project.dependencies.each do |dep|
       dep.remove
     end
