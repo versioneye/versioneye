@@ -20,4 +20,5 @@ class GitCrawler
   end
 
   alias_method :update, :pull
+
 end
