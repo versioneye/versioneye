@@ -193,7 +193,19 @@ class User::GithubReposController < ApplicationController
           repo[:imported_files] << project_info
         end
       end
-
+      repo['project_files'] = decode_branch_names(repo['project_files'])
       repo
+    end
+
+    #function that decodes encoded branch-keys to plain string
+    def decode_branch_names(project_files)
+      decoded_map = {}
+
+      project_files.each_pair do |branch, files|
+        decoded_branch = Github.decode_db_key(branch)
+        decoded_map[decoded_branch] = files
+      end
+
+      decoded_map
     end
 end
