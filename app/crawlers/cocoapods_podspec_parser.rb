@@ -5,7 +5,6 @@ require 'cocoapods-core'
 #
 # http://docs.cocoapods.org/specification.html
 #
-
 class CocoapodsPodspecParser
 
   @@language  = Product::A_LANGUAGE_OBJECTIVEC
