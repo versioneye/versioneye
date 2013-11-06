@@ -1,3 +1,4 @@
+
 .repo-controls {
   max-height: 200px;
   overflow-x: hidden;
@@ -39,7 +40,12 @@
 #github-repos {
   font-size: 0.9em;
 
-  .spanX {
+  &.content {
+    padding: 0px 15px;
+  }
+
+  & .spanX {
+    border: 1px solid white;
     margin-left: 0px;
   }
 
@@ -56,10 +62,6 @@
     max-height: 200px;
     overflow: scroll;
   }
-
-  & .repo-info:hover {
-    background-color: #fafafa;
-  };
 
   .github-repo-control {
     padding: 2px 5px;

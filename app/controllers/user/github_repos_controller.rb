@@ -136,8 +136,7 @@ class User::GithubReposController < ApplicationController
   def poll_changes
     is_changed = Github.user_repos_changed?( current_user )
     if is_changed == true
-      updated_repos = GitHubService.cached_user_repos(current_user)
-      render json: {changed: true, msg: "Changed - pulled #{current_user.github_repos.all.count} repos"}
+      render json: {changed: true, msg: "Changed."}
       return true
     end
     render json: {changed: false}
