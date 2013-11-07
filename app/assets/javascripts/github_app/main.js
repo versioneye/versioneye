@@ -32,8 +32,8 @@ define(
           all_repos.fetchAll();
         } else {
           showNotification(
-              "alert alert-info",
-              "We could not detect any changes on your Github repositories."
+            "alert alert-info",
+            "We could not detect any changes on your Github repositories."
           );
           console.log("No changes for repos - i'll wait and poll again.");
         }
@@ -121,25 +121,14 @@ define(
 
     if(!_.isUndefined(repos)  && !_.isNull(repos) && !_.isEmpty(repos) && repos.length > 0){
       initViews(repos);
-      loader_notification.html(notification_template({
-        classes: "alert-info",
-        content: [
-          '<i class="icon-spinner icon-spin"></i>',
-          'Loading your github repos. Currently has imported: ' + repos.length
-        ].join(' ')
-      }));
+      loader_notification.html([
+          'Got ',  repos.length, 'repositories'
+      ].join(' ')
+      );
     } else {
-      loader_notification.html(notification_template({
-        classes: "alert-info",
-        content: [
-          '<i class="icon-spinner icon-spin"></i>',
-          'Loading your github repos. Still no data. Going to ping soon again'
-        ].join(' ')
-      }));
+      loader_notification.html('Still no data. Going to ping soon again');
     }
 
-    //loader_notification.removeClass('hide');
-    //loader_notification.show();
     return true;
   });
 

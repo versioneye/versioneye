@@ -10,13 +10,6 @@ define(['underscore', 'backbone',
     })).fadeIn(400).delay(6000).fadeOut(800);
   }
 
-  function hideRepoLoader(){
-    console.debug("Going to hide repo loader");
-    console.debug($("#github-loader-notification"));
-    $("#github-loader-notification").empty();
-    return true;
-  }
-
 	var GithubRepoModel = Backbone.Model.extend({
     urlRoot: "/user/github_repos"
   });
@@ -39,8 +32,6 @@ define(['underscore', 'backbone',
 
         if(response.task_status === 'done'){
           console.debug("Got all repos. Stopping poller;");
-          $("#github-loader-notification").html('Done');
-          hideRepoLoader();
           showNotification(
               "alert alert-success",
               "Importing your Github repositories is done."
