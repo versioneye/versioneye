@@ -15,6 +15,8 @@ class CocoapodsPodspecParser
     # not implemented
   end
 
+  attr_accessor :podspec
+
   def parse_file ( file )
     @podspec = load_spec file
     return nil unless @podspec
@@ -130,10 +132,10 @@ class CocoapodsPodspecParser
   def create_license
     @spec_hash.except! "license"
 
-    # version_numbers = @product.versions.map(&:version)
-    # return nil if version_numbers.member?( version )
-
     # create new license if version doesn't exist yet
+    license = License.where( {:language => @@language, :prod_key => prod_key, :version  => version} )
+    return nil if license.first
+
     license = License.new({
       :language => @@language,
       :prod_key => prod_key,

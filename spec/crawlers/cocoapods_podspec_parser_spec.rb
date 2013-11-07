@@ -85,8 +85,10 @@ describe CocoapodsPodspecParser do
         links.count.should == 1
       end
 
-      def should_not_create_more_versionlinks
-        licenses = License.where(language:@language, prod_key:@prod_key, version_id:'3.1.1')
+      def should_not_create_more_licenses
+        # License.count.should == 1
+        License.each {|l| puts "License #{l.language} - #{l.prod_key} - #{l.version} : #{l.name}"}
+        licenses = License.where(language:@language, prod_key:@prod_key, version:'3.1.1')
         licenses.count.should == 1
       end
 
