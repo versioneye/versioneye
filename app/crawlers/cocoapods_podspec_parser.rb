@@ -63,7 +63,8 @@ class CocoapodsPodspecParser
 
 
   def update_product
-    add_version
+    create_version
+    create_license
     create_dependencies
     create_repository
     create_developers
@@ -117,9 +118,17 @@ class CocoapodsPodspecParser
     end
   end
 
+  def create_version
+    @spec_hash.except! "version"
 
-  def add_version
-    @spec_hash.except! "version", "license"
+    version_numbers = @product.versions.map(&:version)
+    return nil if version_numbers.member? version
+
+    @product.add_version( version )
+  end
+
+  def create_license
+    @spec_hash.except! "license"
 
     version_numbers = @product.versions.map(&:version)
     return nil if version_numbers.member?( version )
