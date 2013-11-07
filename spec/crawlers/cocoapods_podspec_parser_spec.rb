@@ -29,15 +29,12 @@ describe CocoapodsPodspecParser do
         version = product.versions.first
         version.version.should eq '3.1.1'
 
-        # licenses = [*product.licenses]
-        # licenses.count.should == 1
-        # license = licenses.first
-        # puts "license is #{license.to_yaml}"
-        # license.name.should eq 'BSD'
-
         Versionlink.count.should == 1
         Developer.count.should == 1
         License.count.should == 1
+
+        license = License.first
+        license.name.should == 'BSD'
       end
     end
 
@@ -130,14 +127,9 @@ describe CocoapodsPodspecParser do
         licenses = License.where(language:@language, prod_key:@prod_key)
         licenses.size.should == 2
 
-        # licenses = product.licenses
-        # puts "licenses are #{licenses.to_a.to_yaml}"
-
-        # license_names = licenses.map(&:name)
-        # puts "license names are #{license_names.to_yaml}"
-
-        # license_names.should include 'BSD'
-        # license_names.should include 'MIT'
+        license_names = licenses.map(&:name)
+        license_names.should include 'BSD'
+        license_names.should include 'MIT'
       end
     end
 
@@ -150,6 +142,7 @@ describe CocoapodsPodspecParser do
 
         should_create_another_product
         should_create_another_developer
+        should_create_another_license
       end
 
       def should_create_another_product
@@ -158,6 +151,10 @@ describe CocoapodsPodspecParser do
 
       def should_create_another_developer
         Developer.count.should == 2
+      end
+
+      def should_create_another_license
+        License.count.should == 2
       end
 
     end
