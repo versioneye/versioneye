@@ -24,7 +24,7 @@ class CocoapodsPodspecParser
     @product = get_product
     update_product
 
-    Rails.logger.info @spec_hash.to_json unless @spec_hash.except!("name").empty?
+    Rails.logger.info(@spec_hash.to_json) unless @spec_hash.except!("name").empty?
 
     @product
   end
@@ -130,15 +130,17 @@ class CocoapodsPodspecParser
   def create_license
     @spec_hash.except! "license"
 
-    version_numbers = @product.versions.map(&:version)
-    return nil if version_numbers.member?( version )
+    # version_numbers = @product.versions.map(&:version)
+    # return nil if version_numbers.member?( version )
 
     # create new license if version doesn't exist yet
     license = License.new({
-      :name     => @podspec.license[:type],
-      :language => language,
+      :language => @@language,
       :prod_key => prod_key,
       :version  => version,
+
+      :name     => @podspec.license[:type],
+      :comments => @podspec.license[:text],
     })
     license.save
   end
