@@ -1,7 +1,9 @@
+
 #TODO: multiple versions on line
 
 class BowerParser < CommonParser
   attr_reader :rules
+
   def initialize
     #ATOMIC RULES
     numeric = '\d+' #numeric identifier
@@ -89,6 +91,7 @@ class BowerParser < CommonParser
     end
 
     #TODO: what is version/version_label ...
+
     if (m = version.match(self.rules[:star_version]))
       version_data = {version: product.version, label: "*", comperator: "="}
     elsif (m = version.match(self.rules[:main_version]))
@@ -111,13 +114,16 @@ class BowerParser < CommonParser
         newest = VersionService.greater_than(product.versions, ver)
       when ">="
         newest = VersionService.greater_than_equal(product.versions, ver)
+
       else
         newest = nil
       end
+
       if newest
         version_data = {version: newest.version, label: ver, comperator: m[:comperator]}
       else
         Rails.debug.error("Couldnt find latest versions for #{product[:name]} using version: `#{ver}`")
+
         version_data = {version: ver, label: version, comperator: m[:comperator]}
       end
     elsif (m = version.match(self.rules[:tilde_version]))
