@@ -1,4 +1,7 @@
-class Bower
+#TODO: check ratelimit
+#TODO: no removing prev doc => update values + add new version
+
+class BowerCrawler
   def self.clean
     Product.where(prod_type: Project::A_TYPE_BOWER).delete_all
   end
@@ -33,10 +36,10 @@ class Bower
     imported = 0
     failed = 0
 
-    app_list.to_a.each do |app| 
+    app_list.to_a.each do |app|
       #read project's bower on github to get more info
       pkg_info = self.read_info_from_github(app[:url])
-    
+
       unless pkg_info
         p "Cant read info from: `#{app[:url]}`. Going to try luck with next package."
         next
@@ -51,6 +54,8 @@ class Bower
       deps = to_dependencies(prod, pkg_info)
       deps.to_a.each {|dep| prod.dependencies << dep}
 
+      #TODO: when product exists, then update info and add new versions
+      delete_previous_product(prod[:language], prod[:prod_key]);
       if prod.save
         p "Imported: #{prod[:name]}"
         imported += 1
@@ -101,25 +106,25 @@ class Bower
                             prod_version: prod[:version],
                             dep_prod_key: dep_key,
                             scope: Dependency::A_SCOPE_REQUIRE
-      
+
       dep.save
       deps << dep
     end
 
-    deps 
+    deps
   end
 
   def self.read_info_from_github(source_url, filename = "bower.json")
     info = {
-      version: "*", 
-      license: "unknown", 
-      dependencies: {}, 
-      url: source_url, 
+      version: "*",
+      license: "unknown",
+      dependencies: {},
+      url: source_url,
       private_repo: false,
       group_id: nil, #github user name
       artifact_id: nil, #github repo name
     }
-    
+
     unless source_url =~ /^git:\/\/github\.com/i
       p "warning: going to ignore #{source_url} - its not github repo, cant read bower.json"
       info[:private_repo] = true
@@ -127,15 +132,15 @@ class Bower
     end
     urlpath = source_url.gsub(/:\/+|\/+|\:/, "_")
     _, _, owner, repo = urlpath.split(/_/)
-    
+
     p "#-- #{source_url}, #{owner}, #{repo}"
-    repo.gsub!(/\.git$/, "")
+    repo.to_s.gsub!(/\.git$/, "")
     info[:name] = repo
     info[:group_id] = owner
     info[:artifact_id] = repo
 
     url = "#{Github::A_API_URL}/repos/#{owner}/#{repo}/contents/#{filename}"
-    admin = User.find_by_email "timgluz@gmail.com"
+    admin = User.find_by_email "admin@versioneye.com"
     content = Github.fetch_raw_file(url, admin[:github_token])
     if content
       begin
@@ -156,4 +161,7 @@ class Bower
     info
   end
 
+  def self.delete_previous_product(language, prod_key)
+    Product.where(language: language, prod_key: prod_key).delete_all
+  end
 end

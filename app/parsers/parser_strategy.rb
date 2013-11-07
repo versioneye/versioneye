@@ -2,7 +2,6 @@ class ParserStrategy
 
   def self.parser_for( project_type, url )
     case project_type
-<<<<<<< HEAD
       when Project::A_TYPE_MAVEN2
         if url.match(/pom.json/)
           return PomJsonParser.new
@@ -46,10 +45,10 @@ class ParserStrategy
         else
           return PodFileParser.new
         end
-    when Project::A_TYPE_BOWER
-      return BowerParser.new
+      when Project::A_TYPE_BOWER
+        return BowerParser.new
+      else
+      nil
     end
-    nil
   end
-
 end
