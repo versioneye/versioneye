@@ -122,14 +122,16 @@ class CocoapodsPodspecParser
     @spec_hash.except! "version", "license"
 
     version_numbers = @product.versions.map(&:version)
-    unless version_numbers.member? version
-      @product.add_version( version, {
-        :license => @podspec.license[:type],
-        # TODO get release date through github api
-        # repository => version tag
-        #:released_at =>
-        } )
-    end
+    return nil if version_numbers.member?( version )
+
+    # create new license if version doesn't exist yet
+    license = License.new({
+      :name     => @podspec.license[:type],
+      :language => language,
+      :prod_key => prod_key,
+      :version  => version,
+    })
+    license.save
   end
 
 
