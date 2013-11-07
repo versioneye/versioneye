@@ -90,7 +90,7 @@ describe BowerParser do
     it "parses project file from given url correctly " do
       parser = BowerParser.new
       project = parser.parse("#{host}#{filepath}")
-      
+
       p "#-------------", project
       project.should_not be_nil
       project.dependencies.size.should eql(7)
@@ -104,4 +104,5 @@ describe BowerParser do
       #TODO: finish it - do i need to test correctness of range of match
     end
   end
+
 end
