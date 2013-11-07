@@ -15,6 +15,8 @@ class CocoapodsPodspecParser
     # not implemented
   end
 
+  attr_accessor :podspec
+
   def parse_file ( file )
     @podspec = load_spec file
     return nil unless @podspec
@@ -24,7 +26,7 @@ class CocoapodsPodspecParser
     @product = get_product
     update_product
 
-    Rails.logger.info @spec_hash.to_json unless @spec_hash.except!("name").empty?
+    Rails.logger.info(@spec_hash.to_json) unless @spec_hash.except!("name").empty?
 
     @product
   end
@@ -63,7 +65,8 @@ class CocoapodsPodspecParser
 
 
   def update_product
-    add_version
+    create_version
+    create_license
     create_dependencies
     create_repository
     create_developers
@@ -117,19 +120,29 @@ class CocoapodsPodspecParser
     end
   end
 
-
-  def add_version
-    @spec_hash.except! "version", "license"
+  def create_version
+    @spec_hash.except! "version"
 
     version_numbers = @product.versions.map(&:version)
-    return nil if version_numbers.member?( version )
+    return nil if version_numbers.member? version
+
+    @product.add_version( version )
+  end
+
+  def create_license
+    @spec_hash.except! "license"
 
     # create new license if version doesn't exist yet
+    license = License.where( {:language => @@language, :prod_key => prod_key, :version  => version} )
+    return nil if license.first
+
     license = License.new({
-      :name     => @podspec.license[:type],
-      :language => language,
+      :language => @@language,
       :prod_key => prod_key,
       :version  => version,
+
+      :name     => @podspec.license[:type],
+      :comments => @podspec.license[:text],
     })
     license.save
   end

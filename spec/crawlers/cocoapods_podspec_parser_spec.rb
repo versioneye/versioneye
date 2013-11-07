@@ -28,9 +28,13 @@ describe CocoapodsPodspecParser do
 
         version = product.versions.first
         version.version.should eq '3.1.1'
-        version.license.should eq 'BSD'
+
         Versionlink.count.should == 1
         Developer.count.should == 1
+        License.count.should == 1
+
+        license = License.first
+        license.name.should == 'BSD'
       end
     end
 
@@ -49,6 +53,7 @@ describe CocoapodsPodspecParser do
         should_not_create_another_version
         should_not_create_more_developers
         should_not_create_more_versionlinks
+        should_not_create_more_licenses
       end
 
       def should_not_create_another_product
@@ -59,11 +64,12 @@ describe CocoapodsPodspecParser do
 
       def should_not_create_another_version
         products = Product.where(language:@language, prod_key:@prod_key)
-        versions = products.first.versions
+        product = products.first
+
+        versions = product.versions
         versions.size.should == 1
         version = versions.first
         version.version.should == '3.1.1'
-        version.license.should eq 'BSD'
       end
 
       def should_not_create_more_developers
@@ -76,11 +82,18 @@ describe CocoapodsPodspecParser do
         links.count.should == 1
       end
 
+      def should_not_create_more_licenses
+        # License.count.should == 1
+        License.each {|l| puts "License #{l.language} - #{l.prod_key} - #{l.version} : #{l.name}"}
+        licenses = License.where(language:@language, prod_key:@prod_key, version:'3.1.1')
+        licenses.count.should == 1
+      end
+
     end
 
     context 'parse other version of the podspec' do
 
-      it 'should create another version not anouther product' do
+      it 'should create another version not another product' do
         # should run before :all
         DatabaseCleaner.clean
 
@@ -101,17 +114,22 @@ describe CocoapodsPodspecParser do
 
       def should_create_another_version
         products = Product.where(language:@language, prod_key:@prod_key)
-        versions = products.first.versions
+        product  = products.first
+        versions = product.versions
         versions.size.should == 2
 
         version_numbers = versions.map(&:version)
         version_numbers.should include '3.1.1'
         version_numbers.should include '3.1.2'
+      end
 
-        licenses = versions.map(&:license)
-        licenses.should include 'BSD'
-        licenses.should include 'MIT'
+      def should_create_another_license
+        licenses = License.where(language:@language, prod_key:@prod_key)
+        licenses.size.should == 2
 
+        license_names = licenses.map(&:name)
+        license_names.should include 'BSD'
+        license_names.should include 'MIT'
       end
     end
 
@@ -124,6 +142,7 @@ describe CocoapodsPodspecParser do
 
         should_create_another_product
         should_create_another_developer
+        should_create_another_license
       end
 
       def should_create_another_product
@@ -132,6 +151,10 @@ describe CocoapodsPodspecParser do
 
       def should_create_another_developer
         Developer.count.should == 2
+      end
+
+      def should_create_another_license
+        License.count.should == 2
       end
 
     end
