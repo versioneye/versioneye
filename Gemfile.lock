@@ -43,6 +43,9 @@ GEM
       builder
       mime-types
       xml-simple
+    axiom-types (0.0.5)
+      descendants_tracker (~> 0.0.1)
+      ice_nine (~> 0.9)
     backports (3.3.5)
     binding.repl (0.8.0)
     boson (1.2.4)
@@ -76,6 +79,9 @@ GEM
       json_pure (~> 1.8)
       nap (~> 0.5)
     coderay (1.1.0)
+    coercible (0.2.0)
+      backports (~> 3.0, >= 3.1.0)
+      descendants_tracker (~> 0.0.1)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -94,6 +100,7 @@ GEM
     debugger-ruby_core_source (1.2.3)
     descendants_tracker (0.0.3)
     diff-lcs (1.2.5)
+    equalizer (0.0.7)
     erubis (2.7.0)
     every_day_irb (1.5.1)
     execjs (2.0.2)
@@ -112,7 +119,7 @@ GEM
     ffi (1.9.3)
     g (1.7.2)
     gene_pool (1.3.0)
-    grape (0.5.0)
+    grape (0.6.1)
       activesupport
       builder
       hashie (>= 1.2.0)
@@ -121,8 +128,8 @@ GEM
       rack (>= 1.3.0)
       rack-accept
       rack-mount
-      virtus
-    grape-entity (0.2.0)
+      virtus (>= 1.0.0)
+    grape-entity (0.3.0)
       activesupport
       multi_json (>= 1.3.2)
     gravatar_image_tag (1.1.3)
@@ -136,6 +143,7 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.6.5)
+    ice_nine (0.10.0)
     interactive_editor (0.0.10)
       spoon (>= 0.0.1)
     irbtools (1.5.1)
@@ -313,9 +321,11 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    virtus (0.5.5)
-      backports (~> 3.3)
+    virtus (1.0.0)
+      axiom-types (~> 0.0.5)
+      coercible (~> 0.2)
       descendants_tracker (~> 0.0.1)
+      equalizer (~> 0.0.7)
     websocket (1.0.7)
     whenever (0.8.4)
       activesupport (>= 2.3.4)
@@ -334,7 +344,6 @@ PLATFORMS
 
 DEPENDENCIES
   aws-s3 (= 0.6.3)
-  backports (= 3.3.5)
   bourbon (= 3.1.8)
   capistrano (= 2.15.5)
   capybara (= 2.1.0)
@@ -349,8 +358,8 @@ DEPENDENCIES
   factory_girl_rails (= 4.3.0)
   fakes3 (= 0.1.5.2)
   fakeweb (= 1.3.0)
-  grape (= 0.5.0)
-  grape-entity (= 0.2.0)
+  grape (= 0.6.1)
+  grape-entity (= 0.3.0)
   grape-swagger!
   gravatar_image_tag (= 1.1.3)
   htmlentities (= 4.3.1)
@@ -382,7 +391,6 @@ DEPENDENCIES
   twitter_oauth (= 0.4.94)
   uglifier (= 2.3.0)
   unicorn (= 4.7.0)
-  virtus (~> 0.5.5)
   whenever (= 0.8.4)
   will_paginate (= 3.0.5)
   yui-compressor (= 0.12.0)

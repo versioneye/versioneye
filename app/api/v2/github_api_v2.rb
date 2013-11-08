@@ -158,9 +158,9 @@ module V2
       end
       post '/hook/:project_id' do
         authorized?
-        project = Project.find( params[:project_id] )
+        project = Project.find_by_id( params[:project_id] )
         resp = false
-        if project.collaborator?( current_user )
+        if project && project.collaborator?( current_user )
           Thread.new{ ProjectService.update( project, false ) }
           resp = true
         else

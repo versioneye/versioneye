@@ -21,8 +21,8 @@ gem 'tire'               , '0.6.1'
 gem 'json'               , '~> 1.8.0'
 gem 'dalli'              , '2.6.4'   # memcache library
 gem 'kgio'               , '~> 2.8.0'   # 20% performance boost for dalli
-gem 'grape'              , '0.5.0'
-gem 'grape-entity'       , '0.2.0'
+gem 'grape'              , '0.6.1'
+gem 'grape-entity'       , '0.3.0'
 gem 'grape-swagger'      , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
 gem 'htmlentities'       , '4.3.1'
 gem 'capistrano'         , '2.15.5'
@@ -30,11 +30,6 @@ gem 'whenever'           , '0.8.4'
 gem 'bourbon'            , '3.1.8'
 gem 'ruby_regex'         , '0.1.0'
 gem 'cocoapods-core'     , '0.27.1'
-
-# @rmetzler added these 2 gems to get the API tests back to work
-# This deps are required by grape 0.5.0. After update to grape 0.6.X this can be removed.
-gem 'backports'         , '3.3.5'
-gem 'virtus'            , '~> 0.5.5'
 
 group :development do
   gem 'psych'             , '2.0.1'
