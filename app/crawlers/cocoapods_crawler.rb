@@ -8,7 +8,7 @@ class CocoapodsCrawler < GitCrawler
 
   def initialize
     # TODO put config in config file
-    super "https://github.com/CocoaPods/Specs.git", "/Users/robertreiz/workspace/cocoapods-specs"
+    super "https://github.com/CocoaPods/Specs.git", "/home/versioneye/cocoapods/cocoapods-specs"
   end
 
   def crawl
