@@ -37,8 +37,8 @@ pid "/var/www/versioneye/current/pids/unicorn.pid"
 # By default, the Unicorn logger will write to stderr.
 # Additionally, ome applications/frameworks log to stderr or stdout,
 # so prevent them from going to /dev/null when daemonized here:
-# stderr_path "/path/to/app/shared/log/unicorn.stderr.log"
-# stdout_path "/path/to/app/shared/log/unicorn.stdout.log"
+# stderr_path "/var/www/versioneye/shared/log/unicorn.stderr.log"
+# stdout_path "/var/www/versioneye/shared/log/unicorn.stdout.log"
 
 # combine Ruby 2.0.0dev or REE with "preload_app true" for memory savings
 # http://rubyenterpriseedition.com/faq.html#adapt_apps_for_cow
