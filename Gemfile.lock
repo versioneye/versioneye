@@ -334,7 +334,7 @@ PLATFORMS
 
 DEPENDENCIES
   aws-s3 (= 0.6.3)
-  backports (~> 3.3.3)
+  backports (= 3.3.5)
   bourbon (= 3.1.8)
   capistrano (= 2.15.5)
   capybara (= 2.1.0)
