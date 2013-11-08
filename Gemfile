@@ -31,13 +31,15 @@ gem 'bourbon'           , '3.1.8'
 gem 'ruby_regex'        , '0.1.0'
 gem 'cocoapods-core'    , '~> 0.26.2'
 
-gem 'backports'         , '3.3.3'
+# @rmetzler added these 2 gems to get the API tests back to work
+gem 'backports'         , '~> 3.3.3'
+gem 'virtus'            , '~> 0.5.5'
 
 group :development do
-  gem 'psych'
+  gem 'psych'             , '2.0.0'
   gem 'irbtools'
   gem 'terminal-notifier'
-  gem 'fakes3'
+  gem 'fakes3'            , '0.1.5'
   gem 'debugger'          , '~> 1.6.1'
 end
 
@@ -46,7 +48,7 @@ group :assets do
   gem 'sass'          , :require => 'sass'
   gem 'sass-rails'    , "3.2.6"
   gem 'coffee-rails'  , "3.2.2"
-  gem 'uglifier'
+  gem 'uglifier'      , '2.1.2'
   gem 'yui-compressor', '0.12.0'
 end
 
