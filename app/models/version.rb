@@ -8,9 +8,6 @@ class Version
   field :version        , type: String
   field :link           , type: String
   field :downloads      , type: Integer
-  field :authors        , type: String # TODO remove it
-  field :description    , type: String # TODO remove it
-  field :summary        , type: String # TODO remove it
   field :prerelease     , type: Boolean
   field :mistake        , type: Boolean
   field :pom            , type: String
