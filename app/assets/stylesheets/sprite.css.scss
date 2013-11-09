@@ -81,22 +81,37 @@ $c_url: "/assets/c.png";
 .icon_ruby_big_container{
 	padding: 10px 10px 10px 10px;
 	width: 36px;
-	height: 36px;	
+	height: 36px;
 	display: inline-block;
 }
 .icon_ruby_small_container{
 	padding: 7px 7px 8px 8px;
 	margin: 0;
 	width: 25px;
-	height: 25px;	
+	height: 25px;
 	display: inline-block;
 }
 
 .icon_objective-c{
 	background: url(/assets/language/objective-c.png) no-repeat;
 	margin: 0;
-	width: 56px; 
+	width: 56px;
 	height: 56px;
+	display: inline-block;
+}
+
+.icon_objective-c.small.on{
+	background: url(/assets/language/objective-c_small.png) no-repeat;
+	margin: 0;
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+}
+
+.icon_objective-c_small_container{
+	margin: 0;
+	width: 30px;
+	height: 30px;
 	display: inline-block;
 }
 
@@ -107,14 +122,14 @@ $c_url: "/assets/c.png";
 .icon_r_big_container{
 	padding: 16px 0 10px 0;
 	width: 56px;
-	height: 30px;	
+	height: 30px;
 	display: inline-block;
 }
 .icon_r_small_container{
 	padding: 7px 4px 8px 5px;
 	margin: 0;
 	width: 31px;
-	height: 25px;	
+	height: 25px;
 	display: inline-block;
 }
 
@@ -125,14 +140,14 @@ $c_url: "/assets/c.png";
 .icon_java_big_container{
 	padding: 0 11px 0 10px;
 	width: 35px;
-	height: 56px;	
+	height: 56px;
 	display: inline-block;
 }
 .icon_java_small_container{
 	padding: 1px 9px 1px 9px;
 	margin: 0;
 	width: 22px;
-	height: 38px;	
+	height: 38px;
 	display: inline-block;
 }
 
@@ -143,14 +158,14 @@ $c_url: "/assets/c.png";
 .icon_php_big_container{
 	padding: 13px 2px 13px 2px;
 	width: 52px;
-	height: 30px;	
+	height: 30px;
 	display: inline-block;
 }
 .icon_php_small_container{
 	padding: 10px 2px 10px 2px;
 	margin: 0;
 	width: 36px;
-	height: 20px;	
+	height: 20px;
 	display: inline-block;
 }
 
@@ -161,14 +176,14 @@ $c_url: "/assets/c.png";
 .icon_nodejs_big_container{
 	padding: 26px 0 0px 0;
 	width: 56px;
-	height: 30px;	
+	height: 30px;
 	display: inline-block;
 }
 .icon_nodejs_small_container{
 	padding: 11px 1px 11px 0;
 	margin: 0;
 	width: 39px;
-	height: 12px;	
+	height: 12px;
 	display: inline-block;
 }
 
@@ -179,14 +194,14 @@ $c_url: "/assets/c.png";
 .icon_javascript_big_container{
 	padding: 12px 6px 13px 7px;
 	width: 43px;
-	height: 31px;	
+	height: 31px;
 	display: inline-block;
 }
 .icon_javascript_small_container{
 	padding: 9px 5px 9px 5px;
 	margin: 0;
 	width: 30px;
-	height: 22px;	
+	height: 22px;
 	display: inline-block;
 }
 
@@ -197,14 +212,14 @@ $c_url: "/assets/c.png";
 .icon_python_big_container{
 	padding: 10px 11px 11px 11px;
 	width: 34px;
-	height: 35px;	
+	height: 35px;
 	display: inline-block;
 }
 .icon_python_small_container{
 	padding: 8px 8px 8px 8px;
 	margin: 0;
 	width: 24px;
-	height: 24px;	
+	height: 24px;
 	display: inline-block;
 }
 
@@ -215,14 +230,14 @@ $c_url: "/assets/c.png";
 .icon_clojure_big_container{
 	padding: 16px 0 10px 0;
 	width: 56px;
-	height: 30px;	
+	height: 30px;
 	display: inline-block;
 }
 .icon_clojure_small_container{
 	padding: 5px 5px 6px 5px;
 	margin: 0;
 	width: 30px;
-	height: 29px;	
+	height: 29px;
 	display: inline-block;
 }
 
@@ -232,7 +247,7 @@ $c_url: "/assets/c.png";
 .icon_c_big_container{
 	padding: 0;
 	width: 56px;
-	height: 56px;	
+	height: 56px;
 	display: inline-block;
 }
 
