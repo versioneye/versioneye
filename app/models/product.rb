@@ -26,7 +26,6 @@ class Product
   field :artifact_id, type: String
   field :parent_id  , type: String
 
-  field :authors           , type: String # TODO this hase to be remove in the long run
   field :description       , type: String
   field :description_manual, type: String
   field :downloads         , type: Integer
