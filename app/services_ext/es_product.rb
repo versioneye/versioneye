@@ -2,18 +2,49 @@ class EsProduct
 
   def self.create_index_with_mappings
     Tire.index Settings.elasticsearch_product_index do
-      create :mappings => {
+      create :settings => {
+          :number_of_shards => 1,
+          :number_of_replicas => 1,
+          :analysis => {
+            :filter => {
+              :name_ngrams => {
+                :side => "front",
+                :type => "edgeNGram",
+                :max_gram => 20,
+                :min_gram => 2
+              }
+            },
+            :analyzer => {
+              :product_name => {
+                :filter => ["standard", "lowercase", "asciifolding"],
+                :type => "custom",
+                :tokenizer => "standard"
+              },
+              :ngram_name => {
+                :filter => ["standard", "lowercase", "asciifolding", "name_ngrams"],
+                :type => "custom",
+                :tokenizer => "standard"
+              }
+            }
+          }
+        },
+      :mappings => {
         :product => {
           :properties => {
             :_id  => { :type => 'string', :analyzer => 'keyword', :include_in_all => false },
             :name => { :type => 'multi_field', :fields => {
-                :name => {:type => 'string', :analyzer => 'standard', :boost => 100},
-                :untouched => {:type => 'string', :analyzer => 'keyword'}
-              } },
-            # :name               => { :type => 'string', :analyzer => 'keyword',  },
+                :name    => {:type => 'string', :analyzer => 'product_name'},
+                :partial => {
+                  :search_analyzer => "product_name",
+                  :index_analyzer  => "ngram_name",
+                  :type => "string",
+                  :include_in_all => true
+                }
+              }
+            },
             :description        => { :type => 'string', :analyzer => 'snowball' },
             :description_manual => { :type => 'string', :analyzer => 'snowball' },
-            :language           => { :type => 'string', :analyzer => 'keyword' }
+            :language           => { :type => 'string', :analyzer => 'keyword'  }
           }
         }
       }
@@ -95,6 +126,7 @@ class EsProduct
     group_id = "" if !group_id
 
     q = "*" if !q || q.empty?
+    q.downcase
 
     s = Tire.search( Settings.elasticsearch_product_index,
                       load: true,
@@ -102,9 +134,6 @@ class EsProduct
                       search_type: "dfs_query_and_fetch",
                       per_page: results_per_page,
                       size: results_per_page) do |search|
-
-      # search.sort { by [{:_score => 'desc'}] }
-      # search.sort { by [{'name.untouched' => 'asc'}] }
 
       if langs and !langs.empty?
         decoded_langs = []
@@ -118,11 +147,11 @@ class EsProduct
         if q != '*' and !group_id.empty?
           # when user search by name and group_id
           query.boolean do
-            must {string 'name:' + q}
+            must {string 'name.partial:' + q}
             must {string 'group_id:' + group_id + "*"}
           end
         elsif q != '*' and group_id.empty?
-          query.string "name:" + q
+          query.string "name.partial:" + q
         elsif q == '*' and !group_id.empty?
           query.string "group_id:" + group_id + "*"
         end
@@ -131,24 +160,6 @@ class EsProduct
     end
 
     s.results
-  end
-
-  def self.search_exact(name)
-    s = Tire.search( Settings.elasticsearch_product_index, load: true) do |search|
-      response = search.query do |query|
-        query.boolean do
-          must {string name, default_operator: "AND" }
-        end
-      end
-      # filter result by hand
-      result = []
-      response.results.each do |item|
-        if item.name.eql? name then
-            result << item
-        end
-      end
-      return result
-    end
   end
 
   def self.autocomplete(term, results_per_page = 10)
@@ -165,4 +176,3 @@ class EsProduct
     s.results
   end
 end
-
