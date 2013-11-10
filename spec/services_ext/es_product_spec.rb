@@ -17,17 +17,18 @@ describe EsProduct do
     EsProduct.clean_all #remove all previous indexes at elasticsearch
     EsProduct.create_index_with_mappings
     @prods = [
-      {:name => "club-mate",        :language => "Java", :group_id => "org.club.mate"},
-      {:name => "club-mate-parent", :language => "Java", :group_id => "com.club.mate"},
-      {:name => "club-mate-child",  :language => "Java", :group_id => "net.club.mate"},
-      {:name => "club-mate-c",      :language => "C",    :group_id => ""},
-      {:name => "club-mate-ccc",    :language => "c++",  :group_id => ""},
-      {:name => "club-mate-ruby",   :language => "Ruby", :group_id => ""},
-      {:name => "club-mate-cnet",   :language => "c#",   :group_id => "net.microsoft.crap"},
-      {:name => "bad.mate.jar",     :language => "mate", :group_id => "club.mate.org"},
-      {:name => "good.mate.jar",    :language => "mate", :group_id => "club.mate.org"},
-      {:name => "superb_mate.jar",  :language => "mate", :group_id => "club.mate.org"},
-      {:name => "json_nodejs",  :language => "Node.JS", :group_id => ""}
+      {:name => "club-mate",        :language => "Java",    :group_id => "org.club.mate"},
+      {:name => "club-mate-parent", :language => "Java",    :group_id => "com.club.mate"},
+      {:name => "club-mate-child",  :language => "Java",    :group_id => "net.club.mate"},
+      {:name => "club-mate-c",      :language => "C",       :group_id => ""},
+      {:name => "club-mate-ccc",    :language => "c++",     :group_id => ""},
+      {:name => "club-mate-ruby",   :language => "Ruby",    :group_id => ""},
+      {:name => "club-mate-cnet",   :language => "c#",      :group_id => "net.microsoft.crap"},
+      {:name => "bad.mate.jar",     :language => "mate",    :group_id => "club.mate.org"},
+      {:name => "good.mate.jar",    :language => "mate",    :group_id => "club.mate.org"},
+      {:name => "superb_mate.jar",  :language => "mate",    :group_id => "club.mate.org"},
+      {:name => "json_nodejs",      :language => "Node.JS", :group_id => ""},
+      {:name => "Hibernate",        :language => "Java",    :group_id => "org.hibernate"}
 
     ]
     @products = Array.new
@@ -64,11 +65,11 @@ describe EsProduct do
     end
 
     it "Finds the only element in the index by name" do
-      EsProduct.clean_all
+      EsProduct.reset
       product = Product.new(:name => "rails")
-      product.save
+      product.save.should be_true
       EsProduct.index product
-      sleep 2 # sleep for 2 seconds until the product gets indexed via REST.
+      sleep 3 # sleep for 2 seconds until the product gets indexed via REST.
       results = EsProduct.search "rails"
       results.count.should eql(1)
     end
@@ -80,7 +81,7 @@ describe EsProduct do
     it "Finds club-mate first!" do
       results = EsProduct.search "club-mate"
       results.count.should eql(7)
-      results[0].name.should eql("club-mate") #async adding&indexing gaves diff results
+      results[0].name.should eql("club-mate")
     end
   end
 
@@ -97,7 +98,6 @@ describe EsProduct do
       Product.where(reindex: true).count.should equal 0
     end
   end
-
 
   context " - index all documents in `products` collection" do
     it "index_all" do
@@ -131,15 +131,6 @@ describe EsProduct do
       EsProduct.search("json_nodejs", nil, ["nodejs"]).count.should eql(1)
     end
 
-
-    # it "test, does language filtering is case insensitive" do
-    #   sleep 4
-    #   results1 = EsProduct.search "club-mate", nil, ["Java"]
-    #   results2 = EsProduct.search "club-mate", nil, ["java"]
-    #   results1[0][:name].should eql results2[0][:name]
-    #   results1.count.should eql(results2.count)
-    # end
-
     it " - should return 1 result with the right group_id." do
       sleep 5
       results = EsProduct.search nil, "com."
@@ -166,12 +157,18 @@ describe EsProduct do
       results.count.should eql(1)
     end
 
-    it "Give only exact matches and nothing else." do
-      sleep  4
-      EsProduct.search_exact("club-mate").count.should eql(1)
-      EsProduct.search_exact("club-mate-c").count.should eql(1)
-      EsProduct.search_exact("club-mate-child").count.should eql(1)
+    it "returns Hibernate because of perect match" do
+      results = EsProduct.search "Hibernate"
+      results.count.should eql(1)
+      results.first.name.should eql("Hibernate")
     end
+
+    it "returns Hibernate" do
+      results = EsProduct.search "hibernat"
+      results.count.should eql(1)
+      results.first.name.should eql("Hibernate")
+    end
+
   end
 
 end
