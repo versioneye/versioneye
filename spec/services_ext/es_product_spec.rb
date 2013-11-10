@@ -118,8 +118,6 @@ describe EsProduct do
       expect { EsProduct.search("") }.to raise_error(ArgumentError)
     end
 
-    # TODO: c gaves every c language, but c++ and c# dont work at all
-    # Right now this case is not important because we are not tracking c++ or c#
     it "test language filtering"  do
       sleep 4
       EsProduct.search("club-mate", nil, ["Java"]).count.should eql(3)
