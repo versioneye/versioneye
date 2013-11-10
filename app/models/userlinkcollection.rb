@@ -5,7 +5,6 @@ class Userlinkcollection
 
   A_LINKEDIN      = "http://www.linkedin.com/in/"
   A_XING          = "http://www.xing.com/profile/"
-  A_GULP          = "http://www.gulp.de/resume/"    # TODO remove this shit
   A_GITHUB        = "https://github.com/"
   A_STACKOVERFLOW = "http://stackoverflow.com/users/"
   A_TWITTER       = "https://twitter.com/#!/"
@@ -14,7 +13,6 @@ class Userlinkcollection
   field :user_id,       type: String
   field :linkedin,      type: String, :default => A_LINKEDIN
   field :xing,          type: String, :default => A_XING
-  field :gulp,          type: String, :default => A_GULP
   field :github,        type: String, :default => A_GITHUB
   field :stackoverflow, type: String, :default => A_STACKOVERFLOW
   field :twitter,       type: String, :default => A_TWITTER
@@ -25,7 +23,7 @@ class Userlinkcollection
   end
 
   def empty?
-  	linkedin_empty? && xing_empty? && gulp_empty? && github_empty? &&
+  	linkedin_empty? && xing_empty? && github_empty? &&
     stackoverflow_empty? && twitter_empty? && facebook_empty?
   end
 
@@ -35,9 +33,6 @@ class Userlinkcollection
     end
     if self.xing && !self.xing.empty?
       self.xing = "#{A_XING}#{self.xing}"
-    end
-    if self.gulp && !self.gulp.empty?
-      self.gulp = "#{A_GULP}#{self.gulp}"
     end
     if self.github && !self.github.empty?
       self.github = "#{A_GITHUB}#{self.github}"
@@ -59,9 +54,6 @@ class Userlinkcollection
   end
   def xing_empty?
     self.xing.nil? || self.xing.empty? || self.xing.eql?(A_XING)
-  end
-  def gulp_empty?
-    self.gulp.nil? || self.gulp.empty? || self.gulp.eql?(A_GULP)
   end
   def github_empty?
     self.github.nil? || self.github.empty? || self.github.eql?(A_GITHUB)
