@@ -2,8 +2,8 @@ require 'spec_helper'
 
 def add_local_products
   @prods.each do |prod|
-      product = Product.new prod
-    end
+    product = Product.new prod
+  end
 end
 
 def get_index_count
@@ -43,23 +43,13 @@ describe EsProduct do
   context "With no indexes: " do
 
     it "does clean_all successfull" do
-      begin
-        EsProduct.clean_all # clean all previous accidental data
-        # if elasticsearch is empty, then it should return false
-        EsProduct.clean_all
-        "true".should eql("false")
-      rescue
-        "true".should eql("true")
-      end
+      EsProduct.clean_all.should be_true
+      EsProduct.clean_all.should be_false
     end
 
-    it "is nil because no index" do
-      begin
-        EsProduct.search("random query")
-        "true".should eql("false")
-      rescue
-        "true".should eql("true")
-      end
+    it "empty result because no index" do
+      results = EsProduct.search("random query")
+      results.should be_empty
     end
 
   end
@@ -135,7 +125,7 @@ describe EsProduct do
       sleep 4
       EsProduct.search("club-mate", nil, ["Java"]).count.should eql(3)
     end
-    
+
     it "test language filtering does decodes language name correctly"  do
       sleep 4
       EsProduct.search("json_nodejs", nil, ["nodejs"]).count.should eql(1)

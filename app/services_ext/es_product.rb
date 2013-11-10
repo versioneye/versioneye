@@ -7,9 +7,10 @@ class EsProduct
           :properties => {
             :_id  => { :type => 'string', :analyzer => 'keyword', :include_in_all => false },
             :name => { :type => 'multi_field', :fields => {
-                :name => {:type => 'string', :analyzer => 'snowball', :boost => 100},
-                :untouched => {:type => 'string', :analyzer => 'keyword' }
+                :name => {:type => 'string', :analyzer => 'standard', :boost => 100},
+                :untouched => {:type => 'string', :analyzer => 'keyword'}
               } },
+            # :name               => { :type => 'string', :analyzer => 'keyword',  },
             :description        => { :type => 'string', :analyzer => 'snowball' },
             :description_manual => { :type => 'string', :analyzer => 'snowball' },
             :language           => { :type => 'string', :analyzer => 'keyword' }
@@ -106,7 +107,7 @@ class EsProduct
       # search.sort { by [{'name.untouched' => 'asc'}] }
 
       if langs and !langs.empty?
-        decoded_langs = [] 
+        decoded_langs = []
         langs.each do |lang|
           decoded_langs << Product.decode_language(lang)
         end
