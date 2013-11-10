@@ -153,8 +153,9 @@ class EsProduct
             must {string 'group_id:' + group_id + "*"}
           end
         elsif q != '*' and group_id.empty?
-          query.string "name.partial:" + q
-          query.custom_score "script: _score + doc['followers'].value"
+          query.custom_score :script => "_score + doc['followers'].value" do
+            string "name.partial:" + q
+          end
         elsif q == '*' and !group_id.empty?
           query.string "group_id:" + group_id + "*"
         end
