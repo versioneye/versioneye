@@ -11,7 +11,7 @@ class EsProduct
                 :side => "front",
                 :type => "edgeNGram",
                 :max_gram => 20,
-                :min_gram => 2
+                :min_gram => 3
               }
             },
             :analyzer => {
@@ -33,15 +33,17 @@ class EsProduct
           :properties => {
             :_id  => { :type => 'string', :analyzer => 'keyword', :include_in_all => false },
             :name => { :type => 'multi_field', :fields => {
-                :name    => {:type => 'string', :analyzer => 'product_name'},
+                :name    => {:type => 'string', :analyzer => 'product_name', :include_in_all => false},
                 :partial => {
                   :search_analyzer => "product_name",
                   :index_analyzer  => "ngram_name",
                   :type => "string",
-                  :include_in_all => true
+                  :include_in_all => true,
+                  :boost => 100
                 }
               }
             },
+            :followers          => { :type => 'integer', :include_in_all => true, :boost => 50},
             :description        => { :type => 'string', :analyzer => 'snowball' },
             :description_manual => { :type => 'string', :analyzer => 'snowball' },
             :language           => { :type => 'string', :analyzer => 'keyword'  }
@@ -152,6 +154,7 @@ class EsProduct
           end
         elsif q != '*' and group_id.empty?
           query.string "name.partial:" + q
+          query.custom_score "script: _score + doc['followers'].value"
         elsif q == '*' and !group_id.empty?
           query.string "group_id:" + group_id + "*"
         end
