@@ -31,6 +31,7 @@ gem 'whenever'           , '0.8.4'
 gem 'bourbon'            , '3.1.8'
 gem 'ruby_regex'         , '0.1.0'
 gem 'cocoapods-core'     , '0.27.1'
+gem 'octokit'            , "~> 2.5.1"
 
 group :development do
   gem 'psych'             , '2.0.1'
