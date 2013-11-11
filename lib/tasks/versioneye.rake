@@ -80,6 +80,7 @@ namespace :versioneye do
   desc "crawl & import Cococapods specs"
   task :crawl_cocoapods => :environment do
     CocoapodsCrawler.crawl
+    GithubVersionCrawler.add_versions_to_all_products
   end
 
 end

@@ -17,14 +17,24 @@ class GithubVersionCrawler
     @github = client.root
   end
 
+  def self.add_versions_to_all_products
+    crawler = self.new
+    products_with_empty_version_strings.each do |p|
+      crawler.add_version_to_product( p.language, p.prod_key )
+    end
+  end
+
+  def self.products_with_empty_version_strings
+    Product.where({:language =>"Objective-C", "versions.version.ne" => nil }).all
+  end
+
+
   def add_version_to_product (language, prod_key)
 
     # load product
-
     product = Product.find_by_lang_key(language, prod_key)
 
-    # TODO get Git URL, owner and repo from product
-
+    # get git URL, owner and repo from product
     repo = product.repositories.map(&:repo_source).uniq.first
     github_versions = versions_for_github_url( repo )
 
@@ -42,7 +52,6 @@ class GithubVersionCrawler
   end
 
 
-
   def versions_for_github_url github_url
     versions = {}
 
@@ -58,15 +67,19 @@ class GithubVersionCrawler
 
       meta = GithubVersionCrawler.commit_metadata owner, repo, sha
 
-      date_string = meta["commit"]["author"]["date"].to_s
-      date_time   = DateTime.parse date_string
+      begin
+        date_string = meta["commit"]["author"]["date"].to_s
+        date_time   = DateTime.parse date_string
 
-      url = "#{A_API_URL}/repos/#{owner}/#{repo}/#{sha}"
-      versions[v_name] = {
-        :sha             => sha,
-        :released_at     => date_time,
-        :released_string => date_string,
-      }
+        url = "#{A_API_URL}/repos/#{owner}/#{repo}/#{sha}"
+        versions[v_name] = {
+          :sha             => sha,
+          :released_at     => date_time,
+          :released_string => date_string,
+        }
+      rescue => e
+        Rails.logger.error e
+      end
     end
 
     versions
