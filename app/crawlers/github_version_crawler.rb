@@ -43,6 +43,7 @@ class GithubVersionCrawler
       if v.released_string.to_s.empty?
         version_string = v.version.to_s
         v_hash = github_versions[version_string]
+        next unless v_hash
         v.released_at     = v_hash[:released_at]
         v.released_string = v_hash[:released_string]
       end
@@ -90,7 +91,7 @@ class GithubVersionCrawler
   def self.commit_metadata owner, repo, sha
     url = self.commit_url owner, repo, sha
 
-    response = HTTParty.get(url) #, :headers => {"User-Agent" => A_USER_AGENT } )
+    response = HTTParty.get(url, :headers => {"User-Agent" => A_USER_AGENT } )
 
     Rails.logger.debug response
 
