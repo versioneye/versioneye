@@ -174,7 +174,7 @@ class EsProduct
           search_type: 'dfs_query_and_fetch',
           size: results_per_page
     ) do |search|
-        search.query { |query| query.string "#{ q }*"}
+        search.query { |query| query.string "name.partial:#{q}"}
         search.sort {by :followers, 'desc'}
       end
     s.results
