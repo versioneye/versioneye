@@ -8,34 +8,46 @@ class GithubVersionCrawler
   A_API_URL    = "https://api.github.com"
 
 
-	def initialize
-		# create client and authenticate
-    @github = Octokit.root
-	end
+  def initialize
+    # create client and authenticate
+    @github = Octokit::Client.new \
+      :client_id     => Settings.github_client_id,
+      :client_secret => Settings.github_client_secret
 
-	def add_version (language, prod_key)
+    # @github = Octokit.root
+  end
 
-		# load product
+  def add_version_to_product (language, prod_key)
+
+    # load product
 
     product = Product.find_by_lang_key(language, prod_key)
 
     # TODO get Git URL, owner and repo from product
 
+    repo = product.repositories.map(&:repo_source).uniq.first
+    github_versions = versions_for_github_url( repo )
 
-    github_versions = GithubVersionCrawler.versions_for_github_url( github )
+    # update releases infos at version
+    product.versions.each do |v|
+      if v.released_string.to_s.empty?
+        v_hash = github_versions[v.version.to_s]
+        v.released_at = v_hash[:released_at]
+        v.released_at = v_hash[:released_string]
+      end
+    end
 
-		# store releases infos at version
-		product.versions.concat github_versions
     product.save
-	end
+  end
 
 
 
-  def self.versions_for_github_url github_url
-    versions = []
+  def versions_for_github_url github_url
+    versions = {}
 
-    parsed = GithubVersionCrawler.parse_github_url git_url
-    tags   = GithubVersionCrawler.tags_for_repo github_url
+    parsed = GithubVersionCrawler.parse_github_url github_url
+    tags   = tags_for_repo github_url
+
     versions = tags.map do |t|
 
       owner  = parsed[:owner]
@@ -45,16 +57,15 @@ class GithubVersionCrawler
 
       meta = GithubVersionCrawler.commit_metadata owner, repo, sha
 
-      date_string = meta["commit"]["date"]
+      date_string = meta["commit"]["author"]["date"].to_s
       date_time = DateTime.parse date_string
 
       url = "#{A_API_URL}/repos/#{owner}/#{repo}/#{sha}"
-      version = Version.new({
-        :version         => v_name,
+      versions[v_name] = {
+        :sha             => sha,
         :released_at     => date_time,
         :released_string => date_string,
-      })
-      versions << version
+      }
     end
 
     versions

@@ -28,16 +28,15 @@ describe GithubVersionCrawler do
     it "should return metadata for a commit" do
       meta = GithubVersionCrawler.commit_metadata 'rmetzler', 'render-as-markdown', '725155400b35488ab65e8dd44264e055a397fd74'
 
-      puts "commit url", GithubVersionCrawler.commit_url('rmetzler', 'render-as-markdown', '725155400b35488ab65e8dd44264e055a397fd74')
-
-      puts "returns:", meta
+      meta.should_not be_nil
+      meta["commit"]["author"]["name"].should eq("Richard Metzler")
     end
   end
 
   describe ".versions_for_github_url" do
     it "returns correct versions for render-as-markdown" do
       repo_url = 'https://github.com/rmetzler/render-as-markdown.git'
-      versions = GithubVersionCrawler.versions_for_github_url repo_url
+      versions = GithubVersionCrawler.new.versions_for_github_url repo_url
       versions.length.should eq(4)
     end
 
