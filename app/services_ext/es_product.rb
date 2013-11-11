@@ -64,15 +64,6 @@ class EsProduct
   end
 
   def self.index_all
-    # count = Product.count()
-    # bulk = 100
-    # max = count / bulk
-    # max += 1
-    # (0..max).each do |i|
-    #   skip = i * bulk
-    #   products = Product.all().skip(skip).limit(bulk)
-    #   Tire.index( Settings.elasticsearch_product_index ).bulk_store products.to_a
-    # end
     Product.all.each do |product|
       index product
     end
