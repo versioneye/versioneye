@@ -2,21 +2,21 @@
 
 <div class="" style="margin-bottom: 20px;" >
   <% if @product.used_by_count == 0 %>
-    No other software artifact is referencing this project. That doesn't mean anything. But in general references from other artifacts are a good sign.
+    No other software package is referencing this project. That doesn't mean anything. But in general references from other packages are a good sign.
   <% else %>
     <%= number_with_delimiter(@product.used_by_count, delimiter: ".") %>
-    software artifacts are referencing this project.
+    software packages are referencing this project.
     <% if @product.used_by_count > 0 && @product.used_by_count < 10 %>
       That is a beginning.
     <% elsif @product.used_by_count >= 10 && @product.used_by_count < 100 %>
-      That is a good sign. If that much other artifacts are referencing it, it must be good and useful.
+      That is a good sign. If that much other packages are referencing it, it must be good and useful.
     <% elsif @product.used_by_count >= 100 && @product.used_by_count < 1000 %>
-      This is a <b>famous</b> project. If that much other artifacts are referencing it, it must be good and useful.
+      This is a <b>famous</b> project. If that much other packages are referencing it, it must be good and useful.
     <% elsif @product.used_by_count >= 1000 && @product.used_by_count < 10000 %>
-      This project is a <b>Rockstar</b>! If that much other artifacts are referencing it, it must be good and useful.
+      This project is a <b>Rockstar</b>! If that much other packages are referencing it, it must be good and useful.
       As a <%= @product.language %> dev you should know this project!
     <% elsif @product.used_by_count >= 10000 %>
-      This project is <b>epic</b>! If that much other artifacts are referencing it, it must be good and useful.
+      This project is <b>epic</b>! If that much other packages are referencing it, it must be good and useful.
       Shame on you if you don't know this project. As a <%= @product.language %> dev this is a must have on your Resume!
     <% end %>
   <% end %>
