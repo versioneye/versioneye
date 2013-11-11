@@ -6,21 +6,25 @@ class BowerCrawler
     Product.where(prod_type: Project::A_TYPE_BOWER).delete_all
   end
 
-  def self.import_from_url(source_url = nil)
+  def self.crawl(source_url = nil)
     if source_url.to_s.strip.empty?
       source_url = "https://bower.herokuapp.com/packages"
       p "Going to use default url: `#{source_url}`"
     end
 
+    #fetches list of all registered bower packages
     content = HTTParty.get(source_url)
     unless content
-      p "Error: cant read bower packages from: `#{source_url}`"
+      p "Error: cant read list of registered bower packages from: `#{source_url}`"
     end
+   
+    admin = User.find_by_email "admin@versioneye.com"
 
     app_list = JSON.parse(content, symbolize_names: true)
-    add_bower_packages(app_list)
+    add_bower_packages(app_list, admin[:github_token])
   end
 
+  #for saved list of packages
   def self.import_from_file(filepath)
     unless File.file?(filepath)
       p "Error: uncorrect path : `#{filepath}`"
@@ -32,13 +36,13 @@ class BowerCrawler
     add_bower_packages(app_list)
   end
 
-  def self.add_bower_packages(app_list)
+  def self.add_bower_packages(app_list, token)
     imported = 0
     failed = 0
 
     app_list.to_a.each do |app|
       #read project's bower on github to get more info
-      pkg_info = self.read_info_from_github(app[:url])
+      pkg_info = self.read_info_from_github(app[:url], token)
 
       unless pkg_info
         p "Cant read info from: `#{app[:url]}`. Going to try luck with next package."
@@ -47,16 +51,22 @@ class BowerCrawler
 
       prod = to_product(pkg_info)
       versionlink = to_versionlink(prod, pkg_info)
-      versionlink.save
 
       prod[:version] = pkg_info[:version]
       prod.versions << to_version(pkg_info)
+      
+      prod_license = to_licence(pkg_info)
       deps = to_dependencies(prod, pkg_info)
       deps.to_a.each {|dep| prod.dependencies << dep}
 
-      #TODO: when product exists, then update info and add new versions
-      delete_previous_product(prod[:language], prod[:prod_key]);
-      if prod.save
+      #-- try to read versioninfo & versionarchive to tags
+      tags = Github.repo_tags(pkg_info[:full_name], token)
+      if tags and not tags.empty?
+        p "Repo `#{pkg_info[:full_name]}` has #{tags.to_a.count} tags."
+        parse_repo_tags(tags)
+      end
+
+      if prod.upsert
         p "Imported: #{prod[:name]}"
         imported += 1
       else
@@ -78,19 +88,31 @@ class BowerCrawler
                  description: pkg_info[:description].to_s 
   end
 
-  def self.to_versionlink(prod, pkg_info)
-    Versionlink.new language: prod[:language],
-                    prod_key: prod[:prod_key],
-                    link: pkg_info[:url]
+  def self.to_versionlink(prod, pkg_info, link_name = "scm")
+    new_version = Versionlink.new language: prod[:language],
+                                  prod_key: prod[:prod_key],
+                                  link: pkg_info[:url],
+                                  name: link_name
+    new_version.save
+    new_version
   end
 
   def self.to_version(pkg_info)
     Version.new version: pkg_info[:version],
-                license: pkg_info[:license],
-                description: pkg_info[:description],
                 link: pkg_info[:url]
   end
-  
+
+  def self.to_license(product, pkg_info)
+    return nil if product.nil?
+
+    new_licence = License.new name: pkg_info[:license] || "unknown",
+                              field: product[:language],
+                              prod_key: product[:prod_key],
+                              version: pkg_info[:version]
+    new_licence.save
+    new_licence
+  end
+
   def self.to_dependencies(prod, pkg_info)
     deps = []
    
@@ -114,7 +136,7 @@ class BowerCrawler
     deps
   end
 
-  def self.read_info_from_github(source_url, filename = "bower.json")
+  def self.read_info_from_github(source_url, token, filename = "bower.json")
     info = {
       version: "*",
       license: "unknown",
@@ -140,7 +162,6 @@ class BowerCrawler
     info[:artifact_id] = repo
 
     url = "#{Github::A_API_URL}/repos/#{owner}/#{repo}/contents/#{filename}"
-    admin = User.find_by_email "admin@versioneye.com"
     content = Github.fetch_raw_file(url, admin[:github_token])
     if content
       begin
@@ -161,7 +182,12 @@ class BowerCrawler
     info
   end
 
-  def self.delete_previous_product(language, prod_key)
-    Product.where(language: language, prod_key: prod_key).delete_all
+  def parse_repo_tags(prod, tags)
+    tags.each {|tag| save_repo_tag(prod, tag)}
+  end
+
+  def save_repo_tag(prod, tag)
+    #TODO: add version & date - use tag[:url]
+    #TODO: save downloadable zip-barballs; tag[:zipball_url]
   end
 end

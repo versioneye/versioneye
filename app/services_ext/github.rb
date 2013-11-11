@@ -5,6 +5,7 @@ class Github
 
   A_USER_AGENT = "www.versioneye.com"
   A_API_URL    = "https://api.github.com"
+  A_DEFAULT_HEADER = {"User-Agent" => A_USER_AGENT}
 
   def self.api_url 
     A_API_URL
@@ -211,6 +212,17 @@ class Github
     nil
   end
 
+  def self.repo_tags(repository, token)
+    response = HTTParty.get("#{A_API_URL}/repos/#{repository}/tags",
+                             headers: A_DEFAULT_HEADER)
+    tags = catch_github_exception JSON.parse(response.body)
+    tags
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    return false
+  end
+
   def self.search(q, langs = nil, users = nil, page = 1, per_page = 30)
     search_term = "#{q}"
     if langs
@@ -241,7 +253,6 @@ class Github
 
     JSON.parse(body)
   end
-
   def self.supported_languages()
     Set['java', 'ruby', 'python', 'node.js', 'php', 'javascript', 'coffeescript', 'clojure']
   end
