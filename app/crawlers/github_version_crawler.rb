@@ -4,17 +4,17 @@ class GithubVersionCrawler
 
   include HTTParty
 
-  A_USER_AGENT = "curl/7.30.0"#www.versioneye.com"
+  A_USER_AGENT = "www.versioneye.com"
   A_API_URL    = "https://api.github.com"
 
 
   def initialize
     # create client and authenticate
-    @github = Octokit::Client.new \
+    client = Octokit::Client.new \
       :client_id     => Settings.github_client_id,
       :client_secret => Settings.github_client_secret
 
-    # @github = Octokit.root
+    @github = client.root
   end
 
   def add_version_to_product (language, prod_key)
@@ -31,9 +31,10 @@ class GithubVersionCrawler
     # update releases infos at version
     product.versions.each do |v|
       if v.released_string.to_s.empty?
-        v_hash = github_versions[v.version.to_s]
-        v.released_at = v_hash[:released_at]
-        v.released_at = v_hash[:released_string]
+        version_string = v.version.to_s
+        v_hash = github_versions[version_string]
+        v.released_at     = v_hash[:released_at]
+        v.released_string = v_hash[:released_string]
       end
     end
 
@@ -48,7 +49,7 @@ class GithubVersionCrawler
     parsed = GithubVersionCrawler.parse_github_url github_url
     tags   = tags_for_repo github_url
 
-    versions = tags.map do |t|
+    tags.each do |t|
 
       owner  = parsed[:owner]
       repo   = parsed[:repo]
@@ -58,7 +59,7 @@ class GithubVersionCrawler
       meta = GithubVersionCrawler.commit_metadata owner, repo, sha
 
       date_string = meta["commit"]["author"]["date"].to_s
-      date_time = DateTime.parse date_string
+      date_time   = DateTime.parse date_string
 
       url = "#{A_API_URL}/repos/#{owner}/#{repo}/#{sha}"
       versions[v_name] = {
