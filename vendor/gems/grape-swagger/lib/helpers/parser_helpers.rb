@@ -1,11 +1,11 @@
 module ParserHelpers
-  
+
   def parse_params(params, path, method)
     accepted_file_classes = ['Rack::Multipart::UploadedFile', 'Hash']
     if params
       params.map do |param, value|
         value[:type] = 'file' if value.is_a?(Hash) and accepted_file_classes.include?(value[:type])
-        
+
         dataType = value.is_a?(Hash) ? value[:type]||'String' : 'String'
         description = value.is_a?(Hash) ? value[:desc] || value[:description] : ''
         required = value.is_a?(Hash) ? !!value[:required] : false
@@ -76,16 +76,18 @@ module ParserHelpers
     indent = string.scan(/^[ \t]*(?=\S)/).min.try(:size) || 0
     string.gsub(/^[ \t]{#{indent}}/, '')
   end
-  
+
   def parse_notes(notes, options)
     notes  = notes.to_s
     return notes if notes.empty?
     return notes unless options.has_key?(:markdown)
     return notes unless options[:markdown]
     return Kramdown::Document.new(strip_heredoc(notes)).to_html
- end
+  end
+
   def parse_base_path(base_path, request)
     (base_path.is_a?(Proc) ? base_path.call(request) : base_path) || request.base_url
   end
+
 end
 
