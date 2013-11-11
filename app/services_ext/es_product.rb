@@ -39,11 +39,11 @@ class EsProduct
                   :index_analyzer  => "ngram_name",
                   :type => "string",
                   :include_in_all => true,
-                  :boost => 100
+                  :boost => 10
                 }
               }
             },
-            :followers          => { :type => 'integer', :include_in_all => true, :boost => 50},
+            :followers          => { :type => 'integer', :include_in_all => true},
             :description        => { :type => 'string', :analyzer => 'snowball' },
             :description_manual => { :type => 'string', :analyzer => 'snowball' },
             :language           => { :type => 'string', :analyzer => 'keyword'  }
@@ -153,7 +153,7 @@ class EsProduct
             must {string 'group_id:' + group_id + "*"}
           end
         elsif q != '*' and group_id.empty?
-          query.custom_score :script => "_score + doc['followers'].value" do
+          query.custom_score :script => "(_score + doc['used_by_count'].value) * (doc['followers'].value + 1)" do
             string "name.partial:" + q
           end
         elsif q == '*' and !group_id.empty?
@@ -174,7 +174,7 @@ class EsProduct
           search_type: 'dfs_query_and_fetch',
           size: results_per_page
     ) do |search|
-        search.query { |query| query.string "#{ q }*"}
+        search.query { |query| query.string "name.partial:#{q}"}
         search.sort {by :followers, 'desc'}
       end
     s.results
