@@ -36,7 +36,7 @@ class GithubVersionCrawler
 
     # get git URL, owner and repo from product
     repo = product.repositories.map(&:repo_source).uniq.first
-    github_versions = versions_for_github_url( repo )
+    #github_versions = versions_for_github_url( repo )
 
     # update releases infos at version
     product.versions.each do |v|
@@ -66,6 +66,8 @@ class GithubVersionCrawler
       v_name = t.name
       sha    = t.commit.sha
 
+      next
+
       meta = GithubVersionCrawler.commit_metadata owner, repo, sha
 
       begin
@@ -89,6 +91,7 @@ class GithubVersionCrawler
 
 
   def self.commit_metadata owner, repo, sha
+    return
     url = self.commit_url owner, repo, sha
 
     response = HTTParty.get(url, :headers => {"User-Agent" => A_USER_AGENT } )
@@ -120,10 +123,6 @@ class GithubVersionCrawler
     parsed = {:owner => $1, :repo => $2}
     return false unless match
     parsed
-  end
-
-  def metadata_for_commit
-    # curl https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74
   end
 
 end
