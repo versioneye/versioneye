@@ -12,6 +12,8 @@ class Project
   A_TYPE_LEIN     = "Lein"
   A_TYPE_BOWER    = "Bower"
   A_TYPE_GITHUB   = "GitHub"
+  A_TYPE_R        = "R"
+  A_TYPE_COCOAPODS= "CocoaPods"
 
   A_SOURCE_UPLOAD = "upload"
   A_SOURCE_URL    = "url"
@@ -105,7 +107,7 @@ class Project
 
   def collaborator( user )
     return nil if user.nil?
-    return nil if collaborators.nil? || collaborators.empty?
+    return nil if collaborators.nil? || collaborators.size == 0
     collaborators.each do |collaborator|
       return collaborator if user._id.to_s.eql?( collaborator.user_id.to_s )
     end
@@ -116,6 +118,12 @@ class Project
     return false if user.nil?
     return true if !self.user.nil? && self.user.username.eql?( user.username )
     return !collaborator( user ).nil?
+  end
+
+  def remove_collaborators
+    collaborators.each do |collaborator|
+      collaborator.remove
+    end
   end
 
   def outdated?

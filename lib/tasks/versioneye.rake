@@ -54,6 +54,8 @@ namespace :versioneye do
     puts "STOP to send out monthly project notification emails."
   end
 
+
+
   desc "update version data globally"
   task :update_version_data_global => :environment do
   puts "START update the version numbers on products."
@@ -73,6 +75,11 @@ namespace :versioneye do
     puts "START to send out verification reminder E-Mails."
     User.send_verification_reminders
     puts "STOP to send out verification reminder E-Mails."
+  end
+
+  desc "crawl & import Cococapods specs"
+  task :crawl_cocoapods => :environment do
+    CocoapodsCrawler.crawl
   end
 
 end

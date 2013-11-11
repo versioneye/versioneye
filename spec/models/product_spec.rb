@@ -121,18 +121,21 @@ describe Product do
     end
   end
 
-  # TODO refactor this for the new license model
-  # describe "handling product licenses" do
-  #   it "- get licence of product, that is added by crawler" do
-  #     p = described_class.new name: "Testdescribed_class", license: "Apache22"
-  #     p.license_info.should eql("Apache22")
-  #   end
-
-  #   it "- get license of product that is added by user" do
-  #     p = described_class.new name: "testdescribed_class2", license_manual: "Rocket42"
-  #     p.license_info.should eql("Rocket42")
-  #   end
-  # end
+  describe "handling product licenses" do
+    it "- get licence of product, that is added by crawler" do
+      product1 = ProductFactory.create_for_gemfile("bee", "1.4.0")
+      product1.versions.push( Version.new({version: "1.4.0"}) )
+      product1.save
+      license = License.new({:language => product1.language, :prod_key => product1.prod_key,
+        :version => product1.version, :name => "MIT"})
+      license.save
+      product1.license_info.should eql("MIT")
+      license = License.new({:language => product1.language, :prod_key => product1.prod_key,
+        :version => product1.version, :name => "GLP"})
+      license.save
+      product1.license_info.should eql("MIT, GLP")
+    end
+  end
 
   describe "get_unique_languages_for_product_ids" do
 

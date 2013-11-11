@@ -38,5 +38,5 @@ module V2
       header "Access-Control-Allow-Headers", "api_key, Content-Type"
 
     end
- end
+  end
 end

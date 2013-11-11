@@ -20,6 +20,7 @@ development:
   memcache_servers: ["127.0.0.1:11211"]
   memcache_username:
   memcache_password:
+  cocoapods_spec: /home/versioneye/cocoapods/cocoapods-specs
 
 test:
   server_url: http://localhost:3000
@@ -43,6 +44,7 @@ test:
   memcache_servers: ["127.0.0.1:11211"]
   memcache_username:
   memcache_password:
+  cocoapods_spec: /home/versioneye/cocoapods/cocoapods-specs
 
 production:
   server_url: http://www.versioneye.com
@@ -66,3 +68,4 @@ production:
   memcache_servers: <%= ENV['MEMCACHE_SERVERS'] %>
   memcache_username: <%= ENV['MEMCACHE_USERNAME'] %>
   memcache_password: <%= ENV['MEMCACHE_PASSWORD'] %>
+  cocoapods_spec: <%= ENV['COCOAPODS_SPEC'] %>

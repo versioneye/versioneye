@@ -14,6 +14,7 @@ class Product
   A_LANGUAGE_JAVASCRIPT = "JavaScript"
   A_LANGUAGE_CLOJURE    = "Clojure"
   A_LANGUAGE_C          = "C"
+  A_LANGUAGE_OBJECTIVEC = "Objective-C"
 
   field :name         , type: String
   field :name_downcase, type: String
@@ -25,19 +26,15 @@ class Product
   field :artifact_id, type: String
   field :parent_id  , type: String
 
-  field :authors           , type: String # TODO this hase to be remove in the long run
   field :description       , type: String
   field :description_manual, type: String
-  field :link              , type: String # TODO this hase to be remove in the long run
   field :downloads         , type: Integer
   field :followers         , type: Integer, default: 0
   field :used_by_count     , type: Integer, default: 0
-  #field :license           , type: String, default: "unknown" #legacy
 
   field :version     , type: String
   field :version_link, type: String
 
-  field :icon        , type: String # TODO this hase to be remove in the long run
   field :twitter_name, type: String
 
   field :reindex, type: Boolean, default: true
@@ -53,7 +50,6 @@ class Product
 
   has_and_belongs_to_many :users
   # has_and_belongs_to_many :licenses
-
   # has_and_belongs_to_many :versionarchives
   # has_and_belongs_to_many :versionlinks
   # has_and_belongs_to_many :versioncomments
@@ -70,7 +66,7 @@ class Product
   def self.supported_languages
     Set[ A_LANGUAGE_RUBY, A_LANGUAGE_PYTHON, A_LANGUAGE_NODEJS,
          A_LANGUAGE_JAVA, A_LANGUAGE_PHP, A_LANGUAGE_R, A_LANGUAGE_JAVASCRIPT,
-         A_LANGUAGE_CLOJURE]
+         A_LANGUAGE_CLOJURE, A_LANGUAGE_OBJECTIVEC]
   end
 
   # legacy, still used by fall back search
@@ -159,6 +155,14 @@ class Product
     versions.nil? || versions.size == 0 ? true : false
   end
 
+  def add_version(version_string, hash = {})
+    unless version_by_number(version_string)
+      version_hash = {:version => version_string}.merge(hash)
+      version = Version.new(version_hash)
+      versions.push( version )
+    end
+  end
+
   ######## END VERSIONS ###################
 
   def comments
@@ -199,8 +203,8 @@ class Product
   end
 
   def dependencies(scope = nil)
-    dependencies_cache = Hash.new if dependencies_cache.nil?
-    scope = Dependency.main_scope(self.language) if scope == nil
+    dependencies_cache ||= {}
+    scope = Dependency.main_scope(self.language) unless scope
     if dependencies_cache[scope].nil?
       dependencies_cache[scope] = Dependency.find_by_lang_key_version_scope( language, prod_key, version, scope )
     end
@@ -293,6 +297,7 @@ class Product
     return A_LANGUAGE_NODEJS if language.match(/^node/i)
     return A_LANGUAGE_PHP if language.match(/^php/i)
     return A_LANGUAGE_JAVASCRIPT if language.match(/^JavaScript/i)
+    return A_LANGUAGE_OBJECTIVEC if language.match(/^Objective-C/i)
     return language.capitalize
   end
 
