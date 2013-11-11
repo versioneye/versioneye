@@ -30,7 +30,7 @@ class Product
   field :description_manual, type: String
   field :downloads         , type: Integer
   field :followers         , type: Integer, default: 0
-  field :used_by_count     , type: Integer, default: 0
+  field :used_by_count     , type: Integer, default: 0 # Number of projects using this one.
 
   field :version     , type: String
   field :version_link, type: String
@@ -131,6 +131,7 @@ class Product
       :description        => self.description.to_s,
       :description_manual => self.description_manual.to_s,
       :followers          => self.followers,
+      :used_by_count      => self.used_by_count,
       :group_id           => self.group_id.to_s,
       :prod_key           => self.prod_key,
       :language           => self.language,
@@ -196,7 +197,8 @@ class Product
   end
 
   def update_used_by_count( persist = true )
-    count = Dependency.where(:dep_prod_key => self.prod_key).count
+    grouped = Dependency.where(:dep_prod_key => self.prod_key).group_by(&:prod_key)
+    count = grouped.count
     return nil if count == self.used_by_count
     self.used_by_count = count
     self.save if persist

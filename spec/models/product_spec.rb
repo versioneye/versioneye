@@ -151,4 +151,62 @@ describe Product do
 
   end
 
+
+  describe "update_used_by_count" do
+
+    it "returns 0 because there are no deps" do
+      product_1 = ProductFactory.create_new 1
+      product_1.save
+      product_1.update_used_by_count
+      product_1.used_by_count.should eq(0)
+    end
+
+    it "returns 1 because there is 1 dep" do
+      product_1 = ProductFactory.create_new 1
+      product_2 = ProductFactory.create_new 2
+      dependency = Dependency.new({ :language => product_2.language,
+        :prod_key => product_2.prod_key, :prod_version => product_2.version,
+        :dep_prod_key => product_1.prod_key, :version => product_1.version})
+      dependency.save
+      product_1.save
+      product_1.update_used_by_count
+      product_1.used_by_count.should eq(1)
+    end
+
+    it "returns still 1 because there are 2 deps from 1 product" do
+      product_1 = ProductFactory.create_new 1
+      product_2 = ProductFactory.create_new 2
+      dependency = Dependency.new({ :language => product_2.language,
+        :prod_key => product_2.prod_key, :prod_version => product_2.version,
+        :dep_prod_key => product_1.prod_key, :version => product_1.version})
+      dependency.save
+      dependency2 = Dependency.new({ :language => product_2.language,
+        :prod_key => product_2.prod_key, :prod_version => "dev-master",
+        :dep_prod_key => product_1.prod_key, :version => product_1.version})
+      dependency2.save
+      product_1.save
+      product_1.update_used_by_count
+      product_1.used_by_count.should eq(1)
+    end
+
+    it "returns 2 because there are 2 deps" do
+      product_1 = ProductFactory.create_new 1
+      product_2 = ProductFactory.create_new 2
+      product_3 = ProductFactory.create_new 3
+      dependency = Dependency.new({ :language => product_2.language,
+        :prod_key => product_2.prod_key, :prod_version => product_2.version,
+        :dep_prod_key => product_1.prod_key, :version => product_1.version})
+      dependency.save
+      dependency2 = Dependency.new({ :language => product_3.language,
+        :prod_key => product_3.prod_key, :prod_version => product_3.version,
+        :dep_prod_key => product_1.prod_key, :version => product_1.version})
+      dependency2.save
+      product_1.save
+      product_1.update_used_by_count
+      product_1.used_by_count.should eq(2)
+    end
+
+  end
+
+
 end

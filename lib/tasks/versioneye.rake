@@ -10,6 +10,11 @@ namespace :versioneye do
     SubmittedUrl.update_integration_statuses()
     puts "STOP  to update integration status of submitted urls"
 
+    puts "START to crawl CocoaPods"
+    CocoapodsCrawler.crawl
+    GithubVersionCrawler.add_versions_to_all_products
+    puts "STOP to crawl CocoaPods"
+
     puts "START to crawl packagist.org"
     PackagistCrawler.crawl
     puts "STOP to crawl packagist.org"
@@ -80,6 +85,12 @@ namespace :versioneye do
   desc "crawl & import Cococapods specs"
   task :crawl_cocoapods => :environment do
     CocoapodsCrawler.crawl
+    GithubVersionCrawler.add_versions_to_all_products
+  end
+
+  desc "crawl packagist"
+  task :crawl_packagist => :environment do
+    PackagistCrawler.crawl
   end
 
 end
