@@ -139,4 +139,41 @@ describe GemfileParser do
 
   end
 
+  describe "parse_requested_version" do
+
+    it "parses the right version" do
+      version_number = "=1.0.0"
+      dependency = Projectdependency.new
+      product = ProductFactory.create_new 1, :gemfile
+      @parser.parse_requested_version version_number, dependency, product
+      dependency.version_requested.should eql("1.0.0")
+    end
+
+    it "parses the right tilde version" do
+      version_number = "~>10.10.0"
+      dependency = Projectdependency.new
+      product = ProductFactory.create_new 1, :gemfile
+      product.versions.push Version.new({:version => "10.10.2"})
+      product.versions.push Version.new({:version => "10.10.3"})
+      product.versions.push Version.new({:version => "10.10.4"})
+      product.versions.push Version.new({:version => "9.10.14"})
+      product.save
+      @parser.parse_requested_version version_number, dependency, product
+      dependency.version_requested.should eql("10.10.4")
+    end
+
+    it "parses the right tilde version" do
+      version_number = "~>0.12.2"
+      dependency = Projectdependency.new
+      product = ProductFactory.create_new 1, :gemfile
+      product.versions.push Version.new({:version => "0.12.2"})
+      product.versions.push Version.new({:version => "0.12.2.rc1"})
+      product.save
+      @parser.parse_requested_version version_number, dependency, product
+      dependency.version_requested.should eql("0.12.2")
+    end
+
+  end
+
+
 end
