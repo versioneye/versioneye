@@ -14,21 +14,20 @@ end
 describe EsProduct do
 
   before :each do
-    EsProduct.clean_all #remove all previous indexes at elasticsearch
-    EsProduct.create_index_with_mappings
+    EsProduct.reset
     @prods = [
-      {:name => "club-mate",        :language => "Java",    :group_id => "org.club.mate", :followers => 1},
-      {:name => "club-mate-parent", :language => "Java",    :group_id => "com.club.mate", :followers => 1},
-      {:name => "club-mate-child",  :language => "Java",    :group_id => "net.club.mate", :followers => 1},
-      {:name => "club-mate-c",      :language => "C",       :group_id => "", :followers => 1},
-      {:name => "club-mate-ccc",    :language => "c++",     :group_id => "", :followers => 1},
-      {:name => "club-mate-ruby",   :language => "Ruby",    :group_id => "", :followers => 1},
-      {:name => "club-mate-cnet",   :language => "c#",      :group_id => "net.microsoft.crap", :followers => 1},
-      {:name => "bad.mate.jar",     :language => "mate",    :group_id => "club.mate.org", :followers => 1},
-      {:name => "good.mate.jar",    :language => "mate",    :group_id => "club.mate.org", :followers => 1},
-      {:name => "superb_mate.jar",  :language => "mate",    :group_id => "club.mate.org", :followers => 1},
-      {:name => "json_nodejs",      :language => "Node.JS", :group_id => "", :followers => 1},
-      {:name => "Hibernate",        :language => "Java",    :group_id => "org.hibernate", :followers => 1}
+      {:name => "club-mate",        :language => "Java",    :group_id => "org.club.mate", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-parent", :language => "Java",    :group_id => "com.club.mate", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-child",  :language => "Java",    :group_id => "net.club.mate", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-c",      :language => "C",       :group_id => "", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-ccc",    :language => "c++",     :group_id => "", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-ruby",   :language => "Ruby",    :group_id => "", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-cnet",   :language => "c#",      :group_id => "net.microsoft.crap", :followers => 1, :used_by_count => 1},
+      {:name => "bad.mate.jar",     :language => "mate",    :group_id => "club.mate.org", :followers => 1, :used_by_count => 1},
+      {:name => "good.mate.jar",    :language => "mate",    :group_id => "club.mate.org", :followers => 1, :used_by_count => 1},
+      {:name => "superb_mate.jar",  :language => "mate",    :group_id => "club.mate.org", :followers => 1, :used_by_count => 1},
+      {:name => "json_nodejs",      :language => "Node.JS", :group_id => "", :followers => 1, :used_by_count => 1},
+      {:name => "Hibernate",        :language => "Java",    :group_id => "org.hibernate", :followers => 1, :used_by_count => 1}
     ]
     @products = Array.new
     @prods.each do |prod|
