@@ -6,7 +6,7 @@ class Version
 
   field :uid            , type: String
   field :version        , type: String
-  field :link           , type: String
+  field :link           , type: String # TODO legacy. Should be removed in the long run.
   field :downloads      , type: Integer
   field :prerelease     , type: Boolean
   field :mistake        , type: Boolean
