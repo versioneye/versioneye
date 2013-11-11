@@ -1,0 +1,46 @@
+require 'spec_helper'
+
+describe GithubVersionCrawler do
+
+	describe ".owner_and_repo" do
+    example "1" do
+      repo = 'https://github.com/0xced/ABGetMe.git'
+      parsed = GithubVersionCrawler.parse_github_url(repo)
+
+      # parsed.should_not be_nil
+      parsed[:owner].should == '0xced'
+      parsed[:repo].should  == 'ABGetMe'
+    end
+  end
+
+  describe "#tags_for_repo" do
+    it "returns tags" do
+      repo = 'https://github.com/0xced/ABGetMe.git'
+      tags = GithubVersionCrawler.new.tags_for_repo repo
+      tags.length.should == 1
+      t = tags.first
+      t.name = '1.0.0'
+      t.commit.sha = '8d8d7ca9f3429c952b83d1ecf03178e8efb99cb2'
+    end
+  end
+
+  describe ".commit_metadata" do
+    it "should return metadata for a commit" do
+      meta = GithubVersionCrawler.commit_metadata 'rmetzler', 'render-as-markdown', '725155400b35488ab65e8dd44264e055a397fd74'
+
+      puts "commit url", GithubVersionCrawler.commit_url('rmetzler', 'render-as-markdown', '725155400b35488ab65e8dd44264e055a397fd74')
+
+      puts "returns:", meta
+    end
+  end
+
+  describe ".versions_for_github_url" do
+    it "returns correct versions for render-as-markdown" do
+      repo_url = 'https://github.com/rmetzler/render-as-markdown.git'
+      versions = GithubVersionCrawler.versions_for_github_url repo_url
+      versions.length.should eq(4)
+    end
+
+  end
+
+end
