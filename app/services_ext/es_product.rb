@@ -44,6 +44,7 @@ class EsProduct
               }
             },
             :followers          => { :type => 'integer', :include_in_all => true},
+            :used_by_count      => { :type => 'integer', :include_in_all => true},
             :description        => { :type => 'string', :analyzer => 'snowball' },
             :description_manual => { :type => 'string', :analyzer => 'snowball' },
             :language           => { :type => 'string', :analyzer => 'keyword'  }
