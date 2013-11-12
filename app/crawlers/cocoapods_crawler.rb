@@ -2,7 +2,7 @@ require 'git_crawler'
 
 class CocoapodsCrawler < GitCrawler
 
-  def self.logger
+  def logger
     ActiveSupport::BufferedLogger.new("log/cocoapods.log")
   end
 
@@ -22,14 +22,14 @@ class CocoapodsCrawler < GitCrawler
     all_spec_files do |filepath|
       # parse every podspec file
       i += 1
-      self.logger.info "Parse CocoaPods Spec ##{i}: #{filepath}"
+      logger.info "Parse CocoaPods Spec ##{i}: #{filepath}"
       parser  = CocoapodsPodspecParser.new
       product = parser.parse_file filepath
       if product
         VersionService.update_version_data product, false
         product.save
       else
-        self.logger.warn "NO PRODUCT"
+        logger.warn "NO PRODUCT"
       end
     end
   end
