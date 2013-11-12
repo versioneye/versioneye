@@ -7,7 +7,7 @@ require 'cocoapods-core'
 #
 class CocoapodsPodspecParser
 
-  def self.logger
+  def logger
     ActiveSupport::BufferedLogger.new("log/cocoapods.log")
   end
 
@@ -30,7 +30,7 @@ class CocoapodsPodspecParser
     @product = get_product
     update_product
 
-    self.logger.info(@spec_hash.to_json) unless @spec_hash.except!("name").empty?
+    logger.info(@spec_hash.to_json) unless @spec_hash.except!("name").empty?
 
     @product
   end
@@ -39,8 +39,8 @@ class CocoapodsPodspecParser
   def load_spec file
     Pod::Spec.from_file(file)
   rescue => e
-    self.logger.error e.message
-    self.logger.error e.backtrace
+    logger.error e.message
+    logger.error e.backtrace
     nil
   end
 
@@ -79,8 +79,8 @@ class CocoapodsPodspecParser
     @product.save
     @product
   rescue => e
-    self.logger.error e.message
-    self.logger.error e.backtrace
+    logger.error e.message
+    logger.error e.backtrace
     nil
   end
 

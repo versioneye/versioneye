@@ -48,6 +48,8 @@ class ProductMigration
         self.update_followers( product )
       end
     end
+  rescue => e
+    Rails.logger.error e.message
   end
 
   def self.update_followers( product )

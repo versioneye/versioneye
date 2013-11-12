@@ -7,20 +7,10 @@ class GithubVersionCrawler
   A_USER_AGENT = "www.versioneye.com"
   A_API_URL    = "https://api.github.com"
 
-
-  def initialize
-    # create client and authenticate
-    client = Octokit::Client.new \
-      :client_id     => Settings.github_client_id,
-      :client_secret => Settings.github_client_secret
-
-    @github = client.root
-  end
-
-  def self.add_versions_to_all_products
-    crawler = self.new
-    products_with_empty_version_strings.each do |p|
-      crawler.add_version_to_product( p.language, p.prod_key )
+  # Crawle Release dates for Objective-C packages
+  def self.crawl
+    products_with_empty_version_strings.each do |product|
+      add_version_to_product( product )
     end
   end
 
@@ -28,24 +18,23 @@ class GithubVersionCrawler
     Product.where({:language =>"Objective-C", "versions.version.ne" => nil }).all
   end
 
-
-  def add_version_to_product (language, prod_key)
-
-    # load product
-    product = Product.find_by_lang_key(language, prod_key)
-
+  def self.add_version_to_product ( product )
     # get git URL, owner and repo from product
     repo = product.repositories.map(&:repo_source).uniq.first
-    #github_versions = versions_for_github_url( repo )
+    github_versions = versions_for_github_url( repo )
 
     # update releases infos at version
-    product.versions.each do |v|
-      if v.released_string.to_s.empty?
-        version_string = v.version.to_s
-        v_hash = github_versions[version_string]
-        next unless v_hash
-        v.released_at     = v_hash[:released_at]
-        v.released_string = v_hash[:released_string]
+    product.versions.each do |version|
+      if version.released_string.to_s.empty?
+        version_string          = version.version.to_s
+        v_hash                  = github_versions[version_string]
+        if v_hash.nil?
+          p "Not tag for #{product.name} : #{version_string}"
+          next
+        end
+        version.released_at     = v_hash[:released_at]
+        version.released_string = v_hash[:released_string]
+        p "update version #{version.version} with #{version.released_at}"
       end
     end
 
@@ -53,51 +42,49 @@ class GithubVersionCrawler
   end
 
 
-  def versions_for_github_url github_url
+  def self.versions_for_github_url github_url
     versions = {}
+    owner_repo = parse_github_url github_url
+    tags_data  = tags_for_repo owner_repo
+    owner      = owner_repo[:owner]
+    repo       = owner_repo[:repo]
 
-    parsed = GithubVersionCrawler.parse_github_url github_url
-    tags   = tags_for_repo github_url
-
-    tags.each do |t|
-
-      owner  = parsed[:owner]
-      repo   = parsed[:repo]
-      v_name = t.name
-      sha    = t.commit.sha
-
-      next
-
-      meta = GithubVersionCrawler.commit_metadata owner, repo, sha
-
-      begin
-        date_string = meta["commit"]["author"]["date"].to_s
-        date_time   = DateTime.parse date_string
-
-        url = "#{A_API_URL}/repos/#{owner}/#{repo}/#{sha}"
-        versions[v_name] = {
-          :sha             => sha,
-          :released_at     => date_time,
-          :released_string => date_string,
-        }
-      rescue => e
-        Rails.logger.error e
+    tags_data.tap do |t_data|
+      t_data.each do |tag|
+        process_tag(versions, tag, owner, repo)
       end
     end
-
     versions
   end
 
 
+  def self.process_tag(versions, tag, owner, repo)
+    v_name      = tag.name
+    sha         = tag.commit.sha
+    date_string = fetch_commit_date(owner, repo, sha)
+    date_time   = DateTime.parse date_string
+    url         = "#{A_API_URL}/repos/#{owner}/#{repo}/#{sha}"
+    versions[v_name] = {
+      :sha             => sha,
+      :released_at     => date_time,
+      :released_string => date_string,
+    }
+  rescue => e
+    Rails.logger.error e.message
+    p e.message
+  end
 
-  def self.commit_metadata owner, repo, sha
-    return
+
+  def self.fetch_commit_date(owner, repo, sha)
+    meta = fetch_commit_metadata owner, repo, sha
+    meta["commit"]["author"]["date"].to_s
+  end
+
+
+  def self.fetch_commit_metadata owner, repo, sha
     url = self.commit_url owner, repo, sha
-
-    response = HTTParty.get(url, :headers => {"User-Agent" => A_USER_AGENT } )
-
+    response = HTTParty.get(url) #, :headers => {"User-Agent" => A_USER_AGENT } )
     Rails.logger.debug response
-
     if response.code == 200
       return JSON.parse(response.body)
     else
@@ -110,19 +97,25 @@ class GithubVersionCrawler
     "#{A_API_URL}/repos/#{owner}/#{repo}/commits/#{sha}"
   end
 
-  def tags_for_repo (github_url)
-    uri_hash = GithubVersionCrawler.parse_github_url(github_url)
-    return nil unless uri_hash
-
-    repo = (@github.rels[:repository].get :uri => uri_hash).data
-    tags = repo.rels[:tags].get.data
+  def self.tags_for_repo( owner_repo )
+    return nil unless owner_repo
+    api = get_github_api
+    repo = api.rels[:repository].get(:uri => owner_repo).data
+    tags = repo.rels[:tags]
+    tags_data = tags.get.data
+    tags_data
   end
 
   def self.parse_github_url (git_url)
     match = /https:\/\/github.com\/(.+)\/(.+)\.git/.match git_url
-    parsed = {:owner => $1, :repo => $2}
+    owner_repo = {:owner => $1, :repo => $2}
     return false unless match
-    parsed
+    owner_repo
+  end
+
+  def self.get_github_api
+    client = Octokit::Client.new :client_id => Settings.github_client_id, :client_secret => Settings.github_client_secret
+    client.root
   end
 
 end
