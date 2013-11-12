@@ -2,7 +2,7 @@ class GemfileParser < CommonParser
 
   # Parser for Gemfile. For Ruby.
   # http://gembundler.com/man/gemfile.5.html
-  # http://docs.rubygems.org/read/chapter/16#page74
+  # http://guides.rubygems.org/patterns/#semantic_versioning
   #
   def parse ( url )
     return nil if url.nil? || url.empty?
