@@ -14,7 +14,7 @@ class User::GithubReposController < ApplicationController
       github_repos = github_repos.desc(:commited_at)
       repos = []
       github_repos.each do |repo|
-        repos << process_repo(repo)
+        repos << process_repo(repo, task_status)
       end
     end
 
@@ -171,7 +171,7 @@ class User::GithubReposController < ApplicationController
   adds additional metadata for each item in repo collection,
   for example is this project already imported etc
 =end
-    def process_repo repo
+    def process_repo(repo, task_status = nil)
       imported_repos      = current_user.projects.by_source(Project::A_SOURCE_GITHUB)
       imported_repo_names = imported_repos.map(&:github_project).to_set
       supported_langs     = Github.supported_languages
@@ -194,11 +194,13 @@ class User::GithubReposController < ApplicationController
         end
       end
       repo['project_files'] = decode_branch_names(repo['project_files'])
+      repo['task_status'] = task_status
       repo
     end
 
     #function that decodes encoded branch-keys to plain string
     def decode_branch_names(project_files)
+      return if project_files.nil?
       decoded_map = {}
 
       project_files.each_pair do |branch, files|

@@ -17,14 +17,8 @@ define(['underscore', 'backbone',
     model: GithubRepoModel,
     url: "/user/github_repos",
     initialize: function(options){
-      var poller_options = {
-        delayed: false,
-        condition: function(model){
-          return model.get('task_status') === 'done';
-        }
-      };
-
-      this.poller = Poller.get(this); //registered event is main.js
+      this.poller = Poller.get(this, {delay: 1000}); //registered event is main.js
+      this.initViews = options.initViews;
     },
 
     parse: function(response){

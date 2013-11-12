@@ -48,13 +48,20 @@ class Github
     repo = user.github_repos.all.first
     #if user don't have any repos in cache, then force to load data
     return true if repo.nil?
+
     headers = {
       "User-Agent" => A_USER_AGENT,
       "If-Modified-Since" => repo[:cached_at].httpdate
     }
     path = "/user?access_token=#{URI.escape(user.github_token)}"
+
     response = @@conn.head(path: path, headers: headers)
+    puts response.status
     response.status != 304
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    return false
   end
 
   def self.user_repos(user, url = nil, page = 1, per_page = 30)
