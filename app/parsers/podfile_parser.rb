@@ -34,7 +34,7 @@ class PodfileParser < CommonParser
     @project
   end
 
-  # TODO: are there projects that gets updated
+  # TODO: are there projects that gets updated?
   def get_project
     project = Project.new \
       project_type: @@project_type,
@@ -51,18 +51,22 @@ class PodfileParser < CommonParser
     puts "dependencies: #{@pod_file.dependencies}"
     puts "target_def: #{target_def}"
 
-    if 1 < target_def.size # TODO make scopes out of the target definitions
-      Rails.logger.warn "found more than one target definition for " # TODO
-
-    elsif target_def.empty?
-      Rails.logger.warn "no target definitions found for" # TODO
-
+    if target_def.empty?
+      Rails.logger.warn "no target definitions found for target definition" # TODO
     else
-      dependencies = target_def.first["dependencies"]
-      dependencies.each do |dep|
-        create_dependency dep
-     end
 
+      if 1 < target_def.size
+        Rails.logger.warn "found more than one target definition for target definition"
+      end
+
+      # TODO make scopes out of the target definitions
+      # target_def.each do |target|
+      #   target.
+      # end
+      dependencies = target_def.first["dependencies"]
+      dep_array = dependencies.map do |dep|
+        create_dependency dep
+      end
     end
   end
 
@@ -71,48 +75,108 @@ class PodfileParser < CommonParser
     # TODO If there is no product in DB, than just set coperator & version.
     # It will marked as unknown.
     if dep.is_a? String
-      name = dep
-      puts "create_dependency '#{name}' (name only)"
-
-      dependency = Projectdependency.new \
-        :language => @@language,
-        :prod_key => name.downcase,
-        :name     => name
-        :version_requested => "" # TODO latest from DB.
+      dependency = latest_version_of_dependency dep
 
     elsif dep.is_a? Hash
       name = dep.keys.first
       reqs = dep[name]
 
-      requirements = reqs.map do |r|
-        if :head == r
-          puts "WARNING dependency '#{name}' requires HEAD (#{dep})" # TODO
-          return {:version_requested => "HEAD", :version_label => "HEAD"}
-        else
-          # TODO parse version + comperator with VersionService.
-          return parse_compare_version r
-        end
+      product = product(name)
+
+      requirement = reqs.each do |req_version|
+        v_hash = version_hash(req_version, name, product)
+        puts "VERSION HASH IS #{v_hash}"
+        return v_hash
       end
 
-      puts "create_dependency '#{name}' -- #{requirements}"
+      puts "create_dependency '#{name}' -- #{requirement}"
 
       dependency = Projectdependency.new \
         :language => @@language,
         :prod_key => name.downcase,
         :name     => name,
-        :version_requested  => requirements[:version_requested],
-        :comperator         => requirements[:comperator]
+        :version_requested  => requirement.first[:version_requested],
+        :comperator         => requirement.first[:comperator]
 
     end
 
-    dependency.save
     dependency.outdated?
   end
 
   VERSION_REGEXP = /^(=|!=|>=|>|<=|<|~>)\s*(\d(\.\d(\.\d)?)?)/
-  def parse_compare_version string
+  def parse_version string
     string.match VERSION_REGEXP
     comperator, version = $1, $2
     return {:comperator => comperator, :version_requested => version}
   end
+
+  def version_hash req_version, prod_name, prod
+    if :head == req_version
+      puts "WARNING dependency '#{prod_name}' requires HEAD" # TODO
+      return {:version_requested => "HEAD", :version_label => "HEAD"}
+
+    elsif :git == req_version
+      puts "WARNING dependency '#{prod_name}' requires GIT" # TODO
+      return {:version_requested => "GIT", :version_label => "GIT"}
+
+    elsif :path == req_version
+      puts "WARNING dependency '#{prod_name}' requires PATH" # TODO
+      return {:version_requested => "PATH", :version_label => "PATH"}
+
+    else
+      requested_version = parse_version req_version
+      # TODO copy composer for version ranges
+
+      all_versions = prod.versions
+      comperator   = requested_version[:comperator]
+      req_ver      = requested_version[:version_requested]
+
+      best_version = best_version(all_versions, comperator, req_ver)
+
+      requested_version[:version_requested] = best_version
+
+      puts "VERSION is #{requested_version}"
+      return requested_version
+    end
+  end
+
+  def best_version(versions, comperator, v)
+    case comperator
+    when ">"
+      VersionService.greater_than(versions, v)
+    when ">="
+      VersionService.greater_than_or_equal(versions, v)
+    when "<"
+      VersionService.smaller_than(versions, v)
+    when "<="
+      VersionService.smaller_than_or_equal(versions, v)
+    when "~>"
+      VersionService.version_approximately_greater_than_starter(versions, v)
+    else
+      v
+    end
+  end
+
+  def product name
+    prod_key = name.downcase
+    products = Product.where({:language => @@language, :prod_key => prod_key, })
+    Rails.logger.warn "more than one Product found for (#{@@language}, #{prod_key})"
+    products.first
+  end
+
+  def latest_version_of_dependency name
+    puts "create_dependency '#{name}' (name only => latest stable version)"
+
+    prod_key = name.downcase
+    product = product(prod_key)
+    version = nil
+    version = product.version if product
+
+    Projectdependency.new \
+      :language => @@language,
+      :prod_key => prod_key,
+      :name     => name,
+      :version_requested => version
+  end
+
 end

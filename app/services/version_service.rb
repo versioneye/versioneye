@@ -180,7 +180,7 @@ class VersionService
   # TODO test
   def self.average_release_time( versions )
     return nil if versions.nil? || versions.empty? || versions.size == 1
-    released_versions = self.versions_with_rleased_date( versions )
+    released_versions = self.versions_with_released_date( versions )
     return nil if released_versions.nil? || released_versions.empty? || released_versions.size < 3
     sorted_versions = released_versions.sort! { |a,b| a.released_at <=> b.released_at }
     first = sorted_versions.first.released_at
@@ -216,7 +216,7 @@ class VersionService
 
   private
 
-    def self.versions_with_rleased_date( versions )
+    def self.versions_with_released_date( versions )
       return nil if versions.nil? || versions.empty?
       new_versions = Array.new
       versions.each do |version|
