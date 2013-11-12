@@ -1,5 +1,3 @@
-require 'octokit'
-
 class GithubVersionCrawler
 
   include HTTParty
@@ -29,7 +27,7 @@ class GithubVersionCrawler
         version_string          = version.version.to_s
         v_hash                  = github_versions[version_string]
         if v_hash.nil?
-          p "Not tag for #{product.name} : #{version_string}"
+          p "Not tag available for #{product.name} : #{version_string}"
           next
         end
         version.released_at     = v_hash[:released_at]
@@ -99,7 +97,7 @@ class GithubVersionCrawler
 
   def self.tags_for_repo( owner_repo )
     return nil unless owner_repo
-    api = get_github_api
+    api = OctokitApi.get_instance
     repo = api.rels[:repository].get(:uri => owner_repo).data
     tags = repo.rels[:tags]
     tags_data = tags.get.data
@@ -111,11 +109,6 @@ class GithubVersionCrawler
     owner_repo = {:owner => $1, :repo => $2}
     return false unless match
     owner_repo
-  end
-
-  def self.get_github_api
-    client = Octokit::Client.new :client_id => Settings.github_client_id, :client_secret => Settings.github_client_secret
-    client.root
   end
 
 end

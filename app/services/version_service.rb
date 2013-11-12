@@ -35,6 +35,8 @@ class VersionService
     return newest_version_number( versions_filtered, stability )
   end
 
+  # http://guides.rubygems.org/patterns/#semantic_versioning
+  # http://robots.thoughtbot.com/rubys-pessimistic-operator
   def self.version_approximately_greater_than_starter(value)
     ar = value.split(".")
     new_end = ar.length - 2
