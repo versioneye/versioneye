@@ -120,7 +120,11 @@ define(
 
 
     if(!_.isUndefined(repos)  && !_.isNull(repos) && !_.isEmpty(repos) && repos.length > 0){
-      initViews(repos);
+      if(repos.length < current_repos.perPage){
+        //change view only when it's smaller than per_page number;
+        initViews(repos);
+      }
+
       loader_notification.html([
           'Got ',  repos.length, 'repositories'
       ].join(' ')
