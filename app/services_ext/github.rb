@@ -1,4 +1,15 @@
 class Github
+<<<<<<< Updated upstream
+=======
+
+  A_USER_AGENT = "Chrome/28(www.versioneye.com, contact@versioneye.com)"
+  A_API_URL    = "https://api.github.com"
+  A_WORKERS_COUNT = 4
+  A_DEFAULT_HEADERS = {
+    "User-Agent" => A_USER_AGENT,
+    "Connection" => "Keep-Alive"
+  }
+>>>>>>> Stashed changes
 
   include HTTParty
   persistent_connection_adapter
@@ -58,6 +69,40 @@ class Github
     url = "#{A_API_URL}/orgs/#{orga_name}/repos?access_token=#{user.github_token}" if url.nil?
     read_repos(user, url, page, per_page)
   end
+<<<<<<< Updated upstream
+=======
+
+  def self.read_repo_data(user, repo, try_n = 3)
+    project_files = nil
+    branch_docs = self.repo_branches(user, repo['full_name'])
+    if branch_docs and !branch_docs.nil?
+      branches = branch_docs.map {|x| x['name']}
+      repo['branches'] = branches
+    else
+      repo['branches'] = ["master"]
+    end
+    #adds project files
+    try_n.times do
+      project_files = repo_project_files(user, repo['full_name'], branch_docs)
+      break if project_files
+      p "Trying to read `#{repo['full_name']}` again"
+      sleep 3
+    end
+
+    if project_files.nil?
+      msg = "Cant read project files for repo `#{repo['full_name']}`. Tried to read #{try_n} ntimes."
+      Rails.logger.error msg
+    end
+
+    repo['project_files'] = project_files
+    GithubRepo.add_new(user, repo, "1")
+    repo
+  end
+
+  def self.execute_job(workers)
+    workers.each {|worker| worker.join}
+  end
+>>>>>>> Stashed changes
 
   def self.read_repos(user, url, page = 1, per_page = 30)
     request_headers = {"User-Agent" => A_USER_AGENT}
