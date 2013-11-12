@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe PodFileParser do
+describe PodfileParser do
 
   describe '#parse' do
 
     it "should read a simple podfile and return project, dependencies" do
-      parser = PodFileParser.new
+      parser = PodfileParser.new
       # project = parser.parse_file './spec/fixtures/files/podfile/very-simple.podfile'
       project = parser.parse_file './spec/fixtures/files/podfile/more-complex.podfile'
 
