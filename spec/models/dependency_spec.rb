@@ -74,7 +74,7 @@ describe Dependency do
       dependency.version = "~> 2.2"
       dependency.dep_prod_key = product.prod_key
       dependency.language = product.language
-      dependency.gem_version_parsed().should eql("2.2.9")
+      dependency.gem_version_parsed().should eql("2.3")
 
       dependency.version = "~> 2.0"
       dependency.dep_prod_key = product.prod_key
