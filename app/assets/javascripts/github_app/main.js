@@ -53,7 +53,8 @@ define(
             "alert alert-info",
             "We detected some changes on your Github repositories and updated the view here."
           );
-          all_repos.fetchAll(initViews);
+          //all_repos.fetchAll(initViews);
+          //all_repos.poller.start();
         } else {
           if(show_all == true){
             showNotification(
@@ -74,7 +75,7 @@ define(
 
   //TODO: refactor to GithubApp namespace
   //TODO: keep data in browser DB
-  var all_repos       = new GithubAllRepoCollection(); //includes all repos ~ client-side cache
+  var all_repos       = new GithubAllRepoCollection({}); //includes all repos ~ client-side cache
   all_repos.showNotification = showNotification;
   all_repos.initViews = initViews;
 
@@ -117,20 +118,31 @@ define(
     var notification_template = _.template($("#github-notification-template").html());
     var loader_notification = $("#github-loader-notification");
     loader_notification.empty();
-
+    if(_.isUndefined(repos) || _.isEmpty(repos)){
+      loader_notification.html([
+            'Still reading data from Github .'
+        ].join(' '));
+    }
 
     if(!_.isUndefined(repos)  && !_.isNull(repos) && !_.isEmpty(repos) && repos.length > 0){
-      if(repos.length < current_repos.perPage){
+      if(current_repos.length < 10){
         //change view only when it's smaller than per_page number;
+        console.debug("Going to re=render page;");
         initViews(repos);
       }
-
-      loader_notification.html([
-          'Got ',  repos.length, 'repositories'
-      ].join(' ')
-      );
-    } else {
-      loader_notification.html('Still no data. Going to ping soon again');
+      //update loader notification
+      if(repos.at(0).get('task_status') === 'done'){
+        loader_notification.html([
+            'Got ',  repos.length, 'repositories.'
+        ].join(' '));
+        initViews(repos); // re-render again when importing ready to get pagination right
+      } else {
+        loader_notification.html([
+            '<i class = "icon-spinner icon-spin"></i>',
+            ' Please wait, we are still reading data. Imported ',  repos.length, 'repositories'
+        ].join(' ')
+        );
+      }
     }
 
     return true;
@@ -172,6 +184,6 @@ define(
 		console.log("Running github app");
 		var app_router = new AppRouter();
 		Backbone.history.start();
-    setTimeout(pollChanges, 15000);
+    //setTimeout(pollChanges, 15000); //todo: polling detect change on chache
   }};
 });
