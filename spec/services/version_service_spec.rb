@@ -122,7 +122,10 @@ describe VersionService do
       VersionService.version_approximately_greater_than_starter("1.0").should eql("1.")
     end
     it "returns the given value" do
-      VersionService.version_approximately_greater_than_starter("1.2").should eql("1.2.")
+      VersionService.version_approximately_greater_than_starter("1.2").should eql("1.")
+    end
+    it "returns the given value" do
+      VersionService.version_approximately_greater_than_starter("1.2.3").should eql("1.2.")
     end
 
   end
