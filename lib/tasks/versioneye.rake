@@ -10,6 +10,11 @@ namespace :versioneye do
     SubmittedUrl.update_integration_statuses()
     puts "STOP  to update integration status of submitted urls"
 
+    puts "START to crawl CocoaPods"
+    CocoapodsCrawler.crawl
+    GithubVersionCrawler.add_versions_to_all_products
+    puts "STOP to crawl CocoaPods"
+
     puts "START to crawl packagist.org"
     PackagistCrawler.crawl
     puts "STOP to crawl packagist.org"
@@ -54,6 +59,8 @@ namespace :versioneye do
     puts "STOP to send out monthly project notification emails."
   end
 
+
+
   desc "update version data globally"
   task :update_version_data_global => :environment do
   puts "START update the version numbers on products."
@@ -73,6 +80,17 @@ namespace :versioneye do
     puts "START to send out verification reminder E-Mails."
     User.send_verification_reminders
     puts "STOP to send out verification reminder E-Mails."
+  end
+
+  desc "crawl & import Cococapods specs"
+  task :crawl_cocoapods => :environment do
+    CocoapodsCrawler.crawl
+    GithubVersionCrawler.add_versions_to_all_products
+  end
+
+  desc "crawl packagist"
+  task :crawl_packagist => :environment do
+    PackagistCrawler.crawl
   end
 
 end

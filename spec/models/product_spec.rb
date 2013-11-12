@@ -121,18 +121,21 @@ describe Product do
     end
   end
 
-  # TODO refactor this for the new license model
-  # describe "handling product licenses" do
-  #   it "- get licence of product, that is added by crawler" do
-  #     p = described_class.new name: "Testdescribed_class", license: "Apache22"
-  #     p.license_info.should eql("Apache22")
-  #   end
-
-  #   it "- get license of product that is added by user" do
-  #     p = described_class.new name: "testdescribed_class2", license_manual: "Rocket42"
-  #     p.license_info.should eql("Rocket42")
-  #   end
-  # end
+  describe "handling product licenses" do
+    it "- get licence of product, that is added by crawler" do
+      product1 = ProductFactory.create_for_gemfile("bee", "1.4.0")
+      product1.versions.push( Version.new({version: "1.4.0"}) )
+      product1.save
+      license = License.new({:language => product1.language, :prod_key => product1.prod_key,
+        :version => product1.version, :name => "MIT"})
+      license.save
+      product1.license_info.should eql("MIT")
+      license = License.new({:language => product1.language, :prod_key => product1.prod_key,
+        :version => product1.version, :name => "GLP"})
+      license.save
+      product1.license_info.should eql("MIT, GLP")
+    end
+  end
 
   describe "get_unique_languages_for_product_ids" do
 
@@ -147,5 +150,63 @@ describe Product do
     end
 
   end
+
+
+  describe "update_used_by_count" do
+
+    it "returns 0 because there are no deps" do
+      product_1 = ProductFactory.create_new 1
+      product_1.save
+      product_1.update_used_by_count
+      product_1.used_by_count.should eq(0)
+    end
+
+    it "returns 1 because there is 1 dep" do
+      product_1 = ProductFactory.create_new 1
+      product_2 = ProductFactory.create_new 2
+      dependency = Dependency.new({ :language => product_2.language,
+        :prod_key => product_2.prod_key, :prod_version => product_2.version,
+        :dep_prod_key => product_1.prod_key, :version => product_1.version})
+      dependency.save
+      product_1.save
+      product_1.update_used_by_count
+      product_1.used_by_count.should eq(1)
+    end
+
+    it "returns still 1 because there are 2 deps from 1 product" do
+      product_1 = ProductFactory.create_new 1
+      product_2 = ProductFactory.create_new 2
+      dependency = Dependency.new({ :language => product_2.language,
+        :prod_key => product_2.prod_key, :prod_version => product_2.version,
+        :dep_prod_key => product_1.prod_key, :version => product_1.version})
+      dependency.save
+      dependency2 = Dependency.new({ :language => product_2.language,
+        :prod_key => product_2.prod_key, :prod_version => "dev-master",
+        :dep_prod_key => product_1.prod_key, :version => product_1.version})
+      dependency2.save
+      product_1.save
+      product_1.update_used_by_count
+      product_1.used_by_count.should eq(1)
+    end
+
+    it "returns 2 because there are 2 deps" do
+      product_1 = ProductFactory.create_new 1
+      product_2 = ProductFactory.create_new 2
+      product_3 = ProductFactory.create_new 3
+      dependency = Dependency.new({ :language => product_2.language,
+        :prod_key => product_2.prod_key, :prod_version => product_2.version,
+        :dep_prod_key => product_1.prod_key, :version => product_1.version})
+      dependency.save
+      dependency2 = Dependency.new({ :language => product_3.language,
+        :prod_key => product_3.prod_key, :prod_version => product_3.version,
+        :dep_prod_key => product_1.prod_key, :version => product_1.version})
+      dependency2.save
+      product_1.save
+      product_1.update_used_by_count
+      product_1.used_by_count.should eq(2)
+    end
+
+  end
+
 
 end

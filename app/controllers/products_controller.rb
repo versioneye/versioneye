@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
 
   @@languages = [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
     Product::A_LANGUAGE_PYTHON, Product::A_LANGUAGE_PHP, Product::A_LANGUAGE_NODEJS,
-    Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R]
+    Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R, Product::A_LANGUAGE_OBJECTIVEC]
 
   def index
     @user = User.new

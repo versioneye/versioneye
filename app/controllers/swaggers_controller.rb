@@ -14,6 +14,6 @@ class SwaggersController < ApplicationController
     @api_key = user_api.api_key unless user_api.nil?
     @version = params.has_key?(:version) ? params[:version] : 'v2'
     @api_url = "/api/#{@version}"
- end
+  end
 
 end

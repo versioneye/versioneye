@@ -36,12 +36,12 @@ class VersionService
   end
 
   def self.version_approximately_greater_than_starter(value)
-    if value.match(/\.0$/)
-      new_end = value.length - 2
-      return value[0..new_end]
-    else
-      return "#{value}."
-    end
+    ar = value.split(".")
+    new_end = ar.length - 2
+    new_end = 0 if new_end < 0
+    arr = ar[0..new_end]
+    starter = arr.join(".")
+    return "#{starter}."
   end
 
   def self.version_tilde_newest( versions, value )
