@@ -7,12 +7,9 @@ require 'cocoapods-core'
 
 class PodfileParser < CommonParser
 
-  def self.logger
-    ActiveSupport::BufferedLogger.new("log/cocoapods.log")
-  end
-
   @@project_type = Project::A_TYPE_COCOAPODS
   @@language     = Product::A_LANGUAGE_OBJECTIVEC
+  @url          = ""
 
   attr_accessor :pod_hash, :prod_key
 
@@ -20,9 +17,14 @@ class PodfileParser < CommonParser
     # TODO not sure what to put here
   end
 
+  def parse url
+    @url = url
+    # TODO
+  end
+
   def parse_file filename
     @pod_filename = filename
-    @pod_file = load_podfile @pod_filename
+    @pod_file = Pod::Podfile.from_file @pod_filename
     @pod_hash = @pod_file.to_hash
 
     @project = get_project
@@ -32,19 +34,12 @@ class PodfileParser < CommonParser
     @project
   end
 
-  def load_podfile file
-    Pod::Podfile.from_file file
-  end
-
   # TODO: are there projects that gets updated
   def get_project
     project = Project.new \
       project_type: @@project_type,
       language: @@language,
-      project_key: "", # TODO
-      email: "richard@paadee.com" # TODO
-
-    project.save
+      url: @url
     project
   end
 
@@ -56,11 +51,11 @@ class PodfileParser < CommonParser
     puts "dependencies: #{@pod_file.dependencies}"
     puts "target_def: #{target_def}"
 
-    if 1 < target_def.size
-      logger.warn "found more than one target definition for " # TODO
+    if 1 < target_def.size # TODO make scopes out of the target definitions
+      Rails.logger.warn "found more than one target definition for " # TODO
 
     elsif target_def.empty?
-      logger.warn "no target definitions found for" # TODO
+      Rails.logger.warn "no target definitions found for" # TODO
 
     else
       dependencies = target_def.first["dependencies"]
@@ -72,6 +67,9 @@ class PodfileParser < CommonParser
   end
 
   def create_dependency dep
+    # TODO load product.
+    # TODO If there is no product in DB, than just set coperator & version.
+    # It will marked as unknown.
     if dep.is_a? String
       name = dep
       puts "create_dependency '#{name}' (name only)"
@@ -80,6 +78,7 @@ class PodfileParser < CommonParser
         :language => @@language,
         :prod_key => name.downcase,
         :name     => name
+        :version_requested => "" # TODO latest from DB.
 
     elsif dep.is_a? Hash
       name = dep.keys.first
@@ -90,6 +89,7 @@ class PodfileParser < CommonParser
           puts "WARNING dependency '#{name}' requires HEAD (#{dep})" # TODO
           return {:version_requested => "HEAD", :version_label => "HEAD"}
         else
+          # TODO parse version + comperator with VersionService.
           return parse_compare_version r
         end
       end
