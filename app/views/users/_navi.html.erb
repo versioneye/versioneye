@@ -1,47 +1,44 @@
 
-		<div class="box header">
-			<h5>
-				<h5>Knows</h5>
-			</h5>
-		</div>
-		<div class="box content" >
-			<% @user['product_ids'] = Array.new if @user['product_ids'].nil? %>
-			<% languages = Product.get_unique_languages_for_product_ids( @user['product_ids'] ) %>
-			<% languages.each do |language| %>
-				<% prog_lang = language.downcase.gsub(/\./, "") %>
-				<div class="icon_<%= prog_lang %>_big_container">
-					<div class = "icon_<%= prog_lang %> fix_big on" ></div>
-				</div>
-			<% end %>
-		</div>
+    <div class="box header">
+      <h5>
+        <h5>Knows</h5>
+      </h5>
+    </div>
+    <div class="box content" >
+      <% @user['product_ids'] ||= [] %>
+      <% languages = Product.get_unique_languages_for_product_ids( @user['product_ids'] ) %>
+      <% languages.each do |language| %>
+        <% prog_lang = language.downcase.gsub(/\./, "") %>
+        <div class="icon_<%= prog_lang %>_big_container">
+          <div class = "icon_<%= prog_lang %> fix_big on" ></div>
+        </div>
+      <% end %>
+    </div>
 
-		<% if @userlinkcollection && !@userlinkcollection.empty? %>
-			<div class="box header">
-				<h5>
-					<h5>Is on</h5>
-				</h5>
-			</div>
-			<div class="box content" >
-				<% if !@userlinkcollection.github_empty? %>
-					<%= link_to image_tag("socialnetworks/github.png"), @userlinkcollection.github, :target => "github" %>
-				<% end %>
-				<% if !@userlinkcollection.stackoverflow_empty? %>
-					<%= link_to image_tag("socialnetworks/stackoverflow.png"), @userlinkcollection.stackoverflow, :target => "stackoverflow" %>
-				<% end %>
-				<% if !@userlinkcollection.twitter_empty? %>
-					<%= link_to image_tag("socialnetworks/twitter-bird.png"), @userlinkcollection.twitter, :target => "twitter" %>
-				<% end %>
-				<% if !@userlinkcollection.facebook_empty? %>
-					<%= link_to image_tag("socialnetworks/facebook.png"), @userlinkcollection.facebook, :target => "facebook" %>
-				<% end %>
-				<% if !@userlinkcollection.linkedin_empty? %>
-					<%= link_to image_tag("socialnetworks/linkedin.png"), @userlinkcollection.linkedin, :target => "linkedin" %>
-				<% end %>
-				<% if !@userlinkcollection.xing_empty? %>
-					<%= link_to image_tag("socialnetworks/xing.png"), @userlinkcollection.xing, :target => "xing" %>
-				<% end %>
-				<% if !@userlinkcollection.gulp_empty? %>
-					<%= link_to image_tag("socialnetworks/gulp.png"), @userlinkcollection.gulp, :target => "gulp" %>
-				<% end %>
-			</div>
-		<% end %>
+    <% if @userlinkcollection && !@userlinkcollection.empty? %>
+      <div class="box header">
+        <h5>
+          <h5>Is on</h5>
+        </h5>
+      </div>
+      <div class="box content" >
+        <% if !@userlinkcollection.github_empty? %>
+          <%= link_to image_tag("socialnetworks/github.png"), @userlinkcollection.github, :target => "github" %>
+        <% end %>
+        <% if !@userlinkcollection.stackoverflow_empty? %>
+          <%= link_to image_tag("socialnetworks/stackoverflow.png"), @userlinkcollection.stackoverflow, :target => "stackoverflow" %>
+        <% end %>
+        <% if !@userlinkcollection.twitter_empty? %>
+          <%= link_to image_tag("socialnetworks/twitter-bird.png"), @userlinkcollection.twitter, :target => "twitter" %>
+        <% end %>
+        <% if !@userlinkcollection.facebook_empty? %>
+          <%= link_to image_tag("socialnetworks/facebook.png"), @userlinkcollection.facebook, :target => "facebook" %>
+        <% end %>
+        <% if !@userlinkcollection.linkedin_empty? %>
+          <%= link_to image_tag("socialnetworks/linkedin.png"), @userlinkcollection.linkedin, :target => "linkedin" %>
+        <% end %>
+        <% if !@userlinkcollection.xing_empty? %>
+          <%= link_to image_tag("socialnetworks/xing.png"), @userlinkcollection.xing, :target => "xing" %>
+        <% end %>
+      </div>
+    <% end %>

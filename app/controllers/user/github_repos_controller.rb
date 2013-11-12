@@ -107,7 +107,7 @@ class User::GithubReposController < ApplicationController
 
     repo[:command_data] = command_data
     render json: repo
- end
+  end
 
   def show
     id = params[:id]
