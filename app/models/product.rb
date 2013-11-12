@@ -32,7 +32,7 @@ class Product
   field :followers         , type: Integer, default: 0
   field :used_by_count     , type: Integer, default: 0 # Number of projects using this one.
 
-  field :version     , type: String
+  field :version     , type: String # current stable version
   field :version_link, type: String
 
   field :twitter_name, type: String
