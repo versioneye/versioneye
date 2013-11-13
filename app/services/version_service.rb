@@ -171,7 +171,6 @@ class VersionService
     newest_stable_version = self.newest_version( versions )
     return nil if newest_stable_version.version.eql?( product.version)
     product.version      = newest_stable_version.version
-    product.version_link = newest_stable_version.link
     product.save if persist
   rescue => e
     Rails.logger.error e.message

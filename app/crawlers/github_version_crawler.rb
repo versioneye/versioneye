@@ -19,6 +19,7 @@ class GithubVersionCrawler
   def self.add_version_to_product ( product )
     # get git URL, owner and repo from product
     repo = product.repositories.map(&:repo_source).uniq.first
+    return nil if repo.to_s.empty?
     github_versions = versions_for_github_url( repo )
     return nil if github_versions.nil?
 
@@ -28,7 +29,7 @@ class GithubVersionCrawler
         version_string          = version.version.to_s
         v_hash                  = github_versions[version_string]
         if v_hash.nil?
-          p "Not tag available for #{product.name} : #{version_string}"
+          p "No tag available for #{product.name} : #{version_string}"
           next
         end
         version.released_at     = v_hash[:released_at]

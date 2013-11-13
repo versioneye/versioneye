@@ -14,11 +14,11 @@ class Projectdependency
   field :ext_link   , type: String # Link to external package. For example zip file on GitHub / Google Code.
 
   field :name       , type: String
-  field :group_id   , type: String
-  field :artifact_id, type: String
+  field :group_id   , type: String # Maven specific
+  field :artifact_id, type: String # Maven specific
 
   field :version_current  , type: String  # the newest version from the database
-  field :version_requested, type: String  # locked version
+  field :version_requested, type: String  # requested version from the project file
   field :version_label    , type: String  # the version number from the projectfile (Gemfile, package.json)
   field :comperator       , type: String, :default => "="
   field :scope            , type: String, :default => Dependency::A_SCOPE_COMPILE

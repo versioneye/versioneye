@@ -18,22 +18,21 @@ class Product
 
   field :name         , type: String
   field :name_downcase, type: String
-  field :prod_key     , type: String
-  field :prod_type    , type: String
+  field :prod_key     , type: String # Unique identifier inside a language
+  field :prod_type    , type: String # Identifies the package manager
   field :language     , type: String
+  field :version      , type: String
 
-  field :group_id   , type: String
-  field :artifact_id, type: String
-  field :parent_id  , type: String
+  field :group_id   , type: String # Maven specific
+  field :artifact_id, type: String # Maven specific
+  field :parent_id  , type: String # Maven specific
 
   field :description       , type: String
   field :description_manual, type: String
-  field :downloads         , type: Integer
+
+  field :downloads         , type: Integer, default: 0
   field :followers         , type: Integer, default: 0
   field :used_by_count     , type: Integer, default: 0 # Number of projects using this one.
-
-  field :version     , type: String
-  field :version_link, type: String
 
   field :twitter_name, type: String
 
@@ -49,10 +48,12 @@ class Product
   embeds_many :repositories
 
   has_and_belongs_to_many :users
-  # has_and_belongs_to_many :licenses
-  # has_and_belongs_to_many :versionarchives
-  # has_and_belongs_to_many :versionlinks
-  # has_and_belongs_to_many :versioncomments
+  # :licenses
+  # :versionarchives
+  # :versionlinks
+  # :versioncomments
+  # :dependencies
+
 
   attr_accessor :released_days_ago, :released_ago_in_words, :released_ago_text
   attr_accessor :version_uid, :in_my_products, :dependencies_cache

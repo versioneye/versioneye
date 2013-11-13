@@ -20,7 +20,7 @@ development:
   memcache_servers: ["127.0.0.1:11211"]
   memcache_username:
   memcache_password:
-  cocoapods_spec: /home/versioneye/cocoapods/cocoapods-specs
+  cocoapods_spec: /Users/robertreiz/cocoapods/cocoapods-specs
 
 test:
   server_url: http://localhost:3000
