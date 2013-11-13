@@ -12,7 +12,7 @@ namespace :versioneye do
 
     puts "START to crawl CocoaPods"
     CocoapodsCrawler.crawl
-    GithubVersionCrawler.add_versions_to_all_products
+    GithubVersionCrawler.crawl
     puts "STOP to crawl CocoaPods"
 
     puts "START to crawl packagist.org"
