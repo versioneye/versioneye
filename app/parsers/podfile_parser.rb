@@ -9,7 +9,7 @@ require 'cocoapods-core'
 #
 # or parse a single Podfile on the filesystem
 #
-#    PodfileParser.new.parse_file filepath
+#    PodfileParser.new.parse_file '/path/to/the/Podfile'
 #
 
 module Pod
@@ -31,7 +31,7 @@ module Pod
             # rubocop:enable Eval
           end
         rescue Exception => e
-          puts e
+          Rails.logger.error e
           message = "Invalid url `#{url}`: #{e.message}"
           raise DSLError.new(message, url, e.backtrace)
         end
@@ -41,6 +41,7 @@ module Pod
 
     end
   end
+
 end
 
 
@@ -50,7 +51,7 @@ class PodfileParser < CommonParser
   @@language     = Product::A_LANGUAGE_OBJECTIVEC
 
 
-  attr_accessor :pod_hash, :prod_key
+  attr_accessor :pod_file, :pod_hash, :prod_key
   @url = ""
 
   def initialize
@@ -93,34 +94,17 @@ class PodfileParser < CommonParser
 
   def create_dependencies
 
+    # TODO make scopes out of the target definitions
     target_def = @pod_hash["target_definitions"]
 
-    puts "dependencies: #{@pod_file.dependencies}"
-    puts "target_def: #{target_def}"
-
-    if target_def.empty?
-      Rails.logger.warn "no target definitions found for target definition" # TODO
-    else
-
-      if 1 < target_def.size
-        Rails.logger.warn "found more than one target definition for target definition"
-        puts "Target definitions: #{target_def.to_yaml}"
-      end
-
-      # TODO make scopes out of the target definitions
-      # target_def.each do |target|
-      #   target.
-      # end
-      dependencies = target_def.first["dependencies"]
-      dependencies.each do |dep|
-        veye_dependency = create_dependency dep
-        puts "this dependency #{veye_dependency}"
-      end
-
-      puts "all dependencies: #{@project.projectdependencies}"
-
-      # @project.projectdependencies = veye_dep_array
+    # I had problems getting correct dependencies from
+    # the hash for some targets, so I now get all
+    # all dependencies and forget about the target's first
+    @pod_file.dependencies.each do |d|
+      create_dependency d.name => d.requirement.as_list
     end
+
+    Rails.logger.info "Project has #{@project.projectdependencies.count} dependencies"
   end
 
   def create_dependency dep
@@ -129,12 +113,12 @@ class PodfileParser < CommonParser
     # It will marked as unknown.
     if dep.is_a? String
       dependency = create_dependency_from_string(dep)
-      puts "CONVERTED string #{dep} --> #{dependency}"
+      Rails.logger.debug "CONVERTED string #{dep} --> #{dependency}"
     elsif dep.is_a? Hash
       dependency = create_dependency_from_hash(dep)
-      puts "CONVERTED hash  #{dep} --> #{dependency}"
+      Rails.logger.debug "CONVERTED hash  #{dep} --> #{dependency}"
     else
-      puts "Problem: don't know how to handle #{dep} [#{dep.class}]"
+      Rails.logger.debug "Problem: don't know how to handle #{dep} [#{dep.class}]"
     end
 
     dependency.outdated?
@@ -145,7 +129,7 @@ class PodfileParser < CommonParser
   end
 
   def create_dependency_from_string name
-    puts "create_dependency '#{name}' (name only => latest stable version)"
+    Rails.logger.debug "create_dependency '#{name}' (name only => latest stable version)"
 
     prod_key = name.downcase
     product = product(prod_key)
@@ -171,11 +155,11 @@ class PodfileParser < CommonParser
 
     requirement = reqs.map do |req_version|
       v_hash = version_hash(req_version, name, product)
-      puts "VERSION HASH IS #{v_hash}"
+      Rails.logger.debug "VERSION HASH IS #{v_hash}"
       v_hash
     end
 
-    puts "create_dependency '#{name}' -- #{requirement}"
+    Rails.logger.debug "create_dependency '#{name}' -- #{requirement}"
 
     dependency = Projectdependency.new({
       :language => @@language,
@@ -197,15 +181,15 @@ class PodfileParser < CommonParser
 
   def version_hash req_version, prod_name, prod
     if :head == req_version
-      puts "WARNING dependency '#{prod_name}' requires HEAD" # TODO
+      Rails.logger.debug "WARNING dependency '#{prod_name}' requires HEAD" # TODO
       return {:version_requested => "HEAD", :version_label => "HEAD"}
 
     elsif :git == req_version
-      puts "WARNING dependency '#{prod_name}' requires GIT" # TODO
+      Rails.logger.debug "WARNING dependency '#{prod_name}' requires GIT" # TODO
       return {:version_requested => "GIT", :version_label => "GIT"}
 
     elsif :path == req_version
-      puts "WARNING dependency '#{prod_name}' requires PATH" # TODO
+      Rails.logger.debug "WARNING dependency '#{prod_name}' requires PATH" # TODO
       return {:version_requested => "PATH", :version_label => "PATH"}
 
     else
@@ -221,7 +205,7 @@ class PodfileParser < CommonParser
         requested_version[:version_requested] = best_version
       end
 
-      puts "VERSION is #{requested_version}"
+      Rails.logger.debug "VERSION is #{requested_version}"
       return requested_version
     end
   end
