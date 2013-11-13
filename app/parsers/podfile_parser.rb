@@ -112,10 +112,9 @@ class PodfileParser < CommonParser
       #   target.
       # end
       dependencies = target_def.first["dependencies"]
-      dependencies.map do |dep|
+      dependencies.each do |dep|
         veye_dependency = create_dependency dep
         puts "this dependency #{veye_dependency}"
-        @project.projectdependencies.push veye_dependency
       end
 
       puts "all dependencies: #{@project.projectdependencies}"
@@ -139,6 +138,8 @@ class PodfileParser < CommonParser
     end
 
     dependency.outdated?
+    @project.projectdependencies.push dependency
+
     dependency.save
     dependency
   end
@@ -168,7 +169,7 @@ class PodfileParser < CommonParser
 
     product = product(name)
 
-    requirement = reqs.each do |req_version|
+    requirement = reqs.map do |req_version|
       v_hash = version_hash(req_version, name, product)
       puts "VERSION HASH IS #{v_hash}"
       v_hash
