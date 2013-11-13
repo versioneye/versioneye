@@ -5,15 +5,15 @@ class Versioncomment
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :user_id, type: String
+  field :user_id    , type: String
 
+  # Belongs to the product with this attributes
   field :language   , type: String
   field :product_key, type: String
-  field :prod_name  , type: String
-  field :language   , type: String
   field :version    , type: String
+  field :prod_name  , type: String
 
-  field :comment, type: String
+  field :comment    , type: String
   field :update_type, type: String
 
   embeds_many :versioncommentreplys

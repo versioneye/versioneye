@@ -19,7 +19,9 @@ class GithubVersionCrawler
   def self.add_version_to_product ( product )
     # get git URL, owner and repo from product
     repo = product.repositories.map(&:repo_source).uniq.first
+    return nil if repo.to_s.empty?
     github_versions = versions_for_github_url( repo )
+    return nil if github_versions.nil?
 
     # update releases infos at version
     product.versions.each do |version|
@@ -43,10 +45,11 @@ class GithubVersionCrawler
   def self.versions_for_github_url github_url
     versions = {}
     owner_repo = parse_github_url github_url
+    return nil  if owner_repo.nil?
+
     tags_data  = tags_for_repo owner_repo
     owner      = owner_repo[:owner]
     repo       = owner_repo[:repo]
-
     tags_data.tap do |t_data|
       t_data.each do |tag|
         process_tag(versions, tag, owner, repo)
@@ -107,7 +110,12 @@ class GithubVersionCrawler
   def self.parse_github_url (git_url)
     match = /https:\/\/github.com\/(.+)\/(.+)\.git/.match git_url
     owner_repo = {:owner => $1, :repo => $2}
-    return false unless match
+    if match.nil? || match == false
+      error = "Couldn't parse #{git_url}"
+      p error
+      Rails.logger.error error
+      return nil
+    end
     owner_repo
   end
 

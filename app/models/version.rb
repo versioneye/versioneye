@@ -6,10 +6,7 @@ class Version
 
   field :uid            , type: String
   field :version        , type: String
-  field :link           , type: String # TODO legacy. Should be removed in the long run.
   field :downloads      , type: Integer
-  field :prerelease     , type: Boolean
-  field :mistake        , type: Boolean
   field :pom            , type: String
   field :released_at    , type: DateTime
   field :released_string, type: String
@@ -20,7 +17,6 @@ class Version
     {
       :version    => self.version,
       :uid        => self.get_decimal_uid,
-      :link       => self.link,
       :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
       :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
     }
