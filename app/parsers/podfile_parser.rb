@@ -104,7 +104,7 @@ class PodfileParser < CommonParser
 
       if 1 < target_def.size
         Rails.logger.warn "found more than one target definition for target definition"
-        puts target_def.to_yaml
+        puts "Target definitions: #{target_def.to_yaml}"
       end
 
       # TODO make scopes out of the target definitions
@@ -112,14 +112,15 @@ class PodfileParser < CommonParser
       #   target.
       # end
       dependencies = target_def.first["dependencies"]
-      veye_dep_array = dependencies.map do |dep|
+      dependencies.map do |dep|
         veye_dependency = create_dependency dep
         puts "this dependency #{veye_dependency}"
+        @project.projectdependencies.push veye_dependency
       end
 
-      puts "all dependencies: #{veye_dep_array}"
+      puts "all dependencies: #{@project.projectdependencies}"
 
-      @project.projectdependencies.concat veye_dep_array
+      # @project.projectdependencies = veye_dep_array
     end
   end
 
@@ -128,32 +129,61 @@ class PodfileParser < CommonParser
     # TODO If there is no product in DB, than just set coperator & version.
     # It will marked as unknown.
     if dep.is_a? String
-      dependency = latest_version_of_dependency dep
-
+      dependency = create_dependency_from_string(dep)
+      puts "CONVERTED string #{dep} --> #{dependency}"
     elsif dep.is_a? Hash
-      name = dep.keys.first
-      reqs = dep[name]
-
-      product = product(name)
-
-      requirement = reqs.each do |req_version|
-        v_hash = version_hash(req_version, name, product)
-        puts "VERSION HASH IS #{v_hash}"
-        return v_hash
-      end
-
-      puts "create_dependency '#{name}' -- #{requirement}"
-
-      dependency = Projectdependency.new \
-        :language => @@language,
-        :prod_key => name.downcase,
-        :name     => name,
-        :version_requested  => requirement.first[:version_requested],
-        :comperator         => requirement.first[:comperator]
-
+      dependency = create_dependency_from_hash(dep)
+      puts "CONVERTED hash  #{dep} --> #{dependency}"
+    else
+      puts "Problem: don't know how to handle #{dep} [#{dep.class}]"
     end
 
     dependency.outdated?
+    dependency.save
+    dependency
+  end
+
+  def create_dependency_from_string name
+    puts "create_dependency '#{name}' (name only => latest stable version)"
+
+    prod_key = name.downcase
+    product = product(prod_key)
+    version = nil
+    version = product.version if product
+
+    dependency = Projectdependency.new({
+      :language => @@language,
+      :prod_key => prod_key,
+      :name     => name,
+      :version_requested => version,
+      })
+
+    dependency
+  end
+
+
+  def create_dependency_from_hash dep_hash
+    name = dep_hash.keys.first
+    reqs = dep_hash[name]
+
+    product = product(name)
+
+    requirement = reqs.each do |req_version|
+      v_hash = version_hash(req_version, name, product)
+      puts "VERSION HASH IS #{v_hash}"
+      v_hash
+    end
+
+    puts "create_dependency '#{name}' -- #{requirement}"
+
+    dependency = Projectdependency.new({
+      :language => @@language,
+      :prod_key => name.downcase,
+      :name     => name,
+      :version_requested  => requirement.first[:version_requested],
+      :comperator         => requirement.first[:comperator],
+      })
+
     dependency
   end
 
@@ -226,19 +256,5 @@ class PodfileParser < CommonParser
     products.first
   end
 
-  def latest_version_of_dependency name
-    puts "create_dependency '#{name}' (name only => latest stable version)"
-
-    prod_key = name.downcase
-    product = product(prod_key)
-    version = nil
-    version = product.version if product
-
-    Projectdependency.new \
-      :language => @@language,
-      :prod_key => prod_key,
-      :name     => name,
-      :version_requested => version
-  end
 
 end
