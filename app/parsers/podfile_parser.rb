@@ -5,6 +5,41 @@ require 'cocoapods-core'
 #
 # TODO doc url
 
+module Pod
+  class Podfile
+    # Configures a new Podfile from the given ruby string.
+    #
+    # @param  [String] string
+    #         The ruby string which will configure the podfile with the DSL.
+    #
+    # @param  [Pathname] path
+    #         The path from which the Podfile is loaded.
+    #
+    # @return [Podfile] the new Podfile
+    #
+    def self.from_url(url)
+      podfile = nil
+      open(url) do |io|
+        begin
+          podfile = Podfile.new do
+            # rubocop:disable Eval
+            eval(io.string, nil, url)
+            # rubocop:enable Eval
+          end
+        rescue Exception => e
+          puts e
+          message = "Invalid url `#{url}`: #{e.message}"
+          raise DSLError.new(message, url, e.backtrace)
+        end
+      end
+
+      podfile
+
+    end
+  end
+end
+
+
 class PodfileParser < CommonParser
 
   @@project_type = Project::A_TYPE_COCOAPODS
@@ -19,28 +54,34 @@ class PodfileParser < CommonParser
 
   def parse url
     @url = url
-    # TODO
+    return nil if url.to_s.empty?
+    podfile = fetch_response_body( url )
+    return nil if podfile.nil?
+
+    @pod_file = Pod::Podfile.from_url url
+
+    create_project
   end
 
   def parse_file filename
     @pod_filename = filename
     @pod_file = Pod::Podfile.from_file @pod_filename
+    create_project
+  end
+
+  def create_project
     @pod_hash = @pod_file.to_hash
-
-    @project = get_project
-
+    @project  = init_project
     create_dependencies
-
     @project
   end
 
   # TODO: are there projects that gets updated?
-  def get_project
-    project = Project.new \
+  def init_project
+    Project.new \
       project_type: @@project_type,
       language: @@language,
       url: @url
-    project
   end
 
 
@@ -57,6 +98,7 @@ class PodfileParser < CommonParser
 
       if 1 < target_def.size
         Rails.logger.warn "found more than one target definition for target definition"
+        puts target_def.to_yaml
       end
 
       # TODO make scopes out of the target definitions
@@ -64,9 +106,14 @@ class PodfileParser < CommonParser
       #   target.
       # end
       dependencies = target_def.first["dependencies"]
-      dep_array = dependencies.map do |dep|
-        create_dependency dep
+      veye_dep_array = dependencies.map do |dep|
+        veye_dependency = create_dependency dep
+        puts "this dependency #{veye_dependency}"
       end
+
+      puts "all dependencies: #{veye_dep_array}"
+
+      @project.projectdependencies.concat veye_dep_array
     end
   end
 
@@ -101,6 +148,7 @@ class PodfileParser < CommonParser
     end
 
     dependency.outdated?
+    dependency
   end
 
   VERSION_REGEXP = /^(=|!=|>=|>|<=|<|~>)\s*(\d(\.\d(\.\d)?)?)/
@@ -127,13 +175,14 @@ class PodfileParser < CommonParser
       requested_version = parse_version req_version
       # TODO copy composer for version ranges
 
-      all_versions = prod.versions
       comperator   = requested_version[:comperator]
       req_ver      = requested_version[:version_requested]
 
-      best_version = best_version(all_versions, comperator, req_ver)
-
-      requested_version[:version_requested] = best_version
+      if prod
+        all_versions = prod.versions
+        best_version = best_version(all_versions, comperator, req_ver)
+        requested_version[:version_requested] = best_version
+      end
 
       puts "VERSION is #{requested_version}"
       return requested_version
@@ -151,7 +200,14 @@ class PodfileParser < CommonParser
     when "<="
       VersionService.smaller_than_or_equal(versions, v)
     when "~>"
-      VersionService.version_approximately_greater_than_starter(versions, v)
+      starter         = VersionService.version_approximately_greater_than_starter( v )
+      possible_vers   = VersionService.versions_start_with( versions, starter )
+      highest_version = VersionService.newest_version_from( possible_vers )
+      if highest_version
+        return highest_version.version
+      else
+        return v
+      end
     else
       v
     end
