@@ -3,17 +3,21 @@ require 'cocoapods-core'
 # This parser parses the podfile for any CocoaPods project
 # and creates and stores a Project model in VersionEye
 #
-# TODO doc url
+# use like this:
+#
+#    PodfileParser.new.parse 'https://raw.github.com/CocoaPods/CocoaPods/master/spec/fixtures/Podfile'
+#
+# or parse a single Podfile on the filesystem
+#
+#    PodfileParser.new.parse_file filepath
+#
 
 module Pod
   class Podfile
-    # Configures a new Podfile from the given ruby string.
+    # Configures a new Podfile from the given url.
     #
-    # @param  [String] string
-    #         The ruby string which will configure the podfile with the DSL.
-    #
-    # @param  [Pathname] path
-    #         The path from which the Podfile is loaded.
+    # @param  [String] url
+    #         The url which will configure the podfile with the DSL.
     #
     # @return [Podfile] the new Podfile
     #
@@ -44,12 +48,14 @@ class PodfileParser < CommonParser
 
   @@project_type = Project::A_TYPE_COCOAPODS
   @@language     = Product::A_LANGUAGE_OBJECTIVEC
-  @url          = ""
+
 
   attr_accessor :pod_hash, :prod_key
+  @url = ""
 
   def initialize
     # TODO not sure what to put here
+    # currently you have to create one parser per single file/url
   end
 
   def parse url
@@ -86,7 +92,7 @@ class PodfileParser < CommonParser
 
 
   def create_dependencies
-    # TODO this are differen compile targets
+
     target_def = @pod_hash["target_definitions"]
 
     puts "dependencies: #{@pod_file.dependencies}"
