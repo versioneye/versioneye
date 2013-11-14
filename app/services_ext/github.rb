@@ -176,7 +176,7 @@ class Github
     body = HTTParty.get("#{A_API_URL}/repos/#{name}?access_token=#{github_token}",
                         :headers => {"User-Agent" => A_USER_AGENT} ).response.body
     repo = catch_github_exception JSON.parse(body)
-    return repo['private'] unless repo.nil? and !repo.is_a(Hash)
+    return repo['private'] unless repo.nil? && !repo.is_a(Hash)
     false
   rescue => e
     Rails.logger.error e.message
@@ -224,23 +224,7 @@ class Github
     JSON.parse(body)
   end
 
-  def self.supported_languages()
-    Set['java', 'ruby', 'python', 'node.js', 'php', 'javascript', 'coffeescript', 'clojure']
-  end
-
   private
-
-    def self.language_supported?(lang)
-      return false if lang.nil?
-      lang.casecmp('Java')         == 0 ||
-      lang.casecmp('Ruby')         == 0 ||
-      lang.casecmp('Python')       == 0 ||
-      lang.casecmp('Node.JS')      == 0 ||
-      lang.casecmp("CoffeeScript") == 0 ||
-      lang.casecmp("JavaScript")   == 0 ||
-      lang.casecmp("PHP")          == 0 ||
-      lang.casecmp("Clojure")      == 0
-    end
 
 =begin
   Method that checks does Github sent error message

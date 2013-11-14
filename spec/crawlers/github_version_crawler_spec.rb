@@ -18,6 +18,7 @@ describe GithubVersionCrawler do
       url = 'https://github.com/0xced/ABGetMe.git'
       owner_repo = GithubVersionCrawler.parse_github_url url
       tags = GithubVersionCrawler.tags_for_repo owner_repo
+      tags.should_not be_nil
       tags.length.should == 1
       t = tags.first
       t.name = '1.0.0'
@@ -38,6 +39,7 @@ describe GithubVersionCrawler do
     it "returns correct versions for render-as-markdown" do
       repo_url = 'https://github.com/rmetzler/render-as-markdown.git'
       versions = GithubVersionCrawler.versions_for_github_url repo_url
+      versions.should_not be_nil
       versions.length.should eq(4)
     end
 
