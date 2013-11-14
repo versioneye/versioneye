@@ -29,12 +29,12 @@ class GithubVersionCrawler
         version_string          = version.version.to_s
         v_hash                  = github_versions[version_string]
         if v_hash.nil?
-          p "No tag available for #{product.name} : #{version_string}"
+          p "Tag not available for #{product.name} : #{version_string}"
           next
         end
         version.released_at     = v_hash[:released_at]
         version.released_string = v_hash[:released_string]
-        p "update version #{version.version} with #{version.released_at}"
+        p "update #{product.name} v #{version.version} was released at #{version.released_at}"
       end
     end
 
