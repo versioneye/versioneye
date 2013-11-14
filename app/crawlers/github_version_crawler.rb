@@ -38,7 +38,7 @@ class GithubVersionCrawler
         end
         version.released_at     = v_hash[:released_at]
         version.released_string = v_hash[:released_string]
-        p "update version #{version.version} with #{version.released_at}"
+        p "update #{product.name} v #{version.version} was released at #{version.released_at}"
       end
     end
 
