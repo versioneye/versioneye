@@ -60,8 +60,8 @@ production:
   postmark_api_key: <%= ENV['POSTMARK_API_KEY'] %>
   github_client_id: <%= ENV['GITHUB_CLIENT_ID'] %>
   github_client_secret: <%= ENV['GITHUB_CLIENT_SECRET'] %>
-  github_user: xxxxxxxx
-  github_pass: xxxxxxxx
+  github_user: <%= ENV['GITHUB_USER'] %>
+  github_pass: <%= ENV['GITHUB_PASS'] %>
   facebook_client_id: <%= ENV['FACEBOOK_CLIENT_ID'] %>
   facebook_client_secret: <%= ENV['FACEBOOK_CLIENT_SECRET'] %>
   twitter_consumer_key: <%= ENV['TWITTER_CONSUMER_KEY'] %>
