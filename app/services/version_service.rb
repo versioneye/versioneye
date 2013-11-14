@@ -35,6 +35,8 @@ class VersionService
     return newest_version_number( versions_filtered, stability )
   end
 
+  # http://guides.rubygems.org/patterns/#semantic_versioning
+  # http://robots.thoughtbot.com/rubys-pessimistic-operator
   def self.version_approximately_greater_than_starter(value)
     ar = value.split(".")
     new_end = ar.length - 2
@@ -169,7 +171,6 @@ class VersionService
     newest_stable_version = self.newest_version( versions )
     return nil if newest_stable_version.version.eql?( product.version)
     product.version      = newest_stable_version.version
-    product.version_link = newest_stable_version.link
     product.save if persist
   rescue => e
     Rails.logger.error e.message
@@ -180,7 +181,7 @@ class VersionService
   # TODO test
   def self.average_release_time( versions )
     return nil if versions.nil? || versions.empty? || versions.size == 1
-    released_versions = self.versions_with_rleased_date( versions )
+    released_versions = self.versions_with_released_date( versions )
     return nil if released_versions.nil? || released_versions.empty? || released_versions.size < 3
     sorted_versions = released_versions.sort! { |a,b| a.released_at <=> b.released_at }
     first = sorted_versions.first.released_at
@@ -216,7 +217,7 @@ class VersionService
 
   private
 
-    def self.versions_with_rleased_date( versions )
+    def self.versions_with_released_date( versions )
       return nil if versions.nil? || versions.empty?
       new_versions = Array.new
       versions.each do |version|

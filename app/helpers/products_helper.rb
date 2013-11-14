@@ -100,7 +100,6 @@ module ProductsHelper
     versionObj = product.version_by_number( version )
     if versionObj
       product.version = versionObj.version
-      product.version_link = versionObj.link
       update_release_infos( versionObj, product )
       return true
     else

@@ -41,8 +41,8 @@ module Versioneye
 
     Mongoid.load!("config/mongoid.yml")
 
-    # Mongoid.logger.level = Logger::DEBUG
-    # Moped.logger.level = Logger::DEBUG
+    Mongoid.logger.level = Logger::ERROR
+    Moped.logger.level = Logger::ERROR
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"

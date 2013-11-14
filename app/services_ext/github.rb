@@ -298,11 +298,18 @@ class Github
   end
 
   def self.private_repo?( github_token, name )
+<<<<<<< HEAD
     path = "/repos/#{name}?access_token=#{github_token}"
     response = @@conn.get(path: path, :headers => A_DEFAULT_HEADERS )
     repo = catch_github_exception JSON.parse(response.body)
 
     return repo['private'] unless repo.nil? and !repo.is_a(Hash)
+=======
+    body = HTTParty.get("#{A_API_URL}/repos/#{name}?access_token=#{github_token}",
+                        :headers => {"User-Agent" => A_USER_AGENT} ).response.body
+    repo = catch_github_exception JSON.parse(body)
+    return repo['private'] unless repo.nil? && !repo.is_a(Hash)
+>>>>>>> develop
     false
   rescue => e
     Rails.logger.error e.message
@@ -365,6 +372,7 @@ class Github
     JSON.parse(response.body)
   end
 
+<<<<<<< HEAD
   def self.supported_languages
     Set['java', 'ruby', 'python', 'node.js', 'php', 'javascript', 'coffeescript', 'clojure']
   end
@@ -394,6 +402,10 @@ class Github
       lang.casecmp("Clojure")      == 0
     end
 
+=======
+  private
+
+>>>>>>> develop
 =begin
   Method that checks does Github sent error message
   If yes, then it'll log it and return nil
