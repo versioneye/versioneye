@@ -14,11 +14,6 @@ class CocoapodsPodspecParser
   @@language  = Product::A_LANGUAGE_OBJECTIVEC
   @@prod_type = Project::A_TYPE_COCOAPODS
 
-  # the cocoapods spec crawler only works on files
-  def parse( url )
-    # not implemented
-  end
-
   attr_accessor :podspec
 
   def parse_file ( file )
@@ -131,14 +126,17 @@ class CocoapodsPodspecParser
     return nil if version_numbers.member? version
 
     @product.add_version( version )
+
+    CrawlerUtils.create_newest @product, version
+    CrawlerUtils.create_notifications @product, version
   end
 
   def create_license
     @spec_hash.except! "license"
 
     # create new license if version doesn't exist yet
-    license = License.where( {:language => @@language, :prod_key => prod_key, :version  => version} )
-    return nil if license.first
+    licenses = License.where( {:language => @@language, :prod_key => prod_key, :version  => version} )
+    return nil if licenses.first
 
     license = License.new({
       :language => @@language,
