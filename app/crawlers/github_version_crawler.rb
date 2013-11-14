@@ -28,10 +28,10 @@ class GithubVersionCrawler
       if version.released_string.to_s.empty?
         version_string   = version.version.to_s
         v_hash           = github_versions[version_string]
-        if v_hash.nil?
+        if v_hash.nil? || v_hash.empty?
           # couldn't find 0.0.1, try v0.0.1
           v_hash         = github_versions["v#{version_string}"]
-          if v_hash.nil?
+          if v_hash.nil? || v_hash.empty?
             p "No tag available for #{repo} - #{product.name} : #{version_string} / v#{version_string}"
             next
           end
@@ -49,7 +49,7 @@ class GithubVersionCrawler
   def self.versions_for_github_url github_url
     versions = {}
     owner_repo = parse_github_url github_url
-    return nil  if owner_repo.nil?
+    return nil if owner_repo.nil? || owner_repo.empty?
 
     tags_data  = tags_for_repo owner_repo
     owner      = owner_repo[:owner]
