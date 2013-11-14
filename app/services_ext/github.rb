@@ -298,18 +298,10 @@ class Github
   end
 
   def self.private_repo?( github_token, name )
-<<<<<<< HEAD
     path = "/repos/#{name}?access_token=#{github_token}"
     response = @@conn.get(path: path, :headers => A_DEFAULT_HEADERS )
     repo = catch_github_exception JSON.parse(response.body)
-
     return repo['private'] unless repo.nil? and !repo.is_a(Hash)
-=======
-    body = HTTParty.get("#{A_API_URL}/repos/#{name}?access_token=#{github_token}",
-                        :headers => {"User-Agent" => A_USER_AGENT} ).response.body
-    repo = catch_github_exception JSON.parse(body)
-    return repo['private'] unless repo.nil? && !repo.is_a(Hash)
->>>>>>> develop
     false
   rescue => e
     Rails.logger.error e.message
@@ -372,14 +364,9 @@ class Github
     JSON.parse(response.body)
   end
 
-<<<<<<< HEAD
-  def self.supported_languages
-    Set['java', 'ruby', 'python', 'node.js', 'php', 'javascript', 'coffeescript', 'clojure']
-  end
-
   def self.support_project_files
     Set['pom.xml', 'Gemfile', 'Gemfile.lock', 'composer.json', 'composer.lock', 'requirements.txt',
-        'setup.py', 'package.json','bower.json', 'dependency.gradle', 'project.clj']
+        'setup.py', 'package.json','bower.json', 'dependency.gradle', 'project.clj', 'Podfile']
   end
 
   def self.encode_db_key(key_val)
@@ -390,22 +377,7 @@ class Github
   end
 
   private
-    def self.language_supported?(lang)
-      return false if lang.nil?
-      lang.casecmp('Java')         == 0 ||
-      lang.casecmp('Ruby')         == 0 ||
-      lang.casecmp('Python')       == 0 ||
-      lang.casecmp('Node.JS')      == 0 ||
-      lang.casecmp("CoffeeScript") == 0 ||
-      lang.casecmp("JavaScript")   == 0 ||
-      lang.casecmp("PHP")          == 0 ||
-      lang.casecmp("Clojure")      == 0
-    end
 
-=======
-  private
-
->>>>>>> develop
 =begin
   Method that checks does Github sent error message
   If yes, then it'll log it and return nil
