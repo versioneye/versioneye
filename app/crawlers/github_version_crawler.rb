@@ -26,11 +26,15 @@ class GithubVersionCrawler
     # update releases infos at version
     product.versions.each do |version|
       if version.released_string.to_s.empty?
-        version_string          = version.version.to_s
-        v_hash                  = github_versions[version_string]
+        version_string   = version.version.to_s
+        v_hash           = github_versions[version_string]
         if v_hash.nil?
-          p "No tag available for #{product.name} : #{version_string}"
-          next
+          # couldn't find 0.0.1, try v0.0.1
+          v_hash         = github_versions["v#{version_string}"]
+          if v_hash.nil?
+            p "No tag available for #{product.name} : #{version_string} / v#{version_string}"
+            next
+          end
         end
         version.released_at     = v_hash[:released_at]
         version.released_string = v_hash[:released_string]
