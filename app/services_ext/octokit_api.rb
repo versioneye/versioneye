@@ -2,14 +2,19 @@ require 'octokit'
 
 class OctokitApi
 
-  @@github_api = nil
+  def self.application_authentication
+    { :login => Settings.github_user, :password => Settings.github_pass }
+  end
 
   # Singleton pattern
-  def self.get_instance
-    return @@github_api if @@github_api
-    client = Octokit::Client.new :client_id => Settings.github_client_id, :client_secret => Settings.github_client_secret
-    @@github_api = client.root
-    @@github_api
+  def self.client
+    @@client ||= Octokit::Client.new(self.application_authentication)
+  end
+
+  # Singleton pattern
+  # returns root
+  def self.instance
+    @@github_api ||= self.client.root
   end
 
 end

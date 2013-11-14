@@ -100,7 +100,7 @@ class GithubVersionCrawler
 
   def self.tags_for_repo( owner_repo )
     return nil unless owner_repo
-    api = OctokitApi.get_instance
+    api = OctokitApi.instance
     repo = api.rels[:repository].get(:uri => owner_repo).data
     tags = repo.rels[:tags]
     tags_data = tags.get.data
