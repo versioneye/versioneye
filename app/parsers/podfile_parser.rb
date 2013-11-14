@@ -47,16 +47,15 @@ end
 
 class PodfileParser < CommonParser
 
-  @@project_type = Project::A_TYPE_COCOAPODS
   @@language     = Product::A_LANGUAGE_OBJECTIVEC
 
-
-  attr_accessor :pod_file, :pod_hash, :prod_key
+  attr_accessor :pod_file, :pod_hash
   @url = ""
 
-  def initialize
-    # TODO not sure what to put here
-    # currently you have to create one parser per single file/url
+  def parse_file filename
+    @pod_filename = filename
+    @pod_file = Pod::Podfile.from_file @pod_filename
+    create_project
   end
 
   def parse url
@@ -70,12 +69,6 @@ class PodfileParser < CommonParser
     create_project
   end
 
-  def parse_file filename
-    @pod_filename = filename
-    @pod_file = Pod::Podfile.from_file @pod_filename
-    create_project
-  end
-
   def create_project
     @pod_hash = @pod_file.to_hash
     @project  = init_project
@@ -86,7 +79,7 @@ class PodfileParser < CommonParser
   # TODO: are there projects that gets updated?
   def init_project
     Project.new \
-      project_type: @@project_type,
+      project_type: Project::A_TYPE_COCOAPODS,
       language: @@language,
       url: @url
   end
@@ -95,7 +88,7 @@ class PodfileParser < CommonParser
   def create_dependencies
 
     # TODO make scopes out of the target definitions
-    target_def = @pod_hash["target_definitions"]
+    # target_def = @pod_hash["target_definitions"]
 
     # I had problems getting correct dependencies from
     # the hash for some targets, so I now get all
@@ -108,41 +101,32 @@ class PodfileParser < CommonParser
   end
 
   def create_dependency dep
-    # TODO load product.
-    # TODO If there is no product in DB, than just set coperator & version.
-    # It will marked as unknown.
-    if dep.is_a? String
-      dependency = create_dependency_from_string(dep)
-      Rails.logger.debug "CONVERTED string #{dep} --> #{dependency}"
-    elsif dep.is_a? Hash
-      dependency = create_dependency_from_hash(dep)
-      Rails.logger.debug "CONVERTED hash  #{dep} --> #{dependency}"
-    else
-      Rails.logger.debug "Problem: don't know how to handle #{dep} [#{dep.class}]"
+    if dep.nil?
+      Rails.logger.debug "Problem: don't know how to handle #{dep}"
+      return nil
     end
 
+    dependency = create_dependency_from_hash( dep )
     dependency.outdated?
     @project.projectdependencies.push dependency
-
     dependency.save
     dependency
   end
 
   def create_dependency_from_string name
     Rails.logger.debug "create_dependency '#{name}' (name only => latest stable version)"
-
-    prod_key = name.downcase
-    product = product(prod_key)
-    version = nil
-    version = product.version if product
-
+    product  = load_product( name.downcase )
+    version  = nil
+    prod_key = nil
+    version  = product.version if product
+    prod_key = product.prod_key if product
     dependency = Projectdependency.new({
       :language => @@language,
       :prod_key => prod_key,
       :name     => name,
       :version_requested => version,
+      :comperator => "="
       })
-
     dependency
   end
 
@@ -151,7 +135,7 @@ class PodfileParser < CommonParser
     name = dep_hash.keys.first
     reqs = dep_hash[name]
 
-    product = product(name)
+    product = load_product( name )
 
     requirement = reqs.map do |req_version|
       v_hash = version_hash(req_version, name, product)
@@ -167,6 +151,7 @@ class PodfileParser < CommonParser
       :name     => name,
       :version_requested  => requirement.first[:version_requested],
       :comperator         => requirement.first[:comperator],
+      :version_label      => requirement.first[:version_label]
       })
 
     dependency
@@ -179,67 +164,73 @@ class PodfileParser < CommonParser
     return {:comperator => comperator, :version_requested => version}
   end
 
-  def version_hash req_version, prod_name, prod
-    if :head == req_version
+  def version_hash version_from_file, prod_name, prod
+    if :head == version_from_file
       Rails.logger.debug "WARNING dependency '#{prod_name}' requires HEAD" # TODO
-      return {:version_requested => "HEAD", :version_label => "HEAD"}
+      return {:version_requested => "HEAD", :version_label => "HEAD", :comperator => "="}
 
-    elsif :git == req_version
+    elsif :git == version_from_file
       Rails.logger.debug "WARNING dependency '#{prod_name}' requires GIT" # TODO
-      return {:version_requested => "GIT", :version_label => "GIT"}
+      return {:version_requested => "GIT", :version_label => "GIT", :comperator => "="}
 
-    elsif :path == req_version
+    elsif :path == version_from_file
       Rails.logger.debug "WARNING dependency '#{prod_name}' requires PATH" # TODO
-      return {:version_requested => "PATH", :version_label => "PATH"}
+      return {:version_requested => "PATH", :version_label => "PATH", :comperator => "="}
 
     else
-      requested_version = parse_version req_version
+      comperator_version = parse_version version_from_file
       # TODO copy composer for version ranges
 
-      comperator   = requested_version[:comperator]
-      req_ver      = requested_version[:version_requested]
+      comperator = comperator_version[:comperator]
+      version    = comperator_version[:version_requested]
 
       if prod
-        all_versions = prod.versions
-        best_version = best_version(all_versions, comperator, req_ver)
-        requested_version[:version_requested] = best_version
+        version_requested = best_version(comperator, version, prod.versions)
+        return {:version_requested => version_requested, :version_label => version_from_file, :comperator => comperator}
       end
 
-      Rails.logger.debug "VERSION is #{requested_version}"
-      return requested_version
+      return {:version_requested => version, :version_label => version_from_file, :comperator => comperator}
     end
   end
 
-  def best_version(versions, comperator, v)
+  # It is important that this method is not writing into the database!
+  #
+  def parse_requested_version(version_number, dependency, product)
+    # This method has to be on every parser.
+  end
+
+  def best_version(comperator, version, versions)
     case comperator
     when ">"
-      VersionService.greater_than(versions, v)
+      VersionService.greater_than(versions, version).version
     when ">="
-      VersionService.greater_than_or_equal(versions, v)
+      VersionService.greater_than_or_equal(versions, version).version
     when "<"
-      VersionService.smaller_than(versions, v)
+      VersionService.smaller_than(versions, version).version
     when "<="
-      VersionService.smaller_than_or_equal(versions, v)
+      VersionService.smaller_than_or_equal(versions, version).version
     when "~>"
-      starter         = VersionService.version_approximately_greater_than_starter( v )
+      starter         = VersionService.version_approximately_greater_than_starter( version )
       possible_vers   = VersionService.versions_start_with( versions, starter )
       highest_version = VersionService.newest_version_from( possible_vers )
-      if highest_version
-        return highest_version.version
-      else
-        return v
-      end
+      return highest_version.version if highest_version
+      return version
     else
-      v
+      version
     end
+  rescue => e
+    Rails.logger.error e.message
+    version
   end
 
-  def product name
+  def load_product name
     prod_key = name.downcase
     products = Product.where({:language => @@language, :prod_key => prod_key, })
-    Rails.logger.warn "more than one Product found for (#{@@language}, #{prod_key})"
+    return nil if products.nil? || products.empty?
+    if products.count > 1
+      Rails.logger.error "more than one Product found for (#{@@language}, #{prod_key})"
+    end
     products.first
   end
-
 
 end

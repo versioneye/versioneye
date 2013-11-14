@@ -1,7 +1,5 @@
 class ParserStrategy
 
-  # TODO add cocoapods parser
-
   def self.parser_for( project_type, url )
     case project_type
       when Project::A_TYPE_MAVEN2
@@ -17,6 +15,9 @@ class ParserStrategy
         else
           return PythonSetupParser.new
         end
+
+      when Project::A_TYPE_COCOAPODS
+        return PodfileParser.new
 
       when Project::A_TYPE_NPM
         return PackageParser.new
