@@ -158,7 +158,7 @@ class User::GithubReposController < ApplicationController
     def process_repo repo
       imported_repos      = current_user.projects.by_source(Project::A_SOURCE_GITHUB)
       imported_repo_names = imported_repos.map(&:github_project).to_set
-      supported_langs     = Github.supported_languages
+      supported_langs     = Product.supported_languages.map{ |lang| lang.downcase }
 
       repo[:supported] = supported_langs.include? repo["language"]
       repo[:imported_branches] = {}
