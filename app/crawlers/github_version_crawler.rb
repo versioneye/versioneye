@@ -43,6 +43,8 @@ class GithubVersionCrawler
     end
 
     product.save
+  rescue => e
+    Rails.logger.error e.backtrace.first
   end
 
 
@@ -60,6 +62,9 @@ class GithubVersionCrawler
       end
     end
     versions
+  rescue => e
+    Rails.logger.error e.backtrace.first
+    nil
   end
 
 
@@ -79,12 +84,16 @@ class GithubVersionCrawler
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
     p e.message
+    nil
   end
 
 
   def self.fetch_commit_date(owner, repo, sha)
     meta = fetch_commit_metadata owner, repo, sha
     meta["commit"]["author"]["date"].to_s
+  rescue => e
+    Rails.logger.error e.backtrace.first
+    nil
   end
 
 
@@ -98,6 +107,9 @@ class GithubVersionCrawler
       Rails.logger.warn "Requested: #{url}\t response: #{response.code}"
       return nil
     end
+  rescue => e
+    Rails.logger.error e.backtrace.first
+    nil
   end
 
   def self.commit_url owner, repo, sha
@@ -111,6 +123,9 @@ class GithubVersionCrawler
     tags = repo.rels[:tags]
     tags_data = tags.get.data
     tags_data
+  rescue => e
+    Rails.logger.error e.backtrace.first
+    nil
   end
 
   def self.parse_github_url (git_url)
@@ -123,6 +138,9 @@ class GithubVersionCrawler
       return nil
     end
     owner_repo
+  rescue => e
+    Rails.logger.error e.backtrace.first
+    nil
   end
 
 end
