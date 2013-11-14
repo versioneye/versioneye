@@ -44,7 +44,10 @@ class GithubVersionCrawler
 
     product.save
   rescue => e
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.message
+    e.backtrace.each do |trace|
+      Rails.logger.error trace
+    end
   end
 
 
@@ -63,7 +66,10 @@ class GithubVersionCrawler
     end
     versions
   rescue => e
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.message
+    e.backtrace.each do |trace|
+      Rails.logger.error trace
+    end
     nil
   end
 
@@ -72,6 +78,7 @@ class GithubVersionCrawler
     v_name      = tag.name
     sha         = tag.commit.sha
     date_string = fetch_commit_date(owner, repo, sha)
+    return nil if date_string.to_s.empty?
     date_time   = DateTime.parse date_string
     url         = "#{A_API_URL}/repos/#{owner}/#{repo}/#{sha}"
     versions[v_name] = {
@@ -82,7 +89,9 @@ class GithubVersionCrawler
   rescue => e
     Rails.logger.error "Exception for #{url}"
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    e.backtrace.each do |trace|
+      Rails.logger.error trace
+    end
     p e.message
     nil
   end
@@ -92,7 +101,11 @@ class GithubVersionCrawler
     meta = fetch_commit_metadata owner, repo, sha
     meta["commit"]["author"]["date"].to_s
   rescue => e
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error meta
+    Rails.logger.error e.message
+    e.backtrace.each do |trace|
+      Rails.logger.error trace
+    end
     nil
   end
 
@@ -108,7 +121,11 @@ class GithubVersionCrawler
       return nil
     end
   rescue => e
-    Rails.logger.error e.backtrace.first
+
+    Rails.logger.error e.message
+    e.backtrace.each do |trace|
+      Rails.logger.error trace
+    end
     nil
   end
 
@@ -124,7 +141,10 @@ class GithubVersionCrawler
     tags_data = tags.get.data
     tags_data
   rescue => e
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.message
+    e.backtrace.each do |trace|
+      Rails.logger.error trace
+    end
     nil
   end
 
@@ -139,7 +159,10 @@ class GithubVersionCrawler
     end
     owner_repo
   rescue => e
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.message
+    e.backtrace.each do |trace|
+      Rails.logger.error trace
+    end
     nil
   end
 
