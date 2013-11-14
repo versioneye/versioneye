@@ -21,7 +21,7 @@ class GithubVersionCrawler
     repo = product.repositories.map(&:repo_source).uniq.first
     return nil if repo.to_s.empty?
     github_versions = versions_for_github_url( repo )
-    return nil if github_versions.nil?
+    return nil if github_versions.nil? || github_versions.empty?
 
     # update releases infos at version
     product.versions.each do |version|
@@ -32,7 +32,7 @@ class GithubVersionCrawler
           # couldn't find 0.0.1, try v0.0.1
           v_hash         = github_versions["v#{version_string}"]
           if v_hash.nil?
-            p "No tag available for #{product.name} : #{version_string} / v#{version_string}"
+            p "No tag available for #{repo} - #{product.name} : #{version_string} / v#{version_string}"
             next
           end
         end
@@ -75,7 +75,9 @@ class GithubVersionCrawler
       :released_string => date_string,
     }
   rescue => e
+    Rails.logger.error "Exception for #{url}"
     Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
     p e.message
   end
 
