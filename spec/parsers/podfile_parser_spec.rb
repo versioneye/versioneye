@@ -2,11 +2,23 @@ require 'spec_helper'
 
 describe PodfileParser do
 
-  describe '.parse_file' do
 
-    before :each do
-      @parser = PodfileParser.new
+  before :each do
+    @parser = PodfileParser.new
+  end
+
+  # parse remote urls
+
+  describe '.parse' do
+    it 'parses remote urls' do
+      @project = @parser.parse 'https://raw.github.com/CocoaPods/Core/master/spec/fixtures/Podfile'
+      @project.should be_true
+      @project.language.should eq Product::A_LANGUAGE_OBJECTIVEC
+      @project.project_type.should eq Project::A_TYPE_COCOAPODS
     end
+  end
+
+  describe '.parse_file' do
 
     def parse_and_check podfile_path
       podfile podfile_path
