@@ -1,7 +1,7 @@
 platform :ios
 
 pod 'SSToolkit'
-pod 'AFNetworking', '>= 0.5.1'
+pod 'AFNetworking', '0.1.1'
 pod 'CocoaLumberjack'
 pod 'Objection', :head # 'bleeding edge'
 

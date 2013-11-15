@@ -86,7 +86,6 @@ class PodfileParser < CommonParser
 
 
   def create_dependencies
-
     # TODO make scopes out of the target definitions
     # target_def = @pod_hash["target_definitions"]
 
@@ -96,6 +95,8 @@ class PodfileParser < CommonParser
     @pod_file.dependencies.each do |d|
       create_dependency d.name => d.requirement.as_list
     end
+
+    @project.dep_number = @project.projectdependencies.count
 
     Rails.logger.info "Project has #{@project.projectdependencies.count} dependencies"
   end
@@ -107,29 +108,12 @@ class PodfileParser < CommonParser
     end
 
     dependency = create_dependency_from_hash( dep )
-    dependency.outdated?
+    @project.out_number     += 1 if dependency.outdated?
+    # @project.unknown_number += 1 if product.nil? TODO
     @project.projectdependencies.push dependency
     dependency.save
     dependency
   end
-
-  def create_dependency_from_string name
-    Rails.logger.debug "create_dependency '#{name}' (name only => latest stable version)"
-    product  = load_product( name.downcase )
-    version  = nil
-    prod_key = nil
-    version  = product.version if product
-    prod_key = product.prod_key if product
-    dependency = Projectdependency.new({
-      :language => @@language,
-      :prod_key => prod_key,
-      :name     => name,
-      :version_requested => version,
-      :comperator => "="
-      })
-    dependency
-  end
-
 
   def create_dependency_from_hash dep_hash
     name = dep_hash.keys.first
@@ -147,7 +131,7 @@ class PodfileParser < CommonParser
 
     dependency = Projectdependency.new({
       :language => @@language,
-      :prod_key => name.downcase,
+      :prod_key => name.downcase, # TODO set only if product exist!
       :name     => name,
       :version_requested  => requirement.first[:version_requested],
       :comperator         => requirement.first[:comperator],
