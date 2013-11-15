@@ -19,6 +19,7 @@ class BowerCrawler
     end
    
     admin = User.find_by_email "admin@versioneye.com"
+    @@token = admin[:github_token]
 
     app_list = JSON.parse(content, symbolize_names: true)
     add_bower_packages(app_list, admin[:github_token])
@@ -41,6 +42,7 @@ class BowerCrawler
     failed = 0
 
     app_list.to_a.each do |app|
+      p "#-- reading : #{app[:url]}"
       #read project's bower on github to get more info
       pkg_info = self.read_info_from_github(app[:url], token)
 
@@ -49,13 +51,17 @@ class BowerCrawler
         next
       end
 
+      unless Product.fetch_product(Product::A_LANGUAGE_JAVASCRIPT, pkg_info[:full_name]).nil?
+        p "Going to skip `#{pkg_info[:fullname]}` because it's already imported;"
+      end
+
       prod = to_product(pkg_info)
       versionlink = to_versionlink(prod, pkg_info)
 
       prod[:version] = pkg_info[:version]
       prod.versions << to_version(pkg_info)
       
-      prod_license = to_licence(pkg_info)
+      prod_license = to_license(prod, pkg_info)
       deps = to_dependencies(prod, pkg_info)
       deps.to_a.each {|dep| prod.dependencies << dep}
 
@@ -63,14 +69,14 @@ class BowerCrawler
       tags = Github.repo_tags(pkg_info[:full_name], token)
       if tags and not tags.empty?
         p "Repo `#{pkg_info[:full_name]}` has #{tags.to_a.count} tags."
-        parse_repo_tags(tags)
+        self.parse_repo_tags(prod, tags)
       end
 
       if prod.upsert
-        p "Imported: #{prod[:name]}"
+        p "Imported: #{prod[:prod_key]}"
         imported += 1
       else
-        p "#------------------------", "Failed to save: '#{app}'"
+        p "#-- Failed to save: '#{app}'"
         failed += 1
       end
     end
@@ -79,9 +85,9 @@ class BowerCrawler
   end
 
   def self.to_product(pkg_info)
-    Product.new  name: pkg_info[:name],
-                 name_downcase: pkg_info[:name].to_s.downcase,
-                 prod_key: "bower/#{pkg_info[:name]}",
+    Product.new  name: "#{pkg_info[:full_name]}",
+                 name_downcase: pkg_info[:full_name].to_s.downcase,
+                 prod_key: pkg_info[:full_name].to_s,
                  prod_type: Project::A_TYPE_BOWER,
                  language: Product::A_LANGUAGE_JAVASCRIPT,
                  private_repo: pkg_info[:private_repo],
@@ -155,25 +161,27 @@ class BowerCrawler
     urlpath = source_url.gsub(/:\/+|\/+|\:/, "_")
     _, _, owner, repo = urlpath.split(/_/)
 
-    p "#-- #{source_url}, #{owner}, #{repo}"
+    #p "#-- #{source_url}, #{owner}, #{repo}, #{filename}"
     repo.to_s.gsub!(/\.git$/, "")
     info[:name] = repo
     info[:group_id] = owner
     info[:artifact_id] = repo
+    info[:full_name] = "#{owner}/#{repo}"
 
     url = "#{Github::A_API_URL}/repos/#{owner}/#{repo}/contents/#{filename}"
-    content = Github.fetch_raw_file(url, admin[:github_token])
+    content = Github.fetch_raw_file(url, token)
+    
     if content
       begin
       info.merge! JSON.parse(content)
-      p "This project had #{filename}"
+      p "Found: #{filename}"
       rescue
         p "Error: cant parse JSON file for #{url}."
       end
     else
       #try to read package.json
       if filename != "package.json"
-        info = self.read_info_from_github(source_url, "package.json")
+        info = self.read_info_from_github(source_url, token, "package.json")
       else
         p "No project file."
       end
@@ -182,12 +190,35 @@ class BowerCrawler
     info
   end
 
-  def parse_repo_tags(prod, tags)
-    tags.each {|tag| save_repo_tag(prod, tag)}
+  def self.parse_repo_tags(prod, tags)
+    return if tags.nil? or tags.empty?
+    prod.versions.delete_all #we are going to reload anyway everything
+    tags.each {|tag| parse_repo_tag(prod, tag)}
   end
 
-  def save_repo_tag(prod, tag)
-    #TODO: add version & date - use tag[:url]
-    #TODO: save downloadable zip-barballs; tag[:zipball_url]
+  def self.parse_repo_tag(prod, tag)
+    p "Going to parse repo_tag:", tag
+
+    bower_parser = BowerParser.new
+    m = tag["name"].to_s.match bower_parser.rules[:full_version]
+    if m and m[:version]
+      commit_info = Github.json_by_url tag['commit']['url'], @@token
+      if commit_info
+        released_at = commit_info['commit']['date']
+      else
+        released_at = nil
+      end
+
+      new_version = Version.new version: m[:version],
+                                prerelease: !m[:prerelease].nil?,
+                                released_at: released_at
+      prod.versions << new_version
+      
+      new_link = Versionarchive.new language: prod[:language],
+                                    prod_key: prod[:prod_key],
+                                    version_id: m[:version],
+                                    link: tag['zipball_url'],
+                                    name: "#{prod[:prod_key]}_#{m[:version]}.zip"
+    end
   end
 end

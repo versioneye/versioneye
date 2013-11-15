@@ -15,10 +15,14 @@ describe BowerParser do
 
   context "testing correctness of parser rules" do
     it "matches all main versions correctly" do
-     "1.0.0".match(parser.rules[:main_version]).should_not be_nil
-     "0.10.1".match(parser.rules[:main_version]).should_not be_nil
-     "99.9.9".match(parser.rules[:main_version]).should_not be_nil
-     "0.0.1000".match(parser.rules[:main_version]).should_not be_nil
+      "1".match(parser.rules[:main_version]).should_not be_nil
+      "v1".match(parser.rules[:main_version]).should_not be_nil
+      "1.0".match(parser.rules[:main_version]).should_not be_nil
+      "v1.0".match(parser.rules[:main_version]).should_not be_nil
+      "1.0.0".match(parser.rules[:main_version]).should_not be_nil
+      "0.10.1".match(parser.rules[:main_version]).should_not be_nil
+      "99.9.9".match(parser.rules[:main_version]).should_not be_nil
+      "0.0.1000".match(parser.rules[:main_version]).should_not be_nil
     end
 
     it "matches full versions correctly" do

@@ -20,7 +20,7 @@ class BowerParser < CommonParser
 
     build_info = "\\+(?<build>#{build_ident}(\\.#{build_ident})*)" # for build metadata = +
 
-    main_version =  "(?<version>(#{numeric})\\.(#{numeric})\\.(#{numeric}))"
+    main_version =  "(?<version>(#{numeric})(\\.(#{numeric})(\\.(#{numeric}))?)?)"
 
     #full version = main version, optionally followed by prerelease or build info
     full_version = "^#{ign}#{main_version}(#{prerelease_info})?(#{build_info})?$"
