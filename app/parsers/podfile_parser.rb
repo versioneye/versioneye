@@ -97,7 +97,6 @@ class PodfileParser < CommonParser
     end
 
     @project.dep_number = @project.projectdependencies.count
-
     Rails.logger.info "Project has #{@project.projectdependencies.count} dependencies"
   end
 
@@ -109,7 +108,7 @@ class PodfileParser < CommonParser
 
     dependency = create_dependency_from_hash( dep )
     @project.out_number     += 1 if dependency.outdated?
-    # @project.unknown_number += 1 if product.nil? TODO
+    @project.unknown_number += 1 if dependency.prod_key.nil?
     @project.projectdependencies.push dependency
     dependency.save
     dependency
@@ -119,7 +118,9 @@ class PodfileParser < CommonParser
     name = dep_hash.keys.first
     reqs = dep_hash[name]
 
+    prod_key = nil
     product = load_product( name )
+    prod_key = product.prod_key if product
 
     requirement = reqs.map do |req_version|
       v_hash = version_hash(req_version, name, product)
@@ -131,7 +132,7 @@ class PodfileParser < CommonParser
 
     dependency = Projectdependency.new({
       :language => @@language,
-      :prod_key => name.downcase, # TODO set only if product exist!
+      :prod_key => prod_key,
       :name     => name,
       :version_requested  => requirement.first[:version_requested],
       :comperator         => requirement.first[:comperator],
