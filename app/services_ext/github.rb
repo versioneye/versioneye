@@ -168,9 +168,9 @@ class Github
     return nil if url.nil? || url.empty?
     response = HTTParty.get( "#{url}?access_token=" + URI.escape(token), 
                             :headers => {"User-Agent" => A_USER_AGENT,
-                                         "Accept" => "application/vnd.github.VERSION.raw"} )
+                                         "Accept" => "application/vnd.github.v3.raw"} )
     if response.code != 200
-      Rails.logger.error "Cant fetch file from #{url}:  #{response.code}\n
+      Rails.logger.error "Cant read rawfile from #{url}:  #{response.code}\n
         #{response.message}\n#{response}"
       return nil
     end
@@ -213,14 +213,24 @@ class Github
   end
 
   def self.repo_tags(repository, token)
-    response = HTTParty.get("#{A_API_URL}/repos/#{repository}/tags",
-                             headers: A_DEFAULT_HEADER)
-    tags = catch_github_exception JSON.parse(response.body)
-    tags
+    url = "#{A_API_URL}/repos/#{repository}/tags"
+    json_by_url url, token
+  end
+
+  def self.rate_limit(token)
+    json_by_url "#{A_API_URL}/rate_limit", token
+  end
+
+  def self.json_by_url(url, token)
+    url = "#{url}?access_token=#{URI.escape(token.to_s)}"
+
+    response = HTTParty.get url, headers: A_DEFAULT_HEADER
+    results = catch_github_exception JSON.parse(response.body)
+    results
   rescue => e
+    p e.message, e.backtrace.first
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
-    return false
   end
 
   def self.search(q, langs = nil, users = nil, page = 1, per_page = 30)
@@ -254,7 +264,7 @@ class Github
     JSON.parse(body)
   end
   def self.supported_languages()
-    Set['java', 'ruby', 'python', 'node.js', 'php', 'javascript', 'coffeescript', 'clojure']
+    Set['java', 'ruby', 'python', 'node.js', 'php', 'javascript', 'coffeescript', 'clojure', 'objective-c']
   end
 
   private
