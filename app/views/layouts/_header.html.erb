@@ -31,8 +31,8 @@
             </li>
             <li class="divider-vertical"></li>
             <li>
-              <a href="<%= user_path( current_user ) %>" title="Profile" >
-                <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round", :gravatar => { :size => 25, :default => "#{Settings.server_url}/profile_icon.png" }) %> <%= current_user.username %>
+              <a href="<%= user_path( current_user ) %>" style="padding-top: 6px;" title="Profile" >
+                <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.server_url}/profile_icon.png" }) %> <%= current_user.username %>
               </a>
             </li>
             <li class="divider-vertical"></li>
