@@ -214,23 +214,41 @@ class Github
 
   def self.repo_tags(repository, token)
     url = "#{A_API_URL}/repos/#{repository}/tags"
-    json_by_url url, token
+    get_json url, token
+  end
+
+  def self.repo_changed?(repository, modified_since, token = nil)
+    url = "#{A_API_URL}/repos/#{repository}"
+    body = get_json(url, token, modified_since)
+    not body.nil?
   end
 
   def self.rate_limit(token)
-    json_by_url "#{A_API_URL}/rate_limit", token
+    get_json("#{A_API_URL}/rate_limit", token)
   end
 
-  def self.json_by_url(url, token)
-    url = "#{url}?access_token=#{URI.escape(token.to_s)}"
-
-    response = HTTParty.get url, headers: A_DEFAULT_HEADER
-    results = catch_github_exception JSON.parse(response.body)
+  def self.get_json(url, token, modified_since = nil)
+    request_headers = A_DEFAULT_HEADER
+    if token
+      request_headers.merge!({"Authorization" => "token #{token}"})
+    end
+    
+    if modified_since
+      request_headers.merge!({"If-Modified-Since" => modified_since.rfc822})
+    end 
+ 
+    response = HTTParty.get url, headers: request_headers
+    if response.body or response.body.length < 2
+      results = catch_github_exception JSON.parse(response.body.to_s)
+    else
+      p "Got empty response from `#{url}`"
+    end
     results
   rescue => e
-    p e.message, e.backtrace.first
+    p "Failed to read #{url}", e.message
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
+    return nil
   end
 
   def self.search(q, langs = nil, users = nil, page = 1, per_page = 30)
