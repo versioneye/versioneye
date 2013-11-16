@@ -322,7 +322,7 @@ GEM
       mime-types (>= 1.16)
       oauth (>= 0.4.7)
     tzinfo (0.3.38)
-    uglifier (2.3.0)
+    uglifier (2.3.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     unicode-display_width (0.1.1)
@@ -399,7 +399,7 @@ DEPENDENCIES
   tire (= 0.6.1)
   turn
   twitter_oauth (= 0.4.94)
-  uglifier (= 2.3.0)
+  uglifier (~> 2.3.0)
   unicorn (= 4.7.0)
   whenever (= 0.8.4)
   will_paginate (= 3.0.5)

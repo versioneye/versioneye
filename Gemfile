@@ -45,7 +45,7 @@ group :assets do
   gem 'sass'          , :require => 'sass'
   gem 'sass-rails'    , "3.2.6"
   gem 'coffee-rails'  , "3.2.2"
-  gem 'uglifier'      , '2.3.0'
+  gem 'uglifier'      , '~> 2.3.0'
   gem 'yui-compressor', '0.12.0'
 end
 
