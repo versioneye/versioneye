@@ -132,7 +132,7 @@ class ProductsController < ApplicationController
     elsif license && !license.empty?
       license = License.new({:name => license, :url => licenseLink, :language => @product.language, :prod_key => @product.prod_key, :version => licenseVersion})
       license.save
-      add_status_comment(@product, current_user, "license", license)
+      add_status_comment(@product, current_user, "license", license.name)
       flash[:success] = "License updated."
     elsif twitter_name && !twitter_name.empty?
       @product.twitter_name = twitter_name
