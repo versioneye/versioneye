@@ -79,9 +79,9 @@ class BowerCrawler
 
   def self.add_bower_package(pkg_info, token)
       prod = to_product(pkg_info)
-      versionlink = to_versionlink(prod, pkg_info)
-
       prod[:version] = pkg_info[:version]
+
+      versionlink = to_versionlink(prod, pkg_info[:url])
       prod.versions << to_version(pkg_info)
       
       prod_license = to_license(prod, pkg_info)
@@ -126,10 +126,10 @@ class BowerCrawler
                  description: pkg_info[:description].to_s 
   end
 
-  def self.to_versionlink(prod, pkg_info, link_name = "scm")
+  def self.to_versionlink(prod, url, link_name = "scm")
     new_version = Versionlink.new language: prod[:language],
                                   prod_key: prod[:prod_key],
-                                  link: pkg_info[:url],
+                                  link: url,
                                   name: link_name
     new_version.save
     new_version
@@ -272,9 +272,16 @@ class BowerCrawler
       
       new_link = Versionarchive.new language: prod[:language],
                                     prod_key: prod[:prod_key],
-                                    version_id: m[:version],
+                                    version: m[:version],
                                     link: tag['zipball_url'],
                                     name: "#{prod[:prod_key]}_#{m[:version]}.zip"
+      new_link.save
+
+      new_link = Versionlink.new language: prod[:language],
+                                 prod_key: prod[:prod_key],
+                                 version: m[:version],
+                                 name: "Homepage",
+                                 link: "https://www.github.com/#{prod[:prod_key]}"
       new_link.save
     else
       p "Skipped tag `#{tag_name}` "

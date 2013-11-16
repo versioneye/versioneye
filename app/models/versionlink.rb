@@ -6,7 +6,7 @@ class Versionlink
   # Belongs to the product with this attributes
   field :language  , type: String
   field :prod_key  , type: String
-  field :version_id, type: String # version string. For example 1.0.1. TODO rename to version.
+  field :version, type: String 
 
   field :link      , type: String # this is a URL
   field :name      , type: String
