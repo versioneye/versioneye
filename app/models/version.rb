@@ -35,6 +35,10 @@ class Version
     version.gsub("/", ":")
   end
 
+  def created_at
+    self.released_at or self.created_at
+  end
+
   def released_or_detected
     return released_at if released_at
     return created_at
