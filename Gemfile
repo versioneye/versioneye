@@ -28,9 +28,9 @@ gem 'htmlentities'       , '4.3.1'
 gem 'capistrano'         , '2.15.5'
 gem 'whenever'           , '0.8.4'
 gem 'bourbon'            , '3.1.8'
-gem 'ruby_regex'         , '0.1.0'
-gem 'cocoapods-core'     , '0.27.1'
-gem 'octokit'            , "~> 2.5.1"
+gem 'ruby_regex'         , '~> 0.1.0'
+gem 'cocoapods-core'     , '0.28.0'
+gem 'octokit'            , "~> 2.6.0"
 
 group :development do
   gem 'psych'             , '2.0.1'
