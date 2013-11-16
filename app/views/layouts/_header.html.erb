@@ -30,30 +30,28 @@
               <%= link_to "My Projects", user_projects_path %>
             </li>
             <li class="divider-vertical"></li>
-            <li class ="dropdown">
-              <a class = "dropdown-toggle" data-toggle = "dropdown" href = "#">
-                <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round", :gravatar => { :size => 25, :default => "#{Settings.server_url}/profile_icon.png" }) %>
-                <%= current_user.fullname %>
-                <b class = "caret"></b>
+            <li>
+              <a href="<%= user_path( current_user ) %>" title="Profile" >
+                <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round", :gravatar => { :size => 25, :default => "#{Settings.server_url}/profile_icon.png" }) %> <%= current_user.username %>
               </a>
-              <ul class = "dropdown-menu">
-                <li >
-                  <%= link_to "Settings", settings_profile_path %>
-                </li>
-                <li>
-                  <%= link_to "Profile", user_path( current_user ) %>
-                </li>
-                <li>
-                  <a href="/search?q=submit_new_resource_<%= rand(1000) %>">Submit New Resource</a>
-                </li>
-                <li>
-                  <a href="JavaScript: load_dialog_feedback()">Feedback</a>
-                </li>
-                <li class = "divider"></li>
-                <li>
-                  <%= link_to "Logout", signout_path %>
-                </li>
-              </ul>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <a href="JavaScript: load_dialog_feedback()" title="Feedback">
+                <i class="icon-comment" ></i>
+              </a>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <a href="<%= settings_profile_path %>" title="Settings" >
+                <i class="icon-cogs" ></i>
+              </a>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <a href="<%= signout_path %>" title="Logout" >
+                <i class="icon-signout" ></i>
+              </a>
             </li>
             <!-- menu for admin -->
             <% if signed_in_admin? && 1 == 2 %>
