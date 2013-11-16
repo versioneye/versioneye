@@ -144,7 +144,7 @@ class BowerCrawler
     return nil if product.nil?
 
     new_licence = License.new name: pkg_info[:license] || "unknown",
-                              field: product[:language],
+                              language: product[:language],
                               prod_key: product[:prod_key],
                               version: pkg_info[:version]
     new_licence.save
