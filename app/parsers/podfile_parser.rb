@@ -149,12 +149,8 @@ class PodfileParser < CommonParser
     return {:comperator => comperator, :version_requested => version}
   end
 
-  def version_hash version_from_file, prod_name, prod
-    if :head == version_from_file
-      Rails.logger.debug "WARNING dependency '#{prod_name}' requires HEAD" # TODO
-      return {:version_requested => "HEAD", :version_label => "HEAD", :comperator => "="}
-
-    elsif :git == version_from_file
+  def version_hash version_from_file, prod_name, product
+    if :git == version_from_file
       Rails.logger.debug "WARNING dependency '#{prod_name}' requires GIT" # TODO
       return {:version_requested => "GIT", :version_label => "GIT", :comperator => "="}
 
@@ -169,8 +165,8 @@ class PodfileParser < CommonParser
       comperator = comperator_version[:comperator]
       version    = comperator_version[:version_requested]
 
-      if prod
-        version_requested = best_version(comperator, version, prod.versions)
+      if product
+        version_requested = best_version(comperator, version, product.versions)
         return {:version_requested => version_requested, :version_label => version_from_file, :comperator => comperator}
       end
 

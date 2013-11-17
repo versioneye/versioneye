@@ -3,16 +3,16 @@ class Project
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_TYPE_RUBYGEMS = "RubyGem"
-  A_TYPE_PIP      = "PIP"
-  A_TYPE_NPM      = "npm"
-  A_TYPE_COMPOSER = "composer"
-  A_TYPE_GRADLE   = "gradle"
-  A_TYPE_MAVEN2   = "Maven2"
-  A_TYPE_LEIN     = "Lein"
-  A_TYPE_GITHUB   = "GitHub"
-  A_TYPE_R        = "R"
-  A_TYPE_COCOAPODS= "CocoaPods"
+  A_TYPE_RUBYGEMS  = "RubyGem"
+  A_TYPE_PIP       = "PIP"
+  A_TYPE_NPM       = "npm"
+  A_TYPE_COMPOSER  = "composer"
+  A_TYPE_GRADLE    = "gradle"
+  A_TYPE_MAVEN2    = "Maven2"
+  A_TYPE_LEIN      = "Lein"
+  A_TYPE_GITHUB    = "GitHub"
+  A_TYPE_R         = "R"
+  A_TYPE_COCOAPODS = "CocoaPods"
 
   A_SOURCE_UPLOAD = "upload"
   A_SOURCE_URL    = "url"
