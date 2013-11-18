@@ -10,11 +10,7 @@ class BowerCrawler
     Newest.where(prod_type: Project::A_TYPE_BOWER).delete_all
  end
 
-  def self.crawl(source_url = nil)
-    #TODO: special user for BowerCrawler 
-    admin = User.find_by_email "admin@versioneye.com"
-    @@token = admin[:github_token]
-
+  def self.crawl(token, source_url = nil)
     if source_url.to_s.strip.empty?
       source_url = "https://bower.herokuapp.com/packages"
       p "Going to use default url: `#{source_url}`"
@@ -172,7 +168,12 @@ class BowerCrawler
 
   def self.to_dependencies(prod, pkg_info)
     return nil if !pkg_info.has_key?(:dependencies) or pkg_info[:dependencies].nil?
-    deps = [] 
+    deps = []
+    if not pkg_info[:dependencies].is_a?(Hash)
+      p "#{prod[:prod_key]} dependencies have wrong structure. `#{pkg_info[:dependencies]}`"
+      return nil
+    end
+
     pkg_info[:dependencies].each_pair do |prod_name, version|
       next if prod_name.to_s.empty?
       dep = to_dependency(prod, prod_name, version)
@@ -184,7 +185,12 @@ class BowerCrawler
   def self.to_dev_dependencies(prod, pkg_info)
     return nil if !pkg_info.has_key?(:dev_dependencies) or pkg_info[:dev_dependencies].nil?
     deps = [] 
-    pkg_info[:dev_dependencies].each_pair do |prod_name, version|
+    if not pkg_info[:devDependencies].is_a?(Hash)
+      p "DevDependecies for #{prod[:prod_key]} have wrong structure. `#{pkg_info[:devDependencies]}`"
+      return nil
+    end
+
+   pkg_info[:dev_dependencies].each_pair do |prod_name, version|
       next if prod_name.to_s.empty?
       dep = to_dependency(prod, prod_name, version, Dependency::A_SCOPE_DEVELOPMENT)
       deps << dep if dep
