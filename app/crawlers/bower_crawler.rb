@@ -31,7 +31,7 @@ class BowerCrawler
       p "Error: got empty list of registered bower packages ;"
       return nil
     end
-
+    #read info for every bower package on that list;
     add_bower_packages(app_list, @@token)
   end
 
@@ -43,7 +43,7 @@ class BowerCrawler
       check_rate_limit if (i % A_MINIMUM_RATE_LIMIT) == 0
       
       p "#-- iteration #{i}, reading : #{app[:url]}"
-      pkg_info = self.read_info_from_github(app[:url], token)
+      pkg_info = self.read_project_info_from_github(app[:url], token)
 
       if pkg_info
         prod = add_bower_package(pkg_info, token)
@@ -52,20 +52,8 @@ class BowerCrawler
         next
       end
 
-      #TODO: if product didnt get version from project file and has versions; use latest
-
       if prod and prod.upsert
-        #add also new newest entity
-        newest = Newest.new name: prod[:name],
-                            version: prod[:version],
-                            language: prod[:language],
-                            prod_key: prod[:prod_key],
-                            prod_type: prod[:prod_type]
-        begin
-          newest.upsert
-        rescue => e
-          p "Cant save newest: #{newest.to_json}.\n #{e.message} #{newest.errors.full_messages.to_sentence}"
-        end
+        newest = to_newest(prod) #newest model is used for latest_releases stats
         imported += 1
         p "Imported: #{prod[:prod_key]}"
       else
@@ -84,8 +72,10 @@ class BowerCrawler
       versionlink = to_versionlink(prod, pkg_info[:url])
       prod.versions << to_version(pkg_info)
       
-      prod_license = to_license(prod, pkg_info)
+      pkg_info[:licenses].to_a.each {|lic| to_license(prod, lic)}
       deps = to_dependencies(prod, pkg_info)
+      deps.to_a.each {|dep| prod.dependencies << dep}
+      deps = to_dev_dependencies(prod, pkg_info)
       deps.to_a.each {|dep| prod.dependencies << dep}
 
       #-- try to read versioninfo & versionarchive to tags
@@ -94,6 +84,14 @@ class BowerCrawler
         p "Repo `#{pkg_info[:full_name]}` has #{tags.to_a.count} tags."
         self.parse_repo_tags(prod, tags)
       end
+
+      #-- if prod didnt get versionnumber from project, then try to used latest from tags
+
+      if prod[:version].nil?
+        latest_version = prod.sorted_versions.first
+        prod[:version] = latest_version[:version] if latest_version
+      end
+
       prod
   end
 
@@ -116,10 +114,29 @@ class BowerCrawler
     end
   end
 
+  def self.to_newest(prod)
+    newest = Newest.where(prod_key: prod[:prod_key], language: prod[:language], version: prod[:version]).first
+    unless newest.nil?
+      p "Newest model for #{prod[:language]}/#{prod[:prod_key]} for version #{prod[:version]} already exists."
+      return newest
+    end
+
+    newest = Newest.new name: prod[:name],
+                        version: prod[:version],
+                        language: prod[:language],
+                        prod_key: prod[:prod_key],
+                        prod_type: prod[:prod_type]
+    newest.save
+    newest
+  rescue => e
+    p "Cant save newest: #{newest.to_json}.\n #{e.message} #{newest.errors.full_messages.to_sentence}"
+  end
+
+
   def self.to_product(pkg_info)
     Product.new  name: "#{pkg_info[:full_name]}",
                  name_downcase: pkg_info[:full_name].to_s.downcase,
-                 prod_key: pkg_info[:full_name].to_s,
+                 prod_key: pkg_info[:full_name].to_s.downcase,
                  prod_type: Project::A_TYPE_BOWER,
                  language: Product::A_LANGUAGE_JAVASCRIPT,
                  private_repo: pkg_info[:private_repo],
@@ -137,98 +154,151 @@ class BowerCrawler
 
   def self.to_version(pkg_info)
     Version.new version: pkg_info[:version],
-                link: pkg_info[:url]
+                link: pkg_info[:url],
+                released_at: DateTime.now() #not actual release date for version in project file
   end
 
-  def self.to_license(product, pkg_info)
+  def self.to_license(product, license_info)
     return nil if product.nil?
 
-    new_licence = License.new name: pkg_info[:license] || "unknown",
+    new_licence = License.new name: license_info[:name],
+                              url: license_info[:url],
                               language: product[:language],
                               prod_key: product[:prod_key],
-                              version: pkg_info[:version]
+                              version: product[:version]
     new_licence.save
     new_licence
   end
 
   def self.to_dependencies(prod, pkg_info)
-    deps = []
-   
+    return nil if !pkg_info.has_key?(:dependencies) or pkg_info[:dependencies].nil?
+    deps = [] 
     pkg_info[:dependencies].each_pair do |prod_name, version|
-      next if prod_name.to_s.empty? #ignore dependencies with no-names
-
-      dep_key = "#{prod[:pkg_manager]}/#{prod_name}"
-      dep =  Dependency.new name: prod_name,
-                            prod_type: Project::A_TYPE_BOWER,
-                            language: prod[:language],
-                            version: version,
-                            prod_key: prod[:prod_key],
-                            prod_version: prod[:version],
-                            dep_prod_key: dep_key,
-                            scope: Dependency::A_SCOPE_REQUIRE
-
-      dep.save
-      deps << dep
+      next if prod_name.to_s.empty?
+      dep = to_dependency(prod, prod_name, version)
+      deps << dep if dep
     end
-
     deps
   end
 
-  def self.read_info_from_github(source_url, token, filename = "bower.json")
+  def self.to_dev_dependencies(prod, pkg_info)
+    return nil if !pkg_info.has_key?(:dev_dependencies) or pkg_info[:dev_dependencies].nil?
+    deps = [] 
+    pkg_info[:dev_dependencies].each_pair do |prod_name, version|
+      next if prod_name.to_s.empty?
+      dep = to_dependency(prod, prod_name, version, Dependency::A_SCOPE_DEVELOPMENT)
+      deps << dep if dep
+    end
+    deps
+  end
+
+
+  def self.to_dependency(prod, dep_name, dep_version, scope = nil)
+    unless scope
+      scope = Dependency::A_SCOPE_REQUIRE
+    end
+
+    dep =  Dependency.new name: dep_name,
+                          prod_type: Project::A_TYPE_BOWER,
+                          language: prod[:language],
+                          version: prod[:version],
+                          dep_version: dep_version, #TODO: git tag / path
+                          prod_key: prod[:prod_key].to_s.downcase,
+                          prod_version: prod[:version],
+                          dep_prod_key: dep_name,
+                          scope: scope
+    dep.save
+    dep
+  rescue => e
+    p "Error: Cant save dependency `#{dep_name}` with version `#{dep_version}` for #{prod[:prod_key]}."
+    p e.message
+  end
+
+  def self.to_pkg_info(owner, repo, project_url, project_info)
     info = {
-      version: nil,
-      license: "unknown",
-      dependencies: {},
-      url: source_url,
+      name: repo,
+      group_id: owner,
+      artifact_id: repo,
+      full_name: "#{owner}/#{repo}",
+      version: project_info[:version],
+      licenses: [{name: "unknown", url: nil}],
+      description: project_info[:description],
+      dependencies: project_info[:dependecies],
+      dev_dependencies: project_info[:devDependencies],
+      url: project_url,
       private_repo: false,
-      group_id: nil, #github user name
-      artifact_id: nil, #github repo name
     }
 
-    unless source_url =~ /^git:\/\/github\.com/i
-      #TODO: add support for private hosts
-      p "#------------------------------------------------------------",
-        "warning: going to ignore #{source_url} - its not github repo, cant read bower.json"
-      info[:private_repo] = true
-      return nil
-    end
-    urlpath = source_url.gsub(/:\/+|\/+|\:/, "_")
-    _, _, owner, repo = urlpath.split(/_/)
-
-    repo.to_s.gsub!(/\.git$/, "")
-    info[:name] = repo
-    info[:group_id] = owner
-    info[:artifact_id] = repo
-    info[:full_name] = "#{owner}/#{repo}"
-    url = "#{Github::A_API_URL}/repos/#{owner}/#{repo}/contents/#{filename}"
-   
-    return nil unless repo_changed?(info[:full_name])
-
-    content = Github.fetch_raw_file(url, token)
-    if content
-      begin
-      p "Found: #{filename}"
-      info.merge! JSON.parse(content, symbolize_names: true)
-      rescue
-        p "Error: cant parse JSON file for #{url}."
+    if project_info.has_key?(:license)
+      license_info = project_info[:license]
+      if license_info.is_a?(String)
+        info[:licenses] = [{name: project_info[:license], url: nil}]
+      elsif license_info.is_a?(Array)
+        info[:licenses] = []
+        license_info.each do |lic|
+          info[:licenses] << {name: lic, url: nil}
+        end
       end
-    else
-      #try to read package.json
-      if filename != "package.json"
-        info = self.read_info_from_github(source_url, token, "package.json")
-      else
-        p "No project file."
+    elsif project_info.has_key?(:licenses)
+      #support for npm.js licenses
+      info[:licenses] = []
+      project_info[:licenses].to_a.each do |lic|
+        info[:licenses] << {name: lic[:type], url: lic[:url]}
       end
     end
 
     info
   end
 
+  def self.read_project_info_from_github(repo_url, token)
+    pkg_info = nil
+    supported_files = Set.new ['bower.json', 'component.json', 'package.json']
+
+    unless repo_url =~ /^git:\/\/github\.com/i
+      #TODO: add support for private hosts
+      p "#------------------------------------------------------------",
+        "warning: going to ignore #{repo_url} - its not github repo, cant read bower.json"
+      return nil
+    end
+    urlpath = repo_url.gsub(/:\/+|\/+|\:/, "_")
+    _, _, owner, repo = urlpath.split(/_/)
+
+    repo.to_s.gsub!(/\.git$/, "")
+    repo_name = "#{owner}/#{repo}"
+ 
+    return nil unless repo_changed?(repo_name) #crawl only repo is changed
+
+    supported_files.to_a.each do |filename|
+      file_url = "#{Github::A_API_URL}/repos/#{owner}/#{repo}/contents/#{filename}"
+      project_file = read_project_file_from_url(file_url, token)
+      if project_file.is_a?(Hash)
+        p "Found: #{filename}"
+        pkg_info = to_pkg_info(owner, repo, repo_url, project_file) 
+        break
+      end
+    end
+    
+    if pkg_info.nil?
+      p "warning: Found no supported project files. #{supported_files.to_a}"
+    end
+
+    pkg_info
+  end
+
+  def self.read_project_file_from_url(file_url, token)
+    content = Github.fetch_raw_file(file_url, token)
+    return nil if content.nil?  
+    content = JSON.parse(content, symbolize_names: true)
+    content
+  rescue => e
+    p "Error: cant parse JSON file for #{file_url}.", e.message
+    nil
+  end
+
   def self.repo_changed?(repo_name)
  
     repo_changed = true
     existing_package = Product.fetch_product(Product::A_LANGUAGE_JAVASCRIPT, repo_name)
-
     return repo_changed if existing_package.nil?
     
     repo_changed = Github.repo_changed?(repo_name, existing_package[:updated_at], @@token)
