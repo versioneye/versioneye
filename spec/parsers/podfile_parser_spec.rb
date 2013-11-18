@@ -50,6 +50,22 @@ describe PodfileParser do
       project
     end
 
+    def test_dependency dep, version_current, version_requested, outdated
+      dep.version_current.should eq(version_current)
+      dep.version_requested.should eq(version_requested)
+      dep.outdated.should eq(outdated)
+    end
+
+    def cocoa_product(product_name, latest_version, *other_versions)
+      new_product = ProductFactory.create_for_cocoapods(product_name, latest_version)
+      other_versions.each do |a_version|
+        new_product.versions.push(Version.new({:version => a_version}))
+      end
+      new_product.save
+      new_product
+    end
+
+
     it "should read a simple podfile and return project, dependencies" do
       create_pods
       project = parse_and_check './spec/fixtures/files/pod_file/example1/Podfile'
@@ -84,11 +100,104 @@ describe PodfileParser do
     end
 
     it "should parse a podfile with target definitions" do
-      project = parse_and_check './spec/fixtures/files/pod_file/target_example1/Podfile'
+
+      # setup
+      cocoa_product( 'TestFlightSDK',   '2.0.2', '2.1.1-beta',     '2.0',  '1.3')
+      cocoa_product( 'MBProgressHUD',   '0.8',   '0.7',   '0.6',   '0.5')
+      cocoa_product( 'iRate',           '1.8.2', '1.8',   '1.7.5', '1.6.2')
+      cocoa_product( 'TimesSquare',     '1.0.1', '1.0.0')
+      cocoa_product( 'AFNetworking',    '2.0.2', '2.0.0', '1.3.3')
+      cocoa_product( 'KKPasscodeLock',  '0.2.2', '0.1.5')
+      cocoa_product( 'iCarousel',       '1.7.6', '1.7.4', '1.7',   '1.6.3')
+
+      # run
+      project = parse_and_check "./spec/fixtures/files/pod_file/target_example1/Podfile"
+
+      # test
+      project.dependencies.count.should eq 7
+
+      dep = get_dependency(project,  'TestFlightSDK')
+      test_dependency(dep, '2.0.2', '2.0.2', false)
+
+      dep = get_dependency(project,  'MBProgressHUD')
+      test_dependency(dep, '0.8',   '0.5',   true)
+
+      dep = get_dependency(project,  'iRate')
+      test_dependency(dep, '1.8.2', '1.8.2', false)
+
+      dep = get_dependency(project,  'TimesSquare')
+      test_dependency(dep, '1.0.1', '1.0.1', false)
+
+      dep = get_dependency(project,  'AFNetworking')
+      test_dependency(dep, '2.0.2', '1.1.0', true)
+
+      dep = get_dependency(project,  'KKPasscodeLock')
+      test_dependency(dep, '0.2.2', '0.1.5', true)
+
+      dep = get_dependency(project,  'iCarousel')
+      test_dependency(dep, '1.7.6', '1.7.4', true)
     end
 
-    it "should parse linked targets in podfile" do
-      parse_and_check './spec/fixtures/files/pod_file/target_example2/Podfile'
+    it "should parse a podfile with target definitions" do
+
+      # setup
+      cocoa_product("SSKeychain",            "1.2.1", "0.2.1", "0.1.4")
+      cocoa_product("INAppStoreWindow",      "1.3",   "1.2",   "1.1", "1.0")
+      cocoa_product("AFNetworking",          "2.0.2", "2.0.0", "1.3.3")
+      cocoa_product("Reachability",          "3.1.1", "3.1.0", "3.0.0")
+      cocoa_product("KSADNTwitterFormatter", "0.2.0", "0.1.0") # can't find this on VersionEye
+      cocoa_product("MASShortcut",           "1.2.2", "1.2",   "1.1")
+      cocoa_product("MagicalRecord",         "2.2",   "2.0",   "1.1.8")
+      cocoa_product("MASPreferences",        "1.0")
+
+      project = parse_and_check "./spec/fixtures/files/pod_file/target_example2/Podfile"
+      project.dependencies.count.should eq 8
+
+      dep = get_dependency(project, "SSKeychain")
+      test_dependency(dep, "1.2.1", "0.1.4", true)
+
+      # currently this dependency is not outdated, but will be soon
+      dep = get_dependency(project, "INAppStoreWindow")
+      test_dependency(dep, "1.3",   "1.3",   false)
+
+      dep = get_dependency(project, "AFNetworking")
+      test_dependency(dep, "2.0.2", "1.1.0", true)
+
+      dep = get_dependency(project, "Reachability")
+      test_dependency(dep, "3.1.1", "3.1.1", false)
+
+      dep = get_dependency(project, "KSADNTwitterFormatter")
+      test_dependency(dep, "0.2.0", "0.1.0", true)
+
+      dep = get_dependency(project, "MASShortcut")
+      test_dependency(dep, "1.2.2", "1.2.2", false)
+
+      dep = get_dependency(project, "MagicalRecord")
+      test_dependency(dep, "2.2",   "2.1",   true)
+
+      dep = get_dependency(project, "MASPreferences")
+      test_dependency(dep, "1.0",   "1.0",   false)
+    end
+
+
+    it "should parse simple targets in podfile" do
+
+      # setup
+      cocoa_product('Kiwi',            '2.2.3', '2.2', '2.1')
+      cocoa_product('CocoaLumberjack', '1.6.3', '1.6', '1.3')
+
+      # run
+      project = parse_and_check './spec/fixtures/files/pod_file/target_example_3/Podfile'
+
+      # check
+      project.dependencies.count.should eq 3 # TODO check why this isn't 2
+
+      dep = get_dependency(project, 'Kiwi')
+      test_dependency(dep, '2.2.3', '2.2.3', false)
+
+      dep = get_dependency(project, 'CocoaLumberjack')
+      test_dependency(dep, '1.6.3', '1.6.3', false)
+
     end
 
   end
