@@ -26,14 +26,11 @@ class Product
   field :artifact_id, type: String
   field :parent_id  , type: String
 
-  field :authors           , type: String # TODO this hase to be remove in the long run
   field :description       , type: String
   field :description_manual, type: String
-  field :link              , type: String # TODO this hase to be remove in the long run
   field :downloads         , type: Integer
   field :followers         , type: Integer, default: 0
   field :used_by_count     , type: Integer, default: 0
-  #field :license           , type: String, default: "unknown" #legacy
 
   field :version     , type: String
   field :version_link, type: String
@@ -151,9 +148,9 @@ class Product
 
   def version_by_number( searched_version )
     return nil if searched_version.to_s.empty?
-
+    return nil if versions.empty?
     versions.each do |version|
-      return version if version.version.eql?( searched_version )
+      return version if version.version.to_s.eql?( searched_version )
     end
     nil
   end
