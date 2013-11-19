@@ -316,9 +316,12 @@ class LanguageDailyStats
     lang_key = LanguageDailyStats.language_to_sym(lang)
     if rows
       rows.each do |row|
+        val = 0
+        val = row[lang_key][metric] if row.has_attribute?(lang_key)
+
         results << {
           title: lang,
-          value: row[lang_key][metric],
+          value: val || 0,
           date: row[:date_string]
         }
       end
