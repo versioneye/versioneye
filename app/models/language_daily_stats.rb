@@ -311,7 +311,7 @@ class LanguageDailyStats
   def self.language_timeline30(lang, metric)
     rows = self.last_30_days_stats
     results = []
-    return results if rows.nil?
+    return results if rows.nil? || rows.empty?
 
     lang_key = LanguageDailyStats.language_to_sym(lang)
     if rows
