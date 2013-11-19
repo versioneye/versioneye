@@ -42,7 +42,7 @@ class Github
   end
 
   def self.user_repos_changed?( user )
-    repo = user.github_repos.all.first
+    repo = user.  repo = github_repos.all.first
     #if user don't have any repos in cache, then force to load data
     return true if repo.nil?
     headers = {
@@ -212,9 +212,14 @@ class Github
     nil
   end
 
+  def self.repo_info(repository, token, modified_since = nil, raw = false)
+    url = "#{A_API_URL}/repos/#{repository}"
+    get_json url, token, nil, raw
+  end
+
   def self.repo_tags(repository, token)
     url = "#{A_API_URL}/repos/#{repository}/tags"
-    get_json url, token
+    get_json url, token, nil, true
   end
 
   def self.repo_changed?(repository, modified_since, token = nil)
@@ -227,7 +232,7 @@ class Github
     get_json("#{A_API_URL}/rate_limit", token)
   end
 
-  def self.get_json(url, token, modified_since = nil)
+  def self.get_json(url, token, modified_since = nil, raw = false)
     request_headers = A_DEFAULT_HEADER
     if token
       request_headers.merge!({"Authorization" => "token #{token}"})
@@ -238,6 +243,8 @@ class Github
     end 
  
     response = HTTParty.get url, headers: request_headers
+    return response if raw == true
+
     if response.body or response.body.length < 2
       results = catch_github_exception JSON.parse(response.body.to_s)
     else

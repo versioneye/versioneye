@@ -4,13 +4,15 @@
 class BowerCrawler
 
   A_MINIMUM_RATE_LIMIT = 10
-
+  A_TASK_CHECK_EXISTENCE = "bower_crawler/check_existence"
   def self.clean
     Product.where(prod_type: Project::A_TYPE_BOWER).delete_all
     Newest.where(prod_type: Project::A_TYPE_BOWER).delete_all
+    CrawlerTask.by_task(A_TASK_CHECK_EXISTENCE).delete_all
  end
 
   def self.crawl(token, source_url = nil)
+    @@token = token
     if source_url.to_s.strip.empty?
       source_url = "https://bower.herokuapp.com/packages"
       p "Going to use default url: `#{source_url}`"
@@ -27,10 +29,75 @@ class BowerCrawler
       p "Error: got empty list of registered bower packages ;"
       return nil
     end
-    #read info for every bower package on that list;
-    add_bower_packages(app_list, @@token)
+    task_list = get_existing_repos(app_list, token)
+    #task_list = get_repos_with_project_file(task_list, token)
+    add_bower_packages(task_list, token)
   end
 
+  #Builds task list, which is sorted by importance and not-existing projects are removed
+  def self.get_existing_repos(app_list, token)
+    p "Going to build list of active and changed Bowers packages."
+
+    app_list.each_with_index do |app, i|
+      check_rate_limit if (i % A_MINIMUM_RATE_LIMIT) == 0
+      repo_info = url_to_repo_info(app[:url])
+      next if repo_info.nil? or repo_info.empty?
+      check_repo_existence(repo_info, token)
+    end
+
+    total_tasks = CrawlerTask.by_task(A_TASK_CHECK_EXISTENCE)
+    n_total = total_tasks.all.count
+    n_failed = total_tasks.where(exists: false).count
+    n_unfinished = total_tasks.where(task_done: false).count
+    p "#-- #{A_TASK_CHECK_EXISTENCE} is done.",
+      "#{n_total}.existing projects;",
+      "#{n_failed}.dead projects",
+      "#{n_unfinished} unfinished tasks"
+    
+    CrawlerTask.where(task_name: A_TASK_CHECK_EXISTENCE, exists: true).desc(:repo_weight)
+  end
+
+  def self.check_repo_existence(repo_info, token)
+
+    task = CrawlerTask.find_or_create_by( task_name: A_TASK_CHECK_EXISTENCE,
+                                          repo_name: repo_info[:repo],
+                                          repo_owner: repo_info[:owner],
+                                          source: CrawlerTask::A_SOURCE_GITHUB,
+                                          url: repo_info[:url],
+                                          repo_fullname: repo_info[:full_name])
+    response = Github.repo_info(repo_info[:full_name], token, task[:updated_at], true)
+    if response.class != HTTParty::Response
+      p "Got exception for #{repo_info[:url]}"
+      p "class? #{response.class}" 
+    elsif response.code > 199 and response.code < 300
+      repo = JSON.parse response.body
+      task.update_attributes({
+        repo_weight: repo['stargazers_count'] + repo['watchers_count'],
+        exists: true,
+        runs: task[:runs] + 1,
+        task_done: true
+      })
+    elsif response.code == 404
+      p "Repo #{repo_info[:full_name]} with url `#{repo_info[:url]}` doesnt exists."
+      task.update_attributes({
+        runs: task[:runs] + 1,
+        fails: task[:fails] + 1,
+        exists: false,
+        task_done: true,
+      })
+    elsif response.code >= 500
+      #when service down
+      p "Sadly Github is down; cant access  #{repo_info[:url]}"
+      task.update_attributes({
+        runs: task[:runs] + 1,
+        fails: task[:fails] + 1,
+        task_done: false,
+      })
+    end
+
+    task
+  end
+  
   def self.add_bower_packages(app_list, token)
     imported = 0
     failed = 0
@@ -75,7 +142,7 @@ class BowerCrawler
       deps.to_a.each {|dep| prod.dependencies << dep}
 
       #-- try to read versioninfo & versionarchive to tags
-      tags = Github.repo_tags(pkg_info[:full_name], token)
+      tags = nil #Github.repo_tags(pkg_info[:full_name], token)
       if tags and not tags.empty?
         p "Repo `#{pkg_info[:full_name]}` has #{tags.to_a.count} tags."
         self.parse_repo_tags(prod, tags)
@@ -167,7 +234,8 @@ class BowerCrawler
   end
 
   def self.to_dependencies(prod, pkg_info)
-    return nil if !pkg_info.has_key?(:dependencies) or pkg_info[:dependencies].nil?
+    return nil if !pkg_info.has_key?(:dependencies) or pkg_info[:dependencies].nil? or pkg_info[:dependencies].empty?
+
     deps = []
     if not pkg_info[:dependencies].is_a?(Hash)
       p "#{prod[:prod_key]} dependencies have wrong structure. `#{pkg_info[:dependencies]}`"
@@ -183,7 +251,8 @@ class BowerCrawler
   end
 
   def self.to_dev_dependencies(prod, pkg_info)
-    return nil if !pkg_info.has_key?(:dev_dependencies) or pkg_info[:dev_dependencies].nil?
+    return nil if !pkg_info.has_key?(:dev_dependencies) or pkg_info[:dev_dependencies].nil? or pkg_info[:dev_dependencies].empty?
+
     deps = [] 
     if not pkg_info[:devDependencies].is_a?(Hash)
       p "DevDependecies for #{prod[:prod_key]} have wrong structure. `#{pkg_info[:devDependencies]}`"
@@ -248,34 +317,56 @@ class BowerCrawler
     elsif project_info.has_key?(:licenses)
       #support for npm.js licenses
       info[:licenses] = []
-      project_info[:licenses].to_a.each do |lic|
-        info[:licenses] << {name: lic[:type], url: lic[:url]}
+      if project_info[:licenses].is_a?(Array)
+        project_info[:licenses].to_a.each do |lic|
+          info[:licenses] << {name: lic[:type], url: lic[:url]}
+        end
+      elsif project_info[:licenses].is_a?(Hash)
+        lic = project_info[:licenses]
+        info[:licenses] = [{name: lic[:type], url: lic[:url]}]
       end
     end
 
     info
   end
 
-  def self.read_project_info_from_github(repo_url, token)
-    pkg_info = nil
-    supported_files = Set.new ['bower.json', 'component.json', 'package.json']
-
-    unless repo_url =~ /^git:\/\/github\.com/i
+  def self.url_to_repo_info(repo_url)
+    git_url_matcher = /^git:\/\/github.com/i
+    git_io_matcher = /github.io/i
+    urlpath = repo_url.gsub(/:\/+|\/+|\:/, "_")
+  
+    if repo_url =~ git_url_matcher
+      _, _, owner, repo = urlpath.split(/_/)
+    elsif repo_url =~ git_io_matcher
+      _, owner, repo, _ = urlpath.split('_')
+      owner = owner.split('.').first
+    else
       #TODO: add support for private hosts
       p "#------------------------------------------------------------",
         "warning: going to ignore #{repo_url} - its not github repo, cant read bower.json"
       return nil
+
     end
-    urlpath = repo_url.gsub(/:\/+|\/+|\:/, "_")
-    _, _, owner, repo = urlpath.split(/_/)
 
     repo.to_s.gsub!(/\.git$/, "")
     repo_name = "#{owner}/#{repo}"
  
-    return nil unless repo_changed?(repo_name) #crawl only repo is changed
+    {
+      owner: owner,
+      repo: repo,
+      full_name: repo_name,
+      url: repo_url
+    }
+  end
+
+  def self.read_project_info_from_github(repo_info, token)
+    pkg_info = nil
+    supported_files = Set.new ['bower.json', 'component.json', 'package.json']
+    
+    return nil unless repo_changed?(repo_info[:full_name]) #crawl only repo is changed
 
     supported_files.to_a.each do |filename|
-      file_url = "#{Github::A_API_URL}/repos/#{owner}/#{repo}/contents/#{filename}"
+      file_url = "#{Github::A_API_URL}/repos/#{repo_info[:owner]}/#{repo_info[:repo]}/contents/#{filename}"
       project_file = read_project_file_from_url(file_url, token)
       if project_file.is_a?(Hash)
         p "Found: #{filename}"
