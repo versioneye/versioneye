@@ -169,6 +169,8 @@ class Github
       return nil
     end
     project_file = fetch_project_from_url(user, project_file_info)
+    return nil if project_file.nil?
+
     project_file["name"] = project_file_info["name"]
     project_file["type"] = project_file_info["type"]
     project_file["branch"] = project_file_info["branch"]
@@ -200,6 +202,8 @@ class Github
     url   = "#{A_API_URL}/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)
     response = get(url, :headers => A_DEFAULT_HEADERS)
     tree   = JSON.parse response.body
+    return result if tree.nil? or not tree.has_key?('tree')
+
     tree['tree'].each do |file|
       name           = file['path']
       result['url']  = file['url']
