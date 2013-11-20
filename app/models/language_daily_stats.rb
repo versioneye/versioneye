@@ -311,17 +311,18 @@ class LanguageDailyStats
   def self.language_timeline30(lang, metric)
     rows = self.last_30_days_stats
     results = []
-    return results if rows.nil?
+    return results if rows.nil? || rows.empty?
 
     lang_key = LanguageDailyStats.language_to_sym(lang)
-    if rows
-      rows.each do |row|
-        results << {
-          title: lang,
-          value: row[lang_key][metric],
-          date: row[:date_string]
-        }
-      end
+    rows.each do |row|
+      val = 0
+      val = row[lang_key][metric] if row.has_attribute?(lang_key)
+
+      results << {
+        title: lang,
+        value: val || 0,
+        date: row[:date_string]
+      }
     end
     results
   end
