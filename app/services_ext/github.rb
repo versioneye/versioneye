@@ -11,7 +11,11 @@ class Github
   }
 
   include HTTParty
-  persistent_connection_adapter
+  persistent_connection_adapter({
+    name: "versioneye_github_client",
+    pool_size: 8,
+    keep_alive: 30
+  })
   
   def self.token( code )
     domain    = 'https://github.com/'
