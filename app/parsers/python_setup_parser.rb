@@ -1,7 +1,7 @@
 class PythonSetupParser < RequirementsParser
 
-  def parse(url)
-    response = fetch_response(url)
+  def parse( url )
+    response = fetch_response( url )
     doc      = response.body
     return nil if doc.nil? or doc.empty?
     requirements = parse_requirements( doc )
