@@ -44,6 +44,8 @@ class User
   field :stripe_token      , type: String
   field :stripe_customer_id, type: String
 
+  field :email_send_error, type: String
+
   # *** RELATIONS START ***
   belongs_to :plan
   has_one    :billing_address
