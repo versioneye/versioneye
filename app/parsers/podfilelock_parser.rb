@@ -16,7 +16,7 @@ class PodfilelockParser < CommonParser
 
   def create_project
     @project = init_project
-    puts "created project #{@project}"
+    Rails.logger.info "created project #{@project}"
     create_dependencies
     @project
   end
@@ -44,7 +44,7 @@ class PodfilelockParser < CommonParser
     end
 
     dependency = create_dependency_from_hash( dep )
-    puts "created dependency #{dependency} for project #{@project}"
+    Rails.logger.debug "created dependency #{dependency} for project #{@project.nil? ? "nil" : @project}"
     return nil if dependency.nil?
 
     @project.out_number     += 1 if dependency.outdated?
@@ -63,7 +63,7 @@ class PodfilelockParser < CommonParser
 
     requirement = reqs.map do |req_version|
       v_hash = version_hash(req_version, name, product)
-      Rails.logger.debug "VERSION HASH IS #{v_hash}"
+      puts "VERSION HASH IS #{v_hash}"
       v_hash
     end
 
