@@ -1,5 +1,5 @@
 require 'uri'
-require 'excon'
+require 'httparty'
 
 class Github
   A_USER_AGENT = "Chrome/28(www.versioneye.com, contact@versioneye.com)"
@@ -10,9 +10,9 @@ class Github
     "Connection" => "Keep-Alive"
   }
 
-  @@conn = Excon.new(A_API_URL)
-  #Excon.defaults[:ssl_verify_peer] = false
-
+  include HTTParty
+  persistent_connection_adapter
+  
   def self.token( code )
     domain    = 'https://github.com/'
     uri       = 'login/oauth/access_token'
@@ -28,15 +28,14 @@ class Github
 
   def self.user(token)
     return nil if token.to_s.empty?
-
-    path           = "/user?access_token=" + URI.escape( token )
-    response      =  @@conn.get(path: path, :headers => A_DEFAULT_HEADERS )
+    url           = "#{A_API_URL}/user?access_token=" + URI.escape( token )
+    response      =  get(url, :headers => A_DEFAULT_HEADERS )
     json_user     = JSON.parse response.body
     catch_github_exception json_user
   end
 
   def self.oauth_scopes( token )
-    resp = @@conn.get(path: "/user?access_token=#{token}", headers: A_DEFAULT_HEADERS)
+    resp = get("#{A_API_URL}/user?access_token=#{token}", headers: A_DEFAULT_HEADERS)
     resp.headers['x-oauth-scopes']
   rescue => e
     Rails.logger.error e.message
@@ -53,9 +52,8 @@ class Github
       "User-Agent" => A_USER_AGENT,
       "If-Modified-Since" => repo[:cached_at].httpdate
     }
-    path = "/user?access_token=#{URI.escape(user.github_token)}"
-
-    response = @@conn.head(path: path, headers: headers)
+    url = "#{A_API_URL}/user?access_token=#{URI.escape(user.github_token)}"
+    response = head(url, headers: headers)
     puts response.status
     response.status != 304
   rescue => e
@@ -105,7 +103,7 @@ class Github
   end
 
   def self.read_repos(user, url, page = 1, per_page = 30)
-    response        = Excon.get(url, headers: A_DEFAULT_HEADERS)
+    response        = get(url, headers: A_DEFAULT_HEADERS)
     data            = catch_github_exception JSON.parse(response.body)
     data            = [] if data.nil?
     workers         = []
@@ -125,7 +123,6 @@ class Github
 
     #execute & wait reduntant tasks
     execute_job(workers)
-
     paging_links = parse_paging_links(response.headers)
     repos = {
       repos: repo_docs,
@@ -133,10 +130,10 @@ class Github
         start: page,
         per_page: per_page
       },
-      etag: response.headers["ETag"],
+      etag: response.headers["etag"],
       ratelimit: {
-        limit: response.headers["X-RateLimit-Limit"],
-        remaining: response.headers["X-RateLimit-Remaining"]
+        limit: response.headers["x-ratelimit-limit"],
+        remaining: response.headers["x-ratelimit-remaining"]
       }
     }
     repos[:paging].merge! paging_links unless paging_links.nil?
@@ -144,14 +141,14 @@ class Github
   end
 
   def self.repo_branches(user, repo_name)
-    path = "/repos/#{repo_name}/branches?access_token=#{user.github_token}"
-    response = @@conn.get(path: path, headers: A_DEFAULT_HEADERS)
+    url = "#{A_API_URL}/repos/#{repo_name}/branches?access_token=#{user.github_token}"
+    response = get(url, headers: A_DEFAULT_HEADERS)
     catch_github_exception JSON.parse(response.body)
   end
 
   def self.repo_branch_info(user, repo_name, branch = "master")
-    path= "/repos/#{repo_name}/branches/#{branch}?access_token=#{user.github_token}"
-    response = @@conn.get(path: path, headers: A_DEFAULT_HEADERS)
+    url = "#{A_API_URL}/repos/#{repo_name}/branches/#{branch}?access_token=#{user.github_token}"
+    response = get(url, headers: A_DEFAULT_HEADERS)
     catch_github_exception JSON.parse(response.body)
   end
 
@@ -196,8 +193,8 @@ class Github
   # TODO: add tests
   def self.project_file_info(git_project, filename, sha, token)
     result = Hash.new
-    path   = "/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)
-    response = @@conn.get(path, :headers => A_DEFAULT_HEADERS)
+    url   = "#{A_API_URL}/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)
+    response = get(url, :headers => A_DEFAULT_HEADERS)
     tree   = JSON.parse response.body
     tree['tree'].each do |file|
       name           = file['path']
@@ -215,8 +212,8 @@ class Github
 
   def self.fetch_repo_branch_tree(user, repo_name, branch_sha, recursive = false)
     rec_val = (recursive == true) ? 1 : 0
-    path = "/repos/#{repo_name}/git/trees/#{branch_sha}?access_token=#{user.github_token}&recursive=#{rec_val}"
-    response = @@conn.get(path: path, headers: A_DEFAULT_HEADERS )
+    url = "#{A_API_URL}/repos/#{repo_name}/git/trees/#{branch_sha}?access_token=#{user.github_token}&recursive=#{rec_val}"
+    response = get(url, headers: A_DEFAULT_HEADERS )
     if response.status != 200
       msg = "Can't fetch repo tree for `#{repo_name}` from #{url}: #{response.status} #{response.body}"
       Rails.logger.error msg
@@ -275,7 +272,7 @@ class Github
 
   def self.fetch_file( url, token )
     return nil if url.nil? || url.empty?
-    response = Excon.get( "#{url}?access_token=" + URI.escape(token), :headers => A_DEFAULT_HEADERS )
+    response = get( "#{url}?access_token=" + URI.escape(token), :headers => A_DEFAULT_HEADERS )
     if response.status != 200
       Rails.logger.error "Can't fetch file from #{url}:  #{response.code}\n#{response.message}"
       return nil
@@ -284,8 +281,8 @@ class Github
   end
 
   def self.orga_names( github_token )
-    path = "/user/orgs?access_token=#{github_token}"
-    response = @@conn.get(path: path, :headers => A_DEFAULT_HEADERS )
+    url = "#{A_API_URL}/user/orgs?access_token=#{github_token}"
+    response = get(url, :headers => A_DEFAULT_HEADERS )
     organisations = catch_github_exception JSON.parse( response.body )
     names = Array.new
     if organisations.nil? || organisations.empty?
@@ -298,8 +295,8 @@ class Github
   end
 
   def self.private_repo?( github_token, name )
-    path = "/repos/#{name}?access_token=#{github_token}"
-    response = @@conn.get(path: path, :headers => A_DEFAULT_HEADERS )
+    url = "#{A_API_URL}/repos/#{name}?access_token=#{github_token}"
+    response = get(url, :headers => A_DEFAULT_HEADERS )
     repo = catch_github_exception JSON.parse(response.body)
 
     return repo['private'] unless repo.nil? and !repo.is_a(Hash)
@@ -311,8 +308,8 @@ class Github
   end
 
   def self.repo_sha(repository, token)
-    path = "/repos/#{repository}/git/refs/heads?access_token=" + URI.escape(token)
-    response = @@conn.get(path: path, :headers => A_DEFAULT_HEADERS)
+    url = "#{A_API_URL}/repos/#{repository}/git/refs/heads?access_token=" + URI.escape(token)
+    response = get(url, :headers => A_DEFAULT_HEADERS)
     heads = JSON.parse response.body
 
     heads.each do |head|
@@ -323,8 +320,8 @@ class Github
 
   def self.check_user_ratelimit(user)
 
-    path = "/rate_limit?access_token=#{user.github_token}"
-    response = @@conn.get(path: path, :headers => A_DEFAULT_HEADERS)
+    url = "#{A_API_URL}/rate_limit?access_token=#{user.github_token}"
+    response = get(url, :headers => A_DEFAULT_HEADERS)
 
     response = JSON.parse response.body
     response['resources']
@@ -355,8 +352,8 @@ class Github
     search_term.gsub!(/\s+/, '+')
     pagination_data = "page=#{page}&per_page=#{per_page}"
 
-    response = @@conn.get(
-      "/search/repositories?q=#{search_term}&#{pagination_data}",
+    response = get(
+      "#{A_API_URL}/search/repositories?q=#{search_term}&#{pagination_data}",
       headers: {
         "User-Agent" => "#{A_USER_AGENT}",
         "Accept" => "application/vnd.github.preview"
@@ -417,9 +414,9 @@ class Github
     end
 
     def self.parse_paging_links( headers )
-      return nil unless headers.has_key? "Link"
+      return nil unless headers.has_key? "link"
       links = []
-      headers["Link"].split(",").each do |link_token|
+      headers["link"].split(",").each do |link_token|
         matches = link_token.strip.match /<([\w|\/|\.|:|=|?|\&]+)>;\s+rel=\"(\w+)\"/m
         links << [matches[2], matches[1]]
       end
