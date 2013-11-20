@@ -54,8 +54,8 @@ class Github
     }
     url = "#{A_API_URL}/user?access_token=#{URI.escape(user.github_token)}"
     response = head(url, headers: headers)
-    puts response.status
-    response.status != 304
+    puts response.code
+    response.code != 304
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
@@ -214,8 +214,8 @@ class Github
     rec_val = (recursive == true) ? 1 : 0
     url = "#{A_API_URL}/repos/#{repo_name}/git/trees/#{branch_sha}?access_token=#{user.github_token}&recursive=#{rec_val}"
     response = get(url, headers: A_DEFAULT_HEADERS )
-    if response.status != 200
-      msg = "Can't fetch repo tree for `#{repo_name}` from #{url}: #{response.status} #{response.body}"
+    if response.code != 200
+      msg = "Can't fetch repo tree for `#{repo_name}` from #{url}: #{response.code} #{response.body}"
       Rails.logger.error msg
       return nil
     end
@@ -273,7 +273,7 @@ class Github
   def self.fetch_file( url, token )
     return nil if url.nil? || url.empty?
     response = get( "#{url}?access_token=" + URI.escape(token), :headers => A_DEFAULT_HEADERS )
-    if response.status != 200
+    if response.code != 200
       Rails.logger.error "Can't fetch file from #{url}:  #{response.code}\n#{response.message}"
       return nil
     end
