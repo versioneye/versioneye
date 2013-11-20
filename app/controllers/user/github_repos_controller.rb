@@ -7,8 +7,9 @@ class User::GithubReposController < ApplicationController
 
   def index
     task_status  = GitHubService.cached_user_repos(current_user)
-
-    github_repos = GithubRepo.by_user(current_user)
+    
+    github_repos = current_user.github_repos
+    p "Repo from controller: ", github_repos.first
     if github_repos and github_repos.count > 0
       github_repos = github_repos.desc(:commited_at)
       repos = []
@@ -16,7 +17,6 @@ class User::GithubReposController < ApplicationController
         repos << process_repo(repo, task_status)
       end
     end
-
     render json: {
       success: true,
       task_status: task_status,
