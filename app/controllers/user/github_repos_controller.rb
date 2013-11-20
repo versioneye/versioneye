@@ -6,7 +6,6 @@ class User::GithubReposController < ApplicationController
   end
 
   def index
-
     task_status  = GitHubService.cached_user_repos(current_user)
 
     github_repos = GithubRepo.by_user(current_user)

@@ -135,6 +135,7 @@ define(
         loader_notification.html([
             'Got ',  repos.length, 'repositories.'
         ].join(' '));
+
         initViews(repos); // re-render again when importing ready to get pagination right
       } else {
         loader_notification.html([

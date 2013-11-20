@@ -6,6 +6,7 @@ class Github
   A_API_URL    = "https://api.github.com"
   A_WORKERS_COUNT = 4
   A_DEFAULT_HEADERS = {
+    "Accept"     => "application/vnd.github.v3+json",
     "User-Agent" => A_USER_AGENT,
     "Connection" => "Keep-Alive"
   }
@@ -64,6 +65,19 @@ class Github
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
     return false
+  end
+
+  #returns how many repos user has. NB! doesnt count orgs
+  def self.count_user_repos(user)
+    n = 0
+    return n if user[:github_token].nil?
+    
+    url = "#{A_API_URL}/user?access_token=#{user[:github_token]}"
+    user_info = get_json(url, user[:github_token])
+    if user_info
+      n = user_info[:public_repos].to_i + user_info[:total_private_repos].to_i 
+    end
+    return n
   end
 
   def self.user_repos(user, url = nil, page = 1, per_page = 30)
@@ -367,6 +381,13 @@ class Github
       }
     )
     JSON.parse(response.body)
+  end
+
+  def self.get_json(url, token = nil, raw = false)
+    response = get(url)
+    return response if raw
+    content = JSON.parse(response.body, symbolize_names: true)
+    catch_github_exception(content)
   end
 
   def self.support_project_files

@@ -38,6 +38,7 @@ class GitHubService
   NB! allows only one running task per user;
 =end
   def self.cached_user_repos( user )
+    
     user_task_key = "#{user[:username]}-#{user[:github_id]}"
 
     task_status = @@memcache.get(user_task_key)
@@ -47,8 +48,15 @@ class GitHubService
       return task_status
     end
 
-    if user.github_repos.all.count == 0
+    if user[:github_token] and user.github_repos.all.count == 0
       Rails.logger.info "Fetch Repositories from GitHub and cache them in DB."
+      n_repos = Github.count_user_repos(user)
+      if n_repos == 0 
+        Rails.logger.debug "user had no repositories;"
+        task_status = A_TASK_DONE
+        @@memcache.set(user_task_key, task_status)
+        return task_status
+      end
       task_status = A_TASK_RUNNING
       @@memcache.set(user_task_key, task_status)
       Thread.new do
