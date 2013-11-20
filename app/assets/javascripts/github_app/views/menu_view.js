@@ -122,6 +122,7 @@ define(['underscore', 'backbone'],
         btn.find("span.btn-title").text("Reimport all data");
         btn.removeClass("disabled");
       }
+      this.currentRepos.reset();
       this.allRepos.clearAll(restore_state);
       this.trackGA('ga_github_check_changes');
       return true;
