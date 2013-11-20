@@ -31,6 +31,11 @@ define(['underscore', 'backbone',
               "Importing your Github repositories is done."
           );
           this.poller.stop();
+
+          //when we didnt get any repo after polling;
+           if(_.isUndefined(response.repos) || _.isEmpty(response.repos)|| _.isNull(response.repos)){
+             $("#github-repos").html('<strong>No repositories</strong>');
+           }
         }
 
         if(!_.isUndefined(response.repos) && !_.isEmpty(response.repos) && !_.isNull(response.repos)){
