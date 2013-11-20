@@ -159,6 +159,34 @@ describe CocoapodsPodspecParser do
 
     end
 
+
+    it "should add subspecs as dependencies" do
+      DatabaseCleaner.clean
+
+      @product = CocoapodsPodspecParser.new.parse_file './spec/fixtures/files/podspec/subspec_ex1/RestKit.podspec'
+
+      dependencies = Dependency.where({
+        :language     => Product::A_LANGUAGE_OBJECTIVEC,
+        :prod_type    => Project::A_TYPE_COCOAPODS,
+        :prod_key     => 'RestKit'.downcase,
+        :prod_version => '0.22.0'
+        })
+
+      dependencies.count.should eq(5)
+      dependencies.map(&:name).should =~  %w{
+        AFNetworking
+        ISO8601DateFormatterValueTransformer
+        RKValueTransformers
+        SOCKit
+        TransitionKit
+        }
+      # project_dep "RKValueTransformers" "~> 1.0.1"
+      # project_dep "ISO8601DateFormatterValueTransformer" "~> 0.5.0"
+      # project_dep "SOCKit" ">= 0 external_source=nil>"
+      # project_dep "AFNetworking" "~> 1.3.0"
+      # project_dep "TransitionKit" "= 2.0.0"
+    end
+
   end
 
 end

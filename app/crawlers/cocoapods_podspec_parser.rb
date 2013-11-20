@@ -67,6 +67,7 @@ class CocoapodsPodspecParser
     create_version
     create_license
     create_dependencies
+    create_subspecs
     create_repository
     create_developers
     create_homepage_link
@@ -106,6 +107,30 @@ class CocoapodsPodspecParser
     @podspec.dependencies.each do |pod_dep|
       dep = Dependency.find_by_lang_key_and_version(@@language, prod_key, version)
       next if dep
+      dep = Dependency.new({
+        :language      => @@language,
+        :prod_type     => @@prod_type,
+        :prod_key      => prod_key,
+        :prod_version  => version,
+
+        :dep_prod_key  => pod_dep.to_s,
+        :version       => pod_dep.version,
+        })
+      dep.save
+    end
+  end
+
+  def create_subspecs
+
+    # get all dependencies of all sub dependencies
+    deps = @podspec.subspecs.map(&:dependencies).flatten
+
+    #remove subspecs from dependencies
+    subspec_start = "#{spec.name}/"
+    outter_dep = deps.delete_if {|d| d.name.start_with? subspec_start}
+
+    outter_dep.each do |dep|
+      # TODO create scopes
       dep = Dependency.new({
         :language      => @@language,
         :prod_type     => @@prod_type,
