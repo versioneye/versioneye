@@ -25,12 +25,19 @@ class BowerCrawler
 
     #TODO: add continuing from last place
     task1 = Thread.new {crawl_existing_sources(source_url, token)}
-    task2 = Thread.new {crawl_bower_packages(token)}
+    task2 = Thread.new do
+      begin
+        crawl_bower_packages(token)
+      rescue => e
+        p "Exception on task.2", e.message
+      end
+    end
     task1.join; task2.join
 
+    #for debugging 2nd worker
     #tasks = CrawlerTask.by_task(A_TASK_READ_PROJECT)
     #tasks.each_with_index {|task, i| add_bower_package(task, token, i)}
-    p "Crawler finished"
+    #p "Crawler finished"
   end
 
   def self.crawl_existing_sources(source_url, token)
@@ -133,32 +140,31 @@ class BowerCrawler
   
   def self.add_bower_package(task, token, imported)
     check_rate_limit if (imported % A_MINIMUM_RATE_LIMIT) == 0
-    success = false
     p "#-- reading #{task[:full_name]} from url: #{task[:url]}"
     pkg_info = self.read_project_info_from_github(task, token)
-
-    if pkg_info
-      prod = create_bower_package(pkg_info, token)
-    else
-      p "Skipped: `#{task[:url]}`."
-      return
-    end
+    result = false
+    prod = nil
+    prod = create_bower_package(pkg_info, token) if pkg_info
 
     if prod and prod.save
       newest = to_newest(prod) #newest model is used for latest_releases stats
       p "Imported: #{prod[:prod_key]}"
       task.update_attributes({
-        re_crawl: false
+        re_crawl: false,
+        runs: task[:runs] + 1,
+        task_failed: true
       })
-      success =  true
+      result =  true
     else
-      p "#-- Failed to save: '#{task}'"
+      p "#-- Failed to import: '#{task[:repo_fullname]}'"
       task.update_attributes({
-        re_crawl: true
+        re_crawl: true,
+        runs: task[:runs] + 1,
+        fails: task[:fails] + 1,
+        task_failed: true
       })
     end
-
-    success
+    result
   end
 
   #saves product and save sub/related docs
@@ -205,7 +211,7 @@ class BowerCrawler
       file_url = "#{Github::A_API_URL}/repos/#{owner}/#{repo}/contents/#{filename}"
       project_file = read_project_file_from_url(file_url, token)
       if project_file.is_a?(Hash)
-        p "Found: #{filename}"
+        p "Found: #{filename} for #{task[:repo_fullname]}"
         pkg_info = to_pkg_info(owner, repo, repo_url, project_file) 
         break
       end
