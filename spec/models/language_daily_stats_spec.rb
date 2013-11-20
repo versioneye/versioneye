@@ -176,7 +176,6 @@ describe LanguageDailyStats do
       stats =  LanguageDailyStats.two_months_ago_stats
 
       stats.should_not be_nil
-      p stats
       stats.empty?.should be_false
       stats.has_key?("Ruby").should be_true
       stats["Ruby"].has_key?("new_version")
