@@ -28,9 +28,9 @@ class Github
 
   def self.user(token)
     return nil if token.to_s.empty?
-
-    path           = "/user?access_token=" + URI.escape( token )
-    response      =  @@conn.get(path: path, :headers => A_DEFAULT_HEADERS )
+    path          = "/user?access_token=" + URI.escape( token )
+    url          = "#{A_API_URL}#{path}"
+    response      = HTTParty.get( url, :headers => {"User-Agent" => A_USER_AGENT } )
     json_user     = JSON.parse response.body
     catch_github_exception json_user
   end
