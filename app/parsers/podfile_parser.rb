@@ -86,7 +86,6 @@ class PodfileParser < CommonParser
 
 
   def create_dependencies
-
     # TODO make scopes out of the target definitions
     # target_def = @pod_hash["target_definitions"]
 
@@ -97,6 +96,7 @@ class PodfileParser < CommonParser
       create_dependency d.name => d.requirement.as_list
     end
 
+    @project.dep_number = @project.projectdependencies.count
     Rails.logger.info "Project has #{@project.projectdependencies.count} dependencies"
   end
 
@@ -107,35 +107,20 @@ class PodfileParser < CommonParser
     end
 
     dependency = create_dependency_from_hash( dep )
-    dependency.outdated?
+    @project.out_number     += 1 if dependency.outdated?
+    @project.unknown_number += 1 if dependency.prod_key.nil?
     @project.projectdependencies.push dependency
     dependency.save
     dependency
   end
 
-  def create_dependency_from_string name
-    Rails.logger.debug "create_dependency '#{name}' (name only => latest stable version)"
-    product  = load_product( name.downcase )
-    version  = nil
-    prod_key = nil
-    version  = product.version if product
-    prod_key = product.prod_key if product
-    dependency = Projectdependency.new({
-      :language => @@language,
-      :prod_key => prod_key,
-      :name     => name,
-      :version_requested => version,
-      :comperator => "="
-      })
-    dependency
-  end
-
-
   def create_dependency_from_hash dep_hash
     name = dep_hash.keys.first
     reqs = dep_hash[name]
 
+    prod_key = nil
     product = load_product( name )
+    prod_key = product.prod_key if product
 
     requirement = reqs.map do |req_version|
       v_hash = version_hash(req_version, name, product)
@@ -147,7 +132,7 @@ class PodfileParser < CommonParser
 
     dependency = Projectdependency.new({
       :language => @@language,
-      :prod_key => name.downcase,
+      :prod_key => prod_key,
       :name     => name,
       :version_requested  => requirement.first[:version_requested],
       :comperator         => requirement.first[:comperator],
@@ -164,12 +149,8 @@ class PodfileParser < CommonParser
     return {:comperator => comperator, :version_requested => version}
   end
 
-  def version_hash version_from_file, prod_name, prod
-    if :head == version_from_file
-      Rails.logger.debug "WARNING dependency '#{prod_name}' requires HEAD" # TODO
-      return {:version_requested => "HEAD", :version_label => "HEAD", :comperator => "="}
-
-    elsif :git == version_from_file
+  def version_hash version_from_file, prod_name, product
+    if [:git, :head].member? version_from_file
       Rails.logger.debug "WARNING dependency '#{prod_name}' requires GIT" # TODO
       return {:version_requested => "GIT", :version_label => "GIT", :comperator => "="}
 
@@ -184,8 +165,8 @@ class PodfileParser < CommonParser
       comperator = comperator_version[:comperator]
       version    = comperator_version[:version_requested]
 
-      if prod
-        version_requested = best_version(comperator, version, prod.versions)
+      if product
+        version_requested = best_version(comperator, version, product.versions)
         return {:version_requested => version_requested, :version_label => version_from_file, :comperator => comperator}
       end
 

@@ -1,0 +1,9 @@
+pod 'RestKit'
+
+target :debug do
+    pod 'CocoaLumberjack'
+end
+
+target :test, :exclusive => true do
+    pod 'Kiwi'
+end
