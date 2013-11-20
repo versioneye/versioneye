@@ -1,13 +1,13 @@
 require 'cocoapods-core'
 
-class PodfilelockParser < CommonParser
+class PodLockFileParser < CommonParser
 
   #Pod::Lockfile
-
+  
   def parse_file filename
     @lock_filename = filename
-    file = File.new @lock_filename
-    @lock_file = Pod::Lockfile.from_file file
+    pathname = Pathname.new @lock_filename
+    @lock_file = Pod::Lockfile.from_file pathname
     create_project
   end
 
@@ -46,6 +46,4 @@ class PodfilelockParser < CommonParser
     dependency.save
     dependency
   end
-
-
 end
