@@ -1,0 +1,10 @@
+platform :ios
+
+pod 'SSToolkit'
+pod 'AFNetworking', '>= 0.2.1'
+pod 'CocoaLumberjack', '~> 1.2.0'
+pod 'Objection', :head # 'bleeding edge'
+pod 'JSONKit', '1.1.0'
+pod 'HipsterInBerlin'
+
+generate_bridge_support!

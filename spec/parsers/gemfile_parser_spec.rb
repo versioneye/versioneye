@@ -118,9 +118,10 @@ describe GemfileParser do
 
       dep_8 = project.dependencies[7]
       dep_8.name.should eql("sass-rails")
-      dep_8.version_requested.should eql("3.2.9")
+      dep_8.version_requested.should eql("3.3.9")
       dep_8.version_current.should eql("3.3.9")
       dep_8.comperator.should eql("~>")
+      dep_8.outdated.should be_false
 
       dep_9 = project.dependencies[8]
       dep_9.name.should eql("cucumber-rails")

@@ -1,7 +1,11 @@
 
 <div class="container" id="login" >
   <div class="pull-left" style="padding-top: 10px;">
-    <%= image_tag "logos/versioneye-transparent.png" %>
+    <% if signed_in? %>
+      <%= link_to image_tag("logos/versioneye-transparent.png"), user_projects_path %>
+    <% else %>
+      <%= image_tag "logos/versioneye-transparent.png" %>
+    <% end %>
   </div>
 
     <% unless current_user %>

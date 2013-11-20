@@ -5,7 +5,7 @@ gem 'rails'              , '3.2.15'
 gem 'jquery-rails'       , '2.2.1'
 gem 'execjs'             , '2.0.2'
 gem 'will_paginate'      , '3.0.5'
-gem 'gravatar_image_tag' , '1.1.3'
+gem 'gravatar_image_tag' , '1.2.0'
 gem 'mongoid'            , '3.1.5'
 gem 'naturalsorter'      , '2.0.6'
 gem 'postmark-rails'     , '0.5.2'
@@ -28,9 +28,9 @@ gem 'htmlentities'       , '4.3.1'
 gem 'capistrano'         , '2.15.5'
 gem 'whenever'           , '0.8.4'
 gem 'bourbon'            , '3.1.8'
-gem 'ruby_regex'         , '0.1.0'
-gem 'cocoapods-core'     , '0.27.1'
-gem 'octokit'            , "~> 2.5.1"
+gem 'ruby_regex'         , '~> 0.1.0'
+gem 'cocoapods-core'     , '0.28.0'
+gem 'octokit'            , "~> 2.6.0"
 
 group :development do
   gem 'psych'             , '2.0.1'
@@ -45,7 +45,7 @@ group :assets do
   gem 'sass'          , :require => 'sass'
   gem 'sass-rails'    , "3.2.6"
   gem 'coffee-rails'  , "3.2.2"
-  gem 'uglifier'      , '2.3.0'
+  gem 'uglifier'      , '~> 2.3.0'
   gem 'yui-compressor', '0.12.0'
 end
 

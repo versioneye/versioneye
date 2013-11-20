@@ -298,7 +298,6 @@ class Github
     url = "#{A_API_URL}/repos/#{name}?access_token=#{github_token}"
     response = get(url, :headers => A_DEFAULT_HEADERS )
     repo = catch_github_exception JSON.parse(response.body)
-
     return repo['private'] unless repo.nil? and !repo.is_a(Hash)
     false
   rescue => e
@@ -362,13 +361,9 @@ class Github
     JSON.parse(response.body)
   end
 
-  def self.supported_languages
-    Set['java', 'ruby', 'python', 'node.js', 'php', 'javascript', 'coffeescript', 'clojure']
-  end
-
   def self.support_project_files
     Set['pom.xml', 'Gemfile', 'Gemfile.lock', 'composer.json', 'composer.lock', 'requirements.txt',
-        'setup.py', 'package.json','bower.json', 'dependency.gradle', 'project.clj']
+        'setup.py', 'package.json','bower.json', 'dependency.gradle', 'project.clj', 'Podfile']
   end
 
   def self.encode_db_key(key_val)
@@ -379,17 +374,6 @@ class Github
   end
 
   private
-    def self.language_supported?(lang)
-      return false if lang.nil?
-      lang.casecmp('Java')         == 0 ||
-      lang.casecmp('Ruby')         == 0 ||
-      lang.casecmp('Python')       == 0 ||
-      lang.casecmp('Node.JS')      == 0 ||
-      lang.casecmp("CoffeeScript") == 0 ||
-      lang.casecmp("JavaScript")   == 0 ||
-      lang.casecmp("PHP")          == 0 ||
-      lang.casecmp("Clojure")      == 0
-    end
 
 =begin
   Method that checks does Github sent error message

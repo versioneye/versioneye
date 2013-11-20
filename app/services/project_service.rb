@@ -10,6 +10,7 @@ class ProjectService
     return Project::A_TYPE_MAVEN2   if trimmed_name.match(/pom.xml$/) or trimmed_name.match(/pom.json$/)
     return Project::A_TYPE_LEIN     if trimmed_name.match(/project.clj$/)
     return Project::A_TYPE_BOWER    if trimmed_name.match(/^bower.json$/)
+    return Project::A_TYPE_COCOAPODS if trimmed_name.match(/Podfile$/) or trimmed_name.match(/.podfile$/)
     return nil
   end
 
