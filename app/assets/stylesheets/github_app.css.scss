@@ -52,15 +52,16 @@
   .label {
     display: inline;
     font-weight: 400;
-    font-size: 0.8em;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
+    margin-right: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
   }
 
   .repo-info .repo-desc {
     max-height: 200px;
     overflow: scroll;
+    padding-top: 5px;
   }
 
   .github-repo-control {
@@ -106,7 +107,7 @@
       border: 2px solid #97989C; border-radius: 4px;
       position: absolute; top: 0; bottom: 0; right: 46px;
       -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
-      -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+      -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s;
   }
 
   .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {

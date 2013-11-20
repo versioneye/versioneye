@@ -21,4 +21,9 @@
       For Maven based packages currently we don't have the real release dates. We can only show the date we detected a specific version.
     </div>
   <% end %>
+  <% if @product.language.eql?(Product::A_LANGUAGE_OBJECTIVEC) %>
+    <div style="margin-top: 10px; font-size: 12px;">
+      Currently we don't have all released dates for Objective-C packages. Might be that you see the date we detected the package. We are working on it to get complete data!
+    </div>
+  <% end %>
 <% end %>
