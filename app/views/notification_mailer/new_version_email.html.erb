@@ -15,7 +15,7 @@
           <% next if product.nil? %>
           <tr>
             <td style="vertical-align: top;">
-              <% version = product.version_by_number( notification.version_id ) %>
+              <% version = product.version_by_number( notification.version ) %>
               <img src= "http://www.versioneye.com/assets/language/<%= product.language.downcase %>.png" style = "width: 48px; height: 48px;"/>
             </td>
             <td style = "vertical-align: middle;">

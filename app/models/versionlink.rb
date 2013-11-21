@@ -27,7 +27,7 @@ class Versionlink
       product = Product.find_by_lang_key( self.language, self.prod_key )
     end
     return nil if product.nil?
-    product.version = self.version_id
+    product.version = self.version
     product
   end
 
@@ -35,8 +35,8 @@ class Versionlink
     Versionlink.where( language: language, prod_key: prod_key, link: link )[0]
   end
 
-  def self.find_version_link(language, prod_key, version_id, link)
-    Versionlink.where( language: language, prod_key: prod_key, version_id: version_id, link: link )
+  def self.find_version_link(language, prod_key, version, link)
+    Versionlink.where( language: language, prod_key: prod_key, version: version, link: link )
   end
 
   def self.create_versionlink language, prod_key, version_number, link, name
@@ -50,7 +50,7 @@ class Versionlink
       return nil
     end
     versionlink = Versionlink.new({:name => name, :link => link, :language => language,
-      :prod_key => prod_key, :version_id => version_number })
+      :prod_key => prod_key, :version => version_number })
     versionlink.save
   end
 
