@@ -9,5 +9,4 @@ class PackageManager
     project_dependency
   end
 
-
 end

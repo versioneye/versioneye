@@ -104,8 +104,7 @@ class Dependency
     elsif prod_type.eql?( Project::A_TYPE_NPM )
       abs_version = String.new( npm_version_parsed )
     elsif prod_type.eql?( Project::A_TYPE_COCOAPODS )
-      # TODO make this an own method
-      abs_version = String.new( gem_version_parsed )
+      abs_version = String.new( cocoapods_version_parsed )
     end
     # TODO cases for java
     abs_version
@@ -117,6 +116,14 @@ class Dependency
     dependency     = Projectdependency.new
     parser         = GemfileParser.new
     parser.parse_requested_version(version_string, dependency, product)
+    dependency.version_requested
+  end
+
+  def cocoapods_version_parsed
+    version_string = String.new(version)
+    product        = Product.fetch_product( self.language, self.dep_prod_key )
+    dependency     = Projectdependency.new
+    CocoapodsPackageManager.parse_requested_version(version_string, dependency, product)
     dependency.version_requested
   end
 
