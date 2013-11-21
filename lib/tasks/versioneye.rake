@@ -50,6 +50,10 @@ namespace :versioneye do
     puts "START to send out weekly project notification E-Mails."
     ProjectService.update_all( Project::A_PERIOD_WEEKLY )
     puts "STOP to send out weekly project notification E-Mails."
+
+    puts "START to send out verification reminder E-Mails."
+    User.send_verification_reminders
+    puts "STOP to send out verification reminder E-Mails."
   end
 
   desc "excute monthly jobs"
