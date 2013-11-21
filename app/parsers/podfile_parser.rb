@@ -177,7 +177,7 @@ class PodfileParser < CommonParser
   # It is important that this method is not writing into the database!
   #
   def parse_requested_version(version_number, dependency, product)
-    # This method has to be on every parser.
+    CocoapodsPackageManager.parse_requested_version( version_number, dependency, product )
   end
 
   def best_version(comperator, version, versions)

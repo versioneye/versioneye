@@ -35,4 +35,7 @@ class License
     return nil
   end
 
+  def to_s
+    "[License for(#{language}/#{prod_key}/#{version}) : #{name}]"
+  end
 end
