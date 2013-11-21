@@ -15,7 +15,7 @@ class UserNotificationSetting
     count = 0
     users = User.all()
     users.each do |user|
-      next if user.deleted
+      next if user.deleted || user.email_inactive
       notification_setting = self.fetch_or_create_notification_setting( user )
       if notification_setting.newsletter_features
         UserNotificationSetting.send_newsletter_new_features_for_user( user )
