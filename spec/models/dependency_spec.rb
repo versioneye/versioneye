@@ -11,21 +11,10 @@ describe Dependency do
       product.prod_key = "gasgagasgj8623_jun44444it/juasgnit23afsg"
       product.language = Product::A_LANGUAGE_RUBY
 
-      version = Version.new
-      version.version = "1.0"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "1.1"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "1.2"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.0"
-      product.versions.push(version)
+      product.versions.push(Version.new({:version => "1.0"}))
+      product.versions.push(Version.new({:version => "1.1"}))
+      product.versions.push(Version.new({:version => "1.2"}))
+      product.versions.push(Version.new({:version => "2.0"}))
       product.save
 
       dependency = Dependency.new
@@ -44,30 +33,12 @@ describe Dependency do
       product.prod_key = "huj_buuuuu"
       product.language = Product::A_LANGUAGE_RUBY
 
-      version = Version.new
-      version.version = "1.2"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.0"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.2.1"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.2.2"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.2.9"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.3"
-      product.versions.push(version)
-
+      product.versions.push(Version.new({:version => "1.2"}))
+      product.versions.push(Version.new({:version => "2.0"}))
+      product.versions.push(Version.new({:version => "2.2.1"}))
+      product.versions.push(Version.new({:version => "2.2.2"}))
+      product.versions.push(Version.new({:version => "2.2.9"}))
+      product.versions.push(Version.new({:version => "2.3"}))
       product.save
 
       dependency = Dependency.new
@@ -94,21 +65,10 @@ describe Dependency do
       product.prod_key = "gasgagasgj8623_jun44444it/juasgnit23afsg"
       product.language = Product::A_LANGUAGE_OBJECTIVEC
 
-      version = Version.new
-      version.version = "1.0"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "1.1"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "1.2"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.0"
-      product.versions.push(version)
+      product.versions.push(Version.new({:version => "1.0"}))
+      product.versions.push(Version.new({:version => "1.1"}))
+      product.versions.push(Version.new({:version => "1.2"}))
+      product.versions.push(Version.new({:version => "2.0"}))
       product.save
 
       dependency = Dependency.new
@@ -127,29 +87,12 @@ describe Dependency do
       product.prod_key = "huj_buuuuu"
       product.language = Product::A_LANGUAGE_OBJECTIVEC
 
-      version = Version.new
-      version.version = "1.2"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.0"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.2.1"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.2.2"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.2.9"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.3"
-      product.versions.push(version)
+      product.versions.push(Version.new({:version => "1.2"}))
+      product.versions.push(Version.new({:version => "2.0"}))
+      product.versions.push(Version.new({:version => "2.2.1"}))
+      product.versions.push(Version.new({:version => "2.2.2"}))
+      product.versions.push(Version.new({:version => "2.2.9"}))
+      product.versions.push(Version.new({:version => "2.3"}))
 
       product.save
 
@@ -178,21 +121,10 @@ describe Dependency do
       product.language = Product::A_LANGUAGE_RUBY
       product.prod_key = "gasgj8623_jun44444it/juat23afsg"
 
-      version = Version.new
-      version.version = "1.0"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "1.1"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "1.2"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.0"
-      product.versions.push(version)
+      product.versions.push(Version.new({:version => "1.0"}))
+      product.versions.push(Version.new({:version => "1.1"}))
+      product.versions.push(Version.new({:version => "1.2"}))
+      product.versions.push(Version.new({:version => "2.0"}))
       product.save
 
       dependency = Dependency.new
@@ -211,34 +143,13 @@ describe Dependency do
       product.prod_key = "huj_buuuuu"
       product.language = Product::A_LANGUAGE_RUBY
 
-      version = Version.new
-      version.version = "1.2"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.0"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.2.1"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.2.2"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.2.9"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.3"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "3.0"
-      product.versions.push(version)
-
+      product.versions.push(Version.new({:version => "1.2"}))
+      product.versions.push(Version.new({:version => "2.0"}))
+      product.versions.push(Version.new({:version => "2.2.1"}))
+      product.versions.push(Version.new({:version => "2.2.2"}))
+      product.versions.push(Version.new({:version => "2.2.9"}))
+      product.versions.push(Version.new({:version => "2.3"}))
+      product.versions.push(Version.new({:version => "3.0"}))
       product.save
 
       dependency = Dependency.new
@@ -265,21 +176,10 @@ describe Dependency do
       product.language = Product::A_LANGUAGE_RUBY
       product.prod_key = "gasgj8623_jun44444it/juat23afsg"
 
-      version = Version.new
-      version.version = "1.0"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "1.1"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "1.2"
-      product.versions.push(version)
-
-      version = Version.new
-      version.version = "2.0"
-      product.versions.push(version)
+      product.versions.push(Version.new({:version => "1.0"}))
+      product.versions.push(Version.new({:version => "1.1"}))
+      product.versions.push(Version.new({:version => "1.2"}))
+      product.versions.push(Version.new({:version => "2.0"}))
       product.save
 
       dependency = Dependency.new
