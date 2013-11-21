@@ -21,7 +21,7 @@ class LicenseMigration
       licenses = License.where(:language => product.language, :prod_key => product.prod_key)
       next if licenses && !licenses.empty?
       product.versions.each do |version|
-        license = License.new({ :language => product.language, :prod_key => product.prod_key, :version => version.version,
+        license = License.new({ :language => product.language, :prod_key => product.prod_key, :version => version.to_s,
           :name => product.license_info, :url => product.license_link_info })
         license.save
         p "create license #{license.name} - #{license.url} for #{license.prod_key} : #{license.version}"

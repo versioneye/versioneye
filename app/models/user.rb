@@ -108,6 +108,7 @@ class User
   def self.send_verification_reminders
     users = User.where( :verification.ne => nil )
     users.each do |user|
+      next if user.email_inactive
       user.send_verification_reminder
     end
   end
