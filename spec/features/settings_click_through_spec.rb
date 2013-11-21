@@ -16,7 +16,6 @@ describe "Settings click throgh" do
 
     it "clicks through all links without errors" do
       visit settings_profile_path
-      page.should have_content(@user.fullname)
       page.should have_content("Profile")
       page.should have_content("Links")
       page.should have_content("E-Mails")
