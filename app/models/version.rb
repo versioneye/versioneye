@@ -54,4 +54,8 @@ class Version
     uid.to_s.to_i(16).to_s(10)
   end
 
+  def to_s
+    version
+  end
+
 end
