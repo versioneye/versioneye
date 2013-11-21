@@ -148,7 +148,7 @@ class Product
 
   def version_by_number( searched_version )
     versions.each do |version|
-      return version if version.version.eql?( searched_version )
+      return version if version.to_s.eql?( searched_version )
     end
     nil
   end

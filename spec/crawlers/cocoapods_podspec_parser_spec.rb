@@ -27,7 +27,7 @@ describe CocoapodsPodspecParser do
         product.versions.size.should == 1
 
         version = product.versions.first
-        version.version.should eq '3.1.1'
+        version.to_s.should eq '3.1.1'
 
         Versionlink.count.should == 1
         Developer.count.should == 1
@@ -69,7 +69,7 @@ describe CocoapodsPodspecParser do
         versions = product.versions
         versions.size.should == 1
         version = versions.first
-        version.version.should == '3.1.1'
+        version.to_s.should == '3.1.1'
       end
 
       def should_not_create_more_developers

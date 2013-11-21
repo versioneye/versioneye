@@ -90,11 +90,11 @@ class ProductMigration
   def self.remove_leading_vs(lang)
     Product.where(language: lang).each do |product|
       product.versions.each do |version|
-        if version.version.match(/v[0-9]+\..*/)
-          Rails.logger.info "#{version.version}"
-          version.version = version.version.gsub("v", "")
+        if version.to_s.match(/v[0-9]+\..*/)
+          Rails.logger.info "#{version}"
+          version.version = version.to_s.gsub("v", "")
           product.save
-          Rails.logger.info " -- #{version.version}"
+          Rails.logger.info " -- #{version}"
         end
       end
     end
@@ -140,7 +140,7 @@ class ProductMigration
     Product.where(language: lang).each do |product|
       product.versions.each do |version|
         if version.released_string.nil?
-          Rails.logger.info "#{product.name} - #{version.version} - empty!"
+          Rails.logger.info "#{product.name} - #{version.to_s} - empty!"
           next
         end
       end

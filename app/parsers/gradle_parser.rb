@@ -80,7 +80,7 @@ class GradleParser < CommonParser
       versions        = VersionService.versions_start_with( product.versions, starter )
       highest_version = VersionService.newest_version_from( versions )
       if highest_version
-        dependency.version_requested = highest_version.version
+        dependency.version_requested = highest_version.to_s
       else
         dependency.version_requested = ver
       end

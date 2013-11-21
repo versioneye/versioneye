@@ -5,8 +5,8 @@ class VersionService
     return nil if versions.nil? || versions.empty?
     filtered = Array.new
     versions.each do |version|
-      next if version.version.eql?("dev-master")
-      if VersionTagRecognizer.does_it_fit_stability? version.version, stability
+      next if version.to_s.eql?("dev-master")
+      if VersionTagRecognizer.does_it_fit_stability? version.to_s, stability
         filtered << version
       end
     end
@@ -19,7 +19,7 @@ class VersionService
   def self.newest_version_number( versions, stability = "stable" )
     version = newest_version( versions, stability )
     return nil if version.nil?
-    return version.version
+    return version.to_s
   end
 
 
@@ -76,8 +76,8 @@ class VersionService
     # get all versions from range ( >=start <=stop )
     range = Array.new
     versions.each do |version|
-      fits_stop  = Naturalsorter::Sorter.smaller_or_equal?( version.version, stop  )
-      fits_start = Naturalsorter::Sorter.bigger_or_equal?(  version.version, start )
+      fits_stop  = Naturalsorter::Sorter.smaller_or_equal?( version.to_s, stop  )
+      fits_start = Naturalsorter::Sorter.bigger_or_equal?(  version.to_s, start )
       if fits_start && fits_stop
         range.push(version)
       end
@@ -90,7 +90,7 @@ class VersionService
     result = Array.new
     return result if versions.nil? || versions.empty?
     versions.each do |version|
-      if version.version.match(/^#{val}/)
+      if version.to_s.match(/^#{val}/)
         result.push(version)
       end
     end
@@ -102,7 +102,7 @@ class VersionService
   def self.newest_but_not( versions, value, range=false, stability = "stable")
     filtered_versions = Array.new
     versions.each do |version|
-      if !version.version.match(/^#{value}/)
+      if !version.to_s.match(/^#{value}/)
         filtered_versions.push(version)
       end
     end
@@ -115,7 +115,7 @@ class VersionService
   def self.greater_than( versions, value, range = false, stability = "stable")
     filtered_versions = Array.new
     versions.each do |version|
-      if Naturalsorter::Sorter.bigger?(version.version, value)
+      if Naturalsorter::Sorter.bigger?(version.to_s, value)
         filtered_versions.push(version)
       end
     end
@@ -128,7 +128,7 @@ class VersionService
   def self.greater_than_or_equal( versions, value, range = false, stability = "stable")
     filtered_versions = Array.new
     versions.each do |version|
-      if Naturalsorter::Sorter.bigger_or_equal?(version.version, value)
+      if Naturalsorter::Sorter.bigger_or_equal?(version.to_s, value)
         filtered_versions.push(version)
       end
     end
@@ -141,7 +141,7 @@ class VersionService
   def self.smaller_than( versions, value, range = false, stability = "stable")
     filtered_versions = Array.new
     versions.each do |version|
-      if Naturalsorter::Sorter.smaller?(version.version, value)
+      if Naturalsorter::Sorter.smaller?(version.to_s, value)
         filtered_versions.push(version)
       end
     end
@@ -154,7 +154,7 @@ class VersionService
   def self.smaller_than_or_equal( versions, value, range = false, stability = "stable")
     filtered_versions = Array.new
     versions.each do |version|
-      if Naturalsorter::Sorter.smaller_or_equal?(version.version, value)
+      if Naturalsorter::Sorter.smaller_or_equal?(version.to_s, value)
         filtered_versions.push(version)
       end
     end
@@ -169,8 +169,8 @@ class VersionService
     versions = product.versions
     return nil if versions.nil? || versions.empty?
     newest_stable_version = self.newest_version( versions )
-    return nil if newest_stable_version.version.eql?( product.version)
-    product.version      = newest_stable_version.version
+    return nil if newest_stable_version.to_s.eql?( product.version)
+    product.version      = newest_stable_version.to_s
     product.save if persist
   rescue => e
     Rails.logger.error e.message
@@ -208,7 +208,6 @@ class VersionService
     average = diff_days / sorted_versions.size
     average
   rescue => e
-    p e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
     nil
@@ -227,13 +226,8 @@ class VersionService
     end
 
     def self.get_newest_or_value(newest, value)
-      if newest.nil?
-        version = Version.new
-        version.version = value
-        return version
-      else
-        return newest
-      end
+      return Version.new({:version => value}) if newest.nil?
+      return newest
     end
 
 end

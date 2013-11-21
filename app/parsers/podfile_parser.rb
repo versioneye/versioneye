@@ -194,7 +194,7 @@ class PodfileParser < CommonParser
       starter         = VersionService.version_approximately_greater_than_starter( version )
       possible_vers   = VersionService.versions_start_with( versions, starter )
       highest_version = VersionService.newest_version_from( possible_vers )
-      return highest_version.version if highest_version
+      return highest_version.to_s if highest_version
       return version
     else
       version

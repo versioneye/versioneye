@@ -1,5 +1,5 @@
 
-<% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.version ) %>
+<% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.to_s ) %>
 <% if !downloads.nil? && !downloads.empty? %>
 
   <div class = "well row box_snippet" style="margin-bottom: 5px;" >

@@ -13,6 +13,10 @@ class Version
 
   embedded_in :product
 
+  def to_s
+    version.to_s
+  end
+
   def as_json(parameter=nil)
     {
       :version    => self.version,
