@@ -21,7 +21,7 @@ class Product
   field :prod_key     , type: String # Unique identifier inside a language
   field :prod_type    , type: String # Identifies the package manager
   field :language     , type: String
-  field :version      , type: String
+  field :version      , type: String # latest stable version
 
   field :group_id   , type: String # Maven specific
   field :artifact_id, type: String # Maven specific
@@ -44,7 +44,7 @@ class Product
   index({updated_at: -1}, {background: true})
   index({updated_at: -1, language: -1}, {background: true})
 
-  embeds_many :versions
+  embeds_many :versions     # unsorted versions
   embeds_many :repositories
 
   has_and_belongs_to_many :users
