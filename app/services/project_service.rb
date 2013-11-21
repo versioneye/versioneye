@@ -59,12 +59,14 @@ class ProjectService
   end
 
   def self.update( project, send_email = false )
-    return nil if project.nil? || project.user_id.nil?
+    return nil if project.nil?
+    return nil if project.user_id.nil? || project.user.nil?
+    return nil if project.user.deleted
     self.update_url( project )
     new_project = self.build_from_url( project.url )
     project.update_from( new_project )
     if send_email && project.out_number > 0
-      p "send out email notification for project: #{project.name} to user #{project.user.fullname}"
+      Rails.logger.info "send out email notification for project: #{project.name} to user #{project.user.fullname}"
       ProjectMailer.projectnotification_email( project ).deliver
     end
     project
