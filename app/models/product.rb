@@ -154,6 +154,10 @@ class Product
       return version if version[:version].to_s.eql?( searched_version )
     end
     nil
+  rescue => e
+    p e.message
+    Rails.logger.error e
+    nil
   end
 
   def versions_empty?
