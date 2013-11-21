@@ -15,7 +15,7 @@ define(['underscore', 'backbone'],
       this.collection.on('all', this.render, this);
       this.currentRepos = options.currentRepos;
       this.allRepos = options.allRepos;
-      this.fetchAll = options.fetchAll;
+      this.repoView = options.repoView;
     },
     events: {
       "click li.org-item": "onOrgItem",
@@ -24,7 +24,7 @@ define(['underscore', 'backbone'],
       "click #github-search-btn": "onSearchItem",
       "submit #github-repo-search" : "onSearchItem",
       "keyup #github-repo-search": "onSearchItem",
-      "click #refresh-github-data": "onCheckChanges"
+      "click #refresh-github-data": "onRefillCache"
     },
     render: function(){
       console.log("Rendering menu...");
@@ -103,7 +103,7 @@ define(['underscore', 'backbone'],
       return true;
     },
 
-    onCheckChanges: function(ev){
+    onRefillCache: function(ev){
       btn = jQuery(ev.currentTarget);
 
       if(btn.hasClass("disabled")){
@@ -114,14 +114,16 @@ define(['underscore', 'backbone'],
       btn.addClass("disabled");
       btn.find("span.btn-title").text("Please wait...");
       btn.find(".btn-icon").addClass("icon-spin");
-
+      var that = this;
       var restore_state = function(){
+        that.repoView.resetView();
         var btn = btn;
         btn.find(".btn-icon").removeClass("icon-spin");
         btn.find("span.btn-title").text("Reimport all data");
         btn.removeClass("disabled");
       }
-      this.fetchAll(restore_state);
+      this.currentRepos.reset();
+      this.allRepos.clearAll(restore_state);
       this.trackGA('ga_github_check_changes');
       return true;
     },
