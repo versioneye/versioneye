@@ -6,10 +6,8 @@ class User::GithubReposController < ApplicationController
   end
 
   def index
-    task_status  = GitHubService.cached_user_repos(current_user)
-    
+    task_status  = GitHubService.cached_user_repos(current_user) 
     github_repos = current_user.github_repos
-    p "Repo from controller: ", github_repos.first
     if github_repos and github_repos.count > 0
       github_repos = github_repos.desc(:commited_at)
       repos = []
