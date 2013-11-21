@@ -1,12 +1,12 @@
 class PackageManager
 
-  def self.update_requested_with_current( dependency, product )
+  def self.update_requested_with_current( project_dependency, product )
     if product && product.version
-      dependency.version_requested = product.version
+      project_dependency.version_requested = product.version
     else
-      dependency.version_requested = "UNKNOWN"
+      project_dependency.version_requested = "UNKNOWN"
     end
-    dependency
+    project_dependency
   end
 
 

@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'ruby-debug'
 
 describe CocoapodsPackageManager do
 
@@ -7,7 +6,8 @@ describe CocoapodsPackageManager do
     Version.new({:version => string})
   end
 
-  def versions *arr
+  def versions arr
+    raise "no array" unless arr.is_a? Array
     arr.map { |v_string| version(v_string) }
   end
 
@@ -20,8 +20,7 @@ describe CocoapodsPackageManager do
 
   describe ".choose_version" do
     describe "~>" do
-      it "'~> 0.1.0' means latest 0.1.x" do
-        # debugger
+      example "'~> 0.1.0' means latest 0.1.x" do
         versions = versions(['0.2.0', '0.1.4', '0.1.1', '0.1.0', '0.0.9'])
         v = CocoapodsPackageManager.choose_version '~>', '0.1.0', versions
         v.should eq('0.1.4')
@@ -31,13 +30,41 @@ describe CocoapodsPackageManager do
 
   describe ".parse_requested_version" do
 
-    it "should return dependency with latest product version if version constraint is empty" do
-      product = Product.new({version: "1.0.1", versions: versions('1.0.1', '1.0.2', '1.0.0')})
-      dependency = Dependency.new
+    context "version constraint is empty" do
+      it "should return dependency with latest product version if " do
+        product = Product.new({version: "1.0.2", versions: versions(['1.0.1', '1.0.2', '1.0.0'])})
+        dependency = Projectdependency.new
 
-      CocoapodsPackageManager.parse_requested_version(nil, dependency, product)
+        CocoapodsPackageManager.parse_requested_version(nil, dependency, product)
 
-      dependency.version.should eq('1.0.2')
+        dependency.version_requested.should eq('1.0.2')
+      end
+    end
+
+    context "no product given" do
+      it "should return the version string" do
+        dependency = Projectdependency.new
+
+        CocoapodsPackageManager.parse_requested_version('~>0.9', dependency, nil)
+
+        dependency.version_requested.should eq('~>0.9')
+        dependency.version_label.should eq('~>0.9')
+      end
+    end
+
+    context "everything is there" do
+      example "'~> 1.0.0' means latest 1.0.x" do
+
+        product = Product.new({version: "1.0.2", versions: versions(['2.0.0', '1.1.0', '1.0.1', '1.0.2', '1.0.0'])})
+        dependency = Projectdependency.new
+
+        CocoapodsPackageManager.parse_requested_version('~> 1.0.0', dependency, product)
+
+        dependency.version_label.should eq('~> 1.0.0')
+        dependency.version_requested.should eq('1.0.2')
+        dependency.comperator.should eq('~>')
+
+      end
     end
 
   end

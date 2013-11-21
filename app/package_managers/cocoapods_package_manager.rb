@@ -3,23 +3,31 @@ class CocoapodsPackageManager < PackageManager
   # Public: put the best version of product into dependency
   #
   # version_constraint - A String or Array of Strings, each with comperator and version number
-  # dependency - the dependency object, this will be updated through the method
-  # product    - the product requested by the dependency. Can be nil. \
-  #              Has potentially multiple versions and version_constraint determines \
-  #              which one to choose.
-  #
-  # Examples
+  # project_dependency - the Projectdependency object, this will be updated through the method
+  # product            - the Product requested by the dependency. Can be nil. \
+  #                      Has potentially multiple versions and version_constraint determines \
+  #                      which one to choose.
   #
   #
   # Returns nothing but updates the dependency
-  def self.parse_requested_version(version_constraint, dependency, product = nil)
+  def self.parse_requested_version(version_constraint, project_dependency, product = nil)
 
     if version_constraint.to_s.empty?
-      update_requested_with_current( dependency, product )
+      update_requested_with_current( project_dependency, product )
       return
     end
 
-    constraint = parse_version_constraint( version_constraint )
+    if product.nil?
+      project_dependency.version_requested = version_constraint
+      project_dependency.version_label     = version_constraint
+      return
+    end
+
+    parsed = parse_version_constraint( version_constraint )
+    chosen = choose_version( parsed[:comperator], parsed[:version_requested], product.versions)
+    project_dependency.version_label     = version_constraint
+    project_dependency.comperator        = parsed[:comperator]
+    project_dependency.version_requested = chosen
   end
 
 
