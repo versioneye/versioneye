@@ -32,10 +32,7 @@ define(['underscore', 'backbone'],
 				}, {
 				 classes: "repo-language label label-info",
 				 content: repo.language
-				}, {
-				 classes: "repo-updated label",
-				 content: "<strong>updated: &nbsp;</strong>" + timeago
-				}, {
+				},{
           classes: "repo-pushed label",
           content: "<strong>last commit:&nbsp;<strong>" + commit_timeago
         }
