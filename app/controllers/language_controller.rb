@@ -15,11 +15,11 @@ class LanguageController < ApplicationController
     @lang            = Product.decode_language(params[:lang])
     @top_products    = Product.by_language(@lang).desc(:followers).limit(10)
     @latest_products = Newest.by_language(@lang).desc(:created_at).limit(10)
-    @latest_stats     = LanguageDailyStats.latest_stats(@lang)
+    @latest_stats    = LanguageDailyStats.latest_stats(@lang)
 
     @followers = []
     @languages = @@languages
-    @language = Language.where(name: @lang).first
+    @language  = Language.where(name: @lang).first
 
     #build sample population of followers
     population = []
