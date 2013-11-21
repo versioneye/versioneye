@@ -11,13 +11,14 @@ class Version
   field :authors        , type: String # TODO remove it
   field :description    , type: String # TODO remove it
   field :summary        , type: String # TODO remove it
-  field :prerelease     , type: Boolean
+  field :prerelease     , type: Boolean, default: false
   field :mistake        , type: Boolean
   field :pom            , type: String
   field :released_at    , type: DateTime
   field :released_string, type: String
   field :license        , type: String # TODO remove
-
+  field :comperator     , type: String #just for bwerparser
+  field :label          , type: String #just for bowerparser    
   embedded_in :product
 
   def as_json(parameter=nil)
