@@ -151,4 +151,8 @@ class Dependency
     return self.version
   end
 
+  def to_s
+    "[Dependency (#{prod_type}/#{language})] #{prod_key}(#{prod_version}) depends on #{dep_prod_key}(#{version})"
+  end
+
 end
