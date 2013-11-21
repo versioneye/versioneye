@@ -10,6 +10,7 @@ class Project
   A_TYPE_GRADLE    = "gradle"
   A_TYPE_MAVEN2    = "Maven2"
   A_TYPE_LEIN      = "Lein"
+  A_TYPE_BOWER     = "Bower"
   A_TYPE_GITHUB    = "GitHub"
   A_TYPE_R         = "R"
   A_TYPE_COCOAPODS = "CocoaPods"
@@ -79,6 +80,10 @@ class Project
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
     nil
+  end
+
+  def filename
+    self.s3_filename.to_s.gsub(/^\S+\_/, "")
   end
 
   def self.find_private_projects_by_user user_id
