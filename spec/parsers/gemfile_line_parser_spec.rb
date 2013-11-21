@@ -94,7 +94,6 @@ describe GemfileParser do
       line = "gem 'rspec',     :group => [:test, :development]"
       elements = @parser.fetch_line_elements( line )
       version = @parser.fetch_version( elements )
-      p version
       version.should be_empty
     end
 
