@@ -83,8 +83,8 @@ describe CocoapodsPodspecParser do
       end
 
       def should_not_create_more_licenses
-        # License.count.should == 1
-        License.each {|l| puts "License #{l.language} - #{l.prod_key} - #{l.version} : #{l.name}"}
+        License.count.should == 1
+        # License.each {|l| puts "License #{l.language} - #{l.prod_key} - #{l.version} : #{l.name}"}
         licenses = License.where(language:@language, prod_key:@prod_key, version:'3.1.1')
         licenses.count.should == 1
       end
@@ -163,7 +163,11 @@ describe CocoapodsPodspecParser do
     it "should add subspecs as dependencies" do
       DatabaseCleaner.clean
 
-      @product = CocoapodsPodspecParser.new.parse_file './spec/fixtures/files/podspec/subspec_ex1/RestKit.podspec'
+      podspec = './spec/fixtures/files/podspec/subspec_ex1/RestKit.podspec'
+
+      @product = CocoapodsPodspecParser.new.parse_file(podspec)
+      count = Dependency.where(language: "Objective-C").count
+      # puts "FOUND #{count} Objective-C dependencies"
 
       dependencies = Dependency.where({
         :language     => Product::A_LANGUAGE_OBJECTIVEC,
@@ -173,6 +177,8 @@ describe CocoapodsPodspecParser do
         })
 
       dependencies.count.should eq(5)
+      # puts dependencies
+
       dependencies.map(&:name).should =~  %w{
         AFNetworking
         ISO8601DateFormatterValueTransformer
@@ -180,11 +186,6 @@ describe CocoapodsPodspecParser do
         SOCKit
         TransitionKit
         }
-      # project_dep "RKValueTransformers" "~> 1.0.1"
-      # project_dep "ISO8601DateFormatterValueTransformer" "~> 0.5.0"
-      # project_dep "SOCKit" ">= 0 external_source=nil>"
-      # project_dep "AFNetworking" "~> 1.3.0"
-      # project_dep "TransitionKit" "= 2.0.0"
     end
 
   end

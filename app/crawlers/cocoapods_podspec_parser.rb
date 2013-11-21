@@ -67,7 +67,7 @@ class CocoapodsPodspecParser
     create_version
     create_license
     create_dependencies
-    create_subspecs
+    create_subspec_dependencies
     create_repository
     create_developers
     create_homepage_link
@@ -75,6 +75,8 @@ class CocoapodsPodspecParser
     @product.save
     @product
   rescue => e
+    # puts e
+    # puts e.backtrace
     logger.error e.message
     logger.error e.backtrace
     nil
@@ -104,44 +106,50 @@ class CocoapodsPodspecParser
       prepare_command
       })
 
-    @podspec.dependencies.each do |pod_dep|
-      dep = Dependency.find_by_lang_key_and_version(@@language, prod_key, version)
-      next if dep
-      dep = Dependency.new({
-        :language      => @@language,
-        :prod_type     => @@prod_type,
-        :prod_key      => prod_key,
-        :prod_version  => version,
-
-        :dep_prod_key  => pod_dep.to_s,
-        :version       => pod_dep.version,
-        })
-      dep.save
+    @podspec.dependencies.each do |dep|
+      d = create_dependency(dep.name, dep.name.downcase, dep.version)
+      # puts "Created: #{d}"
     end
   end
 
-  def create_subspecs
+  def create_subspec_dependencies
+
+    return if @podspec.subspecs.empty?
 
     # get all dependencies of all sub dependencies
+    # TODO create scopes
     deps = @podspec.subspecs.map(&:dependencies).flatten
 
     #remove subspecs from dependencies
-    subspec_start = "#{spec.name}/"
-    outter_dep = deps.delete_if {|d| d.name.start_with? subspec_start}
+    subspec_start = "#{@podspec.name}/"
+    deps.delete_if {|d| d.name.start_with? subspec_start}
 
-    outter_dep.each do |dep|
-      # TODO create scopes
-      dep = Dependency.new({
-        :language      => @@language,
-        :prod_type     => @@prod_type,
-        :prod_key      => prod_key,
-        :prod_version  => version,
-
-        :dep_prod_key  => pod_dep.to_s,
-        :version       => pod_dep.version,
-        })
-      dep.save
+    deps.each do |dep|
+      d = create_dependency(dep.name, dep.name.downcase, dep.requirement.to_s)
     end
+
+  end
+
+  def create_dependency dep_name, dep_prod_key, dep_version
+
+    # make sure it's really downcased
+    dep_prod_key = dep_prod_key.downcase
+
+    dep = Dependency.find_by(@@language, prod_key, version, dep_name, dep_version, dep_prod_key)
+    return dep if dep
+
+    dep = Dependency.new({
+      :language     => @@language,
+      :prod_type    => @@prod_type,
+      :prod_key     => prod_key,
+      :prod_version => version,
+
+      :name         => dep_name,
+      :dep_prod_key => dep_prod_key,
+      :version      => dep_version,
+      })
+    dep.save
+    dep
   end
 
   def create_version
@@ -224,11 +232,11 @@ class CocoapodsPodspecParser
   end
 
   def prod_key
-    @podspec.name.downcase
+    @prod_key ||= @podspec.name.downcase
   end
 
   def version
-    @podspec.version.to_s
+    @version ||= @podspec.version.to_s
   end
 
   def description
