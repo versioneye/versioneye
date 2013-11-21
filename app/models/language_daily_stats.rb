@@ -235,7 +235,7 @@ class LanguageDailyStats
   end
 
   def self.last_30_days_stats
-    self.since_to(15.days.ago.at_midnight, Date.tomorrow.at_midnight).asc(:date)
+    self.since_to(30.days.ago.at_midnight, Date.tomorrow.at_midnight).asc(:date)
   end
 
   def self.last_month_stats
