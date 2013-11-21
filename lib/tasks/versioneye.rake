@@ -10,15 +10,6 @@ namespace :versioneye do
     SubmittedUrl.update_integration_statuses()
     puts "STOP  to update integration status of submitted urls"
 
-    puts "START to crawl CocoaPods"
-    CocoapodsCrawler.crawl
-    GithubVersionCrawler.crawl
-    puts "STOP to crawl CocoaPods"
-
-    puts "START to crawl packagist.org"
-    PackagistCrawler.crawl
-    puts "STOP to crawl packagist.org"
-
     puts "START update meta data on products. Update followers, version and used_by_count"
     ProductMigration.update_meta_data_global
     puts "STOP  update meta data on products."
