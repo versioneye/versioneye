@@ -87,6 +87,7 @@ class VersionService
   def self.versions_start_with( versions, val )
     result = Array.new
     return result if versions.nil? || versions.empty?
+    version_matcher = Regexp.new("^#{val.to_s}")
     versions.each do |version|
       if version.version.match(/^#{val}/)
         result.push(version)
