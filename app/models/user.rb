@@ -13,6 +13,7 @@ class User
   field :fullname          , type: String
   field :prev_fullname     , type: String
   field :email             , type: String
+  field :email_inactive    , type: Boolean, default: false # Inactive recipients are ones that have generated a hard bounce or a spam complaint
   field :encrypted_password, type: String
   field :salt              , type: String
   field :admin             , type: Boolean, default: false
