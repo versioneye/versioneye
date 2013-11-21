@@ -5,7 +5,7 @@ class Versionarchive
 
   field :language  , type: String
   field :prod_key  , type: String
-  field :version_id, type: String
+  field :version, type: String
   field :link      , type: String
   field :name      , type: String
 
@@ -19,32 +19,32 @@ class Versionarchive
   end
 
   def self.archives(lang, prod_key, version)
-    Versionarchive.where(language: lang, prod_key: prod_key, version_id: version).asc(:name).to_a
+    Versionarchive.where(language: lang, prod_key: prod_key, version: version).asc(:name).to_a
   end
 
   def self.create_archive_if_not_exist archive
     return nil if archive.link.nil? || archive.link.empty?
     archive.link = add_http( archive.link )
-    return nil if exist_with_link?(archive.language, archive.prod_key, archive.version_id, archive.link)
+    return nil if exist_with_link?(archive.language, archive.prod_key, archive.version, archive.link)
     archive.save
   end
 
   def self.create_if_not_exist_by_name archive
     return nil if archive.link.nil? || archive.link.empty?
     archive.link = add_http( archive.link )
-    return nil if exist_with_name?(archive.language, archive.prod_key, archive.version_id, archive.name)
+    return nil if exist_with_name?(archive.language, archive.prod_key, archive.version, archive.name)
     archive.save
   end
 
   def self.exist_with_name?(lang, prod_key, version, name)
     archive = Versionarchive.where(:language => lang, :prod_key => prod_key,
-      :version_id => version, :name => name )
+      :version => version, :name => name )
     !archive.nil? && !archive.empty?
   end
 
   def self.exist_with_link?(lang, prod_key, version, link)
     archive = Versionarchive.where(:language => lang, :prod_key => prod_key,
-      :version_id => version, :link => link )
+      :version => version, :link => link )
     !archive.nil? && !archive.empty?
   end
 
