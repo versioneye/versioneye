@@ -83,8 +83,6 @@ describe CocoapodsPodspecParser do
       end
 
       def should_not_create_more_licenses
-        License.count.should == 1
-        # License.each {|l| puts "License #{l.language} - #{l.prod_key} - #{l.version} : #{l.name}"}
         licenses = License.where(language:@language, prod_key:@prod_key, version:'3.1.1')
         licenses.count.should == 1
       end
@@ -177,7 +175,6 @@ describe CocoapodsPodspecParser do
         })
 
       dependencies.count.should eq(5)
-      # puts dependencies
 
       dependencies.map(&:name).should =~  %w{
         AFNetworking

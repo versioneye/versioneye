@@ -5,6 +5,7 @@ require 'cocoapods-core'
 #
 # http://docs.cocoapods.org/specification.html
 #
+
 class CocoapodsPodspecParser
 
   def logger
@@ -14,11 +15,13 @@ class CocoapodsPodspecParser
   @@language  = Product::A_LANGUAGE_OBJECTIVEC
   @@prod_type = Project::A_TYPE_COCOAPODS
 
-  attr_accessor :podspec
+  attr_accessor :podspec, :prod_key, :version
 
   def parse_file ( file )
     @podspec = load_spec file
     return nil unless @podspec
+
+    set_prod_key_and_version
 
     @spec_hash = @podspec.to_hash
 
@@ -39,6 +42,10 @@ class CocoapodsPodspecParser
     nil
   end
 
+  def set_prod_key_and_version
+    @prod_key = @podspec.name.downcase
+    @version  = @podspec.version.to_s
+  end
 
   def get_product
     @spec_hash.except! "summary", "description"
@@ -75,8 +82,6 @@ class CocoapodsPodspecParser
     @product.save
     @product
   rescue => e
-    # puts e
-    # puts e.backtrace
     logger.error e.message
     logger.error e.backtrace
     nil
@@ -108,7 +113,6 @@ class CocoapodsPodspecParser
 
     @podspec.dependencies.each do |dep|
       d = create_dependency(dep.name, dep.name.downcase, dep.version)
-      # puts "Created: #{d}"
     end
   end
 
@@ -229,14 +233,6 @@ class CocoapodsPodspecParser
     @podspec.screenshots.to_enum.with_index(1).each do |img_url, i|
       Versionlink.create_versionlink(@@language, prod_key, version, img_url, "Screenshot #{i}")
     end
-  end
-
-  def prod_key
-    @prod_key ||= @podspec.name.downcase
-  end
-
-  def version
-    @version ||= @podspec.version.to_s
   end
 
   def description
