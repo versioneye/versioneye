@@ -50,13 +50,16 @@ describe "frontend APP for importing Github repositories", :js => true do
     end
   end
 
-  describe "as authorized user", :firebug => true do
+  describe "as authorized user", :firebug => true, js: true do
     before :each do
       FakeWeb.allow_net_connect = %r[^https?://127\.0\.0\.1]
       FakeWeb.register_uri(
         :get,
         %r|https://api\.github\.com/user|,
-        {status: [304, "Not modified"], body: {message: "Not modified"}.to_json}
+        [
+          {status: [304, "Not modified"], body: {message: "Not modified"}.to_json},
+          {body: %Q|{"public_repos": 0}|}
+        ]
       )
 
       visit signin_path
@@ -73,10 +76,13 @@ describe "frontend APP for importing Github repositories", :js => true do
 
     it "should show proper message when user dont have any repos" do
       GithubRepo.delete_all
+      Github.count_user_repos(user) #use first reponse
       GitHubService.cached_user_repos( user )
       user.github_repos.all.count.should ==  0
       visit user_projects_github_repositories_path
       page.should_not have_content('Please enable Javascript to see content of the page.')
+
+      sleep 5
       page.should have_content('No repositories')
     end
 
