@@ -44,8 +44,8 @@ class Dependency
     end
   end
 
-  def self.find_by(language, prod_key, prod_version, name, version, dep_prod_key)
-    dependencies = Dependency.where(language: language, prod_key: prod_key, prod_version: prod_version, name: name, version: version, dep_prod_key: dep_prod_key)
+  def self.find_by(language, prod_key, prod_version, dep_name, dep_version, dep_prod_key)
+    dependencies = Dependency.where(language: language, prod_key: prod_key, prod_version: prod_version, name: dep_name, version: dep_version, dep_prod_key: dep_prod_key)
     return nil if dependencies.nil? || dependencies.empty?
     dependencies[0]
   end
@@ -103,6 +103,9 @@ class Dependency
       abs_version = String.new( packagist_version_parsed )
     elsif prod_type.eql?( Project::A_TYPE_NPM )
       abs_version = String.new( npm_version_parsed )
+    elsif prod_type.eql?( Project::A_TYPE_COCOAPODS )
+      # TODO make this an own method
+      abs_version = String.new( gem_version_parsed )
     end
     # TODO cases for java
     abs_version
