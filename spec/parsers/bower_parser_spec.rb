@@ -16,7 +16,9 @@ describe BowerParser do
   context "testing correctness of parser rules" do
     it "matches all main versions correctly" do
       "1".match(parser.rules[:main_version]).should_not be_nil
-      "v1".match(parser.rules[:main_version]).should_not be_nil
+      m = "v1".match(parser.rules[:main_version])
+      m.should_not be_nil
+      m.should eql(1)
       "1.0".match(parser.rules[:main_version]).should_not be_nil
       "v1.0".match(parser.rules[:main_version]).should_not be_nil
       "1.0.0".match(parser.rules[:main_version]).should_not be_nil

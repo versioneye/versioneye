@@ -289,6 +289,7 @@ class BowerCrawler
       end
  
       if prod.version_by_number(m[:version].to_s).nil?
+        #add version only if there's no version with same label
         new_version = Version.new version: m[:version],
                                   prerelease: !m[:prerelease].nil?,
                                   released_at: released_at
