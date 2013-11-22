@@ -10,8 +10,8 @@ class EsProduct
               :name_ngrams => {
                 :side => "front",
                 :type => "edgeNGram",
-                :max_gram => 20,
-                :min_gram => 3
+                :max_gram => 100,
+                :min_gram => 2
               }
             },
             :analyzer => {
