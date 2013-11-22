@@ -1,40 +1,29 @@
 class User::GithubReposController < ApplicationController
 
   before_filter :authenticate
-
   def init
     render "init", layout: "application"
   end
 
   def index
-    repos = []
-
-    if current_user.github_repos.all.count == 0
-      Rails.logger.debug("Going to fill GithubRepo cache for user: #{current_user.fullname} (id: #{current_user.id.to_s})")
-      github_repos = GitHubService.cached_user_repos(current_user)
-    else
-      github_repos = current_user.github_repos.all
+    task_status  = GitHubService.cached_user_repos(current_user) 
+    github_repos = current_user.github_repos
+    if github_repos and github_repos.count > 0
+      github_repos = github_repos.desc(:commited_at)
+      repos = []
+      github_repos.each do |repo|
+        repos << process_repo(repo, task_status)
+      end
     end
-
-    github_repos = github_repos.desc(:updated_at)
-    github_repos.each do |repo|
-      repos << process_repo(repo)
-    end
-
     render json: {
       success: true,
+      task_status: task_status,
       repos: repos,
     }.to_json
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
-  end
-
-  def fetch_all
-    current_user
-    GithubRepo.by_user(current_user).delete_all
-    GitHubService.cached_user_repos(current_user)
-    render json: {changed: true, success: true}
+    render text: "Backend issue - cant import github repositories;", status: 503
   end
 
   def update
@@ -59,13 +48,18 @@ class User::GithubReposController < ApplicationController
     end
 
     command_data = params[:command_data]
+    project_name = params[:fullname]
+    branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : "master"
+    filename     = command_data[:githubFilename]
+    branch_files = params[:project_files][branch]
 
     case params[:command]
     when "import"
-      project_name = params[:fullname]
-      branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : "master"
-      project      = ProjectService.import_from_github( current_user, project_name, branch )
-      p "#-- project: #{project}"
+
+      matching_files = branch_files.keep_if {|file| file['path'] == filename}
+      url = matching_files.first[:url] unless matching_files.empty?
+      puts "#-- Going to import project from: #{url}"
+      project      = ProjectService.import_from_github(current_user, project_name, filename, branch, url)
       if project.nil?
         error_msg = "Can't save project"
         Rails.logger.error("#{project_name} - #{error_msg}")
@@ -80,6 +74,15 @@ class User::GithubReposController < ApplicationController
       command_data[:githubProjectId] = project[:_id].to_s
       repo = GithubRepo.find(params[:_id])
       repo = process_repo(repo)
+      repo[:command_result] = {
+        project_id: project[:_id].to_s,
+        filename: filename,
+        branch: branch,
+        repo: project_name,
+        project_url: url_for(controller: 'projects', action: "show", id: project.id),
+        created_at: project[:created_at]
+      }
+
     when "remove"
       id = command_data[:githubProjectId]
 
@@ -87,6 +90,11 @@ class User::GithubReposController < ApplicationController
         ProjectService.destroy id
         repo = GithubRepo.find(params[:_id])
         repo = process_repo(repo)
+        repo[:command_result] = {
+          filename: filename,
+          branch: branch,
+          repo: project_name
+        }
       else
         error_msg = "Can't remove project with id: `#{id}` - it doesnt exist. Please refresh page."
         Rails.logger.error error_msg
@@ -125,8 +133,7 @@ class User::GithubReposController < ApplicationController
   def poll_changes
     is_changed = Github.user_repos_changed?( current_user )
     if is_changed == true
-      updated_repos = GitHubService.cached_user_repos(current_user)
-      render json: {changed: true, msg: "Changed - pulled #{current_user.github_repos.all.count} repos"}
+      render json: {changed: true, msg: "Changed."}
       return true
     end
     render json: {changed: false}
@@ -150,32 +157,54 @@ class User::GithubReposController < ApplicationController
     end
   end
 
+  def clear
+    results = GithubRepo.by_user(current_user).delete_all
+
+    render json: {success: !results.nil?, msg: "Cache is cleaned. Ready for import."}
+  end
+
   private
 =begin
   adds additional metadata for each item in repo collection,
   for example is this project already imported etc
 =end
-    def process_repo repo
+    def process_repo(repo, task_status = nil)
       imported_repos      = current_user.projects.by_source(Project::A_SOURCE_GITHUB)
       imported_repo_names = imported_repos.map(&:github_project).to_set
       supported_langs     = Product.supported_languages.map{ |lang| lang.downcase }
-
       repo[:supported] = supported_langs.include? repo["language"]
-      repo[:imported_branches] = {}
+      repo[:imported_files] = []
 
       if imported_repo_names.include?(repo["fullname"])
-        imported_branches = imported_repos.where(github_project: repo["fullname"])
-        imported_branches.each do |imported_project|
+        imported_files = imported_repos.where(github_project: repo["fullname"])
+        imported_files.each do |imported_project|
+          filename = imported_project.filename
           project_info = {
+            repo: repo["fullname"],
+            branch: imported_project[:github_branch],
+            filename: filename,
             project_url: url_for(controller: 'projects', action: "show", id: imported_project.id),
             project_id:  imported_project.id,
             created_at: imported_project[:created_at]
           }
-
-          repo[:imported_branches][imported_project[:github_branch]] = project_info
+          repo[:imported_files] << project_info
         end
       end
-
+      repo['project_files'] = decode_branch_names(repo['project_files'])
+      repo['task_status'] = task_status
       repo
+    end
+
+    #function that decodes encoded branch-keys to plain string
+    def decode_branch_names(project_files)
+      return if project_files.nil?
+      decoded_map = {}
+
+      project_files.each_pair do |branch, files|
+        decoded_branch = Github.decode_db_key(branch)
+        decoded_map[decoded_branch] = files
+      end
+
+      decoded_map
     end
 end

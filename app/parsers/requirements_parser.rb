@@ -110,7 +110,7 @@ class RequirementsParser < CommonParser
       end
       highest_version = VersionService.newest_version_from( prod.versions )
       if highest_version
-        dependency.version_requested = highest_version.version
+        dependency.version_requested = highest_version.to_s
       else
         dependency.version_requested = version
       end
@@ -155,7 +155,7 @@ class RequirementsParser < CommonParser
       version.gsub!(">=", "")
       version.gsub!(" ", "")
       newest_version = VersionService.greater_than_or_equal(product.versions, version)
-      dependency.version_requested = newest_version.version
+      dependency.version_requested = newest_version.to_s
       dependency.comperator = ">="
 
     elsif version.match(/^>/)
@@ -163,7 +163,7 @@ class RequirementsParser < CommonParser
       version.gsub!(">", "")
       version.gsub!(" ", "")
       newest_version = VersionService.greater_than(product.versions, version)
-      dependency.version_requested = newest_version.version
+      dependency.version_requested = newest_version.to_s
       dependency.comperator = ">"
 
     elsif version.match(/^<=/)
@@ -171,7 +171,7 @@ class RequirementsParser < CommonParser
       version.gsub!("<=", "")
       version.gsub!(" ", "")
       newest_version = VersionService.smaller_than_or_equal(product.versions, version)
-      dependency.version_requested = newest_version.version
+      dependency.version_requested = newest_version.to_s
       dependency.comperator = "<="
 
     elsif version.match(/^\</)
@@ -179,7 +179,7 @@ class RequirementsParser < CommonParser
       version.gsub!("<", "")
       version.gsub!(" ", "")
       newest_version = VersionService.smaller_than(product.versions, version)
-      dependency.version_requested = newest_version.version
+      dependency.version_requested = newest_version.to_s
       dependency.comperator = "<"
 
     else

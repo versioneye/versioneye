@@ -13,6 +13,10 @@ class License
   field :comments     , type: String # Maven specific
   field :distributions, type: String # Maven specific
 
+  def to_s
+    name
+  end
+
   def product
     Product.fetch_product(self.language, self.prod_key)
   end
@@ -31,4 +35,7 @@ class License
     return nil
   end
 
+  def to_s
+    "[License for(#{language}/#{prod_key}/#{version}) : #{name}]"
+  end
 end

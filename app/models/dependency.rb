@@ -44,8 +44,8 @@ class Dependency
     end
   end
 
-  def self.find_by(language, prod_key, prod_version, name, version, dep_prod_key)
-    dependencies = Dependency.where(language: language, prod_key: prod_key, prod_version: prod_version, name: name, version: version, dep_prod_key: dep_prod_key)
+  def self.find_by(language, prod_key, prod_version, dep_name, dep_version, dep_prod_key)
+    dependencies = Dependency.where(language: language, prod_key: prod_key, prod_version: prod_version, name: dep_name, version: dep_version, dep_prod_key: dep_prod_key)
     return nil if dependencies.nil? || dependencies.empty?
     dependencies[0]
   end
@@ -103,6 +103,8 @@ class Dependency
       abs_version = String.new( packagist_version_parsed )
     elsif prod_type.eql?( Project::A_TYPE_NPM )
       abs_version = String.new( npm_version_parsed )
+    elsif prod_type.eql?( Project::A_TYPE_COCOAPODS )
+      abs_version = String.new( cocoapods_version_parsed )
     end
     # TODO cases for java
     abs_version
@@ -114,6 +116,14 @@ class Dependency
     dependency     = Projectdependency.new
     parser         = GemfileParser.new
     parser.parse_requested_version(version_string, dependency, product)
+    dependency.version_requested
+  end
+
+  def cocoapods_version_parsed
+    version_string = String.new(version)
+    product        = Product.fetch_product( self.language, self.dep_prod_key )
+    dependency     = Projectdependency.new
+    CocoapodsPackageManager.parse_requested_version(version_string, dependency, product)
     dependency.version_requested
   end
 
@@ -149,6 +159,10 @@ class Dependency
   rescue => e
     Rails.logger.error e.message
     return self.version
+  end
+
+  def to_s
+    "[Dependency (#{prod_type}/#{language})] #{prod_key}(#{prod_version}) depends on #{dep_prod_key}(#{version})"
   end
 
 end

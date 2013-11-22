@@ -27,7 +27,7 @@ describe CocoapodsPodspecParser do
         product.versions.size.should == 1
 
         version = product.versions.first
-        version.version.should eq '3.1.1'
+        version.to_s.should eq '3.1.1'
 
         Versionlink.count.should == 1
         Developer.count.should == 1
@@ -69,7 +69,7 @@ describe CocoapodsPodspecParser do
         versions = product.versions
         versions.size.should == 1
         version = versions.first
-        version.version.should == '3.1.1'
+        version.to_s.should == '3.1.1'
       end
 
       def should_not_create_more_developers
@@ -83,8 +83,6 @@ describe CocoapodsPodspecParser do
       end
 
       def should_not_create_more_licenses
-        # License.count.should == 1
-        License.each {|l| puts "License #{l.language} - #{l.prod_key} - #{l.version} : #{l.name}"}
         licenses = License.where(language:@language, prod_key:@prod_key, version:'3.1.1')
         licenses.count.should == 1
       end
@@ -157,6 +155,34 @@ describe CocoapodsPodspecParser do
         License.count.should == 2
       end
 
+    end
+
+
+    it "should add subspecs as dependencies" do
+      DatabaseCleaner.clean
+
+      podspec = './spec/fixtures/files/podspec/subspec_ex1/RestKit.podspec'
+
+      @product = CocoapodsPodspecParser.new.parse_file(podspec)
+      count = Dependency.where(language: "Objective-C").count
+      # puts "FOUND #{count} Objective-C dependencies"
+
+      dependencies = Dependency.where({
+        :language     => Product::A_LANGUAGE_OBJECTIVEC,
+        :prod_type    => Project::A_TYPE_COCOAPODS,
+        :prod_key     => 'RestKit'.downcase,
+        :prod_version => '0.22.0'
+        })
+
+      dependencies.count.should eq(5)
+
+      dependencies.map(&:name).should =~  %w{
+        AFNetworking
+        ISO8601DateFormatterValueTransformer
+        RKValueTransformers
+        SOCKit
+        TransitionKit
+        }
     end
 
   end

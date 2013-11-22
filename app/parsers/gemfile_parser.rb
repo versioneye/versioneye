@@ -71,7 +71,7 @@ class GemfileParser < CommonParser
       version.gsub!(">=", "")
       version.gsub!(" ", "")
       newest_version = VersionService.greater_than_or_equal( product.versions, version)
-      dependency.version_requested = newest_version.version
+      dependency.version_requested = newest_version.to_s
       dependency.comperator        = ">="
       dependency.version_label     = version
 
@@ -80,7 +80,7 @@ class GemfileParser < CommonParser
       version.gsub!(">", "")
       version.gsub!(" ", "")
       newest_version = VersionService.greater_than( product.versions, version )
-      dependency.version_requested = newest_version.version
+      dependency.version_requested = newest_version.to_s
       dependency.comperator        = ">"
       dependency.version_label     = version
 
@@ -89,7 +89,7 @@ class GemfileParser < CommonParser
       version.gsub!("<=", "")
       version.gsub!(" ", "")
       newest_version = VersionService.smaller_than_or_equal( product.versions, version )
-      dependency.version_requested = newest_version.version
+      dependency.version_requested = newest_version.to_s
       dependency.comperator        = "<="
       dependency.version_label     = version
 
@@ -98,7 +98,7 @@ class GemfileParser < CommonParser
       version.gsub!("\<", "")
       version.gsub!(" ", "")
       newest_version = VersionService.smaller_than( product.versions, version )
-      dependency.version_requested = newest_version.version
+      dependency.version_requested = newest_version.to_s
       dependency.comperator        = "<"
       dependency.version_label     = version
 
@@ -110,7 +110,7 @@ class GemfileParser < CommonParser
       versions        = VersionService.versions_start_with( product.versions, starter )
       highest_version = VersionService.newest_version_from( versions )
       if highest_version
-        dependency.version_requested = highest_version.version
+        dependency.version_requested = highest_version.to_s
       else
         dependency.version_requested = ver
       end
