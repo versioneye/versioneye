@@ -807,24 +807,7 @@ h2 + .row {
   overflow-y: auto;
 }
 
-.repo-controls .nav {
-  max-height: 130px;
-  overflow-x: hidden;
-  overflow-y: auto;
 
-  & li:hover {
-    background-color: #efefef;
-  };
-
-  .media-body.product-item {
-    border-top: 1px solid #f3f3f3;
-    padding: 5px 0px;
-
-    &:hover {
-      background-color: #fafafa;
-    };
-  }
-}
 
 #followers-container {
   & .nav-followers:before,
@@ -887,14 +870,7 @@ h2 + .row {
     }
 }
 
-.repo-container {
-  border-bottom: 1px solid #f3f3f3;
-  padding: 10px 0px;
 
-  &:hover {
-    background-color: #f3f3f3;
-  };
-}
 
 .fluid-list-item {
   margin: 0px !important;

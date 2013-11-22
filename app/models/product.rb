@@ -18,24 +18,22 @@ class Product
 
   field :name         , type: String
   field :name_downcase, type: String
-  field :prod_key     , type: String
-  field :prod_type    , type: String
+  field :prod_key     , type: String # Unique identifier inside a language
+  field :prod_type    , type: String # Identifies the package manager
   field :language     , type: String
+  field :version      , type: String # latest stable version
 
-  field :group_id   , type: String
-  field :artifact_id, type: String
-  field :parent_id  , type: String
+  field :group_id   , type: String # Maven specific
+  field :artifact_id, type: String # Maven specific
+  field :parent_id  , type: String # Maven specific
 
   field :description       , type: String
   field :description_manual, type: String
-  field :downloads         , type: Integer
+
+  field :downloads         , type: Integer, default: 0
   field :followers         , type: Integer, default: 0
-  field :used_by_count     , type: Integer, default: 0
+  field :used_by_count     , type: Integer, default: 0 # Number of projects using this one.
 
-  field :version     , type: String
-  field :version_link, type: String
-
-  field :icon        , type: String # TODO this hase to be remove in the long run
   field :twitter_name, type: String
 
   field :reindex, type: Boolean, default: true
@@ -46,15 +44,16 @@ class Product
   index({updated_at: -1}, {background: true})
   index({updated_at: -1, language: -1}, {background: true})
 
-  embeds_many :versions
+  embeds_many :versions     # unsorted versions
   embeds_many :repositories
 
   has_and_belongs_to_many :users
-  # has_and_belongs_to_many :licenses
+  # :licenses
+  # :versionarchives
+  # :versionlinks
+  # :versioncomments
+  # :dependencies
 
-  # has_and_belongs_to_many :versionarchives
-  # has_and_belongs_to_many :versionlinks
-  # has_and_belongs_to_many :versioncomments
 
   attr_accessor :released_days_ago, :released_ago_in_words, :released_ago_text
   attr_accessor :version_uid, :in_my_products, :dependencies_cache
@@ -133,6 +132,7 @@ class Product
       :description        => self.description.to_s,
       :description_manual => self.description_manual.to_s,
       :followers          => self.followers,
+      :used_by_count      => self.used_by_count,
       :group_id           => self.group_id.to_s,
       :prod_key           => self.prod_key,
       :language           => self.language,
@@ -147,15 +147,11 @@ class Product
   end
 
   def version_by_number( searched_version )
-    return nil if searched_version.to_s.empty?
-    return nil if versions_empty?
-    
-    self.versions.to_a.each do |version|
-      return version if version[:version].to_s ==  searched_version.to_s
+    versions.each do |version|
+      return version if version.to_s.eql?( searched_version )
     end
     nil
   rescue => e
-    p e.message
     Rails.logger.error e
     nil
   end
@@ -205,7 +201,8 @@ class Product
   end
 
   def update_used_by_count( persist = true )
-    count = Dependency.where(:dep_prod_key => self.prod_key).count
+    grouped = Dependency.where(:dep_prod_key => self.prod_key).group_by(&:prod_key)
+    count = grouped.count
     return nil if count == self.used_by_count
     self.used_by_count = count
     self.save if persist

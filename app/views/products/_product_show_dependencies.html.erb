@@ -19,7 +19,7 @@
 
 
   <% dependencies = @product.dependencies %>
-  <% if 1 ==2 && !dependencies.empty? && dependencies.count > 2 %>
+  <% if @product.language.eql?(Product::A_LANGUAGE_NODEJS) && !dependencies.empty? && dependencies.count > 2 %>
     <a href="/<%= @product.language_esc%>/<%= @product.to_param%>/<%= @product.version_to_url_param %>/visual_dependencies">
       See visual page
     </a>

@@ -3,11 +3,13 @@ class Versionarchive
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :language   , type: String
-  field :prod_key   , type: String
-  field :version    , type: String
-  field :link       , type: String
-  field :name       , type: String
+  # Belongs to the product with this attributes
+  field :language  , type: String
+  field :prod_key  , type: String
+  field :version_id, type: String
+
+  field :link      , type: String # URL
+  field :name      , type: String # Label for the link/URL
 
   def as_json parameter
     {

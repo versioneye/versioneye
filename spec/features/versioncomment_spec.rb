@@ -22,8 +22,8 @@ describe "Submit a Comment to specific package" do
 
     it "submits a comment" do
       product.version = "1.0"
-      product.versions << Version.new({:version => "1.0"})
       product.save
+      product.versions << Version.new({:version => "1.0"})
 
       version = product.versions.first
       version.updated_at.should_not be_nil

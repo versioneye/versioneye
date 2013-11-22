@@ -156,13 +156,17 @@ module V2
       params do
         requires :project_id, type: String, desc: "Project ID"
       end
-      get '/hook/:project_id' do
+      post '/hook/:project_id' do
         authorized?
-        project = Project.find( params[:project_id] )
-        if project.collaborator?( current_user )
+        project = Project.find_by_id( params[:project_id] )
+        resp = false
+        if project && project.collaborator?( current_user )
           Thread.new{ ProjectService.update( project, false ) }
+          resp = true
+        else
+          resp = "No! You do not have access to this project!"
         end
-        present :success, true
+        present :success, resp
       end
 
 

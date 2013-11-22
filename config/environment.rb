@@ -6,11 +6,12 @@ Versioneye::Application.initialize!
 
 
 begin
-	Tire.configure do
-		# logger STDERR
-		url Settings.elasticsearch_url
-	end
+  Tire.configure do
+    # logger STDOUT
+    # logger STDERR
+    url Settings.elasticsearch_url
+  end
 rescue => e
-	p "Wrong configuration: #{e}"
+  Rails.logger.error "Wrong configuration: #{e}"
 end
 

@@ -2,13 +2,16 @@ require 'git_crawler'
 
 class CocoapodsCrawler < GitCrawler
 
+  def logger
+    ActiveSupport::BufferedLogger.new("log/cocoapods.log")
+  end
+
   def self.crawl
     self.new.crawl
   end
 
   def initialize
-    # TODO put config in config file
-    super "https://github.com/CocoaPods/Specs.git", "/Users/robertreiz/workspace/cocoapods-specs"
+    super "https://github.com/CocoaPods/Specs.git", Settings.cocoapods_spec
   end
 
   def crawl
@@ -19,14 +22,14 @@ class CocoapodsCrawler < GitCrawler
     all_spec_files do |filepath|
       # parse every podspec file
       i += 1
-      Rails.logger.info "Parse CocoaPods Spec ##{i}: #{filepath}"
+      logger.info "Parse CocoaPods Spec ##{i}: #{filepath}"
       parser  = CocoapodsPodspecParser.new
       product = parser.parse_file filepath
       if product
         VersionService.update_version_data product, false
         product.save
       else
-        Rails.logger.warn "NO PRODUCT"
+        logger.warn "NO PRODUCT"
       end
     end
   end

@@ -17,19 +17,69 @@ define(['underscore', 'backbone'],
   var GithubRepoSwitchView = Backbone.View.extend({
     template: _.template($("#github-repo-switch-template").html()),
     events: {
-      "switch-change .switch" : "onSwitchChange"
+      "click .github-switch" : "onSwitchChange"
     },
 
     initialize: function(options){
       this.parent = options.parent;
       this.branch = options.branch;
+      this.project_file = options.project_file;
     },
 
+    renderInfo: function(project_info){
+        not_imported_tmpl = _.template("<strong> {{= filename }} </strong>");
+        imported_tmpl = _.template([
+          '<a href="{{= url}}"> <strong>{{= filename }}</strong> </a>',
+          ', imported {{= moment(imported).fromNow() }}'
+        ].join(' '));
+
+        var content = "";
+        var filename = this.project_file['path'];
+
+        if(!_.isNull(project_info) && !_.isUndefined(project_info)){
+          content = imported_tmpl({
+            branch: this.branch,
+            filename: filename,
+            url: project_info['project_url'],
+            imported: project_info['created_at']
+          });
+        } else {
+          content = not_imported_tmpl({filename: filename});
+        }
+        return content;
+    },
+
+    getImportedFileInfo: function(filename){
+      var imported_files = this.model.get('imported_files');
+      var project_info = null;
+      var is_imported = false;
+
+      with_same_name = _.where(
+        imported_files,
+        {branch: this.branch, filename: filename}
+      );
+
+      if(!_.isEmpty(with_same_name)){
+        is_imported = true;
+        project_info = _.first(with_same_name);
+      }
+
+      return {is_imported: is_imported, info: project_info};
+    },
     render: function(){
+      var filename = this.project_file['path'];
+      var imported_project = this.getImportedFileInfo(filename);
+
+      //add view
+      var switch_info = this.renderInfo(imported_project.info);
       this.$el.html(this.template({
         repo: this.model.toJSON(),
         branch: this.branch,
-        switch_id: this.getModelSwitchId()
+        filename: filename,
+        switch_id: this.getModelSwitchId(),
+        switch_info: switch_info,
+        is_imported: imported_project.is_imported,
+        project_info: imported_project.is_imported ? imported_project.info : {project_id: null}
       }));
       return this;
     },
@@ -37,16 +87,17 @@ define(['underscore', 'backbone'],
     getModelSwitchId: function(){
       var id =  "github-repo-switch-" + this.model.get('github_id');
       if(this.branch){
-        id += "-" + this.branch;
+        id += "-" + this.project_file['sha'];
       }
 
       return id;
     },
 
-    onSwitchChange: function(ev, switch_data){
-      is_switch_active = switch_data.el.parents('.switch').bootstrapSwitch("isActive");
+    onSwitchChange: function(ev){
+      var this_switch = $(ev.currentTarget);
+      var switch_data = this_switch.data();
 
-      if(!is_switch_active){
+      if(this_switch.attr('disabled')){
         console.log("Going to drop event of unactive switch.");
         ev.preventDefault();
         ev.stopImmediatePropagation();
@@ -54,7 +105,9 @@ define(['underscore', 'backbone'],
         return false;
       }
 
-      switch_data.el.parents(".switch").bootstrapSwitch('setActive', false);
+      var prev_state = this_switch.attr("checked");
+      this_switch.attr("checked", !prev_state);
+      this.disableSwitch(this_switch);
 
       var notification_template = _.template($("#github-notification-template").html());
       var loading_info = notification_template({
@@ -64,33 +117,39 @@ define(['underscore', 'backbone'],
           'It may take up-to 4seconds. But we are almost there.'].join(' ')
       });
 
-      if(switch_data.value){
+      if(this_switch.attr("checked")){
         this.showRepoNotification(loading_info);
-        this.addProject(switch_data.el, switch_data.value);
+        this.addProject(this_switch);
       } else {
-        this.removeProject(switch_data.el), switch_data.value;
+        this.removeProject(this_switch);
       }
       return true;
     },
-
+    disableSwitch: function(this_switch){
+      this_switch.attr("disabled", true);
+      this_switch.parents('.onoffswitch').addClass('disabled');
+    },
+    enableSwitch: function(this_switch){
+      this_switch.attr("disabled", false);
+      this_switch.parents('.onoffswitch').removeClass('disabled');
+    },
     switchOnActivate : function(){
       var switch_selector = "#" + this.getModelSwitchId();
-      var repo_switch = $(switch_selector).parents(".github-switch");
+      var repo_switch = $(switch_selector);
 
-      repo_switch.bootstrapSwitch('setState', true);
-      repo_switch.bootstrapSwitch('setActive', true);
+      repo_switch.attr('checked', true);
+      this.enableSwitch(repo_switch);
     },
 
     switchOffActivate: function(){
       var switch_selector = "#" + this.getModelSwitchId();
-      var repo_switch = $(switch_selector).parents(".github-switch");
+      var repo_switch = $(switch_selector);
 
-      repo_switch.bootstrapSwitch("setState", false);
-      repo_switch.bootstrapSwitch('setActive', true);
-
+      repo_switch.attr("checked", false);
+      this.enableSwitch(repo_switch);
     },
 
-    addProject: function(el, data){
+    addProject: function(el){
       console.log("Adding new project");
       var current_switch = this;
       this.model.save(
@@ -116,17 +175,21 @@ define(['underscore', 'backbone'],
     },
 
     onAddSuccess: function(model){
+      var command_result = model.get('command_result');
       var msg = ['<strong> Success! </strong>',
-                 'Github project ', model.get('fullname'),
+                 'Project file ' , command_result['filename'],
+                 ' on branch ', command_result['branch'],
+                 ' of Github project ', model.get('fullname'),
                  ' is now successfully imported.',
-                 'You can now checkout project\'s page to see state of dependencies.'
+                 'You can now checkout project\'s page.'
                  ].join(' ');
 
-      var command_data = model.get('command_data');
-      $(this.el).find('.input').data('githubProjectId', command_data['githubProjectId']);
-      this.updateRepoTitle();
+
+      this.$el.find('input').data('githubProjectId', command_result['project_id']);
+      this.updateRepoTitle(command_result);
+      this.updateRepoProjectInfo(model);
       this.switchOnActivate();
-      this.showRepoNotification("");
+      this.hideRepoNotification();
       showNotification("alert alert-success", msg);
       return true;
     },
@@ -145,7 +208,7 @@ define(['underscore', 'backbone'],
       console.debug("We encountered: " + xhr.status + " " + xhr.statusText);
       console.debug(error_msg);
       showNotification("alert alert-error", error_msg);
-      this.showRepoNotification("");
+      this.hideRepoNotification();
       this.switchOffActivate();
 
       $(this.el).find(".repo-notification").html("");
@@ -181,16 +244,21 @@ define(['underscore', 'backbone'],
 
     onRemoveSuccess: function(model){
       var selector = "#github-repo-" + model.get("github_id");
+      var command_result = model.get('command_result');
+      console.debug(command_result);
+
       var msg = [
         '<strong>Success!</strong>',
-        'Github project ', model.get('fullname'),
-        ' is now successfully removed from your projects.'
+        'The Project\'s file ', command_result['filename'],
+        ' from the Github repository ', model.get('fullname') ,
+        ' is now successfully removed.'
       ].join(' ');
 
       this.updateRepoTitle();
+      this.updateRepoProjectInfo(model);
       this.switchOffActivate();
       showNotification("alert alert-success", msg);
-
+      this.hideRepoNotification();
       return true;
     },
     onRemoveFailure: function(model, xhr, options){
@@ -198,17 +266,38 @@ define(['underscore', 'backbone'],
 
       this.switchOnActivate();
       showNotification("alert alert-warning", msg);
-
+      this.hideRepoNotification();
       return false;
     },
 
-    updateRepoTitle: function(){
-      new_title = this.parent.renderTitle();
-      $(this.el).parents(".repo-control-item").find('.item-title').html(new_title);
+    updateRepoTitle: function(project_info){
+      var new_title = this.renderInfo(project_info);
+      this.$el.find(".item-title").html(new_title);
+    },
+
+    updateRepoProjectInfo:  function(model){
+      var info_template = _.template($('#github-repo-project-info-template').html());
+      var imported_files = this.model.get('imported_files') || [];
+      var imported_urls = _.map(imported_files, function(item){
+        var url_name = item['branch'] + '/' + item['filename'];
+        return ['<a href="', item['project_url'], '" > ', url_name, ' </a>'].join('');
+      });
+      var branch_info = info_template({
+        branches: this.model.get('branches'),
+        imported_urls: imported_urls
+      });
+
+      this.$el.parents('.repo-container').find(".repo-project-info").html(branch_info);
     },
 
     showRepoNotification: function(msg){
-      $(this.el).parents('.repo-container').find(".repo-notification").html(msg);
+      notifier = $(this.el).parents('.repo-container').find(".repo-notification");
+      notifier.removeClass('hide');
+      notifier.html(msg);
+    },
+
+    hideRepoNotification: function(){
+      this.$el.parents('.repo-container').find(".repo-notification").html("").addClass('hide');
     }
   });
 

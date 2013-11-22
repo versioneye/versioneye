@@ -11,13 +11,4 @@
       <div style="border-bottom: 1px dotted gray;"><%= author.name %></div>
     <% end %>
   </div>
-<% elsif @product.authors && !@product.authors.empty? %>
-  <div class="box header">
-    <h3 class="side_header">
-      Authors
-    </h3>
-  </div>
-  <div class="box content" >
-    <%= @product.authors %>
-  </div>
 <% end %>

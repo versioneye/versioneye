@@ -1,8 +1,29 @@
+[![Dependency Status](http://www.versioneye.com/user/projects/52729fad632bac2b7c000dd1/badge.png)](http://www.versioneye.com/user/projects/52729fad632bac2b7c000dd1)
+
 ![Tests](https://www.codeship.io/projects/de2efdb0-1d42-0131-839e-26fabeabc570/status)
 
 # VersionEye
 
 This is the source code for the web application <http://www.versioneye.com>.
+
+
+## Git Flow
+
+We are using the git workflow which is described here <http://nvie.com/posts/a-successful-git-branching-model/>!
+That means the master branch is always deployable. For every feature we open a new brach. The naming pattern for branches is like this:
+
+```
+TICKET-ID_MEANINGFULL-SHORT-DESCRIPTION
+```
+
+for example
+
+```
+313_github_singlepage_app
+```
+
+Every branch have to be merged in to the `develop` branch as soon it is done.
+Merges from develop to master are like tags and deployments. The master branch must always be stable and deployable!
 
 
 ## VersionEye Stack

@@ -23,7 +23,7 @@
               <% product_url   += "/#{product.to_param}" %>
               <% product_url   += "/#{version.to_param}" unless version.nil? %>
               <% product_title  = "#{product.name}".strip %>
-              <% product_title += " (#{version.version})" unless version.nil? %>
+              <% product_title += " (#{version.to_s})" unless version.nil? %>
 
               <a href="<%= product_url %>"><%= product_title %></a>
 

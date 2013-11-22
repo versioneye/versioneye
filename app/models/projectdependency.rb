@@ -14,11 +14,11 @@ class Projectdependency
   field :ext_link   , type: String # Link to external package. For example zip file on GitHub / Google Code.
 
   field :name       , type: String
-  field :group_id   , type: String
-  field :artifact_id, type: String
+  field :group_id   , type: String # Maven specific
+  field :artifact_id, type: String # Maven specific
 
   field :version_current  , type: String  # the newest version from the database
-  field :version_requested, type: String  # locked version
+  field :version_requested, type: String  # requested version from the project file -> locked version
   field :version_label    , type: String  # the version number from the projectfile (Gemfile, package.json)
   field :comperator       , type: String, :default => "="
   field :scope            , type: String, :default => Dependency::A_SCOPE_COMPILE
@@ -37,8 +37,7 @@ class Projectdependency
 
   def find_or_init_product
     product = Product.fetch_product( language, prod_key) if self.prod_key
-    if product.nil?
-      #fix when clojure project is using Java library
+    if product.nil? && ( !group_id.to_s.empty? && !artifact_id.to_s.empty? )
       product = Product.find_by_group_and_artifact self.group_id, self.artifact_id
     end
     product = init_product if product.nil?

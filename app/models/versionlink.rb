@@ -3,13 +3,18 @@ class Versionlink
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  # If version_id is nil this link belongs to all versions of the software package.
+
   # Belongs to the product with this attributes
   field :language  , type: String
   field :prod_key  , type: String
   field :version, type: String 
 
-  field :link      , type: String # this is a URL
-  field :name      , type: String
+  field :link      , type: String # URL:   for example https://github.com/500px/500px-iOS-api
+  field :name      , type: String # Label: for example "500px-iOS-api"
+
+  # true  => This link was manually added by a community member
+  # false => This link was crawled
   field :manual    , type: Boolean, :default => false
 
   def as_json parameter
