@@ -15,6 +15,14 @@ class VersionService
     sorted.first
   end
 
+  def self.versions_by_whitelist(versions, whitelist)
+    whitelist = Set.new whitelist.to_a
+    filtered = []
+    versions.each do |ver|
+      filtered << ver if whitelist.include? ver[:version]
+    end
+    filtered
+  end
 
   def self.newest_version_number( versions, stability = "stable" )
     version = newest_version( versions, stability )
@@ -96,6 +104,16 @@ class VersionService
     result
   end
 
+  def self.versions_by_comperator(versions, operator, value, range = true)
+    matching_versions = case operator
+    when '!=' then not_equal(versions, value, range)
+    when '<'  then smaller_than(versions, value, range)
+    when '<=' then smaller_than_or_equal(versions, value, range)
+    when '>'  then greater_than(versions, value, range)
+    when '>=' then greater_than_or_equal(versions, value, range)
+    else equal(versions, value, range)
+    end
+  end
 
   # TODO write test for it
   def self.newest_but_not( versions, value, range=false, stability = "stable")
@@ -103,6 +121,30 @@ class VersionService
     versions.each do |version|
       if !version.version.match(/^#{value}/)
         filtered_versions.push(version)
+      end
+    end
+    return filtered_versions if range
+    newest = VersionService.newest_version_from(filtered_versions, stability)
+    return get_newest_or_value(newest, value)
+  end
+
+
+  def self.equal( versions, value, range = false, stability = "stable")
+    filtered_versions = Array.new
+    versions.each do |ver|
+      filtered_versions << ver if ver.version == value.to_s
+    end
+    return filtered_versions if range
+    newest = VersionService.newest_version_from(filtered_versions, stability)
+    return get_newest_or_value(newest, value)
+  end
+
+
+  def self.not_equal( versions, value, range = false, stability = "stable")
+    filtered_versions = Array.new
+    versions.each do |version|
+      if version.version != value
+        filtered_versions << version
       end
     end
     return filtered_versions if range

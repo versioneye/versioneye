@@ -41,6 +41,20 @@ describe BowerParser do
                                  version: "3.0",
                                  language: Product::A_LANGUAGE_JAVASCRIPT
                                 )}
+  let(:prod8){FactoryGirl.create(:product_with_versions,
+                                 prod_key: "and-and",
+                                 name: "and-and", 
+                                 version: "2.0",
+                                 language: Product::A_LANGUAGE_JAVASCRIPT
+                                )}
+
+  let(:prod9){FactoryGirl.create(:product_with_versions,
+                                 prod_key: "or-or",
+                                 name: "or-or", 
+                                 version: "2.0",
+                                 language: Product::A_LANGUAGE_JAVASCRIPT
+                                )}
+
 
   let(:filepath){"/veye/bower.json"}
   let(:host){"https://s3-eu-west-1.amazonaws.com"}
@@ -129,6 +143,7 @@ describe BowerParser do
     before :each do
       #FactoryGirl doesnt save them;
       prod1.versions << FactoryGirl.build(:product_version, version: "1.4")
+      prod1.versions << FactoryGirl.build(:product_version, version: "1.5")
       prod1.versions << FactoryGirl.build(:product_version, version: "1.6")
       
       prod2.versions << FactoryGirl.build(:product_version, version: "1.8.0")
@@ -157,9 +172,20 @@ describe BowerParser do
       prod7.versions << FactoryGirl.build(:product_version, version: "1.3")
       prod7.versions << FactoryGirl.build(:product_version, version: "1.9")
       prod7.versions << FactoryGirl.build(:product_version, version: "2.0")
+      
+      prod8.versions << FactoryGirl.build(:product_version, version: "1.0")
+      prod8.versions << FactoryGirl.build(:product_version, version: "1.1")
+      prod8.versions << FactoryGirl.build(:product_version, version: "1.4")
+      prod8.versions << FactoryGirl.build(:product_version, version: "1.6")
+      prod8.versions << FactoryGirl.build(:product_version, version: "2.0")
+      
+      prod9.versions << FactoryGirl.build(:product_version, version: "1.0")
+      prod9.versions << FactoryGirl.build(:product_version, version: "1.1")
+      prod9.versions << FactoryGirl.build(:product_version, version: "1.2")
+      prod9.versions << FactoryGirl.build(:product_version, version: "2.0")
  
-      prod1.save;prod2.save;prod3.save;prod4.save
-      prod5.save;prod6.save;prod7.save
+      prod1.save;prod2.save;prod3.save;prod4.save;prod5.save;
+      prod6.save;prod7.save;prod8.save;prod9.save
     end
     after :each do
       Product.delete_all
@@ -221,9 +247,20 @@ describe BowerParser do
       dep7.comperator.should eql("<=")
       dep7.outdated.should be_true
 
+      dep8 = project.dependencies[7]
+      dep8.name.should eql(prod8[:name])
+      dep8.version_requested.should eql("1.6")
+      dep8.version_current.should eql("2.0")
+      dep8.comperator.should eql("=")
+      dep8.outdated.should be_true
 
-      #TODO: finish it - add tests for combined versions 
-      
+      dep9 = project.dependencies[8]
+      dep9.name.should eql(prod9[:name])
+      dep9.version_requested.should eql("2.0")
+      dep9.version_current.should eql("2.0")
+      dep9.comperator.should eql("=")
+      dep9.outdated.should be_false
+ 
     end
   end
 

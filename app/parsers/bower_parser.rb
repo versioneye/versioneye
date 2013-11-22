@@ -77,41 +77,83 @@ class BowerParser < CommonParser
     project
   end
 
+  def trim_text(text)
+    text = text.to_s.strip
+    text.gsub(/\s+ - \s+/x, '|-|')
+  end
+
   def parse_version_line(package_name, version_line, project)
     product    = Product.fetch_product( Product::A_LANGUAGE_JAVASCRIPT, package_name)
     if product.nil?
       p "Cant find product for #{Product::A_LANGUAGE_JAVASCRIPT}, `#{package_name}`"
     end
-    version_line.to_s.gsub!(/\s+ - \s+/x, '|-|') #concanate temporaly hyphen-versions
-    versions = version_line.split(/\s+ | \|\| /x) #split versions by space and ||
-
-    requested_versions = []
-    product    = Product.fetch_product( Product::A_LANGUAGE_JAVASCRIPT, package_name)
-    p "version_line: `#{version_line}` --> #{versions}"
-    versions.each do |version|
-      version = version.to_s.strip.gsub(/ \|-\| /x, ' - ') #restore hyphen version and remove reduntant spaces
-      version_data = parse_requested_version(package_name, version, product)
-      requested_versions << Version.new(
-                                        version: version_data[:version],
-                                        label: version_data[:label],
-                                        comperator: version_data[:comperator],
-                                        prerelease: version_data[:prerelease]
-                                       )
+   
+    version_line = version_line.strip
+    if trim_text(version_line).split(/\s+/).count < 2
+      newest_version = parse_single_version(package_name, version_line, product)
+    else
+      newest_version = parse_combined_versions(package_name, version_line, product)
     end
 
-    newest_version = VersionService.newest_version(requested_versions)
-
     dependency = init_dependency( product, package_name )
-    #TODO: pre-release, build info? 
+    #TODO: pre-release, build info?
+    #todo: when there's no product with matching version?
+    #TODO: what if newest_version is nil? or empty?
     dependency.update_attributes({
       version_label: newest_version[:label],
       version_requested: newest_version[:version],
-      #current_version: newest_version[:version],
       comperator: newest_version[:comperator]
     })
     project.out_number     += 1 if dependency.outdated?
     project.unknown_number += 1 if product.nil?
     project.projectdependencies.push dependency
+    project
+  end
+
+  def parse_combined_versions(package_name, version_line, product)
+    version_line = trim_text(version_line) #concanate temporaly hyphen-versions
+    versions = version_line.split(/\s+/)
+    whitelisted_labels = Set.new []
+    set_operator = "&"
+    versions.each do |version|
+      if version == "||"
+        set_operator = "|"
+        next
+      end
+      version = version.to_s.strip.gsub(/ \|-\| /x, ' - ') #restore hyphen version and remove reduntant spaces
+     
+      version_data = parse_requested_version(package_name, version, product)
+      matching_labels = VersionService.versions_by_comperator(product.versions, version_data[:comperator], version_data[:label]).to_a.map {|ver| ver[:version]}
+      matching_labels = Set.new matching_labels.to_a
+       
+      whitelisted_labels = matching_labels if whitelisted_labels.empty?
+      if set_operator == '&'
+        whitelisted_labels = whitelisted_labels & matching_labels
+      else set_operator == '|'
+        whitelisted_labels = whitelisted_labels | matching_labels
+      end
+      set_operator = "&" if set_operator == "|" #mark set_operator as used and use default value
+    end
+
+    allowed_versions = VersionService.versions_by_whitelist(product.versions, whitelisted_labels)
+    #TODO: what if allowed_versions nil? - tautology or missing versions on DB??
+    newest_version = VersionService.newest_version(allowed_versions)
+    if newest_version.nil?
+      p "Didnt get any versions for `#{package_name}`:`#{version_line}`"
+      newest_version = Version.new version: 'unknown'
+    end
+
+    newest_version[:comperator] = '=' #TODO: is it correct?
+    newest_version[:label] = versions
+    newest_version
+  end
+
+  def parse_single_version(package_name, version, product)
+    version_data = parse_requested_version(package_name, version, product)
+    Version.new(version: version_data[:version],
+                label: version_data[:label],
+                comperator: version_data[:comperator],
+                prerelease: version_data[:prerelease])
   end
 
   def parse_requested_version(package_name, version, product)
@@ -152,18 +194,7 @@ class BowerParser < CommonParser
       }
     elsif (m = version.match(self.rules[:xrange_version]))
       ver = m[:version]
-      case m[:comperator]
-      when "<" 
-        newest = VersionService.smaller_than(product.versions, ver)
-      when "<="
-        newest = VersionService.smaller_than_equal(product.versions, ver)
-      when ">"
-        newest = VersionService.greater_than(product.versions, ver)
-      when ">="
-        newest = VersionService.greater_than_or_equal(product.versions, ver)
-      else
-         newest = nil
-      end
+      newest = VersionService.versions_by_comperator(product.versions, m[:comperator], m[:version], false)
 
       if newest
         version_data = {version: newest.version, label: ver, comperator: m[:comperator]}
