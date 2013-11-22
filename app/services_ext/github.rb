@@ -17,7 +17,7 @@ class Github
     pool_size: 8,
     keep_alive: 30
   })
-  
+
   def self.token( code )
     domain    = 'https://github.com/'
     uri       = 'login/oauth/access_token'
@@ -71,11 +71,11 @@ class Github
   def self.count_user_repos(user)
     n = 0
     return n if user[:github_token].nil?
-    
+
     url = "#{A_API_URL}/user?access_token=#{user[:github_token]}"
     user_info = get_json(url, user[:github_token])
     if user_info
-      n = user_info[:public_repos].to_i + user_info[:total_private_repos].to_i 
+      n = user_info[:public_repos].to_i + user_info[:total_private_repos].to_i
     end
     return n
   end
@@ -182,7 +182,7 @@ class Github
       Rails.logger.error "Cancelling importing: can't read info about project's file."
       return nil
     end
-    project_file = fetch_project_from_url(user, project_file_info)
+    project_file = fetch_project_from_url(user, project_file_info["url"])
     return nil if project_file.nil?
 
     project_file["name"] = project_file_info["name"]
