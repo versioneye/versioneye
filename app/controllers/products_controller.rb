@@ -43,7 +43,7 @@ class ProductsController < ApplicationController
     lang     = Product.decode_language( params[:lang] )
     prod_key = Product.decode_prod_key( params[:key]  )
     version  = params[:version]
-    @product = fetch_product lang, prod_key
+    @product = fetch_product(lang, prod_key)
     if @product && !lang.eql?( @product.language )
       redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
       return
@@ -56,8 +56,8 @@ class ProductsController < ApplicationController
       redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
       return
     end
-    if @product.version
-      @version   = @product.version_by_number @product.version
+    if @product[:version]
+      @version   = @product.version_by_number(@product.version)
     end
     @current_version     = VersionService.newest_version( @product.versions )
     @versioncomment      = Versioncomment.new
