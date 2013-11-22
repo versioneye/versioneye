@@ -1,4 +1,3 @@
-
 Versioneye::Application.routes.draw do
 
   mount VersionEye::API => '/api'
