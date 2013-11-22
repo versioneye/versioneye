@@ -1,9 +1,28 @@
 require 'spec_helper'
 
 describe "search" do
+  let(:product){FactoryGirl.build(:product,
+                                  name: "json",
+                                  name_downcase: "json",
+                                  prod_key: "json/json",
+                                  version: "1.0",
+                                  prod_type: Project::A_TYPE_RUBYGEMS,
+                                  language: Product::A_LANGUAGE_RUBY)}
+  let(:product2){FactoryGirl.build(:product,
+                                    name: "jsonHP",
+                                    name_downcase: "jsonhp",
+                                    prod_key: "json/jsonhp",
+                                    language: "Java")}
+
+  before :each do
+    EsProduct.reset
+  end
+
+  after :each do
+    Product.delete_all
+  end
 
   it "shows the default search" do
-    EsProduct.reset
     get "/search", :q => ""
     assert_response :success
     assert_select "form[action=?]", "/search"
@@ -12,15 +31,7 @@ describe "search" do
   end
 
   it "show the search with 1 result" do
-    EsProduct.reset
-  	product = Product.new
-  	product.versions = Array.new
-    product.name = "json"
-    product.name_downcase = "json"
-    product.prod_key = "json/json"
-    product.language = "Java"
-    product.save
-    product.versions.push( Version.new({:version => "1.0"}) )
+    product.versions << Version.new({:version => "1.0"})
     product.save
 
     results = MongoProduct.find_by_name( "json" )
@@ -36,53 +47,28 @@ describe "search" do
     assert_select "div#search-results"
     assert_tag :tag => "div", :attributes => { :class => "row search-item"}, :parent => { :tag => "div" }
     assert_tag :tag => "a", :attributes => { :class => "searchResultLink"}
-
-    product.remove
   end
 
   it "shows the search with 2 result" do
-    EsProduct.reset
-    product = Product.new
-    product.versions = Array.new
-    product.name = "junit"
-    product.name_downcase = "junit"
-    product.prod_key = "junit/junit"
-    product.language = "Java"
-    product.save
-    version = Version.new
-    version.version = "1.0"
-    product.versions.push(version)
+    product.versions << Version.new({version: "1.0"})
     product.save
 
-    product2 = Product.new
-    product2.versions = Array.new
-    product2.name = "junitHP"
-    product2.name_downcase = "junithp"
-    product2.prod_key = "junit/junithp"
-    product2.language = "Java"
-    product2.save
-    version2 = Version.new
-    version2.version = "1.0"
-    product2.versions.push(version2)
+    product2.versions << Version.new({version: "1.0"})
     product2.save
 
-    results = MongoProduct.find_by_name( "junit" )
+    results = MongoProduct.find_by_name( "json" )
     results.should_not be_nil
     results.size.should eq(2)
 
     EsProduct.index_newest
 
-    get "/search", :q => "junit"
+    get "/search", :q => "json"
     assert_response :success
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"
     assert_select "div#search-results"
-    assert_tag :tag => "input", :attributes => { :id => "q", :name => "q", :value => "junit", :type => "text" }
+    assert_tag :tag => "input", :attributes => { :id => "q", :name => "q", :value => "json", :type => "text" }
     assert_tag :tag => "div", :attributes => { :class => "row search-item"}, :parent => { :tag => "div" }
     assert_tag :tag => "a", :attributes => { :class => "searchResultLink"}
-
-    product.remove
-    product2.remove
   end
-
 end
