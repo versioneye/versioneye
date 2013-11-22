@@ -26,7 +26,7 @@ class GithubVersionCrawler
     # update releases infos at version
     product.versions.each do |version|
       if version.released_string.to_s.empty?
-        version_string   = version.version.to_s
+        version_string   = version.to_s
         v_hash           = github_versions[version_string]
         if v_hash.nil? || v_hash.empty?
           # couldn't find 0.0.1, try v0.0.1
@@ -38,7 +38,7 @@ class GithubVersionCrawler
         end
         version.released_at     = v_hash[:released_at]
         version.released_string = v_hash[:released_string]
-        p "update #{product.name} v #{version.version} was released at #{version.released_at}"
+        p "update #{product.name} v #{version} was released at #{version.released_at}"
       end
     end
 

@@ -15,7 +15,7 @@ class ProductsController < ApplicationController
     @ab = params['ab']
     if @ab.nil?
       ab_array = ["a", "b"]
-      @ab = "a" # ab_array[Random.rand(2)]
+      @ab = "b" # ab_array[Random.rand(2)]
     end
     @languages = @@languages
     render :layout => 'application_lp'
@@ -31,7 +31,7 @@ class ProductsController < ApplicationController
     elsif @query.include?("%")
       flash.now[:error] = "the character % is not allowed"
     else
-      start = Time.now
+      # start = Time.now
       languages = get_language_array(@lang)
       @products = ProductService.search( @query, @groupid, languages, params[:page])
       # save_search_log( @query, @products, start )

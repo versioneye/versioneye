@@ -3,10 +3,10 @@
 
   <div class="flash info" style="margin-bottom: 5px;" >
     <b>Current:</b>
-    <% if @current_version && !@current_version.version.eql?(@product.version) %>
-      <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/<%= @current_version.version %>" ><%= @current_version.version %></a>
+    <% if @current_version && !@current_version.to_s.eql?(@product.version.to_s) %>
+      <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/<%= @current_version.to_s %>" ><%= @current_version.to_s %></a>
     <% else %>
-      <%= @current_version.version %>
+      <%= @current_version.to_s %>
     <% end %>
   </div>
 

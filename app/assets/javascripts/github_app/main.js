@@ -1,5 +1,5 @@
 define(
-	['underscore', 'backbone', 'moment', 'bootstrap_switch',
+	['underscore', 'backbone', 'moment',
    '/assets/github_app/views/loading_view',
    '/assets/github_app/views/menu_view',
    '/assets/github_app/views/repo_view',
@@ -7,7 +7,7 @@ define(
    '/assets/github_app/collections/all_repo_collection',
    '/assets/github_app/collections/repo_collection',
    '/assets/github_app/collections/menu_collection'],
-	function(_, Backbone, moment, BootstrapSwitch,
+	function(_, Backbone, moment,
             GithubLoadingView, GithubMenuView, GithubRepoView,
             GithubPaginationView, GithubAllRepoCollection,
             GithubRepoCollection, GithubMenuCollection){
@@ -29,11 +29,11 @@ define(
             "alert alert-info",
             "We just reimported all your repositories successfully!"
           );
-          all_repos.fetchAll(initViews);
+          all_repos.fetchAll();
         } else {
           showNotification(
-              "alert alert-info",
-              "We could not detect any changes on your Github repositories."
+            "alert alert-info",
+            "We could not detect any changes on your Github repositories."
           );
           console.log("No changes for repos - i'll wait and poll again.");
         }
@@ -48,12 +48,13 @@ define(
     var jqxhr = $.ajax("/user/poll/github_repos")
       .done(function(data, status, jqxhr){
         if(data.changed){
-          all_repos.reset();
+          all_repos.clearAll(initViews);
           showNotification(
             "alert alert-info",
             "We detected some changes on your Github repositories and updated the view here."
           );
-          all_repos.fetchAll(initViews);
+          //all_repos.fetchAll(initViews);
+          //all_repos.poller.start();
         } else {
           if(show_all == true){
             showNotification(
@@ -73,8 +74,10 @@ define(
   }
 
   //TODO: refactor to GithubApp namespace
-  var all_repos       = new GithubAllRepoCollection({})//includes all repos ~ client-side cache
+  //TODO: keep data in browser DB
+  var all_repos       = new GithubAllRepoCollection({}); //includes all repos ~ client-side cache
   all_repos.showNotification = showNotification;
+  all_repos.initViews = initViews;
 
   var current_repos   = new GithubRepoCollection([], {allRepos: all_repos}); //includes only repos for current view
   var repo_view       = new GithubRepoView({collection: current_repos});
@@ -87,8 +90,9 @@ define(
                           collection: menu_items,
                           currentRepos: current_repos,
                           allRepos: all_repos,
-                          fetchAll: fetchAll
+                          repoView: repo_view
                         });
+
 
   var have_checked_cache = false;
 
@@ -102,12 +106,49 @@ define(
     if(_.isNaN(current_repos.org_id) || _.isUndefined(current_repos.org_id)){
       current_repos.org_id = get_default_org(repos);
     }
-    console.debug("Initializing view with org-id: " + current_repos.org_id)
+    console.debug("Initializing view with org-id: " + current_repos.org_id);
     current_repos.reset();
     current_repos.perPage = 10;
     current_repos.appendNextPage(0);
     pagination_view.render();
   };
+
+  all_repos.poller.on('success', function(repos){
+    console.info('another successful fetch!');
+    var notification_template = _.template($("#github-notification-template").html());
+    var loader_notification = $("#github-loader-notification");
+    loader_notification.empty();
+    if(_.isUndefined(repos) || _.isEmpty(repos)){
+      loader_notification.html([
+            'Still reading data from Github .'
+        ].join(' '));
+    }
+
+    if(!_.isUndefined(repos)  && !_.isNull(repos) && !_.isEmpty(repos) && repos.length > 0){
+      if(current_repos.length < 10){
+        //change view only when it's smaller than per_page number;
+        console.debug("Going to re=render page;");
+        initViews(repos);
+      }
+      //update loader notification
+      if(repos.at(0).get('task_status') === 'done'){
+        loader_notification.html([
+            'Got ',  repos.length, 'repositories.'
+        ].join(' '));
+
+        initViews(repos); // re-render again when importing ready to get pagination right
+      } else {
+        loader_notification.html([
+            '<i class = "icon-spinner icon-spin"></i>',
+            ' Please wait, we are still reading data. Imported ',  repos.length, 'repositories'
+        ].join(' ')
+        );
+      }
+    }
+
+    return true;
+  });
+
 
   var AppRouter = Backbone.Router.extend({
 		routes: {
@@ -118,13 +159,12 @@ define(
     showDefaultRepos: function(){
 			var loader_view = new GithubLoadingView();
 			loader_view.render();
-      all_repos.fetchAll(initViews);
+      all_repos.poller.start();
     },
 		showRepos: function(org_id){
       if(_.isNaN(org_id) || _.isUndefined(org_id)){
         org_id = get_default_org(all_repos);
       }
-
       if(current_repos.org_id !== org_id){
         console.log("Org id changed - cleaning up & resetting view.");
         current_repos.org_id = org_id;
@@ -135,7 +175,8 @@ define(
         console.debug("All_repos still have some repos: " + all_repos.length);
        	current_repos.appendNextPage(0);
       } else {
-        all_repos.fetchAll(initViews);
+        //all_repos.fetchAll(initViews);
+        all_repos.poller.start();
       }
     }
 	});
@@ -144,6 +185,6 @@ define(
 		console.log("Running github app");
 		var app_router = new AppRouter();
 		Backbone.history.start();
-	  setTimeout(pollChanges, 2000); //start polling in 2secs
+    //setTimeout(pollChanges, 15000); //todo: polling detect change on chache
   }};
 });

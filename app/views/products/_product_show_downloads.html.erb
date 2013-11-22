@@ -1,4 +1,4 @@
-<% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.version ) %>
+<% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.to_s ) %>
 <% if !downloads.nil? && !downloads.empty? %>
   <div class="row well box_download" >
     <div class="span2">
