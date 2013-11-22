@@ -21,7 +21,6 @@ class Settings::LinksController < ApplicationController
     @userlinkcollection.xing          = params[:xing]
     @userlinkcollection.twitter       = params[:twitter]
     @userlinkcollection.facebook      = params[:facebook]
-    @userlinkcollection.gulp          = params[:gulp]
     @userlinkcollection.user_id       = current_user.id
     if @userlinkcollection.save
       flash[:success] = "Profile updated."

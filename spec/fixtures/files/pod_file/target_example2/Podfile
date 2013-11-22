@@ -1,0 +1,12 @@
+platform :osx, '10.8'
+
+link_with ['Sail', 'Sail-Tests']
+
+pod 'SSKeychain', '~> 0.1.4'
+pod 'INAppStoreWindow', :head
+pod 'AFNetworking', '1.1.0'
+pod 'Reachability', '~> 3.1.0'
+pod 'KSADNTwitterFormatter', '~> 0.1.0'
+pod 'MASShortcut', '~> 1.1'
+pod 'MagicalRecord', '2.1'
+pod 'MASPreferences', '~> 1.0'

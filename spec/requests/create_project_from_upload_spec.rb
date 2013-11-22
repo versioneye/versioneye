@@ -27,7 +27,7 @@ describe "Create Project from file uplaod" do
     response.should redirect_to( user_project_path( project ) )
 
     get user_project_path( project ), nil, "HTTPS" => "on"
-    response.body.should match("Project:")
+    response.body.should match("Gemfile")
     response.body.should match("rails")
     response.body.should match("jquery-rails")
     response.body.should match("therubyracer")

@@ -13,6 +13,7 @@ class User
   field :fullname          , type: String
   field :prev_fullname     , type: String
   field :email             , type: String
+  field :email_inactive    , type: Boolean, default: false # Inactive recipients are ones that have generated a hard bounce or a spam complaint
   field :encrypted_password, type: String
   field :salt              , type: String
   field :admin             , type: Boolean, default: false
@@ -43,6 +44,8 @@ class User
 
   field :stripe_token      , type: String
   field :stripe_customer_id, type: String
+
+  field :email_send_error, type: String
 
   # *** RELATIONS START ***
   belongs_to :plan
@@ -105,6 +108,7 @@ class User
   def self.send_verification_reminders
     users = User.where( :verification.ne => nil )
     users.each do |user|
+      next if user.email_inactive
       user.send_verification_reminder
     end
   end

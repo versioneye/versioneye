@@ -6,26 +6,21 @@ class Version
 
   field :uid            , type: String
   field :version        , type: String
-  field :link           , type: String
   field :downloads      , type: Integer
-  field :authors        , type: String # TODO remove it
-  field :description    , type: String # TODO remove it
-  field :summary        , type: String # TODO remove it
-  field :prerelease     , type: Boolean, default: false
-  field :mistake        , type: Boolean
   field :pom            , type: String
   field :released_at    , type: DateTime
   field :released_string, type: String
-  field :license        , type: String # TODO remove
-  field :comperator     , type: String #just for bwerparser
-  field :label          , type: String #just for bowerparser    
+
   embedded_in :product
+
+  def to_s
+    version.to_s
+  end
 
   def as_json(parameter=nil)
     {
       :version    => self.version,
       :uid        => self.get_decimal_uid,
-      :link       => self.link,
       :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
       :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
     }
@@ -34,10 +29,6 @@ class Version
   def self.encode_version(version)
     return nil if version.nil?
     version.gsub("/", ":")
-  end
-
-  def created_at
-    self.released_at or self.created_at
   end
 
   def released_or_detected

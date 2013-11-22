@@ -5,26 +5,30 @@ require 'cocoapods-core'
 #
 # http://docs.cocoapods.org/specification.html
 #
+
 class CocoapodsPodspecParser
+
+  def logger
+    ActiveSupport::BufferedLogger.new("log/cocoapods.log")
+  end
 
   @@language  = Product::A_LANGUAGE_OBJECTIVEC
   @@prod_type = Project::A_TYPE_COCOAPODS
 
-  # the cocoapods spec crawler only works on files
-  def parse( url )
-    # not implemented
-  end
+  attr_accessor :podspec, :prod_key, :version
 
   def parse_file ( file )
     @podspec = load_spec file
     return nil unless @podspec
+
+    set_prod_key_and_version
 
     @spec_hash = @podspec.to_hash
 
     @product = get_product
     update_product
 
-    Rails.logger.info @spec_hash.to_json unless @spec_hash.except!("name").empty?
+    logger.info(@spec_hash.to_json) unless @spec_hash.except!("name").empty?
 
     @product
   end
@@ -33,11 +37,15 @@ class CocoapodsPodspecParser
   def load_spec file
     Pod::Spec.from_file(file)
   rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace
+    logger.error e.message
+    logger.error e.backtrace
     nil
   end
 
+  def set_prod_key_and_version
+    @prod_key = @podspec.name.downcase
+    @version  = @podspec.version.to_s
+  end
 
   def get_product
     @spec_hash.except! "summary", "description"
@@ -63,8 +71,10 @@ class CocoapodsPodspecParser
 
 
   def update_product
-    add_version
+    create_version
+    create_license
     create_dependencies
+    create_subspec_dependencies
     create_repository
     create_developers
     create_homepage_link
@@ -72,8 +82,8 @@ class CocoapodsPodspecParser
     @product.save
     @product
   rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace
+    logger.error e.message
+    logger.error e.backtrace
     nil
   end
 
@@ -101,35 +111,77 @@ class CocoapodsPodspecParser
       prepare_command
       })
 
-    @podspec.dependencies.each do |pod_dep|
-      dep = Dependency.find_by_lang_key_and_version(@@language, prod_key, version)
-      next if dep
-      dep = Dependency.new({
-        :language      => @@language,
-        :prod_type     => @@prod_type,
-        :prod_key      => prod_key,
-        :prod_version  => version,
-
-        :dep_prod_key  => pod_dep.to_s,
-        :version       => pod_dep.version,
-        })
-      dep.save
+    @podspec.dependencies.each do |dep|
+      d = create_dependency(dep.name, dep.name.downcase, dep.version)
     end
   end
 
+  def create_subspec_dependencies
 
-  def add_version
-    @spec_hash.except! "version", "license"
+    return if @podspec.subspecs.empty?
+
+    # get all dependencies of all sub dependencies
+    # TODO create scopes
+    deps = @podspec.subspecs.map(&:dependencies).flatten
+
+    #remove subspecs from dependencies
+    subspec_start = "#{@podspec.name}/"
+    deps.delete_if {|d| d.name.start_with? subspec_start}
+
+    deps.each do |dep|
+      d = create_dependency(dep.name, dep.name.downcase, dep.requirement.to_s)
+    end
+
+  end
+
+  def create_dependency dep_name, dep_prod_key, dep_version
+
+    # make sure it's really downcased
+    dep_prod_key = dep_prod_key.downcase
+
+    dep = Dependency.find_by(@@language, prod_key, version, dep_name, dep_version, dep_prod_key)
+    return dep if dep
+
+    dep = Dependency.new({
+      :language     => @@language,
+      :prod_type    => @@prod_type,
+      :prod_key     => prod_key,
+      :prod_version => version,
+
+      :name         => dep_name,
+      :dep_prod_key => dep_prod_key,
+      :version      => dep_version,
+      })
+    dep.save
+    dep
+  end
+
+  def create_version
+    @spec_hash.except! "version"
 
     version_numbers = @product.versions.map(&:version)
-    return nil if version_numbers.member?( version )
+    return nil if version_numbers.member? version
+
+    @product.add_version( version )
+
+    CrawlerUtils.create_newest @product, version
+    CrawlerUtils.create_notifications @product, version
+  end
+
+  def create_license
+    @spec_hash.except! "license"
 
     # create new license if version doesn't exist yet
+    licenses = License.where( {:language => @@language, :prod_key => prod_key, :version  => version} )
+    return nil if licenses.first
+
     license = License.new({
-      :name     => @podspec.license[:type],
-      :language => language,
+      :language => @@language,
       :prod_key => prod_key,
       :version  => version,
+
+      :name     => @podspec.license[:type],
+      :comments => @podspec.license[:text],
     })
     license.save
   end
@@ -181,14 +233,6 @@ class CocoapodsPodspecParser
     @podspec.screenshots.to_enum.with_index(1).each do |img_url, i|
       Versionlink.create_versionlink(@@language, prod_key, version, img_url, "Screenshot #{i}")
     end
-  end
-
-  def prod_key
-    @podspec.name.downcase
-  end
-
-  def version
-    @podspec.version.to_s
   end
 
   def description

@@ -14,6 +14,7 @@ class LanguageDailyStats
   field :Python    , type: Hash
   field :R         , type: Hash
   field :Ruby      , type: Hash
+  field :Objectivec, type: Hash
 
   index({date: -1}, {background: true})
 
@@ -46,7 +47,9 @@ class LanguageDailyStats
   end
 
   def self.language_to_sym(lang)
-    Product.encode_language(lang).capitalize.to_sym
+    lang = Product.encode_language(lang).capitalize
+    lang = lang.gsub(/\-/, "") #special rule for Objective-C
+    lang.to_sym
   end
 
   def self.to_date_string(that_day)
@@ -232,7 +235,7 @@ class LanguageDailyStats
   end
 
   def self.last_30_days_stats
-    self.since_to(15.days.ago.at_midnight, Date.tomorrow.at_midnight).asc(:date)
+    self.since_to(30.days.ago.at_midnight, Date.tomorrow.at_midnight).asc(:date)
   end
 
   def self.last_month_stats
@@ -308,13 +311,16 @@ class LanguageDailyStats
   def self.language_timeline30(lang, metric)
     rows = self.last_30_days_stats
     results = []
-    return results if rows.nil?
+    return results if rows.nil? || rows.empty?
 
     lang_key = LanguageDailyStats.language_to_sym(lang)
     rows.each do |row|
+      val = 0
+      val = row[lang_key][metric] if row.has_attribute?(lang_key)
+
       results << {
         title: lang,
-        value: row[lang_key][metric],
+        value: val || 0,
         date: row[:date_string]
       }
     end

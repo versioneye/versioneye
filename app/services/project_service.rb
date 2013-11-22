@@ -10,6 +10,7 @@ class ProjectService
     return Project::A_TYPE_MAVEN2   if trimmed_name.match(/pom.xml$/) or trimmed_name.match(/pom.json$/)
     return Project::A_TYPE_LEIN     if trimmed_name.match(/project.clj$/)
     return Project::A_TYPE_BOWER    if trimmed_name.match(/bower\.json/)
+    return Project::A_TYPE_COCOAPODS if trimmed_name.match(/Podfile$/) or trimmed_name.match(/.podfile$/)
     return nil
   end
 
@@ -58,12 +59,14 @@ class ProjectService
   end
 
   def self.update( project, send_email = false )
-    return nil if project.nil? || project.user_id.nil?
+    return nil if project.nil?
+    return nil if project.user_id.nil? || project.user.nil?
+    return nil if project.user.deleted
     self.update_url( project )
     new_project = self.build_from_url( project.url )
     project.update_from( new_project )
-    if send_email && project.out_number > 0
-      p "send out email notification for project: #{project.name} to user #{project.user.fullname}"
+    if send_email && project.out_number > 0 && project.user.email_inactive == false
+      Rails.logger.info "send out email notification for project: #{project.name} to user #{project.user.fullname}"
       ProjectMailer.projectnotification_email( project ).deliver
     end
     project
@@ -83,8 +86,12 @@ class ProjectService
   end
 
   def self.update_project_file_from_github( project )
-    project_file = Github.project_file_from_branch( project.user, project.github_project, project.github_branch )
-    return nil if project_file.nil? || project_file.empty?
+    project_file = Github.project_file_from_branch(project.user, project.github_project, project.filename, project.github_branch)
+    if project_file.nil? || project_file.empty?
+      Rails.logger.error "Importing project file from Github failed."
+      return nil
+    end
+
     s3_infos = S3.upload_github_file( project_file, project_file['name'] )
     if s3_infos['filename'] && s3_infos['s3_url']
       S3.delete( project.s3_filename )
@@ -100,17 +107,22 @@ class ProjectService
    - Parsing the project_file to a new project
    - Storing the new project to DB
 =end
-  def self.import_from_github(user, repo_name, branch = "master")
+  def self.import_from_github(user, repo_name, filename, branch = "master", fileurl = nil)
     private_project = Github.private_repo?(user.github_token, repo_name)
     if private_project && !ProjectService.is_allowed_to_add_private_project?(user)
       error_msg = "You selected a private project. Please upgrade your plan to monitor the selected project."
       return error_msg
     end
 
-    project_file = Github.project_file_from_branch( user, repo_name, branch )
+    if fileurl
+      project_file = Github.fetch_project_file_directly(user, filename, branch, fileurl)
+    else
+      project_file = Github.project_file_from_branch( user, repo_name, filename, branch )
+    end
+
     if project_file.nil?
       error_msg = " Didn't find any project file of a supported package manager."
-      Rails.logger.error " Can't import project file from #{repo_name} branch #{branch} "
+      Rails.logger.error " Can't import project file `#{filename}` from #{repo_name} branch #{branch} "
       return error_msg
     end
 
@@ -152,13 +164,8 @@ class ProjectService
     if project.s3_filename && !project.s3_filename.empty?
       S3.delete( project.s3_filename )
     end
-    # TODO remove and replace w project.remove_dependencies
-    project.dependencies.each do |dep|
-      dep.remove
-    end
-    project.collaborators.each do |collaborator|
-      collaborator.remove
-    end
+    project.remove_dependencies
+    project.remove_collaborators
     project.remove
   end
 

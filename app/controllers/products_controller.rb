@@ -8,14 +8,14 @@ class ProductsController < ApplicationController
 
   @@languages = [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
     Product::A_LANGUAGE_PYTHON, Product::A_LANGUAGE_PHP, Product::A_LANGUAGE_NODEJS,
-    Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R]
+    Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R, Product::A_LANGUAGE_OBJECTIVEC]
 
   def index
     @user = User.new
     @ab = params['ab']
     if @ab.nil?
       ab_array = ["a", "b"]
-      @ab = "a" # ab_array[Random.rand(2)]
+      @ab = "b" # ab_array[Random.rand(2)]
     end
     @languages = @@languages
     render :layout => 'application_lp'
@@ -31,7 +31,7 @@ class ProductsController < ApplicationController
     elsif @query.include?("%")
       flash.now[:error] = "the character % is not allowed"
     else
-      start = Time.now
+      # start = Time.now
       languages = get_language_array(@lang)
       @products = ProductService.search( @query, @groupid, languages, params[:page])
       # save_search_log( @query, @products, start )
@@ -132,7 +132,7 @@ class ProductsController < ApplicationController
     elsif license && !license.empty?
       license = License.new({:name => license, :url => licenseLink, :language => @product.language, :prod_key => @product.prod_key, :version => licenseVersion})
       license.save
-      add_status_comment(@product, current_user, "license", license)
+      add_status_comment(@product, current_user, "license", license.name)
       flash[:success] = "License updated."
     elsif twitter_name && !twitter_name.empty?
       @product.twitter_name = twitter_name

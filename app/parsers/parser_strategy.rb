@@ -16,6 +16,9 @@ class ParserStrategy
           return PythonSetupParser.new
         end
 
+      when Project::A_TYPE_COCOAPODS
+        return PodfileParser.new
+
       when Project::A_TYPE_NPM
         return PackageParser.new
 

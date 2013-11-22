@@ -23,6 +23,7 @@ class GithubRepo
   field :size        , type: Integer
   field :etag        , type: String
   field :branches    , type: Array
+  field :project_files, type: Hash,    :default => nil
   field :created_at  , type: DateTime, :default => DateTime.new
   field :updated_at  , type: DateTime, :default => DateTime.new #when github repo was updated
   field :pushed_at   , type: DateTime, :default => DateTime.new
@@ -45,6 +46,7 @@ class GithubRepo
       Rails.console.error("Repo #{full_name} is missing owner. Adding as unknown.")
       repo['owner'] = {'type' => "ufo"}
     end
+
     case repo['owner']['type'].to_s.downcase
     when 'organization'
       owner_type = 'organization'
@@ -81,12 +83,16 @@ class GithubRepo
       size: repo['size'],
       etag: etag.to_s,
       branches: repo['branches'],
+      project_files: repo['project_files'],
       created_at: repo['created_at'],
       updated_at: repo['updated_at'],
       pushed_at: repo['pushed_at'],
       cached_at: DateTime.now
     })
-    new_repo.save
+
+    unless new_repo.save
+      Rails.logger.error "Cant save new repo:#{new_repo.errors.full_messages.to_sentence}"
+    end
   end
 
 end
