@@ -6,7 +6,7 @@ class User::GithubReposController < ApplicationController
   end
 
   def index
-    task_status  = GitHubService.cached_user_repos(current_user) 
+    task_status  = GitHubService.cached_user_repos(current_user)
     github_repos = current_user.github_repos
     if github_repos and github_repos.count > 0
       github_repos = github_repos.desc(:commited_at)
@@ -58,7 +58,6 @@ class User::GithubReposController < ApplicationController
 
       matching_files = branch_files.keep_if {|file| file['path'] == filename}
       url = matching_files.first[:url] unless matching_files.empty?
-      puts "#-- Going to import project from: #{url}"
       project      = ProjectService.import_from_github(current_user, project_name, filename, branch, url)
       if project.nil?
         error_msg = "Can't save project"

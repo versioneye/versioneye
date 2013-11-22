@@ -1,4 +1,4 @@
-<% if !@product.versions.nil? && @product.versions.length > 1 %>
+<% if !@product.versions.nil? && @product.versions.length > 0 %>
   <div class="box header">
     <h3 class="side_header">
       <%= pluralize(@product.versions.count, "Versions") %>
