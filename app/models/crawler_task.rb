@@ -15,6 +15,7 @@ class CrawlerTask
   field :repo_fullname, type: String
   field :repo_weight,   type: Integer, default: 0 #weight = stars + watchers 
   field :data,          type: Hash #subdocument to keep pre-cached data
+  field :crawled_at,    type: DateTime #when it had last successful crawl
 
   scope :by_task, ->(name){where(task: name)}
   scope :re_crawlable, where(re_crawl: true, task_failed: false, url_exists: true)

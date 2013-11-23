@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe GithubVersionCrawler do
-
 	describe ".owner_and_repo" do
     example "1" do
       repo = 'https://github.com/0xced/ABGetMe.git'
@@ -43,5 +42,4 @@ describe GithubVersionCrawler do
       versions.length.should eq(4)
     end
   end
-
 end
