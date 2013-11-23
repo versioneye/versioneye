@@ -10,13 +10,15 @@ class BowerCrawler
   A_TASK_READ_PROJECT = "bower_crawler/read_project"
   A_TASK_READ_TAGS    = "bower_crawler/read_tags"
 
-  def self.clean
+  def self.clean_all
+    #remove all data added by crawler - only for devs.
     Product.where(prod_type: Project::A_TYPE_BOWER).delete_all
     Newest.where(prod_type: Project::A_TYPE_BOWER).delete_all
     License.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
     Dependency.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
     Versionlink.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
     Versionarchive.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
+    CrawlerTask.by_task(A_TASK_CHECK_EXISTENCE).delete_all
     CrawlerTask.by_task(A_TASK_READ_PROJECT).delete_all
   end
 
@@ -133,14 +135,14 @@ class BowerCrawler
   end
   def self.check_repo_existence(task, token)
     success =  false
-    response = Github.repo_info(task[:repo_fullname], token, true, task[:crawled_at])
+    read_task = to_read_task(task, task[:url])
+    response = Github.repo_info(task[:repo_fullname], token, true, read_task[:crawled_at])
 
     if response.class != HTTParty::Response
       success = true
       p "Something went wrong with asking info about #{task[:repo_fullname]}- did nor get any response."
     elsif response.code > 199 and response.code < 300
       repo = JSON.parse response.body
-      read_task = to_read_task(task, task[:url])
       read_task.update_attributes({
         repo_weight: repo['stargazers_count'] + repo['watchers_count'],
         task_failed: false,
@@ -150,7 +152,7 @@ class BowerCrawler
       task.update_attributes({re_crawl: false, url_exists: true, crawled_at: DateTime.now})
       success = true
     elsif response.code == 304
-      p "No changes for `#{task[:repo_fullname]}` since last crawling. Going to skip."
+      p "No changes for `#{task[:repo_fullname]}` since last crawling `#{read_task[:crawled_at]}`. Going to skip."
       task.update_attributes({
         url_exists: true,
         re_crawl: false
@@ -264,7 +266,7 @@ class BowerCrawler
 
   def self.read_project_info_from_github(task, token)
     pkg_info = nil
-    supported_files = Set.new ['bower.json', 'component.json', 'package.json']
+    supported_files = Set.new ['bower.json', 'component.json', "package.json", "module.json"]
     
     owner = task[:repo_owner]
     repo = task[:repo_name]

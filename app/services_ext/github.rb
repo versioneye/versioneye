@@ -399,7 +399,7 @@ class Github
       request_headers["Authorization"] = " token #{token}"
     end
 
-    if updated_at
+    unless updated_at.nil?
       request_headers["If-Modified-Since"] = updated_at.to_datetime.rfc822
     end
 
