@@ -32,7 +32,7 @@ module ProjectHelpers
 
   def upload_and_store(file)
     project = upload file
-    store_project project
+    ProjectService.store project
     project
   end
 
@@ -60,29 +60,18 @@ module ProjectHelpers
     project
   end
 
-  # TODO check if this is doublicate ! Check the code in PrjectsController, ServiceController & ProjectService
-  def store_project(project)
-    success = false
-    if project.dependencies && !project.dependencies.empty? && project.save
-      project.save_dependencies
-      success = true
-    end
-    return success
-  end
-
   def add_dependency_licences(project)
     return nil if project.nil?
     return project if project.dependencies.empty?
 
     project.dependencies.each do |dep|
       prod = dep.product
-      if prod.nil? == false and dep.unknown? == false
+      if !prod.nil? and !dep.unknown?
         dep[:license] = prod.license_info
       else
         dep[:license] = 'unknown'
       end
     end
-
     project
   end
 end

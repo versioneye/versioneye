@@ -1,5 +1,3 @@
-#for indexing use task: rake db:mongoid:create_indexes
-
 class Product
 
   require 'will_paginate/array'
@@ -13,59 +11,49 @@ class Product
   A_LANGUAGE_JAVA       = "Java"
   A_LANGUAGE_PHP        = "PHP"
   A_LANGUAGE_R          = "R"
-  A_LANGUAGE_JAVASCRIPT = "JavaScript"
+  A_LANGUAGE_JAVASCRIPT = "Javascript"
   A_LANGUAGE_CLOJURE    = "Clojure"
   A_LANGUAGE_C          = "C"
+  A_LANGUAGE_OBJECTIVEC = "Objective-C"
 
   field :name         , type: String
   field :name_downcase, type: String
-  field :prod_key     , type: String
-  field :prod_type    , type: String
+  field :prod_key     , type: String # Unique identifier inside a language
+  field :prod_type    , type: String # Identifies the package manager
   field :language     , type: String
+  field :version      , type: String # latest stable version
 
-  field :group_id   , type: String
-  field :artifact_id, type: String
-  field :parent_id  , type: String
+  field :group_id   , type: String # Maven specific
+  field :artifact_id, type: String # Maven specific
+  field :parent_id  , type: String # Maven specific
 
-  field :authors           , type: String # TODO this hase to be remove in the long run
   field :description       , type: String
   field :description_manual, type: String
-  field :link              , type: String # TODO this hase to be remove in the long run
-  field :downloads         , type: Integer
+
+  field :downloads         , type: Integer, default: 0
   field :followers         , type: Integer, default: 0
-  field :used_by_count     , type: Integer, default: 0
-  #field :license           , type: String, default: "unknown" #legacy
+  field :used_by_count     , type: Integer, default: 0 # Number of projects using this one.
 
-  field :version     , type: String
-  field :version_link, type: String
-
-  field :icon        , type: String # TODO this hase to be remove in the long run
   field :twitter_name, type: String
 
   field :reindex, type: Boolean, default: true
 
-  index [[:followers,  Mongo::DESCENDING]]
-  index [[:updated_at, Mongo::DESCENDING]]
-  index [[:created_at, Mongo::DESCENDING]]
+  # For indexing use task: rake db:mongoid:create_indexes
+  index({followers:  -1}, {background: true})
+  index({created_at: -1}, {background: true})
+  index({updated_at: -1}, {background: true})
+  index({updated_at: -1, language: -1}, {background: true})
 
-  embeds_many :versions
+  embeds_many :versions     # unsorted versions
   embeds_many :repositories
 
-  index(
-    [
-      [:updated_at, Mongo::DESCENDING]
-    ],
-    [
-      [:updated_at, Mongo::DESCENDING],
-      [:language, Mongo::DESCENDING]
-    ])
-
   has_and_belongs_to_many :users
-  # has_and_belongs_to_many :licenses
+  # :licenses
+  # :versionarchives
+  # :versionlinks
+  # :versioncomments
+  # :dependencies
 
-  # has_and_belongs_to_many :versionarchives
-  # has_and_belongs_to_many :versionlinks
-  # has_and_belongs_to_many :versioncomments
 
   attr_accessor :released_days_ago, :released_ago_in_words, :released_ago_text
   attr_accessor :version_uid, :in_my_products, :dependencies_cache
@@ -79,7 +67,7 @@ class Product
   def self.supported_languages
     Set[ A_LANGUAGE_RUBY, A_LANGUAGE_PYTHON, A_LANGUAGE_NODEJS,
          A_LANGUAGE_JAVA, A_LANGUAGE_PHP, A_LANGUAGE_R, A_LANGUAGE_JAVASCRIPT,
-         A_LANGUAGE_CLOJURE]
+         A_LANGUAGE_CLOJURE, A_LANGUAGE_OBJECTIVEC]
   end
 
   # legacy, still used by fall back search
@@ -99,7 +87,7 @@ class Product
   # This is slow !! Searches by regex are always slower than exact searches!
   def self.find_by_lang_key_case_insensitiv(language, searched_key)
     return nil if searched_key.nil? || searched_key.empty? || language.nil? || language.empty?
-    result = Product.all(conditions: {prod_key: /^#{searched_key}$/i, language: /^#{language}$/i})
+    result = Product.where( prod_key: /^#{searched_key}$/i, language: /^#{language}$/i )
     return nil if (result.nil? || result.empty?)
     return result[0]
   end
@@ -144,6 +132,7 @@ class Product
       :description        => self.description.to_s,
       :description_manual => self.description_manual.to_s,
       :followers          => self.followers,
+      :used_by_count      => self.used_by_count,
       :group_id           => self.group_id.to_s,
       :prod_key           => self.prod_key,
       :language           => self.language,
@@ -159,13 +148,24 @@ class Product
 
   def version_by_number( searched_version )
     versions.each do |version|
-      return version if version.version.eql?( searched_version )
+      return version if version.to_s.eql?( searched_version )
     end
+    nil
+  rescue => e
+    Rails.logger.error e
     nil
   end
 
   def versions_empty?
     versions.nil? || versions.size == 0 ? true : false
+  end
+
+  def add_version(version_string, hash = {})
+    unless version_by_number(version_string)
+      version_hash = {:version => version_string}.merge(hash)
+      version = Version.new(version_hash)
+      versions.push( version )
+    end
   end
 
   ######## END VERSIONS ###################
@@ -201,15 +201,16 @@ class Product
   end
 
   def update_used_by_count( persist = true )
-    count = Dependency.where(:dep_prod_key => self.prod_key).count
+    grouped = Dependency.where(:dep_prod_key => self.prod_key).group_by(&:prod_key)
+    count = grouped.count
     return nil if count == self.used_by_count
     self.used_by_count = count
     self.save if persist
   end
 
   def dependencies(scope = nil)
-    dependencies_cache = Hash.new if dependencies_cache.nil?
-    scope = Dependency.main_scope(self.language) if scope == nil
+    dependencies_cache ||= {}
+    scope = Dependency.main_scope(self.language) unless scope
     if dependencies_cache[scope].nil?
       dependencies_cache[scope] = Dependency.find_by_lang_key_version_scope( language, prod_key, version, scope )
     end
@@ -226,11 +227,11 @@ class Product
   end
 
   def http_links
-    Versionlink.all(conditions: { language: language, prod_key: self.prod_key, version_id: nil, link: /^http*/}).asc(:name)
+    Versionlink.where(language: language, prod_key: self.prod_key, version: nil, link: /^http*/).asc(:name)
   end
 
   def http_version_links
-    Versionlink.all(conditions: { language: language, prod_key: self.prod_key, version_id: self.version, link: /^http*/ }).asc(:name)
+    Versionlink.where(language: language, prod_key: self.prod_key, version: self.version, link: /^http*/ ).asc(:name)
   end
 
   def self.get_hotest( count )
@@ -302,6 +303,7 @@ class Product
     return A_LANGUAGE_NODEJS if language.match(/^node/i)
     return A_LANGUAGE_PHP if language.match(/^php/i)
     return A_LANGUAGE_JAVASCRIPT if language.match(/^JavaScript/i)
+    return A_LANGUAGE_OBJECTIVEC if language.match(/^Objective-C/i)
     return language.capitalize
   end
 

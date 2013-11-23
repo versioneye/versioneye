@@ -123,7 +123,7 @@ class ComposerParser < CommonParser
       end
       highest_version = VersionService.newest_version_from( prod.versions, stability )
       if highest_version
-        dependency.version_requested = highest_version.version
+        dependency.version_requested = highest_version.to_s
       else
         dependency.version_requested = version
       end
@@ -193,7 +193,7 @@ class ComposerParser < CommonParser
       version.gsub!(" ", "")
       highest_version = VersionService.version_tilde_newest( product.versions, version )
       if highest_version
-        dependency.version_requested = highest_version.version
+        dependency.version_requested = highest_version.to_s
       else
         dependency.version_requested = version
       end

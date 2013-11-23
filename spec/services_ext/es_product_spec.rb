@@ -2,8 +2,8 @@ require 'spec_helper'
 
 def add_local_products
   @prods.each do |prod|
-      product = Product.new prod
-    end
+    product = Product.new prod
+  end
 end
 
 def get_index_count
@@ -14,21 +14,20 @@ end
 describe EsProduct do
 
   before :each do
-    EsProduct.clean_all #remove all previous indexes at elasticsearch
-    EsProduct.create_index_with_mappings
+    EsProduct.reset
     @prods = [
-      {:name => "club-mate",        :language => "Java", :group_id => "org.club.mate"},
-      {:name => "club-mate-parent", :language => "Java", :group_id => "com.club.mate"},
-      {:name => "club-mate-child",  :language => "Java", :group_id => "net.club.mate"},
-      {:name => "club-mate-c",      :language => "C",    :group_id => ""},
-      {:name => "club-mate-ccc",    :language => "c++",  :group_id => ""},
-      {:name => "club-mate-ruby",   :language => "Ruby", :group_id => ""},
-      {:name => "club-mate-cnet",   :language => "c#",   :group_id => "net.microsoft.crap"},
-      {:name => "bad.mate.jar",     :language => "mate", :group_id => "club.mate.org"},
-      {:name => "good.mate.jar",    :language => "mate", :group_id => "club.mate.org"},
-      {:name => "superb_mate.jar",  :language => "mate", :group_id => "club.mate.org"},
-      {:name => "json_nodejs",  :language => "Node.JS", :group_id => ""}
-
+      {:name => "club-mate",        :language => "Java",    :group_id => "org.club.mate", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-parent", :language => "Java",    :group_id => "com.club.mate", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-child",  :language => "Java",    :group_id => "net.club.mate", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-c",      :language => "C",       :group_id => "", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-ccc",    :language => "c++",     :group_id => "", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-ruby",   :language => "Ruby",    :group_id => "", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-cnet",   :language => "c#",      :group_id => "net.microsoft.crap", :followers => 1, :used_by_count => 1},
+      {:name => "bad.mate.jar",     :language => "mate",    :group_id => "club.mate.org", :followers => 1, :used_by_count => 1},
+      {:name => "good.mate.jar",    :language => "mate",    :group_id => "club.mate.org", :followers => 1, :used_by_count => 1},
+      {:name => "superb_mate.jar",  :language => "mate",    :group_id => "club.mate.org", :followers => 1, :used_by_count => 1},
+      {:name => "json_nodejs",      :language => "Node.JS", :group_id => "", :followers => 1, :used_by_count => 1},
+      {:name => "Hibernate",        :language => "Java",    :group_id => "org.hibernate", :followers => 1, :used_by_count => 1}
     ]
     @products = Array.new
     @prods.each do |prod|
@@ -43,23 +42,13 @@ describe EsProduct do
   context "With no indexes: " do
 
     it "does clean_all successfull" do
-      begin
-        EsProduct.clean_all # clean all previous accidental data
-        # if elasticsearch is empty, then it should return false
-        EsProduct.clean_all
-        "true".should eql("false")
-      rescue
-        "true".should eql("true")
-      end
+      EsProduct.clean_all.should be_true
+      EsProduct.clean_all.should be_false
     end
 
-    it "is nil because no index" do
-      begin
-        EsProduct.search("random query")
-        "true".should eql("false")
-      rescue
-        "true".should eql("true")
-      end
+    it "empty result because no index" do
+      results = EsProduct.search("random query")
+      results.should be_empty
     end
 
   end
@@ -74,11 +63,11 @@ describe EsProduct do
     end
 
     it "Finds the only element in the index by name" do
-      EsProduct.clean_all
+      EsProduct.reset
       product = Product.new(:name => "rails")
-      product.save
+      product.save.should be_true
       EsProduct.index product
-      sleep 2 # sleep for 2 seconds until the product gets indexed via REST.
+      sleep 3 # sleep for 2 seconds until the product gets indexed via REST.
       results = EsProduct.search "rails"
       results.count.should eql(1)
     end
@@ -90,7 +79,7 @@ describe EsProduct do
     it "Finds club-mate first!" do
       results = EsProduct.search "club-mate"
       results.count.should eql(7)
-      results[0].name.should eql("club-mate") #async adding&indexing gaves diff results
+      results[0].name.should eql("club-mate")
     end
   end
 
@@ -107,7 +96,6 @@ describe EsProduct do
       Product.where(reindex: true).count.should equal 0
     end
   end
-
 
   context " - index all documents in `products` collection" do
     it "index_all" do
@@ -129,26 +117,15 @@ describe EsProduct do
       expect { EsProduct.search("") }.to raise_error(ArgumentError)
     end
 
-    # TODO: c gaves every c language, but c++ and c# dont work at all
-    # Right now this case is not important because we are not tracking c++ or c#
     it "test language filtering"  do
       sleep 4
       EsProduct.search("club-mate", nil, ["Java"]).count.should eql(3)
     end
-    
+
     it "test language filtering does decodes language name correctly"  do
       sleep 4
       EsProduct.search("json_nodejs", nil, ["nodejs"]).count.should eql(1)
     end
-
-
-    # it "test, does language filtering is case insensitive" do
-    #   sleep 4
-    #   results1 = EsProduct.search "club-mate", nil, ["Java"]
-    #   results2 = EsProduct.search "club-mate", nil, ["java"]
-    #   results1[0][:name].should eql results2[0][:name]
-    #   results1.count.should eql(results2.count)
-    # end
 
     it " - should return 1 result with the right group_id." do
       sleep 5
@@ -176,12 +153,18 @@ describe EsProduct do
       results.count.should eql(1)
     end
 
-    it "Give only exact matches and nothing else." do
-      sleep  4
-      EsProduct.search_exact("club-mate").count.should eql(1)
-      EsProduct.search_exact("club-mate-c").count.should eql(1)
-      EsProduct.search_exact("club-mate-child").count.should eql(1)
+    it "returns Hibernate because of perect match" do
+      results = EsProduct.search "Hibernate"
+      results.count.should eql(1)
+      results.first.name.should eql("Hibernate")
     end
+
+    it "returns Hibernate" do
+      results = EsProduct.search "hibernat"
+      results.count.should eql(1)
+      results.first.name.should eql("Hibernate")
+    end
+
   end
 
 end

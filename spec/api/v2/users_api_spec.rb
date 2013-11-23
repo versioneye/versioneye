@@ -12,7 +12,7 @@ describe V2::UsersApiV2 do
       get @me_uri
       response.status.should == 401
     end
-    
+
     it "returns authorization error when asking user's favorites" do
       get @me_uri + '/favorites'
       response.status.should == 401

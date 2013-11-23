@@ -8,14 +8,14 @@ class ProductsController < ApplicationController
 
   @@languages = [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
     Product::A_LANGUAGE_PYTHON, Product::A_LANGUAGE_PHP, Product::A_LANGUAGE_NODEJS,
-    Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R]
+    Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R, Product::A_LANGUAGE_OBJECTIVEC]
 
   def index
     @user = User.new
     @ab = params['ab']
     if @ab.nil?
       ab_array = ["a", "b"]
-      @ab = "a" # ab_array[Random.rand(2)]
+      @ab = "b" # ab_array[Random.rand(2)]
     end
     @languages = @@languages
     render :layout => 'application_lp'
@@ -31,7 +31,7 @@ class ProductsController < ApplicationController
     elsif @query.include?("%")
       flash.now[:error] = "the character % is not allowed"
     else
-      start = Time.now
+      # start = Time.now
       languages = get_language_array(@lang)
       @products = ProductService.search( @query, @groupid, languages, params[:page])
       # save_search_log( @query, @products, start )
@@ -43,7 +43,7 @@ class ProductsController < ApplicationController
     lang     = Product.decode_language( params[:lang] )
     prod_key = Product.decode_prod_key( params[:key]  )
     version  = params[:version]
-    @product = fetch_product lang, prod_key
+    @product = fetch_product(lang, prod_key)
     if @product && !lang.eql?( @product.language )
       redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
       return
@@ -56,8 +56,8 @@ class ProductsController < ApplicationController
       redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
       return
     end
-    if @product.version
-      @version   = @product.version_by_number @product.version
+    if @product[:version]
+      @version   = @product.version_by_number(@product.version)
     end
     @current_version     = VersionService.newest_version( @product.versions )
     @versioncomment      = Versioncomment.new
@@ -132,7 +132,7 @@ class ProductsController < ApplicationController
     elsif license && !license.empty?
       license = License.new({:name => license, :url => licenseLink, :language => @product.language, :prod_key => @product.prod_key, :version => licenseVersion})
       license.save
-      add_status_comment(@product, current_user, "license", license)
+      add_status_comment(@product, current_user, "license", license.name)
       flash[:success] = "License updated."
     elsif twitter_name && !twitter_name.empty?
       @product.twitter_name = twitter_name
@@ -179,7 +179,7 @@ class ProductsController < ApplicationController
   end
 
   def follow
-    lang_param = params[:product_lang]
+    lang_param       = params[:product_lang]
     @prod_key_param  = params[:product_key]
     product_key      = Product.decode_prod_key @prod_key_param
     language         = Product.decode_language lang_param
@@ -193,7 +193,7 @@ class ProductsController < ApplicationController
           flash.now[:error] = "An error occured. Please try again later and contact the VersionEye Team."
         end
         product = Product.fetch_product( language, product_key )
-        redirect_to package_version_path( product.language.downcase, product.to_param, product.version )
+        redirect_to package_version_path( product.language_esc, product.to_param, product.version )
       }
     end
   end
@@ -215,7 +215,7 @@ class ProductsController < ApplicationController
           end
           if src_hidden.eql? "detail"
             product = Product.fetch_product(language, product_key)
-            redirect_to package_version_path( product.language.downcase, product.to_param, product.version )
+            redirect_to package_version_path( product.language_esc, product.to_param, product.version )
           else
             redirect_to user_path( current_user )
           end

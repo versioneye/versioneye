@@ -2,6 +2,13 @@ require 'spec_helper'
 
 describe "Submit a Comment to specific package" do
 
+  let(:product){FactoryGirl.build(:product,
+                                   name:           "json_gobi",
+                                   name_downcase:  "json_gobi",
+                                   prod_key:       "json_gobi",
+                                   prod_type:      "RubyGem",
+                                   language:       "Ruby"
+                                )}
   before :each do
     @user = UserFactory.create_new
     visit signin_path
@@ -14,23 +21,15 @@ describe "Submit a Comment to specific package" do
   describe "test the comment feature", :js => true do
 
     it "submits a comment" do
-      product               = Product.new
-      product.name          = "json_gobi"
-      product.name_downcase = "json_gobi"
-      product.prod_key      = "json_gobi"
-      product.prod_type     = "RubyGem"
-      product.language      = "Ruby"
-      product.version       = "1.0"
+      product.version = "1.0"
       product.save
-      version               = Version.new({:version => "1.0"})
-      product.versions.push version
+      product.versions << Version.new({:version => "1.0"})
 
-      version               = product.versions.first
-
+      version = product.versions.first
       version.updated_at.should_not be_nil
       version.created_at.should_not be_nil
 
-      visit "/ruby/json_gobi"
+      visit "/ruby/json_gobi/1.0"
 
       fill_in 'versioncomment[comment]', :with => "This is a versioncomment XYZ123"
       click_button 'Save'

@@ -6,7 +6,7 @@ class NewsletterMailer < ActionMailer::Base
     @user = user
     mail(
       :to => @user.email,
-      :subject => "New Features - Muted versions and a new Maven plugin.",
+      :subject => "New Features - CocoaPods + Search + Menu",
       :tag => "newsletter"
       )
   end

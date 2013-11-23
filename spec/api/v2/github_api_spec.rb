@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe "GithubApiV2" do
-  let(:user) {create(:user, username: "pupujuku", fullname: "Pupu Juku", email: "juku@pupu.com")}
-  let(:user2) {create(:user, username: "dontshow", fullname: "Don TShow", email: "dont@show.com")}
+
+  let(:user) {create(:user, username: "pupujuku", fullname: "Pupu Juku", email: "juku@pupu.com", terms: true, datenerhebung: true)}
+  let(:user2) {create(:user, username: "dontshow", fullname: "Don TShow", email: "dont@show.com", terms: true, datenerhebung: true)}
 
   let(:user_api) { ApiFactory.create_new(user) }
 
@@ -55,7 +56,33 @@ describe "GithubApiV2" do
       FakeWeb.register_uri(:head, %r|https://api\.github\.com/user*|,
                            {status: ["304", "Not Modified"], body: "Not modified"})
       FakeWeb.register_uri(:get, %r|https://api\.github\.com/user*|, {body: "{}"})
-
+      FakeWeb.register_uri(:get, %r|https://api\.github\.com/repos/spec/repo1/branches*|, 
+                           {body: %Q|
+                              {
+                                "name": "master",
+                                "commit": {
+                                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/c5b97d5ae6c19d5c5df71a34c7fbeeda2479ccbc"
+                                }
+                              }
+                            |
+                          })
+      FakeWeb.register_uri(:get, %r|https://api.github.com/repos/spec/repo1/git/trees|,
+                           {body: %Q|
+                            {
+                            "sha": "9fb037999f264ba9a7fc6274d15fa3ae2ab98312",
+                            "url": "https://api.github.com/repos/octocat/Hello-World/trees/9fb037999f264ba9a7fc6274d15fa3ae2ab98312",
+                            "tree": [{
+                                      "path": "Gemfile",
+                                      "mode": "100644",
+                                      "type": "blob",
+                                      "size": 30,
+                                      "sha": "44b4fc6d56897b048c772eb4087f854f46256132",
+                                      "url": "https://api.github.com/repos/octocat/Hello-World/git/blobs/44b4fc6d56897b048c772eb4087f854f46256132"
+                                      }]
+                            }
+                            |
+                          })
       repo1.save
       repo2.save
       project1.save

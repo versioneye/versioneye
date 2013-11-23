@@ -1,20 +1,13 @@
 require 'spec_helper'
 
-describe "search" do
+describe "show_package_controller" do
 
   it "show detail page for a package" do
-  	product = Product.new
-  	product.versions = Array.new
-    product.name = "json"
-    product.name_downcase = "json"
-    product.prod_key = "json"
-    product.prod_type = "RubyGem"
-    product.language = Product::A_LANGUAGE_RUBY
-    product.version = "1.0"
+    product = Product.new({:name => "json", :name_downcase => "json",
+      :prod_key => "json", :prod_type => "RubyGem", :version => "1.0",
+      :language => Product::A_LANGUAGE_RUBY})
     product.save
-    version = Version.new
-    version.version = "1.0"
-    product.versions.push(version)
+    product.versions.push( Version.new({:version => "1.0"}) )
 
     results = MongoProduct.find_by_name( "json" )
     results.should_not be_nil
@@ -32,18 +25,11 @@ describe "search" do
   end
 
   it "show visual page for a package" do
-    product = Product.new
-    product.versions = Array.new
-    product.name = "json_g"
-    product.name_downcase = "json_g"
-    product.prod_key = "json_g"
-    product.prod_type = "RubyGem"
-    product.language = Product::A_LANGUAGE_RUBY
-    product.version = "1.0"
+    product = Product.new({:name => "json_g", :name_downcase => "json_g",
+      :prod_key => "json_g", :prod_type => "RubyGem", :version => "1.0",
+      :language => Product::A_LANGUAGE_RUBY})
     product.save
-    version = Version.new
-    version.version = "1.0"
-    product.versions.push(version)
+    product.versions.push Version.new({:version => "1.0"})
 
     results = MongoProduct.find_by_name( "json_g" )
     results.should_not be_nil
@@ -51,8 +37,6 @@ describe "search" do
 
     get "/ruby/json_g/1.0/visual_dependencies"
     assert_response :success
-    # assert_select "form[action=?]", "/search"
-    # assert_select "input[name=?]", "q"
 
     assert_tag :tag => "h1", :attributes => { :style => "margin-bottom: 5px;"}
 

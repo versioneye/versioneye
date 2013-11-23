@@ -15,10 +15,12 @@ module V2
     helpers SearchHelpers
 
     resource :github do
+
       before do
         track_apikey
         init_cache({expires_in: 300})
       end
+
 
       #-- GET '/' -------------------------------------------------------------
       desc "lists your's github repos", {
@@ -80,6 +82,7 @@ module V2
         present :paging, paging, with: EntitiesV2::PagingEntity
       end
 
+
       #-- GET '/github/sync' --------------------------------------------------
       desc "re-load github data", {
         notes: %q[Reimports data from Github.]
@@ -109,6 +112,7 @@ module V2
 
         present msg
       end
+
 
       #-- GET '/github/search' ------------------------------------------------
       desc "search github repositories on github", {
@@ -145,17 +149,24 @@ module V2
       end
 
 
-      #-- POST '/hook' -----------------------------------------------
+      #-- GET '/hook' -----------------------------------------------
       desc "GitHub Hook", {
         notes: %q[This endpoint is registered as service hook on GitHub. It triggers a project re-parse on each git push. ]
       }
       params do
-        requires :api_key,    type: String, desc: "API Token"
         requires :project_id, type: String, desc: "Project ID"
       end
-      post '/hook' do
+      post '/hook/:project_id' do
         authorized?
-        present :got, params
+        project = Project.find_by_id( params[:project_id] )
+        resp = false
+        if project && project.collaborator?( current_user )
+          Thread.new{ ProjectService.update( project, false ) }
+          resp = true
+        else
+          resp = "No! You do not have access to this project!"
+        end
+        present :success, resp
       end
 
 
@@ -189,6 +200,7 @@ module V2
         present :repo, repo, with: EntitiesV2::RepoEntityDetailed
         present :imported_projects, repo_projects, with: EntitiesV2::ProjectEntity
       end
+
 
       #-- POST '/:repo_key' --------------------------------------------------
       desc "imports project file from github", {
@@ -225,6 +237,7 @@ module V2
         present :repo, repo, with: EntitiesV2::RepoEntityDetailed
         present :imported_projects, projects, with: EntitiesV2::ProjectEntity
       end
+
 
       #-- DELETE '/:repo_key' -------------------------------------------------
       desc "remove imported project", {

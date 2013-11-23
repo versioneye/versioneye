@@ -6,11 +6,12 @@ class Dependency
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_SCOPE_COMPILE  = "compile"
-  A_SCOPE_RUNTIME  = "runtime"
-  A_SCOPE_REQUIRE  = "require"
-  A_SCOPE_PROVIDED = "provided"
-  A_SCOPE_TEST     = "test"
+  A_SCOPE_COMPILE     = "compile"
+  A_SCOPE_RUNTIME     = "runtime"
+  A_SCOPE_REQUIRE     = "require"
+  A_SCOPE_PROVIDED    = "provided"
+  A_SCOPE_DEVELOPMENT = "development"
+  A_SCOPE_TEST        = "test"
 
   # This attributes describe to which product
   # this dependency belongs to. Parent!
@@ -23,16 +24,19 @@ class Dependency
   field :dep_prod_key, type: String   # prod_key of the dependency (Foreign Key)
   field :version     , type: String   # version of the dependency. This is the unfiltered version string. It is not parsed yet.
   field :name        , type: String
-  field :group_id    , type: String
-  field :artifact_id , type: String
+  field :group_id    , type: String   # Maven specific
+  field :artifact_id , type: String   # Maven specific
   field :scope       , type: String
-  field :known       , type: Boolean
+  field :known       , type: Boolean  # known or unknown dependency
 
   # The current version of the product, which this dep is referencing
   field :current_version, type: String
 
+  index({language: -1, prod_key: -1}, {background: true})
+  index({language: -1, dep_prod_key: -1}, {background: true})
+
   def self.find_by_lang_key_and_version( lang, prod_key, version)
-    Dependency.all(conditions: { language: lang, prod_key: prod_key, prod_version: version } )
+    Dependency.where( language: lang, prod_key: prod_key, prod_version: version )
   end
 
   def self.find_by_lang_key_version_scope(lang, prod_key, version, scope)
@@ -43,8 +47,8 @@ class Dependency
     end
   end
 
-  def self.find_by(language, prod_key, prod_version, name, version, dep_prod_key)
-    dependencies = Dependency.where(language: language, prod_key: prod_key, prod_version: prod_version, name: name, version: version, dep_prod_key: dep_prod_key)
+  def self.find_by(language, prod_key, prod_version, dep_name, dep_version, dep_prod_key)
+    dependencies = Dependency.where(language: language, prod_key: prod_key, prod_version: prod_version, name: dep_name, version: dep_version, dep_prod_key: dep_prod_key)
     return nil if dependencies.nil? || dependencies.empty?
     dependencies[0]
   end
@@ -86,9 +90,9 @@ class Dependency
       return A_SCOPE_RUNTIME
     elsif language.eql?( Product::A_LANGUAGE_JAVA ) || language.eql?( Product::A_LANGUAGE_CLOJURE )
       return A_SCOPE_COMPILE
-    elsif language.eql?( Product::A_LANGUAGE_NODEJS )
+    elsif language.eql?( Product::A_LANGUAGE_NODEJS)
       return A_SCOPE_COMPILE
-    elsif language.eql?( Product::A_LANGUAGE_PHP )
+    elsif language.eql?( Product::A_LANGUAGE_PHP ) || language.eql?(Product::A_LANGUAGE_JAVASCRIPT)
       return A_SCOPE_REQUIRE
     end
   end
@@ -102,6 +106,8 @@ class Dependency
       abs_version = String.new( packagist_version_parsed )
     elsif prod_type.eql?( Project::A_TYPE_NPM )
       abs_version = String.new( npm_version_parsed )
+    elsif prod_type.eql?( Project::A_TYPE_COCOAPODS )
+      abs_version = String.new( cocoapods_version_parsed )
     end
     # TODO cases for java
     abs_version
@@ -113,6 +119,14 @@ class Dependency
     dependency     = Projectdependency.new
     parser         = GemfileParser.new
     parser.parse_requested_version(version_string, dependency, product)
+    dependency.version_requested
+  end
+
+  def cocoapods_version_parsed
+    version_string = String.new(version)
+    product        = Product.fetch_product( self.language, self.dep_prod_key )
+    dependency     = Projectdependency.new
+    CocoapodsPackageManager.parse_requested_version(version_string, dependency, product)
     dependency.version_requested
   end
 
@@ -148,6 +162,10 @@ class Dependency
   rescue => e
     Rails.logger.error e.message
     return self.version
+  end
+
+  def to_s
+    "[Dependency (#{prod_type}/#{language})] #{prod_key}(#{prod_version}) depends on #{dep_prod_key}(#{version})"
   end
 
 end

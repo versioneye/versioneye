@@ -3,10 +3,10 @@
 
   <div class="flash info" style="margin-bottom: 5px;" >
     <b>Current:</b>
-    <% if @current_version && !@current_version.version.eql?(@product.version) %>
-      <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/<%= @current_version.version %>" ><%= @current_version.version %></a>
+    <% if @current_version && !@current_version.to_s.eql?(@product.version.to_s) %>
+      <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/<%= @current_version.to_s %>" ><%= @current_version.to_s %></a>
     <% else %>
-      <%= @current_version.version %>
+      <%= @current_version.to_s %>
     <% end %>
   </div>
 
@@ -67,7 +67,7 @@
   <% ref_bg = "info"      if references >= 100 and references < 500  %>
   <% ref_bg = "warn"  if references > 0 and references < 100  %>
   <% ref_bg = "error" if references == 0 %>
-  <% ref_text = "#{references} artifacts are referencing this project" %>
+  <% ref_text = "#{references} packages are referencing this project" %>
   <div class="flash <%= ref_bg %>" style="margin-bottom: 5px;" >
     <b title="<%= ref_text %>">References:</b> <span title="<%= ref_text %>"><%= references %></span>
   </div>
@@ -92,6 +92,7 @@
           @product.language.eql?(Product::A_LANGUAGE_CLOJURE) ||
           @product.language.eql?(Product::A_LANGUAGE_NODEJS) ||
           @product.language.eql?(Product::A_LANGUAGE_PYTHON) ||
+          @product.language.eql?(Product::A_LANGUAGE_OBJECTIVEC) ||
           @product.language.eql?(Product::A_LANGUAGE_R) %>
       <a href="/<%= @product.language_esc %>" alt="<%= @product.language_esc %>" title="<%= @product.language_esc %>"><%= @product.language %></a>
     <% else %>
