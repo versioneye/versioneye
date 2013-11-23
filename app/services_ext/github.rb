@@ -346,15 +346,20 @@ class Github
     nil
   end
 
+  def self.repo_info(repository, token, raw = false, updated_at = nil)
+    url = "#{A_API_URL}/repos/#{repository}"
+    get_json(url, token, raw, updated_at)
+  end
+
   def self.repo_tags(repository, token)
-    url = "#{A_API_URL}/#{repository}/git/tags"
-    get_json url, token
+    url = "#{A_API_URL}/repos/#{repository}/tags"
+    get_json(url, token)
   end
 
   def self.rate_limit(token)
     url = "#{A_API_URL}/rate_limit"
     data = get_json(url, token)
-    data['resources'] if data
+    data[:resources] if data
   end
 
   def self.search(q, langs = nil, users = nil, page = 1, per_page = 30)
@@ -388,10 +393,14 @@ class Github
     JSON.parse(response.body)
   end
 
-  def self.get_json(url, token = nil, raw = false)
+  def self.get_json(url, token = nil, raw = false, updated_at = nil)
     request_headers = A_DEFAULT_HEADERS
     if token
       request_headers["Authorization"] = " token #{token}"
+    end
+
+    if updated_at
+      request_headers["If-Modified-Since"] = updated_at.to_datetime.rfc822
     end
 
     response = get(url, headers: request_headers)
@@ -427,6 +436,7 @@ class Github
 =end
     def self.catch_github_exception(data)
       if data.is_a?(Hash) and data.has_key?(:message)
+        p "Catched exception in response from Github API: #{data}"
         Rails.logger.error "Catched exception in response from Github API: #{data}"
         return nil
       else
@@ -435,6 +445,7 @@ class Github
     rescue => e
       # by default here should be no message or nil
       # We expect that everything is ok and there is no error message
+      p e.message, e.backtrace.first
       Rails.logger.error e.message
       Rails.logger.error e.backtrace.first
       nil

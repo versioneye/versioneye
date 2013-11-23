@@ -13,19 +13,38 @@ class BowerCrawler
   def self.clean
     Product.where(prod_type: Project::A_TYPE_BOWER).delete_all
     Newest.where(prod_type: Project::A_TYPE_BOWER).delete_all
+    License.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
     Dependency.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
     Versionlink.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
     Versionarchive.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
     CrawlerTask.by_task(A_TASK_READ_PROJECT).delete_all
   end
 
-  def self.crawl(token, source_url = nil)
-    @@token = token
+  def self.crawl(token, source_url = nil, concurrent = true)
     if source_url.to_s.strip.empty?
       source_url = "https://bower.herokuapp.com/packages"
       p "Going to use default url: `#{source_url}`"
     end
 
+    if concurrent
+      crawl_concurrent(token, source_url)
+    else
+      crawl_serial(token, source_url)
+    end
+  end
+
+  #for debugging
+  def self.crawl_serial(token, source_url)
+    p "Using serial crawler - hopefully just for debugging."
+    #crawl_registered_packages(source_url)
+    #crawl_existing_sources(token)
+    crawl_bower_packages(token)
+    #use this when you want to debug 
+    #tasks = CrawlerTask.by_task(A_TASK_READ_PROJECT)
+    #tasks.each_with_index {|task, i| add_bower_package(task, token, i)}
+  end
+
+  def self.crawl_concurrent(token, source_url)
     task1 = Thread.new {crawl_registered_packages(source_url)}
     task2 = Thread.new {crawl_existing_sources(token)}
     task3 = Thread.new do
@@ -37,9 +56,6 @@ class BowerCrawler
     end
     task1.join; task2.join; task3.join
 
-    #for debugging 3rd worker
-    #tasks = CrawlerTask.by_task(A_TASK_READ_PROJECT)
-    #tasks.each_with_index {|task, i| add_bower_package(task, token, i)}
     p "Crawler finished"
   end
 
@@ -85,12 +101,17 @@ class BowerCrawler
     p "Going to build list of active and changed Bowers packages."
     skipped = 0
     iteration = 0
+    success = 0; failed = 0
     while skipped < A_MAX_RETRY do
-      check_rate_limit(token) if iteration % 10
+      if (iteration % 10) == 0 
+        check_rate_limit(token)
+        p "crawl_existing_sources| success: #{success} , failed: #{failed}"
+      end
+
       task = CrawlerTask.by_task(A_TASK_CHECK_EXISTENCE).re_crawlable.shift
       if task
-        task.update_attributes({re_crawl: false})
-        check_repo_existence(task, token)
+        result = check_repo_existence(task, token)
+        result ? success += 1: failed += 1
       else
         p "Got no tasks for #{A_TASK_CHECK_EXISTENCE}"
         skipped += 1
@@ -112,11 +133,11 @@ class BowerCrawler
   end
   def self.check_repo_existence(task, token)
     success =  false
-    response = Github.repo_info(task[:repo_fullname], token, task[:updated_at], true)
+    response = Github.repo_info(task[:repo_fullname], token, true, task[:crawled_at])
 
     if response.class != HTTParty::Response
-      p "Going to skip #{task[:repo_fullname]} - it hasnt changed since #{task[:updated_at]}"
       success = true
+      p "Something went wrong with asking info about #{task[:repo_fullname]}- did nor get any response."
     elsif response.code > 199 and response.code < 300
       repo = JSON.parse response.body
       read_task = to_read_task(task, task[:url])
@@ -126,20 +147,26 @@ class BowerCrawler
         url_exists: true,
         re_crawl: true
       })
-      task.update_attributes({re_crawl: false, url_exists: true})
+      task.update_attributes({re_crawl: false, url_exists: true, crawled_at: DateTime.now})
       success = true
+    elsif response.code == 304
+      p "No changes for `#{task[:repo_fullname]}` since last crawling. Going to skip."
+      task.update_attributes({
+        url_exists: true,
+        re_crawl: false
+      })
     elsif response.code == 404
       p "Repo #{task[:repo_fullname]} with url `#{task[:url]}` doesnt exists."
       task.update_attributes({
         fails: task[:fails] + 1,
         url_exists: false,
         task_failed: true,
+        recrawl: false
       })
     elsif response.code >= 500
       #when service down
-      p "Sadly Github is down; cant access  #{task[:url]}"
+      p "Sadly Github is down; cant access #{task[:url]}"
       task.update_attributes({
-        runs: task[:runs] + 1,
         fails: task[:fails] + 1,
         re_crawl: true,
         task_failed: true,
@@ -159,6 +186,7 @@ class BowerCrawler
       task = CrawlerTask.by_task(A_TASK_READ_PROJECT).re_crawlable.shift
       if task
         if add_bower_package(task, token, imported)
+          task.update_attributes(crawled_at: DateTime.now)
           imported += 1
           waited = 0 #after successful reading reset waited counter;
         else
@@ -222,7 +250,7 @@ class BowerCrawler
     tags = Github.repo_tags(pkg_info[:full_name], token)
     if tags and not tags.empty?
       p "Repo #{pkg_info[:full_name]} has #{tags.to_a.count} tags."
-      self.parse_repo_tags(prod, tags)
+      self.parse_repo_tags(prod, tags, token)
     end
 
     #-- if prod didnt get versionnumber from project, then try to used latest from tags
@@ -270,37 +298,37 @@ class BowerCrawler
     nil
   end
 
-  def self.parse_repo_tags(prod, tags)
+  def self.parse_repo_tags(prod, tags, token)
     return if tags.nil? or tags.empty?
-    #prod.versions.delete_all #we are going to reload anyway everything
-    tags.each {|tag| parse_repo_tag(prod, tag)}
+    tags.each {|tag| parse_repo_tag(prod, tag, token)}
   end
 
-  def self.parse_repo_tag(prod, tag)
+  def self.parse_repo_tag(prod, tag, token)
     return if tag.nil?
     bower_parser = BowerParser.new
-    tag_name = tag['name'].to_s
+    tag_name = tag[:name].to_s
     tag_name = bower_parser.cleanup_version(tag_name)
     m = tag_name.match bower_parser.rules[:full_version]
 
     if m and m[:version]
-      commit_info = Github.get_json(tag['commit']['url'], @@token)
-      if commit_info
-        released_at = commit_info['commit']['committer']['date'].to_s.to_datetime
+      commit_info = Github.get_json(tag[:commit][:url], token)
+      unless commit_info.nil?
+        released_at = commit_info[:commit][:committer][:date].to_s.to_datetime
       else
+        p "No commit info for tag `#{tag_name}` url: #{tag[:commit][:url]}"
         released_at = nil
       end
  
       if prod.version_by_number(m[:version].to_s).nil?
         #add version only if there's no version with same label
-        new_version = Version.new version: m[:version],
+        new_version = Version.new version: tag_name,
                                   prerelease: !m[:prerelease].nil?,
                                   released_at: released_at
         prod.versions << new_version
         p "Added version `#{new_version[:version]}` with release_date `#{new_version[:released_at]}`"
       end
       
-      to_version_archive(prod, m[:version], tag['zipball_url'])
+      to_version_archive(prod, tag_name, tag['zipball_url'])
       url = "https://www.github.com/#{prod[:prod_key]}"
       to_version_link(prod, m[:version], url, "Github")
     else
@@ -310,18 +338,18 @@ class BowerCrawler
 
   def self.check_rate_limit(token)
     rate_limits = Github.rate_limit token
-    if rate_limits.nil?  or not rate_limits.has_key?('resources')
+    if rate_limits.nil?  or not rate_limits.has_key?(:core)
       p "Failed to check rate limits."
       return
     end
 
-    limits = rate_limits['resources']['core']
-    time_left = (limits['reset'] - Time.now.to_i) / 60 #in minutes
-    if limits['remaining'] <= A_MINIMUM_RATE_LIMIT and time_left > 0
+    limits = rate_limits[:core]
+    time_left = (limits[:reset] - Time.now.to_i) / 60 #in minutes
+    if limits[:remaining] <= A_MINIMUM_RATE_LIMIT and time_left > 0
       p "Going to stop crawling for next #{time_left} minutes"
       sleep time_left.minutes
       p "Waking up and going to continue crawling."
-    elsif limits['remaining'] <= 100
+    elsif limits[:remaining] <= 100
       p "Remaining rate limits: #{limits}"
     end
   end
@@ -367,7 +395,6 @@ class BowerCrawler
       version: prod[:version],
       prod_type: prod[:prod_type]
     })
-    newest.save
     newest
   rescue => e
     p "Cant save newest: #{newest.to_json}.\n #{e.message} #{newest.errors.full_messages.to_sentence}"
@@ -381,7 +408,7 @@ class BowerCrawler
     )
 
     prod.update_attributes({
-      name: "#{pkg_info[:full_name]}",
+      name: pkg_info[:full_name].to_s,
       name_downcase: pkg_info[:full_name].to_s.downcase,
       prod_type: Project::A_TYPE_BOWER,
       private_repo: pkg_info[:private_repo],
@@ -406,7 +433,7 @@ class BowerCrawler
   
   def self.to_version_archive(prod, version, url, name = nil)
     if name.nil?
-      name = "#{prod[:name]}_#{version}}.zip"
+      name = "#{prod[:name]}_#{version}.zip"
     end
     new_link = Versionarchive.find_or_create_by(
       language: prod[:language],
@@ -467,8 +494,8 @@ class BowerCrawler
     return nil if !pkg_info.has_key?(:dev_dependencies) or pkg_info[:dev_dependencies].nil? or pkg_info[:dev_dependencies].empty?
 
     deps = [] 
-    if not pkg_info[:devDependencies].is_a?(Hash)
-      p "DevDependecies for #{prod[:prod_key]} have wrong structure. `#{pkg_info[:devDependencies]}`"
+    if not pkg_info[:dev_dependencies].is_a?(Hash)
+      p "DevDependecies for #{prod[:prod_key]} have wrong structure. `#{pkg_info[:dev_dependencies]}`"
       return nil
     end
 
@@ -514,7 +541,7 @@ class BowerCrawler
       version: project_info[:version],
       licenses: [{name: "unknown", url: nil}],
       description: project_info[:description],
-      dependencies: project_info[:dependecies],
+      dependencies: project_info[:dependencies],
       dev_dependencies: project_info[:devDependencies],
       url: project_url,
       private_repo: false,
