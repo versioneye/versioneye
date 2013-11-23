@@ -13,8 +13,11 @@ class BowerCrawler
   def self.clean
     Product.where(prod_type: Project::A_TYPE_BOWER).delete_all
     Newest.where(prod_type: Project::A_TYPE_BOWER).delete_all
+    Dependency.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
+    Versionlink.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
+    Versionarchive.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
     CrawlerTask.by_task(A_TASK_READ_PROJECT).delete_all
- end
+  end
 
   def self.crawl(token, source_url = nil)
     @@token = token
@@ -83,7 +86,7 @@ class BowerCrawler
     skipped = 0
     iteration = 0
     while skipped < A_MAX_RETRY do
-      check_rate_limit if iteration % 10
+      check_rate_limit(token) if iteration % 10
       task = CrawlerTask.by_task(A_TASK_CHECK_EXISTENCE).re_crawlable.shift
       if task
         task.update_attributes({re_crawl: false})
@@ -174,7 +177,7 @@ class BowerCrawler
   def self.add_bower_package(task, token, imported)
     p "#-- reading #{task[:repo_fullname]} from url: #{task[:url]}"
 
-    check_rate_limit if (imported % A_MINIMUM_RATE_LIMIT) == 0
+    check_rate_limit(token) if (imported % A_MINIMUM_RATE_LIMIT) == 0
     pkg_info = self.read_project_info_from_github(task, token)
     result = false
     prod = nil
@@ -269,7 +272,7 @@ class BowerCrawler
 
   def self.parse_repo_tags(prod, tags)
     return if tags.nil? or tags.empty?
-    prod.versions.delete_all #we are going to reload anyway everything
+    #prod.versions.delete_all #we are going to reload anyway everything
     tags.each {|tag| parse_repo_tag(prod, tag)}
   end
 
@@ -305,9 +308,8 @@ class BowerCrawler
     end
   end
 
-  def self.check_rate_limit
-    token = @@token
-    rate_limits = Github.rate_limit @@token
+  def self.check_rate_limit(token)
+    rate_limits = Github.rate_limit token
     if rate_limits.nil?  or not rate_limits.has_key?('resources')
       p "Failed to check rate limits."
       return
