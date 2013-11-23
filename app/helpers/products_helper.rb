@@ -18,16 +18,19 @@ module ProductsHelper
   end
 
   def user_follows?(product, user)
+    return false if user.products.nil? || user.products.empty?
     return true if user.products.include?(product)
     return false
   end
 
   def display_follow(product, user)
-    return "none" if user.products.include? product
+    return "block" if user.products.nil? || user.products.empty?
+    return "none"  if user.products.include? product
     return "block"
   end
 
   def display_unfollow(product, user)
+    return "none"  if user.products.nil? || user.products.empty?
     return "block" if user.products.include? product
     return "none"
   end
@@ -97,7 +100,6 @@ module ProductsHelper
     versionObj = product.version_by_number( version )
     if versionObj
       product.version = versionObj.version
-      product.version_link = versionObj.link
       update_release_infos( versionObj, product )
       return true
     else

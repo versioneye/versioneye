@@ -3,11 +3,13 @@ class Versionarchive
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  # Belongs to the product with this attributes
   field :language  , type: String
   field :prod_key  , type: String
   field :version_id, type: String
-  field :link      , type: String
-  field :name      , type: String
+
+  field :link      , type: String # URL
+  field :name      , type: String # Label for the link/URL
 
   def as_json parameter
     {
@@ -19,18 +21,40 @@ class Versionarchive
   end
 
   def self.archives(lang, prod_key, version)
-    Versionarchive.all(conditions: { language: lang, prod_key: prod_key, version_id: version}).asc(:name)
+    Versionarchive.where(language: lang, prod_key: prod_key, version: version).asc(:name).to_a
   end
 
   def self.create_archive_if_not_exist archive
     return nil if archive.link.nil? || archive.link.empty?
-    if archive.link.match(/^http.*/).nil?
-      archive.link = "http://#{archive.link}"
-    end
-    archives = Versionarchive.where(:language => archive.language, :prod_key => archive.prod_key,
-      :version_id => archive.version_id, :link => archive.link )
-    return nil if archives && !archives.empty?
+    archive.link = add_http( archive.link )
+    return nil if exist_with_link?(archive.language, archive.prod_key, archive.version, archive.link)
     archive.save
+  end
+
+  def self.create_if_not_exist_by_name archive
+    return nil if archive.link.nil? || archive.link.empty?
+    archive.link = add_http( archive.link )
+    return nil if exist_with_name?(archive.language, archive.prod_key, archive.version, archive.name)
+    archive.save
+  end
+
+  def self.exist_with_name?(lang, prod_key, version, name)
+    archive = Versionarchive.where(:language => lang, :prod_key => prod_key,
+      :version => version, :name => name )
+    !archive.nil? && !archive.empty?
+  end
+
+  def self.exist_with_link?(lang, prod_key, version, link)
+    archive = Versionarchive.where(:language => lang, :prod_key => prod_key,
+      :version => version, :link => link )
+    !archive.nil? && !archive.empty?
+  end
+
+  def self.add_http( link )
+    if link.match(/^http.*/).nil?
+      link = "http://#{link}"
+    end
+    link
   end
 
 end

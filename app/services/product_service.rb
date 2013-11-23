@@ -14,6 +14,7 @@ class ProductService
   def self.follow language, prod_key, user
     result = false
     product = Product.fetch_product language, prod_key
+    product.users = Array.new if product && product.users.nil?
     if product && user && !product.users.include?( user )
       product.users.push user
       product.followers = 0 if product.followers.nil?
@@ -27,6 +28,7 @@ class ProductService
   def self.unfollow language, prod_key, user
     result = false
     product = Product.fetch_product language, prod_key
+    product.users = Array.new if product && product.users.nil?
     if product && user && product.users.include?( user )
       product.users.delete(user)
       product.followers = 0 if product.followers.nil?

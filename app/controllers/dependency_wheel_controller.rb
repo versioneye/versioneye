@@ -7,15 +7,23 @@ class DependencyWheelController < ApplicationController
     scope   = params[:scope]
     respond_to do |format|
       format.json {
-        circle = CircleElement.fetch_circle( lang, key, version, scope )
-        if circle && !circle.empty?
-          resp = CircleElement.generate_json_for_circle_from_array( circle )
-        else
+        if lang.eql?(Product::A_LANGUAGE_NODEJS)
           circle = CircleElement.dependency_circle( lang, key, version, scope )
-          CircleElement.store_circle( circle, lang, key, version, scope )
           resp = CircleElement.generate_json_for_circle_from_hash( circle )
+          render :json => "[#{resp}]"
+        else
+          render :json => "[{\"success\": \"ok\"}]"
         end
-        render :json => "[#{resp}]"
+        # circle = CircleElement.fetch_circle( lang, key, version, scope )
+        # if circle && !circle.empty?
+        #   resp = CircleElement.generate_json_for_circle_from_array( circle )
+        # else
+          # circle = CircleElement.dependency_circle( lang, key, version, scope )
+          # CircleElement.store_circle( circle, lang, key, version, scope )
+          # resp = CircleElement.generate_json_for_circle_from_hash( circle )
+        # end
+        # render :json => "[#{resp}]"
+        # render :json => "[{\"success\": \"ok\"}]"
       }
     end
   end

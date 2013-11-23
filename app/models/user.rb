@@ -13,6 +13,7 @@ class User
   field :fullname          , type: String
   field :prev_fullname     , type: String
   field :email             , type: String
+  field :email_inactive    , type: Boolean, default: false # Inactive recipients are ones that have generated a hard bounce or a spam complaint
   field :encrypted_password, type: String
   field :salt              , type: String
   field :admin             , type: Boolean, default: false
@@ -43,6 +44,8 @@ class User
 
   field :stripe_token      , type: String
   field :stripe_customer_id, type: String
+
+  field :email_send_error, type: String
 
   # *** RELATIONS START ***
   belongs_to :plan
@@ -82,7 +85,7 @@ class User
   attr_accessible :fullname, :username, :email, :password, :new_username, :terms, :datenerhebung, :verification, :terms, :datenerhebung
 
 
-  def save
+  def save(*arg)
     encrypt_password if new_record?
     return false if self.terms == false || self.terms == nil
     return false if self.datenerhebung == false || self.datenerhebung == nil
@@ -103,8 +106,9 @@ class User
   end
 
   def self.send_verification_reminders
-    users = User.all(conditions: {verification: {"$ne" => nil}})
+    users = User.where( :verification.ne => nil )
     users.each do |user|
+      next if user.email_inactive
       user.send_verification_reminder
     end
   end
@@ -174,7 +178,7 @@ class User
   end
 
   def self.find_by_ids( ids )
-    User.all(conditions: {:_id.in => ids})
+    User.where(:id.in => ids)
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
@@ -186,11 +190,11 @@ class User
   end
 
   def emails
-    UserEmail.all(conditions: {user_id: self._id.to_s})
+    UserEmail.where(user_id: self._id.to_s)
   end
 
   def emails_verified
-    UserEmail.all(conditions: {user_id: self._id.to_s, verification: nil})
+    UserEmail.where(user_id: self._id.to_s, verification: nil)
   end
 
   def get_email(email)
@@ -230,13 +234,13 @@ class User
   end
 
   def self.follows_max(n)
-    User.all.select {|user| user['product_ids'].count < n}
+    User.all.select {|user| user['product_ids'].nil? or user['product_ids'].count < n}
   end
   def self.follows_least(n)
-    User.all.select {|user| user['product_ids'].count >= n}
+    User.all.select {|user| !user['product_ids'].nil? and user['product_ids'].count >= n}
   end
   def self.non_followers
-    User.all.select {|user| user['product_ids'].count == 0}
+    User.all.select {|user| user['product_ids'].nil? or user['product_ids'].count == 0}
   end
 
   def self.authenticate(email, submitted_password)

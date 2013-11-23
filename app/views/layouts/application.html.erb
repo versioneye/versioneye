@@ -5,6 +5,12 @@
 
   <meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
 
+  <link href="https://s3.amazonaws.com/veye_assets/versioneye-search.xml"
+        title="VersionEye"
+        rel="search"
+        type="application/opensearchdescription+xml">
+
+
   <% if @product %>
     <% if @product.language.eql?("Ruby") %>
       <title><%= @product.name %> : <%= @product.version %> - Track GEM versions at VersionEye</title>

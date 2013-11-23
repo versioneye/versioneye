@@ -1,4 +1,4 @@
-<% if !@product.versions.nil? && @product.versions.length > 1 %>
+<% if !@product.versions.nil? && @product.versions.length > 0 %>
   <div class="box header">
     <h3 class="side_header">
       <%= pluralize(@product.versions.count, "Versions") %>
@@ -7,10 +7,10 @@
   <div class="box content scrollable-box" style = "min-height: 1em; max-height: 14em;" >
     <% @product.sorted_versions.each do |version|  %>
       <div>
-        <% if VersionTagRecognizer.release?(version.version) %>
-          <a href="<%=product_version_path( @product, version.version )%>"><%=version.version%></a>
+        <% if VersionTagRecognizer.release?(version.to_s) %>
+          <a href="<%=product_version_path( @product, version.to_s )%>"><%=version.to_s%></a>
         <% else %>
-          <a style="color: brown" href="<%=product_version_path( @product, version.version )%>"><%=version.version%></a>
+          <a style="color: brown" href="<%=product_version_path( @product, version.to_s )%>"><%=version.to_s%></a>
         <% end %>
         <span class="" style="font-size: 11px; color: gray;" >(<%= version.released_or_detected.strftime("%b %d, %Y") %>)</span>
       </div>
@@ -19,6 +19,11 @@
   <% if @product.language.eql?(Product::A_LANGUAGE_JAVA) %>
     <div style="margin-top: 10px; font-size: 12px;">
       For Maven based packages currently we don't have the real release dates. We can only show the date we detected a specific version.
+    </div>
+  <% end %>
+  <% if @product.language.eql?(Product::A_LANGUAGE_OBJECTIVEC) %>
+    <div style="margin-top: 10px; font-size: 12px;">
+      Currently we don't have all released dates for Objective-C packages. Might be that you see the date we detected the package. We are working on it to get complete data!
     </div>
   <% end %>
 <% end %>

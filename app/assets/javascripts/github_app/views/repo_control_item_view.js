@@ -9,47 +9,28 @@ define([
     };
 
     var GithubRepoControlItemView = Backbone.View.extend({
-      tagName: "li",
+      tagName: "tr",
       className: "repo-control-item",
       template: _.template($("#github-repo-control-item-template").html()),
+
       initialize: function(options){
-        this.branch = options.branch;
-      },
-      renderTitle: function(){
-        not_imported_tmpl = _.template("<strong> {{= branch }} </strong>");
-        imported_tmpl = _.template([
-          '<strong>{{= branch }}</strong>', 
-          '- <a href="{{= url}}"> projects page </a>',
-          ', imported {{= moment(imported).fromNow() }}'
-        ].join(' '));
-
-        var content = "";
-        var imported_branches =  this.model.get('imported_branches');
-       
-        if(_.has(imported_branches, this.branch)){
-          var imported_branch = imported_branches[this.branch];
-          content = imported_tmpl({
-            branch: this.branch,
-            url: imported_branch.project_url,
-            imported: imported_branch.created_at
-          });
-        } else {
-          content = not_imported_tmpl({branch: this.branch});
-        }
-
-        return content
+        this.branch = options.branch || "<no defined>";
+        this.project_files = options.project_files || [];
       },
       render: function(){
         this.$el.html(this.template({branch: this.branch}));
+        var target_el = this.$el.find('.item-body');
+        var that = this;
+        _.each(this.project_files, function(project_file){
+          var switch_view = new GithubRepoSwitchView({
+            model: that.model,
+            parent: that,
+            branch: that.branch,
+            project_file: project_file
+          }, this);
 
-        var switch_view = new GithubRepoSwitchView({
-          model: this.model, 
-          parent: this,
-          branch: this.branch
+          target_el.append(switch_view.render().$el);
         });
-
-        this.$el.find('.item-title').html(this.renderTitle());        
-        this.$el.find('.item-switch').html(switch_view.render().$el);
         return this;
       }
     });

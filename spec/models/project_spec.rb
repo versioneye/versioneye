@@ -114,6 +114,11 @@ describe Project do
       collaborator_db.should_not be_nil
       collaborator_db.user.username.should eql( col_user.username )
       @test_project.collaborator?( col_user ).should be_true
+
+      @test_project.remove_collaborators
+      @test_project.collaborators.size.should eq(0)
+      @test_project.collaborators.count.should eq(0)
+      @test_project.collaborator( col_user ).should be_nil
     end
   end
 

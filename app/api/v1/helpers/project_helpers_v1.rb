@@ -32,7 +32,7 @@ module ProjectHelpersV1
 
   def upload_and_store(file)
     project = upload file
-    store_project project
+    ProjectService.store project
     project
   end
 
@@ -58,16 +58,6 @@ module ProjectHelpersV1
     project.project_type = project_type
     project.url = url
     project
-  end
-
-  # TODO check if this is doublicate ! Check the code in PrjectsController, ServiceController & ProjectService
-  def store_project(project)
-    success = false
-    if project.dependencies && !project.dependencies.empty? && project.save
-      project.save_dependencies
-      success = true
-    end
-    return success
   end
 
 end

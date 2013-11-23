@@ -1,0 +1,35 @@
+<div class="well box_dep">
+
+<% main_dependencies = @product.dependencies(nil) %>
+
+<div class="row">
+	<div class="span6">
+		<h5 class="dep_header">
+			<%= pluralize( main_dependencies.count, "Required dependencies" ) %>
+		</h5>
+	</div>
+	<div class="span7" >
+		<% if !main_dependencies.empty? %>
+      <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => main_dependencies }  %>
+    <% end %>
+	</div>
+</div>
+
+<% test_deps = @product.dependencies( Dependency::A_SCOPE_TEST ) %>
+<% if test_deps.count > 0 %>
+	<hr/>
+	<h5 class="dep_header">
+    <%= pluralize(test_deps.count, "Test Dependencies") %>
+  </h5>
+  <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => test_deps }  %>
+<% end %>
+
+<% dev_deps = @product.dependencies("development") %>
+<% if dev_deps.count > 0 %>
+	<hr />
+	<h5 class="dep_header">
+    <%= pluralize(dev_deps.count, "Development Dependencies") %>
+  </h5>
+  <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => dev_deps }  %>
+<% end %>
+</div>

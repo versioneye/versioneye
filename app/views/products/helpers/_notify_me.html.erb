@@ -1,5 +1,6 @@
 
   <% if signed_in? %>
+    <% @product['user_ids'] = Array.new() if @product['user_ids'].nil? %>
     <% if !@product['user_ids'].include? current_user.id %>
       <%= form_tag("/package/follow", :style=>"margin: 0;") do  %>
         <input  name="product_key"  type="hidden" value="<%= @product.to_param %>"/>

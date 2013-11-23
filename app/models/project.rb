@@ -3,15 +3,17 @@ class Project
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_TYPE_RUBYGEMS = "RubyGem"
-  A_TYPE_PIP      = "PIP"
-  A_TYPE_NPM      = "npm"
-  A_TYPE_COMPOSER = "composer"
-  A_TYPE_GRADLE   = "gradle"
-  A_TYPE_MAVEN2   = "Maven2"
-  A_TYPE_LEIN     = "Lein"
-  A_TYPE_BOWER    = "bower"
-  A_TYPE_GITHUB   = "GitHub"
+  A_TYPE_RUBYGEMS  = "RubyGem"
+  A_TYPE_PIP       = "PIP"
+  A_TYPE_NPM       = "npm"
+  A_TYPE_COMPOSER  = "composer"
+  A_TYPE_GRADLE    = "gradle"
+  A_TYPE_MAVEN2    = "Maven2"
+  A_TYPE_LEIN      = "Lein"
+  A_TYPE_BOWER     = "bower"
+  A_TYPE_GITHUB    = "GitHub"
+  A_TYPE_R         = "R"
+  A_TYPE_COCOAPODS = "CocoaPods"
 
   A_SOURCE_UPLOAD = "upload"
   A_SOURCE_URL    = "url"
@@ -80,8 +82,12 @@ class Project
     nil
   end
 
+  def filename
+    self.s3_filename.to_s.gsub(/^\S+\_/, "")
+  end
+
   def self.find_private_projects_by_user user_id
-    Project.all(conditions: { user_id: user_id, private_project: true } )
+    Project.where( user_id: user_id, private_project: true )
   end
 
   def show_dependency_badge?
@@ -101,7 +107,7 @@ class Project
 
   def collaborator( user )
     return nil if user.nil?
-    return nil if collaborators.nil? || collaborators.empty?
+    return nil if collaborators.nil? || collaborators.size == 0
     collaborators.each do |collaborator|
       return collaborator if user._id.to_s.eql?( collaborator.user_id.to_s )
     end
@@ -112,6 +118,12 @@ class Project
     return false if user.nil?
     return true if !self.user.nil? && self.user.username.eql?( user.username )
     return !collaborator( user ).nil?
+  end
+
+  def remove_collaborators
+    collaborators.each do |collaborator|
+      collaborator.remove
+    end
   end
 
   def outdated?

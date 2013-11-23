@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
+                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <!-- Created on Sun, 03 Nov 2013 09:38:23 GMT -->
+  <ShortName>VersionEye</ShortName>
+  <Description>Use VersionEye to find software packages and their dependencies.</Description>
+  <Url type="text/html" method="get" template="http://www.versioneye.com/search?q={searchTerms}"/>
+  <Contact>rmetzler@paadee.com</Contact>
+  <!-- <Image width="16" height="16">GENERATEDLATER</Image> -->
+  <Developer>Richard Metzler</Developer>
+  <InputEncoding>UTF-8</InputEncoding>
+  <moz:SearchForm>http://www.versioneye.com</moz:SearchForm>
+  <!-- <Url type="application/opensearchdescription+xml" rel="self" template="GENERATEDLATER"/> -->
+</OpenSearchDescription>

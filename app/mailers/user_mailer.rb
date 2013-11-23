@@ -36,7 +36,8 @@ class UserMailer < ActionMailer::Base
 
   def verification_email_reminder(user, verification, email)
     @user = user
-    @verificationlink = "#{Settings.server_url_https}/users/activate/#{verification}"
+    source = fetch_source( user )
+    @verificationlink = "#{Settings.server_url_https}/users/activate/#{source}/#{verification}"
     mail(
       :to => email,
       :subject => "Verification Reminder",
