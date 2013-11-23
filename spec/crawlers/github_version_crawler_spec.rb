@@ -42,7 +42,6 @@ describe GithubVersionCrawler do
       versions.should_not be_nil
       versions.length.should eq(4)
     end
-
   end
 
 end

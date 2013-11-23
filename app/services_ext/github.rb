@@ -6,7 +6,7 @@ class Github
   A_API_URL    = "https://api.github.com"
   A_WORKERS_COUNT = 4
   A_DEFAULT_HEADERS = {
-    "Accept"     => "application/vnd.github.v3+json",
+    "Accept"     => "application/vnd.github.beta+json",
     "User-Agent" => A_USER_AGENT,
     "Connection" => "Keep-Alive"
   }
@@ -34,10 +34,8 @@ class Github
 
   def self.user(token)
     return nil if token.to_s.empty?
-    url           = "#{A_API_URL}/user?access_token=" + URI.escape( token )
-    response      =  get(url, :headers => A_DEFAULT_HEADERS )
-    json_user     = JSON.parse response.body
-    catch_github_exception json_user
+    url = "#{A_API_URL}/user" 
+    get_json(url, token)
   end
 
   def self.oauth_scopes( token )
@@ -50,7 +48,7 @@ class Github
   end
 
   def self.user_repos_changed?( user )
-    repo = user.  repo = github_repos.all.first
+    repo = user.github_repos.all.first
     #if user don't have any repos in cache, then force to load data
     return true if repo.nil?
 
@@ -60,7 +58,6 @@ class Github
     }
     url = "#{A_API_URL}/user?access_token=#{URI.escape(user.github_token)}"
     response = head(url, headers: headers)
-    puts response.code
     response.code != 304
   rescue => e
     Rails.logger.error e.message
@@ -69,12 +66,11 @@ class Github
   end
 
   #returns how many repos user has. NB! doesnt count orgs
-  def self.count_user_repos(user)
+  def self.count_user_repos(user_info)
     n = 0
-    return n if user[:github_token].nil?
+    return n if user_info[:github_token].nil?
 
-    url = "#{A_API_URL}/user?access_token=#{user[:github_token]}"
-    user_info = get_json(url, user[:github_token])
+    user_info = self.user(user_info[:github_token])
     if user_info
       n = user_info[:public_repos].to_i + user_info[:total_private_repos].to_i
     end
@@ -122,19 +118,19 @@ class Github
   end
 
   def self.read_repos(user, url, page = 1, per_page = 30)
-    response        = get(url, headers: A_DEFAULT_HEADERS)
-    data            = catch_github_exception JSON.parse(response.body)
+    response        = get_json(url, user.github_token, true)
+    data            = catch_github_exception JSON.parse(response.body, symbolize_names: true)
     data            = [] if data.nil?
     workers         = []
     repo_docs       = []
     data.each do |repo|
-      next if repo.nil? or repo['full_name'].to_s.empty?
+      next if repo.nil? or repo[:full_name].to_s.empty?
 
       workers << Thread.new do
         time = Benchmark.measure do
           repo_docs << read_repo_data(user, repo)
         end
-        puts "Reading `#{repo['full_name']}` took: #{time} "
+        puts "Reading `#{repo[:full_name]}` took: #{time} "
         sleep 1/100.0
       end
       execute_job(workers) if workers.count == A_WORKERS_COUNT
@@ -160,15 +156,13 @@ class Github
   end
 
   def self.repo_branches(user, repo_name)
-    url = "#{A_API_URL}/repos/#{repo_name}/branches?access_token=#{user.github_token}"
-    response = get(url, headers: A_DEFAULT_HEADERS)
-    catch_github_exception JSON.parse(response.body)
+    url = "#{A_API_URL}/repos/#{repo_name}/branches"
+    get_json(url, user.github_token)
   end
 
   def self.repo_branch_info(user, repo_name, branch = "master")
-    url = "#{A_API_URL}/repos/#{repo_name}/branches/#{branch}?access_token=#{user.github_token}"
-    response = get(url, headers: A_DEFAULT_HEADERS)
-    catch_github_exception JSON.parse(response.body)
+    url = "#{A_API_URL}/repos/#{repo_name}/branches/#{branch}"
+    get_json(url, user.github_token)
   end
 
   def self.project_file_from_branch(user, repo_name, filename, branch = "master")
@@ -178,17 +172,18 @@ class Github
       return nil
     end
 
-    project_file_info = Github.project_file_info( repo_name, filename, branch_info["commit"]["sha"], user.github_token )
+    project_file_info = Github.project_file_info( repo_name, filename, branch_info[:commit][:sha], user.github_token )
+
     if project_file_info.nil? || project_file_info.empty?
       Rails.logger.error "Cancelling importing: can't read info about project's file."
       return nil
     end
-    project_file = fetch_project_from_url(user, project_file_info["url"])
+    project_file = fetch_project_from_url(user, project_file_info[:url])
     return nil if project_file.nil?
 
-    project_file["name"] = project_file_info["name"]
-    project_file["type"] = project_file_info["type"]
-    project_file["branch"] = project_file_info["branch"]
+    project_file[:name] = project_file_info[:name]
+    project_file[:type] = project_file_info[:type]
+    project_file[:branch] = project_file_info[:branch]
     project_file
   end
 
@@ -197,9 +192,9 @@ class Github
     project_file = fetch_project_from_url(user, url)
     return nil if project_file.nil?
 
-    project_file["name"] = filename
-    project_file["type"] = ProjectService.type_by_filename(filename)
-    project_file["branch"] = branch
+    project_file[:name] = filename
+    project_file[:type] = ProjectService.type_by_filename(filename)
+    project_file[:branch] = branch
     project_file
   end
 
@@ -214,18 +209,17 @@ class Github
   # TODO: add tests
   def self.project_file_info(git_project, filename, sha, token)
     result = Hash.new
-    url   = "#{A_API_URL}/repos/#{git_project}/git/trees/#{sha}?access_token=" + URI.escape(token)
-    response = get(url, :headers => A_DEFAULT_HEADERS)
-    tree   = JSON.parse response.body
-    return result if tree.nil? or not tree.has_key?('tree')
+    url   = "#{A_API_URL}/repos/#{git_project}/git/trees/#{sha}"
+    tree = get_json(url, token)
+    return result if tree.nil? or not tree.has_key?(:tree)
 
-    tree['tree'].each do |file|
-      name           = file['path']
-      result['url']  = file['url']
-      result['name'] = name
+    tree[:tree].each do |file|
+      name           = file[:path]
+      result[:url]  = file[:url]
+      result[:name] = name
       type           = ProjectService.type_by_filename( name )
-      if filename == result['name']
-        result['type'] = type
+      if filename == result[:name]
+        result[:type] = type
         return result
       end
     end
@@ -316,16 +310,16 @@ class Github
     response.body
   end
 
-  def self.orga_names( github_token )
-    url = "#{A_API_URL}/user/orgs?access_token=#{github_token}"
-    response = get(url, :headers => A_DEFAULT_HEADERS )
-    organisations = catch_github_exception JSON.parse( response.body )
-    names = Array.new
+  def self.orga_names(token)
+    url = "#{A_API_URL}/user/orgs"
+    organisations = get_json(url, token)
+    names = []
     if organisations.nil? || organisations.empty?
       return names
     end
+
     organisations.each do |organisation|
-      names << organisation['login']
+      names << organisation[:login]
     end
     names
   end
@@ -343,25 +337,24 @@ class Github
   end
 
   def self.repo_sha(repository, token)
-    url = "#{A_API_URL}/repos/#{repository}/git/refs/heads?access_token=" + URI.escape(token)
-    response = get(url, :headers => A_DEFAULT_HEADERS)
-    heads = JSON.parse response.body
+    url = "#{A_API_URL}/repos/#{repository}/git/refs/heads"
+    heads = get_json(url, token)
 
-    heads.each do |head|
-      return head['object']['sha'] if head['url'].match(/heads\/master$/)
+    heads.to_a.each do |head|
+      return head[:object][:sha] if head[:url].match(/heads\/master$/)
     end
     nil
   end
 
-  def self.check_user_ratelimit(user)
-    url = "#{A_API_URL}/rate_limit?access_token=#{user.github_token}"
-    response = get(url, :headers => A_DEFAULT_HEADERS)
-    response = JSON.parse response.body
-    response['resources']
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
-    return nil
+  def self.repo_tags(repository, token)
+    url = "#{A_API_URL}/#{repository}/git/tags"
+    get_json url, token
+  end
+
+  def self.rate_limit(token)
+    url = "#{A_API_URL}/rate_limit"
+    data = get_json(url, token)
+    data['resources'] if data
   end
 
   def self.search(q, langs = nil, users = nil, page = 1, per_page = 30)
@@ -396,11 +389,20 @@ class Github
   end
 
   def self.get_json(url, token = nil, raw = false)
-    response = get(url)
+    request_headers = A_DEFAULT_HEADERS
+    if token
+      request_headers["Authorization"] = " token #{token}"
+    end
+
+    response = get(url, headers: request_headers)
     return response if raw
     content = JSON.parse(response.body, symbolize_names: true)
     catch_github_exception(content)
-  end
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    return nil
+ end
 
   def self.support_project_files
     Set['pom.xml', 'Gemfile', 'Gemfile.lock', 'composer.json', 'composer.lock', 'requirements.txt',
@@ -424,7 +426,7 @@ class Github
   {"message": "Problems parsing JSON"}
 =end
     def self.catch_github_exception(data)
-      if data.is_a?(Hash) and data.has_key?('message')
+      if data.is_a?(Hash) and data.has_key?(:message)
         Rails.logger.error "Catched exception in response from Github API: #{data}"
         return nil
       else

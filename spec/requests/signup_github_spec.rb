@@ -16,7 +16,8 @@ describe "SignUp with GitHub" do
     assert_tag :tag => "button", :attributes => { :class => "btn btn-github btn-large btn-signin" }
 
     FakeWeb.register_uri(:get, "https://github.com/login/oauth/access_token?client_id=#{Settings.github_client_id}&client_secret=#{Settings.github_client_secret}&code=123", :body => "token=token_123")
-    FakeWeb.register_uri(:get, "https://api.github.com/user?access_token=token_123", :body => "{\"id\": 1, \"email\": \"test@test.de\"}")
+    FakeWeb.register_uri(:get, %r|https://api.github.com/user*|, 
+                         :body => "{\"id\": 1, \"email\": \"test@test.de\"}")
 
     get "/auth/github/callback?code=123"
     assert_response :success
@@ -36,7 +37,8 @@ describe "SignUp with GitHub" do
     user.save
 
     FakeWeb.register_uri(:get, "https://github.com/login/oauth/access_token?client_id=#{Settings.github_client_id}&client_secret=#{Settings.github_client_secret}&code=123", :body => "token=token_123")
-    FakeWeb.register_uri(:get, "https://api.github.com/user?access_token=token_123", :body => "{\"id\": 1, \"email\": \"test@test.de\"}")
+    FakeWeb.register_uri(:get, %r|https://api.github.com/user*|, 
+                         :body => "{\"id\": 1, \"email\": \"test@test.de\"}")
 
     get "/auth/github/callback?code=123"
     assert_response 302
@@ -50,7 +52,8 @@ describe "SignUp with GitHub" do
     user = UserFactory.create_new
 
     FakeWeb.register_uri(:get, "https://github.com/login/oauth/access_token?client_id=#{Settings.github_client_id}&client_secret=#{Settings.github_client_secret}&code=123", :body => "token=token_123")
-    FakeWeb.register_uri(:get, "https://api.github.com/user?access_token=token_123", :body => "{\"id\": 1585858, \"email\": \"#{user.email}\"}")
+    FakeWeb.register_uri(:get, %r|https://api.github.com/user*|, 
+                         :body => "{\"id\": 1585858, \"email\": \"#{user.email}\"}")
 
     get "/auth/github/callback?code=123"
     assert_response 302
@@ -73,7 +76,8 @@ describe "SignUp with GitHub" do
     response.should redirect_to( user_packages_i_follow_path )
 
     FakeWeb.register_uri(:get, "https://github.com/login/oauth/access_token?client_id=#{Settings.github_client_id}&client_secret=#{Settings.github_client_secret}&code=123", :body => "token=token_123")
-    FakeWeb.register_uri(:get, "https://api.github.com/user?access_token=token_123", :body => "{\"id\": 1585858, \"email\": \"#{user.email}\"}")
+    FakeWeb.register_uri(:get, %r|https://api.github.com/user*|, 
+                         :body => "{\"id\": 1585858, \"email\": \"#{user.email}\"}")
 
     get "/auth/github/callback?code=123"
     assert_response 302
@@ -84,5 +88,4 @@ describe "SignUp with GitHub" do
     user_db.github_id.should eql("1585858")
     user_db.github_scope.should be_nil
   end
-
 end

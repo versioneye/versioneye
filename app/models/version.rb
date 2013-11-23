@@ -10,6 +10,8 @@ class Version
   field :pom            , type: String
   field :released_at    , type: DateTime
   field :released_string, type: String
+  field :github_tag     , type: String
+  field :github_commit_sha, type: String
 
   embedded_in :product
 
