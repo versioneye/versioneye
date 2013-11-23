@@ -300,6 +300,8 @@ class BowerCrawler
     nil
   end
 
+  #TODO: refactor to own crawler
+  #TODO: adjust request checker/limiter?
   def self.parse_repo_tags(prod, tags, token)
     return if tags.nil? or tags.empty?
     tags.each {|tag| parse_repo_tag(prod, tag, token)}
