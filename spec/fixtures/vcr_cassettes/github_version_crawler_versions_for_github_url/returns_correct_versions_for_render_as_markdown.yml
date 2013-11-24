@@ -1,0 +1,383 @@
+--- 
+http_interactions: 
+- request: 
+    method: get
+    uri: https://api.github.com/repos/rmetzler/render-as-markdown?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/vnd.github.beta+json
+      User-Agent: 
+      - Octokit Ruby Gem 2.6.1
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Sun, 24 Nov 2013 18:34:58 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Ratelimit-Remaining: 
+      - "4985"
+      X-Ratelimit-Reset: 
+      - "1385321495"
+      Cache-Control: 
+      - public, max-age=60, s-maxage=60
+      Last-Modified: 
+      - Sun, 10 Nov 2013 11:10:46 GMT
+      Etag: 
+      - "\"0952dd8a4f9af384049a2318d58a8b66\""
+      Vary: 
+      - Accept
+      - Accept-Encoding
+      X-Github-Media-Type: 
+      - github.beta; format=json
+      X-Content-Type-Options: 
+      - nosniff
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 4E345547:4DB1:5FD7DC:529246D2
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA62YUW+jOBDHvwpC2nvZNIYmadpIq917ubd7OfVe7iUyMIAV
+        g5FtkmtRv/uNbQgkmyvJEqlqCPH8/Pd4xh678Vnib8LFYvW8Xr7M/JIW4G98
+        CWUC8oGqh4LKXSIOpT/z05rzbdegAP3OQZKLLbE9SH/T+FxkrDS8tjlSTH+r
+        5+fH5cyne6qp3NaSY5Nc60ptCAnmmXQ/zGNREPdIYL0KH4NVkrw8rdLlAsKX
+        lyWNIXiii3USJMvvyTcL+LL4/cvjH/jHEig1i0Wp5hnTeR0ZGr4PgzR6Cukq
+        TR8Tulqmy2ixXkVRmNI4Xa5f4nlVZr/Jb/+i0k7H1kj2xxSgwelAaMUGXZNa
+        gVRk4IhcF/xs7L3SYcNUcC4OaH3W+tMOyNHKzJwlsDL7BQJaNUToHHCicAgf
+        xjFM6dvEWIuGmA/0pmEonHkJyU2CWhuUY+Lro8Hgq4SF1ZGKJas0w/m+DTm0
+        RJKQGS3ZO72dhJYKAUbSbRKsBVrCHiP2NlNn0pBKsj2N34wrJMTA9ujYX8Cd
+        2SJNv1VmOfgbJ964mWnY0qQwKZ1SruBj5tuuNTayL2aYxtdE9eVlI4HjLGKn
+        rzlTXgaFhx/U+7Ndh7wceAXS0znVnlt8lHcAzr1UyIJqDUnfFl95EcsybH+0
+        Bw6FcbTH2Q48TSMOxvvYdHccxKeJbOfrmJ+XR2JoI1M5isEMRghK28HbZJZh
+        NAT/t+kX44pAIyGpFmPryrjQE1hDhl9NSGqgxeQBWAjCciGme9ZCEMaUquGq
+        TBl3gmUp0qVkWReRWy2vScRxvKOgZqoUy0qAyR49ghq7N5mZiiQt43w6uuM0
+        xD3ZKKDZZMmGYWRyEU1m4V5LLKghKqduW9Pbe6g0ZMM5AUtI7yLZcI5gLe8Q
+        B1auAR2xuM9qDInJejsOaVoPc1pmNc2mk48gjAZTFWT0fbQ+Gs+xnoRYLB21
+        ZFF9nwWyZxnFrujA9WG6i3tUD7Z10Odl0BXOGFRG1h1FwcbKk3FqizlJjTuh
+        TRyf48338arqOtmG05B+XXebR9vDVG+3u0enlzR9PyYQ7zMGxyHN14rq3Kx4
+        2F1FJUwV32JIE1GsCefzeZMDtVV+AfIO2e4oiKMyzrG4naq36TiuZLQHidTI
+        NQddLmgyOS2PIIS6qZ2q2VGG8VfhcXyyUAsZUguG9bAW5fQ1uicN+aXQLGXx
+        NQes8bQ8gTXfFStjmFHOZxjVePhnGOd4fDUzi8UuTPeWo+Bw8JbEUCUeJjDk
+        J89Cx2mIOxzHEvBMlWypxnPQYxAuHsLgIXh6DdabRbAJl/9g33WVnLcJsdlr
+        GG7CYLN8Mm2qWuWnmJ+a4KrZhiY+4fXLhSuIC0ccc7GBfKXy3vhHb7rprjn+
+        3zTmGGNnSXFb3/vzLe46c5SdiwIqLEPaWyccdae3u7Bh4oJyM2D2jlaLdXBS
+        dsSiLnGmwpl/oBrrZ9zW+1ddqYKd/VVHb6Z7qrYunf2NlrU5NOObfskYvDyw
+        HesauTNlDy6YlKK9PSsxjfHyooKyJQ8EuGOkUTf4/USt/ZJASmuut65iR7UF
+        Vdoe+93DhR9K0Ac8ow76GlY2ndKP/wCuIw0cZBQAAA==
+
+    http_version: 
+  recorded_at: Sun, 24 Nov 2013 18:34:58 GMT
+- request: 
+    method: get
+    uri: https://api.github.com/repos/rmetzler/render-as-markdown/tags?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/vnd.github.beta+json
+      User-Agent: 
+      - Octokit Ruby Gem 2.6.1
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Sun, 24 Nov 2013 18:34:59 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Ratelimit-Remaining: 
+      - "4984"
+      X-Ratelimit-Reset: 
+      - "1385321495"
+      Cache-Control: 
+      - public, max-age=60, s-maxage=60
+      Last-Modified: 
+      - Sun, 10 Nov 2013 11:10:46 GMT
+      Etag: 
+      - "\"0952dd8a4f9af384049a2318d58a8b66\""
+      Vary: 
+      - Accept
+      - Accept-Encoding
+      X-Github-Media-Type: 
+      - github.beta; format=json
+      X-Content-Type-Options: 
+      - nosniff
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 4E345547:4DB5:D1B4C5:529246D2
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA9WUy2rDMBBF/0XrxHp4JEv+lVLKyJJqU7+QlRYS8u+1adJH
+        ugnUXnQ5gjl35jDo4UR67DwpySvLWKbIjhyb0WLbPh1iOz/XKY1TSSmOTfbc
+        pPpgs2roaPTjMNHY+XRsfZzL3vm4x2nfYXxxw1tPLxj6yU0Y1+BeMF/ceZyu
+        SaQ8kanGeWINgjulg/NMyyCkMwI1OAheWkSDhrkcuDPzqn9c8SN5oncnns+7
+        n77lRr4X7ha+F+6tbx5UZQKDotIicONVLrx0wBQTQXHueWVVgSqs5/vuxF++
+        YSPfC3cL3wv31nchJJcSGLO5BK3RKum1cwBCgWdSYm6K4IqldaX7vjvxu+/l
+        O9lA9xW7su0r9l/JfnwHen5Uz74FAAA=
+
+    http_version: 
+  recorded_at: Sun, 24 Nov 2013 18:34:59 GMT
+- request: 
+    method: get
+    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/8421d68fde085f25d92a84d4fe5baa9a90d341d9
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: {}
+
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Sun, 24 Nov 2013 18:34:59 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "60"
+      X-Ratelimit-Remaining: 
+      - "43"
+      X-Ratelimit-Reset: 
+      - "1385321495"
+      Cache-Control: 
+      - public, max-age=60, s-maxage=60
+      Last-Modified: 
+      - Sun, 10 Nov 2013 11:06:40 GMT
+      Etag: 
+      - "\"9127523d70d2105f78cf32ec78cb8a96\""
+      Vary: 
+      - Accept
+      - Accept-Encoding
+      X-Github-Media-Type: 
+      - github.beta; format=json
+      X-Content-Type-Options: 
+      - nosniff
+      Content-Length: 
+      - "4132"
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 4E345547:4DB2:C95478:529246D3
+    body: 
+      encoding: US-ASCII
+      string: "{\"sha\":\"8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"commit\":{\"author\":{\"name\":\"Richard Metzler\",\"email\":\"richard.metzler@me.com\",\"date\":\"2013-11-10T11:06:40Z\"},\"committer\":{\"name\":\"Richard Metzler\",\"email\":\"richard.metzler@me.com\",\"date\":\"2013-11-10T11:06:40Z\"},\"message\":\"bump version\",\"tree\":{\"sha\":\"6b717b5cf078251b95a85239b181d290a78fc8ba\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/trees/6b717b5cf078251b95a85239b181d290a78fc8ba\"},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/commits/8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"comments_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/8421d68fde085f25d92a84d4fe5baa9a90d341d9/comments\",\"author\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"a078401ee88a4d28161dd2b47e8056e2f6b93bb6\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/a078401ee88a4d28161dd2b47e8056e2f6b93bb6\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/a078401ee88a4d28161dd2b47e8056e2f6b93bb6\"}],\"stats\":{\"total\":2,\"additions\":1,\"deletions\":1},\"files\":[{\"sha\":\"5ee1943825c7e12cb69c53321234fec5b57b62d3\",\"filename\":\"lib/render-as-markdown/version.rb\",\"status\":\"modified\",\"additions\":1,\"deletions\":1,\"changes\":2,\"blob_url\":\"https://github.com/rmetzler/render-as-markdown/blob/8421d68fde085f25d92a84d4fe5baa9a90d341d9/lib/render-as-markdown/version.rb\",\"raw_url\":\"https://github.com/rmetzler/render-as-markdown/raw/8421d68fde085f25d92a84d4fe5baa9a90d341d9/lib/render-as-markdown/version.rb\",\"contents_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/contents/lib/render-as-markdown/version.rb?ref=8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"patch\":\"@@ -1,6 +1,6 @@\\n module RenderAsMarkdown\\n   GEM     = 'render-as-markdown'\\n-  VERSION = '0.0.5'\\n+  VERSION = '0.0.6'\\n end\\n \\n #puts \\\"This is version #{RenderAsMarkdown::VERSION} of gem #{RenderAsMarkdown::GEM}\\\"\"}]}"
+    http_version: 
+  recorded_at: Sun, 24 Nov 2013 18:35:00 GMT
+- request: 
+    method: get
+    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/1f6c9f047c82f19e632e5d40602f611e1cb67a6f
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: {}
+
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Sun, 24 Nov 2013 18:35:00 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "60"
+      X-Ratelimit-Remaining: 
+      - "42"
+      X-Ratelimit-Reset: 
+      - "1385321495"
+      Cache-Control: 
+      - public, max-age=60, s-maxage=60
+      Last-Modified: 
+      - Wed, 16 Oct 2013 10:21:28 GMT
+      Etag: 
+      - "\"9f0c8be9e7f367760cbb124c9f5752b4\""
+      Vary: 
+      - Accept
+      - Accept-Encoding
+      X-Github-Media-Type: 
+      - github.beta; format=json
+      X-Content-Type-Options: 
+      - nosniff
+      Content-Length: 
+      - "4122"
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 4E345547:4DB5:D1B6C4:529246D4
+    body: 
+      encoding: US-ASCII
+      string: "{\"sha\":\"1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"commit\":{\"author\":{\"name\":\"Richard Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-16T10:21:28Z\"},\"committer\":{\"name\":\"Richard Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-16T10:21:28Z\"},\"message\":\"v0.0.5\",\"tree\":{\"sha\":\"e6f682f49bcce3b2a643964581101ac563276029\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/trees/e6f682f49bcce3b2a643964581101ac563276029\"},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/commits/1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"comments_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/1f6c9f047c82f19e632e5d40602f611e1cb67a6f/comments\",\"author\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://0.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://0.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"787fb6e026b128bfb6e61c446f6efa0b0a94c8ad\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/787fb6e026b128bfb6e61c446f6efa0b0a94c8ad\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/787fb6e026b128bfb6e61c446f6efa0b0a94c8ad\"}],\"stats\":{\"total\":2,\"additions\":1,\"deletions\":1},\"files\":[{\"sha\":\"b954c357e3643938e7cb4b4cebb3e8cfa2f09ce6\",\"filename\":\"lib/render-as-markdown/version.rb\",\"status\":\"modified\",\"additions\":1,\"deletions\":1,\"changes\":2,\"blob_url\":\"https://github.com/rmetzler/render-as-markdown/blob/1f6c9f047c82f19e632e5d40602f611e1cb67a6f/lib/render-as-markdown/version.rb\",\"raw_url\":\"https://github.com/rmetzler/render-as-markdown/raw/1f6c9f047c82f19e632e5d40602f611e1cb67a6f/lib/render-as-markdown/version.rb\",\"contents_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/contents/lib/render-as-markdown/version.rb?ref=1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"patch\":\"@@ -1,6 +1,6 @@\\n module RenderAsMarkdown\\n   GEM     = 'render-as-markdown'\\n-  VERSION = '0.0.4'\\n+  VERSION = '0.0.5'\\n end\\n \\n #puts \\\"This is version #{RenderAsMarkdown::VERSION} of gem #{RenderAsMarkdown::GEM}\\\"\"}]}"
+    http_version: 
+  recorded_at: Sun, 24 Nov 2013 18:35:00 GMT
+- request: 
+    method: get
+    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: {}
+
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Sun, 24 Nov 2013 18:35:00 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "60"
+      X-Ratelimit-Remaining: 
+      - "41"
+      X-Ratelimit-Reset: 
+      - "1385321495"
+      Cache-Control: 
+      - public, max-age=60, s-maxage=60
+      Last-Modified: 
+      - Sun, 13 Oct 2013 00:39:39 GMT
+      Etag: 
+      - "\"d4f34c73dccc0e3d3f0bf15238f6f641\""
+      Vary: 
+      - Accept
+      - Accept-Encoding
+      X-Github-Media-Type: 
+      - github.beta; format=json
+      X-Content-Type-Options: 
+      - nosniff
+      Content-Length: 
+      - "4129"
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 4E345547:4DB1:5FD8F4:529246D4
+    body: 
+      encoding: US-ASCII
+      string: "{\"sha\":\"725155400b35488ab65e8dd44264e055a397fd74\",\"commit\":{\"author\":{\"name\":\"Richard Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-13T00:39:39Z\"},\"committer\":{\"name\":\"Richard Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-13T00:39:39Z\"},\"message\":\"version 0.0.4\",\"tree\":{\"sha\":\"7af5d615c8fe5cefb7f510dce3cdbae8d0459dff\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/trees/7af5d615c8fe5cefb7f510dce3cdbae8d0459dff\"},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/commits/725155400b35488ab65e8dd44264e055a397fd74\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/725155400b35488ab65e8dd44264e055a397fd74\",\"comments_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74/comments\",\"author\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\"}],\"stats\":{\"total\":2,\"additions\":1,\"deletions\":1},\"files\":[{\"sha\":\"2c3f6c866bfab1147280327282daea7e4762666e\",\"filename\":\"lib/render-as-markdown/version.rb\",\"status\":\"modified\",\"additions\":1,\"deletions\":1,\"changes\":2,\"blob_url\":\"https://github.com/rmetzler/render-as-markdown/blob/725155400b35488ab65e8dd44264e055a397fd74/lib/render-as-markdown/version.rb\",\"raw_url\":\"https://github.com/rmetzler/render-as-markdown/raw/725155400b35488ab65e8dd44264e055a397fd74/lib/render-as-markdown/version.rb\",\"contents_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/contents/lib/render-as-markdown/version.rb?ref=725155400b35488ab65e8dd44264e055a397fd74\",\"patch\":\"@@ -1,6 +1,6 @@\\n module RenderAsMarkdown\\n   GEM     = 'render-as-markdown'\\n-  VERSION = '0.0.3'\\n+  VERSION = '0.0.4'\\n end\\n \\n #puts \\\"This is version #{RenderAsMarkdown::VERSION} of gem #{RenderAsMarkdown::GEM}\\\"\"}]}"
+    http_version: 
+  recorded_at: Sun, 24 Nov 2013 18:35:01 GMT
+- request: 
+    method: get
+    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: {}
+
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Sun, 24 Nov 2013 18:35:01 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "60"
+      X-Ratelimit-Remaining: 
+      - "40"
+      X-Ratelimit-Reset: 
+      - "1385321495"
+      Cache-Control: 
+      - public, max-age=60, s-maxage=60
+      Last-Modified: 
+      - Sun, 13 Oct 2013 00:39:39 GMT
+      Etag: 
+      - "\"d4f34c73dccc0e3d3f0bf15238f6f641\""
+      Vary: 
+      - Accept
+      - Accept-Encoding
+      X-Github-Media-Type: 
+      - github.beta; format=json
+      X-Content-Type-Options: 
+      - nosniff
+      Content-Length: 
+      - "4129"
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 4E345547:4DB3:161DE72:529246D5
+    body: 
+      encoding: US-ASCII
+      string: "{\"sha\":\"725155400b35488ab65e8dd44264e055a397fd74\",\"commit\":{\"author\":{\"name\":\"Richard Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-13T00:39:39Z\"},\"committer\":{\"name\":\"Richard Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-13T00:39:39Z\"},\"message\":\"version 0.0.4\",\"tree\":{\"sha\":\"7af5d615c8fe5cefb7f510dce3cdbae8d0459dff\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/trees/7af5d615c8fe5cefb7f510dce3cdbae8d0459dff\"},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/commits/725155400b35488ab65e8dd44264e055a397fd74\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/725155400b35488ab65e8dd44264e055a397fd74\",\"comments_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74/comments\",\"author\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\"}],\"stats\":{\"total\":2,\"additions\":1,\"deletions\":1},\"files\":[{\"sha\":\"2c3f6c866bfab1147280327282daea7e4762666e\",\"filename\":\"lib/render-as-markdown/version.rb\",\"status\":\"modified\",\"additions\":1,\"deletions\":1,\"changes\":2,\"blob_url\":\"https://github.com/rmetzler/render-as-markdown/blob/725155400b35488ab65e8dd44264e055a397fd74/lib/render-as-markdown/version.rb\",\"raw_url\":\"https://github.com/rmetzler/render-as-markdown/raw/725155400b35488ab65e8dd44264e055a397fd74/lib/render-as-markdown/version.rb\",\"contents_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/contents/lib/render-as-markdown/version.rb?ref=725155400b35488ab65e8dd44264e055a397fd74\",\"patch\":\"@@ -1,6 +1,6 @@\\n module RenderAsMarkdown\\n   GEM     = 'render-as-markdown'\\n-  VERSION = '0.0.3'\\n+  VERSION = '0.0.4'\\n end\\n \\n #puts \\\"This is version #{RenderAsMarkdown::VERSION} of gem #{RenderAsMarkdown::GEM}\\\"\"}]}"
+    http_version: 
+  recorded_at: Sun, 24 Nov 2013 18:35:01 GMT
+recorded_with: VCR 2.7.0
