@@ -71,14 +71,15 @@ describe GithubVersionCrawler, :vcr do
     end
   end
 
-  describe ".commit_metadata" do
+  describe ".fetch_commit_date" do
     # use_vcr_cassette
 
-    it "should return metadata for a commit" do
-      meta = GithubVersionCrawler.fetch_commit_metadata 'rmetzler', 'render-as-markdown', '725155400b35488ab65e8dd44264e055a397fd74'
+    it "should return the date for a commit" do
+      user_repo = {:owner => 'versioneye', :repo => 'naturalsorter' }
+      date = GithubVersionCrawler.fetch_commit_date user_repo, '3cc7ef47557d7d790c7e55e667d451f56d276c13'
 
-      meta.should_not be_nil
-      meta["commit"]["author"]["name"].should eq("Richard Metzler")
+      date.should_not be_nil
+      date.should eq("2013-11-16T14:14:13Z")
     end
   end
 

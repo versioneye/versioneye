@@ -23,6 +23,9 @@ class GithubVersionCrawler
     github_versions = versions_for_github_url( repo )
     return nil if github_versions.nil? || github_versions.empty?
 
+    remaining = OctokitApi.instance.ratelimit.remaining
+    Rails.logger.info "check version dates for #{product.prod_key} - Remaining API requests: #{remaining}"
+
     # update releases infos at version
     product.versions.each do |version|
       if version.released_string.to_s.empty?
@@ -45,9 +48,7 @@ class GithubVersionCrawler
     product.save
   rescue => e
     Rails.logger.error e.message
-    e.backtrace.each do |trace|
-      Rails.logger.error trace
-    end
+    e.backtrace.each.map{|trace| Rails.logger.error trace }
   end
 
 
@@ -57,112 +58,80 @@ class GithubVersionCrawler
     return nil if owner_repo.nil? || owner_repo.empty?
 
     tags_data  = tags_for_repo owner_repo
-    owner      = owner_repo[:owner]
-    repo       = owner_repo[:repo]
+    return nil if tags_data.nil? || tags_data.empty?
+
     tags_data.tap do |t_data|
       t_data.each do |tag|
-        process_tag(versions, tag, owner, repo)
+        process_tag( versions, tag, owner_repo )
       end
     end
     versions
   rescue => e
     Rails.logger.error e.message
-    e.backtrace.each do |trace|
-      Rails.logger.error trace
-    end
+    e.backtrace.each.map{|trace| Rails.logger.error trace }
     nil
   end
 
 
-  def self.process_tag(versions, tag, owner, repo)
+  def self.process_tag(versions, tag, owner_repo )
     v_name      = tag.name
     sha         = tag.commit.sha
-    date_string = fetch_commit_date(owner, repo, sha)
+    date_string = fetch_commit_date( owner_repo, sha )
     return nil if date_string.to_s.empty?
     date_time   = DateTime.parse date_string
-    url         = "#{A_API_URL}/repos/#{owner}/#{repo}/#{sha}"
     versions[v_name] = {
       :sha             => sha,
       :released_at     => date_time,
       :released_string => date_string,
     }
   rescue => e
-    Rails.logger.error "Exception for #{url}"
     Rails.logger.error e.message
-    e.backtrace.each do |trace|
-      Rails.logger.error trace
-    end
-    p e.message
+    e.backtrace.each.map{|trace| Rails.logger.error trace }
     nil
   end
 
 
-  def self.fetch_commit_date(owner, repo, sha)
-    meta = fetch_commit_metadata owner, repo, sha
-    meta["commit"]["author"]["date"].to_s
+  def self.fetch_commit_date( owner_repo, sha )
+    return nil unless owner_repo
+    api = OctokitApi.instance
+    root = api.root
+    repo = root.rels[:repository].get(:uri => owner_repo).data
+    commit = repo.rels[:commits].get(:sha => sha)
+    commit_json = JSON.parse commit.data.to_json
+    commit_json.first["commit"]["author"]["date"].to_s
   rescue => e
-    Rails.logger.error meta
     Rails.logger.error e.message
-    e.backtrace.each do |trace|
-      Rails.logger.error trace
-    end
+    e.backtrace.each.map{|trace| Rails.logger.error trace }
     nil
   end
 
-
-  def self.fetch_commit_metadata owner, repo, sha
-    url = self.commit_url owner, repo, sha
-    response = HTTParty.get(url) #, :headers => {"User-Agent" => A_USER_AGENT } )
-    Rails.logger.debug response
-    if response.code == 200
-      return JSON.parse(response.body)
-    else
-      Rails.logger.warn "Requested: #{url}\t response: #{response.code}"
-      return nil
-    end
-  rescue => e
-
-    Rails.logger.error e.message
-    e.backtrace.each do |trace|
-      Rails.logger.error trace
-    end
-    nil
-  end
-
-  def self.commit_url owner, repo, sha
-    "#{A_API_URL}/repos/#{owner}/#{repo}/commits/#{sha}"
-  end
 
   def self.tags_for_repo( owner_repo )
     return nil unless owner_repo
     api = OctokitApi.instance
-    repo = api.rels[:repository].get(:uri => owner_repo).data
+    root = api.root
+    repo = root.rels[:repository].get(:uri => owner_repo).data
     tags = repo.rels[:tags]
     tags_data = tags.get.data
     tags_data
   rescue => e
     Rails.logger.error e.message
-    e.backtrace.each do |trace|
-      Rails.logger.error trace
-    end
+    e.backtrace.each.map{|trace| Rails.logger.error trace }
     nil
   end
+
 
   def self.parse_github_url (git_url)
     match = /https:\/\/github.com\/(.+)\/(.+)\.git/.match git_url
     owner_repo = {:owner => $1, :repo => $2}
     if match.nil? || match == false
-      error = "Couldn't parse #{git_url}"
-      p error
-      Rails.logger.error error
+      Rails.logger.error "Couldn't parse #{git_url}"
       return nil
     end
     owner_repo
   rescue => e
     Rails.logger.error e.message
-    e.backtrace.each do |trace|
-      Rails.logger.error trace
-    end
+    e.backtrace.each.map{|trace| Rails.logger.error trace }
     nil
   end
 
