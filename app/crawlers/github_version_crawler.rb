@@ -5,6 +5,7 @@ class GithubVersionCrawler
   A_USER_AGENT = "www.versioneye.com"
   A_API_URL    = "https://api.github.com"
 
+
   # Crawle Release dates for Objective-C packages
   def self.crawl
     products_with_empty_version_strings.each do |product|
@@ -12,20 +13,27 @@ class GithubVersionCrawler
     end
   end
 
+
   def self.products_with_empty_version_strings
     Product.where({:language =>"Objective-C", "versions.version.ne" => nil }).all
   end
 
+
   def self.add_version_to_product ( product )
-    # get git URL, owner and repo from product
     repo = product.repositories.map(&:repo_source).uniq.first
     return nil if repo.to_s.empty?
+
     github_versions = versions_for_github_url( repo )
     return nil if github_versions.nil? || github_versions.empty?
 
-    remaining = OctokitApi.instance.ratelimit.remaining
-    Rails.logger.info "check version dates for #{product.prod_key} - Remaining API requests: #{remaining}"
+    update_release_dates product, github_versions
+  rescue => e
+    Rails.logger.error e.message
+    e.backtrace.each.map{|trace| Rails.logger.error trace }
+  end
 
+
+  def self.update_release_dates( product, github_versions )
     # update releases infos at version
     product.versions.each do |version|
       if version.released_string.to_s.empty?
@@ -35,25 +43,25 @@ class GithubVersionCrawler
           # couldn't find 0.0.1, try v0.0.1
           v_hash         = github_versions["v#{version_string}"]
           if v_hash.nil? || v_hash.empty?
-            p "No tag available for #{repo} - #{product.name} : #{version_string} / v#{version_string}"
+            Rails.logger.info "No tag available for #{repo} - #{product.name} : #{version_string} / v#{version_string}"
             next
           end
         end
         version.released_at     = v_hash[:released_at]
         version.released_string = v_hash[:released_string]
-        p "update #{product.name} v #{version} was released at #{version.released_at}"
+        Rails.logger.info "update #{product.name} v #{version} was released at #{version.released_at}"
       end
     end
 
     product.save
-  rescue => e
-    Rails.logger.error e.message
-    e.backtrace.each.map{|trace| Rails.logger.error trace }
+
+    remaining = OctokitApi.instance.ratelimit.remaining
+    Rails.logger.info "check version dates for #{product.prod_key} - Remaining API requests: #{remaining}"
   end
 
 
   def self.versions_for_github_url github_url
-    versions = {}
+    versions   = {}
     owner_repo = parse_github_url github_url
     return nil if owner_repo.nil? || owner_repo.empty?
 
@@ -93,10 +101,8 @@ class GithubVersionCrawler
 
   def self.fetch_commit_date( owner_repo, sha )
     return nil unless owner_repo
-    api = OctokitApi.instance
-    root = api.root
-    repo = root.rels[:repository].get(:uri => owner_repo).data
-    commit = repo.rels[:commits].get(:sha => sha)
+    repo        = repo_data owner_repo
+    commit      = repo.rels[:commits].get(:sha => sha)
     commit_json = JSON.parse commit.data.to_json
     commit_json.first["commit"]["author"]["date"].to_s
   rescue => e
@@ -108,16 +114,21 @@ class GithubVersionCrawler
 
   def self.tags_for_repo( owner_repo )
     return nil unless owner_repo
-    api = OctokitApi.instance
-    root = api.root
-    repo = root.rels[:repository].get(:uri => owner_repo).data
-    tags = repo.rels[:tags]
+    repo      = repo_data owner_repo
+    tags      = repo.rels[:tags]
     tags_data = tags.get.data
     tags_data
   rescue => e
     Rails.logger.error e.message
     e.backtrace.each.map{|trace| Rails.logger.error trace }
     nil
+  end
+
+
+  def self.repo_data owner_repo
+    api  = OctokitApi.instance
+    root = api.root
+    repo = root.rels[:repository].get(:uri => owner_repo).data
   end
 
 
