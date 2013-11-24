@@ -10,7 +10,7 @@ class GithubController < ApplicationController
     end
 
     token     = Github.token( code )
-    json_user = Github.user token
+    json_user = Github.user(token)
 
     if signed_in?
       update_user_scope( json_user, token )
@@ -81,7 +81,7 @@ class GithubController < ApplicationController
 
     def update_user_scope(json_user, token)
       user = current_user
-      user.github_id = json_user['id']
+      user.github_id = json_user[:id]
       user.github_token = token
       user.github_scope = Github.oauth_scopes( token )
       # next line is mandatory otherwise the private repos don't get
@@ -91,15 +91,16 @@ class GithubController < ApplicationController
     end
 
     def get_user_for_token(json_user, token)
-      user = User.find_by_github_id( json_user['id'] )
+      user = User.find_by_github_id( json_user[:id].to_s )
       if !user.nil?
         user.github_token = token
         user.save
         return user
       end
-      user = User.find_by_email( json_user['email'] )
+
+      user = User.find_by_email( json_user[:email] )
       if !user.nil?
-        user.github_id = json_user['id']
+        user.github_id = json_user[:id]
         user.github_token = token
         user.save
         return user
