@@ -107,15 +107,10 @@ class GithubVersionCrawler
 
   def self.fetch_commit_date( owner_repo, sha )
     return nil unless owner_repo
-    repo        = repo_data owner_repo
-    commits      = repo.rels[:commits].get(:sha => sha)
-    commits_json = JSON.parse commits.data.to_json
-    commits_json.each do |commit|
-      if commit['sha'].eql?( sha )
-        return commit["commit"]["committer"]["date"].to_s
-      end
-    end
-    nil
+    api = OctokitApi.instance
+    commit = api.commit(owner_repo, sha)
+    commit_json = JSON.parse commit.to_json
+    return commit_json["commit"]["committer"]["date"].to_s
   rescue => e
     Rails.logger.error e.message
     e.backtrace.each.map{|trace| Rails.logger.error trace }
