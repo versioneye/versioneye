@@ -8,14 +8,11 @@ class GithubVersionCrawler
 
   # Crawle Release dates for Objective-C packages
   def self.crawl
-    products_with_empty_version_strings.each do |product|
+    # products = Product.where({:language =>"Objective-C", "versions.version.ne" => nil }).all
+    products = Product.where({:language =>"Objective-C"}).all
+    products.each do |product|
       add_version_to_product( product )
     end
-  end
-
-
-  def self.products_with_empty_version_strings
-    Product.where({:language =>"Objective-C", "versions.version.ne" => nil }).all
   end
 
 
@@ -102,9 +99,14 @@ class GithubVersionCrawler
   def self.fetch_commit_date( owner_repo, sha )
     return nil unless owner_repo
     repo        = repo_data owner_repo
-    commit      = repo.rels[:commits].get(:sha => sha)
-    commit_json = JSON.parse commit.data.to_json
-    commit_json.first["commit"]["author"]["date"].to_s
+    commits      = repo.rels[:commits].get(:sha => sha)
+    commits_json = JSON.parse commits.data.to_json
+    commits_json.each do |commit|
+      if commit['sha'].eql?( sha )
+        return commit["commit"]["committer"]["date"].to_s
+      end
+    end
+    nil
   rescue => e
     Rails.logger.error e.message
     e.backtrace.each.map{|trace| Rails.logger.error trace }
