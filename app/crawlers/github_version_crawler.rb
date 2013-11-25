@@ -8,8 +8,8 @@ class GithubVersionCrawler
 
   # Crawle Release dates for Objective-C packages
   def self.crawl
-    # products = Product.where({:language =>"Objective-C", "versions.version.ne" => nil }).all
-    products = Product.where({:language =>"Objective-C"}).all
+    # products = Product.where({ :language => Product::A_LANGUAGE_OBJECTIVEC, "versions.version.ne" => nil }).all
+    products = Product.where({ :language => Product::A_LANGUAGE_OBJECTIVEC }).all
     products.each do |product|
       add_version_to_product( product )
     end
