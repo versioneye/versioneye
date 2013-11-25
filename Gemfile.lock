@@ -187,7 +187,7 @@ GEM
     method_locator (0.0.4)
     method_source (0.8.2)
     methodfinder (2.0.0)
-    mime-types (1.25)
+    mime-types (1.25.1)
     mini_portile (0.5.2)
     mongoid (3.1.5)
       activemodel (~> 3.2)
