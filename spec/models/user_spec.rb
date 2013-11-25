@@ -95,6 +95,21 @@ describe User do
       db_user.should_not be_nil
       user.remove
     end
+    it "saves a new user in the db" do
+      email = "daniele.sluijters+versioneye@gmail.com"
+      user = User.new
+      user.fullname = "Daniele sluijters"
+      user.username = "sluijters"
+      user.email = email
+      user.password = "password"
+      user.salt = "salt"
+      user.terms = true
+      user.datenerhebung = true
+      user.save.should be_true
+      db_user = User.find_by_email( email )
+      db_user.should_not be_nil
+      user.remove
+    end
     it "test case for tobias" do
       email = "t@blinki.st"
       user = User.new
