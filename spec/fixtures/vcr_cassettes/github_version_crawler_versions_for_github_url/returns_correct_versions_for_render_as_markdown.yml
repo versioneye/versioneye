@@ -1835,4 +1835,344 @@ http_interactions:
 
     http_version: 
   recorded_at: Sun, 24 Nov 2013 22:57:28 GMT
+- request: 
+    method: get
+    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/8421d68fde085f25d92a84d4fe5baa9a90d341d9?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/vnd.github.beta+json
+      User-Agent: 
+      - Octokit Ruby Gem 2.6.1
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Mon, 25 Nov 2013 11:26:57 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Ratelimit-Remaining: 
+      - "4991"
+      X-Ratelimit-Reset: 
+      - "1385381367"
+      Cache-Control: 
+      - public, max-age=60, s-maxage=60
+      Last-Modified: 
+      - Sun, 10 Nov 2013 11:06:40 GMT
+      Etag: 
+      - "\"04c714ba7b707ed1c5b0c9315529aa0c\""
+      Vary: 
+      - Accept
+      - Accept-Encoding
+      X-Github-Media-Type: 
+      - github.beta; format=json
+      X-Content-Type-Options: 
+      - nosniff
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 5DD35AC8:384E:1EF8D7F:52933401
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA+1XS4/bNhD+K4KCNIfElkiJegGLOIe06GFbYJvm0G6wIEXK
+        IqoXSMrbRPB/71CWN7vONrac9FBgAUGQSH4z3wxnyJnB1SV1MzcJMeJRUnDh
+        J6TAhKeYJiEPC0EYpSlNfR6EiKfuKzdv61oaNxtc2puyVfarobUAKVcyL6ni
+        zqUwnyqhYLGoqaxgRu1mlvVuZlWLJciBBZwai8Q+ChYILZD/DqHMj7LQ/8Pd
+        7pUZkPVfaqmF1nRtebC+7pyNUFq2DbAzSsDoMDkpYjGKGckLP04wQSwlNCE4
+        SBlKEMepT+OkyBNGAdgra3VpTKczz6OdXK6lKXtmrfaU6FrtqckX8NtwoRZU
+        L2qq/uLtbePBYs/q1t7JOsFZ30HpbnO1NzMeRGNu8rZvICz8bydyBonS1NXN
+        Q/vvO/wrrt4pO8NgfaBv9ibPNdOzAPC0hvj6nHpVu5aNzbDJRpiU3M1IkuAQ
+        1m2ooeqAKVqu1W5iDMfdpydigrBPOE8jUoSBQGka0lz4EQ1i7vPwNb8Y4/l5
+        8OY5/hEeyYGMzNtG3wtuGEd+wSJESVFgTklYhCyICWOooHkRxmm+7Jr1D+ri
+        b2C653FjKbvHGBzLq15D4t7lFaw+LSpgYdFWVXsL6K/v6UMF3h3qToJs1mdI
+        ANTgtaYUsFFgwtY6Rmozj8yIGODk0Aa8aWVo2Hkl+CxCEwbo3DbAZBjPqlFY
+        z3SuZGfgYJxH7AESJLVqTRv5ic6XBEgb++PxOcuqEQFIsbHpMwu6gwxep+SG
+        5h+tK5TIhdyAY88Qd4AFaeZjZy+e32HjrZulETeU1zalC1ppcXgHPqX73TX6
+        lO5P6b4rqA7O5f93uncUCkK45LM/93UnhXoz9JEQSUJDjhMUIc4xC2OR+CQS
+        uIhYGjAWwfnxjSXgviSZofG0O/axIneqvE7Wtf0w3mnWNYNrWkOhxMZQ4nAu
+        x7vEzRD0E6IS+z84OwtZifuuJALqmjCA8j2PBcI5i9KcBAFGOIBeJyeMxCzC
+        PABXWujU11SSPWbA1CcsFbMnNzDrQZVbt1wWUnAY+3dq0NmUtFlbbmACq1p2
+        XvVqkSfXrt4pdih6ex4VAH5fJlBZmuP39fFmai/nuPmvlSguZrQ+HTV5CVu+
+        WjkL9CpyXtrXanXdOBAEfSWcq7G1e6Mvp8YOZhznp7eX8HacC+fFl63fi+tm
+        4Tjv31799vOvv9gl/tJfEhh9+cVoBKMOKIA3PM+63mjn2n1XSu3AMwWn82w4
+        JJFlk/it0xbOWtSPrgGW22vX3X7Y/gPVSmTGJBAAAA==
+
+    http_version: 
+  recorded_at: Mon, 25 Nov 2013 11:26:57 GMT
+- request: 
+    method: get
+    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/1f6c9f047c82f19e632e5d40602f611e1cb67a6f?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/vnd.github.beta+json
+      User-Agent: 
+      - Octokit Ruby Gem 2.6.1
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Mon, 25 Nov 2013 11:26:58 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Ratelimit-Remaining: 
+      - "4990"
+      X-Ratelimit-Reset: 
+      - "1385381367"
+      Cache-Control: 
+      - public, max-age=60, s-maxage=60
+      Last-Modified: 
+      - Wed, 16 Oct 2013 10:21:28 GMT
+      Etag: 
+      - "\"7edebcb5569ab3e736d897370ec1f43b\""
+      Vary: 
+      - Accept
+      - Accept-Encoding
+      X-Github-Media-Type: 
+      - github.beta; format=json
+      X-Content-Type-Options: 
+      - nosniff
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 5DD35AC8:384A:CC81D6:52933401
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA+1XS4/bNhD+K4KCNIesLVFvCVjEOaRFD9sC27SHdoMFH0OJ
+        qF6gaG8Sw/+9Q9nebJxtbDnpocACgiCR/Ga+Gc5whmt3qKhbuEQmPJd+lPIs
+        kCSHJAwgFpGf+IFMCAHCWZLSRLoXLu+aRhm3WLt0aapO26+WNoBSrhWvqBbO
+        FZiPNWhcDA1VNc7o7cwCaFmDBBBzBFy4ghqLC3wSzog/I8lb4hcBKYLsT3ez
+        V2VQ0n+no4FhoKVlsfLn/jxGVkYD/q93roFEJuiUKGecQ8gCmkRhnkRxRohP
+        KI/RVSm6KUfgUltbK2P6ofA82qt5qUy1ZHP0maeh7wZPN1vf4G8rQM/oMGuo
+        /lt0d62Hiz2re/BO1olO+g5Kt1s6eBOjAFpzy7tli8HgfzuRM0hUpqlvP7f/
+        ocO/4uqtsjMMHg70Td7kqWZ6FoCeHjC+PiVc3ZWqtXm1sxEnlXCLOMuCCNet
+        qKH6gCmZl3o7MYbj9tODNCaBHwuRJ7GMQiB5HlEOfkLDVPgieiUux3h+Hr5+
+        HvyIjxJIRvGuHR4EN44TX7KE0FjKQNA4khEL05gxIimXUZrzed+WP+jL98h0
+        z+PWUnaPMTiWV8sB9Ke8wtWnRQUulF1dd3eI/vqefq7Au0fdS1BteYYERK29
+        zlSAG4UmbKxj1GCmkRkRazw5BoPetDIG3HkNYhKhHQbp3LXIZD2eVaOwJRu4
+        Vr1RuN/TRD5EoqROl7RVH+l0SYi0sT8en5MojAhEwsqmzyToFrL2eq1WlH+w
+        rtDAQa3QsWeIO8CiNPOhtyXnd9x462Zl4JaKxqa0pPUAh7XvKd3vy+hTuj+l
+        +7ahOjiX/9/p3lNsCLHIF3/t+840S7Gigh8kjAQZs98J4VGE7ShI6jOf5hHP
+        qMDz4xtbwH1LMkHjaTX2sSZ313mdrGvzbqxp1jVr13SGYosdYIsjhBpriVsQ
+        vEdADfs/PDulquGhK1keRzyMUwht7x5mkHIWsYgDYyFkXNJA+jmHBF1pobvb
+        TK3YYwassGFAxXPN7MmNzJaoym06oaQCuxv/Tg1vNBVtS8sNTWB1xw6q0ond
+        q0We3Lt6p9ih6d15VBD4fZlgZ2mO1+vjl6m9nOPmv9IgLydcfXpqeIVbvlg4
+        M3KROC/ta7G4aR0MgmUNzvV4tXs9XO0udjjjOD+9ucK341w6L768+r24aWeO
+        88eb699+/vUXu8ReRSMcffnFaIyjDirANz7P+qUZnBv3baUGB59dcDrP1ock
+        imInfuN00imheXQNstzcuO7m3eYfRbqe6BoQAAA=
+
+    http_version: 
+  recorded_at: Mon, 25 Nov 2013 11:26:58 GMT
+- request: 
+    method: get
+    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/vnd.github.beta+json
+      User-Agent: 
+      - Octokit Ruby Gem 2.6.1
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Mon, 25 Nov 2013 11:26:58 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Ratelimit-Remaining: 
+      - "4989"
+      X-Ratelimit-Reset: 
+      - "1385381367"
+      Cache-Control: 
+      - public, max-age=60, s-maxage=60
+      Last-Modified: 
+      - Sun, 13 Oct 2013 00:39:39 GMT
+      Etag: 
+      - "\"ff6cd193928c63501870b51c523a7a3b\""
+      Vary: 
+      - Accept
+      - Accept-Encoding
+      X-Github-Media-Type: 
+      - github.beta; format=json
+      X-Content-Type-Options: 
+      - nosniff
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 5DD35AC8:384E:1EF8F01:52933402
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA+1X3W/bNhD/VwQVXR8aW5RESrKBoO5DN+whG5B1e9hSBPyU
+        iOkLJO2sNfy/7yjbWeJmteV2DwMCCIJE8nf3u+MdebcObUXDeZgnJCYEI8RS
+        gouCsozIQgiMkwxLRAhNZ7kSOQ4vQt41jXbhfB3Spas6479a2kiQcq15RY0I
+        rqT7VEsDi2VDdQ0zZjuzkLSspZJSTAFwEQrqPC5BcTqJ0SRO3yM0T2fw/B5u
+        9qocSPrvdDTSWlp6FitprO7aAE3R1BvqjITh9d5DVBGRxYQXShIuFcsViZHg
+        MuWCUXAWwmQmlALg0niTK+d6O48i2utpqV21ZFNwXWRk39nINFsXwW8rpJlQ
+        O2mo+VN0d20EiyOv20b5qTrBV99A6XZnQe24YJCtu+XdsoWYQF9P5AwSlWvq
+        28f2P3T4F1y9VXaGwfZA3+hNHmtm5AHgaQvx9U/e1V2pW59eOxthUotwTooi
+        wbBuRR01B0yTaWm2E0M4bj8jmZM4QUSIWUYUTmU8m2HKJcpomgsk8BtxOcTz
+        y/Tty+R7eLQAMpp3rX0Q3DAeI8WymBKlEkEJVpilOWEsVpQrnM/4tG/L78zl
+        X8B0z+PWUw6PMTiWV0sL6XufV7D6tKiAhaqr6+4O0F/e08cKonvUvQTdlmdI
+        ANQ66lwlYaPAhI13jLZuHJkBsYaTwzrwppdhYeeNFKMI7TBA564FJuvhrBqE
+        LZnlRvcOjsdxxB4hQVJnStrqT3S8JED62B+Oz1FWDQhAypVPn1HQLWQd9Uav
+        KP/oXWEkl3oFjj1D3AEWpLmPvb95foWN927WTt5S0fiUVrS28vAKfE73+2v0
+        Od2f031bUB2cy//vdO8pFIRwyc//2NedseA44RnFcTFjiKAYYcyQYCwVUqqC
+        iARzJHIG58dXloD7kmSExtPu2KeK3F3ldbKuzYfhTvOuWYeucxRK7ARKHCH0
+        cJeE8xjaCVnL/R+cnUrX8qErE56qjBdZxhRlcYzzpEBpAm8oVSTNJc6zJMsy
+        35h46K6pqTV7yoBdtzA13vOe2RJUhU0ntNJSwNi/U4PGpqJt6bmBCazu2HnV
+        q0eeXLtGp9hh6N15VAD4bZlAZemO39fHm6m9nOPmvzFSXY5ofXrqeAVbvlgE
+        k/giC17712Jx0wYQBMtaBtdDa/fWXu0aO5gJgh/eXcE7CC6DV5+3fq9u2kkQ
+        /Pbu+pcff/7JL/GtaAqjrz8bxTAagAJ4w/OiXzob3ITvK20DePat7Iv1IYn5
+        fCd+E3QqKGUTPLUGWG5uwnDzYfM3N0CoDiEQAAA=
+
+    http_version: 
+  recorded_at: Mon, 25 Nov 2013 11:26:58 GMT
+- request: 
+    method: get
+    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/vnd.github.beta+json
+      User-Agent: 
+      - Octokit Ruby Gem 2.6.1
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Mon, 25 Nov 2013 11:26:59 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Ratelimit-Remaining: 
+      - "4988"
+      X-Ratelimit-Reset: 
+      - "1385381367"
+      Cache-Control: 
+      - public, max-age=60, s-maxage=60
+      Last-Modified: 
+      - Sun, 13 Oct 2013 00:39:39 GMT
+      Etag: 
+      - "\"ff6cd193928c63501870b51c523a7a3b\""
+      Vary: 
+      - Accept
+      - Accept-Encoding
+      X-Github-Media-Type: 
+      - github.beta; format=json
+      X-Content-Type-Options: 
+      - nosniff
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 5DD35AC8:384A:CC8277:52933403
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA+1X3W/bNhD/VwQVXR8aW5RESrKBoO5DN+whG5B1e9hSBPyU
+        iOkLJO2sNfy/7yjbWeJmteV2DwMCCIJE8nf3u+MdebcObUXDeZgnJCYEI8RS
+        gouCsozIQgiMkwxLRAhNZ7kSOQ4vQt41jXbhfB3Spas6479a2kiQcq15RY0I
+        rqT7VEsDi2VDdQ0zZjuzkLSspZJSTAFwEQrqPC5BcTqJ0SRO3yM0T2fw/B5u
+        9qocSPrvdDTSWlp6FitprO7aAE3R1BvqjITh9d5DVBGRxYQXShIuFcsViZHg
+        MuWCUXAWwmQmlALg0niTK+d6O48i2utpqV21ZFNwXWRk39nINFsXwW8rpJlQ
+        O2mo+VN0d20EiyOv20b5qTrBV99A6XZnQe24YJCtu+XdsoWYQF9P5AwSlWvq
+        28f2P3T4F1y9VXaGwfZA3+hNHmtm5AHgaQvx9U/e1V2pW59eOxthUotwTooi
+        wbBuRR01B0zjaWm2E0M4bj8jmZM4QUSIWUYUTmU8m2HKJcpomgsk8BtxOcTz
+        y/Tty+R7eLQAMpp3rX0Q3DAeI8WymBKlEkEJVpilOWEsVpQrnM/4tG/L78zl
+        X8B0z+PWUw6PMTiWV0sL6XufV7D6tKiAhaqr6+4O0F/e08cKonvUvQTdlmdI
+        ANQ66lwlYaPAhI13jLZuHJkBsYaTwzrwppdhYeeNFKMI7TBA564FJuvhrBqE
+        LZnlRvcOjsdxxB4hQVJnStrqT3S8JED62B+Oz1FWDQhAypVPn1HQLWQd9Uav
+        KP/oXWEkl3oFjj1D3AEWpLmPvb95foWN927WTt5S0fiUVrS28vAKfE73+2v0
+        Od2f031bUB2cy//vdO8pFIRwyc//2NedseA44RnFcTFjiKAYYcyQYCwVUqqC
+        iARzJHIG58dXloD7kmSExtPu2KeK3F3ldbKuzYfhTvOuWYeucxRK7ARKHCH0
+        cJeE8xjaCVnL/R+cnUrX8qErE56qjBdZxhRlcYzzpEBpAm8oVSTNJc6zJMsy
+        35h46K6pqTV7yoBdtzA13vOe2RJUhU0ntNJSwNi/U4PGpqJt6bmBCazu2HnV
+        q0eeXLtGp9hh6N15VAD4bZlAZemO39fHm6m9nOPmvzFSXY5ofXrqeAVbvlgE
+        k/giC17712Jx0wYQBMtaBtdDa/fWXu0aO5gJgh/eXcE7CC6DV5+3fq9u2kkQ
+        /Pbu+pcff/7JL/GtaAqjrz8bxTAagAJ4w/OiXzob3ITvK20DePat7Iv1IYn5
+        fCd+E3QqKGUTPLUGWG5uwnDzYfM3d8THRyEQAAA=
+
+    http_version: 
+  recorded_at: Mon, 25 Nov 2013 11:26:59 GMT
 recorded_with: VCR 2.7.0
