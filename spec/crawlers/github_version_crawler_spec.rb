@@ -79,7 +79,7 @@ describe GithubVersionCrawler, :vcr do
       date = GithubVersionCrawler.fetch_commit_date user_repo, '3cc7ef47557d7d790c7e55e667d451f56d276c13'
 
       date.should_not be_nil
-      date.should eq("2013-11-16T14:14:13Z")
+      date.should eq("2013-06-17T10:00:51Z")
     end
   end
 
