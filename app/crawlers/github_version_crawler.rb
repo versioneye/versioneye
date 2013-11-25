@@ -7,12 +7,18 @@ class GithubVersionCrawler
 
 
   # Crawle Release dates for Objective-C packages
-  def self.crawl
-    # products = Product.where({ :language => Product::A_LANGUAGE_OBJECTIVEC, "versions.version.ne" => nil }).all
-    products = Product.where({ :language => Product::A_LANGUAGE_OBJECTIVEC }).all
-    products.each do |product|
+  def self.crawl(language = Product::A_LANGUAGE_OBJECTIVEC, empty_versions = true )
+    products(language, empty_versions).each do |product|
       add_version_to_product( product )
     end
+  end
+
+
+  def self.products( language, empty_versions )
+    if empty_versions
+      return Product.where({ :language => language, "versions.version.ne" => nil }).all
+    end
+    Product.where({ :language => language }).all
   end
 
 
@@ -33,27 +39,30 @@ class GithubVersionCrawler
   def self.update_release_dates( product, github_versions )
     # update releases infos at version
     product.versions.each do |version|
-      if version.released_string.to_s.empty?
-        version_string   = version.to_s
-        v_hash           = github_versions[version_string]
-        if v_hash.nil? || v_hash.empty?
-          # couldn't find 0.0.1, try v0.0.1
-          v_hash         = github_versions["v#{version_string}"]
-          if v_hash.nil? || v_hash.empty?
-            Rails.logger.info "No tag available for #{repo} - #{product.name} : #{version_string} / v#{version_string}"
-            next
-          end
-        end
-        version.released_at     = v_hash[:released_at]
-        version.released_string = v_hash[:released_string]
-        Rails.logger.info "update #{product.name} v #{version} was released at #{version.released_at}"
-      end
+      v_hash = version_hash github_versions, version.to_s
+      next if v_hash.nil? || v_hash.empty?
+
+      version.released_at     = v_hash[:released_at]
+      version.released_string = v_hash[:released_string]
+      product.save
+      Rails.logger.info "update #{product.name} v #{version} was released at #{version.released_at}"
     end
-
-    product.save
-
     remaining = OctokitApi.instance.ratelimit.remaining
     Rails.logger.info "check version dates for #{product.prod_key} - Remaining API requests: #{remaining}"
+  end
+
+
+  def self.version_hash github_versions, version_string
+    version_hash = github_versions[version_string]
+    if version_hash.nil? || version_hash.empty?
+      # couldn't find 0.0.1, try v0.0.1
+      version_hash = github_versions["v#{version_string}"]
+      if version_hash.nil? || version_hash.empty?
+        Rails.logger.info "No tag available for #{repo} - #{product.name} : #{version_string} / v#{version_string}"
+        return
+      end
+    end
+    version_hash
   end
 
 
