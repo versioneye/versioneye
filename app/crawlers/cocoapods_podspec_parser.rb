@@ -8,11 +8,11 @@ require 'cocoapods-core'
 
 class CocoapodsPodspecParser
 
+  attr_reader :language, :prod_type
+
   def logger
     ActiveSupport::BufferedLogger.new("log/cocoapods.log")
   end
-
-  attr_reader :language, :prod_type
 
   attr_reader :podspec
   attr_reader :name, :prod_key, :version
@@ -201,7 +201,7 @@ class CocoapodsPodspecParser
 
   def create_screenshot_links
     @podspec.screenshots.to_enum.with_index(1).each do |img_url, i|
-      Versionlink.create_versionlink(@@language, prod_key, version, img_url, "Screenshot #{i}")
+      Versionlink.create_versionlink(language, prod_key, version, img_url, "Screenshot #{i}")
     end
   end
 
