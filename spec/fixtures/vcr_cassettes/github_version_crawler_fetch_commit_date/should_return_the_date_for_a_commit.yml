@@ -460,4 +460,127 @@ http_interactions:
 
     http_version: 
   recorded_at: Sun, 24 Nov 2013 23:05:51 GMT
+- request: 
+    method: get
+    uri: https://api.github.com/repos/versioneye/naturalsorter/commits/3cc7ef47557d7d790c7e55e667d451f56d276c13?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/vnd.github.beta+json
+      User-Agent: 
+      - Octokit Ruby Gem 2.6.1
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Tue, 26 Nov 2013 01:55:16 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Ratelimit-Remaining: 
+      - "4999"
+      X-Ratelimit-Reset: 
+      - "1385434516"
+      Cache-Control: 
+      - public, max-age=60, s-maxage=60
+      Last-Modified: 
+      - Mon, 17 Jun 2013 10:00:51 GMT
+      Etag: 
+      - "\"3480431effc102caeab1719fcb59c1a8\""
+      Vary: 
+      - Accept
+      - Accept-Encoding
+      X-Github-Media-Type: 
+      - github.beta; format=json
+      X-Content-Type-Options: 
+      - nosniff
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 5CE56CE2:263D:C0C6B:5293FF84
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        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
+
+    http_version: 
+  recorded_at: Tue, 26 Nov 2013 01:55:16 GMT
 recorded_with: VCR 2.7.0
