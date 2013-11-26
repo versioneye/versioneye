@@ -45,7 +45,7 @@ describe CocoapodsPodspecParser do
         parser  = CocoapodsPodspecParser.new
         product = parser.parse_file( podspec )
 
-        product.should_not be_nil
+        product.should be_true
         product.language.should eq 'Objective-C'
         product.prod_key.should eq 'aerogear-push'
         product.name.should eq 'AeroGear-Push'
