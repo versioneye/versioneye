@@ -47,30 +47,38 @@ end
 
 class PodfileParser < CommonParser
 
-  @@language     = Product::A_LANGUAGE_OBJECTIVEC
+  attr_reader :language, :project_type
 
-  attr_accessor :pod_file, :pod_hash
-  @url = ""
+  attr_accessor :pod_file, :url
+  attr_accessor :project
+
+  def initialize
+    @language     = Product::A_LANGUAGE_OBJECTIVEC
+    @project_type = Project::A_TYPE_COCOAPODS
+  end
 
   def parse_file filename
     @pod_filename = filename
-    @pod_file = Pod::Podfile.from_file @pod_filename
+    @pod_file = Pod::Podfile.from_file( @pod_filename )
     create_project
   end
 
   def parse url
     @url = url
     return nil if url.to_s.empty?
-    podfile = fetch_response_body( url )
-    return nil if podfile.nil?
 
-    @pod_file = Pod::Podfile.from_url url
+    begin
+    @pod_file = Pod::Podfile.from_url( url )
+    rescue => e
+      Rails.logger.error e.message
+      Rails.logger.error e.backtrace.join("\n")
+      nil
+    end
 
     create_project
   end
 
   def create_project
-    @pod_hash = @pod_file.to_hash
     @project  = init_project
     create_dependencies
     @project
@@ -79,9 +87,9 @@ class PodfileParser < CommonParser
   # TODO: are there projects that gets updated?
   def init_project
     Project.new \
-      project_type: Project::A_TYPE_COCOAPODS,
-      language: @@language,
-      url: @url
+      project_type: project_type,
+      language: language,
+      url: url
   end
 
 
@@ -131,7 +139,7 @@ class PodfileParser < CommonParser
     Rails.logger.debug "create_dependency '#{name}' -- #{requirement}"
 
     dependency = Projectdependency.new({
-      :language => @@language,
+      :language => language,
       :prod_key => prod_key,
       :name     => name,
       :version_requested  => requirement.first[:version_requested],
@@ -206,10 +214,10 @@ class PodfileParser < CommonParser
 
   def load_product name
     prod_key = name.downcase
-    products = Product.where({:language => @@language, :prod_key => prod_key, })
+    products = Product.where({:language => language, :prod_key => prod_key, })
     return nil if products.nil? || products.empty?
     if products.count > 1
-      Rails.logger.error "more than one Product found for (#{@@language}, #{prod_key})"
+      Rails.logger.error "more than one Product found for (#{language}, #{prod_key})"
     end
     products.first
   end

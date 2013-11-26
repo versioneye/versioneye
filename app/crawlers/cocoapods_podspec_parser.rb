@@ -12,10 +12,15 @@ class CocoapodsPodspecParser
     ActiveSupport::BufferedLogger.new("log/cocoapods.log")
   end
 
-  @@language  = Product::A_LANGUAGE_OBJECTIVEC
-  @@prod_type = Project::A_TYPE_COCOAPODS
+  attr_reader :language, :prod_type
 
-  attr_accessor :podspec, :prod_key, :version
+  attr_reader :podspec
+  attr_reader :name, :prod_key, :version
+
+  def initialize
+    @language  = Product::A_LANGUAGE_OBJECTIVEC
+    @prod_type = Project::A_TYPE_COCOAPODS
+  end
 
   def parse_file ( file )
     @podspec = load_spec file
@@ -39,6 +44,7 @@ class CocoapodsPodspecParser
   end
 
   def set_prod_key_and_version
+    @name     = @podspec.name
     @prod_key = @podspec.name.downcase
     @version  = @podspec.version.to_s
   end
@@ -52,11 +58,12 @@ class CocoapodsPodspecParser
       product.update_attributes({
         :reindex       => true,
         :prod_key      => prod_key,
-        :name          => @podspec.name,
+        :name          => name,
         :name_downcase => prod_key,
         :description   => description,
-        :language      => @@language,
-        :prod_type     => @@prod_type,
+
+        :language      => language,
+        :prod_type     => prod_type,
       })
       product.save
     end
@@ -111,12 +118,12 @@ class CocoapodsPodspecParser
     # make sure it's really downcased
     dep_prod_key = dep_prod_key.downcase
 
-    dep = Dependency.find_by(@@language, prod_key, version, dep_name, dep_version, dep_prod_key)
+    dep = Dependency.find_by(language, prod_key, version, dep_name, dep_version, dep_prod_key)
     return dep if dep
 
     dep = Dependency.new({
-      :language     => @@language,
-      :prod_type    => @@prod_type,
+      :language     => language,
+      :prod_type    => prod_type,
       :prod_key     => prod_key,
       :prod_version => version,
 
@@ -141,11 +148,11 @@ class CocoapodsPodspecParser
 
   def create_license
     # create new license if version doesn't exist yet
-    licenses = License.where( {:language => @@language, :prod_key => prod_key, :version  => version} )
+    licenses = License.where( {:language => language, :prod_key => prod_key, :version  => version} )
     return nil if licenses.first
 
     license = License.new({
-      :language => @@language,
+      :language => language,
       :prod_key => prod_key,
       :version  => version,
 
@@ -172,11 +179,11 @@ class CocoapodsPodspecParser
 
   def create_developers
     @podspec.authors.each_pair do |name, email|
-      developer = Developer.find_by( @@language, prod_key, version, name ).first
+      developer = Developer.find_by( language, prod_key, version, name ).first
       next if developer
 
       developer = Developer.new({
-        :language => @@language,
+        :language => language,
         :prod_key => prod_key,
         :version  => version,
 
@@ -189,7 +196,7 @@ class CocoapodsPodspecParser
 
   def create_homepage_link
     # checking for valid link is done inside create_versionlink
-    Versionlink.create_versionlink(@@language, prod_key, version, @podspec.homepage, 'Homepage')
+    Versionlink.create_versionlink(language, prod_key, version, @podspec.homepage, 'Homepage')
   end
 
   def create_screenshot_links
