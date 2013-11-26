@@ -60,6 +60,10 @@ class Product
 
   scope :by_language, ->(lang){where(language: lang)}
 
+  def to_s
+    "<Product #{prod_key}(#{version}) ##{language}>"
+  end
+
   def delete
     false
   end
