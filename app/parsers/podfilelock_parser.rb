@@ -2,15 +2,36 @@ require 'cocoapods-core'
 
 class PodfilelockParser < CommonParser
 
-  #Pod::Lockfile
-  @@language     = Product::A_LANGUAGE_OBJECTIVEC
+  # these are the same for all projects parsed with this parser
+  attr_reader :language, :project_type
 
-  attr_accessor :project, :lock_filename, :lock_file
+  # these are the inputs
+  attr_accessor :lockfile_name, :url
+
+  # these are the (intermediate) outputs
+  attr_accessor :project, :lockfile
+
+
+  def initialize
+    @project_type = Project::A_TYPE_COCOAPODS
+    @language     = Product::A_LANGUAGE_OBJECTIVEC
+  end
+
+  def parse url
+    return nil unless url
+    @url = url
+    @lockfile = Pod::Lockfile.from_url url
+
+    create_project
+  end
 
   def parse_file filename
-    @lock_filename = filename
-    pathname = Pathname.new @lock_filename
-    @lock_file = Pod::Lockfile.from_file pathname
+    return nil unless filename
+    @lockfile_name = filename
+
+    pathname = Pathname.new filename
+    @lockfile = Pod::Lockfile.from_file pathname
+
     create_project
   end
 
@@ -23,63 +44,53 @@ class PodfilelockParser < CommonParser
 
   def init_project
     Project.new \
-      project_type: Project::A_TYPE_COCOAPODS,
-      language: Product::A_LANGUAGE_OBJECTIVEC,
-      url: @url
+      project_type: project_type,
+      language: language,
+      url: url
   end
 
   def create_dependencies
-    @lock_file.dependencies.each do |d|
-      create_dependency d.name => d.requirement.as_list
+
+    # lockfile.dependencies.each do |d|
+    #   create_dependency d.name => d.requirement.as_list
+    # end
+
+    lockfile.pod_names.each do |pod_name|
+      version = lockfile.version(pod_name)
+      create_dependency( pod_name, version.version )
     end
 
     @project.dep_number = @project.projectdependencies.count
     Rails.logger.info "Project has #{@project.projectdependencies.count} dependencies"
   end
 
-  def create_dependency dep
-    if dep.nil?
+  def create_dependency dep_name, dep_version
+    unless dep_name
       Rails.logger.debug "Problem: try to create_dependency(nil)"
       return nil
     end
 
-    dependency = create_dependency_from_hash( dep )
-    Rails.logger.debug "created dependency #{dependency} for project #{@project.nil? ? "nil" : @project}"
-    return nil if dependency.nil?
+    Rails.logger.debug "create_dependency '#{dep_name}' -- #{dep_version}"
 
-    @project.out_number     += 1 if dependency.outdated?
-    @project.unknown_number += 1 if dependency.prod_key.nil?
-    @project.projectdependencies.push dependency
+    prod_key = dep_name.downcase
+    product = load_product( prod_key )
+
+    dependency = Projectdependency.new({
+      :language => language,
+      :prod_key => prod_key,
+      :name     => dep_name,
+      :version_requested  => dep_version,
+      :comperator         => '=',
+      :version_label      => dep_version
+      })
+
+    project.out_number     += 1 if dependency.outdated?
+    project.unknown_number += 1 if dependency.prod_key.nil?
+    project.projectdependencies.push dependency
     dependency.save
     dependency
   end
 
-  def create_dependency_from_hash dep_hash
-    name = dep_hash.keys.first
-    reqs = dep_hash[name]
-    prod_key = nil
-    product = load_product( name )
-    prod_key = product.prod_key if product
-
-    requirement = reqs.map do |req_version|
-      v_hash = version_hash(req_version, name, product)
-      puts "VERSION HASH IS #{v_hash}"
-      v_hash
-    end
-
-    Rails.logger.debug "create_dependency '#{name}' -- #{requirement}"
-
-    dependency = Projectdependency.new({
-      :language => @@language,
-      :prod_key => prod_key,
-      :name     => name,
-      :version_requested  => requirement.first[:version_requested],
-      :comperator         => requirement.first[:comperator],
-      :version_label      => requirement.first[:version_label]
-      })
-
-    dependency
-  end
 
 
   VERSION_REGEXP = /^(=|!=|>=|>|<=|<|~>)\s*(\d(\.\d(\.\d)?)?)/
@@ -146,11 +157,14 @@ class PodfilelockParser < CommonParser
 
   def load_product name
     prod_key = name.downcase
-    products = Product.where({:language => @@language, :prod_key => prod_key, })
-    return nil if products.nil? || products.empty?
-    if products.count > 1
-      Rails.logger.error "more than one Product found for (#{@@language}, #{prod_key})"
+    products = Product.where({:language => language, :prod_key => prod_key })
+    if products.nil? || products.empty?
+      Rails.logger.warn "no product found for language #{language} prod_key #{prod_key}"
+      return nil
+    elsif products.count > 1
+      Rails.logger.error "more than one Product found for (#{language}, #{prod_key})"
     end
+
     products.first
   end
 end
