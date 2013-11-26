@@ -15,7 +15,7 @@ class OctokitApi
   # Singleton pattern
   # returns root
   def self.instance
-    @@github_api ||= self.client.root
+    @@github_api ||= self.client
   end
 
 end

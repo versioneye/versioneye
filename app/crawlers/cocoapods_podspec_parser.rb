@@ -23,12 +23,8 @@ class CocoapodsPodspecParser
 
     set_prod_key_and_version
 
-    @spec_hash = @podspec.to_hash
-
     @product = get_product
     update_product
-
-    logger.info(@spec_hash.to_json) unless @spec_hash.except!("name").empty?
 
     @product
   end
@@ -38,7 +34,7 @@ class CocoapodsPodspecParser
     Pod::Spec.from_file(file)
   rescue => e
     logger.error e.message
-    logger.error e.backtrace
+    logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -48,7 +44,6 @@ class CocoapodsPodspecParser
   end
 
   def get_product
-    @spec_hash.except! "summary", "description"
 
     product = Product.find_by_lang_key(Product::A_LANGUAGE_OBJECTIVEC, prod_key)
 
@@ -83,36 +78,14 @@ class CocoapodsPodspecParser
     @product
   rescue => e
     logger.error e.message
-    logger.error e.backtrace
+    logger.error e.backtrace.join("\n")
     nil
   end
 
 
   def create_dependencies
-    @spec_hash.except! *(%w{
-      dependencies
-      platforms
-      requires_arc
-      frameworks
-      ios
-      osx
-      resources
-      subspecs
-      default_subspec
-      vendored_libraries
-      source_files
-      exclude_files
-      compiler_flags
-      xcconfig
-      preserve_paths
-      public_header_files
-      prefix_header_contents
-      header_mappings_dir
-      prepare_command
-      })
-
     @podspec.dependencies.each do |dep|
-      d = create_dependency(dep.name, dep.name.downcase, dep.version)
+      d = create_dependency(dep.name, dep.name.downcase, dep.requirement.to_s)
     end
   end
 
@@ -135,7 +108,6 @@ class CocoapodsPodspecParser
   end
 
   def create_dependency dep_name, dep_prod_key, dep_version
-
     # make sure it's really downcased
     dep_prod_key = dep_prod_key.downcase
 
@@ -157,7 +129,6 @@ class CocoapodsPodspecParser
   end
 
   def create_version
-    @spec_hash.except! "version"
 
     version_numbers = @product.versions.map(&:version)
     return nil if version_numbers.member? version
@@ -169,8 +140,6 @@ class CocoapodsPodspecParser
   end
 
   def create_license
-    @spec_hash.except! "license"
-
     # create new license if version doesn't exist yet
     licenses = License.where( {:language => @@language, :prod_key => prod_key, :version  => version} )
     return nil if licenses.first
@@ -188,8 +157,6 @@ class CocoapodsPodspecParser
 
 
   def create_repository
-    @spec_hash.except! "source"
-
     repo = repository
     unless @product.repositories.member?( repo )
       @product.repositories.push( repo )
@@ -204,9 +171,7 @@ class CocoapodsPodspecParser
   end
 
   def create_developers
-    @spec_hash.except! "authors"
-
-    @podspec.authors.each do |name, email|
+    @podspec.authors.each_pair do |name, email|
       developer = Developer.find_by( @@language, prod_key, version, name ).first
       next if developer
 
@@ -223,21 +188,17 @@ class CocoapodsPodspecParser
   end
 
   def create_homepage_link
-    @spec_hash.except! "homepage"
+    # checking for valid link is done inside create_versionlink
     Versionlink.create_versionlink(@@language, prod_key, version, @podspec.homepage, 'Homepage')
   end
 
   def create_screenshot_links
-    @spec_hash.except! "screenshots"
-
     @podspec.screenshots.to_enum.with_index(1).each do |img_url, i|
       Versionlink.create_versionlink(@@language, prod_key, version, img_url, "Screenshot #{i}")
     end
   end
 
   def description
-    @spec_hash.except! "summary", "description"
-
     description = @podspec.summary
     if @podspec.description
       description << "\n\n" << @podspec.description
