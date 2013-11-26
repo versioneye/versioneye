@@ -58,6 +58,10 @@ class Project
   scope :by_period, ->(period){ where(period:  period ) }
   scope :by_github, ->(reponame){ where(source: A_SOURCE_GITHUB, github_project: reponame)}
 
+  def to_s
+    "<Project #{language}/#{project_type} #{name}>"
+  end
+
   def dependencies
     self.projectdependencies
   end
