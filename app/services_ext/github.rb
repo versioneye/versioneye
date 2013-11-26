@@ -384,7 +384,11 @@ class Github
   end
 
   def self.get_json(url, token = nil, raw = false)
-    response = get(url)
+    request_headers = A_DEFAULT_HEADERS
+    if token
+      request_headers["Authorization"] = "token #{token}"
+    end
+    response = get(url, headers: request_headers)
     return response if raw
     content = JSON.parse(response.body, symbolize_names: true)
     catch_github_exception(content)
@@ -422,7 +426,7 @@ class Github
       # by default here should be no message or nil
       # We expect that everything is ok and there is no error message
       Rails.logger.error e.message
-      Rails.logger.error e.backtrace.first
+      Rails.logger.error e.backtrace.join('/n')
       nil
     end
 
