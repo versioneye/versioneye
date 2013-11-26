@@ -11,9 +11,11 @@ describe PodfilelockParser do
   def cocoa_product(product_name, latest_version, *other_versions)
     new_product = ProductFactory.create_for_cocoapods(product_name, latest_version)
     other_versions.each do |a_version|
-      new_product.versions.push(Version.new({:version => a_version}))
+      version_model = Version.new({:version => a_version})
+      new_product.versions.push(version_model)
     end
     new_product.save
+    # puts "created new #{new_product}"
     new_product
   end
 
@@ -36,7 +38,7 @@ describe PodfilelockParser do
 
   # test the versions and if the requested version is outdated
   def test_dependency dep, version_latest, version_requested, outdated
-    puts "dependency #{dep.name} version #{dep.version_current}"
+    # puts "dependency #{dep.name} version #{dep.version_current}"
     dep.version_current.should eq(version_latest)
     dep.version_requested.should eq(version_requested)
     dep.outdated.should eq(outdated)
@@ -62,9 +64,11 @@ describe PodfilelockParser do
     end
 
     it "should read a lockfile from disk and return a project with dependencies" do
+      create_products
+
       project = parse_and_check 'spec/fixtures/files/podfilelock/example1/Podfile.lock'
 
-      puts project
+      # puts project
       puts project.projectdependencies
 
       dep = get_dependency(project, "Masonry")
