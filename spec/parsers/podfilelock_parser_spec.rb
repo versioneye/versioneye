@@ -55,22 +55,20 @@ describe PodfilelockParser do
 
   describe '#parse_file' do
 
-    def create_products
+
+    it "should read a lockfile from disk and return a project with dependencies" do
+
+      # setup
       cocoa_product("Masonry", "0.3.0",  "0.2.4",  "0.2.3")
       cocoa_product("RestKit", "0.22.0", "0.20.3", "0.10.3")
       cocoa_product("UIColor-Utilities", "1.0.1",  "1.0")
       cocoa_product("CupertinoYankee",   "1.0.0",  "0.1.1", "0.1")
       cocoa_product("MSCollectionViewCalendarLayout", "1.0")
-    end
 
-    it "should read a lockfile from disk and return a project with dependencies" do
-      create_products
-
+      # run
       project = parse_and_check 'spec/fixtures/files/podfilelock/example1/Podfile.lock'
 
-      # puts project
-      puts project.projectdependencies
-
+      # compare
       dep = get_dependency(project, "Masonry")
       test_dependency(dep, "0.3.0",  "0.2.4", true)
 
@@ -87,6 +85,51 @@ describe PodfilelockParser do
       test_dependency(dep,  "1.0", "0.1.2", true)
     end
 
-  end
+    it "should parse another Podfile.lock and return project with dependencies" do
+      # setup
+      cocoa_product("JRSwizzle", "1.0")
+
+      # TODO: make something about these subspecs
+
+      cocoa_product("libextobjc", "0.3", '0.2.5', '0.2.0', '0.1.0')
+      cocoa_product("libextobjc/EXTConcreteProtocol", "0.3", '0.2.5', '0.2.0', '0.1.0')
+      cocoa_product("libextobjc/EXTKeyPathCoding"   , "0.3", '0.2.5', '0.2.0', '0.1.0')
+      cocoa_product("libextobjc/EXTScope"           , "0.3", '0.2.5', '0.2.0', '0.1.0')
+      cocoa_product("libextobjc/RuntimeExtensions"  , "0.3", '0.2.5', '0.2.0', '0.1.0')
+
+      cocoa_product("ReactiveCocoa"                 , '2.1.7', '2.1', '2.0.0', '1.9.7')
+      cocoa_product("ReactiveCocoa/Core"            , '2.1.7', '2.1', '2.0.0', '1.9.7')
+      cocoa_product("ReactiveCocoa/RACExtensions"   , '2.1.7', '2.1', '2.0.0', '1.9.7')
+
+      # run
+      project = parse_and_check 'spec/fixtures/files/podfilelock/example2/Podfile.lock'
+
+      # compare
+      project.should be_true
+
+      dep = get_dependency(project, "JRSwizzle")
+      test_dependency(dep, "1.0",  "1.0", false)
+
+      # TODO: make something about these subspecs
+
+      %w{ libextobjc/EXTConcreteProtocol
+          libextobjc/EXTKeyPathCoding
+          libextobjc/EXTScope
+          libextobjc/RuntimeExtensions
+      }.each do |pod|
+
+        dep = get_dependency(project, pod)
+        dep.should be_true
+        test_dependency(dep, "0.3", "0.2.5", true)
+      end
+
+      %w{ ReactiveCocoa
+          ReactiveCocoa/Core
+          ReactiveCocoa/RACExtensions
+      }.each do |pod|
+        dep = get_dependency(project, pod)
+        test_dependency(dep, "2.1.7", "1.8.0", true)
+      end
+    end  end
 
 end

@@ -1,5 +1,11 @@
 require 'cocoapods-core'
 
+# This parser parses Cocoapods Podfile.lock file
+#
+#
+# TODO: test PodfilelockParser#parse( url )
+# TODO: implement Subspecs
+
 class PodfilelockParser < CommonParser
 
   # these are the same for all projects parsed with this parser
@@ -55,7 +61,7 @@ class PodfilelockParser < CommonParser
     #   create_dependency d.name => d.requirement.as_list
     # end
 
-    lockfile.pod_names.each do |pod_name|
+    @lockfile.pod_names.each do |pod_name|
       version = lockfile.version(pod_name)
       create_dependency( pod_name, version.version )
     end
