@@ -71,20 +71,26 @@ class PodfilelockParser < CommonParser
   end
 
   def create_dependency dep_name, dep_version
+
     unless dep_name
       Rails.logger.debug "Problem: try to create_dependency(nil)"
       return nil
     end
 
-    Rails.logger.debug "create_dependency '#{dep_name}' -- #{dep_version}"
+    dep_spec_name, subspec = CocoapodsPackageManager.spec_subspec( dep_name )
 
-    prod_key = dep_name.downcase
-    product = load_product( prod_key )
+    Rails.logger.debug "create_dependency '#{dep_spec_name}' -- #{dep_version}"
+    Rails.logger.debug "ignoring subspec #{subspec} of #{dep_name}" if subspec
+
+    product  = load_product( dep_spec_name )
+    prod_key = nil
+    prod_key ||= product.prod_key if product
 
     dependency = Projectdependency.new({
       :language => language,
       :prod_key => prod_key,
-      :name     => dep_name,
+      :name     => dep_spec_name,
+
       :version_requested  => dep_version,
       :comperator         => '=',
       :version_label      => dep_version
@@ -95,70 +101,6 @@ class PodfilelockParser < CommonParser
     project.projectdependencies.push dependency
     dependency.save
     dependency
-  end
-
-
-
-  VERSION_REGEXP = /^(=|!=|>=|>|<=|<|~>)\s*(\d(\.\d(\.\d)?)?)/
-  def parse_version string
-    string.match VERSION_REGEXP
-    comperator, version = $1, $2
-    return {:comperator => comperator, :version_requested => version}
-  end
-
-  def version_hash version_from_file, prod_name, product
-    if [:git, :head].member? version_from_file
-      Rails.logger.debug "WARNING dependency '#{prod_name}' requires GIT" # TODO
-      return {:version_requested => "GIT", :version_label => "GIT", :comperator => "="}
-
-    elsif :path == version_from_file
-      Rails.logger.debug "WARNING dependency '#{prod_name}' requires PATH" # TODO
-      return {:version_requested => "PATH", :version_label => "PATH", :comperator => "="}
-
-    else
-      comperator_version = parse_version version_from_file
-      # TODO copy composer for version ranges
-
-      comperator = comperator_version[:comperator]
-      version    = comperator_version[:version_requested]
-
-      if product
-        version_requested = best_version(comperator, version, product.versions)
-        return {:version_requested => version_requested, :version_label => version_from_file, :comperator => comperator}
-      end
-
-      return {:version_requested => version, :version_label => version_from_file, :comperator => comperator}
-    end
-  end
-
-  # It is important that this method is not writing into the database!
-  #
-  def parse_requested_version(version_number, dependency, product)
-    # This method has to be on every parser.
-  end
-
-  def best_version(comperator, version, versions)
-    case comperator
-    when ">"
-      VersionService.greater_than(versions, version).version
-    when ">="
-      VersionService.greater_than_or_equal(versions, version).version
-    when "<"
-      VersionService.smaller_than(versions, version).version
-    when "<="
-      VersionService.smaller_than_or_equal(versions, version).version
-    when "~>"
-      starter         = VersionService.version_approximately_greater_than_starter( version )
-      possible_vers   = VersionService.versions_start_with( versions, starter )
-      highest_version = VersionService.newest_version_from( possible_vers )
-      return highest_version.version if highest_version
-      return version
-    else
-      version
-    end
-  rescue => e
-    Rails.logger.error e.message
-    version
   end
 
   def load_product name
