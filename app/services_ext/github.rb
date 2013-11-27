@@ -6,16 +6,15 @@ class Github
   A_API_URL    = "https://api.github.com"
   A_WORKERS_COUNT = 4
   A_DEFAULT_HEADERS = {
-    "Accept"     => "application/vnd.github.beta+json",
+    "Accept"     => "application/vnd.github.v3+json",
     "User-Agent" => A_USER_AGENT,
     "Connection" => "Keep-Alive"
   }
 
   include HTTParty
-
   persistent_connection_adapter({
     name: "versioneye_github_client",
-    pool_size: 8,
+    pool_size: 16,
     keep_alive: 30
   })
 
@@ -125,7 +124,6 @@ class Github
     repo_docs       = []
     data.each do |repo|
       next if repo.nil? or repo[:full_name].to_s.empty?
-
       workers << Thread.new do
         time = Benchmark.measure do
           repo_docs << read_repo_data(user, repo)
@@ -173,7 +171,6 @@ class Github
     end
 
     project_file_info = Github.project_file_info( repo_name, filename, branch_info[:commit][:sha], user.github_token )
-
     if project_file_info.nil? || project_file_info.empty?
       Rails.logger.error "Cancelling importing: can't read info about project's file."
       return nil
@@ -186,7 +183,6 @@ class Github
     project_file[:branch] = project_file_info[:branch]
     project_file
   end
-
 
   def self.fetch_project_file_directly(user, filename, branch, url)
     project_file = fetch_project_from_url(user, url)
@@ -425,6 +421,13 @@ class Github
     URI.unescape key_val
   end
 
+  def self.encode_db_key(key_val)
+    URI.escape(key_val, /\.|\$/)
+  end
+  def self.decode_db_key(key_val)
+    URI.unescape key_val
+  end
+
   private
 
 =begin
@@ -447,7 +450,7 @@ class Github
       # We expect that everything is ok and there is no error message
       p e.message, e.backtrace.first
       Rails.logger.error e.message
-      Rails.logger.error e.backtrace.first
+      Rails.logger.error e.backtrace.join('/n')
       nil
     end
 
@@ -469,5 +472,4 @@ class Github
       query += '&code=' + code
       query
     end
-
 end
