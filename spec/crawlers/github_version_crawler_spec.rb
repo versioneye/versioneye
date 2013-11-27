@@ -44,7 +44,8 @@ describe GithubVersionCrawler, :vcr do
     # FakeWeb.clean_registry
   end
 
-	describe ".owner_and_repo" do
+  describe ".owner_and_repo" do
+
     example "1" do
       repo = 'https://github.com/0xced/ABGetMe.git'
       parsed = GithubVersionCrawler.parse_github_url(repo)
@@ -70,13 +71,6 @@ describe GithubVersionCrawler, :vcr do
     end
   end
 
-  describe ".commit_metadata" do
-    it "should return metadata for a commit" do
-      meta = GithubVersionCrawler.fetch_commit_metadata 'rmetzler', 'render-as-markdown', '725155400b35488ab65e8dd44264e055a397fd74'
-
-      meta.should_not be_nil
-      meta["commit"]["author"]["name"].should eq("Richard Metzler")
-  
   describe ".fetch_commit_date" do
     # use_vcr_cassette
 
@@ -98,5 +92,7 @@ describe GithubVersionCrawler, :vcr do
       versions.should_not be_nil
       versions.length.should eq(4)
     end
+
   end
+
 end

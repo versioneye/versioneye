@@ -49,7 +49,6 @@ class GithubVersionCrawler
     Rails.logger.info "check version dates for #{product.prod_key} - Remaining API requests: #{remaining}"
   end
 
-
   def self.version_hash github_versions, version_string
     version_hash = github_versions[version_string]
     if version_hash.nil? || version_hash.empty?
@@ -97,7 +96,7 @@ class GithubVersionCrawler
     }
   rescue => e
     Rails.logger.error e.message
-    e.backtrace.each.map{|trace| Rails.logger.error trace }
+    e.backtrace.each.map {|trace| Rails.logger.error trace }
     nil
   end
 
@@ -113,7 +112,6 @@ class GithubVersionCrawler
     nil
   end
 
-
   def self.tags_for_repo( owner_repo )
     return nil unless owner_repo
     repo      = repo_data owner_repo
@@ -126,13 +124,11 @@ class GithubVersionCrawler
     nil
   end
 
-
   def self.repo_data owner_repo
     api  = OctokitApi.instance
     root = api.root
     repo = root.rels[:repository].get(:uri => owner_repo).data
   end
-
 
   def self.parse_github_url (git_url)
     match = /https:\/\/github.com\/(.+)\/(.+)\.git/.match git_url
