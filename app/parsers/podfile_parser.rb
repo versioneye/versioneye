@@ -12,38 +12,6 @@ require 'cocoapods-core'
 #    PodfileParser.new.parse_file '/path/to/the/Podfile'
 #
 
-module Pod
-  class Podfile
-    # Configures a new Podfile from the given url.
-    #
-    # @param  [String] url
-    #         The url which will configure the podfile with the DSL.
-    #
-    # @return [Podfile] the new Podfile
-    #
-    def self.from_url(url)
-      podfile = nil
-      open(url) do |io|
-        begin
-          podfile = Podfile.new do
-            # rubocop:disable Eval
-            eval(io.string, nil, url)
-            # rubocop:enable Eval
-          end
-        rescue Exception => e
-          Rails.logger.error e
-          message = "Invalid url `#{url}`: #{e.message}"
-          raise DSLError.new(message, url, e.backtrace)
-        end
-      end
-
-      podfile
-
-    end
-  end
-
-end
-
 
 class PodfileParser < CommonParser
 
@@ -101,60 +69,49 @@ class PodfileParser < CommonParser
     # the hash for some targets, so I now get all
     # all dependencies and forget about the target's first
     @pod_file.dependencies.each do |d|
-      create_dependency d.name => d.requirement.as_list
+      create_dependency d.name, d.requirement.as_list
     end
 
     @project.dep_number = @project.projectdependencies.count
     Rails.logger.info "Project has #{@project.projectdependencies.count} dependencies"
   end
 
-  def create_dependency dep
-    if dep.nil?
-      Rails.logger.debug "Problem: don't know how to handle #{dep}"
+  def create_dependency dep_name, requirements
+    if dep_name.nil?
+      Rails.logger.debug "Problem: don't know how to handle #{dep_name}"
       return nil
     end
 
-    dependency = create_dependency_from_hash( dep )
-    @project.out_number     += 1 if dependency.outdated?
-    @project.unknown_number += 1 if dependency.prod_key.nil?
-    @project.projectdependencies.push dependency
-    dependency.save
-    dependency
-  end
+    product = load_product( dep_name )
 
-  def create_dependency_from_hash dep_hash
-    name = dep_hash.keys.first
-    reqs = dep_hash[name]
-
+    # prod_key should be nil if there is no such product
     prod_key = nil
-    product = load_product( name )
-    prod_key = product.prod_key if product
+    prod_key ||= product.prod_key if product
 
-    requirement = reqs.map do |req_version|
-      v_hash = version_hash(req_version, name, product)
+    requirement = requirements.map do |req_version|
+      v_hash = version_hash(req_version, dep_name, product)
       Rails.logger.debug "VERSION HASH IS #{v_hash}"
       v_hash
     end
 
-    Rails.logger.debug "create_dependency '#{name}' -- #{requirement}"
+    Rails.logger.debug "create_dependency '#{dep_name}' -- #{requirement}"
 
     dependency = Projectdependency.new({
       :language => language,
       :prod_key => prod_key,
-      :name     => name,
+      :name     => dep_name,
+
       :version_requested  => requirement.first[:version_requested],
       :comperator         => requirement.first[:comperator],
       :version_label      => requirement.first[:version_label]
       })
 
-    dependency
-  end
 
-  VERSION_REGEXP = /^(=|!=|>=|>|<=|<|~>)\s*(\d(\.\d(\.\d)?)?)/
-  def parse_version string
-    string.match VERSION_REGEXP
-    comperator, version = $1, $2
-    return {:comperator => comperator, :version_requested => version}
+    @project.out_number     += 1 if dependency.outdated?
+    @project.unknown_number += 1 if dependency.prod_key.nil?
+    @project.projectdependencies.push dependency
+    dependency.save
+    dependency
   end
 
   def version_hash version_from_file, prod_name, product
@@ -167,14 +124,15 @@ class PodfileParser < CommonParser
       return {:version_requested => "PATH", :version_label => "PATH", :comperator => "="}
 
     else
-      comperator_version = parse_version version_from_file
+      comperator_version = CocoapodsPackageManager.parse_version_constraint( version_from_file )
+
       # TODO copy composer for version ranges
 
       comperator = comperator_version[:comperator]
       version    = comperator_version[:version_requested]
 
       if product
-        version_requested = best_version(comperator, version, product.versions)
+        version_requested = CocoapodsPackageManager.choose_version(comperator, version, product.versions)
         return {:version_requested => version_requested, :version_label => version_from_file, :comperator => comperator}
       end
 
@@ -188,29 +146,6 @@ class PodfileParser < CommonParser
     CocoapodsPackageManager.parse_requested_version( version_number, dependency, product )
   end
 
-  def best_version(comperator, version, versions)
-    case comperator
-    when ">"
-      VersionService.greater_than(versions, version).version
-    when ">="
-      VersionService.greater_than_or_equal(versions, version).version
-    when "<"
-      VersionService.smaller_than(versions, version).version
-    when "<="
-      VersionService.smaller_than_or_equal(versions, version).version
-    when "~>"
-      starter         = VersionService.version_approximately_greater_than_starter( version )
-      possible_vers   = VersionService.versions_start_with( versions, starter )
-      highest_version = VersionService.newest_version_from( possible_vers )
-      return highest_version.to_s if highest_version
-      return version
-    else
-      version
-    end
-  rescue => e
-    Rails.logger.error e.message
-    version
-  end
 
   def load_product name
     prod_key = name.downcase

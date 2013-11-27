@@ -213,7 +213,7 @@ describe PodfileParser do
       puts deps
       deps.size.should eq(2)
       deps.each do |dep|
-        dep.name.should be_member(%w{ShareKit xmlrpc})
+        %w{ShareKit xmlrpc}.should be_member(dep.name)
       end
     end
 

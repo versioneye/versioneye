@@ -39,6 +39,7 @@ describe PodfilelockParser do
   # test the versions and if the requested version is outdated
   def test_dependency dep, version_latest, version_requested, outdated
     # puts "dependency #{dep.name} version #{dep.version_current}"
+    dep.should be_true
     dep.version_current.should eq(version_latest)
     dep.version_requested.should eq(version_requested)
     dep.outdated.should eq(outdated)
@@ -50,6 +51,23 @@ describe PodfilelockParser do
     it "should HTTP-get a lockfile and return a project with dependencies" do
       # project =
     end
+
+    it "should drop subspecs and just use the main spec" do
+
+      # TODO add this before so the subspecs are actually known
+      # 'https://raw.github.com/CocoaPods/Specs/master/ShareKit/2.4.6/ShareKit.podspec'
+      # 'https://raw.github.com/CocoaPods/Specs/master/xmlrpc/2.3.3/xmlrpc.podspec'
+
+      project = parser.parse 'https://raw.github.com/DenisDbv/OpenAuth/master/Podfile.lock'
+
+      deps = project.dependencies
+      puts deps
+      deps.size.should eq(2)
+      deps.each do |dep|
+        dep.name.should be_member(%w{ShareKit xmlrpc})
+      end
+    end
+
 
   end
 
@@ -110,26 +128,14 @@ describe PodfilelockParser do
       dep = get_dependency(project, "JRSwizzle")
       test_dependency(dep, "1.0",  "1.0", false)
 
-      # TODO: make something about these subspecs
+      dep = get_dependency(project, 'libextobjc')
+      test_dependency(dep, "0.3", "0.2.5", true)
 
-      %w{ libextobjc/EXTConcreteProtocol
-          libextobjc/EXTKeyPathCoding
-          libextobjc/EXTScope
-          libextobjc/RuntimeExtensions
-      }.each do |pod|
+      dep = get_dependency(project, 'ReactiveCocoa')
+      test_dependency(dep, "2.1.7", "1.8.0", true)
 
-        dep = get_dependency(project, pod)
-        dep.should be_true
-        test_dependency(dep, "0.3", "0.2.5", true)
-      end
+    end
 
-      %w{ ReactiveCocoa
-          ReactiveCocoa/Core
-          ReactiveCocoa/RACExtensions
-      }.each do |pod|
-        dep = get_dependency(project, pod)
-        test_dependency(dep, "2.1.7", "1.8.0", true)
-      end
-    end  end
+  end
 
 end
