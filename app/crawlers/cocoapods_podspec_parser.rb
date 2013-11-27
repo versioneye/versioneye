@@ -8,27 +8,9 @@ require 'cocoapods-core'
 
 class CocoapodsPodspecParser
 
-  #creating my own little logger
-
-  def error args
-    puts "error: #{args}"
-  end
-  def warn args
-    puts "warn: #{args}"
-  end
-  def debug args
-    puts "debug: #{args}"
-  end
-  def info args
-    puts "info: #{args}"
-  end
   def logger
-    return self
+    ActiveSupport::BufferedLogger.new("log/cocoapods.log")
   end
-
-  # def logger
-  #   ActiveSupport::BufferedLogger.new("log/cocoapods.log")
-  # end
 
   @@language  = Product::A_LANGUAGE_OBJECTIVEC
   @@prod_type = Project::A_TYPE_COCOAPODS
