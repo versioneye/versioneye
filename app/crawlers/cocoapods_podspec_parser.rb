@@ -8,13 +8,17 @@ require 'cocoapods-core'
 
 class CocoapodsPodspecParser
 
-  attr_reader :language, :prod_type
-
   def logger
     ActiveSupport::BufferedLogger.new("log/cocoapods.log")
   end
 
+  # the same for all products
+  attr_reader :language, :prod_type
+
+  # the product source
   attr_reader :podspec
+
+  # important parts of the parsed domain model output
   attr_reader :name, :prod_key, :version
 
   def initialize
@@ -22,6 +26,12 @@ class CocoapodsPodspecParser
     @prod_type = Project::A_TYPE_COCOAPODS
   end
 
+
+  # Public: parses a podspec file
+  #
+  # file  - the Podspec file path
+  #
+  # Returns a Product
   def parse_file ( file )
     @podspec = load_spec file
     return nil unless @podspec
