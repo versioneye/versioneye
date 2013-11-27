@@ -2,11 +2,11 @@
 
 <div class="span8 col2-left" >
 
-  <%= form_tag("/auth/twitter/create", :method => "post", :class => "form-horizontal") do  %> 
+  <%= form_tag("/auth/twitter/create", :method => "post", :class => "form-horizontal") do  %>
 
     <div class="control-group">
       <div class="controls">
-        Almost done. We just need your email address. 
+        Almost done. We just need your email address.
       </div>
     </div>
 
@@ -15,7 +15,7 @@
       <div class="controls">
         <%= text_field_tag :email, @email, :class => "round", :id => "email"  %>
       </div>
-    </div>   
+    </div>
 
     <div class="control-group">
       <div class="controls">
@@ -41,9 +41,7 @@
     <div class="control-group">
       <div class="control-label"></div>
       <div class="controls">
-        <button type="submit" 
-                class="btn2 btn2-big" 
-                onClick="return validateEmail( document.getElementById('email').value )" ><%= t(:page_signup_button_signup) %></button>
+        <button type="submit" class="btn2 btn2-big" ><%= t(:page_signup_button_signup) %></button>
       </div>
     </div>
 

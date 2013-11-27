@@ -19,7 +19,8 @@ describe CocoapodsPodspecParser do
         # should run before :all
         DatabaseCleaner.clean
 
-        product = CocoapodsPodspecParser.new.parse_file './spec/fixtures/files/podspec/Reachability.podspec'
+        podspec = './spec/fixtures/files/podspec/Reachability.podspec'
+        product = CocoapodsPodspecParser.new.parse_file( podspec )
         product.should_not be_nil
         product.language.should eq 'Objective-C'
         product.prod_key.should eq 'reachability'
@@ -35,6 +36,28 @@ describe CocoapodsPodspecParser do
 
         license = License.first
         license.name.should == 'BSD'
+      end
+
+      it 'should create dependencies' do
+        DatabaseCleaner.clean
+
+        podspec = 'spec/fixtures/files/podspec/AeroGear-Push.podspec'
+        expect(File).to exist(podspec)
+
+        parser  = CocoapodsPodspecParser.new
+        product = parser.parse_file( podspec )
+
+        product.should be_true
+        product.language.should eq 'Objective-C'
+        product.prod_key.should eq 'aerogear-push'
+        product.name.should eq 'AeroGear-Push'
+        product.versions.size.should == 1
+
+        Developer.where({  prod_key: parser.prod_key }).count.should == 1
+        License.where({    prod_key: parser.prod_key }).count.should == 1
+        Dependency.where({ prod_key: parser.prod_key }).count.should == 1
+        Versionlink.where({prod_key: parser.prod_key }).count.should == 1
+
       end
     end
 
