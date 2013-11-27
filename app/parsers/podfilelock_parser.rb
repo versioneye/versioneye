@@ -56,40 +56,50 @@ class PodfilelockParser < CommonParser
   end
 
   def create_dependencies
+    pod_names = lockfile.pod_names
 
-    # lockfile.dependencies.each do |d|
-    #   create_dependency d.name => d.requirement.as_list
-    # end
+    hash_array = pod_names.map do |name|
+      hash = {name: name, version: lockfile.version(name)}
+      hash[:spec], hash[:subspec] = CocoapodsPackageManager.spec_subspec( name )
+      hash
+    end
 
-    @lockfile.pod_names.each do |pod_name|
-      version = lockfile.version(pod_name)
-      create_dependency( pod_name, version.version )
+    specs = ( hash_array.map { |hash| hash[:spec] } ).uniq
+    specs_and_versions = hash_array.inject({}) do |result,hash|
+      spec = hash[:spec]
+      if specs.member? spec
+        result[spec] = hash[:version]
+        specs.delete spec
+      end
+      result
+    end
+
+    specs_and_versions.each_pair do |spec, version|
+      create_dependency spec, version
     end
 
     @project.dep_number = @project.projectdependencies.count
     Rails.logger.info "Project has #{@project.projectdependencies.count} dependencies"
   end
 
-  def create_dependency dep_name, dep_version
+  # spec should now be the spec without subspec
+  def create_dependency spec, dep_version
 
-    unless dep_name
+    unless spec
       Rails.logger.debug "Problem: try to create_dependency(nil)"
       return nil
     end
 
-    dep_spec_name, subspec = CocoapodsPackageManager.spec_subspec( dep_name )
+    Rails.logger.debug "create_dependency '#{spec}' -- #{dep_version}"
 
-    Rails.logger.debug "create_dependency '#{dep_spec_name}' -- #{dep_version}"
-    Rails.logger.debug "ignoring subspec #{subspec} of #{dep_name}" if subspec
-
-    product  = load_product( dep_spec_name )
+    product  = load_product( spec )
     prod_key = nil
     prod_key ||= product.prod_key if product
 
     dependency = Projectdependency.new({
       :language => language,
       :prod_key => prod_key,
-      :name     => dep_spec_name,
+      :name     => spec,
 
       :version_requested  => dep_version,
       :comperator         => '=',
