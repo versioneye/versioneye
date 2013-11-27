@@ -65,11 +65,26 @@ class PodfileParser < CommonParser
     # TODO make scopes out of the target definitions
     # target_def = @pod_hash["target_definitions"]
 
-    # I had problems getting correct dependencies from
-    # the hash for some targets, so I now get all
-    # all dependencies and forget about the target's first
-    @pod_file.dependencies.each do |d|
-      create_dependency d.name, d.requirement.as_list
+    deps = pod_file.dependencies
+
+    hash_array = deps.map do |dep|
+      hash = {name: dep.name, version: dep.requirement.as_list}
+      hash[:spec], hash[:subspec] = CocoapodsPackageManager.spec_subspec( dep.name )
+      hash
+    end
+
+    specs = ( hash_array.map { |hash| hash[:spec] } ).uniq
+    specs_and_versions = hash_array.inject({}) do |result,hash|
+      spec = hash[:spec]
+      if specs.member? spec
+        result[spec] = hash[:version]
+        specs.delete spec
+      end
+      result
+    end
+
+    specs_and_versions.each_pair do |spec, version|
+      d = create_dependency(spec, version)
     end
 
     @project.dep_number = @project.projectdependencies.count

@@ -90,6 +90,7 @@ class CocoapodsPodspecParser
     create_repository
     create_developers
     create_homepage_link
+    create_github_podspec_versionarchive
     create_screenshot_links
     @product.save
     @product
@@ -207,6 +208,18 @@ class CocoapodsPodspecParser
   def create_homepage_link
     # checking for valid link is done inside create_versionlink
     Versionlink.create_versionlink(language, prod_key, version, @podspec.homepage, 'Homepage')
+  end
+
+  def create_github_podspec_versionarchive
+    # checking for valid link is done inside create_versionlink
+    va = Versionarchive.new({
+      language: language,
+      prod_key: prod_key,
+      version: version,
+      link:"https://github.com/CocoaPods/Specs/blob/master/#{name}/#{version}/#{name}.podspec",
+      name:"#{name}.podspec (#{version})",
+    })
+    va.save
   end
 
   def create_screenshot_links

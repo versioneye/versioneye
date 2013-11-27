@@ -82,7 +82,7 @@ class Projectdependency
   end
 
   def to_s
-    "<Projectdependency: #{project} depends on #{prod_key} (#{version_label}) current: #{version_current} >"
+    "<Projectdependency: #{project} depends on #{name} (#{version_label}) current: #{version_current} >"
   end
 
   private

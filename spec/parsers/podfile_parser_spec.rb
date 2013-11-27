@@ -206,11 +206,12 @@ describe PodfileParser do
       # 'https://raw.github.com/CocoaPods/Specs/master/ShareKit/2.4.6/ShareKit.podspec'
       # 'https://raw.github.com/CocoaPods/Specs/master/xmlrpc/2.3.3/xmlrpc.podspec'
 
+      podfile = 'https://raw.github.com/DenisDbv/OpenAuth/8d654f25d540ec865a8faeace40a810b7bdc9ff2/Podfile'
       parser  = PodfileParser.new
-      project = parser.parse 'https://raw.github.com/DenisDbv/OpenAuth/8d654f25d540ec865a8faeace40a810b7bdc9ff2/Podfile'
+      project = parser.parse( podfile )
 
       deps = project.dependencies
-      puts deps
+
       deps.size.should eq(2)
       deps.each do |dep|
         %w{ShareKit xmlrpc}.should be_member(dep.name)

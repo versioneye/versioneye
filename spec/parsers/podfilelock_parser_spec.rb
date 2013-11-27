@@ -58,13 +58,16 @@ describe PodfilelockParser do
       # 'https://raw.github.com/CocoaPods/Specs/master/ShareKit/2.4.6/ShareKit.podspec'
       # 'https://raw.github.com/CocoaPods/Specs/master/xmlrpc/2.3.3/xmlrpc.podspec'
 
-      project = parser.parse 'https://raw.github.com/DenisDbv/OpenAuth/master/Podfile.lock'
-
+      lockfile_url = 'https://raw.github.com/DenisDbv/OpenAuth/master/Podfile.lock'
+      project = parser.parse( lockfile_url )
       deps = project.dependencies
-      puts deps
-      deps.size.should eq(2)
+
+      deps.size.should eq(6)
+
       deps.each do |dep|
-        dep.name.should be_member(%w{ShareKit xmlrpc})
+        %w{
+          Facebook-iOS-SDK JSONKit NSData+Base64
+          ShareKit xmlrpc SSKeychain}.should be_member(dep.name)
       end
     end
 
