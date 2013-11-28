@@ -84,7 +84,7 @@ class PodfileParser < CommonParser
     end
 
     specs_and_versions.each_pair do |spec, version|
-      d = create_dependency(spec, version)
+      create_dependency(spec, version)
     end
 
     @project.dep_number = @project.projectdependencies.count
