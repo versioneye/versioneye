@@ -152,11 +152,12 @@ class CocoapodsPodspecParser
   def create_dependency dep_name, dep_version
     # make sure it's really downcased
     dep_prod_key = dep_name.downcase
+    dependency_version = dep_version.is_a?(Array) ? dep_version.first : dep_version.to_s
 
-    dep = Dependency.find_by(language, prod_key, version, dep_name, dep_version, dep_prod_key)
-    return dep if dep
+    dependency = Dependency.find_by(language, prod_key, version, dep_name, dependency_version, dep_prod_key)
+    return dependency if dependency
 
-    dep = Dependency.new({
+    dependency = Dependency.new({
       :language     => language,
       :prod_type    => prod_type,
       :prod_key     => prod_key,
@@ -164,10 +165,10 @@ class CocoapodsPodspecParser
 
       :name         => dep_name,
       :dep_prod_key => dep_prod_key,
-      :version      => dep_version,
+      :version      => dependency_version,
       })
-    dep.save
-    dep
+    dependency.save
+    dependency
   end
 
   def create_version
@@ -244,7 +245,6 @@ class CocoapodsPodspecParser
       link:"https://github.com/CocoaPods/Specs/blob/master/#{name}/#{version}/#{name}.podspec",
       name:"#{name}.podspec",
     })
-    puts "nach new"
     Versionarchive.create_archive_if_not_exist( archive )
   end
 
