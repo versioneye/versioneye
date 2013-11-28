@@ -236,15 +236,19 @@ class CocoapodsPodspecParser
   end
 
   def create_github_podspec_versionarchive
+    puts "try to create github link"
     # checking for valid link is done inside create_versionlink
-    va = Versionarchive.new({
+    archive = Versionarchive.new({
       language: language,
       prod_key: prod_key,
       version_id: version,
       link:"https://github.com/CocoaPods/Specs/blob/master/#{name}/#{version}/#{name}.podspec",
-      name:"#{name}.podspec (#{version})",
+      name:"#{name}.podspec",
     })
-    va.save
+    puts "nach new"
+    # archive.save
+    Versionarchive.create_if_not_exist( archive )
+    puts "github link created"
   end
 
   def create_screenshot_links

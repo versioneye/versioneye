@@ -6,7 +6,7 @@ class Versionarchive
   # Belongs to the product with this attributes
   field :language  , type: String
   field :prod_key  , type: String
-  field :version_id, type: String
+  field :version_id, type: String # TODO rename to :version
 
   field :link      , type: String # URL
   field :name      , type: String # Label for the link/URL
@@ -25,9 +25,12 @@ class Versionarchive
   end
 
   def self.create_archive_if_not_exist archive
+    puts "create_archive_if_not_exist ******"
     return nil if archive.link.nil? || archive.link.empty?
+    puts "@http"
     archive.link = add_http( archive.link )
     return nil if exist_with_link?(archive.language, archive.prod_key, archive.version_id, archive.link)
+    puts "save archive #{archive} *****"
     archive.save
   end
 

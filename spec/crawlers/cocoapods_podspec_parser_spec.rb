@@ -134,6 +134,7 @@ describe CocoapodsPodspecParser do
         should_not_create_more_developers
         should_not_create_more_versionlinks
         should_not_create_more_licenses
+        should_not_create_more_archives
       end
 
       def should_not_create_another_product
@@ -167,6 +168,10 @@ describe CocoapodsPodspecParser do
         licenses.count.should == 1
       end
 
+      def should_not_create_more_archives
+        archives = Versionarchive.where(language:@language, prod_key:@prod_key, version_id:'3.1.1')
+        archives.count.should == 1
+      end
     end
 
     context 'parse other version of the podspec' do
