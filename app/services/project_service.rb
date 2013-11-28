@@ -72,7 +72,7 @@ class ProjectService
     project
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -155,7 +155,7 @@ class ProjectService
     parser.parse url
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     project = Project.new
   end
 

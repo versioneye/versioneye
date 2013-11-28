@@ -119,7 +119,7 @@ class User
     end
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
   end
 
   def create_username
@@ -173,7 +173,7 @@ class User
     return User.find(id.to_s)
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -181,7 +181,7 @@ class User
     User.where(:id.in => ids)
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -256,7 +256,7 @@ class User
     ( user && user.salt == coockie_salt ) ? user : nil
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 

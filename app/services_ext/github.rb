@@ -44,7 +44,7 @@ class Github
     resp.headers['x-oauth-scopes']
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     "no_scope"
   end
 
@@ -63,7 +63,7 @@ class Github
     response.code != 304
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     return false
   end
 
@@ -206,7 +206,7 @@ class Github
     Github.fetch_file url, user.github_token
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -288,7 +288,7 @@ class Github
     project_files
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     return
   end
 
@@ -324,7 +324,7 @@ class Github
     false
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     return false
   end
 
@@ -348,7 +348,7 @@ class Github
     response['resources']
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     return nil
   end
 

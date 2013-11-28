@@ -47,7 +47,7 @@ class CircleElement
     end
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
   end
 
   def self.dependency_circle(lang, prod_key, version, scope)
@@ -74,7 +74,7 @@ class CircleElement
     return self.fetch_deps(1, hash, Hash.new, lang)
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
   end
 
   def self.fetch_deps(deep, hash, parent_hash, lang)
@@ -117,7 +117,7 @@ class CircleElement
     return merged_hash
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
   end
 
 

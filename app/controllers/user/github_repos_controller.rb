@@ -22,7 +22,7 @@ class User::GithubReposController < ApplicationController
     }.to_json
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     render text: "Backend issue - cant import github repositories;", status: 503
   end
 
