@@ -14,7 +14,7 @@ class GitHubService
   A_TASK_DONE = 'done'
 
   def self.update_all_repos
-    User.live_users.where(:github_scope => "repo").no_timeout.each do |user|
+    User.all(:timeout => true).live_users.where(:github_scope => "repo").each do |user|
       update_repos_for_user user
     end
   end
