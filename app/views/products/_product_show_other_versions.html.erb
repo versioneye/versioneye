@@ -23,7 +23,7 @@
   <% end %>
   <% if @product.language.eql?(Product::A_LANGUAGE_OBJECTIVEC) %>
     <div style="margin-top: 10px; font-size: 12px;">
-      Currently we don't have all released dates for Objective-C packages. Might be that you see the date we detected the package. We are working on it to get complete data!
+      Since Cocoapods doesn’t have the original release dates we now try to get them from the corresponding git tag. We use the Github API to do this, so this currently works only for pods hosted on Github.
     </div>
   <% end %>
 <% end %>
