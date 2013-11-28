@@ -6,33 +6,14 @@
     <div class="span2">
       <h5 class="dep_header">Podfile entry</h5>
     </div>
-    <div class="span5" style="width: 430px; margin-bottom: 0;">
-      <pre class = "prettyprint" style="background-color: #fff; margin-bottom: 0;">
-        <code>pod '<%= @product.name %>', '<%= @version.to_s %>'</code>
-      </pre>
-    </div>
+    <div class="span5" style="width: 430px; margin-bottom: 0;"><pre class = "prettyprint" style="background-color: #fff; margin-bottom: 0;"><code>pod '<%= @product.name %>', '<%= @version.to_s %>'</code></pre></div>
   </div>
 
   <div class="row" style="margin-bottom: 5px;">
     <div class="span2">
       <h5 class="dep_header">Install with</h5>
     </div>
-    <div class="span5" style="width: 430px; margin-bottom: 0;">
-      <pre class="prettyprint download_area" style="margin-bottom: 0;">
-        <code>cocoapods install <%= @product.name %> --version <%= @version.to_s %></code>
-      </pre>
-    </div>
-  </div>
-
-  <div class="row" style="margin-bottom: 5px;">
-    <div class="span2">
-      <h5 class="dep_header">Install with</h5>
-    </div>
-    <div class="span5" style="width: 430px; margin-bottom: 0;">
-      <pre class="prettyprint download_area" style="margin-bottom: 0;">
-        <code>cocoapods install <%= @product.name %> --version <%= @version.to_s %></code>
-      </pre>
-    </div>
+    <div class="span5" style="width: 430px; margin-bottom: 0;"><pre class="prettyprint download_area" style="margin-bottom: 0;"><code>cocoapods install <%= @product.name %> --version <%= @version.to_s %></code></pre></div>
   </div>
 
   <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.to_s ) %>
