@@ -215,7 +215,7 @@ class CocoapodsPodspecParser
     va = Versionarchive.new({
       language: language,
       prod_key: prod_key,
-      version: version,
+      version_id: version,
       link:"https://github.com/CocoaPods/Specs/blob/master/#{name}/#{version}/#{name}.podspec",
       name:"#{name}.podspec (#{version})",
     })
