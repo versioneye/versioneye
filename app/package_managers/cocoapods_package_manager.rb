@@ -84,4 +84,73 @@ class CocoapodsPackageManager < PackageManager
     Rails.logger.error e.message
     version_number
   end
+
+  # Public: parse a string into [spec, subspec] array.
+  #
+  # string - the string that will be parsed
+  # Examples
+  #
+  #   spec_subspec 'ShareKit/Facebook'
+  #   # => ['ShareKit', 'Facebook']
+  #
+  #   spec_subspec 'ShareKit'
+  #   # => ['ShareKit']
+  #
+  # Returns nil if the String is nil or empty, or an array containing [spec,subspec]
+  def self.spec_subspec string
+    return nil if string.nil? || string.empty?
+    string.split('/')
+  end
+
+end
+
+## Monkey Patch CocoaPods, so we are able to parse from URLs
+
+module Pod
+  class Podfile
+    # Configures a new Podfile from the given url.
+    #
+    # @param  [String] url
+    #         The url which will configure the podfile with the DSL.
+    #
+    # @return [Podfile] the new Podfile
+    #
+    def self.from_url(url)
+      podfile = nil
+      open(url) do |io|
+        begin
+          podfile = Podfile.new do
+            # rubocop:disable Eval
+            eval(io.string, nil, url)
+            # rubocop:enable Eval
+          end
+        rescue Exception => e
+          Rails.logger.error e
+          message = "Invalid url `#{url}`: #{e.message}"
+          raise DSLError.new(message, url, e.backtrace)
+        end
+      end
+
+      podfile
+
+    end
+  end
+
+  class Lockfile
+    def self.from_url(url)
+      open(url) do |io|
+        require 'yaml'
+        hash = YAML.load(io)
+
+        unless hash && hash.is_a?(Hash)
+          raise Informative, "Invalid Lockfile in `#{url}`"
+        end
+
+        lockfile = Lockfile.new(hash)
+        lockfile.defined_in_file = url
+        lockfile
+      end
+    end
+  end
+
 end

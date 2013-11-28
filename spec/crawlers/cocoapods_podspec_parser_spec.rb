@@ -57,7 +57,7 @@ describe CocoapodsPodspecParser do
         License.where({    prod_key: parser.prod_key }).count.should == 1
         Dependency.where({ prod_key: parser.prod_key }).count.should == 1
         Versionlink.where({prod_key: parser.prod_key }).count.should == 1
-
+        Versionarchive.where({prod_key: parser.prod_key }).count.should == 1
       end
     end
 

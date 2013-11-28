@@ -14,7 +14,6 @@ capybara-*.html
 /coverage/
 /spec/tmp/*
 **.orig
-*.lock
 rerun.txt
 pickle-email-*.html
 .idea/

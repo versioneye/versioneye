@@ -81,6 +81,10 @@ class Projectdependency
     self.outdated
   end
 
+  def to_s
+    "<Projectdependency: #{project} depends on #{name} (#{version_label}) current: #{version_current} >"
+  end
+
   private
 
     def init_product
