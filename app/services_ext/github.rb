@@ -320,7 +320,7 @@ class Github
     url = "#{A_API_URL}/repos/#{name}?access_token=#{github_token}"
     response = get(url, :headers => A_DEFAULT_HEADERS )
     repo = catch_github_exception JSON.parse(response.body)
-    return repo['private'] unless repo.nil? and !repo.is_a(Hash)
+    return repo['private'] unless repo.nil? and !repo.is_a?(Hash)
     false
   rescue => e
     Rails.logger.error e.message
