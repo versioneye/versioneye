@@ -16,7 +16,7 @@ class GithubVersionCrawler
 
   def self.products( language, empty_versions )
     if empty_versions
-      return Product.where({ :language => language, "versions.version.ne" => nil }).all
+      return Product.where({ :language => language, "versions.version.ne" => nil }).no_timeout.all
     end
     Product.where({ :language => language }).all
   end
