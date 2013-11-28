@@ -61,7 +61,8 @@
       @product.language.eql?(Product::A_LANGUAGE_RUBY) ||
       @product.language.eql?(Product::A_LANGUAGE_CLOJURE) ||
       @product.language.eql?(Product::A_LANGUAGE_NODEJS) ||
-      @product.language.eql?(Product::A_LANGUAGE_PHP) %>
+      @product.language.eql?(Product::A_LANGUAGE_PHP) ||
+      @product.language.eql?(Product::A_LANGUAGE_OBJECTIVEC) %>
   <% references = @product.used_by_count %>
   <% ref_bg = "success" if references >= 500  %>
   <% ref_bg = "info"      if references >= 100 and references < 500  %>
