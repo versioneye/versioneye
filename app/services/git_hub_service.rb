@@ -14,7 +14,7 @@ class GitHubService
   A_TASK_DONE = 'done'
 
   def self.update_all_repos
-    User.all(:timeout => true).live_users.where(:github_scope => "repo").each do |user|
+    User.live_users.where(:github_scope => "repo").no_timeout.each do |user|
       update_repos_for_user user
     end
   end
@@ -38,7 +38,7 @@ class GitHubService
   NB! allows only one running task per user;
 =end
   def self.cached_user_repos( user )
-    
+
     user_task_key = "#{user[:username]}-#{user[:github_id]}"
 
     task_status = @@memcache.get(user_task_key)
@@ -51,7 +51,7 @@ class GitHubService
     if user[:github_token] and user.github_repos.all.count == 0
       Rails.logger.info "Fetch Repositories from GitHub and cache them in DB."
       n_repos = Github.count_user_repos(user)
-      if n_repos == 0 
+      if n_repos == 0
         Rails.logger.debug "user had no repositories;"
         task_status = A_TASK_DONE
         @@memcache.set(user_task_key, task_status)
