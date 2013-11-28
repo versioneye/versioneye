@@ -61,6 +61,61 @@ describe CocoapodsPodspecParser do
 
         License.first.name = 'Apache License, Version 2.0'
       end
+
+      it "should add dependencies of subspecs" do
+        DatabaseCleaner.clean
+
+        podspec = './spec/fixtures/files/podspec/subspec_ex1/RestKit.podspec'
+
+        @product = CocoapodsPodspecParser.new.parse_file(podspec)
+        count = Dependency.where(language: "Objective-C").count
+        # puts "FOUND #{count} Objective-C dependencies"
+
+        dependencies = Dependency.where({
+          :language     => Product::A_LANGUAGE_OBJECTIVEC,
+          :prod_type    => Project::A_TYPE_COCOAPODS,
+          :prod_key     => 'RestKit'.downcase,
+          :prod_version => '0.22.0'
+          })
+
+        dependencies.count.should eq(5)
+
+        dependencies.map(&:name).should =~  %w{
+          AFNetworking
+          ISO8601DateFormatterValueTransformer
+          RKValueTransformers
+          SOCKit
+          TransitionKit
+          }
+      end
+
+      it "should create dependencies to specs not to subspecs" do
+        #should run before all
+        DatabaseCleaner.clean
+
+        parser = CocoapodsPodspecParser.new
+
+        podspec = './spec/fixtures/files/podspec/ShareKit.podspec'
+        product = parser.parse_file podspec
+
+        VersionService.update_version_data product, true
+
+        puts product
+
+        dependencies = Dependency.where({
+          :language     => product.language,
+          :prod_type    => product.prod_type,
+          :prod_key     => product.prod_key,
+          :prod_version => product.version
+          })
+
+        dep_keys = dependencies.map(&:dep_prod_key)
+
+        dep_keys.should be_member("google-api-client")
+        dep_keys.should_not be_member("Google-API-Client/Common".downcase)
+      end
+
+
     end
 
     context 'parsing the same file again' do
@@ -180,34 +235,6 @@ describe CocoapodsPodspecParser do
         License.count.should == 2
       end
 
-    end
-
-
-    it "should add subspecs as dependencies" do
-      DatabaseCleaner.clean
-
-      podspec = './spec/fixtures/files/podspec/subspec_ex1/RestKit.podspec'
-
-      @product = CocoapodsPodspecParser.new.parse_file(podspec)
-      count = Dependency.where(language: "Objective-C").count
-      # puts "FOUND #{count} Objective-C dependencies"
-
-      dependencies = Dependency.where({
-        :language     => Product::A_LANGUAGE_OBJECTIVEC,
-        :prod_type    => Project::A_TYPE_COCOAPODS,
-        :prod_key     => 'RestKit'.downcase,
-        :prod_version => '0.22.0'
-        })
-
-      dependencies.count.should eq(5)
-
-      dependencies.map(&:name).should =~  %w{
-        AFNetworking
-        ISO8601DateFormatterValueTransformer
-        RKValueTransformers
-        SOCKit
-        TransitionKit
-        }
     end
 
   end
