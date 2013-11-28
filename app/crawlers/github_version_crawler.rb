@@ -11,17 +11,17 @@ class GithubVersionCrawler
 
 
   # Crawle Release dates for Objective-C packages
-  def self.crawl(language = Product::A_LANGUAGE_OBJECTIVEC, empty_versions = true, desc = true )
-    products(language, empty_versions, desc).each do |product|
+  def self.crawl(language = Product::A_LANGUAGE_OBJECTIVEC, empty_release_dates = true, desc = true )
+    products(language, empty_release_dates, desc).each do |product|
       add_version_to_product( product )
     end
   end
 
 
-  def self.products( language, empty_versions, desc = true )
+  def self.products( language, empty_release_dates, desc = true )
     products = nil
-    if empty_versions
-      products = Product.where({ :language => language, "versions.version.ne" => nil })
+    if empty_release_dates
+      products = Product.where({ :language => language, "versions.released_at" => nil })
     else
       products = Product.where({ :language => language })
     end
