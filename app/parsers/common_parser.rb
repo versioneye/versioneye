@@ -20,7 +20,7 @@ class CommonParser
     http.get("#{path}?#{query}")
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -29,7 +29,7 @@ class CommonParser
     response.body
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -38,7 +38,7 @@ class CommonParser
     JSON.parse( body )
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 

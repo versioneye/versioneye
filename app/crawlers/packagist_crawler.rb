@@ -54,7 +54,7 @@ class PackagistCrawler
     end
   rescue => e
     self.logger.error "ERROR in crawle_package Message:   #{e.message}"
-    self.logger.error "ERROR in crawle_package backtrace: #{e.backtrace.first}"
+    self.logger.error e.backtrace.join("\n")
     PackagistCrawler.store_error crawl, e.message, e.backtrace, name
   end
 
@@ -204,7 +204,7 @@ class PackagistCrawler
     error.save
   rescue => e
     self.logger.error "ERROR in store_error: #{e.message}"
-    self.logger.error "ERROR in store_error: #{e.backtrace.first}"
+    self.logger.error e.backtrace.join("\n")
   end
 
 end

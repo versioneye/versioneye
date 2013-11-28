@@ -9,7 +9,7 @@ class TwitterController < ApplicationController
     redirect_to request_token.authorize_url
   rescue => e
     logger.error e
-    logger.error e.backtrace.first
+    logger.error e.backtrace.join("\n")
     flash[:error] = "An error occured. Please contact the VersionEye Team."
     redirect_to "/signup"
   end

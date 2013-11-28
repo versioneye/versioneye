@@ -23,7 +23,7 @@ class MongoProduct
     return result
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     return empty_criteria
   end
 
@@ -46,7 +46,7 @@ class MongoProduct
     return query
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     return empty_criteria
   end
 
@@ -57,7 +57,7 @@ class MongoProduct
     Product.where(name_downcase: /^#{searched_name}/)
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     return empty_criteria
   end
 
@@ -76,7 +76,7 @@ class MongoProduct
     query
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     return empty_criteria
   end
 
