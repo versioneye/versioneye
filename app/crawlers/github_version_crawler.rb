@@ -5,6 +5,10 @@ class GithubVersionCrawler
   A_USER_AGENT = "www.versioneye.com"
   A_API_URL    = "https://api.github.com"
 
+  def self.logger
+    ActiveSupport::BufferedLogger.new("log/github_version_crawler.log")
+  end
+
 
   # Crawle Release dates for Objective-C packages
   def self.crawl(language = Product::A_LANGUAGE_OBJECTIVEC, empty_versions = true )
@@ -31,8 +35,8 @@ class GithubVersionCrawler
 
     update_release_dates product, github_versions
   rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
   end
 
 
@@ -45,10 +49,10 @@ class GithubVersionCrawler
       version.released_at     = v_hash[:released_at]
       version.released_string = v_hash[:released_string]
       product.save
-      Rails.logger.info "update #{product.name} v #{version} was released at #{version.released_at}"
+      logger.info "update #{product.name} v #{version} was released at #{version.released_at}"
     end
     remaining = OctokitApi.instance.ratelimit.remaining
-    Rails.logger.info "check version dates for #{product.prod_key} - Remaining API requests: #{remaining}"
+    logger.info "check version dates for #{product.prod_key} - Remaining API requests: #{remaining}"
   end
 
 
@@ -58,7 +62,7 @@ class GithubVersionCrawler
       # couldn't find 0.0.1, try v0.0.1
       version_hash = github_versions["v#{version_string}"]
       if version_hash.nil? || version_hash.empty?
-        Rails.logger.info "No tag available for #{repo} - #{product.name} : #{version_string} / v#{version_string}"
+        logger.info "No tag available for #{repo} - #{product.name} : #{version_string} / v#{version_string}"
         return
       end
     end
@@ -81,8 +85,8 @@ class GithubVersionCrawler
     end
     versions
   rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -99,8 +103,8 @@ class GithubVersionCrawler
       :released_string => date_string,
     }
   rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -112,8 +116,8 @@ class GithubVersionCrawler
     commit_json = JSON.parse commit.to_json
     return commit_json["commit"]["committer"]["date"].to_s
   rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -125,8 +129,8 @@ class GithubVersionCrawler
     tags_data = tags.get.data
     tags_data
   rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -142,13 +146,13 @@ class GithubVersionCrawler
     match = /https:\/\/github.com\/(.+)\/(.+)\.git/.match git_url
     owner_repo = {:owner => $1, :repo => $2}
     if match.nil? || match == false
-      Rails.logger.error "Couldn't parse #{git_url}"
+      logger.error "Couldn't parse #{git_url}"
       return nil
     end
     owner_repo
   rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
     nil
   end
 
