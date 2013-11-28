@@ -236,7 +236,6 @@ class CocoapodsPodspecParser
   end
 
   def create_github_podspec_versionarchive
-    puts "try to create github link"
     # checking for valid link is done inside create_versionlink
     archive = Versionarchive.new({
       language: language,
@@ -246,9 +245,7 @@ class CocoapodsPodspecParser
       name:"#{name}.podspec",
     })
     puts "nach new"
-    # archive.save
-    Versionarchive.create_if_not_exist( archive )
-    puts "github link created"
+    Versionarchive.create_archive_if_not_exist( archive )
   end
 
   def create_screenshot_links
