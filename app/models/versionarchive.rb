@@ -25,12 +25,9 @@ class Versionarchive
   end
 
   def self.create_archive_if_not_exist archive
-    puts "create_archive_if_not_exist ******"
     return nil if archive.link.nil? || archive.link.empty?
-    puts "@http"
     archive.link = add_http( archive.link )
     return nil if exist_with_link?(archive.language, archive.prod_key, archive.version_id, archive.link)
-    puts "save archive #{archive} *****"
     archive.save
   end
 
