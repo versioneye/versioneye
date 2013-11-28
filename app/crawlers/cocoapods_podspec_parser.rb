@@ -8,33 +8,30 @@ require 'cocoapods-core'
 
 class CocoapodsPodspecParser
 
-  #creating my own little logger
-
-  def error args
-    puts "error: #{args}"
-  end
-  def warn args
-    puts "warn: #{args}"
-  end
-  def debug args
-    puts "debug: #{args}"
-  end
-  def info args
-    puts "info: #{args}"
-  end
   def logger
-    return self
+    ActiveSupport::BufferedLogger.new("log/cocoapods.log")
   end
 
-  # def logger
-  #   ActiveSupport::BufferedLogger.new("log/cocoapods.log")
-  # end
+  # the same for all products
+  attr_reader :language, :prod_type
 
-  @@language  = Product::A_LANGUAGE_OBJECTIVEC
-  @@prod_type = Project::A_TYPE_COCOAPODS
+  # the product source
+  attr_reader :podspec
 
-  attr_accessor :podspec, :prod_key, :version
+  # important parts of the parsed domain model output
+  attr_reader :name, :prod_key, :version
 
+  def initialize
+    @language  = Product::A_LANGUAGE_OBJECTIVEC
+    @prod_type = Project::A_TYPE_COCOAPODS
+  end
+
+
+  # Public: parses a podspec file
+  #
+  # file  - the Podspec file path
+  #
+  # Returns a Product
   def parse_file ( file )
     @podspec = load_spec file
     return nil unless @podspec
@@ -57,6 +54,7 @@ class CocoapodsPodspecParser
   end
 
   def set_prod_key_and_version
+    @name     = @podspec.name
     @prod_key = @podspec.name.downcase
     @version  = @podspec.version.to_s
   end
@@ -70,11 +68,12 @@ class CocoapodsPodspecParser
       product.update_attributes({
         :reindex       => true,
         :prod_key      => prod_key,
-        :name          => @podspec.name,
+        :name          => name,
         :name_downcase => prod_key,
         :description   => description,
-        :language      => @@language,
-        :prod_type     => @@prod_type,
+
+        :language      => language,
+        :prod_type     => prod_type,
       })
       product.save
     end
@@ -91,6 +90,7 @@ class CocoapodsPodspecParser
     create_repository
     create_developers
     create_homepage_link
+    create_github_podspec_versionarchive
     create_screenshot_links
     @product.save
     @product
@@ -129,12 +129,12 @@ class CocoapodsPodspecParser
     # make sure it's really downcased
     dep_prod_key = dep_prod_key.downcase
 
-    dep = Dependency.find_by(@@language, prod_key, version, dep_name, dep_version, dep_prod_key)
+    dep = Dependency.find_by(language, prod_key, version, dep_name, dep_version, dep_prod_key)
     return dep if dep
 
     dep = Dependency.new({
-      :language     => @@language,
-      :prod_type    => @@prod_type,
+      :language     => language,
+      :prod_type    => prod_type,
       :prod_key     => prod_key,
       :prod_version => version,
 
@@ -159,11 +159,11 @@ class CocoapodsPodspecParser
 
   def create_license
     # create new license if version doesn't exist yet
-    licenses = License.where( {:language => @@language, :prod_key => prod_key, :version  => version} )
+    licenses = License.where( {:language => language, :prod_key => prod_key, :version  => version} )
     return nil if licenses.first
 
     license = License.new({
-      :language => @@language,
+      :language => language,
       :prod_key => prod_key,
       :version  => version,
 
@@ -190,11 +190,11 @@ class CocoapodsPodspecParser
 
   def create_developers
     @podspec.authors.each_pair do |name, email|
-      developer = Developer.find_by( @@language, prod_key, version, name ).first
+      developer = Developer.find_by( language, prod_key, version, name ).first
       next if developer
 
       developer = Developer.new({
-        :language => @@language,
+        :language => language,
         :prod_key => prod_key,
         :version  => version,
 
@@ -207,12 +207,24 @@ class CocoapodsPodspecParser
 
   def create_homepage_link
     # checking for valid link is done inside create_versionlink
-    Versionlink.create_versionlink(@@language, prod_key, version, @podspec.homepage, 'Homepage')
+    Versionlink.create_versionlink(language, prod_key, version, @podspec.homepage, 'Homepage')
+  end
+
+  def create_github_podspec_versionarchive
+    # checking for valid link is done inside create_versionlink
+    va = Versionarchive.new({
+      language: language,
+      prod_key: prod_key,
+      version: version,
+      link:"https://github.com/CocoaPods/Specs/blob/master/#{name}/#{version}/#{name}.podspec",
+      name:"#{name}.podspec (#{version})",
+    })
+    va.save
   end
 
   def create_screenshot_links
     @podspec.screenshots.to_enum.with_index(1).each do |img_url, i|
-      Versionlink.create_versionlink(@@language, prod_key, version, img_url, "Screenshot #{i}")
+      Versionlink.create_versionlink(language, prod_key, version, img_url, "Screenshot #{i}")
     end
   end
 

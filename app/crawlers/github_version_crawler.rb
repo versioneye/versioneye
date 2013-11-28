@@ -32,7 +32,7 @@ class GithubVersionCrawler
     update_release_dates product, github_versions
   rescue => e
     Rails.logger.error e.message
-    e.backtrace.each.map{|trace| Rails.logger.error trace }
+    Rails.logger.error e.backtrace.join("\n")
   end
 
 
@@ -82,7 +82,7 @@ class GithubVersionCrawler
     versions
   rescue => e
     Rails.logger.error e.message
-    e.backtrace.each.map{|trace| Rails.logger.error trace }
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -100,7 +100,7 @@ class GithubVersionCrawler
     }
   rescue => e
     Rails.logger.error e.message
-    e.backtrace.each.map{|trace| Rails.logger.error trace }
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -113,7 +113,7 @@ class GithubVersionCrawler
     return commit_json["commit"]["committer"]["date"].to_s
   rescue => e
     Rails.logger.error e.message
-    e.backtrace.each.map{|trace| Rails.logger.error trace }
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -126,7 +126,7 @@ class GithubVersionCrawler
     tags_data
   rescue => e
     Rails.logger.error e.message
-    e.backtrace.each.map{|trace| Rails.logger.error trace }
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -148,7 +148,7 @@ class GithubVersionCrawler
     owner_repo
   rescue => e
     Rails.logger.error e.message
-    e.backtrace.each.map{|trace| Rails.logger.error trace }
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
