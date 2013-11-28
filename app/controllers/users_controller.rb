@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_filter :authenticate, :only => [:update, :destroy, :index]
   before_filter :correct_user, :only => [:update]
   before_filter :admin_user,   :only => [:destroy, :index]
+  before_filter :admin_user,   :only => [:index]
   before_filter :set_locale
 
   force_ssl :only => [:new, :create, :activate] if Rails.env.production?
