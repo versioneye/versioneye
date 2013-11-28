@@ -70,7 +70,6 @@ class GithubVersionCrawler
       # couldn't find 0.0.1, try v0.0.1
       version_hash = github_versions["v#{version_string}"]
       if version_hash.nil? || version_hash.empty?
-        logger.info "No tag available for #{repo} - #{product.name} : #{version_string} / v#{version_string}"
         return
       end
     end
