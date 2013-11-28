@@ -174,7 +174,7 @@ class VersionService
     product.save if persist
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
   end
 
 
@@ -193,9 +193,10 @@ class VersionService
     average
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
+
 
   def self.estimated_average_release_time( versions )
     return nil if versions.nil? || versions.empty? || versions.size == 1
@@ -209,7 +210,7 @@ class VersionService
     average
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
