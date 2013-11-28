@@ -1,3 +1,24 @@
+.mb5  { margin-bottom: 5px;}
+.w430 { width: 430px;}
+
+h1.product{
+  display: inline;
+  padding: 0;
+  font-family: "Droid Sans";
+  color: black;
+}
+
+h2.section_header{
+  padding: 0 0 10px 0;
+  margin: 0;
+  color: $text_casual;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+h3.side_header{
+  font-size: 16px;
+}
 
 .rating_cell{
   width: 170px;
@@ -30,25 +51,19 @@
   height: 19px;
 }
 
-h1.product{
-  display: inline;
-  padding: 0;
-  font-family: "Droid Sans";
-  color: black;
-}
 
 .versioncomment_reply_section{
   padding-left: 20px;
   padding-top: 20px;
-}
 
-.versioncomment_reply_section .meta-text-small{
-  padding-top: 5px;
-}
+  .meta-text-small{
+    padding-top: 5px;
+  }
 
-.versioncomment_reply_section .reply{
-  padding-bottom: 25px;
-  border-bottom: 0px;
+  .reply{
+    padding-bottom: 25px;
+    border-bottom: 0px;
+  }
 }
 
 .versioncomment_reply_link_section{
@@ -60,14 +75,3 @@ h1.product{
   padding-top: 20px;
 }
 
-h2.section_header{
-  padding: 0 0 10px 0;
-  margin: 0;
-  color: $text_casual;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-h3.side_header{
-  font-size: 16px;
-}
