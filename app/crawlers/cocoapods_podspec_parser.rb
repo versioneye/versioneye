@@ -86,7 +86,6 @@ class CocoapodsPodspecParser
     create_version
     create_license
     create_dependencies
-    create_subspec_dependencies
     create_repository
     create_developers
     create_homepage_link
@@ -102,32 +101,57 @@ class CocoapodsPodspecParser
 
 
   def create_dependencies
-    @podspec.dependencies.each do |dep|
-      d = create_dependency(dep.name, dep.name.downcase, dep.requirement.to_s)
+
+    deps = get_podspec_dependencies
+
+    hash = hash_of_dependencies_to_versions(deps)
+
+    hash.each_pair do |spec, version|
+      create_dependency(spec, version)
     end
+
   end
 
-  def create_subspec_dependencies
-
-    return if @podspec.subspecs.empty?
+  # returns a list of dependencies
+  def get_podspec_dependencies
+    subspecs = @podspec.subspecs || []
 
     # get all dependencies of all sub dependencies
-    # TODO create scopes
-    deps = @podspec.subspecs.map(&:dependencies).flatten
+    sub_deps = subspecs.map(&:dependencies).flatten
 
-    #remove subspecs from dependencies
+    # remove subspecs from dependencies
+    # (for when a subspec depends on other parts of the spec)
     subspec_start = "#{@podspec.name}/"
-    deps.delete_if {|d| d.name.start_with? subspec_start}
+    sub_deps.delete_if {|d| d.name.start_with? subspec_start}
 
-    deps.each do |dep|
-      d = create_dependency(dep.name, dep.name.downcase, dep.requirement.to_s)
-    end
-
+    podspec.dependencies.concat(sub_deps)
   end
 
-  def create_dependency dep_name, dep_prod_key, dep_version
+  # creates a hash where every key is a dependency and the value is the version
+  def hash_of_dependencies_to_versions deps
+    hash_array = deps.map do |dep|
+      hash = {name: dep.name, version: dep.requirement.as_list}
+      hash[:spec], hash[:subspec] = CocoapodsPackageManager.spec_subspec( dep.name )
+      hash
+    end
+
+    specs = ( hash_array.map { |hash| hash[:spec] } ).uniq
+    specs_and_versions = hash_array.inject({}) do |result,hash|
+      spec = hash[:spec]
+      if specs.member? spec
+        result[spec] = hash[:version]
+        specs.delete spec
+      end
+      result
+    end
+
+    specs_and_versions
+  end
+
+
+  def create_dependency dep_name, dep_version
     # make sure it's really downcased
-    dep_prod_key = dep_prod_key.downcase
+    dep_prod_key = dep_name.downcase
 
     dep = Dependency.find_by(language, prod_key, version, dep_name, dep_version, dep_prod_key)
     return dep if dep
@@ -147,7 +171,8 @@ class CocoapodsPodspecParser
   end
 
   def create_version
-
+    # versions aren't stored at product
+    # this is what VersionService.update_version_data does
     version_numbers = @product.versions.map(&:version)
     return nil if version_numbers.member? version
 
