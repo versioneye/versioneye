@@ -62,19 +62,13 @@ class Dependency
   end
 
   def language_escaped
-    if self.language.eql? Product::A_LANGUAGE_NODEJS
-      return "nodejs"
-    end
+    return "nodejs" if self.language.eql? Product::A_LANGUAGE_NODEJS
     return language.downcase
   end
 
   def update_known
-    product = self.product
-    if product.nil?
-      self.known = false
-    else
-      self.known = true
-    end
+    product    = self.product
+    self.known = !product.nil?
     self.save()
   end
 
@@ -162,7 +156,7 @@ class Dependency
   end
 
   def to_s
-    "[Dependency (#{prod_type}/#{language})] #{prod_key}(#{prod_version}) depends on #{dep_prod_key}(#{version})"
+    "Dependency - #{language}:#{prod_key}:#{prod_version} depends on #{dep_prod_key}:#{version}"
   end
 
 end
