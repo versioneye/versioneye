@@ -1,9 +1,9 @@
 require 'cocoapods-core'
+require 'cocoapods_package_manager'
 
 # This parser parses Cocoapods Podfile.lock file
 #
 #
-# TODO: test PodfilelockParser#parse( url )
 # TODO: implement Subspecs
 
 class PodfilelockParser < CommonParser
@@ -26,14 +26,14 @@ class PodfilelockParser < CommonParser
   def parse url
     return nil unless url
     @url = url
-    @lockfile = Pod::Lockfile.from_url url
+    @lockfile = Pod::Lockfile.from_url url # from_url is monkey patched. You find it in cocoapods_package_manager.rb
 
     create_project
   end
 
   def parse_file filename
     return nil unless filename
-    @lockfile_name = filename
+    @lockfile_name  = filename
 
     pathname = Pathname.new filename
     @lockfile = Pod::Lockfile.from_file pathname
