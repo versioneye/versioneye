@@ -74,6 +74,7 @@ class BowerParser < CommonParser
       parse_version_line( package_name, version_line, project )
     end
     project.dep_number = project.dependencies.size
+
     project
   end
 
@@ -85,27 +86,30 @@ class BowerParser < CommonParser
   def parse_version_line(package_name, version_line, project)
     product    = Product.fetch_product( Product::A_LANGUAGE_JAVASCRIPT, package_name)
     if product.nil?
-      p "Cant find product for #{Product::A_LANGUAGE_JAVASCRIPT}, `#{package_name}`"
+      #Bower dependency may defined as fullname of the repo
+      product = Product.where(prod_key: package_name, language: Product::A_LANGUAGE_JAVASCRIPT).shift
     end
-   
-    version_line = version_line.strip
-    if trim_text(version_line).split(/\s+/).count < 2
-      newest_version = parse_single_version(package_name, version_line, product)
-    else
-      newest_version = parse_combined_versions(package_name, version_line, product)
-    end
-
     dependency = init_dependency( product, package_name )
-    #TODO: pre-release, build info?
-    #todo: when there's no product with matching version?
-    #TODO: what if newest_version is nil? or empty?
-    dependency.update_attributes({
-      version_label: newest_version[:label],
-      version_requested: newest_version[:version],
-      comperator: newest_version[:comperator]
-    })
+    if product.nil?
+      p "Cant find product for #{Product::A_LANGUAGE_JAVASCRIPT}, `#{package_name}`"
+      project.unknown_number += 1
+    else  
+      version_line = version_line.strip
+      if trim_text(version_line).split(/\s+/).count < 2
+        newest_version = parse_single_version(package_name, version_line, product)
+      else
+        newest_version = parse_combined_versions(package_name, version_line, product)
+      end
+
+      #todo: when there's no product with matching version?
+      #TODO: what if newest_version is nil? or empty?
+      dependency.update_attributes({
+        #version_label: newest_version[:label],
+        version_requested: newest_version[:version],
+        comperator: newest_version[:comperator]
+      })
+    end
     project.out_number     += 1 if dependency.outdated?
-    project.unknown_number += 1 if product.nil?
     project.projectdependencies.push dependency
     project
   end
@@ -123,6 +127,11 @@ class BowerParser < CommonParser
       version = version.to_s.strip.gsub(/ \|-\| /x, ' - ') #restore hyphen version and remove reduntant spaces
      
       version_data = parse_requested_version(package_name, version, product)
+      if version_data.nil?
+        Rails.logger.error "Cant parse version `#{version_line}` for #{package_name}."
+        return nil
+      end
+
       matching_labels = VersionService.versions_by_comperator(product.versions, version_data[:comperator], version_data[:label]).to_a.map {|ver| ver[:version]}
       matching_labels = Set.new matching_labels.to_a
        
