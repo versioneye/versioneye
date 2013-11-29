@@ -107,7 +107,7 @@ class PackagistCrawler
     PackagistCrawler.create_dependencies product, version_number, version_obj
   rescue => e
     self.logger.error "ERROR in create_new_version Message:   #{e.message}"
-    self.logger.error "ERROR in create_new_version backtrace: #{e.backtrace}"
+    self.logger.error e.backtrace.join("\n")
     PackagistCrawler.store_error crawl, e.message, e.backtrace, product.name
   end
 

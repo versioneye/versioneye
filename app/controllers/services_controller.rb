@@ -33,7 +33,7 @@ class ServicesController < ApplicationController
     redirect_to service_path( project.id )
   rescue => e
     logger.error "ERROR Message:   #{e.message}"
-    logger.error "ERROR backtrace: #{e.backtrace}"
+    logger.error e.backtrace.join("\n")
     flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye team."
     redirect_to "/"
   end
