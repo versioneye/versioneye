@@ -1,16 +1,7 @@
 class ProductMigration
 
-  def self.update_followers
-    products = Product.where( :"user_ids.0" => {"$exists"=>true} )
-    products.each do |product|
-      product.followers = product.users.count
-      product.save
-      Rails.logger.info "update followers for #{product.name}"
-    end
-    Rails.logger.info "#{products.count} products updated."
-  end
 
-  def self.count_versions(lang)
+  def self.count_versions lang
     versions_count = 0
     count = Product.where(language: lang).count()
     Rails.logger.info "language: #{lang}, count: #{count}"
@@ -34,45 +25,7 @@ class ProductMigration
     end
   end
 
-  def self.update_meta_data_global
-    count = Product.count()
-    page = 100
-    iterations = count / page
-    iterations += 1
-    (0..iterations).each do |i|
-      skip = i * page
-      products = Product.all().skip(skip).limit(page)
-      products.each do |product|
-        VersionService.update_version_data( product, true )
-        product.update_used_by_count( true )
-        self.update_followers( product )
-      end
-    end
-  rescue => e
-    Rails.logger.error e.message
-  end
-
-  def self.update_followers( product )
-    return nil if product.followers == product.user_ids.count
-    product.followers = product.user_ids.count
-    product.save
-  end
-
-  def self.update_version_data_global
-    count = Product.count()
-    page = 100
-    iterations = count / page
-    iterations += 1
-    (0..iterations).each do |i|
-      skip = i * page
-      products = Product.all().skip(skip).limit(page)
-      products.each do |product|
-        VersionService.update_version_data( product )
-      end
-    end
-  end
-
-  def self.parse_release_date_global(lang)
+  def self.parse_release_date_global lang
     Product.where(language: lang).each do |product|
       product.versions.each do |version|
         if version.released_string.nil?
@@ -87,7 +40,7 @@ class ProductMigration
     end
   end
 
-  def self.remove_leading_vs(lang)
+  def self.remove_leading_vs lang
     Product.where(language: lang).each do |product|
       product.versions.each do |version|
         if version.to_s.match(/v[0-9]+\..*/)
@@ -100,7 +53,7 @@ class ProductMigration
     end
   end
 
-  def self.count_central_mvn_repo()
+  def self.count_central_mvn_repo
     count = 0
     Product.where(language: "Java").each do |product|
       product.repositories.each do |repo|
@@ -112,7 +65,7 @@ class ProductMigration
     end
   end
 
-  def self.remove_bad_links(lang)
+  def self.remove_bad_links lang
     Product.where(language: lang).each do |product|
       product.http_links.each do |link|
         if link.link.match(/^http.*/).nil?
@@ -124,7 +77,7 @@ class ProductMigration
     end
   end
 
-  def self.improve_ruby_links()
+  def self.improve_ruby_links
     Product.where(language: "Ruby").each do |product|
       Versionlink.where(prod_key: product.prod_key).each do |link|
         if !link.version_id.nil?
@@ -136,7 +89,7 @@ class ProductMigration
     end
   end
 
-  def self.check_emtpy_release_dates(lang)
+  def self.check_emtpy_release_dates lang
     Product.where(language: lang).each do |product|
       product.versions.each do |version|
         if version.released_string.nil?
