@@ -4,7 +4,7 @@ require 'github'
 
 class BowerCrawler
 
-  A_MINIMUM_RATE_LIMIT = 50
+  A_MINIMUM_RATE_LIMIT = 150 #TODO: some methods dont check limits all the time
   A_MAX_RETRY = 12 #12x10 ~> if dont get task in 120sec then stop worker
   A_SLEEP_TIME = 20
   A_TASK_CHECK_EXISTENCE = "bower_crawler/check_existence"
@@ -49,13 +49,10 @@ class BowerCrawler
   #for debugging
   def self.crawl_serial(token, source_url)
     p "Using serial crawler - hopefully just for debugging."
-    #crawl_registered_list(source_url)
-    #crawl_existing_sources(token)
+    crawl_registered_list(source_url)
+    crawl_existing_sources(token)
     crawl_projects(token)
-    #crawl_versions(token) 
-    #use this when you want to debug 
-    #tasks = CrawlerTask.by_task(A_TASK_READ_PROJECT)
-    #tasks.each_with_index {|task, i| add_bower_package(task, token, i)}
+    crawl_versions(token) 
   end
 
   def self.crawl_concurrent(token, source_url)
@@ -128,6 +125,7 @@ class BowerCrawler
         task.update_attributes({crawled_at: DateTime.now})
         to_version_task(task) #add new version task when everything went oK
       end
+      sleep 1/100 #force little pause before next iteration
       result
     end
   end
@@ -150,7 +148,10 @@ class BowerCrawler
           next
         end
         
-        tags.each {|tag| parse_repo_tag(prod, tag, token)}
+        tags.each do |tag| 
+          parse_repo_tag(prod, tag, token)
+          sleep 1/100 #just force little pause asking commit info -> github may block
+        end
 
         #-- if prod didnt get versionnumber from project-file
         if prod[:version].nil?
@@ -167,20 +168,15 @@ class BowerCrawler
   def self.crawler_task_executor(task_name, next_task_name, token, &block)
     p "#-- #{task_name} is starting ... "
     start_time = Time.now
-    waited = 0
     success = 0; failed = 0
-    while waited < A_MAX_RETRY do
+    while true do
       check_request_limit(token)
       task = get_task_for(task_name)
-      if task.nil?
-        waited += 1
-        next
-      end
+      next if task.nil?
 
       if task[:poison_pill] == true
         task.delete
         p "#-- #{task_name} got poison pill. Going to die ..."
-        p "#{task_name} left  #{left_tasks} unfinished tasks;"
         break
       end
 
@@ -218,14 +214,19 @@ class BowerCrawler
   rescue Exception => ex
     puts ex.message
     puts ex.backtrace.join("\n")
+    to_poison_pill(next_task_name) if next_task_name
   end
 
   def self.get_task_for(task_name)
-    task = CrawlerTask.by_task(task_name).crawlable.desc(:weight).shift
-    if task.nil?
+    100.times do |i|
+      task = CrawlerTask.by_task(task_name).crawlable.desc(:weight).shift
+      break if task
+      
       p "No tasks for #{task_name} - going to wait before re-trying again"
       sleep A_SLEEP_TIME
     end
+
+    to_poison_pill(task_name) if task.nil? 
     task
   end
 
@@ -253,6 +254,7 @@ class BowerCrawler
         url_exists: true,
         re_crawl: false
       })
+      success = true
     elsif response.code == 404
       p "Repo #{task[:repo_fullname]} with url `#{task[:url]}` doesnt exists."
       task.update_attributes({
@@ -283,8 +285,6 @@ class BowerCrawler
     prod = create_bower_package(pkg_info, token) if pkg_info
 
     if prod and prod.save
-      newest = to_newest(prod) #newest model is used for latest_releases stats
-      p "Imported: #{prod[:prod_key]}"
       task.update_attributes({
         re_crawl: false,
         runs: task[:runs] + 1,
@@ -292,7 +292,6 @@ class BowerCrawler
       })
       result =  true
     else
-      p "#-- Failed to import: '#{task[:repo_fullname]}'"
       task.update_attributes({
         re_crawl: false,
         runs: task[:runs] + 1,
@@ -388,6 +387,8 @@ class BowerCrawler
                                 build_tag:      m[:build],
                                 released_at:    released_at
       prod.versions << new_version
+      newest = to_newest(prod, version)
+
       p "Added version `#{new_version[:version]}` with release_date `#{new_version[:released_at]}`"
     end
     
@@ -456,6 +457,7 @@ class BowerCrawler
       runs: read_task[:runs] + 1,
       repo_name: task[:repo_name],
       repo_owner: task[:repo_owner],
+      weight: 1 + task[:weight],
       url: url
     })
 
@@ -491,12 +493,17 @@ class BowerCrawler
     task
   end
 
-  def self.to_newest(prod)
-    newest = Newest.find_or_initialize_by(prod_key: prod[:prod_key], language: prod[:language], version: prod[:version])
+  def self.to_newest(prod, version)
+    newest = Newest.find_or_initialize_by(
+      prod_key: prod[:prod_key], 
+      language: prod[:language], 
+      version: version[:version]
+    )
 
     newest.update_attributes({ 
-      version: prod[:version],
-      prod_type: prod[:prod_type]
+      version: version[:version],
+      prod_type: prod[:prod_type],
+      created_at: version[:released_at] || newest[:created_at]
     })
     newest
   rescue => e
@@ -511,7 +518,7 @@ class BowerCrawler
     )
 
     prod.update_attributes({
-      name: pkg_info[:full_name].to_s,
+      name: pkg_info[:name].to_s,
       name_downcase: pkg_info[:full_name].to_s.downcase,
       prod_type: Project::A_TYPE_BOWER,
       private_repo: pkg_info[:private_repo],
