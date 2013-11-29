@@ -140,7 +140,7 @@ define(
       } else {
         loader_notification.html([
             '<i class = "icon-spinner icon-spin"></i>',
-            ' Please wait, we are still reading data. Imported ',  repos.length, 'repositories'
+            ' Please wait. We are still reading data from the GitHub API. Imported ',  repos.length, 'repositories'
         ].join(' ')
         );
       }

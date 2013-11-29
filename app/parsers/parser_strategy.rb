@@ -17,7 +17,11 @@ class ParserStrategy
         end
 
       when Project::A_TYPE_COCOAPODS
-        return PodfileParser.new
+        if url.match(/Podfile.lock/)
+          return PodfilelockParser.new
+        else
+          return PodfileParser.new
+        end
 
       when Project::A_TYPE_NPM
         return PackageParser.new

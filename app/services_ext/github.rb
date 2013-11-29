@@ -396,7 +396,7 @@ class Github
 
   def self.support_project_files
     Set['pom.xml', 'Gemfile', 'Gemfile.lock', 'composer.json', 'composer.lock', 'requirements.txt',
-        'setup.py', 'package.json','bower.json', 'dependency.gradle', 'project.clj', 'Podfile']
+        'setup.py', 'package.json','bower.json', 'dependency.gradle', 'project.clj', 'Podfile', 'Podfile.lock']
   end
 
   def self.encode_db_key(key_val)
