@@ -31,7 +31,7 @@ class License
 
   def link
     return url if url && !url.empty?
-    return "http://choosealicense.com/licenses/mit/" if name.match(/^#{name}$/i)
+    return "http://choosealicense.com/licenses/mit/" if name.match(/^MIT$/i)
     return nil
   end
 
