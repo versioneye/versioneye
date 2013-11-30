@@ -11,7 +11,6 @@ class GithubController < ApplicationController
 
     token     = Github.token code
     json_user = Github.user token
-    Rails.logger.info "code: #{code} token: #{token}"
 
     if signed_in?
       update_user_scope( json_user, token )
