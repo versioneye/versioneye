@@ -137,8 +137,8 @@ class UsersController < ApplicationController
     verification = params[:verification]
     source       = params[:source]
 
-    message = "Congratulation. Your Account is activated."
-    user = User.where(verification: verification)[0]
+    message   = "Congratulation. Your Account is activated."
+    user      = User.where(verification: verification).shift
     activated = User.activate!( verification )
 
     if activated && github_source?( source )

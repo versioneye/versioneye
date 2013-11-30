@@ -23,7 +23,8 @@ class UserEmail
   end
 
   def self.activate!(verification)
-    user_email = UserEmail.where(verification: verification)[0]
+    return false if verification.nil? || verification.strip.empty?
+    user_email = UserEmail.where(verification: verification).shift
     if user_email
       user_email.verification = nil
       user_email.save
