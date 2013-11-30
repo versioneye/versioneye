@@ -19,7 +19,7 @@ class Userlinkcollection
   field :facebook,      type: String, :default => A_FACEBOOK
 
   def self.find_all_by_user(user_id)
-    return nil if user_id.nil? || user_id.strip.empty?
+    return nil if user_id.nil? || user_id.to_s.strip.empty?
   	Userlinkcollection.where( user_id: user_id ).shift
   end
 
