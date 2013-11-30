@@ -8,7 +8,6 @@ class User
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes
 
-  field :old_id            , type: String
   field :username          , type: String
   field :fullname          , type: String
   field :prev_fullname     , type: String

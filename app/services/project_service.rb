@@ -108,8 +108,8 @@ class ProjectService
    - Storing the new project to DB
 =end
   def self.import_from_github(user, repo_name, filename, branch = "master", fileurl = nil)
-    private_project = Github.private_repo?(user.github_token, repo_name)
-    if private_project && !ProjectService.is_allowed_to_add_private_project?(user)
+    private_project = Github.private_repo? user.github_token, repo_name
+    if private_project && !is_allowed_to_add_private_project?( user )
       error_msg = "You selected a private project. Please upgrade your plan to monitor the selected project."
       return error_msg
     end
