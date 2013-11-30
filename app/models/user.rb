@@ -150,8 +150,8 @@ class User
   end
 
   def self.activate!(verification)
-    return false if verification.nil?
-    user = User.where(verification: verification)[0]
+    return false if verification.nil? || verification.strip.empty?
+    user = User.where(verification: verification).shift
     if user
       user.verification = nil
       user.save
@@ -246,7 +246,7 @@ class User
   end
 
   def self.authenticate(email, submitted_password)
-    user = User.where( email: email.downcase )[0]
+    user = User.where( email: email.downcase ).shift
     return nil  if user.nil? || user.deleted
     return user if user.has_password?(submitted_password)
     return nil
