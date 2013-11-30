@@ -9,8 +9,9 @@ class GithubController < ApplicationController
       return
     end
 
-    token     = Github.token( code )
+    token     = Github.token code
     json_user = Github.user token
+    Rails.logger.info "code: #{code} token: #{token}"
 
     if signed_in?
       update_user_scope( json_user, token )
@@ -85,26 +86,20 @@ class GithubController < ApplicationController
       user.github_token = token
       user.github_scope = Github.oauth_scopes( token )
       # next line is mandatory otherwise the private repos don't get
-      # fetched immediately. Bu questions ask me (reiz).
+      # fetched immediately (reiz)
       user.github_repos.delete_all
       user.save
     end
 
     def get_user_for_token(json_user, token)
-      user = User.find_by_github_id( json_user['id'] )
-      if !user.nil?
-        user.github_token = token
-        user.save
-        return user
-      end
-      user = User.find_by_email( json_user['email'] )
-      if !user.nil?
-        user.github_id = json_user['id']
-        user.github_token = token
-        user.save
-        return user
-      end
-      return nil
+      return nil if json_user.nil?
+      return nil if json_user['id'].nil?
+      user = User.find_by_github_id( json_user['id'].to_s )
+      return nil if user.nil?
+
+      user.github_token = token
+      user.save
+      return user
     end
 
 end

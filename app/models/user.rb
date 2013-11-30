@@ -63,8 +63,14 @@ class User
   validates_presence_of :encrypted_password, :message => "Encrypted_password is mandatory!"
   validates_presence_of :salt              , :message => "Salt is mandatory!"
 
-  validates_uniqueness_of :username, :message => "Username exist already."
-  validates_uniqueness_of :email   , :message => "E-Mail exist already."
+  validates_uniqueness_of :username          , :message => "Username exist already."
+  validates_uniqueness_of :email             , :message => "E-Mail exist already."
+  validates_uniqueness_of :github_id         , :message => "GitHub ID exist already."
+  validates_uniqueness_of :github_token      , :message => "GitHub token exist already."
+  validates_uniqueness_of :twitter_id        , :message => "Twitter ID exist already."
+  validates_uniqueness_of :twitter_token     , :message => "Twitter token exist already."
+  validates_uniqueness_of :stripe_token      , :message => "Stripe token exist already."
+  validates_uniqueness_of :stripe_customer_id, :message => "Stripe customer id exist already."
 
   validates_length_of :username, minimum: 2, maximum: 50, :message => "username length is not ok"
   validates_length_of :fullname, minimum: 2, maximum: 50, :message => "fullname length is not ok"
@@ -94,6 +100,14 @@ class User
 
   def to_param
     username
+  end
+
+  def to_s
+    result = "#{username} / #{fullname} / #{email}"
+    result += " - verification: #{verification}" if verification
+    result += " - verified account " if verification.nil?
+    result += " - deleted " if deleted
+    result
   end
 
   def create_verification
@@ -157,10 +171,12 @@ class User
   end
 
   def self.find_by_username( username )
+    return nil if username.nil? || username.strip.empty?
     User.where( username: /^#{username}$/i ).shift
   end
 
   def self.find_by_email(email)
+    return nil if email.nil? || email.strip.empty?
     user = User.where(email: email).shift
     if user.nil?
       user = User.where(email: /^#{email}$/i).shift
@@ -197,8 +213,8 @@ class User
     UserEmail.where(user_id: self._id.to_s, verification: nil)
   end
 
-  def get_email(email)
-    UserEmail.where( user_id: self._id.to_s, email: email )[0]
+  def get_email email
+    UserEmail.where( user_id: self._id.to_s, email: email ).shift
   end
 
   def image_url
@@ -207,26 +223,18 @@ class User
     url
   end
 
-  def has_password?(submitted_password)
+  def has_password? submitted_password
     self.encrypted_password == encrypt(submitted_password)
   end
 
-  def self.find_by_twitter_id(twitter_id)
-    users = User.where(twitter_id: twitter_id)
-    if users && users.size > 1
-      return nil
-    else
-      users[0]
-    end
+  def self.find_by_twitter_id twitter_id
+    return nil if twitter_id.nil? || twitter_id.strip.empty?
+    User.where(twitter_id: twitter_id).shift
   end
 
-  def self.find_by_github_id(github_id)
-    users = User.where(github_id: github_id)
-    if users && users.size > 1
-      return nil
-    else
-      users[0]
-    end
+  def self.find_by_github_id github_id
+    return nil if github_id.nil? || github_id.strip.empty?
+    User.where(github_id: github_id).shift
   end
 
   def github_account_connected?
