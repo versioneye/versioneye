@@ -65,12 +65,6 @@ class User
 
   validates_uniqueness_of :username          , :message => "Username exist already."
   validates_uniqueness_of :email             , :message => "E-Mail exist already."
-  validates_uniqueness_of :github_id         , :message => "GitHub ID exist already."
-  validates_uniqueness_of :github_token      , :message => "GitHub token exist already."
-  validates_uniqueness_of :twitter_id        , :message => "Twitter ID exist already."
-  validates_uniqueness_of :twitter_token     , :message => "Twitter token exist already."
-  validates_uniqueness_of :stripe_token      , :message => "Stripe token exist already."
-  validates_uniqueness_of :stripe_customer_id, :message => "Stripe customer id exist already."
 
   validates_length_of :username, minimum: 2, maximum: 50, :message => "username length is not ok"
   validates_length_of :fullname, minimum: 2, maximum: 50, :message => "fullname length is not ok"
