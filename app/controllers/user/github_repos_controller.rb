@@ -41,7 +41,7 @@ class User::GithubReposController < ApplicationController
 =end
   def create
     "unified update method for Backbone models"
-    if params[:command].nil? or params[:fullname].nil? or params[:command_data].nil?
+    if params[:command].nil? || params[:fullname].nil? || params[:command_data].nil?
       error_msg = "Wrong command (`#{params[:command]}`) or project fullname is missing."
       render text: error_msg, status: 400
       return false
@@ -57,8 +57,8 @@ class User::GithubReposController < ApplicationController
     when "import"
 
       matching_files = branch_files.keep_if {|file| file['path'] == filename}
-      url = matching_files.first[:url] unless matching_files.empty?
-      project      = ProjectService.import_from_github(current_user, project_name, filename, branch, url)
+      url            = matching_files.first[:url] unless matching_files.empty?
+      project        = ProjectService.import_from_github(current_user, project_name, filename, branch, url)
       if project.nil?
         error_msg = "Can't save project"
         Rails.logger.error("#{project_name} - #{error_msg}")
