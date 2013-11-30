@@ -15,10 +15,8 @@ class ProjectService
   end
 
   def self.store( project )
-    if project.nil?
-      Rails.logger.error "Project can't be nil. Some error with importing."
-      return nil
-    end
+    return false if project.nil?
+
     project.make_project_key!
     if project.dependencies && !project.dependencies.empty? && project.save
       project.save_dependencies
@@ -109,9 +107,8 @@ class ProjectService
 =end
   def self.import_from_github(user, repo_name, filename, branch = "master", fileurl = nil)
     private_project = Github.private_repo? user.github_token, repo_name
-    if private_project && !is_allowed_to_add_private_project?( user )
-      error_msg = "You selected a private project. Please upgrade your plan to monitor the selected project."
-      return error_msg
+    if !allowed_to_add_project?( user, private_project )
+      return "Please upgrade your plan to monitor the selected project."
     end
 
     if fileurl
@@ -169,15 +166,15 @@ class ProjectService
     project.remove
   end
 
-  # TODO write test
-  def self.is_allowed_to_add_private_project?( user )
-    private_projects = Project.find_private_projects_by_user( user.id )
-    plan = user.plan
-    if plan.nil? || plan.private_projects <= private_projects.count
-      return false
-    else
-      return true
+  def self.allowed_to_add_project?( user, private_project )
+    return true if !private_project
+    private_project_count = Project.private_project_count_by_user( user.id )
+    max = user.free_private_projects
+    if user.plan
+      max += user.plan.private_projects
     end
+    return false if private_project_count >= max
+    return true
   end
 
   # Returns a map with
@@ -215,4 +212,5 @@ class ProjectService
 
     indexes
   end
+
 end
