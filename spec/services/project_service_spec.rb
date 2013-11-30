@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe ProjectService do
 
+  let(:github_user) { FactoryGirl.create(:github_user)}
+
   describe "type_by_filename" do
     it "returns RubyGems. OK" do
       url1 = "http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_Gemfile?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D"
@@ -95,5 +97,61 @@ describe ProjectService do
     end
 
   end
+
+
+  describe "allowed_to_add_project?" do
+
+    it "allows because its a public project" do
+      described_class.allowed_to_add_project?(nil, false).should be_true
+    end
+
+    it "denies because user doesn't have a private plan" do
+      described_class.allowed_to_add_project?(github_user, true).should be_false
+    end
+
+    it "allows because user has a plan and no projects" do
+      Plan.create_default_plans
+      plan = Plan.by_name_id( Plan::A_PLAN_PERSONAL )
+      user = github_user
+      user.plan = plan
+      user.save
+      described_class.allowed_to_add_project?(github_user, true).should be_true
+    end
+
+    it "denies because user has a plan and to many private projects already" do
+      Plan.create_default_plans
+      plan = Plan.by_name_id( Plan::A_PLAN_PERSONAL )
+      user = github_user
+      user.plan = plan
+      user.save
+      plan.private_projects.times { ProjectFactory.create_new( user, {:private_project => true} ) }
+      described_class.allowed_to_add_project?(github_user, true).should be_false
+    end
+
+    it "allows because user has a plan and to many private projects already, but 1 additional free project" do
+      Plan.create_default_plans
+      plan = Plan.by_name_id( Plan::A_PLAN_PERSONAL )
+      user = github_user
+      user.plan = plan
+      user.free_private_projects = 1
+      user.save
+      plan.private_projects.times { ProjectFactory.create_new( user, {:private_project => true} ) }
+      described_class.allowed_to_add_project?(github_user, true).should be_true
+    end
+
+    it "denises because user has a plan and to many private projects already" do
+      Plan.create_default_plans
+      plan = Plan.by_name_id( Plan::A_PLAN_PERSONAL )
+      user = github_user
+      user.plan = plan
+      user.free_private_projects = 1
+      user.save
+      max = plan.private_projects + user.free_private_projects
+      max.times { ProjectFactory.create_new( user, {:private_project => true} ) }
+      described_class.allowed_to_add_project?(github_user, true).should be_false
+    end
+
+  end
+
 
 end
