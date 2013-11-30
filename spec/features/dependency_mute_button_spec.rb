@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "Mute project dependency", :js => true do
+
   let(:user){ FactoryGirl.create(:default_user)}
   let(:product){FactoryGirl.create(:product,
     prod_key: "spec_product1",
