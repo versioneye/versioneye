@@ -83,7 +83,7 @@ class PomParser < CommonParser
       return
     end
     version = String.new(version_number)
-    version = version.strip
+    version = version.to_s.strip
     version = version.gsub('"', '')
     version = version.gsub("'", "")
 

@@ -90,8 +90,8 @@ class Project
     self.s3_filename.to_s.gsub(/^\S+\_/, "")
   end
 
-  def self.find_private_projects_by_user user_id
-    Project.where( user_id: user_id, private_project: true )
+  def self.private_project_count_by_user user_id
+    Project.where( user_id: user_id, private_project: true ).count
   end
 
   def show_dependency_badge?

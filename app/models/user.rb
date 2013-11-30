@@ -29,6 +29,7 @@ class User
   field :blog       , type: String
 
   field :refer_name, type: String
+  field :free_private_projects, type: Integer, default: 0
 
   # TODO refactor this in facebook_account, twitter_account
   # create own models for that und connect them to user
