@@ -28,7 +28,7 @@ class Settings::PaymentsController < ApplicationController
     end
   rescue => e
     logger.error e.message
-    logger.error e.backtrace.first
+    logger.error e.backtrace.join("\n")
     flash[:error] = "An error occured. Please contact the VersionEye Team."
     redirect_to settings_profile_path
   end

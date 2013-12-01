@@ -5,7 +5,7 @@ class ProductService
     EsProduct.search(q, group_id, languages, page_count)
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     Rails.logger.info  "Dam. We don't give up. Not yet! Start alternative search on awesome MongoDB."
     MongoProduct.find_by(q, "", group_id, languages, 300).paginate(:page => page_count)
   end
@@ -38,6 +38,7 @@ class ProductService
     result
   end
 
+
   def self.updates_since_to(dt_since, dt_to)
     stats = []
     Product.supported_languages.each do |lang|
@@ -50,6 +51,43 @@ class ProductService
     end
     stats
   end
+
+
+  def self.update_meta_data_global
+    count = Product.count()
+    page = 100
+    iterations = count / page
+    iterations += 1
+    (0..iterations).each do |i|
+      skip = i * page
+      products = Product.all().skip(skip).limit(page)
+      products.each do |product|
+        VersionService.update_version_data( product, true )
+        product.update_used_by_count( true )
+        update_followers product
+      end
+    end
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join("\n")
+  end
+
+  def self.update_followers( product )
+    return nil if product.followers == product.user_ids.count
+    product.followers = product.user_ids.count
+    product.save
+  end
+
+  def self.update_followers
+    products = Product.where( :"user_ids.0" => {"$exists"=>true} )
+    products.each do |product|
+      product.followers = product.users.count
+      product.save
+      Rails.logger.info "#{product.name} has #{product.followers} followers"
+    end
+    Rails.logger.info "#{products.count} products updated."
+  end
+
 
   def self.to_stats_container(title, stats)
     {

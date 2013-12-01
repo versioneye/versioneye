@@ -9,8 +9,8 @@ class GithubController < ApplicationController
       return
     end
 
-    token     = Github.token( code )
-    json_user = Github.user(token)
+    token     = Github.token code
+    json_user = Github.user token
 
     if signed_in?
       update_user_scope( json_user, token )
@@ -19,19 +19,18 @@ class GithubController < ApplicationController
     end
 
     user = get_user_for_token( json_user, token )
-    if user
-      if user.activated?
-        sign_in user
-        redirect_back_or( user_packages_i_follow_path )
-      else
-        flash[:error] = "Your account is not activated. Did you click the verification link in the email we send you?"
-        redirect_to signin_path
-      end
-      return
-    else
+    if user.nil?
       cookies.permanent.signed[:github_token] = token
       @user = User.new
-      render "new"
+      render "new" and return
+    end
+
+    if user.activated?
+      sign_in user
+      redirect_back_or( user_packages_i_follow_path )
+    else
+      flash[:error] = "Your account is not activated. Did you click the verification link in the email we send you?"
+      redirect_to signin_path
     end
   end
 
@@ -85,27 +84,20 @@ class GithubController < ApplicationController
       user.github_token = token
       user.github_scope = Github.oauth_scopes( token )
       # next line is mandatory otherwise the private repos don't get
-      # fetched immediately. Bu questions ask me (reiz).
+      # fetched immediately (reiz)
       user.github_repos.delete_all
       user.save
     end
 
     def get_user_for_token(json_user, token)
-      user = User.find_by_github_id( json_user[:id].to_s )
-      if !user.nil?
-        user.github_token = token
-        user.save
-        return user
-      end
+      return nil if json_user.nil?
+      return nil if json_user['id'].nil?
+      user = User.find_by_github_id( json_user['id'].to_s )
+      return nil if user.nil?
 
-      user = User.find_by_email( json_user[:email] )
-      if !user.nil?
-        user.github_id = json_user[:id]
-        user.github_token = token
-        user.save
-        return user
-      end
-      return nil
+      user.github_token = token
+      user.save
+      return user
     end
 
 end

@@ -1,8 +1,8 @@
 class ServicesController < ApplicationController
 
+  before_filter :check_refer, :only => [:index]
+
   def index
-    refer_name = params['refer']
-    check_refer( refer_name )
     @project = Project.new
   end
 
@@ -33,7 +33,7 @@ class ServicesController < ApplicationController
     redirect_to service_path( project.id )
   rescue => e
     logger.error "ERROR Message:   #{e.message}"
-    logger.error "ERROR backtrace: #{e.backtrace}"
+    logger.error e.backtrace.join("\n")
     flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye team."
     redirect_to "/"
   end
@@ -80,18 +80,5 @@ class ServicesController < ApplicationController
     cookies.permanent.signed[:plan_selected] = plan
     redirect_to signup_path
   end
-
-  private
-
-    def check_refer(refer_name)
-      if refer_name
-        refer = Refer.get_by_name(refer_name)
-        if refer
-          refer.count = refer.count + 1
-          refer.save
-          cookies.permanent.signed[:veye_refer] = refer_name
-        end
-      end
-    end
 
 end

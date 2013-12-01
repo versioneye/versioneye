@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
   before_filter :admin_user                    , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license]
   before_filter :check_redirects_package       , :only => [:show]
   before_filter :check_redirects_package_visual, :only => [:show_visual]
+  before_filter :check_refer                   , :only => [:index]
   #before_filter :force_http
 
   @@languages = [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,

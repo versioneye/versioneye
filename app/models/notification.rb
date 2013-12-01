@@ -49,7 +49,7 @@ class Notification
     return true
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     return false
   end
 

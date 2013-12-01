@@ -8,7 +8,6 @@ class User
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes
 
-  field :old_id            , type: String
   field :username          , type: String
   field :fullname          , type: String
   field :prev_fullname     , type: String
@@ -30,6 +29,7 @@ class User
   field :blog       , type: String
 
   field :refer_name, type: String
+  field :free_private_projects, type: Integer, default: 0
 
   # TODO refactor this in facebook_account, twitter_account
   # create own models for that und connect them to user
@@ -63,8 +63,8 @@ class User
   validates_presence_of :encrypted_password, :message => "Encrypted_password is mandatory!"
   validates_presence_of :salt              , :message => "Salt is mandatory!"
 
-  validates_uniqueness_of :username, :message => "Username exist already."
-  validates_uniqueness_of :email   , :message => "E-Mail exist already."
+  validates_uniqueness_of :username          , :message => "Username exist already."
+  validates_uniqueness_of :email             , :message => "E-Mail exist already."
 
   validates_length_of :username, minimum: 2, maximum: 50, :message => "username length is not ok"
   validates_length_of :fullname, minimum: 2, maximum: 50, :message => "fullname length is not ok"
@@ -96,6 +96,14 @@ class User
     username
   end
 
+  def to_s
+    result = "#{username} / #{fullname} / #{email}"
+    result += " - verification: #{verification}" if verification
+    result += " - verified account " if verification.nil?
+    result += " - deleted " if deleted
+    result
+  end
+
   def create_verification
     random = create_random_value
     self.verification = secure_hash("#{random}--#{username}")
@@ -119,7 +127,7 @@ class User
     end
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
   end
 
   def create_username
@@ -142,8 +150,8 @@ class User
   end
 
   def self.activate!(verification)
-    return false if verification.nil?
-    user = User.where(verification: verification)[0]
+    return false if verification.nil? || verification.strip.empty?
+    user = User.where(verification: verification).shift
     if user
       user.verification = nil
       user.save
@@ -157,10 +165,12 @@ class User
   end
 
   def self.find_by_username( username )
+    return nil if username.nil? || username.strip.empty?
     User.where( username: /^#{username}$/i ).shift
   end
 
   def self.find_by_email(email)
+    return nil if email.nil? || email.strip.empty?
     user = User.where(email: email).shift
     if user.nil?
       user = User.where(email: /^#{email}$/i).shift
@@ -173,7 +183,7 @@ class User
     return User.find(id.to_s)
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -181,7 +191,7 @@ class User
     User.where(:id.in => ids)
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -197,8 +207,8 @@ class User
     UserEmail.where(user_id: self._id.to_s, verification: nil)
   end
 
-  def get_email(email)
-    UserEmail.where( user_id: self._id.to_s, email: email )[0]
+  def get_email email
+    UserEmail.where( user_id: self._id.to_s, email: email ).shift
   end
 
   def image_url
@@ -207,26 +217,18 @@ class User
     url
   end
 
-  def has_password?(submitted_password)
+  def has_password? submitted_password
     self.encrypted_password == encrypt(submitted_password)
   end
 
-  def self.find_by_twitter_id(twitter_id)
-    users = User.where(twitter_id: twitter_id)
-    if users && users.size > 1
-      return nil
-    else
-      users[0]
-    end
+  def self.find_by_twitter_id twitter_id
+    return nil if twitter_id.nil? || twitter_id.strip.empty?
+    User.where(twitter_id: twitter_id).shift
   end
 
-  def self.find_by_github_id(github_id)
-    users = User.where(github_id: github_id)
-    if users && users.size > 1
-      return nil
-    else
-      users[0]
-    end
+  def self.find_by_github_id github_id
+    return nil if github_id.nil? || github_id.strip.empty?
+    User.where(github_id: github_id).shift
   end
 
   def github_account_connected?
@@ -244,7 +246,7 @@ class User
   end
 
   def self.authenticate(email, submitted_password)
-    user = User.where( email: email.downcase )[0]
+    user = User.where( email: email.downcase ).shift
     return nil  if user.nil? || user.deleted
     return user if user.has_password?(submitted_password)
     return nil
@@ -256,7 +258,7 @@ class User
     ( user && user.salt == coockie_salt ) ? user : nil
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 

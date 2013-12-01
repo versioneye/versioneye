@@ -15,7 +15,7 @@ class PomParser < CommonParser
     project
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -83,7 +83,7 @@ class PomParser < CommonParser
       return
     end
     version = String.new(version_number)
-    version = version.strip
+    version = version.to_s.strip
     version = version.gsub('"', '')
     version = version.gsub("'", "")
 

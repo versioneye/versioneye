@@ -1,5 +1,6 @@
 
 FactoryGirl.define do
+
   factory :user do
     terms true
     datenerhebung true
@@ -21,6 +22,31 @@ FactoryGirl.define do
     datenerhebung true
     encrypted_password Digest::SHA2.hexdigest("sugar--password")
   end
+
+  factory :github_user, class: User do
+    fullname "Hans Tanz"
+    username "hans_tanz"
+    email "hans@tanz.de"
+    password "password"
+    salt "salt"
+    github_id "github_id_123"
+    terms true
+    datenerhebung true
+    encrypted_password Digest::SHA2.hexdigest("sugar--password")
+  end
+
+  factory :twitter_user, class: User do
+    fullname "Hans Tanz"
+    username "hans_tanz"
+    email "hans@tanz.de"
+    password "password"
+    salt "salt"
+    twitter_id "twitter_id_123"
+    terms true
+    datenerhebung true
+    encrypted_password Digest::SHA2.hexdigest("sugar--password")
+  end
+
 end
 
 

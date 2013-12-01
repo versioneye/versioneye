@@ -11,7 +11,8 @@ namespace :versioneye do
     puts "STOP  to update integration status of submitted urls"
 
     puts "START update meta data on products. Update followers, version and used_by_count"
-    ProductMigration.update_meta_data_global
+    ProductService.update_meta_data_global
+    ProductService.update_followers
     puts "STOP  update meta data on products."
 
     puts "START reindex newest products for elastic search"
@@ -54,14 +55,6 @@ namespace :versioneye do
     puts "STOP to send out monthly project notification emails."
   end
 
-
-
-  desc "update version data globally"
-  task :update_version_data_global => :environment do
-  puts "START update the version numbers on products."
-    ProductMigration.update_version_data_global
-    puts "STOP update the version numbers on products."
-  end
 
   desc "send out new version email notifications"
   task :send_notifications => :environment do
