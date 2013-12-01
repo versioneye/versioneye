@@ -39,45 +39,39 @@ describe "SignUp with GitHub" do
     end
   end
 
-  # it "signin an existing user with GitHub. The GitHub ID is already in the database." do
-  #   user = UserFactory.create_new
-  #   user.github_id = "1"
-  #   user.github_token = nil
-  #   user.save
+  it "sign in an existing user with GitHub. The GitHub ID is already in the database." do
+    user = UserFactory.create_new
+    user.github_id = "652130"
+    user.github_token = nil
+    user.save.should be_true
+    VCR.use_cassette('github_signup', :allow_playback_repeats => true) do
+      get "/auth/github/callback?code=79ac3ef94f10e72f2302"
+      response.should redirect_to( user_packages_i_follow_path )
+      user_db = User.find_by_email( user.email )
+      user_db.github_token.should eql("3974100548430f742b9716b2e26ba73437fe8028")
+    end
+  end
 
-  #   FakeWeb.register_uri(:get, "https://github.com/login/oauth/access_token?client_id=#{Settings.github_client_id}&client_secret=#{Settings.github_client_secret}&code=123", :body => "token=token_123")
-  #   FakeWeb.register_uri(:get, "https://api.github.com/user?access_token=token_123", :body => "{\"id\": 1, \"email\": \"test@test.de\"}")
+  it "connect a signed in user to his GitHub Account." do
+    user = UserFactory.create_new
+    user.github_id = nil
+    user.github_token = nil
+    user.github_scope = nil
+    user.save
 
-  #   get "/auth/github/callback?code=123"
-  #   assert_response 302
-  #   response.should redirect_to( user_packages_i_follow_path )
+    post "/sessions", {:session => {:email => user.email, :password => "12345" }}, "HTTPS" => "on"
+    assert_response 302
+    response.should redirect_to( user_packages_i_follow_path )
 
-  #   user_db = User.find_by_email( user.email )
-  #   user_db.github_token.should eql("token_123")
-  # end
-
-  # it "connect a signed in user to his GitHub Account." do
-  #   user = UserFactory.create_new
-  #   user.github_id = nil
-  #   user.github_token = nil
-  #   user.github_scope = nil
-  #   user.save
-
-  #   post "/sessions", {:session => {:email => user.email, :password => "12345" }}, "HTTPS" => "on"
-  #   assert_response 302
-  #   response.should redirect_to( user_packages_i_follow_path )
-
-  #   FakeWeb.register_uri(:get, "https://github.com/login/oauth/access_token?client_id=#{Settings.github_client_id}&client_secret=#{Settings.github_client_secret}&code=123", :body => "token=token_123")
-  #   FakeWeb.register_uri(:get, "https://api.github.com/user?access_token=token_123", :body => "{\"id\": 1585858, \"email\": \"#{user.email}\"}")
-
-  #   get "/auth/github/callback?code=123"
-  #   assert_response 302
-  #   response.should redirect_to("/settings/connect")
-
-  #   user_db = User.find_by_email( user.email )
-  #   user_db.github_token.should eql("token_123")
-  #   user_db.github_id.should eql("1585858")
-  #   user_db.github_scope.should be_nil
-  # end
+    VCR.use_cassette('github_signup', :allow_playback_repeats => true) do
+      get "/auth/github/callback?code=79ac3ef94f10e72f2302"
+      assert_response 302
+      response.should redirect_to("/settings/connect")
+      user_db = User.find_by_email( user.email )
+      user_db.github_token.should eql("3974100548430f742b9716b2e26ba73437fe8028")
+      user_db.github_id.should eql("652130")
+      user_db.github_scope.should eql("no_scope")
+    end
+  end
 
 end

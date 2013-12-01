@@ -325,13 +325,13 @@ class User
     end
   end
 
-  def update_from_github_json(json_user, token, scopes = ["no_scope"])
-    self.fullname = json_user['name']
-    self.username = json_user['login']
-    self.github_id = json_user['id']
+  def update_from_github_json(json_user, token, scopes = "no_scope")
+    self.fullname     = json_user['name']
+    self.username     = json_user['login']
+    self.github_id    = json_user['id']
     self.github_token = token
-    self.github_scope = scopes.join(",")
-    self.password = create_random_value
+    self.github_scope = scopes
+    self.password     = create_random_value
     if self.username.nil? || self.username.empty?
       self.username = create_random_value
     end

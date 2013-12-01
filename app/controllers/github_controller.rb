@@ -58,6 +58,7 @@ class GithubController < ApplicationController
       json_user = Github.user token
       user      = User.new
       scopes    = Github.oauth_scopes token
+      scopes    = "no_scope" if scopes.size == 0
       user.update_from_github_json( json_user, token, scopes )
       user.email         = @email
       user.terms         = true
@@ -78,10 +79,12 @@ class GithubController < ApplicationController
   private
 
     def update_user_scope(json_user, token)
-      user = current_user
-      user.github_id = json_user['id']
+      user              = current_user
+      user.github_id    = json_user['id']
       user.github_token = token
-      user.github_scope = Github.oauth_scopes( token )
+      scopes            = Github.oauth_scopes( token )
+      scopes            = "no_scope" if scopes.size == 0
+      user.github_scope = scopes
       # next line is mandatory otherwise the private repos don't get
       # fetched immediately (reiz)
       user.github_repos.delete_all
