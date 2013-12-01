@@ -84,6 +84,9 @@ class User::GithubReposController < ApplicationController
 
     repo[:command_data] = command_data
     render json: repo
+  rescue => e
+    Rails.logger.error "Error in create: #{e.message}"
+    render text: e.message, status: 503 and return
   end
 
 
@@ -137,16 +140,14 @@ class User::GithubReposController < ApplicationController
     def import_repo command_data, project_name, branch, filename, branch_files
       matching_files = branch_files.keep_if {|file| file['path'] == filename}
       url            = matching_files.first[:url] unless matching_files.empty?
-      project        = ProjectService.import_from_github(current_user, project_name, filename, branch, url)
+      project        = ProjectService.import_from_github current_user, project_name, filename, branch, url
+
       if project.nil?
-        error_msg = "Can't save project"
-        Rails.logger.error("#{project_name} - #{error_msg}")
-        render text: error_msg, status: 503 and return
+        raise "Something went wrong. It was not possible to save the project. Please contact the VersionEye team."
       end
-      if project.is_a?(String)
-        error_msg = project
-        Rails.logger.error("#{project_name} - #{error_msg}")
-        render text: error_msg, status: 503 and return
+
+      if project.is_a? String
+        raise project
       end
 
       command_data[:githubProjectId] = project[:_id].to_s
@@ -166,21 +167,20 @@ class User::GithubReposController < ApplicationController
 
     def remove_repo command_data, project_name, branch, filename, branch_files
       id = command_data[:githubProjectId]
-      repo = []
-      if Project.where(_id: id).exists?
-        ProjectService.destroy id
-        repo = GithubRepo.find(params[:_id])
-        repo = process_repo(repo)
-        repo[:command_result] = {
-          filename: filename,
-          branch: branch,
-          repo: project_name
-        }
-      else
-        error_msg = "Can't remove project with id: `#{id}` - it doesnt exist. Please refresh page."
-        Rails.logger.error error_msg
-        render text: error_msg, status: 400 and return
+      project_exists = Project.where(_id: id).exists?
+
+      if !project_exists
+        raise "Can't remove project with id: `#{id}` - it does not exist. Please refresh the page."
       end
+
+      ProjectService.destroy id
+      repo = GithubRepo.find(params[:_id])
+      repo = process_repo(repo)
+      repo[:command_result] = {
+        filename: filename,
+        branch: branch,
+        repo: project_name
+      }
       repo
     end
 
