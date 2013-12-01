@@ -101,6 +101,15 @@ class Product
       return product if product
     end
     product = Product.find_by_lang_key( lang, key )
+
+    if product.nil? and lang == A_LANGUAGE_JAVASCRIPT 
+      product = Product.find_by_lang_key(lang, "#{key}/#{key}") #for bowers shortnames
+      
+      if product.nil?
+        product = Product.where(language: lang, name: key).shift  
+      end
+    end
+
     if product.nil?
       product = Product.find_by_lang_key_case_insensitiv( lang, key )
     end

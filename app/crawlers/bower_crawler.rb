@@ -522,7 +522,7 @@ class BowerCrawler
 
     prod.update_attributes({
       name: pkg_info[:name].to_s,
-      name_downcase: pkg_info[:full_name].to_s.downcase,
+      name_downcase: pkg_info[:name].to_s.downcase,
       prod_type: Project::A_TYPE_BOWER,
       private_repo: pkg_info[:private_repo],
       description: pkg_info[:description].to_s 

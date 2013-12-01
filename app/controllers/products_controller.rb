@@ -52,11 +52,14 @@ class ProductsController < ApplicationController
       flash[:error] = "The requested package is not available."
       return
     end
+   
+
     if version.nil? || ( attach_version( @product, version ) == false )
-      redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
+      version = VersionService.newest_version(@product.versions) if version.nil?
+      redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, version )
       return
     end
-    if @product[:version]
+    if version
       @version   = @product.version_by_number(@product.version)
     end
     @current_version     = VersionService.newest_version( @product.versions )

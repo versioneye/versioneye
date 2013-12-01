@@ -1,6 +1,3 @@
-
-#TODO: multiple versions on line
-
 class BowerParser < CommonParser
   attr_reader :rules
 
