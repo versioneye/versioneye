@@ -1,14 +1,16 @@
 class User::GithubReposController < ApplicationController
 
   before_filter :authenticate
+
   def init
     render "init", layout: "application"
   end
 
+
   def index
-    task_status  = GitHubService.cached_user_repos(current_user)
+    task_status  = GitHubService.cached_user_repos current_user
     github_repos = current_user.github_repos
-    if github_repos and github_repos.count > 0
+    if github_repos && github_repos.count > 0
       github_repos = github_repos.desc(:commited_at)
       repos = []
       github_repos.each do |repo|
@@ -26,13 +28,32 @@ class User::GithubReposController < ApplicationController
     render text: "Backend issue - cant import github repositories;", status: 503
   end
 
-  def update
-    if params[:github_id].nil? and params[:fullname].nil?
-      logger.error "Unknown data object - don't satisfy githubrepo model."
-      render nothing: true, status: 400
+
+  def show
+    id = params[:id]
+    repo = GithubRepo.where(_id: id.to_s).first
+    if repo
+      render json: process_repo(repo)
+    else
+      error_msg = "No such github repo with id: `#{id}`"
+      render text: error_msg, status: 400
     end
-    redirect_to action: create
   end
+
+
+  def show_menu_items
+    menu_items = []
+    user_orgs = current_user.github_repos.distinct(:owner_login)
+    user_orgs.each do |owner_login|
+      repo = current_user.github_repos.by_owner_login(owner_login).first
+      menu_items << {
+        name: repo[:owner_login],
+        type: repo[:owner_type]
+      }
+    end
+    render json: menu_items
+  end
+
 
 =begin
   Unified updated method for GithubRepos.
@@ -47,6 +68,7 @@ class User::GithubReposController < ApplicationController
       return false
     end
 
+    repo = []
     command_data = params[:command_data]
     project_name = params[:fullname]
     branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : "master"
@@ -55,7 +77,64 @@ class User::GithubReposController < ApplicationController
 
     case params[:command]
     when "import"
+      repo = import_repo command_data, project_name, branch, filename, branch_files
+    when "remove"
+      repo = remove_repo command_data, project_name, branch, filename, branch_files
+    end
 
+    repo[:command_data] = command_data
+    render json: repo
+  end
+
+
+  def update
+    if params[:github_id].nil? and params[:fullname].nil?
+      logger.error "Unknown data object - don't satisfy githubrepo model."
+      render nothing: true, status: 400
+    end
+    redirect_to action: create
+  end
+
+
+  def destroy
+    id = params[:project_id]
+    success = false
+    msg = ""
+    if Project.where(_id: id).exists?
+      ProjectService.destroy id
+      success = true
+    else
+      msg = "Can't remove project with id: `#{id}` - it doesnt exist. Please refresh page."
+      Rails.logger.error msg
+    end
+    respond_to do |format|
+      format.html {redirect_to user_projects_path}
+      format.json {
+        render json: {success: success, project_id: id, msg: msg}}
+    end
+  end
+
+
+  def poll_changes
+    is_changed = Github.user_repos_changed?( current_user )
+    if is_changed == true
+      render json: {changed: true, msg: "Changed."}
+      return true
+    end
+    render json: {changed: false}
+  end
+
+
+  def clear
+    results = GithubRepo.by_user(current_user).delete_all
+    render json: {success: !results.nil?, msg: "Cache is cleaned. Ready for import."}
+  end
+
+
+  private
+
+
+    def import_repo command_data, project_name, branch, filename, branch_files
       matching_files = branch_files.keep_if {|file| file['path'] == filename}
       url            = matching_files.first[:url] unless matching_files.empty?
       project        = ProjectService.import_from_github(current_user, project_name, filename, branch, url)
@@ -81,10 +160,13 @@ class User::GithubReposController < ApplicationController
         project_url: url_for(controller: 'projects', action: "show", id: project.id),
         created_at: project[:created_at]
       }
+      repo
+    end
 
-    when "remove"
+
+    def remove_repo command_data, project_name, branch, filename, branch_files
       id = command_data[:githubProjectId]
-
+      repo = []
       if Project.where(_id: id).exists?
         ProjectService.destroy id
         repo = GithubRepo.find(params[:_id])
@@ -99,70 +181,10 @@ class User::GithubReposController < ApplicationController
         Rails.logger.error error_msg
         render text: error_msg, status: 400 and return
       end
+      repo
     end
 
-    repo[:command_data] = command_data
-    render json: repo
-  end
 
-  def show
-    id = params[:id]
-    repo = GithubRepo.where(_id: id.to_s).first
-    if repo
-      render json: process_repo(repo)
-    else
-      error_msg = "No such github repo with id: `#{id}`"
-      render text: error_msg, status: 400
-    end
-  end
-
-  def show_menu_items
-    menu_items = []
-    user_orgs = current_user.github_repos.distinct(:owner_login)
-    user_orgs.each do |owner_login|
-      repo = current_user.github_repos.by_owner_login(owner_login).first
-      menu_items << {
-        name: repo[:owner_login],
-        type: repo[:owner_type]
-      }
-    end
-    render json: menu_items
-  end
-
-  def poll_changes
-    is_changed = Github.user_repos_changed?( current_user )
-    if is_changed == true
-      render json: {changed: true, msg: "Changed."}
-      return true
-    end
-    render json: {changed: false}
-  end
-
-  def destroy
-    id = params[:project_id]
-    success = false
-    msg = ""
-    if Project.where(_id: id).exists?
-      ProjectService.destroy id
-      success = true
-    else
-      msg = "Can't remove project with id: `#{id}` - it doesnt exist. Please refresh page."
-      Rails.logger.error msg
-    end
-    respond_to do |format|
-      format.html {redirect_to user_projects_path}
-      format.json {
-        render json: {success: success, project_id: id, msg: msg}}
-    end
-  end
-
-  def clear
-    results = GithubRepo.by_user(current_user).delete_all
-
-    render json: {success: !results.nil?, msg: "Cache is cleaned. Ready for import."}
-  end
-
-  private
 =begin
   adds additional metadata for each item in repo collection,
   for example is this project already imported etc
@@ -194,16 +216,16 @@ class User::GithubReposController < ApplicationController
       repo
     end
 
+
     #function that decodes encoded branch-keys to plain string
     def decode_branch_names(project_files)
       return if project_files.nil?
       decoded_map = {}
-
       project_files.each_pair do |branch, files|
         decoded_branch = Github.decode_db_key(branch)
         decoded_map[decoded_branch] = files
       end
-
       decoded_map
     end
+
 end

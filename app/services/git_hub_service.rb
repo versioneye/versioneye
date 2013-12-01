@@ -2,16 +2,17 @@ require 'benchmark'
 require 'dalli'
 
 class GitHubService
+
   @@memcache_options = {
-    :namespace => "github_app",
-    :compress => true,
+    :namespace  => "github_app",
+    :compress   => true,
     :expires_in => 15.minutes #ugly = means only allows import after 15min; unless task unlocks
   }
   @@memcache = Dalli::Client.new('localhost:11211', @@memcache_options)
 
-  A_TASK_NIL = nil
+  A_TASK_NIL     = nil
   A_TASK_RUNNING = 'running'
-  A_TASK_DONE = 'done'
+  A_TASK_DONE    = 'done'
 
   def self.update_all_repos
     User.all(:timeout => true).live_users.where(:github_scope => "repo").each do |user|
@@ -19,14 +20,14 @@ class GitHubService
     end
   end
 
-  def self.update_repos_for_user( user )
+  def self.update_repos_for_user user
     Rails.logger.debug "Importing repos for #{user.fullname}."
     user.github_repos.delete_all
     GitHubService.cached_user_repos user
     Rails.logger.debug  "Got #{user.github_repos.count} repos for #{user.fullname}."
     user.github_repos.all
   rescue => e
-    Rails.logger.error "Cant import repos for #{user.fullname}\n#{e}"
+    Rails.logger.error "Cant import repos for #{user.fullname} \n #{e}"
   end
 
 =begin
@@ -37,11 +38,11 @@ class GitHubService
   else it returns cached results from GitHubRepos collection.
   NB! allows only one running task per user;
 =end
-  def self.cached_user_repos( user )
+  def self.cached_user_repos user
 
     user_task_key = "#{user[:username]}-#{user[:github_id]}"
 
-    task_status = @@memcache.get(user_task_key)
+    task_status = @@memcache.get user_task_key
 
     if task_status == A_TASK_RUNNING
       Rails.logger.debug "We are still importing repos for `#{user[:fullname]}.`"
@@ -50,9 +51,9 @@ class GitHubService
 
     if user[:github_token] and user.github_repos.all.count == 0
       Rails.logger.info "Fetch Repositories from GitHub and cache them in DB."
-      n_repos = Github.count_user_repos(user)
+      n_repos = Github.count_user_repos user
       if n_repos == 0
-        Rails.logger.debug "user had no repositories;"
+        Rails.logger.debug "user has no repositories;"
         task_status = A_TASK_DONE
         @@memcache.set(user_task_key, task_status)
         return task_status
