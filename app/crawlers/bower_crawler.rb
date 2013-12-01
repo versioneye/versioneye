@@ -4,7 +4,7 @@ require 'github'
 
 class BowerCrawler
 
-  A_MINIMUM_RATE_LIMIT = 150 #TODO: some methods dont check limits all the time
+  A_MINIMUM_RATE_LIMIT = 50 
   A_MAX_RETRY = 12 #12x10 ~> if dont get task in 120sec then stop worker
   A_SLEEP_TIME = 20
   A_TASK_CHECK_EXISTENCE = "bower_crawler/check_existence"
@@ -218,9 +218,10 @@ class BowerCrawler
   end
 
   def self.get_task_for(task_name)
+    task = nil
     100.times do |i|
       task = CrawlerTask.by_task(task_name).crawlable.desc(:weight).shift
-      break if task
+      break unless task.nil?
       
       p "No tasks for #{task_name} - going to wait before re-trying again"
       sleep A_SLEEP_TIME
@@ -368,7 +369,8 @@ class BowerCrawler
       p "Skipped tag `#{tag[:name].to_s}` "
       return
     end
-      
+    
+    check_request_limit(token)
     commit_info = Github.get_json(tag[:commit][:url], token)
     unless commit_info.nil?
       released_at = commit_info[:commit][:committer][:date].to_s.to_datetime
@@ -387,7 +389,7 @@ class BowerCrawler
                                 build_tag:      m[:build],
                                 released_at:    released_at
       prod.versions << new_version
-      newest = to_newest(prod, version)
+      newest = to_newest(prod, new_version)
 
       p "Added version `#{new_version[:version]}` with release_date `#{new_version[:released_at]}`"
     end
@@ -494,13 +496,14 @@ class BowerCrawler
   end
 
   def self.to_newest(prod, version)
-    newest = Newest.find_or_initialize_by(
+    newest = Newest.find_or_create_by(
       prod_key: prod[:prod_key], 
       language: prod[:language], 
       version: version[:version]
     )
 
-    newest.update_attributes({ 
+    newest.update_attributes({
+      name: prod[:name],
       version: version[:version],
       prod_type: prod[:prod_type],
       created_at: version[:released_at] || newest[:created_at]
