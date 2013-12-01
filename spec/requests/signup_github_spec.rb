@@ -26,7 +26,7 @@ describe "SignUp with GitHub" do
     assert_response :success
     assert_tag :tag => "button", :attributes => { :class => "btn btn-github btn-large btn-signin" }
 
-    VCR.use_cassette('github_signup') do
+    VCR.use_cassette('github_signup', :allow_playback_repeats => true) do
       get "/auth/github/callback?code=79ac3ef94f10e72f2302"
       assert_response :success
 
