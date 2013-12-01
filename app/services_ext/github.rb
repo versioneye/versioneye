@@ -18,25 +18,18 @@ class Github
     keep_alive: 30
   })
 
-  def self.token( code )
-    domain    = 'https://github.com/'
-    uri       = 'login/oauth/access_token'
-    query     = token_query( code )
-    link      = "#{domain}#{uri}?#{query}"
-    doc       = Nokogiri::HTML( open( URI.encode(link) ) )
-    p_element = doc.xpath('//body/p')
-    p_string  = p_element.text
-    pips      = p_string.split("&")
-    token     = pips[0].split("=")[1]
-    token
+  def self.token code
+    response = Octokit.exchange_code_for_token(code, Settings.github_client_id, Settings.github_client_secret)
+    response.access_token
   end
 
-  def self.user(token)
+  def self.user token
     return nil if token.to_s.empty?
-    url           = "#{A_API_URL}/user?access_token=" + URI.escape( token )
-    response      =  get(url, :headers => A_DEFAULT_HEADERS )
-    json_user     = JSON.parse response.body
-    catch_github_exception json_user
+    client = Octokit::Client.new :access_token => token
+    client.user.to_json
+  rescue => e
+    Rails.logger.error e.backtrace.join( "\n" )
+    nil
   end
 
   def self.oauth_scopes( token )
@@ -438,15 +431,6 @@ class Github
         links << [matches[2], matches[1]]
       end
       Hash[*links.flatten]
-    end
-
-    def self.token_query( code )
-      query = 'client_id='
-      query += Settings.github_client_id
-      query += '&client_secret='
-      query += Settings.github_client_secret
-      query += '&code=' + code
-      query
     end
 
 end

@@ -19,19 +19,18 @@ class GithubController < ApplicationController
     end
 
     user = get_user_for_token( json_user, token )
-    if user
-      if user.activated?
-        sign_in user
-        redirect_back_or( user_packages_i_follow_path )
-      else
-        flash[:error] = "Your account is not activated. Did you click the verification link in the email we send you?"
-        redirect_to signin_path
-      end
-      return
-    else
+    if user.nil?
       cookies.permanent.signed[:github_token] = token
       @user = User.new
-      render "new"
+      render "new" and return
+    end
+
+    if user.activated?
+      sign_in user
+      redirect_back_or( user_packages_i_follow_path )
+    else
+      flash[:error] = "Your account is not activated. Did you click the verification link in the email we send you?"
+      redirect_to signin_path
     end
   end
 
