@@ -51,7 +51,7 @@ http_interactions:
   recorded_at: Sun, 01 Dec 2013 19:20:01 GMT
 - request:
     method: get
-    uri: https://api.github.com/user?access_token=3974100548430f742b9716b2e26ba73437fe8028
+    uri: https://api.github.com/user
     body:
       encoding: US-ASCII
       string: ""

@@ -25,21 +25,30 @@ class Github
   end
 
   def self.user token
-    return nil if token.to_s.empty?
-    client = Octokit::Client.new :access_token => token
+    client = user_client token
     JSON.parse client.user.to_json
   rescue => e
+    Rails.logger.error e.message
     Rails.logger.error e.backtrace.join( "\n" )
     nil
   end
 
   def self.oauth_scopes( token )
-    resp = get("#{A_API_URL}/user?access_token=#{token}", headers: A_DEFAULT_HEADERS)
-    resp.headers['x-oauth-scopes']
+    client = user_client token
+    client.scopes token
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
     "no_scope"
+  end
+
+  def self.user_client token
+    return nil if token.to_s.empty?
+    Octokit::Client.new :access_token => token
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join "\n"
+    nil
   end
 
   def self.user_repos_changed?( user )
