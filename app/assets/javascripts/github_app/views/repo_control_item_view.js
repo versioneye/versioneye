@@ -21,6 +21,11 @@ define([
         this.$el.html(this.template({branch: this.branch}));
         var target_el = this.$el.find('.item-body');
         var that = this;
+        if(_.isEmpty(this.project_files)){
+          target_el.append("Sorry. We couldn't find any project file in this branch.");
+          return this;
+        }
+
         _.each(this.project_files, function(project_file){
           var switch_view = new GithubRepoSwitchView({
             model: that.model,

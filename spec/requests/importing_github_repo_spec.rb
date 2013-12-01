@@ -38,17 +38,17 @@ describe "Importing github repo as new project via github_repos_controller" do
     end
 
     it "should raise exception when user tries to import not existing repo" do
-      ProjectService.should_receive(:import_from_github).and_return(nil)
+      ProjectService.should_receive(:import_from_github).and_return nil
       repo1['command'] = "import"
       repo1['command_data'] = {
-        'githubFullname'  => 'timgluz/mallet-lda', 
-        "githubBranch"    =>"master", 
-        "githubFilename"=>"Gemfile" 
+        "githubFullname" => "timgluz/mallet-lda",
+        "githubBranch"   => "master",
+        "githubFilename" => "Gemfile"
       }
       repo1['project_files'] = {
         master: [{
           mode: "100644",
-          path: "Gemfile", 
+          path: "Gemfile",
           sha: "42716b93d440050ced0d10fdb8c696832e0aef89",
           size: 293,
           type: "blob",
@@ -66,14 +66,14 @@ describe "Importing github repo as new project via github_repos_controller" do
       ProjectService.should_receive(:import_from_github).and_return(project1)
       repo1['command'] = "import"
       repo1['command_data'] = {
-        'githubFullname'  => 'timgluz/mallet-lda', 
-        "githubBranch"    =>"master", 
-        "githubFilename"=>"Gemfile"
+        "githubFullname" => "timgluz/mallet-lda",
+        "githubBranch"   => "master",
+        "githubFilename" => "Gemfile"
       }
       repo1['project_files'] = {
         master: [{
           mode: "100644",
-          path: "Gemfile", 
+          path: "Gemfile",
           sha: "42716b93d440050ced0d10fdb8c696832e0aef89",
           size: 293,
           type: "blob",
@@ -87,29 +87,25 @@ describe "Importing github repo as new project via github_repos_controller" do
 
     it "should remove project after imported project succeeds" do
       project1.save.should be_true
-
       ProjectService.should_receive( :destroy ).and_return(true)
       repo1['command'] = 'remove'
       repo1['command_data'] = {
-        'githubFullname'  => 'spec/repo1', 
-        "githubBranch"    => "master", 
-        "githubFilename"  => "Gemfile", 
+        "githubFullname"  => "spec/repo1",
+        "githubBranch"    => "master",
+        "githubFilename"  => "Gemfile",
         "githubProjectId" => project1[:_id].to_s
       }
       repo1['project_files'] = {
         master: [{
           mode: "100644",
-          path: "Gemfile", 
+          path: "Gemfile",
           sha: "42716b93d440050ced0d10fdb8c696832e0aef89",
           size: 293,
           type: "blob",
           url: "https://api.github.com/repos/timgluz/lein-clr/git/blobs/42716b93d440050ced0d10fdb8c696832e0aef89"
         }]
       }
-
-
       post user_github_repos_path, repo1.as_document
-
       response.status.should eql(200)
     end
   end

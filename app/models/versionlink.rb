@@ -36,7 +36,8 @@ class Versionlink
   end
 
   def self.find_by( language, prod_key, link )
-    Versionlink.where( language: language, prod_key: prod_key, link: link )[0]
+    return nil if link.nil? || link.strip.empty?
+    Versionlink.where( language: language, prod_key: prod_key, link: link ).shift
   end
 
   def self.find_version_link(language, prod_key, version, link)

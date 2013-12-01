@@ -64,7 +64,7 @@ class GradleParser < CommonParser
       self.update_requested_with_current(dependency, product)
       return
     end
-    version = version.strip
+    version = version.to_s.strip
     version = version.gsub('"', '')
     version = version.gsub("'", "")
 

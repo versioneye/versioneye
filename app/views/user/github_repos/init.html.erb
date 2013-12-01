@@ -29,7 +29,7 @@
         If you want us to monitor your private repositories, you need to grant VersionEye access:
         <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&amp;scope=repo' style="margin-right: 5px;" >
           Grant access to private repositories.
-        </a><br/>
+        </a><br/><br/>
         Unfortunately, GitHub doesn't have a read-only scope for private repositories currently.
         But we promise you that we don't have any git write operations in our code base.
         <br/>
@@ -109,7 +109,7 @@
         </div>
         <div class = "controls">
           <button class = "btn btn-mini btn-link controls-toggle">
-            <i class = "icon-caret-down"></i> Project files
+            <i class = "icon-caret-up"></i> Show project files
           </button>
         </div>
       </div>
@@ -120,7 +120,7 @@
           <div class = "repo-controls"></div>
           <div class = "controls">
             <button class = "btn btn-mini btn-link controls-toggle">
-              <i class = "icon-caret-down"></i> Project info
+              <i class = "icon-caret-up"></i> Show project info
             </button>
           </div>
         </div>
@@ -163,17 +163,17 @@
 
 <script id = "github-repo-control-item-template" type = "text/template">
   <td class = "item-header span3">
-    <h5>
+    <p>
       <i class="icon-code-fork"></i>
       {{= branch }}
-    </h5>
+    </p>
   </td>
   <td class = "item-body span9"></td>
 </script>
 
 <script id = "github-repo-switch-template" type = "text/template">
 <div class = "row-fluid repo-control">
-  <div class = "span3 item-switch">
+  <div class = "span2 item-switch">
     <div class="onoffswitch">
       <input type="checkbox" name="{{= switch_id }}"
               class="onoffswitch-checkbox github-switch"
@@ -191,7 +191,9 @@
       </label>
     </div>
   </div>
-  <div class = "span9 item-title"> {{= switch_info }} </div>
+  <div class = "span10 item-title">
+    {{= switch_info }}
+  </div>
 </div>
 </script>
 

@@ -37,10 +37,10 @@ class UserNotificationSetting
     Rails.logger.info "Send new feature newsletter to #{user.fullname}"
     NewsletterMailer.newsletter_new_features_email(user).deliver
   rescue => e
-    user.email_send_error = "#{e.message} - #{e.backtrace.first}"
+    user.email_send_error = e.message
     user.save
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
   end
 
 end

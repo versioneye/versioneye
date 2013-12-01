@@ -18,23 +18,18 @@ class Github
     keep_alive: 30
   })
 
-  def self.token( code )
-    domain    = 'https://github.com/'
-    uri       = 'login/oauth/access_token'
-    query     = token_query( code )
-    link      = "#{domain}#{uri}?#{query}"
-    doc       = Nokogiri::HTML( open( URI.encode(link) ) )
-    p_element = doc.xpath('//body/p')
-    p_string  = p_element.text
-    pips      = p_string.split("&")
-    token     = pips[0].split("=")[1]
-    token
+  def self.token code
+    response = Octokit.exchange_code_for_token(code, Settings.github_client_id, Settings.github_client_secret)
+    response.access_token
   end
 
-  def self.user(token)
+  def self.user token
     return nil if token.to_s.empty?
-    url = "#{A_API_URL}/user" 
-    get_json(url, token)
+    client = Octokit::Client.new :access_token => token
+    client.user.to_json
+  rescue => e
+    Rails.logger.error e.backtrace.join( "\n" )
+    nil
   end
 
   def self.oauth_scopes( token )
@@ -42,7 +37,7 @@ class Github
     resp.headers['x-oauth-scopes']
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     "no_scope"
   end
 
@@ -60,7 +55,7 @@ class Github
     response.code != 304
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     return false
   end
 
@@ -198,7 +193,7 @@ class Github
     Github.fetch_file url, user.github_token
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -279,7 +274,7 @@ class Github
     project_files
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     return
   end
 
@@ -324,11 +319,11 @@ class Github
     url = "#{A_API_URL}/repos/#{name}?access_token=#{github_token}"
     response = get(url, :headers => A_DEFAULT_HEADERS )
     repo = catch_github_exception JSON.parse(response.body)
-    return repo['private'] unless repo.nil? and !repo.is_a(Hash)
+    return repo['private'] unless repo.nil? and !repo.is_a?(Hash)
     false
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     return false
   end
 
@@ -411,7 +406,7 @@ class Github
 
   def self.support_project_files
     Set['pom.xml', 'Gemfile', 'Gemfile.lock', 'composer.json', 'composer.lock', 'requirements.txt',
-        'setup.py', 'package.json','bower.json', 'dependency.gradle', 'project.clj', 'Podfile']
+        'setup.py', 'package.json','bower.json', 'dependency.gradle', 'project.clj', 'Podfile', 'Podfile.lock']
   end
 
   def self.encode_db_key(key_val)
@@ -464,12 +459,13 @@ class Github
       Hash[*links.flatten]
     end
 
-    def self.token_query( code )
-      query = 'client_id='
-      query += Settings.github_client_id
-      query += '&client_secret='
-      query += Settings.github_client_secret
-      query += '&code=' + code
-      query
-    end
+  #TODO: remove: who uses that???
+   # def self.token_query( code )
+   #   query = 'client_id='
+   #   query += Settings.github_client_id
+   #   query += '&client_secret='
+   #   query += Settings.github_client_secret
+   #   query += '&code=' + code
+   #   query
+   # end
 end

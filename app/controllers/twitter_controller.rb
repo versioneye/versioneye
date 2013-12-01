@@ -1,15 +1,15 @@
 class TwitterController < ApplicationController
 
   def forward
-    oauth = oauth_consumer
-    url = "https://www.versioneye.com/auth/twitter/callback"
-    request_token = oauth.get_request_token(:oauth_callback => url)
-    session[:token] = request_token.token
+    oauth            = oauth_consumer
+    url              = "https://www.versioneye.com/auth/twitter/callback"
+    request_token    = oauth.get_request_token(:oauth_callback => url)
+    session[:token]  = request_token.token
     session[:secret] = request_token.secret
     redirect_to request_token.authorize_url
   rescue => e
     logger.error e
-    logger.error e.backtrace.first
+    logger.error e.backtrace.join("\n")
     flash[:error] = "An error occured. Please contact the VersionEye Team."
     redirect_to "/signup"
   end
@@ -21,12 +21,12 @@ class TwitterController < ApplicationController
       return
     end
 
-    oauth = oauth_consumer
-    access_token = fetch_access_token( oauth, session[:token], session[:secret], oauth_verifier)
-    session[:token] = nil
-    session[:secret] = nil
+    oauth                  = oauth_consumer
+    access_token           = fetch_access_token( oauth, session[:token], session[:secret], oauth_verifier)
+    session[:token]        = nil
+    session[:secret]       = nil
     session[:access_token] = access_token
-    json_user = fetch_json_user( oauth, access_token )
+    json_user              = fetch_json_user( oauth, access_token )
 
     if signed_in?
       update_current_user(current_user, json_user, access_token)
@@ -34,11 +34,7 @@ class TwitterController < ApplicationController
       return
     end
 
-    twitter_user_id = json_user['id']
-    user = nil
-    if twitter_user_id
-      user = User.find_by_twitter_id( twitter_user_id )
-    end
+    user = User.find_by_twitter_id( json_user['id'] )
     if user
       update_current_user(user, json_user, access_token)
       sign_in user
@@ -75,8 +71,8 @@ class TwitterController < ApplicationController
       end
       user = User.new
       user.update_from_twitter_json(user_info, access_token.token, access_token.secret)
-      user.email = @email
-      user.terms = true
+      user.email         = @email
+      user.terms         = true
       user.datenerhebung = true
       user.create_verification
       if user.save
@@ -126,8 +122,8 @@ class TwitterController < ApplicationController
     end
 
     def update_current_user(user, json_user, access_token)
-      user.twitter_id = json_user['id']
-      user.twitter_token = access_token.token
+      user.twitter_id     = json_user['id']
+      user.twitter_token  = access_token.token
       user.twitter_secret = access_token.secret
       user.save
     end

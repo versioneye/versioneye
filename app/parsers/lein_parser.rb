@@ -16,7 +16,7 @@ class LeinParser < CommonParser
       dep_items = dep_items.first.children
     end
 
-    deps = self.build_dependencies dep_items     
+    deps = self.build_dependencies dep_items
     project              = Project.new deps
     project.project_type = Project::A_TYPE_LEIN
     project.language     = Product::A_LANGUAGE_CLOJURE
@@ -85,7 +85,7 @@ class LeinParser < CommonParser
       self.update_requested_with_current(dependency, product)
       return
     end
-    version = version.strip
+    version = version.to_s.strip
     version = version.gsub('"', '')
     version = version.gsub("'", "")
 

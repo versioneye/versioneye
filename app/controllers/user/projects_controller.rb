@@ -26,7 +26,7 @@ class User::ProjectsController < ApplicationController
     end
   rescue => e
     logger.error e.message
-    logger.error e.backtrace.first
+    logger.error e.backtrace.join("\n")
     flash[:error] = "VersionEye is not able to parse your project. Please contact the VersionEye Team."
     redirect_to user_projects_path
   end

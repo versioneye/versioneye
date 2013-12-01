@@ -29,7 +29,7 @@ module SessionsHelper
     !current_user.nil?
   rescue => e
     Rails.logger.info e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     false
   end
 
@@ -37,7 +37,7 @@ module SessionsHelper
     signed_in? && current_user.admin?
   rescue => e
     Rails.logger.info e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     false
   end
 
@@ -66,7 +66,7 @@ module SessionsHelper
     end
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -82,7 +82,7 @@ module SessionsHelper
       User.authenticate_with_salt(*remember_token)
     rescue => e
       Rails.logger.info e.message
-      Rails.logger.error e.backtrace.first
+      Rails.logger.error e.backtrace.join("\n")
       nil
     end
 

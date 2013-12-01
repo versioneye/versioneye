@@ -11,11 +11,9 @@ class Settings::ConnectController < ApplicationController
     user = current_user
     service = params[:service]
     if service && service.eql?("twitter")
-      user.twitter_id = nil
       user.twitter_token = nil
       user.twitter_secret = nil
     elsif service && service.eql?("github")
-      user.github_id = nil
       user.github_token = nil
       user.github_scope = nil
     end

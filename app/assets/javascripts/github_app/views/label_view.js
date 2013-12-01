@@ -31,10 +31,10 @@ define(['underscore', 'backbone'],
 				 })
 				}, {
 				 classes: "repo-language label label-info",
-				 content: repo.language
+				 content: repo.language || "language is not specified"
 				},{
           classes: "repo-pushed label",
-          content: "<strong>last commit:&nbsp;<strong>" + commit_timeago
+          content: "last commit:&nbsp;" + commit_timeago
         }
 			]
 

@@ -69,4 +69,28 @@ describe CocoapodsPackageManager do
 
   end
 
+  describe ".spec_subspec" do
+    def parse string
+      CocoapodsPackageManager.spec_subspec(string)
+    end
+
+    it "returns nil for nil" do
+      expect(parse(nil)).to eq(nil)
+    end
+
+    it "returns nil for empty string" do
+      expect(parse("")).to eq(nil)
+    end
+
+    it "returns the string if there is no subspec" do
+      spec, subspec = CocoapodsPackageManager.spec_subspec( 'spec' )
+      expect(spec).to eq('spec')
+      expect(subspec).to be_nil
+    end
+
+    it "returns spec/subspec" do
+      expect(parse('spec/subspec')).to eq(%w{spec subspec})
+    end
+  end
+
 end

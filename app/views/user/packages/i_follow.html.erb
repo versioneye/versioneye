@@ -22,7 +22,7 @@
     <% else %>
       <% if @popular_packages %>
         <p>
-          Why not following the most popular packages?
+          <b>Why not following the most popular packages?</b>
         </p>
         <div style="padding-top: 20px;">
           <%= render :partial => "products/show_search_results_iterator", :locals => { :products => @popular_packages, :prefix => "user", :name_limit => 70 } %>

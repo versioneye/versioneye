@@ -6,7 +6,7 @@ class Versionarchive
   # Belongs to the product with this attributes
   field :language  , type: String
   field :prod_key  , type: String
-  field :version_id, type: String
+  field :version_id, type: String # TODO rename to :version
 
   field :link      , type: String # URL
   field :name      , type: String # Label for the link/URL

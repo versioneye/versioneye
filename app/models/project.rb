@@ -58,6 +58,10 @@ class Project
   scope :by_period, ->(period){ where(period:  period ) }
   scope :by_github, ->(reponame){ where(source: A_SOURCE_GITHUB, github_project: reponame)}
 
+  def to_s
+    "<Project #{language}/#{project_type} #{name}>"
+  end
+
   def dependencies
     self.projectdependencies
   end
@@ -78,7 +82,7 @@ class Project
     Project.find( id )
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
+    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
@@ -86,8 +90,8 @@ class Project
     self.s3_filename.to_s.gsub(/^\S+\_/, "")
   end
 
-  def self.find_private_projects_by_user user_id
-    Project.where( user_id: user_id, private_project: true )
+  def self.private_project_count_by_user user_id
+    Project.where( user_id: user_id, private_project: true ).count
   end
 
   def show_dependency_badge?
