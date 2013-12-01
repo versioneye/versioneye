@@ -25,8 +25,9 @@ class Github
 
   def self.user token
     return nil if token.to_s.empty?
-    client = Octokit::Client.new :access_token => token
-    client.user.to_json
+    #client = Octokit::Client.new :access_token => token
+    #client.user.to_json #TODO: wtf? 
+    get_json("#{A_API_URL}/user", token)
   rescue => e
     Rails.logger.error e.backtrace.join( "\n" )
     nil
@@ -64,7 +65,7 @@ class Github
     n = 0
     return n if user_info[:github_token].nil?
 
-    user_info = self.user(user_info[:github_token])
+    user_info = get_json("#{A_API_URL}/user", user_info[:github_token])
     if user_info
       n = user_info[:public_repos].to_i + user_info[:total_private_repos].to_i
     end
