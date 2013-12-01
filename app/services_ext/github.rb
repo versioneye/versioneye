@@ -2,6 +2,7 @@ require 'uri'
 require 'httparty'
 
 class Github
+
   A_USER_AGENT = "Chrome/28(www.versioneye.com, contact@versioneye.com)"
   A_API_URL    = "https://api.github.com"
   A_WORKERS_COUNT = 4

@@ -53,10 +53,9 @@ class GithubController < ApplicationController
       token = cookies.signed[:github_token]
       if token == nil || token.empty?
         flash.now[:error] = "An error occured. Your GitHub token is not anymore available. Please try again later."
-        render 'new'
-        return
+        render 'new' and return
       end
-      json_user = Github.user( token )
+      json_user = Github.user token
       user      = User.new
       scopes    = Github.oauth_scopes( token )
       user.update_from_github_json( json_user, token, scopes )
