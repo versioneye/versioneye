@@ -126,7 +126,7 @@ class User::GithubReposController < ApplicationController
 
 
   def clear
-    results = GithubRepo.by_user(current_user).delete_all
+    results = GithubRepo.by_user( current_user ).delete_all
     render json: {success: !results.nil?, msg: "Cache is cleaned. Ready for import."}
   end
 
