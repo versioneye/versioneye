@@ -26,7 +26,7 @@ class Github
   def self.user token
     return nil if token.to_s.empty?
     client = Octokit::Client.new :access_token => token
-    client.user.to_json
+    JSON.parse client.user.to_json
   rescue => e
     Rails.logger.error e.backtrace.join( "\n" )
     nil
