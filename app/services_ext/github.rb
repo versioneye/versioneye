@@ -68,7 +68,7 @@ class Github
   end
 
   #returns how many repos user has. NB! doesnt count orgs
-  def self.count_user_repos(user)
+  def self.count_user_repos user
     n = 0
     return n if user[:github_token].nil?
 

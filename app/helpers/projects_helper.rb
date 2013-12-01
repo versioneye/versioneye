@@ -6,17 +6,18 @@ module ProjectsHelper
     end
   end
 
-	def outdated_color(project)
+	def outdated_color project
 		return "red" if project.out_number > 0
 		return "green"
 	end
 
-	def unknown_color(project)
+	def unknown_color project
 		return "orange" if project.unknown_number > 0
 		return ""
 	end
 
-  def add_dependency_classes(project)
+  def add_dependency_classes project
+    return nil if project.nil?
     deps = project.dependencies
     return project if deps.nil? or deps.empty?
     deps.each do |dep|
@@ -37,11 +38,11 @@ module ProjectsHelper
     project
   end
 
-  def badge_for_project( id )
-    badge = Rails.cache.read( id )
+  def badge_for_project id
+    badge = Rails.cache.read id
     return badge if badge
 
-    project = Project.find_by_id( id )
+    project = Project.find_by_id id
     return "unknown" if project.nil?
 
     outdated = project.outdated?
