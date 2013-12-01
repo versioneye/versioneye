@@ -6,7 +6,7 @@ class GitHubService
   @@memcache_options = {
     :namespace  => "github_app",
     :compress   => true,
-    :expires_in => 15.minutes #ugly = means only allows import after 15min; unless task unlocks
+    :expires_in => 30.minutes # Only allows import after X min; unless task unlocks!
   }
   @@memcache = Dalli::Client.new('localhost:11211', @@memcache_options)
 
