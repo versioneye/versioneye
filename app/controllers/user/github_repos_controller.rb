@@ -25,7 +25,7 @@ class User::GithubReposController < ApplicationController
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    render text: "Backend issue - cant import github repositories;", status: 503
+    render text: "An error occured. We are not able to import GitHub repositories. Please contact the VersionEye team.", status: 503
   end
 
 
@@ -35,15 +35,14 @@ class User::GithubReposController < ApplicationController
     if repo
       render json: process_repo(repo)
     else
-      error_msg = "No such github repo with id: `#{id}`"
-      render text: error_msg, status: 400
+      render text: "No such GitHub repository with id: `#{id}`", status: 400
     end
   end
 
 
   def show_menu_items
     menu_items = []
-    user_orgs = current_user.github_repos.distinct(:owner_login)
+    user_orgs  = current_user.github_repos.distinct(:owner_login)
     user_orgs.each do |owner_login|
       repo = current_user.github_repos.by_owner_login(owner_login).first
       menu_items << {
@@ -61,7 +60,6 @@ class User::GithubReposController < ApplicationController
   If commant attr in model is "remove", then removes current project
 =end
   def create
-    "unified update method for Backbone models"
     if params[:command].nil? || params[:fullname].nil? || params[:command_data].nil?
       error_msg = "Wrong command (`#{params[:command]}`) or project fullname is missing."
       render text: error_msg, status: 400
@@ -111,9 +109,8 @@ class User::GithubReposController < ApplicationController
       Rails.logger.error msg
     end
     respond_to do |format|
-      format.html {redirect_to user_projects_path}
-      format.json {
-        render json: {success: success, project_id: id, msg: msg}}
+      format.html { redirect_to user_projects_path }
+      format.json { render json: {success: success, project_id: id, msg: msg} }
     end
   end
 
