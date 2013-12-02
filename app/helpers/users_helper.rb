@@ -48,6 +48,8 @@ module UsersHelper
     else
       promo.redeem!
       user.free_private_projects = promo.free_private_projects
+      user.promo_code = code
+      user.save
       plu = pluralize(promo.free_private_projects, "private project")
       flash.now[:success] = "Congrats. Because of the promo code you can monitor #{plu} for free!"
     end
