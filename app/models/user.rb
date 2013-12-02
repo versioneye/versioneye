@@ -28,6 +28,7 @@ class User
   field :time_zone  , type: String
   field :blog       , type: String
 
+  field :promo_code, type: String
   field :refer_name, type: String
   field :free_private_projects, type: Integer, default: 0
 
@@ -81,7 +82,7 @@ class User
   scope :follows_least  , ->(n){where(:product_ids.count >= n)}
   scope :follows_max    , ->(n){where(:product_ids.count <= n)}
 
-  attr_accessor :password, :new_username, :promo_code
+  attr_accessor :password, :new_username
   attr_accessible :fullname, :username, :email, :password, :new_username, :terms, :datenerhebung, :verification, :terms, :datenerhebung
 
 

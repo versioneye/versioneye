@@ -43,6 +43,7 @@ class Auth::GithubController < ApplicationController
   def create
     @email = params[:email]
     @terms = params[:terms]
+    @promo = params[:promo_code]
 
     if !User.email_valid?(@email)
       flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
@@ -70,8 +71,7 @@ class Auth::GithubController < ApplicationController
       if user.save
         user.send_verification_email
         User.new_user_email user
-        promo_code = cookies.signed[:promo_code]
-        check_promo_code promo_code, user
+        check_promo_code @promo, user
         cookies.delete(:promo_code)
         cookies.delete(:github_token)
       else
