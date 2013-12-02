@@ -1,5 +1,7 @@
 module UsersHelper
 
+  include ActionView::Helpers::TextHelper
+
   def gravatar_for(user, options = { :size => 50 })
     gravatar_image_tag(user.email.downcase, :alt => user.fullname,
                                             :class => 'gravatar',
@@ -34,6 +36,25 @@ module UsersHelper
     elsif user.privacy_comments.eql?("everybody")
       return true
     end
+  end
+
+  def check_promo_code( code, user )
+    return nil if code.to_s.empty? || user.nil?
+    promo = PromoCode.by_name code
+    if promo.nil?
+      flash.now[:warn] = "Sorry. But the promo code you entered does not exist!"
+    elsif !promo.is_valid?
+      flash.now[:warn] = "Sorry. But the promo code you entered is not valid anymore!"
+    else
+      promo.redeem!
+      user.free_private_projects = promo.free_private_projects
+      plu = pluralize(promo.free_private_projects, "private project")
+      flash.now[:success] = "Congrats. Because of the promo code you can monitor #{plu} for free!"
+    end
+  rescue => e
+    logger.error "ERROR in check_promo_code: #{e.message}"
+    logger.error e.backtrace.join "\n"
+    nil
   end
 
 end

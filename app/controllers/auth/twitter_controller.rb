@@ -1,8 +1,8 @@
-class TwitterController < ApplicationController
+class Auth::TwitterController < ApplicationController
 
   def forward
     oauth            = oauth_consumer
-    url              = "https://www.versioneye.com/auth/twitter/callback"
+    url              = "#{Settings.server_url}/auth/twitter/callback"
     request_token    = oauth.get_request_token(:oauth_callback => url)
     session[:token]  = request_token.token
     session[:secret] = request_token.secret
@@ -11,13 +11,13 @@ class TwitterController < ApplicationController
     logger.error e
     logger.error e.backtrace.join("\n")
     flash[:error] = "An error occured. Please contact the VersionEye Team."
-    redirect_to "/signup"
+    redirect_to signin_path
   end
 
   def callback
     oauth_verifier = params[:oauth_verifier]
     if oauth_verifier.nil? || oauth_verifier.empty?
-      redirect_to "/signup"
+      redirect_to signin_path
       return
     end
 
@@ -35,18 +35,25 @@ class TwitterController < ApplicationController
     end
 
     user = User.find_by_twitter_id( json_user['id'] )
-    if user
-      update_current_user(user, json_user, access_token)
-      sign_in user
-      redirect_back_or( "/user/projects" )
-    else
-      redirect_to "http://versioneye.com/auth/twitter/new"
+    if user.nil?
+      init_variables_for_new_page
+      redirect_to auth_twitter_new_path
+      return
     end
+
+    if user.activated?
+      sign_in user
+      update_current_user(user, json_user, access_token)
+      redirect_back_or( user_packages_i_follow_path )
+      return
+    end
+
+    flash[:error] = "Your account is not activated. Did you click the verification link in the email we send you?"
+    redirect_to signin_path
   end
 
   def new
-    @email = ""
-    @terms = false
+    init_variables_for_new_page
   end
 
   def create
@@ -55,10 +62,12 @@ class TwitterController < ApplicationController
 
     if !User.email_valid?(@email)
       flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
+      init_variables_for_new_page
       render 'new'
     elsif !@terms.eql?("1")
       flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
-      render 'new'
+      init_variables_for_new_page
+      render auth_twitter_new_path
     else
       oauth = oauth_consumer
       access_token = session[:access_token]
@@ -66,7 +75,7 @@ class TwitterController < ApplicationController
       if user_info == nil || user_info.empty?
         flash.now[:error] = "An error occured. Your Twitter token is not anymore available. Please try again later."
         logger.error "An error occured. Your Twitter token is not anymore available. Please try again later."
-        render 'new'
+        render auth_twitter_new_path
         return
       end
       user = User.new
@@ -79,16 +88,24 @@ class TwitterController < ApplicationController
         user.send_verification_email
         User.new_user_email(user)
         session[:access_token] = nil
-        render 'create'
+        promo_code = cookies.signed[:promo_code]
+        check_promo_code promo_code, user
+        cookies.delete(:promo_code)
       else
         flash.now[:error] = "An error occured. Please contact the VersionEye Team."
         logger.error "An error occured. Please contact the VersionEye Team."
-        render 'new'
+        render auth_twitter_new_path
       end
     end
   end
 
   private
+
+    def init_variables_for_new_page
+      @email = ""
+      @terms = false
+      @promo = cookies.signed[:promo_code]
+    end
 
     def oauth_consumer
       OAuth::Consumer.new(Settings.twitter_consumer_key,

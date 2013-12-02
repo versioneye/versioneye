@@ -14,8 +14,12 @@ class UsersController < ApplicationController
   end
 
   def new
+    promo_code = params[:promo_code]
     @user = User.new
-    @user.promo_code = params[:promo_code]
+    return if promo_code.to_s.empty?
+
+    @user.promo_code = promo_code
+    cookies.permanent.signed[:promo_code] = promo_code
   end
 
   def created
@@ -299,22 +303,6 @@ class UsersController < ApplicationController
       end
     rescue => e
       logger.error "ERROR in check_refer: #{e.message}"
-      logger.error e.stacktrace.join "\n"
-      nil
-    end
-
-    def check_promo_code( code, user )
-      return nil if code.to_s.empty? || user.nil?
-      promo = PromoCode.by_name code
-      if promo.nil? || !promo.is_valid?
-        flash.now[:warn] = "Sorry. But the promo code you entered is not valid anymore!"
-      else
-        promo.redeem!
-        user.free_private_projects = promo.free_private_projects
-        flash.now[:success] = "Congrats. Because of the promo code you can monitor #{promo.free_private_projects} private projects for free!"
-      end
-    rescue => e
-      logger.error "ERROR in check_promo_code: #{e.message}"
       logger.error e.stacktrace.join "\n"
       nil
     end

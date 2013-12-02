@@ -1,11 +1,11 @@
-class GithubController < ApplicationController
+class Auth::GithubController < ApplicationController
 
   before_filter :set_locale
 
   def callback
     code = params['code']
     if code.nil? || code.empty?
-      redirect_to "/signup"
+      redirect_to signup_path
       return
     end
 
@@ -13,30 +13,31 @@ class GithubController < ApplicationController
     json_user = Github.user token
 
     if signed_in?
-      update_user_scope( json_user, token )
+      update_user_scope json_user, token
       redirect_to settings_connect_path
       return
     end
 
-    user = get_user_for_token( json_user, token )
+    user = get_user_for_token json_user, token
     if user.nil?
       cookies.permanent.signed[:github_token] = token
-      @user = User.new
-      render "new" and return
+      init_variables_for_new_page
+      render auth_github_new_path
+      return
     end
 
     if user.activated?
       sign_in user
-      redirect_back_or( user_packages_i_follow_path )
-    else
-      flash[:error] = "Your account is not activated. Did you click the verification link in the email we send you?"
-      redirect_to signin_path
+      redirect_back_or user_packages_i_follow_path
+      return
     end
+
+    flash[:error] = "Your account is not activated. Did you click the verification link in the email we send you?"
+    redirect_to signin_path
   end
 
   def new
-    @email = ""
-    @terms = false
+    init_variables_for_new_page
   end
 
   def create
@@ -45,15 +46,17 @@ class GithubController < ApplicationController
 
     if !User.email_valid?(@email)
       flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
-      render 'new'
+      init_variables_for_new_page
+      render auth_github_new_path
     elsif !@terms.eql?("1")
       flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
-      render 'new'
+      init_variables_for_new_page
+      render auth_github_new_path
     else
       token = cookies.signed[:github_token]
       if token == nil || token.empty?
-        flash.now[:error] = "An error occured. Your GitHub token is not anymore available. Please try again later."
-        render 'new' and return
+        flash.now[:error] = "An error occured. Your GitHub token is not anymore available. Please contact the VersionEye team."
+        render auth_github_new_path and return
       end
       json_user = Github.user token
       user      = User.new
@@ -66,17 +69,26 @@ class GithubController < ApplicationController
       user.create_verification
       if user.save
         user.send_verification_email
-        User.new_user_email(user)
+        User.new_user_email user
+        promo_code = cookies.signed[:promo_code]
+        check_promo_code promo_code, user
+        cookies.delete(:promo_code)
         cookies.delete(:github_token)
-        render 'create'
       else
         flash.now[:error] = "An error occured. Please contact the VersionEye Team."
-        render 'new'
+        init_variables_for_new_page
+        render auth_github_new_path
       end
     end
   end
 
   private
+
+    def init_variables_for_new_page
+      @user = User.new
+      @terms = false
+      @promo = cookies.signed[:promo_code]
+    end
 
     def update_user_scope(json_user, token)
       user              = current_user
