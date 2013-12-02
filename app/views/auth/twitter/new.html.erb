@@ -18,6 +18,13 @@
     </div>
 
     <div class="control-group">
+        <%= label_tag :promo_code, "Promo code", :class => "control-label", :for => "promo_code" %>
+      <div class="controls">
+        <%= text_field_tag :promo_code, @promo, :id => "promo_code" %> optional
+      </div>
+    </div>
+
+    <div class="control-group">
       <div class="controls">
         <%= check_box_tag :terms, "1", false, :style => "vertical-align: top; margin-right: 5px;", :id => "terms" %>
         <label for="terms" style="display: inline; font-size: 12px;">

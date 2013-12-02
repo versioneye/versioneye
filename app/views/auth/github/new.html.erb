@@ -13,7 +13,14 @@
     <div class="control-group">
       <%= label_tag(:email, "E-Mail", :class => "control-label", :for => "email") %>
       <div class="controls">
-        <%= text_field_tag :email, @email, :class => "round", :id => "email"  %>
+        <%= text_field_tag :email, @email, :class => "round", :id => "email"  %> mandatory
+      </div>
+    </div>
+
+    <div class="control-group">
+        <%= label_tag :promo_code, "Promo code", :class => "control-label", :for => "promo_code" %>
+      <div class="controls">
+        <%= text_field_tag :promo_code, @promo, :id => "promo_code" %> optional
       </div>
     </div>
 
