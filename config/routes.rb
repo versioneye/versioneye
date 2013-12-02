@@ -9,11 +9,6 @@ Versioneye::Application.routes.draw do
     get   '/github/callback',   :to => 'github#callback'
     get   '/github/new',        :to => 'github#new'
     post  '/github/create',     :to => 'github#create'
-
-    get   '/twitter/forward',   :to => 'twitter#forward'
-    get   '/twitter/callback',  :to => 'twitter#callback'
-    get   '/twitter/new',       :to => 'twitter#new'
-    post  '/twitter/create',    :to => 'twitter#create'
   end
 
   get   '/cloudcontrol/resources', :to => 'cloudcontrol#resources'
