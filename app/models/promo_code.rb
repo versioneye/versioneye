@@ -4,7 +4,7 @@ class PromoCode
   include Mongoid::Timestamps
 
   field :name                 , type: String
-  field :end_date             , type: DateTime
+  field :end_date             , type: DateTime, default: (DateTime.now + 30.days)
   field :free_private_projects, type: Integer, default: 1
   field :redeemed             , type: Integer, default: 0
 
@@ -16,6 +16,15 @@ class PromoCode
 
   def self.by_name name
     PromoCode.where(:name => name).shift
+  end
+
+  def is_valid?
+    DateTime.now < end_date
+  end
+
+  def redeem!
+    self.redeemed = self.redeemed.to_i + 1
+    self.save
   end
 
 end
