@@ -119,6 +119,10 @@ class Auth::TwitterController < ApplicationController
     def fetch_access_token( oauth, token, secret, verifier )
       request_token = OAuth::RequestToken.new( oauth, token, secret )
       request_token.get_access_token(:oauth_verifier => verifier)
+    rescue => e
+      logger.error e.message
+      logger.error e.backtrace.join "\n"
+      nil
     end
 
     def fetch_json_user( oauth, access_token )
