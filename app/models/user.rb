@@ -81,7 +81,7 @@ class User
   scope :follows_least  , ->(n){where(:product_ids.count >= n)}
   scope :follows_max    , ->(n){where(:product_ids.count <= n)}
 
-  attr_accessor :password, :new_username
+  attr_accessor :password, :new_username, :promo_code
   attr_accessible :fullname, :username, :email, :password, :new_username, :terms, :datenerhebung, :verification, :terms, :datenerhebung
 
 

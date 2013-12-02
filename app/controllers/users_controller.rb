@@ -31,22 +31,25 @@ class UsersController < ApplicationController
 
     @user[:datenerhebung] = @user[:terms]
 
-    if UserService.valid_user?(@user, flash, t)
-      @user.create_username
-      @user.create_verification
-
-      refer_name = cookies.signed[:veye_refer]
-      check_refer( refer_name, @user )
-
-      if @user.save
-        @user.send_verification_email
-        User.new_user_email(@user)
-      else
-        flash[:error] = "#{t(:general_error)} - #{@user.errors.full_messages.to_sentence}"
-        redirect_to signup_path and return
-      end
-    else
+    if !UserService.valid_user?(@user, flash, t)
       flash[:error] = t(flash[:error])
+      redirect_to signup_path and return
+    end
+
+    @user.create_username
+    @user.create_verification
+
+    refer_name = cookies.signed[:veye_refer]
+    check_refer refer_name, @user
+
+    promo_code = params[:user][:promo_code]
+    check_promo_code promo_code, @user
+
+    if @user.save
+      @user.send_verification_email
+      User.new_user_email(@user)
+    else
+      flash[:error] = "#{t(:general_error)} - #{@user.errors.full_messages.to_sentence}"
       redirect_to signup_path and return
     end
   end
@@ -294,8 +297,25 @@ class UsersController < ApplicationController
         end
       end
     rescue => e
-      logger.error "ERROR in check_refer: #{e}"
-      return nil
+      logger.error "ERROR in check_refer: #{e.message}"
+      logger.error e.stacktrace.join "\n"
+      nil
+    end
+
+    def check_promo_code( code, user )
+      return nil if code.to_s.empty? || user.nil?
+      promo = PromoCode.by_name code
+      if promo.nil? || !promo.is_valid?
+        flash.now[:warn] = "Sorry. But the promo code you entered is not valid anymore!"
+      else
+        promo.redeem!
+        user.free_private_projects = promo.free_private_projects
+        flash.now[:success] = "Congrats. Because of the promo code you can monitor #{promo.free_private_projects} private projects for free!"
+      end
+    rescue => e
+      logger.error "ERROR in check_promo_code: #{e.message}"
+      logger.error e.stacktrace.join "\n"
+      nil
     end
 
 end

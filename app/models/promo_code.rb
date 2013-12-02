@@ -5,7 +5,7 @@ class PromoCode
 
   field :name                 , type: String
   field :end_date             , type: DateTime, default: (DateTime.now + 30.days)
-  field :free_private_projects, type: Integer, default: 1
+  field :free_private_projects, type: Integer, default: 2
   field :redeemed             , type: Integer, default: 0
 
   validates_uniqueness_of :name, :message => "Name exist already."
