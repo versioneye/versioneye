@@ -15,6 +15,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @user.promo_code = params[:promo_code]
   end
 
   def created
