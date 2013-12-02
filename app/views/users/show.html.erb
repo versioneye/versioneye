@@ -18,6 +18,7 @@
 
 	<div class="span8 content">
 
+		<% if !@products.nil? && @products.size > 0 %>
 		<div >
 			<h2 class="section_header">
 				Follows <%= pluralize(@user['product_ids'].count, "Package") %>
@@ -34,6 +35,7 @@
 				</div>
 			<% end %>
 		</div>
+		<% end %>
 
 		<div >
 			<h2 class="section_header">
