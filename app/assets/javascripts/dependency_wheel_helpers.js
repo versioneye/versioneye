@@ -45,6 +45,6 @@ function show_pinit_button(picture_url, options){
     canvas_container.appendChild(img);
   }
   pin_button = document.getElementById("pinit");
-  pin_button.href = "http://pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.versioneye.com/package/"+options.product_key+"/"+options.product_version+"&media="+picture_url+"&description=" + options.product_name + " : " + options.version + " : " + options.scope;
+  pin_button.href = "https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.versioneye.com/package/"+options.product_key+"/"+options.product_version+"&media="+picture_url+"&description=" + options.product_name + " : " + options.version + " : " + options.scope;
   pin_button.style.display = "block";
 }
