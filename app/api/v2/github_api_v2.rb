@@ -149,7 +149,7 @@ module V2
       end
 
 
-      #-- GET '/hook' -----------------------------------------------
+      #-- POST '/hook' -----------------------------------------------
       desc "GitHub Hook", {
         notes: %q[This endpoint is registered as service hook on GitHub. It triggers a project re-parse on each git push. ]
       }
