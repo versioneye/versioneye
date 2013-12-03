@@ -35,10 +35,6 @@ describe GithubVersionCrawler, :vcr do
     # remove Webmock
     WebMock.allow_net_connect!
 
-    VCR.configure do |c|
-      c.allow_http_connections_when_no_cassette = true
-    end
-
     # # restore Fakeweb
     # FakeWeb.allow_net_connect = false
     # FakeWeb.clean_registry
