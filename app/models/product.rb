@@ -119,6 +119,10 @@ class Product
     Product.where( group_id: group, artifact_id: artifact ).shift
   end
 
+  def self.by_prod_keys language, prod_keys
+    Product.where(:language => language, :prod_key.in => prod_keys)
+  end
+
   ######## ELASTIC SEARCH MAPPING ###################
   def to_indexed_json
     {
@@ -178,15 +182,15 @@ class Product
   end
 
   def license_info
-    licenses = self.licenses(false)
+    licenses = self.licenses false
     return "unknown" if licenses.nil? || licenses.empty?
     licenses.map{|a| a.name}.join(", ")
   end
 
   # An artifact (product + version) can have multiple licenses
   # at the same time. That's not a bug!
-  def licenses(ignore_version = false )
-    License.for_product( self, ignore_version )
+  def licenses ignore_version = false
+    License.for_product self, ignore_version
   end
 
   def developers
