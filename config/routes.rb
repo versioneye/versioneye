@@ -146,8 +146,8 @@ Versioneye::Application.routes.draw do
 
   get   '/pricing',            :to => 'services#pricing'
   get   '/news',               :to => 'news#news'
-  get   '/mynews',             :to => 'news#mynews'
-  get   '/hotnews',            :to => 'news#hotnews'
+  get   '/mynews',             :to => 'news#news'
+  get   '/hotnews',            :to => 'news#news'
 
   namespace :admin do
 
@@ -229,8 +229,9 @@ Versioneye::Application.routes.draw do
   get   '/package_visual/:key/:version'        , :to => 'page#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
   get   '/:lang',                             :to => 'language#show'
-  get   '/:lang/:key/badge',                  :to => 'products#badge',  :constraints => { :key => /[^\/]+/ }
-  get   '/:lang/:key/:version/badge',         :to => 'products#badge',  :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/:lang/:key/badge',                  :to => 'products#badge',      :constraints => { :key => /[^\/]+/ }
+  get   '/:lang/:key/references',             :to => 'products#references', :constraints => { :key => /[^\/]+/ }, :as => 'product_references'
+  get   '/:lang/:key/:version/badge',         :to => 'products#badge',      :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
   get   '/:lang/:key/visual_dependencies'         , :to => 'products#show_visual', :constraints => { :key => /[^\/]+/ }
   get   '/:lang/:key/:version/visual_dependencies', :to => 'products#show_visual', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'visual_dependencies'
