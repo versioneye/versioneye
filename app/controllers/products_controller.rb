@@ -91,6 +91,14 @@ class ProductsController < ApplicationController
     send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
   end
 
+  def references
+    language  = Product.decode_language( params[:lang] )
+    prod_key  = Product.decode_prod_key params[:key]
+    @product  = Product.fetch_product language, prod_key
+    prod_keys = Dependency.where(:language => language, :dep_prod_key => prod_key).distinct(:prod_key)
+    @products = Product.by_prod_keys(language, prod_keys).paginate(:page => params[:page])
+  end
+
   def edit
     lang     = Product.decode_language( params[:lang] )
     key      = Product.decode_prod_key params[:key]
