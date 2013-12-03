@@ -1,6 +1,6 @@
 class PomJsonParser < CommonParser
 
-  def parse( url )
+  def parse url
     return nil if url.nil? || url.empty?
     pom_json = self.fetch_response_body_json( url )
     return nil if pom_json.nil?

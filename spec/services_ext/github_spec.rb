@@ -347,7 +347,6 @@ describe Github do
 
     it "should be true when everything goes as planned and fakeweb returns correct response" do
       Github.private_repo?(user_without_token.github_token, "versioneye").should be_false
-
       Github.private_repo?(user_without_token.github_token, "versioneye").should be_true
     end
   end
