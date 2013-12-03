@@ -19,20 +19,6 @@
     <hr />
 
     <div class="row" >
-      <div class="span1" style="width: 80px;"><label>Twitter</label></div>
-      <div class="span4" >
-        <% if @user.twitter_token && @user.twitter_secret %>
-          <span style="color: green">Connected</span>
-          <%= link_to "[ disconnect ]", settings_disconnect_path(:service => "twitter"), :confirm => "Are you sure?", :class => "meta-text-small" %>
-        <% else %>
-          <a href="/auth/twitter/forward" >
-            Connect with Twitter
-          </a>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="row" >
       <div class="span1" style="width: 80px;"><label>GitHub</label></div>
       <div class="span4" >
         <% if @user.github_token %>
