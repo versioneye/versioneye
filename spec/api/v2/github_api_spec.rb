@@ -56,7 +56,7 @@ describe "GithubApiV2" do
       FakeWeb.register_uri(:head, %r|https://api\.github\.com/user*|,
                            {status: ["304", "Not Modified"], body: "Not modified"})
       FakeWeb.register_uri(:get, %r|https://api\.github\.com/user*|, {body: "{}"})
-      FakeWeb.register_uri(:get, %r|https://api\.github\.com/repos/spec/repo1/branches*|, 
+      FakeWeb.register_uri(:get, %r|https://api\.github\.com/repos/spec/repo1/branches*|,
                            {body: %Q|
                               {
                                 "name": "master",
@@ -150,4 +150,23 @@ describe "GithubApiV2" do
       msg['success'].should be_true
     end
   end
+
+  describe "github_hook" do
+
+    it "should return 200" do
+      post "#{api_path}/#{repo_key1}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+      response.status.should eql(201)
+
+      repo = JSON.parse response.body
+      repo.should_not be_nil
+      repo.has_key?('repo').should be_true
+      repo['repo']['fullname'].should eql("spec/repo1")
+      repo.has_key?('imported_projects').should be_true
+
+      project = repo['imported_projects'].first
+      project["name"].should eql("spec_projectX")
+    end
+
+  end
+
 end
