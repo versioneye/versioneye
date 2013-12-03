@@ -4,13 +4,30 @@ class AnalyticsService
 
   def self.most_followed_products
     Language.each do |lang|
-    	puts "Language #{lang.name}"
-      puts '--------'
-
-      Product.where({ :language => lang.name }).desc(:followers).limit(10).each {|p| puts "#{p.name} has #{p.followers} Followers"}
-
-      puts "\n\n"
+      most_followed_prods lang
     end
+  end
+
+  def self.most_followed_prods lang
+    puts "Language #{lang.name}"
+    puts '--------'
+
+    Product.where({ :language => lang.name }).desc(:followers).limit(10).each do |p|
+      puts "#{p.name} has #{p.followers} Followers - https://www.versioneye.com/#{p.language_esc}/#{p.to_param}"
+    end
+
+    puts "\n\n"
+  end
+
+  def self.most_referenced_prods lang
+    puts "Language #{lang.name}"
+    puts '--------'
+
+    Product.where({ :language => lang.name }).desc(:used_by_count).limit(10).each do |p|
+      puts "#{p.name} has #{p.used_by_count} References - https://www.versioneye.com/#{p.language_esc}/#{p.to_param}"
+    end
+
+    puts "\n\n"
   end
 
   def self.most_used_dependencies_csv filename='most_used_dependencies.csv'
