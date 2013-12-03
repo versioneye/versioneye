@@ -1,7 +1,6 @@
 class Settings::DeleteController < ApplicationController
 
   before_filter :authenticate
-  force_ssl if Rails.env.production?
 
   def index
   end

@@ -1,7 +1,5 @@
 class SessionsController < ApplicationController
 
-  force_ssl :only => [:new, :create] if Rails.env.production?
-
   def new
   end
 

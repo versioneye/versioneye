@@ -1,7 +1,5 @@
 class SwaggersController < ApplicationController
 
-  force_ssl
-
   def index
     @current_user = current_user
     user_api = Api.where(user_id: @current_user.id).shift if @current_user

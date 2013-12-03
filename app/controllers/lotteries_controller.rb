@@ -1,7 +1,5 @@
 class LotteriesController < ApplicationController
 
-  force_ssl if Rails.env.production?
-
   layout "lottery"
 
   before_filter :authenticate, :only => [:libraries, :follow, :thankyou]
