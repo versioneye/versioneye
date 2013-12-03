@@ -32,6 +32,11 @@ describe "GithubApiV2" do
 
   describe "when user is unauthorized" do
 
+    before :each do
+      FakeWeb.allow_net_connect = true
+      WebMock.allow_net_connect!
+    end
+
     it "raises http error when asking list of repos" do
       get api_path,  nil, "HTTPS" => "on"
       response.status.should eql(401)
@@ -155,14 +160,6 @@ describe "GithubApiV2" do
   end
 
   describe "github_hook" do
-
-    before :each do
-      FakeWeb.allow_net_connect = true
-      WebMock.allow_net_connect!
-      VCR.configure do |c|
-        c.allow_http_connections_when_no_cassette = true
-      end
-    end
 
     it "should return 200" do
       post "#{api_path}/#{repo_key1}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
