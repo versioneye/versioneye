@@ -115,7 +115,7 @@ describe ComposerParser do
 
 
       parser  = ComposerParser.new
-      project = parser.parse("http://s3.amazonaws.com/veye_test_env/composer.json")
+      project = parser.parse("https://s3.amazonaws.com/veye_test_env/composer.json")
       project.should_not be_nil
       project.dependencies.size.should eql(19)
 
