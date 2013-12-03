@@ -146,8 +146,8 @@ Versioneye::Application.routes.draw do
 
   get   '/pricing',            :to => 'services#pricing'
   get   '/news',               :to => 'news#news'
-  get   '/mynews',             :to => 'news#mynews'
-  get   '/hotnews',            :to => 'news#hotnews'
+  get   '/mynews',             :to => 'news#news'
+  get   '/hotnews',            :to => 'news#news'
 
   namespace :admin do
 
