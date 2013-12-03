@@ -70,7 +70,14 @@
   <% ref_bg = "error"   if references == 0 %>
   <% ref_text = "#{references} packages are referencing this project" %>
   <div class="flash <%= ref_bg %>" style="margin-bottom: 5px;" >
-    <b title="<%= ref_text %>">References:</b> <span title="<%= ref_text %>"><%= references %></span>
+    <b title="<%= ref_text %>">References:</b>
+    <span title="<%= ref_text %>">
+      <% if references > 0 %>
+        <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/references"><%= references %></a>
+      <% else %>
+        <%= references %>
+      <% end %>
+    </span>
   </div>
 <% end %>
 

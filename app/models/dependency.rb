@@ -1,5 +1,7 @@
 class Dependency
 
+  require 'will_paginate/array'
+
   # This Model describes the relationship between 2 products/packages
   # This Model describes 1 dependency of a package to another package
 
