@@ -1,7 +1,6 @@
 class Settings::PlanController < ApplicationController
 
   before_filter :authenticate
-  force_ssl if Rails.env.production?
 
   def index
     if current_user.plan.nil?

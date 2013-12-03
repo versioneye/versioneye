@@ -1,7 +1,6 @@
 class Settings::LinksController < ApplicationController
 
   before_filter :authenticate
-  force_ssl if Rails.env.production?
 
   def index
     @userlinkcollection = Userlinkcollection.find_all_by_user( current_user.id )

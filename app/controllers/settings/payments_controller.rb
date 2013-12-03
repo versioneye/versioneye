@@ -3,8 +3,6 @@ class Settings::PaymentsController < ApplicationController
   before_filter :authenticate
   layout        :resolve_layout
 
-  force_ssl if Rails.env.production?
-
   def index
     customer_id        = current_user.stripe_customer_id
     @customer          = StripeService.fetch_customer(customer_id) if customer_id

@@ -1,7 +1,6 @@
 class Settings::ConnectController < ApplicationController
 
   before_filter :authenticate
-  force_ssl if Rails.env.production?
 
   def index
     @user = current_user

@@ -1,7 +1,6 @@
 class Settings::UserNotificationSettingsController < ApplicationController
 
   before_filter :authenticate
-  force_ssl if Rails.env.production?
 
   def index
     @user_notification = UserNotificationSetting.fetch_or_create_notification_setting current_user

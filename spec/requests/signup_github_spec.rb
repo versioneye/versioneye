@@ -17,6 +17,7 @@ describe "SignUp with GitHub" do
 
   after :all do
     WebMock.allow_net_connect!
+    FakeWeb.allow_net_connect = true
     FakeWeb.clean_registry
   end
 

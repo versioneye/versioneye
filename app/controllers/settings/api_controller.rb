@@ -1,7 +1,6 @@
 class Settings::ApiController < ApplicationController
 
   before_filter :authenticate
-  force_ssl if Rails.env.production?
 
   def index
     @user_api = Api.find_or_initialize_by(user_id: current_user.id.to_s)

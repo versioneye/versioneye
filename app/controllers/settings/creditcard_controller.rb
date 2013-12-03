@@ -1,7 +1,6 @@
 class Settings::CreditcardController < ApplicationController
 
   before_filter :authenticate
-  force_ssl if Rails.env.production?
 
   def index
     plan = cookies.signed[:plan_selected]
