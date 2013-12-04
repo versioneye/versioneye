@@ -85,12 +85,8 @@ define(['underscore', 'backbone'],
     },
 
     getModelSwitchId: function(){
-      var id =  "github-repo-switch-" + this.model.get('github_id');
-      if(this.branch){
-        id += "-" + this.project_file['sha'];
-      }
-
-      return id;
+      var prefix =  "github-repo-switch-" + this.model.get('github_id') + "-" + this.project_file['uuid'];
+      return _.uniqueId(prefix);
     },
 
     onSwitchChange: function(ev){
@@ -134,17 +130,13 @@ define(['underscore', 'backbone'],
       this_switch.parents('.onoffswitch').removeClass('disabled');
     },
     switchOnActivate : function(){
-      var switch_selector = "#" + this.getModelSwitchId();
-      var repo_switch = $(switch_selector);
-
+      var repo_switch = this.$el.find('input');
       repo_switch.attr('checked', true);
       this.enableSwitch(repo_switch);
     },
 
     switchOffActivate: function(){
-      var switch_selector = "#" + this.getModelSwitchId();
-      var repo_switch = $(switch_selector);
-
+      var repo_switch = this.$el.find('input');
       repo_switch.attr("checked", false);
       this.enableSwitch(repo_switch);
     },
@@ -184,8 +176,8 @@ define(['underscore', 'backbone'],
                  'You can now checkout project\'s page.'
                  ].join(' ');
 
-
-      this.$el.find('input').data('githubProjectId', command_result['project_id']);
+      var this_switch = this.$el.find('input');
+      this_switch.data('githubProjectId', command_result['project_id']);
       this.updateRepoTitle(command_result);
       this.updateRepoProjectInfo(model);
       this.switchOnActivate();
@@ -209,7 +201,8 @@ define(['underscore', 'backbone'],
       console.debug(error_msg);
       showNotification("alert alert-error", error_msg);
       this.hideRepoNotification();
-      this.switchOffActivate();
+      var this_switch = this.$el.find('input');
+      this.switchOffActivate(this_switch);
 
       $(this.el).find(".repo-notification").html("");
       return false;
@@ -245,8 +238,6 @@ define(['underscore', 'backbone'],
     onRemoveSuccess: function(model){
       var selector = "#github-repo-" + model.get("github_id");
       var command_result = model.get('command_result');
-      console.debug(command_result);
-
       var msg = [
         '<strong>Success!</strong>',
         'The Project\'s file ', command_result['filename'],
@@ -263,7 +254,6 @@ define(['underscore', 'backbone'],
     },
     onRemoveFailure: function(model, xhr, options){
       var msg = "Fail: Can not remove project";
-
       this.switchOnActivate();
       showNotification("alert alert-warning", msg);
       this.hideRepoNotification();

@@ -14,7 +14,11 @@ define([
       template: _.template($("#github-repo-control-item-template").html()),
 
       initialize: function(options){
-        this.branch = options.branch || "<no defined>";
+        this.branch = options.branch;
+        if(_.isNaN(this.branch) || _.isNull(this.branch)){
+          console.error("Branch info is missing - importing will not work;");
+        }
+
         this.project_files = options.project_files || [];
       },
       render: function(){
