@@ -1,5 +1,6 @@
 class Product
 
+  require 'will_paginate'
   require 'will_paginate/array'
 
   include Mongoid::Document

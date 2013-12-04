@@ -52,6 +52,27 @@ class Dependency
     dependencies[0]
   end
 
+  def self.references language, prod_key, page
+    per_page = 30
+    page     = 0 if page.to_s.empty?
+    page     = page.to_i - 1 if page.to_i > 0
+    skip     = page.to_i * per_page
+
+    count = Dependency.collection.aggregate(
+      { '$match' => { 'language' => language, 'dep_prod_key' => prod_key } },
+      { '$group' => { '_id' => '$prod_key' } }
+    ).count
+
+    deps = Dependency.collection.aggregate(
+      { '$match' => { 'language' => language, 'dep_prod_key' => prod_key } },
+      { '$group' => { '_id' => '$prod_key' } },
+      { '$skip' => skip },
+      { '$limit' => per_page }
+    )
+    prod_keys = deps.map{|dep| dep['_id'] }
+    {:prod_keys => prod_keys, :count => count}
+  end
+
   def product
     if group_id && artifact_id
       return Product.find_by_group_and_artifact( group_id, artifact_id )
