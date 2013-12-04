@@ -48,21 +48,21 @@
     </form>
 
     <script type="text/javascript">
-      image_url = document.URL + "/badge.png"
+      image_url = "<%= product_badge_url(@product) %>" + ".png"
 
-      markdown_url = "[![Dependency Status]("+image_url+")]("+document.URL+")"
+      markdown_url = "[![Dependency Status]("+image_url+")](<%= products_url(@product) %>)"
       element = document.getElementById("badge_for_markdown")
       element.value = markdown_url
 
-      textile_url = "!"+image_url+"(Dependency Status)!:"+document.URL
+      textile_url = "!"+image_url+"(Dependency Status)!:<%= products_url(@product) %>"
       element_textile = document.getElementById("badge_for_textile")
       element_textile.value = textile_url
 
-      rdoc_url = "{<img src=\"" + image_url + "\" alt=\"Dependency Status\" />}["+document.URL+"]"
+      rdoc_url = "{<img src=\"" + image_url + "\" alt=\"Dependency Status\" />}[<%= products_url(@product) %>]"
       element_rdoc = document.getElementById("badge_for_rdoc")
       element_rdoc.value = rdoc_url
 
-      html_url = "<a href='"+document.URL+"'><img src='"+image_url+"' alt=\"Dependency Status\" /></a>"
+      html_url = "<a href='<%= products_url(@product) %>'><img src='"+image_url+"' alt=\"Dependency Status\" /></a>"
       element_html = document.getElementById("badge_for_html")
       element_html.value = html_url
 
