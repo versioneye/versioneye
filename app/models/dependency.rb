@@ -66,7 +66,7 @@ class Dependency
     deps = Dependency.collection.aggregate(
       { '$match' => { 'language' => language, 'dep_prod_key' => prod_key } },
       { '$group' => { '_id' => '$prod_key' } },
-      { '$skip' => skip },
+      { '$skip'  => skip },
       { '$limit' => per_page }
     )
     prod_keys = deps.map{|dep| dep['_id'] }
