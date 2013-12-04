@@ -1,3 +1,4 @@
+
 <div id="dialog_dependency_badge" class="modal hide fade" style="text-align: left;">
   <div class = "modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -48,21 +49,26 @@
     </form>
 
     <script type="text/javascript">
-      image_url = "<%= product_badge_url(@product) %>" + ".png"
+      image_url = document.URL + "/badge.png"
+      url = document.URL
+      <% if @product %>
+        image_url = "<%= product_badge_url(@product, :lang => @product.language_esc) %>" + ".png"
+        url = <%= products_url(@product, :lang => @product.language_esc) %>
+      <% end %>
 
-      markdown_url = "[![Dependency Status]("+image_url+")](<%= products_url(@product) %>)"
+      markdown_url = "[![Dependency Status]("+image_url+")]("+url+")"
       element = document.getElementById("badge_for_markdown")
       element.value = markdown_url
 
-      textile_url = "!"+image_url+"(Dependency Status)!:<%= products_url(@product) %>"
+      textile_url = "!"+image_url+"(Dependency Status)!:"+url+""
       element_textile = document.getElementById("badge_for_textile")
       element_textile.value = textile_url
 
-      rdoc_url = "{<img src=\"" + image_url + "\" alt=\"Dependency Status\" />}[<%= products_url(@product) %>]"
+      rdoc_url = "{<img src=\"" + image_url + "\" alt=\"Dependency Status\" />}["+url+"]"
       element_rdoc = document.getElementById("badge_for_rdoc")
       element_rdoc.value = rdoc_url
 
-      html_url = "<a href='<%= products_url(@product) %>'><img src='"+image_url+"' alt=\"Dependency Status\" /></a>"
+      html_url = "<a href='"+url+"'><img src='"+image_url+"' alt=\"Dependency Status\" /></a>"
       element_html = document.getElementById("badge_for_html")
       element_html.value = html_url
 
