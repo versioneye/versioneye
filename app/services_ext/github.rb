@@ -254,7 +254,7 @@ class Github
       branch_tree = fetch_repo_branch_tree(user, repo_name, branch_sha)
       break unless branch_tree.nil?
       Rails.logger.error "Going to read tree of branch `#{branch}` for #{repo_name} again after little pause."
-      #sleep 3
+      sleep 1 #it's required to prevent bombing Github's api after our request got rejected
     end
 
     if branch_tree.nil? or !branch_tree.has_key?('tree')
@@ -263,7 +263,10 @@ class Github
       return
     end
 
-    branch_tree['tree'].keep_if {|file| ProjectService.type_by_filename(file['path'].to_s) != nil}
+    project_files = branch_tree['tree'].keep_if {|file| ProjectService.type_by_filename(file['path'].to_s) != nil}
+    project_files.each {|file| file[:uuid] = SecureRandom.hex}
+
+    project_files
   end
 
   #returns all project files in the given repos grouped by branches
