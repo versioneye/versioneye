@@ -1,5 +1,4 @@
 source 'http://rubygems.org'
-ruby "1.9.3"
 
 gem 'rails'              , '3.2.15'
 gem 'jquery-rails'       , '2.2.1'
@@ -59,7 +58,7 @@ group :test do
   gem 'selenium-webdriver', '2.37.0'
   gem 'fakeweb'           , '1.3.0'
   gem 'vcr'               , '~> 2.8.0',  :require => false
-  gem 'webmock'           , '~> 1.16.0', :require => false
+  gem 'webmock'           , '1.15.2', :require => false
   gem 'database_cleaner'  , '1.2.0'
   gem 'factory_girl'      , '4.3.0'
   gem 'factory_girl_rails', '4.3.0'
