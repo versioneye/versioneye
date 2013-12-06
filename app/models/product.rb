@@ -1,5 +1,6 @@
 class Product
 
+  require 'will_paginate'
   require 'will_paginate/array'
 
   include Mongoid::Document
@@ -198,7 +199,7 @@ class Product
   end
 
   def update_used_by_count persist = true
-    grouped = Dependency.where(:dep_prod_key => self.prod_key).group_by(&:prod_key)
+    grouped = Dependency.where(:language => self.language, :dep_prod_key => self.prod_key).group_by(&:prod_key)
     count = grouped.count
     return nil if count == self.used_by_count
     self.used_by_count = count
