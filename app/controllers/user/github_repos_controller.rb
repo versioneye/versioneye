@@ -84,7 +84,7 @@ class User::GithubReposController < ApplicationController
     render json: repo
   rescue => e
     Rails.logger.error "Error in create: #{e.message}"
-    Rails.logger.error e.backstrace.join('\n')
+    Rails.logger.error e.backtrace.join('\n')
     render text: e.message, status: 503 and return
   end
 
