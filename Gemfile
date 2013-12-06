@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby "2.0.0"
 
-gem 'rails'              , '3.2.15'
+gem 'rails'              , '3.2.16'
 gem 'jquery-rails'       , '2.2.1'
 gem 'execjs'             , '2.0.2'
 gem 'will_paginate'      , '3.0.5'
@@ -13,7 +13,7 @@ gem 'httparty'           , '0.12.0'
 gem 'persistent_httparty', '0.1.1'
 gem 'oauth'              , '0.4.7'
 gem 'twitter_oauth'      , '0.4.94'
-gem 'aws-s3'             , '0.6.3', :require => 'aws/s3'
+gem 'aws-sdk'            , '~> 1.0'
 gem 'nokogiri'           , '1.6.0'
 gem 'stripe'             , '1.8.8'
 gem 'unicorn'            , '4.7.0'

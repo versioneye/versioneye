@@ -3,10 +3,10 @@ class CommonParser
   @@curl_ca_bundle  = "/opt/local/share/curl/curl-ca-bundle.crt"
   @@ca_certificates = "/usr/lib/ssl/certs/ca-certificates.crt"
 
-  def fetch_response( url )
-    url  = self.do_replacements_for_github( url )
-    uri  = URI.parse(url)
-    http = Net::HTTP.new(uri.host, uri.port)
+  def fetch_response url
+    url  = self.do_replacements_for_github url
+    uri  = URI.parse url
+    http = Net::HTTP.new uri.host, uri.port
     if uri.port == 443
       http.use_ssl = true
       if File.exist?(@@curl_ca_bundle)
