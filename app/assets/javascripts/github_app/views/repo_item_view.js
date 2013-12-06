@@ -14,7 +14,8 @@ define(['underscore', 'backbone',
       template: _.template($("#github-repo-info-template").html()),
       info_template: _.template($('#github-repo-project-info-template').html()),
       events: {
-        "click .controls-toggle": "toggleBranchView"
+        "click .controls > .toggle-next": "toggleBranchView",
+        "click .controls > .update-repo": "updateRepository"
       },
       render: function(){
         var control_view = new GithubRepoControlView({model: this.model});
@@ -48,8 +49,64 @@ define(['underscore', 'backbone',
         repo_sliders.toggleClass("current");
         current_slider.addClass("hide");
         return false;
+      },
+
+      updateRepository: function(ev){
+        var repo_info = this.$el.children(".repo-container").data();
+        var that = this;
+        var btn = this.$el.find(".controls .update-repo.btn");
+        this.disableUpdateButton(btn);
+        this.showUpdateLoader(btn);
+        this.model.save({
+          command: "update",
+          command_data: repo_info
+        },
+        {
+          beforeSend: function(xhr){
+            xhr.setRequestHeader(
+              'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+            );
+          },
+          success: function(model, xhr, options){
+            that.onUpdateSuccess(model, btn)
+          },
+          error: function(model, xhr, options){
+            console.debug(xhr);
+            that.onUpdateFailure(model, btn, xhr);
+          }
+        });
+      },
+
+
+      onUpdateSuccess: function(model, btn){
+        console.debug("Update was successful.");
+        this.removeUpdateLoader(btn);
+        this.enableUpdateButton(btn);
+        this.render();
+      },
+      onUpdateFailure: function(model, btn){
+        console.debug("Update failed;")
+        this.removeUpdateLoader(btn);
+        this.enableUpdateButton(btn);
+      },
+      showUpdateLoader: function(btn){
+        btn.find('i.icon-refresh').addClass('icon-spin');
+        btn.find('span.btn-title').text('Reading the newest information');
+      },
+      removeUpdateLoader: function(btn){
+        btn.find("i.icon-refresh").removeClass("icon-spin");
+        btn.find("span.btn-title").text("Update the repository")
+      },
+      disableUpdateButton: function(btn){
+        btn.addClass('disabled');
+        btn.attr('disabled', true);
+      },
+      enableUpdateButton: function(btn){
+        btn.removeClass('disabled');
+        btn.attr('disabled', false);
       }
+
     });
 
   return GithubRepoItemView;
-});
+});//end of module
