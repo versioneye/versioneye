@@ -38,10 +38,9 @@ class GitHubService
   else it returns cached results from GitHubRepos collection.
   NB! allows only one running task per user;
 =end
-  def self.cached_user_repos user
+  def self.cached_user_repos(user)
 
     user_task_key = "#{user[:username]}-#{user[:github_id]}"
-
     task_status = @@memcache.get user_task_key
 
     if task_status == A_TASK_RUNNING
@@ -63,14 +62,9 @@ class GitHubService
       Thread.new do
         orga_names = Github.orga_names(user.github_token)
         self.cache_user_all_repos(user, orga_names)
-        task_status = A_TASK_DONE
-
-        @@memcache.set(user_task_key, task_status)
+        @@memcache.set(user_task_key, A_TASK_DONE)
       end
-    elsif Github.user_repos_changed?( user )
-      Rails.logger.info "Repos are changed - going to re-import all user repos."
-      user.github_repos.delete_all
-      self.cached_user_repos user
+
     else
       Rails.logger.info "Nothing is changed - skipping update."
       task_status = A_TASK_DONE
@@ -88,6 +82,21 @@ class GitHubService
   rescue => e
     Rails.logger.error "Bad Credentials"
     true
+  end
+
+
+  def self.update_repo_info(user, repo_fullname)
+    current_repo = GithubRepo.by_user(user).by_fullname(repo_fullname).shift
+    if current_repo.nil?
+      Rails.logger.error "User #{user[:username]} has no such repo `#{repo_fullname}`."
+      return nil
+    end
+
+    repo_info = Github.repo_info(repo_fullname, user[:github_token])
+    repo_info = Github.read_repo_data(repo_info, user[:github_token])
+    updated_repo = GithubRepo.build_new(user, repo_info)
+    current_repo.update_attributes(updated_repo.attributes)
+    current_repo
   end
 
   private

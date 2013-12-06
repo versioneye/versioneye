@@ -104,7 +104,7 @@ define(['underscore', 'backbone'],
     },
 
     onRefillCache: function(ev){
-      btn = jQuery(ev.currentTarget);
+      var btn = jQuery(ev.currentTarget);
 
       if(btn.hasClass("disabled")){
         console.debug("Ignoring event on disabled button.");
@@ -117,7 +117,6 @@ define(['underscore', 'backbone'],
       var that = this;
       var restore_state = function(){
         that.repoView.resetView();
-        var btn = btn;
         btn.find(".btn-icon").removeClass("icon-spin");
         btn.find("span.btn-title").text("Reimport all data");
         btn.removeClass("disabled");

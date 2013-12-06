@@ -228,7 +228,7 @@ module V2
 
         repo = user.github_repos.by_fullname(repo_name).first
         unless repo
-          error! "We couldn't finde the repository `#{repo_name}` in your account.", 400
+          error! "We couldn't find the repository `#{repo_name}` in your account.", 400
         end
 
         project = ProjectService.import_from_github(user, repo_name, branch)

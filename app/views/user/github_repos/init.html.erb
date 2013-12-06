@@ -90,7 +90,10 @@
 </script>
 
 <script id = "github-repo-info-template" type = "text/template">
-  <div id = "github-repo-{{= repo.github_id}}" class = "repo-container">
+  <div id = "github-repo-{{= repo.github_id}}"
+       class = "repo-container"
+       data-repo-id = "{{= repo.github_id }}"
+       data-repo-fullname = "{{= repo.fullname }}">
     <div class = "repo-notification hide span12"></div>
     <div id = "slide1" class = "repo-slider current" data-next="slide2">
       <div class = "repo-info row-fluid">
@@ -107,8 +110,12 @@
           <div class = "span12 repo-desc"> {{= repo.description }} </div>
           <div class = "span12 repo-project-info"></div>
         </div>
-        <div class = "controls">
-          <button class = "btn btn-mini btn-link controls-toggle">
+        <div class = "controls span12">
+          <button class = "btn btn-mini btn-link controls-toggle update-repo pull-left">
+              <i class = "icon-refresh"></i>
+              <span class = "btn-title"> Update the repository </span>
+          </button>
+          <button class = "btn btn-mini btn-link controls-toggle toggle-next pull-right">
             <i class = "icon-caret-up"></i> Show project files
           </button>
         </div>
@@ -117,9 +124,13 @@
     <div id = "slide2" class = "repo-slider" data-next="slide1">
       <div class = "span12">
         <div class = "repo-controls-container">
-          <div class = "repo-controls"></div>
-          <div class = "controls">
-            <button class = "btn btn-mini btn-link controls-toggle">
+          <div class = "repo-controls span12"></div>
+          <div class = "controls span12">
+            <button class = "btn btn-mini btn-link controls-toggle update-repo pull-left">
+              <i class = "icon-refresh"></i>
+              <span class = "btn-title"> Update the repository </span>
+            </button>
+            <button class = "btn btn-mini btn-link controls-toggle toggle-next pull-right">
               <i class = "icon-caret-up"></i> Show project info
             </button>
           </div>
@@ -233,7 +244,7 @@
           <a href= "javascript:void(0)" data-field="private" data-order= "-1">Visibility</a>
         </li>
         <li class="sort-item">
-          <a href= "javascript:void(0)" data-field="imported" data-order= "-1">Imported</a>
+          <a href= "javascript:void(0)" data-field="cached_at" data-order= "-1">Imported</a>
         </li>
         <li class="sort-item">
           <a href= "javascript:void(0)" data-field="name" data-order= "-1">Name</a>

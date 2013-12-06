@@ -112,9 +112,9 @@ class ProjectService
     end
 
     if fileurl
-      project_file = Github.fetch_project_file_directly(user, filename, branch, fileurl)
+      project_file = Github.fetch_project_file_directly(filename, branch, fileurl, user[:github_token])
     else
-      project_file = Github.project_file_from_branch( user, repo_name, filename, branch )
+      project_file = Github.fetch_project_file_from_branch(repo_name, filename, branch, user[:github_token] )
     end
 
     if project_file.nil?
