@@ -15,11 +15,11 @@ class ServicesController < ApplicationController
       return nil
     end
 
-    orig_filename       =  file['datafile'].original_filename
+    orig_filename       = file['datafile'].original_filename
     filename            = nil
-    filename            = S3.upload_fileupload( file )
-    url                 = S3.url_for( filename )
-    project             = ProjectService.build_from_url( url )
+    filename            = S3.upload_fileupload file
+    url                 = S3.url_for filename
+    project             = ProjectService.build_from_url url
     project.name        = Project.create_random_value
     project.s3_filename = filename
     project.source      = Project::A_SOURCE_UPLOAD
@@ -28,7 +28,7 @@ class ServicesController < ApplicationController
     if !project.dependencies.nil? && !project.dependencies.empty? && project.save
       project.save_dependencies
     else
-      flash[:error] = "Ups. An error occured. Something is wrong with your file."
+      flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye team."
     end
     redirect_to service_path( project.id )
   rescue => e

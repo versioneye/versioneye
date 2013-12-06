@@ -15,7 +15,7 @@ class ProjectService
     return nil
   end
 
-  def self.store( project )
+  def self.store project
     return false if project.nil?
 
     project.make_project_key!
@@ -28,19 +28,19 @@ class ProjectService
     end
   end
 
-  def self.update_all( period )
+  def self.update_all period
     update_projects period
     update_collaborators_projects period
   end
 
-  def self.update_projects( period )
-    projects = Project.by_period( period )
+  def self.update_projects period
+    projects = Project.by_period period
     projects.each do |project|
       self.update( project, true )
     end
   end
 
-  def self.update_collaborators_projects( period )
+  def self.update_collaborators_projects period
     collaborators = ProjectCollaborator.by_period( period )
     collaborators.each do |collaborator|
       project = collaborator.project
@@ -57,12 +57,12 @@ class ProjectService
     end
   end
 
-  def self.update( project, send_email = false )
+  def self.update project, send_email = false
     return nil if project.nil?
     return nil if project.user_id.nil? || project.user.nil?
     return nil if project.user.deleted
-    self.update_url( project )
-    new_project = self.build_from_url( project.url )
+    self.update_url project
+    new_project = self.build_from_url project.url
     project.update_from( new_project )
     if send_email && project.out_number > 0 && project.user.email_inactive == false
       Rails.logger.info "send out email notification for project: #{project.name} to user #{project.user.fullname}"
@@ -75,7 +75,7 @@ class ProjectService
     nil
   end
 
-  def self.update_url( project )
+  def self.update_url project
     if project.source.eql?( Project::A_SOURCE_GITHUB )
       self.update_project_file_from_github( project )
     end
@@ -84,7 +84,7 @@ class ProjectService
     end
   end
 
-  def self.update_project_file_from_github( project )
+  def self.update_project_file_from_github project
     project_file = Github.project_file_from_branch(project.user, project.github_project, project.filename, project.github_branch)
     if project_file.nil? || project_file.empty?
       Rails.logger.error "Importing project file from Github failed."
@@ -106,7 +106,7 @@ class ProjectService
    - Parsing the project_file to a new project
    - Storing the new project to DB
 =end
-  def self.import_from_github(user, repo_name, filename, branch = "master", fileurl = nil)
+  def self.import_from_github user, repo_name, filename, branch = "master", fileurl = nil
     private_project = Github.private_repo? user.github_token, repo_name
     if !allowed_to_add_project?( user, private_project )
       return "Please upgrade your plan to monitor the selected project."
@@ -147,12 +147,12 @@ class ProjectService
     return parsed_project if store( parsed_project )
   end
 
-  def self.build_from_url( url )
-    project_type = type_by_filename( url )
+  def self.build_from_url url
+    project_type = type_by_filename url
     parser       = ParserStrategy.parser_for( project_type, url )
     parser.parse url
   rescue => e
-    Rails.logger.error e.message
+    Rails.logger.error "Error in build_from_url(url) -> e.message"
     Rails.logger.error e.backtrace.join("\n")
     project = Project.new
   end
@@ -181,7 +181,7 @@ class ProjectService
   # Returns a map with
   #  - :key => "language_prod_key"
   #  - :value => "Array of project IDs where the prod_key is used"
-  def self.user_product_index_map(user, add_collaborated = true)
+  def self.user_product_index_map user, add_collaborated = true
     indexes = Hash.new
     projects = user.projects
     return indexes if projects.nil?
