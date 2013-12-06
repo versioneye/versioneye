@@ -84,19 +84,25 @@ class ProductsController < ApplicationController
   end
 
   def badge
-    language = Product.decode_language( params[:lang] )
+    language = Product.decode_language params[:lang]
     prod_key = Product.decode_prod_key params[:key]
-    version  = Version.decode_version params[:version]
-    badge    = badge_for_product( language, prod_key, version )
+    version  = Version.decode_version  params[:version]
+    badge    = badge_for_product language, prod_key, version
     send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
   end
 
   def references
-    language  = Product.decode_language( params[:lang] )
-    prod_key  = Product.decode_prod_key params[:key]
-    @product  = Product.fetch_product language, prod_key
-    prod_keys = Dependency.where(:language => language, :dep_prod_key => prod_key).distinct(:prod_key)
-    @products = Product.by_prod_keys(language, prod_keys).paginate(:page => params[:page])
+    language   = Product.decode_language params[:lang]
+    prod_key   = Product.decode_prod_key params[:key]
+    page       = parse_page params[:page]
+    @product   = Product.fetch_product language, prod_key
+    response   = Dependency.references language, prod_key, page
+    products   = Product.by_prod_keys language, response[:prod_keys]
+    pre_amount = (page.to_i - 1) * 30
+    pre        = Array.new pre_amount
+    @products  = pre + products
+    @products  = @products.paginate(:page => page, :per_page => 30)
+    @products.total_entries = response[:count]
   end
 
   def edit
@@ -245,6 +251,12 @@ class ProductsController < ApplicationController
   end
 
   private
+
+    def parse_page page
+      return 1 if page.to_s.empty?
+      return 1 if page.to_i < 1
+      page
+    end
 
     def format_autocomplete(product)
       {

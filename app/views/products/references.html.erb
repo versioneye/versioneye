@@ -11,7 +11,7 @@
 
 <div class="span8" >
   <div class="row content_header_def" >
-    <em> `<%= @product.name %>`</em> has <%= @products.total_entries %> references
+    <em> `<%= @product.name %>`</em> has <%= pluralize( @products.total_entries , "reference")  %>
   </div>
   <div class="content">
     <%= render :partial => "products/show_search_results",

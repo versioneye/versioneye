@@ -75,11 +75,11 @@ class StatisticService
       results << stats
     end
 
-
     return results
   end
 
   def self.diff_in_months(date1, date2)
     (date2.year*12+date2.month) - (date1.year*12+date1.month)
   end
+
 end
