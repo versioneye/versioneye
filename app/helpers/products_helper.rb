@@ -51,7 +51,7 @@ module ProductsHelper
     product = Product.fetch_product language, prod_key
     return "unknown" if product.nil?
 
-    product.version = version
+    product.version = version if version
     dependencies = product.dependencies
     if dependencies.nil? || dependencies.empty?
       badge = "none"

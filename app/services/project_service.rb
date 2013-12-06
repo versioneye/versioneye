@@ -1,6 +1,7 @@
 class ProjectService
 
-  def self.type_by_filename( filename )
+  def self.type_by_filename filename
+    return nil if filename.to_s.empty?
     trimmed_name = filename.split("?")[0]
     return Project::A_TYPE_RUBYGEMS  if trimmed_name.match(/Gemfile$/)          or trimmed_name.match(/Gemfile.lock$/)
     return Project::A_TYPE_COMPOSER  if trimmed_name.match(/composer.json$/)    or trimmed_name.match(/composer.lock$/)
