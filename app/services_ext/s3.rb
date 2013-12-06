@@ -14,32 +14,58 @@ class S3
     AWS::S3::S3Object.delete filename, Settings.s3_projects_bucket
   end
 
-  def self.upload_fileupload( fileUp )
+  def self.upload_fileupload fileUp
     orig_filename =  fileUp['datafile'].original_filename
     fname = self.sanitize_filename(orig_filename)
     random = Project.create_random_value
     filename = "#{random}_#{fname}"
-    AWS::S3::S3Object.store(filename,
-      fileUp['datafile'].read,
-      Settings.s3_projects_bucket,
-      :access => "private")
+
+    self.store_in_project_bucket filename, fileUp['datafile'].read
+
     filename
+  rescue => e
+    Rails.logger.error "Exception in S3.upload_fileupload(fileUp) - #{e.message}"
+    Rails.logger.error e.backtrace.join "\n"
+    nil
   end
 
-  def self.upload_github_file(file, filename)
+  def self.upload_github_file file, filename
     file_bin     = file['content']
     random_value = Project.create_random_value
     new_filename = "#{random_value}_#{filename}"
-    AWS::S3::S3Object.store(
-      new_filename,
-      Base64.decode64(file_bin),
-      Settings.s3_projects_bucket,
-      :access => "private")
+
+    self.store_in_project_bucket new_filename, Base64.decode64(file_bin)
+
     url                = S3.url_for( new_filename )
     result             = Hash.new
     result['filename'] = new_filename
     result['s3_url']   = url
     result
+  end
+
+  def self.connect
+    # AWS::S3::Base.establish_connection!(
+    #   :access_key_id     => Settings.aws_s3_access_key_id,
+    #   :secret_access_key => Settings.aws_s3_secret_access_key )
+    AWS::S3::Base.establish_connection!(
+      :access_key_id     => Settings.aws_s3_access_key_id,
+      :secret_access_key => Settings.aws_s3_secret_access_key,
+      :server => "localhost",
+      :port => "4567"
+    )
+  rescue => e
+    p "error in s3.connect: #{e.message}"
+    p e.backtrace.message
+  end
+
+  def self.store_in_project_bucket filename, bin
+    self.connect
+    AWS::S3::S3Object.store( filename, bin, Settings.s3_projects_bucket, :access => "private")
+  rescue => e
+    p "Error in store_in_project_bucket: #{e.message}"
+    p e.backtrace.message
+
+    # AWS::S3::S3Object.store( filename, bin, Settings.s3_projects_bucket, :access => "private")
   end
 
   private

@@ -30,7 +30,7 @@ module ProjectHelpersV1
     project.remove
   end
 
-  def upload_and_store(file)
+  def upload_and_store file
     project = upload file
     ProjectService.store project
     project
@@ -38,7 +38,7 @@ module ProjectHelpersV1
 
   def upload file
     project_name = file['datafile'].original_filename
-    filename = S3.upload_fileupload(file )
+    filename = S3.upload_fileupload file
     url = S3.url_for( filename )
     project_type = ProjectService.type_by_filename( url )
     project = create_project(project_type, url, project_name)
