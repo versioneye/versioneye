@@ -48,9 +48,9 @@
     </form>
 
     <script type="text/javascript">
-      image_url = "<%= product_badge_url(@product) %>" + ".png"
+      image_url = "<%= product_badge_url(@product, :lang => @product.language_esc) %>" + ".png"
 
-      markdown_url = "[![Dependency Status]("+image_url+")](<%= products_url(@product) %>)"
+      markdown_url = "[![Dependency Status]("+image_url+")](<%= products_url(@product, :lang => @product.language_esc) %>)"
       element = document.getElementById("badge_for_markdown")
       element.value = markdown_url
 
