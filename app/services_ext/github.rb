@@ -20,7 +20,7 @@ class Github
   })
 
   def self.token code
-    response = Octokit.exchange_code_for_token(code, Settings.github_client_id, Settings.github_client_secret)
+    response = Octokit.exchange_code_for_token code, Settings.github_client_id, Settings.github_client_secret
     response.access_token
   end
 
@@ -33,7 +33,7 @@ class Github
     nil
   end
 
-  def self.oauth_scopes( token )
+  def self.oauth_scopes token
     client = user_client token
     client.scopes token
   rescue => e
@@ -51,7 +51,7 @@ class Github
     nil
   end
 
-  def self.user_repos_changed?( user )
+  def self.user_repos_changed? user
     repo = user.github_repos.all.first
     #if user don't have any repos in cache, then force to load data
     return true if repo.nil?
@@ -83,16 +83,17 @@ class Github
     return n
   end
 
-  def self.user_repos(user, url = nil, page = 1, per_page = 30)
+  def self.user_repos user, url = nil, page = 1, per_page = 30
     url = "#{A_API_URL}/user/repos?page=#{page}&per_page=#{per_page}&access_token=#{user.github_token}" if url.nil?
     read_repos(user, url, page, per_page)
   end
 
-  def self.user_orga_repos(user, orga_name, url = nil, page = 1, per_page = 30)
+  def self.user_orga_repos user, orga_name, url = nil, page = 1, per_page = 30
     url = "#{A_API_URL}/orgs/#{orga_name}/repos?access_token=#{user.github_token}" if url.nil?
     read_repos(user, url, page, per_page)
   end
-  def self.read_repo_data(user, repo, try_n = 3)
+
+  def self.read_repo_data user, repo, try_n = 3
     project_files = nil
     branch_docs = self.repo_branches(user, repo['full_name'])
     if branch_docs and !branch_docs.nil?
@@ -119,11 +120,11 @@ class Github
     repo
   end
 
-  def self.execute_job(workers)
+  def self.execute_job workers
     workers.each {|worker| worker.join}
   end
 
-  def self.read_repos(user, url, page = 1, per_page = 30)
+  def self.read_repos user, url, page = 1, per_page = 30
     response        = get(url, headers: A_DEFAULT_HEADERS)
     data            = catch_github_exception JSON.parse(response.body)
     data            = [] if data.nil?
@@ -161,19 +162,19 @@ class Github
     repos
   end
 
-  def self.repo_branches(user, repo_name)
+  def self.repo_branches user, repo_name
     url = "#{A_API_URL}/repos/#{repo_name}/branches?access_token=#{user.github_token}"
     response = get(url, headers: A_DEFAULT_HEADERS)
     catch_github_exception JSON.parse(response.body)
   end
 
-  def self.repo_branch_info(user, repo_name, branch = "master")
+  def self.repo_branch_info user, repo_name, branch = "master"
     url = "#{A_API_URL}/repos/#{repo_name}/branches/#{branch}?access_token=#{user.github_token}"
     response = get(url, headers: A_DEFAULT_HEADERS)
     catch_github_exception JSON.parse(response.body)
   end
 
-  def self.project_file_from_branch(user, repo_name, filename, branch = "master")
+  def self.project_file_from_branch user, repo_name, filename, branch = "master"
     branch_info = Github.repo_branch_info user, repo_name, branch
     if branch_info.nil?
       Rails.logger.error "Cancelling importing: can't read branch info."
@@ -195,17 +196,17 @@ class Github
   end
 
 
-  def self.fetch_project_file_directly(user, filename, branch, url)
-    project_file = fetch_project_from_url(user, url)
+  def self.fetch_project_file_directly user, filename, branch, url
+    project_file = fetch_project_from_url user, url
     return nil if project_file.nil?
 
-    project_file["name"] = filename
-    project_file["type"] = ProjectService.type_by_filename(filename)
+    project_file["name"]   = filename
+    project_file["type"]   = ProjectService.type_by_filename filename
     project_file["branch"] = branch
     project_file
   end
 
-  def self.fetch_project_from_url(user, url)
+  def self.fetch_project_from_url user, url
     Github.fetch_file url, user.github_token
   rescue => e
     Rails.logger.error e.message

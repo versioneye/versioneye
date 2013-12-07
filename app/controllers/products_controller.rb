@@ -84,10 +84,10 @@ class ProductsController < ApplicationController
   end
 
   def badge
-    language = Product.decode_language( params[:lang] )
+    language = Product.decode_language params[:lang]
     prod_key = Product.decode_prod_key params[:key]
-    version  = Version.decode_version params[:version]
-    badge    = badge_for_product( language, prod_key, version )
+    version  = Version.decode_version  params[:version]
+    badge    = badge_for_product language, prod_key, version
     send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
   end
 
