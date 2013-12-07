@@ -25,7 +25,7 @@ gem 'grape'              , '0.6.1'
 gem 'grape-entity'       , '0.3.0'
 gem 'grape-swagger'      , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
 gem 'htmlentities'       , '4.3.1'
-gem 'capistrano'         , '2.15.5'
+gem 'capistrano'         , '3.0.1'
 gem 'whenever'           , '0.8.4'
 gem 'bourbon'            , '3.1.8'
 gem 'ruby_regex'         , '~> 0.1.0'
@@ -59,7 +59,7 @@ group :test do
   gem 'selenium-webdriver', '2.38.0'
   gem 'fakeweb'           , '1.3.0'
   gem 'vcr'               , '~> 2.8.0',  :require => false
-  gem 'webmock'           , '1.15.2', :require => false
+  gem 'webmock'           , '1.16.0', :require => false
   gem 'database_cleaner'  , '1.2.0'
   gem 'factory_girl'      , '4.3.0'
   gem 'factory_girl_rails', '4.3.0'
