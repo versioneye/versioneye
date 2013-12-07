@@ -15,7 +15,7 @@ gem 'oauth'              , '0.4.7'
 gem 'twitter_oauth'      , '0.4.94'
 gem 'aws-sdk'            , '~> 1.0'
 gem 'nokogiri'           , '1.6.0'
-gem 'stripe'             , '1.8.8'
+gem 'stripe'             , '1.9.9'
 gem 'unicorn'            , '4.7.0'
 gem 'tire'               , '0.6.1'
 gem 'json'               , '~> 1.8.0'
@@ -56,7 +56,7 @@ group :test do
   gem 'rspec-mocks'       , '2.14.4'
   gem 'capybara'          , '~> 2.2.0'
   gem 'capybara-firebug'  , '~> 2.0.0'
-  gem 'selenium-webdriver', '2.37.0'
+  gem 'selenium-webdriver', '2.38.0'
   gem 'fakeweb'           , '1.3.0'
   gem 'vcr'               , '~> 2.8.0',  :require => false
   gem 'webmock'           , '1.15.2', :require => false

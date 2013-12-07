@@ -44,15 +44,22 @@ module ProductsHelper
   end
 
   def badge_for_product( language, prod_key, version )
-    key = "#{language}_#{prod_key}_#{version}"
+    product = nil
+    if version.nil?
+      product = Product.fetch_product language, prod_key
+      version = product.version
+    end
+
+    key   = "#{language}_#{prod_key}_#{version}"
     badge = Rails.cache.read( key )
     return badge if badge
 
-    product = Product.fetch_product language, prod_key
+    product = Product.fetch_product language, prod_key if product.nil?
     return "unknown" if product.nil?
 
     product.version = version if version
-    dependencies = product.dependencies
+    dependencies    = product.dependencies
+
     if dependencies.nil? || dependencies.empty?
       badge = "none"
       Rails.cache.write( key, badge, timeToLive: 1.hour )

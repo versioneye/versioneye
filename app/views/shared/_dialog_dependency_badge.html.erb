@@ -50,7 +50,7 @@
 
     <script type="text/javascript">
       image_url = document.URL + "/badge.png"
-      url = document.URL
+      url       = document.URL
       <% if @product %>
         image_url = "<%= product_badge_url(@product, :lang => @product.language_esc) %>" + ".png"
         url = "<%= products_url(@product, :lang => @product.language_esc) %>"
