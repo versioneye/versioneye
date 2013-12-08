@@ -231,7 +231,7 @@ Versioneye::Application.routes.draw do
   get   '/:lang',                             :to => 'language#show'
   get   '/:lang/:key/references',             :to => 'products#references', :constraints => { :key => /[^\/]+/ }, :as => 'product_references'
   get   '/:lang/:key/badge',                  :to => 'products#badge',      :constraints => { :key => /[^\/]+/ }, :as => 'product_badge'
-  get   '/:lang/:key/:version/badge',         :to => 'products#badge',      :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/:lang/:key/:version/badge',         :to => 'products#badge',      :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'product_version_badge'
 
   get   '/:lang/:key/visual_dependencies'         , :to => 'products#show_visual', :constraints => { :key => /[^\/]+/ }
   get   '/:lang/:key/:version/visual_dependencies', :to => 'products#show_visual', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'visual_dependencies'

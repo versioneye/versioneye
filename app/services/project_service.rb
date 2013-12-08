@@ -113,9 +113,9 @@ class ProjectService
     end
 
     if fileurl
-      project_file = Github.fetch_project_file_directly(user, filename, branch, fileurl)
+      project_file = Github.fetch_project_file_directly(filename, branch, fileurl, user[:github_token])
     else
-      project_file = Github.project_file_from_branch( user, repo_name, filename, branch )
+      project_file = Github.fetch_project_file_from_branch(repo_name, filename, branch, user[:github_token] )
     end
 
     if project_file.nil?
@@ -124,17 +124,17 @@ class ProjectService
       return error_msg
     end
 
-    s3_info = S3.upload_github_file( project_file, project_file['name'] )
+    s3_info = S3.upload_github_file( project_file, project_file[:name] )
     if s3_info.nil? && !s3_info.has_key?('filename') && !s3_info.has_key?('s3_url')
       error_msg = "Connectivity issues - can't import project file for parsing."
-      Rails.logger.error " Can't upload file to s3: #{project_file['name']}"
+      Rails.logger.error " Can't upload file to s3: #{project_file[:name]}"
       return error_msg
     end
 
     parsed_project = build_from_url s3_info['s3_url']
     parsed_project.update_attributes({
       name: repo_name,
-      project_type: project_file['type'],
+      project_type: project_file[:type],
       user_id: user.id.to_s,
       source: Project::A_SOURCE_GITHUB,
       github_project: repo_name,

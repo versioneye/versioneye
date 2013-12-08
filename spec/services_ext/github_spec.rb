@@ -217,7 +217,6 @@ describe Github do
 
     it "should response hash-map where 'repos' are empty array when user has wrong credentials" do
       response = Github.read_repos(user_without_token, url_start)
-
       response.should_not be_nil
       response.has_key?(:repos).should be_true
       response[:repos].empty?.should be_true
@@ -253,19 +252,19 @@ describe Github do
     end
 
     it "should nil when user is having wrong credentials" do
-      Github.repo_branches(user_without_token, "versioneye/spec").should be_nil
+      Github.repo_branches("versioneye/spec", user_without_token[:github_token]).should be_nil
     end
 
     it "should correct name of branch of given repositories" do
-      Github.repo_branches(user_without_token, "versioneye/spec").should be_nil
+      Github.repo_branches("versioneye/spec", user_without_token[:github_token]).should be_nil
 
-      branches = Github.repo_branches(user_with_token, "versioneye/spec")
+      branches = Github.repo_branches("versioneye/spec", user_with_token[:github_token])
       branches.should_not be_nil
       branches.count.should eql(1)
 
-      branches.first.has_key?('name').should be_true
-      branches.first['name'].should eql('master')
-      branches.first['commit']['sha'].should eql("6dcb09b5b57875f334f61aebed695e2e4193db5e")
+      branches.first.has_key?(:name).should be_true
+      branches.first[:name].should eql('master')
+      branches.first[:commit][:sha].should eql("6dcb09b5b57875f334f61aebed695e2e4193db5e")
     end
   end
 
@@ -283,15 +282,18 @@ describe Github do
     end
 
     it "should return nil when user uses wrong credentials" do
-      Github.repo_branch_info(user_without_token, "versioneye/spec", "master").should be_nil
+      token = user_without_token[:github_token]
+      Github.repo_branch_info("versioneye/spec", "master", token).should be_nil
     end
 
     it "should return proper data when user uses correct info" do
-      Github.repo_branch_info(user_without_token, "versioneye/spec", "master").should be_nil
+      token = user_without_token[:github_token]
+      Github.repo_branch_info("versioneye/spec", "master", token).should be_nil
 
-      branch_info = Github.repo_branch_info(user_with_token, "versioneye/spec", "master")
+      token = user_with_token[:github_token]
+      branch_info = Github.repo_branch_info("versioneye/spec", "master", token)
       branch_info.should_not be_nil
-      branch_info['name'].should eql('master')
+      branch_info[:name].should eql('master')
     end
   end
 
@@ -317,7 +319,7 @@ describe Github do
     end
 
     it "should return empty array when github returns exception"  do
-      Github.orga_names(user_without_token.github_token).empty?.should be_true
+      Github.orga_names(user_without_token[:github_token]).empty?.should be_true
     end
 
     it "should return list with right names" do
