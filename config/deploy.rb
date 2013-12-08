@@ -1,46 +1,82 @@
-# Automatically precompile assets
-load "deploy/assets"
 
-# Execute "bundle install" after deploy, but only when really needed
-require "bundler/capistrano"
+set :application, 'versioneye'
 
-set :application, "versioneye"
-set :repository , "git@github.com:versioneye/versioneye.git"
-
-set :scm, :git
+set :scm     , :git
+set :repo_url, 'git@github.com:versioneye/versioneye.git'
+set :branch  , "master"
 
 set :ssh_options, {:forward_agent => true}
+set :user       , "ubuntu"
+set :use_sudo   , false
+set :deploy_to  , '/var/www/versioneye'
 
-set :deploy_to, "/var/www/versioneye"
+set :format   , :pretty
+set :log_level, :debug
 
-role :web, "yunicon_app"                      # Your HTTP server, Apache/etc
-role :app, "yunicon_app"                      # This may be the same as your `Web` server
-role :db,  "yunicon_app", :primary => true    # This is where Rails migrations will run
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+set :keep_releases, 7
 
-set :rails_env, :production
-
-set :user, "versioneye"
-set :use_sudo, false
+desc "Check that we can access everything"
+task :check_write_permissions do
+  on roles(:all) do |host|
+    if test("[ -w #{fetch(:deploy_to)} ]")
+      info "#{fetch(:deploy_to)} is writable on #{host}"
+    else
+      error "#{fetch(:deploy_to)} is not writable on #{host}"
+    end
+  end
+end
 
 namespace :deploy do
 
-  task :start, :roles => :app, :except => { :no_release => true } do
-    run "/etc/init.d/unicorn start"
+  desc 'Start application'
+  task :start do
+    on roles(:app), in: :sequence, wait: 5 do
+      run "/etc/init.d/unicorn start"
+    end
   end
 
-  task :stop, :roles => :app, :except => { :no_release => true } do
-    run "/etc/init.d/unicorn stop"
+  desc 'Stop application'
+  task :stop do
+    on roles(:app), in: :sequence, wait: 5 do
+      run "/etc/init.d/unicorn stop"
+    end
   end
 
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "/etc/init.d/unicorn restart"
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      run "/etc/init.d/unicorn restart"
+    end
   end
 
   # Precompile assets
-  namespace :assets do
-    task :precompile, :roles => :web, :except => { :no_release => true } do
-      run %Q{cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile}
-    end
-  end
+  # namespace :assets do
+
+  #   desc 'Precompile all assets'
+  #   task :precompile, :roles => :app, :except => { :no_release => true } do
+  #     run %Q{cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile}
+  #   end
+
+  # end
+
+  # desc 'Restart application'
+  # task :restart do
+  #   on roles(:app), in: :sequence, wait: 5 do
+  #     # Your restart mechanism here, for example:
+  #     # execute :touch, release_path.join('tmp/restart.txt')
+  #   end
+  # end
+
+  # after :restart, :clear_cache do
+  #   on roles(:web), in: :groups, limit: 3, wait: 10 do
+  #     # Here we can do anything such as:
+  #     # within release_path do
+  #     #   execute :rake, 'cache:clear'
+  #     # end
+  #   end
+  # end
+
+  after :finishing, 'deploy:cleanup'
 
 end

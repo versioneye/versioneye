@@ -25,7 +25,6 @@ gem 'grape'              , '0.6.1'
 gem 'grape-entity'       , '0.3.0'
 gem 'grape-swagger'      , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
 gem 'htmlentities'       , '4.3.1'
-gem 'capistrano'         , '3.0.1'
 gem 'whenever'           , '0.8.4'
 gem 'bourbon'            , '3.1.8'
 gem 'ruby_regex'         , '~> 0.1.0'
@@ -33,11 +32,13 @@ gem 'cocoapods-core'     , '0.28.0'
 gem 'octokit'            , "~> 2.6.0"
 
 group :development do
-  gem 'psych'             , '~> 2.0.0'
-  gem 'irbtools'          , '1.5.1'
-  gem 'terminal-notifier' , '1.5.1'
-  gem 'fakes3'            , '0.1.5.2'
-  gem 'debugger'          , '~> 1.6.0'
+  gem 'capistrano'       , '3.0.1'
+  gem 'capistrano-rails' , '1.1.0'
+  gem 'psych'            , '~> 2.0.0'
+  gem 'irbtools'         , '1.5.1'
+  gem 'terminal-notifier', '1.5.1'
+  gem 'fakes3'           , '0.1.5.2'
+  gem 'debugger'         , '~> 1.6.0'
 end
 
 group :assets do
