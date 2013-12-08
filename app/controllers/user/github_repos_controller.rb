@@ -75,15 +75,16 @@ class User::GithubReposController < ApplicationController
 
     case params[:command]
     when "import"
-      repo = import_repo command_data, project_name, branch, filename, branch_files
+      repo = import_repo(command_data, project_name, branch, filename, branch_files)
     when "remove"
-      repo = remove_repo command_data, project_name, branch, filename, branch_files
+      repo = remove_repo(command_data, project_name, branch, filename, branch_files)
+    when "update"
+      repo = update_repo(command_data)
     end
-
-    repo[:command_data] = command_data
     render json: repo
   rescue => e
     Rails.logger.error "Error in create: #{e.message}"
+    Rails.logger.error e.backtrace.join('\n')
     render text: e.message, status: 503 and return
   end
 
@@ -134,7 +135,7 @@ class User::GithubReposController < ApplicationController
   private
 
 
-    def import_repo command_data, project_name, branch, filename, branch_files
+    def import_repo(command_data, project_name, branch, filename, branch_files)
       matching_files = branch_files.keep_if {|file| file['path'] == filename}
       url            = matching_files.first[:url] unless matching_files.empty?
       project        = ProjectService.import_from_github current_user, project_name, filename, branch, url
@@ -150,6 +151,7 @@ class User::GithubReposController < ApplicationController
       command_data[:githubProjectId] = project[:_id].to_s
       repo = GithubRepo.find(params[:_id])
       repo = process_repo(repo)
+      repo[:command_data] = command_data
       repo[:command_result] = {
         project_id: project[:_id].to_s,
         filename: filename,
@@ -162,7 +164,7 @@ class User::GithubReposController < ApplicationController
     end
 
 
-    def remove_repo command_data, project_name, branch, filename, branch_files
+    def remove_repo(command_data, project_name, branch, filename, branch_files)
       id = command_data[:githubProjectId]
       project_exists = Project.where(_id: id).exists?
 
@@ -173,6 +175,7 @@ class User::GithubReposController < ApplicationController
       ProjectService.destroy id
       repo = GithubRepo.find(params[:_id])
       repo = process_repo(repo)
+      repo[:command_data] = command_data
       repo[:command_result] = {
         filename: filename,
         branch: branch,
@@ -181,6 +184,18 @@ class User::GithubReposController < ApplicationController
       repo
     end
 
+
+    def update_repo(command_data)
+      Rails.logger.debug "Going to update repo-info for #{command_data}"
+      repo = GitHubService.update_repo_info current_user, command_data["repoFullname"]
+      repo = process_repo(repo)
+      repo[:command_data] = command_data
+      repo[:command_result] = {
+        status: "updated"
+      }
+
+      repo
+    end
 
 =begin
   adds additional metadata for each item in repo collection,

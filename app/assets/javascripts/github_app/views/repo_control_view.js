@@ -8,6 +8,7 @@ define([
          evaluate: /\{\{(.+?)\}\}/g
     };
 
+    //TODO: rename as GithubRepoTableView and subitems GithubRepoRowView
     var GithubRepoControlView = Backbone.View.extend({
       tagName: "table",
       className: "github-repo-control table table-striped row-fluid",
