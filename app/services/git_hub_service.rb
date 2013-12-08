@@ -85,15 +85,15 @@ class GitHubService
   end
 
 
-  def self.update_repo_info(user, repo_fullname)
+  def self.update_repo_info user, repo_fullname
     current_repo = GithubRepo.by_user(user).by_fullname(repo_fullname).shift
     if current_repo.nil?
       Rails.logger.error "User #{user[:username]} has no such repo `#{repo_fullname}`."
       return nil
     end
 
-    repo_info = Github.repo_info(repo_fullname, user[:github_token])
-    repo_info = Github.read_repo_data(repo_info, user[:github_token])
+    repo_info = Github.repo_info repo_fullname, user[:github_token]
+    repo_info = Github.read_repo_data repo_info, user[:github_token]
     updated_repo = GithubRepo.build_new(user, repo_info)
     current_repo.update_attributes(updated_repo.attributes)
     current_repo
