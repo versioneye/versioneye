@@ -1,9 +1,9 @@
 #------------------------------------------------------------------------------
 # Github - helper functions to manage Github's data.
 #
-# NB! For consistancy: every function that returns hash-map, should have 
+# NB! For consistancy: every function that returns hash-map, should have
 # symbolized keys. For that you can use 2 helpers function:
-#  
+#
 #  * {'a' => 1}.deep_symbolize_keys - encodes keys recursively
 #
 #  * JSON.parse(json_string, symbolize_names: true)
@@ -35,7 +35,7 @@ class Github
   })
 
   def self.token code
-    response = Octokit.exchange_code_for_token(code, Settings.github_client_id, Settings.github_client_secret)
+    response = Octokit.exchange_code_for_token code, Settings.github_client_id, Settings.github_client_secret
     response.access_token
   end
 
@@ -48,7 +48,7 @@ class Github
     nil
   end
 
-  def self.oauth_scopes( token )
+  def self.oauth_scopes token
     client = user_client token
     client.scopes token
   rescue => e
@@ -66,7 +66,7 @@ class Github
     nil
   end
 
-  def self.user_repos_changed?( user )
+  def self.user_repos_changed? user
     repo = user.github_repos.all.first
     #if user don't have any repos in cache, then force to load data
     return true if repo.nil?
@@ -98,23 +98,22 @@ class Github
     return n
   end
 
-  def self.user_repos(user, url = nil, page = 1, per_page = 30)
+  def self.user_repos user, url = nil, page = 1, per_page = 30
     url = "#{A_API_URL}/user/repos?page=#{page}&per_page=#{per_page}&access_token=#{user.github_token}" if url.nil?
     read_repos(user, url, page, per_page)
   end
 
-  def self.user_orga_repos(user, orga_name, url = nil, page = 1, per_page = 30)
+  def self.user_orga_repos user, orga_name, url = nil, page = 1, per_page = 30
     url = "#{A_API_URL}/orgs/#{orga_name}/repos?access_token=#{user.github_token}" if url.nil?
     read_repos(user, url, page, per_page)
   end
 
-  def self.repo_info(repo_fullname, token)
+  def self.repo_info repo_fullname, token
     get_json "#{A_API_URL}/repos/#{repo_fullname}", token
   end
 
-  def self.read_repo_data(repo, token, try_n = 3)
+  def self.read_repo_data repo, token, try_n = 3
     return nil if repo.nil?
-
     project_files = nil
     repo = repo.deep_symbolize_keys
     fullname = repo[:full_name]
@@ -143,11 +142,11 @@ class Github
     repo
   end
 
-  def self.execute_job(workers)
+  def self.execute_job workers
     workers.each {|worker| worker.join}
   end
 
-  def self.read_repos(user, url, page = 1, per_page = 30)
+  def self.read_repos user, url, page = 1, per_page = 30
     response        = get(url, headers: A_DEFAULT_HEADERS)
     data            = catch_github_exception JSON.parse(response.body, symbolize_names: true)
     data            = [] if data.nil?
@@ -187,18 +186,18 @@ class Github
     repos
   end
 
-  def self.repo_branches(repo_name, token)
+  def self.repo_branches repo_name, token
     url = "#{A_API_URL}/repos/#{repo_name}/branches"
     get_json(url, token)
   end
 
-  def self.repo_branch_info(repo_name, branch = "master", token = nil)
+  def self.repo_branch_info repo_name, branch = "master", token = nil
     url = "#{A_API_URL}/repos/#{repo_name}/branches/#{branch}"
     response = get_json(url, token)
   end
 
-  def self.fetch_project_file_from_branch(repo_name, filename, branch = "master", token = nil)
-    branch_info = Github.repo_branch_info(repo_name, branch, token)
+  def self.fetch_project_file_from_branch repo_name, filename, branch = "master", token = nil
+    branch_info = Github.repo_branch_info repo_name, branch, token
     if branch_info.nil?
       Rails.logger.error "Cancelling importing: can't read branch info."
       return nil
@@ -217,7 +216,6 @@ class Github
     project_file[:branch] = branch
     project_file
   end
-
 
   def self.fetch_project_file_directly(filename, branch, url, token)
     project_file = fetch_file(url, token)
