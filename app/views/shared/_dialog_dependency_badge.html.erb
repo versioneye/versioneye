@@ -52,8 +52,8 @@
       image_url = document.URL + "/badge.png"
       url       = document.URL
       <% if @product %>
-        image_url = "<%= product_badge_url(@product, :lang => @product.language_esc) %>" + ".png"
-        url = "<%= products_url(@product, :lang => @product.language_esc) %>"
+        image_url = "<%= product_version_badge_url(:lang => @product.language_esc, :key => @product.to_param, :version => @product.version) %>" + ".png"
+        url = "<%= package_version_url(:lang => @product.language_esc, :key => @product.to_param, :version => @product.version) %>"
       <% end %>
 
       markdown_url = "[![Dependency Status]("+image_url+")]("+url+")"
@@ -71,7 +71,6 @@
       html_url = "<a href='"+url+"'><img src='"+image_url+"' alt=\"Dependency Status\" /></a>"
       element_html = document.getElementById("badge_for_html")
       element_html.value = html_url
-
     </script>
 
   </div>
