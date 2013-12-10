@@ -106,10 +106,10 @@
       <div style = "margin-top: 20px;">
         <ul class = "nav nav-tabs" style="margin-bottom: 0" id="projectTabs">
           <li class = "active">
-          <a href = "#dependencies" data-toggle="tab" onclick="page_view('ga_project_dependencies')"><i class = "icon-puzzle-piece">&nbsp;</i>Dependencies</a>
+            <a href = "#dependencies" data-toggle="tab" onclick="page_view('ga_project_dependencies')"><i class = "icon-puzzle-piece">&nbsp;</i>Dependencies</a>
           </li>
           <li>
-          <a href = "#licenses" data-toggle="tab" onclick="page_view('ga_project_licenses')"><i class = "icon-tasks">&nbsp;</i>Licenses</a>
+            <a href = "#licenses" data-toggle="tab" onclick="page_view('ga_project_licenses')"><i class = "icon-tasks">&nbsp;</i>Licenses</a>
           </li>
           <% if signed_in? && @project.collaborator?( current_user ) %>
             <li>

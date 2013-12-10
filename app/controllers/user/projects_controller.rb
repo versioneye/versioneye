@@ -32,11 +32,11 @@ class User::ProjectsController < ApplicationController
   end
 
   def show
-    id = params[:id]
-    project = Project.find_by_id( id )
-    project = add_dependency_classes( project )
-    @project = project
-    @sorted_deps = sort_dependencies_by_rank(project)
+    id             = params[:id]
+    project        = Project.find_by_id( id )
+    project        = add_dependency_classes( project )
+    @project       = project
+    @sorted_deps   = sort_dependencies_by_rank(project)
     @collaborators = project.collaborators
 
     unless project.visible_for_user?(current_user)
