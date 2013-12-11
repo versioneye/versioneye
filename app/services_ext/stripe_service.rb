@@ -1,7 +1,7 @@
 class StripeService
 
   def self.fetch_customer customer_id
-    Stripe::Customer.retrieve( customer_id )
+    Stripe::Customer.retrieve customer_id
   end
 
   def self.create_customer stripe_token, plan_name_id, email
@@ -29,8 +29,17 @@ class StripeService
     nil
   end
 
-  def self.get_invoice( invoice_id )
-    Stripe::Invoice.retrieve( invoice_id )
+  def self.get_invoice invoice_id
+    Stripe::Invoice.retrieve invoice_id
+  end
+
+  def self.delete customer_id
+    return nil if customer_id.to_s.empty?
+    customer = self.fetch_customer customer_id
+    customer.delete
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join("\n")
   end
 
 end
