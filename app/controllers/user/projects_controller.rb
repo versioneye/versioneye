@@ -32,11 +32,11 @@ class User::ProjectsController < ApplicationController
   end
 
   def show
-    id = params[:id]
-    project = Project.find_by_id( id )
-    project = add_dependency_classes( project )
-    @project = project
-    @sorted_deps = sort_dependencies_by_rank(project)
+    id             = params[:id]
+    project        = Project.find_by_id( id )
+    project        = add_dependency_classes( project )
+    @project       = project
+    @sorted_deps   = sort_dependencies_by_rank(project)
     @collaborators = project.collaborators
 
     unless project.visible_for_user?(current_user)
@@ -47,7 +47,7 @@ class User::ProjectsController < ApplicationController
 
   def badge
     id    = params[:id]
-    badge = badge_for_project( id )
+    badge = ProjectService.badge_for_project id
     path  = "app/assets/images/badges"
     send_file "#{path}/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
   end
@@ -136,8 +136,8 @@ class User::ProjectsController < ApplicationController
 
   def reparse
     id = params[:id]
-    project = Project.find_by_id( id )
-    ProjectService.update( project )
+    project = Project.find_by_id id
+    ProjectService.update project
     flash[:info] = "Project re parse is done."
     redirect_to user_project_path( project )
   end

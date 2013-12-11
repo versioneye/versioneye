@@ -63,7 +63,8 @@ class ProjectService
     return nil if project.user.deleted
     self.update_url project
     new_project = self.build_from_url project.url
-    project.update_from( new_project )
+    project.update_from new_project
+    self.update_badge_for_project project
     if send_email && project.out_number > 0 && project.user.email_inactive == false
       Rails.logger.info "send out email notification for project: #{project.name} to user #{project.user.fullname}"
       ProjectMailer.projectnotification_email( project ).deliver
@@ -212,6 +213,26 @@ class ProjectService
     end
 
     indexes
+  end
+
+  def self.badge_for_project project_id
+    badge = Rails.cache.read project_id
+    return badge if badge
+
+    project = Project.find_by_id project_id
+    return "unknown" if project.nil?
+
+    update_badge_for_project project
+  end
+
+  def self.update_badge_for_project project
+    badge    = project.outdated? ? "out-of-date" : "up-to-date"
+    Rails.cache.write( project.id.to_s, badge, timeToLive: 1.day)
+    badge
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join "\n"
+    "unknown"
   end
 
 end
