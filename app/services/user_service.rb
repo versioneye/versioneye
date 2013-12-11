@@ -29,25 +29,26 @@ class UserService
     return true;
   end
 
-  def self.delete( user )
-    Notification.remove_notifications( user )
-    collaborators = ProjectCollaborator.by_user( user )
+  def self.delete user
+    Notification.remove_notifications user
+    collaborators = ProjectCollaborator.by_user user
     if !collaborators.nil? && !collaborators.empty?
       collaborators.each do |project_collaborator|
         project_collaborator.remove
       end
     end
-    random = create_random_value
-    user.deleted = true
-    user.email = "#{random}_#{user.email}"
-    user.prev_fullname = user.fullname
-    user.fullname = "Deleted"
-    user.username = "#{random}_#{user.username}"
-    user.github_id = nil
-    user.github_token = nil
-    user.github_scope = nil
-    user.twitter_id = nil
-    user.twitter_token = nil
+    StripeService.delete user.stripe_customer_id
+    random              = create_random_value
+    user.deleted        = true
+    user.email          = "#{random}_#{user.email}"
+    user.prev_fullname  = user.fullname
+    user.fullname       = "Deleted"
+    user.username       = "#{random}_#{user.username}"
+    user.github_id      = nil
+    user.github_token   = nil
+    user.github_scope   = nil
+    user.twitter_id     = nil
+    user.twitter_token  = nil
     user.twitter_secret = nil
     user.products.clear
     user.save
