@@ -27,6 +27,7 @@ class S3
   end
 
   def self.upload_github_file(file, filename)
+    return nil if file.nil? || filename.to_s.empty?
     file_bin     = file['content']
     random_value = Project.create_random_value
     new_filename = "#{random_value}_#{filename}"
