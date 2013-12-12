@@ -3,7 +3,7 @@ set :application, 'versioneye'
 
 set :scm     , :git
 set :repo_url, 'git@github.com:versioneye/versioneye.git'
-set :branch  , "master"
+set :branch  , "ruby_2"
 
 set :ssh_options, {:forward_agent => true}
 set :user       , "ubuntu"
@@ -32,21 +32,21 @@ namespace :deploy do
   desc 'Start application'
   task :start do
     on roles(:app), in: :sequence, wait: 5 do
-      run "/etc/init.d/unicorn start"
+      run %Q{/etc/init.d/unicorn start}
     end
   end
 
   desc 'Stop application'
   task :stop do
     on roles(:app), in: :sequence, wait: 5 do
-      run "/etc/init.d/unicorn stop"
+      run %Q{etc/init.d/unicorn stop}
     end
   end
 
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      run "/etc/init.d/unicorn restart"
+      run %Q{/etc/init.d/unicorn restart}
     end
   end
 
