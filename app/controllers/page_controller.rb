@@ -69,7 +69,7 @@ class PageController < ApplicationController
     product  = Product.find_by_key( prod_key )
     new_path = "/"
     if product
-      new_path += "#{product.language.downcase}/#{product.to_param}"
+      new_path += "#{product.language_esc}/#{product.to_param}"
       if version
         new_path += "/#{version}"
       end
