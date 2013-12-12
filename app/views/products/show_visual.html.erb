@@ -95,7 +95,7 @@
             key = key.replace(/\//g, ":");
             version = item.version;
             version = version.replace(/\//g, ":");
-            window.location.href = "/<%= @product.language.downcase %>/" + key + "/" + version;
+            window.location.href = "/<%= @product.language_esc %>/" + key + "/" + version;
           }
         } );
       }
