@@ -91,7 +91,7 @@ class ProjectService
       return nil
     end
 
-    s3_infos = S3.upload_github_file( project_file, project_file['name'] )
+    s3_infos = S3.upload_github_file( project_file, project_file[:name] )
     if s3_infos['filename'] && s3_infos['s3_url']
       S3.delete( project.s3_filename )
       project.s3_filename = s3_infos['filename']
