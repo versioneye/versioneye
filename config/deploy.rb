@@ -11,7 +11,7 @@ set :use_sudo   , false
 set :deploy_to  , '/var/www/versioneye'
 
 set :format   , :pretty
-set :log_level, :debug
+set :log_level, :info # :debug :error
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 7
