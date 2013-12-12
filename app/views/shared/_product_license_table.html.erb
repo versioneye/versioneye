@@ -31,7 +31,13 @@
     <% else %>
       <tr class="flash warning">
         <td></td>
-        <td><a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></td>
+        <td>
+          <% if product.prod_key %>
+            <a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a>
+          <% else %>
+            <%= product.name %>
+          <% end %>
+        </td>
         <td> unknown </td>
       </tr>
     <% end %>
