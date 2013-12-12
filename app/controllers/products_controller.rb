@@ -136,7 +136,7 @@ class ProductsController < ApplicationController
     @product = Product.fetch_product lang, key
     if @product.nil? || !current_user.admin
       flash[:success] = "An error occured. Please try again later."
-      redirect_to package_version_path(@product.language.downcase, @product.to_param, @product.version)
+      redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
       return
     end
     if description && !description.empty?
@@ -164,7 +164,7 @@ class ProductsController < ApplicationController
       versionlink.save
       flash[:success] = "New link added."
     end
-    redirect_to package_version_path(@product.language.downcase, @product.to_param, @product.version)
+    redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
   end
 
   def delete_link
@@ -177,7 +177,7 @@ class ProductsController < ApplicationController
       versionlink.remove
       flash[:success] = "Link removed."
     end
-    redirect_to package_version_path(@product.language.downcase, @product.to_param, @product.version)
+    redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
   end
 
   def delete_license
@@ -190,7 +190,7 @@ class ProductsController < ApplicationController
       license.remove
       flash[:success] = "License removed."
     end
-    redirect_to package_version_path(@product.language.downcase, @product.to_param, @product.version)
+    redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
   end
 
   def follow
