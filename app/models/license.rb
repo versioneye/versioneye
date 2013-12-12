@@ -31,11 +31,13 @@ class License
 
   def link
     return url if url && !url.empty?
-    return "http://choosealicense.com/licenses/mit/" if name.match(/^MIT$/i)
+    return "http://choosealicense.com/licenses/mit/" if name.match(/^MIT$/i) || name.match(/^The MIT License$/) || name.match(/^MIT License$/)
+    return "http://www.apache.org/licenses/LICENSE-2.0.txt" if name.match(/^Apache License\, Version 2\.0$/i) || name.match(/^Apache License Version 2\.0$/i) || name.match(/^The Apache Software License\, Version 2\.0$/i)
     return nil
   end
 
   def to_s
     "[License for(#{language}/#{prod_key}/#{version}) : #{name}]"
   end
+
 end
