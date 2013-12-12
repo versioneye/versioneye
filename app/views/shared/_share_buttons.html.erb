@@ -2,12 +2,12 @@
   <li id = "<%= @product.id %>" class="list-cell share-on-icon">
     <a href="https://twitter.com/share"
        class="twitter-share-button"
-       data-url="<%= Settings.server_url %>/<%= @product.language.downcase %>/<%= @product.to_param %>/<%= @product.version_to_url_param %>"
+       data-url="<%= Settings.server_url %>/<%= @product.language_esc %>/<%= @product.to_param %>/<%= @product.version_to_url_param %>"
        data-text="Check out #<%= @product.name %> @VersionEye"
        data-count="horizontal" >Twitter</a>
      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
   </li>
 
   <li class="list-cell share-on-icon" >
-    <div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="<%= Settings.server_url %>/<%= @product.language.downcase %>/<%= @product.to_param %>/<%= @product.version_to_url_param %>" style="width:85px;"></div>
+    <div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="<%= Settings.server_url %>/<%= @product.language_esc %>/<%= @product.to_param %>/<%= @product.version_to_url_param %>" style="width:85px;"></div>
   </li>
