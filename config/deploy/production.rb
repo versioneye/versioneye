@@ -26,8 +26,8 @@ role :app, %w{ubuntu@ec2-54-194-97-146.eu-west-1.compute.amazonaws.com}
 # you can see them in [net/ssh documentation](http://net-ssh.github.io/net-ssh/classes/Net/SSH.html#method-c-start)
 # set it globally
  set :ssh_options, {
-   keys: %w(~/.aws/aws_init.pem),
-   forward_agent: false # , auth_methods: %w(password)
+   #keys: %w(~/.aws/aws_init.pem),
+   forward_agent: true # , auth_methods: %w(password)
  }
 
 # and/or per server
