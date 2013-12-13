@@ -40,7 +40,7 @@ class User::ProjectsController < ApplicationController
     @collaborators = project.collaborators
 
     unless project.visible_for_user?(current_user)
-      return if authenticate == false
+      return if !authenticate
       redirect_to(root_path) unless current_user?(project.user)
     end
   end
@@ -237,7 +237,7 @@ class User::ProjectsController < ApplicationController
       end
 
       dep.update_attributes(update_map)
-      return {json: params}
+      {json: params}
     end
 
     def fetch_project( params )
@@ -248,14 +248,14 @@ class User::ProjectsController < ApplicationController
       end
       return upload_and_store( file )       if file && !file.empty?
       return fetch_and_store( project_url ) if project_url && !project_url.empty?
-      return nil
+      nil
     end
 
     def upload_and_store file
       project = upload file
       stored = store_project(project)
       return project if stored
-      return nil if not stored
+      nil
     end
 
     def upload file
@@ -274,7 +274,7 @@ class User::ProjectsController < ApplicationController
       project.source = Project::A_SOURCE_URL
       stored = store_project(project)
       return project if stored
-      return nil if not stored
+      nil if not stored
     end
 
     def build_project( url, project_name )
@@ -289,10 +289,10 @@ class User::ProjectsController < ApplicationController
     def store_project( project )
       if ProjectService.store project
         flash[:success] = "Project was created successfully."
-        return true
+        true
       else
         flash[:error] = "An error occured. Something is wrong with your file. Please contact the VersionEye Team on Twitter."
-        return false
+        false
       end
     end
 

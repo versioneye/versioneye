@@ -10,8 +10,8 @@ class Repository
 
   def as_json
     {
-      :repo_source => self.src,
-      :repo_type => self.repotype
+      :repo_source => self.repo_source,
+      :repo_type => self.repo_type
     }
   end
 
