@@ -116,16 +116,6 @@ class User::GithubReposController < ApplicationController
   end
 
 
-  def poll_changes
-    is_changed = Github.user_repos_changed?( current_user )
-    if is_changed
-      render json: {changed: true, msg: "Changed."}
-      return true
-    end
-    render json: {changed: false}
-  end
-
-
   def clear
     results = GithubRepo.by_user( current_user ).delete_all
     render json: {success: !results.nil?, msg: "Cache is cleaned. Ready for import."}
