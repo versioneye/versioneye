@@ -158,11 +158,11 @@ class User
       user.save
       return true
     end
-    return false;
+    return false
   end
 
   def activated?
-    return verification.nil?
+    verification.nil?
   end
 
   def self.find_by_username( username )
@@ -303,7 +303,7 @@ class User
     return false if user.nil?
     self.password = password
     encrypt_password
-    return save
+    save
   end
 
   def update_from_twitter_json(json_user, token, secret)

@@ -59,7 +59,7 @@ class SubmittedUrl
       $stderr.puts "Failed to update integration status for submittedUrl.#{self._id}"
       $stderr.puts self.errors.full_messages.to_sentence
     end
-    return false
+    false
   end
 
   def url_guessed

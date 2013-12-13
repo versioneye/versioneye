@@ -18,7 +18,7 @@ class VersioncommentrepliesController < ApplicationController
     @versioncomment.prod_name = @product.name
     @versioncomment.language = @product.language
     attach_version(@product, version)
- saved = false;
+    saved = false
     if @versioncomment.save
       saved = true
       send_comment_reply_mails(user, @versioncomment)

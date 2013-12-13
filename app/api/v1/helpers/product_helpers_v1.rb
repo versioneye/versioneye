@@ -4,7 +4,6 @@ require 'htmlentities'
 module ProductHelpersV1
   @@special_languages = {
     "pip" => "Python",
-    "npm" => "Javascript",
     "npm" => "Node.JS",
     "php" => "PHP",
     "node.js" =>  "Node.JS",
@@ -55,7 +54,7 @@ module ProductHelpersV1
       error! "Language `#{lang}`is not correct."
     end
 
-    return parsed_lang
+    parsed_lang
   end
 
   def parse_product_key(prod_key)

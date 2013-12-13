@@ -24,6 +24,7 @@ module UsersHelper
     elsif user.privacy_products.eql?("everybody")
       return true
     end
+    true
   end
 
   def has_permission_to_see_comments( user, current_user )
@@ -36,6 +37,7 @@ module UsersHelper
     elsif user.privacy_comments.eql?("everybody")
       return true
     end
+    true
   end
 
   def check_promo_code( code, user )

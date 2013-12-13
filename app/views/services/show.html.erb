@@ -55,7 +55,7 @@
     </div>
     <script type="text/javascript">
       function render_wheel_demo(){
-        canvas_container = document.getElementById("canvas-demo-container")
+        canvas_container = document.getElementById("canvas-demo-container");
         if (canvas_container){
           var wheel = new DependencyWheel.Remote(false, canvas_container, {
             url: '/services/<%= @project.id %>/recursive_dependencies.json',

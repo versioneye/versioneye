@@ -8,7 +8,7 @@ module ProjectHelpersV1
       result = true
     end
 
-    return result
+    result
   end
 
   def fetch_project_by_key_and_user(project_key, current_user)

@@ -106,7 +106,7 @@ class Project
 
     is_collaborator = ProjectCollaborator.collaborator?(self[:_id], user[:_id])
     return true if self.user_id.to_s == user[:_id].to_s or is_collaborator
-    return false
+    false
   end
 
   def collaborator( user )
@@ -115,13 +115,13 @@ class Project
     collaborators.each do |collaborator|
       return collaborator if user._id.to_s.eql?( collaborator.user_id.to_s )
     end
-    return nil
+    nil
   end
 
   def collaborator?( user )
     return false if user.nil?
     return true if !self.user.nil? && self.user.username.eql?( user.username )
-    return !collaborator( user ).nil?
+    !collaborator( user ).nil?
   end
 
   def remove_collaborators
@@ -134,7 +134,7 @@ class Project
     self.projectdependencies.each do |dep|
       return true if dep.outdated?
     end
-    return false
+    false
   end
 
   def outdated_dependencies

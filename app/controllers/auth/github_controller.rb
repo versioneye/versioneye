@@ -111,7 +111,7 @@ class Auth::GithubController < ApplicationController
 
       user.github_token = token
       user.save
-      return user
+      user
     end
 
 end

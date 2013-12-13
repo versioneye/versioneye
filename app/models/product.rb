@@ -212,7 +212,7 @@ class Product
     if dependencies_cache[scope].nil?
       dependencies_cache[scope] = Dependency.find_by_lang_key_version_scope( language, prod_key, version, scope )
     end
-    return dependencies_cache[scope]
+    dependencies_cache[scope]
   end
 
   def all_dependencies
@@ -255,9 +255,9 @@ class Product
   def name_version limit
     nameversion = "#{name} (#{version})"
     if nameversion.length > limit
-      return "#{nameversion[0, limit]}.."
+      "#{nameversion[0, limit]}.."
     else
-      return nameversion
+      nameversion
     end
   end
 
@@ -307,19 +307,19 @@ class Product
 
   def description_summary
     if description && description_manual
-      return "#{description} \n \n #{description_manual}"
+      "#{description} \n \n #{description_manual}"
     elsif description && !description_manual
       return description
     elsif !description && description_manual
       return description_manual
     else
-      return ""
+      ""
     end
   end
 
   def short_summary
     return get_summary(description, 125) if description
-    return get_summary(description_manual, 125)
+    get_summary(description_manual, 125)
   end
 
   def show_dependency_badge?
@@ -333,7 +333,7 @@ class Product
     def get_summary text, size
       return "" if text.nil?
       return "#{text[0..size]}..." if text.size > size
-      return text[0..size]
+      text[0..size]
     end
 
 end

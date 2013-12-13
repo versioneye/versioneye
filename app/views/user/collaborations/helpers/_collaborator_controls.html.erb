@@ -6,7 +6,7 @@
     )
 %>
 
-<% if collaboration[:active] == false %>
+<% if !collaboration[:active] %>
   <%= button_to(
         'Approve',
         user_collaboration_delete_path(collaboration_id: collaboration[:_id].to_s),

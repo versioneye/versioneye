@@ -151,7 +151,7 @@ class PodfileParser < CommonParser
         return {:version_requested => version_requested, :version_label => version_from_file, :comperator => comperator}
       end
 
-      return {:version_requested => version, :version_label => version_from_file, :comperator => comperator}
+      {:version_requested => version, :version_label => version_from_file, :comperator => comperator}
     end
   end
 

@@ -55,7 +55,7 @@ class GemfilelockParser < GemfileParser
       data.push v
     end
 
-    return {:unknown_number => unknowns, :out_number => out_number, :projectdependencies => data}
+    {:unknown_number => unknowns, :out_number => out_number, :projectdependencies => data}
   end
 
 end
