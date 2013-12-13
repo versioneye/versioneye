@@ -14,11 +14,13 @@ class GitHubService
   A_TASK_RUNNING = 'running'
   A_TASK_DONE    = 'done'
 
+
   def self.update_all_repos
     User.all(:timeout => true).live_users.where(:github_scope => "repo").each do |user|
       update_repos_for_user user
     end
   end
+
 
   def self.update_repos_for_user user
     Rails.logger.debug "Importing repos for #{user.fullname}."
@@ -30,6 +32,7 @@ class GitHubService
     Rails.logger.error "Cant import repos for #{user.fullname} \n #{e}"
   end
 
+
 =begin
   Returns github repos for user;
   If user don't have yet any github repos
@@ -38,7 +41,7 @@ class GitHubService
   else it returns cached results from GitHubRepos collection.
   NB! allows only one running task per user;
 =end
-  def self.cached_user_repos(user)
+  def self.cached_user_repos user
 
     user_task_key = "#{user[:username]}-#{user[:github_id]}"
     task_status = @@memcache.get user_task_key
@@ -73,17 +76,6 @@ class GitHubService
     task_status
   end
 
-  def self.bad_credentail?(repo)
-    if repo.is_a?(Hash) and repo.has_key?("message")
-      Rails.logger.error("Catched Github API exception: #{repo}")
-      return true
-    end
-    return false
-  rescue => e
-    Rails.logger.error "Bad Credentials"
-    true
-  end
-
 
   def self.update_repo_info user, repo_fullname
     current_repo = GithubRepo.by_user(user).by_fullname(repo_fullname).shift
@@ -99,7 +91,9 @@ class GitHubService
     current_repo
   end
 
+
   private
+
 
     def self.cache_user_all_repos(user, orga_names)
       puts "Going to cache users repositories."
@@ -115,6 +109,7 @@ class GitHubService
       threads.each { |worker| worker.join }
     end
 
+
     def self.cache_user_repos( user )
       url = nil
       begin
@@ -123,6 +118,7 @@ class GitHubService
       end while not url.nil?
     end
 
+
     def self.cache_user_orga_repos(user, orga_name)
       url = nil
       begin
@@ -130,4 +126,5 @@ class GitHubService
         url = data[:paging]["next"]
       end while not url.nil?
     end
+
 end

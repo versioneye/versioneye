@@ -102,10 +102,6 @@ module V2
           repos = GitHubService.update_repos_for_user(user)
         end
 
-        if Github.user_repos_changed?(user)
-          repos = GitHubService.cached_user_repos(user)
-        end
-
         if repos
           msg =  {changed: true, msg: "Changed - pulled #{user.github_repos.all.count} repos"}
         end

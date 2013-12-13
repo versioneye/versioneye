@@ -66,25 +66,6 @@ class Github
     nil
   end
 
-  def self.user_repos_changed? user
-    repo = user.github_repos.all.first
-    #if user don't have any repos in cache, then force to load data
-    return true if repo.nil?
-
-    headers = {
-      "User-Agent" => A_USER_AGENT,
-      "If-Modified-Since" => repo[:cached_at].httpdate
-    }
-    url = "#{A_API_URL}/user?access_token=#{URI.escape(user.github_token)}"
-    response = head(url, headers: headers)
-    puts response.code
-    response.code != 304
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
-    return false
-  end
-
   #returns how many repos user has. NB! doesnt count orgs
   def self.count_user_repos user
     n = 0
@@ -95,7 +76,7 @@ class Github
     if user_info
       n = user_info[:public_repos].to_i + user_info[:total_private_repos].to_i
     end
-    return n
+    n
   end
 
   def self.user_repos user, url = nil, page = 1, per_page = 30
@@ -247,8 +228,7 @@ class Github
     result
   end
 
-    #TODO: remove user where token makes more sense
-    #TODO: refactor to use get_json again ...
+  #TODO: refactor to use get_json again ...
   def self.fetch_repo_branch_tree(repo_name, token, branch_sha, recursive = false)
     rec_val = (recursive == true) ? 1 : 0
     url = "#{A_API_URL}/repos/#{repo_name}/git/trees/#{branch_sha}?access_token=#{token}&recursive=#{rec_val}"
@@ -309,7 +289,6 @@ class Github
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    return
   end
 
   def self.fetch_file( url, token )
@@ -363,8 +342,8 @@ class Github
     nil
   end
 
+  # TODO check if needed
   def self.check_user_ratelimit(user)
-
     url = "#{A_API_URL}/rate_limit?access_token=#{user.github_token}"
     response = get(url, :headers => A_DEFAULT_HEADERS)
 
@@ -373,7 +352,7 @@ class Github
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    return nil
+    nil
   end
 
   def self.search(q, langs = nil, users = nil, page = 1, per_page = 30)
