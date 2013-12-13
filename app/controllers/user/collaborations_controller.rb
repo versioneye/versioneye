@@ -41,7 +41,7 @@ class User::CollaborationsController < ApplicationController
       flash[:error] = "You can not remove other peoples."
     end
 
-    redirect_to :back and return
+    redirect_to :back
   end
 
   def approve

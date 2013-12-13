@@ -37,7 +37,7 @@ class ComposerParser < CommonParser
     elsif dependencies && dependencies_dev
       return dependencies.merge(dependencies_dev)
     end
-    return nil
+    nil
   end
 
   def process_dependency key, value, project, data

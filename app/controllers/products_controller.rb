@@ -27,7 +27,7 @@ class ProductsController < ApplicationController
     @groupid = params[:g]
     @lang    = get_lang_value( params[:lang] )
     commit   = params[:commit]
-    if ( (@query.nil? || @query.empty?) && (@groupid.nil? || @groupid.empty?) )
+    if (@query.nil? || @query.empty?) && (@groupid.nil? || @groupid.empty?)
       flash.now[:error] = "Please give us some input. Type in a value for name."
     elsif @query.include?("%")
       flash.now[:error] = "the character % is not allowed"
@@ -53,7 +53,7 @@ class ProductsController < ApplicationController
       flash[:error] = "The requested package is not available."
       return
     end
-    if version.nil? || ( attach_version( @product, version ) == false )
+    if version.nil? || (!attach_version(@product, version))
       redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
       return
     end
@@ -75,7 +75,7 @@ class ProductsController < ApplicationController
       redirect_to "/"
       return
     end
-    if version.nil? || ( attach_version( @product, version ) == false )
+    if version.nil? || (!attach_version(@product, version))
       redirect_to visual_dependencies_path( @product.language_esc.downcase, @product.to_param, @product.version )
       return
     end

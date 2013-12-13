@@ -30,7 +30,7 @@ class PackageParser < CommonParser
   # It is important that this method is not writing int the database!
   #
   def parse_requested_version(version, dependency, product)
-    if (version.nil? || version.empty?)
+    if version.nil? || version.empty?
       self.update_requested_with_current(dependency, product)
       return
     end

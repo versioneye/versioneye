@@ -50,7 +50,7 @@ class Admin::LanguageController < ApplicationController
     if lang.nil?
       flash[:error] = "Failure: can't delete language `#{params[:id]}`."
     else
-      lang.delete
+      lang.remove
       flash[:success] = "Success: #{lang[:name]} is now removed."
     end
 

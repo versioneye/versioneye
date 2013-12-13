@@ -118,7 +118,7 @@ class User::GithubReposController < ApplicationController
 
   def poll_changes
     is_changed = Github.user_repos_changed?( current_user )
-    if is_changed == true
+    if is_changed
       render json: {changed: true, msg: "Changed."}
       return true
     end

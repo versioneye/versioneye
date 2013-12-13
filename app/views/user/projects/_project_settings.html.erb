@@ -33,8 +33,8 @@
         <label class="control-label" style="width: 200px;" >This Project is</label>
         <div class="controls" style="margin-left: 210px;">
           <select name="visibility" style="width: 150px; margin: 0px;" >
-            <option value="private"  <%= "selected" if @project.public == false %> >Private</option>
-            <option value="public"   <%= "selected" if @project.public == true  %> >Public</option>
+            <option value="private"  <%= "selected" if !@project.public %> >Private</option>
+            <option value="public"   <%= "selected" if @project.public %> >Public</option>
           </select> <button type="submit" class="btn btn-primary" >Save</button>
         </div>
       </div>

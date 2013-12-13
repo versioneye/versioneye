@@ -141,7 +141,7 @@ class LanguageDailyStats
       return false
     end
 
-    if release_info.attributes.has_key?('created_at') and release_info.attributes.has_key?('created_at')
+    if release_info.attributes.has_key?('created_at')
       unless prod_info[:created_at].nil? or release_info[:created_at].nil?
         product_date = self.to_date_string(prod_info[:created_at])
         release_date = self.to_date_string(release_info[:created_at])
@@ -293,8 +293,10 @@ class LanguageDailyStats
     when :last_month
       t1 = self.last_month_stats
       t2 = self.two_months_ago_stats
+    else
+      t1 = self.yesterday_stats
+      t2 = self.t2_stats
     end
-
     return t1, t2
   end
 

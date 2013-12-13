@@ -52,7 +52,7 @@ class UsersController < ApplicationController
       User.new_user_email(@user)
     else
       flash[:error] = "#{t(:general_error)} - #{@user.errors.full_messages.to_sentence}"
-      redirect_to signup_path and return
+      redirect_to signup_path
     end
   end
 
@@ -80,7 +80,7 @@ class UsersController < ApplicationController
       end
     else
       flash[:error] = t(flash[:error])
-      redirect_to :back and return
+      redirect_to :back
     end
   end
 
