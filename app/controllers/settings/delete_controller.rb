@@ -8,8 +8,8 @@ class Settings::DeleteController < ApplicationController
   def destroy
     password = params[:password]
     user = current_user
-    if !user.password_valid?(password)
-      flash[:error] = "The password is wrong. Please try again."
+    unless user.password_valid?(password)
+      flash[:error] = 'The password is wrong. Please try again.'
       redirect_to settings_delete_path()
       return
     end

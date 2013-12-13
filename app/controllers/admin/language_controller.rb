@@ -7,7 +7,7 @@ class Admin::LanguageController < ApplicationController
 
   def show
     language = Language.where(param_name: params[:id]).first
-    render partial: "language_block", locals: {language: language}
+    render partial: 'language_block', locals: {language: language}
   end
 
   def new

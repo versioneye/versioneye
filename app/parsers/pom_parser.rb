@@ -51,7 +51,7 @@ class PomParser < CommonParser
     properties = Hash.new
     doc.xpath('//project/properties').each do |node|
       node.children.each do |child|
-        if !child.text.strip.empty?
+        unless child.text.strip.empty?
           properties[child.name.downcase] = child.text.strip
         end
       end

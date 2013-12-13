@@ -8,7 +8,7 @@ class PromoCode
   field :free_private_projects, type: Integer, default: 2
   field :redeemed             , type: Integer, default: 0
 
-  validates_uniqueness_of :name, :message => "Name exist already."
+  validates_uniqueness_of :name, :message => 'Name exist already.'
 
   def to_s
     "#{name} - free private projects: #{free_private_projects}. Ends: #{end_date}"

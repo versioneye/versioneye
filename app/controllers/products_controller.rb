@@ -154,7 +154,7 @@ class ProductsController < ApplicationController
       @product.save
       add_status_comment(@product, current_user, "twitter")
       flash[:success] = "Twitter name updated."
-    elsif link_url && !link_url.empty? &&
+    elsif link_url && !link_url.empty?
       versionlink = Versionlink.new
       versionlink.language = @product.language
       versionlink.prod_key = @product.prod_key
@@ -204,7 +204,7 @@ class ProductsController < ApplicationController
       format.js
       format.json {render json: {success: follow}}
       format.html {
-        if !follow
+        unless follow
           flash.now[:error] = "An error occured. Please try again later and contact the VersionEye Team."
         end
         product = Product.fetch_product( language, product_key )
@@ -225,7 +225,7 @@ class ProductsController < ApplicationController
       format.js
       format.json {render json: {success: unfollow}}
       format.html {
-          if !unfollow
+          unless unfollow
             flash.now[:error] = "An error occured. Please try again later."
           end
           if src_hidden.eql? "detail"

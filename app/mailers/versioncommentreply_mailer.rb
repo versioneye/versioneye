@@ -11,7 +11,7 @@ class VersioncommentreplyMailer < ActionMailer::Base
     mail(
       :to => @comment_user.email,
       :subject => "#{reply_user.fullname} replied to your comment",
-      :tag => "versioncomment"
+      :tag => 'versioncomment'
       )
   end
 

@@ -26,7 +26,7 @@ class UserService
       flash[:error] = "page_signup_error_terms"
       return false
     end
-    return true
+    true
   end
 
   def self.delete user

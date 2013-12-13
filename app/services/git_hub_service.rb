@@ -4,7 +4,7 @@ require 'dalli'
 class GitHubService
 
   @@memcache_options = {
-    :namespace  => "github_app",
+    :namespace  => 'github_app',
     :compress   => true,
     :expires_in => 30.minutes # Only allows import after X min; unless task unlocks!
   }

@@ -9,8 +9,8 @@ class VersioncommentMailer < ActionMailer::Base
     @commentlink = "#{Settings.server_url}/vc/#{comment.id}"
     mail(
       :to => @follower.email,
-      :subject => "Comment on Package",
-      :tag => "versioncomment"
+      :subject => 'Comment on Package',
+      :tag => 'versioncomment'
       )
   end
 
