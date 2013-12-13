@@ -33,7 +33,7 @@ class UsersController < ApplicationController
 
     @user[:datenerhebung] = @user[:terms]
 
-    if !UserService.valid_user?(@user, flash, t)
+    unless UserService.valid_user?(@user, flash, t)
       flash[:error] = t(flash[:error])
       redirect_to signup_path and return
     end

@@ -6,15 +6,15 @@ class Admin::SubmittedUrlsController < ApplicationController
     @show_state = params[:by_state]
     @users = {}
     case @show_state
-    when "unchecked"
+    when 'unchecked'
       @submitted_urls = SubmittedUrl.as_unchecked
-    when "checked"
+    when 'checked'
       @submitted_urls = SubmittedUrl.as_checked
-    when "accepted"
+    when 'accepted'
       @submitted_urls = SubmittedUrl.as_accepted
-    when "declined"
+    when 'declined'
       @submitted_urls = SubmittedUrl.as_declined
-    when "all"
+    when 'all'
       @submitted_urls = SubmittedUrl.all
     else
       @submitted_urls = SubmittedUrl.as_unchecked

@@ -10,8 +10,8 @@ class ServicesController < ApplicationController
     file = params[:upload]
 
     if file.nil? || file.empty?
-      flash[:error] = "No file selected. Please select a project file from your computer."
-      redirect_to "/"
+      flash[:error] = 'No file selected. Please select a project file from your computer.'
+      redirect_to '/'
       return nil
     end
 

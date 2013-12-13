@@ -1,6 +1,6 @@
 class LotteryMigration
   def self.update_selections
-    p "Updating Lottery selections..."
+    p 'Updating Lottery selections...'
     Lottery.where(:ticket.in => [nil, false]).each {|ticket| update_selection(ticket)}
     total = Lottery.all.count
     success = Lottery.where(migrated: true).count

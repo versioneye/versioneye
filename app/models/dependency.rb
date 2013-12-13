@@ -8,12 +8,12 @@ class Dependency
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_SCOPE_COMPILE     = "compile"
-  A_SCOPE_RUNTIME     = "runtime"
-  A_SCOPE_REQUIRE     = "require"
-  A_SCOPE_PROVIDED    = "provided"
-  A_SCOPE_DEVELOPMENT = "development"
-  A_SCOPE_TEST        = "test"
+  A_SCOPE_COMPILE     = 'compile'
+  A_SCOPE_RUNTIME     = 'runtime'
+  A_SCOPE_REQUIRE     = 'require'
+  A_SCOPE_PROVIDED    = 'provided'
+  A_SCOPE_DEVELOPMENT = 'development'
+  A_SCOPE_TEST        = 'test'
 
   # This attributes describe to which product
   # this dependency belongs to. Parent!

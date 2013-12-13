@@ -8,7 +8,7 @@ class MavenRepository
   field :replace_with_repo_src, type: String
   field :language, type: String
 
-  validates_uniqueness_of :url, :message => "m2 repository url exist already."
+  validates_uniqueness_of :url, :message => 'm2 repository url exist already.'
 
   def self.fill_it
     repos = Hash.new
