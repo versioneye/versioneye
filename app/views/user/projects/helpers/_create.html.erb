@@ -1,6 +1,6 @@
 
 <div style="padding-bottom: 20px;">
-  <b>The file upload can take a couple of seconds. Please be patient.</b>
+  <b>Creating a new project can take a couple of seconds. Please be patient.</b>
   <br/><br/>
   Supported files are pom.xml, dependency.gradle,
   Gemfile, Gemfile.lock,
@@ -12,19 +12,22 @@
 <div class="tabbable">
   <ul class="nav nav-tabs" style="margin: 0px;">
     <li class="active">
-      <a href="#tab1" data-toggle="tab">
-        From Disk
+      <a href="#tab2" data-toggle="tab">
+        Create from URL
       </a>
     </li>
-    <li>
-      <a href="#tab2" data-toggle="tab">
-        From URL
+    <li class="">
+      <a href="#tab1" data-toggle="tab">
+        Upload from Disk
       </a>
     </li>
   </ul>
   <!-- tab content -->
   <div class="tab-content" style="min-height:30px; padding: 10px;">
-    <div class="tab-pane active" id="tab1">
+    <div class="tab-pane active" id="tab2">
+      <%= f.text_field :url, :class => "round", :style => "width: 430px;", :placeholder =>"Paste your URL here" %>
+    </div>
+    <div class="tab-pane" id="tab1">
       <div class = "fileupload fileupload-new" data-provides="fileupload">
         <span class = "btn btn-file">
           <span class = "fileupload-new"> Select project file </span>
@@ -34,9 +37,6 @@
         <span class = "fileupload-preview"></span>
         <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
       </div>
-    </div>
-    <div class="tab-pane" id="tab2">
-      <%= f.text_field :url, :class => "round", :style => "width: 430px;", :placeholder =>"Paste your url here" %>
     </div>
   </div>
 </div>
