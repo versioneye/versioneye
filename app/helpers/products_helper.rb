@@ -8,19 +8,19 @@ module ProductsHelper
     if version.nil?
       version = product.version_to_url_param
     end
-    return "/#{lang.downcase}/#{product.to_param}/#{version}"
+    "/#{lang.downcase}/#{product.to_param}/#{version}"
   end
 
   def product_url(product)
     return "/0/0" if product.nil? || product.prod_key.nil?
     lang = product.language.gsub("\.", "")
-    return "/#{lang.downcase}/#{product.to_param}"
+    "/#{lang.downcase}/#{product.to_param}"
   end
 
   def user_follows?(product, user)
     return false if user.products.nil? || user.products.empty?
     return true if user.products.include?(product)
-    return false
+    false
   end
 
   def display_follow(product, user)
@@ -32,7 +32,7 @@ module ProductsHelper
   def display_unfollow(product, user)
     return "none"  if user.products.nil? || user.products.empty?
     return "block" if user.products.include? product
-    return "none"
+    "none"
   end
 
   def do_parse_search_input( query )
@@ -40,7 +40,7 @@ module ProductsHelper
     query = "json" if query_empty
     query = query.strip()
     query = query.downcase
-    return query
+    query
   end
 
   def badge_for_product( language, prod_key, version )
@@ -70,7 +70,7 @@ module ProductsHelper
     badge = "out-of-date" if outdated
     badge = "up-to-date"  if not outdated
     Rails.cache.write( key, badge, timeToLive: 2.hour )
-    return badge
+    badge
   end
 
   def get_lang_value( lang )
@@ -108,9 +108,9 @@ module ProductsHelper
     if versionObj
       product.version = versionObj.version
       update_release_infos( versionObj, product )
-      return true
+      true
     else
-      return false
+      false
     end
   end
 
@@ -170,18 +170,17 @@ module ProductsHelper
     end
     if !key_match_1.nil? || !key_match_2.nil? || !version_match.nil?
       redirect_to path
-      return
     end
   end
 
   def check_tilde key
     return key.gsub("\~", "\.") if key.match(/\~/)
-    return key
+    key
   end
 
   def check_group_sep key
     return key.gsub("--", ":") if key.match(/.+\-\-.+/)
-    return key
+    key
   end
 
 end

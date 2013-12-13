@@ -73,12 +73,12 @@ class PomParser < CommonParser
       return val if value.nil? || value.empty?
       return value
     else
-      return val
+      val
     end
   end
 
   def parse_requested_version(version_number, dependency, product)
-    if (version_number.nil? || version_number.empty?)
+    if version_number.nil? || version_number.empty?
       self.update_requested_with_current(dependency, product)
       return
     end

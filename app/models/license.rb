@@ -13,10 +13,6 @@ class License
   field :comments     , type: String # Maven specific
   field :distributions, type: String # Maven specific
 
-  def to_s
-    name
-  end
-
   def product
     Product.fetch_product(self.language, self.prod_key)
   end
@@ -33,14 +29,14 @@ class License
     return url if url && !url.empty?
     return "http://choosealicense.com/licenses/mit/" if mit_match( name )
     return "http://www.apache.org/licenses/LICENSE-2.0.txt" if apache_license_2_match( name )
-    return nil
+    nil
   end
 
   def name_substitute
     return "MIT" if mit_match( name )
     return "Apache License, Version 2.0" if apache_license_2_match( name )
     return "Apache License" if apache_license_match( name )
-    return name
+    name
   end
 
   def to_s

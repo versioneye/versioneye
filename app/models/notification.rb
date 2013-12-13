@@ -28,7 +28,7 @@ class Notification
     user_ids.each do |id|
       user = User.find_by_id( id )
       next if user.nil?
-      if user.deleted == true
+      if user.deleted
         self.remove_notifications user
       else
         count += 1 if self.send_unsend_notifications user

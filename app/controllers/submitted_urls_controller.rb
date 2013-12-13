@@ -1,8 +1,12 @@
 class SubmittedUrlsController < ApplicationController
 
   def create
-    success = false
-    user_id = current_user.id unless current_user.nil?
+    if current_user.nil?
+      flash[:error] = "Sorry, but you have to be logged in for this action"
+      redirect_to :back and return
+    end
+
+    user_id = current_user.id
     new_submitted_url = SubmittedUrl.new  :user_id      => user_id, 
                                           :search_term  => params[:search_term],
                                           :url          => params[:url],

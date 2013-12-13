@@ -50,7 +50,7 @@ class PythonSetupParser < RequirementsParser
   end
 
 
-  def from_file()
+  def from_file
     doc_file = File.new "test/files/setup.py"
     doc_file.read
   end

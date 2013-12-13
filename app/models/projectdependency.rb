@@ -52,7 +52,7 @@ class Projectdependency
     return update_outdated! if self.outdated.nil?
     last_update_ago = Time.now - self.outdated_updated_at
     return self.outdated if last_update_ago < A_SECONDS_PER_DAY
-    return update_outdated!
+    update_outdated!
   end
 
   def release?

@@ -127,7 +127,7 @@ class PageController < ApplicationController
   def sitemap_5
     redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-5.xml'
   end
-  def sitemap_5
+  def sitemap_6
     redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-6.xml'
   end
 
@@ -152,7 +152,7 @@ class PageController < ApplicationController
       hash = Hash.new
       hash['key'] = key
       hash['language'] = language
-      return hash
+      hash
     end
 
 end

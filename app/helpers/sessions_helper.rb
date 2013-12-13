@@ -44,7 +44,7 @@ module SessionsHelper
   def authenticate
     return true if signed_in?
     deny_access
-    return false
+    false
   end
 
   def deny_access
@@ -59,7 +59,7 @@ module SessionsHelper
 
   def set_locale
     locale = "en"
-    if (locale && !locale.empty?)
+    if locale && !locale.empty?
       I18n.locale = locale
     elsif I18n.locale.nil?
       I18n.locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first

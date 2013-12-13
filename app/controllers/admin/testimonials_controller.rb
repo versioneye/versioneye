@@ -19,7 +19,7 @@ class Admin::TestimonialsController < ApplicationController
     else
       flash[:error] = "Error! Can't save updates! #{testimonial.errors.full_messages.to_sentence}"
     end
-    redirect_to :back and return
+    redirect_to :back
   end
 
   def decline
@@ -31,7 +31,7 @@ class Admin::TestimonialsController < ApplicationController
     else
       flash[:error] = "Error! Can't save updates! #{testimonial.errors.full_messages.to_sentence}"
     end
-    redirect_to :back and return
+    redirect_to :back
   end
 
   private
