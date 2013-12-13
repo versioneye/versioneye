@@ -53,7 +53,7 @@ class ParserStrategy
           return PodFileParser.new
         end
       else
-        return PackageParser.new
+        return nil
     end
     nil
   end
