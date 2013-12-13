@@ -252,11 +252,6 @@ class User
     User.all.select {|user| user['product_ids'].nil? or user['product_ids'].count == 0}
   end
 
-  class << self
-    alias_method :non_followers :all_inactive_users
-  end
-
-
   def self.authenticate(email, submitted_password)
     user = User.where( email: email.downcase ).shift
     return nil  if user.nil? || user.deleted
