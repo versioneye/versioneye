@@ -81,4 +81,11 @@ namespace :versioneye do
     PackagistCrawler.crawl
   end
 
+  desc "send out suggestion emails to inactive users"
+  task :send_suggestions
+    puts "START to send out suggestion emails to inactive users"
+    User.all_inactive_users.each { |user| user.send_suggestions }
+    puts "STOP  to send out suggestion emails to inactive users"
+  end
+
 end
