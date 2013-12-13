@@ -3,25 +3,25 @@ class Project
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_TYPE_RUBYGEMS  = "RubyGem"
-  A_TYPE_PIP       = "PIP"
-  A_TYPE_NPM       = "npm"
-  A_TYPE_COMPOSER  = "composer"
-  A_TYPE_GRADLE    = "gradle"
-  A_TYPE_MAVEN2    = "Maven2"
-  A_TYPE_LEIN      = "Lein"
-  A_TYPE_BOWER     = "Bower"
-  A_TYPE_GITHUB    = "GitHub"
-  A_TYPE_R         = "R"
-  A_TYPE_COCOAPODS = "CocoaPods"
+  A_TYPE_RUBYGEMS  = 'RubyGem'
+  A_TYPE_PIP       = 'PIP'
+  A_TYPE_NPM       = 'npm'
+  A_TYPE_COMPOSER  = 'composer'
+  A_TYPE_GRADLE    = 'gradle'
+  A_TYPE_MAVEN2    = 'Maven2'
+  A_TYPE_LEIN      = 'Lein'
+  A_TYPE_BOWER     = 'Bower'
+  A_TYPE_GITHUB    = 'GitHub'
+  A_TYPE_R         = 'R'
+  A_TYPE_COCOAPODS = 'CocoaPods'
 
-  A_SOURCE_UPLOAD = "upload"
-  A_SOURCE_URL    = "url"
-  A_SOURCE_GITHUB = "github"
+  A_SOURCE_UPLOAD = 'upload'
+  A_SOURCE_URL    = 'url'
+  A_SOURCE_GITHUB = 'github'
 
-  A_PERIOD_MONTHLY = "monthly"
-  A_PERIOD_WEEKLY  = "weekly"
-  A_PERIOD_DAILY   = "daily"
+  A_PERIOD_MONTHLY = 'monthly'
+  A_PERIOD_WEEKLY  = 'weekly'
+  A_PERIOD_DAILY   = 'daily'
 
   field :name       , type: String
   field :description, type: String
@@ -50,7 +50,7 @@ class Project
 
   belongs_to :user
   has_many   :projectdependencies
-  has_many   :collaborators, class_name: "ProjectCollaborator"
+  has_many   :collaborators, class_name: 'ProjectCollaborator'
 
   scope :by_user  , ->(user)  { where(user_id: user[:_id].to_s) }
   scope :by_collaborator, ->(user){all_in(_id: ProjectCollaborator.by_user(user).to_a.map(&:project_id))}

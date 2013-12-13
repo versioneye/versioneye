@@ -10,8 +10,8 @@ class Notification
   belongs_to :user
   belongs_to :product
 
-  validates_presence_of :user_id   , :message => "User is mandatory!"
-  validates_presence_of :product_id, :message => "Product is mandatory!"
+  validates_presence_of :user_id   , :message => 'User is mandatory!'
+  validates_presence_of :product_id, :message => 'Product is mandatory!'
 
   scope :all_not_sent, where(sent_email: false)
   scope :by_user     , ->(user){where(user_id: user.id)}

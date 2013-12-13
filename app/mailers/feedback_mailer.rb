@@ -7,9 +7,9 @@ class FeedbackMailer < ActionMailer::Base
     @email = email
     @feedback = feedback
     mail(
-      :to => "reiz@versioneye.com",
-      :subject => "VersionEye Feedback",
-      :tag => "feedback"
+      :to => 'reiz@versioneye.com',
+      :subject => 'VersionEye Feedback',
+      :tag => 'feedback'
       )
   end
 

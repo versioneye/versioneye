@@ -3,7 +3,7 @@ class SwaggersController < ApplicationController
   def index
     @current_user = current_user
     user_api = Api.where(user_id: @current_user.id).shift if @current_user
-    @api_key = "Log in to get your own api token"
+    @api_key = 'Log in to get your own api token'
 
     if @current_user.nil? == false and @api_key.nil?
       user_api = Api.create_new(@current_user)

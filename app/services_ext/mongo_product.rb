@@ -6,7 +6,7 @@ class MongoProduct
   def self.find_by(query, description = nil, group_id = nil, languages=nil, limit=300)
     searched_name = nil
     if query
-      searched_name = String.new( query.gsub(" ", "-") )
+      searched_name = String.new( query.gsub(' ', '-') )
     end
     result1 = find_all(searched_name, description, group_id, languages, limit, nil)
 

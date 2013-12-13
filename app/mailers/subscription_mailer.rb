@@ -6,8 +6,8 @@ class SubscriptionMailer < ActionMailer::Base
     @user =  user
     mail(
       to: user.email,
-      subject: "VersionEye Subscription",
-      tag: "subscription"
+      subject: 'VersionEye Subscription',
+      tag: 'subscription'
     )
   end
 

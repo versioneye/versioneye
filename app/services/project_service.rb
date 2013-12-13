@@ -1,7 +1,8 @@
 class ProjectService
 
-  def self.type_by_filename( filename )
-    trimmed_name = filename.split("?")[0]
+  def self.type_by_filename filename
+    return nil if filename.to_s.empty?
+    trimmed_name = filename.split('?')[0]
     return Project::A_TYPE_RUBYGEMS  if trimmed_name.match(/Gemfile$/)          or trimmed_name.match(/Gemfile.lock$/)
     return Project::A_TYPE_COMPOSER  if trimmed_name.match(/composer.json$/)    or trimmed_name.match(/composer.lock$/)
     return Project::A_TYPE_PIP       if trimmed_name.match(/requirements.txt$/) or trimmed_name.match(/setup.py$/) or trimmed_name.match(/pip.log$/)
@@ -108,7 +109,7 @@ class ProjectService
 =end
   def self.import_from_github(user, repo_name, filename, branch = "master", fileurl = nil)
     private_project = Github.private_repo? user.github_token, repo_name
-    if !allowed_to_add_project?( user, private_project )
+    unless allowed_to_add_project?(user, private_project)
       return "Please upgrade your plan to monitor the selected project."
     end
 

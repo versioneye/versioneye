@@ -337,7 +337,7 @@ class User
       self.username = create_random_value
     end
     user = User.find_by_username(self.username)
-    if !user.nil?
+    unless user.nil?
       random_value = create_random_value
       self.username = "#{self.username}#{random_value}"
     end
