@@ -8,7 +8,7 @@ class User::ProjectsController < ApplicationController
   end
 
   def new
-    @project = Project.new
+    @project = Project.new(params)
   end
 
   def create
