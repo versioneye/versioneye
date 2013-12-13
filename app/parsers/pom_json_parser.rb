@@ -8,7 +8,7 @@ class PomJsonParser < CommonParser
     pom_json['dependencies'].each do |json_dep|
       version = json_dep['version']
       name = json_dep['name']
-      spliti = name.split(":")
+      spliti = name.split(':')
       group_id = spliti[0]
       artifact_id = spliti[1]
       dependency = init_dependency(name, group_id, artifact_id, version)

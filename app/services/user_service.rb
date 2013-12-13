@@ -13,7 +13,7 @@ class UserService
   end
 
   def self.valid_user?(user, flash, t)
-    if !User.email_valid?(user.email)
+    unless User.email_valid?(user.email)
       flash[:error] = "page_signup_error_email"
       return false
     elsif user.fullname.nil? || user.fullname.empty?

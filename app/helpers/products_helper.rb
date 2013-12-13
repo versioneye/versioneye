@@ -3,8 +3,8 @@ module ProductsHelper
   include ActionView::Helpers::DateHelper
 
   def product_version_path( product, version = nil )
-    return "/0/0/0" if product.nil? || product.prod_key.nil?
-    lang = product.language.gsub("\.", "")
+    return '/0/0/0' if product.nil? || product.prod_key.nil?
+    lang = product.language.gsub("\.", '')
     if version.nil?
       version = product.version_to_url_param
     end
@@ -12,7 +12,7 @@ module ProductsHelper
   end
 
   def product_url(product)
-    return "/0/0" if product.nil? || product.prod_key.nil?
+    return '/0/0' if product.nil? || product.prod_key.nil?
     lang = product.language.gsub("\.", "")
     "/#{lang.downcase}/#{product.to_param}"
   end
@@ -85,7 +85,7 @@ module ProductsHelper
 
     langs = lang.split(",")
     langs.each do |language|
-      if !language.strip.empty?
+      unless language.strip.empty?
         language = language.downcase
         if special_languages.has_key? language
           languages.push(special_languages[language])

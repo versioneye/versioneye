@@ -2,7 +2,7 @@ class SubmittedUrlsController < ApplicationController
 
   def create
     if current_user.nil?
-      flash[:error] = "Sorry, but you have to be logged in for this action"
+      flash[:error] = 'Sorry, but you have to be logged in for this action'
       redirect_to :back and return
     end
 

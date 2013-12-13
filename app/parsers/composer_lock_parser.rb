@@ -1,6 +1,6 @@
 class ComposerLockParser < ComposerParser
 
-  @@group_id = "php"
+  @@group_id = 'php'
 
   def parse( url )
     dependencies = self.fetch_project_dependencies(url)

@@ -3,7 +3,7 @@ class User::GithubReposController < ApplicationController
   before_filter :authenticate
 
   def init
-    render "init", layout: "application"
+    render 'init', layout: 'application'
   end
 
 
@@ -168,7 +168,7 @@ class User::GithubReposController < ApplicationController
       id = command_data[:githubProjectId]
       project_exists = Project.where(_id: id).exists?
 
-      if !project_exists
+      unless project_exists
         raise "Can't remove project with id: `#{id}` - it does not exist. Please refresh the page."
       end
 
