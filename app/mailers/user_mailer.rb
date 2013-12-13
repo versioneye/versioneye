@@ -101,6 +101,15 @@ class UserMailer < ActionMailer::Base
     )
   end
 
+  def suggest_packages_email( user )
+    @fullname = user[:fullname]
+    mail(
+      :to => user[:email],
+      :subject => "Follow popular software packages on VersionEye",
+      :tag => "suggest_packages"
+    )
+  end
+
   def fetch_source( user )
     source = "email"
     source = "twitter" if user.twitter_id
