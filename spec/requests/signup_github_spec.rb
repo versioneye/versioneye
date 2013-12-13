@@ -30,6 +30,7 @@ describe "SignUp with GitHub" do
     VCR.use_cassette('github_signup', :allow_playback_repeats => true) do
       get "/auth/github/callback?code=79ac3ef94f10e72f2302"
       assert_response :success
+      response.body.should match("Almost done. We just need your email address.")
 
       post "/auth/github/create", {:email => "test@versioneye.com", :terms => "0" }, "HTTPS" => "on"
       response.body.should match("You have to accept the Conditions of Use AND the Data Aquisition")
