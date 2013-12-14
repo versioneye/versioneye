@@ -1,4 +1,7 @@
 
+# Automatically precompile assets
+load 'deploy/assets'
+
 set :application, 'versioneye'
 
 set :scm     , :git
