@@ -18,7 +18,7 @@ require 'httparty'
 
 class Github
 
-  A_USER_AGENT = "Chrome/28(www.versioneye.com, contact@versioneye.com)"
+  A_USER_AGENT = 'Chrome/28(www.versioneye.com, contact@versioneye.com)'
   A_API_URL    = "https://api.github.com"
   A_WORKERS_COUNT = 4
   A_DEFAULT_HEADERS = {
@@ -265,11 +265,8 @@ class Github
 
   #returns all project files in the given repos grouped by branches
   def self.repo_project_files(repo_name, token, branch_docs = nil)
-    if branch_docs
-      branches = branch_docs
-    else
-      branches = repo_branches(repo_name, token)
-    end
+
+    branches = branch_docs ? branch_docs : repo_branches(repo_name, token)
 
     if branches.nil? or branches.empty?
       msg = "#{repo_name} doesnt have any branches."

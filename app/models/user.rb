@@ -212,12 +212,6 @@ class User
     UserEmail.where( user_id: self._id.to_s, email: email ).shift
   end
 
-  def image_url
-    url = 'http://www.gravatar.com/avatar/'
-    url += Digest::MD5.hexdigest(email.strip.downcase)
-    url
-  end
-
   def has_password? submitted_password
     self.encrypted_password == encrypt(submitted_password)
   end
@@ -350,8 +344,7 @@ class User
   def replacements_for_username( username )
     username = username.gsub(".", "")
     username = username.gsub("-", "")
-    username = username.gsub("_", "")
-    username
+    username.gsub("_", "")
   end
 
   def fetch_or_create_billing_address

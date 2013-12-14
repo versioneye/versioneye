@@ -80,6 +80,8 @@ class User::GithubReposController < ApplicationController
       repo = remove_repo(command_data, project_name, branch, filename, branch_files)
     when "update"
       repo = update_repo(command_data)
+    else
+      repo = "{'response': 'wrong command'}"
     end
     render json: repo
   rescue => e

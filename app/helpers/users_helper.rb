@@ -18,7 +18,7 @@ module UsersHelper
     return true if !current_user.nil? && user.id == current_user.id
     if user.privacy_products.eql?('nobody')
       return false
-    elsif user.privacy_products.eql?("ru")
+    elsif user.privacy_products.eql?('ru')
       return true if !current_user.nil?
       return false if current_user.nil?
     elsif user.privacy_products.eql?("everybody")

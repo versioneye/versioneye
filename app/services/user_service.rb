@@ -17,7 +17,7 @@ class UserService
       flash[:error] = 'page_signup_error_email'
       return false
     elsif user.fullname.nil? || user.fullname.empty?
-      flash[:error] = "page_signup_error_fullname"
+      flash[:error] = 'page_signup_error_fullname'
       return false
     elsif user.password.nil? || user.password.empty? || user.password.size < 5
       flash[:error] = "page_signup_error_password"

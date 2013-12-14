@@ -39,8 +39,7 @@ module ProductsHelper
     query_empty = query.nil? || query.empty? || query.strip.empty? || query.eql?("search for a software library")
     query = "json" if query_empty
     query = query.strip()
-    query = query.downcase
-    query
+    query.downcase
   end
 
   def badge_for_product( language, prod_key, version )

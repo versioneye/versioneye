@@ -24,7 +24,7 @@ class VersioncommentsController < ApplicationController
     id = params[:id]
     @versioncommentreply = Versioncommentreply.new()
     @comment = Versioncomment.find_by_id(id)
-    if !@comment.nil?
+    if @comment
       @product = @comment.product
       attach_version(@product, @comment.version)
     else

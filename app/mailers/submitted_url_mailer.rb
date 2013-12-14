@@ -16,7 +16,7 @@ class SubmittedUrlMailer < ActionMailer::Base
     @user = submitted_url.user
     mail(
       :to       => @user.email,
-      :subject  => "Your submitted Resource is accepted.", 
+      :subject  => 'Your submitted Resource is accepted.',
       :tag      => 'notice')
   end
 
