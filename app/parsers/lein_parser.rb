@@ -40,8 +40,7 @@ class LeinParser < CommonParser
       break if match.nil?
       content = "#{match.pre_match} <#{match.to_a[2]} attr=\"#{match.to_a[1]}\"> #{match.post_match}"
     end
-    content = '<project>' + content + '</project>'
-    content
+    '<project>' + content + '</project>'
   end
 
   def build_dependencies(matches)

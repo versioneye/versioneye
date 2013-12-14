@@ -19,7 +19,7 @@ class Settings::PrivacyController < ApplicationController
     elsif User.authenticate(current_user.email, password).nil?
       flash[:error] = 'The password is wrong. Please try again.'
     elsif user.save
-      flash[:success] = "Profile updated."
+      flash[:success] = 'Profile updated.'
     else
       flash[:error] = "Something went wrong. Please try again later."
     end

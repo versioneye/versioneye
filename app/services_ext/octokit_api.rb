@@ -13,7 +13,7 @@ class OctokitApi
 
   # Singleton pattern
   def self.instance
-    @@github_api ||= self.client
+    self.client
   end
 
 end
