@@ -62,12 +62,12 @@ module V2
           GitHubService.cached_user_repos(user)
         end
 
-        unless params[:only_imported]
-          repos = user.github_repos.where(query_filters).paginate(per_page: 30, page: page)
-        else
+        if params[:only_imported]
           imported_projects = Project.by_user(user).where(source: Project::A_SOURCE_GITHUB)
           repo_names = imported_projects.map {|proj| proj[:github_project]}
           repos = user.github_repos.any_in(fullname: repo_names.to_a).paginate(per_page: 30, page: page)
+        else
+          repos = user.github_repos.where(query_filters).paginate(per_page: 30, page: page)
         end
 
         repos.each do |repo|
@@ -98,12 +98,8 @@ module V2
         allowed_params = Set.new [true, 'true', 't', 'T', 1 , '1']
 
         if allowed_params.include? params[:force]
-          p "Re-imports everything"
           repos = GitHubService.update_repos_for_user(user)
-        end
-
-        if repos
-          msg =  {changed: true, msg: "Changed - pulled #{user.github_repos.all.count} repos"}
+          msg = {changed: true, msg: "Changed - pulled #{user.github_repos.all.count} repos"} if repos
         end
 
         present msg
@@ -135,7 +131,6 @@ module V2
           error! "Search term is unspecified", 400
         end
 
-        results = []
         search_results = Github.search(q, params[:langs], params[:users], page, per_page)
         total_count = search_results['total_count']
         results = process_search_results(search_results)
@@ -155,14 +150,13 @@ module V2
       post '/hook/:project_id' do
         authorized?
         project = Project.find_by_id( params[:project_id] )
-        resp = false
+
         if project && project.collaborator?( current_user )
           Thread.new{ ProjectService.update( project, false ) }
-          resp = true
+          present :success, true
         else
-          resp = "No! You do not have access to this project!"
+          present :success, "No! You do not have access to this project!"
         end
-        present :success, resp
       end
 
 
@@ -227,7 +221,7 @@ module V2
           error! "We couldn't find the repository `#{repo_name}` in your account.", 400
         end
 
-        project = ProjectService.import_from_github(user, repo_name, branch)
+        ProjectService.import_from_github(user, repo_name, branch)
         projects = Project.by_user(current_user).by_github(repo_name).to_a
 
         present :repo, repo, with: EntitiesV2::RepoEntityDetailed
