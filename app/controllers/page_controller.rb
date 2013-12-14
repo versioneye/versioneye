@@ -3,15 +3,15 @@ class PageController < ApplicationController
   def routing_error
     path = request.fullpath
     if path.match(/\/version\//)
-      path.gsub!("/version/", "/")
+      path.gsub!('/version/', '/')
     else
-      path = "/"
+      path = '/'
     end
     redirect_to path
   end
 
   def legacy_route
-    path = "/"
+    path = '/'
     key     = params[:key]
     version = params[:version]
     key = parse_param key
@@ -26,7 +26,7 @@ class PageController < ApplicationController
       hash = fetch_lang_and_key( key )
       language = hash['language']
       key = hash['key']
-      if !language.empty?
+      unless language.empty?
         product = Product.fetch_product language, key
         if product
           path = "/#{product.language_esc}/#{product.to_param}/#{version}"
@@ -52,7 +52,7 @@ class PageController < ApplicationController
       hash     = fetch_lang_and_key( key )
       language = hash['language']
       key      = hash['key']
-      if !language.empty?
+      unless language.empty?
         product = Product.fetch_product language, key
         if product
           path = "/#{product.language_esc}/#{product.to_param}/#{version}/badge.png"

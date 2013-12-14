@@ -3,10 +3,10 @@ class Plan
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_PLAN_FREE            = "02_free"
-  A_PLAN_PERSONAL        = "02_personal"
-  A_PLAN_BUSINESS_SMALL  = "02_business_small"
-  A_PLAN_BUSINESS_NORMAL = "02_business_normal"
+  A_PLAN_FREE            = '02_free'
+  A_PLAN_PERSONAL        = '02_personal'
+  A_PLAN_BUSINESS_SMALL  = '02_business_small'
+  A_PLAN_BUSINESS_NORMAL = '02_business_normal'
 
   field :name_id         , type: String
   field :name            , type: String

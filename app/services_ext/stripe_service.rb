@@ -13,16 +13,14 @@ class StripeService
   end
 
   def self.create_or_update_customer user, stripe_token, plan_name_id
-    customer = nil
     if user.stripe_customer_id
       customer = self.fetch_customer user.stripe_customer_id
       customer.card = stripe_token
       customer.save
       customer.update_subscription( :plan => plan_name_id )
-    else
-      customer = self.create_customer stripe_token, plan_name_id, user.email
+      return customer
     end
-    customer
+    self.create_customer stripe_token, plan_name_id, user.email
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")

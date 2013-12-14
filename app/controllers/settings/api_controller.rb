@@ -6,7 +6,7 @@ class Settings::ApiController < ApplicationController
     @user_api = Api.find_or_initialize_by(user_id: current_user.id.to_s)
     @api_calls = 0
     if @user_api.api_key.nil?
-      @user_api.api_key = "generate new value"
+      @user_api.api_key = 'generate new value'
     else
       @api_calls = ApiCall.by_user(current_user).by_api_key(@user_api.api_key).count
     end

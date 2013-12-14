@@ -10,16 +10,14 @@ class ServicesController < ApplicationController
     file = params[:upload]
 
     if file.nil? || file.empty?
-      flash[:error] = "No file selected. Please select a project file from your computer."
-      redirect_to "/"
+      flash[:error] = 'No file selected. Please select a project file from your computer.'
+      redirect_to '/'
       return nil
     end
 
-    orig_filename       = file['datafile'].original_filename
-    filename            = nil
-    filename            = S3.upload_fileupload file
-    url                 = S3.url_for filename
-    project             = ProjectService.build_from_url url
+    filename            = S3.upload_fileupload( file )
+    url                 = S3.url_for( filename )
+    project             = ProjectService.build_from_url( url )
     project.name        = Project.create_random_value
     project.s3_filename = filename
     project.source      = Project::A_SOURCE_UPLOAD

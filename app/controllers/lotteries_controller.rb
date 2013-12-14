@@ -1,11 +1,11 @@
 class LotteriesController < ApplicationController
 
-  layout "lottery"
+  layout 'lottery'
 
   before_filter :authenticate, :only => [:libraries, :follow, :thankyou]
 
   def index
-    render text: "Uhh, sorry but you shouldnt see this."
+    render text: 'Uhh, sorry but you shouldnt see this.'
   end
 
   def show
@@ -15,11 +15,11 @@ class LotteriesController < ApplicationController
   def show_verification
     verification = params[:verification]
     if User.activate!(verification)
-      flash[:success] = "Congratulation. Your Account is activated. Please Sign In."
-      redirect_to "/lottery/signin" and return
+      flash[:success] = 'Congratulation. Your Account is activated. Please Sign In.'
+      redirect_to '/lottery/signin' and return
     end
 
-    flash[:error] = "Sorry! Verification failed."
+    flash[:error] = 'Sorry! Verification failed.'
     redirect_to "/lottery" #if failed, move back to lottery landing page
   end
 
@@ -75,7 +75,7 @@ class LotteriesController < ApplicationController
         flash[:error] = "You already have a ticket."
         return false
       end
-      return true
+      true
     end
 
 end

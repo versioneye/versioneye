@@ -62,7 +62,7 @@ class Versionlink
 
   def get_link
     return "http://#{self.link}" if self.link.match(/^www.*/) != nil
-    return self.link
+    self.link
   end
 
 end

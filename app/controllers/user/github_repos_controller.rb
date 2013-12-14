@@ -3,16 +3,16 @@ class User::GithubReposController < ApplicationController
   before_filter :authenticate
 
   def init
-    render "init", layout: "application"
+    render 'init', layout: 'application'
   end
 
 
   def index
     task_status  = GitHubService.cached_user_repos current_user
     github_repos = current_user.github_repos
+    repos = []
     if github_repos && github_repos.count > 0
       github_repos = github_repos.desc(:commited_at)
-      repos = []
       github_repos.each do |repo|
         repos << process_repo(repo, task_status)
       end
@@ -80,6 +80,8 @@ class User::GithubReposController < ApplicationController
       repo = remove_repo(command_data, project_name, branch, filename, branch_files)
     when "update"
       repo = update_repo(command_data)
+    else
+      repo = "{'response': 'wrong command'}"
     end
     render json: repo
   rescue => e
@@ -113,16 +115,6 @@ class User::GithubReposController < ApplicationController
       format.html { redirect_to user_projects_path }
       format.json { render json: {success: success, project_id: id, msg: msg} }
     end
-  end
-
-
-  def poll_changes
-    is_changed = Github.user_repos_changed?( current_user )
-    if is_changed
-      render json: {changed: true, msg: "Changed."}
-      return true
-    end
-    render json: {changed: false}
   end
 
 
@@ -168,7 +160,7 @@ class User::GithubReposController < ApplicationController
       id = command_data[:githubProjectId]
       project_exists = Project.where(_id: id).exists?
 
-      if !project_exists
+      unless project_exists
         raise "Can't remove project with id: `#{id}` - it does not exist. Please refresh the page."
       end
 

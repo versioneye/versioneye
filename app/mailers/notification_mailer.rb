@@ -12,7 +12,7 @@ class NotificationMailer < ActionMailer::Base
     mail(
       :to => @user.email,
       :subject => "Update: #{names}",
-      :tag => "notification_new_version"
+      :tag => 'notification_new_version'
       )
   end
 

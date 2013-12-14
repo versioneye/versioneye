@@ -12,10 +12,10 @@ class VersioncommentsController < ApplicationController
     @versioncomment.language  = @product.language
     attach_version(@product, version)
     if @versioncomment.save
-      flash[:success] = "Comment saved!"
+      flash[:success] = 'Comment saved!'
       send_comment_mails(@product, user, @versioncomment)
     else
-      flash[:error] = "Something went wrong"
+      flash[:error] = 'Something went wrong'
     end
     redirect_to product_version_path(@product)
   end
@@ -24,7 +24,7 @@ class VersioncommentsController < ApplicationController
     id = params[:id]
     @versioncommentreply = Versioncommentreply.new()
     @comment = Versioncomment.find_by_id(id)
-    if !@comment.nil?
+    if @comment
       @product = @comment.product
       attach_version(@product, @comment.version)
     else

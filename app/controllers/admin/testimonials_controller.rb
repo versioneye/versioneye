@@ -15,7 +15,7 @@ class Admin::TestimonialsController < ApplicationController
     testimonial.update_attributes moderated: true,
                                   approved: true
     if testimonial.save
-      flash[:notice] = "Success! Testimonial is now accepted."
+      flash[:notice] = 'Success! Testimonial is now accepted.'
     else
       flash[:error] = "Error! Can't save updates! #{testimonial.errors.full_messages.to_sentence}"
     end

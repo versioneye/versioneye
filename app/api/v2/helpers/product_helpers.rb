@@ -57,7 +57,7 @@ module ProductHelpers
       error! "Language `#{lang}`is not correct."
     end
 
-    return parsed_lang
+    parsed_lang
   end
 
   def encode_prod_key(prod_key)
@@ -68,7 +68,7 @@ module ProductHelpers
   def decode_prod_key(prod_key)
     parsed_key = HTMLEntities.new.decode prod_key
     parsed_key = parsed_key.to_s.gsub(":", "/")
-    parsed_key = parsed_key.gsub("~", ".")
+    parsed_key.gsub("~", ".")
   end
 
   def parse_product_key(prod_key)

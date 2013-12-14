@@ -8,22 +8,22 @@ class EsProduct
           :analysis => {
             :filter => {
               :name_ngrams => {
-                :side => "front",
-                :type => "edgeNGram",
+                :side => 'front',
+                :type => 'edgeNGram',
                 :max_gram => 100,
                 :min_gram => 2
               }
             },
             :analyzer => {
               :product_name => {
-                :filter => ["standard", "lowercase", "asciifolding"],
-                :type => "custom",
-                :tokenizer => "standard"
+                :filter => ['standard', 'lowercase', 'asciifolding'],
+                :type => 'custom',
+                :tokenizer => 'standard'
               },
               :ngram_name => {
-                :filter => ["standard", "lowercase", "asciifolding", "name_ngrams"],
-                :type => "custom",
-                :tokenizer => "standard"
+                :filter => ['standard', 'lowercase', 'asciifolding', 'name_ngrams'],
+                :type => 'custom',
+                :tokenizer => 'standard'
               }
             }
           }
@@ -35,9 +35,9 @@ class EsProduct
             :name => { :type => 'multi_field', :fields => {
                 :name    => {:type => 'string', :analyzer => 'product_name', :include_in_all => false},
                 :partial => {
-                  :search_analyzer => "product_name",
-                  :index_analyzer  => "ngram_name",
-                  :type => "string",
+                  :search_analyzer => 'product_name',
+                  :index_analyzer  => 'ngram_name',
+                  :type => 'string',
                   :include_in_all => true,
                   :boost => 10
                 }

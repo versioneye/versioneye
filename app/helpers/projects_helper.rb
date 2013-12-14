@@ -7,13 +7,13 @@ module ProjectsHelper
   end
 
   def outdated_color project
-    return "red" if project.out_number > 0
-    "green"
+    return 'red' if project.out_number > 0
+    'green'
   end
 
   def unknown_color project
-    return "orange" if project.unknown_number > 0
-    ""
+    return 'orange' if project.unknown_number > 0
+    ''
   end
 
   def add_dependency_classes project

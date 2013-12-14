@@ -6,8 +6,8 @@ class JsonCache
   field :name, type: String
   field :json_string, type: String
 
-  A_LANGUAGE_PROJECT_COUNT = "lang_project_count"
-  A_LANGUAGE_PROJECT_TREND = "lang_project_trend"
+  A_LANGUAGE_PROJECT_COUNT = 'lang_project_count'
+  A_LANGUAGE_PROJECT_TREND = 'lang_project_trend'
 
   def self.language_project_count 
     JsonCache.where(:name => A_LANGUAGE_PROJECT_COUNT).first

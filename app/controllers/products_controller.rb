@@ -7,18 +7,14 @@ class ProductsController < ApplicationController
   before_filter :check_refer                   , :only => [:index]
   #before_filter :force_http
 
-  @@languages = [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
-    Product::A_LANGUAGE_PYTHON, Product::A_LANGUAGE_PHP, Product::A_LANGUAGE_NODEJS,
-    Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R, Product::A_LANGUAGE_OBJECTIVEC]
-
   def index
     @user = User.new
     @ab = params['ab']
     if @ab.nil?
-      ab_array = ["a", "b"]
-      @ab = "b" # ab_array[Random.rand(2)]
+      # ab_array = ['a', 'b']
+      @ab = 'b' # ab_array[Random.rand(2)]
     end
-    @languages = @@languages
+    @languages = supported_languages
     render :layout => 'application_lp'
   end
 
@@ -26,7 +22,6 @@ class ProductsController < ApplicationController
     @query   = do_parse_search_input( params[:q] )
     @groupid = params[:g]
     @lang    = get_lang_value( params[:lang] )
-    commit   = params[:commit]
     if (@query.nil? || @query.empty?) && (@groupid.nil? || @groupid.empty?)
       flash.now[:error] = "Please give us some input. Type in a value for name."
     elsif @query.include?("%")
@@ -37,7 +32,7 @@ class ProductsController < ApplicationController
       @products = ProductService.search( @query, @groupid, languages, params[:page])
       # save_search_log( @query, @products, start )
     end
-    @languages = @@languages
+    @languages = supported_languages
   end
 
   def show
@@ -154,7 +149,7 @@ class ProductsController < ApplicationController
       @product.save
       add_status_comment(@product, current_user, "twitter")
       flash[:success] = "Twitter name updated."
-    elsif link_url && !link_url.empty? &&
+    elsif link_url && !link_url.empty?
       versionlink = Versionlink.new
       versionlink.language = @product.language
       versionlink.prod_key = @product.prod_key
@@ -204,7 +199,7 @@ class ProductsController < ApplicationController
       format.js
       format.json {render json: {success: follow}}
       format.html {
-        if !follow
+        unless follow
           flash.now[:error] = "An error occured. Please try again later and contact the VersionEye Team."
         end
         product = Product.fetch_product( language, product_key )
@@ -225,7 +220,7 @@ class ProductsController < ApplicationController
       format.js
       format.json {render json: {success: unfollow}}
       format.html {
-          if !unfollow
+          unless unfollow
             flash.now[:error] = "An error occured. Please try again later."
           end
           if src_hidden.eql? "detail"
@@ -301,6 +296,12 @@ class ProductsController < ApplicationController
 
     def admin_user
       redirect_to(root_path) unless current_user.admin?
+    end
+
+    def supported_languages
+      [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
+      Product::A_LANGUAGE_PYTHON, Product::A_LANGUAGE_PHP, Product::A_LANGUAGE_NODEJS,
+      Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R, Product::A_LANGUAGE_OBJECTIVEC]
     end
 
 end

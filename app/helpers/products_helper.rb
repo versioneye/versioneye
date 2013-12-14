@@ -3,8 +3,8 @@ module ProductsHelper
   include ActionView::Helpers::DateHelper
 
   def product_version_path( product, version = nil )
-    return "/0/0/0" if product.nil? || product.prod_key.nil?
-    lang = product.language.gsub("\.", "")
+    return '/0/0/0' if product.nil? || product.prod_key.nil?
+    lang = product.language.gsub("\.", '')
     if version.nil?
       version = product.version_to_url_param
     end
@@ -12,8 +12,8 @@ module ProductsHelper
   end
 
   def product_url(product)
-    return "/0/0" if product.nil? || product.prod_key.nil?
-    lang = product.language.gsub("\.", "")
+    return '/0/0' if product.nil? || product.prod_key.nil?
+    lang = product.language.gsub("\.", '')
     "/#{lang.downcase}/#{product.to_param}"
   end
 
@@ -26,7 +26,7 @@ module ProductsHelper
   def display_follow(product, user)
     return "block" if user.products.nil? || user.products.empty?
     return "none"  if user.products.include? product
-    return "block"
+    "block"
   end
 
   def display_unfollow(product, user)
@@ -39,8 +39,7 @@ module ProductsHelper
     query_empty = query.nil? || query.empty? || query.strip.empty? || query.eql?("search for a software library")
     query = "json" if query_empty
     query = query.strip()
-    query = query.downcase
-    query
+    query.downcase
   end
 
   def badge_for_product( language, prod_key, version )
@@ -86,7 +85,7 @@ module ProductsHelper
 
     langs = lang.split(",")
     langs.each do |language|
-      if !language.strip.empty?
+      unless language.strip.empty?
         language = language.downcase
         if special_languages.has_key? language
           languages.push(special_languages[language])

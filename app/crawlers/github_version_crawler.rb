@@ -2,11 +2,11 @@ class GithubVersionCrawler
 
   include HTTParty
 
-  A_USER_AGENT = "www.versioneye.com"
-  A_API_URL    = "https://api.github.com"
+  A_USER_AGENT = 'www.versioneye.com'
+  A_API_URL    = 'https://api.github.com'
 
   def self.logger
-    ActiveSupport::BufferedLogger.new("log/github_version_crawler.log")
+    ActiveSupport::BufferedLogger.new('log/github_version_crawler.log')
   end
 
 
@@ -19,17 +19,12 @@ class GithubVersionCrawler
 
 
   def self.products( language, empty_release_dates, desc = true )
-    products = nil
-    if empty_release_dates
-      products = Product.where({ :language => language, "versions.released_at" => nil })
-    else
-      products = Product.where({ :language => language })
-    end
-    if desc
-      products = products.desc(:name)
-    else
-      products = products.asc(:name)
-    end
+    products = Product.where({ :language => language, "versions.released_at" => nil }) if empty_release_dates
+    products = Product.where({ :language => language }) if !empty_release_dates
+
+    products = products.desc(:name) if desc
+    products = products.asc(:name) if !desc
+
     products.no_timeout
   end
 

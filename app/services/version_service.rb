@@ -1,22 +1,22 @@
 class VersionService
 
 
-  def self.newest_version(versions, stability = "stable")
+  def self.newest_version(versions, stability = 'stable')
     return nil if versions.nil? || versions.empty?
     filtered = Array.new
     versions.each do |version|
-      next if version.to_s.eql?("dev-master")
+      next if version.to_s.eql?('dev-master')
       if VersionTagRecognizer.does_it_fit_stability? version.to_s, stability
         filtered << version
       end
     end
     filtered = versions if filtered.empty?
-    sorted = Naturalsorter::Sorter.sort_version_by_method( filtered, "version", false )
+    sorted = Naturalsorter::Sorter.sort_version_by_method( filtered, 'version', false )
     sorted.first
   end
 
 
-  def self.newest_version_number( versions, stability = "stable" )
+  def self.newest_version_number( versions, stability = 'stable')
     version = newest_version( versions, stability )
     return nil if version.nil?
     return version.to_s
@@ -102,7 +102,7 @@ class VersionService
   def self.newest_but_not( versions, value, range=false, stability = "stable")
     filtered_versions = Array.new
     versions.each do |version|
-      if !version.to_s.match(/^#{value}/)
+      unless version.to_s.match(/^#{value}/)
         filtered_versions.push(version)
       end
     end
