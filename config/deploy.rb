@@ -1,6 +1,5 @@
 
-# Automatically precompile assets
-load 'deploy/assets'
+SSHKit.config.command_map[:rake] = "bundle exec rake"
 
 set :application, 'versioneye'
 
@@ -56,31 +55,26 @@ namespace :deploy do
     end
   end
 
+  desc 'assets:precompile'
+  namespace :assets do
+    task :precompile do
+      on roles :app, in: :sequence, wait: 5 do
+        within release_path do
+          with rails_env: fetch(:rails_env) do
+            execute :rake, "assets:precompile"
+          end
+        end
+      end
+    end
+  end
+
   # Precompile assets
   # namespace :assets do
-
   #   desc 'Precompile all assets'
   #   task :precompile, :roles => :app, :except => { :no_release => true } do
   #     run %Q{cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile}
   #   end
 
-  # end
-
-  # desc 'Restart application'
-  # task :restart do
-  #   on roles(:app), in: :sequence, wait: 5 do
-  #     # Your restart mechanism here, for example:
-  #     # execute :touch, release_path.join('tmp/restart.txt')
-  #   end
-  # end
-
-  # after :restart, :clear_cache do
-  #   on roles(:web), in: :groups, limit: 3, wait: 10 do
-  #     # Here we can do anything such as:
-  #     # within release_path do
-  #     #   execute :rake, 'cache:clear'
-  #     # end
-  #   end
   # end
 
   after :finishing, 'deploy:cleanup'
