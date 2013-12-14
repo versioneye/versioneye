@@ -3,13 +3,6 @@ require 'dalli'
 
 class GitHubService
 
-  @@memcache_options = {
-    :namespace  => 'github_app',
-    :compress   => true,
-    :expires_in => 30.minutes # Only allows import after X min; unless task unlocks!
-  }
-  @@memcache = Dalli::Client.new('localhost:11211', @@memcache_options)
-
   A_TASK_NIL     = nil
   A_TASK_RUNNING = 'running'
   A_TASK_DONE    = 'done'
@@ -42,9 +35,9 @@ class GitHubService
   NB! allows only one running task per user;
 =end
   def self.cached_user_repos user
-
+    memcache      = memcache_client
     user_task_key = "#{user[:username]}-#{user[:github_id]}"
-    task_status = @@memcache.get user_task_key
+    task_status   = memcache.get user_task_key
 
     if task_status == A_TASK_RUNNING
       Rails.logger.debug "We are still importing repos for `#{user[:fullname]}.`"
@@ -53,19 +46,19 @@ class GitHubService
 
     if user[:github_token] and user.github_repos.all.count == 0
       Rails.logger.info "Fetch Repositories from GitHub and cache them in DB."
-      n_repos = Github.count_user_repos user
+      n_repos    = Github.count_user_repos user
       if n_repos == 0
         Rails.logger.debug "user has no repositories;"
         task_status = A_TASK_DONE
-        @@memcache.set(user_task_key, task_status)
+        memcache.set(user_task_key, task_status)
         return task_status
       end
       task_status = A_TASK_RUNNING
-      @@memcache.set(user_task_key, task_status)
+      memcache.set(user_task_key, task_status)
       Thread.new do
         orga_names = Github.orga_names(user.github_token)
         self.cache_user_all_repos(user, orga_names)
-        @@memcache.set(user_task_key, A_TASK_DONE)
+        memcache.set(user_task_key, A_TASK_DONE)
       end
 
     else
@@ -93,6 +86,18 @@ class GitHubService
 
 
   private
+
+
+    def self.memcache_client
+      Dalli::Client.new(
+        'localhost:11211',
+        {
+          :namespace  => 'github_app',
+          :compress   => true,
+          :expires_in => 30.minutes # Only allows import after X min; unless task unlocks!
+        }
+      )
+    end
 
 
     def self.cache_user_all_repos(user, orga_names)
