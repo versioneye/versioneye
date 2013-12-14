@@ -30,7 +30,7 @@ module ProjectHelpers
     project.remove
   end
 
-  def upload_and_store(file)
+  def upload_and_store file
     project = upload file
     ProjectService.store project
     project

@@ -1,231 +1,185 @@
---- 
-http_interactions: 
-- request: 
+---
+http_interactions:
+- request:
     method: get
     uri: https://api.github.com/?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
+      string: ''
+    headers:
+      Accept:
       - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
+      User-Agent:
+      - Octokit Ruby Gem 2.6.2
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Server: 
+    headers:
+      Server:
       - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 18:34:55 GMT
-      Content-Type: 
+      Date:
+      - Thu, 05 Dec 2013 14:56:00 GMT
+      Content-Type:
       - application/json; charset=utf-8
-      Transfer-Encoding: 
+      Transfer-Encoding:
       - chunked
-      Status: 
+      Status:
       - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4989"
-      X-Ratelimit-Reset: 
-      - "1385321495"
-      Cache-Control: 
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4986'
+      X-Ratelimit-Reset:
+      - '1386258265'
+      Cache-Control:
       - public, max-age=60, s-maxage=60
-      Etag: 
+      Etag:
       - "\"e4559722c53d01255bb3d12bbb945098\""
-      Vary: 
+      Vary:
       - Accept
       - Accept-Encoding
-      X-Github-Media-Type: 
+      X-Github-Media-Type:
       - github.beta; format=json
-      X-Content-Type-Options: 
+      X-Content-Type-Options:
       - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
       - "*"
-      X-Github-Request-Id: 
-      - 4E345547:4DB4:182F55D:529246CF
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA5WUy26DMBBF/4VFV1G8j1TlU5ADU3ALmPjRiFr8e2fGoUlU
-        yTabkMW587zjUDXeGJhc7S2Y2puhOlW9c7M9CSFndeyU6/3l2OhREFEdKuld
-        r436kU7pyaYlryyKG91CbUGapk8rIyOIP1/fw9WDWdbwNssODjNWyn+sNu6g
-        TQtmxdgwSjVkCqIeRARZoT9VRhEZgr9xTDmYGYQ/ANoMywihehj0TU1deiBc
-        +R8bhJOmA0d9d8rm6mIkCPrUqiURLjWdDwHElLV+18JYYEtXFul0IZHBWr5g
-        yYyUZ0QY0pN26kM1JS59QVGqTSenu8FrA7O2yqHjIZMdZVYE/F0Fi0Q4u2VG
-        u/7zLC3gJUny7h5xUTb7y6CaunTnIvIoNNJBPahR4amnrvzBkWhrfsmIYr/6
-        NuEpikAy6vFJvuPmnydeaqSXV6x8ZWwYxpO7snhsBtr0DDjWnQwijiJwcBrF
-        FqJ4cXcBSh3IMZ2aCPJ82RuOxiSQqmLBsxMzFuceyY+bdt+ot8wFI+fKdpiG
-        +MJnZ/0FisGLGfUGAAA=
-
+      X-Github-Request-Id:
+      - D95B947E:2CE4:BA1ABA:52A09400
+    body:
+      encoding: UTF-8
+      string: "{\"current_user_url\":\"https://api.github.com/user\",\"authorizations_url\":\"https://api.github.com/authorizations\",\"code_search_url\":\"https://api.github.com/search/code?q={query}{&page,per_page,sort,order}\",\"emails_url\":\"https://api.github.com/user/emails\",\"emojis_url\":\"https://api.github.com/emojis\",\"events_url\":\"https://api.github.com/events\",\"feeds_url\":\"https://api.github.com/feeds\",\"following_url\":\"https://api.github.com/user/following{/target}\",\"gists_url\":\"https://api.github.com/gists{/gist_id}\",\"hub_url\":\"https://api.github.com/hub\",\"issue_search_url\":\"https://api.github.com/search/issues?q={query}{&page,per_page,sort,order}\",\"issues_url\":\"https://api.github.com/issues\",\"keys_url\":\"https://api.github.com/user/keys\",\"notifications_url\":\"https://api.github.com/notifications\",\"organization_repositories_url\":\"https://api.github.com/orgs/{org}/repos/{?type,page,per_page,sort}\",\"organization_url\":\"https://api.github.com/orgs/{org}\",\"public_gists_url\":\"https://api.github.com/gists/public\",\"rate_limit_url\":\"https://api.github.com/rate_limit\",\"repository_url\":\"https://api.github.com/repos/{owner}/{repo}\",\"repository_search_url\":\"https://api.github.com/search/repositories?q={query}{&page,per_page,sort,order}\",\"current_user_repositories_url\":\"https://api.github.com/user/repos{?type,page,per_page,sort}\",\"starred_url\":\"https://api.github.com/user/starred{/owner}{/repo}\",\"starred_gists_url\":\"https://api.github.com/gists/starred\",\"team_url\":\"https://api.github.com/teams\",\"user_url\":\"https://api.github.com/users/{user}\",\"user_organizations_url\":\"https://api.github.com/user/orgs\",\"user_repositories_url\":\"https://api.github.com/users/{user}/repos{?type,page,per_page,sort}\",\"user_search_url\":\"https://api.github.com/search/users?q={query}{&page,per_page,sort,order}\"}"
     http_version: 
-  recorded_at: Sun, 24 Nov 2013 18:34:56 GMT
-- request: 
+  recorded_at: Thu, 05 Dec 2013 14:56:00 GMT
+- request:
     method: get
     uri: https://api.github.com/repos/0xced/ABGetMe?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
+      string: ''
+    headers:
+      Accept:
       - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
+      User-Agent:
+      - Octokit Ruby Gem 2.6.2
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Server: 
+    headers:
+      Server:
       - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 18:34:56 GMT
-      Content-Type: 
+      Date:
+      - Thu, 05 Dec 2013 14:56:01 GMT
+      Content-Type:
       - application/json; charset=utf-8
-      Transfer-Encoding: 
+      Transfer-Encoding:
       - chunked
-      Status: 
+      Status:
       - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4988"
-      X-Ratelimit-Reset: 
-      - "1385321495"
-      Cache-Control: 
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4985'
+      X-Ratelimit-Reset:
+      - '1386258265'
+      Cache-Control:
       - public, max-age=60, s-maxage=60
-      Last-Modified: 
+      Last-Modified:
       - Sat, 23 Nov 2013 22:42:41 GMT
-      Etag: 
+      Etag:
       - "\"f0a7625501dffd9be235646911542c62\""
-      Vary: 
+      Vary:
       - Accept
       - Accept-Encoding
-      X-Github-Media-Type: 
+      X-Github-Media-Type:
       - github.beta; format=json
-      X-Content-Type-Options: 
+      X-Content-Type-Options:
       - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
       - "*"
-      X-Github-Request-Id: 
-      - 4E345547:4DB3:161D77E:529246D0
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA51Y227jNhD9FUPAFi3qmLo4TiJgsU0LtOjDYgt0+9IXg5JG
-        FhvdQFLJJkL+vYeUZMmGs44FGIkszjk8HM5whm4dkThh4N24t9f+0il5QU7o
-        3P/6B+nP5CydtMnzbf/W/RZTwsax6qkk6YStk1c7UQJmDQAylNdesAmWDn/k
-        msttI3OMZ1rXKmTMXe1kN7CKq4J1j4w2wZpcf7PeJHfuXUyuu0n45m7N7xKi
-        2L/9lHy0BB+C+w/+7/iIhEot4qpUq53QWRMZNrz3vdskSvkamDS42ZAfJ+sg
-        8m8iWt9eX6frVV3ufpAfv0HpoGNrJDvnFABwuBBei8nUrFEkFRu8kOkiP1r4
-        KHNvlVZ5Xj0Bd2T6NjXbQ8z+WLgod5fCAWlZpTPC5kD2q3GGUPoCGda8ZeYf
-        3GcIFLZaUvJ+KT0AQkwovbZMUl1ZpiZSsRS1FtjdC/imMNBUcsdL8cIvpAFM
-        AW3EXDC5NQeMHhGWF+A6+5bVUjzy+NksX1JM4hGevJTrCAgq/VybjP4He2z8
-        KjRteVKYdE15ruh16dh5NYzsiyWy9GzcTg6BhPYbNR4cC1HUORXwg3X9Iq3k
-        Qnz5e9EohN2iKZMqbswoJYv7v/5Uix8VTyl//gkKYfqwl/LdbLP+7vJoosfg
-        zzj/BBA5BRimf6DnGWiDahn+9okQIyt5VEmuq3OJfUrMAbxl068mOjTxYoZI
-        CwM8q6o5HrIwwIVSDb0rME8tzaIVG2K+bIqoO3zeE+mnCDscdHGlxK4kmuGZ
-        PbS1R7jxcSR5GWdzyAZky7onu2N8N0OWQRkpeRXNQKPWMAttmcp4d77r7Twl
-        hssgD6gkpTNlGeSeSstZe2YlGeieCMVEY/tmaBqQrO09lfNy1/DdHK49FDtn
-        ytuOv5wt7qfiesSCCD2OliJq5h4nI9qo6ook8m6Oq0bwSGXL9Per9MklTqq1
-        XWRRiHOF8xRPDzwIztlkJq6OCc338zX9LWkG2bLxpOsO0J7zcq/1J+igibUj
-        swmTuTo7JGt/rrnOzGmBCWou6XKBPZC1EUd/sVqt2oy47Q8LkrNyqsOBgMs4
-        Q190uaZ2QKLOF1zbTjM1khJ0nnnFkxmpsIeCptuUy3V1uGl01LhwzRBjYVOe
-        QuSkdFXOOcNG7JSxrLRIRfyeZvpUKhzA20/oBGNa8jxfIspwixOIOzSHZk/Q
-        OtEcH3Q4SMYl1vBIygkhOMObA7Jl3cUmloQOOdlyjR7Xdz3/yvWuvOCrF4Te
-        OvQ3/2K2pk4ObIIrz7vyg6++H67x8YxN3ajskObmyvONieuGfmBMcP70YYQn
-        3JWPr4xDq2vunTBXKhvNfxmNw4PLem8c54iHoyA9x/94fLC/BYCYrCqoRtmE
-        k4w08YInL/APCmFcNSW86Pm3S+eJa/RYKEPTl0MBBcmX6D+KNRL+6jfDztW2
-        yxcn1LIxNxW8GbNw8vJJPIjBqLsQ9DNg0kJIWfW/SJTIGtwSayp75kGJ211E
-        lBMCMRl3QowMsvtVJJTyJtfbrt2D7IIrbW9b3cOJgZL0Ey4cw2yYY1qUe62b
-        1/8BYT3mfZ0RAAA=
-
+      X-Github-Request-Id:
+      - D95B947E:2CE3:5982EC:52A09400
+    body:
+      encoding: UTF-8
+      string: "{\"id\":3170852,\"name\":\"ABGetMe\",\"full_name\":\"0xced/ABGetMe\",\"owner\":{\"login\":\"0xced\",\"id\":51363,\"avatar_url\":\"https://2.gravatar.com/avatar/e634e02646d909ce006da694a9deec28?d=https%3A%2F%2Fidenticons.github.com%2F218dbfa4c28f376e2cd43b27be4855f4.png&r=x\",\"gravatar_id\":\"e634e02646d909ce006da694a9deec28\",\"url\":\"https://api.github.com/users/0xced\",\"html_url\":\"https://github.com/0xced\",\"followers_url\":\"https://api.github.com/users/0xced/followers\",\"following_url\":\"https://api.github.com/users/0xced/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/0xced/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/0xced/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/0xced/subscriptions\",\"organizations_url\":\"https://api.github.com/users/0xced/orgs\",\"repos_url\":\"https://api.github.com/users/0xced/repos\",\"events_url\":\"https://api.github.com/users/0xced/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/0xced/received_events\",\"type\":\"User\",\"site_admin\":false},\"private\":false,\"html_url\":\"https://github.com/0xced/ABGetMe\",\"description\":\"ABGetMe
+        implementation for iOS using undocumented APIs (safely)\",\"fork\":false,\"url\":\"https://api.github.com/repos/0xced/ABGetMe\",\"forks_url\":\"https://api.github.com/repos/0xced/ABGetMe/forks\",\"keys_url\":\"https://api.github.com/repos/0xced/ABGetMe/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/0xced/ABGetMe/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/0xced/ABGetMe/teams\",\"hooks_url\":\"https://api.github.com/repos/0xced/ABGetMe/hooks\",\"issue_events_url\":\"https://api.github.com/repos/0xced/ABGetMe/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/0xced/ABGetMe/events\",\"assignees_url\":\"https://api.github.com/repos/0xced/ABGetMe/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/0xced/ABGetMe/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/0xced/ABGetMe/tags\",\"blobs_url\":\"https://api.github.com/repos/0xced/ABGetMe/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/0xced/ABGetMe/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/0xced/ABGetMe/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/0xced/ABGetMe/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/0xced/ABGetMe/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/0xced/ABGetMe/languages\",\"stargazers_url\":\"https://api.github.com/repos/0xced/ABGetMe/stargazers\",\"contributors_url\":\"https://api.github.com/repos/0xced/ABGetMe/contributors\",\"subscribers_url\":\"https://api.github.com/repos/0xced/ABGetMe/subscribers\",\"subscription_url\":\"https://api.github.com/repos/0xced/ABGetMe/subscription\",\"commits_url\":\"https://api.github.com/repos/0xced/ABGetMe/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/0xced/ABGetMe/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/0xced/ABGetMe/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/0xced/ABGetMe/issues/comments/{number}\",\"contents_url\":\"https://api.github.com/repos/0xced/ABGetMe/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/0xced/ABGetMe/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/0xced/ABGetMe/merges\",\"archive_url\":\"https://api.github.com/repos/0xced/ABGetMe/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/0xced/ABGetMe/downloads\",\"issues_url\":\"https://api.github.com/repos/0xced/ABGetMe/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/0xced/ABGetMe/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/0xced/ABGetMe/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/0xced/ABGetMe/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/0xced/ABGetMe/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/0xced/ABGetMe/releases{/id}\",\"created_at\":\"2012-01-13T13:14:26Z\",\"updated_at\":\"2013-11-23T22:42:41Z\",\"pushed_at\":\"2012-07-12T22:00:23Z\",\"git_url\":\"git://github.com/0xced/ABGetMe.git\",\"ssh_url\":\"git@github.com:0xced/ABGetMe.git\",\"clone_url\":\"https://github.com/0xced/ABGetMe.git\",\"svn_url\":\"https://github.com/0xced/ABGetMe\",\"homepage\":\"\",\"size\":132,\"stargazers_count\":128,\"watchers_count\":128,\"language\":\"Objective-C\",\"has_issues\":true,\"has_downloads\":true,\"has_wiki\":true,\"forks_count\":8,\"mirror_url\":null,\"open_issues_count\":0,\"forks\":8,\"open_issues\":0,\"watchers\":128,\"default_branch\":\"master\",\"master_branch\":\"master\",\"network_count\":8,\"subscribers_count\":6}"
     http_version: 
-  recorded_at: Sun, 24 Nov 2013 18:34:56 GMT
-- request: 
+  recorded_at: Thu, 05 Dec 2013 14:56:01 GMT
+- request:
     method: get
     uri: https://api.github.com/repos/0xced/ABGetMe/tags?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
+      string: ''
+    headers:
+      Accept:
       - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
+      User-Agent:
+      - Octokit Ruby Gem 2.6.2
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Server: 
+    headers:
+      Server:
       - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 18:34:57 GMT
-      Content-Type: 
+      Date:
+      - Thu, 05 Dec 2013 14:56:01 GMT
+      Content-Type:
       - application/json; charset=utf-8
-      Transfer-Encoding: 
+      Transfer-Encoding:
       - chunked
-      Status: 
+      Status:
       - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4987"
-      X-Ratelimit-Reset: 
-      - "1385321495"
-      Cache-Control: 
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4984'
+      X-Ratelimit-Reset:
+      - '1386258265'
+      Cache-Control:
       - public, max-age=60, s-maxage=60
-      Last-Modified: 
+      Last-Modified:
       - Sat, 23 Nov 2013 22:42:41 GMT
-      Etag: 
+      Etag:
       - "\"f0a7625501dffd9be235646911542c62\""
-      Vary: 
+      Vary:
       - Accept
       - Accept-Encoding
-      X-Github-Media-Type: 
+      X-Github-Media-Type:
       - github.beta; format=json
-      X-Content-Type-Options: 
+      X-Content-Type-Options:
       - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
       - "*"
-      X-Github-Request-Id: 
-      - 4E345547:4DB2:C95267:529246D0
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA52PywrCMBRE/+WuJTdtlSbd6caVXyAiedzaQB+hSUEs/XcD
-        VtfqdmDOmTnP0KuOoIKMccZhAw/ntWrb6zS2KW1i9KFCVN6xm4vNpJkZOhzJ
-        DwH53ZDF/eFI8US4FvENimr8D7QWP6Ak7FyEaobQqLRJWGFLo2RdbHNp5C7X
-        orAZmZoXWSlIUK2lNDpPZ34+8XIF/NqxLJcniPUG4UQBAAA=
-
+      X-Github-Request-Id:
+      - D95B947E:2CE5:12A636C:52A09401
+    body:
+      encoding: UTF-8
+      string: "[{\"name\":\"1.0.0\",\"zipball_url\":\"https://api.github.com/repos/0xced/ABGetMe/zipball/1.0.0\",\"tarball_url\":\"https://api.github.com/repos/0xced/ABGetMe/tarball/1.0.0\",\"commit\":{\"sha\":\"8d8d7ca9f3429c952b83d1ecf03178e8efb99cb2\",\"url\":\"https://api.github.com/repos/0xced/ABGetMe/commits/8d8d7ca9f3429c952b83d1ecf03178e8efb99cb2\"}}]"
     http_version: 
-  recorded_at: Sun, 24 Nov 2013 18:34:57 GMT
-recorded_with: VCR 2.7.0
+  recorded_at: Thu, 05 Dec 2013 14:56:01 GMT
+recorded_with: VCR 2.8.0

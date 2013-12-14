@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby "1.9.3"
+ruby "2.0.0"
 
 gem 'rails'              , '3.2.16'
 gem 'jquery-rails'       , '2.2.1'
@@ -13,7 +13,7 @@ gem 'httparty'           , '0.12.0'
 gem 'persistent_httparty', '0.1.1'
 gem 'oauth'              , '0.4.7'
 gem 'twitter_oauth'      , '0.4.94'
-gem 'aws-s3'             , '0.6.3', :require => 'aws/s3'
+gem 'aws-sdk'            , '~> 1.0'
 gem 'nokogiri'           , '1.6.0'
 gem 'stripe'             , '1.9.9'
 gem 'unicorn'            , '4.7.0'
@@ -25,7 +25,6 @@ gem 'grape'              , '0.6.1'
 gem 'grape-entity'       , '0.3.0'
 gem 'grape-swagger'      , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
 gem 'htmlentities'       , '4.3.1'
-gem 'capistrano'         , '2.15.5'
 gem 'whenever'           , '0.8.4'
 gem 'bourbon'            , '3.1.8'
 gem 'ruby_regex'         , '~> 0.1.0'
@@ -33,11 +32,13 @@ gem 'cocoapods-core'     , '0.28.0'
 gem 'octokit'            , "~> 2.6.0"
 
 group :development do
-  gem 'psych'             , '~> 2.0.0'
-  gem 'irbtools'          , '1.5.1'
-  gem 'terminal-notifier' , '1.5.1'
-  gem 'fakes3'            , '0.1.5.2'
-  gem 'debugger'          , '~> 1.6.0'
+  gem 'capistrano'       , '3.0.1'
+  gem 'capistrano-rails' , '1.1.0'
+  gem 'psych'            , '~> 2.0.0'
+  gem 'irbtools'         , '1.5.1'
+  gem 'terminal-notifier', '1.5.1'
+  gem 'fakes3'           , '0.1.5.2'
+  gem 'debugger'         , '~> 1.6.0'
 end
 
 group :assets do
@@ -59,7 +60,7 @@ group :test do
   gem 'selenium-webdriver', '2.38.0'
   gem 'fakeweb'           , '1.3.0'
   gem 'vcr'               , '~> 2.8.0',  :require => false
-  gem 'webmock'           , '~> 1.16.0', :require => false
+  gem 'webmock'           , '1.16.0', :require => false
   gem 'database_cleaner'  , '1.2.0'
   gem 'factory_girl'      , '4.3.0'
   gem 'factory_girl_rails', '4.3.0'
