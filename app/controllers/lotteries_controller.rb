@@ -75,7 +75,7 @@ class LotteriesController < ApplicationController
         flash[:error] = "You already have a ticket."
         return false
       end
-      return true
+      true
     end
 
 end

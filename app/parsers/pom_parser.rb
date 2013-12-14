@@ -71,7 +71,7 @@ class PomParser < CommonParser
       new_val.downcase!
       value = properties[new_val]
       return val if value.nil? || value.empty?
-      return value
+      value
     else
       val
     end
