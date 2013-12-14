@@ -5,7 +5,7 @@ class PythonSetupParser < RequirementsParser
     doc      = response.body
     return nil if doc.nil? or doc.empty?
     requirements = parse_requirements( doc )
-    extras       = parse_extras( doc )
+    # extras       = parse_extras( doc )
     project      = init_project( url )
     requirements.each do |requirement|
       parse_line requirement, project

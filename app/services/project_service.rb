@@ -155,7 +155,7 @@ class ProjectService
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    project = Project.new
+    Project.new
   end
 
   def self.destroy project_id

@@ -15,8 +15,6 @@ class ServicesController < ApplicationController
       return nil
     end
 
-    orig_filename       =  file['datafile'].original_filename
-    filename            = nil
     filename            = S3.upload_fileupload( file )
     url                 = S3.url_for( filename )
     project             = ProjectService.build_from_url( url )

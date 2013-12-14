@@ -172,7 +172,7 @@ class Dependency
 
   def version_for_url
     url_param = version_parsed
-    ver = Version.encode_version( url_param )
+    Version.encode_version( url_param )
   rescue => e
     Rails.logger.error e.message
     return self.version
