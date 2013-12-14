@@ -26,7 +26,7 @@ module ProductsHelper
   def display_follow(product, user)
     return "block" if user.products.nil? || user.products.empty?
     return "none"  if user.products.include? product
-    return "block"
+    "block"
   end
 
   def display_unfollow(product, user)

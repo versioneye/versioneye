@@ -137,8 +137,7 @@ class GemfileParser < CommonParser
   def fetch_line_elements( line )
     line = replace_comments( line )
     line = line.strip
-    line_elements = line.split(",")
-    line_elements
+    line.split(",")
   end
 
   def fetch_gem_name( line_elements )
@@ -149,8 +148,7 @@ class GemfileParser < CommonParser
     gem_name = gem_name.strip
     gem_name = gem_name.gsub('"', '')
     gem_name = gem_name.gsub("'", "")
-    gem_name = gem_name.split(" ").first
-    gem_name
+    gem_name.split(" ").first
   end
 
   def fetch_version( line_elements )
@@ -187,8 +185,7 @@ class GemfileParser < CommonParser
       end
     end
     version = version.gsub('"', '')
-    version = version.gsub("'", "")
-    version
+    version.gsub("'", "")
   end
 
   def replace_comments( value )

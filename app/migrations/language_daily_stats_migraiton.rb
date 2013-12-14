@@ -27,7 +27,7 @@ class LanguageDailyStatsMigraiton
       language: prod[:language],
       prod_key: prod[:prod_key]).desc(:created_at).first
 
-    unless latest_release.nil?
+    if latest_release
       version_numbers = latest_release[:version].to_s.split(".")
     else
       version_numbers = prod[:version].to_s.split(".")

@@ -230,7 +230,7 @@ class Github
 
   #TODO: refactor to use get_json again ...
   def self.fetch_repo_branch_tree(repo_name, token, branch_sha, recursive = false)
-    rec_val = (recursive == true) ? 1 : 0
+    rec_val = recursive ? 1 : 0
     url = "#{A_API_URL}/repos/#{repo_name}/git/trees/#{branch_sha}?access_token=#{token}&recursive=#{rec_val}"
     response = get(url, headers: A_DEFAULT_HEADERS )
     if response.code != 200

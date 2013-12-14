@@ -10,9 +10,9 @@ class User::GithubReposController < ApplicationController
   def index
     task_status  = GitHubService.cached_user_repos current_user
     github_repos = current_user.github_repos
+    repos = []
     if github_repos && github_repos.count > 0
       github_repos = github_repos.desc(:commited_at)
-      repos = []
       github_repos.each do |repo|
         repos << process_repo(repo, task_status)
       end
