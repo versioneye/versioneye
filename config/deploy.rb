@@ -5,7 +5,7 @@ set :application, 'versioneye'
 
 set :scm     , :git
 set :repo_url, 'git@github.com:versioneye/versioneye.git'
-set :branch  , "ruby_2"
+set :branch  , "master"
 
 set :ssh_options, {:forward_agent => true}
 set :user       , "ubuntu"
@@ -67,15 +67,6 @@ namespace :deploy do
       end
     end
   end
-
-  # Precompile assets
-  # namespace :assets do
-  #   desc 'Precompile all assets'
-  #   task :precompile, :roles => :app, :except => { :no_release => true } do
-  #     run %Q{cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile}
-  #   end
-
-  # end
 
   after :finishing, 'deploy:cleanup'
 
