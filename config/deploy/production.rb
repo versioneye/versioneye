@@ -11,7 +11,7 @@ set :normalize_asset_timestamps, %{public/images public/javascripts public/style
 # unless any hosts have the primary property set.
 #role :web, %w{user@example.com}
 #role :db,  %w{user@example.com}
-role :app, %w{ubuntu@ec2-54-194-97-146.eu-west-1.compute.amazonaws.com}
+role :app, %w{ubuntu@aws-1}
 
 # Extended Server Syntax
 # ======================
@@ -26,7 +26,6 @@ role :app, %w{ubuntu@ec2-54-194-97-146.eu-west-1.compute.amazonaws.com}
 # you can see them in [net/ssh documentation](http://net-ssh.github.io/net-ssh/classes/Net/SSH.html#method-c-start)
 # set it globally
  set :ssh_options, {
-   #keys: %w(~/.aws/aws_init.pem),
    forward_agent: true # , auth_methods: %w(password)
  }
 
