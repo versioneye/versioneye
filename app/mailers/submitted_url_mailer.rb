@@ -17,7 +17,7 @@ class SubmittedUrlMailer < ActionMailer::Base
     mail(
       :to       => @user.email,
       :subject  => "Your submitted Resource is accepted.", 
-      :tag      => "notice")
+      :tag      => 'notice')
   end
 
   def declined_url_email(submitted_url)

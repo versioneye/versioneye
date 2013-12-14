@@ -12,7 +12,7 @@ class ComposerLockParser < ComposerParser
 
   def process_package project, package
     dependency = Projectdependency.new
-    dependency.name = package["name"]
+    dependency.name = package['name']
     dependency.language = Product::A_LANGUAGE_PHP
 
     product = Product.fetch_product Product::A_LANGUAGE_PHP, dependency.name

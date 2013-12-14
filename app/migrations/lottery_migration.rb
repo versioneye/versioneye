@@ -12,7 +12,7 @@ class LotteryMigration
     ticket[:selection].each do |selection|
 
       if selection.is_a?(Hash)
-        prod_key =  selection["prod_key"]
+        prod_key =  selection['prod_key']
       end
 
       if selection.is_a?(String)

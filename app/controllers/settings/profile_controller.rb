@@ -15,9 +15,9 @@ class Settings::ProfileController < ApplicationController
     blog         = params[:blog]
     password     = params[:password]
     if password.nil? || password.empty?
-      flash[:error] = "For security reasons. Please type in your current password."
+      flash[:error] = 'For security reasons. Please type in your current password.'
     elsif new_username.nil? || new_username.empty?
-      flash[:error] = "Please type in a username."
+      flash[:error] = 'Please type in a username.'
     elsif !current_user.username.eql?(new_username) && !User.username_valid?(new_username)
       flash[:error] = "Username exist already. Please choose another username."
     elsif User.authenticate(current_user.email, password).nil?

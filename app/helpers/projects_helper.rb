@@ -12,8 +12,8 @@ module ProjectsHelper
   end
 
   def unknown_color project
-    return "orange" if project.unknown_number > 0
-    ""
+    return 'orange' if project.unknown_number > 0
+    ''
   end
 
   def add_dependency_classes project

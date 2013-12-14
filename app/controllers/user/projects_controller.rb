@@ -14,7 +14,7 @@ class User::ProjectsController < ApplicationController
   def create
     project = fetch_project params
     if project.nil?
-      flash[:error] = "Please put in a URL OR select a file from your computer." if flash[:error].nil?
+      flash[:error] = 'Please put in a URL OR select a file from your computer.' if flash[:error].nil?
       redirect_to new_user_project_path
       return nil
     end

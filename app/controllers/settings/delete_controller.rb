@@ -16,7 +16,7 @@ class Settings::DeleteController < ApplicationController
     user.password = password
     UserService.delete user
     sign_out
-    redirect_to "/"
+    redirect_to root_path
   end
 
 end
