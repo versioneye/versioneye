@@ -8,12 +8,12 @@ class Dependency
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_SCOPE_COMPILE     = "compile"
-  A_SCOPE_RUNTIME     = "runtime"
-  A_SCOPE_REQUIRE     = "require"
-  A_SCOPE_PROVIDED    = "provided"
-  A_SCOPE_DEVELOPMENT = "development"
-  A_SCOPE_TEST        = "test"
+  A_SCOPE_COMPILE     = 'compile'
+  A_SCOPE_RUNTIME     = 'runtime'
+  A_SCOPE_REQUIRE     = 'require'
+  A_SCOPE_PROVIDED    = 'provided'
+  A_SCOPE_DEVELOPMENT = 'development'
+  A_SCOPE_TEST        = 'test'
 
   # This attributes describe to which product
   # this dependency belongs to. Parent!
@@ -172,7 +172,7 @@ class Dependency
 
   def version_for_url
     url_param = version_parsed
-    ver = Version.encode_version( url_param )
+    Version.encode_version( url_param )
   rescue => e
     Rails.logger.error e.message
     return self.version

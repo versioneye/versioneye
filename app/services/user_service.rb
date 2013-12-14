@@ -12,12 +12,12 @@ class UserService
     SecureRandom.urlsafe_base64(length)
   end
 
-  def self.valid_user?(user, flash, t)
+  def self.valid_user?(user, flash)
     if !User.email_valid?(user.email)
-      flash[:error] = "page_signup_error_email"
+      flash[:error] = 'page_signup_error_email'
       return false
     elsif user.fullname.nil? || user.fullname.empty?
-      flash[:error] = "page_signup_error_fullname"
+      flash[:error] = 'page_signup_error_fullname'
       return false
     elsif user.password.nil? || user.password.empty? || user.password.size < 5
       flash[:error] = "page_signup_error_password"
@@ -26,7 +26,7 @@ class UserService
       flash[:error] = "page_signup_error_terms"
       return false
     end
-    return true
+    true
   end
 
   def self.delete user

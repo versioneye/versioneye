@@ -40,9 +40,7 @@ class LeinParser < CommonParser
       break if match.nil?
       content = "#{match.pre_match} <#{match.to_a[2]} attr=\"#{match.to_a[1]}\"> #{match.post_match}"
     end
-    content = '<project>' + content + '</project>'
-
-    content
+    '<project>' + content + '</project>'
   end
 
   def build_dependencies(matches)
@@ -76,7 +74,7 @@ class LeinParser < CommonParser
       data << dependency
     end
 
-    return {:unknown_number => unknowns, :out_number => out_number, :projectdependencies => data}
+    {:unknown_number => unknowns, :out_number => out_number, :projectdependencies => data}
   end
 
   # TODO use this method in this class to parse version strings

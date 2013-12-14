@@ -8,8 +8,8 @@ class UserMailer < ActionMailer::Base
     @billing_address = user.billing_address
     mail(
       :to => user.email,
-      :subject => "Receipt",
-      :tag => "receipt"
+      :subject => 'Receipt',
+      :tag => 'receipt'
       )
   end
 

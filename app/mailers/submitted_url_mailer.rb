@@ -6,9 +6,9 @@ class SubmittedUrlMailer < ActionMailer::Base
     @submitted_url = submitted_url
     @user = submitted_url.user
     mail(
-      :to       => "reiz@versioneye.com",
-      :subject  => "New Submission", 
-      :tag      => "notice")
+      :to       => 'reiz@versioneye.com',
+      :subject  => 'New Submission',
+      :tag      => 'notice')
   end
 
   def approved_url_email(submitted_url)
@@ -16,8 +16,8 @@ class SubmittedUrlMailer < ActionMailer::Base
     @user = submitted_url.user
     mail(
       :to       => @user.email,
-      :subject  => "Your submitted Resource is accepted.", 
-      :tag      => "notice")
+      :subject  => 'Your submitted Resource is accepted.',
+      :tag      => 'notice')
   end
 
   def declined_url_email(submitted_url)

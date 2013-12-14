@@ -9,10 +9,10 @@ class Settings::ConnectController < ApplicationController
   def disconnect
     user = current_user
     service = params[:service]
-    if service && service.eql?("twitter")
+    if service && service.eql?('twitter')
       user.twitter_token = nil
       user.twitter_secret = nil
-    elsif service && service.eql?("github")
+    elsif service && service.eql?('github')
       user.github_token = nil
       user.github_scope = nil
     end

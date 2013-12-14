@@ -1,6 +1,6 @@
 class StatisticService
 
-  A_STAT_LANGUAGES = ["Java", "Ruby", "Python", "Node.JS", "Clojure", "R", "PHP"]
+  A_STAT_LANGUAGES = ['Java', 'Ruby', 'Python', 'Node.JS', 'Clojure', 'R', 'PHP']
 
 
   def self.language_project_count

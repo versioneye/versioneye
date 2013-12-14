@@ -15,11 +15,11 @@ class Settings::PrivacyController < ApplicationController
     user.privacy_products = privacy_products
     user.privacy_comments = privacy_comments
     if password.nil? || password.empty?
-      flash[:error] = "Please type in the password!"
+      flash[:error] = 'Please type in the password!'
     elsif User.authenticate(current_user.email, password).nil?
-      flash[:error] = "The password is wrong. Please try again."
+      flash[:error] = 'The password is wrong. Please try again.'
     elsif user.save
-      flash[:success] = "Profile updated."
+      flash[:success] = 'Profile updated.'
     else
       flash[:error] = "Something went wrong. Please try again later."
     end

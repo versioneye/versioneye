@@ -19,8 +19,8 @@ class User::CollaborationsController < ApplicationController
 
     @collaboration = ProjectCollaborator.find_by_id(collab_id)
     if @collaboration.nil? or !@collaboration.current?(current_user)
-      flash[:error] = "Wrong collaboration, or this collaboration is now remove."
-      render text: "Contributions doesnt exist anymore.", layout: "application"
+      flash[:error] = 'Wrong collaboration, or this collaboration is now remove.'
+      render text: 'Contributions doesnt exist anymore.', layout: 'application'
     end
   end
 
@@ -35,10 +35,10 @@ class User::CollaborationsController < ApplicationController
     end
 
     if collaborator.owner.id == current_user.id or (!collaborator.nil? and collaborator.user.id == current_user.id)
-      flash[:success] = "Collaborator is now removed."
+      flash[:success] = 'Collaborator is now removed.'
       collaborator.delete
     else
-      flash[:error] = "You can not remove other peoples."
+      flash[:error] = 'You can not remove other peoples.'
     end
 
     redirect_to :back
@@ -97,9 +97,9 @@ class User::CollaborationsController < ApplicationController
 
     @collab.update_attributes({email: new_email})
     if @collab.save
-      flash[:success] = "Status saved."
+      flash[:success] = 'Status saved.'
     else
-      flash[:error] = "Something went wrong. Please try again later."
+      flash[:error] = 'Something went wrong. Please try again later.'
     end
     redirect_to user_collaboration_path(@collab)
   end

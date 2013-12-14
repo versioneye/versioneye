@@ -1,7 +1,7 @@
 class PackagistCrawler
 
   def self.logger
-    ActiveSupport::BufferedLogger.new("log/packagist.log")
+    ActiveSupport::BufferedLogger.new('log/packagist.log')
   end
 
   def self.crawl

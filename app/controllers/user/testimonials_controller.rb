@@ -52,7 +52,6 @@ class User::TestimonialsController < ApplicationController
       flash.now[:success] = "Many Thanks for your testimonial. Your feedback is highly appreciated."
       @testimonial = testimonial.content
       render "tweet"
-      return
     else
       flash.now[:error] = "Ups. Something went wrong. Please reach out to the VersionEye Team and help them to improve the product."
       redirect_to action: 'show'

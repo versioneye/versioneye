@@ -3,7 +3,7 @@ require 'git_crawler'
 class CocoapodsCrawler < GitCrawler
 
   def logger
-    ActiveSupport::BufferedLogger.new("log/cocoapods.log")
+    ActiveSupport::BufferedLogger.new('log/cocoapods.log')
   end
 
   def self.crawl
@@ -11,7 +11,7 @@ class CocoapodsCrawler < GitCrawler
   end
 
   def initialize
-    super "https://github.com/CocoaPods/Specs.git", Settings.cocoapods_spec
+    super 'https://github.com/CocoaPods/Specs.git', Settings.cocoapods_spec
   end
 
   def crawl

@@ -12,7 +12,7 @@ class Settings::EmailsController < ApplicationController
     user = User.find_by_email(email)
     user_email = UserEmail.find_by_email(email)
     if user || user_email
-      flash[:error] = "The E-Mail Address exist already in our system. Please choose another one."
+      flash[:error] = 'The E-Mail Address exist already in our system. Please choose another one.'
       redirect_to settings_emails_path()
       return
     end

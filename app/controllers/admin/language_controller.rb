@@ -7,7 +7,7 @@ class Admin::LanguageController < ApplicationController
 
   def show
     language = Language.where(param_name: params[:id]).first
-    render partial: "language_block", locals: {language: language}
+    render partial: 'language_block', locals: {language: language}
   end
 
   def new
@@ -66,10 +66,10 @@ class Admin::LanguageController < ApplicationController
       current_doc = Language.by_language(doc["name"]).shift
       if current_doc.nil?
         new_doc = Language.new doc
+        new_doc.save!
       else
         current_doc.update_attributes(doc)
       end
-      new_doc.save!
     end
 
     flash[:success] = "Uploaded successfully"
