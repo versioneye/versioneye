@@ -26,7 +26,7 @@ class ServicesController < ApplicationController
     if !project.dependencies.nil? && !project.dependencies.empty? && project.save
       project.save_dependencies
     else
-      flash[:error] = "Ups. An error occured. Something is wrong with your file."
+      flash[:error] = "Ups. An error occured. Something is wrong with your file. Please contact the VersionEye team."
     end
     redirect_to service_path( project.id )
   rescue => e

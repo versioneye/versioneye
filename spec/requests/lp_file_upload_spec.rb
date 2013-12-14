@@ -10,6 +10,7 @@ describe "Create Project from file uplaod on the service page - guest area" do
     gemfile = "#{Rails.root}/spec/assets/Gemfile"
     file_attachment = Rack::Test::UploadedFile.new(gemfile, "application/octet-stream")
     post "services", {:utf8 => true, :upload => {:datafile => file_attachment }}
+    file_attachment.close
     assert_response 302
     project = Project.first
     project.should_not be_nil

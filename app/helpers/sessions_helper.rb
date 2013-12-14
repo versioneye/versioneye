@@ -72,12 +72,6 @@ module SessionsHelper
 
   private
 
-    def force_http
-      if request.ssl? && Rails.env.production?
-        redirect_to :protocol => 'http://', :status => :moved_permanently
-      end
-    end
-
     def user_from_remember_token
       User.authenticate_with_salt(*remember_token)
     rescue => e

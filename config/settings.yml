@@ -3,17 +3,11 @@ development:
   server_url_https: https://www.versioneye.com
   s3_projects_bucket: veye_dev_projects
   s3_infographics_bucket: veye_dev_infographics
-  aws_s3_access_key_id:
-  aws_s3_secret_access_key:
   postmark_api_key:
   github_client_id: fecbf3c93f67f3a85489
   github_client_secret: 1bfa476846fa530e53b8c804f40a8d44ee030b3a
   github_user: xxxxxxxx
   github_pass: xxxxxxxx
-  facebook_client_id: 343261999102032
-  facebook_client_secret: c9061c49f6a64a983a8d61cfd33070ad
-  twitter_consumer_key: XCXPzp6GGZcFfCw2UhxocA
-  twitter_consumer_secret: so1T6l4nrLaY5IZEfIFzb8CtkrmNwe0I7K6F4a3oZx4
   stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
   elasticsearch_url: localhost:9200
@@ -29,17 +23,11 @@ test:
   server_url_https: http://localhost:3000
   s3_projects_bucket: veye_test_projects
   s3_infographics_bucket: veye_test_infographics
-  aws_s3_access_key_id:
-  aws_s3_secret_access_key:
   postmark_api_key:
   github_client_id: 23baa3ad794ac9a9214b
   github_client_secret: bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
   github_user: xxxxxxxx
   github_pass: xxxxxxxx
-  facebook_client_id: 501503429878210
-  facebook_client_secret: 8e3a78427aaa35b5d65071b56f94417d
-  twitter_consumer_key: XCXPzp6GGZcFfCw2UhxocA
-  twitter_consumer_secret: so1T6l4nrLaY5IZEfIFzb8CtkrmNwe0I7K6F4a3oZx4
   stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
   elasticsearch_url: localhost:9200
@@ -55,17 +43,11 @@ production:
   server_url_https: https://www.versioneye.com
   s3_projects_bucket: veye_prod_projects
   s3_infographics_bucket: veye_prod_infographics
-  aws_s3_access_key_id: <%= ENV['AWS_S3_ACCESS_KEY_ID'] %>
-  aws_s3_secret_access_key: <%= ENV['AWS_S3_SECRET_ACCESS_KEY'] %>
   postmark_api_key: <%= ENV['POSTMARK_API_KEY'] %>
   github_client_id: <%= ENV['GITHUB_CLIENT_ID'] %>
   github_client_secret: <%= ENV['GITHUB_CLIENT_SECRET'] %>
   github_user: <%= ENV['GITHUB_USER'] %>
   github_pass: <%= ENV['GITHUB_PASS'] %>
-  facebook_client_id: <%= ENV['FACEBOOK_CLIENT_ID'] %>
-  facebook_client_secret: <%= ENV['FACEBOOK_CLIENT_SECRET'] %>
-  twitter_consumer_key: <%= ENV['TWITTER_CONSUMER_KEY'] %>
-  twitter_consumer_secret: <%= ENV['TWITTER_CONSUMER_SECRET'] %>
   stripe_public_key: <%= ENV['STRIPE_PUBLIC_KEY'] %>
   stripe_secret_key: <%= ENV['STRIPE_SECRET_KEY'] %>
   elasticsearch_url: <%= ENV['ELASTICSEARCH_URL'] %>

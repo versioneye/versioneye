@@ -1,2178 +1,453 @@
---- 
-http_interactions: 
-- request: 
+---
+http_interactions:
+- request:
     method: get
-    uri: https://api.github.com/repos/rmetzler/render-as-markdown?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
+    uri: https://api.github.com/?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
+      string: ''
+    headers:
+      Accept:
       - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
+      User-Agent:
+      - Octokit Ruby Gem 2.6.2
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Server: 
+    headers:
+      Server:
       - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 18:34:58 GMT
-      Content-Type: 
+      Date:
+      - Thu, 05 Dec 2013 14:56:02 GMT
+      Content-Type:
       - application/json; charset=utf-8
-      Transfer-Encoding: 
+      Transfer-Encoding:
       - chunked
-      Status: 
+      Status:
       - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4985"
-      X-Ratelimit-Reset: 
-      - "1385321495"
-      Cache-Control: 
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4982'
+      X-Ratelimit-Reset:
+      - '1386258265'
+      Cache-Control:
       - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sun, 10 Nov 2013 11:10:46 GMT
-      Etag: 
-      - "\"0952dd8a4f9af384049a2318d58a8b66\""
-      Vary: 
+      Etag:
+      - "\"e4559722c53d01255bb3d12bbb945098\""
+      Vary:
       - Accept
       - Accept-Encoding
-      X-Github-Media-Type: 
+      X-Github-Media-Type:
       - github.beta; format=json
-      X-Content-Type-Options: 
+      X-Content-Type-Options:
       - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
       - "*"
-      X-Github-Request-Id: 
-      - 4E345547:4DB1:5FD7DC:529246D2
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA62YUW+jOBDHvwpC2nvZNIYmadpIq917ubd7OfVe7iUyMIAV
-        g5FtkmtRv/uNbQgkmyvJEqlqCPH8/Pd4xh678Vnib8LFYvW8Xr7M/JIW4G98
-        CWUC8oGqh4LKXSIOpT/z05rzbdegAP3OQZKLLbE9SH/T+FxkrDS8tjlSTH+r
-        5+fH5cyne6qp3NaSY5Nc60ptCAnmmXQ/zGNREPdIYL0KH4NVkrw8rdLlAsKX
-        lyWNIXiii3USJMvvyTcL+LL4/cvjH/jHEig1i0Wp5hnTeR0ZGr4PgzR6Cukq
-        TR8Tulqmy2ixXkVRmNI4Xa5f4nlVZr/Jb/+i0k7H1kj2xxSgwelAaMUGXZNa
-        gVRk4IhcF/xs7L3SYcNUcC4OaH3W+tMOyNHKzJwlsDL7BQJaNUToHHCicAgf
-        xjFM6dvEWIuGmA/0pmEonHkJyU2CWhuUY+Lro8Hgq4SF1ZGKJas0w/m+DTm0
-        RJKQGS3ZO72dhJYKAUbSbRKsBVrCHiP2NlNn0pBKsj2N34wrJMTA9ujYX8Cd
-        2SJNv1VmOfgbJ964mWnY0qQwKZ1SruBj5tuuNTayL2aYxtdE9eVlI4HjLGKn
-        rzlTXgaFhx/U+7Ndh7wceAXS0znVnlt8lHcAzr1UyIJqDUnfFl95EcsybH+0
-        Bw6FcbTH2Q48TSMOxvvYdHccxKeJbOfrmJ+XR2JoI1M5isEMRghK28HbZJZh
-        NAT/t+kX44pAIyGpFmPryrjQE1hDhl9NSGqgxeQBWAjCciGme9ZCEMaUquGq
-        TBl3gmUp0qVkWReRWy2vScRxvKOgZqoUy0qAyR49ghq7N5mZiiQt43w6uuM0
-        xD3ZKKDZZMmGYWRyEU1m4V5LLKghKqduW9Pbe6g0ZMM5AUtI7yLZcI5gLe8Q
-        B1auAR2xuM9qDInJejsOaVoPc1pmNc2mk48gjAZTFWT0fbQ+Gs+xnoRYLB21
-        ZFF9nwWyZxnFrujA9WG6i3tUD7Z10Odl0BXOGFRG1h1FwcbKk3FqizlJjTuh
-        TRyf48338arqOtmG05B+XXebR9vDVG+3u0enlzR9PyYQ7zMGxyHN14rq3Kx4
-        2F1FJUwV32JIE1GsCefzeZMDtVV+AfIO2e4oiKMyzrG4naq36TiuZLQHidTI
-        NQddLmgyOS2PIIS6qZ2q2VGG8VfhcXyyUAsZUguG9bAW5fQ1uicN+aXQLGXx
-        NQes8bQ8gTXfFStjmFHOZxjVePhnGOd4fDUzi8UuTPeWo+Bw8JbEUCUeJjDk
-        J89Cx2mIOxzHEvBMlWypxnPQYxAuHsLgIXh6DdabRbAJl/9g33WVnLcJsdlr
-        GG7CYLN8Mm2qWuWnmJ+a4KrZhiY+4fXLhSuIC0ccc7GBfKXy3vhHb7rprjn+
-        3zTmGGNnSXFb3/vzLe46c5SdiwIqLEPaWyccdae3u7Bh4oJyM2D2jlaLdXBS
-        dsSiLnGmwpl/oBrrZ9zW+1ddqYKd/VVHb6Z7qrYunf2NlrU5NOObfskYvDyw
-        HesauTNlDy6YlKK9PSsxjfHyooKyJQ8EuGOkUTf4/USt/ZJASmuut65iR7UF
-        Vdoe+93DhR9K0Ac8ow76GlY2ndKP/wCuIw0cZBQAAA==
-
+      X-Github-Request-Id:
+      - D95B947E:2CE7:1289F0F:52A09402
+    body:
+      encoding: UTF-8
+      string: "{\"current_user_url\":\"https://api.github.com/user\",\"authorizations_url\":\"https://api.github.com/authorizations\",\"code_search_url\":\"https://api.github.com/search/code?q={query}{&page,per_page,sort,order}\",\"emails_url\":\"https://api.github.com/user/emails\",\"emojis_url\":\"https://api.github.com/emojis\",\"events_url\":\"https://api.github.com/events\",\"feeds_url\":\"https://api.github.com/feeds\",\"following_url\":\"https://api.github.com/user/following{/target}\",\"gists_url\":\"https://api.github.com/gists{/gist_id}\",\"hub_url\":\"https://api.github.com/hub\",\"issue_search_url\":\"https://api.github.com/search/issues?q={query}{&page,per_page,sort,order}\",\"issues_url\":\"https://api.github.com/issues\",\"keys_url\":\"https://api.github.com/user/keys\",\"notifications_url\":\"https://api.github.com/notifications\",\"organization_repositories_url\":\"https://api.github.com/orgs/{org}/repos/{?type,page,per_page,sort}\",\"organization_url\":\"https://api.github.com/orgs/{org}\",\"public_gists_url\":\"https://api.github.com/gists/public\",\"rate_limit_url\":\"https://api.github.com/rate_limit\",\"repository_url\":\"https://api.github.com/repos/{owner}/{repo}\",\"repository_search_url\":\"https://api.github.com/search/repositories?q={query}{&page,per_page,sort,order}\",\"current_user_repositories_url\":\"https://api.github.com/user/repos{?type,page,per_page,sort}\",\"starred_url\":\"https://api.github.com/user/starred{/owner}{/repo}\",\"starred_gists_url\":\"https://api.github.com/gists/starred\",\"team_url\":\"https://api.github.com/teams\",\"user_url\":\"https://api.github.com/users/{user}\",\"user_organizations_url\":\"https://api.github.com/user/orgs\",\"user_repositories_url\":\"https://api.github.com/users/{user}/repos{?type,page,per_page,sort}\",\"user_search_url\":\"https://api.github.com/search/users?q={query}{&page,per_page,sort,order}\"}"
     http_version: 
-  recorded_at: Sun, 24 Nov 2013 18:34:58 GMT
-- request: 
+  recorded_at: Thu, 05 Dec 2013 14:56:03 GMT
+- request:
+    method: get
+    uri: https://api.github.com/repos/rmetzler/render-as-markdown?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.beta+json
+      User-Agent:
+      - Octokit Ruby Gem 2.6.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Thu, 05 Dec 2013 14:56:03 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4981'
+      X-Ratelimit-Reset:
+      - '1386258265'
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Last-Modified:
+      - Wed, 04 Dec 2013 15:57:46 GMT
+      Etag:
+      - "\"1e599a9bd64a19d3ac43abfe4394a51e\""
+      Vary:
+      - Accept
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.beta; format=json
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - D95B947E:2CE4:BA1E92:52A09403
+    body:
+      encoding: UTF-8
+      string: "{\"id\":13358749,\"name\":\"render-as-markdown\",\"full_name\":\"rmetzler/render-as-markdown\",\"owner\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"private\":false,\"html_url\":\"https://github.com/rmetzler/render-as-markdown\",\"description\":\"This
+        gem is a Markdown helper that renders well formatted Markdown for bigger Markdown
+        elements like tables\",\"fork\":false,\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown\",\"forks_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/forks\",\"keys_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/teams\",\"hooks_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/hooks\",\"issue_events_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/events\",\"assignees_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/tags\",\"blobs_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/languages\",\"stargazers_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/stargazers\",\"contributors_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/contributors\",\"subscribers_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/subscribers\",\"subscription_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/subscription\",\"commits_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/issues/comments/{number}\",\"contents_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/merges\",\"archive_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/downloads\",\"issues_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/releases{/id}\",\"created_at\":\"2013-10-06T07:30:14Z\",\"updated_at\":\"2013-12-04T15:57:46Z\",\"pushed_at\":\"2013-12-04T15:57:41Z\",\"git_url\":\"git://github.com/rmetzler/render-as-markdown.git\",\"ssh_url\":\"git@github.com:rmetzler/render-as-markdown.git\",\"clone_url\":\"https://github.com/rmetzler/render-as-markdown.git\",\"svn_url\":\"https://github.com/rmetzler/render-as-markdown\",\"homepage\":\"http://rmetzler.github.io/render-as-markdown\",\"size\":378,\"stargazers_count\":0,\"watchers_count\":0,\"language\":\"Ruby\",\"has_issues\":true,\"has_downloads\":true,\"has_wiki\":true,\"forks_count\":0,\"mirror_url\":null,\"open_issues_count\":1,\"forks\":0,\"open_issues\":1,\"watchers\":0,\"default_branch\":\"master\",\"master_branch\":\"master\",\"network_count\":0,\"subscribers_count\":1}"
+    http_version: 
+  recorded_at: Thu, 05 Dec 2013 14:56:03 GMT
+- request:
     method: get
     uri: https://api.github.com/repos/rmetzler/render-as-markdown/tags?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
+      string: ''
+    headers:
+      Accept:
       - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
+      User-Agent:
+      - Octokit Ruby Gem 2.6.2
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Server: 
+    headers:
+      Server:
       - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 18:34:59 GMT
-      Content-Type: 
+      Date:
+      - Thu, 05 Dec 2013 14:56:03 GMT
+      Content-Type:
       - application/json; charset=utf-8
-      Transfer-Encoding: 
+      Transfer-Encoding:
       - chunked
-      Status: 
+      Status:
       - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4984"
-      X-Ratelimit-Reset: 
-      - "1385321495"
-      Cache-Control: 
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4980'
+      X-Ratelimit-Reset:
+      - '1386258265'
+      Cache-Control:
       - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sun, 10 Nov 2013 11:10:46 GMT
-      Etag: 
-      - "\"0952dd8a4f9af384049a2318d58a8b66\""
-      Vary: 
+      Last-Modified:
+      - Wed, 04 Dec 2013 15:57:46 GMT
+      Etag:
+      - "\"1e599a9bd64a19d3ac43abfe4394a51e\""
+      Vary:
       - Accept
       - Accept-Encoding
-      X-Github-Media-Type: 
+      X-Github-Media-Type:
       - github.beta; format=json
-      X-Content-Type-Options: 
+      X-Content-Type-Options:
       - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
       - "*"
-      X-Github-Request-Id: 
-      - 4E345547:4DB5:D1B4C5:529246D2
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA9WUy2rDMBBF/0XrxHp4JEv+lVLKyJJqU7+QlRYS8u+1adJH
-        ugnUXnQ5gjl35jDo4UR67DwpySvLWKbIjhyb0WLbPh1iOz/XKY1TSSmOTfbc
-        pPpgs2roaPTjMNHY+XRsfZzL3vm4x2nfYXxxw1tPLxj6yU0Y1+BeMF/ceZyu
-        SaQ8kanGeWINgjulg/NMyyCkMwI1OAheWkSDhrkcuDPzqn9c8SN5oncnns+7
-        n77lRr4X7ha+F+6tbx5UZQKDotIicONVLrx0wBQTQXHueWVVgSqs5/vuxF++
-        YSPfC3cL3wv31nchJJcSGLO5BK3RKum1cwBCgWdSYm6K4IqldaX7vjvxu+/l
-        O9lA9xW7su0r9l/JfnwHen5Uz74FAAA=
-
+      X-Github-Request-Id:
+      - D95B947E:2CE4:BA1F5E:52A09403
+    body:
+      encoding: UTF-8
+      string: "[{\"name\":\"v0.0.6\",\"zipball_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/zipball/v0.0.6\",\"tarball_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/tarball/v0.0.6\",\"commit\":{\"sha\":\"8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/8421d68fde085f25d92a84d4fe5baa9a90d341d9\"}},{\"name\":\"v0.0.5\",\"zipball_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/zipball/v0.0.5\",\"tarball_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/tarball/v0.0.5\",\"commit\":{\"sha\":\"1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/1f6c9f047c82f19e632e5d40602f611e1cb67a6f\"}},{\"name\":\"v0.0.4\",\"zipball_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/zipball/v0.0.4\",\"tarball_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/tarball/v0.0.4\",\"commit\":{\"sha\":\"725155400b35488ab65e8dd44264e055a397fd74\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74\"}},{\"name\":\"0.0.4\",\"zipball_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/zipball/0.0.4\",\"tarball_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/tarball/0.0.4\",\"commit\":{\"sha\":\"725155400b35488ab65e8dd44264e055a397fd74\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74\"}}]"
     http_version: 
-  recorded_at: Sun, 24 Nov 2013 18:34:59 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/8421d68fde085f25d92a84d4fe5baa9a90d341d9
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: {}
-
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 18:34:59 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "60"
-      X-Ratelimit-Remaining: 
-      - "43"
-      X-Ratelimit-Reset: 
-      - "1385321495"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sun, 10 Nov 2013 11:06:40 GMT
-      Etag: 
-      - "\"9127523d70d2105f78cf32ec78cb8a96\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Content-Length: 
-      - "4132"
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 4E345547:4DB2:C95478:529246D3
-    body: 
-      encoding: US-ASCII
-      string: "{\"sha\":\"8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"commit\":{\"author\":{\"name\":\"Richard Metzler\",\"email\":\"richard.metzler@me.com\",\"date\":\"2013-11-10T11:06:40Z\"},\"committer\":{\"name\":\"Richard Metzler\",\"email\":\"richard.metzler@me.com\",\"date\":\"2013-11-10T11:06:40Z\"},\"message\":\"bump version\",\"tree\":{\"sha\":\"6b717b5cf078251b95a85239b181d290a78fc8ba\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/trees/6b717b5cf078251b95a85239b181d290a78fc8ba\"},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/commits/8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"comments_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/8421d68fde085f25d92a84d4fe5baa9a90d341d9/comments\",\"author\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"a078401ee88a4d28161dd2b47e8056e2f6b93bb6\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/a078401ee88a4d28161dd2b47e8056e2f6b93bb6\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/a078401ee88a4d28161dd2b47e8056e2f6b93bb6\"}],\"stats\":{\"total\":2,\"additions\":1,\"deletions\":1},\"files\":[{\"sha\":\"5ee1943825c7e12cb69c53321234fec5b57b62d3\",\"filename\":\"lib/render-as-markdown/version.rb\",\"status\":\"modified\",\"additions\":1,\"deletions\":1,\"changes\":2,\"blob_url\":\"https://github.com/rmetzler/render-as-markdown/blob/8421d68fde085f25d92a84d4fe5baa9a90d341d9/lib/render-as-markdown/version.rb\",\"raw_url\":\"https://github.com/rmetzler/render-as-markdown/raw/8421d68fde085f25d92a84d4fe5baa9a90d341d9/lib/render-as-markdown/version.rb\",\"contents_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/contents/lib/render-as-markdown/version.rb?ref=8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"patch\":\"@@ -1,6 +1,6 @@\\n module RenderAsMarkdown\\n   GEM     = 'render-as-markdown'\\n-  VERSION = '0.0.5'\\n+  VERSION = '0.0.6'\\n end\\n \\n #puts \\\"This is version #{RenderAsMarkdown::VERSION} of gem #{RenderAsMarkdown::GEM}\\\"\"}]}"
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 18:35:00 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/1f6c9f047c82f19e632e5d40602f611e1cb67a6f
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: {}
-
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 18:35:00 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "60"
-      X-Ratelimit-Remaining: 
-      - "42"
-      X-Ratelimit-Reset: 
-      - "1385321495"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Wed, 16 Oct 2013 10:21:28 GMT
-      Etag: 
-      - "\"9f0c8be9e7f367760cbb124c9f5752b4\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Content-Length: 
-      - "4122"
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 4E345547:4DB5:D1B6C4:529246D4
-    body: 
-      encoding: US-ASCII
-      string: "{\"sha\":\"1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"commit\":{\"author\":{\"name\":\"Richard Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-16T10:21:28Z\"},\"committer\":{\"name\":\"Richard Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-16T10:21:28Z\"},\"message\":\"v0.0.5\",\"tree\":{\"sha\":\"e6f682f49bcce3b2a643964581101ac563276029\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/trees/e6f682f49bcce3b2a643964581101ac563276029\"},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/commits/1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"comments_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/1f6c9f047c82f19e632e5d40602f611e1cb67a6f/comments\",\"author\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://0.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://0.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"787fb6e026b128bfb6e61c446f6efa0b0a94c8ad\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/787fb6e026b128bfb6e61c446f6efa0b0a94c8ad\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/787fb6e026b128bfb6e61c446f6efa0b0a94c8ad\"}],\"stats\":{\"total\":2,\"additions\":1,\"deletions\":1},\"files\":[{\"sha\":\"b954c357e3643938e7cb4b4cebb3e8cfa2f09ce6\",\"filename\":\"lib/render-as-markdown/version.rb\",\"status\":\"modified\",\"additions\":1,\"deletions\":1,\"changes\":2,\"blob_url\":\"https://github.com/rmetzler/render-as-markdown/blob/1f6c9f047c82f19e632e5d40602f611e1cb67a6f/lib/render-as-markdown/version.rb\",\"raw_url\":\"https://github.com/rmetzler/render-as-markdown/raw/1f6c9f047c82f19e632e5d40602f611e1cb67a6f/lib/render-as-markdown/version.rb\",\"contents_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/contents/lib/render-as-markdown/version.rb?ref=1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"patch\":\"@@ -1,6 +1,6 @@\\n module RenderAsMarkdown\\n   GEM     = 'render-as-markdown'\\n-  VERSION = '0.0.4'\\n+  VERSION = '0.0.5'\\n end\\n \\n #puts \\\"This is version #{RenderAsMarkdown::VERSION} of gem #{RenderAsMarkdown::GEM}\\\"\"}]}"
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 18:35:00 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: {}
-
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 18:35:00 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "60"
-      X-Ratelimit-Remaining: 
-      - "41"
-      X-Ratelimit-Reset: 
-      - "1385321495"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sun, 13 Oct 2013 00:39:39 GMT
-      Etag: 
-      - "\"d4f34c73dccc0e3d3f0bf15238f6f641\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Content-Length: 
-      - "4129"
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 4E345547:4DB1:5FD8F4:529246D4
-    body: 
-      encoding: US-ASCII
-      string: "{\"sha\":\"725155400b35488ab65e8dd44264e055a397fd74\",\"commit\":{\"author\":{\"name\":\"Richard Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-13T00:39:39Z\"},\"committer\":{\"name\":\"Richard Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-13T00:39:39Z\"},\"message\":\"version 0.0.4\",\"tree\":{\"sha\":\"7af5d615c8fe5cefb7f510dce3cdbae8d0459dff\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/trees/7af5d615c8fe5cefb7f510dce3cdbae8d0459dff\"},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/commits/725155400b35488ab65e8dd44264e055a397fd74\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/725155400b35488ab65e8dd44264e055a397fd74\",\"comments_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74/comments\",\"author\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\"}],\"stats\":{\"total\":2,\"additions\":1,\"deletions\":1},\"files\":[{\"sha\":\"2c3f6c866bfab1147280327282daea7e4762666e\",\"filename\":\"lib/render-as-markdown/version.rb\",\"status\":\"modified\",\"additions\":1,\"deletions\":1,\"changes\":2,\"blob_url\":\"https://github.com/rmetzler/render-as-markdown/blob/725155400b35488ab65e8dd44264e055a397fd74/lib/render-as-markdown/version.rb\",\"raw_url\":\"https://github.com/rmetzler/render-as-markdown/raw/725155400b35488ab65e8dd44264e055a397fd74/lib/render-as-markdown/version.rb\",\"contents_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/contents/lib/render-as-markdown/version.rb?ref=725155400b35488ab65e8dd44264e055a397fd74\",\"patch\":\"@@ -1,6 +1,6 @@\\n module RenderAsMarkdown\\n   GEM     = 'render-as-markdown'\\n-  VERSION = '0.0.3'\\n+  VERSION = '0.0.4'\\n end\\n \\n #puts \\\"This is version #{RenderAsMarkdown::VERSION} of gem #{RenderAsMarkdown::GEM}\\\"\"}]}"
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 18:35:01 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: {}
-
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 18:35:01 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "60"
-      X-Ratelimit-Remaining: 
-      - "40"
-      X-Ratelimit-Reset: 
-      - "1385321495"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sun, 13 Oct 2013 00:39:39 GMT
-      Etag: 
-      - "\"d4f34c73dccc0e3d3f0bf15238f6f641\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Content-Length: 
-      - "4129"
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 4E345547:4DB3:161DE72:529246D5
-    body: 
-      encoding: US-ASCII
-      string: "{\"sha\":\"725155400b35488ab65e8dd44264e055a397fd74\",\"commit\":{\"author\":{\"name\":\"Richard Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-13T00:39:39Z\"},\"committer\":{\"name\":\"Richard Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-13T00:39:39Z\"},\"message\":\"version 0.0.4\",\"tree\":{\"sha\":\"7af5d615c8fe5cefb7f510dce3cdbae8d0459dff\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/trees/7af5d615c8fe5cefb7f510dce3cdbae8d0459dff\"},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/commits/725155400b35488ab65e8dd44264e055a397fd74\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/725155400b35488ab65e8dd44264e055a397fd74\",\"comments_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74/comments\",\"author\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\"}],\"stats\":{\"total\":2,\"additions\":1,\"deletions\":1},\"files\":[{\"sha\":\"2c3f6c866bfab1147280327282daea7e4762666e\",\"filename\":\"lib/render-as-markdown/version.rb\",\"status\":\"modified\",\"additions\":1,\"deletions\":1,\"changes\":2,\"blob_url\":\"https://github.com/rmetzler/render-as-markdown/blob/725155400b35488ab65e8dd44264e055a397fd74/lib/render-as-markdown/version.rb\",\"raw_url\":\"https://github.com/rmetzler/render-as-markdown/raw/725155400b35488ab65e8dd44264e055a397fd74/lib/render-as-markdown/version.rb\",\"contents_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/contents/lib/render-as-markdown/version.rb?ref=725155400b35488ab65e8dd44264e055a397fd74\",\"patch\":\"@@ -1,6 +1,6 @@\\n module RenderAsMarkdown\\n   GEM     = 'render-as-markdown'\\n-  VERSION = '0.0.3'\\n+  VERSION = '0.0.4'\\n end\\n \\n #puts \\\"This is version #{RenderAsMarkdown::VERSION} of gem #{RenderAsMarkdown::GEM}\\\"\"}]}"
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 18:35:01 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 22:57:21 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4923"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Etag: 
-      - "\"e4559722c53d01255bb3d12bbb945098\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2D7C:24B7355:52928451
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA5WUy26DMBBF/4VFV1G8j1TlU5ADU3ALmPjRiFr8e2fGoUlU
-        yTabkMW587zjUDXeGJhc7S2Y2puhOlW9c7M9CSFndeyU6/3l2OhREFEdKuld
-        r436kU7pyaYlryyKG91CbUGapk8rIyOIP1/fw9WDWdbwNssODjNWyn+sNu6g
-        TQtmxdgwSjVkCqIeRARZoT9VRhEZgr9xTDmYGYQ/ANoMywihehj0TU1deiBc
-        +R8bhJOmA0d9d8rm6mIkCPrUqiURLjWdDwHElLV+18JYYEtXFul0IZHBWr5g
-        yYyUZ0QY0pN26kM1JS59QVGqTSenu8FrA7O2yqHjIZMdZVYE/F0Fi0Q4u2VG
-        u/7zLC3gJUny7h5xUTb7y6CaunTnIvIoNNJBPahR4amnrvzBkWhrfsmIYr/6
-        NuEpikAy6vFJvuPmnydeaqSXV6x8ZWwYxpO7snhsBtr0DDjWnQwijiJwcBrF
-        FqJ4cXcBSh3IMZ2aCPJ82RuOxiSQqmLBsxMzFuceyY+bdt+ot8wFI+fKdpiG
-        +MJnZ/0FisGLGfUGAAA=
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 22:57:21 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 22:57:22 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4922"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Etag: 
-      - "\"e4559722c53d01255bb3d12bbb945098\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2D7C:24B73D1:52928451
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA5WUy26DMBBF/4VFV1G8j1TlU5ADU3ALmPjRiFr8e2fGoUlU
-        yTabkMW587zjUDXeGJhc7S2Y2puhOlW9c7M9CSFndeyU6/3l2OhREFEdKuld
-        r436kU7pyaYlryyKG91CbUGapk8rIyOIP1/fw9WDWdbwNssODjNWyn+sNu6g
-        TQtmxdgwSjVkCqIeRARZoT9VRhEZgr9xTDmYGYQ/ANoMywihehj0TU1deiBc
-        +R8bhJOmA0d9d8rm6mIkCPrUqiURLjWdDwHElLV+18JYYEtXFul0IZHBWr5g
-        yYyUZ0QY0pN26kM1JS59QVGqTSenu8FrA7O2yqHjIZMdZVYE/F0Fi0Q4u2VG
-        u/7zLC3gJUny7h5xUTb7y6CaunTnIvIoNNJBPahR4amnrvzBkWhrfsmIYr/6
-        NuEpikAy6vFJvuPmnydeaqSXV6x8ZWwYxpO7snhsBtr0DDjWnQwijiJwcBrF
-        FqJ4cXcBSh3IMZ2aCPJ82RuOxiSQqmLBsxMzFuceyY+bdt+ot8wFI+fKdpiG
-        +MJnZ/0FisGLGfUGAAA=
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 22:57:22 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos/rmetzler/render-as-markdown?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 22:57:22 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4921"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sun, 10 Nov 2013 11:10:46 GMT
-      Etag: 
-      - "\"0952dd8a4f9af384049a2318d58a8b66\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2D7B:3A624CE:52928452
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA62YUW+jOBDHvwpC2nvZNIYmadpIq917ubd7OfVe7iUyMIAV
-        g5FtkmtRv/uNbQgkmyvJEqlqCPH8/Pd4xh678Vnib8LFYvW8Xr7M/JIW4G98
-        CWUC8oGqh4LKXSIOpT/z05rzbdegAP3OQZKLLbE9SH/T+FxkrDS8tjlSTH+r
-        5+fH5cyne6qp3NaSY5Nc60ptCAnmmXQ/zGNREPdIYL0KH4NVkrw8rdLlAsKX
-        lyWNIXiii3USJMvvyTcL+LL4/cvjH/jHEig1i0Wp5hnTeR0ZGr4PgzR6Cukq
-        TR8Tulqmy2ixXkVRmNI4Xa5f4nlVZr/Jb/+i0k7H1kj2xxSgwelAaMUGXZNa
-        gVRk4IhcF/xs7L3SYcNUcC4OaH3W+tMOyNHKzJwlsDL7BQJaNUToHHCicAgf
-        xjFM6dvEWIuGmA/0pmEonHkJyU2CWhuUY+Lro8Hgq4SF1ZGKJas0w/m+DTm0
-        RJKQGS3ZO72dhJYKAUbSbRKsBVrCHiP2NlNn0pBKsj2N34wrJMTA9ujYX8Cd
-        2SJNv1VmOfgbJ964mWnY0qQwKZ1SruBj5tuuNTayL2aYxtdE9eVlI4HjLGKn
-        rzlTXgaFhx/U+7Ndh7wceAXS0znVnlt8lHcAzr1UyIJqDUnfFl95EcsybH+0
-        Bw6FcbTH2Q48TSMOxvvYdHccxKeJbOfrmJ+XR2JoI1M5isEMRghK28HbZJZh
-        NAT/t+kX44pAIyGpFmPryrjQE1hDhl9NSGqgxeQBWAjCciGme9ZCEMaUquGq
-        TBl3gmUp0qVkWReRWy2vScRxvKOgZqoUy0qAyR49ghq7N5mZiiQt43w6uuM0
-        xD3ZKKDZZMmGYWRyEU1m4V5LLKghKqduW9Pbe6g0ZMM5AUtI7yLZcI5gLe8Q
-        B1auAR2xuM9qDInJejsOaVoPc1pmNc2mk48gjAZTFWT0fbQ+Gs+xnoRYLB21
-        ZFF9nwWyZxnFrujA9WG6i3tUD7Z10Odl0BXOGFRG1h1FwcbKk3FqizlJjTuh
-        TRyf48338arqOtmG05B+XXebR9vDVG+3u0enlzR9PyYQ7zMGxyHN14rq3Kx4
-        2F1FJUwV32JIE1GsCefzeZMDtVV+AfIO2e4oiKMyzrG4naq36TiuZLQHidTI
-        NQddLmgyOS2PIIS6qZ2q2VGG8VfhcXyyUAsZUguG9bAW5fQ1uicN+aXQLGXx
-        NQes8bQ8gTXfFStjmFHOZxjVePhnGOd4fDUzi8UuTPeWo+Bw8JbEUCUeJjDk
-        J89Cx2mIOxzHEvBMlWypxnPQYxAuHsLgIXh6DdabRbAJl/9g33WVnLcJsdlr
-        GG7CYLN8Mm2qWuWnmJ+a4KrZhiY+4fXLhSuIC0ccc7GBfKXy3vhHb7rprjn+
-        3zTmGGNnSXFb3/vzLe46c5SdiwIqLEPaWyccdae3u7Bh4oJyM2D2jlaLdXBS
-        dsSiLnGmwpl/oBrrZ9zW+1ddqYKd/VVHb6Z7qrYunf2NlrU5NOObfskYvDyw
-        HesauTNlDy6YlKK9PSsxjfHyooKyJQ8EuGOkUTf4/USt/ZJASmuut65iR7UF
-        Vdoe+93DhR9K0Ac8ow76GlY2ndKP/wCuIw0cZBQAAA==
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 22:57:22 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 22:57:23 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4920"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sun, 10 Nov 2013 11:06:40 GMT
-      Etag: 
-      - "\"04c714ba7b707ed1c5b0c9315529aa0c\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      Link: 
-      - <https://api.github.com/repositories/13358749/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd&top=master&last_sha=b3cbadefd6166eacbf98a41d79cf6b012a24a73f>; rel="next", <https://api.github.com/repositories/13358749/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd&sha=master>; rel="first"
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2D78:FFD2E6:52928452
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA+2daW9bR5aG/wohoOdTLNW+EGh0GkgPMMAEAdLuL9NoBLVK
-        HHMRSMoex8h/n3NJyyRF36jKty7RDA6yQDZVfKtKVeJ57tn++elm8+BupjdG
-        MBqVyTERIzOT0TJnRBQ5Se+cdZZELmi0N9/dhNViMdveTD/duKftw2rdfbV0
-        iwTv8vMsPLh1nPyYtr/O0xq+OS3cbA6vrPev3C72r3y/SLfwPvAN0W27kYxQ
-        /obSN5S8pXRK1FSQ/7n57VlsC+81psoibTbuvpuHf1o8Tt6n9Wa2WsLstusE
-        f/u8Scprqr0MmWjDJPVWOiMZt54aGpklTpscjHcw8Gndrfphu33cTO/u3OPs
-        9n62fXjy3arv1ulxtblbf94L+OMypvUbt3mzcOt3cfVheQfffNdpb+6KNWGz
-        Gojuf7ibu8rzkJbbX8LqaQnHggyfyDdM4mG7mP9yuv7jDf+drd6LfcOCNy/0
-        qn/Itcu86wbATm/gfB2u3nx1P1t2N+zzGuHFWbyZSmOYgO9777Zu/WKm5PZ+
-        vX9hdxz3X94lLSkjMkarZBY8UWuFC4kox3UkUfwl/nl3nv/E//on9p/w7yzC
-        ZGZhtdwcHW74e0qyV9TJnFl0UmThuZbe0+xCFtqG28fl/X+s//x/MNPnefzS
-        TfnmtRm8dq+eNnBxv9wr+O6yUwHfmFfz+eoDjP79n+mpwN2XUV/eYba8/4Z3
-        gFGf7lbbhwQ/KFjCb93GzDbbusnsRnyC3xybLexm9x4b+MmvU6ya0OcxMJ0P
-        S5jJp93vqt2bPflNWM8et/CLsW5iJyPhnVbre7ec/erq3wlGdmd/9+uzalW7
-        ETAyve+uT9XQ/ZBPd4/r2XsXPnZbsU4hzd7Dxn7D270YC++2/fjYffD8A37w
-        3TbPtukXFxfdlc5uvkkvPwPxun/5GMXrjtd9b1C9+L183df90YFBCB/y038+
-        250O7E1BaErGOBGZoYrGyLzQyRCpEsvKW+69gt8fA03AZ5OkQrHsM/ZrRu5n
-        y6tY67d//fbdN2zJXubbeOX7R+di6mEVwt4SMuViSu23s0qVwoFT/vHYgdPk
-        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
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 22:57:23 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 22:57:23 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4919"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Etag: 
-      - "\"e4559722c53d01255bb3d12bbb945098\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2D7C:24B7570:52928453
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA5WUy26DMBBF/4VFV1G8j1TlU5ADU3ALmPjRiFr8e2fGoUlU
-        yTabkMW587zjUDXeGJhc7S2Y2puhOlW9c7M9CSFndeyU6/3l2OhREFEdKuld
-        r436kU7pyaYlryyKG91CbUGapk8rIyOIP1/fw9WDWdbwNssODjNWyn+sNu6g
-        TQtmxdgwSjVkCqIeRARZoT9VRhEZgr9xTDmYGYQ/ANoMywihehj0TU1deiBc
-        +R8bhJOmA0d9d8rm6mIkCPrUqiURLjWdDwHElLV+18JYYEtXFul0IZHBWr5g
-        yYyUZ0QY0pN26kM1JS59QVGqTSenu8FrA7O2yqHjIZMdZVYE/F0Fi0Q4u2VG
-        u/7zLC3gJUny7h5xUTb7y6CaunTnIvIoNNJBPahR4amnrvzBkWhrfsmIYr/6
-        NuEpikAy6vFJvuPmnydeaqSXV6x8ZWwYxpO7snhsBtr0DDjWnQwijiJwcBrF
-        FqJ4cXcBSh3IMZ2aCPJ82RuOxiSQqmLBsxMzFuceyY+bdt+ot8wFI+fKdpiG
-        +MJnZ/0FisGLGfUGAAA=
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 22:57:23 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos/rmetzler/render-as-markdown?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 22:57:24 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4918"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sun, 10 Nov 2013 11:10:46 GMT
-      Etag: 
-      - "\"0952dd8a4f9af384049a2318d58a8b66\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2D7A:38C2F4F:52928454
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA62YUW+jOBDHvwpC2nvZNIYmadpIq917ubd7OfVe7iUyMIAV
-        g5FtkmtRv/uNbQgkmyvJEqlqCPH8/Pd4xh678Vnib8LFYvW8Xr7M/JIW4G98
-        CWUC8oGqh4LKXSIOpT/z05rzbdegAP3OQZKLLbE9SH/T+FxkrDS8tjlSTH+r
-        5+fH5cyne6qp3NaSY5Nc60ptCAnmmXQ/zGNREPdIYL0KH4NVkrw8rdLlAsKX
-        lyWNIXiii3USJMvvyTcL+LL4/cvjH/jHEig1i0Wp5hnTeR0ZGr4PgzR6Cukq
-        TR8Tulqmy2ixXkVRmNI4Xa5f4nlVZr/Jb/+i0k7H1kj2xxSgwelAaMUGXZNa
-        gVRk4IhcF/xs7L3SYcNUcC4OaH3W+tMOyNHKzJwlsDL7BQJaNUToHHCicAgf
-        xjFM6dvEWIuGmA/0pmEonHkJyU2CWhuUY+Lro8Hgq4SF1ZGKJas0w/m+DTm0
-        RJKQGS3ZO72dhJYKAUbSbRKsBVrCHiP2NlNn0pBKsj2N34wrJMTA9ujYX8Cd
-        2SJNv1VmOfgbJ964mWnY0qQwKZ1SruBj5tuuNTayL2aYxtdE9eVlI4HjLGKn
-        rzlTXgaFhx/U+7Ndh7wceAXS0znVnlt8lHcAzr1UyIJqDUnfFl95EcsybH+0
-        Bw6FcbTH2Q48TSMOxvvYdHccxKeJbOfrmJ+XR2JoI1M5isEMRghK28HbZJZh
-        NAT/t+kX44pAIyGpFmPryrjQE1hDhl9NSGqgxeQBWAjCciGme9ZCEMaUquGq
-        TBl3gmUp0qVkWReRWy2vScRxvKOgZqoUy0qAyR49ghq7N5mZiiQt43w6uuM0
-        xD3ZKKDZZMmGYWRyEU1m4V5LLKghKqduW9Pbe6g0ZMM5AUtI7yLZcI5gLe8Q
-        B1auAR2xuM9qDInJejsOaVoPc1pmNc2mk48gjAZTFWT0fbQ+Gs+xnoRYLB21
-        ZFF9nwWyZxnFrujA9WG6i3tUD7Z10Odl0BXOGFRG1h1FwcbKk3FqizlJjTuh
-        TRyf48338arqOtmG05B+XXebR9vDVG+3u0enlzR9PyYQ7zMGxyHN14rq3Kx4
-        2F1FJUwV32JIE1GsCefzeZMDtVV+AfIO2e4oiKMyzrG4naq36TiuZLQHidTI
-        NQddLmgyOS2PIIS6qZ2q2VGG8VfhcXyyUAsZUguG9bAW5fQ1uicN+aXQLGXx
-        NQes8bQ8gTXfFStjmFHOZxjVePhnGOd4fDUzi8UuTPeWo+Bw8JbEUCUeJjDk
-        J89Cx2mIOxzHEvBMlWypxnPQYxAuHsLgIXh6DdabRbAJl/9g33WVnLcJsdlr
-        GG7CYLN8Mm2qWuWnmJ+a4KrZhiY+4fXLhSuIC0ccc7GBfKXy3vhHb7rprjn+
-        3zTmGGNnSXFb3/vzLe46c5SdiwIqLEPaWyccdae3u7Bh4oJyM2D2jlaLdXBS
-        dsSiLnGmwpl/oBrrZ9zW+1ddqYKd/VVHb6Z7qrYunf2NlrU5NOObfskYvDyw
-        HesauTNlDy6YlKK9PSsxjfHyooKyJQ8EuGOkUTf4/USt/ZJASmuut65iR7UF
-        Vdoe+93DhR9K0Ac8ow76GlY2ndKP/wCuIw0cZBQAAA==
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 22:57:24 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 22:57:24 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4917"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sun, 10 Nov 2013 11:06:40 GMT
-      Etag: 
-      - "\"04c714ba7b707ed1c5b0c9315529aa0c\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      Link: 
-      - <https://api.github.com/repositories/13358749/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd&top=master&last_sha=b3cbadefd6166eacbf98a41d79cf6b012a24a73f>; rel="next", <https://api.github.com/repositories/13358749/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd&sha=master>; rel="first"
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2D7A:38C302E:52928454
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA+2daW9bR5aG/wohoOdTLNW+EGh0GkgPMMAEAdLuL9NoBLVK
-        HHMRSMoex8h/n3NJyyRF36jKty7RDA6yQDZVfKtKVeJ57tn++elm8+BupjdG
-        MBqVyTERIzOT0TJnRBQ5Se+cdZZELmi0N9/dhNViMdveTD/duKftw2rdfbV0
-        iwTv8vMsPLh1nPyYtr/O0xq+OS3cbA6vrPev3C72r3y/SLfwPvAN0W27kYxQ
-        /obSN5S8pXRK1FSQ/7n57VlsC+81psoibTbuvpuHf1o8Tt6n9Wa2WsLstusE
-        f/u8Scprqr0MmWjDJPVWOiMZt54aGpklTpscjHcw8Gndrfphu33cTO/u3OPs
-        9n62fXjy3arv1ulxtblbf94L+OMypvUbt3mzcOt3cfVheQfffNdpb+6KNWGz
-        Gojuf7ibu8rzkJbbX8LqaQnHggyfyDdM4mG7mP9yuv7jDf+drd6LfcOCNy/0
-        qn/Itcu86wbATm/gfB2u3nx1P1t2N+zzGuHFWbyZSmOYgO9777Zu/WKm5PZ+
-        vX9hdxz3X94lLSkjMkarZBY8UWuFC4kox3UkUfwl/nl3nv/E//on9p/w7yzC
-        ZGZhtdwcHW74e0qyV9TJnFl0UmThuZbe0+xCFtqG28fl/X+s//x/MNPnefzS
-        TfnmtRm8dq+eNnBxv9wr+O6yUwHfmFfz+eoDjP79n+mpwN2XUV/eYba8/4Z3
-        gFGf7lbbhwQ/KFjCb93GzDbbusnsRnyC3xybLexm9x4b+MmvU6ya0OcxMJ0P
-        S5jJp93vqt2bPflNWM8et/CLsW5iJyPhnVbre7ec/erq3wlGdmd/9+uzalW7
-        ETAyve+uT9XQ/ZBPd4/r2XsXPnZbsU4hzd7Dxn7D270YC++2/fjYffD8A37w
-        3TbPtukXFxfdlc5uvkkvPwPxun/5GMXrjtd9b1C9+L183df90YFBCB/y038+
-        250O7E1BaErGOBGZoYrGyLzQyRCpEsvKW+69gt8fA03AZ5OkQrHsM/ZrRu5n
-        y6tY67d//fbdN2zJXubbeOX7R+di6mEVwt4SMuViSu23s0qVwoFT/vHYgdPk
-        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
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 22:57:24 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 22:57:25 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4916"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Etag: 
-      - "\"e4559722c53d01255bb3d12bbb945098\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2D79:215EFF5:52928455
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA5WUy26DMBBF/4VFV1G8j1TlU5ADU3ALmPjRiFr8e2fGoUlU
-        yTabkMW587zjUDXeGJhc7S2Y2puhOlW9c7M9CSFndeyU6/3l2OhREFEdKuld
-        r436kU7pyaYlryyKG91CbUGapk8rIyOIP1/fw9WDWdbwNssODjNWyn+sNu6g
-        TQtmxdgwSjVkCqIeRARZoT9VRhEZgr9xTDmYGYQ/ANoMywihehj0TU1deiBc
-        +R8bhJOmA0d9d8rm6mIkCPrUqiURLjWdDwHElLV+18JYYEtXFul0IZHBWr5g
-        yYyUZ0QY0pN26kM1JS59QVGqTSenu8FrA7O2yqHjIZMdZVYE/F0Fi0Q4u2VG
-        u/7zLC3gJUny7h5xUTb7y6CaunTnIvIoNNJBPahR4amnrvzBkWhrfsmIYr/6
-        NuEpikAy6vFJvuPmnydeaqSXV6x8ZWwYxpO7snhsBtr0DDjWnQwijiJwcBrF
-        FqJ4cXcBSh3IMZ2aCPJ82RuOxiSQqmLBsxMzFuceyY+bdt+ot8wFI+fKdpiG
-        +MJnZ/0FisGLGfUGAAA=
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 22:57:25 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos/rmetzler/render-as-markdown?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 22:57:26 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4915"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sun, 10 Nov 2013 11:10:46 GMT
-      Etag: 
-      - "\"0952dd8a4f9af384049a2318d58a8b66\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2D79:215F073:52928455
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA62Y32+jOBDH/xWEtPeyaQz52UZa7d7Lvd3LqfdyL5GBAawa
-        jGzTXIv6v9/YhkCyuZIskaqGEM/HX49n7LEbnyX+Llwu14/b1dPML2kB/s6X
-        UCYgH6h6KKh8ScSh9Gd+WnO+7xoUoN85SHKxJbYH6e8an4uMlYbXNkeK6W/9
-        +LhYzXz6SjWV+1pybJJrXakdIYt5Jt0P81gUxD0S2K7DRbBOkqfNOl0tIXx6
-        WtEYgg1dbpMgWX1PvlnAl+XvXxZ/4B9LoNQsFqWaZ0zndWRo+D4M0mgT0nWa
-        LhK6XqWraLldR1GY0jhdbZ/ieVVmv8lv/6LSTsfeSPbHFKDB6UBoxQZdk1qB
-        VGTgiFwX/GzsvdJhw1RwLg5ofdb60w7I0crMnCWwMvsFAlo1ROgccKJwCB/G
-        MUzp28RYi4aYD/SmYSiceQnJTYJaG5Rj4uujweCrhIXVkYolqzTD+b4NObRE
-        kpAZLdk7vZ2ElgoBRtJtEqwFWsIrRuxtps6kIZVkrzR+M66QEAN7Rcf+Au7M
-        Fmn6rTLLwd848cbNTMOeJoVJ6ZRyBR8z33atsZF9McM0viaqLy8bCRxnETt9
-        zpnyMig8/KDen+065OXAK5Cezqn23OKjvANw7qVCFlRrSPq2+MqLWJZh+6M9
-        cCiMoz3OXsDTNOJgvI9NX46D+DSR7Xwd8/PySAxtZCpHMZjBCEFpL/A2mWUY
-        DcH/bfrFuCLQSEiqxdi6Mi70BNaQ4VcTkhpoMXkAFoKwXIjpnrUQhDGlargq
-        U8adYFmKdClZ1kXkVstrEnEc7yiomSrFshJgskePoMbuTWamIknLOJ+O7jgN
-        cU82Cmg2WbJhGJlcRJNZuNcSC2qIyqnb1vT+HioN2XBOwBLSu0g2nCNYyzvE
-        gZVrQEcs7rMaQ2Ky3o5DmtbDnJZZTbPp5CMIo8FUBRl9H62PxnOsJyEWS0ct
-        WVTfZ4HsWUaxKzpwfZju4h7Vg20d9HkZdIUzBpWRdUdRsLHyZJzaYk5S405o
-        E8fnePN9vKq6TrbhNKRf193m0fYw1dvt7tHpJU3fjwnE+4zBcUjztaI6Nyse
-        dldRCVPFtxjSRBRrwvl83uRAbZVfgLxDtjsK4qiMcyxup+ptOo4rGe1BIjVy
-        zUGXC5pMTssjCKFuaqdqdpRh/FV4HJ8s1EKG1IJhPaxFOX2N7klDfik0S1l8
-        zQFrPC1PYM13xcoYZpTzGUY1Hv4ZxjkeX83MYrEL073lKDgcvCUxVImHCQz5
-        ybPQcRriDsexBDxTJXuq8Ry0CMLlQxg8BJvnYLtbBrtw9Q/2XVfJeZsQmz2H
-        4S4MdquNaVPVKj/F/NQEV802NPEJr18uXEFcOOKYiw3kK5X3xj960113zfH/
-        pjHHGDtLitv6fj3f4q4zR9m5KKDCMqS9dcJRd3q7CxsmLig3A2bvaLXcBidl
-        RyzqEmcqnPkHqrF+xm29f9WVKtjZX3X0Zrqnau/S2d9pWZtDM77pl4zBywN7
-        YV0jd6bswQWTUrS3ZyWmMV5eVFC25IEAd4w06ga/n6i1XxJIac313lXsqLag
-        Sttjv3u48EMJ+oBn1EFfw8qmU/rxH0wNwlNkFAAA
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 22:57:26 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 22:57:26 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4914"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sun, 10 Nov 2013 11:06:40 GMT
-      Etag: 
-      - "\"04c714ba7b707ed1c5b0c9315529aa0c\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      Link: 
-      - <https://api.github.com/repositories/13358749/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd&top=master&last_sha=b3cbadefd6166eacbf98a41d79cf6b012a24a73f>; rel="next", <https://api.github.com/repositories/13358749/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd&sha=master>; rel="first"
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2D7A:38C32FF:52928456
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA+2daW9bR5aG/wohoOdTLNW+EGh0GkgPMMAEAdLuL9NoBLVK
-        HHMRSMoex8h/n3NJyyRF36jKty7RDA6yQDZVfKtKVeJ57tn++elm8+BupjdG
-        MBqVyTERIzOT0TJnRBQ5Se+cdZZELmi0N9/dhNViMdveTD/duKftw2rdfbV0
-        iwTv8vMsPLh1nPyYtr/O0xq+OS3cbA6vrPev3C72r3y/SLfwPvAN0W27kYxQ
-        /obSN5S8pXRK1FSQ/7n57VlsC+81psoibTbuvpuHf1o8Tt6n9Wa2WsLstusE
-        f/u8Scprqr0MmWjDJPVWOiMZt54aGpklTpscjHcw8Gndrfphu33cTO/u3OPs
-        9n62fXjy3arv1ulxtblbf94L+OMypvUbt3mzcOt3cfVheQfffNdpb+6KNWGz
-        Gojuf7ibu8rzkJbbX8LqaQnHggyfyDdM4mG7mP9yuv7jDf+drd6LfcOCNy/0
-        qn/Itcu86wbATm/gfB2u3nx1P1t2N+zzGuHFWbyZSmOYgO9777Zu/WKm5PZ+
-        vX9hdxz3X94lLSkjMkarZBY8UWuFC4kox3UkUfwl/nl3nv/E//on9p/w7yzC
-        ZGZhtdwcHW74e0qyV9TJnFl0UmThuZbe0+xCFtqG28fl/X+s//x/MNPnefzS
-        TfnmtRm8dq+eNnBxv9wr+O6yUwHfmFfz+eoDjP79n+mpwN2XUV/eYba8/4Z3
-        gFGf7lbbhwQ/KFjCb93GzDbbusnsRnyC3xybLexm9x4b+MmvU6ya0OcxMJ0P
-        S5jJp93vqt2bPflNWM8et/CLsW5iJyPhnVbre7ec/erq3wlGdmd/9+uzalW7
-        ETAyve+uT9XQ/ZBPd4/r2XsXPnZbsU4hzd7Dxn7D270YC++2/fjYffD8A37w
-        3TbPtukXFxfdlc5uvkkvPwPxun/5GMXrjtd9b1C9+L183df90YFBCB/y038+
-        250O7E1BaErGOBGZoYrGyLzQyRCpEsvKW+69gt8fA03AZ5OkQrHsM/ZrRu5n
-        y6tY67d//fbdN2zJXubbeOX7R+di6mEVwt4SMuViSu23s0qVwoFT/vHYgdPk
-        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
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 22:57:26 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 22:57:27 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4913"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Etag: 
-      - "\"e4559722c53d01255bb3d12bbb945098\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2D7C:24B782A:52928457
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA5WUy26DMBBF/4VFV1G8j1TlU5ADU3ALmPjRiFr8e2fGoUlU
-        yTabkMW587zjUDXeGJhc7S2Y2puhOlW9c7M9CSFndeyU6/3l2OhREFEdKuld
-        r436kU7pyaYlryyKG91CbUGapk8rIyOIP1/fw9WDWdbwNssODjNWyn+sNu6g
-        TQtmxdgwSjVkCqIeRARZoT9VRhEZgr9xTDmYGYQ/ANoMywihehj0TU1deiBc
-        +R8bhJOmA0d9d8rm6mIkCPrUqiURLjWdDwHElLV+18JYYEtXFul0IZHBWr5g
-        yYyUZ0QY0pN26kM1JS59QVGqTSenu8FrA7O2yqHjIZMdZVYE/F0Fi0Q4u2VG
-        u/7zLC3gJUny7h5xUTb7y6CaunTnIvIoNNJBPahR4amnrvzBkWhrfsmIYr/6
-        NuEpikAy6vFJvuPmnydeaqSXV6x8ZWwYxpO7snhsBtr0DDjWnQwijiJwcBrF
-        FqJ4cXcBSh3IMZ2aCPJ82RuOxiSQqmLBsxMzFuceyY+bdt+ot8wFI+fKdpiG
-        +MJnZ/0FisGLGfUGAAA=
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 22:57:27 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos/rmetzler/render-as-markdown?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 22:57:27 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4912"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sun, 10 Nov 2013 11:10:46 GMT
-      Etag: 
-      - "\"0952dd8a4f9af384049a2318d58a8b66\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2D7A:38C34D4:52928457
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA62Y32+jOBDH/xWEtPeyaQz52UZa7d7Lvd3LqfdyL5GBAawa
-        jGzTXIv6v9/YhkCyuZIskaqGEM/HX49n7LEbnyX+Llwu14/b1dPML2kB/s6X
-        UCYgH6h6KKh8ScSh9Gd+WnO+7xoUoN85SHKxJbYH6e8an4uMlYbXNkeK6W/9
-        +LhYzXz6SjWV+1pybJJrXakdIYt5Jt0P81gUxD0S2K7DRbBOkqfNOl0tIXx6
-        WtEYgg1dbpMgWX1PvlnAl+XvXxZ/4B9LoNQsFqWaZ0zndWRo+D4M0mgT0nWa
-        LhK6XqWraLldR1GY0jhdbZ/ieVVmv8lv/6LSTsfeSPbHFKDB6UBoxQZdk1qB
-        VGTgiFwX/GzsvdJhw1RwLg5ofdb60w7I0crMnCWwMvsFAlo1ROgccKJwCB/G
-        MUzp28RYi4aYD/SmYSiceQnJTYJaG5Rj4uujweCrhIXVkYolqzTD+b4NObRE
-        kpAZLdk7vZ2ElgoBRtJtEqwFWsIrRuxtps6kIZVkrzR+M66QEAN7Rcf+Au7M
-        Fmn6rTLLwd848cbNTMOeJoVJ6ZRyBR8z33atsZF9McM0viaqLy8bCRxnETt9
-        zpnyMig8/KDen+065OXAK5Cezqn23OKjvANw7qVCFlRrSPq2+MqLWJZh+6M9
-        cCiMoz3OXsDTNOJgvI9NX46D+DSR7Xwd8/PySAxtZCpHMZjBCEFpL/A2mWUY
-        DcH/bfrFuCLQSEiqxdi6Mi70BNaQ4VcTkhpoMXkAFoKwXIjpnrUQhDGlargq
-        U8adYFmKdClZ1kXkVstrEnEc7yiomSrFshJgskePoMbuTWamIknLOJ+O7jgN
-        cU82Cmg2WbJhGJlcRJNZuNcSC2qIyqnb1vT+HioN2XBOwBLSu0g2nCNYyzvE
-        gZVrQEcs7rMaQ2Ky3o5DmtbDnJZZTbPp5CMIo8FUBRl9H62PxnOsJyEWS0ct
-        WVTfZ4HsWUaxKzpwfZju4h7Vg20d9HkZdIUzBpWRdUdRsLHyZJzaYk5S405o
-        E8fnePN9vKq6TrbhNKRf193m0fYw1dvt7tHpJU3fjwnE+4zBcUjztaI6Nyse
-        dldRCVPFtxjSRBRrwvl83uRAbZVfgLxDtjsK4qiMcyxup+ptOo4rGe1BIjVy
-        zUGXC5pMTssjCKFuaqdqdpRh/FV4HJ8s1EKG1IJhPaxFOX2N7klDfik0S1l8
-        zQFrPC1PYM13xcoYZpTzGUY1Hv4ZxjkeX83MYrEL073lKDgcvCUxVImHCQz5
-        ybPQcRriDsexBDxTJXuq8Ry0CMLlQxg8BJvnYLtbBrtw9Q/2XVfJeZsQmz2H
-        4S4MdquNaVPVKj/F/NQEV802NPEJr18uXEFcOOKYiw3kK5X3xj960113zfH/
-        pjHHGDtLitv6fj3f4q4zR9m5KKDCMqS9dcJRd3q7CxsmLig3A2bvaLXcBidl
-        RyzqEmcqnPkHqrF+xm29f9WVKtjZX3X0Zrqnau/S2d9pWZtDM77pl4zBywN7
-        YV0jd6bswQWTUrS3ZyWmMV5eVFC25IEAd4w06ga/n6i1XxJIac313lXsqLag
-        Sttjv3u48EMJ+oBn1EFfw8qmU/rxH0wNwlNkFAAA
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 22:57:27 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 22:57:28 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4911"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sun, 10 Nov 2013 11:06:40 GMT
-      Etag: 
-      - "\"04c714ba7b707ed1c5b0c9315529aa0c\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      Link: 
-      - <https://api.github.com/repositories/13358749/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd&top=master&last_sha=b3cbadefd6166eacbf98a41d79cf6b012a24a73f>; rel="next", <https://api.github.com/repositories/13358749/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd&sha=master>; rel="first"
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2D79:215F27A:52928458
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA+2daW9bR5aG/wohoOdTLNW+EGh0GkgPMMAEAdLuL9NoBLVK
-        HHMRSMoex8h/n3NJyyRF36jKty7RDA6yQDZVfKtKVeJ57tn++elm8+BupjdG
-        MBqVyTERIzOT0TJnRBQ5Se+cdZZELmi0N9/dhNViMdveTD/duKftw2rdfbV0
-        iwTv8vMsPLh1nPyYtr/O0xq+OS3cbA6vrPev3C72r3y/SLfwPvAN0W27kYxQ
-        /obSN5S8pXRK1FSQ/7n57VlsC+81psoibTbuvpuHf1o8Tt6n9Wa2WsLstusE
-        f/u8Scprqr0MmWjDJPVWOiMZt54aGpklTpscjHcw8Gndrfphu33cTO/u3OPs
-        9n62fXjy3arv1ulxtblbf94L+OMypvUbt3mzcOt3cfVheQfffNdpb+6KNWGz
-        Gojuf7ibu8rzkJbbX8LqaQnHggyfyDdM4mG7mP9yuv7jDf+drd6LfcOCNy/0
-        qn/Itcu86wbATm/gfB2u3nx1P1t2N+zzGuHFWbyZSmOYgO9777Zu/WKm7PZ+
-        vX9hdxz3X94lLSkjMkarZBY8UWuFC4kox3UkUfwl/nl3nv/E//on9p/w7yzC
-        ZGZhtdwcHW74e0qyV9TJnFl0UmThuZbe0+xCFtqG28fl/X+s//x/MNPnefzS
-        TfnmtRm8dq+eNnBxv9wr+O6yUwHfmFfz+eoDjP79n+mpwN2XUV/eYba8/4Z3
-        gFGf7lbbhwQ/KFjCb93GzDbbusnsRnyC3xybLexm9x4b+MmvU6ya0OcxMJ0P
-        S5jJp93vqt2bPflNWM8et/CLsW5iJyPhnVbre7ec/erq3wlGdmd/9+uzalW7
-        ETAyve+uT9XQ/ZBPd4/r2XsXPnZbsU4hzd7Dxn7D270YC++2/fjYffD8A37w
-        3TbPtukXFxfdlc5uvkkvPwPxun/5GMXrjtd9b1C9+L183df90YFBCB/y038+
-        250O7E1BaErGOBGZoYrGyLzQyRCpEsvKW+69gt8fA03AZ5OkQrHsM/ZrRu5n
-        y6tY67d//fbdN2zJXubbeOX7R+di6mEVwt4SMuViSu23s0qVwoFT/vHYgdPk
-        7U8//HS7iN3HyAtSYdLywMB6I1qxyGRKJEejledglPEkRQCgC8NPzDGpFGoO
-        B4RO9BuO6mf7eQRSKT7DpTZpi/uyp+fXLZ7XcbR2r5FUXvlNjKYLmi5/QNNl
-        /3vi89M6JBUkFXgIvHsigQ8mPj/6/YOTiidBGhe5z5wZ4QjV8EcqnAcbVFkw
-        OblODr4Ybnc+myQVioNJpVjrmFSKBw3zrHyf3P085ZQi+Fhge0/8KuQNI28Z
-        mzIx5WoAq5RocD5lZqdxoJV1gkdaabJdTe4f3jyCp6V7GHdKLHBUVIqMak0T
-        595mLbMK4GKJPgjGFKXCE2G7pQ1k3AOxFGu2JZbKEzGOb6ViEpe7N+2JpXSZ
-        SCyv3CskFiQWJBZ0pR5FNXzFwQ6fzuhK3Ye43KEr9QXs/Bu4Us99KwaidohX
-        hBLPfCRCuKScY5I4ErgDm9RDPJRxcrjd+UwsFYqDLa9irWNiKR40NrFQM6Vk
-        KviYxHKicUwsi9V7IJbZfHuGKlIkyoJMwnpDYgBvSvDCaR6S0txHDa6VTK0z
-        w4/MAVWKNduiSuVRGAdVKiZxuQvTHlVKl4mogqhyZHq9+JDFp639e3PdcSHo
-        XPl6NDU+mcAnE3/AJxPnqCIECcx6wRQjRrPAuKbEOkas19FTCLAm8LhckuF2
-        5zOqVCgOtryKtY5RpXjQ6KiiIWNlKuSoqHKscYQq7h2Aitu86/wrAVwtEBcG
-        h8ctNrf/u1ktJ3m9Wkx+/ttff/jxb3vX0KnjxWRIFfDSSmYUt8pSbh2B4DGu
-        jQrByUCihdjCLsasmeOlWLMtzVSelnFopmISl7tT7WmmdJlIM6/cKzRv0Lz5
-        A5o3SDNIM4s7fHjRnyX8Bw8VEzpnQVXmCaLFQraWGp50pFaYaGUXP5Yh1UU0
-        TGqpUBxueZWu7oRmSgddgGaonHI6Ms0cNA4042LceV06mInpPfz32KXHL8Ps
-        K0FjKkZpYoKgQuqFsYwkSbjgRBkXWEhwqLLWOfmW7FKs2Zhd6s7GSOxSPonL
-        3aAR2KVwmcguyC793gb0xPTvDXpisP7GcaEODBrDoLGvZ8j8WwaNeQdZLVJq
-        57q0hMw5xADRSHwKRHkFT8tZgDggoofbnV/SXMoVB1texas7SXMpn+B+Td+Y
-        kP9qCgrlUwGOknE9Mccap+wSIGxs7ebzzWSddiFkYRVTmM8WXZ2zl0kvlBIt
-        LGS+8EyIYJ50hdeEijlnLyAHhkDoYSC8QfDhIZKsWLMtvxQfqi/m/Ahp+hWT
-        uNwtas8vpctEfkF+6bfRkV/69wb5BfkF+QUMuZceHEx6uYakF0mSECKIpKQG
-        r0viDuJ8oERUTpm7DCU7Iw2MkdyOXyoUB1texVrH/FI8aFTfC7Vdmr7o8l5G
-        87281DhLell8BK+Lf7qHurL3k7xav5us8jHGvNmmzfZN9xG47kq9vIQar6QL
-        lFrw6ukQtDCKScMIh1QqmYxOPnBIk2nh2DtATbFmW6ipPDTjOGUqJnG5q9Ue
-        akqXiVCDUNNvuCPU9O8NQg1CDUINQs1XOlZcA9QwyrQ13oQcrHEpcCiNrIyU
-        iVADKTOWU5szaVHz9tkpU6E42PIq1jqGmuJBl4CazmcyNtR80ThATed/mXx2
-        wEzcvZstz/9/xjBUOjgsNtgALKNMslFCLQjNlNIefHs8WScIdMoZDshHjplS
-        zbYMU3lGxmGYiklc7ia1Z5jSZSLDIMP02+nIMP17gwyDDIMMgwxzpQzjfJY6
-        CWc9005CbFCWVPIkAlQpg6D0rKB3B7Rp7NowDkzGfmaYCsXBllex1kmnl/It
-        GTGwbO804WbM+skvNUoZ5oxeFPT+04ILBRDDGMs0KA9HSvrIiINiysYxZahp
-        kFp1oJdizbb0Unykxgwrq5jE5e5Qe3opXSbSyyu/nTGlH1P6MaUfayljLeXe
-        FtkvHA4YVnYNHhiTrSSQHw0xPl2lMkMohQR+QTLUU87Q/IUyqRlnDZ6aP9NL
-        heJgy6tY66SWcvmWjE4v5AL0ctA40Mt2/RHCx/ZpMce+lzNucd4JHrmhACne
-        ccuhNJml2UNSTALHHrxEITjRNE3nL9Zsyy3Fh2lMbqmYxOVuT3tuKV0mcgty
-        S79nAb0u/XuDXhf0uqDXBb0u1+p1gcgbBtFhibFAg08aqMVnYUJiCZoSUg7P
-        y3PmDezOL16XcsXBlpcr1TrxupQOGj1yjE6ZmsrxSpF1Xpdjjd/jljNigZYv
-        RhhInIpJMZ0htSVlaBgEfSplTMQQDan92rEGiVQHT0uxZltiKT5GYxJLxSQu
-        d2/aE0vpMpFYkFj6rXIklv69QWJBYkFiQWK5UmIhSgivoetglh7cKoFQSLlm
-        OgYC0WLaqwB1bzUXDePEKhQHW17FWsfEUjzoAsRC9ZTZUXNd6PSg8XViOWOV
-        mG32zFkFiVDQ3CWKwDmRsWMWlSA2LHmdrbBN21YWa7ZllcqzME5OS8UkLndj
-        2rNK6TKRVZBV+u1xZJX+vUFWQVZBVkFWuVJWCcET4aUKXtEsiHCMB2+MVDZE
-        oj08JvcxGifa5bRUKA62vIq1jlmleNDorEKm0IRFqFFZ5Vjja8WS79ME4ju3
-        T5szZPFSBCuhqkOIgllodpp4djEJqLfNYso0UQVnRzSos31wrxRrtkWWyiMx
-        DrJUTOJyF6c9spQuE5EFkaXfLEdk6d8bRBZEFkQWRJYrRRaqBBOQs0IoNBN0
-        kWtCdAZeUUb7aHIywifLY8OAsArFwZZXsdYxshQPugyyUDY+snzWOEWW9ZP/
-        OGG35JZ0pZEn27V7PzsHF8EolV7I7KAOMgkhQi4LlKIT2etAFWcpetHVFxvO
-        vAdwKdZsCy6VB2MccKmYxOWuT3twKV0mgguCS79xjuDSvzcILgguCC4ILlcK
-        Ll1lWk6jc4FbleEfToQwLGuhubYWHC+QXc18Q3CpUBxseRVrHYNL8aALgAsR
-        ELY1MrgcNI4bu2QXth2uOD8/b0MpIo3CA/AabSl0MoUDZJOmKllhtIFyYTRb
-        cNY1qNtwRCulmm1ppfI0jEMrFZO43J1pTyuly0RaQVrpt8iRVvr3BmkFaQVp
-        BWnlSmkF8qahv7nW1NNooAs6k9AaUGktwP70zGhlpRGQfz/8Kflz3n2F4mDL
-        q1jrmFaKB41NK9RCqeMpE2PSyolGT7Xj7iNuvd1M3K4D5WSzSPP5WZyYAFKB
-        5ixCQIUwmhwJgDtGcpsFhbrEKnGRmGGuacHjYs22AFN5QMYBmIpJXO4atQeY
-        0mUiwCDA9BvpCDD9e4MAgwCDAIMAc6UA4yUllDmdoNW5IQbCwxgBMzNrTrSg
-        xBsVmYc/tQOYCsXBllex1om7pXxL9lB2M/104562D6t199XSLRKURf95Fh7c
-        Ok5+TNtf57se82nhZnN4Zb1/5fvk7ucppxRvYcB3N9Ftu3GMUP6GkjdQ1Ivy
-        KSVTMS7AHGucxolBuePNbLWceBfvzz0uXrPMHNUBoNeZxKFJi3TQrSUYCpWy
-        nYGklwgxiE2BpVizLbAUn6Iv9vsvYfW03N5MyfCJPHN/xSQud23aA0vpMhFY
-        EFj6jXIElv69QWBBYEFgQWC5UmDJnhrvnWHWJgj56TqayyQzhPooTxnnUPhY
-        eZIa2J3PlleF4mDLq1jrGFiKB43tcSF2yviUyzE9LicaB2DZQQr4WJZxskwf
-        JrOY3HlOi2bRBg1tfAwNSUQoQyxSApcdeF6gogOHwmIGitIpNxx2D1FixZrD
-        UaET/YZD2w0Zx8lScTAvd3PaM0vpMpFZkFn67XJklv69QWZBZkFmQWa5UmYB
-        WglCMkhBcEI4SjlXmWqTnZZCe+YTl07E1KAI1LP5V6E42PIq1jrpzlK+JeM6
-        WaDdo4T6YeMyy7HGqZNln30/CbOziLAAZyUSDq1HJSE8cXC1ZK945lpDJx+d
-        odSx58w1hZVizbawUnyCxnSwVEziclemPayULhNhBWGl3yBHWOnfG4QVhBWE
-        FYSVK4UVbb2GEk+RMUYTTyGBlalUCF2eC9MpER1cFC1bSVYoDra8irWOYaV4
-        0LgOFv22q3QspmzEymEvNA6wslit02RXOuyHv/93j3/FRAnxYIxCgQaoGiZD
-        UJG4Dm8JOOu0c4C+RmnetGZYsWZbZKk8EuP4VyomcbmL0x5ZSpeJyILI0m+W
-        I7L07w0iCyILIgsiy5UiC+NEQeIBlH8KMUMzFiOtNj5AtWMVoIE550FpB50D
-        h8f1PPtXKhQHW17FWsfIUjxoILI8Ouhmkm5hX76SwrKDCYgIo2RARFiNwhGu
-        uHdpEt3HTdeYBYLCVk9bSMCfz7bbeZr42Xay45nula27n3xOdTmPGBNWKxMz
-        gwY/LFLnGZdMUWshtUV4yyBezMWgUoPOP4eIsWLNtkRTeWLGIZqKSVzuXrUn
-        mtJlItEg0fRb7Ug0/XuDRINEg0SDRHOlREMcgbz8yB20m4SO5jkqKGbLTWQi
-        M23BP8MFCUk2jBirUBxseRVrHRNN8aCBRPNKWv6OabrMfD6Aaeo0XjhhOgYF
-        6/scViANHypke2MVgSIOUkVqEgMPDJRxSEJwyJfKAcLImhZBLtZsCyuVh2Ec
-        WKmYxOWuTHtYKV0mwgrCSr9BjrDSvzcIKwgrCCsIK1cKKwp6mXeGJkT9mARR
-        Pl3+PWNaSCgpJqKSngqdeGjofqlQHGx5FWsdw0rxoNFhRUylnUozKqwca7yA
-        la8n4nulNBQKS4Rn8KIIk33OkTnOOZWRQVp+8MIm2uDEHNwqxZptSaXyJIxD
-        KhWTuNx9aU8qpctEUkFS6bfGkVT69wZJBUkFSQVJ5UpJRdoArcwFgx7mDP6N
-        XUcN4sD4zJC3ILPsyolBtkJuFyhWoTjY8irWOiaV4kHjkop6S9lUmKmw45HK
-        TkPSKaM7jQOpdBXD3v70w0/nOfgESg6DG86zZJziUpNAHBcRqmNLyML3VGXC
-        PGvghjtwSijVbMspledgHE6pmMTlbkt7TildJnIKckq/LY6c0r83yCnIKcgp
-        yClXyikpiABdywUNhMJT8SCU9hHcKlFowaILGTpMJiIadmWpUBxseRVrHXNK
-        8aDROYVMOTg89Kiccqxx4JR16prLTPJsns6jv6JnITmuY+Y+0BQy+OOE7dwr
-        PvMgTVScR4giHM62B1Yp1mzLKpVnYRxWqZjE5W5Me1YpXSayCrJKvz2OrNK/
-        N8gqyCrIKsgqV8oqNKtgMxEQ0MMytUlBMJiMgkASQlbQy5wG8KpAR8nhdudz
-        8n2F4mDLq1jrmFWKB12AVRj4O0aM/gKfCgGHyrPGgVXek1ty26WabNcJ+lp+
-        utk8OGhvmVRWcE4ATEJI4FdxChJTlJCGQr6TCxJOj4aTY4eflgOlFGu2pZTK
-        UzAOpVRM4nJ3pT2llC4TKQUppd8SR0rp3xukFKQUpBSklCulFG00dM9IhHVd
-        Io3vvlY0CAHmaMqOeOIsuFxcHG53PlNKheJgy6tY66SqcfmW7Nc0Tp/7HUFQ
-        M6Vje1QOGqctWP5r4e7TJMzd5typoign0LkngufNdBn1jkQjnXGJCWjeAwUZ
-        vJeQU9+0/lexZltcKT5DX6z3EbrcV0zicpemPa6ULhNxBXGl3yRHXOnfG8QV
-        xBXEFcSVK8UVGrPNmmVIV+FKBihebOB/FBKjKc1Q+Eu6wCw89GyHKxWKgy2v
-        Yq0Tp0r5loyLK9CBHgLAxD6JZC+1TesOjrroLPBx/DwLD24dJz+m7a9zeOW7
-        m7Rwszm8st6/8v0r9b/U2xONU1yZz5bvztwqOglKDOUKGq3AIcnaKsecoAK6
-        sKhAjSbER62aJtQXa7bllOLDMyanVEzicrelPaeULhM5BTml3xZHTunfG+QU
-        5BTkFOSUK+UUz4OHBiBQn5gqlVzw2RowO6O2IUO+ClQE6x6U84bBXxWKgy2v
-        Yq1jTikeNHbwV9fZHjhl1OCvE40Dp3x4cNvJbDNZuPW7uPqw/MsZsERoZy8y
-        FzZ6DT1VjKWKJsk9lAITKXpIX2HwN5IMB9xDHFixZltgqTwQ48SBVUzictem
-        PbCULhOBBYGl3yhHYOnfGwQWBBYEFgSWKwUWiPKSjnJjnOQq8QzIwuCRuWVG
-        Ec4opNcHsDuJGW53PseBVSgOtryKtQBY/vX/jCpYZDp9AQA=
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 22:57:28 GMT
-- request: 
+  recorded_at: Thu, 05 Dec 2013 14:56:04 GMT
+- request:
     method: get
     uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/8421d68fde085f25d92a84d4fe5baa9a90d341d9?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
+      string: ''
+    headers:
+      Accept:
       - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
+      User-Agent:
+      - Octokit Ruby Gem 2.6.2
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Server: 
+    headers:
+      Server:
       - GitHub.com
-      Date: 
-      - Mon, 25 Nov 2013 11:26:57 GMT
-      Content-Type: 
+      Date:
+      - Thu, 05 Dec 2013 14:56:04 GMT
+      Content-Type:
       - application/json; charset=utf-8
-      Transfer-Encoding: 
+      Transfer-Encoding:
       - chunked
-      Status: 
+      Status:
       - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4991"
-      X-Ratelimit-Reset: 
-      - "1385381367"
-      Cache-Control: 
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4979'
+      X-Ratelimit-Reset:
+      - '1386258265'
+      Cache-Control:
       - public, max-age=60, s-maxage=60
-      Last-Modified: 
+      Last-Modified:
       - Sun, 10 Nov 2013 11:06:40 GMT
-      Etag: 
+      Etag:
       - "\"04c714ba7b707ed1c5b0c9315529aa0c\""
-      Vary: 
+      Vary:
       - Accept
       - Accept-Encoding
-      X-Github-Media-Type: 
+      X-Github-Media-Type:
       - github.beta; format=json
-      X-Content-Type-Options: 
+      X-Content-Type-Options:
       - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
       - "*"
-      X-Github-Request-Id: 
-      - 5DD35AC8:384E:1EF8D7F:52933401
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA+1XS4/bNhD+K4KCNIfElkiJegGLOIe06GFbYJvm0G6wIEXK
-        IqoXSMrbRPB/71CWN7vONrac9FBgAUGQSH4z3wxnyJnB1SV1MzcJMeJRUnDh
-        J6TAhKeYJiEPC0EYpSlNfR6EiKfuKzdv61oaNxtc2puyVfarobUAKVcyL6ni
-        zqUwnyqhYLGoqaxgRu1mlvVuZlWLJciBBZwai8Q+ChYILZD/DqHMj7LQ/8Pd
-        7pUZkPVfaqmF1nRtebC+7pyNUFq2DbAzSsDoMDkpYjGKGckLP04wQSwlNCE4
-        SBlKEMepT+OkyBNGAdgra3VpTKczz6OdXK6lKXtmrfaU6FrtqckX8NtwoRZU
-        L2qq/uLtbePBYs/q1t7JOsFZ30HpbnO1NzMeRGNu8rZvICz8bydyBonS1NXN
-        Q/vvO/wrrt4pO8NgfaBv9ibPNdOzAPC0hvj6nHpVu5aNzbDJRpiU3M1IkuAQ
-        1m2ooeqAKVqu1W5iDMfdpydigrBPOE8jUoSBQGka0lz4EQ1i7vPwNb8Y4/l5
-        8OY5/hEeyYGMzNtG3wtuGEd+wSJESVFgTklYhCyICWOooHkRxmm+7Jr1D+ri
-        b2C653FjKbvHGBzLq15D4t7lFaw+LSpgYdFWVXsL6K/v6UMF3h3qToJs1mdI
-        ANTgtaYUsFFgwtY6Rmozj8yIGODk0Aa8aWVo2Hkl+CxCEwbo3DbAZBjPqlFY
-        z3SuZGfgYJxH7AESJLVqTRv5ic6XBEgb++PxOcuqEQFIsbHpMwu6gwxep+SG
-        5h+tK5TIhdyAY88Qd4AFaeZjZy+e32HjrZulETeU1zalC1ppcXgHPqX73TX6
-        lO5P6b4rqA7O5f93uncUCkK45LM/93UnhXoz9JEQSUJDjhMUIc4xC2OR+CQS
-        uIhYGjAWwfnxjSXgviSZofG0O/axIneqvE7Wtf0w3mnWNYNrWkOhxMZQ4nAu
-        x7vEzRD0E6IS+z84OwtZifuuJALqmjCA8j2PBcI5i9KcBAFGOIBeJyeMxCzC
-        PABXWujU11SSPWbA1CcsFbMnNzDrQZVbt1wWUnAY+3dq0NmUtFlbbmACq1p2
-        XvVqkSfXrt4pdih6ex4VAH5fJlBZmuP39fFmai/nuPmvlSguZrQ+HTV5CVu+
-        WjkL9CpyXtrXanXdOBAEfSWcq7G1e6Mvp8YOZhznp7eX8HacC+fFl63fi+tm
-        4Tjv31799vOvv9gl/tJfEhh9+cVoBKMOKIA3PM+63mjn2n1XSu3AMwWn82w4
-        JJFlk/it0xbOWtSPrgGW22vX3X7Y/gPVSmTGJBAAAA==
-
+      X-Github-Request-Id:
+      - D95B947E:2CE3:598547:52A09404
+    body:
+      encoding: UTF-8
+      string: "{\"sha\":\"8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"commit\":{\"author\":{\"name\":\"Richard
+        Metzler\",\"email\":\"richard.metzler@me.com\",\"date\":\"2013-11-10T11:06:40Z\"},\"committer\":{\"name\":\"Richard
+        Metzler\",\"email\":\"richard.metzler@me.com\",\"date\":\"2013-11-10T11:06:40Z\"},\"message\":\"bump
+        version\",\"tree\":{\"sha\":\"6b717b5cf078251b95a85239b181d290a78fc8ba\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/trees/6b717b5cf078251b95a85239b181d290a78fc8ba\"},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/commits/8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"comments_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/8421d68fde085f25d92a84d4fe5baa9a90d341d9/comments\",\"author\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"a078401ee88a4d28161dd2b47e8056e2f6b93bb6\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/a078401ee88a4d28161dd2b47e8056e2f6b93bb6\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/a078401ee88a4d28161dd2b47e8056e2f6b93bb6\"}],\"stats\":{\"total\":2,\"additions\":1,\"deletions\":1},\"files\":[{\"sha\":\"5ee1943825c7e12cb69c53321234fec5b57b62d3\",\"filename\":\"lib/render-as-markdown/version.rb\",\"status\":\"modified\",\"additions\":1,\"deletions\":1,\"changes\":2,\"blob_url\":\"https://github.com/rmetzler/render-as-markdown/blob/8421d68fde085f25d92a84d4fe5baa9a90d341d9/lib/render-as-markdown/version.rb\",\"raw_url\":\"https://github.com/rmetzler/render-as-markdown/raw/8421d68fde085f25d92a84d4fe5baa9a90d341d9/lib/render-as-markdown/version.rb\",\"contents_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/contents/lib/render-as-markdown/version.rb?ref=8421d68fde085f25d92a84d4fe5baa9a90d341d9\",\"patch\":\"@@
+        -1,6 +1,6 @@\\n module RenderAsMarkdown\\n   GEM     = 'render-as-markdown'\\n-
+        \ VERSION = '0.0.5'\\n+  VERSION = '0.0.6'\\n end\\n \\n #puts \\\"This is
+        version #{RenderAsMarkdown::VERSION} of gem #{RenderAsMarkdown::GEM}\\\"\"}]}"
     http_version: 
-  recorded_at: Mon, 25 Nov 2013 11:26:57 GMT
-- request: 
+  recorded_at: Thu, 05 Dec 2013 14:56:04 GMT
+- request:
     method: get
     uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/1f6c9f047c82f19e632e5d40602f611e1cb67a6f?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
+      string: ''
+    headers:
+      Accept:
       - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
+      User-Agent:
+      - Octokit Ruby Gem 2.6.2
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Server: 
+    headers:
+      Server:
       - GitHub.com
-      Date: 
-      - Mon, 25 Nov 2013 11:26:58 GMT
-      Content-Type: 
+      Date:
+      - Thu, 05 Dec 2013 14:56:05 GMT
+      Content-Type:
       - application/json; charset=utf-8
-      Transfer-Encoding: 
+      Transfer-Encoding:
       - chunked
-      Status: 
+      Status:
       - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4990"
-      X-Ratelimit-Reset: 
-      - "1385381367"
-      Cache-Control: 
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4978'
+      X-Ratelimit-Reset:
+      - '1386258265'
+      Cache-Control:
       - public, max-age=60, s-maxage=60
-      Last-Modified: 
+      Last-Modified:
       - Wed, 16 Oct 2013 10:21:28 GMT
-      Etag: 
+      Etag:
       - "\"7edebcb5569ab3e736d897370ec1f43b\""
-      Vary: 
+      Vary:
       - Accept
       - Accept-Encoding
-      X-Github-Media-Type: 
+      X-Github-Media-Type:
       - github.beta; format=json
-      X-Content-Type-Options: 
+      X-Content-Type-Options:
       - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
       - "*"
-      X-Github-Request-Id: 
-      - 5DD35AC8:384A:CC81D6:52933401
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA+1XS4/bNhD+K4KCNIesLVFvCVjEOaRFD9sC27SHdoMFH0OJ
-        qF6gaG8Sw/+9Q9nebJxtbDnpocACgiCR/Ga+Gc5whmt3qKhbuEQmPJd+lPIs
-        kCSHJAwgFpGf+IFMCAHCWZLSRLoXLu+aRhm3WLt0aapO26+WNoBSrhWvqBbO
-        FZiPNWhcDA1VNc7o7cwCaFmDBBBzBFy4ghqLC3wSzog/I8lb4hcBKYLsT3ez
-        V2VQ0n+no4FhoKVlsfLn/jxGVkYD/q93roFEJuiUKGecQ8gCmkRhnkRxRohP
-        KI/RVSm6KUfgUltbK2P6ofA82qt5qUy1ZHP0maeh7wZPN1vf4G8rQM/oMGuo
-        /lt0d62Hiz2re/BO1olO+g5Kt1s6eBOjAFpzy7tli8HgfzuRM0hUpqlvP7f/
-        ocO/4uqtsjMMHg70Td7kqWZ6FoCeHjC+PiVc3ZWqtXm1sxEnlXCLOMuCCNet
-        qKH6gCmZl3o7MYbj9tODNCaBHwuRJ7GMQiB5HlEOfkLDVPgieiUux3h+Hr5+
-        HvyIjxJIRvGuHR4EN44TX7KE0FjKQNA4khEL05gxIimXUZrzed+WP+jL98h0
-        z+PWUnaPMTiWV8sB9Ke8wtWnRQUulF1dd3eI/vqefq7Au0fdS1BteYYERK29
-        zlSAG4UmbKxj1GCmkRkRazw5BoPetDIG3HkNYhKhHQbp3LXIZD2eVaOwJRu4
-        Vr1RuN/TRD5EoqROl7RVH+l0SYi0sT8en5MojAhEwsqmzyToFrL2eq1WlH+w
-        rtDAQa3QsWeIO8CiNPOhtyXnd9x462Zl4JaKxqa0pPUAh7XvKd3vy+hTuj+l
-        +7ahOjiX/9/p3lNsCLHIF3/t+840S7Gigh8kjAQZs98J4VGE7ShI6jOf5hHP
-        qMDz4xtbwH1LMkHjaTX2sSZ313mdrGvzbqxp1jVr13SGYosdYIsjhBpriVsQ
-        vEdADfs/PDulquGhK1keRzyMUwht7x5mkHIWsYgDYyFkXNJA+jmHBF1pobvb
-        TK3YYwassGFAxXPN7MmNzJaoym06oaQCuxv/Tg1vNBVtS8sNTWB1xw6q0ond
-        q0We3Lt6p9ih6d15VBD4fZlgZ2mO1+vjl6m9nOPmv9IgLydcfXpqeIVbvlg4
-        M3KROC/ta7G4aR0MgmUNzvV4tXs9XO0udjjjOD+9ucK341w6L768+r24aWeO
-        88eb699+/vUXu8ReRSMcffnFaIyjDirANz7P+qUZnBv3baUGB59dcDrP1ock
-        imInfuN00imheXQNstzcuO7m3eYfRbqe6BoQAAA=
-
+      X-Github-Request-Id:
+      - D95B947E:2CE6:102154F:52A09404
+    body:
+      encoding: UTF-8
+      string: "{\"sha\":\"1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"commit\":{\"author\":{\"name\":\"Richard
+        Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-16T10:21:28Z\"},\"committer\":{\"name\":\"Richard
+        Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-16T10:21:28Z\"},\"message\":\"v0.0.5\",\"tree\":{\"sha\":\"e6f682f49bcce3b2a643964581101ac563276029\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/trees/e6f682f49bcce3b2a643964581101ac563276029\"},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/commits/1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"comments_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/1f6c9f047c82f19e632e5d40602f611e1cb67a6f/comments\",\"author\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://1.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"787fb6e026b128bfb6e61c446f6efa0b0a94c8ad\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/787fb6e026b128bfb6e61c446f6efa0b0a94c8ad\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/787fb6e026b128bfb6e61c446f6efa0b0a94c8ad\"}],\"stats\":{\"total\":2,\"additions\":1,\"deletions\":1},\"files\":[{\"sha\":\"b954c357e3643938e7cb4b4cebb3e8cfa2f09ce6\",\"filename\":\"lib/render-as-markdown/version.rb\",\"status\":\"modified\",\"additions\":1,\"deletions\":1,\"changes\":2,\"blob_url\":\"https://github.com/rmetzler/render-as-markdown/blob/1f6c9f047c82f19e632e5d40602f611e1cb67a6f/lib/render-as-markdown/version.rb\",\"raw_url\":\"https://github.com/rmetzler/render-as-markdown/raw/1f6c9f047c82f19e632e5d40602f611e1cb67a6f/lib/render-as-markdown/version.rb\",\"contents_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/contents/lib/render-as-markdown/version.rb?ref=1f6c9f047c82f19e632e5d40602f611e1cb67a6f\",\"patch\":\"@@
+        -1,6 +1,6 @@\\n module RenderAsMarkdown\\n   GEM     = 'render-as-markdown'\\n-
+        \ VERSION = '0.0.4'\\n+  VERSION = '0.0.5'\\n end\\n \\n #puts \\\"This is
+        version #{RenderAsMarkdown::VERSION} of gem #{RenderAsMarkdown::GEM}\\\"\"}]}"
     http_version: 
-  recorded_at: Mon, 25 Nov 2013 11:26:58 GMT
-- request: 
+  recorded_at: Thu, 05 Dec 2013 14:56:05 GMT
+- request:
     method: get
     uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
+      string: ''
+    headers:
+      Accept:
       - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
+      User-Agent:
+      - Octokit Ruby Gem 2.6.2
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Server: 
+    headers:
+      Server:
       - GitHub.com
-      Date: 
-      - Mon, 25 Nov 2013 11:26:58 GMT
-      Content-Type: 
+      Date:
+      - Thu, 05 Dec 2013 14:56:05 GMT
+      Content-Type:
       - application/json; charset=utf-8
-      Transfer-Encoding: 
+      Transfer-Encoding:
       - chunked
-      Status: 
+      Status:
       - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4989"
-      X-Ratelimit-Reset: 
-      - "1385381367"
-      Cache-Control: 
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4977'
+      X-Ratelimit-Reset:
+      - '1386258265'
+      Cache-Control:
       - public, max-age=60, s-maxage=60
-      Last-Modified: 
+      Last-Modified:
       - Sun, 13 Oct 2013 00:39:39 GMT
-      Etag: 
+      Etag:
       - "\"ff6cd193928c63501870b51c523a7a3b\""
-      Vary: 
+      Vary:
       - Accept
       - Accept-Encoding
-      X-Github-Media-Type: 
+      X-Github-Media-Type:
       - github.beta; format=json
-      X-Content-Type-Options: 
+      X-Content-Type-Options:
       - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
       - "*"
-      X-Github-Request-Id: 
-      - 5DD35AC8:384E:1EF8F01:52933402
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA+1X3W/bNhD/VwQVXR8aW5RESrKBoO5DN+whG5B1e9hSBPyU
-        iOkLJO2sNfy/7yjbWeJmteV2DwMCCIJE8nf3u+MdebcObUXDeZgnJCYEI8RS
-        gouCsozIQgiMkwxLRAhNZ7kSOQ4vQt41jXbhfB3Spas6479a2kiQcq15RY0I
-        rqT7VEsDi2VDdQ0zZjuzkLSspZJSTAFwEQrqPC5BcTqJ0SRO3yM0T2fw/B5u
-        9qocSPrvdDTSWlp6FitprO7aAE3R1BvqjITh9d5DVBGRxYQXShIuFcsViZHg
-        MuWCUXAWwmQmlALg0niTK+d6O48i2utpqV21ZFNwXWRk39nINFsXwW8rpJlQ
-        O2mo+VN0d20EiyOv20b5qTrBV99A6XZnQe24YJCtu+XdsoWYQF9P5AwSlWvq
-        28f2P3T4F1y9VXaGwfZA3+hNHmtm5AHgaQvx9U/e1V2pW59eOxthUotwTooi
-        wbBuRR01B0yTaWm2E0M4bj8jmZM4QUSIWUYUTmU8m2HKJcpomgsk8BtxOcTz
-        y/Tty+R7eLQAMpp3rX0Q3DAeI8WymBKlEkEJVpilOWEsVpQrnM/4tG/L78zl
-        X8B0z+PWUw6PMTiWV0sL6XufV7D6tKiAhaqr6+4O0F/e08cKonvUvQTdlmdI
-        ANQ66lwlYaPAhI13jLZuHJkBsYaTwzrwppdhYeeNFKMI7TBA564FJuvhrBqE
-        LZnlRvcOjsdxxB4hQVJnStrqT3S8JED62B+Oz1FWDQhAypVPn1HQLWQd9Uav
-        KP/oXWEkl3oFjj1D3AEWpLmPvb95foWN927WTt5S0fiUVrS28vAKfE73+2v0
-        Od2f031bUB2cy//vdO8pFIRwyc//2NedseA44RnFcTFjiKAYYcyQYCwVUqqC
-        iARzJHIG58dXloD7kmSExtPu2KeK3F3ldbKuzYfhTvOuWYeucxRK7ARKHCH0
-        cJeE8xjaCVnL/R+cnUrX8qErE56qjBdZxhRlcYzzpEBpAm8oVSTNJc6zJMsy
-        35h46K6pqTV7yoBdtzA13vOe2RJUhU0ntNJSwNi/U4PGpqJt6bmBCazu2HnV
-        q0eeXLtGp9hh6N15VAD4bZlAZemO39fHm6m9nOPmvzFSXY5ofXrqeAVbvlgE
-        k/giC17712Jx0wYQBMtaBtdDa/fWXu0aO5gJgh/eXcE7CC6DV5+3fq9u2kkQ
-        /Pbu+pcff/7JL/GtaAqjrz8bxTAagAJ4w/OiXzob3ITvK20DePat7Iv1IYn5
-        fCd+E3QqKGUTPLUGWG5uwnDzYfM3N0CoDiEQAAA=
-
+      X-Github-Request-Id:
+      - D95B947E:2CE6:1021612:52A09405
+    body:
+      encoding: UTF-8
+      string: "{\"sha\":\"725155400b35488ab65e8dd44264e055a397fd74\",\"commit\":{\"author\":{\"name\":\"Richard
+        Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-13T00:39:39Z\"},\"committer\":{\"name\":\"Richard
+        Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-13T00:39:39Z\"},\"message\":\"version
+        0.0.4\",\"tree\":{\"sha\":\"7af5d615c8fe5cefb7f510dce3cdbae8d0459dff\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/trees/7af5d615c8fe5cefb7f510dce3cdbae8d0459dff\"},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/commits/725155400b35488ab65e8dd44264e055a397fd74\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/725155400b35488ab65e8dd44264e055a397fd74\",\"comments_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74/comments\",\"author\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://0.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://0.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\"}],\"stats\":{\"total\":2,\"additions\":1,\"deletions\":1},\"files\":[{\"sha\":\"2c3f6c866bfab1147280327282daea7e4762666e\",\"filename\":\"lib/render-as-markdown/version.rb\",\"status\":\"modified\",\"additions\":1,\"deletions\":1,\"changes\":2,\"blob_url\":\"https://github.com/rmetzler/render-as-markdown/blob/725155400b35488ab65e8dd44264e055a397fd74/lib/render-as-markdown/version.rb\",\"raw_url\":\"https://github.com/rmetzler/render-as-markdown/raw/725155400b35488ab65e8dd44264e055a397fd74/lib/render-as-markdown/version.rb\",\"contents_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/contents/lib/render-as-markdown/version.rb?ref=725155400b35488ab65e8dd44264e055a397fd74\",\"patch\":\"@@
+        -1,6 +1,6 @@\\n module RenderAsMarkdown\\n   GEM     = 'render-as-markdown'\\n-
+        \ VERSION = '0.0.3'\\n+  VERSION = '0.0.4'\\n end\\n \\n #puts \\\"This is
+        version #{RenderAsMarkdown::VERSION} of gem #{RenderAsMarkdown::GEM}\\\"\"}]}"
     http_version: 
-  recorded_at: Mon, 25 Nov 2013 11:26:58 GMT
-- request: 
+  recorded_at: Thu, 05 Dec 2013 14:56:05 GMT
+- request:
     method: get
     uri: https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
+      string: ''
+    headers:
+      Accept:
       - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
+      User-Agent:
+      - Octokit Ruby Gem 2.6.2
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Server: 
+    headers:
+      Server:
       - GitHub.com
-      Date: 
-      - Mon, 25 Nov 2013 11:26:59 GMT
-      Content-Type: 
+      Date:
+      - Thu, 05 Dec 2013 14:56:06 GMT
+      Content-Type:
       - application/json; charset=utf-8
-      Transfer-Encoding: 
+      Transfer-Encoding:
       - chunked
-      Status: 
+      Status:
       - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4988"
-      X-Ratelimit-Reset: 
-      - "1385381367"
-      Cache-Control: 
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4976'
+      X-Ratelimit-Reset:
+      - '1386258265'
+      Cache-Control:
       - public, max-age=60, s-maxage=60
-      Last-Modified: 
+      Last-Modified:
       - Sun, 13 Oct 2013 00:39:39 GMT
-      Etag: 
+      Etag:
       - "\"ff6cd193928c63501870b51c523a7a3b\""
-      Vary: 
+      Vary:
       - Accept
       - Accept-Encoding
-      X-Github-Media-Type: 
+      X-Github-Media-Type:
       - github.beta; format=json
-      X-Content-Type-Options: 
+      X-Content-Type-Options:
       - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
       - "*"
-      X-Github-Request-Id: 
-      - 5DD35AC8:384A:CC8277:52933403
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA+1X3W/bNhD/VwQVXR8aW5RESrKBoO5DN+whG5B1e9hSBPyU
-        iOkLJO2sNfy/7yjbWeJmteV2DwMCCIJE8nf3u+MdebcObUXDeZgnJCYEI8RS
-        gouCsozIQgiMkwxLRAhNZ7kSOQ4vQt41jXbhfB3Spas6479a2kiQcq15RY0I
-        rqT7VEsDi2VDdQ0zZjuzkLSspZJSTAFwEQrqPC5BcTqJ0SRO3yM0T2fw/B5u
-        9qocSPrvdDTSWlp6FitprO7aAE3R1BvqjITh9d5DVBGRxYQXShIuFcsViZHg
-        MuWCUXAWwmQmlALg0niTK+d6O48i2utpqV21ZFNwXWRk39nINFsXwW8rpJlQ
-        O2mo+VN0d20EiyOv20b5qTrBV99A6XZnQe24YJCtu+XdsoWYQF9P5AwSlWvq
-        28f2P3T4F1y9VXaGwfZA3+hNHmtm5AHgaQvx9U/e1V2pW59eOxthUotwTooi
-        wbBuRR01B0zjaWm2E0M4bj8jmZM4QUSIWUYUTmU8m2HKJcpomgsk8BtxOcTz
-        y/Tty+R7eLQAMpp3rX0Q3DAeI8WymBKlEkEJVpilOWEsVpQrnM/4tG/L78zl
-        X8B0z+PWUw6PMTiWV0sL6XufV7D6tKiAhaqr6+4O0F/e08cKonvUvQTdlmdI
-        ANQ66lwlYaPAhI13jLZuHJkBsYaTwzrwppdhYeeNFKMI7TBA564FJuvhrBqE
-        LZnlRvcOjsdxxB4hQVJnStrqT3S8JED62B+Oz1FWDQhAypVPn1HQLWQd9Uav
-        KP/oXWEkl3oFjj1D3AEWpLmPvb95foWN927WTt5S0fiUVrS28vAKfE73+2v0
-        Od2f031bUB2cy//vdO8pFIRwyc//2NedseA44RnFcTFjiKAYYcyQYCwVUqqC
-        iARzJHIG58dXloD7kmSExtPu2KeK3F3ldbKuzYfhTvOuWYeucxRK7ARKHCH0
-        cJeE8xjaCVnL/R+cnUrX8qErE56qjBdZxhRlcYzzpEBpAm8oVSTNJc6zJMsy
-        35h46K6pqTV7yoBdtzA13vOe2RJUhU0ntNJSwNi/U4PGpqJt6bmBCazu2HnV
-        q0eeXLtGp9hh6N15VAD4bZlAZemO39fHm6m9nOPmvzFSXY5ofXrqeAVbvlgE
-        k/giC17712Jx0wYQBMtaBtdDa/fWXu0aO5gJgh/eXcE7CC6DV5+3fq9u2kkQ
-        /Pbu+pcff/7JL/GtaAqjrz8bxTAagAJ4w/OiXzob3ITvK20DePat7Iv1IYn5
-        fCd+E3QqKGUTPLUGWG5uwnDzYfM3d8THRyEQAAA=
-
+      X-Github-Request-Id:
+      - D95B947E:2CE5:12A6BC3:52A09405
+    body:
+      encoding: UTF-8
+      string: "{\"sha\":\"725155400b35488ab65e8dd44264e055a397fd74\",\"commit\":{\"author\":{\"name\":\"Richard
+        Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-13T00:39:39Z\"},\"committer\":{\"name\":\"Richard
+        Metzler\",\"email\":\"richard@eaglefeed.me\",\"date\":\"2013-10-13T00:39:39Z\"},\"message\":\"version
+        0.0.4\",\"tree\":{\"sha\":\"7af5d615c8fe5cefb7f510dce3cdbae8d0459dff\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/trees/7af5d615c8fe5cefb7f510dce3cdbae8d0459dff\"},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/git/commits/725155400b35488ab65e8dd44264e055a397fd74\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/725155400b35488ab65e8dd44264e055a397fd74\",\"comments_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/725155400b35488ab65e8dd44264e055a397fd74/comments\",\"author\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://2.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"rmetzler\",\"id\":58824,\"avatar_url\":\"https://2.gravatar.com/avatar/e751205dd965f43e1994ace06a37d0d4?d=https%3A%2F%2Fidenticons.github.com%2F10fb61a5ff2da54f4b375bb1facf479c.png&r=x\",\"gravatar_id\":\"e751205dd965f43e1994ace06a37d0d4\",\"url\":\"https://api.github.com/users/rmetzler\",\"html_url\":\"https://github.com/rmetzler\",\"followers_url\":\"https://api.github.com/users/rmetzler/followers\",\"following_url\":\"https://api.github.com/users/rmetzler/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/rmetzler/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/rmetzler/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/rmetzler/subscriptions\",\"organizations_url\":\"https://api.github.com/users/rmetzler/orgs\",\"repos_url\":\"https://api.github.com/users/rmetzler/repos\",\"events_url\":\"https://api.github.com/users/rmetzler/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/rmetzler/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\",\"url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/commits/1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\",\"html_url\":\"https://github.com/rmetzler/render-as-markdown/commit/1dc42c6a4189b0501044b0dbb3deef85d24c0d7b\"}],\"stats\":{\"total\":2,\"additions\":1,\"deletions\":1},\"files\":[{\"sha\":\"2c3f6c866bfab1147280327282daea7e4762666e\",\"filename\":\"lib/render-as-markdown/version.rb\",\"status\":\"modified\",\"additions\":1,\"deletions\":1,\"changes\":2,\"blob_url\":\"https://github.com/rmetzler/render-as-markdown/blob/725155400b35488ab65e8dd44264e055a397fd74/lib/render-as-markdown/version.rb\",\"raw_url\":\"https://github.com/rmetzler/render-as-markdown/raw/725155400b35488ab65e8dd44264e055a397fd74/lib/render-as-markdown/version.rb\",\"contents_url\":\"https://api.github.com/repos/rmetzler/render-as-markdown/contents/lib/render-as-markdown/version.rb?ref=725155400b35488ab65e8dd44264e055a397fd74\",\"patch\":\"@@
+        -1,6 +1,6 @@\\n module RenderAsMarkdown\\n   GEM     = 'render-as-markdown'\\n-
+        \ VERSION = '0.0.3'\\n+  VERSION = '0.0.4'\\n end\\n \\n #puts \\\"This is
+        version #{RenderAsMarkdown::VERSION} of gem #{RenderAsMarkdown::GEM}\\\"\"}]}"
     http_version: 
-  recorded_at: Mon, 25 Nov 2013 11:26:59 GMT
-recorded_with: VCR 2.7.0
+  recorded_at: Thu, 05 Dec 2013 14:56:06 GMT
+recorded_with: VCR 2.8.0
