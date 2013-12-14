@@ -12,7 +12,7 @@ class UserService
     SecureRandom.urlsafe_base64(length)
   end
 
-  def self.valid_user?(user, flash, t)
+  def self.valid_user?(user, flash)
     if !User.email_valid?(user.email)
       flash[:error] = 'page_signup_error_email'
       return false

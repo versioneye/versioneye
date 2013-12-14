@@ -11,10 +11,10 @@ class ProductsController < ApplicationController
     @user = User.new
     @ab = params['ab']
     if @ab.nil?
-      ab_array = ['a', 'b']
+      # ab_array = ['a', 'b']
       @ab = 'b' # ab_array[Random.rand(2)]
     end
-    languages = supported_languages
+    @languages = supported_languages
     render :layout => 'application_lp'
   end
 
@@ -22,7 +22,6 @@ class ProductsController < ApplicationController
     @query   = do_parse_search_input( params[:q] )
     @groupid = params[:g]
     @lang    = get_lang_value( params[:lang] )
-    commit   = params[:commit]
     if (@query.nil? || @query.empty?) && (@groupid.nil? || @groupid.empty?)
       flash.now[:error] = "Please give us some input. Type in a value for name."
     elsif @query.include?("%")

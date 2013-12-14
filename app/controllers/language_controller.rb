@@ -5,8 +5,6 @@ class LanguageController < ApplicationController
   end
 
   def show
-    sample_size           = 24
-    max_population_size   = 10 * sample_size
     @lang            = Product.decode_language(params[:lang])
     @top_products    = Product.by_language(@lang).desc(:followers).limit(10)
     @latest_products = Newest.by_language(@lang).desc(:created_at).limit(10)

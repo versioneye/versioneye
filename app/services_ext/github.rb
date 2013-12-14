@@ -174,7 +174,7 @@ class Github
 
   def self.repo_branch_info repo_name, branch = "master", token = nil
     url = "#{A_API_URL}/repos/#{repo_name}/branches/#{branch}"
-    response = get_json(url, token)
+    get_json(url, token)
   end
 
   def self.fetch_project_file_from_branch repo_name, filename, branch = "master", token = nil
