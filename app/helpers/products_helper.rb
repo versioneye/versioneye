@@ -13,7 +13,7 @@ module ProductsHelper
 
   def product_url(product)
     return '/0/0' if product.nil? || product.prod_key.nil?
-    lang = product.language.gsub("\.", "")
+    lang = product.language.gsub("\.", '')
     "/#{lang.downcase}/#{product.to_param}"
   end
 

@@ -11,8 +11,8 @@ class ProductsController < ApplicationController
     @user = User.new
     @ab = params['ab']
     if @ab.nil?
-      ab_array = ["a", "b"]
-      @ab = "b" # ab_array[Random.rand(2)]
+      ab_array = ['a', 'b']
+      @ab = 'b' # ab_array[Random.rand(2)]
     end
     languages = supported_languages
     render :layout => 'application_lp'

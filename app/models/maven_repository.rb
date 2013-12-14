@@ -12,13 +12,13 @@ class MavenRepository
 
   def self.fill_it
     repos = Hash.new
-    repos["central"]            = "http://repo.maven.apache.org/maven2"
-    repos["codeHaus"]           = "http://repository.codehaus.org/"
-    repos["typesafe"]           = "http://repo.typesafe.com/typesafe/releases/"
-    repos["akka"]               = "http://repo.akka.io/releases"
-    repos["ibiblio"]            = "http://mirrors.ibiblio.org/maven2/"
-    repos["antelink"]           = "http://maven.antelink.com/content/repositories/central/"
-    repos["activity"]           = "https://maven.alfresco.com/nexus/content/repositories/activiti-releases/org/activiti/"
+    repos['central']            = 'http://repo.maven.apache.org/maven2'
+    repos['codeHaus']           = 'http://repository.codehaus.org/'
+    repos['typesafe']           = 'http://repo.typesafe.com/typesafe/releases/'
+    repos['akka']               = 'http://repo.akka.io/releases'
+    repos['ibiblio']            = 'http://mirrors.ibiblio.org/maven2/'
+    repos['antelink']           = 'http://maven.antelink.com/content/repositories/central/'
+    repos['activity']           = "https://maven.alfresco.com/nexus/content/repositories/activiti-releases/org/activiti/"
     repos["activity_designer"]  = "https://maven.alfresco.com/nexus/content/repositories/activiti/org/activiti/designer/"
     repos["servicemix"]         = "http://svn.apache.org/repos/asf/servicemix/m2-repo"
     repos["springRelease"]      = "http://maven.springframework.org/release/"

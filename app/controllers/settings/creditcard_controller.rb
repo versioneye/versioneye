@@ -14,7 +14,7 @@ class Settings::CreditcardController < ApplicationController
     plan_name_id = params[:plan]
     stripe_token = params[:stripeToken]
     if stripe_token.nil? || stripe_token.empty?
-      flash[:error] = "Sorry. But something went wrong. Please try again later."
+      flash[:error] = 'Sorry. But something went wrong. Please try again later.'
       redirect_to settings_plans_path
       return
     end

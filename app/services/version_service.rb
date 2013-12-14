@@ -16,7 +16,7 @@ class VersionService
   end
 
 
-  def self.newest_version_number( versions, stability = "stable" )
+  def self.newest_version_number( versions, stability = 'stable')
     version = newest_version( versions, stability )
     return nil if version.nil?
     return version.to_s
