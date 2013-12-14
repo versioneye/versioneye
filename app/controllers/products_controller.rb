@@ -5,7 +5,6 @@ class ProductsController < ApplicationController
   before_filter :check_redirects_package       , :only => [:show]
   before_filter :check_redirects_package_visual, :only => [:show_visual]
   before_filter :check_refer                   , :only => [:index]
-  #before_filter :force_http
 
   def index
     @user = User.new
