@@ -1,4 +1,4 @@
-<% if !comment.versioncommentreplys.empty? %>
+<% unless comment.versioncommentreplys.empty? %>
 	<div id="<%= comment.id %>_reply_section" class="versioncomment_reply_section" >
 	<% comment.versioncommentreplys.each do |reply| %>
 	<div style="min-height: 35px; margin-bottom: 10px;">

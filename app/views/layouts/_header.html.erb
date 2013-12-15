@@ -14,7 +14,7 @@
 
       <div class = "span7 pull-right">
         <ul class="nav pull-right">
-          <% if !signed_in? %>
+          <% unless signed_in? %>
             <li>
               <%= link_to "Pricing", "/pricing" %>
             </li>

@@ -13,13 +13,13 @@
 	</div>
 
 	<div class="span8 content">
-		<% if !@comments.nil? %>
+		<% if @comments %>
 			<div>
 				<h2 class="section_header">
 					<%= pluralize(@count, "Comment") %>
 				</h2>
 			</div>
-			<% if !@comments.nil? && !@comments.empty? %>
+			<% if @comments && !@comments.empty? %>
 				<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %>
 				<div style="margin-top: 20px;" class="pull-right">
 					<%= will_paginate @comments %>
