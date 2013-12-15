@@ -2,7 +2,7 @@
 
 	<div class="span1" style = "width:60px; text-align: left;">
 		<a href="/users/<%= comment.user.username %>">
-			<%= gravatar_image_tag( comment.user.email, :style => "width: 50px;", :alt => comment.user.fullname, :gravatar => { :size => 50, :default => "#{Settings.server_url}/profile_icon.png" }) %>
+			<%= gravatar_image_tag( comment.user.email, :style => 'width: 50px;', :alt => comment.user.fullname, :gravatar => { :size => 50, :default => "#{Settings.server_url}/profile_icon.png" }) %>
 		</a>
 	</div>
 

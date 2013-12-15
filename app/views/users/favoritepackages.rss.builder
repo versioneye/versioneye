@@ -1,10 +1,10 @@
-xml.rss :version => "2.0" do
+xml.rss :version => '2.0' do
   xml.channel do
-    xml.language "en"
-    xml.category "Tech. News"
-    xml.ttl "60"
+    xml.language 'en'
+    xml.category 'Tech. News'
+    xml.ttl '60'
     xml.title "VersionEye Notifications for #{@user.fullname}"
-    xml.description "Latest VersionEye notifications."
+    xml.description 'Latest VersionEye notifications.'
     xml.link "#{url_for favoritepackages_user_url}.rss"
     xml.image do |img|
       img.url "http://www.versioneye.com/assets/icon_114.png"

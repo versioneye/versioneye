@@ -5,7 +5,7 @@
     No other software package is referencing this project. <br>
     That doesn't mean anything. But in general references from other packages are a good sign.
   <% else %>
-    <%= number_with_delimiter(@product.used_by_count, delimiter: ".") %>
+    <%= number_with_delimiter(@product.used_by_count, delimiter: '.') %>
     software packages are referencing this project.<br>
     <% if @product.used_by_count > 0 && @product.used_by_count < 10 %>
       That is a beginning.

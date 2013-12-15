@@ -3,7 +3,7 @@
   <% if @languages && !@languages.empty? && @lang %>
     <h2 class="section_header">Check out other languages at VersionEye</h2>
       <% @languages.each do |language| %>
-        <% langname = language.downcase.gsub(/\./, "") %>
+        <% langname = language.downcase.gsub(/\./, '') %>
         <% next if language.eql?(@lang) %>
         <div onclick="document.location.href='/<%=language%>'" class="icon_<%= langname %>_small_container" style="cursor: pointer;" >
             <span  id="icon_<%= langname %>" class="icon_<%= langname %> small on" title="<%= langname %>">&nbsp;</span>
