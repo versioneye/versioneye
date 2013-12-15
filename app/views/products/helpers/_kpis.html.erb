@@ -105,7 +105,7 @@
           @product.language.eql?(Product::A_LANGUAGE_PYTHON) ||
           @product.language.eql?(Product::A_LANGUAGE_OBJECTIVEC) ||
           @product.language.eql?(Product::A_LANGUAGE_R) %>
-      <a href="/<%= @product.language_esc %>" alt="<%= @product.language_esc %>" title="<%= @product.language_esc %>"><%= @product.language %></a>
+      <a href="/<%= @product.language_esc %>" title="<%= @product.language_esc %>"><%= @product.language %></a>
     <% else %>
       <%= @product.language %>
     <% end %>

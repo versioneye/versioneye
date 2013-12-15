@@ -23,9 +23,6 @@
         </h2>
       </div>
 
-      <% unless signed_in? %>
-        <%= render 'shared/dialog_follow' %>
-      <% end %>
       <%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
       <% if !@products.nil? && !@products.empty? %>
         <div style="margin-top: 20px; text-align: right;">
