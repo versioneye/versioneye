@@ -2,7 +2,7 @@
 
 <div class = "release-list">
   <div class = "row-fluid">
-    <%= render partial: "release_list_item", collection: @latest_releases, locals: {columns: 2} %>
+    <%= render partial: 'release_list_item', collection: @latest_releases, locals: {columns: 2} %>
   </div>
   <% unless @latest_releases.nil? || @latest_releases.empty? %>
 	  <div class = "pagination pagination-right pagination-mini" >

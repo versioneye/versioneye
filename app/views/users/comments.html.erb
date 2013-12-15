@@ -1,4 +1,4 @@
-<% title "Profile" %>
+<% title 'Profile' %>
 
 <% if !@user.nil? && @user.deleted %>
 	This Account does not exist anymore.
@@ -6,7 +6,7 @@
 
 <% if !@user.nil? && !@user.deleted %>
 
-	<%= render "header" %>
+	<%= render 'header' %>
 
 	<div class="span3" >
 		<%= render "users/navi" %>
