@@ -19,15 +19,15 @@ class S3
     AWS.s3.buckets[Settings.s3_projects_bucket].objects[filename].delete
   end
 
-  def self.upload_fileupload fileUp
-    orig_filename = fileUp['datafile'].original_filename
+  def self.upload_fileupload file_up
+    orig_filename = file_up['datafile'].original_filename
     fname         = self.sanitize_filename(orig_filename)
     random        = Project.create_random_value
     filename      = "#{random}_#{fname}"
-    self.store_in_project_bucket filename, fileUp['datafile'].read
+    self.store_in_project_bucket filename, file_up['datafile'].read
     filename
   rescue => e
-    Rails.logger.error "Exception in S3.upload_fileupload(fileUp) - #{e.message}"
+    Rails.logger.error "Exception in S3.upload_fileupload(file_up) - #{e.message}"
     Rails.logger.error e.backtrace.join "\n"
     nil
   end

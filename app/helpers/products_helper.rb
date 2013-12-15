@@ -103,29 +103,29 @@ module ProductsHelper
     if version.nil? || version.empty?
       version = product.version
     end
-    versionObj = product.version_by_number( version )
-    if versionObj
-      product.version = versionObj.version
-      update_release_infos( versionObj, product )
+    version_obj = product.version_by_number( version )
+    if version_obj
+      product.version = version_obj.to_s
+      update_release_infos( version_obj, product )
       true
     else
       false
     end
   end
 
-  def update_release_infos( versionObj, product )
+  def update_release_infos( version_obj, product )
     today = DateTime.now.to_date
-    if versionObj.released_at
-      diff_release = today - versionObj.released_at.to_date
+    if version_obj.released_at
+      diff_release = today - version_obj.released_at.to_date
       product.released_days_ago = diff_release.to_i
       last_date = Date.today - product.released_days_ago
       product.released_ago_in_words = distance_of_time_in_words(Date.today, last_date)
-      product.released_ago_text = "This artifact was released #{product.released_ago_in_words} ago on #{versionObj.created_at.strftime("%b %d, %Y - %I:%m %p")}"
+      product.released_ago_text = "This artifact was released #{product.released_ago_in_words} ago on #{version_obj.created_at.strftime("%b %d, %Y - %I:%m %p")}"
     else
-      diff = today - versionObj.created_at.to_date
+      diff = today - version_obj.created_at.to_date
       product.released_days_ago = diff.to_i
-      product.released_ago_in_words = distance_of_time_in_words(Date.today, versionObj.created_at)
-      product.released_ago_text = "We don't have any information about the release date of this artifact, but we detected it #{product.released_ago_in_words} ago on #{versionObj.created_at.strftime("%b %d, %Y - %I:%m %p")}"
+      product.released_ago_in_words = distance_of_time_in_words(Date.today, version_obj.created_at)
+      product.released_ago_text = "We don't have any information about the release date of this artifact, but we detected it #{product.released_ago_in_words} ago on #{version_obj.created_at.strftime("%b %d, %Y - %I:%m %p")}"
     end
   end
 
