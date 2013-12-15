@@ -17,7 +17,6 @@
       <% end %>
     <% end %>
   <% else %>
-    <%= render 'shared/dialog_follow' %>
     <button type="submit" class="btn btn-large btn-primary" style="width: 100%" onclick="load_dialog_follow('<%= @product.name %>', '<%= @product.prod_key %>', '<%= @product.language %>');">Follow</button>
   <% end %>
 </div>
