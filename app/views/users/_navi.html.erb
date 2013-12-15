@@ -1,8 +1,6 @@
 
     <div class="box header">
-      <h5>
-        <h5>Knows</h5>
-      </h5>
+       <h5>Knows</h5>
     </div>
     <div class="box content" >
       <% @user['product_ids'] ||= [] %>
@@ -17,9 +15,7 @@
 
     <% if @userlinkcollection && !@userlinkcollection.empty? %>
       <div class="box header">
-        <h5>
-          <h5>Is on</h5>
-        </h5>
+        <h5>Is on</h5>
       </div>
       <div class="box content" >
         <% if !@userlinkcollection.github_empty? %>

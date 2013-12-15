@@ -22,7 +22,7 @@
 
   <div class="div-cell lp_half_box" style="margin-right: 5px; vertical-align: top;" >
     <div class="searchResults" id="newest" style="padding: 10px; vertical-align: top;" >
-      <% if !@newest.nil? %>
+      <% if @newest %>
         <%= render :partial => "products/show_search_results_iterator", :locals => { :products => @newest, :prefix => "newest", :name_limit => 33 } %>
       <% end %>
     </div>
@@ -32,7 +32,7 @@
 
   <div class="div-cell lp_half_box" style="margin-left: 5px; vertical-align: top;">
     <div class="searchResults" id="hottest" style="padding: 10px;" >
-      <% if !@hotest.nil? %>
+      <% if @hotest %>
         <%= render :partial => "products/show_search_results_iterator", :locals => { :products => @hotest, :prefix => "hottest", :name_limit => 33 } %>
       <% end %>
     </div>

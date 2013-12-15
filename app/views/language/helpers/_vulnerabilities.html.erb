@@ -1,33 +1,33 @@
 <h4> Vulnerabilities </h4>
 
-<% unless @vulnerabilities.nil?  or @vulnerabilities.empty? %>
-  <ul class = "media-list">
-
-    <% @vulnerabilities.each do |issue|  %>
-      <li class = "media">
-        <div class = "media-body">
-          <h5>
-            <a href= "<%= issue['source-path'] %>" target= "_blank">
-              <%= issue['entry-id'] %>
-            </a>
-            <small> - <%= time_ago_in_words(issue['modified']) %> </small>
-          </h5>
-          <p> <%= issue['summary'] %> </p>
-          <div class = "product-labels">
-            <span class = "label label-info">Score: <%= issue['metrics']['score'] %></span>
-            <span class = "label label-info">Access-vector: <%= issue['metrics']['access-vector'] %></span>
-            <span class = "label label-info">Confidentiality impact: <%= issue['metrics']['confidentiality-impact'] %></span>
-            <a href = "<%= issue['source-path'] %>" target = "_blank">
-              <span class = "label label-success">Source</span>
-            </a>
-         </div>
-       </div>
-     </li>
-    <% end %>
-  </ul>
-<% else %>
+<% if @vulnerabilities.nil? || @vulnerabilities.empty? %>
   <p>
     <strong> Good news! </strong>
     We have not detect any vulnerabilities for <%= @lang %>. Happy coding!
   </p>
+<% else %>
+    <ul class = "media-list">
+
+      <% @vulnerabilities.each do |issue|  %>
+          <li class = "media">
+            <div class = "media-body">
+              <h5>
+                <a href= "<%= issue['source-path'] %>" target= "_blank">
+                  <%= issue['entry-id'] %>
+                </a>
+                <small> - <%= time_ago_in_words(issue['modified']) %> </small>
+              </h5>
+              <p> <%= issue['summary'] %> </p>
+              <div class = "product-labels">
+                <span class = "label label-info">Score: <%= issue['metrics']['score'] %></span>
+                <span class = "label label-info">Access-vector: <%= issue['metrics']['access-vector'] %></span>
+                <span class = "label label-info">Confidentiality impact: <%= issue['metrics']['confidentiality-impact'] %></span>
+                <a href = "<%= issue['source-path'] %>" target = "_blank">
+                  <span class = "label label-success">Source</span>
+                </a>
+              </div>
+            </div>
+          </li>
+      <% end %>
+    </ul>
 <% end %>

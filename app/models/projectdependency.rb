@@ -48,6 +48,10 @@ class Projectdependency
     prod_key.nil? && ext_link.nil?
   end
 
+  def known?
+    !self.unknown?
+  end
+
   def outdated?
     return update_outdated! if self.outdated.nil?
     last_update_ago = Time.now - self.outdated_updated_at
