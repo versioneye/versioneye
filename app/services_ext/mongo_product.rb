@@ -94,7 +94,7 @@ class MongoProduct
 
     def self.add_description_to_query(query, description)
       if description && !description.empty?
-        query = query.where("$or" => [ {"description" => /#{description}/i}, {"description_manual" => /#{description}/i} ] )
+        query = query.where("$or" => [ {:description => /#{description}/i}, {:description_manual => /#{description}/i} ] )
       end
       query
     end

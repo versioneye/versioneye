@@ -79,9 +79,9 @@ module ProductsHelper
 
   def get_language_array(lang)
     languages = Array.new
-    special_languages = {"php" => "PHP",
-                          "node.js" =>  "Node.JS",
-                          "nodejs" => "Node.JS"}
+    special_languages = {'php' => 'PHP',
+                         'node.js' =>  'Node.JS',
+                         'nodejs' => 'Node.JS'}
 
     langs = lang.split(",")
     langs.each do |language|
