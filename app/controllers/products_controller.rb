@@ -118,15 +118,15 @@ class ProductsController < ApplicationController
   end
 
   def update
-    description    = params[:description_manual]
-    license        = params[:license]
-    licenseLink    = params[:licenseLink]
-    licenseVersion = params[:licenseVersion]
-    twitter_name   = params[:twitter_name]
-    link_url       = params[:link_url]
-    link_name      = params[:link_name]
-    lang           = Product.decode_language( params[:lang] )
-    key            = Product.decode_prod_key params[:key]
+    description     = params[:description_manual]
+    license         = params[:license]
+    license_link    = params[:licenseLink]
+    license_version = params[:licenseVersion]
+    twitter_name    = params[:twitter_name]
+    link_url        = params[:link_url]
+    link_name       = params[:link_name]
+    lang            = Product.decode_language( params[:lang] )
+    key             = Product.decode_prod_key params[:key]
     @product = Product.fetch_product lang, key
     if @product.nil? || !current_user.admin
       flash[:success] = "An error occured. Please try again later."
@@ -139,7 +139,7 @@ class ProductsController < ApplicationController
       add_status_comment(@product, current_user, "description")
       flash[:success] = "Description updated."
     elsif license && !license.empty?
-      license = License.new({:name => license, :url => licenseLink, :language => @product.language, :prod_key => @product.prod_key, :version => licenseVersion})
+      license = License.new({:name => license, :url => license_link, :language => @product.language, :prod_key => @product.prod_key, :version => license_version})
       license.save
       add_status_comment(@product, current_user, "license", license.name)
       flash[:success] = "License updated."
