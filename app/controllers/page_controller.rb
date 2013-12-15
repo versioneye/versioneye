@@ -33,7 +33,7 @@ class PageController < ApplicationController
         end
       end
     end
-    redirect_to path.gsub("//", "/")
+    redirect_to path.gsub("//", "/"), :status => 301
   end
 
   def legacy_badge_route
@@ -59,7 +59,7 @@ class PageController < ApplicationController
         end
       end
     end
-    redirect_to path.gsub("//", "/")
+    redirect_to path.gsub("//", "/"), :status => 301
   end
 
   def show_visual_old
@@ -75,7 +75,7 @@ class PageController < ApplicationController
       end
       new_path += "/visual_dependencies"
     end
-    redirect_to new_path
+    redirect_to new_path, :status => 301
   end
 
   def disclaimer
