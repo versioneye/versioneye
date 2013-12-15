@@ -128,17 +128,17 @@ class User::GithubReposController < ApplicationController
 
 
     def import_repo(command_data, project_name, branch, filename, branch_files)
+      err_message = 'Something went wrong. It was not possible to save the project. Please contact the VersionEye team.'
       matching_files = branch_files.keep_if {|file| file['path'] == filename}
-      url            = matching_files.first[:url] unless matching_files.empty?
-      project        = ProjectService.import_from_github current_user, project_name, filename, branch, url
 
-      if project.nil?
-        raise "Something went wrong. It was not possible to save the project. Please contact the VersionEye team."
-      end
+      raise err_message if matching_files.empty?
 
-      if project.is_a? String
-        raise project
-      end
+      url     = matching_files.first[:url]
+      project = ProjectService.import_from_github current_user, project_name, filename, branch, url
+
+      raise err_message if project.nil?
+
+      raise project if project.is_a? String
 
       command_data[:githubProjectId] = project[:_id].to_s
       repo = GithubRepo.find(params[:_id])

@@ -97,6 +97,7 @@ class Product
   end
 
   def self.fetch_product lang, key
+    return nil if lang.to_s.empty? || key.to_s.empty?
     lang = A_LANGUAGE_NODEJS if lang.eql? "nodejs"
     if lang.eql? "package"
       product = Product.find_by_key( key )
