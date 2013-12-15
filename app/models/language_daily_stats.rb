@@ -259,8 +259,8 @@ class LanguageDailyStats
     Product.supported_languages.each do |lang|
       lang_key = LanguageDailyStats.language_to_sym(lang).to_s
 
-      t0_metric_value = t0_stats[lang_key][metric] if t0_stats.has_key?(lang_key)
-      t1_metric_value = t1_stats[lang_key][metric] if t1_stats.has_key?(lang_key)
+      t0_metric_value = t0_stats.has_key?(lang_key) ? t0_stats[lang_key][metric] : nil
+      t1_metric_value = t1_stats.has_key?(lang_key) ? t1_stats[lang_key][metric] : nil
       if t0_metric_value and t1_metric_value
         diff = t0_metric_value - t1_metric_value
       else
