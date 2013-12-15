@@ -24,7 +24,6 @@
           <tr >
             <td style="border-bottom: 1px dotted gray; padding: 5px;">
               <% product = Product.fetch_product( dep.language, dep.prod_key ) %>
-              <% version = product.version_by_number( dep.version_current ) %>
               <img src= "http://www.versioneye.com/assets/language/<%= product.language.downcase %>.png" style = "width: 48px; height: 48px;"/>
             </td>
             <td style = "vertical-align: middle; border-bottom: 1px dotted gray; padding: 5px;">

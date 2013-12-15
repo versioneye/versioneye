@@ -15,19 +15,20 @@
 
         <% products = Array.new %>
         <div class="tab-content" style="width: 100%;" >
-          <div id="dependencies" class="tab-pane active" style="width: 617px;" onclick="page_view('ga_lp_file_upload_dependencies')" >
+          <div id="dependencies_tab" class="tab-pane active" style="width: 617px;" onclick="page_view('ga_lp_file_upload_dependencies')" >
 
             <% if @project.dependencies && @project.dependencies.size > 0 %>
               <% deps = @project.dependencies.sort { |a, b| b.outdated.to_s <=> a.outdated.to_s } %>
+              <div id="dependencies" class="tab-pane active" style="width: 617px;" >
+                <%= render partial: "user/projects/project_dependency_table", locals: {deps: deps} %>
+              </div>
+            <% else %>
+              We couldn't find any dependencies.
             <% end %>
-
-            <div id="dependencies" class="tab-pane active" style="width: 617px;" >
-              <%= render partial: "user/projects/project_dependency_table", locals: {deps: deps} %>
-            </div>
 
           </div>
 
-          <div id="licenses" class="tab-pane" onclick="page_view('ga_lp_file_upload_licenses')">
+          <div id="licenses_tab" class="tab-pane" onclick="page_view('ga_lp_file_upload_licenses')">
             <% products = Array.new %>
             <% deps.each do |dep| %>
               <% product = dep.find_or_init_product %>

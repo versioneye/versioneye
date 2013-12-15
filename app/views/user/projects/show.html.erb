@@ -90,7 +90,7 @@
           </div>
           <% if @project.source.eql?( Project::A_SOURCE_UPLOAD ) %>
             <div id="reupload_form" style="display: none;" >
-              <%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
+              <%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do  %>
                 <input name="project_id" id="project_id" type="hidden" value="<%= @project._id.to_s %>" />
                 <%= file_field 'upload', 'datafile', :class => "round" %>
                 <button type="submit" class="btn2 btn2-large">Upload</button>
