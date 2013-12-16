@@ -142,7 +142,8 @@
 
             <%= render :partial => "shared/product_license_table", :locals => {:products => products, :width => "615"} %>
 
-            <div id="trans_deps">
+            <div id="trans_deps" style="margin-top: 15px;">
+              <h3>Licenses of transitive dependencies</h3>
               <form id="trans_dep_form" action="<%= transitive_dependencies_user_project_path(@project) %>" data-remote="true" method="post" >
                 <input hidden="true" name="id" value="<%= @project.id.to_s %>" />
                 <button type="submit" class="btn btn-primary"
