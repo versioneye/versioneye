@@ -182,7 +182,11 @@ class User::ProjectsController < ApplicationController
     else
       @project.public = false
     end
-    @project.save
+    if @project.save
+      flash[:success] = "We saved your changes."
+    else
+      flash[:error] = "Something went wrong. Please try again later."
+    end
     redirect_to user_project_path(@project)
   end
 
@@ -200,6 +204,23 @@ class User::ProjectsController < ApplicationController
     @project.email = new_email
     if @project.save
       flash[:success] = "Status saved."
+    else
+      flash[:error] = "Something went wrong. Please try again later."
+    end
+    redirect_to user_project_path(@project)
+  end
+
+  def save_notify_after_api_update
+    id     = params[:id]
+    notify = params[:notify]
+    @project = Project.find_by_id id
+    if notify.eql? Project::A_NOTIFY_AFTER_API_UPDATE_NOTIFY
+      @project.notify_after_api_update = true
+    else
+      @project.notify_after_api_update = false
+    end
+    if @project.save
+      flash[:success] = "We saved your changes."
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
