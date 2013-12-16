@@ -13,12 +13,12 @@ class CircleElement
   field :prod_scope         , type: String
 
   # This attributes describe the circle_element itself!
-  field :dep_prod_key       , type: String
-  field :version            , type: String
-  field :text               , type: String
+  field :dep_prod_key       , type: String, :default => ''
+  field :version            , type: String, :default => ''
+  field :text               , type: String, :default => ''
   field :connections_string , type: String
   field :dependencies_string, type: String
-  field :level              , type: Integer
+  field :level              , type: Integer, :default => 1
 
   attr_accessor :connections, :dependencies
 
@@ -26,13 +26,9 @@ class CircleElement
     CircleElement.where(language: language, prod_key: prod_key, prod_version: version, prod_scope: scope)
   end
 
-  def init
+  def init_arrays
     self.connections  = Array.new
     self.dependencies = Array.new
-    self.text         = ''
-    self.dep_prod_key = ''
-    self.version      = ''
-    self.level        = 1
   end
 
   def self.store_circle(circle, lang, prod_key, version, scope)
@@ -64,7 +60,7 @@ class CircleElement
     dependencies.each do |dep|
       next if dep.name.nil? || dep.name.empty?
       element = CircleElement.new
-      element.init
+      element.init_arrays
       element.dep_prod_key = dep.dep_prod_key
       element.version      = dep.version_parsed
       element.level        = 0
@@ -98,7 +94,7 @@ class CircleElement
           ele.connections << "#{element.dep_prod_key}"
         else
           new_element = CircleElement.new
-          new_element.init
+          new_element.init_arrays
           new_element.dep_prod_key   = dep.dep_prod_key
           new_element.level          = deep
           attach_label_to_element(new_element, dep)

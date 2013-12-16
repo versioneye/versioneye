@@ -70,6 +70,12 @@ class Project
     self.projectdependencies
   end
 
+  def sorted_dependencies_by_rank
+    deps = self.dependencies
+    return deps if deps.nil? or deps.empty?
+    deps.sort_by {|dep| dep[:status_rank] }
+  end
+
   def unmuted_dependencies
     deps = self.projectdependencies
     return nil if deps.nil?
