@@ -13,17 +13,21 @@
 
     <p>
       Connect your VersionEye account with other networks. In that way you can login
-      with your GitHub or Twitter account.
+      with your GitHub or Bitbucket account.
     </p>
 
-    <hr />
-
-    <div class="row" >
-      <div class="span1" style="width: 80px;"><label>GitHub</label></div>
-      <div class="span4" >
+    <div class="row-fluid span12" >
+      <div class="span2">
+        <i class = "icon icon-github-alt"></i>
+        <strong>GitHub</strong>
+      </div>
+      <div class="span8" >
         <% if @user.github_token %>
           <span style="color: green">Connected</span>
-          <%= link_to "[ disconnect ]", settings_disconnect_path(:service => "github"), :confirm => "Are you sure?", :class => "meta-text-small" %>
+          <%= link_to "[ disconnect ]",
+                      settings_disconnect_path(:service => "github"),
+                      :confirm => "Are you sure?",
+                      :class => "meta-text-small" %>
           <% scopes = current_user.github_scope %>
           <% if scopes && !scopes.empty? %>
             scopes: [<%= scopes %>]
@@ -35,6 +39,31 @@
         <% end %>
       </div>
     </div>
+    <!-- Bitbucket connections -->
+    <div class="row-fluid span12" >
+      <div class="span2" >
+        <i class = "icon icon-bitbucket"></i>
+        <strong>Bitbucket</strong>
+      </div>
+       <div class="span8" >
+         <% if @user.bitbucket_token %>
+         <span style="color: green">Connected</span>
+         <%= link_to "[ disconnect ]",
+         settings_disconnect_path(:service => "bitbucket"),
+         :confirm => "Are you sure?",
+         :class => "meta-text-small" %>
+         <% scopes = current_user.bitbucket_scope %>
+         <% if scopes && !scopes.empty? %>
+         scopes: [<%= scopes %>]
+         <% end %>
+         <% else %>
+         <a href='<%= auth_bitbucket_connect_path %>'  >
+         Connect with Bitbucket
+         </a>
+         <% end %>
+       </div>
+    </div>
+
 
   </div>
 </div>

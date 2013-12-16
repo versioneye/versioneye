@@ -43,6 +43,11 @@ class User
   field :github_token, type: String
   field :github_scope, type: String
 
+  field :bitbucket_id, type: String
+  field :bitbucket_token, type: String
+  field :bitbucket_secret, type: String
+  field :bitbucket_scope, type: String
+
   field :stripe_token      , type: String
   field :stripe_customer_id, type: String
 
@@ -226,6 +231,11 @@ class User
     User.where(github_id: github_id).shift
   end
 
+  def self.find_by_bitbucket_id(bitbucket_id)
+    return nil if bitbucket_id.to_s.strip.empty?
+    User.where(bitbucket_id: bitbucket_id).shift
+  end
+
   def github_account_connected?
     !self.github_id.to_s.empty? && !self.github_token.to_s.empty?
   end
@@ -339,6 +349,25 @@ class User
     if self.fullname.nil? || self.fullname.empty?
       self.fullname = self.username
     end
+  end
+
+  def update_from_bitbucket_json(user_info, token, secret, scopes = "no_scope")
+    self[:username] = user_info[:username]
+
+    if self[:username].to_s.empty? 
+      self.username = "unknown_#{SecureRandom.hex(8)}"
+    end
+
+    user = User.find_by_username(self[:username])
+    unless user.nil?
+      random_value = SecureRandom.hex(8)
+      self.username = "#{self[:username]}_#{random_value}"
+    end
+
+    self[:fullname] =  user_info[:display_name]
+    self[:bitbucket_id] =  user_info[:username]
+    self[:bitbucket_token] = token
+    self[:bitbucket_secret] = secret
   end
 
   def replacements_for_username( username )
