@@ -36,8 +36,6 @@ class User::ProjectsController < ApplicationController
     project        = Project.find_by_id( id )
     project        = add_dependency_classes( project )
     @project       = project
-    @sorted_deps   = sort_dependencies_by_rank(project)
-    @collaborators = project.collaborators
 
     unless project.visible_for_user?(current_user)
       return if !authenticate
@@ -215,12 +213,6 @@ class User::ProjectsController < ApplicationController
   end
 
   private
-
-    def sort_dependencies_by_rank(project)
-      deps = project.dependencies
-      return project if deps.nil? or deps.empty?
-      deps.sort_by {|dep| dep[:status_rank] }
-    end
 
     def update_project_dependency(params, update_map)
       project_id = params[:id]
