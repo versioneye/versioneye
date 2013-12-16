@@ -123,13 +123,13 @@
 
         <div class="tab-content" style="width: 100%;" >
           <div id="dependencies" class="tab-pane active" style="width: 617px;" >
-            <%= render partial: "project_dependency_table", locals: {deps: @sorted_deps} %>
+            <%= render partial: "project_dependency_table", locals: {deps: @project.sorted_dependencies_by_rank} %>
           </div>
 
           <div id="licenses" class="tab-pane">
             <% products = Array.new %>
-            <% unless @sorted_deps.nil? %>
-              <% @sorted_deps.each do |dep| %>
+            <% unless @project.dependencies.nil? && @project.dependencies.empty? %>
+              <% @project.dependencies.each do |dep| %>
                 <% product = dep.find_or_init_product %>
                 <% product.version = dep.version_requested %>
                 <% products << product %>
