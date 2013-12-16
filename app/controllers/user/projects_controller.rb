@@ -46,28 +46,18 @@ class User::ProjectsController < ApplicationController
   def transitive_dependencies
     id             = params[:id]
     project        = Project.find_by_id( id )
-
-    hash = Hash.new
-    project.dependencies.each do |dep|
-      element = CircleElement.new
-      element.dep_prod_key = dep.prod_key
-      element.version      = dep.version_requested
-      element.level        = 0
-      hash[dep.prod_key] = element
-    end
-    trans_dependencies = Array.new
+    hash = circle_hash_for_dependencies project
+    @products = Array.new
     circle = CircleElement.fetch_deps(1, hash, Hash.new, project.language)
     circle.each do |dep|
       next if dep.last[:level] == 0
-      trans_dependencies << dep.last
-      p "#{dep.last['dep_prod_key']} : #{dep.last['version']}"
+      product = Product.fetch_product( project.language, dep.last['dep_prod_key'] )
+      next if product.nil?
+      product.version = dep.last['version']
+      @products << product
     end
     respond_to do |format|
-      format.html {redirect_to user_projects_path}
-      format.json {
-        resp = CircleElement.generate_json_for_circle_from_hash( circle )
-        render :json => "[#{resp}]"
-      }
+      format.js
     end
   end
 
@@ -314,6 +304,19 @@ class User::ProjectsController < ApplicationController
         flash[:error] = "An error occured. Something is wrong with your file. Please contact the VersionEye Team on Twitter."
         false
       end
+    end
+
+    def circle_hash_for_dependencies( project )
+      hash = Hash.new
+      project.dependencies.each do |dep|
+        element = CircleElement.new
+        element.init_arrays
+        element.dep_prod_key = dep.prod_key
+        element.version      = dep.version_requested
+        element.level        = 0
+        hash[dep.prod_key] = element
+      end
+      hash
     end
 
 end

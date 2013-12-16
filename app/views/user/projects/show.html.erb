@@ -137,6 +137,18 @@
             <% end %>
 
             <%= render :partial => "shared/product_license_table", :locals => {:products => products, :width => "615"} %>
+
+            <div id="trans_deps">
+              <form id="trans_dep_form" action="<%= transitive_dependencies_user_project_path(@project) %>" data-remote="true" method="post" >
+                <input hidden="true" name="id" value="<%= @project.id.to_s %>" />
+                <button type="submit" class="btn btn-primary"
+                  onclick="document.getElementById('progress_bar').style.display='block';
+                           document.getElementById('trans_dep_form').style.display='none'; " >Show licenses for transitive dependencies</button>
+              </form>
+              <div id="progress_bar" style="display: none">
+                <%= image_tag "loadingbar.gif" %>
+              </div>
+            </div>
           </div>
 
           <% if signed_in? && @project.collaborator?( current_user ) %>
