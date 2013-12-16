@@ -15,7 +15,7 @@
     <div class="row content_header_def">
       <div id="project-title">
         <span class = "namelabel" >
-          <%= @project.name %>
+          <b>Name:</b> <%= @project.name %>
         </span>
         <% if current_user?(@project.user) %>
           <div class="icon-edit open-editor"
@@ -52,6 +52,10 @@
         </script>
 
       <% end %>
+
+      <div style="padding-top: 10px;">
+        <b>Project ID:</b> <%= @project.id.to_s %>
+      </div>
 
     </div>
     <div class="span8 content" >
