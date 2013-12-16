@@ -22,9 +22,9 @@ class ProductsController < ApplicationController
     @groupid = params[:g]
     @lang    = get_lang_value( params[:lang] )
     if (@query.nil? || @query.empty?) && (@groupid.nil? || @groupid.empty?)
-      flash.now[:error] = "Please give us some input. Type in a value for name."
-    elsif @query.include?("%")
-      flash.now[:error] = "the character % is not allowed"
+      flash.now[:error] = 'Please give us some input. Type in a value for name.'
+    elsif @query.include?('%')
+      flash.now[:error] = 'the character % is not allowed'
     else
       # start = Time.now
       languages = get_language_array(@lang)
@@ -44,7 +44,7 @@ class ProductsController < ApplicationController
       return
     end
     if @product.nil?
-      flash[:error] = "The requested package is not available."
+      flash[:error] = 'The requested package is not available.'
       return
     end
     if version.nil? || (!attach_version(@product, version))
@@ -65,8 +65,8 @@ class ProductsController < ApplicationController
     version  = params[:version]
     @product = Product.fetch_product lang, key
     if @product.nil?
-      flash[:error] = "The requested package is not available."
-      redirect_to "/"
+      flash[:error] = 'The requested package is not available.'
+      redirect_to '/'
       return
     end
     if version.nil? || (!attach_version(@product, version))

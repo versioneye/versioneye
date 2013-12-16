@@ -38,7 +38,7 @@ class DependencyWheelController < ApplicationController
         if url_exist?(url)
           render :json => "#{url}"
         else
-          render :json => "nil"
+          render :json => 'nil'
         end
       }
     end
@@ -50,12 +50,12 @@ class DependencyWheelController < ApplicationController
     image_version = params[:version]
     scope = params[:scope]
     filename = "#{image_key}:#{image_version}:#{scope}.png"
-    image_bin.gsub!(/data:image\/png;base64,/, "")
+    image_bin.gsub!(/data:image\/png;base64,/, '')
     AWS::S3::S3Object.store(
       filename,
       Base64.decode64(image_bin),
       Settings.s3_infographics_bucket,
-      :access => "public-read")
+      :access => 'public-read')
     url = S3.infographic_url_for(filename)
     respond_to do |format|
       format.json {
@@ -70,7 +70,7 @@ class DependencyWheelController < ApplicationController
       url = URI.parse(url_path)
       req = Net::HTTP.new(url.host, url.port)
       res = req.request_head(url.path)
-      if res.code == "200"
+      if res.code == '200'
         return true
       else
         return false

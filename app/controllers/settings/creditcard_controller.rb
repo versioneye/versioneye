@@ -26,9 +26,9 @@ class Settings::CreditcardController < ApplicationController
       user.plan = Plan.by_name_id plan_name_id
       user.save
       user.billing_address.update_from_params( params )
-      flash[:success] = "Many Thanks. We just updated your plan."
+      flash[:success] = 'Many Thanks. We just updated your plan.'
     else
-      flash[:error] = "Something went wrong. Please contact the VersionEye Team."
+      flash[:error] = 'Something went wrong. Please contact the VersionEye Team.'
     end
     redirect_to settings_plans_path
   end

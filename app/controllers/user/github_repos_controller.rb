@@ -25,7 +25,7 @@ class User::GithubReposController < ApplicationController
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    render text: "An error occured. We are not able to import GitHub repositories. Please contact the VersionEye team.", status: 503
+    render text: 'An error occured. We are not able to import GitHub repositories. Please contact the VersionEye team.', status: 503
   end
 
 
@@ -69,16 +69,16 @@ class User::GithubReposController < ApplicationController
     repo = []
     command_data = params[:command_data]
     project_name = params[:fullname]
-    branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : "master"
+    branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : 'master'
     filename     = command_data[:githubFilename]
     branch_files = params[:project_files][branch]
 
     case params[:command]
-    when "import"
+    when 'import'
       repo = import_repo(command_data, project_name, branch, filename, branch_files)
-    when "remove"
+    when 'remove'
       repo = remove_repo(command_data, project_name, branch, filename, branch_files)
-    when "update"
+    when 'update'
       repo = update_repo(command_data)
     else
       repo = "{'response': 'wrong command'}"

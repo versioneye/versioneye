@@ -29,7 +29,7 @@ class CocoapodsCrawler < GitCrawler
         VersionService.update_version_data product, false
         product.save
       else
-        logger.warn "NO PRODUCT"
+        logger.warn 'NO PRODUCT'
       end
     end
   end

@@ -23,10 +23,10 @@ class LanguageDailyStats
   def self.initial_metrics_table
     #metrics table for every language
     {
-      "new_version" => 0,   #new versions publised
-      "novel_package" => 0, #new libraries published
-      "total_package" => 0, #total packages upto this date
-      "total_artifact" => 0 #total artifacts upto this date
+      'new_version' => 0,   #new versions publised
+      'novel_package' => 0, #new libraries published
+      'total_package' => 0, #total packages upto this date
+      'total_artifact' => 0 #total artifacts upto this date
     }
   end
 
@@ -48,12 +48,12 @@ class LanguageDailyStats
 
   def self.language_to_sym(lang)
     lang = Product.encode_language(lang).capitalize
-    lang = lang.gsub(/\-/, "") #special rule for Objective-C
+    lang = lang.gsub(/\-/, '') #special rule for Objective-C
     lang.to_sym
   end
 
   def self.to_date_string(that_day)
-    that_day.strftime("%Y-%m-%d")
+    that_day.strftime('%Y-%m-%d')
   end
 
   def self.new_document(that_day, save = false)

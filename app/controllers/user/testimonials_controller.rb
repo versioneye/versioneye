@@ -32,11 +32,11 @@ class User::TestimonialsController < ApplicationController
     new_testimonial.user_id = current_user.id
 
     if new_testimonial.save(validate: false)
-      flash.now[:success] = "Many Thanks for your testimonial. Your feedback is highly appreciated."
+      flash.now[:success] = 'Many Thanks for your testimonial. Your feedback is highly appreciated.'
       @testimonial = new_testimonial.content
-      render "tweet"
+      render 'tweet'
     else
-      flash.now[:error] = "Ups. Something went wrong. Please reach out to the VersionEye Team and help them to improve the product."
+      flash.now[:error] = 'Ups. Something went wrong. Please reach out to the VersionEye Team and help them to improve the product.'
       redirect_to action: 'show'
     end
   end
@@ -44,16 +44,16 @@ class User::TestimonialsController < ApplicationController
   def update
     testimonial = Testimonial.find_by_id(params[:testimonial][:_id])
     if testimonial.nil?
-      flash.now[:error] = "Ups. Something went wrong. Please reach out to the VersionEye Team and help them to improve the product."
+      flash.now[:error] = 'Ups. Something went wrong. Please reach out to the VersionEye Team and help them to improve the product.'
       redirect_to :back and return
     end
     testimonial.update_attributes!(params[:testimonial])
     if testimonial.save
-      flash.now[:success] = "Many Thanks for your testimonial. Your feedback is highly appreciated."
+      flash.now[:success] = 'Many Thanks for your testimonial. Your feedback is highly appreciated.'
       @testimonial = testimonial.content
-      render "tweet"
+      render 'tweet'
     else
-      flash.now[:error] = "Ups. Something went wrong. Please reach out to the VersionEye Team and help them to improve the product."
+      flash.now[:error] = 'Ups. Something went wrong. Please reach out to the VersionEye Team and help them to improve the product.'
       redirect_to action: 'show'
     end
   end

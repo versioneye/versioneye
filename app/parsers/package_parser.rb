@@ -36,7 +36,7 @@ class PackageParser < CommonParser
     end
     version = version.to_s.strip
     version = version.gsub('"', '')
-    version = version.gsub("'", "")
+    version = version.gsub("'", '')
 
     if product.nil?
       dependency.version_requested = version
@@ -47,39 +47,39 @@ class PackageParser < CommonParser
     if version.match(/\*/) || version.empty?
       # Start Matching. Matches everything.
       dependency.version_requested = product.version
-      dependency.version_label = "*"
-      dependency.comperator = "="
+      dependency.version_label = '*'
+      dependency.comperator = '='
 
     elsif version.match(/^=/)
       # Equals
-      version.gsub!("=", "")
-      version.gsub!(" ", "")
+      version.gsub!('=', '')
+      version.gsub!(' ', '')
       dependency.version_requested = version
       dependency.version_label = version
-      dependency.comperator = "="
+      dependency.comperator = '='
 
     elsif version.match(/^!=/)
       # Not equal to version
-      version.gsub!("!=", "")
-      version.gsub!(" ", "")
+      version.gsub!('!=', '')
+      version.gsub!(' ', '')
       newest_version = VersionService.newest_but_not(product.versions, version)
       dependency.version_requested = newest_version
-      dependency.comperator = "!="
+      dependency.comperator = '!='
       dependency.version_label = version
 
     elsif version.match(/^>=/)
       # Greater than or equal to
-      version.gsub!(">=", "")
-      version.gsub!(" ", "")
+      version.gsub!('>=', '')
+      version.gsub!(' ', '')
       newest_version = VersionService.greater_than_or_equal(product.versions, version)
       dependency.version_requested = newest_version.to_s
-      dependency.comperator = ">="
+      dependency.comperator = '>='
       dependency.version_label = version
 
     elsif version.match(/^>/)
       # Greater than version
-      version.gsub!(">", "")
-      version.gsub!(" ", "")
+      version.gsub!('>', '')
+      version.gsub!(' ', '')
       newest_version = VersionService.greater_than(product.versions, version)
       dependency.version_requested = newest_version.to_s
       dependency.comperator = ">"

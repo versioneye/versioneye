@@ -32,7 +32,7 @@ class Auth::GithubController < ApplicationController
       return
     end
 
-    flash[:error] = "Your account is not activated. Did you click the verification link in the email we send you?"
+    flash[:error] = 'Your account is not activated. Did you click the verification link in the email we send you?'
     redirect_to signin_path
   end
 
@@ -46,26 +46,26 @@ class Auth::GithubController < ApplicationController
     @promo = params[:promo_code]
 
     unless User.email_valid?(@email)
-      flash.now[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
+      flash.now[:error] = 'The E-Mail address is already taken. Please choose another E-Mail.'
       init_variables_for_new_page
       render auth_github_new_path and return
     end
 
-    unless @terms.eql?("1")
-      flash.now[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
+    unless @terms.eql?('1')
+      flash.now[:error] = 'You have to accept the Conditions of Use AND the Data Aquisition.'
       init_variables_for_new_page
       render auth_github_new_path and return
     end
 
     token = cookies.signed[:github_token]
     if token == nil || token.empty?
-      flash.now[:error] = "An error occured. Your GitHub token is not anymore available. Please contact the VersionEye team."
+      flash.now[:error] = 'An error occured. Your GitHub token is not anymore available. Please contact the VersionEye team.'
       render auth_github_new_path and return
     end
     json_user = Github.user token
     user      = User.new
     scopes    = Github.oauth_scopes token
-    scopes    = "no_scope" if scopes.size == 0
+    scopes    = 'no_scope' if scopes.size == 0
     user.update_from_github_json( json_user, token, scopes )
     user.email         = @email
     user.terms         = true
@@ -78,7 +78,7 @@ class Auth::GithubController < ApplicationController
       cookies.delete(:promo_code)
       cookies.delete(:github_token)
     else
-      flash.now[:error] = "An error occured. Please contact the VersionEye Team."
+      flash.now[:error] = 'An error occured. Please contact the VersionEye Team.'
       init_variables_for_new_page
       render auth_github_new_path
     end

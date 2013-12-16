@@ -62,7 +62,7 @@ class MongoProduct
   end
 
   def self.find_by_name_exclude(searched_name, prod_keys)
-    if searched_name.nil? || searched_name.strip == ""
+    if searched_name.nil? || searched_name.strip == ''
       return nil
     end
     Product.where(name_downcase: /#{searched_name}/, :prod_key.nin => prod_keys)

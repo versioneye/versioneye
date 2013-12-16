@@ -24,20 +24,20 @@ module ProductsHelper
   end
 
   def display_follow(product, user)
-    return "block" if user.products.nil? || user.products.empty?
-    return "none"  if user.products.include? product
-    "block"
+    return 'block' if user.products.nil? || user.products.empty?
+    return 'none' if user.products.include? product
+    'block'
   end
 
   def display_unfollow(product, user)
-    return "none"  if user.products.nil? || user.products.empty?
-    return "block" if user.products.include? product
-    "none"
+    return 'none' if user.products.nil? || user.products.empty?
+    return 'block' if user.products.include? product
+    'none'
   end
 
   def do_parse_search_input( query )
-    query_empty = query.nil? || query.empty? || query.strip.empty? || query.eql?("search for a software library")
-    query = "json" if query_empty
+    query_empty = query.nil? || query.empty? || query.strip.empty? || query.eql?('search for a software library')
+    query = 'json' if query_empty
     query = query.strip()
     query.downcase
   end
@@ -54,26 +54,26 @@ module ProductsHelper
     return badge if badge
 
     product = Product.fetch_product language, prod_key if product.nil?
-    return "unknown" if product.nil?
+    return 'unknown' if product.nil?
 
     product.version = version if version
     dependencies    = product.dependencies
 
     if dependencies.nil? || dependencies.empty?
-      badge = "none"
+      badge = 'none'
       Rails.cache.write( key, badge, timeToLive: 1.hour )
       return badge
     end
 
     outdated = DependencyService.dependencies_outdated?( product.dependencies )
-    badge = "out-of-date" if outdated
-    badge = "up-to-date"  if not outdated
+    badge = 'out-of-date' if outdated
+    badge = 'up-to-date' if not outdated
     Rails.cache.write( key, badge, timeToLive: 2.hour )
     badge
   end
 
   def get_lang_value( lang )
-    lang = "," if lang.nil? || lang.empty?
+    lang = ',' if lang.nil? || lang.empty?
     lang
   end
 

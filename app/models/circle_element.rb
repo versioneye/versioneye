@@ -29,9 +29,9 @@ class CircleElement
   def init
     self.connections  = Array.new
     self.dependencies = Array.new
-    self.text         = ""
-    self.dep_prod_key = ""
-    self.version      = ""
+    self.text         = ''
+    self.dep_prod_key = ''
+    self.version      = ''
     self.level        = 1
   end
 
@@ -56,7 +56,7 @@ class CircleElement
     end
     hash = Hash.new
     dependencies = Array.new
-    if scope.eql?("all")
+    if scope.eql?('all')
       dependencies = Dependency.find_by_lang_key_and_version( lang, prod_key, version )
     else
       dependencies = Dependency.find_by_lang_key_version_scope( lang, prod_key, version, scope )

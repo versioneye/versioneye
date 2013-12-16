@@ -21,8 +21,8 @@ class Versionlink
     {
       :name => self.name,
       :link => self.link,
-      :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
-      :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
+      :created_at => self.created_at.strftime('%Y.%m.%d %I:%M %p'),
+      :updated_at => self.updated_at.strftime('%Y.%m.%d %I:%M %p')
     }
   end
 

@@ -64,7 +64,7 @@ class SubmittedUrl
 
   def url_guessed
     unless url.match(/https:\/\/github.com\//).nil?
-      new_url = url.gsub("https://github.com/", "https://api.github.com/repos/")
+      new_url = url.gsub('https://github.com/', 'https://api.github.com/repos/')
       unless new_url.match("\/$").nil?
         return new_url[0..-2]
       end
@@ -75,7 +75,7 @@ class SubmittedUrl
 
   def name_guessed
     unless url.match(/https:\/\/github.com\//).nil?
-      name = url.gsub("https://github.com/", "")
+      name = url.gsub('https://github.com/', '')
       unless name.match("\/$").nil?
         return name[0..-2]
       end

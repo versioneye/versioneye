@@ -27,7 +27,7 @@ class User::ProjectsController < ApplicationController
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
-    flash[:error] = "VersionEye is not able to parse your project. Please contact the VersionEye Team."
+    flash[:error] = 'VersionEye is not able to parse your project. Please contact the VersionEye Team.'
     redirect_to user_projects_path
   end
 
@@ -48,8 +48,8 @@ class User::ProjectsController < ApplicationController
   def badge
     id    = params[:id]
     badge = ProjectService.badge_for_project id
-    path  = "app/assets/images/badges"
-    send_file "#{path}/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
+    path  = 'app/assets/images/badges'
+    send_file "#{path}/dep_#{badge}.png", :type => 'image/png', :disposition => 'inline'
   end
 
   def update_name
@@ -67,19 +67,19 @@ class User::ProjectsController < ApplicationController
     file       = params[:upload]
     project_id = params[:project_id]
     if file.nil? || project_id.nil?
-      flash[:error] = "Something went wrong. Please contact the VersionEye Team."
+      flash[:error] = 'Something went wrong. Please contact the VersionEye Team.'
       redirect_to user_projects_path
       return
     end
     project = Project.find_by_id project_id
     if project.nil?
-      flash[:error] = "No project with given key. Please contact the VersionEye Team."
+      flash[:error] = 'No project with given key. Please contact the VersionEye Team.'
       redirect_to user_projects_path
       return
     end
     new_project = upload file
     if new_project.nil?
-      flash[:error] = "Something went wrong. Please contact the VersionEye Team."
+      flash[:error] = 'Something went wrong. Please contact the VersionEye Team.'
       redirect_to user_projects_path
     end
     project.update_from new_project
