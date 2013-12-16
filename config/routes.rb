@@ -113,6 +113,7 @@ Versioneye::Application.routes.draw do
         post 'save_period'
         post 'save_email'
         post 'save_visibility'
+        post 'save_notify_after_api_update'
         post 'reparse'
         post 'update_name'
         post 'add_collaborator'
