@@ -33,7 +33,9 @@ class License
   end
 
   def name_substitute
+    return 'unknown' if name.to_s.empty?
     return 'MIT' if mit_match( name )
+    return 'BSD' if bsd_match( name )
     return 'Apache License, Version 2.0' if apache_license_2_match( name )
     return 'Apache License' if apache_license_match( name )
     name
@@ -49,14 +51,22 @@ class License
       name.match(/^MIT$/i) || name.match(/^The MIT License$/) || name.match(/^MIT License$/)
     end
 
+    def bsd_match name
+      name.match(/^BSD License$/i) || name.match(/^BSD$/) || name.match(/^MIT License$/)
+    end
+
     def apache_license_2_match name
-      name.match(/^Apache License\, Version 2\.0$/i) || name.match(/^Apache License Version 2\.0$/i) || name.match(/^The Apache Software License\, Version 2\.0$/i)
+      name.match(/^Apache License\, Version 2\.0$/i) ||
+      name.match(/^Apache License Version 2\.0$/i) ||
+      name.match(/^The Apache Software License\, Version 2\.0$/i) ||
+      name.match(/^Apache 2$/i) ||
+      name.match(/^Apache 2\.0$/i) ||
+      name.match(/^Apache License 2\.0$/i) ||
+      name.match(/^Apache Software License - Version 2\.0$/i)
     end
 
     def apache_license_match name
       name.match(/^Apache License$/i) || name.match(/^Apache Software Licenses$/i)
     end
-
-
 
 end
