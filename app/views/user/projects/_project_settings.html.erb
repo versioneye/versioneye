@@ -1,9 +1,8 @@
-
 <% if current_user?(@project.user) %>
   <div style="margin-top: 20px;" id="settings_area">
     <form action="<%= save_period_user_project_path(@project) %>" method="post" class="form-horizontal" >
       <div>
-        Choose how frequently this project should be checked. After every check we will send out email notifications.
+        How often do you want us to check your project's dependencies? We will send you an email notification whenever we check your dependencies.
       </div>
       <div class="control-group">
 
@@ -19,7 +18,7 @@
 
     <form action="<%= save_email_user_project_path(@project) %>" method="post" class="form-horizontal" >
       <div>
-        Choose the email address we should send the notifications to.
+        What's the email address we should send the notifications to?
       </div>
       <div class="control-group">
         <div class="controls" style="margin-left: 0px;">
@@ -35,9 +34,8 @@
 
     <form action="<%= save_visibility_user_project_path(@project) %>" method="post" class="form-horizontal" >
       <div>
-        By default all projects are private, so that only you and your collaborators can see it.
-        If you make it public you can share the link to this project and everybody can
-        see the dependencies and licenses of this project.
+        All projects are private by default. Only you and your collaborators can see it.<br/>
+        By setting it to public you allow everyone to see the dependencies and licenses of this project.
       </div>
       <div class="control-group">
         <div class="controls" style="margin-left: 0px;">
@@ -51,8 +49,8 @@
 
     <form action="<%= save_notify_after_api_update_user_project_path(@project) %>" method="post" class="form-horizontal" >
       <div>
-        Choose if you want to get an email notification after this project was updated through our API. That
-        is for example the case if you use the VersionEye GitHub Hook or our Maven Plugin.
+        Do you want receive email notifications whenever the dependency file for this project changes?
+        This might happen through the VersionEye API, GitHub or Maven integration.
       </div>
       <div class="control-group">
         <div class="controls" style="margin-left: 0px;">
