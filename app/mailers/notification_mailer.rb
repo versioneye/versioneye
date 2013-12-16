@@ -19,9 +19,9 @@ class NotificationMailer < ActionMailer::Base
   def status(count)
     @count = count
     mail(
-      :to => "reiz@versioneye.com",
+      :to => 'reiz@versioneye.com',
       :subject => "#{count} notifications",
-      :tag => "notification_status"
+      :tag => 'notification_status'
       )
   end
 
@@ -36,7 +36,7 @@ class NotificationMailer < ActionMailer::Base
         notification = notifications[num]
         names.push notification.product.name
       end
-      result = names.join(", ")
+      result = names.join(', ')
       if notifications.size > 3
         result = "#{result} ..."
       end

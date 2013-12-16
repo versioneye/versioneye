@@ -39,7 +39,7 @@ class Admin::SubmittedUrlsController < ApplicationController
         submitted_url.declined = false
         submitted_url.product_resource = new_resource
         submitted_url.save
-        flash[:success] = "Resource was accepted successfully"
+        flash[:success] = 'Resource was accepted successfully'
         SubmittedUrlMailer.approved_url_email(submitted_url).deliver
       else
         flash[:error] = new_resource.errors.full_messages.to_sentence
@@ -56,7 +56,7 @@ class Admin::SubmittedUrlsController < ApplicationController
       submitted_url.declined = true
       submitted_url.declined_message = params[:declined_message]
       if submitted_url.save
-        flash[:notice] = "Url is now declined."
+        flash[:notice] = 'Url is now declined.'
         SubmittedUrlMailer.declined_url_email(submitted_url).deliver
       else
         flash[:error] - submitted_url.errors.full_messages.to_sentence
@@ -72,7 +72,7 @@ class Admin::SubmittedUrlsController < ApplicationController
       flash[:error] = "Can't delete: id of SubmittedUrl is missing."
     else
       submitted_url.delete
-      flash[:notice] = "Submitted Url is now deleted."
+      flash[:notice] = 'Submitted Url is now deleted.'
     end
     redirect_to :back
   end

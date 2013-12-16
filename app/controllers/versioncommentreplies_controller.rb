@@ -26,9 +26,9 @@ class VersioncommentrepliesController < ApplicationController
     respond_to do |format|
       format.html {
         if saved
-          flash[:success] = "Comment saved!"
+          flash[:success] = 'Comment saved!'
         else
-          flash[:error] = "Something went wrong"
+          flash[:error] = 'Something went wrong'
         end
         redirect_to product_version_path(@product)
       }

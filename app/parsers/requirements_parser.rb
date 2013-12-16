@@ -27,7 +27,7 @@ class RequirementsParser < CommonParser
 
 
   def parse_line( line, project )
-    line.gsub!(" ", "")
+    line.gsub!(' ', '')
     return false if !line.match(/^#/).nil? || line.empty?
 
     comparator  = extract_comparator line
@@ -72,7 +72,7 @@ class RequirementsParser < CommonParser
     end
     version = version.strip
     version = version.gsub('"', '')
-    version = version.gsub("'", "")
+    version = version.gsub("'", '')
     dependency.version_label = String.new(version)
 
     if product.nil?

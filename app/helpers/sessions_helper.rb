@@ -49,7 +49,7 @@ module SessionsHelper
 
   def deny_access
     store_location
-    redirect_to signin_path, :notice => "Please sign in to access this page."
+    redirect_to signin_path, :notice => 'Please sign in to access this page.'
   end
 
   def redirect_back_or(default)
@@ -58,7 +58,7 @@ module SessionsHelper
   end
 
   def set_locale
-    locale = "en"
+    locale = 'en'
     if locale && !locale.empty?
       I18n.locale = locale
     elsif I18n.locale.nil?

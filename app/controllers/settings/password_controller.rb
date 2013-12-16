@@ -21,9 +21,9 @@ class Settings::PasswordController < ApplicationController
     else
       @user = current_user
       if @user.update_password(current_user.email, password, new_password)
-        flash[:success] = "Profile updated."
+        flash[:success] = 'Profile updated.'
       else
-        flash[:error] = "Something went wrong. Please try again later."
+        flash[:error] = 'Something went wrong. Please try again later.'
       end
     end
     redirect_to settings_password_path()

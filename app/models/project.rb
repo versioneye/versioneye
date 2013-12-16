@@ -36,7 +36,7 @@ class Project
   field :source        , type: String,  :default => A_SOURCE_UPLOAD
   field :s3_filename   , type: String
   field :github_project, type: String   # Repository name at GitHub
-  field :github_branch , type: String,  :default => "master" # Branch     name at GitHub
+  field :github_branch , type: String,  :default => 'master' # Branch     name at GitHub
   field :dep_number    , type: Integer
   field :out_number    , type: Integer, :default => 0
   field :unknown_number, type: Integer, :default => 0

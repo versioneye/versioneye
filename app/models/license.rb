@@ -27,15 +27,15 @@ class License
 
   def link
     return url if url && !url.empty?
-    return "http://choosealicense.com/licenses/mit/" if mit_match( name )
-    return "http://www.apache.org/licenses/LICENSE-2.0.txt" if apache_license_2_match( name )
+    return 'http://choosealicense.com/licenses/mit/' if mit_match( name )
+    return 'http://www.apache.org/licenses/LICENSE-2.0.txt' if apache_license_2_match( name )
     nil
   end
 
   def name_substitute
-    return "MIT" if mit_match( name )
-    return "Apache License, Version 2.0" if apache_license_2_match( name )
-    return "Apache License" if apache_license_match( name )
+    return 'MIT' if mit_match( name )
+    return 'Apache License, Version 2.0' if apache_license_2_match( name )
+    return 'Apache License' if apache_license_match( name )
     name
   end
 

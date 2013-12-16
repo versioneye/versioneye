@@ -19,8 +19,8 @@ class UserMailer < ActionMailer::Base
     @verificationlink = "#{Settings.server_url_https}/users/activate/#{source}/#{verification}"
     mail(
       :to => email,
-      :subject => "Verification",
-      :tag => "verification"
+      :subject => 'Verification',
+      :tag => 'verification'
       )
   end
 
@@ -29,8 +29,8 @@ class UserMailer < ActionMailer::Base
     @verificationlink = "#{Settings.server_url_https}/users/activate/email/#{verification}"
     mail(
       :to => email,
-      :subject => "Verification",
-      :tag => "verification"
+      :subject => 'Verification',
+      :tag => 'verification'
       )
   end
 
@@ -40,8 +40,8 @@ class UserMailer < ActionMailer::Base
     @verificationlink = "#{Settings.server_url_https}/users/activate/#{source}/#{verification}"
     mail(
       :to => email,
-      :subject => "Verification Reminder",
-      :tag => "verification_reminder"
+      :subject => 'Verification Reminder',
+      :tag => 'verification_reminder'
       )
   end
 
@@ -52,8 +52,8 @@ class UserMailer < ActionMailer::Base
 
     mail(
       :to => collaborator[:invitation_email],
-      :subject => "Invitation to project collabration",
-      :tag => "collaboration"
+      :subject => 'Invitation to project collabration',
+      :tag => 'collaboration'
     )
   end
 
@@ -66,7 +66,7 @@ class UserMailer < ActionMailer::Base
     mail(
       :to => @callee[:email],
       :subject => "#{@caller[:fullname]} added you as collaborator.",
-      :tag => "collaboration"
+      :tag => 'collaboration'
     )
   end
 
@@ -75,8 +75,8 @@ class UserMailer < ActionMailer::Base
     @url = "#{Settings.server_url_https}/updatepassword/#{@user.verification}"
     mail(
       :to => @user.email,
-      :subject => "Password Reset",
-      :tag => "password_reset"
+      :subject => 'Password Reset',
+      :tag => 'password_reset'
       )
   end
 

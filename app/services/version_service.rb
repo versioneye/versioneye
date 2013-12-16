@@ -23,14 +23,14 @@ class VersionService
   end
 
 
-  def self.newest_version_from( versions, stability = "stable")
+  def self.newest_version_from( versions, stability = 'stable')
     return nil if !versions || versions.empty?
     VersionService.newest_version( versions, stability )
   end
 
 
   # TODO write test
-  def self.newest_version_from_wildcard( versions, version_start, stability = "stable" )
+  def self.newest_version_from_wildcard( versions, version_start, stability = 'stable')
     versions_filtered = versions_start_with( versions, version_start )
     return newest_version_number( versions_filtered, stability )
   end
@@ -38,18 +38,18 @@ class VersionService
   # http://guides.rubygems.org/patterns/#semantic_versioning
   # http://robots.thoughtbot.com/rubys-pessimistic-operator
   def self.version_approximately_greater_than_starter(value)
-    ar = value.split(".")
+    ar = value.split('.')
     new_end = ar.length - 2
     new_end = 0 if new_end < 0
     arr = ar[0..new_end]
-    starter = arr.join(".")
+    starter = arr.join('.')
     return "#{starter}."
   end
 
   def self.version_tilde_newest( versions, value )
     return nil if value.nil?
-    value = value.gsub("~", "")
-    value = value.gsub(" ", "")
+    value = value.gsub('~', '')
+    value = value.gsub(' ', '')
     upper_border = self.tile_border( value )
     greater_than = self.greater_than_or_equal( versions, value, true  )
     range = self.smaller_than( greater_than, upper_border, true )
@@ -61,11 +61,11 @@ class VersionService
     if value.match(/\./).nil? && value.match(/^[0-9\-\_a-zA-Z]*$/)
       return value.to_i + 1
     elsif value.match(/\./) && value.match(/^[0-9]+\.[0-9\-\_a-zA-Z]*$/)
-      nums  = value.split(".")
+      nums  = value.split('.')
       up    = nums.first.to_i + 1
       return "#{up}.0"
     elsif value.match(/\./) && value.match(/^[0-9]+\.[0-9]+\.[0-9\-\_a-zA-Z]*$/)
-      nums = value.split(".")
+      nums = value.split('.')
       up   = nums[1].to_i + 1
       return "#{nums[0]}.#{up}"
     end

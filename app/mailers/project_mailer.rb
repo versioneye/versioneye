@@ -19,7 +19,7 @@ class ProjectMailer < ActionMailer::Base
     mail(
       :to      => email,
       :subject => "Project Notification for #{project.name}",
-      :tag     => "project_notification"
+      :tag     => 'project_notification'
       )
   end
 
