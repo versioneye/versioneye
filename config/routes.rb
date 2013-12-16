@@ -9,6 +9,13 @@ Versioneye::Application.routes.draw do
     get   '/github/callback',   :to => 'github#callback'
     get   '/github/new',        :to => 'github#new'
     post  '/github/create',     :to => 'github#create'
+
+    post '/bitbucket/authorize',  :to => 'bitbucket#authorize' 
+    get '/bitbucket/callback',    :to => 'bitbucket#callback'
+    get '/bitbucket/new',         :to => 'bitbucket#new'
+    get '/bitbucket/signin',      :to => 'bitbucket#signin'
+    get '/bitbucket/connect',     :to => 'bitbucket#connect'
+    get '/bitbucket/create',      :to => 'bitbucket#create'
   end
 
   get   '/cloudcontrol/resources', :to => 'cloudcontrol#resources'
