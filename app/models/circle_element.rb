@@ -26,7 +26,7 @@ class CircleElement
     CircleElement.where(language: language, prod_key: prod_key, prod_version: version, prod_scope: scope)
   end
 
-  def init
+  def initialize
     self.connections  = Array.new
     self.dependencies = Array.new
     self.text         = ''
@@ -64,7 +64,6 @@ class CircleElement
     dependencies.each do |dep|
       next if dep.name.nil? || dep.name.empty?
       element = CircleElement.new
-      element.init
       element.dep_prod_key = dep.dep_prod_key
       element.version      = dep.version_parsed
       element.level        = 0

@@ -43,6 +43,34 @@ class User::ProjectsController < ApplicationController
     end
   end
 
+  def transitive_dependencies
+    id             = params[:id]
+    project        = Project.find_by_id( id )
+
+    hash = Hash.new
+    project.dependencies.each do |dep|
+      element = CircleElement.new
+      element.dep_prod_key = dep.prod_key
+      element.version      = dep.version_requested
+      element.level        = 0
+      hash[dep.prod_key] = element
+    end
+    trans_dependencies = Array.new
+    circle = CircleElement.fetch_deps(1, hash, Hash.new, project.language)
+    circle.each do |dep|
+      next if dep.last[:level] == 0
+      trans_dependencies << dep.last
+      p "#{dep.last['dep_prod_key']} : #{dep.last['version']}"
+    end
+    respond_to do |format|
+      format.html {redirect_to user_projects_path}
+      format.json {
+        resp = CircleElement.generate_json_for_circle_from_hash( circle )
+        render :json => "[#{resp}]"
+      }
+    end
+  end
+
   def badge
     id    = params[:id]
     badge = ProjectService.badge_for_project id
