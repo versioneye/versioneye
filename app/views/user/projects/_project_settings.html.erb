@@ -55,8 +55,8 @@
       <div class="control-group">
         <div class="controls" style="margin-left: 0px;">
           <select name="notify" >
-            <option value="<%= Project::A_NOTIFY_AFTER_API_UPDATE_NOTIFY %>"  <%= @project.notify_after_api_update.to_s.eql?('true')  ? 'selected' : '' %> >Notify after update via API</option>
-            <option value="<%= Project::A_NOTIFY_AFTER_API_UPDATE_SILENT %>"  <%= @project.notify_after_api_update.to_s.eql?('false') ? 'selected' : '' %> >Stay silent</option>
+            <option value="notify"  <%= @project.notify_after_api_update.to_s.eql?('true')  ? 'selected' : '' %> >Notify after update via API</option>
+            <option value="silent"  <%= @project.notify_after_api_update.to_s.eql?('false') ? 'selected' : '' %> >Stay silent</option>
           </select> <button type="submit" class="btn btn-primary" >Save</button>
         </div>
       </div>

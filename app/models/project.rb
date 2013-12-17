@@ -23,9 +23,6 @@ class Project
   A_PERIOD_WEEKLY  = 'weekly'
   A_PERIOD_DAILY   = 'daily'
 
-  A_NOTIFY_AFTER_API_UPDATE_NOTIFY = 'notify'
-  A_NOTIFY_AFTER_API_UPDATE_SILENT = 'silent'
-
   field :name       , type: String
   field :description, type: String
   field :license    , type: String
@@ -34,7 +31,7 @@ class Project
   field :language      , type: String
   field :project_key   , type: String
   field :period        , type: String,  :default => A_PERIOD_WEEKLY
-  field :notify_after_api_update, type: String, :default => A_NOTIFY_AFTER_API_UPDATE_NOTIFY
+  field :notify_after_api_update, type: Boolean, :default => false
   field :email         , type: String
   field :url           , type: String
   field :source        , type: String,  :default => A_SOURCE_UPLOAD
