@@ -60,6 +60,8 @@ class User
   has_one    :testimonial
   has_many   :projects
   has_many   :github_repos
+  has_many   :bitbucket_repos
+
   has_and_belongs_to_many :products
   # *** RELATIONS END ***
 
@@ -239,6 +241,11 @@ class User
   def github_account_connected?
     !self.github_id.to_s.empty? && !self.github_token.to_s.empty?
   end
+
+  def bitbucket_account_connected?
+    !self.bitbucket_id.to_s.empty? && !self.bitbucket_token.to_s.empty?
+  end
+
 
   def self.follows_max(n)
     User.all.select {|user| user['product_ids'].nil? or user['product_ids'].count < n}

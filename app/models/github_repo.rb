@@ -39,11 +39,9 @@ class GithubRepo
   scope :by_fullname   , ->(fullname){where(fullname: fullname)}
 
 
-  def self.build_new(user, repo, etag = nil)
-    return false if repo.nil? || repo.empty?
-    repo = repo.deep_symbolize_keys
+  def self.get_owner_type(owner_info)
+    owner_type = "unknown"
 
-    owner_info = repo[:owner]
     case owner_info[:type].to_s.downcase
     when 'organization'
       owner_type = 'organization'
@@ -57,6 +55,14 @@ class GithubRepo
       owner_type = 'unknown'
     end
 
+    owner_type
+  end
+
+  def self.build_new(user, repo, etag = nil)
+    return false if repo.nil? || repo.empty?
+    repo = repo.deep_symbolize_keys
+
+    owner_info = get_owner_type(repo[:owner])
     new_repo = GithubRepo.new({
       user_id: user.id,
       github_id: repo[:id],

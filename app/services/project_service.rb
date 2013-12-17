@@ -19,10 +19,13 @@ class ProjectService
     return false if project.nil?
 
     project.make_project_key!
+    project.save
     if project.dependencies && !project.dependencies.empty? && project.save
       project.save_dependencies
       return true
     else
+      p project
+      p "Can't save project: #{project.errors.full_messages.to_json}"
       Rails.logger.error "Can't save project: #{project.errors.full_messages.to_json}"
       return false
     end
@@ -148,8 +151,56 @@ class ProjectService
     return parsed_project if store( parsed_project )
   end
 
-  def self.build_from_url url
-    project_type = type_by_filename url
+=begin
+  This methods is doing 3 things
+   - Importing a project_file from Bitbucket
+   - Parsing the project_file to a new project
+   - Storing the new project to DB
+=end
+
+  def self.import_from_bitbucket(user, repo_name, filename, branch = "master")
+    repo = BitbucketRepo.by_user(user).by_fullname(repo_name).shift
+    private_project = repo[:private]
+    unless allowed_to_add_project?(user, private_project)
+      return "Please upgrade your plan to monitor the selected project."
+    end
+
+    content = Bitbucket.fetch_project_file_from_branch(
+      repo_name, branch, filename, user[:bitbucket_token], user[:bitbucket_secret]
+    )
+    if content.nil? or content == "error"
+      error_msg = " Didn't find any project file of a supported package manager."
+      Rails.logger.error " Can't import project file `#{filename}` from #{repo_name} branch #{branch} "
+      return error_msg
+    end
+
+    s3_info = S3.upload_file_content(content, filename)
+    if s3_info.nil? && !s3_info.has_key?('filename') && !s3_info.has_key?('s3_url')
+      error_msg = "Connectivity issues - can't import project file for parsing."
+      Rails.logger.error " Can't upload file to s3: #{project_file[:name]}"
+      return error_msg
+    end
+
+    project_type = ProjectService.type_by_filename(filename)
+    parsed_project = build_from_url(s3_info['s3_url'], project_type)
+    p "parsed project: #{parsed_project.to_json}"
+    parsed_project.update_attributes({
+      name: repo_name,
+      project_type: project_type,
+      user_id: user.id.to_s,
+      source: Project::A_SOURCE_BITBUCKET,
+      scm_fullname: repo_name,
+      scm_branch: branch,
+      private_project: private_project,
+      s3_filename: s3_info['filename'],
+      url: s3_info['s3_url']
+    })
+
+    return parsed_project if store( parsed_project )
+ end
+
+  def self.build_from_url(url, project_type = nil)
+    project_type = type_by_filename(url) if project_type.nil?
     parser       = ParserStrategy.parser_for( project_type, url )
     parser.parse url
   rescue => e

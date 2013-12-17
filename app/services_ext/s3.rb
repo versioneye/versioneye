@@ -46,6 +46,19 @@ class S3
     result
   end
 
+  def self.upload_file_content( content, filename)
+    return nil if content.nil? || filename.to_s.empty?
+    file_bin = content
+    random_value = Project.create_random_value
+    new_filename = "#{random_value}_#{filename}"
+    self.store_in_project_bucket new_filename, file_bin #Base64.decode64(file_bin)
+    url                = S3.url_for( new_filename )
+    result             = Hash.new
+    result['filename'] = new_filename
+    result['s3_url']   = url
+    result
+  end
+
   def self.store_in_project_bucket filename, bin
     bucket = AWS.s3.buckets[Settings.s3_projects_bucket]
     obj    = bucket.objects[ filename ]

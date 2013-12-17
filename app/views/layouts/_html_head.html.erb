@@ -53,8 +53,10 @@
       <%= javascript_include_tag "application_payment",  :defer => false, :async => false %>
 
     <% elsif current_page?( user_projects_github_repositories_path ) %>
-
       <%= javascript_include_tag "application_github",  :defer => false, :async => false %>
+
+    <% elsif current_page?( user_projects_bitbucket_repositories_path ) %>
+      <%= javascript_include_tag "application_bitbucket",  :defer => false, :async => false %>
 
     <% elsif current_page?(version_eye_api_path) %>
 
