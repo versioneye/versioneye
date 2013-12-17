@@ -49,7 +49,7 @@ class ServicesController < ApplicationController
     hash = Hash.new
     dependencies.each do |dep|
       element = CircleElement.new
-      element.init
+      element.init_arrays
       element.dep_prod_key = dep.prod_key
       element.version = dep.version_requested
       element.level = 0
