@@ -64,7 +64,7 @@ class ProjectService
     self.update_url project
     new_project = self.build_from_url project.url
     project.update_from new_project
-    self.update_badge_for_project project
+    update_badge_for_project( project )
     if send_email && project.out_number > 0 && project.user.email_inactive == false
       Rails.logger.info "send out email notification for project: #{project.name} to user #{project.user.fullname}"
       ProjectMailer.projectnotification_email( project ).deliver

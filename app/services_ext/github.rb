@@ -275,9 +275,9 @@ class Github
 
     project_files = {}
     branches.each do |branch|
-      branch_name = branch[:name]
-      branch_key = encode_db_key(branch_name)
-      branch_sha = branch[:commit][:sha]
+      branch_name  = branch[:name]
+      branch_key   = encode_db_key(branch_name)
+      branch_sha   = branch[:commit][:sha]
       branch_files = project_files_from_branch(repo_name, token, branch_sha)
       project_files[branch_key] = branch_files unless branch_files.nil?
     end

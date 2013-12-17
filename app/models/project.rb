@@ -212,7 +212,7 @@ class Project
 
   def update_from new_project
     return nil if new_project.nil?
-    if !new_project.dependencies.nil? && !new_project.dependencies.empty?
+    if new_project.dependencies && !new_project.dependencies.empty?
       self.overwrite_dependencies( new_project.dependencies )
     end
     self.description    = new_project.description
