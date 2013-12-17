@@ -53,7 +53,10 @@ class User::ProjectsController < ApplicationController
       next if dep.last[:level] == 0
       product = Product.fetch_product( project.language, dep.last['dep_prod_key'] )
       next if product.nil?
-      product.version = dep.last['version']
+      version = dep.last['version']
+      if !version.to_s.empty? && !version.to_s.eql?('unknown')
+        product.version = version
+      end
       @products << product
     end
     respond_to do |format|
