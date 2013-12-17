@@ -11,7 +11,7 @@ end
 describe "SignUp with GitHub" do
 
   before :all do
-    FakeWeb.allow_net_connect = false
+    FakeWeb.allow_net_connect = true
     WebMock.allow_net_connect!
   end
 
@@ -28,8 +28,9 @@ describe "SignUp with GitHub" do
     assert_tag :tag => "button", :attributes => { :class => "btn btn-github btn-large btn-signin" }
 
     VCR.use_cassette('github_signup', :allow_playback_repeats => true) do
-      get "/auth/github/callback?code=79ac3ef94f10e72f2302"
+      get "/auth/github/callback?code=003f290db37ad2ceefc9"
       assert_response :success
+      response.body.should match("Almost done. We just need your email address.")
 
       post "/auth/github/create", {:email => "test@versioneye.com", :terms => "0" }, "HTTPS" => "on"
       response.body.should match("You have to accept the Conditions of Use AND the Data Aquisition")
@@ -46,7 +47,7 @@ describe "SignUp with GitHub" do
     user.github_token = nil
     user.save.should be_true
     VCR.use_cassette('github_signup', :allow_playback_repeats => true) do
-      get "/auth/github/callback?code=79ac3ef94f10e72f2302"
+      get "/auth/github/callback?code=003f290db37ad2ceefc9"
       response.should redirect_to( user_packages_i_follow_path )
       user_db = User.find_by_email( user.email )
       user_db.github_token.should eql("3974100548430f742b9716b2e26ba73437fe8028")
@@ -65,7 +66,7 @@ describe "SignUp with GitHub" do
     response.should redirect_to( user_packages_i_follow_path )
 
     VCR.use_cassette('github_signup', :allow_playback_repeats => true) do
-      get "/auth/github/callback?code=79ac3ef94f10e72f2302"
+      get "/auth/github/callback?code=003f290db37ad2ceefc9"
       assert_response 302
       response.should redirect_to("/settings/connect")
       user_db = User.find_by_email( user.email )

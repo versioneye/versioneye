@@ -16,12 +16,12 @@ module UsersHelper
 
   def has_permission_to_see_products( user, current_user )
     return true if !current_user.nil? && user.id == current_user.id
-    if user.privacy_products.eql?("nobody")
+    if user.privacy_products.eql?('nobody')
       return false
-    elsif user.privacy_products.eql?("ru")
+    elsif user.privacy_products.eql?('ru')
       return true if !current_user.nil?
       return false if current_user.nil?
-    elsif user.privacy_products.eql?("everybody")
+    elsif user.privacy_products.eql?('everybody')
       return true
     end
     true
@@ -29,12 +29,12 @@ module UsersHelper
 
   def has_permission_to_see_comments( user, current_user )
     return true if !current_user.nil? && user.id == current_user.id
-    if user.privacy_comments.eql?("nobody")
+    if user.privacy_comments.eql?('nobody')
       return false
-    elsif user.privacy_comments.eql?("ru")
+    elsif user.privacy_comments.eql?('ru')
       return true if !current_user.nil?
       return false if current_user.nil?
-    elsif user.privacy_comments.eql?("everybody")
+    elsif user.privacy_comments.eql?('everybody')
       return true
     end
     true
@@ -44,15 +44,15 @@ module UsersHelper
     return nil if code.to_s.empty? || user.nil?
     promo = PromoCode.by_name code
     if promo.nil?
-      flash.now[:warn] = "Sorry. But the promo code you entered does not exist!"
+      flash.now[:warn] = 'Sorry. But the promo code you entered does not exist!'
     elsif !promo.is_valid?
-      flash.now[:warn] = "Sorry. But the promo code you entered is not valid anymore!"
+      flash.now[:warn] = 'Sorry. But the promo code you entered is not valid anymore!'
     else
       promo.redeem!
       user.free_private_projects = promo.free_private_projects
       user.promo_code = code
       user.save
-      plu = pluralize(promo.free_private_projects, "private project")
+      plu = pluralize(promo.free_private_projects, 'private project')
       flash.now[:success] = "Congrats. Because of the promo code you can monitor #{plu} for free!"
     end
   rescue => e

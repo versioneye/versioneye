@@ -23,14 +23,14 @@ class PomParser < CommonParser
     dependency = Projectdependency.new
     dependency.language = Product::A_LANGUAGE_JAVA
     node.children.each do |child|
-      if child.name.casecmp("groupId") == 0
+      if child.name.casecmp('groupId') == 0
         dependency.group_id = child.text.strip
-      elsif child.name.casecmp("artifactId") == 0
+      elsif child.name.casecmp('artifactId') == 0
         dependency.artifact_id = child.text.strip
-      elsif child.name.casecmp("version") == 0
+      elsif child.name.casecmp('version') == 0
         version_text = get_variable_value_from_pom(properties, child.text.strip)
         dependency.version_requested = version_text
-      elsif child.name.casecmp("scope") == 0
+      elsif child.name.casecmp('scope') == 0
         dependency.scope = child.text.strip
       end
     end
@@ -64,14 +64,14 @@ class PomParser < CommonParser
   end
 
   def get_variable_value_from_pom( properties, val )
-    if val.include?("${") && val.include?("}")
+    if val.include?('${') && val.include?('}')
       new_val = String.new(val)
-      new_val.gsub!("${", "")
-      new_val.gsub!("}", "")
+      new_val.gsub!('${', '')
+      new_val.gsub!('}', '')
       new_val.downcase!
       value = properties[new_val]
       return val if value.nil? || value.empty?
-      return value
+      value
     else
       val
     end

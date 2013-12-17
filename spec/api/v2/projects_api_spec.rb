@@ -20,6 +20,17 @@ describe V2::ProjectsApiV2 do
   let(:product6) {create(:product_with_versions, versions_count: 4, name: "thin",            prod_key: "thin",            version: "1.3.1", license: "MIT")}
   let(:product7) {create(:product_with_versions, versions_count: 4, name: "tilt",            prod_key: "tilt",            version: "1.3.3", license: "MIT")}
 
+  before :all do
+    FakeWeb.allow_net_connect = true
+    WebMock.allow_net_connect!
+  end
+
+  after :all do
+    WebMock.allow_net_connect!
+    FakeWeb.allow_net_connect = true
+    FakeWeb.clean_registry
+  end
+
   describe "Unauthorized user shouldnt have access, " do
 
     it "returns 401, when user tries to fetch list of project" do
@@ -33,7 +44,9 @@ describe V2::ProjectsApiV2 do
     end
 
     it "returns 401, when user tries to upload file" do
-      post project_uri + '.json', {upload: test_file, multipart:true, send_file: true}, "HTTPS" => "on"
+      file = test_file
+      post project_uri + '.json', {upload: file, multipart:true, send_file: true}, "HTTPS" => "on"
+      file.close
       response.status.should eq(401)
     end
 
@@ -53,13 +66,14 @@ describe V2::ProjectsApiV2 do
     end
 
     it "returns 201 and project info, when upload was successfully" do
+      file = test_file
       response = post project_uri, {
-        upload:    test_file,
+        upload:    file,
         api_key:   user_api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
-
+      file.close
       response.status.should eq(201)
     end
   end
@@ -79,13 +93,14 @@ describe V2::ProjectsApiV2 do
     include Rack::Test::Methods
 
     before :each do
+      file = test_file
       response = post project_uri, {
-        upload:    test_file,
+        upload:    file,
         api_key:   user_api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
-
+      file.close
       response.status.should eq(201)
     end
 

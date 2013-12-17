@@ -113,6 +113,8 @@ Versioneye::Application.routes.draw do
         post 'save_period'
         post 'save_email'
         post 'save_visibility'
+        post 'transitive_dependencies'
+        post 'save_notify_after_api_update'
         post 'reparse'
         post 'update_name'
         post 'add_collaborator'
@@ -133,7 +135,6 @@ Versioneye::Application.routes.draw do
     get '/github/fetch_all' , :to => 'github_repos#fetch_all'
     get '/github/clear'     , :to => 'github_repos#clear'
     get '/menu/github_repos', :to => 'github_repos#show_menu_items'
-    get '/poll/github_repos', :to => 'github_repos#poll_changes'
 
     resource :testimonials
   end

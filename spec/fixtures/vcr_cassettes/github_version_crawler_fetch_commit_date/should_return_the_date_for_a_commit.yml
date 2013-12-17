@@ -1,586 +1,146 @@
---- 
-http_interactions: 
-- request: 
-    method: get
-    uri: https://api.github.com/?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 23:02:33 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4910"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Etag: 
-      - "\"e4559722c53d01255bb3d12bbb945098\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:4DB5:11153CF:52928589
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA5WUy26DMBBF/4VFV1G8j1TlU5ADU3ALmPjRiFr8e2fGoUlU
-        yTabkMW587zjUDXeGJhc7S2Y2puhOlW9c7M9CSFndeyU6/3l2OhREFEdKuld
-        r436kU7pyaYlryyKG91CbUGapk8rIyOIP1/fw9WDWdbwNssODjNWyn+sNu6g
-        TQtmxdgwSjVkCqIeRARZoT9VRhEZgr9xTDmYGYQ/ANoMywihehj0TU1deiBc
-        +R8bhJOmA0d9d8rm6mIkCPrUqiURLjWdDwHElLV+18JYYEtXFul0IZHBWr5g
-        yYyUZ0QY0pN26kM1JS59QVGqTSenu8FrA7O2yqHjIZMdZVYE/F0Fi0Q4u2VG
-        u/7zLC3gJUny7h5xUTb7y6CaunTnIvIoNNJBPahR4amnrvzBkWhrfsmIYr/6
-        NuEpikAy6vFJvuPmnydeaqSXV6x8ZWwYxpO7snhsBtr0DDjWnQwijiJwcBrF
-        FqJ4cXcBSh3IMZ2aCPJ82RuOxiSQqmLBsxMzFuceyY+bdt+ot8wFI+fKdpiG
-        +MJnZ/0FisGLGfUGAAA=
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 23:02:33 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos//naturalsorte?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 404
-      message: Not Found
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 23:02:34 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 404 Not Found
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4909"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:4DB5:1115440:5292858A
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA6tWyk0tLk5MT1WyUvLLL1Fwyy/NS1HSUUrJTy7NTc0rSSzJ
-        zM+LLy3KAcpnlJQUWOnrp6SWpebkF6QW6aVnlmSUJukl5+fqlxkr1QIARorx
-        tEwAAAA=
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 23:02:34 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos//naturalsorter?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 404
-      message: Not Found
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 23:04:30 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 404 Not Found
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4908"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:4DB2:105CD9B:529285FE
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA6tWyk0tLk5MT1WyUvLLL1Fwyy/NS1HSUUrJTy7NTc0rSSzJ
-        zM+LLy3KAcpnlJQUWOnrp6SWpebkF6QW6aVnlmSUJukl5+fqlxkr1QIARorx
-        tEwAAAA=
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 23:04:30 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos/versioneye/naturalsorter?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 23:05:51 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4907"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sat, 16 Nov 2013 14:14:22 GMT
-      Etag: 
-      - "\"0bd7d1de997c8490ff57e3c99170be60\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2BDE:2FCC6C2:5292864E
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA+2YTW+kOBCG/0qENHvZTruhP0iQRrN72etKu3PaS8uAASuA
-        kTHd20H57/uajwY6M6E7zmEPkaKEgOvxS7nKlKu2eGh5G3e3c5zdwsppxiwP
-        f1QlaVoKqZi0FlZUpem+e3ZgsuQiZydGLoeJY47hXm2lIuY5OMNYQPRE60d3
-        Y6+chUUPVFG5r2SKYYlSRekRslrGsn2wDERG2kvy4D46zjYMfXu13a0322hj
-        B6G/3bpbFtrryP0Wfm0AX9a/f3H+wA8PWa54IPJyGXOVVL6m4b5tU+dh5W98
-        d+Paayd6dINHFj5Erh26mxUNlkUe/yK//gutvY69Fm3NKYDB9EVowUdTk6qE
-        z8jEGYnK0ou3H7ROh0YiTcURhIvxM5OQs51ewIbB8/hdDNjVRKiEYcHwKi/a
-        QbxUtwpqbGqi/8CvmlIiBiQLbxTVWUGSjreXmkhWiAZX+WUgeaEQn7eKm9iC
-        JWRMc/5M38OCbQmElnWrjMYGtuyAGL7VuDWqSSH5gQYn7RLJAsYPcPG7gBfW
-        4KlToTeIP0fe0Y7niu1pmOmkj7BvsJeF1YhQGNzcWCDJr4v4V7tKyM6Lipn/
-        xp6EeLyj+R1ih57uOC7uup3o7khPkBMJ+XSe983MbNw9SrdXk2vUzDK8zUAa
-        ggBRT+xkBtKAmuB3lzwBcpr6QlIl5vaGGYkTUk3G/+oYUoxmZtIbAkiJEIbe
-        bAgg8bKs2FVBPfPuDagkferkVea3O9w1CTPDbhFQS8uSxzljZl48U+rmi6KX
-        xpc0DxJDbg+pSXvVrDmNzcRqgBaYCt8MhM8iaSg1KRPafnvU3lifxmrIhCpZ
-        ZC5WQ85UJU1XvRGqKWcmvn8KAWCmtIeQuvNqSvO4orEh9kzB2uvvdEyfZyuX
-        mSwaMGCiqlOS+9UH7HkDSGttSwfkvqFbB85AbQqSt4ucOR+MKpvGC1nG58qD
-        GWTHmMT/R3B1vF6y9f/z9cwVgjWkJsMm3X4GOryRh7vvQK+U1MMkOuY+QH0L
-        IfWvBVWJ3scwV0ElM5LdMUjtU1Rdy+WyThhtauuMSdNkbhFgURkkqCKNlNY9
-        BAVRRlVTtkdaaIgyPhU0NEu8MwXEdi2N1LaIcagVOAObSWwIY2TGU1YqnKXN
-        uANmDM+F4hEPrjnAzCTehFR/K3kesAVN0wWiF+dsjnhGRa6XEvUoM3RSi8CL
-        oBOhkZKlDKFt5qEeUpP23BlIhqNJuKcKJwpnZTv3q929s/5uu57jeOuHfzBx
-        VYSTMet72763d9/tjYcfx9FjiqpMRpjpEHunh2A77AIRV+hx/PCUPz126NYB
-        LMsyGSx/G+y8n3VgOrsgRURdBP8Nsx4uv1RX2EJtIjJWoHyAQ7V2/oyr9dae
-        VAGBqHJ4fLuwjlShbMW3drjVVw4A/FX5+hiX0HLf5qHlKVnpMyTuDIk+unnk
-        T7wf1B7ZOvAaGyGXUnStphwpiLN9wfKO3AuA0Pag5sFi9Nzy8KRX20gPWUSr
-        VO3bWhlqM1q2XbL24gcPxr2Ez/YYITOdK730VzYLMPSzPTZtLpLP9ljT8H3V
-        dT2f8f8X7bGcqSM6Q/3+g11nfATpd6+X/wBD0rjmoBcAAA==
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 23:05:51 GMT
-- request: 
-    method: get
-    uri: https://api.github.com/repos/versioneye/naturalsorter/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
-      - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      Server: 
-      - GitHub.com
-      Date: 
-      - Sun, 24 Nov 2013 23:05:51 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Status: 
-      - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4906"
-      X-Ratelimit-Reset: 
-      - "1385336914"
-      Cache-Control: 
-      - public, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sat, 16 Nov 2013 14:14:13 GMT
-      Etag: 
-      - "\"4efc69dcf3d60cff53dd0cc38c6e1dff\""
-      Vary: 
-      - Accept
-      - Accept-Encoding
-      X-Github-Media-Type: 
-      - github.beta; format=json
-      Link: 
-      - <https://api.github.com/repositories/4766226/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd&top=master&last_sha=7f712340a1215a655af09a782fc6d18304df6383>; rel="next", <https://api.github.com/repositories/4766226/commits?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd&sha=master>; rel="first"
-      X-Content-Type-Options: 
-      - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
-      - "*"
-      X-Github-Request-Id: 
-      - 5FD03FB0:2BDD:1DF63F4:5292864F
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        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
-
-    http_version: 
-  recorded_at: Sun, 24 Nov 2013 23:05:51 GMT
-- request: 
+---
+http_interactions:
+- request:
     method: get
     uri: https://api.github.com/repos/versioneye/naturalsorter/commits/3cc7ef47557d7d790c7e55e667d451f56d276c13?client_id=23baa3ad794ac9a9214b&client_secret=bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
-    body: 
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept: 
+      string: ''
+    headers:
+      Accept:
       - application/vnd.github.beta+json
-      User-Agent: 
-      - Octokit Ruby Gem 2.6.1
-      Accept-Encoding: 
+      User-Agent:
+      - Octokit Ruby Gem 2.6.2
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: 
-    status: 
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Server: 
+    headers:
+      Server:
       - GitHub.com
-      Date: 
-      - Tue, 26 Nov 2013 01:55:16 GMT
-      Content-Type: 
+      Date:
+      - Thu, 05 Dec 2013 14:56:02 GMT
+      Content-Type:
       - application/json; charset=utf-8
-      Transfer-Encoding: 
+      Transfer-Encoding:
       - chunked
-      Status: 
+      Status:
       - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4999"
-      X-Ratelimit-Reset: 
-      - "1385434516"
-      Cache-Control: 
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4983'
+      X-Ratelimit-Reset:
+      - '1386258265'
+      Cache-Control:
       - public, max-age=60, s-maxage=60
-      Last-Modified: 
+      Last-Modified:
       - Mon, 17 Jun 2013 10:00:51 GMT
-      Etag: 
+      Etag:
       - "\"3480431effc102caeab1719fcb59c1a8\""
-      Vary: 
+      Vary:
       - Accept
       - Accept-Encoding
-      X-Github-Media-Type: 
+      X-Github-Media-Type:
       - github.beta; format=json
-      X-Content-Type-Options: 
+      X-Content-Type-Options:
       - nosniff
-      Access-Control-Allow-Credentials: 
-      - "true"
-      Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
-      Access-Control-Allow-Origin: 
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
       - "*"
-      X-Github-Request-Id: 
-      - 5CE56CE2:263D:C0C6B:5293FF84
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        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
-
+      X-Github-Request-Id:
+      - D95B947E:2CE5:12A6473:52A09401
+    body:
+      encoding: UTF-8
+      string: "{\"sha\":\"3cc7ef47557d7d790c7e55e667d451f56d276c13\",\"commit\":{\"author\":{\"name\":\"reiz\",\"email\":\"robert.reiz.81@gmail.com\",\"date\":\"2013-06-17T10:00:51Z\"},\"committer\":{\"name\":\"reiz\",\"email\":\"robert.reiz.81@gmail.com\",\"date\":\"2013-06-17T10:00:51Z\"},\"message\":\"remove
+        white spaces\",\"tree\":{\"sha\":\"6fe25fef0066a4e43aebf9bb93cef5bd320bd6a3\",\"url\":\"https://api.github.com/repos/versioneye/naturalsorter/git/trees/6fe25fef0066a4e43aebf9bb93cef5bd320bd6a3\"},\"url\":\"https://api.github.com/repos/versioneye/naturalsorter/git/commits/3cc7ef47557d7d790c7e55e667d451f56d276c13\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/versioneye/naturalsorter/commits/3cc7ef47557d7d790c7e55e667d451f56d276c13\",\"html_url\":\"https://github.com/versioneye/naturalsorter/commit/3cc7ef47557d7d790c7e55e667d451f56d276c13\",\"comments_url\":\"https://api.github.com/repos/versioneye/naturalsorter/commits/3cc7ef47557d7d790c7e55e667d451f56d276c13/comments\",\"author\":{\"login\":\"reiz\",\"id\":652130,\"avatar_url\":\"https://0.gravatar.com/avatar/11c3ac04d669661020cf80a822cd9620?d=https%3A%2F%2Fidenticons.github.com%2F001946c78373a160c3c4ba0ce91f8161.png&r=x\",\"gravatar_id\":\"11c3ac04d669661020cf80a822cd9620\",\"url\":\"https://api.github.com/users/reiz\",\"html_url\":\"https://github.com/reiz\",\"followers_url\":\"https://api.github.com/users/reiz/followers\",\"following_url\":\"https://api.github.com/users/reiz/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/reiz/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/reiz/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/reiz/subscriptions\",\"organizations_url\":\"https://api.github.com/users/reiz/orgs\",\"repos_url\":\"https://api.github.com/users/reiz/repos\",\"events_url\":\"https://api.github.com/users/reiz/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/reiz/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"reiz\",\"id\":652130,\"avatar_url\":\"https://0.gravatar.com/avatar/11c3ac04d669661020cf80a822cd9620?d=https%3A%2F%2Fidenticons.github.com%2F001946c78373a160c3c4ba0ce91f8161.png&r=x\",\"gravatar_id\":\"11c3ac04d669661020cf80a822cd9620\",\"url\":\"https://api.github.com/users/reiz\",\"html_url\":\"https://github.com/reiz\",\"followers_url\":\"https://api.github.com/users/reiz/followers\",\"following_url\":\"https://api.github.com/users/reiz/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/reiz/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/reiz/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/reiz/subscriptions\",\"organizations_url\":\"https://api.github.com/users/reiz/orgs\",\"repos_url\":\"https://api.github.com/users/reiz/repos\",\"events_url\":\"https://api.github.com/users/reiz/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/reiz/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"75245c523dc78614f5578e878245467ab4a9c6f4\",\"url\":\"https://api.github.com/repos/versioneye/naturalsorter/commits/75245c523dc78614f5578e878245467ab4a9c6f4\",\"html_url\":\"https://github.com/versioneye/naturalsorter/commit/75245c523dc78614f5578e878245467ab4a9c6f4\"}],\"stats\":{\"total\":72,\"additions\":36,\"deletions\":36},\"files\":[{\"sha\":\"dcc5239c9ed9f715eab46e9645a3c2f7a335d2d0\",\"filename\":\"lib/natcmp.rb\",\"status\":\"modified\",\"additions\":2,\"deletions\":2,\"changes\":4,\"blob_url\":\"https://github.com/versioneye/naturalsorter/blob/3cc7ef47557d7d790c7e55e667d451f56d276c13/lib/natcmp.rb\",\"raw_url\":\"https://github.com/versioneye/naturalsorter/raw/3cc7ef47557d7d790c7e55e667d451f56d276c13/lib/natcmp.rb\",\"contents_url\":\"https://api.github.com/repos/versioneye/naturalsorter/contents/lib/natcmp.rb?ref=3cc7ef47557d7d790c7e55e667d451f56d276c13\",\"patch\":\"@@
+        -61,10 +61,10 @@ def self.natcmp(str1, str2, caseInsensitive=false)\\n \\n
+        \        case (num1 <=> num2)\\n           when -1 then return -1\\n-          when
+        1 then return 1\\n+          when  1 then return  1\\n         end\\n       when
+        -1 then return -1\\n-      when 1 then return 1\\n+      when  1 then return
+        \ 1\\n     end # case\\n \\n   end # while\"},{\"sha\":\"1c15b689b0d80e09ec9e07357a5787f6e4dc3402\",\"filename\":\"lib/versioncmp.rb\",\"status\":\"modified\",\"additions\":34,\"deletions\":34,\"changes\":68,\"blob_url\":\"https://github.com/versioneye/naturalsorter/blob/3cc7ef47557d7d790c7e55e667d451f56d276c13/lib/versioncmp.rb\",\"raw_url\":\"https://github.com/versioneye/naturalsorter/raw/3cc7ef47557d7d790c7e55e667d451f56d276c13/lib/versioncmp.rb\",\"contents_url\":\"https://api.github.com/repos/versioneye/naturalsorter/contents/lib/versioncmp.rb?ref=3cc7ef47557d7d790c7e55e667d451f56d276c13\",\"patch\":\"@@
+        -29,11 +29,11 @@ class Versioncmp\\n   #\\n   def self.compare(a_val, b_val)\\n
+        \\n-    a_empty = a_val.nil? || a_val.empty? \\n-    b_empty = b_val.nil?
+        || b_val.empty? \\n+    a_empty = a_val.nil? || a_val.empty?\\n+    b_empty
+        = b_val.nil? || b_val.empty?\\n \\n-    return 0 if a_empty && b_empty\\n-
+        \   return 1 if (a_empty == false) && b_empty\\n+    return  0 if  a_empty
+        && b_empty\\n+    return  1 if (a_empty == false) && b_empty\\n     return
+        -1 if (b_empty == false) && a_empty\\n \\n     a = pre_process a_val\\n@@
+        -43,14 +43,14 @@ def self.compare(a_val, b_val)\\n     offset2 = 0;\\n \\n
+        \    for i in 0..100\\n-      break if offset1 >= a.length() || offset2 >=
+        b.length() \\n+      break if offset1 >= a.length() || offset2 >= b.length()\\n
+        \\n       part1 = Versioncmp.get_a_piece_of_the_cake(offset1, a);\\n       part2
+        = Versioncmp.get_a_piece_of_the_cake(offset2, b);\\n-      \\n+\\n       return
+        -1 if Versioncmp.timestamp?(part1) && part2.length() < 8\\n       return  1
+        if Versioncmp.timestamp?(part2) && part1.length() < 8\\n-      \\n+\\n       offset1
+        += part1.length() + 1;\\n       offset2 += part2.length() + 1;\\n \\n@@ -59,10
+        +59,10 @@ def self.compare(a_val, b_val)\\n         bi = part2.to_i;\\n         result
+        = Versioncmp.compare_int(ai, bi);\\n         return result if result != 0\\n-
+        \       next \\n+        next\\n       elsif ( !part1.match(/^[0-9]+$/) &&
+        !part2.match(/^[0-9]+$/) )\\n         result = double_scope_checker(a, b)\\n-
+        \       return result if result != 0      \\n+        return result if result
+        != 0\\n         result = Versioncmp.compare_string(part1, part2)\\n         return
+        result if (result != 0)\\n         next\\n@@ -73,12 +73,12 @@ def self.compare(a_val,
+        b_val)\\n         return -1;\\n       end\\n     end\\n-    result = Versioncmp.check_for_tags(a,
+        b) \\n+    result = Versioncmp.check_for_tags(a, b)\\n     return result\\n
+        \  end\\n-  \\n+\\n   # Tags are RC, alpha, beta, dev and so on.\\n-  # \\n+
+        \ #\\n   def self.check_for_tags(a, b)\\n     big = String.new(a)\\n     small
+        = String.new(b)\\n@@ -92,24 +92,24 @@ def self.check_for_tags(a, b)\\n         return
+        Versioncmp.compare_string_length(a, b)\\n       end\\n     end\\n-    self.compare_string_length_odd(a,
+        b)  \\n+    self.compare_string_length_odd(a, b)\\n   end\\n \\n   def self.double_scope_checker(a,
+        b)\\n     if VersionTagRecognizer.tagged?(a) && VersionTagRecognizer.tagged?(b)\\n-
+        \     a_without_scope   = VersionTagRecognizer.remove_tag a\\n+      a_without_scope
+        = VersionTagRecognizer.remove_tag a\\n       b_without_scope = VersionTagRecognizer.remove_tag
+        b\\n       if a_without_scope.eql? b_without_scope\\n         return VersionTagRecognizer.compare_tags(a,
+        b)\\n       end\\n     end\\n-    0 \\n+    0\\n   end\\n-  \\n+\\n   def
+        self.get_a_piece_of_the_cake(offset, cake)\\n     for z in 0..100\\n       offsetz
+        = offset + z\\n-      break if offsetz > cake.length() \\n+      break if
+        offsetz > cake.length()\\n       p = cake[ offset..offset + z ]\\n       if
+        ( p.match(/^\\\\w+\\\\.$/) != nil )\\n         break\\n@@ -121,21 +121,21
+        @@ def self.get_a_piece_of_the_cake(offset, cake)\\n     piece = cake[offset..offset
+        + z ]\\n     return piece\\n   end\\n-  \\n+\\n   def self.timestamp?(part)\\n
+        \    return part.length() == 8 && part.match(/^[0-9]+$/) != nil\\n   end\\n
+        \\n-  def self.pre_process val \\n+  def self.pre_process val\\n     a = replace_x_dev
+        val\\n-    replace_leading_v a \\n+    replace_leading_v a\\n     replace_99_does_not_exist
+        a\\n-    replace_timestamps a \\n-    VersionTagRecognizer.remove_minimum_stability
+        a \\n-    a \\n+    replace_timestamps a\\n+    VersionTagRecognizer.remove_minimum_stability
+        a\\n+    a\\n   end\\n \\n-  def self.replace_99_does_not_exist val \\n+  def
+        self.replace_99_does_not_exist val\\n     if val.eql?(\\\"99.0-does-not-exist\\\")\\n
+        \      val.gsub!(\\\"99.0-does-not-exist\\\", \\\"0.0.0\\\")\\n     end\\n@@
+        -148,12 +148,12 @@ def self.replace_99_does_not_exist val\\n   def self.replace_timestamps
+        val\\n     if val.match(/^[0-9]{8}$/)\\n       val.gsub!(/^[0-9]{8}$/, \\\"0.0.0\\\")\\n-
+        \   elsif val.match(/^[0-9]{8}.[0-9]{6}$/) \\n+    elsif val.match(/^[0-9]{8}.[0-9]{6}$/)\\n
+        \      val.gsub!(/^[0-9]{8}.[0-9]{6}$/, \\\"0.0.0\\\")\\n     end\\n   end\\n
+        \\n-  def self.replace_x_dev val \\n+  def self.replace_x_dev val\\n     new_val
+        = String.new(val)\\n     if val.eql?(\\\"dev-master\\\")\\n       new_val
+        = \\\"9999999\\\"\\n@@ -165,17 +165,17 @@ def self.replace_x_dev val\\n     new_val\\n
+        \  end\\n \\n-  def self.replace_leading_v val \\n+  def self.replace_leading_v
+        val\\n     val.gsub!(/^v/, \\\"\\\") if val.match(/^v[0-9]+/)\\n   end\\n
+        \\n-  def self.replace_leading_vs a, b \\n-    self.replace_leading_v a \\n+
+        \ def self.replace_leading_vs a, b\\n+    self.replace_leading_v a\\n     self.replace_leading_v
+        b\\n   end\\n \\n   def self.check_jquery_versioning(part1, part2)\\n-    #
+        --- START ---- special case for awesome jquery shitty verison numbers \\n+
+        \   # --- START ---- special case for awesome jquery shitty verison numbers\\n
+        \    if ( part1.match(/^[0-9]+[a-zA-Z]+[0-9]+$/) != nil && part2.match(/^[0-9]+$/)
+        != nil )\\n       part1_1 = part1.match(/^[0-9]+/)\\n       result = Versioncmp.compare_int(part1_1[0],
+        part2)\\n@@ -195,7 +195,7 @@ def self.check_jquery_versioning(part1, part2)\\n
+        \    end\\n \\n     return nil\\n-    # --- END ---- special case for awesome
+        jquery shitty verison numbers \\n+    # --- END ---- special case for awesome
+        jquery shitty verison numbers\\n   end\\n \\n   def self.compare_int(ai, bi)\\n@@
+        -203,20 +203,20 @@ def self.compare_int(ai, bi)\\n     return  0 if (ai ==
+        bi)\\n     return  1\\n   end\\n-  \\n+\\n   def self.compare_string(a, b)\\n
+        \    return  0 if a.eql? b\\n     return -1 if a < b\\n     return  1\\n   end\\n
+        \\n-  def self.compare_string_length(a, b)  \\n+  def self.compare_string_length(a,
+        b)\\n     return  0 if a.length() == b.length()\\n     return  1 if a.length()
+        <  b.length()\\n     return -1\\n   end\\n \\n-  def self.compare_string_length_odd(a,
+        b)  \\n+  def self.compare_string_length_odd(a, b)\\n     return  1 if a.length
+        > b.length\\n     return -1 if a.length < b.length\\n     return  0\"}]}"
     http_version: 
-  recorded_at: Tue, 26 Nov 2013 01:55:16 GMT
-recorded_with: VCR 2.7.0
+  recorded_at: Thu, 05 Dec 2013 14:56:02 GMT
+recorded_with: VCR 2.8.0

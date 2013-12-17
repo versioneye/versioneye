@@ -1,24 +1,20 @@
 class LanguageController < ApplicationController
 
-  @@languages = [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
-    Product::A_LANGUAGE_PYTHON, Product::A_LANGUAGE_PHP, Product::A_LANGUAGE_NODEJS,
-    Product::A_LANGUAGE_JAVASCRIPT, Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R,
-    Product::A_LANGUAGE_OBJECTIVEC]
-
   def index
     @languages = Language.all.desc(:updated_at)
   end
 
   def show
-    sample_size           = 24
-    max_population_size   = 10 * sample_size
     @lang            = Product.decode_language(params[:lang])
     @top_products    = Product.by_language(@lang).desc(:followers).limit(10)
     @latest_products = Newest.by_language(@lang).desc(:created_at).limit(10)
     @latest_stats    = LanguageDailyStats.latest_stats(@lang)
 
     @followers = []
-    @languages = @@languages
+    @languages = [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
+                  Product::A_LANGUAGE_PYTHON, Product::A_LANGUAGE_PHP, Product::A_LANGUAGE_NODEJS,
+                  Product::A_LANGUAGE_JAVASCRIPT, Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R,
+                  Product::A_LANGUAGE_OBJECTIVEC]
     @language  = Language.where(name: @lang).first
 
     #build sample population of followers
@@ -42,7 +38,7 @@ class LanguageController < ApplicationController
   def show_block
     lang = Product.decode_language(params[:lang])
     language = Language.where(name: lang).first
-    render partial: "language/helpers/language_block", locals: {language: language}
+    render partial: 'language/helpers/language_block', locals: {language: language}
   end
 
   def new
@@ -60,7 +56,7 @@ class LanguageController < ApplicationController
     new_lang[:param_name] = Product.encode_language(new_lang[:name])
 
     if new_lang.save
-      flash[:success] = "Language is added successfully."
+      flash[:success] = 'Language is added successfully.'
       redirect_to language_path
     else
       flash[:error] = "Can not save language: #{new_lang.errors.full_messages.to_sentence}"
@@ -73,10 +69,10 @@ class LanguageController < ApplicationController
     old_language = Language.where(name: updated_language[:name]).first
     old_language.update_attributes!(updated_language)
     if old_language.save
-      flash[:success] = "Language is now opdated."
+      flash[:success] = 'Language is now opdated.'
       redirect_to "/language/#{old_language[:param_name]}"
     else
-      flash[:error] = "Can not save updates."
+      flash[:error] = 'Can not save updates.'
       redirect_to :back
     end
   end

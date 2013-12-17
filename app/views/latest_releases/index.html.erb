@@ -1,11 +1,11 @@
-<% title "Latest releases" %>
+<% title 'Latest releases' %>
 
-<%= render partial: "latest_plots" %>
+<%= render partial: 'latest_plots' %>
 
 <div class = "release-list">
-  <h3> <%= @latest_releases.count || "" %> latest release</h3>
+  <h3> <%= @latest_releases.count || '' %> latest release</h3>
   <div class = "row-fluid">
-    <%= render partial: "release_list_item", collection: @latest_releases, locals: {columns: 2} %>
+    <%= render partial: 'release_list_item', collection: @latest_releases, locals: {columns: 2} %>
   </div>
 </div>
 

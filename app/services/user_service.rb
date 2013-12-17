@@ -12,18 +12,19 @@ class UserService
     SecureRandom.urlsafe_base64(length)
   end
 
-  def self.valid_user?(user, flash, t)
-    if !User.email_valid?(user.email)
-      flash[:error] = "page_signup_error_email"
+  def self.valid_user?(user, flash)
+    unless User.email_valid?(user.email)
+      flash[:error] = 'page_signup_error_email'
       return false
-    elsif user.fullname.nil? || user.fullname.empty?
-      flash[:error] = "page_signup_error_fullname"
+    end
+    if user.fullname.nil? || user.fullname.empty?
+      flash[:error] = 'page_signup_error_fullname'
       return false
     elsif user.password.nil? || user.password.empty? || user.password.size < 5
-      flash[:error] = "page_signup_error_password"
+      flash[:error] = 'page_signup_error_password'
       return false
     elsif !user.terms
-      flash[:error] = "page_signup_error_terms"
+      flash[:error] = 'page_signup_error_terms'
       return false
     end
     true
@@ -42,7 +43,7 @@ class UserService
     user.deleted        = true
     user.email          = "#{random}_#{user.email}"
     user.prev_fullname  = user.fullname
-    user.fullname       = "Deleted"
+    user.fullname       = 'Deleted'
     user.username       = "#{random}_#{user.username}"
     user.github_id      = nil
     user.github_token   = nil
@@ -65,7 +66,7 @@ class UserService
 
   def self.create_random_value
     chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-    value = ""
+    value = ''
     10.times { value << chars[rand(chars.size)] }
     value
   end

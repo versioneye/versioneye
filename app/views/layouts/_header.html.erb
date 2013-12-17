@@ -5,7 +5,7 @@
       <div class="span4 brand-container" style="margin-left: 0; padding-left: 0; height: 50px;">
         <div style="margin-top: 15px;" class="pull-left">
           <% if signed_in? %>
-            <%= link_to image_tag("logos/versioneye-transparent.png"), user_projects_path %>
+            <%= link_to image_tag('logos/versioneye-transparent.png'), user_projects_path %>
           <% else %>
             <a href="/" ><%= image_tag "logos/versioneye-transparent.png" %></a>
           <% end %>
@@ -14,7 +14,7 @@
 
       <div class = "span7 pull-right">
         <ul class="nav pull-right">
-          <% if !signed_in? %>
+          <% unless signed_in? %>
             <li>
               <%= link_to "Pricing", "/pricing" %>
             </li>

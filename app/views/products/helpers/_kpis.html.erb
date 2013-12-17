@@ -15,12 +15,12 @@
   </div>
 
 
-  <% rel_text = "info" %>
   <% days_ago = @product.released_days_ago %>
-  <% rel_bg = "success" if days_ago < 30  %>
-  <% rel_bg = "info"    if days_ago >= 30 && days_ago <= 90  %>
-  <% rel_bg = "warn"    if days_ago > 90  && days_ago <= 180  %>
-  <% rel_bg = "error"   if days_ago > 180 %>
+  <% rel_bg = '' %>
+  <% rel_bg = 'success' if days_ago < 30  %>
+  <% rel_bg = 'info'    if days_ago >= 30 && days_ago <= 90  %>
+  <% rel_bg = 'warn'    if days_ago > 90  && days_ago <= 180  %>
+  <% rel_bg = 'error'   if days_ago > 180 %>
   <div class="flash <%= rel_bg %>" style="margin-bottom: 5px;" >
     <b title="<%= @product.released_ago_text %>" >Released:</b>
     <span title="<%= @product.released_ago_text %>">
@@ -36,6 +36,7 @@
   <% if average_release_time.nil? %>
     <% average_release_time = VersionService.estimated_average_release_time( @product.versions ) %>
   <% end %>
+  <% art_text = "" %>
   <% art_text = "Not Available" if average_release_time == 0 %>
   <% art_bg = "info" %>
   <% if !average_release_time.nil? && average_release_time > 0 %>
@@ -64,6 +65,7 @@
       @product.language.eql?(Product::A_LANGUAGE_PHP) ||
       @product.language.eql?(Product::A_LANGUAGE_OBJECTIVEC) %>
   <% references = @product.used_by_count %>
+  <% ref_bg = "" %>
   <% ref_bg = "success" if references >= 100  %>
   <% ref_bg = "info"    if references >= 10 and references < 100  %>
   <% ref_bg = "warn"    if references >  0  and references < 10  %>
@@ -82,6 +84,7 @@
 <% end %>
 
   <% main_dep_count = @product.dependencies(nil).count %>
+  <% dep_bg = "" %>
   <% dep_bg = "success" if main_dep_count <= 9  %>
   <% dep_bg = "info" if main_dep_count > 9 and main_dep_count < 15  %>
   <% dep_bg = "warn" if main_dep_count >= 15 and main_dep_count < 30  %>
@@ -102,7 +105,7 @@
           @product.language.eql?(Product::A_LANGUAGE_PYTHON) ||
           @product.language.eql?(Product::A_LANGUAGE_OBJECTIVEC) ||
           @product.language.eql?(Product::A_LANGUAGE_R) %>
-      <a href="/<%= @product.language_esc %>" alt="<%= @product.language_esc %>" title="<%= @product.language_esc %>"><%= @product.language %></a>
+      <a href="/<%= @product.language_esc %>" title="<%= @product.language_esc %>"><%= @product.language %></a>
     <% else %>
       <%= @product.language %>
     <% end %>

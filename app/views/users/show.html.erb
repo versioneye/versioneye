@@ -1,14 +1,14 @@
-<% page_header "Profile" %>
+<% page_header 'Profile' %>
 
-<% if !@user.nil? %>
+<% if @user %>
 	<% title "#{@user.username} (#{@user.fullname}) is following Libraries at VersionEye" %>
 <% end %>
 
-<% if !@user.nil? && @user.deleted %>
+<% if @user && @user.deleted %>
 	This Account does not exist anymore.
 <% end %>
 
-<% if !@user.nil? && !@user.deleted %>
+<% if @user && !@user.deleted %>
 
 	<%= render "header" %>
 
@@ -56,4 +56,3 @@
 	</div>
 
 <% end %>
-<%= render 'shared/dialog_follow' %>

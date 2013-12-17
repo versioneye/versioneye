@@ -4,15 +4,17 @@ http_interactions:
     method: post
     uri: https://github.com/login/oauth/access_token
     body:
-      encoding: US-ASCII
-      string: "{\"code\":\"79ac3ef94f10e72f2302\",\"client_id\":\"23baa3ad794ac9a9214b\",\"client_secret\":\"bf2bc9df8933e9a1784bbcec2b46527b6e8098dd\"}"
+      encoding: UTF-8
+      string: "{\"code\":\"003f290db37ad2ceefc9\",\"client_id\":\"23baa3ad794ac9a9214b\",\"client_secret\":\"bf2bc9df8933e9a1784bbcec2b46527b6e8098dd\"}"
     headers:
       Accept:
       - application/json
       User-Agent:
-      - Octokit Ruby Gem 2.6.1
+      - Octokit Ruby Gem 2.6.2
       Content-Type:
       - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
   response:
     status:
       code: 200
@@ -21,9 +23,11 @@ http_interactions:
       Server:
       - GitHub.com
       Date:
-      - Sun, 01 Dec 2013 19:20:01 GMT
+      - Thu, 05 Dec 2013 15:24:07 GMT
       Content-Type:
       - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
       Status:
       - 200 OK
       Cache-Control:
@@ -33,33 +37,32 @@ http_interactions:
       X-Frame-Options:
       - deny
       Set-Cookie:
-      - logged_in=no; domain=.github.com; path=/; expires=Thu, 01-Dec-2033 19:20:01 GMT; secure; HttpOnly
+      - logged_in=no; domain=.github.com; path=/; expires=Mon, 05-Dec-2033 15:24:07
+        GMT; secure; HttpOnly
       X-Runtime:
-      - "20"
+      - '7'
       Etag:
       - "\"5f86dfb601a19f70c1eafb6e002e3297\""
-      Content-Length:
-      - "92"
       X-Github-Request-Id:
-      - 6D2D0110:5403:85DE941:529B8BE0
+      - D95B947E:31F0:2C5A6E7:52A09A96
       Vary:
       - Accept-Encoding
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: "{\"access_token\":\"3974100548430f742b9716b2e26ba73437fe8028\",\"token_type\":\"bearer\",\"scope\":\"\"}"
     http_version:
-  recorded_at: Sun, 01 Dec 2013 19:20:01 GMT
+  recorded_at: Thu, 05 Dec 2013 15:24:07 GMT
 - request:
     method: get
     uri: https://api.github.com/user
     body:
       encoding: US-ASCII
-      string: ""
+      string: ''
     headers:
       Accept:
       - application/vnd.github.beta+json
       User-Agent:
-      - Octokit Ruby Gem 2.6.1
+      - Octokit Ruby Gem 2.6.2
       Authorization:
       - token 3974100548430f742b9716b2e26ba73437fe8028
       Accept-Encoding:
@@ -72,7 +75,7 @@ http_interactions:
       Server:
       - GitHub.com
       Date:
-      - Sun, 01 Dec 2013 19:20:03 GMT
+      - Thu, 05 Dec 2013 15:24:07 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -80,19 +83,19 @@ http_interactions:
       Status:
       - 200 OK
       X-Ratelimit-Limit:
-      - "5000"
+      - '5000'
       X-Ratelimit-Remaining:
-      - "4993"
+      - '4992'
       X-Ratelimit-Reset:
-      - "1385926294"
+      - '1386258009'
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Last-Modified:
-      - Sun, 01 Dec 2013 19:11:18 GMT
+      - Wed, 04 Dec 2013 16:53:45 GMT
       Etag:
-      - "\"422566adc0075c1b589eeb7ddc91f3dc\""
+      - "\"f65bfd19ae8b59ef378df7a48b1554eb\""
       X-Oauth-Scopes:
-      - ""
+      - ''
       X-Accepted-Oauth-Scopes:
       - user
       Vary:
@@ -103,33 +106,163 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Allow-Credentials:
-      - "true"
+      - 'true'
       Access-Control-Expose-Headers:
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
       Access-Control-Allow-Origin:
       - "*"
       X-Github-Request-Id:
-      - 6D2D0110:7CE9:8015A07:529B8BE2
-      Content-Encoding:
-      - gzip
+      - D95B947E:31F1:3E397E4:52A09A97
     body:
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA5VUXWvbMBT9K8LQPSW2ZKduYij7KO3LBoOu28NegizLjqgt
-        GVlOlob+9x7Z6VfGWAKBxNY55557r052QW0qpYMssFI9BJNAFUGWnscsoZOA
-        r7njdtnbGucr59oui6I4rOx4EArTROPPiDGRcEFnRZou0pTRmIpyTvk8jkWx
-        SGP6sbgcBM6Sz2fxDT6qkNopYXQXVsqt+tyr4T2lbDFLxcU8uUg4S6lIxCzn
-        VMgFK+csZWGrqw/28g+sPvtYes/B/xyA8L4R3qo3paO+k7aL9lNYuaY+6PvV
-        5TOoNHVtNmAdIP8pHL0wYGb8rXR1IhuMXWTcSmIxsPzoB6E6d7yJAb2L/Bcm
-        5/kdtmxlcbSRPR42NhoOdhhIawahPu+EVa1T2Ovxcm9ZUDG24lo98NNUwOpA
-        9laOLz2gwZJr3MbjaSN8F7VWrbnY+tatFFKtMcQTpQ54UHLbVuI+/8Ry/UiV
-        k0teND6jJa87OQk0bzzg1uTSOnI75hbpabne4v0v3EjM/3orQc8R7314kV07
-        UKb+kvu44bw2YpgzMF+krVEFw2i4QuJ1X9eTYKWs5HmNgvvquTIAX11/J5/I
-        a6mQ+HijxHqsLrfSVyD3UrbEWS7uO2JKsj/tQnIzhIdsTW/JD1O6DbeSfFO5
-        5VbJjnBdkEo6oo1TpZIF4bnp8Sg3f2lMyC13cmBcmabBIonRxKAUYZR+fRUN
-        CZpr+7xWYjkuPmPJcxBhO8hi/Om95BKPs0kg0L7DWrlD1zFlbEqTKT2/o+cZ
-        W4DwG5p9W7zDJFMWTym7A4CxjM09Zl93CB+UH58AhJDmmXkFAAA=
-
+      encoding: UTF-8
+      string: "{\"login\":\"reiz\",\"id\":652130,\"avatar_url\":\"https://2.gravatar.com/avatar/11c3ac04d669661020cf80a822cd9620?d=https%3A%2F%2Fidenticons.github.com%2F001946c78373a160c3c4ba0ce91f8161.png&r=x\",\"gravatar_id\":\"11c3ac04d669661020cf80a822cd9620\",\"url\":\"https://api.github.com/users/reiz\",\"html_url\":\"https://github.com/reiz\",\"followers_url\":\"https://api.github.com/users/reiz/followers\",\"following_url\":\"https://api.github.com/users/reiz/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/reiz/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/reiz/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/reiz/subscriptions\",\"organizations_url\":\"https://api.github.com/users/reiz/orgs\",\"repos_url\":\"https://api.github.com/users/reiz/repos\",\"events_url\":\"https://api.github.com/users/reiz/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/reiz/received_events\",\"type\":\"User\",\"site_admin\":false,\"name\":\"Robert
+        Reiz\",\"company\":\"VersionEye\",\"blog\":\"http://robert-reiz.com\",\"location\":\"Berlin\",\"email\":null,\"hireable\":false,\"bio\":\"CEO
+        @ VersionEye. http://www.versioneye.com keep tracks of versions. Follow your Software
+        Libraries and get notified about new versions. Follow, Rate and Comment on
+        over 100K Libraries. \",\"public_repos\":14,\"followers\":20,\"following\":24,\"created_at\":\"2011-03-05T05:19:20Z\",\"updated_at\":\"2013-12-04T16:53:45Z\",\"public_gists\":2}"
     http_version:
-  recorded_at: Sun, 01 Dec 2013 19:20:03 GMT
-recorded_with: VCR 2.7.0
+  recorded_at: Thu, 05 Dec 2013 15:24:08 GMT
+- request:
+    method: get
+    uri: https://api.github.com/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.beta+json
+      User-Agent:
+      - Octokit Ruby Gem 2.6.2
+      Authorization:
+      - token 3974100548430f742b9716b2e26ba73437fe8028
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Thu, 05 Dec 2013 15:24:08 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4991'
+      X-Ratelimit-Reset:
+      - '1386258009'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Wed, 04 Dec 2013 16:53:45 GMT
+      Etag:
+      - "\"f65bfd19ae8b59ef378df7a48b1554eb\""
+      X-Oauth-Scopes:
+      - ''
+      X-Accepted-Oauth-Scopes:
+      - user
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.beta; format=json
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - D95B947E:31F2:415E107:52A09A98
+    body:
+      encoding: UTF-8
+      string: "{\"login\":\"reiz\",\"id\":652130,\"avatar_url\":\"https://0.gravatar.com/avatar/11c3ac04d669661020cf80a822cd9620?d=https%3A%2F%2Fidenticons.github.com%2F001946c78373a160c3c4ba0ce91f8161.png&r=x\",\"gravatar_id\":\"11c3ac04d669661020cf80a822cd9620\",\"url\":\"https://api.github.com/users/reiz\",\"html_url\":\"https://github.com/reiz\",\"followers_url\":\"https://api.github.com/users/reiz/followers\",\"following_url\":\"https://api.github.com/users/reiz/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/reiz/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/reiz/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/reiz/subscriptions\",\"organizations_url\":\"https://api.github.com/users/reiz/orgs\",\"repos_url\":\"https://api.github.com/users/reiz/repos\",\"events_url\":\"https://api.github.com/users/reiz/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/reiz/received_events\",\"type\":\"User\",\"site_admin\":false,\"name\":\"Robert
+        Reiz\",\"company\":\"VersionEye\",\"blog\":\"http://robert-reiz.com\",\"location\":\"Berlin\",\"email\":null,\"hireable\":false,\"bio\":\"CEO
+        @ VersionEye. http://versioneye.com keep tracks of versions. Follow your Software
+        Libraries and get notified about new versions. Follow, Rate and Comment on
+        over 100K Libraries. \",\"public_repos\":14,\"followers\":20,\"following\":24,\"created_at\":\"2011-03-05T05:19:20Z\",\"updated_at\":\"2013-12-04T16:53:45Z\",\"public_gists\":2}"
+    http_version:
+  recorded_at: Thu, 05 Dec 2013 15:24:08 GMT
+- request:
+    method: get
+    uri: https://api.github.com/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.beta+json
+      User-Agent:
+      - Octokit Ruby Gem 2.6.2
+      Authorization:
+      - token 3974100548430f742b9716b2e26ba73437fe8028
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Thu, 05 Dec 2013 15:24:08 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4990'
+      X-Ratelimit-Reset:
+      - '1386258009'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Wed, 04 Dec 2013 16:53:45 GMT
+      Etag:
+      - "\"f65bfd19ae8b59ef378df7a48b1554eb\""
+      X-Oauth-Scopes:
+      - ''
+      X-Accepted-Oauth-Scopes:
+      - user
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.beta; format=json
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - D95B947E:31F4:407F005:52A09A98
+    body:
+      encoding: UTF-8
+      string: "{\"login\":\"reiz\",\"id\":652130,\"avatar_url\":\"https://2.gravatar.com/avatar/11c3ac04d669661020cf80a822cd9620?d=https%3A%2F%2Fidenticons.github.com%2F001946c78373a160c3c4ba0ce91f8161.png&r=x\",\"gravatar_id\":\"11c3ac04d669661020cf80a822cd9620\",\"url\":\"https://api.github.com/users/reiz\",\"html_url\":\"https://github.com/reiz\",\"followers_url\":\"https://api.github.com/users/reiz/followers\",\"following_url\":\"https://api.github.com/users/reiz/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/reiz/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/reiz/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/reiz/subscriptions\",\"organizations_url\":\"https://api.github.com/users/reiz/orgs\",\"repos_url\":\"https://api.github.com/users/reiz/repos\",\"events_url\":\"https://api.github.com/users/reiz/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/reiz/received_events\",\"type\":\"User\",\"site_admin\":false,\"name\":\"Robert
+        Reiz\",\"company\":\"VersionEye\",\"blog\":\"http://robert-reiz.com\",\"location\":\"Berlin\",\"email\":null,\"hireable\":false,\"bio\":\"CEO
+        @ VersionEye. http://versioneye.com keep tracks of versions. Follow your Software
+        Libraries and get notified about new versions. Follow, Rate and Comment on
+        over 100K Libraries. \",\"public_repos\":14,\"followers\":20,\"following\":24,\"created_at\":\"2011-03-05T05:19:20Z\",\"updated_at\":\"2013-12-04T16:53:45Z\",\"public_gists\":2}"
+    http_version:
+  recorded_at: Thu, 05 Dec 2013 15:24:09 GMT
+recorded_with: VCR 2.8.0

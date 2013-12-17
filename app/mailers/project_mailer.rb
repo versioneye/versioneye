@@ -14,17 +14,12 @@ class ProjectMailer < ActionMailer::Base
     @project_name = project.name
     @projectlink  = "#{Settings.server_url}/user/projects/#{project.id}"
 
-    email = nil
-    if user.nil?
-      email = Project.email_for(project, @user)
-    else
-      email = user.email
-    end
+    email = user ? user.email : Project.email_for(project, @user)
 
     mail(
       :to      => email,
       :subject => "Project Notification for #{project.name}",
-      :tag     => "project_notification"
+      :tag     => 'project_notification'
       )
   end
 

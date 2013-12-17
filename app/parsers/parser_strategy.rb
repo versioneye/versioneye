@@ -55,7 +55,6 @@ class ParserStrategy
       else
         return nil
     end
-    nil
   end
 
 end

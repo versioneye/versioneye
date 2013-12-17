@@ -39,7 +39,6 @@ class Newest
 
   def self.balanced_novel(count)
     newest = []
-    nlangs = Product.supported_languages.count
     Product.supported_languages.each do |lang|
       newest.concat Newest.where(language: lang, novel: true).desc(:created_at).limit(count)
     end
@@ -47,8 +46,8 @@ class Newest
   end
 
   def language_esc
-    return "nodejs" if language.eql?(Product::A_LANGUAGE_NODEJS)
-    return language.downcase
+    return 'nodejs' if language.eql?(Product::A_LANGUAGE_NODEJS)
+    language.downcase
   end
 
 end

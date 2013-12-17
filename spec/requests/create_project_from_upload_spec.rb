@@ -21,6 +21,7 @@ describe "Create Project from file uplaod" do
     gemfile = "#{Rails.root}/spec/assets/Gemfile"
     file_attachment = Rack::Test::UploadedFile.new(gemfile, "application/octet-stream")
     post "/user/projects", {:utf8 => true, :upload => {:datafile => file_attachment }}, "HTTPS" => "on"
+    file_attachment.close
     assert_response 302
     project = Project.first
     project.should_not be_nil

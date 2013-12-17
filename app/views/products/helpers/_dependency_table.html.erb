@@ -1,8 +1,8 @@
 
   <% if @product.language.eql?( Product::A_LANGUAGE_JAVA ) %>
-    <% font_size = "12" %>
+    <% font_size = '12' %>
   <% else %>
-    <% font_size = "14" %>
+    <% font_size = '14' %>
   <% end %>
   <table class="dependency_table" style="width: 570px; font-size: <%=font_size%>px;">
     <thead>
@@ -14,7 +14,7 @@
     </thead>
     <% dependencies.each do |dep| %>
       <% dep.update_known_if_nil() %>
-      <% tr_class = "flash warn" if DependencyService.cache_outdated?( dep ) %>
+      <% tr_class = DependencyService.cache_outdated?( dep ) ? "flash warn" : ""  %>
       <tr class="<%= tr_class %>">
         <td>
           <% if dep.known && dep.product %>

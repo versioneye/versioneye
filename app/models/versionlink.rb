@@ -21,8 +21,8 @@ class Versionlink
     {
       :name => self.name,
       :link => self.link,
-      :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
-      :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
+      :created_at => self.created_at.strftime('%Y.%m.%d %I:%M %p'),
+      :updated_at => self.updated_at.strftime('%Y.%m.%d %I:%M %p')
     }
   end
 
@@ -62,7 +62,7 @@ class Versionlink
 
   def get_link
     return "http://#{self.link}" if self.link.match(/^www.*/) != nil
-    return self.link
+    self.link
   end
 
 end

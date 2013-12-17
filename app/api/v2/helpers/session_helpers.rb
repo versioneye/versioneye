@@ -27,10 +27,9 @@ module SessionHelpers
   end
 
   def github_connected?(user)
-    if !user.github_account_connected?
-      error! "Github account is not connected. Check your settings on versioneye.com", 401
-    end
-    true
+    return true if user.github_account_connected?
+    error! "Github account is not connected. Check your settings on versioneye.com", 401
+    false
   end
   def clear_session
     cookies[:api_key] = nil

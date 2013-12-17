@@ -25,7 +25,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    if Set["1", "on", "true"].include? params[:user][:terms]
+    if Set['1', 'on', 'true'].include? params[:user][:terms]
       @user[:terms] = true
     else
       @user[:terms] = false
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
 
     @user[:datenerhebung] = @user[:terms]
 
-    unless UserService.valid_user?(@user, flash, t)
+    unless UserService.valid_user?(@user, flash)
       flash[:error] = t(flash[:error])
       redirect_to signup_path and return
     end
@@ -58,7 +58,7 @@ class UsersController < ApplicationController
 
   def create_mobile
     @user = User.new(params[:user])
-    if Set["1", "on", "true"].include? params[:user][:terms]
+    if Set['1', 'on', 'true'].include? params[:user][:terms]
       @user[:terms] = true
     else
       @user[:terms] = false
@@ -66,14 +66,14 @@ class UsersController < ApplicationController
 
     @user[:datenerhebung] = @user[:terms]
 
-    if UserService.valid_user?(@user, flash, t)
+    if UserService.valid_user?(@user, flash)
       @user.create_username
       @user.create_verification
       if @user.save
         @user.send_verification_email
         User.new_user_email(@user)
         sign_in @user
-        redirect_to "/lottery/libraries"
+        redirect_to '/lottery/libraries'
       else
         flash[:error] = "#{t(:general_error)} - #{@user.errors.full_messages.to_sentence}"
         redirect_to :back and return

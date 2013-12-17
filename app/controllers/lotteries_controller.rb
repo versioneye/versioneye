@@ -15,37 +15,37 @@ class LotteriesController < ApplicationController
   def show_verification
     verification = params[:verification]
     if User.activate!(verification)
-      flash[:success] = "Congratulation. Your Account is activated. Please Sign In."
-      redirect_to "/lottery/signin" and return
+      flash[:success] = 'Congratulation. Your Account is activated. Please Sign In.'
+      redirect_to '/lottery/signin' and return
     end
 
-    flash[:error] = "Sorry! Verification failed."
-    redirect_to "/lottery" #if failed, move back to lottery landing page
+    flash[:error] = 'Sorry! Verification failed.'
+    redirect_to '/lottery' #if failed, move back to lottery landing page
   end
 
   def show_signin
-    render template: "lotteries/_signin_form"
+    render template: 'lotteries/_signin_form'
   end
 
   def libraries
     unless valid_ticket?
-      redirect_to "/lottery/thankyou" and return
+      redirect_to '/lottery/thankyou' and return
     end
 
     @products = Product.all.desc(:followers).limit(12)
-    render template: "/lotteries/libraries"
+    render template: '/lotteries/libraries'
   end
 
   def thankyou
     @tickets = Lottery.by_user(current_user)
     @deadline = Date.new(2013, 10, 31)
     @today = Date.today
-    render template: "/lotteries/thankyou"
+    render template: '/lotteries/thankyou'
   end
 
   def follow
     unless valid_ticket?
-      redirect_to "/lottery/thankyou" and return
+      redirect_to '/lottery/thankyou' and return
     end
 
     product_tokens = params[:products] || []
@@ -63,7 +63,7 @@ class LotteriesController < ApplicationController
     lottery.save
 
     UserMailer.new_ticket(current_user, lottery).deliver
-    redirect_to "/lottery/thankyou"
+    redirect_to '/lottery/thankyou'
   rescue => e
     Rails.logger.error e
   end
@@ -72,10 +72,10 @@ class LotteriesController < ApplicationController
 
     def valid_ticket?
       if Lottery.by_user(current_user).count > 0
-        flash[:error] = "You already have a ticket."
+        flash[:error] = 'You already have a ticket.'
         return false
       end
-      return true
+      true
     end
 
 end
