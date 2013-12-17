@@ -230,7 +230,7 @@ class User::ProjectsController < ApplicationController
     id     = params[:id]
     notify = params[:notify]
     @project = Project.find_by_id id
-    if notify.eql? Project::A_NOTIFY_AFTER_API_UPDATE_NOTIFY
+    if notify.eql?('notify')
       @project.notify_after_api_update = true
     else
       @project.notify_after_api_update = false

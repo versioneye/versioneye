@@ -152,7 +152,7 @@ module V2
         project = Project.find_by_id( params[:project_id] )
 
         if project && project.collaborator?( current_user )
-          Thread.new{ ProjectService.update( project, false ) }
+          Thread.new{ ProjectService.update( project, project.notify_after_api_update ) }
           present :success, true
         else
           present :success, "No! You do not have access to this project!"
