@@ -18,18 +18,18 @@ require 'httparty'
 
 class Github
 
-  A_USER_AGENT = "Chrome/28(www.versioneye.com, contact@versioneye.com)"
-  A_API_URL    = "https://api.github.com"
+  A_USER_AGENT = 'Chrome/28(www.versioneye.com, contact@versioneye.com)'
+  A_API_URL    = 'https://api.github.com'
   A_WORKERS_COUNT = 4
   A_DEFAULT_HEADERS = {
-    "Accept"     => "application/vnd.github.v3+json",
-    "User-Agent" => A_USER_AGENT,
-    "Connection" => "Keep-Alive"
+    'Accept' => 'application/vnd.github.v3+json',
+    'User-Agent' => A_USER_AGENT,
+    'Connection' => 'Keep-Alive'
   }
 
   include HTTParty
   persistent_connection_adapter({
-    name: "versioneye_github_client",
+    name: 'versioneye_github_client',
     pool_size: 32,
     keep_alive: 30
   })
@@ -54,7 +54,7 @@ class Github
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    "no_scope"
+    'no_scope'
   end
 
   def self.user_client token
@@ -64,25 +64,6 @@ class Github
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join "\n"
     nil
-  end
-
-  def self.user_repos_changed? user
-    repo = user.github_repos.all.first
-    #if user don't have any repos in cache, then force to load data
-    return true if repo.nil?
-
-    headers = {
-      "User-Agent" => A_USER_AGENT,
-      "If-Modified-Since" => repo[:cached_at].httpdate
-    }
-    url = "#{A_API_URL}/user?access_token=#{URI.escape(user.github_token)}"
-    response = head(url, headers: headers)
-    puts response.code
-    response.code != 304
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
-    return false
   end
 
   #returns how many repos user has. NB! doesnt count orgs
@@ -95,7 +76,7 @@ class Github
     if user_info
       n = user_info[:public_repos].to_i + user_info[:total_private_repos].to_i
     end
-    return n
+    n
   end
 
   def self.user_repos user, url = nil, page = 1, per_page = 30
@@ -193,7 +174,7 @@ class Github
 
   def self.repo_branch_info repo_name, branch = "master", token = nil
     url = "#{A_API_URL}/repos/#{repo_name}/branches/#{branch}"
-    response = get_json(url, token)
+    get_json(url, token)
   end
 
   def self.fetch_project_file_from_branch repo_name, filename, branch = "master", token = nil
@@ -247,10 +228,9 @@ class Github
     result
   end
 
-    #TODO: remove user where token makes more sense
-    #TODO: refactor to use get_json again ...
+  #TODO: refactor to use get_json again ...
   def self.fetch_repo_branch_tree(repo_name, token, branch_sha, recursive = false)
-    rec_val = (recursive == true) ? 1 : 0
+    rec_val = recursive ? 1 : 0
     url = "#{A_API_URL}/repos/#{repo_name}/git/trees/#{branch_sha}?access_token=#{token}&recursive=#{rec_val}"
     response = get(url, headers: A_DEFAULT_HEADERS )
     if response.code != 200
@@ -285,11 +265,8 @@ class Github
 
   #returns all project files in the given repos grouped by branches
   def self.repo_project_files(repo_name, token, branch_docs = nil)
-    if branch_docs
-      branches = branch_docs
-    else
-      branches = repo_branches(repo_name, token)
-    end
+
+    branches = branch_docs ? branch_docs : repo_branches(repo_name, token)
 
     if branches.nil? or branches.empty?
       msg = "#{repo_name} doesnt have any branches."
@@ -309,7 +286,6 @@ class Github
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    return
   end
 
   def self.fetch_file( url, token )
@@ -363,8 +339,8 @@ class Github
     nil
   end
 
+  # TODO check if needed
   def self.check_user_ratelimit(user)
-
     url = "#{A_API_URL}/rate_limit?access_token=#{user.github_token}"
     response = get(url, :headers => A_DEFAULT_HEADERS)
 
@@ -373,7 +349,7 @@ class Github
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    return nil
+    nil
   end
 
   def self.search(q, langs = nil, users = nil, page = 1, per_page = 30)

@@ -19,8 +19,8 @@ class User::CollaborationsController < ApplicationController
 
     @collaboration = ProjectCollaborator.find_by_id(collab_id)
     if @collaboration.nil? or !@collaboration.current?(current_user)
-      flash[:error] = "Wrong collaboration, or this collaboration is now remove."
-      render text: "Contributions doesnt exist anymore.", layout: "application"
+      flash[:error] = 'Wrong collaboration, or this collaboration is now remove.'
+      render text: 'Contributions doesnt exist anymore.', layout: 'application'
     end
   end
 
@@ -30,15 +30,15 @@ class User::CollaborationsController < ApplicationController
 
     collaborator = ProjectCollaborator.find_by_id(collab_id)
     if collaborator.nil?
-      flash[:error] = "No such collaborator anymore."
+      flash[:error] = 'No such collaborator anymore.'
       redirect_to :back and return
     end
 
     if collaborator.owner.id == current_user.id or (!collaborator.nil? and collaborator.user.id == current_user.id)
-      flash[:success] = "Collaborator is now removed."
+      flash[:success] = 'Collaborator is now removed.'
       collaborator.delete
     else
-      flash[:error] = "You can not remove other peoples."
+      flash[:error] = 'You can not remove other peoples.'
     end
 
     redirect_to :back
@@ -67,7 +67,7 @@ class User::CollaborationsController < ApplicationController
 
     collaborator = ProjectCollaborator.find_by_id(collab_id)
     UserMailer.collaboration_invitation(collaborator).deliver
-    collaborator.update_attribute("invitation_sent", true)
+    collaborator.update_attribute('invitation_sent', true)
 
     flash[:success] = "Invitation successfully sent to #{collaborator[:invitation_email]}"
     redirect_to :back
@@ -79,7 +79,7 @@ class User::CollaborationsController < ApplicationController
     @collab = ProjectCollaborator.find_by_id(id)
     @collab.update_attributes({period: period})
     if @collab.save
-      flash[:success] = "Status saved."
+      flash[:success] = 'Status saved.'
     end
     redirect_to :back
   end
@@ -97,9 +97,9 @@ class User::CollaborationsController < ApplicationController
 
     @collab.update_attributes({email: new_email})
     if @collab.save
-      flash[:success] = "Status saved."
+      flash[:success] = 'Status saved.'
     else
-      flash[:error] = "Something went wrong. Please try again later."
+      flash[:error] = 'Something went wrong. Please try again later.'
     end
     redirect_to user_collaboration_path(@collab)
   end

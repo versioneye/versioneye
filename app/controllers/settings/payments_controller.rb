@@ -15,8 +15,8 @@ class Settings::PaymentsController < ApplicationController
         unless @customer_invoices.nil?
           @customer_invoices.each do |invoice|
             invoice[:date_s]    = Time.at( invoice.date ).to_date
-            invoice[:plan_name] = invoice["lines"]["subscriptions"].first[:plan][:name]
-            invoice[:amount_s]  = "#{sprintf("%.2f", (invoice.total / 100) )} #{invoice.currency.upcase}"
+            invoice[:plan_name] = invoice['lines']['subscriptions'].first[:plan][:name]
+            invoice[:amount_s]  = "#{sprintf('%.2f', (invoice.total / 100) )} #{invoice.currency.upcase}"
             invoice[:link_to]   = settings_receipt_path(invoice_id: invoice[:id])
             @invoices << invoice
           end
@@ -27,7 +27,7 @@ class Settings::PaymentsController < ApplicationController
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
-    flash[:error] = "An error occured. Please contact the VersionEye Team."
+    flash[:error] = 'An error occured. Please contact the VersionEye Team.'
     redirect_to settings_profile_path
   end
 
@@ -44,10 +44,10 @@ class Settings::PaymentsController < ApplicationController
 
     def resolve_layout
       case action_name
-      when "receipt"
-        "plain"
+      when 'receipt'
+        'plain'
       else
-        "application"
+        'application'
       end
     end
 

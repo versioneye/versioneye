@@ -182,7 +182,7 @@ module V2
         end
 
         @current_product.users = Array.new if @current_product.users.nil?
-        if !@current_product.users.include? @current_user
+        unless @current_product.users.include? @current_user
           @current_product.users.push @current_user
           @current_product.followers += 1
           @current_product.save

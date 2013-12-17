@@ -1,4 +1,4 @@
-[![Dependency Status](http://www.versioneye.com/user/projects/52729fad632bac2b7c000dd1/badge.png)](http://www.versioneye.com/user/projects/52729fad632bac2b7c000dd1)
+[![Dependency Status](https://www.versioneye.com/user/projects/52878714632bac28c200006d/badge.png)](https://www.versioneye.com/user/projects/52878714632bac28c200006d)
 
 ![Tests](https://www.codeship.io/projects/de2efdb0-1d42-0131-839e-26fabeabc570/status)
 

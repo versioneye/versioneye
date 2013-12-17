@@ -59,13 +59,13 @@ class Dependency
     skip     = page.to_i * per_page
 
     count = Dependency.collection.aggregate(
-      { '$match' => { 'language' => language, 'dep_prod_key' => prod_key } },
-      { '$group' => { '_id' => '$prod_key' } }
+      { '$match' => { :language => language, :dep_prod_key => prod_key } },
+      { '$group' => { :_id => '$prod_key' } }
     ).count
 
     deps = Dependency.collection.aggregate(
-      { '$match' => { 'language' => language, 'dep_prod_key' => prod_key } },
-      { '$group' => { '_id' => '$prod_key' } },
+      { '$match' => { :language => language, :dep_prod_key => prod_key } },
+      { '$group' => { :_id => '$prod_key' } },
       { '$skip'  => skip },
       { '$limit' => per_page }
     )
@@ -172,7 +172,7 @@ class Dependency
 
   def version_for_url
     url_param = version_parsed
-    ver = Version.encode_version( url_param )
+    Version.encode_version( url_param )
   rescue => e
     Rails.logger.error e.message
     return self.version

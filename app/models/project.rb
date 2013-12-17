@@ -23,6 +23,9 @@ class Project
   A_PERIOD_WEEKLY  = 'weekly'
   A_PERIOD_DAILY   = 'daily'
 
+  A_NOTIFY_AFTER_API_UPDATE_NOTIFY = 'notify'
+  A_NOTIFY_AFTER_API_UPDATE_SILENT = 'silent'
+
   field :name       , type: String
   field :description, type: String
   field :license    , type: String
@@ -31,12 +34,13 @@ class Project
   field :language      , type: String
   field :project_key   , type: String
   field :period        , type: String,  :default => A_PERIOD_WEEKLY
+  field :notify_after_api_update, type: String, :default => A_NOTIFY_AFTER_API_UPDATE_NOTIFY
   field :email         , type: String
   field :url           , type: String
   field :source        , type: String,  :default => A_SOURCE_UPLOAD
   field :s3_filename   , type: String
   field :github_project, type: String   # Repository name at GitHub
-  field :github_branch , type: String,  :default => "master" # Branch     name at GitHub
+  field :github_branch , type: String,  :default => 'master' # Branch     name at GitHub
   field :dep_number    , type: Integer
   field :out_number    , type: Integer, :default => 0
   field :unknown_number, type: Integer, :default => 0
@@ -64,6 +68,12 @@ class Project
 
   def dependencies
     self.projectdependencies
+  end
+
+  def sorted_dependencies_by_rank
+    deps = self.dependencies
+    return deps if deps.nil? or deps.empty?
+    deps.sort_by {|dep| dep[:status_rank] }
   end
 
   def unmuted_dependencies

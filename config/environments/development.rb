@@ -44,19 +44,4 @@ Versioneye::Application.configure do
 
   routes.default_url_options = { host: "127.0.0.1", port: 3000 }
 
-  #uses fake3s gem to simulate offline AWS S3
-  AWS::S3::Base.establish_connection!(
-    :access_key_id => "123",
-    :secret_access_key => "abc",
-    :server => "localhost",
-    :port => "4567"
-  )
-
-  # if Settings.aws_s3_access_key_id && Settings.aws_s3_secret_access_key
-  #     AWS::S3::Base.establish_connection!(
-  #       :access_key_id     => Settings.aws_s3_access_key_id,
-  #       :secret_access_key => Settings.aws_s3_secret_access_key
-  #     )
-  # end
-
 end

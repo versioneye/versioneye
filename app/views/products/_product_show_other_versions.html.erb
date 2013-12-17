@@ -1,7 +1,7 @@
 <% if !@product.versions.nil? && @product.versions.length > 0 %>
   <div class="box header">
     <h3 class="side_header">
-      <%= pluralize(@product.versions.count, "Versions") %>
+      <%= pluralize(@product.versions.count, 'Versions') %>
     </h3>
   </div>
   <div class="box content scrollable-box" style = "min-height: 1em; max-height: 14em;" >

@@ -34,7 +34,7 @@ class ProjectService
   end
 
   def self.update_projects period
-    projects = Project.by_period( period )
+    projects = Project.by_period period
     projects.each do |project|
       self.update( project, true )
     end
@@ -57,7 +57,7 @@ class ProjectService
     end
   end
 
-  def self.update( project, send_email = false )
+  def self.update project, send_email = false
     return nil if project.nil?
     return nil if project.user_id.nil? || project.user.nil?
     return nil if project.user.deleted
@@ -107,7 +107,7 @@ class ProjectService
    - Parsing the project_file to a new project
    - Storing the new project to DB
 =end
-  def self.import_from_github(user, repo_name, filename, branch = "master", fileurl = nil)
+  def self.import_from_github user, repo_name, filename, branch = "master", fileurl = nil
     private_project = Github.private_repo? user.github_token, repo_name
     unless allowed_to_add_project?(user, private_project)
       return "Please upgrade your plan to monitor the selected project."
@@ -148,14 +148,14 @@ class ProjectService
     return parsed_project if store( parsed_project )
   end
 
-  def self.build_from_url( url )
-    project_type = type_by_filename( url )
+  def self.build_from_url url
+    project_type = type_by_filename url
     parser       = ParserStrategy.parser_for( project_type, url )
     parser.parse url
   rescue => e
-    Rails.logger.error e.message
+    Rails.logger.error "Error in build_from_url(url) -> e.message"
     Rails.logger.error e.backtrace.join("\n")
-    project = Project.new
+    Project.new
   end
 
   def self.destroy project_id
@@ -182,7 +182,7 @@ class ProjectService
   # Returns a map with
   #  - :key => "language_prod_key"
   #  - :value => "Array of project IDs where the prod_key is used"
-  def self.user_product_index_map(user, add_collaborated = true)
+  def self.user_product_index_map user, add_collaborated = true
     indexes = Hash.new
     projects = user.projects
     return indexes if projects.nil?

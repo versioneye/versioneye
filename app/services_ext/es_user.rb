@@ -16,7 +16,7 @@ class EsUser
 
   #-- search
   def self.search(term, results_per_page = 10)
-    q = term || "*"
+    q = term || '*'
     s = Tire.search(Settings.elasticsearch_user_index,
                     load: true,
                     search_type: 'dfs_query_and_fetch',

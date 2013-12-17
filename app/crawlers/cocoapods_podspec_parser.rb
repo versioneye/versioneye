@@ -136,7 +136,7 @@ class CocoapodsPodspecParser
     end
 
     specs = ( hash_array.map { |hash| hash[:spec] } ).uniq
-    specs_and_versions = hash_array.inject({}) do |result,hash|
+    hash_array.inject({}) do |result,hash|
       spec = hash[:spec]
       if specs.member? spec
         result[spec] = hash[:version]
@@ -144,8 +144,6 @@ class CocoapodsPodspecParser
       end
       result
     end
-
-    specs_and_versions
   end
 
 

@@ -5,7 +5,7 @@ class PythonSetupParser < RequirementsParser
     doc      = response.body
     return nil if doc.nil? or doc.empty?
     requirements = parse_requirements( doc )
-    extras       = parse_extras( doc )
+    # extras       = parse_extras( doc )
     project      = init_project( url )
     requirements.each do |requirement|
       parse_line requirement, project
@@ -51,7 +51,7 @@ class PythonSetupParser < RequirementsParser
 
 
   def from_file
-    doc_file = File.new "test/files/setup.py"
+    doc_file = File.new 'test/files/setup.py'
     doc_file.read
   end
 
@@ -65,8 +65,7 @@ class PythonSetupParser < RequirementsParser
 
   def parse_extras(doc)
     return nil if doc.nil? or doc.empty?
-    extras_txt = slice_content doc, 'extras_require', '{', '}', true
-    extras_txt
+    slice_content doc, 'extras_require', '{', '}', true
   end
 
 

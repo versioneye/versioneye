@@ -29,7 +29,7 @@ class ProductMigration
     Product.where(language: lang).each do |product|
       product.versions.each do |version|
         if version.released_string.nil?
-          Rails.logger.info "empty!"
+          Rails.logger.info 'empty!'
           next
         end
         version.released_at = DateTime.parse version.released_string
@@ -45,7 +45,7 @@ class ProductMigration
       product.versions.each do |version|
         if version.to_s.match(/v[0-9]+\..*/)
           Rails.logger.info "#{version}"
-          version.version = version.to_s.gsub("v", "")
+          version.version = version.to_s.gsub('v', '')
           product.save
           Rails.logger.info " -- #{version}"
         end
@@ -55,9 +55,9 @@ class ProductMigration
 
   def self.count_central_mvn_repo
     count = 0
-    Product.where(language: "Java").each do |product|
+    Product.where(language: 'Java').each do |product|
       product.repositories.each do |repo|
-        if repo.src.eql?("http://search.maven.org/")
+        if repo.src.eql?('http://search.maven.org/')
           count += 1
           Rails.logger.info "count #{count}"
         end
@@ -78,7 +78,7 @@ class ProductMigration
   end
 
   def self.improve_ruby_links
-    Product.where(language: "Ruby").each do |product|
+    Product.where(language: 'Ruby').each do |product|
       Versionlink.where(prod_key: product.prod_key).each do |link|
         unless link.version_id.nil?
           Rails.logger.info "improve link #{product.prod_key} - #{link.link} - #{link.version_id}"

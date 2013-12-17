@@ -34,7 +34,6 @@
               <% if @user_product_index.has_key?(prod_id) %>
                 <div>Used in this projects:</div>
                 <% proj_ids = @user_product_index[prod_id] %>
-                <% links = [] %>
                 <% proj_ids.each_with_index do |proj_id, i| %>
                   <% project = Project.find_by_id( proj_id ) %>
                    <div> - <%= link_to( project.name, user_project_url( project ) ) %></div>

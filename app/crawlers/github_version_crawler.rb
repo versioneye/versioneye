@@ -19,17 +19,16 @@ class GithubVersionCrawler
 
 
   def self.products( language, empty_release_dates, desc = true )
-    products = nil
+    products = Mongoid::Criteria.new(Product)
     if empty_release_dates
-      products = Product.where({ :language => language, "versions.released_at" => nil })
+      products = Product.where({ :language => language, 'versions.released_at' => nil })
     else
-      products = Product.where({ :language => language })
+      products = Product.where({ :language => language }) if !empty_release_dates
     end
-    if desc
-      products = products.desc(:name)
-    else
-      products = products.asc(:name)
-    end
+
+    products = products.desc(:name) if desc
+    products = products.asc(:name)  if !desc
+
     products.no_timeout
   end
 

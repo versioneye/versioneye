@@ -12,7 +12,7 @@ class Settings::EmailsController < ApplicationController
     user = User.find_by_email(email)
     user_email = UserEmail.find_by_email(email)
     if user || user_email
-      flash[:error] = "The E-Mail Address exist already in our system. Please choose another one."
+      flash[:error] = 'The E-Mail Address exist already in our system. Please choose another one.'
       redirect_to settings_emails_path()
       return
     end
@@ -23,9 +23,9 @@ class Settings::EmailsController < ApplicationController
     user_email.create_verification
     if user_email.save
       UserMailer.verification_email_only(current_user, user_email.verification, user_email.email).deliver
-      flash[:success] = "E-Mail Address added."
+      flash[:success] = 'E-Mail Address added.'
     else
-      flash[:error] = "E-Mail Address is not valid."
+      flash[:error] = 'E-Mail Address is not valid.'
     end
     redirect_to settings_emails_path()
   end
@@ -49,9 +49,9 @@ class Settings::EmailsController < ApplicationController
       user.save
       user_email.email = orig_email
       user_email.save
-      flash[:success] = "Default E-Mail Address changed successfully."
+      flash[:success] = 'Default E-Mail Address changed successfully.'
     else
-      flash[:error] = "An error occured. Please try again later."
+      flash[:error] = 'An error occured. Please try again later.'
     end
     redirect_to settings_emails_path()
   end

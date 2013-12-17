@@ -77,7 +77,7 @@ class Product
 
   # legacy, still used by fall back search
   def self.find_by_key searched_key
-    return nil if searched_key.nil? || searched_key.strip == ""
+    return nil if searched_key.nil? || searched_key.strip == ''
     result = Product.where(prod_key: searched_key)
     return nil if (result.nil? || result.empty?)
     return result[0]
@@ -97,6 +97,7 @@ class Product
   end
 
   def self.fetch_product lang, key
+    return nil if lang.to_s.empty? || key.to_s.empty?
     lang = A_LANGUAGE_NODEJS if lang.eql? "nodejs"
     if lang.eql? "package"
       product = Product.find_by_key( key )

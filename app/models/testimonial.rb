@@ -21,14 +21,14 @@ class Testimonial
   end
 
   def self.dummy_data
-    p "#-- generating dummy testimonials"
+    p '#-- generating dummy testimonials'
     counter = 0
     n = Testimonial.all.count
 
     User.all.skip(n).each do |user|
-      Testimonial.create content: "Boom-boom, i am Daddy Cool!",
-                        title: "Mr.President",
-                        company: "Rich daddy",
+      Testimonial.create content: 'Boom-boom, i am Daddy Cool!',
+                        title: 'Mr.President',
+                        company: 'Rich daddy',
                         user_id: user.id
       return if counter > 10
       counter += 1

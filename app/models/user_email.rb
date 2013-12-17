@@ -37,7 +37,7 @@ class UserEmail
 
     def create_random_value
       chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-      value = ""
+      value = ''
       10.times { value << chars[rand(chars.size)] }
       value
     end

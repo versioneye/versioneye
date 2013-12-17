@@ -37,7 +37,7 @@ class GradleParser < CommonParser
         :artifact_id => row[2],
         :name => row[2],
         :language => Product::A_LANGUAGE_JAVA,
-        :comperator => "="
+        :comperator => '='
       })
 
       product = Product.find_by_group_and_artifact(dependency.group_id, dependency.artifact_id)
@@ -66,7 +66,7 @@ class GradleParser < CommonParser
     end
     version = version.to_s.strip
     version = version.gsub('"', '')
-    version = version.gsub("'", "")
+    version = version.gsub("'", '')
 
     if product.nil?
       dependency.version_requested = version
@@ -75,8 +75,8 @@ class GradleParser < CommonParser
     elsif version.match(/\.\+$/i) or version.match(/\.$/i)
       # Newest available static version
       # http://www.gradle.org/docs/current/userguide/dependency_management.html#sec:dependency_resolution
-      ver = version.gsub("+", "")
-      starter = ver.gsub(" ", "")
+      ver = version.gsub('+', '')
+      starter = ver.gsub(' ', '')
       versions        = VersionService.versions_start_with( product.versions, starter )
       highest_version = VersionService.newest_version_from( versions )
       if highest_version

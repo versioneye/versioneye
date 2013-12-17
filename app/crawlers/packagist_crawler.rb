@@ -42,7 +42,7 @@ class PackagistCrawler
       version_number = String.new(version[0])
       version_obj = version[1]
       if version_number && version_number.match(/v[0-9]+\..*/)
-        version_number.gsub!("v", "")
+        version_number.gsub!('v', '')
       end
       db_version = product.version_by_number version_number
       if db_version.nil?

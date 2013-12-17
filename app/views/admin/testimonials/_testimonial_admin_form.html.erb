@@ -1,9 +1,9 @@
 <div class = "row-fluid">
   <div class = "span6">  
-    <%= form_for testimonial, url: {action: "decline"}, 
-      html: {class: "form from-inline"} do |f| %>
+    <%= form_for testimonial, url: {action: 'decline'},
+      html: {class: 'form from-inline'} do |f| %>
       <%= f.hidden_field :id %>
-      <%= f.submit "Decline", class: "btn btn-danger" %>
+      <%= f.submit 'Decline', class: 'btn btn-danger' %>
     <% end %>
   </div>
   

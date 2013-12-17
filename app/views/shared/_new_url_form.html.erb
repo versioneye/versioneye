@@ -1,11 +1,11 @@
 <% if signed_in? %>
 
-  <%= form_tag(submitted_urls_path, :id => "newUrlForm", :class => "form-horizontal") do %>
+  <%= form_tag(submitted_urls_path, :id => 'newUrlForm', :class => 'form-horizontal') do %>
 
     <%= hidden_field_tag :search_term, params[:q] %>
 
     <div class = "control-group">
-      <%= label_tag :url,nil, :class => "control-label" %>
+      <%= label_tag :url,nil, :class => 'control-label' %>
       <div class = "controls">
         <%= text_field_tag :url, nil, :class => "span5" %>
       </div>

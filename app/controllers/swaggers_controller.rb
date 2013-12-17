@@ -1,17 +1,22 @@
 class SwaggersController < ApplicationController
 
   def index
-    @current_user = current_user
-    user_api = Api.where(user_id: @current_user.id).shift if @current_user
-    @api_key = 'Log in to get your own api token'
-
-    if @current_user.nil? == false and @api_key.nil?
-      user_api = Api.create_new(@current_user)
+    user_api = nil
+    user = current_user
+    if user
+      user_api = Api.where(user_id: user.id).shift
+      if user_api.nil?
+        user_api = Api.create_new( user )
+      end
     end
 
-    @api_key = user_api.api_key unless user_api.nil?
-    @version = params.has_key?(:version) ? params[:version] : 'v2'
-    @api_url = "/api/#{@version}"
+    @api_key = 'Log in to get your own api token'
+    if user_api
+      @api_key = user_api.api_key
+    end
+
+    version = params.has_key?(:version) ? params[:version] : 'v2'
+    @api_url = "/api/#{version}"
   end
 
 end

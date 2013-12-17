@@ -20,8 +20,8 @@ class User
   field :verification      , type: String
   field :terms             , type: Boolean
   field :datenerhebung     , type: Boolean
-  field :privacy_products  , type: String, default: "everybody"
-  field :privacy_comments  , type: String, default: "everybody"
+  field :privacy_products  , type: String, default: 'everybody'
+  field :privacy_comments  , type: String, default: 'everybody'
 
   field :description, type: String
   field :location   , type: String
@@ -58,20 +58,20 @@ class User
   has_and_belongs_to_many :products
   # *** RELATIONS END ***
 
-  validates_presence_of :username          , :message => "Username is mandatory!"
-  validates_presence_of :fullname          , :message => "Fullname is mandatory!"
-  validates_presence_of :email             , :message => "E-Mail is mandatory!"
-  validates_presence_of :encrypted_password, :message => "Encrypted_password is mandatory!"
-  validates_presence_of :salt              , :message => "Salt is mandatory!"
+  validates_presence_of :username          , :message => 'Username is mandatory!'
+  validates_presence_of :fullname          , :message => 'Fullname is mandatory!'
+  validates_presence_of :email             , :message => 'E-Mail is mandatory!'
+  validates_presence_of :encrypted_password, :message => 'Encrypted_password is mandatory!'
+  validates_presence_of :salt              , :message => 'Salt is mandatory!'
 
-  validates_uniqueness_of :username          , :message => "Username exist already."
-  validates_uniqueness_of :email             , :message => "E-Mail exist already."
+  validates_uniqueness_of :username          , :message => 'Username exist already.'
+  validates_uniqueness_of :email             , :message => 'E-Mail exist already.'
 
-  validates_length_of :username, minimum: 2, maximum: 50, :message => "username length is not ok"
-  validates_length_of :fullname, minimum: 2, maximum: 50, :message => "fullname length is not ok"
+  validates_length_of :username, minimum: 2, maximum: 50, :message => 'username length is not ok'
+  validates_length_of :fullname, minimum: 2, maximum: 50, :message => 'fullname length is not ok'
 
   validates_format_of :username, with: /^[a-zA-Z0-9_]+$/
-  validates_format_of :email   , :with => A_EMAIL_REGEX, :message => "The email is not valid."
+  validates_format_of :email   , :with => A_EMAIL_REGEX, :message => 'The email is not valid.'
 
   before_validation :downcase_email
 
@@ -216,12 +216,6 @@ class User
     UserEmail.where( user_id: self._id.to_s, email: email ).shift
   end
 
-  def image_url
-    url = 'http://www.gravatar.com/avatar/'
-    url += Digest::MD5.hexdigest(email.strip.downcase)
-    url
-  end
-
   def has_password? submitted_password
     self.encrypted_password == encrypt(submitted_password)
   end
@@ -356,8 +350,7 @@ class User
   def replacements_for_username( username )
     username = username.gsub(".", "")
     username = username.gsub("-", "")
-    username = username.gsub("_", "")
-    username
+    username.gsub("_", "")
   end
 
   def fetch_or_create_billing_address
