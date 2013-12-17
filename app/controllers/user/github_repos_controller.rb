@@ -134,7 +134,7 @@ class User::GithubReposController < ApplicationController
       raise err_message if matching_files.empty?
 
       url     = matching_files.first[:url]
-      project = ProjectService.import_from_github current_user, project_name, filename, branch, url
+      project = ProjectService.import_from_github current_user, project_name, filename, branch, nil
 
       raise err_message if project.nil?
 
@@ -177,7 +177,7 @@ class User::GithubReposController < ApplicationController
     end
 
 
-    def update_repo(command_data)
+    def update_repo( command_data )
       Rails.logger.debug "Going to update repo-info for #{command_data}"
       repo = GitHubService.update_repo_info current_user, command_data["repoFullname"]
       repo = process_repo(repo)
