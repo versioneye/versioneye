@@ -29,6 +29,7 @@ class License
     return url if url && !url.empty?
     return 'http://choosealicense.com/licenses/mit/' if mit_match( name )
     return 'http://www.apache.org/licenses/LICENSE-2.0.txt' if apache_license_2_match( name )
+    return 'http://choosealicense.com/licenses/eclipse/' if eclipse_match( name )
     nil
   end
 
@@ -38,6 +39,7 @@ class License
     return 'BSD' if bsd_match( name )
     return 'Apache License, Version 2.0' if apache_license_2_match( name )
     return 'Apache License' if apache_license_match( name )
+    return 'Eclipse Public License v1.0' if eclipse_match( name )
     name
   end
 
@@ -49,6 +51,10 @@ class License
 
     def mit_match name
       name.match(/^MIT$/i) || name.match(/^The MIT License$/) || name.match(/^MIT License$/)
+    end
+
+    def eclipse_match name
+      name.match(/^Eclipse$/i) || name.match(/^Eclipse Public License v1\.0$/) || name.match(/^Eclipse License$/)
     end
 
     def bsd_match name
