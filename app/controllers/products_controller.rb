@@ -48,8 +48,8 @@ class ProductsController < ApplicationController
       return
     end
     if version.nil? || (!attach_version(@product, version))
-      redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
-      return
+      params[:version] = @product.version
+      redirect_to( {:action => 'show'}.merge(params) ) and return
     end
     if @product.version
       @version   = @product.version_by_number @product.version
