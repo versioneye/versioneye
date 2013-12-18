@@ -86,7 +86,7 @@ namespace :versioneye do
   end
 
   desc "send out suggestion emails to inactive users"
-  task :send_suggestions
+  task :send_suggestions do
     puts "START to send out suggestion emails to inactive users"
     User.non_followers.each { |user| user.send_suggestions }
     puts "STOP  to send out suggestion emails to inactive users"
