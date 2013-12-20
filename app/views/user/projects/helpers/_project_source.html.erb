@@ -1,11 +1,5 @@
 
-    This is a
-
-    <% if project.private_project %>
-      private project from
-    <% else %>
-      public project from
-    <% end %>
+    This is a project from
 
     <% if project.source.eql? "github" %>
       <a href="https://github.com/<%= project.github_project%>/tree/<%= project.github_branch %>">GitHub <%= project.github_branch %> branch</a>.
