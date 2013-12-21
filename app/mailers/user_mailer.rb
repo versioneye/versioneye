@@ -1,5 +1,6 @@
 class UserMailer < ActionMailer::Base
 
+  layout 'email_html_layout'
   default from: "\"VersionEye\" <notify@versioneye.com>"
 
   def receipt_email(user)
@@ -81,9 +82,7 @@ class UserMailer < ActionMailer::Base
   end
 
   def new_user_email(user)
-    @fullname = user.fullname
-    @username = user.username
-    @github = user.github_id
+    @user = user
     mail(
       :to => "reiz@versioneye.com",
       :subject => "New User",

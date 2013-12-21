@@ -1,21 +1,16 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-	</head>
-	<body>
-		<p>Hello <%= @user.fullname %></p>
-		<p>
-			Please click the verification link below to verify this E-Mail Address:
-		</p>
-		<p>
-			Verification Link: <a href="<%= @verificationlink %>"><%= @verificationlink %></a><br />
-		</p>
-		<p>
-			Thanks for joining and have a great day!
-		</p>
-		<p>
-			Your VersionEye Team
-		</p>
-	</body>
-</html>
+<p>
+  Hello <%= @user.fullname %>
+</p>
+<p>
+  Please click the verification link below to verify this E-Mail Address:
+</p>
+<p>
+  Verification Link: <a href="<%= @verificationlink %>?utm_medium=email&amp;utm_source=verification"><%= @verificationlink %></a><br />
+</p>
+<p>
+  Thanks for joining and have a great day!
+</p>
+<p>
+  Your VersionEye Team<br/>
+  <a href="https://www.versioneye.com?utm_medium=email&amp;utm_source=verification">https://www.versioneye.com</a>
+</p>

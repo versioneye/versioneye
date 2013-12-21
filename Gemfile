@@ -30,7 +30,6 @@ gem 'bourbon'            , '3.1.8'
 gem 'ruby_regex'         , '~> 0.1.0'
 gem 'cocoapods-core'     , '0.28.0'
 gem 'octokit'            , '~> 2.6.0'
-gem 'actionmailer-instyle', :require => 'action_mailer/in_style'
 
 group :development do
   gem 'capistrano'       , '3.0.1'
