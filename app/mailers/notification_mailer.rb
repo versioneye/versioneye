@@ -1,5 +1,6 @@
 class NotificationMailer < ActionMailer::Base
 
+  layout 'email_html_layout'
   default from: "\"VersionEye\" <notify@versioneye.com>"
 
   def new_version_email(user, notifications)
