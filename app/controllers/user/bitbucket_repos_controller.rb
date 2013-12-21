@@ -9,7 +9,7 @@ class User::BitbucketReposController < ApplicationController
     user_repos = current_user.bitbucket_repos
     repos = []
     if user_repos && user_repos.count > 0
-      userhub_repos = user_repos.desc(:commited_at)
+      user_repos = user_repos.desc(:commited_at)
       #TODO: refactor as x.map {}
       user_repos.each do |repo|
         repos << process_repo(repo, task_status)

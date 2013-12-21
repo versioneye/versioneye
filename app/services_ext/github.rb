@@ -139,7 +139,7 @@ class Github
       workers << Thread.new do
         time = Benchmark.measure do
           repo_data = read_repo_data(repo, user.github_token)
-          new_repo = GithubRepo.create_new(user, repo_data, "1")
+          new_repo = GithubRepo.create_new(user, repo_data)
           repo_docs << new_repo
         end
         puts "Reading `#{repo[:full_name]}` took: #{time}"

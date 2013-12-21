@@ -6,21 +6,18 @@ class User::GithubReposController < ApplicationController
     render 'init', layout: 'application'
   end
 
-
   def index
     task_status  = GitHubService.cached_user_repos current_user
     github_repos = current_user.github_repos
-    repos = []
+    processed_repos = []
     if github_repos && github_repos.count > 0
       github_repos = github_repos.desc(:commited_at)
-      github_repos.each do |repo|
-        repos << process_repo(repo, task_status)
-      end
+      github_repos.each {|repo| processed_repos << process_repo(repo, task_status)}
     end
     render json: {
       success: true,
       task_status: task_status,
-      repos: repos,
+      repos: processed_repos,
     }.to_json
   rescue => e
     Rails.logger.error e.message
@@ -94,9 +91,32 @@ class User::GithubReposController < ApplicationController
   def update
     if params[:github_id].nil? and params[:fullname].nil?
       logger.error "Unknown data object - don't satisfy githubrepo model."
-      render nothing: true, status: 400
+      render nothing: true, status: 400 and return
     end
-    redirect_to action: create
+    
+    if params[:command].nil? || params[:fullname].nil? || params[:command_data].nil?
+      error_msg = "Wrong command (`#{params[:command]}`) or project fullname is missing."
+      render text: error_msg, status: 400
+      return false
+    end
+    repo = []
+    command_data = params[:command_data]
+    project_name = params[:fullname]
+    branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : "master"
+    filename     = command_data[:githubFilename]
+    branch_files = params[:project_files][branch]
+
+    case params[:command]
+    when "import"
+      repo = import_repo(command_data, project_name, branch, filename, branch_files)
+    when "remove"
+      repo = remove_repo(command_data)
+    when "update"
+      repo = update_repo(command_data)
+    else
+      render text: "Wrong command `#{params[:command]}`", status: 400
+    end
+    render json: repo
   end
 
 
@@ -156,7 +176,7 @@ class User::GithubReposController < ApplicationController
     end
 
 
-    def remove_repo(command_data, project_name, branch, filename, branch_files)
+    def remove_repo(command_data)
       id = command_data[:githubProjectId]
       project_exists = Project.where(_id: id).exists?
 
@@ -168,14 +188,9 @@ class User::GithubReposController < ApplicationController
       repo = GithubRepo.find(params[:_id])
       repo = process_repo(repo)
       repo[:command_data] = command_data
-      repo[:command_result] = {
-        filename: filename,
-        branch: branch,
-        repo: project_name
-      }
+      repo[:command_result] = {success: true}
       repo
     end
-
 
     def update_repo(command_data)
       Rails.logger.debug "Going to update repo-info for #{command_data}"
@@ -195,18 +210,18 @@ class User::GithubReposController < ApplicationController
 =end
     def process_repo(repo, task_status = nil)
       imported_repos      = current_user.projects.by_source(Project::A_SOURCE_GITHUB)
-      imported_repo_names = imported_repos.map(&:github_project).to_set
+      imported_repo_names = imported_repos.map(&:scm_fullname).to_set
       supported_langs     = Product.supported_languages.map{ |lang| lang.downcase }
-      repo[:supported] = supported_langs.include? repo["language"]
+      repo[:supported] = supported_langs.include? repo[:language]
       repo[:imported_files] = []
 
-      if imported_repo_names.include?(repo["fullname"])
-        imported_files = imported_repos.where(github_project: repo["fullname"])
+      if imported_repo_names.include?(repo[:fullname])
+        imported_files = imported_repos.where(scm_fullname: repo[:fullname])
         imported_files.each do |imported_project|
           filename = imported_project.filename
           project_info = {
-            repo: repo["fullname"],
-            branch: imported_project[:github_branch],
+            repo: repo[:fullname],
+            branch: imported_project[:scm_branch],
             filename: filename,
             project_url: url_for(controller: 'projects', action: "show", id: imported_project.id),
             project_id:  imported_project.id,
@@ -215,7 +230,7 @@ class User::GithubReposController < ApplicationController
           repo[:imported_files] << project_info
         end
       end
-      repo['project_files'] = decode_branch_names(repo['project_files'])
+      repo['project_files'] = decode_branch_names(repo[:project_files])
       repo['task_status'] = task_status
       repo
     end
