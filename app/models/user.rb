@@ -114,10 +114,6 @@ class User
     UserMailer.verification_email(self, self.verification, self.email).deliver
   end
 
-  def send_suggestions
-    UserMailer.suggest_packages_email(self).deliver
-  end
-
   def self.send_verification_reminders
     users = User.where( :verification.ne => nil )
     users.each do |user|
@@ -133,6 +129,10 @@ class User
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
+  end
+
+  def send_suggestions
+    UserMailer.suggest_packages_email(self).deliver
   end
 
   def create_username
