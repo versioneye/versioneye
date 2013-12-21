@@ -132,6 +132,7 @@ class User
   end
 
   def send_suggestions
+    return nil if deleted || email_inactive
     UserMailer.suggest_packages_email(self).deliver
   end
 
