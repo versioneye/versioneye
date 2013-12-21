@@ -6,7 +6,7 @@ define(['underscore', 'backbone'],
 	    evaluate: /\{\{(.+?)\}\}/g
 	};
 
-	var GithubLoadingView = Backbone.View.extend({
+	var SCMLoadingView = Backbone.View.extend({
 		el: "#github-repos",
 		template: _.template($("#github-loading-template").html()),
 		render: function(){
@@ -17,5 +17,5 @@ define(['underscore', 'backbone'],
 		}
 	});
 
-	return GithubLoadingView;
+	return SCMLoadingView;
 });

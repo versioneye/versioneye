@@ -2,8 +2,7 @@ require.config({
     paths: {
         'underscore': '/assets/libs/underscore-min',
         'backbone': '/assets/libs/backbone-min',
-        'moment': '/assets/libs/moment.min',
-        'bootstrap_switch': '/assets/libs/bootstrap_switch',
+        'moment': '/assets/libs/moment.min'
     },
     shim: {
         'underscore': {
@@ -25,11 +24,18 @@ jQuery(document).ready(function(){
     jQuery( "#tabs" ).tabs();
   }
 
-  require(["underscore", "backbone","/assets/bitbucket_app/main"],
-    function(_, Backbone, githubApp) {
-      console.log("Loading required modules...");
+  require(["underscore", "backbone","/assets/scm_app/main"],
+    function(_, Backbone, SCMApp) {
 
-      githubApp.init();
+      var bitbucket_app = new SCMApp({
+        name: "SCMApp for Bitbucket",
+        repo_urls: {
+          root: '/user/bitbucket_repos',
+          clear: '/user/bitbucket/clear'
+        }
+      });
+
+      bitbucket_app.start();
   });
 
 }); // end-of-ready

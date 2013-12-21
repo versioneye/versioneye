@@ -1,11 +1,12 @@
 define(['underscore', 'backbone'],
   function(_, Backbone){
 
-	var GithubRepoModel = Backbone.Model.extend({
-    urlRoot: "/user/bitbucket_repos"
+	var SCMRepoModel = Backbone.Model.extend({
+    idAttribute: "_id"
   });
-  var GithubRepoCollection = Backbone.Collection.extend({
-    model: GithubRepoModel,
+
+  var SCMRepoCollection = Backbone.Collection.extend({
+    model: SCMRepoModel,
     sortKey: 'pushed_at',
     sortOrder: -1,
     initialize:  function(model, options){
@@ -80,5 +81,5 @@ define(['underscore', 'backbone'],
     }
   });
 
-  return GithubRepoCollection;
+  return SCMRepoCollection;
 });

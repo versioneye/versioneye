@@ -7,7 +7,7 @@ define(['underscore', 'backbone'],
 	};
 
 
-	var GithubRepoLabelView = Backbone.View.extend({
+	var SCMRepoLabelView = Backbone.View.extend({
 		className: "repo-labels",
     template: _.template($("#github-repo-label-template").html()),
 
@@ -67,6 +67,6 @@ define(['underscore', 'backbone'],
 		}
 	});
 
-  return GithubRepoLabelView;
+  return SCMRepoLabelView;
 
 });

@@ -1,14 +1,14 @@
 define(['underscore', 'backbone',
-	   '/assets/github_app/views/repo_control_view',
-     '/assets/github_app/views/label_view'],
-  function(_, Backbone, GithubRepoControlView, GithubRepoLabelView){
+	   '/assets/scm_app/views/repo_control_view',
+     '/assets/scm_app/views/label_view'],
+  function(_, Backbone, SCMRepoControlView, SCMRepoLabelView){
 
     _.templateSettings = {
       interpolate: /\{\{\=(.+?)\}\}/g,
          evaluate: /\{\{(.+?)\}\}/g
     };
 
-    var GithubRepoItemView = Backbone.View.extend({
+    var SCMRepoItemView = Backbone.View.extend({
       className: "spanX",
 
       template: _.template($("#github-repo-info-template").html()),
@@ -18,8 +18,8 @@ define(['underscore', 'backbone',
         "click .controls > .update-repo": "updateRepository"
       },
       render: function(){
-        var control_view = new GithubRepoControlView({model: this.model});
-        var label_view = new GithubRepoLabelView({model: this.model});
+        var control_view = new SCMRepoControlView({model: this.model});
+        var label_view = new SCMRepoLabelView({model: this.model});
         var repo_container = this.template({repo: this.model.toJSON()});
 
         this.$el.html(repo_container);
@@ -108,5 +108,5 @@ define(['underscore', 'backbone',
 
     });
 
-  return GithubRepoItemView;
+  return SCMRepoItemView;
 });//end of module

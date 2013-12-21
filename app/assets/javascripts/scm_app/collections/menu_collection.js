@@ -6,12 +6,12 @@ define(['underscore', 'backbone'],
 	    evaluate: /\{\{(.+?)\}\}/g
 	};
 
-	var GithubMenuItem = Backbone.Model.extend({});
-	var GithubMenuCollection = Backbone.Collection.extend({
+	var SCMMenuItem = Backbone.Model.extend({});
+	var SCMMenuCollection = Backbone.Collection.extend({
 		url: "/user/bitbucket/menu",
-		model: GithubMenuItem
+		model: SCMMenuItem
 	});
 
 
-  return GithubMenuCollection;
+  return SCMMenuCollection;
 });

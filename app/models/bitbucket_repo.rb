@@ -26,9 +26,21 @@ class BitbucketRepo
   scope :by_owner_login , ->(owner){where(owner_login: owner)} 
   scope :by_fullname    , ->(name){where(fullname: name)}
 
-  def self.build_new(user, repo, owner_type,  repo_branches = nil, project_files = nil)
+  def self.get_owner_type(user, owner_info)
+    owner_type = 'team'
+    if user[:bitbucket_id] == owner_info[:username]
+      owner_type = 'user'
+    end
+
+    return owner_type
+  end
+
+  def self.build_new(user, repo, repo_branches = nil, project_files = nil)
     return if repo.nil? || repo.empty?
     owner_info = repo[:owner]
+    owner_type = get_owner_type(user, owner_info)
+    repo_links = repo[:links]
+
     new_repo = BitbucketRepo.new({
       user_id: user[:_id],
       user_login: user[:bitbucket_id],
@@ -40,8 +52,8 @@ class BitbucketRepo
       language: repo[:language].to_s.downcase,
       description: repo[:description],
       private: repo[:is_private],
-      html_url: repo[:html],
-      clone_url: repo[:clone].to_a.first,
+      html_url: repo_links[:html][:href],
+      clone_url: repo_links[:clone].to_a.last[:href],
       size: repo[:size],
       branches: repo_branches,
       project_files: project_files,
@@ -53,8 +65,8 @@ class BitbucketRepo
     new_repo
   end
 
-  def self.create_new(user, repo, owner_type, repo_branches = nil, project_files = nil)
-    new_repo = build_new(user, repo, owner_type, repo_branches, project_files)
+  def self.create_new(user, repo, repo_branches = nil, project_files = nil)
+    new_repo = build_new(user, repo, repo_branches, project_files)
     unless new_repo.save
       Rails.logger.error "Cant save new repo:#{new_repo.errors.full_messages.to_sentence}"
     end

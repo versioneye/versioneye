@@ -6,7 +6,7 @@ define(['underscore', 'backbone'],
 	    evaluate: /\{\{(.+?)\}\}/g
 	};
 
-  var GithubPaginationView = Backbone.View.extend({
+  var SCMPaginationView = Backbone.View.extend({
     events: {
       "click .btn-pagination-next": "loadMore"
     },
@@ -26,7 +26,7 @@ define(['underscore', 'backbone'],
           perPage: this.currentRepos.perPage
         }
       }));
-      //$('#github-pagination').html(this.$el)
+
     },
     resetView: function(){
       this.currentRepos.currentPage = 0;
@@ -41,5 +41,5 @@ define(['underscore', 'backbone'],
     }
   });
 
-  return GithubPaginationView;
+  return SCMPaginationView;
 });

@@ -14,7 +14,7 @@ define(['underscore', 'backbone'],
     })).fadeIn(400).delay(6000).fadeOut(800);
   }
 
-  var GithubRepoSwitchView = Backbone.View.extend({
+  var SCMRepoSwitchView = Backbone.View.extend({
     template: _.template($("#github-repo-switch-template").html()),
     events: {
       "click .github-switch" : "onSwitchChange"
@@ -85,7 +85,7 @@ define(['underscore', 'backbone'],
     },
 
     getModelSwitchId: function(){
-      var prefix =  "github-repo-switch-" + this.model.get('github_id') + "-" + this.project_file['uuid'];
+      var prefix =  "github-repo-switch-" + this.project_file['uuid'];
       return _.uniqueId(prefix);
     },
 
@@ -109,7 +109,7 @@ define(['underscore', 'backbone'],
       var loading_info = notification_template({
         classes: "alert alert-info",
         content: ['<img src="/assets/loadingbar2.gif" style="height: 20px;" alt="loading" >',
-          '<strong>Please wait!</strong> We are still importing data from Github.',
+          '<strong>Please wait!</strong> We are still importing data from SCM.',
           'It may take up-to 4seconds. But we are almost there.'].join(' ')
       });
 
@@ -171,7 +171,7 @@ define(['underscore', 'backbone'],
       var msg = ['<strong> Success! </strong>',
                  'Project file ' , command_result['filename'],
                  ' on branch ', command_result['branch'],
-                 ' of Github project ', model.get('fullname'),
+                 ' of SCM project ', model.get('fullname'),
                  ' is now successfully imported.',
                  'You can now checkout project\'s page.'
                  ].join(' ');
@@ -241,7 +241,7 @@ define(['underscore', 'backbone'],
       var msg = [
         '<strong>Success!</strong>',
         'The Project\'s file ', command_result['filename'],
-        ' from the Github repository ', model.get('fullname') ,
+        ' from the SCM repository ', model.get('fullname') ,
         ' is now successfully removed.'
       ].join(' ');
 
@@ -291,5 +291,5 @@ define(['underscore', 'backbone'],
     }
   });
 
-  return GithubRepoSwitchView;
+  return SCMRepoSwitchView;
 });
