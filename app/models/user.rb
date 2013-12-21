@@ -40,10 +40,12 @@ class User
   field :twitter_secret, type: String
 
   field :github_id   , type: String
+  field :github_login, type: String #username on github
   field :github_token, type: String
   field :github_scope, type: String
 
   field :bitbucket_id, type: String
+  field :bitbucket_login, type: String #username on bitbucket
   field :bitbucket_token, type: String
   field :bitbucket_secret, type: String
   field :bitbucket_scope, type: String
@@ -341,6 +343,7 @@ class User
     self.fullname     = json_user['name']
     self.username     = json_user['login']
     self.github_id    = json_user['id']
+    self.github_login = json_user['login']
     self.github_token = token
     self.github_scope = scopes
     self.password     = create_random_value
@@ -373,6 +376,7 @@ class User
 
     self[:fullname] =  user_info[:display_name]
     self[:bitbucket_id] =  user_info[:username]
+    self[:bitbucket_login] = user_info[:username]
     self[:bitbucket_token] = token
     self[:bitbucket_secret] = secret
   end

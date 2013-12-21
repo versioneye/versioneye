@@ -25,11 +25,18 @@ jQuery(document).ready(function(){
     jQuery( "#tabs" ).tabs();
   }
 
-  require(["underscore", "backbone","/assets/github_app/main"],
-    function(_, Backbone, githubApp) {
-      console.log("Loading required modules...");
+ require(["underscore", "backbone","/assets/scm_app/main"],
+    function(_, Backbone, SCMApp) {
 
-      githubApp.init();
+      var github_app = new SCMApp({
+        name: "SCMApp for Github",
+        repo_urls: {
+          root: '/user/github_repos',
+          clear: '/user/github/clear'
+        }
+      });
+
+      github_app.start();
   });
 
 }); // end-of-ready

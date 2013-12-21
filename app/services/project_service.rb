@@ -143,7 +143,8 @@ class ProjectService
       source: Project::A_SOURCE_GITHUB,
       github_project: repo_name,
       private_project: private_project,
-      github_branch: branch,
+      scm_fullname: repo_name,
+      scm_branch: branch,
       s3_filename: s3_info['filename'],
       url: s3_info['s3_url']
     })
@@ -183,7 +184,6 @@ class ProjectService
 
     project_type = ProjectService.type_by_filename(filename)
     parsed_project = build_from_url(s3_info['s3_url'], project_type)
-    p "parsed project: #{parsed_project.to_json}"
     parsed_project.update_attributes({
       name: repo_name,
       project_type: project_type,
