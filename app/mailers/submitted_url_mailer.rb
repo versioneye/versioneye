@@ -1,5 +1,6 @@
 class SubmittedUrlMailer < ActionMailer::Base
-  
+
+  layout 'email_html_layout'
   default from: "\"VersionEye\" <notify@versioneye.com>"
 
   def new_submission_email(submitted_url)
@@ -38,5 +39,5 @@ class SubmittedUrlMailer < ActionMailer::Base
       :subject  => 'Your submitted Resource is integrated',
       :tag      => 'notice')
   end
-  
+
 end

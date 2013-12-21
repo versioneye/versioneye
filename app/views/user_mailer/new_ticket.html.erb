@@ -1,97 +1,22 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-  <head >
-    <title>VersionEye</title>
-  </head>
-
-  <body style="color: #22211f;
-        background-color: lightgray;
-        background-repeat: no-repeat;
-        background-position: 50px 30px;
-        font-size: 14px;
-        font-family: sans-serif, arial, verdana, tahoma, 'lucida grande', 'Segoe UI', 'lucida sans unicode';
-        padding: 0px;
-        margin: 0px;">
-
-    <div style="background-image: url('http://www.versioneye.com/assets/header_os.png');
-        background-repeat: repeat-x;
-          background-position: top;
-        margin: 0px;
-        padding: 0px;
-        height: 55px;
-        width: 100%;
-        vertical-align: middle;">
-      <div style="width: 690px;
-        margin: 0 auto;
-        clear: both;
-          display: block;
-          height: 0;">
-        <div style="float: left; margin: 0; padding: 0;">
-          <a href="http://www.versioneye.com"><img src="http://www.versioneye.com/assets/header_logo_os.png" /></a>
-        </div>
-        <div style="float:left; margin-top: 13px; margin-left: 5px;">
-          <a href="http://www.versioneye.com"><img src="http://www.versioneye.com/assets/eye_off.png" /></a>
-        </div>
-      </div>
-    </div>
-
-    <div style="width: 690px;
-        margin: 0 auto;">
-      <div style="
-        display: inline-block;
-          width: 650px;
-        padding: 20px;
-        margin-top: 10px;
-        background-color: white;
-        -moz-border-radius:    10px;
-          -webkit-border-radius: 10px;
-          border-radius:         10px;" >
-
-
-    <p>Hello <%= @fullname %>.</p>
-    <p>
-      Thank you for your request. We're happy to confirm that you're
-      now signed up to VersionEye's lottery. Our team will contact you
-      if you should win.
-    </p>
-    <p>
-      Here's your ticket id <%= @ticket[:_id].to_s %> and those are the libraries you're following now:<br/>
-      <br/>
-      <% @ticket[:selection].each do |selection| %>
-        <% product  = Product.fetch_product(selection[:language], selection[:prod_key]) %>
-        <% product_url    = "http://www.versioneye.com/#{product.language_esc}/#{product.to_param}" %>
-        <% product_title  = "#{product.name}".strip %>
-        - <a href="<%= product_url %>"><%= product_title %></a><br/>
-      <% end %>
-    </p>
-
-<br/>
-Best regards, <br/>
-Your VersionEye Team<br/>
-<a href="http://www.versioneye.com">http://www.versioneye.com</a>
-<br/>
-    </div>
-      <div style="-moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px;
-        text-align: left;
-          margin-top: 15px;
-        padding: 20px;
-          width: 650px;
-          margin-left: auto;
-          margin-right: auto;
-          clear: both;
-        background-color: white;
-        font-size: 12px;
-        color: #808080;
-        word-wrap:break-word;" >
-        VersionEye GmbH | Invalidenstrasse 50/51 | 10557 Berlin | Germany |
-E-Mail: contact [at] versioneye.com | Amtsgericht: Berlin / Charlottenburg | Handelsregister: Berlin, HRB 144242 B | USt-IdNr.: DE282045007 | CEO: Robert Reiz<br/>
-<a href="https://www.versioneye.com/imprint">Imprint</a> / <a href="https://www.versioneye.com/impressum">Impressum</a>. Unsubscribe here: <a href="https://www.versioneye.com/settings/notifications">Notification Center</a>
-      </div>
-    </div>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-  </body>
-</html>
+<p>
+  Hello <%= @fullname %>.
+</p>
+<p>
+  Thank you for your request. We're happy to confirm that you're
+  now signed up to VersionEye's lottery. Our team will contact you
+  if you should win.
+</p>
+<p>
+  Here's your ticket id <%= @ticket[:_id].to_s %> and those are the libraries you're following now:<br/>
+  <br/>
+  <% @ticket[:selection].each do |selection| %>
+    <% product  = Product.fetch_product(selection[:language], selection[:prod_key]) %>
+    <% product_url    = "http://www.versioneye.com/#{product.language_esc}/#{product.to_param}" %>
+    <% product_title  = "#{product.name}".strip %>
+    - <a href="<%= product_url %>?utm_medium=email&amp;utm_source=new_ticket"><%= product_title %></a><br/>
+  <% end %>
+</p>
+<p>
+  Your VersionEye Team<br/>
+  <a href="http://www.versioneye.com?utm_medium=email&amp;utm_source=new_ticket">http://www.versioneye.com</a>
+</p>

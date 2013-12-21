@@ -1,5 +1,6 @@
 class ProjectMailer < ActionMailer::Base
 
+  layout 'email_html_layout'
   default from: "\"VersionEye\" <notify@versioneye.com>"
 
   # TODO refactor this email. Send only link to project on VersionEye.
