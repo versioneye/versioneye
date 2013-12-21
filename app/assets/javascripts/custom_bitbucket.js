@@ -31,7 +31,8 @@ jQuery(document).ready(function(){
         name: "SCMApp for Bitbucket",
         repo_urls: {
           root: '/user/bitbucket_repos',
-          clear: '/user/bitbucket/clear'
+          clear: '/user/bitbucket/clear',
+          menu: '/user/bitbucket/menu'
         }
       });
 

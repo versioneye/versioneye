@@ -32,7 +32,8 @@ jQuery(document).ready(function(){
         name: "SCMApp for Github",
         repo_urls: {
           root: '/user/github_repos',
-          clear: '/user/github/clear'
+          clear: '/user/github/clear',
+          menu: '/user/github/menu'
         }
       });
 

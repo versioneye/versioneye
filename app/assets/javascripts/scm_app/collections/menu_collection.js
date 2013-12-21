@@ -8,8 +8,12 @@ define(['underscore', 'backbone'],
 
 	var SCMMenuItem = Backbone.Model.extend({});
 	var SCMMenuCollection = Backbone.Collection.extend({
-		url: "/user/bitbucket/menu",
-		model: SCMMenuItem
+		url: "/urls/menu", 
+		model: SCMMenuItem,
+
+    initialize: function(models, options){
+      this.url = options.urls.menu;
+    }
 	});
 
 

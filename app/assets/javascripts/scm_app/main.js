@@ -13,32 +13,6 @@ define(
             SCMRepoCollection, SCMMenuCollection){
 
 
-  //TODO: refactor to SCMApp namespace
-  //TODO: keep data in browser DB
-    /*
-  var all_repos       = new SCMAllRepoCollection({app: SCMApp}); //includes all repos ~ client-side cache
-  all_repos.showNotification = showNotification;
-  all_repos.initViews = initViews;
-
-  var current_repos   = new SCMRepoCollection([], {allRepos: all_repos}); //includes only repos for current view
-  var repo_view       = new SCMRepoView({collection: current_repos});
-  var pagination_view = new SCMPaginationView({
-                              collection: Backbone.Collection.extend({}),
-                              currentRepos: current_repos
-                        });
-  var menu_items      = new SCMMenuCollection();
-  var menu_view       = new SCMMenuView({
-                          collection: menu_items,
-                          currentRepos: current_repos,
-                          allRepos: all_repos,
-                          repoView: repo_view
-                        });
-
-*/
-  //var have_checked_cache = false;
-
-
-
   var AppRouter = Backbone.Router.extend({
     initialize: function(options){
       this.app = options.app;
@@ -99,10 +73,6 @@ define(
       }
     );
 
-      //SCMApp.allRepos.showNotification = showNotification;
-      //SCMApp.allRepos.initViews = initViews;
-
-
     this.currentRepos   = new SCMRepoCollection([], {allRepos: this.allRepos}); //includes only repos for current view
     this.repoView       = new SCMRepoView({
       app: this,
@@ -114,7 +84,7 @@ define(
       currentRepos: this.currentRepos
     });
 
-    this.menuItems      = new SCMMenuCollection();
+    this.menuItems      = new SCMMenuCollection([], {urls: this.options.repo_urls});
     this.menuView       = new SCMMenuView({
       app: this,
       collection: this.menuItems,
