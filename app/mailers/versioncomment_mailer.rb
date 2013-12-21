@@ -1,5 +1,6 @@
 class VersioncommentMailer < ActionMailer::Base
 
+  layout 'email_html_layout'
   default from: "\"VersionEye\" <notify@versioneye.com>"
 
   def versioncomment_email(product, follower, user, comment)

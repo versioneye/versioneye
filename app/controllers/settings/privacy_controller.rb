@@ -21,7 +21,7 @@ class Settings::PrivacyController < ApplicationController
     elsif user.save
       flash[:success] = 'Profile updated.'
     else
-      flash[:error] = "Something went wrong. Please try again later."
+      flash[:error] = 'Something went wrong. Please try again later.'
     end
     redirect_to settings_privacy_path()
   end
@@ -29,9 +29,9 @@ class Settings::PrivacyController < ApplicationController
   private
 
     def validates_privacy_value value
-      return "everybody" if value.nil? || value.empty?
-      return value if value.eql?("everybody") || value.eql?("nobody") || value.eql?("ru")
-      "everybody"
+      return 'everybody' if value.nil? || value.empty?
+      return value if value.eql?('everybody') || value.eql?('nobody') || value.eql?('ru')
+      'everybody'
     end
 
 end

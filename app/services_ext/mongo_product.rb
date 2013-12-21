@@ -62,7 +62,7 @@ class MongoProduct
   end
 
   def self.find_by_name_exclude(searched_name, prod_keys)
-    if searched_name.nil? || searched_name.strip == ""
+    if searched_name.nil? || searched_name.strip == ''
       return nil
     end
     Product.where(name_downcase: /#{searched_name}/, :prod_key.nin => prod_keys)
@@ -94,7 +94,7 @@ class MongoProduct
 
     def self.add_description_to_query(query, description)
       if description && !description.empty?
-        query = query.where("$or" => [ {"description" => /#{description}/i}, {"description_manual" => /#{description}/i} ] )
+        query = query.where("$or" => [ {:description => /#{description}/i}, {:description_manual => /#{description}/i} ] )
       end
       query
     end

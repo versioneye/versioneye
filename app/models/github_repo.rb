@@ -35,7 +35,7 @@ class GithubRepo
   scope :by_user       , ->(user){where(user_id: user._id)}
   scope :by_owner_login, ->(login){where(owner_login: login)}
   scope :by_owner_type , ->(type_name){where(owner_type: type_name)}
-  scope :by_org        , ->(org_name){where(owner_login: org_name, owner_type: "organization")}
+  scope :by_org        , ->(org_name){where(owner_login: org_name, owner_type: 'organization')}
   scope :by_fullname   , ->(fullname){where(fullname: fullname)}
 
 
@@ -57,7 +57,7 @@ class GithubRepo
       if user_login != owner_info[:login] then
         owner_type = 'team'
       else
-        owner_type = "user"
+        owner_type = 'user'
       end
     else
       owner_type = 'unknown'

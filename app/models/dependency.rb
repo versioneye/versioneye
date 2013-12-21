@@ -59,13 +59,13 @@ class Dependency
     skip     = page.to_i * per_page
 
     count = Dependency.collection.aggregate(
-      { '$match' => { 'language' => language, 'dep_prod_key' => prod_key } },
-      { '$group' => { '_id' => '$prod_key' } }
+      { '$match' => { :language => language, :dep_prod_key => prod_key } },
+      { '$group' => { :_id => '$prod_key' } }
     ).count
 
     deps = Dependency.collection.aggregate(
-      { '$match' => { 'language' => language, 'dep_prod_key' => prod_key } },
-      { '$group' => { '_id' => '$prod_key' } },
+      { '$match' => { :language => language, :dep_prod_key => prod_key } },
+      { '$group' => { :_id => '$prod_key' } },
       { '$skip'  => skip },
       { '$limit' => per_page }
     )

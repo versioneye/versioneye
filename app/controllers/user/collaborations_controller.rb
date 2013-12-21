@@ -30,7 +30,7 @@ class User::CollaborationsController < ApplicationController
 
     collaborator = ProjectCollaborator.find_by_id(collab_id)
     if collaborator.nil?
-      flash[:error] = "No such collaborator anymore."
+      flash[:error] = 'No such collaborator anymore.'
       redirect_to :back and return
     end
 
@@ -67,7 +67,7 @@ class User::CollaborationsController < ApplicationController
 
     collaborator = ProjectCollaborator.find_by_id(collab_id)
     UserMailer.collaboration_invitation(collaborator).deliver
-    collaborator.update_attribute("invitation_sent", true)
+    collaborator.update_attribute('invitation_sent', true)
 
     flash[:success] = "Invitation successfully sent to #{collaborator[:invitation_email]}"
     redirect_to :back
@@ -79,7 +79,7 @@ class User::CollaborationsController < ApplicationController
     @collab = ProjectCollaborator.find_by_id(id)
     @collab.update_attributes({period: period})
     if @collab.save
-      flash[:success] = "Status saved."
+      flash[:success] = 'Status saved.'
     end
     redirect_to :back
   end

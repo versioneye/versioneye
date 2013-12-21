@@ -1,44 +1,15 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
-    <p>Hey <%= @callee[:fullname] %>,</p>
-    <p>
-      <%= @caller[:fullname] %> just added you as project collaborator to his/her project
-      <a href="https://www.versioneye.com/user/projects/<%= @project[:_id].to_s %>" ><%= @project[:name] %></a>.
-      Now you will get email notifications to this project.
-    </p>
-    <p>
-        To change your collaboration settings, <a href = "http://www.versioneye.com/user/collaborations" > click here.</a>
-    </p>
-    <br/>
-    Best regards, <br/>
-    Your VersionEye Team<br/>
-    <a href="http://www.versioneye.com">http://www.versioneye.com</a>
-    <br/>
-    </div>
-      <div style="-moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px;
-        text-align: left;
-          margin-top: 15px;
-        padding: 20px;
-          width: 650px;
-          margin-left: auto;
-          margin-right: auto;
-          clear: both;
-        background-color: white;
-        font-size: 12px;
-        color: #808080;
-        word-wrap:break-word;" >
-        VersionEye GmbH | Invalidenstrasse 50/51 | 10557 Berlin | Germany |
-E-Mail: contact [at] versioneye.com | Amtsgericht: Berlin / Charlottenburg | Handelsregister: Berlin, HRB 144242 B | USt-IdNr.: DE282045007 | CEO: Robert Reiz<br/>
-<a href="https://www.versioneye.com/imprint">Imprint</a> / <a href="https://www.versioneye.com/impressum">Impressum</a>. Unsubscribe here: <a href="https://www.versioneye.com/settings/notifications">Notification Center</a>
-      </div>
-    </div>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-  </body>
-</html>
+<p>
+  Hey <%= @callee[:fullname] %>,
+</p>
+<p>
+  <%= @caller[:fullname] %> just added you as project collaborator to his/her project
+  <a href="https://www.versioneye.com/user/projects/<%= @project[:_id].to_s %>?utm_medium=email&amp;utm_source=new_collaboration" ><%= @project[:name] %></a>.
+  Now you will get email notifications to this project.
+</p>
+<p>
+    To change your collaboration settings, <a href="https://www.versioneye.com/user/collaborations?utm_medium=email&amp;utm_source=new_collaboration" > click here.</a>
+</p>
+<p>
+  Your VersionEye Team<br/>
+  <a href="https://www.versioneye.com?utm_medium=email&amp;utm_source=new_collaboration">https://www.versioneye.com</a>
+</p>

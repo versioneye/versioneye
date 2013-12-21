@@ -20,6 +20,14 @@ Versioneye::Application.routes.draw do
 
   get   '/cloudcontrol/resources', :to => 'cloudcontrol#resources'
 
+  # DEBUG
+  # -----
+  # author: @rmetzler
+  # description: this is a debugging route to help designing the suggestion-email
+  #
+  # REMOVE THE NEXT LINE FROM production / master branch / default branch
+  #
+  get   '/emailhelper', :to => 'emailhelper#show'
 
   resources :sessions, :only => [:new, :create, :destroy]
   get    '/signin',                :to => 'sessions#new'
@@ -122,6 +130,8 @@ Versioneye::Application.routes.draw do
         post 'save_period'
         post 'save_email'
         post 'save_visibility'
+        post 'transitive_dependencies'
+        post 'save_notify_after_api_update'
         post 'reparse'
         post 'update_name'
         post 'add_collaborator'

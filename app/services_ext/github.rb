@@ -19,17 +19,17 @@ require 'httparty'
 class Github
 
   A_USER_AGENT = 'Chrome/28(www.versioneye.com, contact@versioneye.com)'
-  A_API_URL    = "https://api.github.com"
+  A_API_URL    = 'https://api.github.com'
   A_WORKERS_COUNT = 4
   A_DEFAULT_HEADERS = {
-    "Accept"     => "application/vnd.github.v3+json",
-    "User-Agent" => A_USER_AGENT,
-    "Connection" => "Keep-Alive"
+    'Accept' => 'application/vnd.github.v3+json',
+    'User-Agent' => A_USER_AGENT,
+    'Connection' => 'Keep-Alive'
   }
 
   include HTTParty
   persistent_connection_adapter({
-    name: "versioneye_github_client",
+    name: 'versioneye_github_client',
     pool_size: 32,
     keep_alive: 30
   })
@@ -54,7 +54,7 @@ class Github
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    "no_scope"
+    'no_scope'
   end
 
   def self.user_client token
@@ -276,9 +276,9 @@ class Github
 
     project_files = {}
     branches.each do |branch|
-      branch_name = branch[:name]
-      branch_key = encode_db_key(branch_name)
-      branch_sha = branch[:commit][:sha]
+      branch_name  = branch[:name]
+      branch_key   = encode_db_key(branch_name)
+      branch_sha   = branch[:commit][:sha]
       branch_files = project_files_from_branch(repo_name, token, branch_sha)
       project_files[branch_key] = branch_files unless branch_files.nil?
     end

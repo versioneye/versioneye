@@ -1,5 +1,6 @@
 class SubmittedUrlMailer < ActionMailer::Base
-  
+
+  layout 'email_html_layout'
   default from: "\"VersionEye\" <notify@versioneye.com>"
 
   def new_submission_email(submitted_url)
@@ -25,8 +26,8 @@ class SubmittedUrlMailer < ActionMailer::Base
     @user = submitted_url.user
     mail(
       :to       => @user.email,
-      :subject  => "You submitted Resource is declined.",
-      :tag      => "notice")
+      :subject  => 'You submitted Resource is declined.',
+      :tag      => 'notice')
   end
 
   def integrated_url_email(submitted_url, product)
@@ -35,8 +36,8 @@ class SubmittedUrlMailer < ActionMailer::Base
     @product = product
     mail(
       :to       => @user.email,
-      :subject  => "Your submitted Resource is integrated",
-      :tag      => "notice")
+      :subject  => 'Your submitted Resource is integrated',
+      :tag      => 'notice')
   end
-  
+
 end

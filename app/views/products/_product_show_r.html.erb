@@ -1,25 +1,24 @@
 
 <div class = "row">
-	<%= render 'products/product_show_header' %>
+  <%= render 'products/product_show_header' %>
 </div>
 
 <div class="span8 content_head_top" >
-	<%= render 'products/product_show_description' %>
-	<%= render 'products/product_show_downloads' %>
-	<%= render 'products/product_show_comments' %>
-	<%= render 'products/product_show_comment' %>
+  <%= render 'products/product_show_description' %>
+  <%= render 'products/product_show_downloads' %>
+  <%= render 'products/product_show_comments' %>
+  <%= render 'products/product_show_comment' %>
 </div>
 
 <div class="sidebar span3 pull-right content_head_top" >
-	<%= render 'products/helpers/follow' %>
+  <%= render 'products/helpers/follow' %>
   <%= render 'products/helpers/kpis' %>
   <%= render 'products/helpers/share' %>
-	<%= render 'products/product_show_followers' %>
-	<%= render 'products/product_show_license' %>
-	<%= render 'products/product_show_links' %>
-	<%= render 'products/product_show_twitter_follow' %>
-	<%= render 'products/product_show_other_versions' %>
-	<% if !signed_in? %>
+  <%= render 'products/product_show_followers' %>
+  <%= render 'products/product_show_links' %>
+  <%= render 'products/product_show_twitter_follow' %>
+  <%= render 'products/product_show_other_versions' %>
+  <% if !signed_in? %>
     <%= render "/shared/github_ad" %>
   <% end %>
 </div>

@@ -22,7 +22,7 @@ class User::GithubReposController < ApplicationController
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    render text: "An error occured. We are not able to import GitHub repositories. Please contact the VersionEye team.", status: 503
+    render text: 'An error occured. We are not able to import GitHub repositories. Please contact the VersionEye team.', status: 503
   end
 
 
@@ -66,16 +66,16 @@ class User::GithubReposController < ApplicationController
     repo = []
     command_data = params[:command_data]
     project_name = params[:fullname]
-    branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : "master"
+    branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : 'master'
     filename     = command_data[:githubFilename]
     branch_files = params[:project_files][branch]
 
     case params[:command]
-    when "import"
+    when 'import'
       repo = import_repo(command_data, project_name, branch, filename, branch_files)
-    when "remove"
+    when 'remove'
       repo = remove_repo(command_data, project_name, branch, filename, branch_files)
-    when "update"
+    when 'update'
       repo = update_repo(command_data)
     else
       repo = "{'response': 'wrong command'}"
@@ -148,17 +148,17 @@ class User::GithubReposController < ApplicationController
 
 
     def import_repo(command_data, project_name, branch, filename, branch_files)
+      err_message = 'Something went wrong. It was not possible to save the project. Please contact the VersionEye team.'
       matching_files = branch_files.keep_if {|file| file['path'] == filename}
-      url            = matching_files.first[:url] unless matching_files.empty?
-      project        = ProjectService.import_from_github current_user, project_name, filename, branch, url
 
-      if project.nil?
-        raise "Something went wrong. It was not possible to save the project. Please contact the VersionEye team."
-      end
+      raise err_message if matching_files.empty?
 
-      if project.is_a? String
-        raise project
-      end
+      url     = matching_files.first[:url]
+      project = ProjectService.import_from_github current_user, project_name, filename, branch, nil
+
+      raise err_message if project.nil?
+
+      raise project if project.is_a? String
 
       command_data[:githubProjectId] = project[:_id].to_s
       repo = GithubRepo.find(params[:_id])
@@ -192,7 +192,7 @@ class User::GithubReposController < ApplicationController
       repo
     end
 
-    def update_repo(command_data)
+    def update_repo( command_data )
       Rails.logger.debug "Going to update repo-info for #{command_data}"
       repo = GitHubService.update_repo_info current_user, command_data["repoFullname"]
       repo = process_repo(repo)
