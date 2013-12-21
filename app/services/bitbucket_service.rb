@@ -6,6 +6,22 @@ class BitbucketService
   A_TASK_RUNNING = 'running'
   A_TASK_DONE = 'done'
 
+  def self.update_repo_info(user, repo_fullname)
+    current_repo = user.bitbucket_repos.where(fullname: repo_fullname).shift
+    if current_repo.nil?
+      Rails.logger.error "User #{user[:username]} has no such repo `#{repo_fullname}`"
+      return nil
+    end
+
+    repo_info = Bitbucket.repo_info repo_fullname, user[:bitbucket_token], user[:bitbucket_secret]
+    repo_branches = Bitbucket.repo_branches repo_fullname, user[:bitbucket_token], user[:bitbucket_secret]
+    repo_files = Bitbucket.repo_project_files repo_fullname, user[:bitbucket_token], user[:bitbucket_secret]
+
+    updated_repo = BitbucketRepo.build_new(user, repo_info, repo_branches, repo_files)
+    current_repo.update_attributes(updated_repo.attributes)
+    current_repo
+  end
+
   def self.cached_user_repos user
     memcache = memcache_client
     user_task_key = "#{user[:username]}-bitbucket"
@@ -37,20 +53,18 @@ class BitbucketService
     #load data
     user_orgs = Bitbucket.user_orgs(user)
     threads = []
-    threads << Thread.new {self.cache_repos(user, user[:bitbucket_id], 'user')}
+    threads << Thread.new {self.cache_repos(user, user[:bitbucket_id])}
     user_orgs.each do |org|
-      threads << Thread.new { self.cache_repos(user, org, 'team') }
+      threads << Thread.new { self.cache_repos(user, org) }
     end
 
     threads.each { |worker| worker.join }
   end
 
   #TODO: refactor as multi-threaded
-  def self.cache_repos(user, owner_name, owner_type)
+  def self.cache_repos(user, owner_name)
     token = user[:bitbucket_token]
     secret = user[:bitbucket_secret]
-    owner_info = Bitbucket.user_info(owner_name, token, secret)
-    p owner_info
     repos = Bitbucket.read_repos(owner_name, token, secret)
         
     #add information about branches and project files
@@ -58,7 +72,7 @@ class BitbucketService
       bm = Benchmark.measure do
         branches = Bitbucket.repo_branches(repo[:full_name], token, secret)
         project_files = Bitbucket.repo_project_files(repo[:full_name], token, secret)
-        BitbucketRepo.create_new(user, repo, owner_type, branches, project_files)
+        BitbucketRepo.create_new(user, repo, branches, project_files)
       end
       p "#-- Added #{repo[:full_name]}", bm
     end

@@ -3,21 +3,26 @@ define(['underscore', 'backbone',
   function(_, Backbone, Poller){
 
   function showNotification(classes, message){
-    var flash_template = _.template(jQuery("#github-notification-template").html());
+    var flash_template = _.template($("#github-notification-template").html());
     $(".flash-container").html(flash_template({
       classes: classes,
       content: message
     })).fadeIn(400).delay(6000).fadeOut(800);
   }
 
-	var GithubRepoModel = Backbone.Model.extend({
-    urlRoot: "/user/bitbucket_repos"
+	var SCMRepoModel = Backbone.Model.extend({
+    idAttribute: "_id",
   });
 
-  var GithubAllRepoCollection = Backbone.Collection.extend({
-    model: GithubRepoModel,
-    url: "/user/bitbucket_repos",
-    initialize: function(options){
+  var SCMAllRepoCollection = Backbone.Collection.extend({
+    model: SCMRepoModel,
+    url: "/missing/setting",
+    initialize: function(models, options){
+      console.debug("Scm options to collection");
+      console.debug(options.urls);
+      this.urls = options.urls;
+      this.url = options.urls.root;
+      this.app = options.app;
       this.poller = Poller.get(this, {delay: 1000}); //registered event is main.js
       this.initViews = options.initViews;
     },
@@ -29,7 +34,7 @@ define(['underscore', 'backbone',
           console.debug("Got all repos. Stopping poller;");
           showNotification(
               "alert alert-success",
-              "Importing your Github repositories is done."
+              "Importing your SCM repositories is done."
           );
           this.poller.stop();
 
@@ -53,7 +58,8 @@ define(['underscore', 'backbone',
       }
     },
     clearAll: function(cb){
-      var jqxhr = $.get("/user/bitbucket/clear");
+      console.debug("Going to clear cache: " + this.urls.clear);
+      var jqxhr = $.get(this.urls.clear);
       var that = this;
       jqxhr.success(function(){
         console.debug("Going to repoll content.");
@@ -77,7 +83,7 @@ define(['underscore', 'backbone',
         error: function(repos, response, options){
           showNotification("alert alert-error",
                            '<div><i class="icon-info-sign"></i> Can not load your repositories due a connectivity issues.</div>');
-          $("#github-repos").html("Connection issues - can not read data from Github.");
+          $("#github-repos").html("Connection issues - can not read data from SCM.");
         }
       });
     },
@@ -91,5 +97,5 @@ define(['underscore', 'backbone',
     }
    });
 
-  return GithubAllRepoCollection;
+  return SCMAllRepoCollection;
 });

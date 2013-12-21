@@ -61,6 +61,11 @@ class Bitbucket
     repos
   end
 
+  def self.repo_info(repo_name, token, secret)
+    path = "#{A_API_V2_PATH}/repositories/#{repo_name}"
+    get_json(path, token, secret)
+  end
+
   def self.repo_branches(repo_name, token, secret)
     path  = "#{A_API_V1_PATH}/repositories/#{repo_name}/branches"
     data = get_json(path, token, secret)
@@ -96,6 +101,7 @@ class Bitbucket
     project_files = branch_tree[:files].keep_if do |file_info|
       ProjectService.type_by_filename(file_info[:path]) != nil
     end
+    project_files.each {|file| file[:uuid] = SecureRandom.hex }
     project_files
   end
 

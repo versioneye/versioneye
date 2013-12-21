@@ -1,13 +1,13 @@
 define(
   ['underscore', 'backbone'],
   function(_, Backbone){
-    
+
     _.templateSettings = {
       interpolate: /\{\{\=(.+?)\}\}/g,
         evaluate: /\{\{(.+?)\}\}/g
     };
 
-    var GithubRepoSelectView = Backbone.View.extend({
+    var SCMRepoSelectView = Backbone.View.extend({
       className: "span9",
       template: _.template($("#github-repo-select-template").html()),
       option_template: _.template($("#github-repo-select-option-template").html()),
@@ -30,7 +30,7 @@ define(
               selected: branch == selected_branch ? "selected" : ""
             }));
         }, this);
-        
+
         this.$el.html(this.template({
           repo: this.model.toJSON(),
           options: options
@@ -45,5 +45,5 @@ define(
       }
     });
 
-    return GithubRepoSelectView;
+    return SCMRepoSelectView;
   });
