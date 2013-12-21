@@ -36,11 +36,11 @@ module V2
         ]
       }
       params do
-        optional :lang, type: String, desc: "Filter by language"
-        optional :private, type: Boolean, desc: "Filter by visibility"
-        optional :org_name, type: String, desc: "Filter by name of organization"
-        optional :org_type, type: String, desc: "Filter by type of organization"
-        optional :page, type: String, default: '1', desc: "Number of page"
+        optional :lang         , type: String, desc: "Filter by language"
+        optional :private      , type: Boolean, desc: "Filter by visibility"
+        optional :org_name     , type: String, desc: "Filter by name of organization"
+        optional :org_type     , type: String, desc: "Filter by type of organization"
+        optional :page         , type: String, default: '1', desc: "Number of page"
         optional :only_imported, type: Boolean, default: false, desc: "Show only imported repositories"
       end
       get '/' do
@@ -52,10 +52,10 @@ module V2
         page = 1 if page < 1
 
         query_filters = {}
-        query_filters[:language] = params[:lang] unless params[:lang].nil?
-        query_filters[:private] = params[:private] unless params[:private].nil?
+        query_filters[:language]    = params[:lang] unless params[:lang].nil?
+        query_filters[:private]     = params[:private] unless params[:private].nil?
         query_filters[:owner_login] = params[:org_name] unless params[:org_name].nil?
-        query_filters[:owner_type] = params[:org_type] unless params[:org_type].nil?
+        query_filters[:owner_type]  = params[:org_type] unless params[:org_type].nil?
 
         if user.github_repos.all.count == 0
           #try to import users repos when there's no repos.
@@ -64,21 +64,21 @@ module V2
 
         if params[:only_imported]
           imported_projects = Project.by_user(user).where(source: Project::A_SOURCE_GITHUB)
-          repo_names = imported_projects.map {|proj| proj[:github_project]}
-          repos = user.github_repos.any_in(fullname: repo_names.to_a).paginate(per_page: 30, page: page)
+          repo_names        = imported_projects.map {|proj| proj[:github_project]}
+          repos             = user.github_repos.any_in(fullname: repo_names.to_a).paginate(per_page: 30, page: page)
         else
           repos = user.github_repos.where(query_filters).paginate(per_page: 30, page: page)
         end
 
         repos.each do |repo|
-          imported_projects = Project.by_user(user).by_github(repo[:fullname]).to_a
-          proj_keys = imported_projects.map {|proj| proj[:project_key]}
+          imported_projects        = Project.by_user(user).by_github(repo[:fullname]).to_a
+          proj_keys                = imported_projects.map {|proj| proj[:project_key]}
           repo[:imported_projects] = proj_keys.to_a
-          repo[:repo_key] = encode_prod_key(repo[:fullname])
+          repo[:repo_key]          = encode_prod_key(repo[:fullname])
         end
         paging = make_paging_object(repos)
 
-        present :repos,  repos, with: EntitiesV2::RepoEntity
+        present :repos , repos , with: EntitiesV2::RepoEntity
         present :paging, paging, with: EntitiesV2::PagingEntity
       end
 
@@ -152,7 +152,7 @@ module V2
         project = Project.find_by_id( params[:project_id] )
 
         if project && project.collaborator?( current_user )
-          Thread.new{ ProjectService.update( project, false ) }
+          Thread.new{ ProjectService.update( project, project.notify_after_api_update ) }
           present :success, true
         else
           present :success, "No! You do not have access to this project!"
@@ -250,7 +250,7 @@ module V2
         github_connected?(user)
 
         repo_name = decode_prod_key(params[:repo_key])
-        branch = params[:branch]
+        branch    = params[:branch]
 
         project = Project.by_user(user).by_github(repo_name).where(github_branch: branch).shift
         error!("Project doesnt exists", 400) if project.nil?

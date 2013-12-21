@@ -46,7 +46,7 @@ class Newest
   end
 
   def language_esc
-    return "nodejs" if language.eql?(Product::A_LANGUAGE_NODEJS)
+    return 'nodejs' if language.eql?(Product::A_LANGUAGE_NODEJS)
     language.downcase
   end
 

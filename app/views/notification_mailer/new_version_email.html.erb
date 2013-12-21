@@ -1,58 +1,52 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
-    <p>Hello <%= @user.fullname %></p>
-    <p>
-      There are new releases out there.
-    </p>
-    <p>
-      <table>
-        <% @notifications.each do |notification| %>
-          <% product = notification.product %>
-          <% next if product.nil? %>
-          <tr>
-            <td style="vertical-align: top;">
-              <% version = product.version_by_number( notification.version_id ) %>
-              <img src= "http://www.versioneye.com/assets/language/<%= product.language.downcase %>.png" style = "width: 48px; height: 48px;"/>
-            </td>
-            <td style = "vertical-align: middle;">
-              <% product_url    = "#{@link}#{product.language_esc}" %>
-              <% product_url   += "/#{product.to_param}" %>
-              <% product_url   += "/#{version.to_param}" unless version.nil? %>
-              <% product_title  = "#{product.name}".strip %>
-              <% product_title += " (#{version.to_s})" unless version.nil? %>
+<p>
+  Hello <%= @user.fullname %>
+</p>
+<p>
+  There are new releases out there.
+</p>
+<p>
+  <table>
+    <% @notifications.each do |notification| %>
+      <% product = notification.product %>
+      <% next if product.nil? %>
+      <tr>
+        <td style="vertical-align: top;">
+          <% version = product.version_by_number( notification.version_id ) %>
+          <img src= "http://www.versioneye.com/assets/language/<%= product.language.downcase %>.png" style = "width: 48px; height: 48px;"/>
+        </td>
+        <td style = "vertical-align: middle;">
+          <% product_url    = "#{@link}#{product.language_esc}" %>
+          <% product_url   += "/#{product.to_param}" %>
+          <% product_url   += "/#{version.to_param}" unless version.nil? %>
+          <% product_title  = "#{product.name}".strip %>
+          <% product_title += " (#{version.to_s})" unless version.nil? %>
 
-              <a href="<%= product_url %>"><%= product_title %></a>
+          <a href="<%= product_url %>?utm_medium=email&amp;utm_source=new_versoin"><%= product_title %></a>
 
-              <% notification.sent_email = true %>
-              <% notification.save %>
+          <% notification.sent_email = true %>
+          <% notification.save %>
 
-              <% prod_id = "#{product.language_esc}_#{product.prod_key}" %>
-              <% if @user_product_index.has_key?(prod_id) %>
-                <div>Used in this projects:</div>
-                <% proj_ids = @user_product_index[prod_id] %>
-                <% proj_ids.each_with_index do |proj_id, i| %>
-                  <% project = Project.find_by_id( proj_id ) %>
-                   <div> - <%= link_to( project.name, user_project_url( project ) ) %></div>
-                <% end %>
-                <br/>
-              <% end %>
-            </td>
+          <% prod_id = "#{product.language_esc}_#{product.prod_key}" %>
+          <% if @user_product_index.has_key?(prod_id) %>
+            <div>Used in this projects:</div>
+            <% proj_ids = @user_product_index[prod_id] %>
+            <% proj_ids.each_with_index do |proj_id, i| %>
+              <% project = Project.find_by_id( proj_id ) %>
+               <div> - <%= link_to( project.name, user_project_url( project ) ) %></div>
+            <% end %>
+            <br/>
+          <% end %>
+        </td>
 
-          </tr>
-        <% end %>
-      </table>
-    </p>
-    <p>
-      We keep you informed. <br/>
-      Have a great day!
-    </p>
-    <p>
-      Your VersionEye Team<br/>
-      <a href="http://www.versioneye.com">http://www.versioneye.com</a>
-    </p>
-  </body>
-</html>
+      </tr>
+    <% end %>
+  </table>
+</p>
+<p>
+  We keep you informed. <br/>
+  Have a great day!
+</p>
+<p>
+  Your VersionEye Team<br/>
+  <a href="http://www.versioneye.com?utm_medium=email&amp;utm_source=new_versoin">http://www.versioneye.com</a>
+</p>

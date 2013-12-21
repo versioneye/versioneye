@@ -1,5 +1,6 @@
 class ProjectMailer < ActionMailer::Base
 
+  layout 'email_html_layout'
   default from: "\"VersionEye\" <notify@versioneye.com>"
 
   # TODO refactor this email. Send only link to project on VersionEye.
@@ -19,7 +20,7 @@ class ProjectMailer < ActionMailer::Base
     mail(
       :to      => email,
       :subject => "Project Notification for #{project.name}",
-      :tag     => "project_notification"
+      :tag     => 'project_notification'
       )
   end
 

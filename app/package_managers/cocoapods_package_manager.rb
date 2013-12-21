@@ -63,15 +63,15 @@ class CocoapodsPackageManager < PackageManager
   # Returns String of chosen version number.
   def self.choose_version(comperator, version_number, version_candidates)
     case comperator
-    when ">"
+    when '>'
       VersionService.greater_than( version_candidates, version_number ).version
-    when ">="
+    when '>='
       VersionService.greater_than_or_equal( version_candidates, version_number ).version
-    when "<"
+    when '<'
       VersionService.smaller_than( version_candidates, version_number ).version
-    when "<="
+    when '<='
       VersionService.smaller_than_or_equal( version_candidates, version_number ).version
-    when "~>"
+    when '~>'
       starter         = VersionService.version_approximately_greater_than_starter( version_number )
       possible_vers   = VersionService.versions_start_with( version_candidates, starter )
       highest_version = VersionService.newest_version_from( possible_vers )

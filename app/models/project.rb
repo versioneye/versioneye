@@ -32,6 +32,7 @@ class Project
   field :language      , type: String
   field :project_key   , type: String
   field :period        , type: String,  :default => A_PERIOD_WEEKLY
+  field :notify_after_api_update, type: Boolean, :default => false
   field :email         , type: String
   field :url           , type: String
   field :source        , type: String,  :default => A_SOURCE_UPLOAD
@@ -69,6 +70,12 @@ class Project
 
   def dependencies
     self.projectdependencies
+  end
+
+  def sorted_dependencies_by_rank
+    deps = self.dependencies
+    return deps if deps.nil? or deps.empty?
+    deps.sort_by {|dep| dep[:status_rank] }
   end
 
   def unmuted_dependencies
@@ -210,7 +217,7 @@ class Project
 
   def update_from new_project
     return nil if new_project.nil?
-    if !new_project.dependencies.nil? && !new_project.dependencies.empty?
+    if new_project.dependencies && !new_project.dependencies.empty?
       self.overwrite_dependencies( new_project.dependencies )
     end
     self.description    = new_project.description

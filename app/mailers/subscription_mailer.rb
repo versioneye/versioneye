@@ -1,5 +1,6 @@
 class SubscriptionMailer < ActionMailer::Base
 
+  layout 'email_html_layout'
   default from: "\"VersionEye\" <notify@versioneye.com>"
 
   def update_subscription( user )

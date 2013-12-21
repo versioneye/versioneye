@@ -1,89 +1,16 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-  <head >
-    <title>VersionEye</title>
-  </head>
-
-  <body style="color: #22211f;
-        background-color: lightgray;
-        background-repeat: no-repeat;
-        background-position: 50px 30px;
-        font-size: 14px;
-        font-family: sans-serif, arial, verdana, tahoma, 'lucida grande', 'Segoe UI', 'lucida sans unicode';
-        padding: 0px;
-        margin: 0px;">
-
-    <div style="background-image: url('http://www.versioneye.com/assets/header_os.png');
-        background-repeat: repeat-x;
-          background-position: top;
-        margin: 0px;
-        padding: 0px;
-        height: 55px;
-        width: 100%;
-        vertical-align: middle;">
-      <div style="width: 690px;
-        margin: 0 auto;
-        clear: both;
-          display: block;
-          height: 0;">
-        <div style="float: left; margin: 0; padding: 0;">
-          <a href="http://www.versioneye.com"><img src="http://www.versioneye.com/assets/header_logo_os.png" /></a>
-        </div>
-        <div style="float:left; margin-top: 13px; margin-left: 5px;">
-          <a href="http://www.versioneye.com"><img src="http://www.versioneye.com/assets/eye_off.png" /></a>
-        </div>
-      </div>
-    </div>
-
-    <div style="width: 690px;
-        margin: 0 auto;">
-      <div style="
-        display: inline-block;
-        width: 650px;
-        padding: 20px;
-        margin-top: 10px;
-        background-color: white;
-        -moz-border-radius:    10px;
-          -webkit-border-radius: 10px;
-          border-radius:         10px;" >
-Hey <%= @user.fullname %>,
+<p>
+  Hey <%= @user.fullname %>,
+</p>
 <p>
   You just updated your subscription to the plan "<%= @user.plan.name %>".<br/>
   You can find your payment history in the settings area:<br/>
-  <a href="https://www.versioneye.com/settings/payments" >https://www.versioneye.com/settings/payments</a><br/>
+  <a href="https://www.versioneye.com/settings/payments?utm_medium=email&amp;utm_source=update_subscription" >https://www.versioneye.com/settings/payments</a><br/>
   And you can change your subscription here: <br/>
-  <a href="https://www.versioneye.com/settings/plans" >https://www.versioneye.com/settings/plans</a><br/>
+  <a href="https://www.versioneye.com/settings/plans?utm_medium=email&amp;utm_source=update_subscription" >https://www.versioneye.com/settings/plans</a><br/>
 </p>
 <p>
 As usual, your feedback is highly appreciated.
 </p>
 <br/>
-Best regards, <br/>
 Your VersionEye Team<br/>
-<a href="http://www.versioneye.com">http://www.versioneye.com</a>
-<br/>
-      </div>
-      <div style="-moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px;
-        text-align: left;
-          margin-top: 15px;
-        padding: 20px;
-          width: 650px;
-          margin-left: auto;
-          margin-right: auto;
-          clear: both;
-        background-color: white;
-        font-size: 12px;
-        color: #808080;
-        word-wrap:break-word;" >
-        VersionEye GmbH | Invalidenstrasse 50/51 | 10557 Berlin | Germany |
-E-Mail: contact [at] versioneye.com | Amtsgericht: Berlin / Charlottenburg | Handelsregister: Berlin, HRB 144242 B | USt-IdNr.: DE282045007 | CEO: Robert Reiz<br/>
-<a href="https://www.versioneye.com/imprint">Imprint</a> / <a href="https://www.versioneye.com/impressum">Impressum</a>. Unsubscribe here: <a href="https://www.versioneye.com/settings/notifications">Notification Center</a>
-      </div>
-    </div>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-  </body>
-</html>
+<a href="http://www.versioneye.com?utm_medium=email&amp;utm_source=update_subscription">http://www.versioneye.com</a>

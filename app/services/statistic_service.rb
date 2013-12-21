@@ -65,9 +65,9 @@ class StatisticService
 
     n_months.times do |i|
       curr_date = start_date >> i
-      stats = { date: curr_date.strftime("%Y-%m-%d")}
+      stats = { date: curr_date.strftime('%Y-%m-%d')}
       A_STAT_LANGUAGES.each do |lang|
-        ncount = Product.where(language: lang, created_at: {"$lt" => curr_date}).count
+        ncount = Product.where(language: lang, created_at: {'$lt' => curr_date}).count
         encoded_lang = Product.encode_language(lang).to_s
         stats.merge!({encoded_lang => ncount})
       end

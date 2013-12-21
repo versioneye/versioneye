@@ -27,15 +27,19 @@ class License
 
   def link
     return url if url && !url.empty?
-    return "http://choosealicense.com/licenses/mit/" if mit_match( name )
-    return "http://www.apache.org/licenses/LICENSE-2.0.txt" if apache_license_2_match( name )
+    return 'http://choosealicense.com/licenses/mit/' if mit_match( name )
+    return 'http://www.apache.org/licenses/LICENSE-2.0.txt' if apache_license_2_match( name )
+    return 'http://choosealicense.com/licenses/eclipse/' if eclipse_match( name )
     nil
   end
 
   def name_substitute
-    return "MIT" if mit_match( name )
-    return "Apache License, Version 2.0" if apache_license_2_match( name )
-    return "Apache License" if apache_license_match( name )
+    return 'unknown' if name.to_s.empty?
+    return 'MIT' if mit_match( name )
+    return 'BSD' if bsd_match( name )
+    return 'Apache License, Version 2.0' if apache_license_2_match( name )
+    return 'Apache License' if apache_license_match( name )
+    return 'Eclipse Public License v1.0' if eclipse_match( name )
     name
   end
 
@@ -49,14 +53,26 @@ class License
       name.match(/^MIT$/i) || name.match(/^The MIT License$/) || name.match(/^MIT License$/)
     end
 
+    def eclipse_match name
+      name.match(/^Eclipse$/i) || name.match(/^Eclipse Public License v1\.0$/) || name.match(/^Eclipse License$/)
+    end
+
+    def bsd_match name
+      name.match(/^BSD License$/i) || name.match(/^BSD$/) || name.match(/^MIT License$/)
+    end
+
     def apache_license_2_match name
-      name.match(/^Apache License\, Version 2\.0$/i) || name.match(/^Apache License Version 2\.0$/i) || name.match(/^The Apache Software License\, Version 2\.0$/i)
+      name.match(/^Apache License\, Version 2\.0$/i) ||
+      name.match(/^Apache License Version 2\.0$/i) ||
+      name.match(/^The Apache Software License\, Version 2\.0$/i) ||
+      name.match(/^Apache 2$/i) ||
+      name.match(/^Apache 2\.0$/i) ||
+      name.match(/^Apache License 2\.0$/i) ||
+      name.match(/^Apache Software License - Version 2\.0$/i)
     end
 
     def apache_license_match name
       name.match(/^Apache License$/i) || name.match(/^Apache Software Licenses$/i)
     end
-
-
 
 end

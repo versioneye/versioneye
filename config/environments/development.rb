@@ -33,10 +33,10 @@ Versioneye::Application.configure do
 
   config.log_level = :debug
 
-  config.action_mailer.delivery_method   = :sendmail
-  config.action_mailer.perform_deliveries = false
+  config.action_mailer.delivery_method       = :postmark # :sendmail
+  config.action_mailer.perform_deliveries    = false
   config.action_mailer.raise_delivery_errors = true
-  # config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
+  config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
 
   ENV['API_BASE_PATH'] = "http://127.0.0.1:3000/api"
 

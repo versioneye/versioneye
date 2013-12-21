@@ -1,28 +1,27 @@
 
 <div class = "row">
-	<%= render 'products/product_show_header' %>
+  <%= render 'products/product_show_header' %>
 </div>
 
 <div class="span8" style="padding-top: 20px;" >
-	<%= render 'products/product_show_description' %>
-	<%= render 'products/helpers/kpi_summary' %>
-	<%= render 'products/product_show_dependencies' %>
-	<%= render 'products/product_show_maven_code_snippet' %>
-	<%= render 'products/product_show_comments' %>
-	<%= render 'products/product_show_comment' %>
+  <%= render 'products/product_show_description' %>
+  <%= render 'products/helpers/kpi_summary' %>
+  <%= render 'products/product_show_dependencies' %>
+  <%= render 'products/product_show_maven_code_snippet' %>
+  <%= render 'products/product_show_comments' %>
+  <%= render 'products/product_show_comment' %>
 </div>
 
 <div class="span3 pull-right" style="padding-top: 20px;">
-	<%= render 'products/helpers/follow' %>
-	<%= render 'products/helpers/kpis' %>
-	<%= render 'products/helpers/share' %>
-	<%= render 'products/product_show_license' %>
-	<%= render 'products/product_show_followers' %>
-	<%= render 'products/product_show_authors' %>
-	<%= render 'products/product_show_links' %>
-	<%= render 'products/product_show_twitter_follow' %>
-	<%= render 'products/product_show_other_versions' %>
-	<% if !signed_in? %>
+  <%= render 'products/helpers/follow' %>
+  <%= render 'products/helpers/kpis' %>
+  <%= render 'products/helpers/share' %>
+  <%= render 'products/product_show_followers' %>
+  <%= render 'products/product_show_authors' %>
+  <%= render 'products/product_show_links' %>
+  <%= render 'products/product_show_twitter_follow' %>
+  <%= render 'products/product_show_other_versions' %>
+  <% if !signed_in? %>
     <%= render "/shared/github_ad" %>
   <% end %>
 </div>

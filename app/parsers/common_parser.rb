@@ -43,8 +43,8 @@ class CommonParser
 
   def do_replacements_for_github(url)
     if url.match(/^https:\/\/github.com\//)
-      url = url.gsub("https://github.com", "https://raw.github.com")
-      url = url.gsub("/blob/", "/")
+      url = url.gsub('https://github.com', 'https://raw.github.com')
+      url = url.gsub('/blob/', '/')
     end
     url
   end
@@ -53,7 +53,7 @@ class CommonParser
     if product && product.version
       dependency.version_requested = product.version
     else
-      dependency.version_requested = "UNKNOWN"
+      dependency.version_requested = 'UNKNOWN'
     end
     dependency
   end

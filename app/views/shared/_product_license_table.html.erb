@@ -3,8 +3,7 @@
 <table class="dependency_table" style="width: <%= width %>px;">
   <thead>
     <tr>
-      <th width="10px" ></th>
-      <th width="200px" ></th>
+      <th width="200px">Dependency</th>
       <th >License</th>
     </tr>
   </thead>
@@ -17,7 +16,6 @@
         <% license_hash[license.name_substitute] = Array.new if license_hash[license.name_substitute].nil? %>
         <% license_hash[license.name_substitute] << product if !product.nil?  %>
         <tr class="<%= sep_class %>">
-          <td></td>
           <td><a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></td>
           <td>
             <% if license.link && !license.link.empty? %>
@@ -33,7 +31,6 @@
       <% license_hash["unknown"] = Array.new if license_hash["unknown"].nil? %>
       <% license_hash["unknown"] << product if !product.nil?  %>
       <tr class="flash warning">
-        <td></td>
         <td>
           <% if product.prod_key %>
             <a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a>
@@ -58,7 +55,7 @@
     <% end %>
   </div>
   <% license_hash[license_name].each do |product| %>
-    <span class="label"><a class="link_white" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></span>
+    <span class="license_box"><a href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></span>
   <% end %>
   <br/><br/>
 <% end %>

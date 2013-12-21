@@ -38,7 +38,7 @@ class LanguageController < ApplicationController
   def show_block
     lang = Product.decode_language(params[:lang])
     language = Language.where(name: lang).first
-    render partial: "language/helpers/language_block", locals: {language: language}
+    render partial: 'language/helpers/language_block', locals: {language: language}
   end
 
   def new
@@ -56,7 +56,7 @@ class LanguageController < ApplicationController
     new_lang[:param_name] = Product.encode_language(new_lang[:name])
 
     if new_lang.save
-      flash[:success] = "Language is added successfully."
+      flash[:success] = 'Language is added successfully.'
       redirect_to language_path
     else
       flash[:error] = "Can not save language: #{new_lang.errors.full_messages.to_sentence}"
@@ -69,10 +69,10 @@ class LanguageController < ApplicationController
     old_language = Language.where(name: updated_language[:name]).first
     old_language.update_attributes!(updated_language)
     if old_language.save
-      flash[:success] = "Language is now opdated."
+      flash[:success] = 'Language is now opdated.'
       redirect_to "/language/#{old_language[:param_name]}"
     else
-      flash[:error] = "Can not save updates."
+      flash[:error] = 'Can not save updates.'
       redirect_to :back
     end
   end

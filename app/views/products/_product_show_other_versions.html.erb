@@ -12,7 +12,7 @@
         <% else %>
           <a style="color: brown" href="<%=product_version_path( @product, version.to_s )%>"><%=version.to_s%></a>
         <% end %>
-        <span class="" style="font-size: 11px; color: gray;" >(<%= version.released_or_detected.strftime("%b %d, %Y") %>)</span>
+        <span class="meta_text_small">(<%= version.released_or_detected.strftime("%b %d, %Y") %>)</span>
       </div>
     <% end %>
   </div>

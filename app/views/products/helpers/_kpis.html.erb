@@ -95,6 +95,24 @@
     <b title="<%= title_text %>">Dependencies:</b> <span title="<%= title_text %>"><%= main_dep_count %></span>
   </div>
 
+  <% licenses = @product.licenses %>
+  <% license_bg = 'info' %>
+  <% license_bg = "error" if licenses.nil? || licenses.empty? %>
+  <div class="flash <%= license_bg %>" style="margin-bottom: 5px;">
+    <b title="license">License:</b>
+    <% if licenses && !licenses.empty? %>
+      <% licenses.each do |license| %>
+        <% if license.url && !license.url.empty? %>
+          <a href="<%= license.url %>" target="license"><%= license.name %></a><br/>
+        <% else %>
+          <%= license.name %><br/>
+        <% end %>
+      <% end %>
+    <% else %>
+      UNKNOWN
+    <% end %>
+  </div>
+
   <div class="flash info" style="margin-bottom: 5px;">
     <b title="<%= title_text %>">Language:</b>
     <% if @product.language.eql?(Product::A_LANGUAGE_RUBY) ||

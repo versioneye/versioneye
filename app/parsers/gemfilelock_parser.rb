@@ -28,7 +28,7 @@ class GemfilelockParser < GemfileParser
     matches.each do |row|
       name = row[0]
       version_match = row[1]
-      version = version_match.gsub("(", "").gsub(")", "")
+      version = version_match.gsub('(', '').gsub(')', '')
       dependency = Projectdependency.new
 
       product = Product.fetch_product( Product::A_LANGUAGE_RUBY, name )
@@ -42,7 +42,7 @@ class GemfilelockParser < GemfileParser
       parse_requested_version(version, dependency, product)
 
       dep = deps[name]
-      if dep.nil? or !dep.comperator.eql?("=")
+      if dep.nil? or !dep.comperator.eql?('=')
         deps[name] = dependency
       end
     end

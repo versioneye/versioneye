@@ -33,11 +33,11 @@ class PageController < ApplicationController
         end
       end
     end
-    redirect_to path.gsub("//", "/"), :status => 301
+    redirect_to path.gsub('//', '/'), :status => 301
   end
 
   def legacy_badge_route
-    path    = "/"
+    path    = '/'
     key     = params[:key]
     version = params[:version]
     key     = parse_param key
@@ -59,27 +59,27 @@ class PageController < ApplicationController
         end
       end
     end
-    redirect_to path.gsub("//", "/"), :status => 301
+    redirect_to path.gsub('//', '/'), :status => 301
   end
 
   def show_visual_old
     key      = params[:key]
     version  = params[:version]
-    prod_key = key.gsub(":", "/").gsub("~", ".").gsub("--", "/")
+    prod_key = key.gsub(':', '/').gsub('~', '.').gsub('--', '/')
     product  = Product.find_by_key( prod_key )
-    new_path = "/"
+    new_path = '/'
     if product
       new_path += "#{product.language_esc}/#{product.to_param}"
       if version
         new_path += "/#{version}"
       end
-      new_path += "/visual_dependencies"
+      new_path += '/visual_dependencies'
     end
     redirect_to new_path, :status => 301
   end
 
   def disclaimer
-    redirect_to "http://www.disclaimer.de/disclaimer.htm?farbe=FFFFFF/000000/000000/000000"
+    redirect_to 'http://www.disclaimer.de/disclaimer.htm?farbe=FFFFFF/000000/000000/000000'
   end
 
   def contact

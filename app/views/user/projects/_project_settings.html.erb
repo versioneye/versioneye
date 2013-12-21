@@ -1,11 +1,13 @@
-
 <% if current_user?(@project.user) %>
   <div style="margin-top: 20px;" id="settings_area">
     <form action="<%= save_period_user_project_path(@project) %>" method="post" class="form-horizontal" >
+      <div>
+        How often do you want us to check your project's dependencies? We will send you an email notification whenever we check your dependencies.
+      </div>
       <div class="control-group">
-        <label class="control-label" style="width: 200px;" >Monitor it</label>
-        <div class="controls" style="margin-left: 210px;">
-          <select name="period" style="width: 150px; margin: 0px;" >
+
+        <div class="controls" style="margin-left: 0px;">
+          <select name="period" >
             <option value="<%= Project::A_PERIOD_DAILY %>"   <%= "selected" if @project.period == Project::A_PERIOD_DAILY   %> >Daily</option>
             <option value="<%= Project::A_PERIOD_WEEKLY %>"  <%= "selected" if @project.period == Project::A_PERIOD_WEEKLY  %> >Weekly</option>
             <option value="<%= Project::A_PERIOD_MONTHLY %>" <%= "selected" if @project.period == Project::A_PERIOD_MONTHLY %> >Monthly</option>
@@ -15,10 +17,12 @@
     </form>
 
     <form action="<%= save_email_user_project_path(@project) %>" method="post" class="form-horizontal" >
+      <div>
+        What's the email address we should send the notifications to?
+      </div>
       <div class="control-group">
-        <label class="control-label" style="width: 200px;" >Send notifications to</label>
-        <div class="controls" style="margin-left: 210px;">
-          <select name="email" style="width: 150px; margin: 0px;" >
+        <div class="controls" style="margin-left: 0px;">
+          <select name="email" >
             <option value="<%= current_user.email %>"  <%= "selected" if @project.email == current_user.email %> ><%= current_user.email %></option>
             <% current_user.emails_verified.each do |user_email| %>
               <option value="<%= user_email.email %>" <%= "selected" if @project.email == user_email.email %> ><%= user_email.email %></option>
@@ -29,16 +33,35 @@
     </form>
 
     <form action="<%= save_visibility_user_project_path(@project) %>" method="post" class="form-horizontal" >
+      <div>
+        All projects are private by default. Only you and your collaborators can see it.<br/>
+        By setting it to public you allow everyone to see the dependencies and licenses of this project.
+      </div>
       <div class="control-group">
-        <label class="control-label" style="width: 200px;" >This Project is</label>
-        <div class="controls" style="margin-left: 210px;">
-          <select name="visibility" style="width: 150px; margin: 0px;" >
+        <div class="controls" style="margin-left: 0px;">
+          <select name="visibility" >
             <option value="private"  <%= "selected" if !@project.public %> >Private</option>
             <option value="public"   <%= "selected" if @project.public %> >Public</option>
           </select> <button type="submit" class="btn btn-primary" >Save</button>
         </div>
       </div>
     </form>
+
+    <form action="<%= save_notify_after_api_update_user_project_path(@project) %>" method="post" class="form-horizontal" >
+      <div>
+        Do you want receive email notifications whenever the dependency file for this project changes?
+        This might happen through the VersionEye API, GitHub or Maven integration.
+      </div>
+      <div class="control-group">
+        <div class="controls" style="margin-left: 0px;">
+          <select name="notify" >
+            <option value="notify"  <%= @project.notify_after_api_update.to_s.eql?('true')  ? 'selected' : '' %> >Notify after update via API</option>
+            <option value="silent"  <%= @project.notify_after_api_update.to_s.eql?('false') ? 'selected' : '' %> >Stay silent</option>
+          </select> <button type="submit" class="btn btn-primary" >Save</button>
+        </div>
+      </div>
+    </form>
+
   </div>
 <% else %>
   <% collaboration = @project.collaborator( current_user ) %>
