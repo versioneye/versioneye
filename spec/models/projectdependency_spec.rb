@@ -3,18 +3,16 @@ require 'spec_helper'
 describe Projectdependency do
 
   before(:each) do
-    user = UserFactory.create_new
-    @project = ProjectFactory.create_new( user )
+    user              = UserFactory.create_new
+
+    @project          = ProjectFactory.create_new( user )
     @project.language = Product::A_LANGUAGE_RUBY
-    @product          = Product.new
-    @product.name     = "gomezify"
-    @product.prod_key = "gomezify"
+
+    @product          = Product.new({:name => 'gomezify', :prod_key => 'gomezify'})
     @product.versions = Array.new
     @product.language = Product::A_LANGUAGE_RUBY
-    version           = Version.new
-    version.version   = "1.0"
-    @product.versions.push(version)
-    @product.version  = "1.0"
+    @product.versions.push(Version.new({:version => '1.0'}))
+    @product.version  = @product.versions.first.to_s
     @product.save
   end
 
@@ -106,6 +104,63 @@ describe Projectdependency do
       dep.outdated?.should be_false
       dep.update_outdated!
       dep.outdated?.should be_true
+    end
+
+  end
+
+  describe "update_version_current" do
+
+    it "doesnt update because prod_key is nil" do
+      dep                   = ProjectdependencyFactory.create_new(@project, @product)
+      dep.prod_key          = nil
+      dep.version_requested = '0.1'
+      dep.update_version_current
+      dep.version_current.should eq(nil)
+    end
+
+    it "doesnt update because prod_key is empty" do
+      dep                   = ProjectdependencyFactory.create_new(@project, @product)
+      dep.prod_key          = ''
+      dep.version_requested = '0.1'
+      dep.update_version_current
+      dep.version_current.should eq(nil)
+    end
+
+    it "doesnt update because prod_key, group_id and artifact_id are unknown" do
+      dep                   = ProjectdependencyFactory.create_new(@project, @product)
+      dep.prod_key          = 'gibts_doch_net'
+      dep.group_id          = 'gibts_doch_net'
+      dep.artifact_id       = 'gibts_doch_net'
+      dep.version_requested = '0.1'
+      dep.update_version_current
+      dep.version_current.should eq(nil)
+    end
+
+    it "updates with the current verson" do
+      dep                   = ProjectdependencyFactory.create_new(@project, @product)
+      dep.version_requested = '0.1'
+      dep.update_version_current
+      dep.version_current.should eq('1.0')
+    end
+
+    it "updates with the current verson from different language" do
+      user              = UserFactory.create_new
+
+      project          = ProjectFactory.create_new( user )
+      project.language = Product::A_LANGUAGE_JAVA
+
+      product          = Product.new({:name => 'lamina', :prod_key => 'lamina', :group_id => 'lamina', :artifact_id => 'lamina' })
+      product.versions = Array.new
+      product.language = Product::A_LANGUAGE_CLOJURE
+      product.versions.push(Version.new({:version => '1.0'}))
+      product.version  = product.versions.first.to_s
+      product.save
+
+      dep                   = ProjectdependencyFactory.create_new(project, product)
+      dep.language          = Product::A_LANGUAGE_JAVA
+      dep.version_requested = '0.1'
+      dep.update_version_current
+      dep.version_current.should eq('1.0')
     end
 
   end
