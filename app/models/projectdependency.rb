@@ -87,6 +87,26 @@ class Projectdependency
     self.outdated
   end
 
+  def update_version_current
+    return false if self.prod_key.nil?
+
+    product = Product.fetch_product self.language, self.prod_key
+    if product.nil? && group_id && artifact_id
+      product = Product.find_by_group_and_artifact( group_id, artifact_id )
+    end
+    return false if product.nil?
+
+    newest_version = VersionService.newest_version_number( product.versions, self.stability )
+    return false if newest_version.nil? || newest_version.empty?
+
+    if self.version_current.nil? || self.version_current.empty? || !self.version_current.eql?( newest_version )
+      self.version_current = newest_version
+      self.release         = VersionTagRecognizer.release? self.version_current
+      self.muted = false
+      self.save()
+    end
+  end
+
   def to_s
     "<Projectdependency: #{project} depends on #{name} (#{version_label}) current: #{version_current} >"
   end
@@ -106,22 +126,6 @@ class Projectdependency
       self.outdated_updated_at = Time.now
       self.save
       self.outdated
-    end
-
-    # TODO refactor this. Move code to service layer !
-    #
-    def update_version_current
-      return false if self.prod_key.nil?
-      product = Product.fetch_product self.language, self.prod_key
-      return false if product.nil?
-      newest_version       = VersionService.newest_version_number( product.versions, self.stability )
-      return false if newest_version.nil? || newest_version.empty?
-      if self.version_current.nil? || self.version_current.empty? || !self.version_current.eql?( newest_version )
-        self.version_current = newest_version
-        self.release         = VersionTagRecognizer.release? self.version_current
-        self.muted = false
-        self.save()
-      end
     end
 
 end
