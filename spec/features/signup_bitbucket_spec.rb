@@ -1,29 +1,5 @@
 require 'spec_helper'
-require 'vcr'
-require 'webmock'
-require 'capybara/rails'
-require 'capybara/rspec'
-
-VCR.configure do |c|
-  c.cassette_library_dir = 'spec/fixtures/vcr_cassettes/'
-  c.ignore_localhost = true
-  c.hook_into :webmock
-end
-
 describe "Signup with Bitbucket" do
-
-  before :all do
-    FakeWeb.allow_net_connect = true
-    WebMock.allow_net_connect!
-  end
-
-  after :all do
-    WebMock.allow_net_connect!
-    FakeWeb.allow_net_connect = true
-    FakeWeb.clean_registry
-  end
-
-
   let(:user1){FactoryGirl.build(:user, email: "test@versioneye.com")}
 
   it "signup a new user with Bitbucket", js: true do
