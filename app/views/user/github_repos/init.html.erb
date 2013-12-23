@@ -190,11 +190,11 @@
               class="onoffswitch-checkbox github-switch"
               id="{{= switch_id }}"
               {{= is_imported ? ' checked ': '' }}
-              data-github-id = "{{= repo.github_id }}"
-              data-github-project-id = "{{= project_info['project_id'] }}"
-              data-github-fullname = "{{= repo.fullname }}"
-              data-github-branch = "{{= branch }}"
-              data-github-filename = "{{= filename }}" />
+              data-scm-id = "{{= repo.github_id }}"
+              data-scm-project-id = "{{= project_info['project_id'] }}"
+              data-scm-fullname = "{{= repo.fullname }}"
+              data-scm-branch = "{{= branch }}"
+              data-scm-filename = "{{= filename }}" />
 
       <label class="onoffswitch-label" for="{{= switch_id }}">
           <div class="onoffswitch-inner"></div>
