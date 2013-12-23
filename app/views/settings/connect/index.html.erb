@@ -46,20 +46,20 @@
         <strong>Bitbucket</strong>
       </div>
        <div class="span8" >
-         <% if @user.bitbucket_token %>
-         <span style="color: green">Connected</span>
-         <%= link_to "[ disconnect ]",
-         settings_disconnect_path(:service => "bitbucket"),
-         :confirm => "Are you sure?",
-         :class => "meta-text-small" %>
-         <% scopes = current_user.bitbucket_scope %>
-         <% if scopes && !scopes.empty? %>
-         scopes: [<%= scopes %>]
-         <% end %>
+         <% if not @user.bitbucket_token.nil? %>
+           <span style="color: green">Connected</span>
+           <%= link_to "[ disconnect ]",
+           settings_disconnect_path(:service => "bitbucket"),
+           :confirm => "Are you sure?",
+           :class => "meta-text-small" %>
+           <% scopes = current_user.bitbucket_scope %>
+           <% if scopes && !scopes.empty? %>
+           scopes: [<%= scopes %>]
+           <% end %>
          <% else %>
-         <a href='<%= auth_bitbucket_connect_path %>'  >
-         Connect with Bitbucket
-         </a>
+           <a href='<%= auth_bitbucket_connect_path %>'  >
+           Connect with Bitbucket
+           </a>
          <% end %>
        </div>
     </div>
