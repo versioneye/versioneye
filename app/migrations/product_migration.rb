@@ -1,36 +1,5 @@
 class ProductMigration
 
-
-  def self.remove_java_clojars
-    z = 0
-    products = Product.where(:language => "Java")
-    products.each do |prod|
-      next if prod.repositories.count > 2
-      prod.repositories.each do |repo|
-        if repo[:src].eql?('http://clojars.org/repo') || repo[:src].eql?('http://clojars.org/repo/')
-          p "remove #{prod.to_s}"
-          prod.remove
-          z = z + 1
-          p z
-        end
-      end
-    end
-    p z
-  end
-
-
-  def self.correct_repo_src
-    products = Product.where(:language => Product::A_LANGUAGE_OBJECTIVEC)
-    products.each do |prod|
-      prod.repositories.each do |repo|
-        repo[:src] = repo[:repo_src]
-        repo[:repotype] = repo[:repotype]
-        repo.save
-      end
-    end
-  end
-
-
   def self.count_versions lang
     versions_count = 0
     count = Product.where(language: lang).count()
