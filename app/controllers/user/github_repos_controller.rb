@@ -66,8 +66,8 @@ class User::GithubReposController < ApplicationController
     repo = []
     command_data = params[:command_data]
     project_name = params[:fullname]
-    branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : 'master'
-    filename     = command_data[:githubFilename]
+    branch       = command_data.has_key?(:scmBranch) ? command_data[:scmBranch] : 'master'
+    filename     = command_data[:scmFilename]
     branch_files = params[:project_files][branch]
 
     case params[:command]
@@ -102,8 +102,8 @@ class User::GithubReposController < ApplicationController
     repo = []
     command_data = params[:command_data]
     project_name = params[:fullname]
-    branch       = command_data.has_key?(:githubBranch) ? command_data[:githubBranch] : "master"
-    filename     = command_data[:githubFilename]
+    branch       = command_data.has_key?(:scmBranch) ? command_data[:scmBranch] : "master"
+    filename     = command_data[:scmFilename]
     branch_files = params[:project_files][branch]
 
     case params[:command]
@@ -160,7 +160,7 @@ class User::GithubReposController < ApplicationController
 
       raise project if project.is_a? String
 
-      command_data[:githubProjectId] = project[:_id].to_s
+      command_data[:scmProjectId] = project[:_id].to_s
       repo = GithubRepo.find(params[:_id])
       repo = process_repo(repo)
       repo[:command_data] = command_data
@@ -177,7 +177,7 @@ class User::GithubReposController < ApplicationController
 
 
     def remove_repo(command_data)
-      id = command_data[:githubProjectId]
+      id = command_data[:scmProjectId]
       project_exists = Project.where(_id: id).exists?
 
       unless project_exists
