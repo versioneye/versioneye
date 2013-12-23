@@ -74,7 +74,7 @@ class User::GithubReposController < ApplicationController
     when 'import'
       repo = import_repo(command_data, project_name, branch, filename, branch_files)
     when 'remove'
-      repo = remove_repo(command_data, project_name, branch, filename, branch_files)
+      repo = remove_repo(command_data)
     when 'update'
       repo = update_repo(command_data)
     else
