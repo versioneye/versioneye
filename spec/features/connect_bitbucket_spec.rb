@@ -4,6 +4,17 @@ describe "Connect with Bitbucket" do
   
   let(:user1){FactoryGirl.create(:default_user)}
 
+  before :each do
+    User.delete_all
+    visit 'https://bitbucket.org/account/signout/'
+    page.has_content? 'Unlimited private code repositories'
+  end
+
+  after :each do
+    visit 'https://bitbucket.org/account/signout/'
+    page.has_content? 'Unlimited private code repositories'
+  end
+
   it "connects Bitbucket account for authorized user", js: true do
     user1.save
     User.all.count.should eql(1)
@@ -20,6 +31,7 @@ describe "Connect with Bitbucket" do
     click_on "Connect with Bitbucket"
 
     #log in with testuser's credentials
+    find("form.login-form").visible?
     within("form.login-form") do
       fill_in "Username", :with => Settings.bitbucket_username
       fill_in 'Password', :with => Settings.bitbucket_password
