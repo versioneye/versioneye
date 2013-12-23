@@ -23,9 +23,9 @@ class Auth::BitbucketController < ApplicationController
       end
 
       if user.nil?
-        session[:access_token] = access_token.token
-        session[:access_token_secret] = access_token.secret
-        redirect_to auth_bitbucket_new_path and return
+        cookies.permanent.signed[:access_token] = access_token.token
+        cookies.permanent.signed[:access_token_secret] = access_token.secret
+        redirect_to auth_bitbucket_new_path(email: session[:email], promo_code: session[:promo_code]) and return
       elsif user.activated?
         user.update_from_bitbucket_json(user_info, access_token.token, access_token.secret)
         user.save
@@ -85,25 +85,31 @@ class Auth::BitbucketController < ApplicationController
     request_token = Bitbucket.request_token(callback_url) 
     session[:email] = @email
     session[:terms] = @terms
-    session[:promo] = @promo
+    session[:promo_code] = @promo
     session[:request_token] = request_token
     redirect_to request_token.authorize_url(oauth_callback: callback_url)
   end
 
   def create
-    @email = session[:email]
-    @terms = session[:terms]
-    @promo = session[:promo_code]
-    access_token = session[:access_token]
-    access_secret = session[:access_token_secret]
+    @email = params[:email]
+    @terms = params[:terms]
+    @promo = params[:promo_code]
+    access_token = cookies.signed[:access_token]
+    access_secret = cookies.signed[:access_token_secret]
 
+
+    Rails.logger.debug("Email: #{@email}, terms: #{@terms}")
     if @email.nil? or @terms.nil?
-      flash[:error] = "Authorization failed. Please try again if it keeps failing then please contact with us."
+      error_msg = "Authorization failed. Please try again if it keeps failing then please contact with us."
+      Rails.logger.error error_msg 
+      flash[:error] = error_msg 
       redirect_to auth_bitbucket_new_path and return
     end
 
-    if access_token.to_s.empty?
-      flash[:error] = "Authorization failed. Our service did not get valid access token from Bitbucket."
+    if access_token.to_s.empty? or access_secret.to_s.empty?
+      error_msg = "Authorization failed. Our service did not get valid access token from Bitbucket."
+      flash[:error] = error_msg 
+      Rails.logger.error error_msg 
       render auth_bitbucket_new_path and return
     end
 
@@ -119,7 +125,7 @@ class Auth::BitbucketController < ApplicationController
       redirect_to auth_bitbucket_new_path
     end
 
-    return
+   
   end
 
   private

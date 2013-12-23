@@ -50,7 +50,12 @@ describe "Signup with Bitbucket" do
       click_on "Sign Up"
     end
 
-    #User.all.count.should eql(1)
-    p User.all.first
+    User.all.count.should eql(1)
+    u = User.all.first
+    u.email.should eql(user1[:email])
+    u.bitbucket_login.should eql("versioneye_test")
+    u.bitbucket_token.should_not be_nil
+    u.bitbucket_secret.should_not be_nil
+
   end
 end
