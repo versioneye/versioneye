@@ -386,6 +386,7 @@ class User
     self[:bitbucket_login] = user_info[:username]
     self[:bitbucket_token] = token
     self[:bitbucket_secret] = secret
+    self[:bitbucket_scope] = scopes
   end
 
   def replacements_for_username( username )
