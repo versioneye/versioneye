@@ -25,7 +25,7 @@ class Auth::BitbucketController < ApplicationController
       if user.nil?
         session[:access_token] = access_token.token
         session[:access_token_secret] = access_token.secret
-        redirect_to auth_bitbucket_create_path and return
+        redirect_to auth_bitbucket_new_path and return
       elsif user.activated?
         user.update_from_bitbucket_json(user_info, access_token.token, access_token.secret)
         user.save
@@ -37,7 +37,8 @@ class Auth::BitbucketController < ApplicationController
     end
 
     session.clear
-    redirect_to signin_path
+    redirect_to signin_path 
+    return
   end
 
   def signin
@@ -50,6 +51,7 @@ class Auth::BitbucketController < ApplicationController
     request_token = Bitbucket.request_token(callback_url)
     session[:request_token] = request_token
     redirect_to request_token.authorize_url(oauth_callback: callback_url)
+    return
   end
 
   def connect
@@ -72,11 +74,11 @@ class Auth::BitbucketController < ApplicationController
     if !User.email_valid?(@email)
       flash[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
       init_variables_for_new_page
-      render auth_bitbucket_new_path
+      render auth_bitbucket_new_path and return
     elsif !@terms.eql?("1")
       flash[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
       init_variables_for_new_page
-      render auth_bitbucket_new_path
+      render auth_bitbucket_new_path and return
     end
     
     callback_url = auth_bitbucket_callback_url
@@ -97,12 +99,12 @@ class Auth::BitbucketController < ApplicationController
 
     if @email.nil? or @terms.nil?
       flash[:error] = "Authorization failed. Please try again if it keeps failing then please contact with us."
-      redirect_to auth_bitbucket_new_path
+      redirect_to auth_bitbucket_new_path and return
     end
 
     if access_token.to_s.empty?
       flash[:error] = "Authorization failed. Our service did not get valid access token from Bitbucket."
-      render auth_github_new_path and return
+      render auth_bitbucket_new_path and return
     end
 
     @user = create_user(@email, access_token, access_secret)
@@ -117,11 +119,11 @@ class Auth::BitbucketController < ApplicationController
       redirect_to auth_bitbucket_new_path
     end
 
+    return
   end
 
   private
     def create_user(email, access_token, access_secret)
-      p "create user for @email: #{email}"
       user = User.new email: email,
                       terms: true,
                       datenerhebung: true
