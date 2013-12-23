@@ -9,7 +9,7 @@ class ProductMigration
       prod.repositories.each do |repo|
         if repo[:src].eql?('http://clojars.org/repo') || repo[:src].eql?('http://clojars.org/repo/')
           p "remove #{prod.to_s}"
-          # prod.remove
+          prod.remove
           z = z + 1
           p z
         end
