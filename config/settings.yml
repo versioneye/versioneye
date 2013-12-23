@@ -10,6 +10,8 @@ development:
   github_pass: xxxxxxxx
   stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
+  bitbucket_token: wW9SUTCKmMDjzFeaXU
+  bitbucket_secret: uQttxDwB7sPrvFnvEkAwwg5TLBdTG4jC
   elasticsearch_url: localhost:9200
   elasticsearch_product_index: product
   elasticsearch_user_index: user
@@ -28,6 +30,10 @@ test:
   github_client_secret: bf2bc9df8933e9a1784bbcec2b46527b6e8098dd
   github_user: xxxxxxxx
   github_pass: xxxxxxxx
+  bitbucket_username: versioneye_test
+  bitbucket_password: qwerty12345
+  bitbucket_token: yWby4uvsy4yzS2PZGW
+  bitbucket_secret: QyBXRdrggxs3udTEg5VYMeeHYSxZAUht
   stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
   elasticsearch_url: localhost:9200
@@ -48,6 +54,8 @@ production:
   github_client_secret: <%= ENV['GITHUB_CLIENT_SECRET'] %>
   github_user: <%= ENV['GITHUB_USER'] %>
   github_pass: <%= ENV['GITHUB_PASS'] %>
+  bitbucket_token: "PLEASE CHANGE ME!"
+  bitbucket_secret: "PLEASE CHANGE ME!"
   stripe_public_key: <%= ENV['STRIPE_PUBLIC_KEY'] %>
   stripe_secret_key: <%= ENV['STRIPE_SECRET_KEY'] %>
   elasticsearch_url: <%= ENV['ELASTICSEARCH_URL'] %>

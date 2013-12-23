@@ -41,5 +41,4 @@ Versioneye::Application.configure do
   config.assets.allow_debugging = true
   ENV['API_BASE_PATH'] = "http://127.0.0.1:3000/api"
   Stripe.api_key = Settings.stripe_secret_key
-
 end
