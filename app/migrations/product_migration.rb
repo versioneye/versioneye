@@ -5,10 +5,11 @@ class ProductMigration
     z = 0
     products = Product.where(:language => "Java")
     products.each do |prod|
-      next if prod.repositories.count > 1
+      next if prod.repositories.count > 2
       prod.repositories.each do |repo|
         if repo[:src].eql?('http://clojars.org/repo') || repo[:src].eql?('http://clojars.org/repo/')
-          p prod.to_s
+          p "remove #{prod.to_s}"
+          # prod.remove
           z = z + 1
           p z
         end
