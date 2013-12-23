@@ -207,8 +207,8 @@ class CocoapodsPodspecParser
 
   def repository
     Repository.new({
-      :repo_type => 'git',
-      :repo_source => @podspec.source[:git]
+      :repotype => 'git',
+      :src => @podspec.source[:git]
       })
   end
 
