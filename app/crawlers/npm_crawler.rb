@@ -75,9 +75,8 @@ class NpmCrawler
 
 
   def self.create_new_version product, version_number, version_obj, time, crawl
-    version_db                 = Version.new({:version => version_number})
-    version_db.released_string = time[version_number]
-    version_db.released_at     = DateTime.parse( version_db.released_string )
+    version_db = Version.new({:version => version_number})
+    parse_release_date( version_db, time )
     product.versions.push version_db
     product.reindex = true
     product.save
@@ -252,8 +251,17 @@ class NpmCrawler
     hp
   rescue => e
     logger.error "Error in homepage_for #{e.message}"
-    logger.error e.backtrace.join("\n")
+    logger.error e.backtrace.join('\n')
     nil
+  end
+
+
+  def self.parse_release_date version_db, time
+    version_db.released_string = time[version_number]
+    version_db.released_at     = DateTime.parse( version_db.released_string )
+  rescue => e
+    logger.error "Error in parse_release_date #{e.message}"
+    logger.error e.backtrace.join('\n')
   end
 
 
