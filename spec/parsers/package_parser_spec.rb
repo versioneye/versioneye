@@ -6,235 +6,205 @@ describe PackageParser do
 
     it "parse from https the file correctly" do
       parser = PackageParser.new
-      project = parser.parse("https://s3.amazonaws.com/veye_test_env/package.json")
+      project = parser.parse('https://s3.amazonaws.com/veye_test_env/package.json')
       project.should_not be_nil
     end
 
     it "parse from http the file correctly" do
-      name1 = "connect-redis"
-      product1 = Product.new
-      product1.name = name1
-      product1.name_downcase = name1
-      product1.prod_key = "connect-redis"
+      name1 = 'connect-redis'
+      product1 = Product.new({:name => name1, :name_downcase => name1, :prod_key => name1})
       product1.language = Product::A_LANGUAGE_NODEJS
-      product1.version = "1.3.0"
+      product1.version = '1.3.0'
       product1.save
-      version1_1 = Version.new
-      version1_1.version = "1.3.0"
-      product1.versions.push(version1_1)
+      product1.versions.push(Version.new({:version => '1.3.0'}))
       product1.save
 
-      name2 = "redis"
-      product2 = Product.new
-      product2.name = name2
-      product2.name_downcase = name2
-      product2.prod_key = "redis"
+      name2 = 'redis'
+      product2 = Product.new({:name => name2, :name_downcase => name2, :prod_key => name2})
       product2.language = Product::A_LANGUAGE_NODEJS
-      product2.version = "1.3.0"
+      product2.version = '1.3.0'
       product2.save
-      version2_1 = Version.new
-      version2_1.version = "1.3.0"
-      product2.versions.push(version2_1)
+      product2.versions.push(Version.new({:version => '1.3.0'}))
       product2.save
 
-      name3 = "memcache"
-      product3 = Product.new
-      product3.name = name3
-      product3.name_downcase = "memcache"
-      product3.prod_key = "memcache"
+      name3 = 'memcache'
+      product3 = Product.new({:name => name3, :name_downcase => name3, :prod_key => name3})
       product3.language = Product::A_LANGUAGE_NODEJS
-      product3.version = "1.4.0"
+      product3.version = '1.4.0'
       product3.save
       version3_1 = Version.new
-      version3_1.version = "1.4.0"
+      version3_1.version = '1.4.0'
       product3.versions.push(version3_1)
       product3.save
 
-      name4 = "mongo"
-      product4 = Product.new
-      product4.name = name4
-      product4.name_downcase = name4
-      product4.prod_key = "mongo"
+      name4 = 'mongo'
+      product4 = Product.new({:name => name4, :name_downcase => name4, :prod_key => name4})
       product4.language = Product::A_LANGUAGE_NODEJS
-      product4.version = "1.1.7"
+      product4.version = '1.1.7'
       product4.save
       version4_1 = Version.new
-      version4_1.version = "1.1.7"
+      version4_1.version = '1.1.7'
       product4.versions.push(version4_1)
       product4.save
 
-      name5 = "mongoid"
-      product5 = Product.new
-      product5.name = name5
-      product5.name_downcase = name5
-      product5.prod_key = "mongoid"
+      name5 = 'mongoid'
+      product5 = Product.new({:name => name5, :name_downcase => name5, :prod_key => name5})
       product5.language = Product::A_LANGUAGE_NODEJS
-      product5.version = "1.1.7"
+      product5.version = '1.1.7'
       product5.save
-      version5_1 = Version.new
-      version5_1.version = "1.1.7"
-      product5.versions.push(version5_1)
+      product5.versions.push(Version.new({:version => '1.1.7'}))
       product5.save
 
-      name6 = "express"
-      product6 = Product.new
-      product6.name = name6
-      product6.name_downcase = name6
-      product6.prod_key = "express"
+      name6 = 'express'
+      product6 = Product.new({:name => name6, :name_downcase => name6, :prod_key => name6})
       product6.language = Product::A_LANGUAGE_NODEJS
-      product6.version = "2.4.7"
+      product6.version = '2.4.7'
       product6.save
-      version6_1 = Version.new
-      version6_1.version = "2.4.0"
-      product6.versions.push(version6_1)
-      version6_2 = Version.new
-      version6_2.version = "2.4.6"
-      product6.versions.push(version6_2)
-      version6_3 = Version.new
-      version6_3.version = "2.4.7"
-      product6.versions.push(version6_3)
+      product6.versions.push(Version.new({:version => '2.4.0'}))
+      product6.versions.push(Version.new({:version => '2.4.6'}))
+      product6.versions.push(Version.new({:version => '2.4.7'}))
       product6.save
 
-      name7 = "fs-ext"
+      name7 = 'fs-ext'
       product7 = Product.new
       product7.name = name7
       product7.name_downcase = name7
-      product7.prod_key = "fs-ext"
+      product7.prod_key = 'fs-ext'
       product7.language = Product::A_LANGUAGE_NODEJS
-      product7.version = "2.4.7"
+      product7.version = '2.4.7'
       product7.save
       version7_1 = Version.new
-      version7_1.version = "0.2.0"
+      version7_1.version = '0.2.0'
       product7.versions.push(version7_1)
       version7_2 = Version.new
-      version7_2.version = "0.2.7"
+      version7_2.version = '0.2.7'
       product7.versions.push(version7_2)
       version7_3 = Version.new
-      version7_3.version = "2.4.7"
+      version7_3.version = '2.4.7'
       product7.versions.push(version7_3)
       product7.save
 
-      name8 = "jade"
+      name8 = 'jade'
       product8 = Product.new
       product8.name = name8
       product8.name_downcase = name8
-      product8.prod_key = "jade"
+      product8.prod_key = 'jade'
       product8.language = Product::A_LANGUAGE_NODEJS
-      product8.version = "2.4.7"
+      product8.version = '2.4.7'
       product8.save
       version8_1 = Version.new
-      version8_1.version = "0.2.0"
+      version8_1.version = '0.2.0'
       product8.versions.push(version8_1)
       version8_2 = Version.new
-      version8_2.version = "0.2.7"
+      version8_2.version = '0.2.7'
       product8.versions.push(version8_2)
       version8_3 = Version.new
-      version8_3.version = "2.4.7"
+      version8_3.version = '2.4.7'
       product8.versions.push(version8_3)
       product8.save
 
-      name9 = "mailer"
+      name9 = 'mailer'
       product9 = Product.new
       product9.name = name9
       product9.name_downcase = name9
-      product9.prod_key = "mailer"
+      product9.prod_key = 'mailer'
       product9.language = Product::A_LANGUAGE_NODEJS
-      product9.version = "0.7.0"
+      product9.version = '0.7.0'
       product9.save
       version9_1 = Version.new
-      version9_1.version = "0.6.0"
+      version9_1.version = '0.6.0'
       product9.versions.push(version9_1)
       version9_2 = Version.new
-      version9_2.version = "0.6.1"
+      version9_2.version = '0.6.1'
       product9.versions.push(version9_2)
       version9_3 = Version.new
-      version9_3.version = "0.6.5"
+      version9_3.version = '0.6.5'
       product9.versions.push(version9_3)
       version9_4 = Version.new
-      version9_4.version = "0.6.9"
+      version9_4.version = '0.6.9'
       product9.versions.push(version9_4)
       version9_5 = Version.new
-      version9_5.version = "0.7.0"
+      version9_5.version = '0.7.0'
       product9.versions.push(version9_5)
       product9.save
 
-      name10 = "markdown"
+      name10 = 'markdown'
       product10 = Product.new
       product10.name = name10
       product10.name_downcase = name10
-      product10.prod_key = "markdown"
+      product10.prod_key = 'markdown'
       product10.language = Product::A_LANGUAGE_NODEJS
-      product10.version = "0.4.0"
+      product10.version = '0.4.0'
       product10.save
       version10_1 = Version.new
-      version10_1.version = "0.2.0"
+      version10_1.version = '0.2.0'
       product10.versions.push(version10_1)
       version10_2 = Version.new
-      version10_2.version = "0.3.0"
+      version10_2.version = '0.3.0'
       product10.versions.push(version10_2)
       version10_3 = Version.new
-      version10_3.version = "0.4.0"
+      version10_3.version = '0.4.0'
       product10.versions.push(version10_3)
       product10.save
 
-      name11 = "mu2"
+      name11 = 'mu2'
       product11 = Product.new
       product11.name = name11
       product11.name_downcase = name11
-      product11.prod_key = "mu2"
+      product11.prod_key = 'mu2'
       product11.language = Product::A_LANGUAGE_NODEJS
-      product11.version = "0.6.0"
+      product11.version = '0.6.0'
       product11.save
       version11_1 = Version.new
-      version11_1.version = "0.5.10"
+      version11_1.version = '0.5.10'
       product11.versions.push(version11_1)
       version11_2 = Version.new
-      version11_2.version = "0.5.0"
+      version11_2.version = '0.5.0'
       product11.versions.push(version11_2)
       version11_3 = Version.new
-      version11_3.version = "0.6.0"
+      version11_3.version = '0.6.0'
       product11.versions.push(version11_3)
       product11.save
 
-      name12 = "pg"
+      name12 = 'pg'
       product12 = Product.new
       product12.name = name12
       product12.name_downcase = name12
-      product12.prod_key = "pg"
+      product12.prod_key = 'pg'
       product12.language = Product::A_LANGUAGE_NODEJS
-      product12.version = "0.6.6"
+      product12.version = '0.6.6'
       product12.save
       version12_1 = Version.new
-      version12_1.version = "0.6.6"
+      version12_1.version = '0.6.6'
       product12.versions.push(version12_1)
       version12_2 = Version.new
-      version12_2.version = "0.5.0"
+      version12_2.version = '0.5.0'
       product12.versions.push(version12_2)
       version12_3 = Version.new
-      version12_3.version = "0.6.1"
+      version12_3.version = '0.6.1'
       product12.versions.push(version12_3)
       product12.save
 
-      name13 = "pg_connect"
+      name13 = 'pg_connect'
       product13 = Product.new
       product13.name = name13
       product13.name_downcase = name13
-      product13.prod_key = "pg_connect"
+      product13.prod_key = 'pg_connect'
       product13.language = Product::A_LANGUAGE_NODEJS
-      product13.version = "0.6.9"
+      product13.version = '0.6.9'
       product13.save
       version13_1 = Version.new
-      version13_1.version = "0.6.9"
+      version13_1.version = '0.6.9'
       product13.versions.push(version13_1)
       version13_2 = Version.new
-      version13_2.version = "0.5.0"
+      version13_2.version = '0.5.0'
       product13.versions.push(version13_2)
       version13_3 = Version.new
-      version13_3.version = "0.6.1"
+      version13_3.version = '0.6.1'
       product13.versions.push(version13_3)
       product13.save
 
-      name14 = "mocha"
+      name14 = 'mocha'
       product14 = Product.new({:name => name14, :name_downcase => name14, :prod_key => name14,
             :language => Product::A_LANGUAGE_NODEJS, :version => '1.16.2'})
       product14.save
