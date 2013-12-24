@@ -22,8 +22,10 @@ class Newest
     Product.fetch_product self.language, self.prod_key
   end
 
-  def self.fetch_newest language, prod_key, verison
+  def self.fetch_newest language, prod_key, version
     Newest.where(:language => language, :prod_key => prod_key, :version => version).shift
+  rescue => e
+    p e
   end
 
   def self.get_newest( count )
