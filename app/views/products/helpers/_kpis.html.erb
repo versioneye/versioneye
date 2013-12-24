@@ -97,7 +97,7 @@
 
   <% licenses = @product.licenses %>
   <% license_bg = 'info' %>
-  <% license_bg = "error" if licenses.nil? || licenses.empty? %>
+  <% license_bg = "error" if !licenses || licenses.empty? %>
   <div class="flash <%= license_bg %>" style="margin-bottom: 5px;">
     <b title="license">License:</b>
     <% if licenses && !licenses.empty? %>

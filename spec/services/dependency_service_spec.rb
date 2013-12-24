@@ -47,7 +47,7 @@ describe DependencyService do
 
     it "is not outdated, because it's higher" do
       product = ProductFactory.create_new(1)
-      product.versions.push Version.new({ :verison => "1.0" })
+      product.versions.push Version.new({ :version => "1.0" })
       product.save
 
       dependency              = Dependency.new
