@@ -144,7 +144,7 @@ class GithubVersionCrawler
   def self.repo_data owner_repo
     api  = OctokitApi.instance
     root = api.root
-    repo = root.rels[:repository].get(:uri => owner_repo).data
+    root.rels[:repository].get(:uri => owner_repo).data
   end
 
 

@@ -133,7 +133,6 @@ class User::GithubReposController < ApplicationController
 
       raise err_message if matching_files.empty?
 
-      url     = matching_files.first[:url]
       project = ProjectService.import_from_github current_user, project_name, filename, branch, nil
 
       raise err_message if project.nil?
@@ -156,6 +155,7 @@ class User::GithubReposController < ApplicationController
     end
 
 
+    # TODO last param is not used. Refactor!
     def remove_repo(command_data, project_name, branch, filename, branch_files)
       id = command_data[:githubProjectId]
       project_exists = Project.where(_id: id).exists?
