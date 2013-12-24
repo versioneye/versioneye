@@ -234,103 +234,106 @@ describe PackageParser do
       product13.versions.push(version13_3)
       product13.save
 
+      name14 = "mocha"
+      product14 = Product.new({:name => name14, :name_downcase => name14, :prod_key => name14,
+            :language => Product::A_LANGUAGE_NODEJS, :version => '1.16.2'})
+      product14.save
+      product14.versions.push(Version.new({:version => '1.0.0'}))
+      product14.versions.push(Version.new({:version => '1.16.0'}))
+      product14.versions.push(Version.new({:version => '1.16.2'}))
+      product14.save
+
 
       parser = PackageParser.new
-      project = parser.parse("http://s3.amazonaws.com/veye_test_env/package.json")
+      project = parser.parse('http://s3.amazonaws.com/veye_test_env/package.json')
       project.should_not be_nil
-      project.dependencies.size.should eql(13)
+      project.dependencies.size.should eql(14)
 
       dep_01 = project.dependencies.first
-      dep_01.name.should eql("connect-redis")
-      dep_01.version_requested.should eql("1.3.0")
-      dep_01.version_current.should eql("1.3.0")
-      dep_01.comperator.should eql("=")
+      dep_01.name.should eql('connect-redis')
+      dep_01.version_requested.should eql('1.3.0')
+      dep_01.version_current.should eql('1.3.0')
+      dep_01.comperator.should eql('=')
 
       dep_02 = project.dependencies[1]
-      dep_02.name.should eql("redis")
-      dep_02.version_requested.should eql("1.3.0")
-      dep_02.version_current.should eql("1.3.0")
-      dep_02.comperator.should eql("=")
+      dep_02.name.should eql('redis')
+      dep_02.version_requested.should eql('1.3.0')
+      dep_02.version_current.should eql('1.3.0')
+      dep_02.comperator.should eql('=')
 
       dep_03 = project.dependencies[2]
-      dep_03.name.should eql("memcache")
-      dep_03.version_requested.should eql("1.4.0")
-      dep_03.version_current.should eql("1.4.0")
-      dep_03.comperator.should eql("=")
+      dep_03.name.should eql('memcache')
+      dep_03.version_requested.should eql('1.4.0')
+      dep_03.version_current.should eql('1.4.0')
+      dep_03.comperator.should eql('=')
 
       dep_04 = project.dependencies[3]
-      dep_04.name.should eql("mongo")
-      dep_04.version_requested.should eql("1.1.7")
-      dep_04.version_current.should eql("1.1.7")
-      dep_04.comperator.should eql("=")
+      dep_04.name.should eql('mongo')
+      dep_04.version_requested.should eql('1.1.7')
+      dep_04.version_current.should eql('1.1.7')
+      dep_04.comperator.should eql('=')
 
       dep_05 = project.dependencies[4]
-      dep_05.name.should eql("mongoid")
-      dep_05.version_requested.should eql("1.1.7")
-      dep_05.version_current.should eql("1.1.7")
-      dep_05.comperator.should eql("=")
+      dep_05.name.should eql('mongoid')
+      dep_05.version_requested.should eql('1.1.7')
+      dep_05.version_current.should eql('1.1.7')
+      dep_05.comperator.should eql('=')
 
       dep_06 = project.dependencies[5]
-      dep_06.name.should eql("express")
-      dep_06.version_requested.should eql("2.4.7")
-      dep_06.version_current.should eql("2.4.7")
-      dep_06.comperator.should eql("=")
+      dep_06.name.should eql('express')
+      dep_06.version_requested.should eql('2.4.7')
+      dep_06.version_current.should eql('2.4.7')
+      dep_06.comperator.should eql('=')
 
       dep_07 = project.dependencies[6]
-      dep_07.name.should eql("fs-ext")
-      dep_07.version_requested.should eql("0.2.7")
-      dep_07.version_current.should eql("2.4.7")
-      dep_07.comperator.should eql("=")
+      dep_07.name.should eql('fs-ext')
+      dep_07.version_requested.should eql('0.2.7')
+      dep_07.version_current.should eql('2.4.7')
+      dep_07.comperator.should eql('=')
 
       dep_08 = project.dependencies[7]
-      dep_08.name.should eql("jade")
-      dep_08.version_requested.should eql("0.2.7")
-      dep_08.version_current.should eql("2.4.7")
-      dep_08.comperator.should eql("~")
+      dep_08.name.should eql('jade')
+      dep_08.version_requested.should eql('0.2.7')
+      dep_08.version_current.should eql('2.4.7')
+      dep_08.comperator.should eql('~')
 
       dep_09 = project.dependencies[8]
-      dep_09.name.should eql("mailer")
-      dep_09.version_requested.should eql("0.6.9")
-      dep_09.version_current.should eql("0.7.0")
-      dep_09.comperator.should eql("=")
+      dep_09.name.should eql('mailer')
+      dep_09.version_requested.should eql('0.6.9')
+      dep_09.version_current.should eql('0.7.0')
+      dep_09.comperator.should eql('=')
 
       dep_10 = project.dependencies[9]
-      dep_10.name.should eql("markdown")
-      dep_10.version_requested.should eql("0.2.0")
-      dep_10.version_current.should eql("0.4.0")
-      dep_10.comperator.should eql("<")
+      dep_10.name.should eql('markdown')
+      dep_10.version_requested.should eql('0.2.0')
+      dep_10.version_current.should eql('0.4.0')
+      dep_10.comperator.should eql('<')
 
       dep_11 = project.dependencies[10]
-      dep_11.name.should eql("mu2")
-      dep_11.version_requested.should eql("0.6.0")
-      dep_11.version_current.should eql("0.6.0")
-      dep_11.comperator.should eql(">")
+      dep_11.name.should eql('mu2')
+      dep_11.version_requested.should eql('0.6.0')
+      dep_11.version_current.should eql('0.6.0')
+      dep_11.comperator.should eql('>')
 
       dep_12 = project.dependencies[11]
-      dep_12.name.should eql("pg")
-      dep_12.version_requested.should eql("0.6.6")
-      dep_12.version_current.should eql("0.6.6")
-      dep_12.comperator.should eql(">=")
+      dep_12.name.should eql('pg')
+      dep_12.version_requested.should eql('0.6.6')
+      dep_12.version_current.should eql('0.6.6')
+      dep_12.comperator.should eql('>=')
 
       dep_13 = project.dependencies[12]
-      dep_13.name.should eql("pg_connect")
-      dep_13.version_requested.should eql("0.6.9")
-      dep_13.version_current.should eql("0.6.9")
-      dep_13.comperator.should eql("<=")
+      dep_13.name.should eql('pg_connect')
+      dep_13.version_requested.should eql('0.6.9')
+      dep_13.version_current.should eql('0.6.9')
+      dep_13.comperator.should eql('<=')
 
-      product1.remove
-      product2.remove
-      product3.remove
-      product4.remove
-      product5.remove
-      product6.remove
-      product7.remove
-      product8.remove
-      product9.remove
-      product10.remove
-      product11.remove
-      product12.remove
-      product13.remove
+      dep_14 = project.dependencies[13]
+      dep_14.name.should eql('mocha')
+      dep_14.version_requested.should eql('1.16.2')
+      dep_14.version_current.should eql('1.16.2')
+      dep_14.comperator.should eql('=')
+      dep_14.version_label.should eql('latest')
+      dep_14.outdated?().should be_false
     end
 
   end

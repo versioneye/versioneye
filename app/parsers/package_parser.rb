@@ -5,11 +5,14 @@ class PackageParser < CommonParser
   # http://wiki.commonjs.org/wiki/Packages/1.1
   #
   def parse ( url )
-    return nil if url.nil? || url.empty?
+    return nil if url.to_s.empty?
+
     data = self.fetch_response_body_json( url )
     return nil if data.nil?
+
     dependencies = fetch_dependencies( data )
     return nil if dependencies.nil?
+
     project = init_project( url, data )
     dependencies.each do |key, value|
       parse_line( key, value, project )
@@ -30,7 +33,7 @@ class PackageParser < CommonParser
   # It is important that this method is not writing int the database!
   #
   def parse_requested_version(version, dependency, product)
-    if version.nil? || version.empty?
+    if version.to_s.strip.empty?
       self.update_requested_with_current(dependency, product)
       return
     end
@@ -44,10 +47,16 @@ class PackageParser < CommonParser
       return
     end
 
-    if version.match(/\*/) || version.empty?
+    if version.match(/\*/)
       # Start Matching. Matches everything.
       dependency.version_requested = product.version
       dependency.version_label = '*'
+      dependency.comperator = '='
+
+    elsif version.casecmp('latest') == 0
+      # Start Matching. Matches everything.
+      dependency.version_requested = product.version
+      dependency.version_label = 'latest'
       dependency.comperator = '='
 
     elsif version.match(/^=/)
