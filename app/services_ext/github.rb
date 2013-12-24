@@ -241,6 +241,7 @@ class Github
     JSON.parse(response.body, symbolize_names: true)
   end
 
+  # TODO recursive param is never used. Refactor!
   def self.project_files_from_branch(repo_name, token, branch_sha, branch = "master", recursive = false, try_n = 3)
     branch_tree = nil
 

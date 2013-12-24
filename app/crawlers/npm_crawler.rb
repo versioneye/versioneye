@@ -34,7 +34,6 @@ class NpmCrawler
     return nil if versions.nil? || versions.empty?
 
     prod_key  = prod_json['_id']
-    prod_name = prod_json['name']
     time      = prod_json['time']
 
     product = init_product prod_key
@@ -96,8 +95,8 @@ class NpmCrawler
   end
 
 
-  def self.init_product name
-    product = Product.find_by_lang_key( Product::A_LANGUAGE_NODEJS, name )
+  def self.init_product prod_key
+    product = Product.find_by_lang_key( Product::A_LANGUAGE_NODEJS, prod_key )
     return product if product
     self.logger.info " -- New Node.JS Package - #{name}"
     Product.new({:reindex => true})
@@ -229,12 +228,14 @@ class NpmCrawler
   def self.bugs_for version_obj
     version_obj['bugs']['web']
   rescue => e
+    p e
     nil
   end
 
   def self.repository_for version_obj
     version_obj['repository']['url']
   rescue => e
+    p e
     nil
   end
 
