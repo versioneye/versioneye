@@ -24,10 +24,10 @@ class GithubRepo
   field :etag        , type: String
   field :branches    , type: Array
   field :project_files, type: Hash,    :default => nil
-  field :created_at  , type: DateTime, :default => DateTime.new
-  field :updated_at  , type: DateTime, :default => DateTime.new #when github repo was updated
-  field :pushed_at   , type: DateTime, :default => DateTime.new
-  field :cached_at   , type: DateTime, :default => DateTime.new
+  field :created_at  , type: DateTime, :default => DateTime.now
+  field :updated_at  , type: DateTime, :default => DateTime.now #when github repo was updated
+  field :pushed_at   , type: DateTime, :default => DateTime.now
+  field :cached_at   , type: DateTime, :default => DateTime.now
 
   belongs_to :user
 
