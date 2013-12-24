@@ -104,7 +104,7 @@ Our rake tasks are organized in `lib/tasks/versioneye.rake`. In this file we hav
 rake versioneye:daily_jobs
 ```
 
-This will execute all jobs we have to run daily. For example sending out the daily new verison notification emails and so on.
+This will execute all jobs we have to run daily. For example sending out the daily new version notification emails and so on.
 
 ```
 rake versioneye:weekly_jobs
