@@ -202,10 +202,16 @@ class NpmCrawler
 
   def self.create_dependencies product, version_number, version_obj
     dependencies = version_obj['dependencies']
-    create_dependency dependencies, product, version_number, "compile"
+    create_dependency dependencies, product, version_number, Dependency::A_SCOPE_COMPILE
 
     devDependencies = version_obj['devDependencies']
-    create_dependency devDependencies, product, version_number, "development"
+    create_dependency devDependencies, product, version_number, Dependency::A_SCOPE_DEVELOPMENT
+
+    bundledDependencies = version_obj['bundledDependencies']
+    create_dependency bundledDependencies, product, version_number, Dependency::A_SCOPE_BUNDLED
+
+    optionalDependencies = version_obj['optionalDependencies']
+    create_dependency optionalDependencies, product, version_number, Dependency::A_SCOPE_OPTIONAL
   end
 
   def self.create_dependency dependencies, product, version_number, scope
