@@ -88,7 +88,7 @@ describe V2::UsersApiV2 do
       response_data["unread"].should == 1
       response_data["notifications"].length.should == 1
       msg = response_data["notifications"].shift
-      msg["version"].should eql(new_notification.version)
+      msg["version"].should eql(new_notification.version_id)
     end
   end
 
