@@ -5,8 +5,8 @@ class NotificationFactory
     random_product = ProductFactory.create_new(Random.rand(100000), :gemfile)
     new_message = Notification.new  user_id: user.id,
                                     product_id: random_product.id,
-                                    version_id: random_product.versions.last.id,
-                                    version: random_product.version
+                                    version_id: random_product.version
+
     if save
       unless new_message.save
         p new_message.errors.full_messages.to_sentence
@@ -35,6 +35,5 @@ class NotificationFactory
 
     new_message
   end
-
 
 end

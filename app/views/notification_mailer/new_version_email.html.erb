@@ -32,12 +32,11 @@
             <% proj_ids = @user_product_index[prod_id] %>
             <% proj_ids.each_with_index do |proj_id, i| %>
               <% project = Project.find_by_id( proj_id ) %>
-               <div> - <%= link_to( project.name, user_project_url( project ) ) %></div>
+              <div> - <%= link_to( project.name, user_project_url( project ) ) %></div>
             <% end %>
             <br/>
           <% end %>
         </td>
-
       </tr>
     <% end %>
   </table>
