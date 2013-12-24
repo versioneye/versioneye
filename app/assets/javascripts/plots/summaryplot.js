@@ -71,8 +71,8 @@ define([require],function(require){
               "text-align": "right",
               "padding": "1px 5px",
               "height": function(d){return 18 + "px";},
-              "width": function(d){return barScaler(d) + "px";},
-            });
+              "width": function(d){return barScaler(d) + "px";}
+          });
     },
     loadAndRender: function(source_url){
       var thisPlot = this;
