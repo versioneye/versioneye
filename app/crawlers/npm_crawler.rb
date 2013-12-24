@@ -43,9 +43,6 @@ class NpmCrawler
     npm_page = "https://npmjs.org/package/#{prod_key}"
     update_npm_link product, npm_page
 
-    product.versions.delete_all     # just temporary !!!
-    product.dependencies.delete_all # just temporary !!!
-
     versions.each do |version|
       version_number = String.new(version[0])
       version_obj = version[1]
@@ -53,18 +50,10 @@ class NpmCrawler
         version_number.gsub!('v', '')
       end
 
-      create_new_version product, version_number, version_obj, time, crawl
+      db_version = product.version_by_number version_number
+      next if db_version
 
-      # db_version = product.version_by_number version_number
-      # if db_version
-      #   db_version.remove
-      # end
-      # if db_version.nil?
-      #   create_new_version product, version_number, version_obj, time, crawl
-      # else
-      #   create_dependencies product, version_number, version_obj
-      #   create_download     product, version_number, version_obj
-      # end
+      create_new_version product, version_number, version_obj, time, crawl
     end
     VersionService.update_version_data( product )
   rescue => e
