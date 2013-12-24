@@ -37,7 +37,7 @@
     <% average_release_time = VersionService.estimated_average_release_time( @product.versions ) %>
   <% end %>
   <% art_text = "" %>
-  <% art_text = "Not Available" if average_release_time == 0 %>
+  <% art_text = "Not Available" if average_release_time.nil? || average_release_time == 0 %>
   <% art_bg = "info" %>
   <% if !average_release_time.nil? && average_release_time > 0 %>
     <% art_bg = "success" if average_release_time > 0 && average_release_time <= 31  %>
@@ -45,12 +45,14 @@
     <% art_bg = "warn"  if average_release_time > 62 && average_release_time <= 124  %>
     <% art_bg = "error" if average_release_time > 124 %>
     <% art_text = "In average this dev team is releasing a new version every #{average_release_time} days." %>
+  <% else %>
+    <% art_bg = "error" %>
   <% end %>
 
   <div class="flash <%= art_bg %>" style="margin-bottom: 5px;" >
     <b title="<%= art_text %>" >Avg. Rel. Time:</b>
     <span title="<%= art_text %>">
-      <% if average_release_time == 0 %>
+      <% if average_release_time.nil? || average_release_time == 0 %>
        N/A
       <% else %>
         <%= average_release_time %> days
