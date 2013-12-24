@@ -36,14 +36,14 @@
   <% if average_release_time.nil? %>
     <% average_release_time = VersionService.estimated_average_release_time( @product.versions ) %>
   <% end %>
-  <% art_text = "" %>
-  <% art_text = "Not Available" if average_release_time.nil? || average_release_time == 0 %>
-  <% art_bg = "info" %>
+  <% art_text = '' %>
+  <% art_text = 'Not Available' if average_release_time.nil? || average_release_time == 0 %>
+  <% art_bg = 'info' %>
   <% if !average_release_time.nil? && average_release_time > 0 %>
-    <% art_bg = "success" if average_release_time > 0 && average_release_time <= 31  %>
-    <% art_bg = "info"  if average_release_time > 31 && average_release_time <= 62  %>
-    <% art_bg = "warn"  if average_release_time > 62 && average_release_time <= 124  %>
-    <% art_bg = "error" if average_release_time > 124 %>
+    <% art_bg = 'success' if average_release_time > 0 && average_release_time <= 31  %>
+    <% art_bg = 'info'  if average_release_time > 31 && average_release_time <= 62  %>
+    <% art_bg = 'warn'  if average_release_time > 62 && average_release_time <= 124  %>
+    <% art_bg = 'error' if average_release_time > 124 %>
     <% art_text = "In average this dev team is releasing a new version every #{average_release_time} days." %>
   <% else %>
     <% art_bg = "error" %>
@@ -67,11 +67,11 @@
       @product.language.eql?(Product::A_LANGUAGE_PHP) ||
       @product.language.eql?(Product::A_LANGUAGE_OBJECTIVEC) %>
   <% references = @product.used_by_count %>
-  <% ref_bg = "" %>
-  <% ref_bg = "success" if references >= 100  %>
-  <% ref_bg = "info"    if references >= 10 and references < 100  %>
-  <% ref_bg = "warn"    if references >  0  and references < 10  %>
-  <% ref_bg = "error"   if references == 0 %>
+  <% ref_bg = '' %>
+  <% ref_bg = 'success' if references >= 100  %>
+  <% ref_bg = 'info'    if references >= 10 and references < 100  %>
+  <% ref_bg = 'warn'    if references >  0  and references < 10  %>
+  <% ref_bg = 'error'   if references == 0 %>
   <% ref_text = "#{references} packages are referencing this project" %>
   <div class="flash <%= ref_bg %>" style="margin-bottom: 5px;" >
     <b title="<%= ref_text %>">References:</b>
@@ -86,11 +86,11 @@
 <% end %>
 
   <% main_dep_count = @product.dependencies(nil).count %>
-  <% dep_bg = "" %>
-  <% dep_bg = "success" if main_dep_count <= 9  %>
-  <% dep_bg = "info" if main_dep_count > 9 and main_dep_count < 15  %>
-  <% dep_bg = "warn" if main_dep_count >= 15 and main_dep_count < 30  %>
-  <% dep_bg = "error" if main_dep_count >= 30 %>
+  <% dep_bg = '' %>
+  <% dep_bg = 'success' if main_dep_count <= 9  %>
+  <% dep_bg = 'info' if main_dep_count > 9 and main_dep_count < 15  %>
+  <% dep_bg = 'warn' if main_dep_count >= 15 and main_dep_count < 30  %>
+  <% dep_bg = 'error' if main_dep_count >= 30 %>
   <% scope = Dependency.main_scope(@product.language) %>
   <% title_text = "#{main_dep_count} direct #{scope} dependencies" %>
   <div class="flash <%= dep_bg %>" style="margin-bottom: 5px;">
@@ -135,6 +135,6 @@
 
 <% if signed_in_admin? %>
   <div  >
-    <%= link_to "edit", product_edit_path %>
+    <%= link_to 'edit', product_edit_path %>
   </div>
 <% end %>
