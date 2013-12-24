@@ -12,13 +12,13 @@
 
 
   <% if @product %>
-    <% if @product.language.eql?("Ruby") %>
+    <% if @product.language.eql?('Ruby') %>
       <title><%= @product.name %> : <%= @product.version %> - Track GEM versions at VersionEye</title>
-    <% elsif @product.language.eql?("Java") %>
+    <% elsif @product.language.eql?('Java') %>
       <title><%= @product.name %> : <%= @product.version %> - Track your JARs at VersionEye</title>
-    <% elsif @product.language.eql?("Node.JS") %>
+    <% elsif @product.language.eql?('Node.JS') %>
       <title><%= @product.name %> : <%= @product.version %> - Track your NPM libraries at VersionEye</title>
-    <% elsif @product.language.eql?("PHP") %>
+    <% elsif @product.language.eql?('PHP') %>
       <title><%= @product.name %> : <%= @product.version %> - Track your PHP libraries at VersionEye</title>
     <% else %>
       <title><%= @product.name %> : <%= @product.version %> - Track your libraries at VersionEye</title>

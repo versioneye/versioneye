@@ -78,11 +78,11 @@ class NpmCrawler
     CrawlerUtils.create_notifications( product, version_number, logger )
 
     bugs_link = bugs_for version_obj
-    Versionlink.create_versionlink product.language, product.prod_key, version_number, bugs_link, "Bugs"
+    Versionlink.create_versionlink product.language, product.prod_key, version_number, bugs_link, 'Bugs'
     repo_link = repository_for version_obj
-    Versionlink.create_versionlink product.language, product.prod_key, version_number, repo_link, "Repository"
+    Versionlink.create_versionlink product.language, product.prod_key, version_number, repo_link, 'Repository'
     homepage_link = homepage_for version_obj
-    Versionlink.create_versionlink product.language, product.prod_key, version_number, homepage_link, "Homepage"
+    Versionlink.create_versionlink product.language, product.prod_key, version_number, homepage_link, 'Homepage'
 
     create_author product, version_number, version_obj['author']
     create_maintainers product, version_number, version_obj['maintainers']
@@ -126,11 +126,11 @@ class NpmCrawler
 
   def self.crawle_object
     crawl                 = Crawle.new
-    crawl.crawler_name    = "NpmCrawler"
-    crawl.crawler_version = "0.1.0"
-    crawl.repository_src  = "http://registry.npmjs.org/"
-    crawl.start_point     = "/"
-    crawl.exec_group      = Time.now.strftime("%Y-%m-%d-%I-%M")
+    crawl.crawler_name    = 'NpmCrawler'
+    crawl.crawler_version = '0.1.0'
+    crawl.repository_src  = 'http://registry.npmjs.org/'
+    crawl.start_point     = '/'
+    crawl.exec_group      = Time.now.strftime('%Y-%m-%d-%I-%M')
     crawl.save
     return crawl
   end
