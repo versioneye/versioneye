@@ -177,12 +177,20 @@ class PackageParser < CommonParser
   def fetch_dependencies( data )
     dependencies = data['dependencies']
     dev_dependencies = data['devDependencies']
+    bundledDependencies = data['bundledDependencies']
+    optionalDependencies = data['optionalDependencies']
     if dev_dependencies
       if dependencies.nil?
         dependencies = dev_dependencies
       else
         dependencies.merge!(dev_dependencies)
       end
+    end
+    if dependencies && bundledDependencies
+      dependencies.merge!(bundledDependencies)
+    end
+    if dependencies && optionalDependencies
+      dependencies.merge!(optionalDependencies)
     end
     dependencies
   end
