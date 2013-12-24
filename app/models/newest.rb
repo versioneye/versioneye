@@ -16,9 +16,14 @@ class Newest
 
   index({updated_at: -1}, {background: true})
   index({updated_at: -1, language: -1}, {background: true})
+  index({language: 1, prod_key: 1, version: 1}, { unique: true , background: true})
 
   def product
     Product.fetch_product self.language, self.prod_key
+  end
+
+  def self.fetch_newest language, prod_key, verison
+    Newest.where(:language => language, :prod_key => prod_key, :version => version).shift
   end
 
   def self.get_newest( count )
