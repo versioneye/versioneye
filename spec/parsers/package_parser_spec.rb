@@ -238,7 +238,7 @@ describe PackageParser do
       parser = PackageParser.new
       project = parser.parse("http://s3.amazonaws.com/veye_test_env/package.json")
       project.should_not be_nil
-      project.dependencies.size.should eql(13)
+      project.dependencies.size.should eql(14)
 
       dep_01 = project.dependencies.first
       dep_01.name.should eql("connect-redis")

@@ -5,6 +5,7 @@ class BitbucketService
   A_TASK_NIL = nil
   A_TASK_RUNNING = 'running'
   A_TASK_DONE = 'done'
+  A_MAX_WORKERS = 16
 
   def self.update_repo_info(user, repo_fullname)
     current_repo = user.bitbucket_repos.where(fullname: repo_fullname).shift
@@ -66,16 +67,33 @@ class BitbucketService
     token = user[:bitbucket_token]
     secret = user[:bitbucket_secret]
     repos = Bitbucket.read_repos(owner_name, token, secret)
-        
+    
+    tasks = []
     #add information about branches and project files
     repos.each do |repo|
-      bm = Benchmark.measure do
-        branches = Bitbucket.repo_branches(repo[:full_name], token, secret)
-        project_files = Bitbucket.repo_project_files(repo[:full_name], token, secret)
-        BitbucketRepo.create_new(user, repo, branches, project_files)
-      end
-      p "#-- Added #{repo[:full_name]}", bm
+      tasks << Thread.new {add_repo(user, repo, token, secret)}
     end
+
+    #simple workpool
+    while not tasks.empty?
+      workers = tasks.shift(A_MAX_WORKERS)
+      workers.each {|task| task.join}
+    end
+    return true
+  end
+
+  def self.add_repo(user, repo, token, secret)
+    repo_name = repo[:full_name]
+    read_branches = Thread.new do
+      Thread.current[:val] = Bitbucket.repo_branches(repo_name, token, secret)
+    end
+    read_files = Thread.new do
+      Thread.current[:val] = Bitbucket.repo_project_files(repo_name, token, secret)
+    end
+    bm = Benchmark.measure {read_branches.join; read_files.join; }
+    printf("#-- Added #{repo_name}\n#{bm}\n")
+    repo = BitbucketRepo.create_new(user, repo, read_branches[:val], read_files[:val])
+    repo
   end
 
   private
