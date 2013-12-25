@@ -1,0 +1,83 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (info@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="qWJJFzRVqheqoPZT3VCrLj1polzeUWZ0dn5qKuFb4",
+        oauth_signature="lUjji0d%2BbFXd8PJ67jvmlSnuzYA%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1387985932", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.3
+      Date:
+      - Wed, 25 Dec 2013 15:38:52 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - app10
+      X-Render-Time:
+      - '0.0220129489899'
+      Content-Language:
+      - en
+      X-Static-Version:
+      - c4f05e63beb6
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      X-Version:
+      - b2ac13e3a153
+      X-Request-Count:
+      - '208'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "{\"repositories\": [{\"scm\": \"git\", \"has_wiki\": false, \"last_updated\":
+        \"2013-12-25T14:58:03.794\", \"no_forks\": false, \"created_on\": \"2013-12-25T14:57:03.873\",
+        \"owner\": \"versioneye_test\", \"logo\": \"https://d3oaxc4q5k2d6q.cloudfront.net/m/c4f05e63beb6/img/language-avatars/default_16.png\",
+        \"email_mailinglist\": \"\", \"is_mq\": false, \"size\": 619780, \"read_only\":
+        false, \"fork_of\": null, \"mq_of\": null, \"state\": \"available\", \"utc_created_on\":
+        \"2013-12-25 13:57:03+00:00\", \"website\": \"\", \"description\": \"Test
+        project for BitbucketSP\", \"has_issues\": false, \"is_fork\": false, \"slug\":
+        \"fantom_hydra\", \"is_private\": false, \"name\": \"fantom_hydra\", \"language\":
+        \"\", \"utc_last_updated\": \"2013-12-25 13:58:03+00:00\", \"email_writers\":
+        true, \"no_public_forks\": false, \"creator\": null, \"resource_uri\": \"/1.0/repositories/versioneye_test/fantom_hydra\"},
+        {\"scm\": \"hg\", \"has_wiki\": false, \"last_updated\": \"2013-12-23T15:02:22.792\",
+        \"no_forks\": false, \"created_on\": \"2013-12-23T15:02:22.766\", \"owner\":
+        \"versioneye_test\", \"logo\": \"https://d3oaxc4q5k2d6q.cloudfront.net/m/c4f05e63beb6/img/language-avatars/default_16.png\",
+        \"email_mailinglist\": \"\", \"is_mq\": false, \"size\": 12744, \"read_only\":
+        false, \"fork_of\": null, \"mq_of\": null, \"state\": \"available\", \"utc_created_on\":
+        \"2013-12-23 14:02:22+00:00\", \"website\": \"\", \"description\": \"Just
+        demo repo for testing purposed.\", \"has_issues\": false, \"is_fork\": false,
+        \"slug\": \"emptyrepo\", \"is_private\": false, \"name\": \"EmptyRepo\", \"language\":
+        \"\", \"utc_last_updated\": \"2013-12-23 14:02:22+00:00\", \"email_writers\":
+        true, \"no_public_forks\": false, \"creator\": null, \"resource_uri\": \"/1.0/repositories/versioneye_test/emptyrepo\"}],
+        \"user\": {\"username\": \"versioneye_test\", \"first_name\": \"Version\",
+        \"last_name\": \"Eye\", \"display_name\": \"Version Eye\", \"is_team\": false,
+        \"avatar\": \"https://secure.gravatar.com/avatar/ef4bc1256a1b06c7de9da2515680ceee?d=https%3A%2F%2Fd3oaxc4q5k2d6q.cloudfront.net%2Fm%2Fc4f05e63beb6%2Fimg%2Fdefault_avatar%2F32%2Fuser_blue.png&s=32\",
+        \"resource_uri\": \"/1.0/users/versioneye_test\"}}"
+    http_version: 
+  recorded_at: Wed, 25 Dec 2013 15:38:52 GMT
+recorded_with: VCR 2.8.0
