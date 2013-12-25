@@ -18,8 +18,14 @@ class Auth::BitbucketController < ApplicationController
       if signed_in?
         #connect accounts and update info
         current_user.update_from_bitbucket_json(user_info, access_token.token, access_token.secret)
-        current_user.save
-        redirect_to settings_connect_path and return
+        if current_user.save
+          redirect_to settings_connect_path and return
+        else
+          error_msg = "Cant attach profile updates from Bitbucket."
+          Rails.logger.error "#{error_msg} Data: #{current_user.errors.full_messages.to_sentence}"
+          flash[:error] = error_msg
+          redirect_to settings_connect_path and return
+        end
       end
 
       if user.nil?

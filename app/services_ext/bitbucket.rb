@@ -6,9 +6,8 @@ class Bitbucket
   A_API_V1_PATH = "/api/1.0"
   A_DEFAULT_HEADERS = {"User-Agent" => "Chrome28 (info@versioneye.com)"}
  
-  #TODO: refactor out 
-  @@api_key = "wW9SUTCKmMDjzFeaXU"
-  @@api_secret = "uQttxDwB7sPrvFnvEkAwwg5TLBdTG4jC"
+  @@api_key = Settings.bitbucket_token
+  @@api_secret = Settings.bitbucket_secret
 
   def self.consumer_key 
    @@api_key 
@@ -31,7 +30,7 @@ class Bitbucket
   def self.user(token, secret)
     path = "#{A_API_V1_PATH}/user"
     response = get_json(path, token, secret)
-    response[:user] unless response.nil?
+    response[:user] if  response.is_a?(Hash)
   end
 
   #returns bitbuckets' profile info for username

@@ -8,10 +8,10 @@ development:
   github_client_secret: 1bfa476846fa530e53b8c804f40a8d44ee030b3a
   github_user: xxxxxxxx
   github_pass: xxxxxxxx
+  bitbucket_token: HgSkE62pTT3HmxFGAm
+  bitbucket_secret: yYdshg5ndaCdkdvJMvkJAwAajjJWg8HZ
   stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
-  bitbucket_token: wW9SUTCKmMDjzFeaXU
-  bitbucket_secret: uQttxDwB7sPrvFnvEkAwwg5TLBdTG4jC
   elasticsearch_url: localhost:9200
   elasticsearch_product_index: product
   elasticsearch_user_index: user
@@ -32,8 +32,8 @@ test:
   github_pass: xxxxxxxx
   bitbucket_username: versioneye_test
   bitbucket_password: qwerty12345
-  bitbucket_token: yWby4uvsy4yzS2PZGW
-  bitbucket_secret: QyBXRdrggxs3udTEg5VYMeeHYSxZAUht
+  bitbucket_token: HgSkE62pTT3HmxFGAm 
+  bitbucket_secret: yYdshg5ndaCdkdvJMvkJAwAajjJWg8HZ 
   stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
   elasticsearch_url: localhost:9200
