@@ -32,8 +32,8 @@ test:
   github_pass: xxxxxxxx
   bitbucket_username: versioneye_test
   bitbucket_password: qwerty12345
-  bitbucket_token: HgSkE62pTT3HmxFGAm 
-  bitbucket_secret: yYdshg5ndaCdkdvJMvkJAwAajjJWg8HZ 
+  bitbucket_token: HgSkE62pTT3HmxFGAm
+  bitbucket_secret: yYdshg5ndaCdkdvJMvkJAwAajjJWg8HZ
   stripe_public_key: pk_06DKeCMLChVTScuOeH9Geig9PVwTM
   stripe_secret_key: sk_06DKx0XR4WDt82u7Fy2ScGTmlBOQr
   elasticsearch_url: localhost:9200
@@ -54,8 +54,8 @@ production:
   github_client_secret: <%= ENV['GITHUB_CLIENT_SECRET'] %>
   github_user: <%= ENV['GITHUB_USER'] %>
   github_pass: <%= ENV['GITHUB_PASS'] %>
-  bitbucket_token: "PLEASE CHANGE ME!"
-  bitbucket_secret: "PLEASE CHANGE ME!"
+  bitbucket_token: "TODO RR PLEASE CHANGE ME!"
+  bitbucket_secret: "TODO RR PLEASE CHANGE ME!"
   stripe_public_key: <%= ENV['STRIPE_PUBLIC_KEY'] %>
   stripe_secret_key: <%= ENV['STRIPE_SECRET_KEY'] %>
   elasticsearch_url: <%= ENV['ELASTICSEARCH_URL'] %>

@@ -1,68 +1,24 @@
 class Auth::BitbucketController < ApplicationController
+
   before_filter :set_locale
 
-  def callback
-    if session.has_key?(:request_token)
-      oauth_verifier = params[:oauth_verifier]
-      oauth_token = params[:oauth_token]
-
-      access_token = session[:request_token].get_access_token(
-        oauth_consumer_key: Bitbucket.consumer_key, 
-        oauth_verifier: oauth_verifier,
-        oauth_token: oauth_token
-      )
- 
-      user_info = Bitbucket.user(access_token.token, access_token.secret)
-      user = User.find_by_bitbucket_id(user_info[:username])
-
-      if signed_in?
-        #connect accounts and update info
-        current_user.update_from_bitbucket_json(user_info, access_token.token, access_token.secret)
-        if current_user.save
-          redirect_to settings_connect_path and return
-        else
-          error_msg = "Cant attach profile updates from Bitbucket."
-          Rails.logger.error "#{error_msg} Data: #{current_user.errors.full_messages.to_sentence}"
-          flash[:error] = error_msg
-          redirect_to settings_connect_path and return
-        end
-      end
-
-      if user.nil?
-        cookies.permanent.signed[:access_token] = access_token.token
-        cookies.permanent.signed[:access_token_secret] = access_token.secret
-        redirect_to auth_bitbucket_new_path(email: session[:email], promo_code: session[:promo_code]) and return
-      elsif user.activated?
-        user.update_from_bitbucket_json(user_info, access_token.token, access_token.secret)
-        user.save
-        sign_in user
-        redirect_to settings_connect_path and return
-      else
-        flash[:error] = "Your account is no activated. Please check your email account."
-      end
-    end
-
-    session.clear
-    redirect_to signin_path 
-    return
-  end
 
   def signin
     if signed_in?
-      flash[:error] = "You already have active Bitbucket session. Please log out to switch accounts."
+      flash[:error] = "You are already signed in. If you want to connect with BitBucket, check your settings!"
       redirect_to settings_connect_path and return
     end
 
-    callback_url =  auth_bitbucket_callback_url
+    callback_url  = auth_bitbucket_callback_url
     request_token = Bitbucket.request_token(callback_url)
     session[:request_token] = request_token
     redirect_to request_token.authorize_url(oauth_callback: callback_url)
-    return
   end
+
 
   def connect
     if not signed_in?
-      flash[:error] = "You have to signed in to connect Bibucket account with your VersionEye account."
+      flash[:error] = "You have to signed in to connect BitBucket account with your VersionEye account."
       redirect_to signin_path and return
     end
 
@@ -72,28 +28,57 @@ class Auth::BitbucketController < ApplicationController
     redirect_to request_token.authorize_url(oauth_callback: callback_url)
   end
 
-  def new
-    @email = params[:email]
-    @terms = params[:terms]
-    @promo = params[:promo_code]
 
-    if !User.email_valid?(@email)
-      flash[:error] = "The E-Mail address is already taken. Please choose another E-Mail."
-      init_variables_for_new_page
-      render auth_bitbucket_new_path and return
-    elsif !@terms.eql?("1")
-      flash[:error] = "You have to accept the Conditions of Use AND the Data Aquisition."
-      init_variables_for_new_page
-      render auth_bitbucket_new_path and return
+  def callback
+    unless session.has_key?(:request_token)
+      flash[:error] = 'An error occured. Please try again and contact the VersionEye team.'
+      session.clear
+      redirect_to signin_path and return
     end
-    
+
+    access_token = fetch_access_token params[:oauth_verifier], params[:oauth_token]
+    user_info    = Bitbucket.user(access_token.token, access_token.secret)
+
+    if signed_in?
+      #connect accounts and update info
+      current_user.update_from_bitbucket_json(user_info, access_token.token, access_token.secret)
+      if current_user.save
+        redirect_to settings_connect_path and return
+      else
+        error_msg = "An error occured. Cant attach profile updates from BitBucket. Please contact the VersionEye team."
+        Rails.logger.error "#{error_msg} Data: #{current_user.errors.full_messages.to_sentence}"
+        flash[:error] = error_msg
+        redirect_to settings_connect_path and return
+      end
+    end
+
+    user = User.find_by_bitbucket_id(user_info[:username])
+
+    if user.nil?
+      cookies.permanent.signed[:access_token] = access_token.token
+      cookies.permanent.signed[:access_token_secret] = access_token.secret
+      redirect_to auth_bitbucket_new_path(email: session[:email], promo_code: session[:promo_code]) and return
+    elsif user.activated?
+      user.update_from_bitbucket_json(user_info, access_token.token, access_token.secret)
+      user.save
+      sign_in user
+      redirect_back_or user_packages_i_follow_path and return
+    else
+      flash[:error] = "Your account is no activated. Please check your email account."
+      redirect_to signin_path and return
+    end
+
+  end
+
+
+  def new
+    init_variables_for_new_page
+    @email = params[:email]
+
     callback_url = auth_bitbucket_callback_url
-    request_token = Bitbucket.request_token(callback_url) 
-    session[:email] = @email
-    session[:terms] = @terms
-    session[:promo_code] = @promo
+    request_token = Bitbucket.request_token(callback_url)
     session[:request_token] = request_token
-    redirect_to request_token.authorize_url(oauth_callback: callback_url)
+    # redirect_to request_token.authorize_url(oauth_callback: callback_url)
   end
 
   def create
@@ -103,19 +88,14 @@ class Auth::BitbucketController < ApplicationController
     access_token = cookies.signed[:access_token]
     access_secret = cookies.signed[:access_token_secret]
 
-
-    Rails.logger.debug("Email: #{@email}, terms: #{@terms}")
-    if @email.nil? or @terms.nil?
-      error_msg = "Authorization failed. Please try again if it keeps failing then please contact with us."
-      Rails.logger.error error_msg 
-      flash[:error] = error_msg 
+    unless new_form_valid?( params )
       redirect_to auth_bitbucket_new_path and return
     end
 
     if access_token.to_s.empty? or access_secret.to_s.empty?
-      error_msg = "Authorization failed. Our service did not get valid access token from Bitbucket."
-      flash[:error] = error_msg 
-      Rails.logger.error error_msg 
+      error_msg = "Authorization failed. Our service did not get valid access token from BitBucket."
+      flash[:error] = error_msg
+      Rails.logger.error error_msg
       render auth_bitbucket_new_path and return
     end
 
@@ -130,16 +110,44 @@ class Auth::BitbucketController < ApplicationController
       Rails.logger.error @user.errors.full_messages.to_sentence
       redirect_to auth_bitbucket_new_path
     end
-
-   
   end
 
   private
+
+    def new_form_valid? params
+      if @email.to_s.empty?
+        flash[:error] = 'The E-Mail address is mandatory!'
+        init_variables_for_new_page
+        return false
+      end
+
+      unless User.email_valid?(@email)
+        flash[:error] = 'The E-Mail address is already taken. Please choose another E-Mail.'
+        init_variables_for_new_page
+        return false
+      end
+
+      unless @terms.eql?('1')
+        flash[:error] = 'You have to accept the Conditions of Use AND the Data Aquisition.'
+        init_variables_for_new_page
+        return false
+      end
+      true
+    end
+
+    def fetch_access_token oauth_verifier, oauth_token
+      access_token = session[:request_token].get_access_token(
+        oauth_consumer_key: Bitbucket.consumer_key,
+        oauth_verifier: oauth_verifier,
+        oauth_token: oauth_token
+      )
+    end
+
     def create_user(email, access_token, access_secret)
       user = User.new email: email,
                       terms: true,
                       datenerhebung: true
-      
+
       user_info = Bitbucket.user(access_token, access_secret)
       user.update_from_bitbucket_json(user_info, access_token, access_secret)
       user.create_verification
