@@ -93,7 +93,7 @@ class User::GithubReposController < ApplicationController
       logger.error "Unknown data object - don't satisfy githubrepo model."
       render nothing: true, status: 400 and return
     end
-    
+
     if params[:command].nil? || params[:fullname].nil? || params[:command_data].nil?
       error_msg = "Wrong command (`#{params[:command]}`) or project fullname is missing."
       render text: error_msg, status: 400
@@ -153,7 +153,6 @@ class User::GithubReposController < ApplicationController
 
       raise err_message if matching_files.empty?
 
-      url     = matching_files.first[:url]
       project = ProjectService.import_from_github current_user, project_name, filename, branch, nil
 
       raise err_message if project.nil?
@@ -191,6 +190,7 @@ class User::GithubReposController < ApplicationController
       repo[:command_result] = {success: true}
       repo
     end
+
 
     def update_repo( command_data )
       Rails.logger.debug "Going to update repo-info for #{command_data}"

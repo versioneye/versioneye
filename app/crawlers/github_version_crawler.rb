@@ -34,7 +34,7 @@ class GithubVersionCrawler
 
 
   def self.add_version_to_product ( product )
-    repo = product.repositories.map(&:repo_source).uniq.first
+    repo = product.repositories.map(&:src).uniq.first
     return nil if repo.to_s.empty?
 
     github_versions = versions_for_github_url( repo )
@@ -144,7 +144,7 @@ class GithubVersionCrawler
   def self.repo_data owner_repo
     api  = OctokitApi.instance
     root = api.root
-    repo = root.rels[:repository].get(:uri => owner_repo).data
+    root.rels[:repository].get(:uri => owner_repo).data
   end
 
 

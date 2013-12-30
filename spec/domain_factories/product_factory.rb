@@ -73,16 +73,11 @@ class ProductFactory
 
 
   def self.create_for_gemfile(name, version)
-    product = Product.new
-    product.name = name
-    product.name_downcase = name.downcase
-    product.prod_key = name
+    product = Product.new({:name => name, :name_downcase => name.downcase, :prod_key => name})
     product.language = Product::A_LANGUAGE_RUBY
-    version_obj = Version.new
-    version_obj.version = version
-    product.versions.push(version_obj)
-    product.version = version
     product.prod_type = Project::A_TYPE_RUBYGEMS
+    product.versions.push( Version.new(:version => version) )
+    product.version = version
     product
   end
 

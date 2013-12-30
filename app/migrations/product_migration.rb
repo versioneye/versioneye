@@ -1,6 +1,5 @@
 class ProductMigration
 
-
   def self.count_versions lang
     versions_count = 0
     count = Product.where(language: lang).count()

@@ -47,7 +47,7 @@ describe DependencyService do
 
     it "is not outdated, because it's higher" do
       product = ProductFactory.create_new(1)
-      product.versions.push Version.new({ :verison => "1.0" })
+      product.versions.push Version.new({ :version => "1.0" })
       product.save
 
       dependency              = Dependency.new
@@ -80,10 +80,10 @@ describe DependencyService do
       prod_3 = ProductFactory.create_new(3)
       prod_4 = ProductFactory.create_new(4)
 
-      dep_1 = DependencyFacotry.create_new(product, prod_1)
-      dep_2 = DependencyFacotry.create_new(product, prod_2)
-      dep_3 = DependencyFacotry.create_new(product, prod_3)
-      dep_4 = DependencyFacotry.create_new(product, prod_4)
+      DependencyFacotry.create_new(product, prod_1)
+      DependencyFacotry.create_new(product, prod_2)
+      DependencyFacotry.create_new(product, prod_3)
+      DependencyFacotry.create_new(product, prod_4)
 
       product.dependencies(nil).size.should eq(4)
       DependencyService.dependencies_outdated?( product.dependencies(nil) ).should be_false
@@ -102,9 +102,9 @@ describe DependencyService do
       prod_3 = ProductFactory.create_new(3)
       prod_4 = ProductFactory.create_new(4)
 
-      dep_1 = DependencyFacotry.create_new(product, prod_1)
-      dep_2 = DependencyFacotry.create_new(product, prod_2)
-      dep_3 = DependencyFacotry.create_new(product, prod_3)
+      DependencyFacotry.create_new(product, prod_1)
+      DependencyFacotry.create_new(product, prod_2)
+      DependencyFacotry.create_new(product, prod_3)
       dep_4 = DependencyFacotry.create_new(product, prod_4)
       dep_4.version = "0.0"
       dep_4.save

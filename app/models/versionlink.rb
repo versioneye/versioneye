@@ -46,7 +46,7 @@ class Versionlink
   end
 
   def self.create_versionlink language, prod_key, version_number, link, name
-    return nil if link.nil? || link.empty?
+    return nil if link.to_s.empty?
     if link.match(/^http.*/).nil? && link.match(/^git.*/).nil?
       link = "http://#{link}"
     end

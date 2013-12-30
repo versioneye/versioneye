@@ -8,12 +8,15 @@ class Dependency
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_SCOPE_COMPILE     = 'compile'
-  A_SCOPE_RUNTIME     = 'runtime'
-  A_SCOPE_REQUIRE     = 'require'
-  A_SCOPE_PROVIDED    = 'provided'
-  A_SCOPE_DEVELOPMENT = 'development'
-  A_SCOPE_TEST        = 'test'
+  A_SCOPE_RUNTIME     = 'runtime'     # RubyGems
+  A_SCOPE_REQUIRE     = 'require'     # PHP Composer
+  A_SCOPE_PROVIDED    = 'provided'    # Java Maven
+  A_SCOPE_TEST        = 'test'        # Java Maven
+  A_SCOPE_COMPILE     = 'compile'     # NPM, Maven
+  A_SCOPE_DEVELOPMENT = 'development' # NPM
+  A_SCOPE_BUNDLED     = 'bundled'     # NPM
+  A_SCOPE_OPTIONAL    = 'optional'    # NPM
+
 
   # This attributes describe to which product
   # this dependency belongs to. Parent!

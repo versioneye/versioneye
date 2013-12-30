@@ -56,7 +56,7 @@
     </div>
     <div class="span5" style="width: 430px;">
       <% @product.repositories.each do |repo| %>
-        <div><a href="<%= repo.src %>" target="new" ><%= repo.src %></a> </div>
+        <div><a href="<%= repo[:src] %>" target="new" ><%= repo[:src] %></a> </div>
       <% end %>
     </div>
   </div>

@@ -65,6 +65,7 @@ Versioneye::Application.configure do
 
   config.action_mailer.delivery_method   = :postmark
   config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
+  config.action_mailer.default_url_options = { :host => 'www.versioneye.com' }
 
   # config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = {
