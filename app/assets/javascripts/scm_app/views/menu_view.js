@@ -116,6 +116,7 @@ define(['underscore', 'backbone'],
       btn.addClass("disabled");
       btn.find("span.btn-title").text("Please wait...");
       btn.find(".btn-icon").addClass("icon-spin");
+      $("#github-loader-notification").html('<i class = "icon-spinner icon-spin"></i>Going to re-import all repositories');
       var that = this;
       var restore_state = function(){
         that.repoView.resetView();

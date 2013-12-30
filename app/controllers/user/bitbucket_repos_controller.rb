@@ -21,16 +21,15 @@ class User::BitbucketReposController < ApplicationController
       user_repos = current_user.bitbucket_repos
       if user_repos && user_repos.count > 0
         user_repos = user_repos.desc(:commited_at)
-        user_repos.each do |repo|
-          processed_repos << process_repo(repo, task_status)
-        end
-      else
+        user_repos.each {|repo| processed_repos << process_repo(repo, task_status)}
+      end
+
+      if task_status == BitbucketService::A_TASK_DONE and user_repos.count == 0
         status_message = %w{
           We couldn't find any repositories in your BitBucket account.
           If you think that's an error contact the VersionEye team.
-          }.join(' ')
+        }.join(' ')
         status_success = false
-        task_status = BitbucketService::A_TASK_DONE
       end
     end
 
