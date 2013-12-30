@@ -2,10 +2,12 @@ require 'benchmark'
 require 'dalli'
 
 class BitbucketService
+
   A_TASK_NIL = nil
   A_TASK_RUNNING = 'running'
   A_TASK_DONE = 'done'
   A_MAX_WORKERS = 16
+
 
   def self.update_repo_info(user, repo_fullname)
     current_repo = user.bitbucket_repos.where(fullname: repo_fullname).shift
@@ -23,11 +25,12 @@ class BitbucketService
     current_repo
   end
 
+
   def self.cached_user_repos user
     memcache = memcache_client
     user_task_key = "#{user[:username]}-bitbucket"
     task_status = memcache.get(user_task_key)
-    
+
     if task_status == A_TASK_RUNNING
       Rails.logger.debug "Still importing data for #{user[:username]} from bitbucket"
       return task_status
@@ -49,6 +52,7 @@ class BitbucketService
     task_status
   end
 
+
   def self.cache_user_all_repos(user)
     puts "Going to cache users repositories."
     #load data
@@ -62,12 +66,13 @@ class BitbucketService
     threads.each { |worker| worker.join }
   end
 
+
   #TODO: refactor as multi-threaded
   def self.cache_repos(user, owner_name)
     token = user[:bitbucket_token]
     secret = user[:bitbucket_secret]
     repos = Bitbucket.read_repos(owner_name, token, secret)
-    
+
     tasks = []
     #add information about branches and project files
     repos.each do |repo|
@@ -81,6 +86,7 @@ class BitbucketService
     end
     return true
   end
+
 
   def self.add_repo(user, repo, token, secret)
     repo_name = repo[:full_name]
@@ -96,7 +102,10 @@ class BitbucketService
     repo
   end
 
+
   private
+
+
     def self.memcache_client
       Dalli::Client.new(
         'localhost:11211',

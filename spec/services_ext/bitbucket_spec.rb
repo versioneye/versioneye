@@ -12,9 +12,13 @@ VCR.configure do |c|
 end
 
 describe Bitbucket do
+
   include Capybara::DSL
 
-  let(:user_with_token){create(:bitbucket_user)}
+  let(:user_with_token){create(:bitbucket_user,
+    :bitbucket_token => 'YsR6vM5qxmfZtkYt9G',
+    :bitbucket_secret => 'raEFhqE2YuBZtwqswGXFRZEzLnnLD8Lu',
+    :bitbucket_login => Settings.bitbucket_username)}
 
   def connect_bitbucket(user)
     Capybara.current_driver = Capybara.javascript_driver
@@ -36,17 +40,23 @@ describe Bitbucket do
   end
 
   context "as authorized user " do
+
     it "returns proper user info" do
       #connect account
       user_with_token.save
-      @@user = connect_bitbucket(user_with_token)
-      user_with_token.reload
-     
+      # user_with_token = connect_bitbucket(user_with_token)
+      # user_with_token.reload
+
+      p "***** START token *********"
+      p user_with_token[:bitbucket_token]
+      p user_with_token[:bitbucket_secret]
+      p "***** STOP token *********"
+
       user_with_token[:bitbucket_token].should_not be_nil
       user_with_token[:bitbucket_secret].should_not be_nil
 
       VCR.use_cassette('bitbucket_user', allow_playback_repeats: true) do
-        user_info = Bitbucket.user(user_with_token[:bitbucket_token], 
+        user_info = Bitbucket.user(user_with_token[:bitbucket_token],
                                    user_with_token[:bitbucket_secret])
         user_info.should_not be_nil
         user_info.is_a?(Hash).should be_true
@@ -57,10 +67,10 @@ describe Bitbucket do
 
     it "returns user information from API2" do
 
-      username = @@user[:bitbucket_login]
-      token = @@user[:bitbucket_token]
-      secret = @@user[:bitbucket_secret]
-      
+      username = user_with_token[:bitbucket_login]
+      token = user_with_token[:bitbucket_token]
+      secret = user_with_token[:bitbucket_secret]
+
       username.should_not be_nil
       token.should_not be_nil
       secret.should_not be_nil
@@ -73,12 +83,12 @@ describe Bitbucket do
       end
     end
 
-    it "returns user organizations" do 
-      @@user[:bitbucket_token].should_not be_nil
-      @@user[:bitbucket_secret].should_not be_nil
+    it "returns user organizations" do
+      user_with_token[:bitbucket_token].should_not be_nil
+      user_with_token[:bitbucket_secret].should_not be_nil
 
       VCR.use_cassette('bitbucket_user_orgs', allow_playback_repeats: true) do
-        user_orgs = Bitbucket.user_orgs(@@user)
+        user_orgs = Bitbucket.user_orgs(user_with_token)
         user_orgs.should_not be_nil
         user_orgs.is_a?(Array).should be_true
       end
@@ -86,10 +96,10 @@ describe Bitbucket do
 
     it "returns user repos" do
 
-      username = @@user[:bitbucket_login]
-      token = @@user[:bitbucket_token]
-      secret = @@user[:bitbucket_secret]
-      
+      username = user_with_token[:bitbucket_login]
+      token = user_with_token[:bitbucket_token]
+      secret = user_with_token[:bitbucket_secret]
+
       username.should_not be_nil
       token.should_not be_nil
       secret.should_not be_nil
@@ -104,10 +114,10 @@ describe Bitbucket do
 
     it "returns information of the repo" do
 
-      username = @@user[:bitbucket_login]
-      token = @@user[:bitbucket_token]
-      secret = @@user[:bitbucket_secret]
-      
+      username = user_with_token[:bitbucket_login]
+      token = user_with_token[:bitbucket_token]
+      secret = user_with_token[:bitbucket_secret]
+
       username.should_not be_nil
       token.should_not be_nil
       secret.should_not be_nil
@@ -122,10 +132,10 @@ describe Bitbucket do
 
     it "returns branches of the repo" do
 
-      username = @@user[:bitbucket_login]
-      token = @@user[:bitbucket_token]
-      secret = @@user[:bitbucket_secret]
-      
+      username = user_with_token[:bitbucket_login]
+      token = user_with_token[:bitbucket_token]
+      secret = user_with_token[:bitbucket_secret]
+
       username.should_not be_nil
       token.should_not be_nil
       secret.should_not be_nil
@@ -144,10 +154,10 @@ describe Bitbucket do
 
     it "returns correct hash-map of project files" do
 
-      username = @@user[:bitbucket_login]
-      token = @@user[:bitbucket_token]
-      secret = @@user[:bitbucket_secret]
-      
+      username = user_with_token[:bitbucket_login]
+      token = user_with_token[:bitbucket_token]
+      secret = user_with_token[:bitbucket_secret]
+
       username.should_not be_nil
       token.should_not be_nil
       secret.should_not be_nil
@@ -163,13 +173,13 @@ describe Bitbucket do
         files['java_branch'].size.should eql(1)
       end
     end
-    
+
     it "returns a filetree of  the repo" do
 
-      username = @@user[:bitbucket_login]
-      token = @@user[:bitbucket_token]
-      secret = @@user[:bitbucket_secret]
-      
+      username = user_with_token[:bitbucket_login]
+      token = user_with_token[:bitbucket_token]
+      secret = user_with_token[:bitbucket_secret]
+
       username.should_not be_nil
       token.should_not be_nil
       secret.should_not be_nil
@@ -188,10 +198,10 @@ describe Bitbucket do
 
     it "returns existing project files on the branch of the repo" do
 
-      username = @@user[:bitbucket_login]
-      token = @@user[:bitbucket_token]
-      secret = @@user[:bitbucket_secret]
-      
+      username = user_with_token[:bitbucket_login]
+      token = user_with_token[:bitbucket_token]
+      secret = user_with_token[:bitbucket_secret]
+
       username.should_not be_nil
       token.should_not be_nil
       secret.should_not be_nil
@@ -209,10 +219,10 @@ describe Bitbucket do
 
     it "returns content of the project files" do
 
-      username = @@user[:bitbucket_login]
-      token = @@user[:bitbucket_token]
-      secret = @@user[:bitbucket_secret]
-      
+      username = user_with_token[:bitbucket_login]
+      token = user_with_token[:bitbucket_token]
+      secret = user_with_token[:bitbucket_secret]
+
       username.should_not be_nil
       token.should_not be_nil
       secret.should_not be_nil
