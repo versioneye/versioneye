@@ -1,10 +1,17 @@
 class User::BitbucketReposController < ApplicationController
+
   before_filter :authenticate
+
   def init
     render 'init', layout: 'application'
   end
 
   def index
+    if current_user.bitbucket_token.nil?
+      render text: 'Your VersionEye account is not connected to BitBucket.', status: 400
+      return
+    end
+
     task_status  = BitbucketService.cached_user_repos current_user
     user_repos = current_user.bitbucket_repos
     repos = []
@@ -14,6 +21,9 @@ class User::BitbucketReposController < ApplicationController
       user_repos.each do |repo|
         repos << process_repo(repo, task_status)
       end
+    else
+      render text: "We couldn't find any repositories in your BitBucket account.", status: 400
+      return
     end
     render json: {
       success: true,
@@ -107,7 +117,7 @@ class User::BitbucketReposController < ApplicationController
     branch       = command_data.has_key?(:scmBranch) ? command_data[:scmBranch] : "master"
     filename     = command_data[:scmFilename]
     project_id   = command_data[:scmProjectId]
-    
+
     case params[:command]
     when "import"
       repo = import_repo(command_data, project_name, branch, filename)
@@ -118,7 +128,7 @@ class User::BitbucketReposController < ApplicationController
     else
       render text: "Wrong command: `#{params[:command]}`", status: 400 and return
     end
- 
+
     render json: repo
   end
 
