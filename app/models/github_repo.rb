@@ -44,8 +44,9 @@ class GithubRepo
 
     if user[:github_login].nil?
       user_info = Github.user(user.github_token)
-      user_login = user_info[:login]
-      user.update_attributes({github_login: user_login})
+      user_info.deep_symbolize_keys #we like symbols 
+      user[:github_login] = user_info[:login]
+      user.save
     else
       user_login = user[:github_login]
     end
