@@ -82,7 +82,10 @@ class ProjectService
   def self.update_url project
     if project.source.eql?( Project::A_SOURCE_GITHUB )
       self.update_project_file_from_github( project )
+    elsif project.source.eql?( Project::A_SOURCE_BITBUCKET )
+      self.update_project_file_from_bitbucket( project )
     end
+
     if project.s3_filename && !project.s3_filename.empty?
       project.url = S3.url_for( project.s3_filename )
     end
@@ -90,18 +93,25 @@ class ProjectService
 
   def self.update_project_file_from_github project
     project_file = Github.fetch_project_file_from_branch project.github_project, project.filename, project.github_branch, project.user.github_token
-    if project_file.nil? || project_file.empty?
+    if project_file.to_s.strip.empty?
       Rails.logger.error "Importing project file from Github failed."
       return nil
     end
 
     s3_infos = S3.upload_github_file( project_file, project_file[:name] )
-    if s3_infos && s3_infos['filename'] && s3_infos['s3_url']
-      S3.delete( project.s3_filename )
-      project.s3_filename = s3_infos['filename']
-      project.url         = s3_infos['s3_url']
-      project.save
+    update_project_with_s3_file project, s3_infos
+  end
+
+  def self.update_project_file_from_bitbucket project
+    user = project.user
+    project_content = Bitbucket.fetch_project_file_from_branch project.scm_fullname, project.scm_branch, project.filename, user.bitbucket_token, user.bitbucket_secret
+    if project_content.nil? || project_content.to_s.empty?
+      Rails.logger.error "Importing project file from BitBucket failed."
+      return nil
     end
+
+    s3_infos = S3.upload_file_content( project_content, project.filename )
+    update_project_with_s3_file project, s3_infos
   end
 
 =begin
@@ -285,5 +295,16 @@ class ProjectService
     Rails.logger.error e.backtrace.join "\n"
     "unknown"
   end
+
+  private
+
+    def update_project_with_s3_file project, s3_infos
+      return false unless s3_infos && s3_infos['filename'] && s3_infos['s3_url']
+
+      S3.delete( project.s3_filename )
+      project.s3_filename = s3_infos['filename']
+      project.url         = s3_infos['s3_url']
+      project.save
+    end
 
 end
