@@ -7,12 +7,20 @@ class User::GithubReposController < ApplicationController
   end
 
   def index
+    if current_user.github_token.nil?
+      render text: 'Your VersionEye account is not connected to GitHub.', status: 400
+      return
+    end
+
     task_status  = GitHubService.cached_user_repos current_user
     github_repos = current_user.github_repos
     processed_repos = []
     if github_repos && github_repos.count > 0
       github_repos = github_repos.desc(:commited_at)
       github_repos.each {|repo| processed_repos << process_repo(repo, task_status)}
+    else
+      render text: "We couldn't find any repositories in your GitHub account.", status: 400
+      return
     end
     render json: {
       success: true,
