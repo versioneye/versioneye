@@ -33,7 +33,7 @@
             scopes: [<%= scopes %>]
           <% end %>
         <% else %>
-          <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd'  >
+          <a href='https://github.com/login/oauth/authorize?client_id=<%= Settings.github_client_id %>'  >
             Connect with GitHub
           </a>
         <% end %>
