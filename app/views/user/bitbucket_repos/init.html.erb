@@ -12,7 +12,7 @@
       Connect with Bitbucket to monitor your Bitbucket Repositories.
     </div>
     <div class="content " >
-      <%= render 'shared/login_with_bitbucket', :btn => "signup" %>
+      <%= render 'shared/connect_with_bitbucket', :btn => "signup" %>
     </div>
   </div>
 
@@ -23,18 +23,6 @@
       <div id = "github-menu" ></div>
       <div id = "github-loader-notification" class = "notification">&nbsp;</div>
     </div>
-    <% if !current_user.bitbucket_token.nil? && !current_user.bitbucket_scope.eql?("repo") %>
-      <div class="content flash warning" >
-        With the current scope VersionEye can only fetch your public repositories.
-        If you want us to monitor your private repositories, you need to grant VersionEye access:
-        <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&amp;scope=repo' style="margin-right: 5px;" >
-          Grant access to private repositories.
-        </a><br/><br/>
-        Unfortunately, GitHub doesn't have a read-only scope for private repositories currently.
-        But we promise you that we don't have any git write operations in our code base.
-        <br/>
-      </div>
-    <% end %>
 
     <div id = "github-repos" class="content row-fluid" >
       <div>
