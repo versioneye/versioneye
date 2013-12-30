@@ -19,7 +19,7 @@ define(['underscore', 'backbone'],
     },
     render: function(){
       console.debug("Rendering pagination view.");
-      if(_.size(this.currentRepos.onlyOrgRepos()) == this.currentRepos.size()){
+      if(_.size(this.currentRepos.onlyOrgRepos()) == this.currentRepos.size() || this.currentRepos.size() < this.currentRepos.perPage ){
         this.$el.html("");
         return 1;
       }
