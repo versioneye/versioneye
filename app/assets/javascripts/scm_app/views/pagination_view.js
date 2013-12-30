@@ -19,6 +19,10 @@ define(['underscore', 'backbone'],
     },
     render: function(){
       console.debug("Rendering pagination view.");
+      if(_.size(this.currentRepos.onlyOrgRepos()) == this.currentRepos.size()){
+        this.$el.html("");
+        return 1;
+      }
       this.$el.html(this.template({
         paging: {
           currentPage: this.currentRepos.currentPage,
