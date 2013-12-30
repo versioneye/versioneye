@@ -1,20 +1,18 @@
 require 'oauth'
 
 class Bitbucket
+
   A_API_URL = "https://bitbucket.org"
   A_API_V2_PATH = "/api/2.0"
   A_API_V1_PATH = "/api/1.0"
-  A_DEFAULT_HEADERS = {"User-Agent" => "Chrome28 (info@versioneye.com)"}
- 
-  @@api_key = Settings.bitbucket_token
-  @@api_secret = Settings.bitbucket_secret
+  A_DEFAULT_HEADERS = {"User-Agent" => "Chrome28 (contact@versioneye.com)"}
 
-  def self.consumer_key 
-   @@api_key 
+  def self.consumer_key
+   Settings.bitbucket_token
   end
-  
+
   def self.init_oauth_client
-    OAuth::Consumer.new(@@api_key, @@api_secret, 
+    OAuth::Consumer.new(Settings.bitbucket_token, Settings.bitbucket_secret,
                        site: A_API_URL,
                        request_token_path: "/api/1.0/oauth/request_token",
                        authorize_path: "/api/1.0/oauth/authenticate",
@@ -114,7 +112,7 @@ class Bitbucket
     oauth = init_oauth_client
     token = OAuth::AccessToken.new(oauth, token, secret)
     oauth_params = {consumer: oauth, token: token, request_uri: url}
-    request_headers = A_DEFAULT_HEADERS 
+    request_headers = A_DEFAULT_HEADERS
     request_headers.merge! headers
 
     response = token.get(path, request_headers)
@@ -123,11 +121,12 @@ class Bitbucket
     end
 
     begin
-      JSON.parse(response.body, symbolize_names: true) 
+      JSON.parse(response.body, symbolize_names: true)
     rescue => e
       Rails.logger.error e.message
       Rails.logger.error "Got status: #{response.code} #{response.message} body: #{response.body}"
       Rails.logger.error e.backtrace.join("\n")
     end
  end
+
 end
