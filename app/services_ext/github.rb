@@ -139,7 +139,7 @@ class Github
       workers << Thread.new do
         time = Benchmark.measure do
           repo_data = read_repo_data(repo, user.github_token)
-          new_repo = GithubRepo.create_new(user, repo_data, "1")
+          new_repo = GithubRepo.create_new(user, repo_data)
           repo_docs << new_repo
         end
         puts "Reading `#{repo[:full_name]}` took: #{time}"
@@ -228,7 +228,8 @@ class Github
     result
   end
 
-  #TODO: refactor to use get_json again ...
+  #TODO: rename repo_branch_tree as service/bitbucket has
+  #TODO: just look main directory?
   def self.fetch_repo_branch_tree(repo_name, token, branch_sha, recursive = false)
     rec_val = recursive ? 1 : 0
     url = "#{A_API_URL}/repos/#{repo_name}/git/trees/#{branch_sha}?access_token=#{token}&recursive=#{rec_val}"

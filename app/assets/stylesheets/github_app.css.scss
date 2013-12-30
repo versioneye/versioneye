@@ -62,9 +62,8 @@
   }
 
   .repo-info .repo-desc {
-    max-height: 200px;
-    overflow: auto;
-    padding-top: 5px;
+    max-height: 65px;
+    overflow: hidden;
   }
 
   .github-repo-control {

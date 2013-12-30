@@ -18,6 +18,7 @@ class Project
   A_SOURCE_UPLOAD = 'upload'
   A_SOURCE_URL    = 'url'
   A_SOURCE_GITHUB = 'github'
+  A_SOURCE_BITBUCKET = 'bitbucket'
 
   A_PERIOD_MONTHLY = 'monthly'
   A_PERIOD_WEEKLY  = 'weekly'
@@ -37,7 +38,11 @@ class Project
   field :source        , type: String,  :default => A_SOURCE_UPLOAD
   field :s3_filename   , type: String
   field :github_project, type: String   # Repository name at GitHub
-  field :github_branch , type: String,  :default => 'master' # Branch     name at GitHub
+  field :github_branch , type: String,  :default => "master" # Branch     name at GitHub
+
+  field :scm_fullname  , type: String
+  field :scm_branch    , type: String, default: "master"
+
   field :dep_number    , type: Integer
   field :out_number    , type: Integer, :default => 0
   field :unknown_number, type: Integer, :default => 0

@@ -7,7 +7,7 @@ define(['underscore', 'backbone'],
 	};
 
 
-	var GithubRepoLabelView = Backbone.View.extend({
+	var SCMRepoLabelView = Backbone.View.extend({
 		className: "repo-labels",
     template: _.template($("#github-repo-label-template").html()),
 
@@ -22,7 +22,7 @@ define(['underscore', 'backbone'],
 
 			var labels = [];
 			var timeago = moment(repo.updated_at).fromNow();
-      var commit_timeago = moment(repo.pushed_at).fromNow();
+      var commit_timeago = moment(repo.updated_at).fromNow();
       var cached_timeago = moment(repo.cached_at).fromNow();
 
 			var label_models = [
@@ -67,6 +67,6 @@ define(['underscore', 'backbone'],
 		}
 	});
 
-  return GithubRepoLabelView;
+  return SCMRepoLabelView;
 
 });

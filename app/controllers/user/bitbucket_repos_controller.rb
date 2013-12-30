@@ -1,4 +1,4 @@
-class User::GithubReposController < ApplicationController
+class User::BitbucketReposController < ApplicationController
 
   before_filter :authenticate
 
@@ -12,23 +12,25 @@ class User::GithubReposController < ApplicationController
     processed_repos = []
     task_status = ''
 
-    if current_user.github_token.nil?
-      status_message = 'Your VersionEye account is not connected to GitHub.'
+    if current_user.bitbucket_token.nil?
+      status_message = 'Your VersionEye account is not connected to BitBucket.'
       status_success = false
-      task_status = GitHubService::A_TASK_DONE
+      task_status = BitbucketService::A_TASK_DONE
     else
-      task_status  = GitHubService.cached_user_repos current_user
-      github_repos = current_user.github_repos
-      if github_repos && github_repos.count > 0
-        github_repos = github_repos.desc(:commited_at)
-        github_repos.each {|repo| processed_repos << process_repo(repo, task_status)}
+      task_status  = BitbucketService.cached_user_repos current_user
+      user_repos = current_user.bitbucket_repos
+      if user_repos && user_repos.count > 0
+        user_repos = user_repos.desc(:commited_at)
+        user_repos.each do |repo|
+          processed_repos << process_repo(repo, task_status)
+        end
       else
         status_message = %w{
-          We couldn't find any repositories in your GitHub account.
+          We couldn't find any repositories in your BitBucket account.
           If you think that's an error contact the VersionEye team.
           }.join(' ')
         status_success = false
-        task_status = GitHubService::A_TASK_DONE
+        task_status = BitbucketService::A_TASK_DONE
       end
     end
 
@@ -41,26 +43,26 @@ class User::GithubReposController < ApplicationController
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    render text: 'An error occured. We are not able to import GitHub repositories. Please contact the VersionEye team.', status: 503
+    render text: "An error occured. We are not able to import BitBucket repositories. Please contact the VersionEye team.", status: 503
   end
 
 
   def show
     id = params[:id]
-    repo = GithubRepo.where(_id: id.to_s).first
+    repo = BitbucketRepo.where(_id: id.to_s).first
     if repo
       render json: process_repo(repo)
     else
-      render text: "No such GitHub repository with id: `#{id}`", status: 400
+      render text: "No such BitBucket repository with id: `#{id}`", status: 400
     end
   end
 
 
   def show_menu_items
     menu_items = []
-    user_orgs  = current_user.github_repos.distinct(:owner_login)
+    user_orgs  = current_user.bitbucket_repos.distinct(:owner_login)
     user_orgs.each do |owner_login|
-      repo = current_user.github_repos.by_owner_login(owner_login).first
+      repo = current_user.bitbucket_repos.by_owner_login(owner_login).first
       menu_items << {
         name: repo[:owner_login],
         type: repo[:owner_type]
@@ -70,9 +72,14 @@ class User::GithubReposController < ApplicationController
   end
 
 
+  def clear
+    results = current_user.bitbucket_repos.delete_all
+    render json: {success: !results.nil?, msg: "Cache is cleaned. Ready for import."}
+  end
+
 =begin
-  Unified updated method for GithubRepos.
-  If command attr in model is "import", then imports new project from github.
+  Unified updated method for SCM app.
+  If command attr in model is "import", then imports new project from bitbucket.
   If commant attr in model is "remove", then removes current project
 =end
   def create
@@ -85,19 +92,19 @@ class User::GithubReposController < ApplicationController
     repo = []
     command_data = params[:command_data]
     project_name = params[:fullname]
-    branch       = command_data.has_key?(:scmBranch) ? command_data[:scmBranch] : 'master'
+    branch       = command_data.has_key?(:scmBranch) ? command_data[:scmBranch] : "master"
     filename     = command_data[:scmFilename]
     branch_files = params[:project_files][branch]
 
     case params[:command]
-    when 'import'
-      repo = import_repo(command_data, project_name, branch, filename, branch_files)
-    when 'remove'
-      repo = remove_repo(command_data)
-    when 'update'
+    when "import"
+      repo = import_repo(command_data, project_name, branch, filename)
+    when "remove"
+      repo = remove_repo(command_data, project_name, branch, filename)
+    when "update"
       repo = update_repo(command_data)
     else
-      repo = "{'response': 'wrong command'}"
+      render text: "Wrong command: `#{params[:command]}`", status: 400 and return
     end
     render json: repo
   rescue => e
@@ -106,80 +113,48 @@ class User::GithubReposController < ApplicationController
     render text: e.message, status: 503 and return
   end
 
-
   def update
-    if params[:github_id].nil? and params[:fullname].nil?
-      logger.error "Unknown data object - don't satisfy githubrepo model."
-      render nothing: true, status: 400 and return
-    end
-
     if params[:command].nil? || params[:fullname].nil? || params[:command_data].nil?
       error_msg = "Wrong command (`#{params[:command]}`) or project fullname is missing."
-      render text: error_msg, status: 400
-      return false
+      Rails.logger.error error_msg
+      render text: error_msg, status: 400 and return
     end
+
     repo = []
     command_data = params[:command_data]
     project_name = params[:fullname]
     branch       = command_data.has_key?(:scmBranch) ? command_data[:scmBranch] : "master"
     filename     = command_data[:scmFilename]
-    branch_files = params[:project_files][branch]
+    project_id   = command_data[:scmProjectId]
 
     case params[:command]
     when "import"
-      repo = import_repo(command_data, project_name, branch, filename, branch_files)
+      repo = import_repo(command_data, project_name, branch, filename)
     when "remove"
-      repo = remove_repo(command_data)
+      repo = remove_repo(command_data, project_id)
     when "update"
       repo = update_repo(command_data)
     else
-      render text: "Wrong command `#{params[:command]}`", status: 400
+      render text: "Wrong command: `#{params[:command]}`", status: 400 and return
     end
+
     render json: repo
   end
 
-
-  def destroy
-    id = params[:project_id]
-    success = false
-    msg = ""
-    if Project.where(_id: id).exists?
-      ProjectService.destroy id
-      success = true
-    else
-      msg = "Can't remove project with id: `#{id}` - it doesnt exist. Please refresh page."
-      Rails.logger.error msg
-    end
-    respond_to do |format|
-      format.html { redirect_to user_projects_path }
-      format.json { render json: {success: success, project_id: id, msg: msg} }
-    end
-  end
-
-
-  def clear
-    results = GithubRepo.by_user( current_user ).delete_all
-    render json: {success: !results.nil?, msg: "Cache is cleaned. Ready for import."}
-  end
-
-
   private
+    def import_repo(command_data, project_name, branch, filename)
+      project        = ProjectService.import_from_bitbucket(current_user, project_name, filename, branch)
 
+      if project.nil?
+        raise "Something went wrong. It was not possible to save the project. Please contact the VersionEye team."
+      end
 
-    def import_repo(command_data, project_name, branch, filename, branch_files)
-      err_message = 'Something went wrong. It was not possible to save the project. Please contact the VersionEye team.'
-      matching_files = branch_files.keep_if {|file| file['path'] == filename}
-
-      raise err_message if matching_files.empty?
-
-      project = ProjectService.import_from_github current_user, project_name, filename, branch, nil
-
-      raise err_message if project.nil?
-
-      raise project if project.is_a? String
+      if project.is_a? String
+        raise project
+      end
 
       command_data[:scmProjectId] = project[:_id].to_s
-      repo = GithubRepo.find(params[:_id])
+      repo = BitbucketRepo.find(params[:_id])
       repo = process_repo(repo)
       repo[:command_data] = command_data
       repo[:command_result] = {
@@ -194,26 +169,28 @@ class User::GithubReposController < ApplicationController
     end
 
 
-    def remove_repo(command_data)
+    def remove_repo(command_data, project_name)
+      p  "#-- remove_repo", command_data, project_name
       id = command_data[:scmProjectId]
       project_exists = Project.where(_id: id).exists?
 
       unless project_exists
-        raise "Can't remove project with id: `#{id}` - it does not exist. Please refresh the page."
+        error_msg  = "Can't remove project with id: `#{id}` - it does not exist. Please refresh the page."
+        render text: error_msg, status: 400
       end
 
       ProjectService.destroy id
-      repo = GithubRepo.find(params[:_id])
+      repo = BitbucketRepo.find(params[:_id])
       repo = process_repo(repo)
       repo[:command_data] = command_data
-      repo[:command_result] = {success: true}
+      repo[:command_result] = {status: "removed"}
       repo
     end
 
 
-    def update_repo( command_data )
+    def update_repo(command_data)
       Rails.logger.debug "Going to update repo-info for #{command_data}"
-      repo = GitHubService.update_repo_info current_user, command_data["repoFullname"]
+      repo = BitbucketService.update_repo_info(current_user, command_data["repoFullname"])
       repo = process_repo(repo)
       repo[:command_data] = command_data
       repo[:command_result] = {
@@ -223,12 +200,13 @@ class User::GithubReposController < ApplicationController
       repo
     end
 
+
 =begin
   adds additional metadata for each item in repo collection,
   for example is this project already imported etc
 =end
     def process_repo(repo, task_status = nil)
-      imported_repos      = current_user.projects.by_source(Project::A_SOURCE_GITHUB)
+      imported_repos      = current_user.projects.by_source(Project::A_SOURCE_BITBUCKET)
       imported_repo_names = imported_repos.map(&:scm_fullname).to_set
       supported_langs     = Product.supported_languages.map{ |lang| lang.downcase }
       repo[:supported] = supported_langs.include? repo[:language]
@@ -249,8 +227,8 @@ class User::GithubReposController < ApplicationController
           repo[:imported_files] << project_info
         end
       end
-      repo['project_files'] = decode_branch_names(repo[:project_files])
-      repo['task_status'] = task_status
+      repo[:project_files] = decode_branch_names(repo[:project_files])
+      repo[:task_status] = task_status
       repo
     end
 
@@ -260,7 +238,7 @@ class User::GithubReposController < ApplicationController
       return if project_files.nil?
       decoded_map = {}
       project_files.each_pair do |branch, files|
-        decoded_branch = Github.decode_db_key(branch)
+        decoded_branch = Bitbucket.decode_db_key(branch)
         decoded_map[decoded_branch] = files
       end
       decoded_map
