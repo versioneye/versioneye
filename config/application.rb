@@ -23,10 +23,13 @@ end
 
 class Settings
   json = File.read("config/settings.json")
-  resp = ERB.new(json).result
-  settings = JSON.parse(resp)
+  settings = JSON.parse(json)
   if settings
     settings[Rails.env].each { |name, value|
+      if value && value.is_a?(String) && value.match(/^env_/)
+        new_val = value.gsub("env_", "")
+        value = ENV[new_val]
+      end
       instance_variable_set("@#{name}", value)
       self.class.class_eval { attr_reader name.intern }
     }
