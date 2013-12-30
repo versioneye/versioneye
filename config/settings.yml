@@ -54,8 +54,8 @@ production:
   github_client_secret: <%= ENV['GITHUB_CLIENT_SECRET'] %>
   github_user: <%= ENV['GITHUB_USER'] %>
   github_pass: <%= ENV['GITHUB_PASS'] %>
-  bitbucket_token: "<%= ENV['BITBUCKET_TOKEN'] %>"
-  bitbucket_secret: "<%= ENV['BITBUCKET_SECRET'] %>"
+  bitbucket_token: <%= ENV['BITBUCKET_TOKEN'] %>
+  bitbucket_secret: <%= ENV['BITBUCKET_SECRET'] %>
   stripe_public_key: <%= ENV['STRIPE_PUBLIC_KEY'] %>
   stripe_secret_key: <%= ENV['STRIPE_SECRET_KEY'] %>
   elasticsearch_url: <%= ENV['ELASTICSEARCH_URL'] %>
