@@ -127,6 +127,13 @@ class Bitbucket
       Rails.logger.error "Got status: #{response.code} #{response.message} body: #{response.body}"
       Rails.logger.error e.backtrace.join("\n")
     end
- end
+  end
+
+  def self.encode_db_key(key_val)
+    URI.escape(key_val.to_s, /\.|\$/)
+  end
+  def self.decode_db_key(key_val)
+    URI.unescape key_val.to_s
+  end
 
 end

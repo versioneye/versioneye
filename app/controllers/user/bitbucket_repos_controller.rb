@@ -7,44 +7,53 @@ class User::BitbucketReposController < ApplicationController
   end
 
   def index
+    status_message = ''
+    status_success = true
+    processed_repos = []
+    task_status = ''
+
     if current_user.bitbucket_token.nil?
-      render text: 'Your VersionEye account is not connected to BitBucket.', status: 400
-      return
-    end
-
-    task_status  = BitbucketService.cached_user_repos current_user
-    user_repos = current_user.bitbucket_repos
-    repos = []
-    if user_repos && user_repos.count > 0
-      user_repos = user_repos.desc(:commited_at)
-      #TODO: refactor as x.map {}
-      user_repos.each do |repo|
-        repos << process_repo(repo, task_status)
-      end
+      status_message = 'Your VersionEye account is not connected to BitBucket.'
+      status_success = false
+      task_status = BitbucketService::A_TASK_DONE
     else
-      render text: "We couldn't find any repositories in your BitBucket account.", status: 400
-      return
+      task_status  = BitbucketService.cached_user_repos current_user
+      user_repos = current_user.bitbucket_repos
+      if user_repos && user_repos.count > 0
+        user_repos = user_repos.desc(:commited_at)
+        user_repos.each do |repo|
+          processed_repos << process_repo(repo, task_status)
+        end
+      else
+        status_message = %w{
+          We couldn't find any repositories in your BitBucket account.
+          If you think that's an error contact the VersionEye team.
+          }.join(' ')
+        status_success = false
+        task_status = BitbucketService::A_TASK_DONE
+      end
     end
-    render json: {
-      success: true,
-      task_status: task_status,
-      repos: repos,
-    }.to_json
 
+    render json: {
+      success: status_success,
+      task_status: task_status,
+      repos: processed_repos,
+      message: status_message
+    }.to_json
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
-    render text: "An error occured. We are not able to import GitHub repositories. Please contact the VersionEye team.", status: 503
+    render text: "An error occured. We are not able to import BitBucket repositories. Please contact the VersionEye team.", status: 503
   end
 
 
   def show
     id = params[:id]
-    repo = GithubRepo.where(_id: id.to_s).first
+    repo = BitbucketRepo.where(_id: id.to_s).first
     if repo
       render json: process_repo(repo)
     else
-      render text: "No such GitHub repository with id: `#{id}`", status: 400
+      render text: "No such BitBucket repository with id: `#{id}`", status: 400
     end
   end
 
@@ -229,7 +238,7 @@ class User::BitbucketReposController < ApplicationController
       return if project_files.nil?
       decoded_map = {}
       project_files.each_pair do |branch, files|
-        decoded_branch = Github.decode_db_key(branch)
+        decoded_branch = Bitbucket.decode_db_key(branch)
         decoded_map[decoded_branch] = files
       end
       decoded_map

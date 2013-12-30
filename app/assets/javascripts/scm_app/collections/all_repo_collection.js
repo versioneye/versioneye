@@ -40,7 +40,7 @@ define(['underscore', 'backbone',
 
           //when we didnt get any repo after polling;
            if(_.isUndefined(response.repos) || _.isEmpty(response.repos)|| _.isNull(response.repos)){
-             $("#github-repos").html('<strong>No repositories</strong>');
+             $("#github-repos").html('<strong>No Repositories</strong>');
            }
         }
 
@@ -53,7 +53,10 @@ define(['underscore', 'backbone',
         }
 
       } else {
+        this.poller.stop();
         console.log("Backend issue while fetching repos.");
+        console.log(response.message)
+        $("#github-repos").html('<br/><strong>'+response.message+'</strong>');
         return [];
       }
     },
