@@ -7,25 +7,36 @@ class User::GithubReposController < ApplicationController
   end
 
   def index
+    status_message = ''
+    status_success = true
+    processed_repos = []
+    task_status = ''
+
     if current_user.github_token.nil?
-      render text: 'Your VersionEye account is not connected to GitHub.', status: 400
-      return
+      status_message = 'Your VersionEye account is not connected to GitHub.'
+      status_success = false
+      task_status = GitHubService::A_TASK_DONE
+    else
+      task_status  = GitHubService.cached_user_repos current_user
+      github_repos = current_user.github_repos
+      if github_repos && github_repos.count > 0
+        github_repos = github_repos.desc(:commited_at)
+        github_repos.each {|repo| processed_repos << process_repo(repo, task_status)}
+      else
+        status_message = %w{
+          We couldn't find any repositories in your GitHub account.
+          If you think that's an error contact the VersionEye team.
+          }.join(' ')
+        status_success = false
+        task_status = GitHubService::A_TASK_DONE
+      end
     end
 
-    task_status  = GitHubService.cached_user_repos current_user
-    github_repos = current_user.github_repos
-    processed_repos = []
-    if github_repos && github_repos.count > 0
-      github_repos = github_repos.desc(:commited_at)
-      github_repos.each {|repo| processed_repos << process_repo(repo, task_status)}
-    else
-      render text: "We couldn't find any repositories in your GitHub account.", status: 400
-      return
-    end
     render json: {
-      success: true,
+      success: status_success,
       task_status: task_status,
       repos: processed_repos,
+      message: status_message
     }.to_json
   rescue => e
     Rails.logger.error e.message

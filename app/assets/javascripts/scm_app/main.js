@@ -146,14 +146,14 @@ define(
           }
         }
       }); //poller end
+
+      this.allRepos.poller.on('error', function(model){
+        console.error('oops! something went wrong. Backend issue during polling.');
+      });
     };
 
     return this;
   }
-
-
-
-
 
 	return SCMApp;
 });
