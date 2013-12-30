@@ -10,11 +10,11 @@ Versioneye::Application.routes.draw do
     get   '/github/new',        :to => 'github#new'
     post  '/github/create',     :to => 'github#create'
 
-    get '/bitbucket/callback',    :to => 'bitbucket#callback'
-    get '/bitbucket/new',         :to => 'bitbucket#new'
-    get '/bitbucket/signin',      :to => 'bitbucket#signin'
-    get '/bitbucket/connect',     :to => 'bitbucket#connect'
-    post '/bitbucket/create',      :to => 'bitbucket#create'
+    get '/bitbucket/signin',    :to => 'bitbucket#signin'
+    get '/bitbucket/connect',   :to => 'bitbucket#connect'
+    get '/bitbucket/callback',  :to => 'bitbucket#callback'
+    get '/bitbucket/new',       :to => 'bitbucket#new'
+    post '/bitbucket/create',   :to => 'bitbucket#create'
   end
 
   get   '/cloudcontrol/resources', :to => 'cloudcontrol#resources'
@@ -117,7 +117,7 @@ Versioneye::Application.routes.draw do
 
   get '/user/packages/popular_in_my_projects'   , :to => "user/packages#popular_in_my_projects"
   get '/user/packages/i_follow'                 , :to => "user/packages#i_follow"
-  
+
   get '/user/projects/github_repositories'      , :to => 'user/github_repos#init'
   get '/user/projects/bitbucket_repositories'   , :to => 'user/bitbucket_repos#init'
 

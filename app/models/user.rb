@@ -368,10 +368,10 @@ class User
     end
   end
 
-  def update_from_bitbucket_json(user_info, token, secret, scopes = "no_scope")
+  def update_from_bitbucket_json(user_info, token, secret, scopes = "read_write")
     self[:username] = user_info[:username]
 
-    if self[:username].to_s.empty? 
+    if self[:username].to_s.empty?
       self.username = "unknown_#{SecureRandom.hex(8)}"
     end
 
@@ -381,12 +381,12 @@ class User
       self.username = "#{self[:username]}_#{random_value}"
     end
 
-    self[:fullname] =  user_info[:display_name]
-    self[:bitbucket_id] =  user_info[:username]
-    self[:bitbucket_login] = user_info[:username]
-    self[:bitbucket_token] = token
+    self[:fullname]         = user_info[:display_name]
+    self[:bitbucket_id]     = user_info[:username]
+    self[:bitbucket_login]  = user_info[:username]
+    self[:bitbucket_token]  = token
     self[:bitbucket_secret] = secret
-    self[:bitbucket_scope] = scopes
+    self[:bitbucket_scope]  = scopes
   end
 
   def replacements_for_username( username )
