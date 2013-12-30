@@ -104,8 +104,8 @@ define([require], function(require){
             .attr({
               "class": "barTitle",
               "x" : function(d){ return 0;},
-              "y" : function(d){ return thisPlot.yScaler(d.name) + thisPlot.yScaler.rangeBand() / 1.8},
-            });
+              "y" : function(d){ return thisPlot.yScaler(d.name) + thisPlot.yScaler.rangeBand() / 1.8}
+        });
   }
 
 

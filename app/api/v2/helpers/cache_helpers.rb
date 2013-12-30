@@ -2,7 +2,7 @@ require 'dalli'
 
 module CacheHelpers
   @@default_cache_options = {
-    namespace: "api2",
+    namespace: 'api2',
     expires_in: 300,
   }
 

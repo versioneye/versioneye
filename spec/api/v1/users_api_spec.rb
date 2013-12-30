@@ -12,7 +12,7 @@ describe UsersApiV1 do
       get @me_uri
       response.status.should == 401
     end
-    
+
     it "returns authorization error when asking user's favorites" do
       get @me_uri + '/favorites'
       response.status.should == 401
@@ -88,7 +88,7 @@ describe UsersApiV1 do
       response_data["unread"].should == 1
       response_data["notifications"].length.should == 1
       msg = response_data["notifications"].shift
-      msg["version"].should eql(new_notification.version)
+      msg["version"].should eql(new_notification.version_id)
     end
   end
 

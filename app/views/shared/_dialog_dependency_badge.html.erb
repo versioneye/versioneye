@@ -49,8 +49,8 @@
     </form>
 
     <script type="text/javascript">
-      image_url = document.URL + "/badge.png";
-      url       = document.URL
+      image_url = document.URL.split("?")[0] + "/badge.png";
+      url       = document.URL.split("?")[0]
       <% if @product %>
         image_url = "<%= product_version_badge_url(:lang => @product.language_esc, :key => @product.to_param, :version => @product.version) %>" + ".png";
         url = "<%= package_version_url(:lang => @product.language_esc, :key => @product.to_param, :version => @product.version) %>";

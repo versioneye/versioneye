@@ -59,7 +59,7 @@ describe Notification do
 
     it "sends out 1 notifications, because 1 user is deleted" do
       user         = UserFactory.create_new 3
-      notification = NotificationFactory.create_new user
+      NotificationFactory.create_new user
       user.deleted = true
       user.save
       count        = Notification.send_notifications

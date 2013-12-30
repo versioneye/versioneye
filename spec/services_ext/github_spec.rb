@@ -224,6 +224,7 @@ describe Github do
 
     it "should parse correctly url from response header" do
        response = Github.read_repos(user_without_token, url_start)
+       # TODO TG condition is here missing on response.
 
        response = Github.read_repos(user_with_token, url_start)
        response.should_not be_nil

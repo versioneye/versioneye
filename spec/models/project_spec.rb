@@ -172,8 +172,8 @@ describe Project do
       product_2 = ProductFactory.create_new 2
       product_3 = ProductFactory.create_new 3
 
-      dep_1 = ProjectdependencyFactory.create_new project, product_1
-      dep_2 = ProjectdependencyFactory.create_new project, product_2
+      ProjectdependencyFactory.create_new project, product_1
+      ProjectdependencyFactory.create_new project, product_2
       dep_3 = ProjectdependencyFactory.create_new project, product_3
 
       unmuted = project.unmuted_dependencies

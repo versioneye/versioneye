@@ -3,7 +3,7 @@ require.config({
         'underscore': '/assets/libs/underscore-min',
         'backbone': '/assets/libs/backbone-min',
         'moment': '/assets/libs/moment.min',
-        'bootstrap_switch': '/assets/libs/bootstrap_switch',
+        'bootstrap_switch': '/assets/libs/bootstrap_switch'
     },
     shim: {
         'underscore': {

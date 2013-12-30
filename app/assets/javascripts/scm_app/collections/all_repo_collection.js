@@ -1,5 +1,5 @@
 define(['underscore', 'backbone',
-        '/assets/libs/backbone.poller.min',],
+        '/assets/libs/backbone.poller.min'],
   function(_, Backbone, Poller){
 
   function showNotification(classes, message){

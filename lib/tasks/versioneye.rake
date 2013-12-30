@@ -85,6 +85,13 @@ namespace :versioneye do
     puts "---"
   end
 
+  desc "crawl NPM"
+  task :crawl_npm => :environment do
+    puts "START to crawle NPM repository"
+    NpmCrawler.crawl
+    puts "---"
+  end
+
   desc "send out suggestion emails to inactive users"
   task :send_suggestions do
     puts "START to send out suggestion emails to inactive users"

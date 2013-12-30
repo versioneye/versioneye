@@ -17,7 +17,7 @@ define([require], function(require){
           '<img src="' + thisPlot.icon.path + '/' + title.toLowerCase() + '.png"',
           ' style = "height:'+ thisPlot.icon.height +'px;" class = "pull-left"',
           ' title = "' + title + '" />',
-          '<strong>' + title + '</strong>',
+          '<strong>' + title + '</strong>'
         ].join(" ");
       },
       valueCell: function(value){

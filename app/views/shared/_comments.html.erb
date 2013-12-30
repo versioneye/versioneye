@@ -6,7 +6,7 @@
       <% if comment_product %>
 
         <div class="span1" style="width:60px; text-align: left;">
-          <%= render :partial => "/shared/language_icons", :locals => {:language => comment.language, :icon => nil, :link => "/#{comment_product.language_esc}/#{comment.prod_key_url}/#{comment.version_url}", :title => ":-)" } %>
+          <%= render :partial => "/shared/language_icons", :locals => {:language => comment.language, :icon => nil, :link => "/#{comment_product.language_esc}/#{comment.prod_key_url}/#{comment.version_url}", :title_text => ":-)" } %>
         </div>
 
         <div class="span6" style="width: 505px;">

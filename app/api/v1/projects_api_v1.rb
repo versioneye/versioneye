@@ -144,7 +144,6 @@ class ProjectsApiV1 < Grape::API
       licenses = {}
 
       @project.dependencies.each do |dep|
-        package_url = nil
         license = "unknown"
         unless dep[:prod_key].nil?
           product = Product.fetch_product( dep.language, dep.prod_key )
