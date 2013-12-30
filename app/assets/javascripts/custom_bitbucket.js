@@ -2,8 +2,7 @@ require.config({
     paths: {
         'underscore': '/assets/libs/underscore-min',
         'backbone': '/assets/libs/backbone-min',
-        'moment': '/assets/libs/moment.min',
-        'bootstrap_switch': '/assets/libs/bootstrap_switch'
+        'moment': '/assets/libs/moment.min'
     },
     shim: {
         'underscore': {
@@ -25,19 +24,19 @@ jQuery(document).ready(function(){
     jQuery( "#tabs" ).tabs();
   }
 
- require(["underscore", "backbone","/assets/scm_app/main"],
+  require(["underscore", "backbone","/assets/scm_app/main"],
     function(_, Backbone, SCMApp) {
 
-      var github_app = new SCMApp({
-        name: "SCMApp for Github",
+      var bitbucket_app = new SCMApp({
+        name: "SCMApp for Bitbucket",
         repo_urls: {
-          root: '/user/github_repos',
-          clear: '/user/github/clear',
-          menu: '/user/github/menu'
+          root: '/user/bitbucket_repos',
+          clear: '/user/bitbucket/clear',
+          menu: '/user/bitbucket/menu'
         }
       });
 
-      github_app.start();
+      bitbucket_app.start();
   });
 
 }); // end-of-ready

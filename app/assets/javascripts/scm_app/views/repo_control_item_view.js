@@ -1,14 +1,14 @@
 define([
   'underscore', 'backbone', 'moment',
-	'/assets/github_app/views/switch_view'],
-  function(_, Backbone, moment, GithubRepoSwitchView){
+	'/assets/scm_app/views/switch_view'],
+  function(_, Backbone, moment, SCMRepoSwitchView){
 
     _.templateSettings = {
       interpolate: /\{\{\=(.+?)\}\}/g,
          evaluate: /\{\{(.+?)\}\}/g
     };
 
-    var GithubRepoControlItemView = Backbone.View.extend({
+    var SCMRepoControlItemView = Backbone.View.extend({
       tagName: "tr",
       className: "repo-control-item",
       template: _.template($("#github-repo-control-item-template").html()),
@@ -31,7 +31,7 @@ define([
         }
 
         _.each(this.project_files, function(project_file){
-          var switch_view = new GithubRepoSwitchView({
+          var switch_view = new SCMRepoSwitchView({
             model: that.model,
             parent: that,
             branch: that.branch,
@@ -43,5 +43,5 @@ define([
         return this;
       }
     });
-    return GithubRepoControlItemView;
+    return SCMRepoControlItemView;
   });

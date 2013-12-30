@@ -9,6 +9,12 @@ Versioneye::Application.routes.draw do
     get   '/github/callback',   :to => 'github#callback'
     get   '/github/new',        :to => 'github#new'
     post  '/github/create',     :to => 'github#create'
+
+    get '/bitbucket/signin',    :to => 'bitbucket#signin'
+    get '/bitbucket/connect',   :to => 'bitbucket#connect'
+    get '/bitbucket/callback',  :to => 'bitbucket#callback'
+    get '/bitbucket/new',       :to => 'bitbucket#new'
+    post '/bitbucket/create',   :to => 'bitbucket#create'
   end
 
   get   '/cloudcontrol/resources', :to => 'cloudcontrol#resources'
@@ -109,9 +115,11 @@ Versioneye::Application.routes.draw do
   resources :versioncomments
   resources :versioncommentreplies
 
-  get '/user/packages/popular_in_my_projects', :to => "user/packages#popular_in_my_projects"
-  get '/user/packages/i_follow'              , :to => "user/packages#i_follow"
-  get '/user/projects/github_repositories'   , :to => 'user/github_repos#init'
+  get '/user/packages/popular_in_my_projects'   , :to => "user/packages#popular_in_my_projects"
+  get '/user/packages/i_follow'                 , :to => "user/packages#i_follow"
+
+  get '/user/projects/github_repositories'      , :to => 'user/github_repos#init'
+  get '/user/projects/bitbucket_repositories'   , :to => 'user/bitbucket_repos#init'
 
   namespace :user do
 
@@ -142,7 +150,14 @@ Versioneye::Application.routes.draw do
     resources :github_repos
     get '/github/fetch_all' , :to => 'github_repos#fetch_all'
     get '/github/clear'     , :to => 'github_repos#clear'
-    get '/menu/github_repos', :to => 'github_repos#show_menu_items'
+    get '/github/menu'      , :to => 'github_repos#show_menu_items'
+
+    resources :bitbucket_repos
+    get '/bitbucket/fetch_all'  , :to => 'bitbucket_repos#fetch_all'
+    get '/bitbucket/clear'      , :to => 'bitbucket_repos#clear'
+    get '/bitbucket/menu'       , :to => 'bitbucket_repos#show_menu_items'
+
+
 
     resource :testimonials
   end

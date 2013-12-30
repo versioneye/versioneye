@@ -6,7 +6,7 @@ define(['underscore', 'backbone'],
 	     evaluate: /\{\{(.+?)\}\}/g
 	};
 
-	var GithubMenuView =  Backbone.View.extend({
+	var SCMMenuView =  Backbone.View.extend({
     el: "#github-menu",
     template: _.template($("#github-menu-template").html()),
 	  item_template: _.template($("#github-menu-item-template").html()),
@@ -87,9 +87,11 @@ define(['underscore', 'backbone'],
     onSearchItem: function(ev){
       ev.preventDefault();
       var search_term = $("#github-search-term").val();
-      if(search_term.length < 2){
-        console.debug("Search term too short, going to skip.");
-        return 1;
+      if(search_term.length < 1){
+        console.debug("Search term too short, going to reset view.");
+        this.removePrevSelection();
+        this.currentRepos.reset();
+        //this.currentRepos.addNewItems(search_matches);
       }
 
       var search_matches = this.allRepos.matchByName(search_term);
@@ -137,5 +139,5 @@ define(['underscore', 'backbone'],
     }
   });
 
-  return GithubMenuView;
+  return SCMMenuView;
 });

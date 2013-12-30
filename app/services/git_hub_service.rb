@@ -14,7 +14,6 @@ class GitHubService
     end
   end
 
-
   def self.update_repos_for_user user
     Rails.logger.debug "Importing repos for #{user.fullname}."
     user.github_repos.delete_all

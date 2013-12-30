@@ -6,7 +6,7 @@ define(['underscore', 'backbone'],
 	    evaluate: /\{\{(.+?)\}\}/g
 	};
 
-  var GithubPaginationView = Backbone.View.extend({
+  var SCMPaginationView = Backbone.View.extend({
     events: {
       "click .btn-pagination-next": "loadMore"
     },
@@ -19,6 +19,10 @@ define(['underscore', 'backbone'],
     },
     render: function(){
       console.debug("Rendering pagination view.");
+      if(_.size(this.currentRepos.onlyOrgRepos()) == this.currentRepos.size() || this.currentRepos.size() < this.currentRepos.perPage ){
+        this.$el.html("");
+        return 1;
+      }
       this.$el.html(this.template({
         paging: {
           currentPage: this.currentRepos.currentPage,
@@ -26,7 +30,7 @@ define(['underscore', 'backbone'],
           perPage: this.currentRepos.perPage
         }
       }));
-      //$('#github-pagination').html(this.$el)
+
     },
     resetView: function(){
       this.currentRepos.currentPage = 0;
@@ -41,5 +45,5 @@ define(['underscore', 'backbone'],
     }
   });
 
-  return GithubPaginationView;
+  return SCMPaginationView;
 });
