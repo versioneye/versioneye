@@ -9,10 +9,7 @@ class Auth::BitbucketController < ApplicationController
       redirect_to settings_connect_path and return
     end
 
-    callback_url  = auth_bitbucket_callback_url
-    request_token = Bitbucket.request_token(callback_url)
-    session[:request_token] = request_token
-    redirect_to request_token.authorize_url(oauth_callback: callback_url)
+    connect_with_bitbucket
   end
 
 
@@ -22,10 +19,7 @@ class Auth::BitbucketController < ApplicationController
       redirect_to signin_path and return
     end
 
-    callback_url =  auth_bitbucket_callback_url
-    request_token = Bitbucket.request_token(callback_url)
-    session[:request_token] = request_token
-    redirect_to request_token.authorize_url(oauth_callback: callback_url)
+    connect_with_bitbucket
   end
 
 
@@ -158,5 +152,12 @@ class Auth::BitbucketController < ApplicationController
       @user = User.new email: session[:email]
       @terms = false
       @promo = session[:promo_code]
+    end
+
+    def connect_with_bitbucket
+      callback_url  = auth_bitbucket_callback_url
+      request_token = Bitbucket.request_token(callback_url)
+      session[:request_token] = request_token
+      redirect_to request_token.authorize_url(oauth_callback: callback_url)
     end
 end
