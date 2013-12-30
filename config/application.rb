@@ -23,7 +23,8 @@ end
 
 class Settings
   json = File.read("config/settings.json")
-  settings = JSON.parse(json)
+  resp = ERB.new(json).result
+  settings = JSON.parse(resp)
   if settings
     settings[Rails.env].each { |name, value|
       instance_variable_set("@#{name}", value)
