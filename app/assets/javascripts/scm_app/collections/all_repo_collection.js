@@ -89,7 +89,7 @@ define(['underscore', 'backbone',
     },
     matchByName: function(search_term){
       var matched_repos = this.filter(function(repo){
-        return repo.get("name").indexOf(search_term) >= 0;
+        return repo.get("name").toLowerCase().indexOf(search_term) >= 0;
       },
       this);
 
