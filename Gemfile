@@ -28,7 +28,7 @@ gem 'htmlentities'       , '4.3.1'
 gem 'whenever'           , '0.9.0'
 gem 'bourbon'            , '3.1.8'
 gem 'ruby_regex'         , '~> 0.1.0'
-gem 'cocoapods-core'     , '0.28.0'
+gem 'cocoapods-core'     , '0.29.0'
 gem 'octokit'            , '~> 2.7.0'
 
 group :development do
@@ -53,7 +53,7 @@ end
 group :test do
   gem 'turn'              , :require => false
   gem 'rspec'             , '2.14.1'
-  gem "rspec-rails"       , '2.14.0'
+  gem 'rspec-rails'       , '2.14.1'
   gem 'rspec-mocks'       , '2.14.4'
   gem 'capybara'          , '~> 2.2.0'
   gem 'capybara-firebug'  , '~> 2.0.0'
