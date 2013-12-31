@@ -64,7 +64,7 @@ module V2
 
         if params[:only_imported]
           imported_projects = Project.by_user(user).where(source: Project::A_SOURCE_GITHUB)
-          repo_names        = imported_projects.map {|proj| proj[:github_project]}
+          repo_names        = imported_projects.map {|proj| proj[:scm_fullname]}
           repos             = user.github_repos.any_in(fullname: repo_names.to_a).paginate(per_page: 30, page: page)
         else
           repos = user.github_repos.where(query_filters).paginate(per_page: 30, page: page)
@@ -252,7 +252,7 @@ module V2
         repo_name = decode_prod_key(params[:repo_key])
         branch    = params[:branch]
 
-        project = Project.by_user(user).by_github(repo_name).where(github_branch: branch).shift
+        project = Project.by_user(user).by_github(repo_name).where(scm_branch: branch).shift
         error!("Project doesnt exists", 400) if project.nil?
         ProjectService.destroy project[:_id].to_s
         present :success, true

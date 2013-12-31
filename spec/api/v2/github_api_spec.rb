@@ -24,8 +24,8 @@ describe "GithubApiV2" do
                          name: "spec_projectX",
                          user_id: user.id.to_s,
                          source: Project::A_SOURCE_GITHUB,
-                         github_project: repo1[:fullname],
-                         github_branch: "master"
+                         scm_fullname: repo1[:fullname],
+                         scm_branch: "master"
                   )}
   let(:api_path) {"/api/v2/github"}
 
