@@ -15,9 +15,9 @@ class Project
   A_TYPE_R         = 'R'
   A_TYPE_COCOAPODS = 'CocoaPods'
 
-  A_SOURCE_UPLOAD = 'upload'
-  A_SOURCE_URL    = 'url'
-  A_SOURCE_GITHUB = 'github'
+  A_SOURCE_UPLOAD    = 'upload'
+  A_SOURCE_URL       = 'url'
+  A_SOURCE_GITHUB    = 'github'
   A_SOURCE_BITBUCKET = 'bitbucket'
 
   A_PERIOD_MONTHLY = 'monthly'
@@ -37,10 +37,8 @@ class Project
   field :url           , type: String
   field :source        , type: String,  :default => A_SOURCE_UPLOAD
   field :s3_filename   , type: String
-  field :github_project, type: String   # Repository name at GitHub
-  field :github_branch , type: String,  :default => "master" # Branch     name at GitHub
 
-  field :scm_fullname  , type: String
+  field :scm_fullname  , type: String # repo name, for example 'reiz/gemify'
   field :scm_branch    , type: String, default: "master"
 
   field :dep_number    , type: Integer
@@ -62,7 +60,7 @@ class Project
   scope :by_collaborator, ->(user){all_in(_id: ProjectCollaborator.by_user(user).to_a.map(&:project_id))}
   scope :by_source, ->(source){ where(source:  source ) }
   scope :by_period, ->(period){ where(period:  period ) }
-  scope :by_github, ->(reponame){ where(source: A_SOURCE_GITHUB, github_project: reponame)}
+  scope :by_github, ->(reponame){ where(source: A_SOURCE_GITHUB, scm_fullname: reponame)}
 
   def to_s
     "<Project #{language}/#{project_type} #{name}>"

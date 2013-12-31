@@ -156,7 +156,7 @@ class Auth::BitbucketController < ApplicationController
 
     def connect_with_bitbucket
       callback_url  = auth_bitbucket_callback_url
-      request_token = Bitbucket.request_token(callback_url)
+      request_token = Bitbucket.request_token( callback_url )
       session[:request_token] = request_token
       redirect_to request_token.authorize_url(oauth_callback: callback_url)
     end

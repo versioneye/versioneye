@@ -61,7 +61,7 @@
     "github_pass": "env_GITHUB_PASS",
     "github_user": "env_GITHUB_USER",
     "memcache_password": "env_MEMCACHE_PASSWORD",
-    "memcache_servers": "env_MEMCACHE_SERVERS",
+    "memcache_servers": ["127.0.0.1:11211"],
     "memcache_username": "env_MEMCACHE_USERNAME",
     "postmark_api_key": "env_POSTMARK_API_KEY",
     "s3_infographics_bucket": "veye_prod_infographics",
