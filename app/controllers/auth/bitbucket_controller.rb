@@ -8,7 +8,6 @@ class Auth::BitbucketController < ApplicationController
       flash[:error] = "You are already signed in. If you want to connect with BitBucket, check your settings!"
       redirect_to settings_connect_path and return
     end
-
     connect_with_bitbucket
   end
 
@@ -18,7 +17,6 @@ class Auth::BitbucketController < ApplicationController
       flash[:error] = "You have to signed in to connect BitBucket account with your VersionEye account."
       redirect_to signin_path and return
     end
-
     connect_with_bitbucket
   end
 
@@ -34,16 +32,8 @@ class Auth::BitbucketController < ApplicationController
     user_info    = Bitbucket.user(access_token.token, access_token.secret)
 
     if signed_in?
-      #connect accounts and update info
-      current_user.update_from_bitbucket_json(user_info, access_token.token, access_token.secret)
-      if current_user.save
-        redirect_to settings_connect_path and return
-      else
-        error_msg = "An error occured. Cant attach profile updates from BitBucket. Please contact the VersionEye team."
-        Rails.logger.error "#{error_msg} Data: #{current_user.errors.full_messages.to_sentence}"
-        flash[:error] = error_msg
-        redirect_to settings_connect_path and return
-      end
+      connect_bitbucket_with_user user_info, access_token
+      redirect_to settings_connect_path and return
     end
 
     user = User.find_by_bitbucket_id(user_info[:username])
@@ -61,7 +51,6 @@ class Auth::BitbucketController < ApplicationController
       flash[:error] = "Your account is no activated. Please check your email account."
       redirect_to signin_path and return
     end
-
   end
 
 
@@ -160,4 +149,20 @@ class Auth::BitbucketController < ApplicationController
       session[:request_token] = request_token
       redirect_to request_token.authorize_url(oauth_callback: callback_url)
     end
+
+    def connect_bitbucket_with_user user_info, access_token
+      current_user[:bitbucket_id]     = user_info[:username]
+      current_user[:bitbucket_login]  = user_info[:username]
+      current_user[:bitbucket_token]  = access_token.token
+      current_user[:bitbucket_secret] = access_token.secret
+      current_user[:bitbucket_scope]  = 'read_write'
+      if current_user.save
+        flash[:success] = 'Your account is now connected to BitBucket.'
+      else
+        error_msg = "An error occured. Cant attach profile updates from BitBucket. Please contact the VersionEye team."
+        Rails.logger.error "#{error_msg} Data: #{current_user.errors.full_messages.to_sentence}"
+        flash[:error] = error_msg
+      end
+    end
+
 end
