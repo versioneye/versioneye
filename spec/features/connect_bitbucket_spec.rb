@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Connect with Bitbucket" do
-  
+
   let(:user1){FactoryGirl.create(:default_user)}
 
   before :each do
@@ -37,7 +37,7 @@ describe "Connect with Bitbucket" do
       fill_in 'Password', :with => Settings.bitbucket_password
       click_button 'Log in'
     end
-    
+
     #grant access
     if page.has_css? 'button.aui-button'
       click_button "Grant access"
@@ -50,6 +50,6 @@ describe "Connect with Bitbucket" do
     u = User.all.first
     u.bitbucket_token.should_not be_nil
     u.bitbucket_secret.should_not be_nil
-    u.username.should eql(u.bitbucket_id)
+    u.username.should eql('hanstanz')
   end
 end
