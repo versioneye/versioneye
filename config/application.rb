@@ -28,7 +28,11 @@ class Settings
     settings[Rails.env].each { |name, value|
       if value && value.is_a?(String) && value.match(/^env_/)
         new_val = value.gsub("env_", "")
-        value = ENV[new_val]
+        if name.eql?("memcache_servers")
+          value = eval ENV[new_val]
+        else
+          value = ENV[new_val]
+        end
       end
       instance_variable_set("@#{name}", value)
       self.class.class_eval { attr_reader name.intern }
