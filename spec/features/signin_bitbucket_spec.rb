@@ -24,8 +24,10 @@ def connect_user_account(user)
 end
 
 describe "Signin with Bitbucket" do
+
   let(:user1){FactoryGirl.create(:bitbucket_user,
                                  bitbucket_id: "versioneye_test")}
+
   before :each do
     User.delete_all
     visit 'https://bitbucket.org/account/signout/'
@@ -62,7 +64,7 @@ describe "Signin with Bitbucket" do
     u = User.all.first
     u.bitbucket_token.should_not be_nil
     u.bitbucket_secret.should_not be_nil
-    u.username.should eql(user1[:bitbucket_id])
+    u.username.should eql('hans_tanz')
     u.bitbucket_login.should eql(user1[:bitbucket_id])
 
   end
