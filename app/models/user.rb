@@ -360,7 +360,7 @@ class User
     user = User.find_by_username(self.username)
     unless user.nil?
       random_value = create_random_value
-      self.username = "#{self.username}#{random_value}"
+      self.username = "#{self.username}_#{random_value}"
     end
     self.username = replacements_for_username( self.username )
     if self.fullname.nil? || self.fullname.empty?
