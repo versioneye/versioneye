@@ -43,7 +43,7 @@ class Auth::BitbucketController < ApplicationController
       cookies.permanent.signed[:access_token_secret] = access_token.secret
       redirect_to auth_bitbucket_new_path(email: session[:email], promo_code: session[:promo_code]) and return
     elsif user.activated?
-      user.update_from_bitbucket_json(user_info, access_token.token, access_token.secret)
+      update_user_with user_info, access_token
       user.save
       sign_in user
       redirect_back_or user_packages_i_follow_path and return
@@ -151,11 +151,7 @@ class Auth::BitbucketController < ApplicationController
     end
 
     def connect_bitbucket_with_user user_info, access_token
-      current_user[:bitbucket_id]     = user_info[:username]
-      current_user[:bitbucket_login]  = user_info[:username]
-      current_user[:bitbucket_token]  = access_token.token
-      current_user[:bitbucket_secret] = access_token.secret
-      current_user[:bitbucket_scope]  = 'read_write'
+      update_user_with user_info, access_token
       if current_user.save
         flash[:success] = 'Your account is now connected to BitBucket.'
       else
@@ -163,6 +159,14 @@ class Auth::BitbucketController < ApplicationController
         Rails.logger.error "#{error_msg} Data: #{current_user.errors.full_messages.to_sentence}"
         flash[:error] = error_msg
       end
+    end
+
+    def update_user_with user_info, access_token
+      current_user[:bitbucket_id]     = user_info[:username]
+      current_user[:bitbucket_login]  = user_info[:username]
+      current_user[:bitbucket_token]  = access_token.token
+      current_user[:bitbucket_secret] = access_token.secret
+      current_user[:bitbucket_scope]  = 'read_write'
     end
 
 end
