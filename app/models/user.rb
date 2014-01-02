@@ -86,7 +86,6 @@ class User
 
   scope :by_verification, ->(code){where(verification: code)}
   scope :live_users     , where(verification: nil, deleted: false)
-  scope :follows_none   , where(:product_ids.empty?)
   scope :follows_equal  , ->(n){where(:product_ids.count.eq(n))}
   scope :follows_least  , ->(n){where(:product_ids.count >= n)}
   scope :follows_max    , ->(n){where(:product_ids.count <= n)}
@@ -137,12 +136,30 @@ class User
     end
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
+    Rails.logger.error e.backtrace.join('\n')
+  end
+
+  def self.none_followers
+    users = Array.new
+    User.all.each do |user|
+      next if user[:product_ids] && !user[:product_ids].empty?
+      users << user
+    end
+    users
+  end
+
+  def self.send_suggestions_to_none_followers
+    none_followers.each do |user|
+      user.send_suggestions
+    end
   end
 
   def send_suggestions
     return nil if deleted || email_inactive
     UserMailer.suggest_packages_email(self).deliver
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
   end
 
   def create_username
