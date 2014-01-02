@@ -290,6 +290,7 @@ class Product
   end
 
   def self.encode_language language
+    return nil if language.to_s.empty?
     language.gsub("\.", "").downcase
   end
 
