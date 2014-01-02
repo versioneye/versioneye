@@ -139,17 +139,8 @@ class User
     Rails.logger.error e.backtrace.join('\n')
   end
 
-  def self.none_followers
-    users = Array.new
-    User.all.each do |user|
-      next if user[:product_ids] && !user[:product_ids].empty?
-      users << user
-    end
-    users
-  end
-
   def self.send_suggestions_to_none_followers
-    none_followers.each do |user|
+    non_followers.each do |user|
       user.send_suggestions
     end
   end
