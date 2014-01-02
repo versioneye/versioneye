@@ -9,6 +9,9 @@ class NpmCrawler
   def self.crawl
     crawl = crawle_object
     packages = get_first_level_list
+    if packages.nil? || packages.empty?
+      packages = get_known_packages
+    end
     packages.each do |name|
       crawle_package name, crawl
     end
@@ -23,6 +26,19 @@ class NpmCrawler
     self.logger.info 'Start fetching first level list'
     packages = JSON.parse HTTParty.get('http://registry.npmjs.org/-/short' ).response.body
     self.logger.info ' -- done.'
+    packages
+  rescue => e
+    self.logger.error "ERROR in get_first_level_list: #{e.message}"
+    self.logger.error e.backtrace.join('\n')
+    nil
+  end
+
+  def self.get_known_packages
+    packages = Array.new
+    products = Product.where(:language => Product::A_LANGUAGE_NODEJS)
+    products.each do |product|
+      packages << product.prod_key
+    end
     packages
   end
 
