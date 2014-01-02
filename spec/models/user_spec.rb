@@ -344,21 +344,23 @@ describe User do
 
   end
 
-  describe "none_followers" do
+  describe "non_followers" do
     it "returns same number of user when users follow nothing" do
-      User.none_followers.count.should eql(User.all.count)
+      User.non_followers.count.should eql(User.all.count)
     end
     it "returns one user less, when one user starts following new Project" do
       user = User.all.first
       prod = ProductFactory.create_new
       user.products.push prod
-      User.none_followers.count.should eql(User.all.count - 1)
+      User.non_followers.count.should eql(User.all.count - 1)
+
       user[:product_ids] = Array.new
       user.save
-      User.none_followers.count.should eql(User.all.count)
+      User.non_followers.count.should eql(User.all.count)
+
       user[:product_ids] = nil
       user.save
-      User.none_followers.count.should eql(User.all.count)
+      User.non_followers.count.should eql(User.all.count)
     end
   end
 
