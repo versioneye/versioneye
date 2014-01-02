@@ -151,6 +151,7 @@ class User
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
+    nil
   end
 
   def create_username
