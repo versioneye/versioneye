@@ -49,7 +49,7 @@ class BowerCrawler
     p "Using serial crawler - hopefully just for debugging."
 #    crawl_registered_list(source_url)
 #    crawl_existing_sources(token)
-    crawl_projects(token)
+#    crawl_projects(token)
     crawl_versions(token) 
   end
 
@@ -508,7 +508,7 @@ class BowerCrawler
     })
     newest
   rescue => e
-    p "Cant save newest: #{newest.to_json}.\n #{e.message} #{newest.errors.full_messages.to_sentence}"
+    p "Cant save newest: #{newest.to_json}.\n #{e.message} \n #{e.backtrace.join('\n')}"
   end
 
 
