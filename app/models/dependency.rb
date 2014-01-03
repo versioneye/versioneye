@@ -1,17 +1,22 @@
 class Dependency
 
+  require 'will_paginate/array'
+
   # This Model describes the relationship between 2 products/packages
   # This Model describes 1 dependency of a package to another package
 
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_SCOPE_COMPILE     = "compile"
-  A_SCOPE_RUNTIME     = "runtime"
-  A_SCOPE_REQUIRE     = "require"
-  A_SCOPE_PROVIDED    = "provided"
-  A_SCOPE_DEVELOPMENT = "development"
-  A_SCOPE_TEST        = "test"
+  A_SCOPE_RUNTIME     = 'runtime'     # RubyGems
+  A_SCOPE_REQUIRE     = 'require'     # PHP Composer
+  A_SCOPE_PROVIDED    = 'provided'    # Java Maven
+  A_SCOPE_TEST        = 'test'        # Java Maven
+  A_SCOPE_COMPILE     = 'compile'     # NPM, Maven
+  A_SCOPE_DEVELOPMENT = 'development' # NPM
+  A_SCOPE_BUNDLED     = 'bundled'     # NPM
+  A_SCOPE_OPTIONAL    = 'optional'    # NPM
+
 
   # This attributes describe to which product
   # this dependency belongs to. Parent!
@@ -53,6 +58,27 @@ class Dependency
     dependencies[0]
   end
 
+  def self.references language, prod_key, page
+    per_page = 30
+    page     = 0 if page.to_s.empty?
+    page     = page.to_i - 1 if page.to_i > 0
+    skip     = page.to_i * per_page
+
+    count = Dependency.collection.aggregate(
+      { '$match' => { :language => language, :dep_prod_key => prod_key } },
+      { '$group' => { :_id => '$prod_key' } }
+    ).count
+
+    deps = Dependency.collection.aggregate(
+      { '$match' => { :language => language, :dep_prod_key => prod_key } },
+      { '$group' => { :_id => '$prod_key' } },
+      { '$skip'  => skip },
+      { '$limit' => per_page }
+    )
+    prod_keys = deps.map{|dep| dep['_id'] }
+    {:prod_keys => prod_keys, :count => count}
+  end
+
   def product
     if group_id && artifact_id
       return Product.find_by_group_and_artifact( group_id, artifact_id )
@@ -66,7 +92,7 @@ class Dependency
 
   def language_escaped
     return "nodejs" if self.language.eql? Product::A_LANGUAGE_NODEJS
-    return language.downcase
+    language.downcase
   end
 
   def update_known
@@ -152,7 +178,7 @@ class Dependency
 
   def version_for_url
     url_param = version_parsed
-    ver = Version.encode_version( url_param )
+    Version.encode_version( url_param )
   rescue => e
     Rails.logger.error e.message
     return self.version

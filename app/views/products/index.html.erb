@@ -2,24 +2,24 @@
 <div class="container" id="login" >
   <div class="pull-left" style="padding-top: 10px;">
     <% if signed_in? %>
-      <%= link_to image_tag("logos/versioneye-transparent.png"), user_projects_path %>
+      <%= link_to image_tag('logos/versioneye-transparent.png'), user_projects_path %>
     <% else %>
-      <%= image_tag "logos/versioneye-transparent.png" %>
+      <%= image_tag 'logos/versioneye-transparent.png' %>
     <% end %>
   </div>
 
-    <% unless current_user %>
+    <% if current_user %>
+      <div class="pull-right opacity_section" style="margin-left: 1px;" >
+        <a id="projects" href="<%= user_projects_path %>">
+          <i class = "icon-archive">&nbsp;</i>Projects
+        </a>
+      </div>
+    <% else %>
       <div class="pull-right opacity_section" style="margin-left: 1px;" >
         <a id="signin" href="/signin" ><i class="icon-signin">&nbsp;</i>Sign in</a>
       </div>
       <div class="pull-right opacity_section" style="margin-left: 1px;" >
         <a id="signup" href="/signup" ><i class="icon-thumbs-up">&nbsp;</i>Sign up</a>
-      </div>
-    <% else %>
-      <div class="pull-right opacity_section" style="margin-left: 1px;" >
-        <a id="signin" href="<%= user_projects_path %>">
-          <i class = "icon-archive">&nbsp;</i>Projects
-        </a>
       </div>
     <% end %>
 

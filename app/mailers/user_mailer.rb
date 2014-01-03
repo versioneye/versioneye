@@ -1,5 +1,6 @@
 class UserMailer < ActionMailer::Base
 
+  layout 'email_html_layout'
   default from: "\"VersionEye\" <notify@versioneye.com>"
 
   def receipt_email(user)
@@ -8,8 +9,8 @@ class UserMailer < ActionMailer::Base
     @billing_address = user.billing_address
     mail(
       :to => user.email,
-      :subject => "Receipt",
-      :tag => "receipt"
+      :subject => 'Receipt',
+      :tag => 'receipt'
       )
   end
 
@@ -19,8 +20,8 @@ class UserMailer < ActionMailer::Base
     @verificationlink = "#{Settings.server_url_https}/users/activate/#{source}/#{verification}"
     mail(
       :to => email,
-      :subject => "Verification",
-      :tag => "verification"
+      :subject => 'Verification',
+      :tag => 'verification'
       )
   end
 
@@ -29,8 +30,8 @@ class UserMailer < ActionMailer::Base
     @verificationlink = "#{Settings.server_url_https}/users/activate/email/#{verification}"
     mail(
       :to => email,
-      :subject => "Verification",
-      :tag => "verification"
+      :subject => 'Verification',
+      :tag => 'verification'
       )
   end
 
@@ -40,8 +41,8 @@ class UserMailer < ActionMailer::Base
     @verificationlink = "#{Settings.server_url_https}/users/activate/#{source}/#{verification}"
     mail(
       :to => email,
-      :subject => "Verification Reminder",
-      :tag => "verification_reminder"
+      :subject => 'Verification Reminder',
+      :tag => 'verification_reminder'
       )
   end
 
@@ -52,8 +53,8 @@ class UserMailer < ActionMailer::Base
 
     mail(
       :to => collaborator[:invitation_email],
-      :subject => "Invitation to project collabration",
-      :tag => "collaboration"
+      :subject => 'Invitation to project collabration',
+      :tag => 'collaboration'
     )
   end
 
@@ -66,7 +67,7 @@ class UserMailer < ActionMailer::Base
     mail(
       :to => @callee[:email],
       :subject => "#{@caller[:fullname]} added you as collaborator.",
-      :tag => "collaboration"
+      :tag => 'collaboration'
     )
   end
 
@@ -75,15 +76,13 @@ class UserMailer < ActionMailer::Base
     @url = "#{Settings.server_url_https}/updatepassword/#{@user.verification}"
     mail(
       :to => @user.email,
-      :subject => "Password Reset",
-      :tag => "password_reset"
+      :subject => 'Password Reset',
+      :tag => 'password_reset'
       )
   end
 
   def new_user_email(user)
-    @fullname = user.fullname
-    @username = user.username
-    @github = user.github_id
+    @user = user
     mail(
       :to => "reiz@versioneye.com",
       :subject => "New User",
@@ -98,6 +97,15 @@ class UserMailer < ActionMailer::Base
       :to => user[:email],
       :subject => "VersionEye's lottery confirmation",
       :tag => "new_lottery"
+    )
+  end
+
+  def suggest_packages_email( user )
+    @fullname = user[:fullname]
+    mail(
+      :to => user[:email],
+      :subject => "Follow popular software packages on VersionEye",
+      :tag => "suggest_packages"
     )
   end
 

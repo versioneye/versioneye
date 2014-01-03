@@ -24,11 +24,10 @@ class GithubRepo
   field :etag        , type: String
   field :branches    , type: Array
   field :project_files, type: Hash,    :default => nil
-  field :created_at  , type: DateTime, :default => DateTime.new
-  field :updated_at  , type: DateTime, :default => DateTime.new #when github repo was updated
-  field :pushed_at   , type: DateTime, :default => DateTime.new
-  field :cached_at   , type: DateTime, :default => DateTime.new
-  field :refreshed_at, type: DateTime, :default => DateTime.new #when this doc updated
+  field :created_at  , type: DateTime, :default => DateTime.now
+  field :updated_at  , type: DateTime, :default => DateTime.now #when github repo was updated
+  field :pushed_at   , type: DateTime, :default => DateTime.now
+  field :cached_at   , type: DateTime, :default => DateTime.now
 
   belongs_to :user
 
@@ -36,63 +35,82 @@ class GithubRepo
   scope :by_user       , ->(user){where(user_id: user._id)}
   scope :by_owner_login, ->(login){where(owner_login: login)}
   scope :by_owner_type , ->(type_name){where(owner_type: type_name)}
-  scope :by_org        , ->(org_name){where(owner_login: org_name, owner_type: "organization")}
+  scope :by_org        , ->(org_name){where(owner_login: org_name, owner_type: 'organization')}
   scope :by_fullname   , ->(fullname){where(fullname: fullname)}
 
 
-  def self.add_new(user, repo, etag = nil)
-    return false if repo.nil? || repo.empty?
-    if repo['owner'].nil?
-      Rails.console.error("Repo #{full_name} is missing owner. Adding as unknown.")
-      repo['owner'] = {'type' => "ufo"}
+  def self.get_owner_type(user, owner_info)
+    owner_type = "unknown"
+
+    if user[:github_login].nil?
+      user_info = Github.user(user.github_token)
+      user_info.deep_symbolize_keys #we like symbols 
+      user[:github_login] = user_info[:login]
+      user.save
+    else
+      user_login = user[:github_login]
     end
 
-    case repo['owner']['type'].to_s.downcase
+    case owner_info[:type].to_s.downcase
     when 'organization'
       owner_type = 'organization'
     when 'user'
-      Rails.logger.debug("Adding new repo into Cache with userLogin: #{user[:user_login]}")
-      if user[:user_login] != repo['owner']['login'] then
+      if user_login != owner_info[:login] then
         owner_type = 'team'
       else
-        owner_type = "user"
+        owner_type = 'user'
       end
     else
       owner_type = 'unknown'
     end
 
+    owner_type
+  end
+
+  def self.build_new(user, repo, etag = nil)
+    return false if repo.nil? || repo.empty?
+    repo = repo.deep_symbolize_keys
+
+    owner_info = repo[:owner]
+    owner_type = get_owner_type(user, repo[:owner])
     new_repo = GithubRepo.new({
       user_id: user.id,
-      github_id: repo['id'],
-      name: repo['name'],
-      fullname: repo['full_name'],
+      github_id: repo[:id],
+      name: repo[:name],
+      fullname: repo[:full_name],
       user_login: user[:user_login],
-      owner_login: repo['owner']['login'],
+      owner_login: owner_info[:login],
       owner_type: owner_type,
-      owner_avatar: repo['owner']['avatar_url'],
-      language: repo['language'].to_s.downcase,
-      description: repo['description'],
-      private: repo['private'],
-      fork: repo['fork'],
-      github_url: repo['url'],
-      homepage: repo['homepage'],
-      git_url: repo['git_url'],
-      html_url: repo['html_url'],
-      forks: repo['forks'],
-      watchers: repo['watchers'],
-      size: repo['size'],
+      owner_avatar: owner_info[:avatar_url],
+      language: repo[:language].to_s.downcase,
+      description: repo[:description],
+      private: repo[:private],
+      fork: repo[:fork],
+      github_url: repo[:url],
+      homepage: repo[:homepage],
+      git_url: repo[:git_url],
+      html_url: repo[:html_url],
+      forks: repo[:forks],
+      watchers: repo[:watchers],
+      size: repo[:size],
       etag: etag.to_s,
-      branches: repo['branches'],
-      project_files: repo['project_files'],
-      created_at: repo['created_at'],
-      updated_at: repo['updated_at'],
-      pushed_at: repo['pushed_at'],
+      branches: repo[:branches],
+      project_files: repo[:project_files],
+      created_at: repo[:created_at],
+      updated_at: repo[:updated_at],
+      pushed_at: repo[:pushed_at],
       cached_at: DateTime.now
     })
 
+    new_repo
+  end
+
+  def self.create_new(user, repo, etag = nil)
+    new_repo = build_new(user, repo, etag)
     unless new_repo.save
       Rails.logger.error "Cant save new repo:#{new_repo.errors.full_messages.to_sentence}"
     end
+    new_repo
   end
 
 end

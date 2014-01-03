@@ -1,20 +1,18 @@
 
-    This is a
+    This is a project from
 
-    <% if project.private_project %>
-      private project from
-    <% else %>
-      public project from
-    <% end %>
+    <% if project.source.eql? Project::A_SOURCE_GITHUB %>
+      <a href="https://github.com/<%= project.scm_fullname %>/tree/<%= project.scm_branch %>">GitHub <%= project.scm_branch %> branch</a>.
 
-    <% if project.source.eql? "github" %>
-      <a href="https://github.com/<%= project.github_project%>/tree/<%= project.github_branch %>">GitHub <%= project.github_branch %> branch</a>.
-
-      <% filename = project[:s3_filename].to_s.gsub(/\S+\_/, "") %>
+      <% filename = project[:s3_filename].to_s.gsub(/\S+\_/, '') %>
       We parsed this file:
-      <a href = "https://github.com/<%= project.github_project %>/blob/<%= project.github_branch %>/<%= filename %>" >
+      <a href = "https://github.com/<%= project.scm_fullname %>/blob/<%= project.scm_branch %>/<%= filename %>" >
         <%= filename %>
       </a>
+    <% elsif project.source.eql? Project::A_SOURCE_BITBUCKET %>
+      <a href="https://bitbucket.org/<%= project.scm_fullname%>/branch/<%= project.scm_branch %>">BitBucket <%= project.scm_branch %> branch</a>.
+
+      <% # TODO show link to file %>
     <% elsif project.source.eql? "url" %>
       <a href="<%= project.url%>">URL</a>.
     <% else %>

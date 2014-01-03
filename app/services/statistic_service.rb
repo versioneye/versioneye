@@ -1,6 +1,6 @@
 class StatisticService
 
-  A_STAT_LANGUAGES = ["Java", "Ruby", "Python", "Node.JS", "Clojure", "R", "PHP"]
+  A_STAT_LANGUAGES = ['Java', 'Ruby', 'Python', 'Node.JS', 'Clojure', 'R', 'PHP']
 
 
   def self.language_project_count
@@ -65,9 +65,9 @@ class StatisticService
 
     n_months.times do |i|
       curr_date = start_date >> i
-      stats = { date: curr_date.strftime("%Y-%m-%d")}
+      stats = { date: curr_date.strftime('%Y-%m-%d')}
       A_STAT_LANGUAGES.each do |lang|
-        ncount = Product.where(language: lang, created_at: {"$lt" => curr_date}).count
+        ncount = Product.where(language: lang, created_at: {'$lt' => curr_date}).count
         encoded_lang = Product.encode_language(lang).to_s
         stats.merge!({encoded_lang => ncount})
       end
@@ -75,11 +75,11 @@ class StatisticService
       results << stats
     end
 
-
     return results
   end
 
   def self.diff_in_months(date1, date2)
     (date2.year*12+date2.month) - (date1.year*12+date1.month)
   end
+
 end

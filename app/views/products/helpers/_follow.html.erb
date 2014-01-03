@@ -3,7 +3,7 @@
   <% if signed_in? %>
     <% @product['user_ids'] = Array.new() if @product['user_ids'].nil? %>
     <% if @product['user_ids'].include? current_user.id %>
-      <%= form_tag("/package/unfollow", :style=>"margin: 0;") do  %>
+      <%= form_tag('/package/unfollow', :style=> 'margin: 0;') do  %>
         <input name="src_hidden"   type="hidden" value="detail"/>
         <input name="product_key"  type="hidden" value="<%= @product.to_param %>"/>
         <input name="product_lang" type="hidden" value="<%= @product.language %>"/>
@@ -17,7 +17,6 @@
       <% end %>
     <% end %>
   <% else %>
-    <%= render 'shared/dialog_follow' %>
     <button type="submit" class="btn btn-large btn-primary" style="width: 100%" onclick="load_dialog_follow('<%= @product.name %>', '<%= @product.prod_key %>', '<%= @product.language %>');">Follow</button>
   <% end %>
 </div>

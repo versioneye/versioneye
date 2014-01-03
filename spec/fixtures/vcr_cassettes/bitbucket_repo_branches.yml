@@ -1,0 +1,154 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/versioneye_test/fantom_hydra/branches
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (info@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="57etRfsKmG00b6dIaE0lWTAkT66ovIptkprh7bA9i8",
+        oauth_signature="xqyNBWls2TmzN5CnVdaQ1bpoM8E%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1387985935", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.3
+      Date:
+      - Wed, 25 Dec 2013 15:38:56 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Request-Count:
+      - '406'
+      X-Served-By:
+      - app07
+      X-Render-Time:
+      - '0.219769001007'
+      Content-Language:
+      - en
+      X-Static-Version:
+      - c4f05e63beb6
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      X-Version:
+      - b2ac13e3a153
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJqYXZhX2JyYW5jaCI6IHsibm9kZSI6ICJkMGFkNzU4YjJjZGMiLCAiZmls
+        ZXMiOiBbeyJ0eXBlIjogInJlbW92ZWQiLCAiZmlsZSI6ICJHZW1maWxlIn0s
+        IHsidHlwZSI6ICJyZW1vdmVkIiwgImZpbGUiOiAiYm93ZXIuanNvbiJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJoYWRvb3AtY29yZS0wLjIwLjIu
+        cG9tLnhtbCJ9XSwgInJhd19hdXRob3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6
+        QGdtYWlsLmNvbT4iLCAidXRjdGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMTQ6
+        NDA6MjkrMDA6MDAiLCAiYXV0aG9yIjogInRpbWdsdXoiLCAidGltZXN0YW1w
+        IjogIjIwMTMtMTEtMDEgMTU6NDA6MjkiLCAicmF3X25vZGUiOiAiZDBhZDc1
+        OGIyY2RjMDMxMTllNjdmMDE0YTM5ZWRjYjNlZGUxMWM0MCIsICJwYXJlbnRz
+        IjogWyIyMGI5YzExOTNhMTYiXSwgImJyYW5jaCI6ICJqYXZhX2JyYW5jaCIs
+        ICJtZXNzYWdlIjogImFkZGVkIGphdmEgYnJhbmNoXG4iLCAicmV2aXNpb24i
+        OiBudWxsLCAic2l6ZSI6IC0xfSwgIm1hc3RlciI6IHsibm9kZSI6ICIyMGI5
+        YzExOTNhMTYiLCAiZmlsZXMiOiBbeyJ0eXBlIjogImFkZGVkIiwgImZpbGUi
+        OiAiR2VtZmlsZSJ9LCB7InR5cGUiOiAicmVtb3ZlZCIsICJmaWxlIjogIkdl
+        bWZpbGUudHh0In0sIHsidHlwZSI6ICJtb2RpZmllZCIsICJmaWxlIjogIlJF
+        QURNRS5tZCJ9XSwgInJhd19hdXRob3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6
+        QGdtYWlsLmNvbT4iLCAidXRjdGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMTQ6
+        MzY6MzErMDA6MDAiLCAiYXV0aG9yIjogInRpbWdsdXoiLCAidGltZXN0YW1w
+        IjogIjIwMTMtMTEtMDEgMTU6MzY6MzEiLCAicmF3X25vZGUiOiAiMjBiOWMx
+        MTkzYTE2YzFkODZmMmE1MjRkMzBjM2UzN2JkMDA1MGJjNCIsICJwYXJlbnRz
+        IjogWyI5ZmRlMjE2NzIyNTYiXSwgImJyYW5jaCI6ICJtYXN0ZXIiLCAibWVz
+        c2FnZSI6ICJ1cGRhdGVkIHJlYWRtZTsgZml4ZWQgZ2VtZmlsZSBleHRlbnNp
+        b247XG4iLCAicmV2aXNpb24iOiBudWxsLCAic2l6ZSI6IC0xfSwgImNsb2p1
+        cmVfYnJhbmNoIjogeyJub2RlIjogIjI4NzU5Y2UwZjhjMSIsICJmaWxlcyI6
+        IFt7InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBh
+        cnR5IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFz
+        dGVyIMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHkuaHRtbCJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5
+        IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVy
+        IMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvMmE4ZDA5
+        MDc2OGQyMzc1NDRhN2M2OWEwZjljMjE3YzcifSwgeyJ0eXBlIjogImFkZGVk
+        IiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVu
+        dF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBw
+        ZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzLzUyZGUxZDFiYTQ1MzM4N2ViYWJl
+        ODRlNTJiMTRhZjhhIn0sIHsidHlwZSI6ICJhZGRlZCIsICJmaWxlIjogInBl
+        cnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3RlbnRfaHR0cGFydHkgdmVy
+        c2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQgcGVyc2lzdGVudF9odHRw
+        YXJ0eV9maWxlcy9hcGkuanMifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUi
+        OiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0
+        eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50
+        X2h0dHBhcnR5X2ZpbGVzL2ZyYW1ld29ya3MtZmVkZDE1MTE1YjgyYzNkNWQy
+        YWZhMzRmNDc1YmEyY2FhNjI4MzYxMy5qcyJ9LCB7InR5cGUiOiAiYWRkZWQi
+        LCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5IGxpYiBwZXJzaXN0ZW50
+        X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVyIMK3IHNvdXBtYXR0IHBl
+        cnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvZ2EuanMifSwgeyJ0eXBlIjogImFk
+        ZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lz
+        dGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0
+        dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL2dpdGh1Yi0yNjM0MmQ2NWMz
+        NDViOTQ0NWZhZTM0NzM2NjRmNDQ5ODAxNzAwMGJlLmNzcyJ9LCB7InR5cGUi
+        OiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5IGxpYiBw
+        ZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVyIMK3IHNv
+        dXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvZ2l0aHViLWExNWM4
+        NGZjZDBjZGJiZDQ3NzIxZGVhODIxYmM0MDA4ZjdjY2ZjZTEuanMifSwgeyJ0
+        eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBs
+        aWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDC
+        tyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL2dpdGh1YjIt
+        ZWZlNTJjNmZlZTc1NzNjZmZjZjUwYzdiZGMxYzA0NWIxNTNhZjQ1YS5jc3Mi
+        fSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRw
+        YXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1h
+        c3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL29j
+        dG9jYXQtc3Bpbm5lci0zMi5naWYifSwgeyJ0eXBlIjogImFkZGVkIiwgImZp
+        bGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRw
+        YXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0
+        ZW50X2h0dHBhcnR5X2ZpbGVzL3NmX21haW4oMSkuanNwIn0sIHsidHlwZSI6
+        ICJhZGRlZCIsICJmaWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBl
+        cnNpc3RlbnRfaHR0cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291
+        cG1hdHQgcGVyc2lzdGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluKDIpLmpz
+        cCJ9LCB7InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0
+        dHBhcnR5IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQg
+        bWFzdGVyIMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMv
+        c2ZfbWFpbigzKS5qc3AifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAi
+        cGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2
+        ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0
+        dHBhcnR5X2ZpbGVzL3NmX21haW4oNCkuanNwIn0sIHsidHlwZSI6ICJhZGRl
+        ZCIsICJmaWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3Rl
+        bnRfaHR0cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQg
+        cGVyc2lzdGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluKDUpLmpzcCJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5
+        IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVy
+        IMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvc2ZfbWFp
+        big2KS5qc3AifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lz
+        dGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9u
+        LnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5
+        X2ZpbGVzL3NmX21haW4oNykuanNwIn0sIHsidHlwZSI6ICJhZGRlZCIsICJm
+        aWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3RlbnRfaHR0
+        cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQgcGVyc2lz
+        dGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluLmpzcCJ9XSwgInJhd19hdXRo
+        b3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6QGdtYWlsLmNvbT4iLCAidXRjdGlt
+        ZXN0YW1wIjogIjIwMTMtMTEtMDEgMTk6MDM6NDArMDA6MDAiLCAiYXV0aG9y
+        IjogInRpbWdsdXoiLCAidGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMjA6MDM6
+        NDAiLCAicmF3X25vZGUiOiAiMjg3NTljZTBmOGMxYWQ5NTgzOTQ3OWM0OWM2
+        NDgwMWVjNTM1ZTg5YSIsICJwYXJlbnRzIjogWyJjOGFhMGE2ZmE1YmIiXSwg
+        ImJyYW5jaCI6ICJjbG9qdXJlX2JyYW5jaCIsICJtZXNzYWdlIjogImFkZCBz
+        b21lIG5vaXNlO1xuIiwgInJldmlzaW9uIjogbnVsbCwgInNpemUiOiAtMX19
+    http_version: 
+  recorded_at: Wed, 25 Dec 2013 15:38:56 GMT
+recorded_with: VCR 2.8.0

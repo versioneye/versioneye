@@ -33,7 +33,7 @@ Versioneye::Application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # See everything in the log (default is :info)
   config.log_level = :info
@@ -65,6 +65,7 @@ Versioneye::Application.configure do
 
   config.action_mailer.delivery_method   = :postmark
   config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
+  config.action_mailer.default_url_options = { :host => 'www.versioneye.com' }
 
   # config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = {
@@ -80,10 +81,4 @@ Versioneye::Application.configure do
 
   Stripe.api_key = Settings.stripe_secret_key
 
-  if Settings.aws_s3_access_key_id && Settings.aws_s3_secret_access_key
-      AWS::S3::Base.establish_connection!(
-        :access_key_id     => Settings.aws_s3_access_key_id,
-        :secret_access_key => Settings.aws_s3_secret_access_key
-      )
-  end
 end

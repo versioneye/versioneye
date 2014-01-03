@@ -1,14 +1,14 @@
-<% title "Packages I follow" %>
+<% title 'Packages I follow' %>
 
 <div class="span3" >
-  <%= render "/user/helpers/navi" %>
+  <%= render '/user/helpers/navi' %>
 </div>
 
 <div class="span8">
 
   <div class="row content_header_def" >
     <% if @products && !@products.empty? %>
-      You follow <%= pluralize(@products.total_entries, "software package") %> <a href="<%= url_for(favoritepackages_user_url( current_user )) %>.rss"><%= image_tag "rss.png", :title => "Subscribe via RSS", :alt => "Subscribe via RSS" %></a>
+      You follow <%= pluralize(@products.total_entries, 'software package') %> <a href="<%= url_for(favoritepackages_user_url( current_user )) %>.rss"><%= image_tag "rss.png", :title => "Subscribe via RSS", :alt => "Subscribe via RSS" %></a>
     <% else %>
       You follow 0 Software Packages
     <% end %>

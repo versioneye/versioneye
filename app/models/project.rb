@@ -3,25 +3,26 @@ class Project
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_TYPE_RUBYGEMS  = "RubyGem"
-  A_TYPE_PIP       = "PIP"
-  A_TYPE_NPM       = "npm"
-  A_TYPE_COMPOSER  = "composer"
-  A_TYPE_GRADLE    = "gradle"
-  A_TYPE_MAVEN2    = "Maven2"
-  A_TYPE_LEIN      = "Lein"
-  A_TYPE_BOWER     = "Bower"
-  A_TYPE_GITHUB    = "GitHub"
-  A_TYPE_R         = "R"
-  A_TYPE_COCOAPODS = "CocoaPods"
+  A_TYPE_RUBYGEMS  = 'RubyGem'
+  A_TYPE_PIP       = 'PIP'
+  A_TYPE_NPM       = 'npm'
+  A_TYPE_COMPOSER  = 'composer'
+  A_TYPE_GRADLE    = 'gradle'
+  A_TYPE_MAVEN2    = 'Maven2'
+  A_TYPE_LEIN      = 'Lein'
+  A_TYPE_BOWER     = 'Bower'
+  A_TYPE_GITHUB    = 'GitHub'
+  A_TYPE_R         = 'R'
+  A_TYPE_COCOAPODS = 'CocoaPods'
 
-  A_SOURCE_UPLOAD = "upload"
-  A_SOURCE_URL    = "url"
-  A_SOURCE_GITHUB = "github"
+  A_SOURCE_UPLOAD    = 'upload'
+  A_SOURCE_URL       = 'url'
+  A_SOURCE_GITHUB    = 'github'
+  A_SOURCE_BITBUCKET = 'bitbucket'
 
-  A_PERIOD_MONTHLY = "monthly"
-  A_PERIOD_WEEKLY  = "weekly"
-  A_PERIOD_DAILY   = "daily"
+  A_PERIOD_MONTHLY = 'monthly'
+  A_PERIOD_WEEKLY  = 'weekly'
+  A_PERIOD_DAILY   = 'daily'
 
   field :name       , type: String
   field :description, type: String
@@ -31,12 +32,15 @@ class Project
   field :language      , type: String
   field :project_key   , type: String
   field :period        , type: String,  :default => A_PERIOD_WEEKLY
+  field :notify_after_api_update, type: Boolean, :default => false
   field :email         , type: String
   field :url           , type: String
   field :source        , type: String,  :default => A_SOURCE_UPLOAD
   field :s3_filename   , type: String
-  field :github_project, type: String   # Repository name at GitHub
-  field :github_branch , type: String,  :default => "master" # Branch     name at GitHub
+
+  field :scm_fullname  , type: String # repo name, for example 'reiz/gemify'
+  field :scm_branch    , type: String, default: "master"
+
   field :dep_number    , type: Integer
   field :out_number    , type: Integer, :default => 0
   field :unknown_number, type: Integer, :default => 0
@@ -50,13 +54,13 @@ class Project
 
   belongs_to :user
   has_many   :projectdependencies
-  has_many   :collaborators, class_name: "ProjectCollaborator"
+  has_many   :collaborators, class_name: 'ProjectCollaborator'
 
   scope :by_user  , ->(user)  { where(user_id: user[:_id].to_s) }
   scope :by_collaborator, ->(user){all_in(_id: ProjectCollaborator.by_user(user).to_a.map(&:project_id))}
   scope :by_source, ->(source){ where(source:  source ) }
   scope :by_period, ->(period){ where(period:  period ) }
-  scope :by_github, ->(reponame){ where(source: A_SOURCE_GITHUB, github_project: reponame)}
+  scope :by_github, ->(reponame){ where(source: A_SOURCE_GITHUB, scm_fullname: reponame)}
 
   def to_s
     "<Project #{language}/#{project_type} #{name}>"
@@ -64,6 +68,12 @@ class Project
 
   def dependencies
     self.projectdependencies
+  end
+
+  def sorted_dependencies_by_rank
+    deps = self.dependencies
+    return deps if deps.nil? or deps.empty?
+    deps.sort_by {|dep| dep[:status_rank] }
   end
 
   def unmuted_dependencies
@@ -106,7 +116,7 @@ class Project
 
     is_collaborator = ProjectCollaborator.collaborator?(self[:_id], user[:_id])
     return true if self.user_id.to_s == user[:_id].to_s or is_collaborator
-    return false
+    false
   end
 
   def collaborator( user )
@@ -115,13 +125,13 @@ class Project
     collaborators.each do |collaborator|
       return collaborator if user._id.to_s.eql?( collaborator.user_id.to_s )
     end
-    return nil
+    nil
   end
 
   def collaborator?( user )
     return false if user.nil?
     return true if !self.user.nil? && self.user.username.eql?( user.username )
-    return !collaborator( user ).nil?
+    !collaborator( user ).nil?
   end
 
   def remove_collaborators
@@ -134,7 +144,7 @@ class Project
     self.projectdependencies.each do |dep|
       return true if dep.outdated?
     end
-    return false
+    false
   end
 
   def outdated_dependencies
@@ -205,7 +215,7 @@ class Project
 
   def update_from new_project
     return nil if new_project.nil?
-    if !new_project.dependencies.nil? && !new_project.dependencies.empty?
+    if new_project.dependencies && !new_project.dependencies.empty?
       self.overwrite_dependencies( new_project.dependencies )
     end
     self.description    = new_project.description

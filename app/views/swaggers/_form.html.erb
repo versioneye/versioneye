@@ -1,7 +1,7 @@
 <%= form_for(@swagger) do |f| %>
   <% if @swagger.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@swagger.errors.count, "error") %> prohibited this swagger from being saved:</h2>
+      <h2><%= pluralize(@swagger.errors.count, 'error') %> prohibited this swagger from being saved:</h2>
 
       <ul>
       <% @swagger.errors.full_messages.each do |msg| %>

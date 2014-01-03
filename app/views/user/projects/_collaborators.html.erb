@@ -4,7 +4,7 @@
 </p>
 
 <div>
-  <%= form_tag(add_collaborator_user_project_path(id: params[:id]),  class: "form-inline", style: "vertical-align:top;") do %>
+  <%= form_tag(add_collaborator_user_project_path(id: params[:id]),  class: 'form-inline', style: 'vertical-align:top;') do %>
     <div class="input-append">
       <input id="collaborator_username" name="collaborator[username]" class="span6 input" type="text" autocomplete="off" />
       <button class="btn btn-primary" onclick="preventSubmit('collaborator_username', 'collaborator username')" type="submit" >
@@ -37,5 +37,5 @@
 </script>
 
 <div class = "media">
-  <%= render partial: "collaborator" , collection: @collaborators %>
+  <%= render partial: "collaborator" , collection: @project.collaborators %>
 </div>

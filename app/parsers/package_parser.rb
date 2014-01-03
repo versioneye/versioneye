@@ -5,11 +5,14 @@ class PackageParser < CommonParser
   # http://wiki.commonjs.org/wiki/Packages/1.1
   #
   def parse ( url )
-    return nil if url.nil? || url.empty?
+    return nil if url.to_s.empty?
+
     data = self.fetch_response_body_json( url )
     return nil if data.nil?
+
     dependencies = fetch_dependencies( data )
     return nil if dependencies.nil?
+
     project = init_project( url, data )
     dependencies.each do |key, value|
       parse_line( key, value, project )
@@ -30,13 +33,13 @@ class PackageParser < CommonParser
   # It is important that this method is not writing int the database!
   #
   def parse_requested_version(version, dependency, product)
-    if (version.nil? || version.empty?)
+    if version.to_s.strip.empty?
       self.update_requested_with_current(dependency, product)
       return
     end
     version = version.to_s.strip
     version = version.gsub('"', '')
-    version = version.gsub("'", "")
+    version = version.gsub("'", '')
 
     if product.nil?
       dependency.version_requested = version
@@ -44,42 +47,48 @@ class PackageParser < CommonParser
       return
     end
 
-    if version.match(/\*/) || version.empty?
+    if version.match(/\*/)
       # Start Matching. Matches everything.
       dependency.version_requested = product.version
-      dependency.version_label = "*"
-      dependency.comperator = "="
+      dependency.version_label = '*'
+      dependency.comperator = '='
+
+    elsif version.casecmp('latest') == 0
+      # Start Matching. Matches everything.
+      dependency.version_requested = product.version
+      dependency.version_label = 'latest'
+      dependency.comperator = '='
 
     elsif version.match(/^=/)
       # Equals
-      version.gsub!("=", "")
-      version.gsub!(" ", "")
+      version.gsub!('=', '')
+      version.gsub!(' ', '')
       dependency.version_requested = version
       dependency.version_label = version
-      dependency.comperator = "="
+      dependency.comperator = '='
 
     elsif version.match(/^!=/)
       # Not equal to version
-      version.gsub!("!=", "")
-      version.gsub!(" ", "")
+      version.gsub!('!=', '')
+      version.gsub!(' ', '')
       newest_version = VersionService.newest_but_not(product.versions, version)
       dependency.version_requested = newest_version
-      dependency.comperator = "!="
+      dependency.comperator = '!='
       dependency.version_label = version
 
     elsif version.match(/^>=/)
       # Greater than or equal to
-      version.gsub!(">=", "")
-      version.gsub!(" ", "")
+      version.gsub!('>=', '')
+      version.gsub!(' ', '')
       newest_version = VersionService.greater_than_or_equal(product.versions, version)
       dependency.version_requested = newest_version.to_s
-      dependency.comperator = ">="
+      dependency.comperator = '>='
       dependency.version_label = version
 
     elsif version.match(/^>/)
       # Greater than version
-      version.gsub!(">", "")
-      version.gsub!(" ", "")
+      version.gsub!('>', '')
+      version.gsub!(' ', '')
       newest_version = VersionService.greater_than(product.versions, version)
       dependency.version_requested = newest_version.to_s
       dependency.comperator = ">"
@@ -168,12 +177,20 @@ class PackageParser < CommonParser
   def fetch_dependencies( data )
     dependencies = data['dependencies']
     dev_dependencies = data['devDependencies']
+    bundledDependencies = data['bundledDependencies']
+    optionalDependencies = data['optionalDependencies']
     if dev_dependencies
       if dependencies.nil?
         dependencies = dev_dependencies
       else
         dependencies.merge!(dev_dependencies)
       end
+    end
+    if dependencies && bundledDependencies
+      dependencies.merge!(bundledDependencies)
+    end
+    if dependencies && optionalDependencies
+      dependencies.merge!(optionalDependencies)
     end
     dependencies
   end

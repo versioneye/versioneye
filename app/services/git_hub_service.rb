@@ -3,19 +3,13 @@ require 'dalli'
 
 class GitHubService
 
-  @@memcache_options = {
-    :namespace  => "github_app",
-    :compress   => true,
-    :expires_in => 30.minutes # Only allows import after X min; unless task unlocks!
-  }
-  @@memcache = Dalli::Client.new('localhost:11211', @@memcache_options)
-
   A_TASK_NIL     = nil
   A_TASK_RUNNING = 'running'
   A_TASK_DONE    = 'done'
 
+
   def self.update_all_repos
-    User.all(:timeout => true).live_users.where(:github_scope => "repo").each do |user|
+    User.all(:timeout => true).live_users.where(:github_scope => 'repo').each do |user|
       update_repos_for_user user
     end
   end
@@ -30,6 +24,7 @@ class GitHubService
     Rails.logger.error "Cant import repos for #{user.fullname} \n #{e}"
   end
 
+
 =begin
   Returns github repos for user;
   If user don't have yet any github repos
@@ -39,10 +34,9 @@ class GitHubService
   NB! allows only one running task per user;
 =end
   def self.cached_user_repos user
-
+    memcache      = memcache_client
     user_task_key = "#{user[:username]}-#{user[:github_id]}"
-
-    task_status = @@memcache.get user_task_key
+    task_status   = memcache.get user_task_key
 
     if task_status == A_TASK_RUNNING
       Rails.logger.debug "We are still importing repos for `#{user[:fullname]}.`"
@@ -50,47 +44,60 @@ class GitHubService
     end
 
     if user[:github_token] and user.github_repos.all.count == 0
-      Rails.logger.info "Fetch Repositories from GitHub and cache them in DB."
-      n_repos = Github.count_user_repos user
+      Rails.logger.info 'Fetch Repositories from GitHub and cache them in DB.'
+      n_repos    = Github.count_user_repos user
       if n_repos == 0
-        Rails.logger.debug "user has no repositories;"
+        Rails.logger.debug 'user has no repositories;'
         task_status = A_TASK_DONE
-        @@memcache.set(user_task_key, task_status)
+        memcache.set(user_task_key, task_status)
         return task_status
       end
       task_status = A_TASK_RUNNING
-      @@memcache.set(user_task_key, task_status)
+      memcache.set(user_task_key, task_status)
       Thread.new do
         orga_names = Github.orga_names(user.github_token)
         self.cache_user_all_repos(user, orga_names)
-        task_status = A_TASK_DONE
-
-        @@memcache.set(user_task_key, task_status)
+        memcache.set(user_task_key, A_TASK_DONE)
       end
-    elsif Github.user_repos_changed?( user )
-      Rails.logger.info "Repos are changed - going to re-import all user repos."
-      user.github_repos.delete_all
-      self.cached_user_repos user
+
     else
-      Rails.logger.info "Nothing is changed - skipping update."
+      Rails.logger.info 'Nothing is changed - skipping update.'
       task_status = A_TASK_DONE
     end
 
     task_status
   end
 
-  def self.bad_credentail?(repo)
-    if repo.is_a?(Hash) and repo.has_key?("message")
-      Rails.logger.error("Catched Github API exception: #{repo}")
-      return true
+
+  def self.update_repo_info user, repo_fullname
+    current_repo = GithubRepo.by_user(user).by_fullname(repo_fullname).shift
+    if current_repo.nil?
+      Rails.logger.error "User #{user[:username]} has no such repo `#{repo_fullname}`."
+      return nil
     end
-    return false
-  rescue => e
-    Rails.logger.error "Bad Credentials"
-    true
+
+    repo_info = Github.repo_info repo_fullname, user[:github_token]
+    repo_info = Github.read_repo_data repo_info, user[:github_token]
+    updated_repo = GithubRepo.build_new(user, repo_info)
+    current_repo.update_attributes(updated_repo.attributes)
+    current_repo
   end
 
+
   private
+
+
+    def self.memcache_client
+      Dalli::Client.new(
+        'localhost:11211',
+        {
+          :namespace  => 'github_app',
+          :compress   => true,
+          :expires_in => 30.minutes # Only allows import after X min; unless task unlocks!
+        }
+      )
+    end
+
 
     def self.cache_user_all_repos(user, orga_names)
       puts "Going to cache users repositories."
@@ -106,6 +113,7 @@ class GitHubService
       threads.each { |worker| worker.join }
     end
 
+
     def self.cache_user_repos( user )
       url = nil
       begin
@@ -114,6 +122,7 @@ class GitHubService
       end while not url.nil?
     end
 
+
     def self.cache_user_orga_repos(user, orga_name)
       url = nil
       begin
@@ -121,4 +130,5 @@ class GitHubService
         url = data[:paging]["next"]
       end while not url.nil?
     end
+
 end

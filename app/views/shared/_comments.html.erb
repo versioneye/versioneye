@@ -6,12 +6,12 @@
       <% if comment_product %>
 
         <div class="span1" style="width:60px; text-align: left;">
-          <%= render :partial => "/shared/language_icons", :locals => {:language => comment.language, :icon => nil, :link => "/#{comment_product.language.downcase}/#{comment.prod_key_url}/#{comment.version_url}", :title => ":-)" } %>
+          <%= render :partial => "/shared/language_icons", :locals => {:language => comment.language, :icon => nil, :link => "/#{comment_product.language_esc}/#{comment.prod_key_url}/#{comment.version_url}", :title_text => ":-)" } %>
         </div>
 
         <div class="span6" style="width: 505px;">
           <div class="row">
-            <a href="/<%= comment_product.language.downcase%>/<%= comment.prod_key_url %>/<%= comment.version_url %>"
+            <a href="/<%= comment_product.language_esc %>/<%= comment.prod_key_url %>/<%= comment.version_url %>"
                class="searchResultLink"><%= comment_product.name_and_version %></a><br/>
             <a href="/users/<%= comment.user.username %>">
               <span ><%= comment.user.fullname %></span>

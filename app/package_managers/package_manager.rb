@@ -4,7 +4,7 @@ class PackageManager
     if product && product.version
       project_dependency.version_requested = product.version
     else
-      project_dependency.version_requested = "UNKNOWN"
+      project_dependency.version_requested = 'UNKNOWN'
     end
     project_dependency
   end

@@ -1,7 +1,5 @@
 class ComposerLockParser < ComposerParser
 
-  @@group_id = "php"
-
   def parse( url )
     dependencies = self.fetch_project_dependencies(url)
     project = init_project( url )
@@ -14,7 +12,7 @@ class ComposerLockParser < ComposerParser
 
   def process_package project, package
     dependency = Projectdependency.new
-    dependency.name = package["name"]
+    dependency.name = package['name']
     dependency.language = Product::A_LANGUAGE_PHP
 
     product = Product.fetch_product Product::A_LANGUAGE_PHP, dependency.name

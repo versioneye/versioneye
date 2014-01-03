@@ -50,7 +50,7 @@ module V2
       get '/:project_key' do
         authorized?
         project_key = params[:project_key]
-        project = fetch_project_by_key_and_user(project_key, current_user)
+        project     = fetch_project_by_key_and_user(project_key, current_user)
         if project.nil?
           error! "Project `#{params[:project_key]}` don't exists", 400
         end
@@ -185,7 +185,6 @@ module V2
         licenses = {}
 
         @project.dependencies.each do |dep|
-          package_url = nil
           license = "unknown"
           unless dep[:prod_key].nil?
             product = Product.fetch_product( dep.language, dep.prod_key )

@@ -1,11 +1,11 @@
 
 <% if project.show_dependency_badge? %>
-  <%= render "shared/dialog_dependency_badge" %>
+  <%= render 'shared/dialog_dependency_badge' %>
   <a href="#dialog_dependency_badge" id="show_dep_badge_window" role="button" data-toggle="modal">
     <img id="dependency_badge" src="#" alt="Dependency Badge" />
   </a>
   <script type="text/javascript">
-    element = document.getElementById("dependency_badge")
-    element.src = document.URL + "/badge.png"
+    element = document.getElementById("dependency_badge");
+    element.src = document.URL.split("?")[0] + "/badge.png"
   </script>
 <% end %>

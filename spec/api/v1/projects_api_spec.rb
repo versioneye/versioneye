@@ -33,7 +33,9 @@ describe ProjectsApiV1 do
     end
 
     it "returns 401, when user tries to upload file" do
-      post project_uri + '.json', {upload: test_file, multipart:true, send_file: true}, "HTTPS" => "on"
+      file = test_file
+      post project_uri + '.json', {upload: file, multipart:true, send_file: true}, "HTTPS" => "on"
+      file.close
       response.status.should eq(401)
     end
 
@@ -53,13 +55,14 @@ describe ProjectsApiV1 do
     end
 
     it "returns 201 and project info, when upload was successfully" do
+      file = test_file
       response = post project_uri, {
-        upload:    test_file,
+        upload:    file,
         api_key:   user_api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
-
+      file.close
       response.status.should eq(201)
     end
   end
@@ -79,13 +82,14 @@ describe ProjectsApiV1 do
     include Rack::Test::Methods
 
     before :each do
+      file = test_file
       response = post project_uri, {
-        upload:    test_file,
+        upload:    file,
         api_key:   user_api.api_key,
         send_file: true,
         multipart: true
       }, "HTTPS" => "on"
-
+      file.close
       response.status.should eq(201)
     end
 

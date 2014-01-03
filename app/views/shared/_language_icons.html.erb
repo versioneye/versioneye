@@ -1,14 +1,14 @@
 <% if icon.nil? %>
-	<% if !language.nil? && !language.empty? %>
-		<% if !link.nil? %>
+	<% if language && !language.empty? %>
+		<% if link %>
 			<a href="<%= link %>">
-				<div class="icon_<%= language.gsub(".", "").downcase %> on"
+				<div class="icon_<%= language.gsub('.', '').downcase %> on"
 					 id="<%= link %>_<%= language.downcase %>_icon"
-					 title = "<%= title %>" ></div>
+					 title = "<%= title_text %>" ></div>
 			</a>
 		<% else %>
 			<div class="icon_<%= language.gsub(".", "").downcase %> on"
-					 title = "<%= title %>" ></div>
+					 title = "<%= title_text %>" ></div>
 		<% end %>
 	<% else %>
 		<div class="eye_off"></div>

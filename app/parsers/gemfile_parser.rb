@@ -36,7 +36,7 @@ class GemfileParser < CommonParser
   # It is important that this method is not writing into the database!
   #
   def parse_requested_version(version_number, dependency, product)
-    if (version_number.nil? || version_number.empty?)
+    if version_number.nil? || version_number.empty?
       self.update_requested_with_current(dependency, product)
       return
     end
@@ -51,34 +51,34 @@ class GemfileParser < CommonParser
 
     if version.match(/^=/)
       # Equals
-      version.gsub!("=", "")
-      version.gsub!(" ", "")
+      version.gsub!('=', '')
+      version.gsub!(' ', '')
       dependency.version_requested = version
       dependency.version_label     = version
-      dependency.comperator        = "="
+      dependency.comperator        = '='
 
     elsif version.match(/^!=/)
       # Not equal to version
-      version.gsub!("!=", "")
-      version.gsub!(" ", "")
+      version.gsub!('!=', '')
+      version.gsub!(' ', '')
       newest_version = VersionService.newest_but_not( product.versions, version)
       dependency.version_requested = newest_version
-      dependency.comperator        = "!="
+      dependency.comperator        = '!='
       dependency.version_label     = version
 
     elsif version.match(/^>=/)
       # Greater than or equal to
-      version.gsub!(">=", "")
-      version.gsub!(" ", "")
+      version.gsub!('>=', '')
+      version.gsub!(' ', '')
       newest_version = VersionService.greater_than_or_equal( product.versions, version)
       dependency.version_requested = newest_version.to_s
-      dependency.comperator        = ">="
+      dependency.comperator        = '>='
       dependency.version_label     = version
 
     elsif version.match(/^>/)
       # Greater than version
-      version.gsub!(">", "")
-      version.gsub!(" ", "")
+      version.gsub!('>', '')
+      version.gsub!(' ', '')
       newest_version = VersionService.greater_than( product.versions, version )
       dependency.version_requested = newest_version.to_s
       dependency.comperator        = ">"
@@ -137,8 +137,7 @@ class GemfileParser < CommonParser
   def fetch_line_elements( line )
     line = replace_comments( line )
     line = line.strip
-    line_elements = line.split(",")
-    line_elements
+    line.split(",")
   end
 
   def fetch_gem_name( line_elements )
@@ -149,8 +148,7 @@ class GemfileParser < CommonParser
     gem_name = gem_name.strip
     gem_name = gem_name.gsub('"', '')
     gem_name = gem_name.gsub("'", "")
-    gem_name = gem_name.split(" ").first
-    gem_name
+    gem_name.split(" ").first
   end
 
   def fetch_version( line_elements )
@@ -187,8 +185,7 @@ class GemfileParser < CommonParser
       end
     end
     version = version.gsub('"', '')
-    version = version.gsub("'", "")
-    version
+    version.gsub("'", "")
   end
 
   def replace_comments( value )

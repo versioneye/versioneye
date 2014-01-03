@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'vcr'
+require 'webmock'
 
 describe "GithubApiV2" do
 
@@ -22,13 +24,18 @@ describe "GithubApiV2" do
                          name: "spec_projectX",
                          user_id: user.id.to_s,
                          source: Project::A_SOURCE_GITHUB,
-                         github_project: repo1[:fullname],
-                         github_branch: "master"
+                         scm_fullname: repo1[:fullname],
+                         scm_branch: "master"
                   )}
   let(:api_path) {"/api/v2/github"}
 
 
   describe "when user is unauthorized" do
+
+    before :each do
+      FakeWeb.allow_net_connect = true
+      WebMock.allow_net_connect!
+    end
 
     it "raises http error when asking list of repos" do
       get api_path,  nil, "HTTPS" => "on"
@@ -56,7 +63,7 @@ describe "GithubApiV2" do
       FakeWeb.register_uri(:head, %r|https://api\.github\.com/user*|,
                            {status: ["304", "Not Modified"], body: "Not modified"})
       FakeWeb.register_uri(:get, %r|https://api\.github\.com/user*|, {body: "{}"})
-      FakeWeb.register_uri(:get, %r|https://api\.github\.com/repos/spec/repo1/branches*|, 
+      FakeWeb.register_uri(:get, %r|https://api\.github\.com/repos/spec/repo1/branches*|,
                            {body: %Q|
                               {
                                 "name": "master",
@@ -87,6 +94,7 @@ describe "GithubApiV2" do
       repo2.save
       project1.save
     end
+
     after :each do
       FakeWeb.clean_registry
       FakeWeb.allow_net_connect = true
@@ -150,4 +158,14 @@ describe "GithubApiV2" do
       msg['success'].should be_true
     end
   end
+
+  describe "github_hook" do
+
+    it "should return 200" do
+      post "#{api_path}/#{repo_key1}", {:api_key => user_api[:api_key]}, "HTTPS" => "on"
+      response.status.should eql(201)
+    end
+
+  end
+
 end

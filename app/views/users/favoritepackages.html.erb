@@ -1,38 +1,36 @@
 <% title "Favorite packages of #{@user.username} (#{@user.fullname}) at VersionEye" %>
-<% page_header "Favorite packages" %>
+<% page_header 'Favorite packages' %>
 
 
 <% if !@user.nil? && @user.deleted %>
-	This Account does not exist anymore.
+  This Account does not exist anymore.
 <% end %>
 
 <% if !@user.nil? && !@user.deleted %>
-	<%= render "header" %>
+  <%= render "header" %>
 
-	<div class="span3" >
-		<%= render "users/navi" %>
-	</div>
+  <div class="span3" >
+    <%= render "users/navi" %>
+  </div>
 
-	<div class="span8 content">
-		<% if !@products.nil? %>
+  <div class="span8 content">
+    <% if !@products.nil? && @products.size > 0 %>
 
-			<div >
-				<h2 class="section_header">
-					Follows <%= pluralize(@products.total_entries, "Package") %>
-					<a href="<%= url_for(favoritepackages_user_url(@user)) %>.rss"><%= image_tag "rss.png", :title => "Subscribe via RSS", :alt => "Subscribe via RSS" %></a>
-				</h2>
-			</div>
+      <div >
+        <h2 class="section_header">
+          Follows <%= pluralize(@products.total_entries, "Package") %>
+          <a href="<%= url_for(favoritepackages_user_url(@user)) %>.rss"><%= image_tag "rss.png", :title => "Subscribe via RSS", :alt => "Subscribe via RSS" %></a>
+        </h2>
+      </div>
 
-			<% if !signed_in? %>
-				<%= render 'shared/dialog_follow' %>
-			<% end %>
-			<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
-			<% if !@products.nil? && !@products.empty? %>
-				<div style="margin-top: 20px; text-align: right;">
-					<%= will_paginate @products %>
-				</div>
-			<% end %>
+      <%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
+      <% if !@products.nil? && !@products.empty? %>
+        <div style="margin-top: 20px; text-align: right;">
+          <%= will_paginate @products %>
+        </div>
+      <% end %>
 
-		<% end %>
-	</div>
+    <% end %>
+  </div>
 <% end %>
+

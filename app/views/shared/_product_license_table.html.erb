@@ -1,18 +1,21 @@
 
+<% license_hash = Hash.new %>
 <table class="dependency_table" style="width: <%= width %>px;">
   <thead>
     <tr>
-      <th width="10px" ></th>
-      <th width="300px" ></th>
+      <th width="200px">Dependency</th>
       <th >License</th>
     </tr>
   </thead>
+  <% products.sort! { |a,b| a.name.downcase <=> b.name.downcase } %>
   <% products.each do |product| %>
+    <% sep_class = "license_seperator" %>
     <% licenses = product.licenses %>
     <% if licenses && !licenses.empty? %>
       <% licenses.each do |license| %>
-        <tr>
-          <td></td>
+        <% license_hash[license.name_substitute] = Array.new if license_hash[license.name_substitute].nil? %>
+        <% license_hash[license.name_substitute] << product if !product.nil?  %>
+        <tr class="<%= sep_class %>">
           <td><a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></td>
           <td>
             <% if license.link && !license.link.empty? %>
@@ -22,13 +25,37 @@
             <% end %>
           </td>
         </tr>
+        <% sep_class = "" %>
       <% end %>
     <% else %>
+      <% license_hash["unknown"] = Array.new if license_hash["unknown"].nil? %>
+      <% license_hash["unknown"] << product if !product.nil?  %>
       <tr class="flash warning">
-        <td></td>
-        <td><a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></td>
+        <td>
+          <% if product.prod_key %>
+            <a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a>
+          <% else %>
+            <%= product.name %>
+          <% end %>
+        </td>
         <td> unknown </td>
       </tr>
     <% end %>
   <% end %>
 </table>
+
+<br/><br/>
+
+<% license_hash.sort.map do |license_name, value| %>
+  <div>
+    <% if license_name.eql?("unknown") %>
+      <span class="label label-warning"><%= license_name %></span>
+    <% else %>
+      <span ><%= license_name %></span>
+    <% end %>
+  </div>
+  <% license_hash[license_name].each do |product| %>
+    <span class="license_box"><a href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></span>
+  <% end %>
+  <br/><br/>
+<% end %>

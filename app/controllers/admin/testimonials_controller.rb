@@ -15,11 +15,11 @@ class Admin::TestimonialsController < ApplicationController
     testimonial.update_attributes moderated: true,
                                   approved: true
     if testimonial.save
-      flash[:notice] = "Success! Testimonial is now accepted."
+      flash[:notice] = 'Success! Testimonial is now accepted.'
     else
       flash[:error] = "Error! Can't save updates! #{testimonial.errors.full_messages.to_sentence}"
     end
-    redirect_to :back and return
+    redirect_to :back
   end
 
   def decline
@@ -27,11 +27,11 @@ class Admin::TestimonialsController < ApplicationController
     testimonial.update_attributes moderated: true,
                                   approved: false
     if testimonial.save
-      flash[:notice] = "Success! Testimonial is now banned."
+      flash[:notice] = 'Success! Testimonial is now banned.'
     else
       flash[:error] = "Error! Can't save updates! #{testimonial.errors.full_messages.to_sentence}"
     end
-    redirect_to :back and return
+    redirect_to :back
   end
 
   private
@@ -44,7 +44,7 @@ class Admin::TestimonialsController < ApplicationController
 
     testimonial = Testimonial.find_by_id(params[:testimonial][:id])
     if testimonial.nil?
-      flash[:error] = "Can not approve given testimonial, because it doesnt exist anymore."
+      flash[:error] = 'Can not approve given testimonial, because it doesnt exist anymore.'
       redirect_to :back and return
     end
 

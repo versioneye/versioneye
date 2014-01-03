@@ -20,14 +20,15 @@ class User
   field :verification      , type: String
   field :terms             , type: Boolean
   field :datenerhebung     , type: Boolean
-  field :privacy_products  , type: String, default: "everybody"
-  field :privacy_comments  , type: String, default: "everybody"
+  field :privacy_products  , type: String, default: 'everybody'
+  field :privacy_comments  , type: String, default: 'everybody'
 
   field :description, type: String
   field :location   , type: String
   field :time_zone  , type: String
   field :blog       , type: String
 
+  field :promo_code, type: String
   field :refer_name, type: String
   field :free_private_projects, type: Integer, default: 0
 
@@ -39,8 +40,15 @@ class User
   field :twitter_secret, type: String
 
   field :github_id   , type: String
+  field :github_login, type: String #username on github
   field :github_token, type: String
   field :github_scope, type: String
+
+  field :bitbucket_id, type: String
+  field :bitbucket_login, type: String #username on bitbucket
+  field :bitbucket_token, type: String
+  field :bitbucket_secret, type: String
+  field :bitbucket_scope, type: String
 
   field :stripe_token      , type: String
   field :stripe_customer_id, type: String
@@ -54,29 +62,30 @@ class User
   has_one    :testimonial
   has_many   :projects
   has_many   :github_repos
+  has_many   :bitbucket_repos
+
   has_and_belongs_to_many :products
   # *** RELATIONS END ***
 
-  validates_presence_of :username          , :message => "Username is mandatory!"
-  validates_presence_of :fullname          , :message => "Fullname is mandatory!"
-  validates_presence_of :email             , :message => "E-Mail is mandatory!"
-  validates_presence_of :encrypted_password, :message => "Encrypted_password is mandatory!"
-  validates_presence_of :salt              , :message => "Salt is mandatory!"
+  validates_presence_of :username          , :message => 'Username is mandatory!'
+  validates_presence_of :fullname          , :message => 'Fullname is mandatory!'
+  validates_presence_of :email             , :message => 'E-Mail is mandatory!'
+  validates_presence_of :encrypted_password, :message => 'Encrypted_password is mandatory!'
+  validates_presence_of :salt              , :message => 'Salt is mandatory!'
 
-  validates_uniqueness_of :username          , :message => "Username exist already."
-  validates_uniqueness_of :email             , :message => "E-Mail exist already."
+  validates_uniqueness_of :username          , :message => 'Username exist already.'
+  validates_uniqueness_of :email             , :message => 'E-Mail exist already.'
 
-  validates_length_of :username, minimum: 2, maximum: 50, :message => "username length is not ok"
-  validates_length_of :fullname, minimum: 2, maximum: 50, :message => "fullname length is not ok"
+  validates_length_of :username, minimum: 2, maximum: 50, :message => 'username length is not ok'
+  validates_length_of :fullname, minimum: 2, maximum: 50, :message => 'fullname length is not ok'
 
   validates_format_of :username, with: /^[a-zA-Z0-9_]+$/
-  validates_format_of :email   , :with => A_EMAIL_REGEX, :message => "The email is not valid."
+  validates_format_of :email   , :with => A_EMAIL_REGEX, :message => 'The email is not valid.'
 
   before_validation :downcase_email
 
   scope :by_verification, ->(code){where(verification: code)}
   scope :live_users     , where(verification: nil, deleted: false)
-  scope :follows_none   , where(:product_ids.empty?)
   scope :follows_equal  , ->(n){where(:product_ids.count.eq(n))}
   scope :follows_least  , ->(n){where(:product_ids.count >= n)}
   scope :follows_max    , ->(n){where(:product_ids.count <= n)}
@@ -127,7 +136,22 @@ class User
     end
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
+    Rails.logger.error e.backtrace.join('\n')
+  end
+
+  def self.send_suggestions_to_none_followers
+    non_followers.each do |user|
+      user.send_suggestions
+    end
+  end
+
+  def send_suggestions
+    return nil if deleted || email_inactive
+    UserMailer.suggest_packages_email(self).deliver
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
+    nil
   end
 
   def create_username
@@ -157,11 +181,11 @@ class User
       user.save
       return true
     end
-    return false;
+    return false
   end
 
   def activated?
-    return verification.nil?
+    verification.nil?
   end
 
   def self.find_by_username( username )
@@ -211,12 +235,6 @@ class User
     UserEmail.where( user_id: self._id.to_s, email: email ).shift
   end
 
-  def image_url
-    url = 'http://www.gravatar.com/avatar/'
-    url += Digest::MD5.hexdigest(email.strip.downcase)
-    url
-  end
-
   def has_password? submitted_password
     self.encrypted_password == encrypt(submitted_password)
   end
@@ -231,16 +249,28 @@ class User
     User.where(github_id: github_id).shift
   end
 
+  def self.find_by_bitbucket_id(bitbucket_id)
+    return nil if bitbucket_id.to_s.strip.empty?
+    User.where(bitbucket_id: bitbucket_id).shift
+  end
+
   def github_account_connected?
     !self.github_id.to_s.empty? && !self.github_token.to_s.empty?
   end
 
+  def bitbucket_account_connected?
+    !self.bitbucket_id.to_s.empty? && !self.bitbucket_token.to_s.empty?
+  end
+
+
   def self.follows_max(n)
     User.all.select {|user| user['product_ids'].nil? or user['product_ids'].count < n}
   end
+
   def self.follows_least(n)
     User.all.select {|user| !user['product_ids'].nil? and user['product_ids'].count >= n}
   end
+
   def self.non_followers
     User.all.select {|user| user['product_ids'].nil? or user['product_ids'].count == 0}
   end
@@ -302,7 +332,7 @@ class User
     return false if user.nil?
     self.password = password
     encrypt_password
-    return save
+    save
   end
 
   def update_from_twitter_json(json_user, token, secret)
@@ -326,19 +356,20 @@ class User
   end
 
   def update_from_github_json(json_user, token, scopes = "no_scope")
-    self.fullname = json_user[:name]
-    self.username = json_user[:login]
-    self.github_id = json_user[:id]
+    self.fullname     = json_user['name']
+    self.username     = json_user['login']
+    self.github_id    = json_user['id']
+    self.github_login = json_user['login']
     self.github_token = token
     self.github_scope = scopes
-    self.password = create_random_value
+    self.password     = create_random_value
     if self.username.nil? || self.username.empty?
       self.username = create_random_value
     end
     user = User.find_by_username(self.username)
-    if !user.nil?
+    unless user.nil?
       random_value = create_random_value
-      self.username = "#{self.username}#{random_value}"
+      self.username = "#{self.username}_#{random_value}"
     end
     self.username = replacements_for_username( self.username )
     if self.fullname.nil? || self.fullname.empty?
@@ -346,11 +377,31 @@ class User
     end
   end
 
+  def update_from_bitbucket_json(user_info, token, secret, scopes = "read_write")
+    self[:username] = user_info[:username]
+
+    if self[:username].to_s.empty?
+      self.username = "unknown_#{SecureRandom.hex(8)}"
+    end
+
+    user = User.find_by_username(self[:username])
+    unless user.nil?
+      random_value = SecureRandom.hex(8)
+      self.username = "#{self[:username]}_#{random_value}"
+    end
+
+    self[:fullname]         = user_info[:display_name]
+    self[:bitbucket_id]     = user_info[:username]
+    self[:bitbucket_login]  = user_info[:username]
+    self[:bitbucket_token]  = token
+    self[:bitbucket_secret] = secret
+    self[:bitbucket_scope]  = scopes
+  end
+
   def replacements_for_username( username )
     username = username.gsub(".", "")
     username = username.gsub("-", "")
-    username = username.gsub("_", "")
-    username
+    username.gsub("_", "")
   end
 
   def fetch_or_create_billing_address

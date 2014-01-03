@@ -27,7 +27,7 @@ class RequirementsParser < CommonParser
 
 
   def parse_line( line, project )
-    line.gsub!(" ", "")
+    line.gsub!(' ', '')
     return false if !line.match(/^#/).nil? || line.empty?
 
     comparator  = extract_comparator line
@@ -41,6 +41,7 @@ class RequirementsParser < CommonParser
 
     dependency = init_dependency package, comparator
 
+    version = ''
     if requirement.count > 1
       version = requirement[1]
       dependency.version_label = version.strip
@@ -65,13 +66,13 @@ class RequirementsParser < CommonParser
   # It is important that this method is not writing int the database!
   #
   def parse_requested_version(version, dependency, product)
-    if (version.nil? || version.empty?)
+    if version.nil? || version.empty?
       self.update_requested_with_current(dependency, product)
       return
     end
     version = version.strip
     version = version.gsub('"', '')
-    version = version.gsub("'", "")
+    version = version.gsub("'", '')
     dependency.version_label = String.new(version)
 
     if product.nil?
@@ -211,17 +212,17 @@ class RequirementsParser < CommonParser
 
   def extract_comparator line
     comparator = nil
-    if !line.match(/>=/).nil?
+    if line.match(/>=/)
       comparator = ">="
-    elsif !line.match(/>/).nil?
+    elsif line.match(/>/)
       comparator = ">"
-    elsif !line.match(/<=/).nil?
+    elsif line.match(/<=/)
       comparator = "<="
-    elsif !line.match(/</).nil?
+    elsif line.match(/</)
       comparator = "<"
-    elsif !line.match(/!=/).nil?
+    elsif line.match(/!=/)
       comparator = "!="
-    elsif !line.match(/==/).nil?
+    elsif line.match(/==/)
       comparator = "=="
     end
     comparator

@@ -1,5 +1,6 @@
 class VersioncommentMailer < ActionMailer::Base
 
+  layout 'email_html_layout'
   default from: "\"VersionEye\" <notify@versioneye.com>"
 
   def versioncomment_email(product, follower, user, comment)
@@ -9,8 +10,8 @@ class VersioncommentMailer < ActionMailer::Base
     @commentlink = "#{Settings.server_url}/vc/#{comment.id}"
     mail(
       :to => @follower.email,
-      :subject => "Comment on Package",
-      :tag => "versioncomment"
+      :subject => 'Comment on Package',
+      :tag => 'versioncomment'
       )
   end
 

@@ -5,7 +5,7 @@
       <h5 class = "media-heading">
         <%= i + 1 %>. <a href = "<%= products_path(lang: prod.language_esc, key: prod.to_param) %>"><%= prod.name %></a>
         <span class = "pull-right">
-          <%= render partial: "shared/product_follow_mini", locals: {product: prod, user: current_user} %>
+          <%= render partial: 'shared/product_follow_mini', locals: {product: prod, user: current_user} %>
         </span>
       </h5>
       <p> <%= prod.short_summary %> </p>

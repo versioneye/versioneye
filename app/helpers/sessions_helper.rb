@@ -44,12 +44,12 @@ module SessionsHelper
   def authenticate
     return true if signed_in?
     deny_access
-    return false
+    false
   end
 
   def deny_access
     store_location
-    redirect_to signin_path, :notice => "Please sign in to access this page."
+    redirect_to signin_path, :notice => 'Please sign in to access this page.'
   end
 
   def redirect_back_or(default)
@@ -58,25 +58,19 @@ module SessionsHelper
   end
 
   def set_locale
-    locale = "en"
-    if (locale && !locale.empty?)
+    locale = 'en'
+    if locale && !locale.empty?
       I18n.locale = locale
     elsif I18n.locale.nil?
       I18n.locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
     end
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
+    Rails.logger.error e.backtrace.join('\n')
     nil
   end
 
   private
-
-    def force_http
-      if request.ssl? && Rails.env.production?
-        redirect_to :protocol => 'http://', :status => :moved_permanently
-      end
-    end
 
     def user_from_remember_token
       User.authenticate_with_salt(*remember_token)

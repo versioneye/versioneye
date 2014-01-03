@@ -6,10 +6,10 @@ class StatisticsController < ApplicationController
   end
 
   def proglangs
-    stats = Rails.cache.read("lang_stat")
+    stats = Rails.cache.read('lang_stat')
     if stats.nil? or stats.empty?
       stats = StatisticService.language_project_count
-      Rails.cache.write("lang_stat", stats)
+      Rails.cache.write('lang_stat', stats)
     end
     results = []
     stats.each do |row|
@@ -20,10 +20,10 @@ class StatisticsController < ApplicationController
   end
 
   def langtrends
-    stats = Rails.cache.read("lang_trend")
+    stats = Rails.cache.read('lang_trend')
     if stats.nil? or stats.empty?
       stats = StatisticService.language_project_trend
-      Rails.cache.write("lang_trend", stats)
+      Rails.cache.write('lang_trend', stats)
     end
     render json: stats
   end

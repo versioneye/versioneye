@@ -3,15 +3,15 @@ class PageController < ApplicationController
   def routing_error
     path = request.fullpath
     if path.match(/\/version\//)
-      path.gsub!("/version/", "/")
+      path.gsub!('/version/', '/')
     else
-      path = "/"
+      path = '/'
     end
     redirect_to path
   end
 
   def legacy_route
-    path = "/"
+    path = '/'
     key     = params[:key]
     version = params[:version]
     key = parse_param key
@@ -26,18 +26,18 @@ class PageController < ApplicationController
       hash = fetch_lang_and_key( key )
       language = hash['language']
       key = hash['key']
-      if !language.empty?
+      unless language.empty?
         product = Product.fetch_product language, key
         if product
           path = "/#{product.language_esc}/#{product.to_param}/#{version}"
         end
       end
     end
-    redirect_to path.gsub("//", "/")
+    redirect_to path.gsub('//', '/'), :status => 301
   end
 
   def legacy_badge_route
-    path    = "/"
+    path    = '/'
     key     = params[:key]
     version = params[:version]
     key     = parse_param key
@@ -52,34 +52,34 @@ class PageController < ApplicationController
       hash     = fetch_lang_and_key( key )
       language = hash['language']
       key      = hash['key']
-      if !language.empty?
+      unless language.empty?
         product = Product.fetch_product language, key
         if product
           path = "/#{product.language_esc}/#{product.to_param}/#{version}/badge.png"
         end
       end
     end
-    redirect_to path.gsub("//", "/")
+    redirect_to path.gsub('//', '/'), :status => 301
   end
 
   def show_visual_old
     key      = params[:key]
     version  = params[:version]
-    prod_key = key.gsub(":", "/").gsub("~", ".").gsub("--", "/")
+    prod_key = key.gsub(':', '/').gsub('~', '.').gsub('--', '/')
     product  = Product.find_by_key( prod_key )
-    new_path = "/"
+    new_path = '/'
     if product
-      new_path += "#{product.language.downcase}/#{product.to_param}"
+      new_path += "#{product.language_esc}/#{product.to_param}"
       if version
         new_path += "/#{version}"
       end
-      new_path += "/visual_dependencies"
+      new_path += '/visual_dependencies'
     end
-    redirect_to new_path
+    redirect_to new_path, :status => 301
   end
 
   def disclaimer
-    redirect_to "http://www.disclaimer.de/disclaimer.htm?farbe=FFFFFF/000000/000000/000000"
+    redirect_to 'http://www.disclaimer.de/disclaimer.htm?farbe=FFFFFF/000000/000000/000000'
   end
 
   def contact
@@ -127,7 +127,7 @@ class PageController < ApplicationController
   def sitemap_5
     redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-5.xml'
   end
-  def sitemap_5
+  def sitemap_6
     redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-6.xml'
   end
 
@@ -152,7 +152,7 @@ class PageController < ApplicationController
       hash = Hash.new
       hash['key'] = key
       hash['language'] = language
-      return hash
+      hash
     end
 
 end

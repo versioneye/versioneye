@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/user/privileges
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (info@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="tyzzcUrWQQyqqhpoRpHWN8SqhmiNblkJx2BZvdEbcw",
+        oauth_signature="yvvm5yK%2BNRq7NJR9h23tZQRLv2U%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1387985933", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.3
+      Date:
+      - Wed, 25 Dec 2013 15:38:54 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '13'
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - app18
+      X-Render-Time:
+      - '0.0254671573639'
+      Content-Language:
+      - en
+      X-Static-Version:
+      - c4f05e63beb6
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      X-Version:
+      - b2ac13e3a153
+      Etag:
+      - "\"a6e0c24c3bbc6b5a00497cb4d74e8c41\""
+      X-Request-Count:
+      - '357'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "{\"teams\": {}}"
+    http_version: 
+  recorded_at: Wed, 25 Dec 2013 15:38:54 GMT
+recorded_with: VCR 2.8.0

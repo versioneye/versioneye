@@ -10,8 +10,8 @@ class Notification
   belongs_to :user
   belongs_to :product
 
-  validates_presence_of :user_id   , :message => "User is mandatory!"
-  validates_presence_of :product_id, :message => "Product is mandatory!"
+  validates_presence_of :user_id   , :message => 'User is mandatory!'
+  validates_presence_of :product_id, :message => 'Product is mandatory!'
 
   scope :all_not_sent, where(sent_email: false)
   scope :by_user     , ->(user){where(user_id: user.id)}
@@ -19,7 +19,7 @@ class Notification
 
 
   def self.unsent_user_notifications( user )
-    Notification.where( sent_email: "false", user_id: user.id )
+    Notification.where( sent_email: 'false', user_id: user.id )
   end
 
   def self.send_notifications
@@ -28,7 +28,7 @@ class Notification
     user_ids.each do |id|
       user = User.find_by_id( id )
       next if user.nil?
-      if user.deleted == true
+      if user.deleted
         self.remove_notifications user
       else
         count += 1 if self.send_unsend_notifications user

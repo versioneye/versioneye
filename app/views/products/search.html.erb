@@ -1,11 +1,11 @@
 
-<% title "Search Results" %>
+<% title 'Search Results' %>
 
 <div class="span3">
 
-  <%= render "extended_search" %>
+  <%= render 'extended_search' %>
 
-  <% if signed_in? == false %>
+  <% if !signed_in? %>
     <%= render "/shared/github_ad" %>
   <% end %>
 

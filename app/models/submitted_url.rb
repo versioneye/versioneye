@@ -59,13 +59,13 @@ class SubmittedUrl
       $stderr.puts "Failed to update integration status for submittedUrl.#{self._id}"
       $stderr.puts self.errors.full_messages.to_sentence
     end
-    return false
+    false
   end
 
   def url_guessed
-    if !url.match(/https:\/\/github.com\//).nil?
-      new_url = url.gsub("https://github.com/", "https://api.github.com/repos/")
-      if !new_url.match("\/$").nil?
+    unless url.match(/https:\/\/github.com\//).nil?
+      new_url = url.gsub('https://github.com/', 'https://api.github.com/repos/')
+      unless new_url.match("\/$").nil?
         return new_url[0..-2]
       end
       return new_url
@@ -74,9 +74,9 @@ class SubmittedUrl
   end
 
   def name_guessed
-    if !url.match(/https:\/\/github.com\//).nil?
-      name = url.gsub("https://github.com/", "")
-      if !name.match("\/$").nil?
+    unless url.match(/https:\/\/github.com\//).nil?
+      name = url.gsub('https://github.com/', '')
+      unless name.match("\/$").nil?
         return name[0..-2]
       end
       return name

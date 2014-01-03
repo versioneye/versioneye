@@ -37,7 +37,7 @@ describe UserNotificationSetting do
     end
 
     it "sends out 1 because user is not deleted and want to receive the email" do
-      user = UserFactory.create_new
+      UserFactory.create_new
       UserNotificationSetting.send_newsletter_features.should eq(1)
     end
 

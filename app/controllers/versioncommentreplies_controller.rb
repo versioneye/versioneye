@@ -18,7 +18,7 @@ class VersioncommentrepliesController < ApplicationController
     @versioncomment.prod_name = @product.name
     @versioncomment.language = @product.language
     attach_version(@product, version)
- saved = false;
+    saved = false
     if @versioncomment.save
       saved = true
       send_comment_reply_mails(user, @versioncomment)
@@ -26,9 +26,9 @@ class VersioncommentrepliesController < ApplicationController
     respond_to do |format|
       format.html {
         if saved
-          flash[:success] = "Comment saved!"
+          flash[:success] = 'Comment saved!'
         else
-          flash[:error] = "Something went wrong"
+          flash[:error] = 'Something went wrong'
         end
         redirect_to product_version_path(@product)
       }
@@ -40,7 +40,7 @@ class VersioncommentrepliesController < ApplicationController
 
     def send_comment_reply_mails(user, comment)
       comment_user = comment.user
-      if !comment_user.username.eql?(user.username)
+      unless comment_user.username.eql?(user.username)
         VersioncommentreplyMailer.versioncomment_reply_email(comment_user, user, comment).deliver
       end
     end

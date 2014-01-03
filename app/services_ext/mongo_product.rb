@@ -6,7 +6,7 @@ class MongoProduct
   def self.find_by(query, description = nil, group_id = nil, languages=nil, limit=300)
     searched_name = nil
     if query
-      searched_name = String.new( query.gsub(" ", "-") )
+      searched_name = String.new( query.gsub(' ', '-') )
     end
     result1 = find_all(searched_name, description, group_id, languages, limit, nil)
 
@@ -51,7 +51,7 @@ class MongoProduct
   end
 
   def self.find_by_name(searched_name)
-    if (searched_name.nil? || searched_name.strip.empty?)
+    if searched_name.nil? || searched_name.strip.empty?
       return nil
     end
     Product.where(name_downcase: /^#{searched_name}/)
@@ -62,14 +62,14 @@ class MongoProduct
   end
 
   def self.find_by_name_exclude(searched_name, prod_keys)
-    if (searched_name.nil? || searched_name.strip == "")
+    if searched_name.nil? || searched_name.strip == ''
       return nil
     end
     Product.where(name_downcase: /#{searched_name}/, :prod_key.nin => prod_keys)
   end
 
   def self.find_by_description(description)
-    if (description.nil? || description.empty?)
+    if description.nil? || description.empty?
       return empty_criteria
     end
     query = Product.where(:description => /#{description}/i).or(:description_manual => /#{description}/i)
@@ -83,7 +83,7 @@ class MongoProduct
   private
 
     def self.add_to_query(query, group_id, languages)
-      if (group_id && !group_id.empty?)
+      if group_id && !group_id.empty?
         query = query.where(group_id: /^#{group_id}/i)
       end
       if languages && !languages.empty?
@@ -93,8 +93,8 @@ class MongoProduct
     end
 
     def self.add_description_to_query(query, description)
-      if (description && !description.empty?)
-        query = query.where("$or" => [ {"description" => /#{description}/i}, {"description_manual" => /#{description}/i} ] )
+      if description && !description.empty?
+        query = query.where("$or" => [ {:description => /#{description}/i}, {:description_manual => /#{description}/i} ] )
       end
       query
     end

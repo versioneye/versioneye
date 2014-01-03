@@ -12,7 +12,7 @@
   <div class="span8 content" >
 
     <div class="boxContainer">
-      <%= form_tag("/#{@product.language.downcase}/#{@product.to_param}/update", :method => "post") do  %>
+      <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/update", :method => "post") do  %>
         <div style="display:table-row;">
           <div class="labelCelMiddle" >
             <%= label_tag(:license, "License Name") %>
@@ -51,8 +51,8 @@
 
         <table>
           <colgroup>
-            <col width="80px;"></col>
-            <col width="*"></col>
+            <col width="80px;"j />
+            <col width="*" />
           </colgroup>
 
           <% licenses.each do |license| %>

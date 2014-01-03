@@ -1,4 +1,4 @@
-<% title  "" %>
+<% title '' %>
 
 <% if @product.nil? %>
 
@@ -7,16 +7,15 @@
 <% else
 
     partial_map = {
-      "#{Project::A_TYPE_MAVEN2}"    => "products/product_show_maven",
-      "#{Project::A_TYPE_RUBYGEMS}"  => "products/product_show_gems",
-      "#{Project::A_TYPE_PIP}"       => "products/product_show_pip",
-      "#{Project::A_TYPE_NPM}"       => "products/product_show_npm",
-      "#{Project::A_TYPE_COMPOSER}"  => "products/product_show_packagist",
-      "#{Project::A_TYPE_R}"         => "products/product_show_r",
-      "#{Project::A_TYPE_GITHUB}"    => "products/product_show_github",
-      "#{Project::A_TYPE_COCOAPODS}" => "products/product_show_cocoapods",
-      "#{Project::A_TYPE_BOWER}"     => "products/product_show_bower"
-   } %>
+      "#{Project::A_TYPE_MAVEN2}"    => 'products/product_show_maven',
+      "#{Project::A_TYPE_RUBYGEMS}"  => 'products/product_show_gems',
+      "#{Project::A_TYPE_PIP}"       => 'products/product_show_pip',
+      "#{Project::A_TYPE_NPM}"       => 'products/product_show_npm',
+      "#{Project::A_TYPE_COMPOSER}"  => 'products/product_show_packagist',
+      "#{Project::A_TYPE_R}"         => 'products/product_show_r',
+      "#{Project::A_TYPE_GITHUB}"    => 'products/product_show_github',
+      "#{Project::A_TYPE_COCOAPODS}" => 'products/product_show_cocoapods'
+    } %>
 
     <% if ["Java", "Clojure"].member? @product.language %>
       <%= render 'products/product_show_maven' %>

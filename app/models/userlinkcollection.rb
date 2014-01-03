@@ -3,12 +3,12 @@ class Userlinkcollection
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_LINKEDIN      = "http://www.linkedin.com/in/"
-  A_XING          = "http://www.xing.com/profile/"
-  A_GITHUB        = "https://github.com/"
-  A_STACKOVERFLOW = "http://stackoverflow.com/users/"
-  A_TWITTER       = "https://twitter.com/#!/"
-  A_FACEBOOK      = "http://www.facebook.com/people/"
+  A_LINKEDIN      = 'http://www.linkedin.com/in/'
+  A_XING          = 'http://www.xing.com/profile/'
+  A_GITHUB        = 'https://github.com/'
+  A_STACKOVERFLOW = 'http://stackoverflow.com/users/'
+  A_TWITTER       = 'https://twitter.com/#!/'
+  A_FACEBOOK      = 'http://www.facebook.com/people/'
 
   field :user_id,       type: String
   field :linkedin,      type: String, :default => A_LINKEDIN

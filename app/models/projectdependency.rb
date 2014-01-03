@@ -20,7 +20,7 @@ class Projectdependency
   field :version_current  , type: String  # the newest version from the database
   field :version_requested, type: String  # requested version from the project file -> locked version
   field :version_label    , type: String  # the version number from the projectfile (Gemfile, package.json)
-  field :comperator       , type: String, :default => "="
+  field :comperator       , type: String, :default => '='
   field :scope            , type: String, :default => Dependency::A_SCOPE_COMPILE
   field :release          , type: Boolean
   field :stability        , type: String, :default => VersionTagRecognizer::A_STABILITY_STABLE
@@ -36,11 +36,13 @@ class Projectdependency
   end
 
   def find_or_init_product
-    product = Product.fetch_product( language, prod_key) if self.prod_key
+    product = Product.fetch_product( language, prod_key)
     if product.nil? && ( !group_id.to_s.empty? && !artifact_id.to_s.empty? )
       product = Product.find_by_group_and_artifact self.group_id, self.artifact_id
     end
-    product = init_product if product.nil?
+    unless product
+      product = init_product
+    end
     product
   end
 
@@ -48,11 +50,15 @@ class Projectdependency
     prod_key.nil? && ext_link.nil?
   end
 
+  def known?
+    !self.unknown?
+  end
+
   def outdated?
     return update_outdated! if self.outdated.nil?
     last_update_ago = Time.now - self.outdated_updated_at
     return self.outdated if last_update_ago < A_SECONDS_PER_DAY
-    return update_outdated!
+    update_outdated!
   end
 
   def release?
@@ -67,7 +73,7 @@ class Projectdependency
     update_version_current
 
     if ( self.prod_key.nil? && self.version_current.nil? ) ||
-       ( self.version_requested.eql?("GIT") || self.version_requested.eql?("PATH") ) ||
+       ( self.version_requested.eql?('GIT') || self.version_requested.eql?('PATH') ) ||
        ( self.version_requested.eql?(self.version_current) )
       return update_outdated( false )
     end
@@ -79,6 +85,26 @@ class Projectdependency
 
     update_outdated( true )
     self.outdated
+  end
+
+  def update_version_current
+    return false if self.prod_key.nil?
+
+    product = Product.fetch_product self.language, self.prod_key
+    if product.nil? && group_id && artifact_id
+      product = Product.find_by_group_and_artifact( group_id, artifact_id )
+    end
+    return false if product.nil?
+
+    newest_version = VersionService.newest_version_number( product.versions, self.stability )
+    return false if newest_version.nil? || newest_version.empty?
+
+    if self.version_current.nil? || self.version_current.empty? || !self.version_current.eql?( newest_version )
+      self.version_current = newest_version
+      self.release         = VersionTagRecognizer.release? self.version_current
+      self.muted = false
+      self.save()
+    end
   end
 
   def to_s
@@ -100,22 +126,6 @@ class Projectdependency
       self.outdated_updated_at = Time.now
       self.save
       self.outdated
-    end
-
-    # TODO refactor this. Move code to service layer !
-    #
-    def update_version_current
-      return false if self.prod_key.nil?
-      product = Product.fetch_product self.language, self.prod_key
-      return false if product.nil?
-      newest_version       = VersionService.newest_version_number( product.versions, self.stability )
-      return false if newest_version.nil? || newest_version.empty?
-      if self.version_current.nil? || self.version_current.empty? || !self.version_current.eql?( newest_version )
-        self.version_current = newest_version
-        self.release         = VersionTagRecognizer.release? self.version_current
-        self.muted = false
-        self.save()
-      end
     end
 
 end

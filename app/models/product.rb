@@ -1,5 +1,6 @@
 class Product
 
+  require 'will_paginate'
   require 'will_paginate/array'
 
   include Mongoid::Document
@@ -15,7 +16,6 @@ class Product
   A_LANGUAGE_CLOJURE    = "Clojure"
   A_LANGUAGE_C          = "C"
   A_LANGUAGE_OBJECTIVEC = "Objective-C"
-
   field :name         , type: String
   field :name_downcase, type: String
   field :prod_key     , type: String # Unique identifier inside a language
@@ -75,32 +75,30 @@ class Product
   end
 
   # legacy, still used by fall back search
-  def self.find_by_key(searched_key)
-    return nil if searched_key.nil? || searched_key.strip == ""
+  def self.find_by_key searched_key
+    return nil if searched_key.nil? || searched_key.strip == ''
     result = Product.where(prod_key: searched_key)
     return nil if (result.nil? || result.empty?)
     return result[0]
   end
 
-  # TOOD R.R. check this
-  def self.find_by_lang_key(language, searched_key)
-    return nil if searched_key.nil? || searched_key.empty? || language.nil? || language.empty?
+  def self.find_by_lang_key language, searched_key
+    return nil if searched_key.to_s.empty? || language.to_s.empty?
     Product.where(language: language, prod_key: searched_key).shift
   end
 
   # This is slow !! Searches by regex are always slower than exact searches!
-  def self.find_by_lang_key_case_insensitiv(language, searched_key)
-    return nil if searched_key.nil? || searched_key.empty? || language.nil? || language.empty?
+  def self.find_by_lang_key_case_insensitiv language, searched_key
+    return nil if searched_key.to_s.empty? || language.to_s.empty?
     result = Product.where( prod_key: /^#{searched_key}$/i, language: /^#{language}$/i )
     return nil if (result.nil? || result.empty?)
     return result[0]
   end
 
-  def self.fetch_product( lang, key )
-    if lang.eql?("nodejs")
-      lang = A_LANGUAGE_NODEJS
-    end
-    if lang.eql?("package")
+  def self.fetch_product lang, key
+    return nil if lang.to_s.empty? || key.to_s.empty?
+    lang = A_LANGUAGE_NODEJS if lang.eql? "nodejs"
+    if lang.eql? "package"
       product = Product.find_by_key( key )
       return product if product
     end
@@ -120,20 +118,19 @@ class Product
     product
   end
 
-  # TODO R.R. check this
-  def self.find_by_keys(product_keys)
-    Product.where(:prod_key.in => product_keys)
-  end
-
-  def self.find_by_id(id)
-    self.find( id )
+  def self.find_by_id id
+    self.find id
   rescue => e
     Rails.logger.error e.message
     nil
   end
 
-  def self.find_by_group_and_artifact(group, artifact)
+  def self.find_by_group_and_artifact group, artifact
     Product.where( group_id: group, artifact_id: artifact ).shift
+  end
+
+  def self.by_prod_keys language, prod_keys
+    Product.where(:language => language, :prod_key.in => prod_keys)
   end
 
   ######## ELASTIC SEARCH MAPPING ###################
@@ -159,7 +156,7 @@ class Product
     Naturalsorter::Sorter.sort_version_by_method( versions, "version", false )
   end
 
-  def version_by_number( searched_version )
+  def version_by_number searched_version
     versions.each do |version|
       return version if version.to_s.eql?( searched_version )
     end
@@ -187,47 +184,47 @@ class Product
     Versioncomment.find_by_prod_key_and_version(self.language, self.prod_key, self.version)
   end
 
-  def language_esc(lang = nil)
+  def language_esc lang = nil
     lang = self.language if lang.nil?
     Product.language_escape lang
   end
 
-  def self.language_escape(lang)
+  def self.language_escape lang
     return "nodejs" if lang.eql?(A_LANGUAGE_NODEJS)
     return lang.downcase
   end
 
   def license_info
-    licenses = self.licenses(false)
+    licenses = self.licenses false
     return "unknown" if licenses.nil? || licenses.empty?
     licenses.map{|a| a.name}.join(", ")
   end
 
   # An artifact (product + version) can have multiple licenses
   # at the same time. That's not a bug!
-  def licenses(ignore_version = false )
-    License.for_product( self, ignore_version )
+  def licenses ignore_version = false
+    License.for_product self, ignore_version
   end
 
   def developers
     Developer.find_by self.language, self.prod_key, version
   end
 
-  def update_used_by_count( persist = true )
-    grouped = Dependency.where(:dep_prod_key => self.prod_key).group_by(&:prod_key)
+  def update_used_by_count persist = true
+    grouped = Dependency.where(:language => self.language, :dep_prod_key => self.prod_key).group_by(&:prod_key)
     count = grouped.count
     return nil if count == self.used_by_count
     self.used_by_count = count
     self.save if persist
   end
 
-  def dependencies(scope = nil)
+  def dependencies scope = nil
     dependencies_cache ||= {}
     scope = Dependency.main_scope(self.language) unless scope
     if dependencies_cache[scope].nil?
       dependencies_cache[scope] = Dependency.find_by_lang_key_version_scope( language, prod_key, version, scope )
     end
-    return dependencies_cache[scope]
+    dependencies_cache[scope]
   end
 
   def all_dependencies
@@ -247,15 +244,11 @@ class Product
     Versionlink.where(language: language, prod_key: self.prod_key, version: self.version, link: /^http*/ ).asc(:name)
   end
 
-  def self.get_hotest( count )
-    Product.all().desc(:followers).limit( count )
-  end
-
   def self.get_unique_languages_for_product_ids(product_ids)
     Product.where(:_id.in => product_ids).distinct(:language)
   end
 
-  def update_in_my_products(array_of_product_ids)
+  def update_in_my_products array_of_product_ids
     self.in_my_products = array_of_product_ids.include?(_id.to_s)
   end
 
@@ -271,20 +264,20 @@ class Product
     "#{name} : #{version}"
   end
 
-  def name_version(limit)
+  def name_version limit
     nameversion = "#{name} (#{version})"
     if nameversion.length > limit
-      return "#{nameversion[0, limit]}.."
+      "#{nameversion[0, limit]}.."
     else
-      return nameversion
+      nameversion
     end
   end
 
   def main_scope
-    Dependency.main_scope( self.language )
+    Dependency.main_scope self.language
   end
 
-  def self.downcase_array(arr)
+  def self.downcase_array arr
     array_dwoncase = Array.new
     arr.each do |element|
       array_dwoncase.push element.downcase
@@ -292,26 +285,27 @@ class Product
     array_dwoncase
   end
 
-  def self.encode_product_key(prod_key)
+  def self.encode_product_key prod_key
     return "0" if prod_key.nil?
     prod_key.to_s.gsub("/", ":")
   end
 
-  def self.encode_prod_key(prod_key)
+  def self.encode_prod_key prod_key
     return nil if prod_key.nil?
     prod_key.gsub("/", ":")
   end
 
-  def self.decode_prod_key(prod_key)
+  def self.decode_prod_key prod_key
     return nil if prod_key.nil?
     prod_key.gsub(":", "/")
   end
 
-  def self.encode_language(language)
+  def self.encode_language language
+    return nil if language.to_s.empty?
     language.gsub("\.", "").downcase
   end
 
-  def self.decode_language( language )
+  def self.decode_language language
     return nil if language.nil?
     return A_LANGUAGE_NODEJS if language.match(/^node/i)
     return A_LANGUAGE_PHP if language.match(/^php/i)
@@ -326,19 +320,19 @@ class Product
 
   def description_summary
     if description && description_manual
-      return "#{description} \n \n #{description_manual}"
+      "#{description} \n \n #{description_manual}"
     elsif description && !description_manual
       return description
     elsif !description && description_manual
       return description_manual
     else
-      return ""
+      ""
     end
   end
 
   def short_summary
     return get_summary(description, 125) if description
-    return get_summary(description_manual, 125)
+    get_summary(description_manual, 125)
   end
 
   def show_dependency_badge?
@@ -352,7 +346,7 @@ class Product
     def get_summary text, size
       return "" if text.nil?
       return "#{text[0..size]}..." if text.size > size
-      return text[0..size]
+      text[0..size]
     end
 
 end

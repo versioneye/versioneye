@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-	</head>
-	<body>
-		<p>Hey</p>
-		<p>
-			<%= @fullname %> signed up. GitHub: <%= @github %> <br/>
-		</p>
-		<p>
-			Link: <a href="http://www.versioneye.com/users/<%= @username %>">http://www.versioneye.com/users/<%= @username %></a><br />
-		</p>
-	</body>
-</html>
+<p>
+  Hey Admin Dude. A new Geek singed up!
+</p>
+<p>
+  Fullname: <%= @user.fullname %> <br/>
+  Username: <a href="http://www.versioneye.com/users/<%= @user.username %>"><%= @user.username %></a> <br/>
+  GitHub ID: <%= @user.github_id %> <br/>
+  BitBucket ID: <%= @user.bitbucket_id %> <br/>
+  Promo Code: <%= @user.promo_code %> <br/>
+</p>

@@ -1,5 +1,5 @@
 <div class="span3" >
-  <%= render "products/helpers/edit_navi" %>
+  <%= render 'products/helpers/edit_navi' %>
 </div>
 
 <div class="span8" >
@@ -11,7 +11,7 @@
   <div class="span8 content" >
 
     <div class="boxContainer">
-      <%= form_tag("/#{@product.language.downcase}/#{@product.to_param}/update", :method => "post") do  %>
+      <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/update", :method => "post") do  %>
         <div style="display:table-row;">
           <div class="labelCelMiddle" style="width: 80px;">
             <%= label_tag(:label, "Label") %>
@@ -42,12 +42,12 @@
       <% if !version_links.empty? %>
         <table>
           <colgroup>
-            <col width="80px;"></col>
-            <col width="*"></col>
+            <col width="80px;" />
+            <col width="*" />
           </colgroup>
         <% version_links.each do |link| %>
           <% if link.manual  %>
-            <%= form_tag("/#{@product.language.downcase}/#{@product.to_param}/delete_link", :method => "post") do  %>
+            <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/delete_link", :method => "post") do  %>
             <tr>
               <td>
                 <button type="submit" class="btn btn-danger" >Delete</button>
@@ -68,7 +68,7 @@
 
 
       <div class="boxContainer">
-        <%= form_tag("/#{@product.language.downcase}/#{@product.to_param}/update", :method => "post") do  %>
+        <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/update", :method => "post") do  %>
           <div style="display:table-row;">
             <div class="labelCelMiddle" style="width: 80px;">
               <%= label_tag(:twitter_name, "Twitter ID") %>

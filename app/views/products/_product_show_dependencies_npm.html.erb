@@ -5,26 +5,17 @@
 <div class="row">
 	<div class="span6">
 		<h5 class="dep_header">
-			<%= pluralize( main_dependencies.count, "Compile Dependencies" ) %>
+			<%= pluralize( main_dependencies.count, 'Compile Dependencies') %>
 		</h5>
 	</div>
 	<div class="span7" >
 		<% if !main_dependencies.empty? %>
-      <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => main_dependencies }  %>
+      <%= render :partial => 'products/helpers/dependency_table', :locals => { :dependencies => main_dependencies }  %>
     <% end %>
 	</div>
 </div>
 
-<% test_deps = @product.dependencies( Dependency::A_SCOPE_TEST ) %>
-<% if test_deps.count > 0 %>
-	<hr/>
-	<h5 class="dep_header">
-    <%= pluralize(test_deps.count, "Test Dependencies") %>
-  </h5>
-  <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => test_deps }  %>
-<% end %>
-
-<% dev_deps = @product.dependencies("development") %>
+<% dev_deps = @product.dependencies(Dependency::A_SCOPE_DEVELOPMENT) %>
 <% if dev_deps.count > 0 %>
 	<hr />
 	<h5 class="dep_header">
@@ -33,3 +24,21 @@
   <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => dev_deps }  %>
 <% end %>
 </div>
+
+<% bundled_deps = @product.dependencies( Dependency::A_SCOPE_BUNDLED ) %>
+<% if bundled_deps.count > 0 %>
+  <hr/>
+  <h5 class="dep_header">
+    <%= pluralize(bundled_deps.count, "Bundled Dependencies") %>
+  </h5>
+  <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => bundled_deps }  %>
+<% end %>
+
+<% optional_deps = @product.dependencies( Dependency::A_SCOPE_OPTIONAL ) %>
+<% if optional_deps.count > 0 %>
+  <hr/>
+  <h5 class="dep_header">
+    <%= pluralize(optional_deps.count, "Optional Dependencies") %>
+  </h5>
+  <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => optional_deps }  %>
+<% end %>

@@ -22,17 +22,22 @@ end
 
 
 class Settings
-    # raw_config = File.read("#{::Rails.root.to_s}/config/settings.yml")
-    raw_config = File.read("config/settings.yml")
-    erb_config = ERB.new(raw_config).result
-    settings = YAML.load(erb_config)[::Rails.env]
-
-    if settings
-        settings.each { |name, value|
-            instance_variable_set("@#{name}", value)
-            self.class.class_eval { attr_reader name.intern }
-        }
-    end
+  json = File.read("config/settings.json")
+  settings = JSON.parse(json)
+  if settings
+    settings[Rails.env].each { |name, value|
+      if value && value.is_a?(String) && value.match(/^env_/)
+        new_val = value.gsub("env_", "")
+        if name.eql?("memcache_servers")
+          value = eval ENV[new_val]
+        else
+          value = ENV[new_val]
+        end
+      end
+      instance_variable_set("@#{name}", value)
+      self.class.class_eval { attr_reader name.intern }
+    }
+  end
 end
 
 

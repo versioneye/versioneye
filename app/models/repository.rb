@@ -3,8 +3,8 @@ class Repository
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :repo_source, type: String
-  field :repo_type  , type: String
+  field :src     , type: String
+  field :repotype, type: String
 
   embedded_in :product
 
@@ -13,6 +13,10 @@ class Repository
       :repo_source => self.src,
       :repo_type => self.repotype
     }
+  end
+
+  def to_s
+    src
   end
 
 end

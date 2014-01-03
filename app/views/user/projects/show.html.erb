@@ -15,7 +15,7 @@
     <div class="row content_header_def">
       <div id="project-title">
         <span class = "namelabel" >
-          <%= @project.name %>
+          <b>Name:</b> <%= @project.name %>
         </span>
         <% if current_user?(@project.user) %>
           <div class="icon-edit open-editor"
@@ -52,6 +52,10 @@
         </script>
 
       <% end %>
+
+      <div style="padding-top: 10px;">
+        <b>Project ID:</b> <%= @project.id.to_s %>
+      </div>
 
     </div>
     <div class="span8 content" >
@@ -90,7 +94,7 @@
           </div>
           <% if @project.source.eql?( Project::A_SOURCE_UPLOAD ) %>
             <div id="reupload_form" style="display: none;" >
-              <%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
+              <%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do  %>
                 <input name="project_id" id="project_id" type="hidden" value="<%= @project._id.to_s %>" />
                 <%= file_field 'upload', 'datafile', :class => "round" %>
                 <button type="submit" class="btn2 btn2-large">Upload</button>
@@ -106,10 +110,10 @@
       <div style = "margin-top: 20px;">
         <ul class = "nav nav-tabs" style="margin-bottom: 0" id="projectTabs">
           <li class = "active">
-          <a href = "#dependencies" data-toggle="tab" onclick="page_view('ga_project_dependencies')"><i class = "icon-puzzle-piece">&nbsp;</i>Dependencies</a>
+            <a href = "#dependencies" data-toggle="tab" onclick="page_view('ga_project_dependencies')"><i class = "icon-puzzle-piece">&nbsp;</i>Dependencies</a>
           </li>
           <li>
-          <a href = "#licenses" data-toggle="tab" onclick="page_view('ga_project_licenses')"><i class = "icon-tasks">&nbsp;</i>Licenses</a>
+            <a href = "#licenses" data-toggle="tab" onclick="page_view('ga_project_licenses')"><i class = "icon-tasks">&nbsp;</i>Licenses</a>
           </li>
           <% if signed_in? && @project.collaborator?( current_user ) %>
             <li>
@@ -123,13 +127,13 @@
 
         <div class="tab-content" style="width: 100%;" >
           <div id="dependencies" class="tab-pane active" style="width: 617px;" >
-            <%= render partial: "project_dependency_table", locals: {deps: @sorted_deps} %>
+            <%= render partial: "project_dependency_table", locals: {deps: @project.sorted_dependencies_by_rank} %>
           </div>
 
           <div id="licenses" class="tab-pane">
             <% products = Array.new %>
-            <% unless @sorted_deps.nil? %>
-              <% @sorted_deps.each do |dep| %>
+            <% unless @project.dependencies.nil? && @project.dependencies.empty? %>
+              <% @project.dependencies.each do |dep| %>
                 <% product = dep.find_or_init_product %>
                 <% product.version = dep.version_requested %>
                 <% products << product %>
@@ -137,6 +141,19 @@
             <% end %>
 
             <%= render :partial => "shared/product_license_table", :locals => {:products => products, :width => "615"} %>
+
+            <div id="trans_deps" style="margin-top: 15px;">
+              <h3>Licenses of transitive dependencies</h3>
+              <form id="trans_dep_form" action="<%= transitive_dependencies_user_project_path(@project) %>" data-remote="true" method="post" >
+                <input hidden="true" name="id" value="<%= @project.id.to_s %>" />
+                <button type="submit" class="btn btn-primary"
+                  onclick="document.getElementById('progress_bar').style.display='block';
+                           document.getElementById('trans_dep_form').style.display='none'; " >Show licenses for transitive dependencies</button>
+              </form>
+              <div id="progress_bar" style="display: none">
+                <%= image_tag "loadingbar.gif" %>
+              </div>
+            </div>
           </div>
 
           <% if signed_in? && @project.collaborator?( current_user ) %>
