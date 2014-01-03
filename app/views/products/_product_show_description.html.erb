@@ -5,7 +5,7 @@
 	<div style="margin-bottom: 20px;" >
 		<p>
 			<% if @product.description && @product.description.include?("\n") %>
-				<%= @product.description.gsub!("\n", "<br/>").html_safe %>
+				<%= @product.description.gsub!("\n", '<br/>').html_safe %>
 			<% else %>
 				<%= @product.description %>
 			<% end %>

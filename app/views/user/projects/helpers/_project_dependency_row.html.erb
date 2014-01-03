@@ -2,7 +2,7 @@
 <tr class="flash <%= dep[:status_class] || 'info' %>">
   <td>
     <div>
-      <%= render partial: "/user/projects/helpers/project_mute_button",
+      <%= render partial: '/user/projects/helpers/project_mute_button',
                  locals: {dep: dep} %>
     <div>
   </td>
@@ -14,7 +14,7 @@
   </td>
   <td>
     <span >
-      <% unless dep.unknown? %>
+      <% if dep.known? %>
         <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" >
           <span><%= product.name %></span>
         </a>

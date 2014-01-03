@@ -27,24 +27,24 @@ class Version
     {
       :version    => self.version,
       :uid        => self.get_decimal_uid,
-      :created_at => self.created_at.strftime("%Y.%m.%d %I:%M %p"),
-      :updated_at => self.updated_at.strftime("%Y.%m.%d %I:%M %p")
+      :created_at => self.created_at.strftime('%Y.%m.%d %I:%M %p'),
+      :updated_at => self.updated_at.strftime('%Y.%m.%d %I:%M %p')
     }
   end
 
   def self.encode_version(version)
     return nil if version.nil?
-    version.gsub("/", ":")
+    version.gsub('/', ':')
   end
 
   def released_or_detected
     return released_at if released_at
-    return created_at
+    created_at
   end
 
   def self.decode_version(version)
     return nil if version.nil?
-    version.gsub(":", "/")
+    version.gsub(':', '/')
   end
 
   def to_param

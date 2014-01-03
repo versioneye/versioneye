@@ -24,7 +24,6 @@ describe ProjectService do
 
     it "returns Composer. OK" do
       url1 = "http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_composer.json?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D"
-      url2 = "http://localhost:4567/veye_dev_projects/i5lSWS951IxJjU1rurMg_composer.lock?AWSAccessKeyId=123&Expires=1360525084&Signature=HRPsn%2Bai%2BoSjm8zqwZFRtzxJvvE%3D"
       described_class.type_by_filename(url1).should eql(Project::A_TYPE_COMPOSER)
       described_class.type_by_filename(url1).should eql(Project::A_TYPE_COMPOSER)
       described_class.type_by_filename("composer.json").should eql(Project::A_TYPE_COMPOSER)

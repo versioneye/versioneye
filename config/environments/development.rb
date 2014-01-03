@@ -33,30 +33,16 @@ Versioneye::Application.configure do
 
   config.log_level = :debug
 
-  config.action_mailer.delivery_method   = :sendmail
-  config.action_mailer.perform_deliveries = false
+  config.action_mailer.delivery_method       = :postmark # :sendmail
+  config.action_mailer.perform_deliveries    = false
   config.action_mailer.raise_delivery_errors = true
-  # config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
+  config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
+  config.action_mailer.default_url_options = { :host => 'localhost' }
 
   ENV['API_BASE_PATH'] = "http://127.0.0.1:3000/api"
 
   Stripe.api_key = Settings.stripe_secret_key
 
   routes.default_url_options = { host: "127.0.0.1", port: 3000 }
-
-  #uses fake3s gem to simulate offline AWS S3
-  AWS::S3::Base.establish_connection!(
-    :access_key_id => "123",
-    :secret_access_key => "abc",
-    :server => "localhost",
-    :port => "4567"
-  )
-
-  # if Settings.aws_s3_access_key_id && Settings.aws_s3_secret_access_key
-  #     AWS::S3::Base.establish_connection!(
-  #       :access_key_id     => Settings.aws_s3_access_key_id,
-  #       :secret_access_key => Settings.aws_s3_secret_access_key
-  #     )
-  # end
 
 end

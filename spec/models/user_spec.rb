@@ -353,6 +353,14 @@ describe User do
       prod = ProductFactory.create_new
       user.products.push prod
       User.non_followers.count.should eql(User.all.count - 1)
+
+      user[:product_ids] = Array.new
+      user.save
+      User.non_followers.count.should eql(User.all.count)
+
+      user[:product_ids] = nil
+      user.save
+      User.non_followers.count.should eql(User.all.count)
     end
   end
 

@@ -14,11 +14,16 @@ class Newest
 
   attr_accessible :name, :version, :language, :prod_key, :prod_type, :product_id, :created_at
 
-  index({created_at: -1}, {background: true})
-  index({created_at: -1, language: -1}, {background: true})
+  index({updated_at: -1}, {background: true})
+  index({updated_at: -1, language: -1}, {background: true})
+  index({language: 1, prod_key: 1, version: 1}, { unique: true , background: true})
 
   def product
     Product.fetch_product self.language, self.prod_key
+  end
+
+  def self.fetch_newest language, prod_key, version
+    Newest.where(:language => language, :prod_key => prod_key, :version => version).shift
   end
 
   def self.get_newest( count )
@@ -39,7 +44,6 @@ class Newest
 
   def self.balanced_novel(count)
     newest = []
-    nlangs = Product.supported_languages.count
     Product.supported_languages.each do |lang|
       newest.concat Newest.where(language: lang, novel: true).desc(:created_at).limit(count)
     end
@@ -47,8 +51,8 @@ class Newest
   end
 
   def language_esc
-    return "nodejs" if language.eql?(Product::A_LANGUAGE_NODEJS)
-    return language.downcase
+    return 'nodejs' if language.eql?(Product::A_LANGUAGE_NODEJS)
+    language.downcase
   end
 
 end

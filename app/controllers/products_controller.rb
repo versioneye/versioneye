@@ -5,20 +5,15 @@ class ProductsController < ApplicationController
   before_filter :check_redirects_package       , :only => [:show]
   before_filter :check_redirects_package_visual, :only => [:show_visual]
   before_filter :check_refer                   , :only => [:index]
-  #before_filter :force_http
-
-  @@languages = [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
-    Product::A_LANGUAGE_PYTHON, Product::A_LANGUAGE_PHP, Product::A_LANGUAGE_NODEJS,
-    Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R, Product::A_LANGUAGE_OBJECTIVEC]
 
   def index
     @user = User.new
     @ab = params['ab']
     if @ab.nil?
-      ab_array = ["a", "b"]
-      @ab = "b" # ab_array[Random.rand(2)]
+      # ab_array = ['a', 'b']
+      @ab = 'b' # ab_array[Random.rand(2)]
     end
-    @languages = @@languages
+    @languages = supported_languages
     render :layout => 'application_lp'
   end
 
@@ -26,18 +21,17 @@ class ProductsController < ApplicationController
     @query   = do_parse_search_input( params[:q] )
     @groupid = params[:g]
     @lang    = get_lang_value( params[:lang] )
-    commit   = params[:commit]
-    if ( (@query.nil? || @query.empty?) && (@groupid.nil? || @groupid.empty?) )
-      flash.now[:error] = "Please give us some input. Type in a value for name."
-    elsif @query.include?("%")
-      flash.now[:error] = "the character % is not allowed"
+    if (@query.nil? || @query.empty?) && (@groupid.nil? || @groupid.empty?)
+      flash.now[:error] = 'Please give us some input. Type in a value for name.'
+    elsif @query.include?('%')
+      flash.now[:error] = 'the character % is not allowed'
     else
       # start = Time.now
       languages = get_language_array(@lang)
       @products = ProductService.search( @query, @groupid, languages, params[:page])
       # save_search_log( @query, @products, start )
     end
-    @languages = @@languages
+    @languages = supported_languages
   end
 
   def show
@@ -50,15 +44,12 @@ class ProductsController < ApplicationController
       return
     end
     if @product.nil?
-      flash[:error] = "The requested package is not available."
+      flash[:error] = 'The requested package is not available.'
       return
     end
-   
-
-    if version.nil? || ( attach_version( @product, version ) == false )
-      version = VersionService.newest_version(@product.versions) if version.nil?
-      redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, version )
-      return
+    if version.nil? || (!attach_version(@product, version))
+      params[:version] = @product.version
+      redirect_to( {:action => 'show'}.merge(params) ) and return
     end
     if version
       @version   = @product.version_by_number(@product.version)
@@ -74,11 +65,11 @@ class ProductsController < ApplicationController
     version  = params[:version]
     @product = Product.fetch_product lang, key
     if @product.nil?
-      flash[:error] = "The requested package is not available."
-      redirect_to "/"
+      flash[:error] = 'The requested package is not available.'
+      redirect_to '/'
       return
     end
-    if version.nil? || ( attach_version( @product, version ) == false )
+    if version.nil? || (!attach_version(@product, version))
       redirect_to visual_dependencies_path( @product.language_esc.downcase, @product.to_param, @product.version )
       return
     end
@@ -87,11 +78,25 @@ class ProductsController < ApplicationController
   end
 
   def badge
-    language = Product.decode_language( params[:lang] )
+    language = Product.decode_language params[:lang]
     prod_key = Product.decode_prod_key params[:key]
-    version  = Version.decode_version params[:version]
-    badge    = badge_for_product( language, prod_key, version )
+    version  = Version.decode_version  params[:version]
+    badge    = badge_for_product language, prod_key, version
     send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
+  end
+
+  def references
+    language   = Product.decode_language params[:lang]
+    prod_key   = Product.decode_prod_key params[:key]
+    page       = parse_page params[:page]
+    @product   = Product.fetch_product language, prod_key
+    response   = Dependency.references language, prod_key, page
+    products   = Product.by_prod_keys language, response[:prod_keys]
+    pre_amount = (page.to_i - 1) * 30
+    pre        = Array.new pre_amount
+    @products  = pre + products
+    @products  = @products.paginate(:page => page, :per_page => 30)
+    @products.total_entries = response[:count]
   end
 
   def edit
@@ -113,19 +118,19 @@ class ProductsController < ApplicationController
   end
 
   def update
-    description    = params[:description_manual]
-    license        = params[:license]
-    licenseLink    = params[:licenseLink]
-    licenseVersion = params[:licenseVersion]
-    twitter_name   = params[:twitter_name]
-    link_url       = params[:link_url]
-    link_name      = params[:link_name]
-    lang           = Product.decode_language( params[:lang] )
-    key            = Product.decode_prod_key params[:key]
+    description     = params[:description_manual]
+    license         = params[:license]
+    license_link    = params[:licenseLink]
+    license_version = params[:licenseVersion]
+    twitter_name    = params[:twitter_name]
+    link_url        = params[:link_url]
+    link_name       = params[:link_name]
+    lang            = Product.decode_language( params[:lang] )
+    key             = Product.decode_prod_key params[:key]
     @product = Product.fetch_product lang, key
     if @product.nil? || !current_user.admin
       flash[:success] = "An error occured. Please try again later."
-      redirect_to package_version_path(@product.language.downcase, @product.to_param, @product.version)
+      redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
       return
     end
     if description && !description.empty?
@@ -134,7 +139,7 @@ class ProductsController < ApplicationController
       add_status_comment(@product, current_user, "description")
       flash[:success] = "Description updated."
     elsif license && !license.empty?
-      license = License.new({:name => license, :url => licenseLink, :language => @product.language, :prod_key => @product.prod_key, :version => licenseVersion})
+      license = License.new({:name => license, :url => license_link, :language => @product.language, :prod_key => @product.prod_key, :version => license_version})
       license.save
       add_status_comment(@product, current_user, "license", license.name)
       flash[:success] = "License updated."
@@ -143,7 +148,7 @@ class ProductsController < ApplicationController
       @product.save
       add_status_comment(@product, current_user, "twitter")
       flash[:success] = "Twitter name updated."
-    elsif link_url && !link_url.empty? &&
+    elsif link_url && !link_url.empty?
       versionlink = Versionlink.new
       versionlink.language = @product.language
       versionlink.prod_key = @product.prod_key
@@ -153,7 +158,7 @@ class ProductsController < ApplicationController
       versionlink.save
       flash[:success] = "New link added."
     end
-    redirect_to package_version_path(@product.language.downcase, @product.to_param, @product.version)
+    redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
   end
 
   def delete_link
@@ -166,7 +171,7 @@ class ProductsController < ApplicationController
       versionlink.remove
       flash[:success] = "Link removed."
     end
-    redirect_to package_version_path(@product.language.downcase, @product.to_param, @product.version)
+    redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
   end
 
   def delete_license
@@ -179,7 +184,7 @@ class ProductsController < ApplicationController
       license.remove
       flash[:success] = "License removed."
     end
-    redirect_to package_version_path(@product.language.downcase, @product.to_param, @product.version)
+    redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
   end
 
   def follow
@@ -193,7 +198,7 @@ class ProductsController < ApplicationController
       format.js
       format.json {render json: {success: follow}}
       format.html {
-        if !follow
+        unless follow
           flash.now[:error] = "An error occured. Please try again later and contact the VersionEye Team."
         end
         product = Product.fetch_product( language, product_key )
@@ -214,7 +219,7 @@ class ProductsController < ApplicationController
       format.js
       format.json {render json: {success: unfollow}}
       format.html {
-          if !unfollow
+          unless unfollow
             flash.now[:error] = "An error occured. Please try again later."
           end
           if src_hidden.eql? "detail"
@@ -240,6 +245,12 @@ class ProductsController < ApplicationController
   end
 
   private
+
+    def parse_page page
+      return 1 if page.to_s.empty?
+      return 1 if page.to_i < 1
+      page
+    end
 
     def format_autocomplete(product)
       {
@@ -284,6 +295,12 @@ class ProductsController < ApplicationController
 
     def admin_user
       redirect_to(root_path) unless current_user.admin?
+    end
+
+    def supported_languages
+      [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
+      Product::A_LANGUAGE_PYTHON, Product::A_LANGUAGE_PHP, Product::A_LANGUAGE_NODEJS,
+      Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R, Product::A_LANGUAGE_OBJECTIVEC]
     end
 
 end

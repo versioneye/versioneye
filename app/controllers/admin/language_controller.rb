@@ -7,7 +7,7 @@ class Admin::LanguageController < ApplicationController
 
   def show
     language = Language.where(param_name: params[:id]).first
-    render partial: "language_block", locals: {language: language}
+    render partial: 'language_block', locals: {language: language}
   end
 
   def new
@@ -23,7 +23,7 @@ class Admin::LanguageController < ApplicationController
     new_lang = Language.new(params[:language])
 
     if new_lang.save
-      flash[:success] = "Language is added successfully."
+      flash[:success] = 'Language is added successfully.'
       redirect_to admin_language_index_path
     else
       flash[:error] = "Can not save language: #{new_lang.errors.full_messages.to_sentence}"
@@ -36,7 +36,7 @@ class Admin::LanguageController < ApplicationController
     old_language = Language.where(name: updated_language[:name]).first
     old_language.update_attributes!(updated_language)
     if old_language.save
-      flash[:success] = "Language is now updated."
+      flash[:success] = 'Language is now updated.'
       redirect_to admin_language_index_path
     else
       flash[:error] = "Can't save updates."
@@ -46,11 +46,11 @@ class Admin::LanguageController < ApplicationController
 
   def destroy
     lang = Language.by_language(params[:id]).shift
-    p "deleting language:", lang
+    p 'deleting language:', lang
     if lang.nil?
       flash[:error] = "Failure: can't delete language `#{params[:id]}`."
     else
-      lang.delete
+      lang.remove
       flash[:success] = "Success: #{lang[:name]} is now removed."
     end
 
@@ -63,16 +63,16 @@ class Admin::LanguageController < ApplicationController
       doc = whitelisted_language_doc_fields(doc)
       next if doc.nil?
 
-      current_doc = Language.by_language(doc["name"]).shift
+      current_doc = Language.by_language(doc['name']).shift
       if current_doc.nil?
         new_doc = Language.new doc
+        new_doc.save!
       else
         current_doc.update_attributes(doc)
       end
-      new_doc.save!
     end
 
-    flash[:success] = "Uploaded successfully"
+    flash[:success] = 'Uploaded successfully'
     redirect_to :back
   end
 
@@ -83,10 +83,10 @@ class Admin::LanguageController < ApplicationController
   private
 
   def whitelisted_language_doc_fields(doc)
-    doc.slice("name", "description", "irc", "irc_url", "supported_managers",
-              "latest_version", "stable_version", "licence", "licence_url",
-              "main_url", "wiki_url", "repo_url", "issue_url", "mailinglist_url",
-              "irc_url", "irc", "twitter_name")
+    doc.slice('name', 'description', 'irc', 'irc_url', 'supported_managers',
+              'latest_version', 'stable_version', 'licence', 'licence_url',
+              'main_url', 'wiki_url', 'repo_url', 'issue_url', 'mailinglist_url',
+              'irc_url', 'irc', 'twitter_name')
   end
 
   def admin_user

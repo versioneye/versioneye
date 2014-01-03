@@ -18,10 +18,10 @@ class Versioncomment
 
   embeds_many :versioncommentreplys
 
-  validates_presence_of :user_id,     :message => "User is mandatory!"
-  validates_presence_of :product_key, :message => "Product is mandatory!"
-  validates_presence_of :version,     :message => "Version is mandatory!"
-  validates_presence_of :comment,     :message => "Comment is mandatory!"
+  validates_presence_of :user_id,     :message => 'User is mandatory!'
+  validates_presence_of :product_key, :message => 'Product is mandatory!'
+  validates_presence_of :version,     :message => 'Version is mandatory!'
+  validates_presence_of :comment,     :message => 'Comment is mandatory!'
 
   scope :by_user, ->(user){ where(user_id: user.id) }
 

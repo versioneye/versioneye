@@ -1,15 +1,16 @@
 <div class="navi nav-tabs nav-stacked"  >
   <% if signed_in? %>
   <ul class = "nav nav-pills nav-stacked">
-    <li><%= link_to "My Projects", user_projects_path, id: "my_projects" %></li>
-    <li><%= link_to "Shared with me", user_collaborations_path %></li>
-    <li><%= link_to "Add New Project", new_user_project_path %></li>
-    <li><%= link_to "Github Repositories", user_projects_github_repositories_path %></li>
+    <li><%= link_to 'My Projects', user_projects_path, id: 'my_projects' %></li>
+    <li><%= link_to 'Shared with me', user_collaborations_path %></li>
+    <li><%= link_to 'Add New Project', new_user_project_path %></li>
+    <li><%= link_to 'Github Repositories', user_projects_github_repositories_path %></li>
+    <li><%= link_to 'Bitbucket Repositories', user_projects_bitbucket_repositories_path %></li>
     <li><hr/></li>
-    <li><%= link_to "Most used packages", :controller => 'user/packages', :action => "popular_in_my_projects"  %> </li>
-    <li><%= link_to "Packages I follow",  :controller => 'user/packages', :action => "i_follow" %></li>
+    <li><%= link_to 'Most used packages', :controller => 'user/packages', :action => 'popular_in_my_projects'  %> </li>
+    <li><%= link_to 'Packages I follow',  :controller => 'user/packages', :action => 'i_follow' %></li>
 </ul>
   <% else %>
-    <%= render "/shared/github_ad" %>
+    <%= render '/shared/github_ad' %>
   <% end %>
 </div>

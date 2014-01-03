@@ -8,7 +8,7 @@ require 'cocoapods-core'
 
 class CocoapodsPodspecParser
   def logger
-    ActiveSupport::BufferedLogger.new("log/cocoapods.log")
+    ActiveSupport::BufferedLogger.new('log/cocoapods.log')
   end
 
   # the same for all products
@@ -134,7 +134,7 @@ class CocoapodsPodspecParser
     end
 
     specs = ( hash_array.map { |hash| hash[:spec] } ).uniq
-    specs_and_versions = hash_array.inject({}) do |result,hash|
+    hash_array.inject({}) do |result,hash|
       spec = hash[:spec]
       if specs.member? spec
         result[spec] = hash[:version]
@@ -142,8 +142,6 @@ class CocoapodsPodspecParser
       end
       result
     end
-
-    specs_and_versions
   end
 
   def create_dependency dep_name, dep_version
@@ -206,8 +204,8 @@ class CocoapodsPodspecParser
 
   def repository
     Repository.new({
-      :repo_type => 'git',
-      :repo_source => @podspec.source[:git]
+      :repotype => 'git',
+      :src => @podspec.source[:git]
       })
   end
 

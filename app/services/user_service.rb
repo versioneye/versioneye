@@ -12,42 +12,44 @@ class UserService
     SecureRandom.urlsafe_base64(length)
   end
 
-  def self.valid_user?(user, flash, t)
-    if !User.email_valid?(user.email)
-      flash[:error] = "page_signup_error_email"
-      return false;
-    elsif user.fullname.nil? || user.fullname.empty?
-      flash[:error] = "page_signup_error_fullname"
-      return false;
-    elsif user.password.nil? || user.password.empty? || user.password.size < 5
-      flash[:error] = "page_signup_error_password"
-      return false;
-    elsif user.terms != true
-      flash[:error] = "page_signup_error_terms"
-      return false;
+  def self.valid_user?(user, flash)
+    unless User.email_valid?(user.email)
+      flash[:error] = 'page_signup_error_email'
+      return false
     end
-    return true;
+    if user.fullname.nil? || user.fullname.empty?
+      flash[:error] = 'page_signup_error_fullname'
+      return false
+    elsif user.password.nil? || user.password.empty? || user.password.size < 5
+      flash[:error] = 'page_signup_error_password'
+      return false
+    elsif !user.terms
+      flash[:error] = 'page_signup_error_terms'
+      return false
+    end
+    true
   end
 
-  def self.delete( user )
-    Notification.remove_notifications( user )
-    collaborators = ProjectCollaborator.by_user( user )
+  def self.delete user
+    Notification.remove_notifications user
+    collaborators = ProjectCollaborator.by_user user
     if !collaborators.nil? && !collaborators.empty?
       collaborators.each do |project_collaborator|
         project_collaborator.remove
       end
     end
-    random = create_random_value
-    user.deleted = true
-    user.email = "#{random}_#{user.email}"
-    user.prev_fullname = user.fullname
-    user.fullname = "Deleted"
-    user.username = "#{random}_#{user.username}"
-    user.github_id = nil
-    user.github_token = nil
-    user.github_scope = nil
-    user.twitter_id = nil
-    user.twitter_token = nil
+    StripeService.delete user.stripe_customer_id
+    random              = create_random_value
+    user.deleted        = true
+    user.email          = "#{random}_#{user.email}"
+    user.prev_fullname  = user.fullname
+    user.fullname       = 'Deleted'
+    user.username       = "#{random}_#{user.username}"
+    user.github_id      = nil
+    user.github_token   = nil
+    user.github_scope   = nil
+    user.twitter_id     = nil
+    user.twitter_token  = nil
     user.twitter_secret = nil
     user.products.clear
     user.save
@@ -64,7 +66,7 @@ class UserService
 
   def self.create_random_value
     chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-    value = ""
+    value = ''
     10.times { value << chars[rand(chars.size)] }
     value
   end

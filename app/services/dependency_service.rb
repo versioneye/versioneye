@@ -24,7 +24,7 @@ class DependencyService
     dependency.save
 
     project_dependency = Projectdependency.new
-    parser = ParserStrategy.parser_for( dependency.prod_type, "" )
+    parser = ParserStrategy.parser_for( dependency.prod_type, '')
     parser.parse_requested_version( dependency.version, project_dependency, product)
     version_requested = project_dependency.version_requested
 

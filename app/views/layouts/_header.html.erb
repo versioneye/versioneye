@@ -1,11 +1,11 @@
-<header style="z-index: 100;">
+<header>
   <div class="navbar navbar-fixed-top">
     <div class = "container row" >
 
-      <div class="span4 brand-container" style="margin-left: 0; padding-left: 0; height: 50px;">
-        <div style="margin-top: 15px;" class="pull-left">
+      <div class="span4 main_logo" >
+        <div class="pull-left l_margin_top_15">
           <% if signed_in? %>
-            <%= link_to image_tag("logos/versioneye-transparent.png"), user_projects_path %>
+            <%= link_to image_tag('logos/versioneye-transparent.png'), user_projects_path %>
           <% else %>
             <a href="/" ><%= image_tag "logos/versioneye-transparent.png" %></a>
           <% end %>
@@ -14,7 +14,7 @@
 
       <div class = "span7 pull-right">
         <ul class="nav pull-right">
-          <% if !signed_in? %>
+          <% unless signed_in? %>
             <li>
               <%= link_to "Pricing", "/pricing" %>
             </li>
@@ -31,7 +31,7 @@
             </li>
             <li class="divider-vertical"></li>
             <li>
-              <a href="<%= user_path( current_user ) %>" style="padding-top: 6px;" title="Profile" >
+              <a href="<%= user_path( current_user ) %>" class="profile_pic_tiny" title="Profile" >
                 <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.server_url}/profile_icon.png" }) %> <%= current_user.username %>
               </a>
             </li>

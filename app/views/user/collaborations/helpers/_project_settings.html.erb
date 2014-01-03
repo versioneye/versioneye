@@ -5,7 +5,7 @@
       <label class="control-label" style="width: 200px;" >Monitor it</label>
       <div class="controls" style="margin-left: 210px;">
         <select name="period" style="width: 150px; margin: 0px;" >
-          <option value="<%= Project::A_PERIOD_DAILY %>"   <%= "selected" if collaboration[:period] == Project::A_PERIOD_DAILY   %> >Daily</option>
+          <option value="<%= Project::A_PERIOD_DAILY %>"   <%= 'selected' if collaboration[:period] == Project::A_PERIOD_DAILY   %> >Daily</option>
           <option value="<%= Project::A_PERIOD_WEEKLY %>"  <%= "selected" if collaboration[:period] == Project::A_PERIOD_WEEKLY  %> >Weekly</option>
           <option value="<%= Project::A_PERIOD_MONTHLY %>" <%= "selected" if collaboration[:period] == Project::A_PERIOD_MONTHLY %> >Monthly</option>
         </select> <button type="submit" class="btn btn-primary" >Save</button>

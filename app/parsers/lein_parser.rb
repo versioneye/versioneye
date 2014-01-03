@@ -40,9 +40,7 @@ class LeinParser < CommonParser
       break if match.nil?
       content = "#{match.pre_match} <#{match.to_a[2]} attr=\"#{match.to_a[1]}\"> #{match.post_match}"
     end
-    content = '<project>' + content + '</project>'
-
-    content
+    '<project>' + content + '</project>'
   end
 
   def build_dependencies(matches)
@@ -59,7 +57,7 @@ class LeinParser < CommonParser
         :artifact_id => name,
         :name => name,
         :version_requested => version,
-        :comperator => "=",
+        :comperator => '=',
         :language => Product::A_LANGUAGE_CLOJURE
       })
 
@@ -76,12 +74,12 @@ class LeinParser < CommonParser
       data << dependency
     end
 
-    return {:unknown_number => unknowns, :out_number => out_number, :projectdependencies => data}
+    {:unknown_number => unknowns, :out_number => out_number, :projectdependencies => data}
   end
 
   # TODO use this method in this class to parse version strings
   def parse_requested_version(version, dependency, product)
-    if (version.nil? || version.empty?)
+    if version.nil? || version.empty?
       self.update_requested_with_current(dependency, product)
       return
     end

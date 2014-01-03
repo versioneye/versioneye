@@ -1,4 +1,12 @@
 require 'spec_helper'
+require 'vcr'
+require 'webmock'
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/fixtures/vcr_cassettes/'
+  c.ignore_localhost = true
+  c.hook_into :webmock # or :fakeweb
+end
 
 describe Github do
 
@@ -157,14 +165,14 @@ describe Github do
     end
 
     it "should return user data when correct credentials" do
-      Github.user("123") #passing the failiing response
-      user_data = Github.user("123")
-      
-      user_data.should_not be_nil
-      user_data.is_a?(Hash).should be_true
-      user_data.has_key?(:login).should be_true
-      user_data[:login].should eql("octocat")
-      user_data[:company].should eql('VersionEye')
+      VCR.use_cassette('github_signup', :allow_playback_repeats => true) do
+        user_data = Github.user("3974100548430f742b9716b2e26ba73437fe8028")
+        user_data.should_not be_nil
+        user_data.is_a?(Hash).should be_true
+        user_data.has_key?("login").should be_true
+        user_data['login'].should eql("reiz")
+        user_data['company'].should eql('VersionEye')
+      end
     end
   end
 
@@ -211,8 +219,6 @@ describe Github do
 
     it "should response hash-map where 'repos' are empty array when user has wrong credentials" do
       response = Github.read_repos(user_without_token, url_start)
-
-      p response
       response.should_not be_nil
       response.has_key?(:repos).should be_true
       response[:repos].empty?.should be_true
@@ -220,6 +226,7 @@ describe Github do
 
     it "should parse correctly url from response header" do
        response = Github.read_repos(user_without_token, url_start)
+       # TODO TG condition is here missing on response.
 
        response = Github.read_repos(user_with_token, url_start)
        response.should_not be_nil
@@ -248,13 +255,13 @@ describe Github do
     end
 
     it "should nil when user is having wrong credentials" do
-      Github.repo_branches(user_without_token, "versioneye/spec").should be_nil
+      Github.repo_branches("versioneye/spec", user_without_token[:github_token]).should be_nil
     end
 
     it "should correct name of branch of given repositories" do
-      Github.repo_branches(user_without_token, "versioneye/spec").should be_nil
+      Github.repo_branches("versioneye/spec", user_without_token[:github_token]).should be_nil
 
-      branches = Github.repo_branches(user_with_token, "versioneye/spec")
+      branches = Github.repo_branches("versioneye/spec", user_with_token[:github_token])
       branches.should_not be_nil
       branches.count.should eql(1)
 
@@ -278,13 +285,16 @@ describe Github do
     end
 
     it "should return nil when user uses wrong credentials" do
-      Github.repo_branch_info(user_without_token, "versioneye/spec", "master").should be_nil
+      token = user_without_token[:github_token]
+      Github.repo_branch_info("versioneye/spec", "master", token).should be_nil
     end
 
     it "should return proper data when user uses correct info" do
-      Github.repo_branch_info(user_without_token, "versioneye/spec", "master").should be_nil
+      token = user_without_token[:github_token]
+      Github.repo_branch_info("versioneye/spec", "master", token).should be_nil
 
-      branch_info = Github.repo_branch_info(user_with_token, "versioneye/spec", "master")
+      token = user_with_token[:github_token]
+      branch_info = Github.repo_branch_info("versioneye/spec", "master", token)
       branch_info.should_not be_nil
       branch_info[:name].should eql('master')
     end
@@ -312,7 +322,7 @@ describe Github do
     end
 
     it "should return empty array when github returns exception"  do
-      Github.orga_names(user_without_token.github_token).empty?.should be_true
+      Github.orga_names(user_without_token[:github_token]).empty?.should be_true
     end
 
     it "should return list with right names" do
@@ -342,7 +352,6 @@ describe Github do
 
     it "should be true when everything goes as planned and fakeweb returns correct response" do
       Github.private_repo?(user_without_token.github_token, "versioneye").should be_false
-
       Github.private_repo?(user_without_token.github_token, "versioneye").should be_true
     end
   end

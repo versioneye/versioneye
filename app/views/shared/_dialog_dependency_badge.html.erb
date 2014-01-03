@@ -1,3 +1,4 @@
+
 <div id="dialog_dependency_badge" class="modal hide fade" style="text-align: left;">
   <div class = "modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -48,24 +49,28 @@
     </form>
 
     <script type="text/javascript">
-      image_url = document.URL + "/badge.png"
+      image_url = document.URL.split("?")[0] + "/badge.png";
+      url       = document.URL.split("?")[0]
+      <% if @product %>
+        image_url = "<%= product_version_badge_url(:lang => @product.language_esc, :key => @product.to_param, :version => @product.version) %>" + ".png";
+        url = "<%= package_version_url(:lang => @product.language_esc, :key => @product.to_param, :version => @product.version) %>";
+      <% end %>
 
-      markdown_url = "[![Dependency Status]("+image_url+")]("+document.URL+")"
-      element = document.getElementById("badge_for_markdown")
-      element.value = markdown_url
+      markdown_url = "[![Dependency Status](" + image_url + ")](" + url + ")";
+      element = document.getElementById("badge_for_markdown");
+      element.value = markdown_url;
 
-      textile_url = "!"+image_url+"(Dependency Status)!:"+document.URL
-      element_textile = document.getElementById("badge_for_textile")
-      element_textile.value = textile_url
+      textile_url = "!" + image_url + "(Dependency Status)!:" + url + "";
+      element_textile = document.getElementById("badge_for_textile");
+      element_textile.value = textile_url;
 
-      rdoc_url = "{<img src=\"" + image_url + "\" alt=\"Dependency Status\" />}["+document.URL+"]"
-      element_rdoc = document.getElementById("badge_for_rdoc")
-      element_rdoc.value = rdoc_url
+      rdoc_url = "{<img src=\"" + image_url + "\" alt=\"Dependency Status\" />}[" + url + "]";
+      element_rdoc = document.getElementById("badge_for_rdoc");
+      element_rdoc.value = rdoc_url;
 
-      html_url = "<a href='"+document.URL+"'><img src='"+image_url+"' alt=\"Dependency Status\" /></a>"
-      element_html = document.getElementById("badge_for_html")
+      html_url = "<a href='" + url + "'><img src='" + image_url + "' alt=\"Dependency Status\" /></a>";
+      element_html = document.getElementById("badge_for_html");
       element_html.value = html_url
-
     </script>
 
   </div>

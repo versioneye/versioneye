@@ -10,7 +10,7 @@ class Admin::CrawlesController < ApplicationController
     group = params[:group]
     @exec_groups = Crawle.all().distinct(:exec_group).reverse()
     @crawles = Crawle.where(exec_group: /#{group}/i).desc(:created_at)
-    render "index"
+    render 'index'
   end
 
   def show

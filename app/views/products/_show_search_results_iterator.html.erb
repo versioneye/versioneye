@@ -5,14 +5,12 @@
     <div class="row search-item" >
 
       <div class="icon56 span2 pull-left">
-        <% prog_lang = product.language.downcase.gsub(/\./, "") %>
+        <% prog_lang = product.language.downcase.gsub(/\./, '') %>
         <span class = "icon_<%= prog_lang %> on" ></span>
       </div>
 
       <div class = "span5">
-        <a href="<%= product_version_path(product) %>" class="searchResultLink">
-          <span ><%= product.name_version(name_limit) %></span>
-        </a><br/>
+        <a href="<%= product_version_path(product) %>" class="searchResultLink"><span ><%= product.name_version(name_limit) %></span></a><br/>
         <% if product.prod_type == "Maven2" %>
           <span class="meta-text-small">GroupId: <%= product.group_id %></span>
         <% else %>
@@ -41,7 +39,7 @@
 
         <% else %>
 
-          <button id="button_<%= product.prod_key %>" type="submit" class="btn btn-success btn-medium" onclick="load_dialog_follow('<%= product.name %>', '<%= product.prod_key %>', '<%= product.language %>');" >Follow</button>
+          <button id="button_<%= product.language_esc %>_<%= product.prod_key %>" type="submit" class="btn btn-success btn-medium" onclick="load_dialog_follow('<%= product.name %>', '<%= product.prod_key %>', '<%= product.language %>');" >Follow</button>
 
         <% end %>
       </div>

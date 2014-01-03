@@ -88,8 +88,8 @@ define([require], function(require){
           .attr({
             "class": "overlay",
             "width": thisPlot.width + "px",
-            "height": thisPlot.height + "px",
-          })
+            "height": thisPlot.height + "px"
+        })
           .on("mouseover", function(){focus.style("display", null);})
           .on("mouseout", function(){focus.style("display", "none");})
           .on("mousemove", mousemove);

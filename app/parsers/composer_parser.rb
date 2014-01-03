@@ -4,8 +4,8 @@ class ComposerParser < CommonParser
   # http://getcomposer.org/doc/01-basic-usage.md
   # https://igor.io/2013/02/07/composer-stability-flags.html
   #
-  def parse ( url )
-    data = self.fetch_data( url )
+  def parse url
+    data = self.fetch_data url
     return nil if data.nil?
     dependencies = fetch_dependencies data
     return nil if dependencies.nil?
@@ -20,7 +20,7 @@ class ComposerParser < CommonParser
     nil
   end
 
-  def fetch_data( url )
+  def fetch_data url
     return nil if url.nil?
     response = self.fetch_response(url)
     return nil if response.nil?
@@ -37,10 +37,10 @@ class ComposerParser < CommonParser
     elsif dependencies && dependencies_dev
       return dependencies.merge(dependencies_dev)
     end
-    return nil
+    nil
   end
 
-  def process_dependency( key, value, project, data )
+  def process_dependency key, value, project, data
     product    = Product.fetch_product( Product::A_LANGUAGE_PHP, key )
     dependency = init_projectdependency( key, product )
     parse_requested_version( value, dependency, product )
@@ -52,7 +52,7 @@ class ComposerParser < CommonParser
     project.projectdependencies.push dependency
   end
 
-  def update_project( project, data )
+  def update_project project, data
     name                = data['name']
     description         = data['description']
     license             = data['license']
@@ -64,15 +64,15 @@ class ComposerParser < CommonParser
 
   # It is important that this method is NOT writing into the database!
   #
-  def parse_requested_version(version, dependency, product)
+  def parse_requested_version version, dependency, product
     if (version.nil? || version.empty?) && !product.nil?
       update_requested_with_current(dependency, product)
       return
     end
     version = version.strip
     version = version.gsub('"', '')
-    version = version.gsub("'", "")
-    version = version.gsub(/^v/, "")
+    version = version.gsub("'", '')
+    version = version.gsub(/^v/, '')
 
     dependency.version_label = String.new(version)
 
@@ -208,7 +208,7 @@ class ComposerParser < CommonParser
 
   # TODO write tests
   #
-  def dependency_in_repositories?( dependency, data )
+  def dependency_in_repositories? dependency, data
     return false if (dependency.nil? || data.nil?)
     repos = data['repositories']
     return false if (repos.nil? || repos.empty? || repo['package'].nil?)
@@ -228,7 +228,7 @@ class ComposerParser < CommonParser
     false
   end
 
-  def init_project( url )
+  def init_project url
     project              = Project.new
     project.project_type = Project::A_TYPE_COMPOSER
     project.language     = Product::A_LANGUAGE_PHP
@@ -238,7 +238,7 @@ class ComposerParser < CommonParser
 
   private
 
-    def init_projectdependency( key, product )
+    def init_projectdependency key, product
       dependency          = Projectdependency.new
       dependency.name     = key
       dependency.language = Product::A_LANGUAGE_PHP
@@ -252,7 +252,7 @@ class ComposerParser < CommonParser
     # This method exist in CommonParser, too!
     # This is just a copy with a different implementation for Composer!
     #
-    def update_requested_with_current( dependency, product )
+    def update_requested_with_current dependency, product
       if product && product.version
         dependency.version_requested = VersionService.newest_version_number( product.versions, dependency.stability )
       else
@@ -261,7 +261,7 @@ class ComposerParser < CommonParser
       dependency
     end
 
-    def print_backtrace( e )
+    def print_backtrace e
       Rails.logger.error e.message
       Rails.logger.error e.backtrace.join("\n")
     end

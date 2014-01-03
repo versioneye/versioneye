@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/versioneye_test/fantom_hydra/src/master/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (info@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="Qe2cNVrkckjHByikiK8WI59ecgKIQQRBixalxep0",
+        oauth_signature="5%2BGJdQrxX84cgpzl%2Fa%2BmUVNWiZQ%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1387985939", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.3
+      Date:
+      - Wed, 25 Dec 2013 15:38:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - app04
+      X-Render-Time:
+      - '0.0717840194702'
+      Content-Language:
+      - en
+      Cache-Control:
+      - max-age=0
+      X-Request-Count:
+      - '154'
+      Expires:
+      - Wed, 25 Dec 2013 15:38:59 GMT
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      Last-Modified:
+      - Wed, 25 Dec 2013 15:38:59 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Version:
+      - b2ac13e3a153
+      X-Static-Version:
+      - c4f05e63beb6
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "{\"node\": \"20b9c1193a16\", \"path\": \"/\", \"directories\": [],
+        \"files\": [{\"size\": 1990, \"path\": \"Gemfile\", \"timestamp\": \"2013-11-01T14:36:31Z\",
+        \"utctimestamp\": \"2013-11-01 14:36:31+00:00\", \"revision\": \"20b9c1193a16\"},
+        {\"size\": 0, \"path\": \"LICENSE\", \"timestamp\": \"2013-11-01T14:29:08Z\",
+        \"utctimestamp\": \"2013-11-01 14:29:08+00:00\", \"revision\": \"a3ffc834e602\"},
+        {\"size\": 139, \"path\": \"README.md\", \"timestamp\": \"2013-11-01T14:36:31Z\",
+        \"utctimestamp\": \"2013-11-01 14:36:31+00:00\", \"revision\": \"20b9c1193a16\"},
+        {\"size\": 215, \"path\": \"bower.json\", \"timestamp\": \"2013-11-01T14:32:25Z\",
+        \"utctimestamp\": \"2013-11-01 14:32:25+00:00\", \"revision\": \"69f219d5fd26\"}]}"
+    http_version: 
+  recorded_at: Wed, 25 Dec 2013 15:38:59 GMT
+recorded_with: VCR 2.8.0

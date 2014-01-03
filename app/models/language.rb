@@ -21,4 +21,5 @@ class Language
   field :twitter_name, type: String
 
   scope :by_language, ->(lang){where(name: Product.decode_language(lang))}
+
 end

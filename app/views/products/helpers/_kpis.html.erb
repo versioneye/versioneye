@@ -15,12 +15,12 @@
   </div>
 
 
-  <% rel_text = "info" %>
   <% days_ago = @product.released_days_ago %>
-  <% rel_bg = "success" if days_ago < 30  %>
-  <% rel_bg = "info"    if days_ago >= 30 && days_ago <= 90  %>
-  <% rel_bg = "warn"    if days_ago > 90  && days_ago <= 180  %>
-  <% rel_bg = "error"   if days_ago > 180 %>
+  <% rel_bg = '' %>
+  <% rel_bg = 'success' if days_ago < 30  %>
+  <% rel_bg = 'info'    if days_ago >= 30 && days_ago <= 90  %>
+  <% rel_bg = 'warn'    if days_ago > 90  && days_ago <= 180  %>
+  <% rel_bg = 'error'   if days_ago > 180 %>
   <div class="flash <%= rel_bg %>" style="margin-bottom: 5px;" >
     <b title="<%= @product.released_ago_text %>" >Released:</b>
     <span title="<%= @product.released_ago_text %>">
@@ -36,20 +36,23 @@
   <% if average_release_time.nil? %>
     <% average_release_time = VersionService.estimated_average_release_time( @product.versions ) %>
   <% end %>
-  <% art_text = "Not Available" if average_release_time == 0 %>
-  <% art_bg = "info" %>
+  <% art_text = '' %>
+  <% art_text = 'Not Available' if average_release_time.nil? || average_release_time == 0 %>
+  <% art_bg = 'info' %>
   <% if !average_release_time.nil? && average_release_time > 0 %>
-    <% art_bg = "success" if average_release_time > 0 && average_release_time <= 31  %>
-    <% art_bg = "info"  if average_release_time > 31 && average_release_time <= 62  %>
-    <% art_bg = "warn"  if average_release_time > 62 && average_release_time <= 124  %>
-    <% art_bg = "error" if average_release_time > 124 %>
+    <% art_bg = 'success' if average_release_time > 0 && average_release_time <= 31  %>
+    <% art_bg = 'info'  if average_release_time > 31 && average_release_time <= 62  %>
+    <% art_bg = 'warn'  if average_release_time > 62 && average_release_time <= 124  %>
+    <% art_bg = 'error' if average_release_time > 124 %>
     <% art_text = "In average this dev team is releasing a new version every #{average_release_time} days." %>
+  <% else %>
+    <% art_bg = "error" %>
   <% end %>
 
   <div class="flash <%= art_bg %>" style="margin-bottom: 5px;" >
     <b title="<%= art_text %>" >Avg. Rel. Time:</b>
     <span title="<%= art_text %>">
-      <% if average_release_time == 0 %>
+      <% if average_release_time.nil? || average_release_time == 0 %>
        N/A
       <% else %>
         <%= average_release_time %> days
@@ -64,25 +67,52 @@
       @product.language.eql?(Product::A_LANGUAGE_PHP) ||
       @product.language.eql?(Product::A_LANGUAGE_OBJECTIVEC) %>
   <% references = @product.used_by_count %>
-  <% ref_bg = "success" if references >= 100  %>
-  <% ref_bg = "info"    if references >= 10 and references < 100  %>
-  <% ref_bg = "warn"    if references >  0  and references < 10  %>
-  <% ref_bg = "error"   if references == 0 %>
+  <% ref_bg = '' %>
+  <% ref_bg = 'success' if references >= 100  %>
+  <% ref_bg = 'info'    if references >= 10 and references < 100  %>
+  <% ref_bg = 'warn'    if references >  0  and references < 10  %>
+  <% ref_bg = 'error'   if references == 0 %>
   <% ref_text = "#{references} packages are referencing this project" %>
   <div class="flash <%= ref_bg %>" style="margin-bottom: 5px;" >
-    <b title="<%= ref_text %>">References:</b> <span title="<%= ref_text %>"><%= references %></span>
+    <b title="<%= ref_text %>">References:</b>
+    <span title="<%= ref_text %>">
+      <% if references > 0 %>
+        <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/references"><%= references %></a>
+      <% else %>
+        <%= references %>
+      <% end %>
+    </span>
   </div>
 <% end %>
 
   <% main_dep_count = @product.dependencies(nil).count %>
-  <% dep_bg = "success" if main_dep_count <= 9  %>
-  <% dep_bg = "info" if main_dep_count > 9 and main_dep_count < 15  %>
-  <% dep_bg = "warn" if main_dep_count >= 15 and main_dep_count < 30  %>
-  <% dep_bg = "error" if main_dep_count >= 30 %>
+  <% dep_bg = '' %>
+  <% dep_bg = 'success' if main_dep_count <= 9  %>
+  <% dep_bg = 'info' if main_dep_count > 9 and main_dep_count < 15  %>
+  <% dep_bg = 'warn' if main_dep_count >= 15 and main_dep_count < 30  %>
+  <% dep_bg = 'error' if main_dep_count >= 30 %>
   <% scope = Dependency.main_scope(@product.language) %>
   <% title_text = "#{main_dep_count} direct #{scope} dependencies" %>
   <div class="flash <%= dep_bg %>" style="margin-bottom: 5px;">
     <b title="<%= title_text %>">Dependencies:</b> <span title="<%= title_text %>"><%= main_dep_count %></span>
+  </div>
+
+  <% licenses = @product.licenses %>
+  <% license_bg = 'info' %>
+  <% license_bg = "error" if !licenses || licenses.empty? %>
+  <div class="flash <%= license_bg %>" style="margin-bottom: 5px;">
+    <b title="license">License:</b>
+    <% if licenses && !licenses.empty? %>
+      <% licenses.each do |license| %>
+        <% if license.url && !license.url.empty? %>
+          <a href="<%= license.url %>" target="license"><%= license.name %></a><br/>
+        <% else %>
+          <%= license.name %><br/>
+        <% end %>
+      <% end %>
+    <% else %>
+      UNKNOWN
+    <% end %>
   </div>
 
   <div class="flash info" style="margin-bottom: 5px;">
@@ -95,7 +125,7 @@
           @product.language.eql?(Product::A_LANGUAGE_PYTHON) ||
           @product.language.eql?(Product::A_LANGUAGE_OBJECTIVEC) ||
           @product.language.eql?(Product::A_LANGUAGE_R) %>
-      <a href="/<%= @product.language_esc %>" alt="<%= @product.language_esc %>" title="<%= @product.language_esc %>"><%= @product.language %></a>
+      <a href="/<%= @product.language_esc %>" title="<%= @product.language_esc %>"><%= @product.language %></a>
     <% else %>
       <%= @product.language %>
     <% end %>
@@ -105,6 +135,6 @@
 
 <% if signed_in_admin? %>
   <div  >
-    <%= link_to "edit", product_edit_path %>
+    <%= link_to 'edit', product_edit_path %>
   </div>
 <% end %>

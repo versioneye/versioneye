@@ -36,11 +36,11 @@ module V2
         ]
       }
       params do
-        optional :lang, type: String, desc: "Filter by language"
-        optional :private, type: Boolean, desc: "Filter by visibility"
-        optional :org_name, type: String, desc: "Filter by name of organization"
-        optional :org_type, type: String, desc: "Filter by type of organization"
-        optional :page, type: String, default: '1', desc: "Number of page"
+        optional :lang         , type: String, desc: "Filter by language"
+        optional :private      , type: Boolean, desc: "Filter by visibility"
+        optional :org_name     , type: String, desc: "Filter by name of organization"
+        optional :org_type     , type: String, desc: "Filter by type of organization"
+        optional :page         , type: String, default: '1', desc: "Number of page"
         optional :only_imported, type: Boolean, default: false, desc: "Show only imported repositories"
       end
       get '/' do
@@ -52,33 +52,33 @@ module V2
         page = 1 if page < 1
 
         query_filters = {}
-        query_filters[:language] = params[:lang] unless params[:lang].nil?
-        query_filters[:private] = params[:private] unless params[:private].nil?
+        query_filters[:language]    = params[:lang] unless params[:lang].nil?
+        query_filters[:private]     = params[:private] unless params[:private].nil?
         query_filters[:owner_login] = params[:org_name] unless params[:org_name].nil?
-        query_filters[:owner_type] = params[:org_type] unless params[:org_type].nil?
+        query_filters[:owner_type]  = params[:org_type] unless params[:org_type].nil?
 
         if user.github_repos.all.count == 0
           #try to import users repos when there's no repos.
           GitHubService.cached_user_repos(user)
         end
 
-        unless params[:only_imported]
-          repos = user.github_repos.where(query_filters).paginate(per_page: 30, page: page)
-        else
+        if params[:only_imported]
           imported_projects = Project.by_user(user).where(source: Project::A_SOURCE_GITHUB)
-          repo_names = imported_projects.map {|proj| proj[:github_project]}
-          repos = user.github_repos.any_in(fullname: repo_names.to_a).paginate(per_page: 30, page: page)
+          repo_names        = imported_projects.map {|proj| proj[:scm_fullname]}
+          repos             = user.github_repos.any_in(fullname: repo_names.to_a).paginate(per_page: 30, page: page)
+        else
+          repos = user.github_repos.where(query_filters).paginate(per_page: 30, page: page)
         end
 
         repos.each do |repo|
-          imported_projects = Project.by_user(user).by_github(repo[:fullname]).to_a
-          proj_keys = imported_projects.map {|proj| proj[:project_key]}
+          imported_projects        = Project.by_user(user).by_github(repo[:fullname]).to_a
+          proj_keys                = imported_projects.map {|proj| proj[:project_key]}
           repo[:imported_projects] = proj_keys.to_a
-          repo[:repo_key] = encode_prod_key(repo[:fullname])
+          repo[:repo_key]          = encode_prod_key(repo[:fullname])
         end
         paging = make_paging_object(repos)
 
-        present :repos,  repos, with: EntitiesV2::RepoEntity
+        present :repos , repos , with: EntitiesV2::RepoEntity
         present :paging, paging, with: EntitiesV2::PagingEntity
       end
 
@@ -98,16 +98,8 @@ module V2
         allowed_params = Set.new [true, 'true', 't', 'T', 1 , '1']
 
         if allowed_params.include? params[:force]
-          p "Re-imports everything"
           repos = GitHubService.update_repos_for_user(user)
-        end
-
-        if Github.user_repos_changed?(user)
-          repos = GitHubService.cached_user_repos(user)
-        end
-
-        if repos
-          msg =  {changed: true, msg: "Changed - pulled #{user.github_repos.all.count} repos"}
+          msg = {changed: true, msg: "Changed - pulled #{user.github_repos.all.count} repos"} if repos
         end
 
         present msg
@@ -139,7 +131,6 @@ module V2
           error! "Search term is unspecified", 400
         end
 
-        results = []
         search_results = Github.search(q, params[:langs], params[:users], page, per_page)
         total_count = search_results['total_count']
         results = process_search_results(search_results)
@@ -149,7 +140,7 @@ module V2
       end
 
 
-      #-- GET '/hook' -----------------------------------------------
+      #-- POST '/hook' -----------------------------------------------
       desc "GitHub Hook", {
         notes: %q[This endpoint is registered as service hook on GitHub. It triggers a project re-parse on each git push. ]
       }
@@ -159,14 +150,13 @@ module V2
       post '/hook/:project_id' do
         authorized?
         project = Project.find_by_id( params[:project_id] )
-        resp = false
+
         if project && project.collaborator?( current_user )
-          Thread.new{ ProjectService.update( project, false ) }
-          resp = true
+          Thread.new{ ProjectService.update( project, project.notify_after_api_update ) }
+          present :success, true
         else
-          resp = "No! You do not have access to this project!"
+          present :success, "No! You do not have access to this project!"
         end
-        present :success, resp
       end
 
 
@@ -228,10 +218,10 @@ module V2
 
         repo = user.github_repos.by_fullname(repo_name).first
         unless repo
-          error! "We couldn't finde the repository `#{repo_name}` in your account.", 400
+          error! "We couldn't find the repository `#{repo_name}` in your account.", 400
         end
 
-        project = ProjectService.import_from_github(user, repo_name, branch)
+        ProjectService.import_from_github(user, repo_name, branch)
         projects = Project.by_user(current_user).by_github(repo_name).to_a
 
         present :repo, repo, with: EntitiesV2::RepoEntityDetailed
@@ -260,9 +250,9 @@ module V2
         github_connected?(user)
 
         repo_name = decode_prod_key(params[:repo_key])
-        branch = params[:branch]
+        branch    = params[:branch]
 
-        project = Project.by_user(user).by_github(repo_name).where(github_branch: branch).shift
+        project = Project.by_user(user).by_github(repo_name).where(scm_branch: branch).shift
         error!("Project doesnt exists", 400) if project.nil?
         ProjectService.destroy project[:_id].to_s
         present :success, true

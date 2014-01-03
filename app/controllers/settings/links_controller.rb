@@ -1,7 +1,6 @@
 class Settings::LinksController < ApplicationController
 
   before_filter :authenticate
-  force_ssl if Rails.env.production?
 
   def index
     @userlinkcollection = Userlinkcollection.find_all_by_user( current_user.id )
@@ -23,9 +22,9 @@ class Settings::LinksController < ApplicationController
     @userlinkcollection.facebook      = params[:facebook]
     @userlinkcollection.user_id       = current_user.id
     if @userlinkcollection.save
-      flash[:success] = "Profile updated."
+      flash[:success] = 'Profile updated.'
     else
-      flash[:error] = "Something went wrong. Please try again later."
+      flash[:error] = 'Something went wrong. Please try again later.'
     end
     redirect_to settings_links_path()
   end

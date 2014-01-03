@@ -47,6 +47,17 @@ FactoryGirl.define do
     encrypted_password Digest::SHA2.hexdigest("sugar--password")
   end
 
+  factory :bitbucket_user, class: User do
+    fullname "Hans Tanz"
+    username "hans_tanz"
+    email "hans@tanz.de"
+    password "password"
+    salt "salt"
+    bitbucket_id "versioneye_test"
+    terms true
+    datenerhebung true
+    encrypted_password Digest::SHA2.hexdigest("sugar--password")
+  end
 end
 
 

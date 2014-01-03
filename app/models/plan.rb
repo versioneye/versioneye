@@ -3,10 +3,10 @@ class Plan
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_PLAN_FREE            = "02_free"
-  A_PLAN_PERSONAL        = "02_personal"
-  A_PLAN_BUSINESS_SMALL  = "02_business_small"
-  A_PLAN_BUSINESS_NORMAL = "02_business_normal"
+  A_PLAN_FREE            = '02_free'
+  A_PLAN_PERSONAL        = '02_personal'
+  A_PLAN_BUSINESS_SMALL  = '02_business_small'
+  A_PLAN_BUSINESS_NORMAL = '02_business_normal'
 
   field :name_id         , type: String
   field :name            , type: String
@@ -22,29 +22,29 @@ class Plan
   def self.create_default_plans
     free = Plan.new
     free.name_id = A_PLAN_FREE
-    free.name = "Free"
-    free.price = "0"
+    free.name = 'Free'
+    free.price = '0'
     free.private_projects = 0
     free.save
 
   	plan = Plan.new
   	plan.name_id = A_PLAN_PERSONAL
-  	plan.name = "Personal"
-  	plan.price = "3"
+  	plan.name = 'Personal'
+  	plan.price = '3'
   	plan.private_projects = 5
   	plan.save
 
   	plan2 = Plan.new
   	plan2.name_id = A_PLAN_BUSINESS_SMALL
-  	plan2.name = "Business - Small"
-  	plan2.price = "7"
+  	plan2.name = 'Business - Small'
+  	plan2.price = '7'
   	plan2.private_projects = 10
   	plan2.save
 
   	plan3 = Plan.new
   	plan3.name_id = A_PLAN_BUSINESS_NORMAL
-  	plan3.name = "Business - Normal"
-  	plan3.price = "25"
+  	plan3.name = 'Business - Normal'
+  	plan3.price = '25'
   	plan3.private_projects = 50
   	plan3.save
   end

@@ -1,7 +1,5 @@
 class SessionsController < ApplicationController
 
-  force_ssl :only => [:new, :create] if Rails.env.production?
-
   def new
   end
 
@@ -11,12 +9,12 @@ class SessionsController < ApplicationController
     user = User.authenticate(params[:session][:email],
                              params[:session][:password])
     if user.nil?
-      flash[:error] = "Invalid email/password combination."
-      @title = "Sign in"
-      redirect_to :back and return
+      flash[:error] = 'Invalid email/password combination.'
+      @title = 'Sign in'
+      redirect_to :back
     elsif !user.activated?
-      flash[:error] = "Your Account is not active. Please validate your email address by clicking the verification link in the verification E-Mail."
-      redirect_to :back and return
+      flash[:error] = 'Your Account is not active. Please validate your email address by clicking the verification link in the verification E-Mail.'
+      redirect_to :back
     else
       sign_in user
       if redirect_url

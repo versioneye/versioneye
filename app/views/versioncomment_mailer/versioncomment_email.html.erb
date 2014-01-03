@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-	</head>
-	<body>
-		<p>Hello <%= @follower.fullname %></p>
-		<p>
-			<a href="http://www.versioneye.com/users/<%= @user.username %>"><%= @user.fullname %></a> wrote a comment on
-			<a href="http://www.versioneye.com/<%= @prod.language.downcase %>/<%= @prod.to_param %>"><%= @prod.name %></a><br/>
-			You can see the comment here: <a href="<%= @commentlink %>"><%= @commentlink %></a>
-		</p>
-		<p>
-			Have a great day!
-		</p>
-		<p>
-			Your VersionEye Team<br/>
-			<a href="http://www.versioneye.com">https://www.versioneye.com</a>
-		</p>
-	</body>
-</html>
+<p>
+	Hello <%= @follower.fullname %>
+</p>
+<p>
+	<a href="http://www.versioneye.com/users/<%= @user.username %>?utm_medium=email&amp;utm_source=version_comment"><%= @user.fullname %></a> wrote a comment on
+	<a href="http://www.versioneye.com/<%= @prod.language_esc %>/<%= @prod.to_param %>?utm_medium=email&amp;utm_source=version_comment"><%= @prod.name %></a><br/>
+	You can see the comment here: <a href="<%= @commentlink %>?utm_medium=email&amp;utm_source=version_comment"><%= @commentlink %></a>
+</p>
+<p>
+	Have a great day!
+</p>
+<p>
+	Your VersionEye Team<br/>
+	<a href="http://www.versioneye.com?utm_medium=email&amp;utm_source=version_comment">https://www.versioneye.com</a>
+</p>

@@ -1,4 +1,4 @@
-[![Dependency Status](http://www.versioneye.com/user/projects/52729fad632bac2b7c000dd1/badge.png)](http://www.versioneye.com/user/projects/52729fad632bac2b7c000dd1)
+[![Dependency Status](https://www.versioneye.com/user/projects/52878714632bac28c200006d/badge.png)](https://www.versioneye.com/user/projects/52878714632bac28c200006d)
 
 ![Tests](https://www.codeship.io/projects/de2efdb0-1d42-0131-839e-26fabeabc570/status)
 
@@ -104,7 +104,7 @@ Our rake tasks are organized in `lib/tasks/versioneye.rake`. In this file we hav
 rake versioneye:daily_jobs
 ```
 
-This will execute all jobs we have to run daily. For example sending out the daily new verison notification emails and so on.
+This will execute all jobs we have to run daily. For example sending out the daily new version notification emails and so on.
 
 ```
 rake versioneye:weekly_jobs

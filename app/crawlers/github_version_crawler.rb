@@ -2,11 +2,11 @@ class GithubVersionCrawler
 
   include HTTParty
 
-  A_USER_AGENT = "www.versioneye.com"
-  A_API_URL    = "https://api.github.com"
+  A_USER_AGENT = 'www.versioneye.com'
+  A_API_URL    = 'https://api.github.com'
 
   def self.logger
-    ActiveSupport::BufferedLogger.new("log/github_version_crawler.log")
+    ActiveSupport::BufferedLogger.new('log/github_version_crawler.log')
   end
 
   # Crawle Release dates for Objective-C packages
@@ -17,23 +17,22 @@ class GithubVersionCrawler
   end
 
   def self.products( language, empty_release_dates, desc = true )
-    products = nil
+    products = Mongoid::Criteria.new(Product)
     if empty_release_dates
-      products = Product.where({ :language => language, "versions.released_at" => nil })
+      products = Product.where({ :language => language, 'versions.released_at' => nil })
     else
-      products = Product.where({ :language => language })
+      products = Product.where({ :language => language }) if !empty_release_dates
     end
-    if desc
-      products = products.desc(:name)
-    else
-      products = products.asc(:name)
-    end
+
+    products = products.desc(:name) if desc
+    products = products.asc(:name)  if !desc
+
     products.no_timeout
   end
 
 
   def self.add_version_to_product ( product )
-    repo = product.repositories.map(&:repo_source).uniq.first
+    repo = product.repositories.map(&:src).uniq.first
     return nil if repo.to_s.empty?
 
     github_versions = versions_for_github_url( repo )
@@ -138,7 +137,7 @@ class GithubVersionCrawler
   def self.repo_data owner_repo
     api  = OctokitApi.instance
     root = api.root
-    repo = root.rels[:repository].get(:uri => owner_repo).data
+    root.rels[:repository].get(:uri => owner_repo).data
   end
 
   def self.parse_github_url (git_url)

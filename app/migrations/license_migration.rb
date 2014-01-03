@@ -6,12 +6,12 @@ class LicenseMigration
   end
 
   def self.migrate_1
-    products = Product.where(:license.ne => nil, :license.ne => "", :license.ne => "unknown", :license.ne => "UNKNOWN")
+    products = Product.where(:license.ne => nil, :license.ne => '', :license.ne => 'unknown', :license.ne => 'UNKNOWN')
     self.process products
   end
 
   def self.migrate_2
-    products = Product.where(:license_manual.ne => nil, :license_manual.ne => "", :license_manual.ne => "unknown", :license_manual.ne => "UNKNOWN")
+    products = Product.where(:license_manual.ne => nil, :license_manual.ne => '', :license_manual.ne => 'unknown', :license_manual.ne => 'UNKNOWN')
     self.process products
   end
 

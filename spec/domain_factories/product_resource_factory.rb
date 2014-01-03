@@ -17,28 +17,28 @@ class ProductResourceFactory
   end
 
   def self.init_db
-    self.store_resource("php/php-src");
-    self.store_resource("jquery/jquery");
-    self.store_resource("jquery/jquery-mobile");
-    self.store_resource("tonytomov/jqGrid");
-    self.store_resource("sstephenson/prototype");
-    self.store_resource("phonegap/phonegap");
-    self.store_resource("documentcloud/underscore");
-    self.store_resource("madrobby/scriptaculous");
-    self.store_resource("mootools/mootools-core");
-    self.store_resource("DmitryBaranovskiy/raphael");
-    self.store_resource("sorccu/cufon");
-    self.store_resource("ztellman/aleph");
-    self.store_resource("ztellman/lamina");
-    self.store_resource("ztellman/gloss");
-    self.store_resource("chaos/slurm");
-    self.store_resource("chaos/lustre");
-    self.store_resource("chaos/zfs");
-    self.store_resource("chaos/diod");
+    self.store_resource('php/php-src')
+    self.store_resource('jquery/jquery')
+    self.store_resource('jquery/jquery-mobile')
+    self.store_resource('tonytomov/jqGrid')
+    self.store_resource('sstephenson/prototype')
+    self.store_resource('phonegap/phonegap')
+    self.store_resource('documentcloud/underscore')
+    self.store_resource('madrobby/scriptaculous')
+    self.store_resource('mootools/mootools-core')
+    self.store_resource('DmitryBaranovskiy/raphael')
+    self.store_resource('sorccu/cufon')
+    self.store_resource('ztellman/aleph')
+    self.store_resource('ztellman/lamina')
+    self.store_resource('ztellman/gloss')
+    self.store_resource('chaos/slurm')
+    self.store_resource('chaos/lustre')
+    self.store_resource('chaos/zfs')
+    self.store_resource('chaos/diod')
   end
 
   def self.store_resource(name)
-    github_api = "https://api.github.com/repos/"
+    github_api = 'https://api.github.com/repos/'
     resource_01_url = "#{github_api}#{name}"
     resource_01 = ProductResource.new({
       :url => resource_01_url,

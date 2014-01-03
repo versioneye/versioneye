@@ -23,10 +23,10 @@ class LanguageDailyStats
   def self.initial_metrics_table
     #metrics table for every language
     {
-      "new_version" => 0,   #new versions publised
-      "novel_package" => 0, #new libraries published
-      "total_package" => 0, #total packages upto this date
-      "total_artifact" => 0 #total artifacts upto this date
+      'new_version' => 0,   #new versions publised
+      'novel_package' => 0, #new libraries published
+      'total_package' => 0, #total packages upto this date
+      'total_artifact' => 0 #total artifacts upto this date
     }
   end
 
@@ -48,12 +48,12 @@ class LanguageDailyStats
 
   def self.language_to_sym(lang)
     lang = Product.encode_language(lang).capitalize
-    lang = lang.gsub(/\-/, "") #special rule for Objective-C
+    lang = lang.gsub(/\-/, '') #special rule for Objective-C
     lang.to_sym
   end
 
   def self.to_date_string(that_day)
-    that_day.strftime("%Y-%m-%d")
+    that_day.strftime('%Y-%m-%d')
   end
 
   def self.new_document(that_day, save = false)
@@ -141,7 +141,7 @@ class LanguageDailyStats
       return false
     end
 
-    if release_info.attributes.has_key?('created_at') and release_info.attributes.has_key?('created_at')
+    if release_info.attributes.has_key?('created_at')
       unless prod_info[:created_at].nil? or release_info[:created_at].nil?
         product_date = self.to_date_string(prod_info[:created_at])
         release_date = self.to_date_string(release_info[:created_at])
@@ -259,8 +259,8 @@ class LanguageDailyStats
     Product.supported_languages.each do |lang|
       lang_key = LanguageDailyStats.language_to_sym(lang).to_s
 
-      t0_metric_value = t0_stats[lang_key][metric] if t0_stats.has_key?(lang_key)
-      t1_metric_value = t1_stats[lang_key][metric] if t1_stats.has_key?(lang_key)
+      t0_metric_value = t0_stats.has_key?(lang_key) ? t0_stats[lang_key][metric] : nil
+      t1_metric_value = t1_stats.has_key?(lang_key) ? t1_stats[lang_key][metric] : nil
       if t0_metric_value and t1_metric_value
         diff = t0_metric_value - t1_metric_value
       else
@@ -293,8 +293,10 @@ class LanguageDailyStats
     when :last_month
       t1 = self.last_month_stats
       t2 = self.two_months_ago_stats
+    else
+      t1 = self.yesterday_stats
+      t2 = self.t2_stats
     end
-
     return t1, t2
   end
 

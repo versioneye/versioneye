@@ -132,11 +132,11 @@ class PodfileParser < CommonParser
   def version_hash version_from_file, prod_name, product
     if [:git, :head].member? version_from_file
       Rails.logger.debug "WARNING dependency '#{prod_name}' requires GIT" # TODO
-      return {:version_requested => "GIT", :version_label => "GIT", :comperator => "="}
+      {:version_requested => "GIT", :version_label => "GIT", :comperator => "="}
 
     elsif :path == version_from_file
       Rails.logger.debug "WARNING dependency '#{prod_name}' requires PATH" # TODO
-      return {:version_requested => "PATH", :version_label => "PATH", :comperator => "="}
+      {:version_requested => "PATH", :version_label => "PATH", :comperator => "="}
 
     else
       comperator_version = CocoapodsPackageManager.parse_version_constraint( version_from_file )
@@ -151,7 +151,7 @@ class PodfileParser < CommonParser
         return {:version_requested => version_requested, :version_label => version_from_file, :comperator => comperator}
       end
 
-      return {:version_requested => version, :version_label => version_from_file, :comperator => comperator}
+      {:version_requested => version, :version_label => version_from_file, :comperator => comperator}
     end
   end
 

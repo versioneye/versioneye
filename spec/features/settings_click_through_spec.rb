@@ -54,7 +54,7 @@ describe "Settings click throgh" do
       click_link "Privacy"
       page.should have_content("Who can see")
 
-      click_link "API"
+      click_link "API Key"
       page.should have_content("API Key")
 
       click_link "Delete"

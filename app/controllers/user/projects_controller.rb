@@ -1,6 +1,6 @@
 class User::ProjectsController < ApplicationController
 
-  before_filter :authenticate        , :except => [:show, :badge]
+  before_filter :authenticate        , :except => [:show, :badge, :transitive_dependencies]
   before_filter :new_project_redirect, :only   => [:index]
 
   def index
@@ -8,13 +8,13 @@ class User::ProjectsController < ApplicationController
   end
 
   def new
-    @project = Project.new
+    @project = Project.new(params)
   end
 
   def create
     project = fetch_project params
     if project.nil?
-      flash[:error] = "Please put in a URL OR select a file from your computer." if flash[:error].nil?
+      flash[:error] = 'Please put in a URL OR select a file from your computer.' if flash[:error].nil?
       redirect_to new_user_project_path
       return nil
     end
@@ -27,29 +27,48 @@ class User::ProjectsController < ApplicationController
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
-    flash[:error] = "VersionEye is not able to parse your project. Please contact the VersionEye Team."
+    flash[:error] = 'VersionEye is not able to parse your project. Please contact the VersionEye Team.'
     redirect_to user_projects_path
   end
 
   def show
-    id = params[:id]
-    project = Project.find_by_id( id )
-    project = add_dependency_classes( project )
-    @project = project
-    @sorted_deps = sort_dependencies_by_rank(project)
-    @collaborators = project.collaborators
+    id             = params[:id]
+    project        = Project.find_by_id( id )
+    project        = add_dependency_classes( project )
+    @project       = project
 
     unless project.visible_for_user?(current_user)
-      return if authenticate == false
+      return if !authenticate
       redirect_to(root_path) unless current_user?(project.user)
+    end
+  end
+
+  def transitive_dependencies
+    id             = params[:id]
+    project        = Project.find_by_id( id )
+    hash = circle_hash_for_dependencies project
+    @products = Array.new
+    circle = CircleElement.fetch_deps(1, hash, Hash.new, project.language)
+    circle.each do |dep|
+      next if dep.last[:level] == 0
+      product = Product.fetch_product( project.language, dep.last['dep_prod_key'] )
+      next if product.nil?
+      version = dep.last['version']
+      if !version.to_s.empty? && !version.to_s.eql?('unknown')
+        product.version = version
+      end
+      @products << product
+    end
+    respond_to do |format|
+      format.js
     end
   end
 
   def badge
     id    = params[:id]
-    badge = badge_for_project( id )
-    path  = "app/assets/images/badges"
-    send_file "#{path}/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
+    badge = ProjectService.badge_for_project id
+    path  = 'app/assets/images/badges'
+    send_file "#{path}/dep_#{badge}.png", :type => 'image/png', :disposition => 'inline'
   end
 
   def update_name
@@ -67,19 +86,19 @@ class User::ProjectsController < ApplicationController
     file       = params[:upload]
     project_id = params[:project_id]
     if file.nil? || project_id.nil?
-      flash[:error] = "Something went wrong. Please contact the VersionEye Team."
+      flash[:error] = 'Something went wrong. Please contact the VersionEye Team.'
       redirect_to user_projects_path
       return
     end
     project = Project.find_by_id project_id
     if project.nil?
-      flash[:error] = "No project with given key. Please contact the VersionEye Team."
+      flash[:error] = 'No project with given key. Please contact the VersionEye Team.'
       redirect_to user_projects_path
       return
     end
     new_project = upload file
     if new_project.nil?
-      flash[:error] = "Something went wrong. Please contact the VersionEye Team."
+      flash[:error] = 'Something went wrong. Please contact the VersionEye Team.'
       redirect_to user_projects_path
     end
     project.update_from new_project
@@ -136,8 +155,8 @@ class User::ProjectsController < ApplicationController
 
   def reparse
     id = params[:id]
-    project = Project.find_by_id( id )
-    ProjectService.update( project )
+    project = Project.find_by_id id
+    ProjectService.update project
     flash[:info] = "Project re parse is done."
     redirect_to user_project_path( project )
   end
@@ -182,7 +201,11 @@ class User::ProjectsController < ApplicationController
     else
       @project.public = false
     end
-    @project.save
+    if @project.save
+      flash[:success] = "We saved your changes."
+    else
+      flash[:error] = "Something went wrong. Please try again later."
+    end
     redirect_to user_project_path(@project)
   end
 
@@ -206,6 +229,23 @@ class User::ProjectsController < ApplicationController
     redirect_to user_project_path(@project)
   end
 
+  def save_notify_after_api_update
+    id     = params[:id]
+    notify = params[:notify]
+    @project = Project.find_by_id id
+    if notify.eql?('notify')
+      @project.notify_after_api_update = true
+    else
+      @project.notify_after_api_update = false
+    end
+    if @project.save
+      flash[:success] = "We saved your changes."
+    else
+      flash[:error] = "Something went wrong. Please try again later."
+    end
+    redirect_to user_project_path(@project)
+  end
+
   def mute_dependency
     render update_project_dependency(params, {muted: true})
   end
@@ -215,12 +255,6 @@ class User::ProjectsController < ApplicationController
   end
 
   private
-
-    def sort_dependencies_by_rank(project)
-      deps = project.dependencies
-      return project if deps.nil? or deps.empty?
-      deps.sort_by {|dep| dep[:status_rank] }
-    end
 
     def update_project_dependency(params, update_map)
       project_id = params[:id]
@@ -237,7 +271,7 @@ class User::ProjectsController < ApplicationController
       end
 
       dep.update_attributes(update_map)
-      return {json: params}
+      {json: params}
     end
 
     def fetch_project( params )
@@ -248,14 +282,14 @@ class User::ProjectsController < ApplicationController
       end
       return upload_and_store( file )       if file && !file.empty?
       return fetch_and_store( project_url ) if project_url && !project_url.empty?
-      return nil
+      nil
     end
 
     def upload_and_store file
       project = upload file
       stored = store_project(project)
       return project if stored
-      return nil if not stored
+      nil
     end
 
     def upload file
@@ -274,7 +308,7 @@ class User::ProjectsController < ApplicationController
       project.source = Project::A_SOURCE_URL
       stored = store_project(project)
       return project if stored
-      return nil if not stored
+      nil if not stored
     end
 
     def build_project( url, project_name )
@@ -289,11 +323,24 @@ class User::ProjectsController < ApplicationController
     def store_project( project )
       if ProjectService.store project
         flash[:success] = "Project was created successfully."
-        return true
+        true
       else
         flash[:error] = "An error occured. Something is wrong with your file. Please contact the VersionEye Team on Twitter."
-        return false
+        false
       end
+    end
+
+    def circle_hash_for_dependencies( project )
+      hash = Hash.new
+      project.dependencies.each do |dep|
+        element = CircleElement.new
+        element.init_arrays
+        element.dep_prod_key = dep.prod_key
+        element.version      = dep.version_requested
+        element.level        = 0
+        hash[dep.prod_key] = element
+      end
+      hash
     end
 
 end

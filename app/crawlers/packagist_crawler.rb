@@ -1,7 +1,7 @@
 class PackagistCrawler
 
   def self.logger
-    ActiveSupport::BufferedLogger.new("log/packagist.log")
+    ActiveSupport::BufferedLogger.new('log/packagist.log')
   end
 
   def self.crawl
@@ -42,7 +42,7 @@ class PackagistCrawler
       version_number = String.new(version[0])
       version_obj = version[1]
       if version_number && version_number.match(/v[0-9]+\..*/)
-        version_number.gsub!("v", "")
+        version_number.gsub!('v', '')
       end
       db_version = product.version_by_number version_number
       if db_version.nil?
@@ -52,6 +52,7 @@ class PackagistCrawler
         PackagistCrawler.create_download     product, version_number, version_obj
       end
     end
+    VersionService.update_version_data( product )
   rescue => e
     self.logger.error "ERROR in crawle_package Message:   #{e.message}"
     self.logger.error e.backtrace.join("\n")
@@ -95,10 +96,9 @@ class PackagistCrawler
     self.logger.info " -- PHP Package: #{product.prod_key} -- with new version: #{version_number}"
 
     self.create_license( product, version_number, version_obj )
-    VersionService.update_version_data( product )
 
-    CrawlerUtils.create_newest product, version_number
-    CrawlerUtils.create_notifications product, version_number
+    CrawlerUtils.create_newest product, version_number, logger
+    CrawlerUtils.create_notifications product, version_number, logger
 
     Versionlink.create_versionlink product.language, product.prod_key, version_number, version_obj['homepage'], "Homepage"
 
@@ -146,15 +146,15 @@ class PackagistCrawler
       end
       dep_prod_key = require_name
       dep = Dependency.find_by( Product::A_LANGUAGE_PHP, product.prod_key, version_number, require_name, require_version, dep_prod_key )
-      if dep.nil?
-        dependency = Dependency.new({:name => require_name, :version => require_version,
-          :dep_prod_key => dep_prod_key, :prod_key => product.prod_key,
-          :prod_version => version_number, :scope => scope, :prod_type => Project::A_TYPE_COMPOSER,
-          :language => Product::A_LANGUAGE_PHP })
-        dependency.save
-        dependency.update_known
-        self.logger.info " ---- Create new dependency: #{dependency.prod_key}:#{dependency.prod_version} depends on #{dependency.dep_prod_key}:#{dependency.version}"
-      end
+      next if dep
+
+      dependency = Dependency.new({:name => require_name, :version => require_version,
+        :dep_prod_key => dep_prod_key, :prod_key => product.prod_key,
+        :prod_version => version_number, :scope => scope, :prod_type => Project::A_TYPE_COMPOSER,
+        :language => Product::A_LANGUAGE_PHP })
+      dependency.save
+      dependency.update_known
+      self.logger.info " ---- Create new dependency: #{dependency.prod_key}:#{dependency.prod_version} depends on #{dependency.dep_prod_key}:#{dependency.version}"
     end
   end
 
@@ -166,9 +166,8 @@ class PackagistCrawler
         author_homepage = author['homepage']
         author_role     = author['role']
         devs = Developer.find_by Product::A_LANGUAGE_PHP, product.prod_key, version_number, author_name
-        if devs && !devs.empty?
-          next
-        end
+        next if devs && !devs.empty?
+
         developer = Developer.new({:language => Product::A_LANGUAGE_PHP,
           :prod_key => product.prod_key, :version => version_number,
           :name => author_name, :email => author_email,

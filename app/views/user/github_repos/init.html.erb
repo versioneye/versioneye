@@ -1,7 +1,7 @@
-<% title "Github Repositories" %>
+<% title 'Github Repositories' %>
 
 <div class="span3" >
-  <%= render "/user/helpers/navi" %>
+  <%= render '/user/helpers/navi' %>
 </div>
 
 
@@ -90,7 +90,10 @@
 </script>
 
 <script id = "github-repo-info-template" type = "text/template">
-  <div id = "github-repo-{{= repo.github_id}}" class = "repo-container">
+  <div id = "github-repo-{{= repo.github_id}}"
+       class = "repo-container"
+       data-repo-id = "{{= repo.github_id }}"
+       data-repo-fullname = "{{= repo.fullname }}">
     <div class = "repo-notification hide span12"></div>
     <div id = "slide1" class = "repo-slider current" data-next="slide2">
       <div class = "repo-info row-fluid">
@@ -107,8 +110,12 @@
           <div class = "span12 repo-desc"> {{= repo.description }} </div>
           <div class = "span12 repo-project-info"></div>
         </div>
-        <div class = "controls">
-          <button class = "btn btn-mini btn-link controls-toggle">
+        <div class = "controls span12">
+          <button class = "btn btn-mini btn-link controls-toggle update-repo pull-left">
+              <i class = "icon-refresh"></i>
+              <span class = "btn-title"> Update the repository </span>
+          </button>
+          <button class = "btn btn-mini btn-link controls-toggle toggle-next pull-right">
             <i class = "icon-caret-up"></i> Show project files
           </button>
         </div>
@@ -117,9 +124,13 @@
     <div id = "slide2" class = "repo-slider" data-next="slide1">
       <div class = "span12">
         <div class = "repo-controls-container">
-          <div class = "repo-controls"></div>
-          <div class = "controls">
-            <button class = "btn btn-mini btn-link controls-toggle">
+          <div class = "repo-controls span12"></div>
+          <div class = "controls span12">
+            <button class = "btn btn-mini btn-link controls-toggle update-repo pull-left">
+              <i class = "icon-refresh"></i>
+              <span class = "btn-title"> Update the repository </span>
+            </button>
+            <button class = "btn btn-mini btn-link controls-toggle toggle-next pull-right">
               <i class = "icon-caret-up"></i> Show project info
             </button>
           </div>
@@ -179,11 +190,11 @@
               class="onoffswitch-checkbox github-switch"
               id="{{= switch_id }}"
               {{= is_imported ? ' checked ': '' }}
-              data-github-id = "{{= repo.github_id }}"
-              data-github-project-id = "{{= project_info['project_id'] }}"
-              data-github-fullname = "{{= repo.fullname }}"
-              data-github-branch = "{{= branch }}"
-              data-github-filename = "{{= filename }}" />
+              data-scm-id = "{{= repo.github_id }}"
+              data-scm-project-id = "{{= project_info['project_id'] }}"
+              data-scm-fullname = "{{= repo.fullname }}"
+              data-scm-branch = "{{= branch }}"
+              data-scm-filename = "{{= filename }}" />
 
       <label class="onoffswitch-label" for="{{= switch_id }}">
           <div class="onoffswitch-inner"></div>
@@ -197,17 +208,6 @@
 </div>
 </script>
 
-<script id = "github-repo-select-template" type = "text/template">
-  <select id = "{{= 'github-repo-select-' + repo.github_id}}" class = "span github-repo-select">
-    {{= options}}
-  </select>
-</script>
-
-<script id = "github-repo-select-option-template" type = "text/template">
-  <option value = "{{= value }}" {{= selected}}>
-    {{= content }}
-  </option>
-</script>
 
 <script id = "github-menu-item-template" type = "text/template">
   <li class = "org-item">
@@ -244,7 +244,7 @@
           <a href= "javascript:void(0)" data-field="private" data-order= "-1">Visibility</a>
         </li>
         <li class="sort-item">
-          <a href= "javascript:void(0)" data-field="imported" data-order= "-1">Imported</a>
+          <a href= "javascript:void(0)" data-field="cached_at" data-order= "-1">Imported</a>
         </li>
         <li class="sort-item">
           <a href= "javascript:void(0)" data-field="name" data-order= "-1">Name</a>

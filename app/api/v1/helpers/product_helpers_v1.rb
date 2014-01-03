@@ -3,12 +3,11 @@ require 'htmlentities'
 
 module ProductHelpersV1
   @@special_languages = {
-    "pip" => "Python",
-    "npm" => "Javascript",
-    "npm" => "Node.JS",
-    "php" => "PHP",
-    "node.js" =>  "Node.JS",
-    "nodejs" => "Node.JS"
+    'pip' => 'Python',
+    'npm' => 'Node.JS',
+    'php' => 'PHP',
+    'node.js' =>  'Node.JS',
+    'nodejs' => 'Node.JS'
   }
 
   def parse_query(query)
@@ -20,14 +19,14 @@ module ProductHelpersV1
 
   def get_language_param(lang)
     lang = lang.to_s
-    lang = "," if lang.empty?
+    lang = ',' if lang.empty?
     lang
   end
 
   def get_language_array(lang)
     languages = []
 
-    langs = lang.split(",")
+    langs = lang.split(',')
     langs.each do |language|
       language.to_s.strip.downcase!
       if language.length > 0
@@ -55,18 +54,18 @@ module ProductHelpersV1
       error! "Language `#{lang}`is not correct."
     end
 
-    return parsed_lang
+    parsed_lang
   end
 
   def parse_product_key(prod_key)
-    parsed_key = prod_key.to_s.gsub("--", "/")
-    parsed_key = parsed_key.gsub("~", ".")
+    parsed_key = prod_key.to_s.gsub('--', '/')
+    parsed_key = parsed_key.gsub('~', '.')
     HTMLEntities.new.decode parsed_key
   end
 
   def fetch_product( encoded_prod_key )
     if encoded_prod_key.match(/\-\-/).nil?
-      key = encoded_prod_key.gsub("~", ".").gsub(":", "/")
+      key = encoded_prod_key.gsub('~', '.').gsub(':', '/')
       product = Product.find_by_key( key )
       if product
         return product

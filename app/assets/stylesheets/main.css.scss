@@ -902,3 +902,26 @@ img.centered {
 .mute-on { color: red;}
 .mute-off {color: green;}
 .dep-icon {vertical-align: none;}
+
+.link_white{
+  color: white;
+}
+
+.link_white:hover{
+  color: white;
+}
+
+.license_seperator{
+  border-top: 1px dashed gray
+}
+
+.license_box{
+  border-bottom: 1px solid lightgray;
+  margin-right: 5px;
+}
+
+.meta_text_small{
+  font-size: 11px;
+  color: gray;
+}
+

@@ -1,4 +1,4 @@
-  <link href="<%= Settings.server_url %>/favicon.ico" rel="shortcut icon"  />
+  <link href="<%= Settings.server_url_https %>/favicon.ico" rel="shortcut icon"  />
   <!--[if lt IE 8]>
     <meta http-equiv="REFRESH" content="0;url=http://www.versioneye.com/oldbrowser.html" />
   <![endif]-->
@@ -53,8 +53,10 @@
       <%= javascript_include_tag "application_payment",  :defer => false, :async => false %>
 
     <% elsif current_page?( user_projects_github_repositories_path ) %>
-
       <%= javascript_include_tag "application_github",  :defer => false, :async => false %>
+
+    <% elsif current_page?( user_projects_bitbucket_repositories_path ) %>
+      <%= javascript_include_tag "application_bitbucket",  :defer => false, :async => false %>
 
     <% elsif current_page?(version_eye_api_path) %>
 

@@ -83,7 +83,7 @@ describe "frontend APP for importing Github repositories", :js => true do
       page.should_not have_content('Please enable Javascript to see content of the page.')
 
       sleep 5
-      page.should have_content('No repositories')
+      page.should have_content("We couldn't find any repositories in your GitHub account. If you think that's an error contact the VersionEye team.")
     end
 
     it "should show list of github repos" do

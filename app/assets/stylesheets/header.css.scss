@@ -1,19 +1,10 @@
 
-.dark-bg {
-  background: url(/assets/header_os.png);
-  color: #fbb21c;
-  background-repeat: repeat-x;
-}
-
 .navbar {
 
-  & .brand-container {
-    padding: 0px 0px 0px 5px;
-  }
-
-  & .brand {
-    margin: 0px 0px 0px 0px;
+  & .main_logo {
     padding: 0px 0px 0px 0px;
+    margin-left: 0;
+    height: 50px;
   }
 
   & img.flag {
@@ -43,6 +34,10 @@
   font-size: 14px;
   font-weight: bold;
   padding: 10px 0px 0px 0px;
+}
+
+.navbar .nav > li > a.profile_pic_tiny {
+  padding: 6px 0px 0px 0px;
 }
 
 .navbar .nav > li > a:hover {

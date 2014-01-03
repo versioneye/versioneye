@@ -102,7 +102,12 @@ describe LanguageDailyStats do
       stats.empty?.should be_false
       stats.has_key?("Ruby").should be_true
       stats["Ruby"].has_key?("new_version")
-      stats["Ruby"]["new_version"].should eq(30)
+      if Time.now.monday?
+        # yesterday was Sunday, that's last week
+        stats["Ruby"]["new_version"].should eq(13)
+      else
+        stats["Ruby"]["new_version"].should eq(30)
+      end
     end
   end
 
@@ -112,7 +117,7 @@ describe LanguageDailyStats do
       LanguageDailyStats.update_counts(14)
     end
 
-    it "should return correct stats for current week" do
+    it "should return correct stats for last week" do
       stats = LanguageDailyStats.last_week_stats
 
       stats.should_not be_nil
@@ -138,7 +143,7 @@ describe LanguageDailyStats do
       LanguageDailyStats.update_counts(15)
     end
 
-    it "should return correct stats for current week" do
+    it "should return correct stats for current month" do
       stats =  LanguageDailyStats.current_month_stats
 
       stats.should_not be_nil
@@ -155,7 +160,7 @@ describe LanguageDailyStats do
       LanguageDailyStats.update_counts(32)
     end
 
-    it "should return correct stats for current week" do
+    it "should return correct stats for last month" do
       stats =  LanguageDailyStats.last_month_stats
 
       stats.should_not be_nil
@@ -172,7 +177,7 @@ describe LanguageDailyStats do
       LanguageDailyStats.update_counts(64)
     end
 
-    it "should return correct stats for current week" do
+    it "should return correct stats for two month ago" do
       stats =  LanguageDailyStats.two_months_ago_stats
 
       stats.should_not be_nil

@@ -2,10 +2,10 @@
   Filter by:
   <ul class= "nav nav-tabs nav-stacked">
     <li>
-      <%= link_to "Show all", admin_submitted_urls_path(:by_state => "all") %> 
+      <%= link_to 'Show all', admin_submitted_urls_path(:by_state => 'all') %>
     </li>
     <li>
-      <%= link_to "Show unchecked",  admin_submitted_urls_path(:by_state => "unchecked") %> 
+      <%= link_to 'Show unchecked',  admin_submitted_urls_path(:by_state => 'unchecked') %>
     </li>
     <li>
       <%= link_to "Show checked", admin_submitted_urls_path(:by_state => "checked") %> 
@@ -32,8 +32,8 @@
       <td> 
           <% status_colors = {"new" => "warning", "declined" => "important", "accepted" => "success"} %>
           <% item_status = "new" %>
-          <% item_status = "declined" if @submitted_url.declined == true %>
-          <% item_status = "accepted" if @submitted_url.declined == false %>
+          <% item_status = "declined" if @submitted_url.declined %>
+          <% item_status = "accepted" if !@submitted_url.declined %>
         <p>
           <span class ="label label-<%= status_colors[item_status] %>">
             <%= item_status %>

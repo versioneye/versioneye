@@ -1,6 +1,6 @@
 
 <div class="span3" >
-  <%= render "products/helpers/edit_navi" %>
+  <%= render 'products/helpers/edit_navi' %>
 </div>
 
 <div class="span8" >
@@ -16,7 +16,7 @@
     <div class="boxHeader">
       Description
     </div>
-    <% if (@product.description && !@product.description.empty?) %>
+    <% if @product.description && !@product.description.empty? %>
       <div class="boxContainer" >
         <div class="meta-text-small">[ crawled data ]</div>
         <% if @product.description.include? "\n" %>
@@ -28,7 +28,7 @@
     <% end %>
     <br/>
     <div class="boxContainer">
-      <%= form_tag("/#{@product.language.downcase}/#{@product.to_param}/update", :method => "post") do  %>
+      <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/update", :method => "post") do  %>
         <%= text_area_tag :description_manual, @product.description_manual, :class => "round", :style => "width: 546px; height: 170px;", :maxlength => "1000", :onKeyUp => "textCounter(this, document.getElementById('counter'), 1000)", :id => "description"  %>
         <br/>
         <button type="submit" class="btn btn-large btn-primary" >Save</button>

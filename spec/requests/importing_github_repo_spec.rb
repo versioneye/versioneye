@@ -41,9 +41,9 @@ describe "Importing github repo as new project via github_repos_controller" do
       ProjectService.should_receive(:import_from_github).and_return nil
       repo1['command'] = "import"
       repo1['command_data'] = {
-        "githubFullname" => "timgluz/mallet-lda",
-        "githubBranch"   => "master",
-        "githubFilename" => "Gemfile"
+        "scmFullname" => "timgluz/mallet-lda",
+        "scmranch"   => "master",
+        "scmFilename" => "Gemfile"
       }
       repo1['project_files'] = {
         master: [{
@@ -66,9 +66,9 @@ describe "Importing github repo as new project via github_repos_controller" do
       ProjectService.should_receive(:import_from_github).and_return(project1)
       repo1['command'] = "import"
       repo1['command_data'] = {
-        "githubFullname" => "timgluz/mallet-lda",
-        "githubBranch"   => "master",
-        "githubFilename" => "Gemfile"
+        "scmFullname" => "timgluz/mallet-lda",
+        "scmBranch"   => "master",
+        "scmFilename" => "Gemfile"
       }
       repo1['project_files'] = {
         master: [{
@@ -90,10 +90,10 @@ describe "Importing github repo as new project via github_repos_controller" do
       ProjectService.should_receive( :destroy ).and_return(true)
       repo1['command'] = 'remove'
       repo1['command_data'] = {
-        "githubFullname"  => "spec/repo1",
-        "githubBranch"    => "master",
-        "githubFilename"  => "Gemfile",
-        "githubProjectId" => project1[:_id].to_s
+        "scmFullname"  => "spec/repo1",
+        "scmBranch"    => "master",
+        "scmFilename"  => "Gemfile",
+        "scmProjectId" => project1[:_id].to_s
       }
       repo1['project_files'] = {
         master: [{

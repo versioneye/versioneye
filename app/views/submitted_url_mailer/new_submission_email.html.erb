@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
-  <p>New Submission: <%= @submitted_url.url %> from <%= @user.fullname %></p>
-  <p>Check them here: <a href="http://www.versioneye.com/admin/submitted_urls">http://www.versioneye.com/admin/submitted_urls</a></p>
-  <p>
-    Best regards, <br/>
-    Your VersionEye Team<br/>
-    <a href="http://www.versioneye.com">http://www.versioneye.com</a>
-  </p>
-  </body>
-</html>
+<p>
+  New Submission: <%= @submitted_url.url %> from <%= @user.fullname %>
+</p>
+<p>
+  Check them here: <a href="http://www.versioneye.com/admin/submitted_urls?utm_medium=email&amp;utm_source=new_submission">http://www.versioneye.com/admin/submitted_urls</a>
+</p>
+<p>
+  Your VersionEye Team<br/>
+  <a href="http://www.versioneye.com?utm_medium=email&amp;utm_source=new_submission">http://www.versioneye.com</a>
+</p>

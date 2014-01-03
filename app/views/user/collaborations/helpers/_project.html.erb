@@ -1,10 +1,10 @@
 <div class="row search-item" >
   <div class="icon56 span2 pull-left">
     <% prog_lang = Product.encode_language(project[:language]) %>
-    <span class = "icon_<%= prog_lang || "default" %> on" ></span>
+    <span class = "icon_<%= prog_lang || 'default' %> on" ></span>
   </div>
   <div class = "span5">
-    <%= link_to project.name, user_project_path(project), class: "searchResultLink" %><br/>
+    <%= link_to project.name, user_project_path(project), class: 'searchResultLink' %><br/>
     <span class="meta-text-small">
       <%= render partial: "user/collaborations/helpers/project_numbers_sentence", locals: { :project => project } %>
     </span>

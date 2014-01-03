@@ -1,14 +1,14 @@
-<% page_header "Profile" %>
+<% page_header 'Profile' %>
 
-<% if !@user.nil? %>
+<% if @user %>
 	<% title "#{@user.username} (#{@user.fullname}) is following Libraries at VersionEye" %>
 <% end %>
 
-<% if !@user.nil? && @user.deleted %>
+<% if @user && @user.deleted %>
 	This Account does not exist anymore.
 <% end %>
 
-<% if !@user.nil? && !@user.deleted %>
+<% if @user && !@user.deleted %>
 
 	<%= render "header" %>
 
@@ -18,6 +18,7 @@
 
 	<div class="span8 content">
 
+		<% if !@products.nil? && @products.size > 0 %>
 		<div >
 			<h2 class="section_header">
 				Follows <%= pluralize(@user['product_ids'].count, "Package") %>
@@ -34,6 +35,7 @@
 				</div>
 			<% end %>
 		</div>
+		<% end %>
 
 		<div >
 			<h2 class="section_header">
@@ -54,4 +56,3 @@
 	</div>
 
 <% end %>
-<%= render 'shared/dialog_follow' %>

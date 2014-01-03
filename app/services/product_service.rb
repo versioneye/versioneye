@@ -7,7 +7,7 @@ class ProductService
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
     Rails.logger.info  "Dam. We don't give up. Not yet! Start alternative search on awesome MongoDB."
-    MongoProduct.find_by(q, "", group_id, languages, 300).paginate(:page => page_count)
+    MongoProduct.find_by(q, '', group_id, languages, 300).paginate(:page => page_count)
   end
 
 
@@ -64,7 +64,7 @@ class ProductService
       products.each do |product|
         VersionService.update_version_data( product, true )
         product.update_used_by_count( true )
-        update_followers product
+        self.update_followers_for product
       end
     end
   rescue => e
@@ -72,14 +72,14 @@ class ProductService
     Rails.logger.error e.backtrace.join("\n")
   end
 
-  def self.update_followers( product )
+  def self.update_followers_for product
     return nil if product.followers == product.user_ids.count
     product.followers = product.user_ids.count
     product.save
   end
 
   def self.update_followers
-    products = Product.where( :"user_ids.0" => {"$exists"=>true} )
+    products = Product.where( :'user_ids.0' => {'$exists' =>true} )
     products.each do |product|
       product.followers = product.users.count
       product.save

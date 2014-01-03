@@ -15,9 +15,9 @@
     <% if !@languages.nil? && !@languages.empty? %>
         <% @languages.each do |language| %>
           <% langname = language.downcase.gsub(/\./, "") %>
-          <div onclick="document.location.href='<%=language%>'" class="icon_<%= langname %>_small_container" style="cursor: pointer;" >
+          <span onclick="document.location.href='<%=language%>'" class="icon_<%= langname %>_small_container" style="cursor: pointer;" >
               <span  id="icon_<%= langname %>" class="icon_<%= langname %> small on" title="<%= langname %>">&nbsp;</span>
-          </div>
+          </span>
         <% end %>
     <% end %>
     </span>
