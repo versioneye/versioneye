@@ -272,7 +272,7 @@ class User
   end
 
   def self.non_followers
-    User.all.select {|user| user['product_ids'].nil? or user['product_ids'].count == 0}
+    User.collection.find({'product_ids.0' => {'$exists' => false}})
   end
 
   def self.authenticate(email, submitted_password)
