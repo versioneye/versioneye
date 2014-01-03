@@ -79,7 +79,7 @@ class ProductService
   end
 
   def self.update_followers
-    products = Product.where( :'user_ids.0' => {'$exists' =>true} )
+    products = Product.where( :'user_ids.0' => {'$exists' => true} )
     products.each do |product|
       product.followers = product.users.count
       product.save
