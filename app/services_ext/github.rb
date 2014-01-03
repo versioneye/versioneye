@@ -92,6 +92,10 @@ class Github
     get_json("#{A_API_URL}/repos/#{repo_fullname}", token, raw, updated_since)
   end
 
+  def self.repo_tags(repository, token)
+    get_json("#{A_API_URL}/repos/#{repository}/tags", token)
+  end
+
   def self.read_repo_data repo, token, try_n = 3
     return nil if repo.nil?
     project_files = nil
