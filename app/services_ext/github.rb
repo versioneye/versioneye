@@ -88,8 +88,8 @@ class Github
     read_repos(user, url, page, per_page)
   end
 
-  def self.repo_info repo_fullname, token
-    get_json "#{A_API_URL}/repos/#{repo_fullname}", token
+  def self.repo_info(repo_fullname, token, raw = false, updated_since = nil)
+    get_json("#{A_API_URL}/repos/#{repo_fullname}", token, raw, updated_since)
   end
 
   def self.read_repo_data repo, token, try_n = 3
@@ -204,6 +204,19 @@ class Github
     project_file[:type] = ProjectService.type_by_filename(filename)
     project_file[:branch] = branch
     project_file
+  end
+
+  def self.fetch_raw_file(url, token)
+    return nil if url.nil? || url.empty?
+    response = HTTParty.get("#{url}?access_token=" + URI.escape(token),
+                            :headers => {"User-Agent" => A_USER_AGENT,
+                                         "Accept" => "application/vnd.github.v3.raw"})
+    if response.code != 200
+      Rails.logger.error("Cant read rawfile from #{url}: #{response.code}\n
+                          #{response.message}\n#{response}")
+       return nil
+    end
+    response.body
   end
 
   # TODO: add tests
@@ -349,6 +362,12 @@ class Github
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
     nil
+  end
+
+  def self.rate_limit(token)
+    url = "#{A_API_URL}/rate_limit"
+    response = get_json(url, token)
+    response[:resources] if response.has_key?(:resources)
   end
 
   def self.search(q, langs = nil, users = nil, page = 1, per_page = 30)

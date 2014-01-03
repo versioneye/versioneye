@@ -1,5 +1,3 @@
-#TODO: check ratelimit
-#TODO: no removing prev doc => update values + add new version
 require 'github'
 
 class BowerCrawler
@@ -49,8 +47,8 @@ class BowerCrawler
   #for debugging
   def self.crawl_serial(token, source_url)
     p "Using serial crawler - hopefully just for debugging."
-    crawl_registered_list(source_url)
-    crawl_existing_sources(token)
+#    crawl_registered_list(source_url)
+#    crawl_existing_sources(token)
     crawl_projects(token)
     crawl_versions(token) 
   end
