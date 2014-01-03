@@ -296,15 +296,15 @@ class Product
 
   def self.decode_language language
     return nil if language.nil?
-    return A_LANGUAGE_NODEJS if language.match(/^node/i)
-    return A_LANGUAGE_PHP if language.match(/^php/i)
+    return A_LANGUAGE_NODEJS     if language.match(/^node/i)
+    return A_LANGUAGE_PHP        if language.match(/^php/i)
     return A_LANGUAGE_JAVASCRIPT if language.match(/^JavaScript/i)
     return A_LANGUAGE_OBJECTIVEC if language.match(/^Objective-C/i)
     return language.capitalize
   end
 
   def to_url_path
-    "/#{Product.encode_language(language)}/#{Product.encode_prod_key(prod_key)}"
+    "/#{language_esc}/#{to_param}"
   end
 
   def description_summary
@@ -325,15 +325,15 @@ class Product
   end
 
   def show_dependency_badge?
-    self.language.eql?(A_LANGUAGE_JAVA) or self.language.eql?(A_LANGUAGE_PHP) or
-    self.language.eql?(A_LANGUAGE_RUBY) or self.language.eql?(A_LANGUAGE_NODEJS) or
+    self.language.eql?(A_LANGUAGE_JAVA)    or self.language.eql?(A_LANGUAGE_PHP) or
+    self.language.eql?(A_LANGUAGE_RUBY)    or self.language.eql?(A_LANGUAGE_NODEJS) or
     self.language.eql?(A_LANGUAGE_CLOJURE) or self.language.eql?(A_LANGUAGE_OBJECTIVEC)
   end
 
   private
 
     def get_summary text, size
-      return "" if text.nil?
+      return '' if text.nil?
       return "#{text[0..size]}..." if text.size > size
       text[0..size]
     end
