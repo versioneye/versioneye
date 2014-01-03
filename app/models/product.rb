@@ -246,7 +246,7 @@ class Product
   end
 
   def version_to_url_param
-    Product.encode_product_key version
+    Version.encode_version version
   end
 
   def name_and_version
@@ -276,22 +276,22 @@ class Product
 
   def self.encode_product_key prod_key
     return "0" if prod_key.nil?
-    prod_key.to_s.gsub("/", ":")
+    prod_key.to_s.gsub('/', ':')
   end
 
   def self.encode_prod_key prod_key
     return nil if prod_key.nil?
-    prod_key.gsub("/", ":")
+    prod_key.gsub('/', ':')
   end
 
   def self.decode_prod_key prod_key
     return nil if prod_key.nil?
-    prod_key.gsub(":", "/")
+    prod_key.gsub(':', '/')
   end
 
   def self.encode_language language
     return nil if language.to_s.empty?
-    language.gsub("\.", "").downcase
+    language.gsub('\.', '').downcase
   end
 
   def self.decode_language language
