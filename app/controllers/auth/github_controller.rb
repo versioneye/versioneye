@@ -5,8 +5,8 @@ class Auth::GithubController < ApplicationController
   def callback
     code = params['code']
     if code.nil? || code.empty?
-      redirect_to signup_path
-      return
+      flash[:error] = "Authorization code is missing."
+      redirect_to signup_path and return
     end
 
     token     = Github.token code

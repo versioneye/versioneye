@@ -537,7 +537,7 @@ class BowerCrawler
     new_link = Versionlink.find_or_create_by(
       language: prod[:language],
       prod_key: prod[:prod_key],
-      version: version,
+      version_id: version,
       name: link_name
     )
     new_link.update_attributes({
@@ -554,7 +554,7 @@ class BowerCrawler
     new_link = Versionarchive.find_or_create_by(
       language: prod[:language],
       prod_key: prod[:prod_key],
-      version: version,
+      version_id: version,
       name: name
     )
     new_link.update_attributes({
