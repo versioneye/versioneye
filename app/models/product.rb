@@ -49,87 +49,16 @@ class Product
   embeds_many :repositories
 
   has_and_belongs_to_many :users
-  # :licenses
-  # :versionarchives
-  # :versionlinks
-  # :versioncomments
-  # :dependencies
-
 
   attr_accessor :released_days_ago, :released_ago_in_words, :released_ago_text
   attr_accessor :version_uid, :in_my_products, :dependencies_cache
 
   scope :by_language, ->(lang){where(language: lang)}
 
-  def to_s
-    "<Product #{prod_key}(#{version}) ##{language}>"
-  end
-
-  def delete
-    false
-  end
-
-  def self.supported_languages
-    Set[ A_LANGUAGE_RUBY, A_LANGUAGE_PYTHON, A_LANGUAGE_NODEJS,
-         A_LANGUAGE_JAVA, A_LANGUAGE_PHP, A_LANGUAGE_R, A_LANGUAGE_JAVASCRIPT,
-         A_LANGUAGE_CLOJURE, A_LANGUAGE_OBJECTIVEC]
-  end
-
-  # legacy, still used by fall back search
-  def self.find_by_key searched_key
-    return nil if searched_key.nil? || searched_key.strip == ''
-    result = Product.where(prod_key: searched_key)
-    return nil if (result.nil? || result.empty?)
-    return result[0]
-  end
-
-  def self.find_by_lang_key language, searched_key
-    return nil if searched_key.to_s.empty? || language.to_s.empty?
-    Product.where(language: language, prod_key: searched_key).shift
-  end
-
-  # This is slow !! Searches by regex are always slower than exact searches!
-  def self.find_by_lang_key_case_insensitiv language, searched_key
-    return nil if searched_key.to_s.empty? || language.to_s.empty?
-    result = Product.where( prod_key: /^#{searched_key}$/i, language: /^#{language}$/i )
-    return nil if (result.nil? || result.empty?)
-    return result[0]
-  end
-
-  def self.fetch_product lang, key
-    return nil if lang.to_s.empty? || key.to_s.empty?
-    lang = A_LANGUAGE_NODEJS if lang.eql? "nodejs"
-    if lang.eql? "package"
-      product = Product.find_by_key( key )
-      return product if product
-    end
-    product = Product.find_by_lang_key( lang, key )
-    if product.nil?
-      product = Product.find_by_lang_key_case_insensitiv( lang, key )
-    end
-    product
-  end
-
-  def self.find_by_id id
-    self.find id
-  rescue => e
-    Rails.logger.error e.message
-    nil
-  end
-
-  def self.find_by_group_and_artifact group, artifact
-    Product.where( group_id: group, artifact_id: artifact ).shift
-  end
-
-  def self.by_prod_keys language, prod_keys
-    Product.where(:language => language, :prod_key.in => prod_keys)
-  end
-
-  ######## ELASTIC SEARCH MAPPING ###################
-  def to_indexed_json
+  def to_indexed_json # For ElasticSearch
     {
       :_id                => self.id.to_s,
-      :_type              => "product",
+      :_type              => 'product',
       :name               => self.name,
       :description        => self.description.to_s,
       :description_manual => self.description_manual.to_s,
@@ -140,6 +69,75 @@ class Product
       :language           => self.language,
       :prod_type          => self.prod_type
     }
+  end
+
+  def self.supported_languages
+    Set[ A_LANGUAGE_RUBY, A_LANGUAGE_PYTHON, A_LANGUAGE_NODEJS,
+         A_LANGUAGE_JAVA, A_LANGUAGE_PHP, A_LANGUAGE_R, A_LANGUAGE_JAVASCRIPT,
+         A_LANGUAGE_CLOJURE, A_LANGUAGE_OBJECTIVEC]
+  end
+
+  def show_dependency_badge?
+    self.language.eql?(A_LANGUAGE_JAVA)    or self.language.eql?(A_LANGUAGE_PHP) or
+    self.language.eql?(A_LANGUAGE_RUBY)    or self.language.eql?(A_LANGUAGE_NODEJS) or
+    self.language.eql?(A_LANGUAGE_CLOJURE) or self.language.eql?(A_LANGUAGE_OBJECTIVEC)
+  end
+
+  def to_s
+    "<Product #{prod_key}(#{version}) ##{language}>"
+  end
+
+  def to_param
+    Product.encode_prod_key self.prod_key
+  end
+
+  ######## SEARCH METHODS ####################
+
+  def self.find_by_id id
+    self.find id
+  rescue => e
+    Rails.logger.error e.message
+    nil
+  end
+
+  def self.fetch_product lang, key
+    return nil if lang.to_s.strip.empty? || key.to_s.strip.empty?
+    return Product.find_by_key( key ) if lang.eql? 'package'
+    product = Product.find_by_lang_key( lang, key )
+    product = Product.find_by_lang_key_case_insensitiv( lang, key ) if product.nil?
+    product
+  end
+
+  # legacy, still used by fall back search and API v1.0
+  def self.find_by_key searched_key
+    return nil if searched_key.to_s.strip.empty?
+    Product.where(prod_key: searched_key).shift
+  rescue => e
+    Rails.logger.error e.message
+    nil
+  end
+
+  def self.find_by_lang_key language, searched_key
+    return nil if searched_key.to_s.strip.empty? || language.to_s.strip.empty?
+    Product.where(language: language, prod_key: searched_key).shift
+  end
+
+  # This is slow!! Searches by regex are always slower than exact searches!
+  def self.find_by_lang_key_case_insensitiv language, searched_key
+    return nil if searched_key.to_s.strip.empty? || language.to_s.strip.empty?
+    result = Product.where( prod_key: /^#{searched_key}$/i, language: /^#{language}$/i ).shift
+  end
+
+  def self.find_by_group_and_artifact group, artifact
+    return nil if group.to_s.strip.empty? || artifact.to_s.strip.empty?
+    Product.where( group_id: group, artifact_id: artifact ).shift
+  end
+
+  def self.by_prod_keys language, prod_keys
+    if language.to_s.strip.empty? || prod_keys.nil? || prod_keys.empty? || !prod_keys.is_a?(Array)
+      return Mongoid::Criteria.new(Product).where(:prod_key => "-1-1")
+    end
+    Product.where(:language => language, :prod_key.in => prod_keys)
   end
 
   ######## START VERSIONS ###################
@@ -174,107 +172,7 @@ class Product
     self.save
   end
 
-  ######## END VERSIONS ###################
-
-  def comments
-    Versioncomment.find_by_prod_key_and_version(self.language, self.prod_key, self.version)
-  end
-
-  def language_esc lang = nil
-    lang = self.language if lang.nil?
-    Product.encode_language lang
-  end
-
-  def license_info
-    licenses = self.licenses false
-    return "unknown" if licenses.nil? || licenses.empty?
-    licenses.map{|a| a.name}.join(", ")
-  end
-
-  # An artifact (product + version) can have multiple licenses
-  # at the same time. That's not a bug!
-  def licenses ignore_version = false
-    License.for_product self, ignore_version
-  end
-
-  def developers
-    Developer.find_by self.language, self.prod_key, version
-  end
-
-  def update_used_by_count persist = true
-    grouped = Dependency.where(:language => self.language, :dep_prod_key => self.prod_key).group_by(&:prod_key)
-    count = grouped.count
-    return nil if count == self.used_by_count
-    self.used_by_count = count
-    self.save if persist
-  end
-
-  def dependencies scope = nil
-    dependencies_cache ||= {}
-    scope = Dependency.main_scope(self.language) unless scope
-    if dependencies_cache[scope].nil?
-      dependencies_cache[scope] = Dependency.find_by_lang_key_version_scope( language, prod_key, version, scope )
-    end
-    dependencies_cache[scope]
-  end
-
-  def all_dependencies
-    Dependency.find_by_lang_key_and_version( language, prod_key, version)
-  end
-
-  def self.random_product
-    size = Product.count - 7
-    Product.skip(rand( size )).first
-  end
-
-  def http_links
-    Versionlink.where(language: language, prod_key: self.prod_key, version_id: nil, link: /^http*/).asc(:name)
-  end
-
-  def http_version_links
-    Versionlink.where(language: language, prod_key: self.prod_key, version_id: self.version, link: /^http*/ ).asc(:name)
-  end
-
-  def self.get_unique_languages_for_product_ids(product_ids)
-    Product.where(:_id.in => product_ids).distinct(:language)
-  end
-
-  def update_in_my_products array_of_product_ids
-    self.in_my_products = array_of_product_ids.include?(_id.to_s)
-  end
-
-  def to_param
-    Product.encode_prod_key self.prod_key
-  end
-
-  def version_to_url_param
-    Version.encode_version version
-  end
-
-  def name_and_version
-    "#{name} : #{version}"
-  end
-
-  def name_version limit
-    nameversion = "#{name} (#{version})"
-    if nameversion.length > limit
-      "#{nameversion[0, limit]}.."
-    else
-      nameversion
-    end
-  end
-
-  def main_scope
-    Dependency.main_scope self.language
-  end
-
-  def self.downcase_array arr
-    array_dwoncase = Array.new
-    arr.each do |element|
-      array_dwoncase.push element.downcase
-    end
-    array_dwoncase
-  end
+  ######## ENCODE / DECODE ###################
 
   def self.encode_prod_key prod_key
     return "0" if prod_key.to_s.strip.empty?
@@ -300,9 +198,21 @@ class Product
     return language.capitalize
   end
 
-  def to_url_path
-    "/#{language_esc}/#{to_param}"
+  ########## UPDATE #############
+
+  def update_used_by_count persist = true
+    grouped = Dependency.where(:language => self.language, :dep_prod_key => self.prod_key).group_by(&:prod_key)
+    count = grouped.count
+    return nil if count == self.used_by_count
+    self.used_by_count = count
+    self.save if persist
   end
+
+  def update_in_my_products array_of_product_ids
+    self.in_my_products = array_of_product_ids.include?(_id.to_s)
+  end
+
+  ########## ELSE #############
 
   def description_summary
     if description && description_manual
@@ -321,10 +231,79 @@ class Product
     get_summary(description_manual, 125)
   end
 
-  def show_dependency_badge?
-    self.language.eql?(A_LANGUAGE_JAVA)    or self.language.eql?(A_LANGUAGE_PHP) or
-    self.language.eql?(A_LANGUAGE_RUBY)    or self.language.eql?(A_LANGUAGE_NODEJS) or
-    self.language.eql?(A_LANGUAGE_CLOJURE) or self.language.eql?(A_LANGUAGE_OBJECTIVEC)
+  def name_and_version
+    "#{name} : #{version}"
+  end
+
+  def name_version limit
+    nameversion = "#{name} (#{version})"
+    if nameversion.length > limit
+      "#{nameversion[0, limit]}.."
+    else
+      nameversion
+    end
+  end
+
+  def language_esc lang = nil
+    lang = self.language if lang.nil?
+    Product.encode_language lang
+  end
+
+  def license_info
+    licenses = self.licenses false
+    return 'unknown' if licenses.nil? || licenses.empty?
+    licenses.map{|a| a.name}.join(', ')
+  end
+
+  def comments
+    Versioncomment.find_by_prod_key_and_version(self.language, self.prod_key, self.version)
+  end
+
+  # An artifact (product + version) can have multiple licenses
+  # at the same time. That's not a bug!
+  def licenses ignore_version = false
+    License.for_product self, ignore_version
+  end
+
+  def developers
+    Developer.find_by self.language, self.prod_key, version
+  end
+
+  def dependencies scope = nil
+    dependencies_cache ||= {}
+    scope = Dependency.main_scope(self.language) unless scope
+    if dependencies_cache[scope].nil?
+      dependencies_cache[scope] = Dependency.find_by_lang_key_version_scope( language, prod_key, version, scope )
+    end
+    dependencies_cache[scope]
+  end
+
+  def all_dependencies
+    Dependency.find_by_lang_key_and_version( language, prod_key, version)
+  end
+
+  def http_links
+    Versionlink.where(language: language, prod_key: self.prod_key, version_id: nil, link: /^http*/).asc(:name)
+  end
+
+  def http_version_links
+    Versionlink.where(language: language, prod_key: self.prod_key, version_id: self.version, link: /^http*/ ).asc(:name)
+  end
+
+  def self.unique_languages_for_product_ids(product_ids)
+    Product.where(:_id.in => product_ids).distinct(:language)
+  end
+
+  def to_url_path
+    "/#{language_esc}/#{to_param}"
+  end
+
+  def version_to_url_param
+    Version.encode_version version
+  end
+
+  def main_scope
+    Dependency.main_scope self.language
   end
 
   private
