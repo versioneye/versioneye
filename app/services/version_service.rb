@@ -15,6 +15,7 @@ class VersionService
     sorted.first
   end
 
+  # TODO @timgluz write tests for this
   def self.versions_by_whitelist(versions, whitelist)
     whitelist = Set.new whitelist.to_a
     filtered = []
@@ -97,7 +98,6 @@ class VersionService
   def self.versions_start_with( versions, val )
     result = Array.new
     return result if versions.nil? || versions.empty?
-    version_matcher = Regexp.new("^#{val.to_s}")
     versions.each do |version|
       if version.to_s.match(/^#{val}/)
         result.push(version)
@@ -106,6 +106,7 @@ class VersionService
     result
   end
 
+  # TODO @timgluz write tests for this
   def self.versions_by_comperator(versions, operator, value, range = true)
     matching_versions = case operator
     when '!=' then not_equal(versions, value, range)
@@ -131,6 +132,7 @@ class VersionService
   end
 
 
+  # TODO @timgluz write tests for this
   def self.equal( versions, value, range = false, stability = "stable")
     filtered_versions = Array.new
     versions.each do |ver|
@@ -142,6 +144,7 @@ class VersionService
   end
 
 
+  # TODO @timgluz write tests for this
   def self.not_equal( versions, value, range = false, stability = "stable")
     filtered_versions = Array.new
     versions.each do |version|
