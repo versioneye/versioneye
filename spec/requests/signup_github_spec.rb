@@ -75,4 +75,5 @@ describe "SignUp with GitHub" do
       user_db.github_scope.should eql("no_scope")
     end
   end
+
 end

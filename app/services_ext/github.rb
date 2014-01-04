@@ -436,7 +436,6 @@ class Github
   def self.decode_db_key(key_val)
     URI.unescape key_val.to_s
   end
-
   private
 
 =begin
