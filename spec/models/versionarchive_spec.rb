@@ -24,7 +24,7 @@ describe Versionarchive do
       Versionarchive.create_archive_if_not_exist archive_3
       Versionarchive.count.should eq(2)
 
-      archs = Versionarchive.archives( archive.language, archive.prod_key, archive.version )
+      archs = Versionarchive.archives( archive.language, archive.prod_key, archive.version_id )
       archs.should_not be_nil
       archs.count.should eq(1)
       archs.first.prod_key.should eql(archive.prod_key)
