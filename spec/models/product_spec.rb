@@ -4,6 +4,130 @@ describe Product do
 
   let( :product ) { Product.new(:language => Product::A_LANGUAGE_RUBY, :prod_key => "funny_bunny", :version => "1.0.0") }
 
+
+  describe "encode_prod_key" do
+
+    it "returns 0 for nil" do
+      Product.encode_prod_key(nil).should eq("0")
+    end
+    it "returns 0 for empty string" do
+      Product.encode_prod_key("").should eq("0")
+    end
+    it "returns 0 for empty string after strip" do
+      Product.encode_prod_key("  ").should eq("0")
+    end
+    it "returns rails" do
+      Product.encode_prod_key('rails').should eq('rails')
+    end
+    it "returns zend:zend" do
+      Product.encode_prod_key('zend/zend').should eq('zend:zend')
+    end
+
+  end
+
+  describe "decode_prod_key" do
+
+    it "returns nil for nil" do
+      Product.decode_prod_key(nil).should be_nil
+    end
+    it "returns nil for empty string" do
+      Product.decode_prod_key("").should be_nil
+    end
+    it "returns nil for empty string after strip" do
+      Product.decode_prod_key("  ").should be_nil
+    end
+    it "returns rails" do
+      Product.decode_prod_key('rails').should eq('rails')
+    end
+    it "returns zend/zend" do
+      Product.decode_prod_key('zend:zend').should eq('zend/zend')
+    end
+
+  end
+
+
+  describe "encode_language" do
+
+    it "returns nil for nil" do
+      Product.encode_language(nil).should be_nil
+    end
+    it "returns nil for empty string" do
+      Product.encode_language("").should be_nil
+    end
+    it "returns 0 for empty string after strip" do
+      Product.encode_language("  ").should be_nil
+    end
+    it "returns php" do
+      Product.encode_language('php').should eq('php')
+    end
+    it "returns php" do
+      Product.encode_language('PHP').should eq('php')
+    end
+    it "returns nodejs" do
+      Product.encode_language('Node.JS').should eq('nodejs')
+    end
+    it "returns objective-c" do
+      Product.encode_language('Objective-C').should eq('objective-c')
+    end
+
+  end
+
+
+  describe "decode_language" do
+
+    it "returns nil for nil" do
+      Product.decode_language(nil).should be_nil
+    end
+    it "returns nil for empty string" do
+      Product.decode_language("").should be_nil
+    end
+    it "returns 0 for empty string after strip" do
+      Product.decode_language("  ").should be_nil
+    end
+    it "returns PHP" do
+      Product.decode_language('php').should eq(Product::A_LANGUAGE_PHP)
+    end
+    it "returns Node.JS" do
+      Product.decode_language('nodejs').should eq(Product::A_LANGUAGE_NODEJS)
+    end
+    it "returns Objective-C" do
+      Product.decode_language('objective-c').should eq(Product::A_LANGUAGE_OBJECTIVEC)
+    end
+    it "returns JavaScript" do
+      Product.decode_language('javascript').should eq(Product::A_LANGUAGE_JAVASCRIPT)
+    end
+    it "returns Ruby" do
+      Product.decode_language('ruby').should eq(Product::A_LANGUAGE_RUBY)
+    end
+    it "returns Ruby" do
+      Product.decode_language('rUBy').should eq(Product::A_LANGUAGE_RUBY)
+    end
+
+  end
+
+
+  describe 'language_esc' do
+
+    it 'returns ruby' do
+      product = Product.new({:language => Product::A_LANGUAGE_RUBY})
+      product.language_esc.should eq('ruby')
+    end
+    it 'returns nodejs' do
+      product = Product.new({:language => Product::A_LANGUAGE_NODEJS})
+      product.language_esc.should eq('nodejs')
+    end
+    it 'returns objective-c' do
+      product = Product.new({:language => Product::A_LANGUAGE_OBJECTIVEC})
+      product.language_esc.should eq('objective-c')
+    end
+    it 'returns titi' do
+      product = Product.new({:language => Product::A_LANGUAGE_OBJECTIVEC})
+      product.language_esc('TiTi').should eq('titi')
+    end
+
+  end
+
+
   describe "find_by_key" do
 
     it "return nil. Because input is nil" do
@@ -111,7 +235,7 @@ describe Product do
   end
 
   describe "downcase_array" do
-    it " - downcases the array" do
+    it "downcases the array" do
       elements = Array.new
       elements.push "Hallo"
       elements.push "BamboO"
@@ -122,7 +246,7 @@ describe Product do
   end
 
   describe "handling product licenses" do
-    it "- get licence of product, that is added by crawler" do
+    it "returns licence of product, that is added by crawler" do
       product1 = ProductFactory.create_for_gemfile("bee", "1.4.0")
       product1.versions.push( Version.new({version: "1.4.0"}) )
       product1.save

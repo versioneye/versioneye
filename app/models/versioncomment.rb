@@ -59,11 +59,11 @@ class Versioncomment
   end
 
   def prod_key_url
-    Product.encode_product_key( self.product_key )
+    Product.encode_prod_key( self.product_key )
   end
 
   def version_url
-    Product.encode_product_key( self.version )
+    Product.encode_prod_key( self.version )
   end
 
   def name_and_version
