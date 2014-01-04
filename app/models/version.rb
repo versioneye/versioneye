@@ -37,11 +37,6 @@ class Version
     version.gsub('/', ':')
   end
 
-  def released_or_detected
-    return released_at if released_at
-    created_at
-  end
-
   def self.decode_version(version)
     return nil if version.nil?
     version.gsub(':', '/')
@@ -52,16 +47,13 @@ class Version
     "#{val}".strip
   end
 
-  def from_param
-    Version.decode_version self.version
-  end
-
-  def to_url_param
-    self.to_param
-  end
-
   def get_decimal_uid
     uid.to_s.to_i(16).to_s(10)
+  end
+
+  def released_or_detected
+    return released_at if released_at
+    created_at
   end
 
 end

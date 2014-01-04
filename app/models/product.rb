@@ -178,6 +178,13 @@ class Product
     end
   end
 
+  def check_nil_version
+    return nil if version
+    return nil if versions.nil? or versions.empty?
+    self.version = sorted_versions.first
+    self.save
+  end
+
   ######## END VERSIONS ###################
 
   def comments
@@ -257,7 +264,7 @@ class Product
   end
 
   def version_to_url_param
-    Product.encode_product_key version
+    Version.encode_version version
   end
 
   def name_and_version
@@ -287,17 +294,17 @@ class Product
 
   def self.encode_product_key prod_key
     return "0" if prod_key.nil?
-    prod_key.to_s.gsub("/", ":")
+    prod_key.to_s.gsub('/', ':')
   end
 
   def self.encode_prod_key prod_key
     return nil if prod_key.nil?
-    prod_key.gsub("/", ":")
+    prod_key.gsub('/', ':')
   end
 
   def self.decode_prod_key prod_key
     return nil if prod_key.nil?
-    prod_key.gsub(":", "/")
+    prod_key.gsub(':', '/')
   end
 
   def self.encode_language language
@@ -307,15 +314,15 @@ class Product
 
   def self.decode_language language
     return nil if language.nil?
-    return A_LANGUAGE_NODEJS if language.match(/^node/i)
-    return A_LANGUAGE_PHP if language.match(/^php/i)
+    return A_LANGUAGE_NODEJS     if language.match(/^node/i)
+    return A_LANGUAGE_PHP        if language.match(/^php/i)
     return A_LANGUAGE_JAVASCRIPT if language.match(/^JavaScript/i)
     return A_LANGUAGE_OBJECTIVEC if language.match(/^Objective-C/i)
     return language.capitalize
   end
 
   def to_url_path
-    "/#{Product.encode_language(language)}/#{Product.encode_prod_key(prod_key)}"
+    "/#{language_esc}/#{to_param}"
   end
 
   def description_summary
@@ -336,15 +343,15 @@ class Product
   end
 
   def show_dependency_badge?
-    self.language.eql?(A_LANGUAGE_JAVA) or self.language.eql?(A_LANGUAGE_PHP) or
-    self.language.eql?(A_LANGUAGE_RUBY) or self.language.eql?(A_LANGUAGE_NODEJS) or
+    self.language.eql?(A_LANGUAGE_JAVA)    or self.language.eql?(A_LANGUAGE_PHP) or
+    self.language.eql?(A_LANGUAGE_RUBY)    or self.language.eql?(A_LANGUAGE_NODEJS) or
     self.language.eql?(A_LANGUAGE_CLOJURE) or self.language.eql?(A_LANGUAGE_OBJECTIVEC)
   end
 
   private
 
     def get_summary text, size
-      return "" if text.nil?
+      return '' if text.nil?
       return "#{text[0..size]}..." if text.size > size
       text[0..size]
     end

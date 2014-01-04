@@ -263,5 +263,27 @@ describe Product do
 
   end
 
+  describe 'check_nil_version' do
+
+    it 'returns nil' do
+      product = Product.new
+      product.check_nil_version
+      product.version.should be_nil
+    end
+
+    it 'returns 1.0.0' do
+      product = Product.new
+      product.versions.push(Version.new({:version => '1.0.0'}))
+      product.check_nil_version
+      product.version.should eq('1.0.0')
+    end
+
+    it 'returns 2.0.0' do
+      product = Product.new({:version => '2.0.0'})
+      product.check_nil_version
+      product.version.should eq('2.0.0')
+    end
+
+  end
 
 end

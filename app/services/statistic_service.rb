@@ -1,7 +1,15 @@
 class StatisticService
 
-  A_STAT_LANGUAGES = ['Java', 'Ruby', 'Python', 'Node.JS', 'Clojure', 'R', 'PHP']
-
+  A_STAT_LANGUAGES = [
+      Product::A_LANGUAGE_RUBY,
+      Product::A_LANGUAGE_PYTHON,
+      Product::A_LANGUAGE_NODEJS,
+      Product::A_LANGUAGE_PHP,
+      Product::A_LANGUAGE_JAVA,
+      Product::A_LANGUAGE_R,
+      Product::A_LANGUAGE_CLOJURE,
+      Product::A_LANGUAGE_OBJECTIVEC
+    ]
 
   def self.language_project_count
     json_cache = JsonCache.language_project_count

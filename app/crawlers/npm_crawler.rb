@@ -9,9 +9,6 @@ class NpmCrawler
   def self.crawl
     crawl = crawle_object
     packages = get_first_level_list
-    if packages.nil? || packages.empty?
-      packages = get_known_packages
-    end
     packages.each do |name|
       crawle_package name, crawl
     end
@@ -21,8 +18,17 @@ class NpmCrawler
     return nil
   end
 
-
   def self.get_first_level_list
+    packages = get_first_level_list_from_registry
+    if packages.nil? || packages.empty?
+      known_packages  = get_known_packages
+      newest_packages = get_first_level_list_from_html
+      packages        = (known_packages + newest_packages).uniq
+    end
+    packages
+  end
+
+  def self.get_first_level_list_from_registry
     self.logger.info 'Start fetching first level list'
     packages = JSON.parse HTTParty.get('http://registry.npmjs.org/-/short' ).response.body
     self.logger.info ' -- done.'
@@ -31,6 +37,27 @@ class NpmCrawler
     self.logger.error "ERROR in get_first_level_list: #{e.message}"
     self.logger.error e.backtrace.join('\n')
     nil
+  end
+
+  def self.get_first_level_list_from_html
+    packages = Array.new
+    20.times.each do |page|
+      packages.concat( fetch_names_from( page ) )
+    end
+    packages
+  end
+
+  def self.fetch_names_from page
+    packages = Array.new
+    doc = Nokogiri::HTML( open("https://npmjs.org/browse/updated/#{page}/") )
+    doc.xpath("//div[@id=\"package\"]/div[@class=\"row\"]/p/a").each do |link|
+      packages << link.content
+    end
+    packages
+  rescue => e
+    self.logger.error "ERROR in fetch_names_from page: #{e.message}"
+    self.logger.error e.backtrace.join('\n')
+    Array.new
   end
 
   def self.get_known_packages

@@ -26,10 +26,8 @@ class ProductsController < ApplicationController
     elsif @query.include?('%')
       flash.now[:error] = 'the character % is not allowed'
     else
-      # start = Time.now
       languages = get_language_array(@lang)
       @products = ProductService.search( @query, @groupid, languages, params[:page])
-      # save_search_log( @query, @products, start )
     end
     @languages = supported_languages
   end
@@ -37,23 +35,25 @@ class ProductsController < ApplicationController
   def show
     lang     = Product.decode_language( params[:lang] )
     prod_key = Product.decode_prod_key( params[:key]  )
-    version  = params[:version]
-    @product = fetch_product(lang, prod_key)
+    version  = Version.decode_version ( params[:version] )
+    @product = fetch_product lang, prod_key
+
+    if @product.nil? || @product.versions.nil? || @product.versions.empty?
+      flash[:error] = 'The requested package is not available.'
+      return
+    end
+
+    @product.check_nil_version
     if @product && !lang.eql?( @product.language )
       redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
       return
     end
-    if @product.nil?
-      flash[:error] = 'The requested package is not available.'
-      return
-    end
+
     if version.nil? || (!attach_version(@product, version))
       params[:version] = @product.version
       redirect_to( {:action => 'show'}.merge(params) ) and return
     end
-    if version
-      @version   = @product.version_by_number(@product.version)
-    end
+    @version             = @product.version_by_number @product.version
     @current_version     = VersionService.newest_version( @product.versions )
     @versioncomment      = Versioncomment.new
     @versioncommentreply = Versioncommentreply.new
@@ -62,7 +62,7 @@ class ProductsController < ApplicationController
   def show_visual
     lang = Product.decode_language( params[:lang] )
     key  = Product.decode_prod_key( params[:key]  )
-    version  = params[:version]
+    version  = Version.decode_version ( params[:version] )
     @product = Product.fetch_product lang, key
     if @product.nil?
       flash[:error] = 'The requested package is not available.'
