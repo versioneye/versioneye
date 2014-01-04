@@ -3,7 +3,7 @@
 <div class = "span<%= spans %> fluid-list-item" style = "height: 70px; overflow: hidden;">
     <% newest     = release_list_item %>
     <% version_url = package_version_path(lang:    newest.language_esc,
-                                          key:     Product.encode_product_key(newest.prod_key),
+                                          key:     Product.encode_prod_key(newest.prod_key),
                                           version: Version.encode_version(newest.version) ) %>
     <a class = "pull-left" href = "<%= version_url %>">
       <img class = "media-object" src= "/assets/language/<%= newest.language.downcase %>.png" />

@@ -5,7 +5,6 @@ require 'cocoapods-core'
 #
 # http://docs.cocoapods.org/specification.html
 #
-
 class CocoapodsPodspecParser
   def logger
     ActiveSupport::BufferedLogger.new('log/cocoapods.log')

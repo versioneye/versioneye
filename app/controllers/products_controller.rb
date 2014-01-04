@@ -193,7 +193,7 @@ class ProductsController < ApplicationController
     product_key      = Product.decode_prod_key @prod_key_param
     language         = Product.decode_language lang_param
     follow           = ProductService.follow language, product_key, current_user
-    @prod_lang_param = Product.language_escape language
+    @prod_lang_param = Product.encode_language language
     respond_to do |format|
       format.js
       format.json {render json: {success: follow}}
@@ -214,7 +214,7 @@ class ProductsController < ApplicationController
     language         = Product.decode_language lang_param
     product_key      = Product.decode_prod_key @prod_key_param
     unfollow         = ProductService.unfollow language, product_key, current_user
-    @prod_lang_param = Product.language_escape language
+    @prod_lang_param = Product.encode_language language
     respond_to do |format|
       format.js
       format.json {render json: {success: unfollow}}
