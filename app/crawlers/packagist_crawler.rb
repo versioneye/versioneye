@@ -118,7 +118,7 @@ class PackagistCrawler
     dist_type = dist['type']
     dist_name = "#{product.name}.#{dist_type}"
     archive = Versionarchive.new({:language => Product::A_LANGUAGE_PHP, :prod_key => product.prod_key,
-      :version => version_number, :name => dist_name, :link => dist_url})
+      :version_id => version_number, :name => dist_name, :link => dist_url})
     Versionarchive.create_if_not_exist_by_name( archive )
   end
 

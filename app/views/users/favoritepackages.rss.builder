@@ -17,15 +17,15 @@ xml.rss :version => '2.0' do
       product          = notification.product
       next if product.nil?
       safe_prod_key    = Product.encode_prod_key product.prod_key
-      version       = notification.version
-      safe_version_key = Product.encode_prod_key version
+      version_id       = notification.version_id
+      safe_version_key = Product.encode_prod_key version_id
       product_url      = url_for package_version_url( product.language_esc, safe_prod_key, safe_version_key )
       notification_message = %Q[
-        VersionEye detected version (#{version}) of #{product.name} (#{product.language} Library).
+        VersionEye detected version (#{version_id}) of #{product.name} (#{product.language} Library).
         #{product.description_summary}.
       ]
       xml.item do
-        xml.title "#{product.name} : #{version}".capitalize
+        xml.title "#{product.name} : #{version_id}".capitalize
         xml.link product_url
         xml.author "VersionEye"
         xml.category product.language
