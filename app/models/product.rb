@@ -6,16 +6,16 @@ class Product
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  A_LANGUAGE_RUBY       = "Ruby"
-  A_LANGUAGE_PYTHON     = "Python"
-  A_LANGUAGE_NODEJS     = "Node.JS"
-  A_LANGUAGE_JAVA       = "Java"
-  A_LANGUAGE_PHP        = "PHP"
-  A_LANGUAGE_R          = "R"
-  A_LANGUAGE_JAVASCRIPT = "Javascript"
-  A_LANGUAGE_CLOJURE    = "Clojure"
-  A_LANGUAGE_C          = "C"
-  A_LANGUAGE_OBJECTIVEC = "Objective-C"
+  A_LANGUAGE_RUBY       = 'Ruby'
+  A_LANGUAGE_PYTHON     = 'Python'
+  A_LANGUAGE_NODEJS     = 'Node.JS'
+  A_LANGUAGE_JAVA       = 'Java'
+  A_LANGUAGE_PHP        = 'PHP'
+  A_LANGUAGE_R          = 'R'
+  A_LANGUAGE_JAVASCRIPT = 'Javascript'
+  A_LANGUAGE_CLOJURE    = 'Clojure'
+  A_LANGUAGE_C          = 'C'
+  A_LANGUAGE_OBJECTIVEC = 'Objective-C'
   field :name         , type: String
   field :name_downcase, type: String
   field :prod_key     , type: String # Unique identifier inside a language
@@ -244,11 +244,11 @@ class Product
   end
 
   def http_links
-    Versionlink.where(language: language, prod_key: self.prod_key, version: nil, link: /^http*/).asc(:name)
+    Versionlink.where(language: language, prod_key: self.prod_key, version_id: nil, link: /^http*/).asc(:name)
   end
 
   def http_version_links
-    Versionlink.where(language: language, prod_key: self.prod_key, version: self.version, link: /^http*/ ).asc(:name)
+    Versionlink.where(language: language, prod_key: self.prod_key, version_id: self.version, link: /^http*/ ).asc(:name)
   end
 
   def self.get_unique_languages_for_product_ids(product_ids)

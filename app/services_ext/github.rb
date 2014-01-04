@@ -437,13 +437,6 @@ class Github
     URI.unescape key_val.to_s
   end
 
-  def self.encode_db_key(key_val)
-    URI.escape(key_val, /\.|\$/)
-  end
-  def self.decode_db_key(key_val)
-    URI.unescape key_val
-  end
-
   private
 
 =begin
