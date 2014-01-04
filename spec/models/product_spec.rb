@@ -11,19 +11,19 @@ describe Product do
   describe "encode_prod_key" do
 
     it "returns 0 for nil" do
-      Product.encode_prod_key(nil).should eq("0")
+      described_class.encode_prod_key(nil).should eq("0")
     end
     it "returns 0 for empty string" do
-      Product.encode_prod_key("").should eq("0")
+      described_class.encode_prod_key("").should eq("0")
     end
     it "returns 0 for empty string after strip" do
-      Product.encode_prod_key("  ").should eq("0")
+      described_class.encode_prod_key("  ").should eq("0")
     end
     it "returns rails" do
-      Product.encode_prod_key('rails').should eq('rails')
+      described_class.encode_prod_key('rails').should eq('rails')
     end
     it "returns zend:zend" do
-      Product.encode_prod_key('zend/zend').should eq('zend:zend')
+      described_class.encode_prod_key('zend/zend').should eq('zend:zend')
     end
 
   end
@@ -31,19 +31,19 @@ describe Product do
   describe "decode_prod_key" do
 
     it "returns nil for nil" do
-      Product.decode_prod_key(nil).should be_nil
+      described_class.decode_prod_key(nil).should be_nil
     end
     it "returns nil for empty string" do
-      Product.decode_prod_key("").should be_nil
+      described_class.decode_prod_key("").should be_nil
     end
     it "returns nil for empty string after strip" do
-      Product.decode_prod_key("  ").should be_nil
+      described_class.decode_prod_key("  ").should be_nil
     end
     it "returns rails" do
-      Product.decode_prod_key('rails').should eq('rails')
+      described_class.decode_prod_key('rails').should eq('rails')
     end
     it "returns zend/zend" do
-      Product.decode_prod_key('zend:zend').should eq('zend/zend')
+      described_class.decode_prod_key('zend:zend').should eq('zend/zend')
     end
 
   end
@@ -52,25 +52,25 @@ describe Product do
   describe "encode_language" do
 
     it "returns nil for nil" do
-      Product.encode_language(nil).should be_nil
+      described_class.encode_language(nil).should be_nil
     end
     it "returns nil for empty string" do
-      Product.encode_language("").should be_nil
+      described_class.encode_language("").should be_nil
     end
     it "returns 0 for empty string after strip" do
-      Product.encode_language("  ").should be_nil
+      described_class.encode_language("  ").should be_nil
     end
     it "returns php" do
-      Product.encode_language('php').should eq('php')
+      described_class.encode_language('php').should eq('php')
     end
     it "returns php" do
-      Product.encode_language('PHP').should eq('php')
+      described_class.encode_language('PHP').should eq('php')
     end
     it "returns nodejs" do
-      Product.encode_language('Node.JS').should eq('nodejs')
+      described_class.encode_language('Node.JS').should eq('nodejs')
     end
     it "returns objective-c" do
-      Product.encode_language('Objective-C').should eq('objective-c')
+      described_class.encode_language('Objective-C').should eq('objective-c')
     end
 
   end
@@ -79,31 +79,31 @@ describe Product do
   describe "decode_language" do
 
     it "returns nil for nil" do
-      Product.decode_language(nil).should be_nil
+      described_class.decode_language(nil).should be_nil
     end
     it "returns nil for empty string" do
-      Product.decode_language("").should be_nil
+      described_class.decode_language("").should be_nil
     end
     it "returns 0 for empty string after strip" do
-      Product.decode_language("  ").should be_nil
+      described_class.decode_language("  ").should be_nil
     end
     it "returns PHP" do
-      Product.decode_language('php').should eq(Product::A_LANGUAGE_PHP)
+      described_class.decode_language('php').should eq(described_class::A_LANGUAGE_PHP)
     end
     it "returns Node.JS" do
-      Product.decode_language('nodejs').should eq(Product::A_LANGUAGE_NODEJS)
+      described_class.decode_language('nodejs').should eq(described_class::A_LANGUAGE_NODEJS)
     end
     it "returns Objective-C" do
-      Product.decode_language('objective-c').should eq(Product::A_LANGUAGE_OBJECTIVEC)
+      described_class.decode_language('objective-c').should eq(described_class::A_LANGUAGE_OBJECTIVEC)
     end
     it "returns JavaScript" do
-      Product.decode_language('javascript').should eq(Product::A_LANGUAGE_JAVASCRIPT)
+      described_class.decode_language('javascript').should eq(described_class::A_LANGUAGE_JAVASCRIPT)
     end
     it "returns Ruby" do
-      Product.decode_language('ruby').should eq(Product::A_LANGUAGE_RUBY)
+      described_class.decode_language('ruby').should eq(described_class::A_LANGUAGE_RUBY)
     end
     it "returns Ruby" do
-      Product.decode_language('rUBy').should eq(Product::A_LANGUAGE_RUBY)
+      described_class.decode_language('rUBy').should eq(described_class::A_LANGUAGE_RUBY)
     end
 
   end
@@ -112,20 +112,104 @@ describe Product do
   describe 'language_esc' do
 
     it 'returns ruby' do
-      product = Product.new({:language => Product::A_LANGUAGE_RUBY})
+      product = described_class.new({:language => Product::A_LANGUAGE_RUBY})
       product.language_esc.should eq('ruby')
     end
     it 'returns nodejs' do
-      product = Product.new({:language => Product::A_LANGUAGE_NODEJS})
+      product = described_class.new({:language => Product::A_LANGUAGE_NODEJS})
       product.language_esc.should eq('nodejs')
     end
     it 'returns objective-c' do
-      product = Product.new({:language => Product::A_LANGUAGE_OBJECTIVEC})
+      product = described_class.new({:language => Product::A_LANGUAGE_OBJECTIVEC})
       product.language_esc.should eq('objective-c')
     end
     it 'returns titi' do
-      product = Product.new({:language => Product::A_LANGUAGE_OBJECTIVEC})
+      product = described_class.new({:language => Product::A_LANGUAGE_OBJECTIVEC})
       product.language_esc('TiTi').should eq('titi')
+    end
+
+  end
+
+
+  describe "find_by_id" do
+
+    it "return nil. Because input is nil" do
+      described_class.find_by_id(nil).should be_nil
+    end
+
+    it "return nil. Because input is empty" do
+      result = described_class.find_by_id("  ")
+      result.should be_nil
+    end
+
+    it "return nil. Because there are no results." do
+      result = described_class.find_by_id("gasflasjgfaskjgas848asjgfasgfasgf")
+      result.should be_nil
+    end
+
+    it "returns the product for string id" do
+      product = described_class.new({:prod_key => 'junit', :name => 'junit'})
+      product.save.should be_true
+      result = described_class.find_by_id( product.id.to_s )
+      result.should_not be_nil
+      result.name.should eq('junit')
+    end
+
+    it "returns the product for object id" do
+      product = described_class.new({:prod_key => 'junit', :name => 'junit'})
+      product.save.should be_true
+      result = described_class.find_by_id( product.id )
+      result.should_not be_nil
+      result.name.should eq('junit')
+    end
+
+  end
+
+
+  describe "fetch_product" do
+
+    it "return nil. Because all inputs are nil" do
+      described_class.fetch_product(nil, nil).should be_nil
+    end
+    it "return nil. Because all inputs are empty" do
+      described_class.fetch_product('', '').should be_nil
+    end
+    it "return nil. Because prod_key is nil" do
+      described_class.fetch_product('ruby', nil).should be_nil
+    end
+    it "return nil. Because language is nil" do
+      described_class.fetch_product(nil, 'xiki').should be_nil
+    end
+    it "returns nil because the language is wrong" do
+      product1 = ProductFactory.create_for_gemfile('bee', '1.4.0')
+      product1.versions.push( Version.new({version: '1.4.0'}) )
+      product1.save
+      described_class.fetch_product( Product::A_LANGUAGE_JAVA, "bee" ).should be_nil
+    end
+    it "returns nil because the prod_key is wrong" do
+      product1 = ProductFactory.create_for_gemfile('bee', '1.4.0')
+      product1.versions.push( Version.new({version: '1.4.0'}) )
+      product1.save
+      described_class.fetch_product( Product::A_LANGUAGE_RUBY, "bee_bee" ).should be_nil
+    end
+    it "returns product for package language" do
+      product1 = ProductFactory.create_for_gemfile('bee', '1.4.0')
+      product1.versions.push( Version.new({version: '1.4.0'}) )
+      product1.save
+      result = described_class.fetch_product( 'package', "bee" )
+      result.should_not be_nil
+      result.language.should eq('Ruby')
+      result.prod_key.should eq('bee')
+    end
+    it "returns the searched product" do
+      product1 = ProductFactory.create_for_gemfile('bee', '1.4.0')
+      product1.versions.push( Version.new({version: '1.4.0'}) )
+      product1.save
+      described_class.fetch_product( Product::A_LANGUAGE_RUBY, "Bee" ).should_not be_nil
+      described_class.fetch_product( Product::A_LANGUAGE_RUBY.downcase, "bee" ).should_not be_nil
+      result = described_class.fetch_product( Product::A_LANGUAGE_RUBY, "bee" )
+      result.should_not be_nil
+      result.prod_key.should eql("bee")
     end
 
   end
@@ -137,38 +221,141 @@ describe Product do
       result = described_class.find_by_key(nil)
       result.should be_nil
     end
-
     it "return nil. Because input is empty" do
       result = described_class.find_by_key("  ")
       result.should be_nil
     end
-
     it "return nil. Because there are no results." do
       result = described_class.find_by_key("gasflasjgfaskjgas848asjgfasgfasgf")
       result.should be_nil
     end
+    it "return searched product" do
+      product = described_class.new({:prod_key => 'junit', :name => 'junit'})
+      product.save.should be_true
+      result = described_class.find_by_key('junit')
+      result.should_not be_nil
+      result.prod_key.should eq('junit')
+      result.name.should eq('junit')
+    end
 
   end
 
+
   describe "find_by_lang_key" do
 
-    it "return nil. Because input is nil" do
-      result = described_class.find_by_lang_key(nil, nil)
-      result.should be_nil
+    it "return nil. Because all inputs are nil" do
+      described_class.find_by_lang_key(nil, nil).should be_nil
     end
-
-    it "return nil. Because input is empty" do
-      product1 = ProductFactory.create_for_gemfile("bee", "1.4.0")
-      product1.versions.push( Version.new({version: "1.4.0"}) )
+    it "return nil. Because all inputs are empty" do
+      described_class.find_by_lang_key('', '').should be_nil
+    end
+    it "return nil. Because prod_key is nil" do
+      described_class.find_by_lang_key('ruby', nil).should be_nil
+    end
+    it "return nil. Because language is nil" do
+      described_class.find_by_lang_key(nil, 'xiki').should be_nil
+    end
+    it "returns the searched product" do
+      product1 = ProductFactory.create_for_gemfile('bee', '1.4.0')
+      product1.versions.push( Version.new({version: '1.4.0'}) )
       product1.save
-      result = described_class.find_by_lang_key( Product::A_LANGUAGE_JAVA, "bee" )
-      result.should be_nil
+      described_class.find_by_lang_key( Product::A_LANGUAGE_JAVA, "bee" ).should be_nil
+      described_class.find_by_lang_key( Product::A_LANGUAGE_RUBY, "Bee" ).should be_nil
+      described_class.find_by_lang_key( Product::A_LANGUAGE_RUBY.downcase, "bee" ).should be_nil
       result = described_class.find_by_lang_key( Product::A_LANGUAGE_RUBY, "bee" )
       result.should_not be_nil
       result.prod_key.should eql("bee")
     end
 
   end
+
+
+  describe "find_by_lang_key_case_insensitiv" do
+
+    it "return nil. Because all inputs are nil" do
+      described_class.find_by_lang_key_case_insensitiv(nil, nil).should be_nil
+    end
+    it "return nil. Because all inputs are empty" do
+      described_class.find_by_lang_key_case_insensitiv('', '').should be_nil
+    end
+    it "return nil. Because prod_key is nil" do
+      described_class.find_by_lang_key_case_insensitiv('ruby', nil).should be_nil
+    end
+    it "return nil. Because language is nil" do
+      described_class.find_by_lang_key_case_insensitiv(nil, 'xiki').should be_nil
+    end
+    it "returns the searched product" do
+      product1 = ProductFactory.create_for_gemfile('bee', '1.4.0')
+      product1.versions.push( Version.new({version: '1.4.0'}) )
+      product1.save
+      described_class.find_by_lang_key_case_insensitiv( Product::A_LANGUAGE_JAVA, "bee" ).should be_nil
+      described_class.find_by_lang_key_case_insensitiv( Product::A_LANGUAGE_RUBY, "Bee" ).should_not be_nil
+      described_class.find_by_lang_key_case_insensitiv( Product::A_LANGUAGE_RUBY.downcase, "bee" ).should_not be_nil
+      result = described_class.find_by_lang_key_case_insensitiv( Product::A_LANGUAGE_RUBY, "bee" )
+      result.should_not be_nil
+      result.prod_key.should eql("bee")
+    end
+
+  end
+
+
+  describe "find_by_group_and_artifact" do
+
+    it "returns nil because of wrong parameters" do
+      described_class.find_by_group_and_artifact("bullshit", "bingo").should be_nil
+    end
+    it "returns nil because of wrong parameters" do
+      described_class.find_by_group_and_artifact('', '').should be_nil
+    end
+    it "returns nil because of wrong parameters" do
+      described_class.find_by_group_and_artifact(nil, nil).should be_nil
+    end
+    it "returns the correct product" do
+      group = "junit56"
+      artifact = "junit23"
+      product.versions = Array.new
+      product.name = artifact
+      product.prod_key = "#{group}/#{artifact}"
+      product.group_id = group
+      product.artifact_id = artifact
+      product.save
+      version = Version.new
+      prod = described_class.find_by_group_and_artifact(group, artifact)
+      prod.should_not be_nil
+      prod.group_id.should eql(group)
+      prod.artifact_id.should eql(artifact)
+    end
+
+  end
+
+
+  describe "by_prod_keys" do
+
+    it "returns nil because of wrong parameters" do
+      described_class.by_prod_keys(nil, nil).should be_empty
+    end
+    it "returns nil because of wrong parameters" do
+      described_class.by_prod_keys('', '').should be_empty
+    end
+    it "returns nil because of wrong parameters" do
+      described_class.by_prod_keys("bullshit", "bingo").should be_empty
+    end
+    it "returns the correct product" do
+      product1 = ProductFactory.create_for_gemfile('xiki', '1.4.0')
+      product1.versions.push( Version.new({version: '1.4.0'}) )
+      product1.save
+      product2 = ProductFactory.create_for_gemfile('tire', '1.4.0')
+      product2.versions.push( Version.new({version: '1.4.0'}) )
+      product2.save
+      results = described_class.by_prod_keys(Product::A_LANGUAGE_RUBY, ['xiki', 'tire'])
+      results.should_not be_nil
+      results.size.should eq(2)
+      results.first.name.should eq('xiki')
+      results.last.name.should eq('tire')
+    end
+
+  end
+
 
   describe "http_links" do
 
@@ -213,40 +400,6 @@ describe Product do
 
   end
 
-  describe "find_by_group_and_artifact" do
-
-    it "returns nil because of wrong parameters" do
-      described_class.find_by_group_and_artifact("bullshit", "bingo").should be_nil
-    end
-
-    it "returns the correct product" do
-      group = "junit56"
-      artifact = "junit23"
-      product.versions = Array.new
-      product.name = "test"
-      product.prod_key = "#{group}/#{artifact}"
-      product.group_id = group
-      product.artifact_id = artifact
-      product.save
-      version = Version.new
-      prod = described_class.find_by_group_and_artifact(group, artifact)
-      prod.should_not be_nil
-      prod.group_id.should eql(group)
-      prod.artifact_id.should eql(artifact)
-    end
-
-  end
-
-  describe "downcase_array" do
-    it "downcases the array" do
-      elements = Array.new
-      elements.push "Hallo"
-      elements.push "BamboO"
-      new_elements = described_class.downcase_array(elements)
-      new_elements.first.should eql("hallo")
-      new_elements.last.should eql("bamboo")
-    end
-  end
 
   describe "handling product licenses" do
     it "returns licence of product, that is added by crawler" do
@@ -264,13 +417,13 @@ describe Product do
     end
   end
 
-  describe "get_unique_languages_for_product_ids" do
+  describe "unique_languages_for_product_ids" do
 
     it "returns unique languages for the product" do
       product_1 = ProductFactory.create_new 1
       product_2 = ProductFactory.create_new 2
       product_3 = ProductFactory.create_new 3, Project::A_TYPE_COMPOSER
-      languages = described_class.get_unique_languages_for_product_ids( [product_1.id, product_2.id, product_3.id] )
+      languages = described_class.unique_languages_for_product_ids( [product_1.id, product_2.id, product_3.id] )
       languages.size.should eq(2)
       languages.include?("PHP").should be_true
       languages.include?("Java").should be_true

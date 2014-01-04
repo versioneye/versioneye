@@ -4,7 +4,7 @@
     </div>
     <div class="box content" >
       <% @user['product_ids'] ||= [] %>
-      <% languages = Product.get_unique_languages_for_product_ids( @user['product_ids'] ) %>
+      <% languages = Product.unique_languages_for_product_ids( @user['product_ids'] ) %>
       <% languages.each do |language| %>
         <% prog_lang = language.downcase.gsub(/\./, "") %>
         <div class="icon_<%= prog_lang %>_big_container">
