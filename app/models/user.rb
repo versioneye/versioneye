@@ -139,12 +139,6 @@ class User
     Rails.logger.error e.backtrace.join('\n')
   end
 
-  def self.send_suggestions_to_none_followers
-    non_followers.each do |user|
-      user.send_suggestions
-    end
-  end
-
   def send_suggestions
     return nil if deleted || email_inactive
     UserMailer.suggest_packages_email(self).deliver
