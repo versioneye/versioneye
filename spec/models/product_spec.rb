@@ -69,7 +69,7 @@ describe Product do
       link.language = product.language
       link.prod_key = product.prod_key
       link.link = "http://link.de"
-      link.version = "nope"
+      link.version_id = "nope"
       link.name = "Name"
       link.save
       product.http_links.size.should eq(0)
@@ -79,7 +79,7 @@ describe Product do
     it "returns 1 link" do
       link = Versionlink.new({language: product.language, prod_key: product.prod_key})
       link.link = "http://link.de"
-      link.version = "1.1"
+      link.version_id = "1.1"
       link.name = "Name"
       link.save
       product.version = "1.1"
