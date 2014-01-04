@@ -10,7 +10,7 @@ class ProjectService
     return Project::A_TYPE_GRADLE    if trimmed_name.match(/.gradle$/)
     return Project::A_TYPE_MAVEN2    if trimmed_name.match(/pom.xml$/) or trimmed_name.match(/pom.json$/)
     return Project::A_TYPE_LEIN      if trimmed_name.match(/project.clj$/)
-    return Project::A_TYPE_BOWER     if trimmed_name.match(/^bower.json$/)
+    return Project::A_TYPE_BOWER     if trimmed_name.match(/bower.json$/)
     return Project::A_TYPE_COCOAPODS if trimmed_name.match(/Podfile$/) or trimmed_name.match(/.podfile$/) or trimmed_name.match(/Podfile.lock$/)
     return nil
   end
@@ -213,7 +213,7 @@ class ProjectService
     parser       = ParserStrategy.parser_for( project_type, url )
     parser.parse url
   rescue => e
-    Rails.logger.error "Error in build_from_url(url) -> e.message"
+    Rails.logger.error "Error in build_from_url(url) -> #{e.message}"
     Rails.logger.error e.backtrace.join("\n")
     Project.new
   end
