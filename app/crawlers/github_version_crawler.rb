@@ -132,8 +132,7 @@ class GithubVersionCrawler
     return nil unless owner_repo
     repo      = repo_data owner_repo
     tags      = repo.rels[:tags]
-    tags_data = tags.get.data
-    tags_data
+    tags.get.data
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
