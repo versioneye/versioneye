@@ -6,6 +6,7 @@ require 'cocoapods-core'
 # http://docs.cocoapods.org/specification.html
 #
 class CocoapodsPodspecParser
+
   def logger
     ActiveSupport::BufferedLogger.new('log/cocoapods.log')
   end
@@ -107,6 +108,7 @@ class CocoapodsPodspecParser
     hash.each_pair do |spec, version|
       create_dependency(spec, version)
     end
+
   end
 
   # returns a list of dependencies
@@ -142,6 +144,7 @@ class CocoapodsPodspecParser
       result
     end
   end
+
 
   def create_dependency dep_name, dep_version
     # make sure it's really downcased
