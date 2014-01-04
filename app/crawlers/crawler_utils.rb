@@ -29,7 +29,7 @@ class CrawlerUtils
       notification            = Notification.new
       notification.user       = subscriber
       notification.product    = product
-      notification.version = version_number
+      notification.version_id = version_number
       if notification.save
         new_notifications += 1
       end

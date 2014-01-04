@@ -1,1 +1,0 @@
-define(["underscore","backbone"],function(e,t){e.templateSettings={interpolate:/\{\{\=(.+?)\}\}/g,evaluate:/\{\{(.+?)\}\}/g};var i=t.View.extend({el:"#github-repos",template:e.template($("#github-loading-template").html()),render:function(){$(this.el).html(this.template({classes:"alert alert-info",message:"Please wait, we are importing data from GitHub."}))}});return i});

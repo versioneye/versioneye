@@ -66,7 +66,7 @@ class License
     end
 
     def eclipse_match name
-      name.match(/^Eclipse$/i) || name.match(/^Eclipse Public License v1\.0$/) || name.match(/^Eclipse License$/)
+      name.match(/^Eclipse$/i) || name.match(/^Eclipse Public License v1\.0$/) || name.match(/^Eclipse License$/) || name.match(/^Eclipse Public License$/)
     end
 
     def bsd_match name
