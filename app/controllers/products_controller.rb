@@ -26,10 +26,8 @@ class ProductsController < ApplicationController
     elsif @query.include?('%')
       flash.now[:error] = 'the character % is not allowed'
     else
-      # start = Time.now
       languages = get_language_array(@lang)
       @products = ProductService.search( @query, @groupid, languages, params[:page])
-      # save_search_log( @query, @products, start )
     end
     @languages = supported_languages
   end
@@ -37,7 +35,7 @@ class ProductsController < ApplicationController
   def show
     lang     = Product.decode_language( params[:lang] )
     prod_key = Product.decode_prod_key( params[:key]  )
-    version  = params[:version]
+    version  = Version.decode_version ( params[:version] )
     @product = fetch_product lang, prod_key
 
     if @product.nil? || @product.versions.nil? || @product.versions.empty?
@@ -64,7 +62,7 @@ class ProductsController < ApplicationController
   def show_visual
     lang = Product.decode_language( params[:lang] )
     key  = Product.decode_prod_key( params[:key]  )
-    version  = params[:version]
+    version  = Version.decode_version ( params[:version] )
     @product = Product.fetch_product lang, key
     if @product.nil?
       flash[:error] = 'The requested package is not available.'

@@ -97,9 +97,8 @@ module ProductsHelper
     languages
   end
 
-  def attach_version(product, version_from_url)
+  def attach_version(product, version)
     return false if product.nil?
-    version = Version.decode_version( version_from_url )
     if version.nil? || version.empty?
       version = product.version
     end
