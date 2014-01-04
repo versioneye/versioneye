@@ -3,7 +3,7 @@ class Notification
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :version, type: String
+  field :version_id, type: String
   field :read      , type: Boolean, default: false
   field :sent_email, type: Boolean, default: false
 
