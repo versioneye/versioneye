@@ -298,7 +298,7 @@ class Product
 
   def self.encode_language language
     return nil if language.to_s.empty?
-    language.gsub('\.', '').downcase
+    language.gsub("\.", "").downcase
   end
 
   def self.decode_language language
