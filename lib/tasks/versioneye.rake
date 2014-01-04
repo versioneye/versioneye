@@ -70,6 +70,13 @@ namespace :versioneye do
     puts "---"
   end
 
+  desc "send out suggestion emails to inactive users"
+  task :send_suggestions do
+    puts "START to send out suggestion emails to inactive users"
+    User.non_followers.each { |user| user.send_suggestions }
+    puts "STOP  to send out suggestion emails to inactive users"
+  end
+
   desc "crawl & import Cococapods specs"
   task :crawl_cocoapods => :environment do
     puts "START to crawle CocoaPods repository"
@@ -90,13 +97,6 @@ namespace :versioneye do
     puts "START to crawle NPM repository"
     NpmCrawler.crawl
     puts "---"
-  end
-
-  desc "send out suggestion emails to inactive users"
-  task :send_suggestions do
-    puts "START to send out suggestion emails to inactive users"
-    User.non_followers.each { |user| user.send_suggestions }
-    puts "STOP  to send out suggestion emails to inactive users"
   end
 
 end
