@@ -159,7 +159,7 @@ describe CocoapodsPodspecParser do
       end
 
       def should_not_create_more_versionlinks
-        links = Versionlink.where(language:@language, prod_key:@prod_key, version:'3.1.1')
+        links = Versionlink.where(language:@language, prod_key:@prod_key, version_id:'3.1.1')
         links.count.should == 1
       end
 
