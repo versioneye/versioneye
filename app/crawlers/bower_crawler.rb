@@ -1,9 +1,10 @@
+require 'crawler_task'
 require 'github'
 
 class BowerCrawler
 
   A_MINIMUM_RATE_LIMIT = 50 
-  A_MAX_RETRY = 12 #12x10 ~> if dont get task in 120sec then stop worker
+  A_MAX_RETRY = 12 #12x10 ~> after that worker'll starve to death
   A_SLEEP_TIME = 20
   A_TASK_CHECK_EXISTENCE = "bower_crawler/check_existence"
   A_TASK_READ_PROJECT = "bower_crawler/read_project"
@@ -47,9 +48,9 @@ class BowerCrawler
   #for debugging
   def self.crawl_serial(token, source_url)
     p "Using serial crawler - hopefully just for debugging."
-#    crawl_registered_list(source_url)
-#    crawl_existing_sources(token)
-#    crawl_projects(token)
+    crawl_registered_list(source_url)
+    crawl_existing_sources(token)
+    crawl_projects(token)
     crawl_versions(token) 
   end
 
@@ -221,7 +222,7 @@ class BowerCrawler
       task = CrawlerTask.by_task(task_name).crawlable.desc(:weight).shift
       break unless task.nil?
       
-      p "No tasks for #{task_name} - going to wait before re-trying again"
+      p "No tasks for #{task_name} - going to wait #{A_SLEEP_TIME} seconds before re-trying again"
       sleep A_SLEEP_TIME
     end
 
@@ -236,11 +237,11 @@ class BowerCrawler
 
     if response.class != HTTParty::Response
       success = true
-      p "Something went wrong with asking info about #{task[:repo_fullname]}- did nor get any response."
+      p "Something went wrong with asking info about #{task[:repo_fullname]}- did not get any response."
     elsif response.code > 199 and response.code < 300
       repo = JSON.parse response.body
       read_task.update_attributes({
-        weight: repo['stargazers_count'] + repo['watchers_count'],
+        weight: repo['stargazers_count'] + repo['watchers_count'] + 10,
         task_failed: false,
         url_exists: true,
         re_crawl: true
@@ -255,7 +256,7 @@ class BowerCrawler
       })
       success = true
     elsif response.code == 404
-      p "Repo #{task[:repo_fullname]} with url `#{task[:url]}` doesnt exists."
+      p "Error: #{task[:repo_fullname]} with url `#{task[:url]}` doesnt exists."
       task.update_attributes({
         fails: task[:fails] + 1,
         url_exists: false,
@@ -264,7 +265,7 @@ class BowerCrawler
       })
     elsif response.code >= 500
       #when service down
-      p "Sadly Github is down; cant access #{task[:url]}"
+      p "Error: Sadly Github is down; cant access #{task[:url]}"
       task.update_attributes({
         fails: task[:fails] + 1,
         re_crawl: true,
@@ -319,7 +320,7 @@ class BowerCrawler
 
   def self.read_project_info_from_github(task, token)
     pkg_info = nil
-    supported_files = Set.new ['bower.json', 'component.json', "package.json", "module.json"]
+    supported_files = Set.new ['bower.json', 'component.json', 'module.json', 'package.json']
     
     owner = task[:repo_owner]
     repo = task[:repo_name]
@@ -358,6 +359,7 @@ class BowerCrawler
       p "Product or tag cant be nil"
       return
     end
+    tag = tag.deep_symbolize_keys
     bower_parser = BowerParser.new
     tag_name = tag[:name].to_s
     tag_name = bower_parser.cleanup_version(tag_name)
@@ -391,8 +393,11 @@ class BowerCrawler
 
       p "Added version `#{new_version[:version]}` with release_date `#{new_version[:released_at]}`"
     end
-    
-    to_version_archive(prod, tag_name, tag['zipball_url'])
+   
+    if tag.has_key?(:zipball_url)
+      to_version_archive(prod, tag_name, tag[:zipball_url])
+    end
+
     url = "https://www.github.com/#{prod[:prod_key]}"
     to_version_link(prod, tag_name, url, "Github")
   end
@@ -503,7 +508,7 @@ class BowerCrawler
     newest.update_attributes({
       name: prod[:name],
       version: version[:version],
-      prod_type: prod[:prod_type],
+      prod_type: Project::A_TYPE_BOWER,
       created_at: version[:released_at] || newest[:created_at]
     })
     newest
