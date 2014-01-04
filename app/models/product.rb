@@ -167,6 +167,13 @@ class Product
     end
   end
 
+  def check_nil_version
+    return nil if version
+    return nil if versions.nil? or versions.empty?
+    self.version = sorted_versions.first
+    self.save
+  end
+
   ######## END VERSIONS ###################
 
   def comments

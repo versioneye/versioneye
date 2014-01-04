@@ -39,21 +39,23 @@ class ProductsController < ApplicationController
     prod_key = Product.decode_prod_key( params[:key]  )
     version  = params[:version]
     @product = fetch_product lang, prod_key
+
+    if @product.nil? || @product.versions.nil? || @product.versions.empty?
+      flash[:error] = 'The requested package is not available.'
+      return
+    end
+
+    @product.check_nil_version
     if @product && !lang.eql?( @product.language )
       redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
       return
     end
-    if @product.nil?
-      flash[:error] = 'The requested package is not available.'
-      return
-    end
+
     if version.nil? || (!attach_version(@product, version))
       params[:version] = @product.version
       redirect_to( {:action => 'show'}.merge(params) ) and return
     end
-    if @product.version
-      @version   = @product.version_by_number @product.version
-    end
+    @version             = @product.version_by_number @product.version
     @current_version     = VersionService.newest_version( @product.versions )
     @versioncomment      = Versioncomment.new
     @versioncommentreply = Versioncommentreply.new
