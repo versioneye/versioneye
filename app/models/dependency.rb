@@ -91,8 +91,7 @@ class Dependency
   end
 
   def language_escaped
-    return "nodejs" if self.language.eql? Product::A_LANGUAGE_NODEJS
-    language.downcase
+    Product.encode_language( language )
   end
 
   def update_known
@@ -173,7 +172,7 @@ class Dependency
   end
 
   def dep_prod_key_for_url
-    Product.encode_product_key dep_prod_key
+    Product.encode_prod_key dep_prod_key
   end
 
   def version_for_url
