@@ -8,10 +8,11 @@ class Versionlink
   # Belongs to the product with this attributes
   field :language  , type: String
   field :prod_key  , type: String
-  field :version, type: String 
+  field :version_id, type: String # version string. For example 1.0.1. TODO rename to version.
 
   field :link      , type: String # URL:   for example https://github.com/500px/500px-iOS-api
   field :name      , type: String # Label: for example "500px-iOS-api"
+
   # true  => This link was manually added by a community member
   # false => This link was crawled
   field :manual    , type: Boolean, :default => false
@@ -31,7 +32,7 @@ class Versionlink
       product = Product.find_by_lang_key( self.language, self.prod_key )
     end
     return nil if product.nil?
-    product.version = self.version
+    product.version = self.version_id
     product
   end
 
@@ -40,8 +41,8 @@ class Versionlink
     Versionlink.where( language: language, prod_key: prod_key, link: link ).shift
   end
 
-  def self.find_version_link(language, prod_key, version, link)
-    Versionlink.where( language: language, prod_key: prod_key, version: version, link: link )
+  def self.find_version_link(language, prod_key, version_id, link)
+    Versionlink.where( language: language, prod_key: prod_key, version_id: version_id, link: link )
   end
 
   def self.create_versionlink language, prod_key, version_number, link, name
@@ -55,7 +56,7 @@ class Versionlink
       return nil
     end
     versionlink = Versionlink.new({:name => name, :link => link, :language => language,
-      :prod_key => prod_key, :version => version_number })
+      :prod_key => prod_key, :version_id => version_number })
     versionlink.save
   end
 
