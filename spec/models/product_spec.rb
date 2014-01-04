@@ -3,6 +3,9 @@ require 'spec_helper'
 describe Product do
 
   let( :product ) { Product.new(:language => Product::A_LANGUAGE_RUBY, :prod_key => "funny_bunny", :version => "1.0.0") }
+  let(:version1) {FactoryGirl.build(:product_version, version: "0.0.1")}
+  let(:version2) {FactoryGirl.build(:product_version, version: "0.0.2")}
+  let(:version3) {FactoryGirl.build(:product_version, version: "0.1")}
 
   describe "find_by_key" do
 
@@ -229,6 +232,59 @@ describe Product do
       product.version.should eq('2.0.0')
     end
 
+  end
+
+  describe "version_by_number" do
+    it "returns nil when number is nil" do
+      product.version_by_number(nil).should be_nil
+    end
+
+    it "returns nil when product has no versions" do
+      product.version_by_number("1.0.0").should be_nil
+    end
+
+    it "returns nil when prodoct has no matching versions" do
+      product.versions << version1
+      product.versions << version2
+      product.save
+      product.version_by_number("1.0.0").should be_nil
+    end
+
+    it "returns correct version when there's matching version" do
+      product.versions.delete_all
+      product.versions << version1
+      product.versions << version2
+      product.save
+      product.version_by_number("0.0.1").should_not be_nil
+    end
+
+    it "should find correct version when there's massive set of subdoc" do
+        product.versions.delete_all
+        40.times do |i|
+          product.versions << FactoryGirl.build(:product_version, version: "0.#{i}.1")
+        end
+        product.save
+
+        match = product.version_by_number("0.12.1")
+        match.should_not be_nil
+        match[:version].should eql("0.12.1")
+    end
+
+    it "should find correct version even there may be versions with invalid or missing value" do
+      product.versions.delete_all
+      product.versions << version1
+      product.versions << FactoryGirl.build(:product_version, version: nil)
+      product.versions << FactoryGirl.build(:product_version, version: "")
+      product.versions << FactoryGirl.build(:product_version, version: 1)
+      product.versions << FactoryGirl.build(:product_version, version: 1.0)
+      product.versions << FactoryGirl.build(:product_version, version: 1.minutes.ago)
+      product.versions << version2
+      product.save
+
+      match = product.version_by_number(version2[:version])
+      match.should_not be_nil
+      match[:version].should eql(version2[:version])
+    end
   end
 
 end
