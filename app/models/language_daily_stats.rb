@@ -21,12 +21,11 @@ class LanguageDailyStats
   attr_accessible :language, :date, :metrics
 
   def self.initial_metrics_table
-    #metrics table for every language
     {
-      'new_version' => 0,   #new versions publised
-      'novel_package' => 0, #new libraries published
-      'total_package' => 0, #total packages upto this date
-      'total_artifact' => 0 #total artifacts upto this date
+      'new_version'    => 0, #new   versions  publised
+      'novel_package'  => 0, #new   libraries published
+      'total_package'  => 0, #total packages  upto this date
+      'total_artifact' => 0  #total artifacts upto this date
     }
   end
 
@@ -41,14 +40,15 @@ class LanguageDailyStats
 
   def initialize_metrics_tables
     Product.supported_languages.each do |lang|
-      lang_key = LanguageDailyStats.language_to_sym(lang)
+      lang_key       = LanguageDailyStats.language_to_sym( lang )
       self[lang_key] = LanguageDailyStats.initial_metrics_table
     end
   end
 
   def self.language_to_sym(lang)
     lang = Product.encode_language(lang).capitalize
-    lang = lang.gsub(/\-/, '') #special rule for Objective-C
+    lang = lang.gsub(/\-/, '') # Special rule for Objective-C
+    lang = lang.gsub(/\./, '') # Special rule for Node.JS
     lang.to_sym
   end
 
@@ -60,7 +60,7 @@ class LanguageDailyStats
     day_string = self.to_date_string(that_day)
     self.where(date_string: day_string).delete_all #remove previous  document
 
-    new_doc  = self.new date: that_day.at_midnight
+    new_doc  = LanguageDailyStats.new date: that_day.at_midnight
     new_doc[:date_string] = self.to_date_string(that_day)
     new_doc.initialize_metrics_tables
 

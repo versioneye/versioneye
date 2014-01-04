@@ -56,6 +56,8 @@ namespace :versioneye do
   end
 
 
+  # ***** Email Tasks *****
+
   desc "send out new version email notifications"
   task :send_notifications => :environment do
     puts "START to send out the notification E-Mails."
@@ -70,15 +72,17 @@ namespace :versioneye do
     puts "---"
   end
 
-  desc "crawl & import Cococapods specs"
-  task :crawl_cocoapods => :environment do
-    puts "START to crawle CocoaPods repository"
-    CocoapodsCrawler.crawl
-    GithubVersionCrawler.crawl
-    puts "---"
+  desc "send out suggestion emails to inactive users"
+  task :send_suggestions do
+    puts "START to send out suggestion emails to inactive users"
+    User.non_followers.each { |user| user.send_suggestions }
+    puts "STOP  to send out suggestion emails to inactive users"
   end
 
-  desc "crawl packagist"
+
+  # ***** Crawler Tasks *****
+
+  desc "crawl Packagist"
   task :crawl_packagist => :environment do
     puts "START to crawle Packagist repository"
     PackagistCrawler.crawl
@@ -92,11 +96,12 @@ namespace :versioneye do
     puts "---"
   end
 
-  desc "send out suggestion emails to inactive users"
-  task :send_suggestions do
-    puts "START to send out suggestion emails to inactive users"
-    User.non_followers.each { |user| user.send_suggestions }
-    puts "STOP  to send out suggestion emails to inactive users"
+  desc "crawl Cococapods"
+  task :crawl_cocoapods => :environment do
+    puts "START to crawle CocoaPods repository"
+    CocoapodsCrawler.crawl
+    GithubVersionCrawler.crawl
+    puts "---"
   end
 
 end
