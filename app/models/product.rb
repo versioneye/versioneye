@@ -182,12 +182,7 @@ class Product
 
   def language_esc lang = nil
     lang = self.language if lang.nil?
-    Product.language_escape lang
-  end
-
-  def self.language_escape lang
-    return "nodejs" if lang.eql?(A_LANGUAGE_NODEJS)
-    return lang.downcase
+    Product.encode_language lang
   end
 
   def license_info
@@ -249,7 +244,7 @@ class Product
   end
 
   def to_param
-    Product.encode_product_key self.prod_key
+    Product.encode_prod_key self.prod_key
   end
 
   def version_to_url_param
@@ -281,28 +276,23 @@ class Product
     array_dwoncase
   end
 
-  def self.encode_product_key prod_key
-    return "0" if prod_key.nil?
+  def self.encode_prod_key prod_key
+    return "0" if prod_key.to_s.strip.empty?
     prod_key.to_s.gsub('/', ':')
   end
 
-  def self.encode_prod_key prod_key
-    return nil if prod_key.nil?
-    prod_key.gsub('/', ':')
-  end
-
   def self.decode_prod_key prod_key
-    return nil if prod_key.nil?
-    prod_key.gsub(':', '/')
+    return nil if prod_key.to_s.strip.empty?
+    prod_key.to_s.gsub(':', '/')
   end
 
   def self.encode_language language
-    return nil if language.to_s.empty?
-    language.gsub("\.", "").downcase
+    return nil if language.to_s.strip.empty?
+    language.to_s.gsub("\.", "").downcase
   end
 
   def self.decode_language language
-    return nil if language.nil?
+    return nil if language.to_s.strip.empty?
     return A_LANGUAGE_NODEJS     if language.match(/^node/i)
     return A_LANGUAGE_PHP        if language.match(/^php/i)
     return A_LANGUAGE_JAVASCRIPT if language.match(/^JavaScript/i)
@@ -322,7 +312,7 @@ class Product
     elsif !description && description_manual
       return description_manual
     else
-      ""
+      ''
     end
   end
 
