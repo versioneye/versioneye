@@ -708,8 +708,7 @@ class BowerCrawler
       owner = owner.split('.').first
     else
       #TODO: add support for private hosts
-      logger.info "#------------------------------------------------------------",
-        "warning: going to ignore #{repo_url} - its not github repo, cant read bower.json"
+      logger.info "warning: going to ignore #{repo_url} - its not github repo, cant read bower.json"
       return nil
 
     end
