@@ -143,9 +143,10 @@ class BowerCrawler
         result = false
       else
         logger.info "#{task[:repo_fullname]} has #{tags.to_a.count} tags."
-        prod = Product.where(:prod_type => Project::A_TYPE_BOWER, :prod_key => task[:repo_fullname]).shift
+        prod_key = task[:repo_fullname].to_s.downcase
+        prod = Product.where(:prod_type => Project::A_TYPE_BOWER, :prod_key => prod_key).shift
         if prod.nil?
-          logger.error "Cant find product for #{Project::A_TYPE_BOWER}/#{task[:repo_fullname]}"
+          logger.error "#{task_name} | Cant find product for #{Project::A_TYPE_BOWER}/#{task[:repo_fullname]}"
           next
         end
 
@@ -235,20 +236,29 @@ class BowerCrawler
     task
   end
 
-  def self.http_head(url)
+  def self.http_head(url, modified_since = nil)
     response = nil
+    headers = nil
+    if modified_since
+      headers = {"If-Modified-Since" => modified_since.rfc822}
+    end
     uri = URI(url)
     Net::HTTP.start(uri.host, uri.port, use_ssl: (uri.scheme == 'https')) do |http|
-      response = http.request_head(uri.path) 
+      response = http.request_head(uri.path, headers) 
     end
 
     response
+    rescue => e
+      logger.error "Cant check headers of url: `#{url}`. #{e.message}"
+      logger.err e.backtrace.join('\n')
   end
 
   def self.check_repo_existence(task, token)
     success =  false
     repo_url = "https://github.com/#{task[:repo_fullname]}"
     response = http_head(repo_url)
+    return false if response.nil?
+
     response_code  = response.code.to_i
     if response_code == 200
       read_task = to_read_task(task, task[:url])
@@ -260,13 +270,22 @@ class BowerCrawler
       })
       success = true
     elsif response_code == 301 or response_code == 308
-      logger.info "#{task[:repo_fullname]} has moved to #{response['location']}"
-      #update task's url and try again with new url
+      logger.info "#{task[:task]} | #{task[:repo_fullname]} has moved to #{response['location']}"
+      #mark current task as failed and dont crawl it
+      repo_info = url_to_repo_info(response['location'])
       task.update_attributes({
-        url: response['location'],
+        re_crawl: false,
+        url_exists: false
+      })
+      #create new task with new url and try again with new url
+      task = to_existence_task(repo_info)
+      task.update_attributes({
+        weight: 20,
+        task_failed: false,
         re_crawl: true,
         url_exists: true
       })
+
       success = true
     elsif response_code == 304
       logger.info "No changes for `#{task[:repo_fullname]}` since last crawling `#{read_task[:crawled_at]}`. Going to skip."
@@ -276,7 +295,7 @@ class BowerCrawler
       logger.error "check_repo_existence| 404 for #{task[:repo_fullname]} on `#{task[:url]}`"
     elsif response_code >= 500
       #when service down
-      logger.info "Error: Sadly Github is down; cant access #{task[:url]}"
+      logger.error "check_repo_existence | Sadly Github is down; cant access #{task[:url]}"
       task.update_attributes({
         fails: task[:fails] + 1,
         re_crawl: true,
@@ -527,12 +546,7 @@ class BowerCrawler
        prod_type: Project::A_TYPE_BOWER
     )
 
-    language = pkg_info[:language]
-    if language.nil?
-      logger.warn "method: to_product(pkg_info) - API returns nil for language, use default language JavaScript"
-      language = Product::A_LANGUAGE_JAVASCRIPT
-    end
-
+    language = Product::A_LANGUAGE_JAVASCRIPT
     prod.update_attributes({
       name: pkg_info[:name].to_s,
       name_downcase: pkg_info[:name].to_s.downcase,
@@ -703,15 +717,15 @@ class BowerCrawler
   end
 
   def self.url_to_repo_info(repo_url)
-    git_url_matcher = /^git:\/\/github.com/i
-    git_io_matcher = /github[\.io|\.com]/i
+    git_url_matcher = /github.com/i
+    git_io_matcher = /\w+\.github\.[io|com]/i
     urlpath = repo_url.gsub(/:\/+|\/+|\:/, "|")
 
-    if repo_url =~ git_url_matcher
-      _, _, owner, repo = urlpath.split('|')
-    elsif repo_url =~ git_io_matcher
+    if repo_url =~ git_io_matcher
       _, owner, repo, _ = urlpath.split('|')
       owner = owner.split('.').first
+    elsif repo_url =~ git_url_matcher
+      _, _, owner, repo = urlpath.split('|')
     else
       #TODO: add support for private hosts
       logger.info "warning: going to ignore #{repo_url} - its not github repo, cant read bower.json"
