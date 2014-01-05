@@ -488,6 +488,107 @@ describe Product do
 
   end
 
+  describe "version_by_number" do
+
+    it "returns nil when number is nil" do
+      product.version_by_number(nil).should be_nil
+    end
+
+    it "returns nil when product has no versions" do
+      product.version_by_number("1.0.0").should be_nil
+    end
+
+    it "returns nil when prodoct has no matching versions" do
+      product.versions << version1
+      product.versions << version2
+      product.save
+      product.version_by_number("1.0.0").should be_nil
+    end
+
+    it "returns correct version when there's matching version" do
+      product.versions.delete_all
+      product.versions << version1
+      product.versions << version2
+      product.save
+      version = product.version_by_number("0.0.1")
+      version.should_not be_nil
+      version.version.should eq('0.0.1')
+    end
+
+    it "should find correct version when there's massive set of subdoc" do
+      product.versions.delete_all
+      40.times do |i|
+        product.versions << FactoryGirl.build(:product_version, version: "0.#{i}.1")
+      end
+      product.save
+      match = product.version_by_number("0.12.1")
+      match.should_not be_nil
+      match[:version].should eql("0.12.1")
+    end
+
+    it "should find correct version even there may be versions with invalid or missing value" do
+      product.versions.delete_all
+      product.versions << version1
+      product.versions << FactoryGirl.build(:product_version, version: nil)
+      product.versions << FactoryGirl.build(:product_version, version: "")
+      product.versions << FactoryGirl.build(:product_version, version: 1)
+      product.versions << FactoryGirl.build(:product_version, version: 1.0)
+      product.versions << FactoryGirl.build(:product_version, version: 1.minutes.ago)
+      product.versions << version2
+      product.save
+      match = product.version_by_number(version2[:version])
+      match.should_not be_nil
+      match[:version].should eql(version2[:version])
+    end
+
+  end
+
+
+  describe 'versions_empty?' do
+
+    it 'returns true if versions nil' do
+      product = Product.new
+      product.versions = nil
+      product.versions_empty?().should be_true
+    end
+    it 'returns true if versions empty' do
+      product = Product.new
+      product.versions = Array.new
+      product.versions_empty?().should be_true
+    end
+    it 'returns false if versions not empty' do
+      product = Product.new
+      product.versions = Array.new
+      product.versions.push(Version.new({:version => '1.0.0'}))
+      product.versions_empty?().should be_false
+    end
+
+  end
+
+
+  describe 'add_version' do
+
+    it 'adds new version' do
+      product = Product.new
+      product.add_version('1.0.0')
+      product.versions.size.should eq(1)
+      product.versions_empty?().should be_false
+      product.version_by_number('1.0.0').should_not be_nil
+    end
+
+    it 'doesnt add new version because its existing already' do
+      product = Product.new
+      product.add_version('1.0.0')
+      product.versions.size.should eq(1)
+      product.add_version('1.0.0')
+      product.versions.size.should eq(1)
+      product.versions_empty?().should be_false
+      product.version_by_number('1.0.0').should_not be_nil
+    end
+
+  end
+
+
   describe 'check_nil_version' do
 
     it 'returns nil' do
@@ -495,14 +596,12 @@ describe Product do
       product.check_nil_version
       product.version.should be_nil
     end
-
     it 'returns 1.0.0' do
       product = Product.new
       product.versions.push(Version.new({:version => '1.0.0'}))
       product.check_nil_version
       product.version.should eq('1.0.0')
     end
-
     it 'returns 2.0.0' do
       product = Product.new({:version => '2.0.0'})
       product.check_nil_version
@@ -511,6 +610,7 @@ describe Product do
 
   end
 
+<<<<<<< HEAD
   describe "version_by_number" do
     it "returns nil when number is nil" do
       product.version_by_number(nil).should be_nil
