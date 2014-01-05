@@ -53,7 +53,7 @@ class BowerCrawler
   #for debugging
   def self.crawl_serial(token, source_url)
     logger.info "Using serial crawler - hopefully just for debugging."
-#    crawl_registered_list(source_url) # Filters out everything what is not on GitHub. If not on GitHub, skip it! And create tasks for the next crawler.
+    crawl_registered_list(source_url) # Filters out everything what is not on GitHub. If not on GitHub, skip it! And create tasks for the next crawler.
     crawl_existing_sources(token)     # Checks if the github url really exists! And create tasks for the next crawler.
     crawl_projects(token)             # Crawles bower.json file and creates/updates basic project infos in DB.
     crawl_versions(token)
@@ -247,8 +247,8 @@ class BowerCrawler
 
   def self.check_repo_existence(task, token)
     success =  false
-
-    response = http_head("https://github.com/#{task[:repo_fullname]}")
+    repo_url = "https://github.com/#{task[:repo_fullname]}"
+    response = http_head(repo_url)
     response_code  = response.code.to_i
     if response_code == 200
       read_task = to_read_task(task, task[:url])
@@ -705,12 +705,12 @@ class BowerCrawler
   def self.url_to_repo_info(repo_url)
     git_url_matcher = /^git:\/\/github.com/i
     git_io_matcher = /github.io/i
-    urlpath = repo_url.gsub(/:\/+|\/+|\:/, "_")
+    urlpath = repo_url.gsub(/:\/+|\/+|\:/, "|")
 
     if repo_url =~ git_url_matcher
-      _, _, owner, repo = urlpath.split(/_/)
+      _, _, owner, repo = urlpath.split('|')
     elsif repo_url =~ git_io_matcher
-      _, owner, repo, _ = urlpath.split('_')
+      _, owner, repo, _ = urlpath.split('|')
       owner = owner.split('.').first
     else
       #TODO: add support for private hosts
