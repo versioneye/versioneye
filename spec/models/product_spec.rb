@@ -610,7 +610,6 @@ describe Product do
 
   end
 
-<<<<<<< HEAD
   describe "version_by_number" do
     it "returns nil when number is nil" do
       product.version_by_number(nil).should be_nil
