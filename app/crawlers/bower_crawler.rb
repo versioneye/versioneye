@@ -53,7 +53,7 @@ class BowerCrawler
   #for debugging
   def self.crawl_serial(token, source_url)
     logger.info "Using serial crawler - hopefully just for debugging."
-    crawl_registered_list(source_url) # Filters out everything what is not on GitHub. If not on GitHub, skip it! And create tasks for the next crawler.
+#    crawl_registered_list(source_url) # Filters out everything what is not on GitHub. If not on GitHub, skip it! And create tasks for the next crawler.
     crawl_existing_sources(token)     # Checks if the github url really exists! And create tasks for the next crawler.
     crawl_projects(token)             # Crawles bower.json file and creates/updates basic project infos in DB.
     crawl_versions(token)
@@ -235,40 +235,46 @@ class BowerCrawler
     task
   end
 
+  def self.http_head(url)
+    response = nil
+    uri = URI(url)
+    Net::HTTP.start(uri.host, uri.port, use_ssl: (uri.scheme == 'https')) do |http|
+      response = http.request_head(uri.path) 
+    end
+
+    response
+  end
 
   def self.check_repo_existence(task, token)
     success =  false
-    read_task = to_read_task(task, task[:url])
-    response = Github.repo_info(task[:repo_fullname], token, true, read_task[:crawled_at])
 
-    if response.class != HTTParty::Response
-      logger.error "Something went wrong with asking info about #{task[:repo_fullname]}- did not get any response."
-    elsif response.code > 199 and response.code < 300
-      repo = JSON.parse response.body
+    response = http_head("https://github.com/#{task[:repo_fullname]}")
+    response_code  = response.code.to_i
+    if response_code == 200
+      read_task = to_read_task(task, task[:url])
       read_task.update_attributes({
-        weight: repo['stargazers_count'] + repo['watchers_count'] + 10,
+        weight: 10,
         task_failed: false,
         url_exists: true,
         re_crawl: true
       })
-      task.update_attributes({re_crawl: false, url_exists: true, crawled_at: DateTime.now})
       success = true
-    elsif response.code == 304
+    elsif response_code == 301 or response_code == 308
+      logger.info "#{task[:repo_fullname]} has moved to #{response['location']}"
+      #update task's url and try again with new url
+      task.update_attributes({
+        url: response['location'],
+        re_crawl: true,
+        url_exists: true
+      })
+      success = true
+    elsif response_code == 304
       logger.info "No changes for `#{task[:repo_fullname]}` since last crawling `#{read_task[:crawled_at]}`. Going to skip."
-      task.update_attributes({
-        url_exists: true,
-        re_crawl: false
-      })
+      task.update_attributes({url_exists: true, re_crawl: false})
       success = true
-    elsif response.code == 404
-      logger.info "Error: #{task[:repo_fullname]} with url `#{task[:url]}` doesnt exists."
-      task.update_attributes({
-        fails: task[:fails] + 1,
-        url_exists: false,
-        task_failed: true,
-        re_crawl: false
-      })
-    elsif response.code >= 500
+    elsif response_code == 404
+      logger.error "check_repo_existence| 404 for #{task[:repo_fullname]} on `#{task[:url]}`"
+    elsif response_code >= 500
       #when service down
       logger.info "Error: Sadly Github is down; cant access #{task[:url]}"
       task.update_attributes({
