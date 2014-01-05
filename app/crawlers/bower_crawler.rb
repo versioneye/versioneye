@@ -704,7 +704,7 @@ class BowerCrawler
 
   def self.url_to_repo_info(repo_url)
     git_url_matcher = /^git:\/\/github.com/i
-    git_io_matcher = /github.io/i
+    git_io_matcher = /github[\.io|\.com]/i
     urlpath = repo_url.gsub(/:\/+|\/+|\:/, "|")
 
     if repo_url =~ git_url_matcher
