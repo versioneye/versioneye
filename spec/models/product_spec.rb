@@ -3,6 +3,9 @@ require 'spec_helper'
 describe Product do
 
   let( :product ) { Product.new(:language => Product::A_LANGUAGE_RUBY, :prod_key => "funny_bunny", :version => "1.0.0") }
+  let(:version1) {FactoryGirl.build(:product_version, version: "0.0.1")}
+  let(:version2) {FactoryGirl.build(:product_version, version: "0.0.2")}
+  let(:version3) {FactoryGirl.build(:product_version, version: "0.1")}
 
 
   describe "encode_prod_key" do
