@@ -414,8 +414,8 @@ describe Product do
     end
   end
 
-  describe "unique_languages_for_product_ids" do
 
+  describe "unique_languages_for_product_ids" do
     it "returns unique languages for the product" do
       product_1 = ProductFactory.create_new 1
       product_2 = ProductFactory.create_new 2
@@ -425,7 +425,6 @@ describe Product do
       languages.include?("PHP").should be_true
       languages.include?("Java").should be_true
     end
-
   end
 
 
@@ -486,8 +485,6 @@ describe Product do
   end
 
 
-<<<<<<< Updated upstream
-=======
   describe "version_by_number" do
 
     it "returns nil when number is nil" do
@@ -610,6 +607,4 @@ describe Product do
 
   end
 
-
->>>>>>> Stashed changes
 end
