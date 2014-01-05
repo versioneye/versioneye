@@ -1,7 +1,11 @@
-
 FactoryGirl.define do
+
   sequence :product_name do |n|
     "spec_product#{n}"
+  end
+
+  sequence :product_version do |n|
+    (n / 2.0).to_s
   end
 
   factory :product do
@@ -24,6 +28,18 @@ FactoryGirl.define do
                                 language: "Ruby")
       end
     end
+
+    factory :product_with_versions do
+      ignore do
+        versions_count 6
+      end
+
+      after(:create) do |product, evaluator|
+        FactoryGirl.create_list(
+          :dependency, evaluator.versions_count,
+          version: FactoryGirl.generate(:product_version)
+        )
+      end
+    end
   end
 end
-
