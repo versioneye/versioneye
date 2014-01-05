@@ -1,5 +1,5 @@
-
 FactoryGirl.define do
+
   sequence :product_name do |n|
     "spec_product#{n}"
   end
@@ -43,4 +43,3 @@ FactoryGirl.define do
     end
   end
 end
-
