@@ -1,4 +1,3 @@
-
 Versioneye::Application.routes.draw do
 
   mount VersionEye::API => '/api'
@@ -26,7 +25,7 @@ Versioneye::Application.routes.draw do
   #
   # REMOVE THE NEXT LINE FROM production / master branch / default branch
   #
-  get   '/emailhelper', :to => 'emailhelper#show'
+  # get   '/emailhelper', :to => 'emailhelper#show'
 
   resources :sessions, :only => [:new, :create, :destroy]
   get    '/signin',                :to => 'sessions#new'
@@ -157,8 +156,6 @@ Versioneye::Application.routes.draw do
     get '/bitbucket/clear'      , :to => 'bitbucket_repos#clear'
     get '/bitbucket/menu'       , :to => 'bitbucket_repos#show_menu_items'
 
-
-
     resource :testimonials
   end
 
@@ -175,7 +172,7 @@ Versioneye::Application.routes.draw do
 
   namespace :admin do
 
-    post  '/language/upload',  :to => 'language#upload_json'
+    post '/language/upload',  :to => 'language#upload_json'
     get  '/language/download', :to => 'language#download_json'
     resources :language
 
@@ -183,12 +180,15 @@ Versioneye::Application.routes.draw do
       post '/approve',            :to => 'submitted_urls#approve'
       post '/decline',            :to => 'submitted_urls#decline'
     end
+
     resource :testimonials do
       put '/approve', :to => 'testimonials#approve'
       put '/decline', :to => 'testimonials#decline'
     end
+
     resources :error_messages
     resources :crawles
+
     get   '/crawles',             :to => 'crawles#index'
     get   '/group/:group',        :to => 'crawles#group', :as => 'group'
   end
