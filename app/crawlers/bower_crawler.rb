@@ -167,7 +167,7 @@ class BowerCrawler
   end
 
   # using: task_executor(task_name) {|task_name| crawl_money}
-  def self.crawler_task_executor(task_name, token, &block)
+  def self.crawler_task_executor(task_name, token)
     logger.info "#-- #{task_name} is starting ... "
     start_time = Time.now
     success = 0; failed = 0
@@ -244,7 +244,7 @@ class BowerCrawler
     end
     uri = URI(url)
     Net::HTTP.start(uri.host, uri.port, use_ssl: (uri.scheme == 'https')) do |http|
-      response = http.request_head(uri.path, headers) 
+      response = http.request_head(uri.path, headers)
     end
 
     response
