@@ -152,6 +152,10 @@ class Product
 
   def sorted_versions
     Naturalsorter::Sorter.sort_version_by_method( versions, "version", false )
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
+    versions
   end
 
   def version_by_number searched_version
