@@ -71,7 +71,7 @@ define([require], function(require){
           .attr({
             "x" : function(d){return thisPlot.xScaler(d.date) + thisPlot.bar.width/2.0 ;},
             "y" : function(d){return thisPlot.yScaler(d.value) + thisPlot.fontSize;},
-            "fill" : "white",
+            "fill" : "lightgrey",
             "text-anchor" : "middle"
           })
           .text(function(d){return d.value});
