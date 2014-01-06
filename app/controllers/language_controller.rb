@@ -7,6 +7,7 @@ class LanguageController < ApplicationController
   def show
     @lang            = Product.decode_language(params[:lang])
     @top_products    = Product.by_language(@lang).desc(:followers).limit(10)
+    @most_referenced_products = Product.by_language(@lang).desc(:used_by_count).limit(10)
     @latest_products = Newest.by_language(@lang).desc(:created_at).limit(10)
     @latest_stats    = LanguageDailyStats.latest_stats(@lang)
 
@@ -32,7 +33,6 @@ class LanguageController < ApplicationController
 
     # @feeds = LanguageFeed.by_language(@lang).map(&:url)
     # render template: "language/show"
-
   end
 
   def show_block
