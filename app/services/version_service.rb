@@ -13,6 +13,10 @@ class VersionService
     filtered = versions if filtered.empty?
     sorted = Naturalsorter::Sorter.sort_version_by_method( filtered, 'version', false )
     sorted.first
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
+    versions.first
   end
 
   # TODO @timgluz write tests for this
