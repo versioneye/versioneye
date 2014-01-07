@@ -1,5 +1,30 @@
 class ProductMigration
 
+  def self.export_references(language = 'Java')
+    top_10 = Product.where(:language => language).desc(:used_by_count).limit(10)
+    top_10.each do |top_1|
+      lines = Array.new
+      response   = Dependency.references language, top_1.prod_key, 0
+      total_entries = response[:count]
+      pages = total_entries / 30
+      rest = total_entries % 30
+      if rest > 0
+        pages += 1
+      end
+      (0..pages).each do |page|
+        response = Dependency.references language, top_1.prod_key, page
+        products = Product.by_prod_keys language, response[:prod_keys]
+        products.each do |prod|
+          line = "#{prod.group_id}; #{prod.artifact_id}; #{prod.repositories.first}"
+          lines << line
+          p line
+        end
+      end
+      filename = "#{top_1.name}.csv"
+      File.open(filename, 'w') {|f| f.write(lines.join("\n"))}
+    end
+  end
+
   def self.count_versions lang
     versions_count = 0
     count = Product.where(language: lang).count()
