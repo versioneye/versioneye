@@ -668,8 +668,13 @@ class BowerCrawler
   end
 
   def self.to_pkg_info(owner, repo, project_url, project_info)
+    pkg_name = project_info[:name].to_s.strip
+    if pkg_name.empty?
+      pkg_name  = repo
+    end
+
     info = {
-      name: repo,
+      name: pkg_name,
       group_id: owner,
       artifact_id: repo,
       full_name: "#{owner}/#{repo}",
