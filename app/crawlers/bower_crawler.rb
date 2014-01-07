@@ -53,8 +53,8 @@ class BowerCrawler
   #for debugging
   def self.crawl_serial(token, source_url)
     logger.info "Using serial crawler - hopefully just for debugging."
-    crawl_registered_list(source_url) # Filters out everything what is not on GitHub. If not on GitHub, skip it! And create tasks for the next crawler.
-    crawl_existing_sources(token)     # Checks if the github url really exists! And create tasks for the next crawler.
+#    crawl_registered_list(source_url) # Filters out everything what is not on GitHub. If not on GitHub, skip it! And create tasks for the next crawler.
+#    crawl_existing_sources(token)     # Checks if the github url really exists! And create tasks for the next crawler.
     crawl_projects(token)             # Crawles bower.json file and creates/updates basic project infos in DB.
     crawl_versions(token)
   end
@@ -122,12 +122,22 @@ class BowerCrawler
   def self.crawl_projects(token)
     task_name = A_TASK_READ_PROJECT
     crawler_task_executor(task_name, token) do |task, token|
-      result = add_bower_package(task, token)
-      if result == true
-        task.update_attributes({crawled_at: DateTime.now})
-        to_version_task(task) # add new version task when everything went oK
+      result = false
+      repo_response = Github.repo_info(task[:repo_fullname], token, true, task[:crawled_at])
+      repo_info = JSON.parse(repo_response.body, symbolize_names: true)
+      if repo_response.code == 200 and not repo_info.nil?
+        result = add_bower_package(task, repo_info,  token)
+        if result == true
+          task.update_attributes({crawled_at: DateTime.now})
+          to_version_task(task) # add new version task when everything went oK
+        end
+      elsif repo_response.code == 304
+        logger.info "crawl_projects | #{task[:repo_fullname]} has no changes; going to skip it;"
+        result = true
+      else
+        logger.error "crawl_projects | cant read information for #{task[:repo_fullname]}."
       end
-      sleep 1/100 # force little pause before next iteration
+      sleep 1/1000.0 # force little pause before next iteration
       result
     end
   end
@@ -306,16 +316,14 @@ class BowerCrawler
     return success
   end
 
-  def self.add_bower_package(task, token)
-    logger.info "#-- reading #{task[:repo_fullname]} from url: #{task[:url]}"
+  def self.add_bower_package(task, repo_info, token)
+    logger.info "#-- reading #{task[:repo_fullname]} from url: #{task[:url]} branch: #{repo_info[:default_branch]}"
 
-    pkg_info = self.read_project_info_from_github(task, token)
+    pkg_file = self.read_project_file_from_github(task, token, repo_info[:default_branch])
     result   = false
     product  = nil
-    product  = create_bower_package(pkg_info, token) if pkg_info
-    if product and product.save
-      result = true
-    end
+    product  = create_bower_package(pkg_file, repo_info, token) if pkg_file
+    result = true if product and product.save
     result
   rescue => e
     logger.error e.message
@@ -324,10 +332,11 @@ class BowerCrawler
   end
 
   # Saves product and save sub/related docs
-  def self.create_bower_package(pkg_info, token)
+  def self.create_bower_package(pkg_info, repo_info, token)
     prod = to_product(pkg_info)
     prod[:version] = pkg_info[:version]
     prod.add_version pkg_info[:version]
+    prod[:language] = repo_info[:language] unless repo_info[:language].nil?
 
     to_version_link(prod, prod[:version], pkg_info[:url])
 
@@ -341,7 +350,7 @@ class BowerCrawler
     prod
   end
 
-  def self.read_project_info_from_github(task, token)
+  def self.read_project_file_from_github(task, token, branch = "master")
     pkg_info = nil
     supported_files = Set.new ['bower.json', 'component.json', 'module.json', 'package.json']
 
@@ -349,9 +358,8 @@ class BowerCrawler
     repo = task[:repo_name]
     fullname = task[:repo_fullname]
     repo_url = task[:url]
-    #return nil unless Github.repo_changed?(fullname, task[:updated_at], token)
     supported_files.to_a.each do |filename|
-      file_url = "https://raw.github.com/#{fullname}/master/#{filename}"
+      file_url = "https://raw.github.com/#{fullname}/#{branch}/#{filename}"
       project_file = read_project_file_from_url(file_url, token)
       if project_file.is_a?(Hash)
         logger.info "Found: #{filename} for #{task[:repo_fullname]}"
