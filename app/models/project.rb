@@ -107,7 +107,7 @@ class Project
   def show_dependency_badge?
     self.language.eql?(Product::A_LANGUAGE_JAVA) or self.language.eql?(Product::A_LANGUAGE_PHP) or
     self.language.eql?(Product::A_LANGUAGE_RUBY) or self.language.eql?(Product::A_LANGUAGE_NODEJS) or
-    self.language.eql?(Product::A_LANGUAGE_CLOJURE)
+    self.language.eql?(Product::A_LANGUAGE_CLOJURE) or self.language.eql?(Product::A_LANGUAGE_OBJECTIVEC)
   end
 
   def visible_for_user?(user)
