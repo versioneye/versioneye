@@ -34,7 +34,7 @@ class GithubCrawler
     tags.each do |tag|
       next if tag.nil?
 
-      version_number = parse_version_number tag
+      version_number = CrawlerUtils.remove_version_prefix tag.name
       if product.version_by_number( version_number )
         logger.info "#{product.language} : #{product.prod_key} : #{version_number} exist already "
         next
