@@ -15,7 +15,6 @@ class NpmCrawler
     crawl.duration = Time.now - crawl.created_at
     crawl.save
     self.logger.info(" *** This crawle took #{crawl.duration} *** ")
-    return nil
   end
 
   def self.get_first_level_list
@@ -86,13 +85,9 @@ class NpmCrawler
     update_npm_link product, npm_page
 
     versions.each do |version|
-      version_number = String.new(version[0])
-      version_obj = version[1]
-      if version_number && version_number.match(/v[0-9]+\..*/)
-        version_number.gsub!('v', '')
-      end
-
-      db_version = product.version_by_number version_number
+      version_number = CrawlerUtils.remove_version_prefix String.new(version[0])
+      version_obj    = version[1]
+      db_version     = product.version_by_number version_number
       next if db_version
 
       create_new_version product, version_number, version_obj, time, crawl
@@ -112,25 +107,17 @@ class NpmCrawler
     product.reindex = true
     product.save
 
-    self.logger.info " -- NPM Package: #{product.prod_key} -- with new version: #{version_number}"
-
-    self.create_license( product, version_number, version_obj )
+    self.logger.info " -- New NPM Package: #{product.prod_key} : #{version_number}"
 
     CrawlerUtils.create_newest( product, version_number, logger )
     CrawlerUtils.create_notifications( product, version_number, logger )
 
-    bugs_link = bugs_for version_obj
-    Versionlink.create_versionlink product.language, product.prod_key, version_number, bugs_link, 'Bugs'
-    repo_link = repository_for version_obj
-    Versionlink.create_versionlink product.language, product.prod_key, version_number, repo_link, 'Repository'
-    homepage_link = homepage_for version_obj
-    Versionlink.create_versionlink product.language, product.prod_key, version_number, homepage_link, 'Homepage'
-
-    create_author product, version_number, version_obj['author']
-    create_maintainers product, version_number, version_obj['maintainers']
-
-    create_download product, version_number, version_obj
     create_dependencies product, version_number, version_obj
+    create_download     product, version_number, version_obj
+    create_versionlinks product, version_number, version_obj
+    create_license      product, version_number, version_obj
+    create_author       product, version_number, version_obj['author']
+    create_maintainers  product, version_number, version_obj['maintainers']
   rescue => e
     self.logger.error "ERROR in create_new_version Message:   #{e.message}"
     self.logger.error e.backtrace.join("\n")
@@ -142,7 +129,7 @@ class NpmCrawler
     product = Product.find_by_lang_key( Product::A_LANGUAGE_NODEJS, prod_key )
     return product if product
     self.logger.info " -- New Node.JS Package - #{name}"
-    Product.new({:reindex => true})
+    Product.new({:prod_key => prod_key, :reindex => true})
   end
 
 
@@ -244,6 +231,17 @@ class NpmCrawler
     optionalDependencies = version_obj['optionalDependencies']
     create_dependency optionalDependencies, product, version_number, Dependency::A_SCOPE_OPTIONAL
   end
+
+
+  def self.create_versionlinks product, version_number, version_obj
+    bugs_link = bugs_for version_obj
+    Versionlink.create_versionlink product.language, product.prod_key, version_number, bugs_link, 'Bugs'
+    repo_link = repository_for version_obj
+    Versionlink.create_versionlink product.language, product.prod_key, version_number, repo_link, 'Repository'
+    homepage_link = homepage_for version_obj
+    Versionlink.create_versionlink product.language, product.prod_key, version_number, homepage_link, 'Homepage'
+  end
+
 
   def self.create_dependency dependencies, product, version_number, scope
     return nil if dependencies.nil? || dependencies.empty?

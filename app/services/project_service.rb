@@ -297,7 +297,7 @@ class ProjectService
 
   private
 
-    def update_project_with_s3_file project, s3_infos
+    def self.update_project_with_s3_file project, s3_infos
       return false unless s3_infos && s3_infos['filename'] && s3_infos['s3_url']
 
       S3.delete( project.s3_filename )
