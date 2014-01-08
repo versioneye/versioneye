@@ -2,9 +2,6 @@ class GithubVersionCrawler
 
   include HTTParty
 
-  A_USER_AGENT = 'www.versioneye.com'
-  A_API_URL    = 'https://api.github.com'
-
   def self.logger
     ActiveSupport::BufferedLogger.new('log/github_version_crawler.log')
   end
