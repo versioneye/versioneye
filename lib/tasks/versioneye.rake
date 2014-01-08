@@ -104,4 +104,11 @@ namespace :versioneye do
     puts "---"
   end
 
+  desc "crawl GitHub"
+  task :crawl_github => :environment do
+    puts "START to crawle GitHub repository"
+    GithubCrawler.crawl
+    puts "---"
+  end
+
 end
