@@ -161,6 +161,16 @@ class User::ProjectsController < ApplicationController
     redirect_to user_project_path( project )
   end
 
+  def followall
+    id = params[:id]
+    project = Project.find_by_id id
+    project.dependencies.each do |dep|
+      ProductService.follow dep.language, dep.prod_key, current_user
+    end
+    flash[:success] = "You follow now all packages from this project."
+    redirect_to user_project_path( project )
+  end
+
   def destroy
     id = params[:id]
     success = false

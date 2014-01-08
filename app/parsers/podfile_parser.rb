@@ -1,4 +1,5 @@
 require 'cocoapods-core'
+require 'cocoapods_package_manager' # for Monkey patch Pod::Podfile.from_url( url )
 
 # This parser parses the podfile for any CocoaPods project
 # and creates and stores a Project model in VersionEye
@@ -11,63 +12,47 @@ require 'cocoapods-core'
 #
 #    PodfileParser.new.parse_file '/path/to/the/Podfile'
 #
-
-
 class PodfileParser < CommonParser
 
-  attr_reader :language, :project_type
-
-  attr_accessor :pod_file, :url
-  attr_accessor :project
-
-  def initialize
-    @language     = Product::A_LANGUAGE_OBJECTIVEC
-    @project_type = Project::A_TYPE_COCOAPODS
-  end
 
   def parse_file filename
-    @pod_filename = filename
-    @pod_file = Pod::Podfile.from_file( @pod_filename )
-    create_project
+    pod_file = Pod::Podfile.from_file( filename )
+    create_project pod_file
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
+    nil
   end
+
 
   def parse url
-    @url = url
     return nil if url.to_s.empty?
-
-    begin
-    @pod_file = Pod::Podfile.from_url( url )
-    rescue => e
-      Rails.logger.error e.message
-      Rails.logger.error e.backtrace.join("\n")
-      nil
-    end
-
-    create_project
-  end
-
-  def create_project
-    @project  = init_project
-    create_dependencies
-    @project
-  end
-
-  # TODO: are there projects that gets updated?
-  def init_project
-    Project.new \
-      project_type: project_type,
-      language: language,
-      url: url
+    pod_file = Pod::Podfile.from_url( url )
+    create_project pod_file, url
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
+    nil
   end
 
 
-  def create_dependencies
+  def create_project pod_file, url = nil
+    project = init_project url
+    create_dependencies project, pod_file
+    project
+  end
+
+
+  def init_project url
+    Project.new({project_type: Project::A_TYPE_COCOAPODS, language: Product::A_LANGUAGE_OBJECTIVEC, url: url})
+  end
+
+
+  def create_dependencies project, pod_file
     # TODO make scopes out of the target definitions
     # target_def = @pod_hash["target_definitions"]
 
-    deps = pod_file.dependencies
-
-    hash_array = deps.map do |dep|
+    hash_array = pod_file.dependencies.map do |dep|
       hash = {name: dep.name, version: dep.requirement.as_list}
       hash[:spec], hash[:subspec] = CocoapodsPackageManager.spec_subspec( dep.name )
       hash
@@ -84,14 +69,15 @@ class PodfileParser < CommonParser
     end
 
     specs_and_versions.each_pair do |spec, version|
-      create_dependency(spec, version)
+      create_dependency(project, spec, version)
     end
 
-    @project.dep_number = @project.projectdependencies.count
-    Rails.logger.info "Project has #{@project.projectdependencies.count} dependencies"
+    project.dep_number = project.projectdependencies.size
+    Rails.logger.info "Project has #{project.projectdependencies.count} dependencies"
   end
 
-  def create_dependency dep_name, requirements
+
+  def create_dependency project, dep_name, requirements
     if dep_name.nil?
       Rails.logger.debug "Problem: don't know how to handle #{dep_name}"
       return nil
@@ -112,7 +98,7 @@ class PodfileParser < CommonParser
     Rails.logger.debug "create_dependency '#{dep_name}' -- #{requirement}"
 
     dependency = Projectdependency.new({
-      :language => language,
+      :language => Product::A_LANGUAGE_OBJECTIVEC,
       :prod_key => prod_key,
       :name     => dep_name,
 
@@ -122,12 +108,13 @@ class PodfileParser < CommonParser
       })
 
 
-    @project.out_number     += 1 if dependency.outdated?
-    @project.unknown_number += 1 if dependency.prod_key.nil?
-    @project.projectdependencies.push dependency
+    project.out_number     += 1 if dependency.outdated?
+    project.unknown_number += 1 if dependency.prod_key.nil?
+    project.projectdependencies.push dependency
     dependency.save
     dependency
   end
+
 
   def version_hash version_from_file, prod_name, product
     if [:git, :head].member? version_from_file
@@ -155,6 +142,7 @@ class PodfileParser < CommonParser
     end
   end
 
+
   # It is important that this method is not writing into the database!
   #
   def parse_requested_version(version_number, dependency, product)
@@ -164,12 +152,13 @@ class PodfileParser < CommonParser
 
   def load_product name
     prod_key = name.downcase
-    products = Product.where({:language => language, :prod_key => prod_key, })
+    products = Product.where({:language => Product::A_LANGUAGE_OBJECTIVEC, :prod_key => prod_key, })
     return nil if products.nil? || products.empty?
     if products.count > 1
-      Rails.logger.error "more than one Product found for (#{language}, #{prod_key})"
+      Rails.logger.error "more than one Product found for (#{Product::A_LANGUAGE_OBJECTIVEC}, #{prod_key})"
     end
     products.first
   end
+
 
 end

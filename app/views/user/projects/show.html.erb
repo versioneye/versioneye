@@ -79,6 +79,11 @@
                   <button class="btn btn-success btn-mini">Re Parse Now</button>
                 </form>
               </div>
+              <div class="span2" style="width: 100px;" >
+                <form action="<%= followall_user_project_path(@project) %>" method="post" style="padding-top: 5px;">
+                  <button class="btn btn-success btn-mini">Follow All</button>
+                </form>
+              </div>
               <div class="span2" style="width: 120px;" >
                 <form action="<%= user_project_path(@project) %>" method="post" style="padding-top: 5px;">
                   <input name="_method" type="hidden" value="delete" />
