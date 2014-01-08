@@ -53,8 +53,8 @@ class BowerCrawler
   #for debugging
   def self.crawl_serial(token, source_url)
     logger.info "Using serial crawler - hopefully just for debugging."
-#    crawl_registered_list(source_url) # Filters out everything what is not on GitHub. If not on GitHub, skip it! And create tasks for the next crawler.
-#    crawl_existing_sources(token)     # Checks if the github url really exists! And create tasks for the next crawler.
+    crawl_registered_list(source_url) # Filters out everything what is not on GitHub. If not on GitHub, skip it! And create tasks for the next crawler.
+    crawl_existing_sources(token)     # Checks if the github url really exists! And create tasks for the next crawler.
     crawl_projects(token)             # Crawles bower.json file and creates/updates basic project infos in DB.
     crawl_versions(token)
   end
@@ -123,8 +123,16 @@ class BowerCrawler
     task_name = A_TASK_READ_PROJECT
     crawler_task_executor(task_name, token) do |task, token|
       result = false
+      check_request_limit(token)
       repo_response = Github.repo_info(task[:repo_fullname], token, true, task[:crawled_at])
-      repo_info = JSON.parse(repo_response.body, symbolize_names: true)
+      
+      repo_info = nil
+      unless repo_response.body.to_s.empty?
+        repo_info = JSON.parse(repo_response.body, symbolize_names: true)
+      else
+        logger.error "Didnt get any repo info for #{task[:repo_fullname]} - got: #{repo_response.code}"
+      end
+
       if repo_response.code == 200 and not repo_info.nil?
         result = add_bower_package(task, repo_info,  token)
         if result == true
@@ -137,7 +145,7 @@ class BowerCrawler
       else
         logger.error "crawl_projects | cant read information for #{task[:repo_fullname]}."
       end
-      sleep 1/1000.0 # force little pause before next iteration
+      sleep 1/100.0 # force little pause before next iteration
       result
     end
   end
