@@ -10,7 +10,7 @@ class GithubCrawler
     crawl = self.crawle_object
     resources = self.get_first_level_list
     resources.each do |resource|
-      crawle_package resource.name, crawl
+      crawle_package resource.name, crawl, resource
     end
     crawl.duration = Time.now - crawl.created_at
     crawl.save
