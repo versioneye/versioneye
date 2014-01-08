@@ -1,4 +1,5 @@
 require 'cocoapods-core'
+require 'cocoapods_package_manager' # for Monkey patch Pod::Podfile.from_url( url )
 
 # This parser parses the podfile for any CocoaPods project
 # and creates and stores a Project model in VersionEye
