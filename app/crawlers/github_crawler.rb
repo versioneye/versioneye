@@ -57,6 +57,9 @@ class GithubCrawler
     product.versions << version
     product.save
     logger.info "New version #{product.language} : #{product.prod_key} : #{version_number}"
+
+    CrawlerUtils.create_newest( product, version_number, logger )
+    CrawlerUtils.create_notifications( product, version_number, logger )
   end
 
   def self.create_archive repository, tag, product, version_number
