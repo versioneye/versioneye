@@ -4,7 +4,6 @@ SSHKit.config.command_map[:rails] = "bundle exec rails"
 
 #set :assets_role, [:app]
 set :assets_role, [:app]
-load 'deploy/assets'
 
 set :application, 'versioneye'
 
@@ -14,7 +13,6 @@ set :branch  , "master"
 
 set :ssh_options, {:forward_agent => true}
 set :user       , "ubuntu"
-set :use_sudo   , false
 set :deploy_to  , '/var/www/versioneye'
 
 set :format   , :pretty
