@@ -177,7 +177,6 @@ class User::GithubReposController < ApplicationController
       project = ProjectService.import_from_github current_user, project_name, filename, branch, nil
 
       raise err_message if project.nil?
-
       raise project if project.is_a? String
 
       command_data[:scmProjectId] = project[:_id].to_s
