@@ -1,7 +1,6 @@
 set :stage, :production
 
 set :rails_env   , :production
-set :assets_roles, [:app]
 set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
 
 # Simple Role Syntax
