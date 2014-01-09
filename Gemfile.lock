@@ -371,6 +371,7 @@ DEPENDENCIES
   aws-sdk (~> 1.0)
   bourbon (= 3.1.8)
   capistrano (= 3.0.1)
+  capistrano-bundler (= 1.1.1)
   capistrano-rails (= 1.1.0)
   capybara (~> 2.2.0)
   capybara-firebug (~> 2.0.0)
