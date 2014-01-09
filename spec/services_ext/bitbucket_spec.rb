@@ -47,11 +47,6 @@ describe Bitbucket do
       # user_with_token = connect_bitbucket(user_with_token)
       # user_with_token.reload
 
-      p "***** START token *********"
-      p user_with_token[:bitbucket_token]
-      p user_with_token[:bitbucket_secret]
-      p "***** STOP token *********"
-
       user_with_token[:bitbucket_token].should_not be_nil
       user_with_token[:bitbucket_secret].should_not be_nil
 
