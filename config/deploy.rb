@@ -55,18 +55,18 @@ namespace :deploy do
     end
   end
 
-  desc 'assets:precompile'
-  namespace :assets do
-    task :precompile do
-      on roles :app, in: :sequence, wait: 5 do
-        within release_path do
-          with rails_env: fetch(:rails_env) do
-            execute :rake, "assets:precompile"
-          end
-        end
-      end
-    end
-  end
+  # desc 'assets:precompile'
+  # namespace :assets do
+  #   task :precompile do
+  #     on roles :app, in: :sequence, wait: 5 do
+  #       within release_path do
+  #         with rails_env: fetch(:rails_env) do
+  #           execute :rake, "assets:precompile"
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
 
   after :finishing, 'deploy:cleanup'
 
