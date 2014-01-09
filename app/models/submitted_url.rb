@@ -27,8 +27,7 @@ class SubmittedUrl
   scope :as_not_integrated, where(integrated: false)
 
   def self.find_by_id(id)
-    return nil if id.nil?
-    id = id.to_s
+    return nil if id.to_s.strip.empty?
     return self.find(id.to_s) if self.where(_id: id.to_s).exists?
   end
 
@@ -44,21 +43,25 @@ class SubmittedUrl
 
   def update_integration_status
     resource = self.product_resource
-    @product = nil
-    if resource && !resource.prod_key.nil?
-      @product = Product.fetch_product( resource.language, resource.prod_key )
-    end
+    return false if resource.nil? || resource.prod_key.nil?
 
-    self.integrated = true unless @product.nil?
+    product = Product.fetch_product( resource.language, resource.prod_key )
+    return false if product.nil?
 
-    if self.save and not @product.nil?
-      @submitted_url = self
-      SubmittedUrlMailer.integrated_url_email(@submitted_url, @product).deliver
+    self.integrated = true
+
+    if self.save
+      submitted_url = self
+      SubmittedUrlMailer.integrated_url_email(submitted_url, product).deliver
       return true
     else
-      $stderr.puts "Failed to update integration status for submittedUrl.#{self._id}"
-      $stderr.puts self.errors.full_messages.to_sentence
+      Rails.logger.error "Failed to update integration status for submittedUrl.#{self._id}"
+      Rails.logger.error self.errors.full_messages.to_sentence
     end
+    false
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
     false
   end
 

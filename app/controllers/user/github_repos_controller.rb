@@ -23,7 +23,7 @@ class User::GithubReposController < ApplicationController
         github_repos = github_repos.desc(:commited_at)
         github_repos.each {|repo| processed_repos << process_repo(repo, task_status)}
       end
-      
+
       if task_status == GitHubService::A_TASK_DONE and github_repos.count == 0
         status_message = %w{
           We couldn't find any repositories in your GitHub account.
@@ -177,7 +177,6 @@ class User::GithubReposController < ApplicationController
       project = ProjectService.import_from_github current_user, project_name, filename, branch, nil
 
       raise err_message if project.nil?
-
       raise project if project.is_a? String
 
       command_data[:scmProjectId] = project[:_id].to_s
