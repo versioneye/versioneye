@@ -2,6 +2,10 @@
 SSHKit.config.command_map[:rake]  = "bundle exec rake"
 SSHKit.config.command_map[:rails] = "bundle exec rails"
 
+#set :assets_role, [:app]
+set :assets_role, [:app]
+load 'deploy/assets'
+
 set :application, 'versioneye'
 
 set :scm     , :git
@@ -14,7 +18,7 @@ set :use_sudo   , false
 set :deploy_to  , '/var/www/versioneye'
 
 set :format   , :pretty
-set :log_level, :info # :debug :error
+set :log_level, :debug # :debug :error
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 7
