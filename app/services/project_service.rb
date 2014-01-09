@@ -91,6 +91,7 @@ class ProjectService
     end
   end
 
+
   def self.update_project_file_from_github project
     project_file = Github.fetch_project_file_from_branch project.scm_fullname, project.filename, project.scm_branch, project.user.github_token
     if project_file.to_s.strip.empty?
@@ -101,6 +102,7 @@ class ProjectService
     s3_infos = S3.upload_github_file( project_file, project_file[:name] )
     update_project_with_s3_file project, s3_infos
   end
+
 
   def self.update_project_file_from_bitbucket project
     user = project.user
@@ -113,6 +115,7 @@ class ProjectService
     s3_infos = S3.upload_file_content( project_content, project.filename )
     update_project_with_s3_file project, s3_infos
   end
+
 
 =begin
   This methods is doing 3 things
@@ -161,6 +164,7 @@ class ProjectService
     return parsed_project if store( parsed_project )
   end
 
+
 =begin
   This methods is doing 3 things
    - Importing a project_file from Bitbucket
@@ -206,7 +210,8 @@ class ProjectService
     })
 
     return parsed_project if store( parsed_project )
- end
+  end
+
 
   def self.build_from_url(url, project_type = nil)
     project_type = type_by_filename(url) if project_type.nil?
@@ -218,6 +223,7 @@ class ProjectService
     Project.new
   end
 
+
   def self.destroy project_id
     project = Project.find_by_id( project_id )
     if project.s3_filename && !project.s3_filename.empty?
@@ -227,6 +233,7 @@ class ProjectService
     project.remove_collaborators
     project.remove
   end
+
 
   def self.allowed_to_add_project?( user, private_project )
     return true if !private_project
@@ -238,6 +245,7 @@ class ProjectService
     return false if private_project_count >= max
     return true
   end
+
 
   # Returns a map with
   #  - :key => "language_prod_key"
@@ -274,6 +282,7 @@ class ProjectService
 
     indexes
   end
+
 
   def self.badge_for_project project_id
     badge = Rails.cache.read project_id

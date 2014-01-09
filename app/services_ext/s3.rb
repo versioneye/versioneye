@@ -36,6 +36,7 @@ class S3
   def self.upload_github_file file, filename
     return nil if file.nil? || filename.to_s.empty?
     file_bin     = file['content']
+    file_bin     = file[:content] if file_bin.nil?
     random_value = Project.create_random_value
     new_filename = "#{random_value}_#{filename}"
     self.store_in_project_bucket new_filename, Base64.decode64(file_bin)
