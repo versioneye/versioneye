@@ -18,6 +18,9 @@ set :log_level, :info # :debug :error
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 7
 
+SSHKit.config.command_map[:rake]  = "bundle exec rake"
+SSHKit.config.command_map[:rails] = "bundle exec rails"
+
 desc "Check that we can access everything"
 task :check_write_permissions do
   on roles(:all) do |host|
