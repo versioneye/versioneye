@@ -92,13 +92,17 @@ class ProjectService
   end
 
   def self.update_project_file_from_github project
-    project_file = Github.fetch_project_file_from_branch project.scm_fullname, project.filename, project.scm_branch, project.user.github_token
+    project_file = Github.fetch_project_file_from_branch(project.scm_fullname, 
+                                                         project.filename, 
+                                                         project.scm_branch, 
+                                                         project.user.github_token)
     if project_file.to_s.strip.empty?
       Rails.logger.error "Importing project file from Github failed."
       return nil
     end
 
     s3_infos = S3.upload_github_file( project_file, project_file[:name] )
+    #s3_infos = S3.upload_file_content(project_file[:content], project.filename)
     update_project_with_s3_file project, s3_infos
   end
 
