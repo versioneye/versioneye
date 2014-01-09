@@ -93,10 +93,7 @@ class ProjectService
 
 
   def self.update_project_file_from_github project
-    project_file = Github.fetch_project_file_from_branch(project.scm_fullname, 
-                                                         project.filename, 
-                                                         project.scm_branch, 
-                                                         project.user.github_token)
+    project_file = self.fetch_project_file project
     if project_file.to_s.strip.empty?
       Rails.logger.error "Importing project file from Github failed."
       return nil
