@@ -2,8 +2,7 @@
 SSHKit.config.command_map[:rake]  = "bundle exec rake"
 SSHKit.config.command_map[:rails] = "bundle exec rails"
 
-#set :assets_role, [:app]
-set :assets_role, [:app]
+# set :assets_role, [:app]
 
 set :application, 'versioneye'
 
