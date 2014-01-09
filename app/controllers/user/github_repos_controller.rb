@@ -23,7 +23,7 @@ class User::GithubReposController < ApplicationController
         github_repos = github_repos.desc(:commited_at)
         github_repos.each {|repo| processed_repos << process_repo(repo, task_status)}
       end
-      
+
       if task_status == GitHubService::A_TASK_DONE and github_repos.count == 0
         status_message = %w{
           We couldn't find any repositories in your GitHub account.

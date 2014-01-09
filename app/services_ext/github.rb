@@ -177,6 +177,7 @@ class Github
     get_json(url, token)
   end
 
+
   def self.fetch_project_file_from_branch repo_name, filename, branch = "master", token = nil
     branch_info = Github.repo_branch_info repo_name, branch, token
     if branch_info.nil?
@@ -197,6 +198,7 @@ class Github
     project_file[:branch] = branch
     project_file
   end
+
 
   def self.fetch_project_file_directly(filename, branch, url, token)
     project_file = fetch_file(url, token)
