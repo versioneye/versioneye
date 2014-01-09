@@ -100,6 +100,10 @@ class Bitbucket
     end
     project_files.each {|file| file[:uuid] = SecureRandom.hex }
     project_files
+
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('/n')
   end
 
   def self.fetch_project_file_from_branch(repo_name, branch, filename, token, secret)
