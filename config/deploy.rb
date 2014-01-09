@@ -2,8 +2,6 @@
 SSHKit.config.command_map[:rake]  = "bundle exec rake"
 SSHKit.config.command_map[:rails] = "bundle exec rails"
 
-load "deploy/assets"
-
 set :application, 'versioneye'
 
 set :scm     , :git
@@ -20,8 +18,6 @@ set :log_level, :info # :debug :error
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 7
-
-
 
 desc "Check that we can access everything"
 task :check_write_permissions do
