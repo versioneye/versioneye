@@ -32,14 +32,14 @@ gem 'cocoapods-core'     , '0.29.0'
 gem 'octokit'            , '~> 2.7.0'
 
 group :development do
-  gem 'capistrano'       , '3.0.1'
-  gem 'capistrano-rails' , '1.1.0'
+  gem 'capistrano'        , '3.0.1'
+  gem 'capistrano-rails'  , '1.1.0'
   gem 'capistrano-bundler', '1.1.1'
-  gem 'psych'            , '~> 2.0.0'
-  gem 'irbtools'         , '1.5.1'
-  gem 'terminal-notifier', '1.5.1'
-  gem 'fakes3'           , '0.1.5.2'
-  gem 'debugger'         , '~> 1.6.0'
+  gem 'psych'             , '~> 2.0.0'
+  gem 'irbtools'          , '1.5.1'
+  gem 'terminal-notifier' , '1.5.1'
+  gem 'fakes3'            , '0.1.5.2'
+  gem 'debugger'          , '~> 1.6.0'
 end
 
 group :assets do
