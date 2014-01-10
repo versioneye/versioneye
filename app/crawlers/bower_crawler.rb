@@ -268,7 +268,7 @@ class BowerCrawler
     response
     rescue => e
       logger.error "Cant check headers of url: `#{url}`. #{e.message}"
-      logger.err e.backtrace.join('\n')
+      logger.error e.backtrace.join('\n')
   end
 
   def self.check_repo_existence(task, token)
