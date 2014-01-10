@@ -7,7 +7,7 @@ class NewsletterMailer < ActionMailer::Base
     @user = user
     mail(
       :to => @user.email,
-      :subject => 'New Features - CocoaPods + Multiple Selection + SSL',
+      :subject => 'New Features - Bitbucket + NodeJS + Most referenced projects',
       :tag => 'newsletter'
       )
   end
