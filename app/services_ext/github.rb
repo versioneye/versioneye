@@ -373,7 +373,7 @@ class Github
       core: {
         limit: 0,
         remaining: 0,
-        time: DateTime.now.to_i + (5 * 60 * 1000)  #default wait 5minute before trying again
+        reset: DateTime.now.to_i + (5 * 60)  #default wait 5minute before trying again
       }
     }
 

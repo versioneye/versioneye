@@ -125,7 +125,17 @@ class BowerCrawler
       result = false
       check_request_limit(token)
       repo_response = Github.repo_info(task[:repo_fullname], token, true, task[:crawled_at])
-      
+     
+      if repo_response.nil? or repo_response.is_a?(Boolean)
+        logger.error "crawl_projects | Didnt get repo_info for #{task[:repo_fullname]}"
+        next #drop this task and take a new
+      end
+
+      if repo_response.code == 304
+        logger.debug "crawl_projects | no changes for #{task[:repo_fullname]}, since #{task[:crawled_at]}"
+        next
+      end
+
       repo_info = nil
       unless repo_response.body.to_s.empty?
         repo_info = JSON.parse(repo_response.body, symbolize_names: true)
@@ -275,7 +285,7 @@ class BowerCrawler
     success =  false
     repo_url = "https://github.com/#{task[:repo_fullname]}"
     response = http_head(repo_url)
-    return false if response.nil?
+    return false if response.nil? or response.is_a?(Boolean)
 
     response_code  = response.code.to_i
     if response_code == 200
@@ -444,13 +454,16 @@ class BowerCrawler
   end
 
   def self.check_request_limit(token)
-    if rate_limits.nil?
-      val = github_rate_limit(token)
+    10.times do |i|
+      break unless rate_limits.nil?
+      val = github_rate_limit(token) #ask rate limits from API
       rate_limits(val)
+      break unless rate_limits.nil?
+      sleep A_SLEEP_TIME
     end
-
+  
     if rate_limits.nil?  or not rate_limits.has_key?(:core)
-      logger.error "Failed to check rate limits."
+      logger.error "Get no rate_limits from Github API - smt very bad is going on."
       sleep A_SLEEP_TIME
       return
     end
