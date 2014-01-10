@@ -131,6 +131,7 @@ Versioneye::Application.routes.draw do
         post 'transitive_dependencies'
         post 'save_notify_after_api_update'
         post 'reparse'
+        post 'followall'
         post 'update_name'
         post 'add_collaborator'
         post 'mute_dependency'
