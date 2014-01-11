@@ -8,8 +8,8 @@ set :normalize_asset_timestamps, %{public/images public/javascripts public/style
 # Supports bulk-adding hosts to roles, the primary
 # server in each group is considered to be the first
 # unless any hosts have the primary property set.
-#role :web, %w{user@example.com}
-#role :db,  %w{user@example.com}
+role :web, %w{ubuntu@aws-1}
+role :db,  %w{ubuntu@aws-1}
 role :app, %w{ubuntu@aws-1}
 
 # Extended Server Syntax
