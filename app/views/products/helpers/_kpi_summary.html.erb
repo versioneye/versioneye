@@ -24,9 +24,9 @@
   <% end %>
 </div>
 
-<% begin  %>
-  <% semver = SemVer.parse( @product.version.to_s.strip ) %>
-  <% if semver %>
+
+
+  <% if @version.semver_2 %>
     <div class="flash success" style="margin-bottom: 20px;" >
       This version number (<%= @product.version %>) fits <a href="http://semver.org">semantic versioning 2.0.0</a>!
     </div>
@@ -35,8 +35,6 @@
       This version number (<%= @product.version %>) doesn't fit <a href="http://semver.org">semantic versioning 2.0.0</a>!
     </div>
   <% end %>
-<% rescue => e %>
 
-<% end %>
 
 

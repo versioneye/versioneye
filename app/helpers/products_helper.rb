@@ -112,6 +112,12 @@ module ProductsHelper
     end
   end
 
+  def fetch_version( product )
+    version = product.version_by_number product.version
+    version.semver_2 = SemVer.parse( version.to_s )
+    version
+  end
+
   def update_release_infos( version_obj, product )
     today = DateTime.now.to_date
     if version_obj.released_at
