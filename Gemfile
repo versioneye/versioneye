@@ -30,6 +30,7 @@ gem 'bourbon'            , '3.1.8'
 gem 'ruby_regex'         , '~> 0.1.0'
 gem 'cocoapods-core'     , '0.29.0'
 gem 'octokit'            , '~> 2.7.0'
+gem 'semverly'           , '1.0.0'
 
 group :development do
   gem 'capistrano'        , '3.0.1'

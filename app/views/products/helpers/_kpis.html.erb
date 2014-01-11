@@ -1,7 +1,11 @@
 
 <div class="row" >
 
-  <div class="flash info" style="margin-bottom: 5px;" >
+  <% semver = SemVer.parse( @current_version.to_s.strip ) %>
+  <% current_color_class = 'info' %>
+  <% current_color_class = 'success' if semver %>
+  <% current_color_class = 'error' if semver.nil? %>
+  <div class="flash <%= current_color_class %>" style="margin-bottom: 5px;" >
     <b>Current:</b>
     <% if @current_version && !@current_version.to_s.eql?(@product.version.to_s) %>
       <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/<%= @current_version.to_s %>" ><%= @current_version.to_s %></a>
@@ -10,7 +14,11 @@
     <% end %>
   </div>
 
-  <div class="flash info" style="margin-bottom: 5px;">
+  <% semver = SemVer.parse( @product.version.to_s.strip ) %>
+  <% this_color_class = 'info' %>
+  <% this_color_class = 'success' if semver %>
+  <% this_color_class = 'error' if semver.nil? %>
+  <div class="flash <%= this_color_class %>" style="margin-bottom: 5px;">
     <b>This:</b> <%= @product.version %>
   </div>
 

@@ -296,6 +296,7 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
+    semverly (1.0.0)
     spoon (0.0.4)
       ffi
     sprockets (2.2.2)
@@ -417,6 +418,7 @@ DEPENDENCIES
   sass
   sass-rails (= 3.2.6)
   selenium-webdriver (= 2.39.0)
+  semverly (= 1.0.0)
   stripe (= 1.9.9)
   terminal-notifier (= 1.5.1)
   therubyracer (= 0.12.0)
