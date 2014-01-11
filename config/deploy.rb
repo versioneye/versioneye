@@ -2,8 +2,7 @@
 SSHKit.config.command_map[:rake]  = "bundle exec rake"
 SSHKit.config.command_map[:rails] = "bundle exec rails"
 
-#set :rails_env, 'production'      # If the environment differs from the stage name
-set :migration_role, 'app'         # Defaults to 'db'
+set :migration_role, 'app'  # Defaults to 'db'
 set :assets_roles, [:app]   # Defaults to [:web]
 
 set :application, 'versioneye'
@@ -17,7 +16,7 @@ set :user       , "ubuntu"
 set :deploy_to  , '/var/www/versioneye'
 
 set :format   , :pretty
-set :log_level, :debug # :debug :error
+set :log_level, :info   # :debug :error :info
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 7
@@ -58,19 +57,6 @@ namespace :deploy do
       execute "/etc/init.d/unicorn restart"
     end
   end
-
-  # desc 'assets:precompile'
-  # namespace :assets do
-  #   task :precompile do
-  #     on roles :app, in: :sequence, wait: 5 do
-  #       within release_path do
-  #         with rails_env: fetch(:rails_env) do
-  #           execute :rake, "assets:precompile"
-  #         end
-  #       end
-  #     end
-  #   end
-  # end
 
   after :finishing, 'deploy:cleanup'
 
