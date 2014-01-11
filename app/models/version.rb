@@ -13,6 +13,8 @@ class Version
 
   embedded_in :product
 
+  attr_accessor :semver_2
+
   def to_s
     version.to_s
   end

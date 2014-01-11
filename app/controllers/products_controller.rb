@@ -53,7 +53,7 @@ class ProductsController < ApplicationController
       params[:version] = @product.version
       redirect_to( {:action => 'show'}.merge(params) ) and return
     end
-    @version             = @product.version_by_number @product.version
+    @version             = fetch_version @product
     @current_version     = VersionService.newest_version( @product.versions )
     @versioncomment      = Versioncomment.new
     @versioncommentreply = Versioncommentreply.new
