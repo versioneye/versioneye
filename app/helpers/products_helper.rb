@@ -114,8 +114,19 @@ module ProductsHelper
 
   def fetch_version( product )
     version = product.version_by_number product.version
-    version.semver_2 = SemVer.parse( version.to_s )
+    parse_semver_2( version )
     version
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
+    nil
+  end
+
+  def parse_semver_2 version
+    version.semver_2 = SemVer.parse( version.to_s )
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
   end
 
   def update_release_infos( version_obj, product )
