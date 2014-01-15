@@ -177,27 +177,33 @@ class Github
     get_json(url, token)
   end
 
+
   def self.fetch_project_file_from_branch repo_name, filename, branch = "master", token = nil
     branch_info = Github.repo_branch_info repo_name, branch, token
     if branch_info.nil?
-      Rails.logger.error "Cancelling importing: can't read branch info."
+      Rails.logger.error "fetch_project_file_from_branch | can't read branch info."
       return nil
     end
 
     file_info = Github.project_file_info( repo_name, filename, branch_info[:commit][:sha], token)
     if file_info.nil? || file_info.empty?
-      Rails.logger.error "Cancelling importing: can't read info about project's file."
+      Rails.logger.error %Q{
+        fetch_project_file_from_branch | can't read info about project's file.
+        repo: #{repo_name} , filename: `#{filename}` , branch_info: #{branch_info}
+      }
       return nil
     end
-    project_file = fetch_file(file_info[:url], token)
-    return nil if project_file.nil?
 
-    project_file[:name] = file_info[:name]
-    project_file[:type] = file_info[:type]
-    project_file[:branch] = branch
-    project_file
+    file_content = fetch_file(file_info[:url], token)
+    return nil if file_content.nil?
+
+    file_info.merge({
+      branch: branch,
+      content: file_content[:content]
+    })
   end
 
+  #TODO: remove it
   def self.fetch_project_file_directly(filename, branch, url, token)
     project_file = fetch_file(url, token)
     return nil if project_file.nil?
@@ -210,27 +216,23 @@ class Github
 
   # TODO: add tests
   def self.project_file_info(git_project, filename, sha, token)
-    result = Hash.new
     url   = "#{A_API_URL}/repos/#{git_project}/git/trees/#{sha}"
     tree = get_json(url, token)
-    return if tree.nil? or not tree.has_key?(:tree)
+    return nil if tree.nil? or not tree.has_key?(:tree)
 
-    tree[:tree].each do |file|
-      name           = file[:path]
-      result[:url]  = file[:url]
-      result[:name] = name
-      type           = ProjectService.type_by_filename( name )
-      if filename == result[:name]
-        result[:type] = type
-        return result
-      end
-    end
-    result
+    matching_files = tree[:tree].keep_if {|blob| blob[:path] == filename}
+    return nil if matching_files.nil? or matching_files.empty?
+    
+    file = matching_files.first
+    {
+      name: file[:path],
+      url: file[:url],
+      type: ProjectService.type_by_filename(file[:path])
+    }
   end
 
-  #TODO: rename repo_branch_tree as service/bitbucket has
-  #TODO: just look main directory?
-  def self.fetch_repo_branch_tree(repo_name, token, branch_sha, recursive = false)
+
+  def self.repo_branch_tree(repo_name, token, branch_sha, recursive = false)
     rec_val = recursive ? 1 : 0
     url = "#{A_API_URL}/repos/#{repo_name}/git/trees/#{branch_sha}?access_token=#{token}&recursive=#{rec_val}"
     response = get(url, headers: A_DEFAULT_HEADERS )
@@ -242,12 +244,12 @@ class Github
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  # TODO recursive param is never used. Refactor!
-  def self.project_files_from_branch(repo_name, token, branch_sha, branch = "master", recursive = false, try_n = 3)
+
+  def self.project_files_from_branch(repo_name, token, branch_sha, branch = "master", try_n = 3)
     branch_tree = nil
 
     try_n.times do
-      branch_tree = fetch_repo_branch_tree(repo_name, token, branch_sha)
+      branch_tree = repo_branch_tree(repo_name, token, branch_sha)
       break unless branch_tree.nil?
       Rails.logger.error "Going to read tree of branch `#{branch}` for #{repo_name} again after little pause."
       sleep 1 #it's required to prevent bombing Github's api after our request got rejected
@@ -264,6 +266,7 @@ class Github
 
     project_files
   end
+
 
   #returns all project files in the given repos grouped by branches
   def self.repo_project_files(repo_name, token, branch_docs = nil)
@@ -292,12 +295,8 @@ class Github
 
   def self.fetch_file( url, token )
     return nil if url.nil? || url.empty?
-    response = get( "#{url}?access_token=" + URI.escape(token), :headers => A_DEFAULT_HEADERS )
-    if response.code != 200
-      Rails.logger.error "Can't fetch file from #{url}:  #{response.code}\n#{response.message}"
-      return nil
-    end
-    JSON.parse response.body
+    uri = URI(url)
+    get_json(uri.path, token)
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
@@ -338,19 +337,6 @@ class Github
     heads.each do |head|
       return head['object']['sha'] if head['url'].match(/heads\/master$/)
     end
-    nil
-  end
-
-  # TODO check if needed
-  def self.check_user_ratelimit(user)
-    url = "#{A_API_URL}/rate_limit?access_token=#{user.github_token}"
-    response = get(url, :headers => A_DEFAULT_HEADERS)
-
-    response = JSON.parse response.body
-    response['resources']
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 

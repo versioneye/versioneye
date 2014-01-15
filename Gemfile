@@ -19,7 +19,7 @@ gem 'stripe'             , '1.9.9'
 gem 'unicorn'            , '4.7.0'
 gem 'tire'               , '0.6.1'
 gem 'json'               , '~> 1.8.0'
-gem 'dalli'              , '2.6.4'      # memcache library
+gem 'dalli'              , '2.7.0'      # memcache library
 gem 'kgio'               , '~> 2.8.0'   # 20% performance boost for dalli
 gem 'grape'              , '0.6.1'
 gem 'grape-entity'       , '0.3.0'
@@ -30,15 +30,17 @@ gem 'bourbon'            , '3.1.8'
 gem 'ruby_regex'         , '~> 0.1.0'
 gem 'cocoapods-core'     , '0.29.0'
 gem 'octokit'            , '~> 2.7.0'
+gem 'semverly'           , '1.0.0'
 
 group :development do
-  gem 'capistrano'       , '3.0.1'
-  gem 'capistrano-rails' , '1.1.0'
-  gem 'psych'            , '~> 2.0.0'
-  gem 'irbtools'         , '1.5.1'
-  gem 'terminal-notifier', '1.5.1'
-  gem 'fakes3'           , '0.1.5.2'
-  gem 'debugger'         , '~> 1.6.0'
+  gem 'capistrano'        , '3.0.1'
+  gem 'capistrano-rails'  , '1.1.0'
+  gem 'capistrano-bundler', '1.1.1'
+  gem 'psych'             , '~> 2.0.0'
+  gem 'irbtools'          , '1.5.1'
+  gem 'terminal-notifier' , '1.5.1'
+  gem 'fakes3'            , '0.1.5.2'
+  gem 'debugger'          , '~> 1.6.0'
 end
 
 group :assets do
