@@ -16,7 +16,7 @@ class ProductResource
   validates_presence_of :url, :resource_type
 
   def self.find_by_id( id )
-    return nil if id.nil?
+    return nil if id.to_s.strip.empty?
     id = id.to_s
     return ProductResource.find(id) if ProductResource.where(_id: id).exists?
   end

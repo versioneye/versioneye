@@ -1,6 +1,7 @@
 module ProductsHelper
 
   include ActionView::Helpers::DateHelper
+  require 'semverly'
 
   def product_version_path( product, version = nil )
     return '/0/0/0' if product.nil? || product.prod_key.nil?
@@ -110,6 +111,23 @@ module ProductsHelper
     else
       false
     end
+  end
+
+  def fetch_version( product )
+    version = product.version_by_number product.version
+    parse_semver_2( version )
+    version
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
+    nil
+  end
+
+  def parse_semver_2 version
+    version.semver_2 = SemVer.parse( version.to_s )
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
   end
 
   def update_release_infos( version_obj, product )
