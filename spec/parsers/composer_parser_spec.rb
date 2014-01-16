@@ -113,11 +113,20 @@ describe ComposerParser do
       product_19.versions.push( Version.new({ :version => "dev-master"  }) )
       product_19.save
 
+      product_20 = ProductFactory.create_for_composer("phpunit/phpunit", "1.0.0")
+      product_20.versions.push( Version.new({ :version => "3.0"       }) )
+      product_20.versions.push( Version.new({ :version => "3.1.0"       }) )
+      product_20.versions.push( Version.new({ :version => "3.2.0"       }) )
+      product_20.versions.push( Version.new({ :version => "3.3-dev"   }) )
+      product_20.versions.push( Version.new({ :version => "3.4-dev"   }) )
+      product_20.versions.push( Version.new({ :version => "dev-master"  }) )
+      product_20.save
+
 
       parser  = ComposerParser.new
       project = parser.parse("https://s3.amazonaws.com/veye_test_env/composer.json")
       project.should_not be_nil
-      project.dependencies.size.should eql(19)
+      project.dependencies.size.should eql(20)
 
 
       dep_01 = fetch_by_name(project.dependencies, "symfony/symfony")
@@ -241,6 +250,15 @@ describe ComposerParser do
       dep_19.version_requested.should eql("2.3-dev")
       dep_19.version_current.should   eql("2.4-dev")
       dep_19.comperator.should        eql("=")
+
+      dep_19 = fetch_by_name(project.dependencies, "phpunit/phpunit")
+      dep_19.name.should              eql("phpunit/phpunit")
+      dep_19.version_label.should     eql("~3")
+      dep_19.version_requested.should eql("3")
+      dep_19.version_current.should   eql("3.2.0")
+      dep_19.comperator.should        eql("~")
+
+
     end
 
   end
