@@ -166,6 +166,28 @@ describe VersionService do
       tilde_version.version.should eql("2.3.1")
     end
 
+    it "returns the right value" do
+      product.versions = Array.new
+      product.versions.push( Version.new({:version => "3.7.29"}) )
+      product.versions.push( Version.new({:version => "3.0.0"}) )
+      product.versions.push( Version.new({:version => "2.3.0"}) )
+      product.versions.push( Version.new({:version => "2.3.1"}) )
+      product.versions.push( Version.new({:version => "3.0.1"}) )
+      tilde_version = VersionService.version_tilde_newest( product.versions, "~3.0" )
+      tilde_version.version.should eql("3.7.29")
+    end
+
+    it "returns the right value" do
+      product.versions = Array.new
+      product.versions.push( Version.new({:version => "3.7.29"}) )
+      product.versions.push( Version.new({:version => "3.0.0"}) )
+      product.versions.push( Version.new({:version => "2.3.0"}) )
+      product.versions.push( Version.new({:version => "2.3.1"}) )
+      product.versions.push( Version.new({:version => "3.0.1"}) )
+      tilde_version = VersionService.version_tilde_newest( product.versions, "~3" )
+      tilde_version.version.should eql("3.7.29")
+    end
+
   end
 
   describe "version_tilde_newest" do
