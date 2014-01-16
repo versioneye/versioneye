@@ -16,20 +16,24 @@ class PythonSetupParser < RequirementsParser
 
 
   def parse_line requirement, project
-    requirement = requirement.strip
+    #requirement = requirement.to_s.strip.gsub(/\"|\'/, '') #remove python's string literals
+    
     return false if requirement.nil? or requirement.empty?
 
     comparator = extract_comparator requirement
-    package, version = requirement.split comparator
+    package, version = requirement.split comparator 
+    version = version.to_s.strip
+    package = package.to_s.strip
+ 
+    product = Product.fetch_product(Product::A_LANGUAGE_PYTHON, package)
 
-    product = Product.fetch_product Product::A_LANGUAGE_PYTHON, package
-
-    if version.nil? && !product.nil?
+    if version.empty? && !product.nil?
       version = product.version
     end
-
+    
+    comparator = "==" if comparator.nil?
     dependency = Projectdependency.new name: package.strip,
-                                       version_label: "#{version}".strip,
+                                       version_label: version,
                                        comperator: comparator,
                                        language: Product::A_LANGUAGE_PYTHON,
                                        scope: Dependency::A_SCOPE_COMPILE
@@ -59,7 +63,7 @@ class PythonSetupParser < RequirementsParser
   def parse_requirements(doc)
     return nil if doc.nil? or doc.empty?
     req_text = slice_content doc, 'install_requires', '[', ']', false
-    req_text.split(/\'/).keep_if {|item| item.strip.length > 1}
+    req_text.split(/\'|\"/).keep_if {|item| item.strip.length > 1}
   end
 
 
@@ -69,6 +73,7 @@ class PythonSetupParser < RequirementsParser
   end
 
 
+  #reads content between start_matcher and end_matcher
   def slice_content(doc, keyword, start_matcher, end_matcher, include_matchers = false)
     return nil if doc.nil? or doc.empty?
 
@@ -87,7 +92,7 @@ class PythonSetupParser < RequirementsParser
 
     #clean up
     req_txt.gsub! /\#.*[^\n]$/, " " #remove python inline commens
-    req_txt.gsub! /\s+       /, " " #remove redutant spacer
+    req_txt.gsub! /\s+/, " " #remove redutant spacer
 
     req_txt
   end
