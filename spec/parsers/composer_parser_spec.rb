@@ -122,7 +122,6 @@ describe ComposerParser do
       product_20.versions.push( Version.new({ :version => "dev-master"  }) )
       product_20.save
 
-
       parser  = ComposerParser.new
       project = parser.parse("https://s3.amazonaws.com/veye_test_env/composer.json")
       project.should_not be_nil
