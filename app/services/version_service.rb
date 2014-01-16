@@ -42,10 +42,10 @@ class VersionService
   # http://guides.rubygems.org/patterns/#semantic_versioning
   # http://robots.thoughtbot.com/rubys-pessimistic-operator
   def self.version_approximately_greater_than_starter(value)
-    ar = value.split('.')
+    ar      = value.split('.')
     new_end = ar.length - 2
     new_end = 0 if new_end < 0
-    arr = ar[0..new_end]
+    arr     = ar[0..new_end]
     starter = arr.join('.')
     return "#{starter}."
   end
@@ -61,7 +61,9 @@ class VersionService
   end
 
   def self.tile_border( value )
-    return value if value.to_s.size == 1
+    if value.is_a? Integer
+      return value + 1
+    end
     if value.match(/\./).nil? && value.match(/^[0-9\-\_a-zA-Z]*$/)
       return value.to_i + 1
     elsif value.match(/\./) && value.match(/^[0-9]+\.[0-9\-\_a-zA-Z]*$/)
@@ -145,7 +147,7 @@ class VersionService
   def self.smaller_than( versions, value, range = false, stability = "stable")
     filtered_versions = Array.new
     versions.each do |version|
-      if Naturalsorter::Sorter.smaller?(version.to_s, value)
+      if Naturalsorter::Sorter.smaller?(version.to_s, value.to_s)
         filtered_versions.push(version)
       end
     end
