@@ -149,9 +149,6 @@ class BowerCrawler
           task.update_attributes({crawled_at: DateTime.now})
           to_version_task(task) # add new version task when everything went oK
         end
-      elsif repo_response.code == 304
-        logger.info "crawl_projects | #{task[:repo_fullname]} has no changes; going to skip it;"
-        result = true
       else
         logger.error "crawl_projects | cant read information for #{task[:repo_fullname]}."
       end
