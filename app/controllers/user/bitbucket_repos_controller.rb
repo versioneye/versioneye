@@ -218,5 +218,4 @@ class User::BitbucketReposController < ApplicationController
       end
       decoded_map
     end
-
 end
