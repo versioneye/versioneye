@@ -81,36 +81,6 @@ class User::BitbucketReposController < ApplicationController
   If command attr in model is "import", then imports new project from bitbucket.
   If commant attr in model is "remove", then removes current project
 =end
-  def create
-    if params[:command].nil? || params[:fullname].nil? || params[:command_data].nil?
-      error_msg = "Wrong command (`#{params[:command]}`) or project fullname is missing."
-      render text: error_msg, status: 400
-      return false
-    end
-
-    repo = []
-    command_data = params[:command_data]
-    project_name = params[:fullname]
-    branch       = command_data.has_key?(:scmBranch) ? command_data[:scmBranch] : "master"
-    filename     = command_data[:scmFilename]
-    branch_files = params[:project_files][branch]
-
-    case params[:command]
-    when "import"
-      repo = import_repo(command_data, project_name, branch, filename)
-    when "remove"
-      repo = remove_repo(command_data, project_name, branch, filename)
-    when "update"
-      repo = update_repo(command_data)
-    else
-      render text: "Wrong command: `#{params[:command]}`", status: 400 and return
-    end
-    render json: repo
-  rescue => e
-    Rails.logger.error "Error in create: #{e.message}"
-    Rails.logger.error e.backtrace.join('\n')
-    render text: e.message, status: 503 and return
-  end
 
   def update
     if params[:command].nil? || params[:fullname].nil? || params[:command_data].nil?
@@ -137,7 +107,14 @@ class User::BitbucketReposController < ApplicationController
       render text: "Wrong command: `#{params[:command]}`", status: 400 and return
     end
 
+    if repo.is_a?(String)
+      render text: repo, status: 405 and return
+    end
+
     render json: repo
+  rescue => e
+    Rails.logger.error "failed to import #{project_name}/#{filename} from Bitbucket: #{e.message}"
+    render text: e.message, status: 503
   end
 
   private
@@ -169,7 +146,6 @@ class User::BitbucketReposController < ApplicationController
 
 
     def remove_repo(command_data, project_name)
-      p  "#-- remove_repo", command_data, project_name
       id = command_data[:scmProjectId]
       project_exists = Project.where(_id: id).exists?
 

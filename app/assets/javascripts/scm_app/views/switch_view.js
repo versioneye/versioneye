@@ -194,7 +194,7 @@ define(['underscore', 'backbone'],
       } else if (xhr.status == 500){
         error_msg = "An error occurred. Please try again later and contact us on Twitter @VersionEye."
       } else {
-        error_msg = "Can't import project: " + model.get('fullname')  + ".";
+        error_msg = "Can't import project: " + model.get('fullname')  + ". ";
         error_msg += xhr.responseText;
       }
       console.debug("We encountered: " + xhr.status + " " + xhr.statusText);
