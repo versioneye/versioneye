@@ -157,12 +157,12 @@ class User::GithubReposController < ApplicationController
       raise err_message if project.nil?
       raise project if project.is_a? String
 
-      command_data[:scmProjectId] = project[:_id].to_s
+      command_data[:scmProjectId] = project.id
       repo = GithubRepo.find(params[:_id])
       repo = process_repo(repo)
       repo[:command_data] = command_data
       repo[:command_result] = {
-        project_id: project[:_id].to_s,
+        project_id: project.id,
         filename: filename,
         branch: branch,
         repo: project_name,

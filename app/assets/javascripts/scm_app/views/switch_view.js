@@ -177,7 +177,7 @@ define(['underscore', 'backbone'],
                  ].join(' ');
 
       var this_switch = this.$el.find('input');
-      this_switch.data('githubProjectId', command_result['project_id']);
+      this_switch.data('scmProjectId', command_result['project_id']);
       this.updateRepoTitle(command_result);
       this.updateRepoProjectInfo(model);
       this.switchOnActivate();
