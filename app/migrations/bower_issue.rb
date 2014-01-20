@@ -34,4 +34,18 @@ class BowerIssue
     end
     return {success: success, failed: failed}
   end
+
+  def self.close_issues(token)
+    opened_issues = Github.get_json("#{Github:A_API_URL}/issues", token)
+    opened_issues.to_a.each do |issue|
+      if issue[:state] == "open" and issue[:creator][:login] = "timgluz"
+        close_issue(issue, token)
+      end
+    end
+  end
+
+
+  def self.close_issue(issue, token)
+    
+  end
 end

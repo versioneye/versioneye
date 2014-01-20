@@ -53,8 +53,8 @@ class BowerCrawler
   #for debugging
   def self.crawl_serial(token, source_url)
     logger.info "Using serial crawler - hopefully just for debugging."
-#    crawl_registered_list(source_url) # Filters out everything what is not on GitHub. If not on GitHub, skip it! And create tasks for the next crawler.
-#    crawl_existing_sources(token)     # Checks if the github url really exists! And create tasks for the next crawler.
+    crawl_registered_list(source_url) # Filters out everything what is not on GitHub. If not on GitHub, skip it! And create tasks for the next crawler.
+    crawl_existing_sources(token)     # Checks if the github url really exists! And create tasks for the next crawler.
     crawl_projects(token)             # Crawles bower.json file and creates/updates basic project infos in DB.
     crawl_versions(token)
   end
@@ -123,21 +123,36 @@ class BowerCrawler
     task_name = A_TASK_READ_PROJECT
     crawler_task_executor(task_name, token) do |task, token|
       result = false
+      check_request_limit(token)
       repo_response = Github.repo_info(task[:repo_fullname], token, true, task[:crawled_at])
-      repo_info = JSON.parse(repo_response.body, symbolize_names: true)
+     
+      if repo_response.nil? or repo_response.is_a?(Boolean)
+        logger.error "crawl_projects | Didnt get repo_info for #{task[:repo_fullname]}"
+        next #drop this task and take a new
+      end
+
+      if repo_response.code == 304
+        logger.debug "crawl_projects | no changes for #{task[:repo_fullname]}, since #{task[:crawled_at]}"
+        next
+      end
+
+      repo_info = nil
+      unless repo_response.body.to_s.empty?
+        repo_info = JSON.parse(repo_response.body, symbolize_names: true)
+      else
+        logger.error "Didnt get any repo info for #{task[:repo_fullname]} - got: #{repo_response.code}"
+      end
+
       if repo_response.code == 200 and not repo_info.nil?
         result = add_bower_package(task, repo_info,  token)
         if result == true
           task.update_attributes({crawled_at: DateTime.now})
           to_version_task(task) # add new version task when everything went oK
         end
-      elsif repo_response.code == 304
-        logger.info "crawl_projects | #{task[:repo_fullname]} has no changes; going to skip it;"
-        result = true
       else
         logger.error "crawl_projects | cant read information for #{task[:repo_fullname]}."
       end
-      sleep 1/1000.0 # force little pause before next iteration
+      sleep 1/100.0 # force little pause before next iteration
       result
     end
   end
@@ -260,14 +275,14 @@ class BowerCrawler
     response
     rescue => e
       logger.error "Cant check headers of url: `#{url}`. #{e.message}"
-      logger.err e.backtrace.join('\n')
+      logger.error e.backtrace.join('\n')
   end
 
   def self.check_repo_existence(task, token)
     success =  false
     repo_url = "https://github.com/#{task[:repo_fullname]}"
     response = http_head(repo_url)
-    return false if response.nil?
+    return false if response.nil? or response.is_a?(Boolean)
 
     response_code  = response.code.to_i
     if response_code == 200
@@ -436,13 +451,16 @@ class BowerCrawler
   end
 
   def self.check_request_limit(token)
-    if rate_limits.nil?
-      val = github_rate_limit(token)
+    10.times do |i|
+      break unless rate_limits.nil?
+      val = github_rate_limit(token) #ask rate limits from API
       rate_limits(val)
+      break unless rate_limits.nil?
+      sleep A_SLEEP_TIME
     end
-
+  
     if rate_limits.nil?  or not rate_limits.has_key?(:core)
-      logger.error "Failed to check rate limits."
+      logger.error "Get no rate_limits from Github API - smt very bad is going on."
       sleep A_SLEEP_TIME
       return
     end
