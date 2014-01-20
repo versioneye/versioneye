@@ -355,9 +355,23 @@ class Github
   end
 
   def self.rate_limit(token)
+    limits = {
+      core: {
+        limit: 0,
+        remaining: 0,
+        reset: DateTime.now.to_i + (5 * 60)  #default wait 5minute before trying again
+      }
+    }
+
     url = "#{A_API_URL}/rate_limit"
+
     response = get_json(url, token)
-    response[:resources] if response.has_key?(:resources)
+    if response and response.has_key?(:resources)
+      limits = response[:resources]
+    else
+      Rails.logger.error "Didnt get any rate_limit from API - going to use default limits: #{limits}"
+    end
+    limits
   end
 
   def self.search(q, langs = nil, users = nil, page = 1, per_page = 30)
@@ -397,7 +411,7 @@ class Github
       request_headers["Authorization"] = " token #{token}"
     end
 
-    unless updated_at.nil?
+    if updated_at.is_a?(Date) or updated_at.is_a?(DateTime) 
       request_headers["If-Modified-Since"] = updated_at.to_datetime.rfc822
     end
 
@@ -409,7 +423,18 @@ class Github
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.first
     return nil
- end
+  end
+
+  def self.patch_json(url, data = {}, token = nil)
+    request_headers = A_DEFAULT_HEADERS
+    response = patch(url, headers: request_headers)
+    content = JSON.parse(response.body, symbolize_names: true)
+    catch_github_exception(content)
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    return nil
+  end
 
   def self.support_project_files
     Set['pom.xml', 'Gemfile', 'Gemfile.lock', 'composer.json', 'composer.lock', 'requirements.txt',
