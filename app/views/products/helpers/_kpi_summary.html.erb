@@ -23,3 +23,18 @@
     <% end %>
   <% end %>
 </div>
+
+
+
+  <% if @version.semver_2 %>
+    <div class="flash success" style="margin-bottom: 20px;" >
+      This version number (<%= @product.version %>) fits <a href="http://semver.org">semantic versioning 2.0.0</a>!
+    </div>
+  <% else %>
+    <div class="flash error" style="margin-bottom: 20px;" >
+      This version number (<%= @product.version %>) doesn't fit <a href="http://semver.org">semantic versioning 2.0.0</a>!
+    </div>
+  <% end %>
+
+
+

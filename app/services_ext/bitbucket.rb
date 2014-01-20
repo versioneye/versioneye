@@ -66,7 +66,7 @@ class Bitbucket
   def self.repo_branches(repo_name, token, secret)
     path  = "#{A_API_V1_PATH}/repositories/#{repo_name}/branches"
     data = get_json(path, token, secret)
-    return if data.nil?
+    return if data.nil? or not data.is_a?(Hash)
 
     branches = []
     data.each_pair {|k, v| branches << v[:branch]}
@@ -100,6 +100,10 @@ class Bitbucket
     end
     project_files.each {|file| file[:uuid] = SecureRandom.hex }
     project_files
+
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('/n')
   end
 
   def self.fetch_project_file_from_branch(repo_name, branch, filename, token, secret)
