@@ -51,7 +51,7 @@ class Product
   has_and_belongs_to_many :users
 
   attr_accessor :released_days_ago, :released_ago_in_words, :released_ago_text
-  attr_accessor :version_uid, :in_my_products, :dependencies_cache
+  attr_accessor :in_my_products, :dependencies_cache
 
   scope :by_language, ->(lang){where(language: lang)}
 

@@ -81,4 +81,6 @@ function initialize_searchbox(){
       '</div>'
     ].join('')
   });
+
+  $('input#q').focus();
 }

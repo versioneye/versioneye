@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Importing github repo as new project via github_repos_controller" do
   describe "when user is unauthorized" do
     it "redirects to signin page" do
-      post user_github_repos_path
+      get user_github_repos_path
       response.status.should eql(302)
    end
   end
@@ -33,7 +33,7 @@ describe "Importing github repo as new project via github_repos_controller" do
     end
 
     it "should raise exception when request misses  required fields" do
-      post user_github_repos_path
+      put "#{user_github_repos_path}/#{repo1[:_id]}"
       response.status.should eql(400)
     end
 
@@ -55,7 +55,8 @@ describe "Importing github repo as new project via github_repos_controller" do
           url: "https://api.github.com/repos/timgluz/lein-clr/git/blobs/42716b93d440050ced0d10fdb8c696832e0aef89"
         }]
       }
-      post user_github_repos_path, repo1.as_document
+      action_url = "#{user_github_repos_path}/#{repo1[:_id]}"
+      put action_url, repo1.as_document
       response.status.should eql(503)
     end
 
@@ -80,8 +81,9 @@ describe "Importing github repo as new project via github_repos_controller" do
           url: "https://api.github.com/repos/timgluz/lein-clr/git/blobs/42716b93d440050ced0d10fdb8c696832e0aef89"
         }]
       }
+      action_url = "#{user_github_repos_path}/#{repo1[:_id]}"
+      put action_url, repo1.as_document
 
-      post user_github_repos_path, repo1.as_document
       response.status.should eql(200)
     end
 
@@ -105,7 +107,8 @@ describe "Importing github repo as new project via github_repos_controller" do
           url: "https://api.github.com/repos/timgluz/lein-clr/git/blobs/42716b93d440050ced0d10fdb8c696832e0aef89"
         }]
       }
-      post user_github_repos_path, repo1.as_document
+      action_url = "#{user_github_repos_path}/#{repo1[:_id]}"
+      put action_url, repo1.as_document
       response.status.should eql(200)
     end
   end

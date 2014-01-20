@@ -11,7 +11,7 @@ describe ComposerParser do
     end
 
     it "parse from https the file correctly" do
-      parser = ComposerParser.new
+      parser  = ComposerParser.new
       project = parser.parse("https://s3.amazonaws.com/veye_test_env/composer.json")
       project.should_not be_nil
     end
@@ -108,16 +108,24 @@ describe ComposerParser do
       product_19.versions.push( Version.new({ :version => "2.0.0"       }) )
       product_19.versions.push( Version.new({ :version => "2.1.0"       }) )
       product_19.versions.push( Version.new({ :version => "2.2.0"       }) )
-      product_19.versions.push( Version.new({ :version => "2.3-dev"   }) )
-      product_19.versions.push( Version.new({ :version => "2.4-dev"   }) )
+      product_19.versions.push( Version.new({ :version => "2.3-dev"     }) )
+      product_19.versions.push( Version.new({ :version => "2.4-dev"     }) )
       product_19.versions.push( Version.new({ :version => "dev-master"  }) )
       product_19.save
 
+      product_20 = ProductFactory.create_for_composer("phpunit/phpunit", "3.7.29")
+      product_20.versions.push( Version.new({ :version => "3.7.29"      }) )
+      product_20.versions.push( Version.new({ :version => "3.1.0"       }) )
+      product_20.versions.push( Version.new({ :version => "3.0.0"       }) )
+      product_20.versions.push( Version.new({ :version => "2.3.0"       }) )
+      product_20.versions.push( Version.new({ :version => "2.4-dev"     }) )
+      product_20.versions.push( Version.new({ :version => "dev-master"  }) )
+      product_20.save
 
       parser  = ComposerParser.new
       project = parser.parse("https://s3.amazonaws.com/veye_test_env/composer.json")
       project.should_not be_nil
-      project.dependencies.size.should eql(19)
+      project.dependencies.size.should eql(20)
 
 
       dep_01 = fetch_by_name(project.dependencies, "symfony/symfony")
@@ -241,6 +249,13 @@ describe ComposerParser do
       dep_19.version_requested.should eql("2.3-dev")
       dep_19.version_current.should   eql("2.4-dev")
       dep_19.comperator.should        eql("=")
+
+      dep_20 = fetch_by_name(project.dependencies, "phpunit/phpunit")
+      dep_20.name.should              eql('phpunit/phpunit')
+      dep_20.version_label.should     eql('~3')
+      dep_20.version_requested.should eql('3.7.29')
+      dep_20.version_current.should   eql('3.7.29')
+      dep_20.comperator.should        eql('~')
     end
 
   end

@@ -177,7 +177,7 @@ define(['underscore', 'backbone'],
                  ].join(' ');
 
       var this_switch = this.$el.find('input');
-      this_switch.data('githubProjectId', command_result['project_id']);
+      this_switch.data('scmProjectId', command_result['project_id']);
       this.updateRepoTitle(command_result);
       this.updateRepoProjectInfo(model);
       this.switchOnActivate();
@@ -194,7 +194,7 @@ define(['underscore', 'backbone'],
       } else if (xhr.status == 500){
         error_msg = "An error occurred. Please try again later and contact us on Twitter @VersionEye."
       } else {
-        error_msg = "Can't import project: " + model.get('fullname')  + ".";
+        error_msg = "Can't import project: " + model.get('fullname')  + ". ";
         error_msg += xhr.responseText;
       }
       console.debug("We encountered: " + xhr.status + " " + xhr.statusText);
