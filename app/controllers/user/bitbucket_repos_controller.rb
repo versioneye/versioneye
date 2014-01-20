@@ -118,6 +118,7 @@ class User::BitbucketReposController < ApplicationController
   end
 
   private
+
     def import_repo(command_data, project_name, branch, filename)
       project        = ProjectService.import_from_bitbucket(current_user, project_name, filename, branch)
 
