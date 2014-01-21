@@ -553,7 +553,7 @@ class BowerCrawler
       language:      language,
       name:          pkg_info[:name].to_s,
       name_downcase: pkg_info[:name].to_s.downcase,
-      version:       pkg_info[:version]
+      version:       pkg_info[:version],
       private_repo:  pkg_info[:private_repo],
       description:   pkg_info[:description].to_s
     })
