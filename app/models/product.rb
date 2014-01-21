@@ -100,18 +100,15 @@ class Product
     nil
   end
 
+  def self.by_type_key prod_type, key
+    return nil if prod_type.to_s.strip.empty? || key.to_s.strip.empty?
+    Product.where(prod_type: prod_type, prod_key: key).shift
+  end
+
   def self.fetch_product lang, key
     return nil if lang.to_s.strip.empty? || key.to_s.strip.empty?
     return Product.find_by_key( key ) if lang.eql? 'package'
     product = Product.find_by_lang_key( lang, key )
-
-    if product.nil? and lang == A_LANGUAGE_JAVASCRIPT
-      product = Product.find_by_lang_key(lang, "#{key}/#{key}") #for bowers shortnames
-      if product.nil?
-        product = Product.where(language: lang, name: key).shift
-      end
-    end
-
     product = Product.find_by_lang_key_case_insensitiv( lang, key ) if product.nil?
     product
   end

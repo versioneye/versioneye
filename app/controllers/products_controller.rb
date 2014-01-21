@@ -44,7 +44,7 @@ class ProductsController < ApplicationController
     end
 
     @product.check_nil_version
-    if @product && !lang.eql?( @product.language )
+    if @product && !lang.eql?( @product.language ) && lang.casecmp(Project::A_TYPE_BOWER) != 0
       redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
       return
     end
@@ -266,7 +266,11 @@ class ProductsController < ApplicationController
     end
 
     def fetch_product( lang, prod_key )
-      product = Product.fetch_product lang, prod_key
+      if lang.casecmp(Project::A_TYPE_BOWER) == 0
+        product = Product.by_type_key Project::A_TYPE_BOWER, prod_key
+      else
+        product = Product.fetch_product lang, prod_key
+      end
       if product.nil? && lang.eql?( Product::A_LANGUAGE_CLOJURE )
         product = Product.fetch_product Product::A_LANGUAGE_JAVA, prod_key
       end
