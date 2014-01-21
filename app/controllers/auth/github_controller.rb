@@ -32,7 +32,7 @@ class Auth::GithubController < ApplicationController
       return
     end
 
-    flash[:error] = 'Your account is not activated. Did you click the verification link in the email we send you?'
+    flash[:error] = 'Your account is not activated. Did you click the verification link in the email we sent to you?'
     redirect_to signin_path
   end
 
@@ -59,7 +59,7 @@ class Auth::GithubController < ApplicationController
 
     token = cookies.signed[:github_token]
     if token == nil || token.empty?
-      flash.now[:error] = 'An error occured. Your GitHub token is not anymore available. Please contact the VersionEye team.'
+      flash.now[:error] = 'An error occured. Your GitHub token is not available anymore. Please contact the VersionEye team.'
       render auth_github_new_path and return
     end
     json_user = Github.user token
