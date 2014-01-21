@@ -122,22 +122,22 @@ class PackagistCrawler
 
   def self.create_dependencies product, version_number, version_obj
     require_dep = version_obj['require']
-    PackagistCrawler.create_dependency require_dep, product, version_number, "require"
+    PackagistCrawler.create_dependency require_dep, product, version_number, 'require'
 
-    require_dep = version_obj['require-dev']
-    PackagistCrawler.create_dependency require_dep, product, version_number, "require-dev"
+    require_dev = version_obj['require-dev']
+    PackagistCrawler.create_dependency require_dev, product, version_number, 'require-dev'
 
-    require_dep = version_obj['replace']
-    PackagistCrawler.create_dependency require_dep, product, version_number, "replace"
+    replace = version_obj['replace']
+    PackagistCrawler.create_dependency replace, product, version_number, 'replace'
 
-    require_dep = version_obj['suggest']
-    PackagistCrawler.create_dependency require_dep, product, version_number, "suggest"
+    suggest = version_obj['suggest']
+    PackagistCrawler.create_dependency suggest, product, version_number, 'suggest'
   end
 
   def self.create_dependency dependencies, product, version_number, scope
     return nil if dependencies.nil? || dependencies.empty?
     dependencies.each do |dep|
-      require_name = dep[0]
+      require_name    = dep[0]
       require_version = dep[1]
       if require_version.strip.eql?("self.version")
         require_version = version_number
