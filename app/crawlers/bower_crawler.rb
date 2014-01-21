@@ -343,9 +343,9 @@ class BowerCrawler
 
     pkg_info[:licenses].to_a.each { |lic| create_or_update_license( prod, lic ) }
 
-    deps = to_dependencies(prod, pkg_info)
+    deps = to_dependencies(prod, pkg_info, :dependencies, Dependency::A_SCOPE_COMPILE)
     deps.to_a.each {|dep| prod.dependencies << dep}
-    deps = to_dev_dependencies(prod, pkg_info)
+    deps = to_dependencies(prod, pkg_info, :dev_dependencies, Dependency::A_SCOPE_DEVELOPMENT)
     deps.to_a.each {|dep| prod.dependencies << dep}
 
     prod
@@ -591,36 +591,18 @@ class BowerCrawler
     new_license
   end
 
-  # TODO merge this with to_dev_dependencies
-  def self.to_dependencies(prod, pkg_info)
-    return nil if prod.nil? || !pkg_info.has_key?(:dependencies) || pkg_info[:dependencies].nil? || pkg_info[:dependencies].empty?
+  def self.to_dependencies(prod, pkg_info, key, scope = Dependency::A_SCOPE_COMPILE)
+    return nil if prod.nil? || !pkg_info.has_key?(key) || pkg_info[key].nil? || pkg_info[key].empty?
 
     deps = []
-    if not pkg_info[:dependencies].is_a?(Hash)
-      logger.error "#{prod[:prod_key]} dependencies have wrong structure. `#{pkg_info[:dependencies]}`"
+    if not pkg_info[key].is_a?(Hash)
+      logger.error "#{prod[:prod_key]} dependencies have wrong structure. `#{pkg_info[key]}`"
       return nil
     end
 
-    pkg_info[:dependencies].each_pair do |prod_name, version|
+    pkg_info[key].each_pair do |prod_name, version|
       next if prod_name.to_s.strip.empty?
-      dep = to_dependency(prod, prod_name, version)
-      deps << dep if dep
-    end
-    deps
-  end
-
-  def self.to_dev_dependencies(prod, pkg_info)
-    return nil if !pkg_info.has_key?(:dev_dependencies) or pkg_info[:dev_dependencies].nil? or pkg_info[:dev_dependencies].empty?
-
-    deps = []
-    if not pkg_info[:dev_dependencies].is_a?(Hash)
-      logger.info "DevDependecies for #{prod[:prod_key]} have wrong structure. `#{pkg_info[:dev_dependencies]}`"
-      return nil
-    end
-
-   pkg_info[:dev_dependencies].each_pair do |prod_name, version|
-      next if prod_name.to_s.empty?
-      dep = to_dependency(prod, prod_name, version, Dependency::A_SCOPE_DEVELOPMENT)
+      dep = to_dependency(prod, prod_name, version, scope)
       deps << dep if dep
     end
     deps
