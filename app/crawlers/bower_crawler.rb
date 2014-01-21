@@ -332,7 +332,7 @@ class BowerCrawler
 
   # Saves product and save sub/related docs
   def self.create_bower_package(pkg_info, repo_info, token)
-    prod = create_or_update_product( pkg_info )
+    prod = create_or_update_product( pkg_info, repo_info )
 
     Versionlink.create_versionlink prod[:language], prod[:prod_key], prod[:version], pkg_info[:url], "SCM"
     Versionlink.create_versionlink prod[:language], prod[:prod_key], prod[:version], pkg_info[:homepage], "Homepage"
@@ -418,8 +418,8 @@ class BowerCrawler
 
   def self.add_new_version( product, tag_name, tag, token )
     new_version                 = Version.new version: tag_name
-    new_verison.released_string = release_date_string( tag, token )
-    new_version.released_at     = released_date( new_verison.released_string )
+    new_version.released_string = release_date_string( tag, token )
+    new_version.released_at     = released_date( new_version.released_string )
     product.versions << new_version
     product.reindex = true
     product.save
@@ -560,6 +560,9 @@ class BowerCrawler
     prod.add_version pkg_info[:version]
     prod.save
     prod
+  rescue => e
+    logger.error e.backtrace.join('\n')
+    nil
   end
 
   def self.create_version_archive(prod, version, url, name = nil)

@@ -12,7 +12,7 @@ class Product
   A_LANGUAGE_JAVA       = 'Java'
   A_LANGUAGE_PHP        = 'PHP'
   A_LANGUAGE_R          = 'R'
-  A_LANGUAGE_JAVASCRIPT = 'Javascript'
+  A_LANGUAGE_JAVASCRIPT = 'JavaScript'
   A_LANGUAGE_CLOJURE    = 'Clojure'
   A_LANGUAGE_C          = 'C'
   A_LANGUAGE_OBJECTIVEC = 'Objective-C'
