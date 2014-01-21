@@ -333,20 +333,14 @@ class BowerCrawler
   # Saves product and save sub/related docs
   def self.create_bower_package(pkg_info, repo_info, token)
     prod = create_or_update_product( pkg_info )
-    prod[:version] = pkg_info[:version]
-    prod.add_version pkg_info[:version]
-    prod[:language] = repo_info[:language] unless repo_info[:language].nil?
-    prod.save
 
     Versionlink.create_versionlink prod[:language], prod[:prod_key], prod[:version], pkg_info[:url], "SCM"
     Versionlink.create_versionlink prod[:language], prod[:prod_key], prod[:version], pkg_info[:homepage], "Homepage"
 
     pkg_info[:licenses].to_a.each { |lic| create_or_update_license( prod, lic ) }
 
-    deps = to_dependencies(prod, pkg_info, :dependencies, Dependency::A_SCOPE_COMPILE)
-    deps.to_a.each {|dep| prod.dependencies << dep}
-    deps = to_dependencies(prod, pkg_info, :dev_dependencies, Dependency::A_SCOPE_DEVELOPMENT)
-    deps.to_a.each {|dep| prod.dependencies << dep}
+    to_dependencies(prod, pkg_info, :dependencies,     Dependency::A_SCOPE_COMPILE)
+    to_dependencies(prod, pkg_info, :dev_dependencies, Dependency::A_SCOPE_DEVELOPMENT)
 
     prod
   end
@@ -548,20 +542,23 @@ class BowerCrawler
     task
   end
 
-  def self.create_or_update_product(pkg_info)
+  def self.create_or_update_product( pkg_info, repo_info )
     prod = Product.find_or_create_by(
        prod_key: pkg_info[:name].to_s.downcase,
        prod_type: Project::A_TYPE_BOWER
     )
-
     language = Product::A_LANGUAGE_JAVASCRIPT
+    language = repo_info[:language] unless repo_info[:language].nil?
     prod.update_attributes({
+      language:      language,
       name:          pkg_info[:name].to_s,
       name_downcase: pkg_info[:name].to_s.downcase,
-      language:      language,
+      version:       pkg_info[:version]
       private_repo:  pkg_info[:private_repo],
       description:   pkg_info[:description].to_s
     })
+    prod.add_version pkg_info[:version]
+    prod.save
     prod
   end
 
@@ -621,6 +618,7 @@ class BowerCrawler
       version: dep_version, # TODO: It can be that the version is in the bower.json is a git tag / path
       scope: scope
     })
+    dependency.update_known
     dependency
   rescue => e
     logger.error "Error: Cant save dependency `#{dep_name}` with version `#{dep_version}` for #{prod[:prod_key]}. -- #{e.message}"
