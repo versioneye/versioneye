@@ -15,6 +15,7 @@ class BowerCrawler
   end
 
   @@rate_limits = nil
+
   def self.rate_limits(val = nil)
     @@rate_limits = val if val
     @@rate_limits
@@ -37,20 +38,11 @@ class BowerCrawler
   end
 
   # token = GitHub user token
-  def self.crawl(token, source_url = nil, concurrent = true)
-    if source_url.to_s.strip.empty?
-      source_url = "https://bower.herokuapp.com/packages"
-      logger.info "Going to use default url: `#{source_url}`"
-    end
-
-    if concurrent
-      crawl_concurrent(token, source_url)
-    else
-      crawl_serial(token, source_url)
-    end
+  def self.crawl(token, source_url = 'https://bower.herokuapp.com/packages', concurrent = true)
+    crawl_concurrent(token, source_url) if concurrent
+    crawl_serial(token, source_url) if not concurrent
   end
 
-  #for debugging
   def self.crawl_serial(token, source_url)
     logger.info "Using serial crawler - hopefully just for debugging."
     crawl_registered_list(source_url) # Filters out everything what is not on GitHub. If not on GitHub, skip it! And create tasks for the next crawler.
@@ -61,19 +53,15 @@ class BowerCrawler
 
   def self.crawl_concurrent(token, source_url)
     logger.info "running Bower crawler on concurrent threads."
-
     tasks = []
     tasks << Thread.new {crawl_registered_list(source_url)}
     tasks << Thread.new {crawl_existing_sources(token)}
     tasks << Thread.new {crawl_projects(token)}
     tasks << Thread.new {crawl_versions(token)}
-
     tasks.each {|task| task.join}
-    logger.info "All task of Bower crawler are finished now. Have a good day!"
   end
 
   def self.crawl_registered_list(source_url)
-    # fetches list of all registered bower packages
     content  = HTTParty.get(source_url)
     app_list = JSON.parse(content, symbolize_names: true)
     tasks    = 0
@@ -118,7 +106,6 @@ class BowerCrawler
     end
   end
 
-  # Imports information of existing project file
   def self.crawl_projects(token)
     task_name = A_TASK_READ_PROJECT
     crawler_task_executor(task_name, token) do |task, token|
@@ -128,7 +115,7 @@ class BowerCrawler
 
       if repo_response.nil? or repo_response.is_a?(Boolean)
         logger.error "crawl_projects | Didnt get repo_info for #{task[:repo_fullname]}"
-        next # drop this task and take a new
+        next
       end
 
       if repo_response.code == 304
@@ -332,9 +319,9 @@ class BowerCrawler
   def self.add_bower_package(task, repo_info, token)
     logger.info "#-- reading #{task[:repo_fullname]} from url: #{task[:url]} branch: #{repo_info[:default_branch]}"
     pkg_file = self.read_project_file_from_github(task, token, repo_info[:default_branch])
-    result   = false
     product  = nil
     product  = create_bower_package(pkg_file, repo_info, token) if pkg_file
+    result   = false
     result   = true if product and product.save
     result
   rescue => e
@@ -352,6 +339,7 @@ class BowerCrawler
     prod.save
 
     Versionlink.create_versionlink prod[:language], prod[:prod_key], prod[:version], pkg_info[:url], "SCM"
+    Versionlink.create_versionlink prod[:language], prod[:prod_key], prod[:version], pkg_info[:homepage], "Homepage"
 
     pkg_info[:licenses].to_a.each { |lic| create_or_update_license( prod, lic ) }
 
@@ -363,17 +351,16 @@ class BowerCrawler
     prod
   end
 
-  def self.read_project_file_from_github(task, token, branch = "master")
-    pkg_info = nil
-    supported_files = Set.new ['bower.json', 'component.json', 'module.json', 'package.json']
-
-    owner = task[:repo_owner]
-    repo = task[:repo_name]
+  def self.read_project_file_from_github(task, token, branch = 'master')
+    owner    = task[:repo_owner]
+    repo     = task[:repo_name]
     fullname = task[:repo_fullname]
     repo_url = task[:url]
+    pkg_info = nil
+    supported_files = Set.new ['bower.json', 'component.json', 'module.json', 'package.json']
     supported_files.to_a.each do |filename|
-      file_url = "https://raw.github.com/#{fullname}/#{branch}/#{filename}"
-      project_file = read_project_file_from_url(file_url, token)
+      file_url     = "https://raw.github.com/#{fullname}/#{branch}/#{filename}"
+      project_file = read_project_file_from_url( file_url, token )
       if project_file.is_a?(Hash)
         logger.info "Found: #{filename} for #{task[:repo_fullname]}"
         pkg_info = to_pkg_info(owner, repo, repo_url, project_file)
@@ -563,14 +550,14 @@ class BowerCrawler
 
   def self.create_or_update_product(pkg_info)
     prod = Product.find_or_create_by(
-       prod_key: pkg_info[:full_name].to_s.downcase,
+       prod_key: pkg_info[:name].to_s.downcase,
        prod_type: Project::A_TYPE_BOWER
     )
 
     language = Product::A_LANGUAGE_JAVASCRIPT
     prod.update_attributes({
-      name:          pkg_info[:full_name].to_s,
-      name_downcase: pkg_info[:full_name].to_s.downcase,
+      name:          pkg_info[:name].to_s,
+      name_downcase: pkg_info[:name].to_s.downcase,
       language:      language,
       private_repo:  pkg_info[:private_repo],
       description:   pkg_info[:description].to_s
@@ -604,6 +591,7 @@ class BowerCrawler
     new_license
   end
 
+  # TODO merge this with to_dev_dependencies
   def self.to_dependencies(prod, pkg_info)
     return nil if prod.nil? || !pkg_info.has_key?(:dependencies) || pkg_info[:dependencies].nil? || pkg_info[:dependencies].empty?
 
@@ -638,11 +626,7 @@ class BowerCrawler
     deps
   end
 
-  def self.to_dependency(prod, dep_name, dep_version, scope = nil)
-    unless scope
-      scope = Dependency::A_SCOPE_REQUIRE
-    end
-
+  def self.to_dependency(prod, dep_name, dep_version, scope = Dependency::A_SCOPE_COMPILE)
     dependency = Dependency.find_or_create_by(
       prod_type: Project::A_TYPE_BOWER,
       language: prod[:language],
@@ -655,67 +639,72 @@ class BowerCrawler
       version: dep_version, # TODO: It can be that the version is in the bower.json is a git tag / path
       scope: scope
     })
-
     dependency
   rescue => e
-    logger.error "Error: Cant save dependency `#{dep_name}` with version `#{dep_version}` for #{prod[:prod_key]}."
-    logger.error e.message
+    logger.error "Error: Cant save dependency `#{dep_name}` with version `#{dep_version}` for #{prod[:prod_key]}. -- #{e.message}"
     logger.error e.backtrace.join('\n')
     nil
   end
 
   def self.to_pkg_info(owner, repo, project_url, project_info)
     pkg_name = project_info[:name].to_s.strip
-    if pkg_name.empty?
-      pkg_name  = repo
-    end
+    pkg_name = repo if pkg_name.empty?
 
-    info = {
+    pkg_info = {
       name: pkg_name,
       group_id: owner,
       artifact_id: repo,
       full_name: "#{owner}/#{repo}",
       version: project_info[:version],
-      licenses: [{name: "unknown", url: nil}],
+      licenses: [{name: "unknown", url: nil}], # default values, try to read real values later.
       description: project_info[:description],
       dependencies: project_info[:dependencies],
       dev_dependencies: project_info[:devDependencies],
+      homepage: project_info[:homepage],
       url: project_url,
       private_repo: false,
     }
 
     if project_info.has_key?(:license)
-      license_info = project_info[:license]
-      if license_info.is_a?(String)
-        info[:licenses] = [{name: license_info, url: nil}]
-      elsif license_info.is_a?(Array)
-        info[:licenses] = []
-        license_info.each do |lic|
-          if lic.is_a?(String)
-            info[:licenses] << {name: lic, url: nil}
-          elsif lic.is_a?(Hash)
-            info[:licenses] << {name: lic[:type], url: lic[:url]}
-          end
-        end
-      end
+      read_license pkg_info, project_info
     elsif project_info.has_key?(:licenses)
-      #support for npm.js licenses
-      info[:licenses] = []
-      if project_info[:licenses].is_a?(Array)
-        project_info[:licenses].to_a.each do |lic|
-          if lic.is_a?(String)
-            info[:licenses] << {name: lic, url: nil}
-          else lic.is_a?(Hash)
-            info[:licenses] << {name: lic[:type], url: lic[:url]}
-          end
-        end
-      elsif project_info[:licenses].is_a?(Hash)
-        lic = project_info[:licenses]
-        info[:licenses] << {name: lic[:type], url: lic[:url]}
-      end
+      read_licenses pkg_info, project_info
     end
 
-    info
+    pkg_info
+  end
+
+  def self.read_license(info, project_info)
+    license_info = project_info[:license]
+    if license_info.is_a?(String)
+      info[:licenses] = [{name: license_info, url: nil}]
+    elsif license_info.is_a?(Array)
+      info[:licenses] = []
+      license_info.each do |lic|
+        if lic.is_a?(String)
+          info[:licenses] << {name: lic, url: nil}
+        elsif lic.is_a?(Hash)
+          info[:licenses] << {name: lic[:type], url: lic[:url]}
+        end
+      end
+    end
+  end
+
+  def self.read_licenses(info, project_info)
+    # support for npm.js licenses
+    info[:licenses] = []
+    if project_info[:licenses].is_a?(Array)
+      project_info[:licenses].to_a.each do |lic|
+        if lic.is_a?(String)
+          info[:licenses] << {name: lic, url: nil}
+        else lic.is_a?(Hash)
+          info[:licenses] << {name: lic[:type], url: lic[:url]}
+        end
+      end
+    elsif project_info[:licenses].is_a?(Hash)
+      lic = project_info[:licenses]
+      info[:licenses] << {name: lic[:type], url: lic[:url]}
+    end
   end
 
   def self.url_to_repo_info(repo_url)
