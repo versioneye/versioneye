@@ -100,11 +100,6 @@ class Product
     nil
   end
 
-  def self.by_type_key prod_type, key
-    return nil if prod_type.to_s.strip.empty? || key.to_s.strip.empty?
-    Product.where(prod_type: prod_type, prod_key: key).shift
-  end
-
   def self.fetch_product lang, key
     return nil if lang.to_s.strip.empty? || key.to_s.strip.empty?
     return Product.find_by_key( key ) if lang.eql? 'package'
