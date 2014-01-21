@@ -337,10 +337,10 @@ class BowerCrawler
     Versionlink.create_versionlink prod[:language], prod[:prod_key], prod[:version], pkg_info[:url], "SCM"
     Versionlink.create_versionlink prod[:language], prod[:prod_key], prod[:version], pkg_info[:homepage], "Homepage"
 
-    pkg_info[:licenses].to_a.each { |lic| create_or_update_license( prod, lic ) }
-
     to_dependencies(prod, pkg_info, :dependencies,     Dependency::A_SCOPE_COMPILE)
     to_dependencies(prod, pkg_info, :dev_dependencies, Dependency::A_SCOPE_DEVELOPMENT)
+
+    pkg_info[:licenses].to_a.each { |lic| create_or_update_license( prod, lic ) }
 
     prod
   end
