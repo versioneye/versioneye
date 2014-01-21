@@ -85,8 +85,7 @@ class PackagistCrawler
   end
 
   def self.create_new_version product, version_number, version_obj, crawl
-    version_db                 = Version.new
-    version_db.version         = version_number
+    version_db                 = Version.new({version: version_number})
     version_db.released_string = version_obj['time']
     version_db.released_at     = DateTime.parse(version_obj['time'])
     product.versions.push version_db
@@ -95,20 +94,19 @@ class PackagistCrawler
 
     self.logger.info " -- PHP Package: #{product.prod_key} -- with new version: #{version_number}"
 
-    self.create_license( product, version_number, version_obj )
-
     CrawlerUtils.create_newest product, version_number, logger
     CrawlerUtils.create_notifications product, version_number, logger
 
     Versionlink.create_versionlink product.language, product.prod_key, version_number, version_obj['homepage'], "Homepage"
 
-    PackagistCrawler.create_developers version_obj['authors'], product, version_number
-    PackagistCrawler.create_download product, version_number, version_obj
-    PackagistCrawler.create_dependencies product, version_number, version_obj
+    self.create_license( product, version_number, version_obj )
+    self.create_developers version_obj['authors'], product, version_number
+    self.create_download product, version_number, version_obj
+    self.create_dependencies product, version_number, version_obj
   rescue => e
     self.logger.error "ERROR in create_new_version Message:   #{e.message}"
     self.logger.error e.backtrace.join("\n")
-    PackagistCrawler.store_error crawl, e.message, e.backtrace, product.name
+    self.store_error crawl, e.message, e.backtrace, product.name
   end
 
   def self.create_download product, version_number, version_obj
