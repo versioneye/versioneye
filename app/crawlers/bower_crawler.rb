@@ -569,8 +569,8 @@ class BowerCrawler
 
     language = Product::A_LANGUAGE_JAVASCRIPT
     prod.update_attributes({
-      name:          pkg_info[:name].to_s,
-      name_downcase: pkg_info[:name].to_s.downcase,
+      name:          pkg_info[:full_name].to_s,
+      name_downcase: pkg_info[:full_name].to_s.downcase,
       language:      language, # TODO @timgluz @reiz this is not for sure JavaScript. It can be something else.
       private_repo:  pkg_info[:private_repo],
       description:   pkg_info[:description].to_s
