@@ -400,7 +400,6 @@ class BowerCrawler
     nil
   end
 
-  # TODO refactor this. Method is too long.
   def self.parse_repo_tag(product, tag, token)
     if product.nil? or tag.nil?
       logger.error "method: parse_repo_tag(product, tag, token) - Product or tag cant be nil"
@@ -421,12 +420,7 @@ class BowerCrawler
 
     check_request_limit(token)
 
-    new_version                 = Version.new version: tag_name
-    new_verison.released_string = release_date_string( tag, token )
-    new_version.released_at     = released_date( new_verison.released_string )
-    product.versions << new_version
-    product.reindex = true
-    product.save
+    add_new_version(product, tag_name, tag, token)
 
     CrawlerUtils.create_newest product, tag_name, logger
     CrawlerUtils.create_notifications product, tag_name, logger
@@ -439,6 +433,15 @@ class BowerCrawler
     # TODO dependencies ??
     # TODO licenses ??
     # TODO developers ??
+  end
+
+  def self.add_new_version( product, tag_name, tag, token )
+    new_version                 = Version.new version: tag_name
+    new_verison.released_string = release_date_string( tag, token )
+    new_version.released_at     = released_date( new_verison.released_string )
+    product.versions << new_version
+    product.reindex = true
+    product.save
   end
 
   def self.release_date_string(tag, token)
