@@ -205,30 +205,6 @@ class Github
     })
   end
 
-  #TODO: remove it
-  def self.fetch_project_file_directly(filename, branch, url, token)
-    project_file = fetch_file(url, token)
-    return nil if project_file.nil?
-
-    project_file[:name] = filename
-    project_file[:type] = ProjectService.type_by_filename(filename)
-    project_file[:branch] = branch
-    project_file
-  end
-
-  def self.fetch_raw_file(url, token)
-    return nil if url.nil? || url.empty?
-    response = HTTParty.get("#{url}?access_token=" + URI.escape(token),
-                            :headers => {"User-Agent" => A_USER_AGENT,
-                                         "Accept" => "application/vnd.github.v3.raw"})
-    if response.code != 200
-      Rails.logger.error("Cant read rawfile from #{url}: #{response.code}\n
-                          #{response.message}\n#{response}")
-       return nil
-    end
-    response.body
-  end
-
   # TODO: add tests
   def self.project_file_info(git_project, filename, sha, token)
     url   = "#{A_API_URL}/repos/#{git_project}/git/trees/#{sha}"
