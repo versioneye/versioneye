@@ -111,4 +111,12 @@ namespace :versioneye do
     puts "---"
   end
 
+  desc "crawl Bower.io"
+  task :crawl_bower => :environment do
+    puts "START to crawle Bower.io repository"
+    reiz = User.find_by_username('reiz')
+    BowerCrawler.crawl reiz.github_token
+    puts "---"
+  end
+
 end
