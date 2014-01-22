@@ -6,14 +6,12 @@ class GithubVersionCrawler
     ActiveSupport::BufferedLogger.new('log/github_version_crawler.log')
   end
 
-
   # Crawle Release dates for Objective-C packages
   def self.crawl(language = Product::A_LANGUAGE_OBJECTIVEC, empty_release_dates = true, desc = true )
     products(language, empty_release_dates, desc).each do |product|
       add_version_to_product( product )
     end
   end
-
 
   def self.products( language, empty_release_dates, desc = true )
     products = Mongoid::Criteria.new(Product)
@@ -59,7 +57,6 @@ class GithubVersionCrawler
     logger.info "check version dates for #{product.prod_key} - Remaining API requests: #{remaining}"
   end
 
-
   def self.version_hash github_versions, version_string
     version_hash = github_versions[version_string]
     if version_hash.nil? || version_hash.empty?
@@ -93,7 +90,6 @@ class GithubVersionCrawler
     nil
   end
 
-
   def self.process_tag(versions, tag, owner_repo )
     v_name      = tag.name
     sha         = tag.commit.sha
@@ -111,7 +107,6 @@ class GithubVersionCrawler
     nil
   end
 
-
   def self.fetch_commit_date( owner_repo, sha )
     return nil unless owner_repo
     api = OctokitApi.instance
@@ -124,7 +119,6 @@ class GithubVersionCrawler
     nil
   end
 
-
   def self.tags_for_repo( owner_repo )
     return nil unless owner_repo
     repo      = repo_data owner_repo
@@ -136,13 +130,11 @@ class GithubVersionCrawler
     nil
   end
 
-
   def self.repo_data owner_repo
     api  = OctokitApi.instance
     root = api.root
     root.rels[:repository].get(:uri => owner_repo).data
   end
-
 
   def self.parse_github_url (git_url)
     match = /https:\/\/github.com\/(.+)\/(.+)\.git/.match git_url

@@ -25,8 +25,7 @@ class NotificationFactory
     random_product = Product.fetch_product(prod1[:language], prod1[:prod_key])
     new_message = Notification.new  user_id: user.id,
                                     product_id: random_product.id,
-                                    version_id: random_product.versions.last.id,
-                                    version: random_product.version
+                                    version_id: random_product.versions.last.version
     if save
       unless new_message.save
         p new_message.errors.full_messages.to_sentence

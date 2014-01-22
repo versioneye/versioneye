@@ -154,12 +154,14 @@ describe Github do
       FakeWeb.allow_net_connect = true
     end
 
-    it "should return nil when user dont have github token" do
-      Github.user(nil).should be_nil
+    it "should return nil when user has no credentials" do
+      response = Github.user(nil)
+      response.should be_nil
     end
 
     it "should return nil when bad credentials" do
-      Github.user("123").should be_nil
+      response = Github.user("smt-very-wrong")
+      response.should be_nil
     end
 
     it "should return user data when correct credentials" do
