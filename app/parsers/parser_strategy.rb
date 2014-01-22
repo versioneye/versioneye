@@ -52,9 +52,10 @@ class ParserStrategy
         else
           return PodFileParser.new
         end
+      when Project::A_TYPE_BOWER
+        return BowerParser.new
       else
-        return nil
+      nil
     end
   end
-
 end

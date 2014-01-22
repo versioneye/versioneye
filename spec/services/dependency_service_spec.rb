@@ -3,23 +3,32 @@ require 'spec_helper'
 describe DependencyService do
 
   describe "outdated?" do
+    let(:product){FactoryGirl.build(:product, 
+                                    name: "test1", 
+                                    prod_key: "test1", 
+                                    language: "Ruby",
+                                    prod_type: Project::A_TYPE_RUBYGEMS)}
+
+    before :each do
+    end
+
+    after :each do
+      Product.delete_all
+    end
 
     it "is outdated" do
-      product = ProductFactory.create_new(1)
-      product.versions.push( Version.new( {:version => "1.0" } ) )
+      product.versions << Version.new({version: "1.0" })
       product.save
-      dependency              = Dependency.new
-      dependency.version      = "0.1"
-      dependency.dep_prod_key = product.prod_key
-      dependency.prod_type    = product.prod_type
-      dependency.language     = product.language
+      dependency = Dependency.new version:      "0.1",
+                                  dep_prod_key: product.prod_key,
+                                  prod_type:    product.prod_type,
+                                  language:     product.language
       DependencyService.outdated?( dependency ).should be_true
     end
 
-    it "is not outdated, because it's equal" do
-      product = ProductFactory.create_new(87)
-      product.versions.push( Version.new({:version => "100.0"}) )
-      product.version = "100.0"
+    it "is not outdated, because it's equal" do 
+      product.versions << Version.new({:version => "1.0.0"})
+      product.version = "1.0.0"
       product.save
 
       dependency              = Dependency.new
@@ -31,16 +40,15 @@ describe DependencyService do
     end
 
     it "is not outdated, because it's a range" do
-      product = ProductFactory.create_new(187, :gemfile)
-      product.versions.push( Version.new({:version => "1.0.0"}) )
+      product.versions <<  Version.new({:version => "1.0.0"})
       product.version = "1.0.0"
       product.save
 
-      dependency              = Dependency.new
-      dependency.version      = ">= 0.9.0"
-      dependency.dep_prod_key = product.prod_key
-      dependency.prod_type    = product.prod_type
-      dependency.language     = product.language
+      dependency = Dependency.new version: ">= 0.9.0",
+                                  dep_prod_key: product.prod_key,
+                                  prod_type: product.prod_type,
+                                  language: product.language
+
       DependencyService.outdated?( dependency ).should be_false
       dependency.version.should eql(">= 0.9.0")
     end
@@ -50,16 +58,15 @@ describe DependencyService do
       product.versions.push Version.new({ :version => "1.0" })
       product.save
 
-      dependency              = Dependency.new
-      dependency.version      = "100000.2"
-      dependency.language     = product.language
-      dependency.dep_prod_key = product.prod_key
+      dependency = Dependency.new version: "100000.2",
+                                  language: product.language,
+                                  dep_prod_key: product.prod_key
+
       DependencyService.outdated?( dependency ).should be_false
     end
 
     it "is not outdated, because unknown dep" do
-      dependency         = Dependency.new
-      dependency.version = "0.1"
+      dependency         = Dependency.new version: "0.1"
       DependencyService.outdated?( dependency ).should be_false
     end
 

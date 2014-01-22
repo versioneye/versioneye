@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20120301021814) do
     t.integer  "user_id"
     t.integer  "unsigneduser_id"
     t.string   "product_id",      :limit => 50,                    :null => false
-    t.string   "version_id",      :limit => 50,                    :null => false
+    t.string   "version",      :limit => 50,                    :null => false
     t.boolean  "read",                          :default => false
     t.boolean  "sent_email",                    :default => false
     t.datetime "created_at"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20120301021814) do
 
   add_index "notifications", ["read"], :name => "index_notifications_on_read"
   add_index "notifications", ["user_id"], :name => "index_notifications_on_user_id"
-  add_index "notifications", ["version_id"], :name => "index_notifications_on_version_id"
+  add_index "notifications", ["version"], :name => "index_notifications_on_version"
 
   create_table "users", :force => true do |t|
     t.string   "username",           :limit => 50,                           :null => false

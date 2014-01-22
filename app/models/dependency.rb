@@ -37,6 +37,9 @@ class Dependency
   # The current version of the product, which this dep is referencing
   field :current_version, type: String
 
+  index({language: -1, prod_key: -1}, {background: true})
+  index({language: -1, dep_prod_key: -1}, {background: true})
+
   def self.find_by_lang_key_and_version( lang, prod_key, version)
     Dependency.where( language: lang, prod_key: prod_key, prod_version: version )
   end
@@ -106,9 +109,9 @@ class Dependency
       return A_SCOPE_RUNTIME
     elsif language.eql?( Product::A_LANGUAGE_JAVA ) || language.eql?( Product::A_LANGUAGE_CLOJURE )
       return A_SCOPE_COMPILE
-    elsif language.eql?( Product::A_LANGUAGE_NODEJS )
+    elsif language.eql?( Product::A_LANGUAGE_NODEJS)
       return A_SCOPE_COMPILE
-    elsif language.eql?( Product::A_LANGUAGE_PHP )
+    elsif language.eql?( Product::A_LANGUAGE_PHP ) || language.eql?(Product::A_LANGUAGE_JAVASCRIPT)
       return A_SCOPE_REQUIRE
     end
   end

@@ -221,7 +221,7 @@ module V2
           error! "We couldn't find the repository `#{repo_name}` in your account.", 400
         end
 
-        ProjectService.import_from_github(user, repo_name, branch)
+        ProjectService.import_from_github(user, repo_name, 'Gemfile', branch)
         projects = Project.by_user(current_user).by_github(repo_name).to_a
 
         present :repo, repo, with: EntitiesV2::RepoEntityDetailed

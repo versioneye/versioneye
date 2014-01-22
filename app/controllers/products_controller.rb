@@ -44,7 +44,7 @@ class ProductsController < ApplicationController
     end
 
     @product.check_nil_version
-    if @product && !lang.eql?( @product.language )
+    if @product && lang.casecmp( @product.language ) != 0
       redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
       return
     end

@@ -67,12 +67,11 @@ class Github
   end
 
   #returns how many repos user has. NB! doesnt count orgs
-  def self.count_user_repos user
+  def self.count_user_repos(user_info)
     n = 0
-    return n if user[:github_token].nil?
+    return n if user_info[:github_token].nil?
 
-    url = "#{A_API_URL}/user?access_token=#{user[:github_token]}"
-    user_info = get_json(url, user[:github_token])
+    user_info = get_json("#{A_API_URL}/user", user_info[:github_token])
     if user_info
       n = user_info[:public_repos].to_i + user_info[:total_private_repos].to_i
     end
@@ -89,8 +88,12 @@ class Github
     read_repos(user, url, page, per_page)
   end
 
-  def self.repo_info repo_fullname, token
-    get_json "#{A_API_URL}/repos/#{repo_fullname}", token
+  def self.repo_info(repo_fullname, token, raw = false, updated_since = nil)
+    get_json("#{A_API_URL}/repos/#{repo_fullname}", token, raw, updated_since)
+  end
+
+  def self.repo_tags(repository, token)
+    get_json("#{A_API_URL}/repos/#{repository}/tags", token)
   end
 
   def self.read_repo_data repo, token, try_n = 3
@@ -135,7 +138,6 @@ class Github
     repo_docs       = []
     data.each do |repo|
       next if repo.nil? or repo[:full_name].to_s.empty?
-
       workers << Thread.new do
         time = Benchmark.measure do
           repo_data = read_repo_data(repo, user.github_token)
@@ -203,17 +205,6 @@ class Github
     })
   end
 
-  #TODO: remove it
-  def self.fetch_project_file_directly(filename, branch, url, token)
-    project_file = fetch_file(url, token)
-    return nil if project_file.nil?
-
-    project_file[:name] = filename
-    project_file[:type] = ProjectService.type_by_filename(filename)
-    project_file[:branch] = branch
-    project_file
-  end
-
   # TODO: add tests
   def self.project_file_info(git_project, filename, sha, token)
     url   = "#{A_API_URL}/repos/#{git_project}/git/trees/#{sha}"
@@ -222,7 +213,7 @@ class Github
 
     matching_files = tree[:tree].keep_if {|blob| blob[:path] == filename}
     return nil if matching_files.nil? or matching_files.empty?
-    
+
     file = matching_files.first
     {
       name: file[:path],
@@ -330,14 +321,33 @@ class Github
   end
 
   def self.repo_sha(repository, token)
-    url = "#{A_API_URL}/repos/#{repository}/git/refs/heads?access_token=" + URI.escape(token)
-    response = get(url, :headers => A_DEFAULT_HEADERS)
-    heads = JSON.parse response.body
+    url = "#{A_API_URL}/repos/#{repository}/git/refs/heads"
+    heads = get_json(url, token)
 
-    heads.each do |head|
-      return head['object']['sha'] if head['url'].match(/heads\/master$/)
+    heads.to_a.each do |head|
+      return head[:object][:sha] if head[:url].match(/heads\/master$/)
     end
     nil
+  end
+
+  def self.rate_limit(token)
+    limits = {
+      core: {
+        limit: 0,
+        remaining: 0,
+        reset: DateTime.now.to_i + (5 * 60)  #default wait 5minute before trying again
+      }
+    }
+
+    url = "#{A_API_URL}/rate_limit"
+
+    response = get_json(url, token)
+    if response and response.has_key?(:resources)
+      limits = response[:resources]
+    else
+      Rails.logger.error "Didnt get any rate_limit from API - going to use default limits: #{limits}"
+    end
+    limits
   end
 
   def self.search(q, langs = nil, users = nil, page = 1, per_page = 30)
@@ -371,15 +381,24 @@ class Github
     JSON.parse(response.body)
   end
 
-  def self.get_json(url, token = nil, raw = false)
+  def self.get_json(url, token = nil, raw = false, updated_at = nil)
     request_headers = A_DEFAULT_HEADERS
     if token
-      request_headers["Authorization"] = "token #{token}"
+      request_headers["Authorization"] = " token #{token}"
     end
+
+    if updated_at.is_a?(Date) or updated_at.is_a?(DateTime)
+      request_headers["If-Modified-Since"] = updated_at.to_datetime.rfc822
+    end
+
     response = get(url, headers: request_headers)
     return response if raw
     content = JSON.parse(response.body, symbolize_names: true)
     catch_github_exception(content)
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.first
+    return nil
   end
 
   def self.support_project_files
@@ -393,7 +412,6 @@ class Github
   def self.decode_db_key(key_val)
     URI.unescape key_val.to_s
   end
-
   private
 
 =begin
@@ -413,8 +431,9 @@ class Github
     rescue => e
       # by default here should be no message or nil
       # We expect that everything is ok and there is no error message
+      p "#{e.message}, #{e.backtrace.first}"
       Rails.logger.error e.message
-      Rails.logger.error e.backtrace.join("\n")
+      Rails.logger.error e.backtrace.join('\n')
       nil
     end
 
@@ -427,5 +446,4 @@ class Github
       end
       Hash[*links.flatten]
     end
-
 end

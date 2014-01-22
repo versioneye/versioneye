@@ -40,7 +40,7 @@ describe GithubVersionCrawler, :vcr do
     # FakeWeb.clean_registry
   end
 
-	describe ".owner_and_repo" do
+  describe ".owner_and_repo" do
 
     example "1" do
       repo = 'https://github.com/0xced/ABGetMe.git'

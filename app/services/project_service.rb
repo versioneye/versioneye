@@ -10,7 +10,7 @@ class ProjectService
     return Project::A_TYPE_GRADLE    if trimmed_name.match(/.gradle$/)
     return Project::A_TYPE_MAVEN2    if trimmed_name.match(/pom.xml$/) or trimmed_name.match(/pom.json$/)
     return Project::A_TYPE_LEIN      if trimmed_name.match(/project.clj$/)
-    return Project::A_TYPE_BOWER     if trimmed_name.match(/^bower.json$/)
+    return Project::A_TYPE_BOWER     if trimmed_name.match(/bower.json$/)
     return Project::A_TYPE_COCOAPODS if trimmed_name.match(/Podfile$/) or trimmed_name.match(/.podfile$/) or trimmed_name.match(/Podfile.lock$/)
     return nil
   end
@@ -133,18 +133,13 @@ class ProjectService
    - Parsing the project_file to a new project
    - Storing the new project to DB
 =end
-  def self.import_from_github user, repo_name, filename, branch = "master", fileurl = nil
+  def self.import_from_github user, repo_name, filename, branch = 'master'
     private_project = Github.private_repo? user.github_token, repo_name
     unless allowed_to_add_project?(user, private_project)
       return "Please upgrade your plan to monitor the selected project."
     end
 
-    if fileurl
-      project_file = Github.fetch_project_file_directly(filename, branch, fileurl, user[:github_token])
-    else
-      project_file = Github.fetch_project_file_from_branch(repo_name, filename, branch, user[:github_token] )
-    end
-
+    project_file = Github.fetch_project_file_from_branch(repo_name, filename, branch, user[:github_token] )
     if project_file.nil?
       error_msg = " Didn't find any project file of a supported package manager."
       Rails.logger.error " Can't import project file `#{filename}` from #{repo_name} branch #{branch} "
@@ -228,7 +223,7 @@ class ProjectService
     parser       = ParserStrategy.parser_for( project_type, url )
     parser.parse url
   rescue => e
-    Rails.logger.error "Error in build_from_url(url) -> e.message"
+    Rails.logger.error "Error in build_from_url(url) -> #{e.message}"
     Rails.logger.error e.backtrace.join("\n")
     Project.new
   end
