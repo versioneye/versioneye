@@ -190,6 +190,32 @@ describe Dependency do
 
   end
 
+  describe "remove_dependencies" do
+
+    it "removes the dependencies" do
+      described_class.count.should eq(0)
+      dependency = described_class.new({:language => Product::A_LANGUAGE_PHP, :prod_key => 'symfony/symfony',
+        :prod_version => '1.0.0', :name => 'symfony', :dep_prod_key => 'symfony.de' })
+      dependency.save
+
+      dependency_1 = described_class.new({:language => Product::A_LANGUAGE_PHP, :prod_key => 'symfony/symfony',
+        :prod_version => '1.1.0', :name => 'symfony', :dep_prod_key => 'symfony.de' })
+      dependency_1.save
+
+      dependency_2 = described_class.new({:language => Product::A_LANGUAGE_PHP, :prod_key => 'symfony/doctrine',
+        :prod_version => '1.0.0', :name => 'doctron', :dep_prod_key => 'symfony.de' })
+      dependency_2.save
+
+      described_class.count.should eq(3)
+      described_class.remove_dependencies Product::A_LANGUAGE_PHP, 'symfony/symfony', '1.0.0'
+      described_class.count.should eq(2)
+      described_class.find_by_lang_key_and_version(dependency_1.language, dependency_2.prod_key, '1.0.0').should_not be_nil
+      described_class.find_by_lang_key_and_version(dependency_1.language, dependency_1.prod_key, '1.1.0').should_not be_nil
+      described_class.find_by_lang_key_and_version(dependency_1.language, dependency_1.prod_key, '1.0.0').should be_empty
+    end
+
+  end
+
   describe "update_known" do
 
     it "updates known with false" do

@@ -40,6 +40,11 @@ class Dependency
   index({language: -1, prod_key: -1}, {background: true})
   index({language: -1, dep_prod_key: -1}, {background: true})
 
+
+  def self.remove_dependencies language, prod_key, version_number
+    Dependency.where( language: language, prod_key: prod_key, prod_version: version_number ).delete_all
+  end
+
   def self.find_by_lang_key_and_version( lang, prod_key, version)
     Dependency.where( language: lang, prod_key: prod_key, prod_version: version )
   end
