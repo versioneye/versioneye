@@ -20,6 +20,10 @@ class Versionarchive
     }
   end
 
+  def self.remove_archives language, prod_key, version_number
+    Versionarchive.where( language: language, prod_key: prod_key, version_id: version_number ).delete_all
+  end
+
   def self.archives(lang, prod_key, version)
     Versionarchive.where(language: lang, prod_key: prod_key, version_id: version).asc(:name).to_a
   end
