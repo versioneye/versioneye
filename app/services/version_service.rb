@@ -19,14 +19,9 @@ class VersionService
     versions.first
   end
 
-  # TODO @timgluz write tests for this
   def self.versions_by_whitelist(versions, whitelist)
     whitelist = Set.new whitelist.to_a
-    filtered = []
-    versions.each do |ver|
-      filtered << ver if whitelist.include? ver[:version]
-    end
-    filtered
+    versions.keep_if {|ver| whitelist.include? ver[:version]}
   end
 
   def self.newest_version_number( versions, stability = 'stable')
@@ -41,9 +36,9 @@ class VersionService
     VersionService.newest_version( versions, stability )
   end
 
-
   # TODO write test
   def self.newest_version_from_wildcard( versions, version_start, stability = 'stable')
+    version_start.gsub!(/x/i, "*")
     versions_filtered = versions_start_with( versions, version_start )
     return newest_version_number( versions_filtered, stability )
   end
@@ -102,17 +97,10 @@ class VersionService
 
 
   def self.versions_start_with( versions, val )
-    result = Array.new
-    return result if versions.nil? || versions.empty?
-    versions.each do |version|
-      if version.to_s.match(/^#{val}/)
-        result.push(version)
-      end
-    end
-    result
+    return [] if versions.nil? || versions.empty?
+    versions.dup.keep_if {|ver| ver[:version].to_s.match(/^#{val}/)}    
   end
 
-  # TODO @timgluz write tests for this
   def self.versions_by_comperator(versions, operator, value, range = true)
     matching_versions = case operator
     when '!=' then not_equal(versions, value, range)
@@ -124,40 +112,23 @@ class VersionService
     end
   end
 
-  # TODO write test for it
-  def self.newest_but_not( versions, value, range=false, stability = "stable")
-    filtered_versions = Array.new
-    versions.each do |version|
-      unless version.to_s.match(/^#{value}/)
-        filtered_versions.push(version)
-      end
-    end
+  def self.newest_but_not( versions, value, range=false, stability = "stable")    
+    filtered_versions = versions.dup.keep_if {|version| version.to_s.match(/^#{value}/i).nil?}
     return filtered_versions if range
     newest = VersionService.newest_version_from(filtered_versions, stability)
     return get_newest_or_value(newest, value)
   end
 
-
-  # TODO @timgluz write tests for this
   def self.equal( versions, value, range = false, stability = "stable")
-    filtered_versions = Array.new
-    versions.each do |ver|
-      filtered_versions << ver if ver.version == value.to_s
-    end
+    filtered_versions = versions.dup.keep_if {|ver| ver[:version] == value.to_s}
     return filtered_versions if range
     newest = VersionService.newest_version_from(filtered_versions, stability)
     return get_newest_or_value(newest, value)
   end
 
 
-  # TODO @timgluz write tests for this
   def self.not_equal( versions, value, range = false, stability = "stable")
-    filtered_versions = Array.new
-    versions.each do |version|
-      if version.version != value
-        filtered_versions << version
-      end
-    end
+     filtered_versions = versions.dup.keep_if {|ver| ver.version != value.to_s}
     return filtered_versions if range
     newest = VersionService.newest_version_from(filtered_versions, stability)
     return get_newest_or_value(newest, value)
@@ -282,5 +253,4 @@ class VersionService
       return Version.new({:version => value}) if newest.nil?
       return newest
     end
-
 end
