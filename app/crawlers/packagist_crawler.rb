@@ -41,7 +41,7 @@ class PackagistCrawler
     versions.each do |version|
       self.process_version version, product
     end
-    # VersionService.update_version_data( product )
+    VersionService.update_version_data( product )
   rescue => e
     self.logger.error "ERROR in crawle_package Message:   #{e.message}"
     self.logger.error e.backtrace.join('\n')
@@ -51,15 +51,11 @@ class PackagistCrawler
   def self.process_version version, product
     version_number = String.new(version[0])
     version_obj = version[1]
-    logger.info " -- "
-    logger.info " -- process #{version_number} for #{product.prod_key} -- "
-    logger.info " -- "
     if version_number && version_number.match(/v[0-9]+\..*/)
       version_number.gsub!('v', '')
     end
     db_version = product.version_by_number version_number
     if db_version.nil?
-      logger.info "****** db_version is nil for #{product.prod_key} !!! ***********"
       PackagistCrawler.create_new_version( product, version_number, version_obj )
       return nil
     end
@@ -102,7 +98,6 @@ class PackagistCrawler
 
 
   def self.create_new_version product, version_number, version_obj
-    logger.info " .. create_new_version #{product.prod_key}, #{version_number}"
     version_db                 = Version.new({version: version_number})
     version_db.released_string = version_obj['time']
     version_db.released_at     = DateTime.parse(version_obj['time'])
