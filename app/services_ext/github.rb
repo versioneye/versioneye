@@ -411,23 +411,12 @@ class Github
       request_headers["Authorization"] = " token #{token}"
     end
 
-    if updated_at.is_a?(Date) or updated_at.is_a?(DateTime) 
+    if updated_at.is_a?(Date) or updated_at.is_a?(DateTime)
       request_headers["If-Modified-Since"] = updated_at.to_datetime.rfc822
     end
 
     response = get(url, headers: request_headers)
     return response if raw
-    content = JSON.parse(response.body, symbolize_names: true)
-    catch_github_exception(content)
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.first
-    return nil
-  end
-
-  def self.patch_json(url, data = {}, token = nil)
-    request_headers = A_DEFAULT_HEADERS
-    response = patch(url, headers: request_headers)
     content = JSON.parse(response.body, symbolize_names: true)
     catch_github_exception(content)
   rescue => e
@@ -466,9 +455,9 @@ class Github
     rescue => e
       # by default here should be no message or nil
       # We expect that everything is ok and there is no error message
-      p e.message, e.backtrace.first
+      p "#{e.message}, #{e.backtrace.first}"
       Rails.logger.error e.message
-      Rails.logger.error e.backtrace.join("\n")
+      Rails.logger.error e.backtrace.join('\n')
       nil
     end
 
