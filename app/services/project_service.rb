@@ -133,18 +133,13 @@ class ProjectService
    - Parsing the project_file to a new project
    - Storing the new project to DB
 =end
-  def self.import_from_github user, repo_name, filename, branch = "master", fileurl = nil
+  def self.import_from_github user, repo_name, filename, branch = 'master'
     private_project = Github.private_repo? user.github_token, repo_name
     unless allowed_to_add_project?(user, private_project)
       return "Please upgrade your plan to monitor the selected project."
     end
 
-    if fileurl
-      project_file = Github.fetch_project_file_directly(filename, branch, fileurl, user[:github_token])
-    else
-      project_file = Github.fetch_project_file_from_branch(repo_name, filename, branch, user[:github_token] )
-    end
-
+    project_file = Github.fetch_project_file_from_branch(repo_name, filename, branch, user[:github_token] )
     if project_file.nil?
       error_msg = " Didn't find any project file of a supported package manager."
       Rails.logger.error " Can't import project file `#{filename}` from #{repo_name} branch #{branch} "

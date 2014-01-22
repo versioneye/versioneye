@@ -152,7 +152,7 @@ class User::GithubReposController < ApplicationController
 
       raise err_message if matching_files.empty?
 
-      project = ProjectService.import_from_github current_user, project_name, filename, branch, nil
+      project = ProjectService.import_from_github current_user, project_name, filename, branch
 
       raise err_message if project.nil?
       raise project if project.is_a? String
