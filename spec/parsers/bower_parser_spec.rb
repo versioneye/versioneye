@@ -5,46 +5,54 @@ describe BowerParser do
   let(:prod1){FactoryGirl.create(:product_with_versions, 
                                  prod_key: "search",
                                  name: "search", 
+                                 prod_type: Project::A_TYPE_BOWER,
                                  language: Product::A_LANGUAGE_JAVASCRIPT
                                 )}
   let(:prod2){FactoryGirl.create(:product_with_versions,
                                  prod_key: "jquery",
                                  name: "jquery", 
+                                 prod_type: Project::A_TYPE_BOWER,
                                  language: Product::A_LANGUAGE_JAVASCRIPT 
                                 )}
   let(:prod3){FactoryGirl.create(:product_with_versions,
                                  prod_key: "bootstrap",
                                  name: "bootstrap", 
+                                 prod_type: Project::A_TYPE_BOWER,
                                  language: Product::A_LANGUAGE_JAVASCRIPT
                                 )}
   let(:prod4){FactoryGirl.create(:product_with_versions,
                                  prod_key: "emberjs",
                                  name: "emberjs", 
                                  version: "3.0",
+                                 prod_type: Project::A_TYPE_BOWER,
                                  language: Product::A_LANGUAGE_JAVASCRIPT
                                 )}
   let(:prod5){FactoryGirl.create(:product_with_versions,
                                  prod_key: "websocket",
                                  name: "websocket", 
                                  version: "3.0",
+                                 prod_type: Project::A_TYPE_BOWER,
                                  language: Product::A_LANGUAGE_JAVASCRIPT
                                 )}
   let(:prod6){FactoryGirl.create(:product_with_versions,
                                  prod_key: "validator",
                                  name: "validator", 
                                  version: "3.0",
+                                 prod_type: Project::A_TYPE_BOWER,
                                  language: Product::A_LANGUAGE_JAVASCRIPT
                                 )}
   let(:prod7){FactoryGirl.create(:product_with_versions,
                                  prod_key: "scss",
                                  name: "scss", 
                                  version: "3.0",
+                                 prod_type: Project::A_TYPE_BOWER,
                                  language: Product::A_LANGUAGE_JAVASCRIPT
                                 )}
   let(:prod8){FactoryGirl.create(:product_with_versions,
                                  prod_key: "and-and",
                                  name: "and-and", 
                                  version: "2.0",
+                                 prod_type: Project::A_TYPE_BOWER,
                                  language: Product::A_LANGUAGE_JAVASCRIPT
                                 )}
 
@@ -52,6 +60,7 @@ describe BowerParser do
                                  prod_key: "or-or",
                                  name: "or-or", 
                                  version: "2.0",
+                                 prod_type: Project::A_TYPE_BOWER,
                                  language: Product::A_LANGUAGE_JAVASCRIPT
                                 )}
 
@@ -186,6 +195,7 @@ describe BowerParser do
  
       prod1.save;prod2.save;prod3.save;prod4.save;prod5.save;
       prod6.save;prod7.save;prod8.save;prod9.save
+    
     end
     after :each do
       Product.delete_all
