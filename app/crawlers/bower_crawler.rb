@@ -151,7 +151,7 @@ class BowerCrawler
     result = false
     crawler_task_executor(task_name, token) do |task, token|
       tags = Github.repo_tags(task[:repo_fullname], token)
-      if tags.nil?
+      if tags.nil? || tags.empty?
         logger.warn "`#{task[:repo_fullname]}` has no versions - going to skip."
         result = true
       else
@@ -352,6 +352,8 @@ class BowerCrawler
     to_dependencies(prod, pkg_info, :dev_dependencies, Dependency::A_SCOPE_DEVELOPMENT)
 
     pkg_info[:licenses].to_a.each { |lic| create_or_update_license( prod, lic ) }
+
+    # TODO developers ??
 
     prod
   end
