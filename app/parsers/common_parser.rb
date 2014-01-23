@@ -1,5 +1,13 @@
 class CommonParser
 
+  def parse(url)
+    raise NotImplementedError, 'Implement me!'
+  end
+
+  def parse_requested_version(version, dependency, product)
+    raise NotImplementedError, 'Implement me!'
+  end
+
   def fetch_response url
     url  = self.do_replacements_for_github url
     uri  = URI.parse url
