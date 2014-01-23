@@ -36,13 +36,13 @@ class BowerParser < CommonParser
     tilde_version = "^\\s* #{tilde} \\s* #{xrange}$"
     caret_version = "^\\s* #{caret} \\s* #{xrange}$"
     hyphen_version = %Q[
-      ^\\s* \\s* 
-      (?<start> #{xrange}) 
-        \\s+ - \\s+ 
+      ^\\s* \\s*
+      (?<start> #{xrange})
+        \\s+ - \\s+
       (?<end> #{xrange}) \\s* $
     ]
     star_version = "(<|>)?=?\\s*\\*"
-    #initialize set of rules 
+    #initialize set of rules
     @rules = {
       main_version: Regexp.new(main_version, Regexp::EXTENDED),
       full_version: Regexp.new(full_version, Regexp::EXTENDED),
@@ -55,8 +55,8 @@ class BowerParser < CommonParser
     }
   end
 
-  def cleanup_version(version_line)
-    version_line.to_s.gsub(/^\D+/, "") #removes all non-numerical before version
+  def cleanup_version(version_label)
+    version_label.to_s.gsub(/^\D+/, "") #removes all non-numerical before version
   end
 
   def parse ( url )
@@ -66,9 +66,9 @@ class BowerParser < CommonParser
     dependencies = fetch_dependencies( data )
     return nil if dependencies.nil?
     project = init_project( url, data )
-    
-    dependencies.each do |package_name, version_line|
-      parse_version_line( package_name, version_line, project )
+
+    dependencies.each do |package_name, version_label|
+      parse_version_label( package_name, version_label, project )
     end
     project.dep_number = project.dependencies.size
 
@@ -80,27 +80,27 @@ class BowerParser < CommonParser
     text.gsub(/\s+ - \s+/x, '|-|')
   end
 
-  def parse_version_line(package_name, version_line, project)
+  def parse_version_label(package_name, version_label, project)
     product    = Product.where(prod_type: Project::A_TYPE_BOWER, name: package_name).first
     dependency = init_dependency( product, package_name )
     if product.nil?
-      Rails.logger.error "#{self.class}.parse_version_line | Cant find product for #{Project::A_TYPE_BOWER}, `#{package_name}`"
+      Rails.logger.error "#{self.class}.parse_version_label | Cant find product for #{Project::A_TYPE_BOWER}, `#{package_name}`"
       project.unknown_number += 1
     else
-      dependency = parse_requested_version(version_line, dependency, product)
+      dependency = parse_requested_version(version_label, dependency, product)
     end
     project.out_number     += 1 if dependency.outdated?
     project.projectdependencies.push dependency
     project
   end
 
-  def parse_requested_version(version_line, dependency, product)
-    version_line = version_line.strip
+  def parse_requested_version(version_label, dependency, product)
+    version_label = version_label.strip
     package_name = dependency[:name]
-    if trim_text(version_line).split(/\s+/).count < 2
-      newest_version = parse_single_version(package_name, version_line, product)
+    if trim_text(version_label).split(/\s+/).count < 2
+      newest_version = parse_single_version(package_name, version_label, product)
     else
-      newest_version = parse_combined_versions(package_name, version_line, product)
+      newest_version = parse_combined_versions(package_name, version_label, product)
     end
 
     dependency.update_attributes({
@@ -108,13 +108,13 @@ class BowerParser < CommonParser
       version_requested: newest_version[:version],
       comperator: newest_version[:comperator]
     })
- 
+
     dependency
   end
 
-  def parse_combined_versions(package_name, version_line, product)
-    version_line = trim_text(version_line) #concanate temporaly hyphen-versions
-    versions = version_line.split(/\s+/)
+  def parse_combined_versions(package_name, version_label, product)
+    version_label = trim_text(version_label) #concanate temporaly hyphen-versions
+    versions = version_label.split(/\s+/)
     whitelisted_labels = Set.new []
     set_operator = "&"
     versions.each do |version|
@@ -123,16 +123,16 @@ class BowerParser < CommonParser
         next
       end
       version = version.to_s.strip.gsub(/ \|-\| /x, ' - ') #restore hyphen version and remove reduntant spaces
-     
+
       version_data = parse_version_data(package_name, version, product)
       if version_data.nil?
-        Rails.logger.error "Cant parse version `#{version_line}` for #{package_name}."
+        Rails.logger.error "Cant parse version `#{version_label}` for #{package_name}."
         return nil
       end
 
       matching_labels = VersionService.versions_by_comperator(product.versions, version_data[:comperator], version_data[:label]).to_a.map {|ver| ver[:version]}
       matching_labels = Set.new matching_labels.to_a
-       
+
       whitelisted_labels = matching_labels if whitelisted_labels.empty?
       if set_operator == '&'
         whitelisted_labels = whitelisted_labels & matching_labels
@@ -146,7 +146,7 @@ class BowerParser < CommonParser
     #TODO: what if allowed_versions nil? - tautology or missing versions on DB??
     newest_version = VersionService.newest_version(allowed_versions)
     if newest_version.nil?
-      Rails.logger.error "#{self.class}.parse_combined_versions| Didnt get any versions for `#{package_name}`:`#{version_line}`"
+      Rails.logger.error "#{self.class}.parse_combined_versions| Didnt get any versions for `#{package_name}`:`#{version_label}`"
       newest_version = Version.new version: 'unknown'
     end
 
@@ -177,25 +177,25 @@ class BowerParser < CommonParser
       version_data = {version: product.version, label: "*", comperator: "="}
     elsif (m = version.match(self.rules[:full_version]))
       version_data = {
-        version: m[:version], 
-        label: m[:version], 
+        version: m[:version],
+        label: m[:version],
         comperator: "=",
         prerelease: (m[:prerelease].nil?) ? false : true
       }
     elsif (m = version.match(self.rules[:asterisk_version]))
       #matches versions as 1.x, 1.*, 1.x.*, 1.*.x
-      ver = m[:version]  
+      ver = m[:version]
       version_root, _ = ver.split(/x|\*/)
       version_root = version_root.to_s.gsub(/\./, '\.')
       matching_versions = VersionService.versions_start_with(product.versions, version_root)
       newest_version = VersionService.newest_version(matching_versions)
       if newest_version
-        version_label = newest_version.version 
+        version_label = newest_version.version
       else
         version_label = version_root.gsub(/\.$/, '') #just use prefix
       end
       version_data = {
-        version: version_label, 
+        version: version_label,
         label: m[:version],
         comperator: "<="
       }
@@ -215,18 +215,18 @@ class BowerParser < CommonParser
       version_label = m[:version]
       version_label = highest_version.version if highest_version
       version_data = {
-        version: version_label, 
-        label: m[:version], 
+        version: version_label,
+        label: m[:version],
         comperator: "~"
       }
     elsif (m = version.match(self.rules[:caret_version]))
-      if m[:version] =~ /0\.0\.\d+/ 
+      if m[:version] =~ /0\.0\.\d+/
         version_data = {version: m[:version], label: m[:version], comperator: "="}
       else
         highest_version = VersionService.version_tilde_newest(product.versions, m[:version])
         version_data = {
-          version: highest_version.version || m[:version], 
-          label: m[:version], 
+          version: highest_version.version || m[:version],
+          label: m[:version],
           comperator: "^"
         }
       end
@@ -242,13 +242,13 @@ class BowerParser < CommonParser
         comperator: "<="
       }
     else
-      Rails.logger.error %Q{BowerParser.parse_version_data | Version `#{version}` for #{product[:name]} 
+      Rails.logger.error %Q{BowerParser.parse_version_data | Version `#{version}` for #{product[:name]}
                             doesnt match with any rules. Probably misformed.}
       version_data = { version: product.version, label: "*", comperator: "="}
     end
     version_data
   end
-  
+
   #TODO: try to add more info ~ licence, github etc
   def init_project( url, data )
     project = Project.new
