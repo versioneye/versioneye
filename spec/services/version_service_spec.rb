@@ -54,7 +54,72 @@ describe VersionService do
       newest.version.should eql("dev-master")
     end
 
+    it "returns the newest value from minor patches" do
+      versions = []
+      versions << Version.new(version: "2.0.1")
+      versions << Version.new(version: "2.0.1-dev")
+      versions << Version.new(version: "2.0.2-dev")
+      versions << Version.new(version: "2.0.2")
+      versions << Version.new(version: "2.0.3")
+      versions << Version.new(version: "2.0.4")
+      versions << Version.new(version: "2.0.4-dev")
+      versions << Version.new(version: "2.0.5")
+      versions << Version.new(version: "2.0.5-dev")
+
+      newest = VersionService.newest_version(versions)
+      newest.should_not be_nil
+      newest[:version].should eq("2.0.5")
+    end
+
   end
+
+  describe "versions_by_whitelist" do
+    before :each do
+      product.versions = []
+    end
+
+    it "returns empty list when whitelist is nil" do
+      product.versions << Version.new(version: "0.1")
+      allowed_versions = VersionService.versions_by_whitelist(product.versions, nil)
+      allowed_versions.should be_empty
+    end
+
+    it "returns empty list when whitelist is just empty array" do
+      product.versions << Version.new(version: "0.1")
+      allowed_versions = VersionService.versions_by_whitelist(product.versions, [])
+      allowed_versions.should be_empty
+    end
+
+    it "returns empty list when whitelist has no matching versions" do
+      product.versions << Version.new(version: "0.1")
+      allowed_versions = VersionService.versions_by_whitelist(product.versions, ["2.0"])
+      allowed_versions.should be_empty
+    end
+
+    it "returns correct version when whitelist has only one version" do
+      product.versions << Version.new(version: "0.1")
+      product.versions << Version.new(version: "0.2")
+      product.versions << Version.new(version: "1.2")
+      allowed_versions = VersionService.versions_by_whitelist(product.versions, ["0.2"])
+      allowed_versions.should_not be_empty
+      allowed_versions.first[:version].should eq("0.2")
+    end
+
+    it "returns correct versions when whitelist has many matching versions" do
+      product.versions << Version.new(version: "0.1")
+      product.versions << Version.new(version: "0.2")
+      product.versions << Version.new(version: "1.2")
+      allowed_versions = VersionService.versions_by_whitelist(product.versions, ["0.2", "1.0", "1.2"])
+      
+      allowed_versions.should_not be_empty
+      allowed_versions.size.should eq(2)
+      allowed_versions[0][:version].should eq("0.2")
+      allowed_versions[1][:version].should eq("1.2")
+    end
+
+
+  end
+
 
   describe "newest_version_number" do
 
@@ -116,6 +181,34 @@ describe VersionService do
 
   end
 
+  describe "newest_version_from_wildcard" do
+    it "returns newest version for 1.x" do
+      versions = []
+      versions << Version.new({version: "0.1"})
+      versions << Version.new({version: "0.9"})
+      versions << Version.new({version: "1.0"})
+      versions << Version.new({version: "1.1"})
+      versions << Version.new({version: "1.5"})
+      versions << Version.new({version: "1.7"})
+
+      newest = VersionService.newest_version_from_wildcard(versions, '1.*')
+      newest.should_not be_nil
+      newest.should eq("1.7")
+    end
+
+    it "returns newest version for 2.0.*" do
+      versions = []
+      versions << Version.new({version: "2.0.1"})
+      versions << Version.new({version: "2.0.5"})
+      versions << Version.new({version: "2.0.5-alpha"})
+      versions << Version.new({version: "2.1.1"})
+
+      newest = VersionService.newest_version_from_wildcard(versions, '2.0.x')
+      newest.should_not be_nil
+      newest.should eq('2.0.5')
+    end
+  end
+
   describe "version_approximately_greater_than_starter" do
 
     it "returns the given value" do
@@ -127,8 +220,8 @@ describe VersionService do
     it "returns the given value" do
       VersionService.version_approximately_greater_than_starter("1.2.3").should eql("1.2.")
     end
-
   end
+
 
   describe "version_tilde_newest" do
 
@@ -249,6 +342,149 @@ describe VersionService do
 
   end
 
+
+  describe "versions_by_comperator" do
+    let(:versions){[]}
+    before :each do
+      versions << Version.new(version: "1.1")
+      versions << Version.new(version: "1.2")
+      versions << Version.new(version: "1.3")
+      versions << Version.new(version: "1.4")
+      versions << Version.new(version: "1.7")
+     end
+
+    it "returns newest not equal version" do
+      version = VersionService.versions_by_comperator(versions, "!=", "1.2", false)
+      version.should_not be_nil
+      version[:version].should eq("1.7")
+    end
+
+    it "returns right range for != operator" do     
+      results = VersionService.versions_by_comperator(versions, "!=", "1.2", true)
+      results.should_not be_nil
+      results.size.should eq(4)
+
+      results[0][:version].should eq("1.1")
+      results[1][:version].should eq("1.3")
+      results[2][:version].should eq("1.4")
+      results[3][:version].should eq("1.7")
+   end
+
+    it "returns newest version for `<` operator" do
+     
+      result = VersionService.versions_by_comperator(versions, "<", "1.3", false)
+      result.should_not be_nil
+      result[:version].should eq("1.2")
+
+      result = VersionService.versions_by_comperator(versions, "<", "1.5", false)
+      result.should_not be_nil
+      result[:version].should eq("1.4")
+
+      result = VersionService.versions_by_comperator(versions, "<", "2.0", false)
+      result.should_not be_nil
+      result[:version].should eq("1.7")
+    end
+
+    it "returns correct versions range  for `<` operator" do     
+      results = VersionService.versions_by_comperator(versions, "<", "1.3", true)
+      results.should_not be_nil
+      results.size.should eq(2)
+
+      results[0][:version].should eq("1.1")
+      results[1][:version].should eq("1.2")
+   end
+
+    it "returns newest version for `<=` operator" do
+      result = VersionService.versions_by_comperator(versions, "<=", "1.4", false)
+      result.should_not be_nil
+      result[:version].should eq("1.4")
+    end
+
+    it "returns correct versions range for `<=` operator" do
+      results = VersionService.versions_by_comperator(versions, "<=", "1.4", true)
+      results.should_not be_nil
+      results.size.should eq(4)
+    end
+    
+    it "returns newest version for `>` operator" do
+      result = VersionService.versions_by_comperator(versions, ">", "1.4", false)
+      result.should_not be_nil
+      result[:version].should eq("1.7")
+    end
+
+    it "returns correct versions range for `>` operator" do
+      results = VersionService.versions_by_comperator(versions, ">", "1.4", true)
+      results.should_not be_nil
+      results.size.should eq(1)
+    end
+
+    it "returns newest version for `>=` operator" do
+      result = VersionService.versions_by_comperator(versions, ">=", "1.4", false)
+      result.should_not be_nil
+      result[:version].should eq("1.7")
+    end
+
+    it "returns correct versions range for `>=` operator" do
+      results = VersionService.versions_by_comperator(versions, ">=", "1.4", true)
+      results.should_not be_nil
+      results.size.should eq(2)
+    end
+  end
+
+  describe "newest_but_not" do
+    let(:versions){[]}
+    before :each do
+      versions << Version.new(version: "1.1")
+      versions << Version.new(version: "1.2")
+      versions << Version.new(version: "1.3")
+    end
+
+    it "returns the newest value except the one specific value" do
+      result = VersionService.newest_but_not(versions, "1.3")
+      result.should_not be_nil
+      result[:version].should eq("1.2")
+    end
+  end
+
+  describe "equal" do
+    let(:versions){[]}
+    before :each do
+      versions << Version.new(version: "1.1")
+      versions << Version.new(version: "1.2")
+      versions << Version.new(version: "1.3")
+    end
+
+    it "returns correct version for the value" do
+      result = VersionService.equal(versions, "1.1")
+      result[:version].should eq("1.1")
+
+      result = VersionService.equal(versions, "1.2")
+      result[:version].should eq("1.2")
+
+      result = VersionService.equal(versions, "1.3")
+      result[:version].should eq("1.3")
+    end
+  end
+
+  describe "not_equal" do
+    let(:versions){[]}
+    before :each do
+      versions << Version.new(version: "1.1")
+      versions << Version.new(version: "1.2")
+      versions << Version.new(version: "1.3")
+    end
+
+    it "returns correct version for the value" do
+      result = VersionService.not_equal(versions, "1.1")
+      result[:version].should eq("1.3")
+
+      result = VersionService.not_equal(versions, "1.2")
+      result[:version].should eq("1.3")
+
+      result = VersionService.not_equal(versions, "1.3")
+      result[:version].should eq("1.2")
+    end
+  end
 
   describe "get_greater_than" do
 
