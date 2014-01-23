@@ -4,7 +4,20 @@ class CommonParser
     raise NotImplementedError, 'Implement me!'
   end
 
-  def parse_requested_version(version, dependency, product)
+  # It is important that this method is NOT writing into the database!
+  #
+  # Params:
+  #   version           = the unparsed version string from the project file, e.g. '>= 2.0.1'
+  #   projectdependency = This object can be empty/new. The results of the method are stored in this object
+  #   product           = The corresponding product to the dependency. It can be nil if the dependency is unknown.
+  #
+  # Result: The method is parsing the version string and setting this values in projectdependency
+  #   - projectdependency.version_label
+  #   - projectdependency.version_requested
+  #   - projectdependency.stability
+  #   - projectdependency.comperator
+  #
+  def parse_requested_version(version, projectdependency, product)
     raise NotImplementedError, 'Implement me!'
   end
 
