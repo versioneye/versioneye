@@ -81,11 +81,11 @@ class BowerCrawler
           fullname: app[:url],
           url: app[:url]
         })
-        task.update_attributes({task_failed: true, url_exists: false})
+        task.update_attributes!({task_failed: true, url_exists: false})
         next
       else
         task = to_existence_task(repo_info)
-        task.update_attributes({
+        task.update_attributes!({
           task_failed: false,
           re_crawl: true,
           url_exists: true
@@ -131,10 +131,11 @@ class BowerCrawler
       end
 
       if repo_response.code == 200 and not repo_info.nil?
-        result = add_bower_package(task, repo_info,  token)
-        if result == true
+        product = add_bower_package(task, repo_info,  token)
+        if product
           task.update_attributes({crawled_at: DateTime.now})
-          to_version_task(task) # add new version task when everything went oK
+          to_version_task(task, product[:prod_key]) # add new version task when everything went oK
+          result = true
         end
       else
         logger.error "crawl_projects | cant read information for #{task[:repo_fullname]}."
@@ -155,10 +156,10 @@ class BowerCrawler
         result = true
       else
         logger.info "#{task[:repo_fullname]} has #{tags.to_a.count} tags."
-        prod_key = task[:repo_name].to_s.downcase
+        prod_key = task[:prod_key]
         product = Product.where(:prod_type => Project::A_TYPE_BOWER, :prod_key => prod_key).shift
         if product.nil?
-          logger.error "#{task_name} | Cant find product for #{Project::A_TYPE_BOWER}/#{task[:repo_name]}"
+          logger.error "#{task_name} | Cant find product for #{Project::A_TYPE_BOWER}/#{prod_key}"
           next
         end
 
@@ -319,11 +320,21 @@ class BowerCrawler
   def self.add_bower_package(task, repo_info, token)
     logger.info "#-- reading #{task[:repo_fullname]} from url: #{task[:url]} branch: #{repo_info[:default_branch]}"
     pkg_file = self.read_project_file_from_github(task, token, repo_info[:default_branch])
-    product  = nil
-    product  = create_bower_package(pkg_file, repo_info, token) if pkg_file
-    result   = false
-    result   = true if product and product.save
-    result
+    if pkg_file.nil?
+      logger.error "add_bower_package | Didnt get any project file for #{task[:repo_fullname]}"
+      return nil
+    end
+    product  = create_bower_package(pkg_file, repo_info, token)
+    if product.nil?
+      logger.error "add_bower_package | cant create_or_find product for #{task[:repo_fullname]}"
+      return nil
+    end
+
+    unless product.save!
+      logger.error "add_bower_package | cant save product for #{repo_info}: #{product.errors.full_messages.to_sentence}"
+    end
+
+    product
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join('\n')
@@ -510,10 +521,10 @@ class BowerCrawler
     read_task
   end
 
-  def self.to_version_task(task)
+  def self.to_version_task(task, prod_key)
     version_task = CrawlerTask.find_or_create_by(
       task: A_TASK_READ_VERSIONS,
-      repo_name: task[:repo_name],
+      prod_key: prod_key,
       repo_fullname: task[:repo_fullname]
     )
 
@@ -544,18 +555,20 @@ class BowerCrawler
        prod_key: pkg_info[:name].to_s.downcase,
        prod_type: Project::A_TYPE_BOWER
     )
+
     language = Product::A_LANGUAGE_JAVASCRIPT
     language = repo_info[:language] unless repo_info[:language].nil?
-    prod.update_attributes({
+    prod.update_attributes!(
       language:      language,
       name:          pkg_info[:name].to_s,
       name_downcase: pkg_info[:name].to_s.downcase,
       version:       pkg_info[:version],
       private_repo:  pkg_info[:private_repo],
       description:   pkg_info[:description].to_s
-    })
+    )
+    
     prod.add_version pkg_info[:version]
-    prod.save
+    prod.save!
     prod
   rescue => e
     logger.error e.backtrace.join('\n')
@@ -581,7 +594,7 @@ class BowerCrawler
       name:     license_info[:name]
     )
 
-    new_license.update_attributes({
+    new_license.update_attributes!({
       name: license_info[:name],
       url:  license_info[:url]
     })
@@ -613,7 +626,7 @@ class BowerCrawler
       prod_version: prod[:version],
       dep_prod_key: dep_name
     )
-    dependency.update_attributes({
+    dependency.update_attributes!({
       name: dep_name,
       version: dep_version, # TODO: It can be that the version is in the bower.json is a git tag / path
       scope: scope
