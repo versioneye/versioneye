@@ -34,7 +34,6 @@ class GemfileParser < CommonParser
   end
 
   # It is important that this method is not writing into the database!
-  #
   def parse_requested_version(version_number, dependency, product)
     if version_number.nil? || version_number.empty?
       self.update_requested_with_current(dependency, product)
