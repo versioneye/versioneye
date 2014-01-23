@@ -25,7 +25,7 @@ class BowerCrawler
     Github.rate_limit(token)
   end
 
-  #just for debugging to clear old noise
+  # Just for debugging to clear old noise
   def self.clean_all
     # Remove all data added by crawler - only for devs.
     Product.where(prod_type: Project::A_TYPE_BOWER).delete_all
