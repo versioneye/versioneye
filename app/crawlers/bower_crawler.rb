@@ -166,7 +166,7 @@ class BowerCrawler
         end
 
         tags.each do |tag|
-          parse_repo_tag( product, tag, token )
+          parse_repo_tag( task[:repo_fullname], product, tag, token )
           sleep 1/100.0 # Just force little pause asking commit info -> github may block
         end
 
@@ -398,9 +398,9 @@ class BowerCrawler
     nil
   end
 
-  def self.parse_repo_tag(product, tag, token)
+  def self.parse_repo_tag(repo_fullname, product, tag, token)
     if product.nil? or tag.nil?
-      logger.error "method: parse_repo_tag(product, tag, token) - Product or tag cant be nil"
+      logger.error "method: parse_repo_tag(repo_fullname, product, tag, token) - Product or tag cant be nil"
       return
     end
 
@@ -424,7 +424,7 @@ class BowerCrawler
 
     logger.info " -- Got package version `#{product.prod_key}` : #{tag_name} "
 
-    url = "https://www.github.com/#{product[:prod_key]}"
+    url = "https://www.github.com/#{repo_fullname}"
     Versionlink.create_versionlink product.language, product.prod_key, tag_name, url, "Github"
     create_version_archive(product, tag_name, tag[:zipball_url]) if tag.has_key?(:zipball_url)
   end
