@@ -88,6 +88,9 @@ class Dependency
     if group_id && artifact_id
       return Product.find_by_group_and_artifact( group_id, artifact_id )
     end
+    if prod_type && prod_type.eql?(Project::A_TYPE_BOWER)
+      return Product.where(:prod_type => Project::A_TYPE_BOWER, :name => dep_prod_key).shift
+    end
     Product.fetch_product( language, dep_prod_key )
   end
 
