@@ -277,6 +277,8 @@ class BowerParser < CommonParser
     dependency          = Projectdependency.new
     dependency.name     = name
     dependency.language = Product::A_LANGUAGE_JAVASCRIPT
+    dependency.prod_type = Project::A_TYPE_BOWER
+
     if product
       dependency.prod_key        = product.prod_key
       dependency.version_current = product.version
