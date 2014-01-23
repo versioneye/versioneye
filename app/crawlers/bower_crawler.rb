@@ -360,6 +360,10 @@ class BowerCrawler
     pkg_info[:licenses].to_a.each { |lic| create_or_update_license( prod, lic ) }
 
     prod
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join('\n')
+    nil
   end
 
   def self.read_project_file_from_github(task, token, branch = 'master')
