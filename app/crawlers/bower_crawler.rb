@@ -514,7 +514,7 @@ class BowerCrawler
     version_task = CrawlerTask.find_or_create_by(
       task: A_TASK_READ_VERSIONS,
       repo_name: task[:repo_name],
-      repo_fullname: task[:repo:repo_name_fullname]
+      repo_fullname: task[:repo_fullname]
     )
 
     version_task.update_attributes({
