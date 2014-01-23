@@ -150,7 +150,7 @@ class BowerCrawler
     result = false
     crawler_task_executor(task_name, token) do |task, token|
       tags = Github.repo_tags(task[:repo_fullname], token)
-      if tags.nil?
+      if tags.nil? || tags.empty?
         logger.warn "`#{task[:repo_fullname]}` has no versions - going to skip."
         result = false
       else
@@ -342,6 +342,8 @@ class BowerCrawler
 
     pkg_info[:licenses].to_a.each { |lic| create_or_update_license( prod, lic ) }
 
+    # TODO developers ??
+
     prod
   end
 
@@ -411,9 +413,6 @@ class BowerCrawler
     url = "https://www.github.com/#{product[:prod_key]}"
     Versionlink.create_versionlink product.language, product.prod_key, tag_name, url, "Github"
     create_version_archive(product, tag_name, tag[:zipball_url]) if tag.has_key?(:zipball_url)
-    # TODO dependencies ??
-    # TODO licenses ??
-    # TODO developers ??
   end
 
   def self.add_new_version( product, tag_name, tag, token )
