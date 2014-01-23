@@ -226,9 +226,9 @@ GEM
     postmark (1.1.0)
       json
       rake
-    postmark-rails (0.5.2)
+    postmark-rails (0.6.0)
       actionmailer (>= 3.0.0)
-      postmark (~> 1.0)
+      postmark (~> 1.1.0)
     psych (2.0.2)
     rack (1.4.5)
     rack-accept (0.4.5)
@@ -345,7 +345,7 @@ GEM
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     unicode-display_width (0.1.1)
-    unicorn (4.7.0)
+    unicorn (4.8.0)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
@@ -408,7 +408,7 @@ DEPENDENCIES
   oauth (= 0.4.7)
   octokit (~> 2.7.0)
   persistent_httparty (= 0.1.1)
-  postmark-rails (= 0.5.2)
+  postmark-rails (= 0.6.0)
   psych (~> 2.0.0)
   rails (= 3.2.16)
   rspec (= 2.14.1)
@@ -426,7 +426,7 @@ DEPENDENCIES
   turn
   twitter_oauth (= 0.4.94)
   uglifier (~> 2.4.0)
-  unicorn (= 4.7.0)
+  unicorn (= 4.8.0)
   vcr (~> 2.8.0)
   webmock (~> 1.17.0)
   whenever (= 0.9.0)
