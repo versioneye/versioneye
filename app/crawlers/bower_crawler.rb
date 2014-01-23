@@ -84,6 +84,7 @@ class BowerCrawler
         task.update_attributes!({task_failed: true, url_exists: false})
         next
       else
+        repo_info[:registry_name] = app[:name]
         task = to_existence_task(repo_info)
         task.update_attributes!({
           task_failed: false,
@@ -151,15 +152,15 @@ class BowerCrawler
     result = false
     crawler_task_executor(task_name, token) do |task, token|
       tags = Github.repo_tags(task[:repo_fullname], token)
-      if tags.nil? || tags.empty?
+      if tags.nil?
         logger.warn "`#{task[:repo_fullname]}` has no versions - going to skip."
         result = true
       else
         logger.info "#{task[:repo_fullname]} has #{tags.to_a.count} tags."
-        prod_key = task[:prod_key]
+        prod_key = make_prod_key(task)
         product = Product.where(:prod_type => Project::A_TYPE_BOWER, :prod_key => prod_key).shift
         if product.nil?
-          logger.error "#{task_name} | Cant find product for #{Project::A_TYPE_BOWER}/#{prod_key}"
+          logger.error "#{task_name} | Cant find product for #{task[:repo_fullname]} with prod_key #{prod_key}"
           next
         end
 
@@ -276,6 +277,7 @@ class BowerCrawler
     if response_code == 200
       read_task = to_read_task(task, task[:url])
       read_task.update_attributes({
+        registry_name: task[:registry_name],
         weight: 10,
         task_failed: false,
         url_exists: true,
@@ -324,7 +326,10 @@ class BowerCrawler
       logger.error "add_bower_package | Didnt get any project file for #{task[:repo_fullname]}"
       return nil
     end
-    product  = create_bower_package(pkg_file, repo_info, token)
+    pkg_file[:name] = task[:registry_name] if task.has_attribute?(:registry_name) #if task has prod_key then use it - dont trust user's unvalidated bower.json
+
+    prod_key = make_prod_key(task)
+    product  = create_bower_package(prod_key, pkg_file, repo_info)
     if product.nil?
       logger.error "add_bower_package | cant create_or_find product for #{task[:repo_fullname]}"
       return nil
@@ -342,8 +347,8 @@ class BowerCrawler
   end
 
   # Saves product and save sub/related docs
-  def self.create_bower_package(pkg_info, repo_info, token)
-    prod = create_or_update_product( pkg_info, repo_info )
+  def self.create_bower_package(prod_key, pkg_info, repo_info)
+    prod = create_or_update_product(prod_key, pkg_info, repo_info[:language])
 
     Versionlink.create_versionlink prod[:language], prod[:prod_key], prod[:version], pkg_info[:url], "SCM"
     Versionlink.create_versionlink prod[:language], prod[:prod_key], prod[:version], pkg_info[:homepage], "Homepage"
@@ -352,8 +357,6 @@ class BowerCrawler
     to_dependencies(prod, pkg_info, :dev_dependencies, Dependency::A_SCOPE_DEVELOPMENT)
 
     pkg_info[:licenses].to_a.each { |lic| create_or_update_license( prod, lic ) }
-
-    # TODO developers ??
 
     prod
   end
@@ -418,7 +421,7 @@ class BowerCrawler
     CrawlerUtils.create_newest product, tag_name, logger
     CrawlerUtils.create_notifications product, tag_name, logger
 
-    logger.info " -- Got package version #{product.prod_key} : #{tag_name} "
+    logger.info " -- Got package version `#{product.prod_key}` : #{tag_name} "
 
     url = "https://www.github.com/#{product[:prod_key]}"
     Versionlink.create_versionlink product.language, product.prod_key, tag_name, url, "Github"
@@ -498,6 +501,7 @@ class BowerCrawler
     task.update_attributes({
       repo_owner: repo_info[:owner],
       repo_name: repo_info[:repo],
+      registry_name: repo_info[:registry_name],
       url: repo_info[:url],
       runs: task[:runs] + 1,
       re_crawl: true
@@ -516,6 +520,7 @@ class BowerCrawler
       runs: read_task[:runs] + 1,
       repo_name: task[:repo_name],
       repo_owner: task[:repo_owner],
+      registry_name: task[:registry_name],
       weight: 1 + task[:weight],
       url: url
     })
@@ -534,6 +539,7 @@ class BowerCrawler
       runs: version_task[:runs] + 1,
       repo_name: task[:repo_name],
       repo_owner: task[:repo_owner],
+      registry_name: task[:registry_name],
       url: task[:url],
       url_exists: true,
       weight: 1,
@@ -552,14 +558,17 @@ class BowerCrawler
     task
   end
 
-  def self.create_or_update_product( pkg_info, repo_info )
+  def self.make_prod_key(task_info)
+    "#{task_info[:repo_owner]}/#{task_info[:registry_name]}".strip.downcase
+  end
+
+  def self.create_or_update_product(prod_key, pkg_info, language = nil)
     prod = Product.find_or_create_by(
-       prod_key: pkg_info[:name].to_s.downcase,
+       prod_key: prod_key,
        prod_type: Project::A_TYPE_BOWER
     )
 
-    language = Product::A_LANGUAGE_JAVASCRIPT
-    language = repo_info[:language] unless repo_info[:language].nil?
+    language = Product::A_LANGUAGE_JAVASCRIPT if language.nil?
     prod.update_attributes!(
       language:      language,
       name:          pkg_info[:name].to_s,
