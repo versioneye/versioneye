@@ -568,11 +568,12 @@ class BowerCrawler
       private_repo:  pkg_info[:private_repo],
       description:   pkg_info[:description].to_s
     )
-    
+
     prod.add_version pkg_info[:version]
     prod.save!
     prod
   rescue => e
+    logger.error e.message
     logger.error e.backtrace.join('\n')
     nil
   end
