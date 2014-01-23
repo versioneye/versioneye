@@ -27,13 +27,14 @@ class BowerCrawler
 
   #just for debugging to clear old noise
   def self.clean_all
-    #remove all data added by crawler - only for devs.
+    # Remove all data added by crawler - only for devs.
     Product.where(prod_type: Project::A_TYPE_BOWER).delete_all
     Newest.where(prod_type: Project::A_TYPE_BOWER).delete_all
-    License.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
     Dependency.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
-    Versionlink.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
-    Versionarchive.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
+
+    # License.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
+    # Versionlink.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
+    # Versionarchive.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
     CrawlerTask.delete_all
   end
 
