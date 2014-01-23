@@ -152,19 +152,19 @@ class BowerCrawler
       tags = Github.repo_tags(task[:repo_fullname], token)
       if tags.nil? || tags.empty?
         logger.warn "`#{task[:repo_fullname]}` has no versions - going to skip."
-        result = false
+        result = true
       else
         logger.info "#{task[:repo_fullname]} has #{tags.to_a.count} tags."
-        prod_key = task[:repo_fullname].to_s.downcase
+        prod_key = task[:repo_name].to_s.downcase
         product = Product.where(:prod_type => Project::A_TYPE_BOWER, :prod_key => prod_key).shift
         if product.nil?
-          logger.error "#{task_name} | Cant find product for #{Project::A_TYPE_BOWER}/#{task[:repo_fullname]}"
+          logger.error "#{task_name} | Cant find product for #{Project::A_TYPE_BOWER}/#{task[:repo_name]}"
           next
         end
 
         tags.each do |tag|
           parse_repo_tag( product, tag, token )
-          sleep 1/100 # Just force little pause asking commit info -> github may block
+          sleep 1/100.0 # Just force little pause asking commit info -> github may block
         end
 
         #-- if product didnt get versionnumber from project-file
@@ -402,13 +402,12 @@ class BowerCrawler
     end
 
     check_request_limit(token)
-
     add_new_version(product, tag_name, tag, token)
 
     CrawlerUtils.create_newest product, tag_name, logger
     CrawlerUtils.create_notifications product, tag_name, logger
 
-    logger.info " -- New package #{product.prod_key} : #{tag_name} "
+    logger.info " -- Got package version #{product.prod_key} : #{tag_name} "
 
     url = "https://www.github.com/#{product[:prod_key]}"
     Versionlink.create_versionlink product.language, product.prod_key, tag_name, url, "Github"
@@ -516,6 +515,7 @@ class BowerCrawler
   def self.to_version_task(task)
     version_task = CrawlerTask.find_or_create_by(
       task: A_TASK_READ_VERSIONS,
+      repo_name: task[:repo_name],
       repo_fullname: task[:repo_fullname]
     )
 
