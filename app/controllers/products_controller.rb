@@ -39,7 +39,6 @@ class ProductsController < ApplicationController
     @product = fetch_product lang, prod_key
 
     if @product.nil? || @product.versions.nil? || @product.versions.empty?
-      flash[:error] = 'The requested package is not available.'
       return
     end
 

@@ -165,8 +165,6 @@ class BowerCrawler
           next
         end
 
-        product[:versions] = []
-        product.save
         tags.each do |tag|
           parse_repo_tag( task[:repo_fullname], product, tag, token )
           sleep 1/100.0 # Just force little pause asking commit info -> github may block
@@ -188,7 +186,7 @@ class BowerCrawler
   def self.update_product_dependencies(product, version_label)
     all_dependencies = product.all_dependencies
     deps_without_version = all_dependencies.keep_if {|dep| dep[:prod_key].nil? }
-    deps_without_version.each do |dep| 
+    deps_without_version.each do |dep|
         dep[:prod_version] = product[:version]
         dep.save
     end
@@ -419,6 +417,11 @@ class BowerCrawler
     tag_name = CrawlerUtils.remove_version_prefix( tag[:name].to_s )
     if tag_name.nil?
       logger.error "Skipped tag `#{tag_name}` "
+      return
+    end
+
+    if product.version_by_number( tag_name )
+      logger.info "#{product.prod_key} : #{tag_name} exists already"
       return
     end
 
