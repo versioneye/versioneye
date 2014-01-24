@@ -357,7 +357,7 @@ class BowerCrawler
   def self.create_bower_package(prod_key, pkg_info, repo_info)
     prod = create_or_update_product(prod_key, pkg_info, repo_info[:language])
 
-    Versionlink.create_project_link prod[:language], prod[:prod_key], repo_info[:repo_fullname], "SCM"
+    Versionlink.create_project_link prod[:language], prod[:prod_key], "https://github.com/#{repo_info[:repo_fullname]}", "SCM"
     Versionlink.create_project_link prod[:language], prod[:prod_key], pkg_info[:homepage], "Homepage"
 
     to_dependencies(prod, pkg_info, :dependencies,     Dependency::A_SCOPE_REQUIRE)
