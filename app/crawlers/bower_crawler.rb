@@ -588,7 +588,6 @@ class BowerCrawler
       description:   pkg_info[:description].to_s
     )
 
-    prod.add_version pkg_info[:version]
     prod.save!
     prod
   rescue => e
