@@ -130,6 +130,7 @@ class BowerCrawler
         logger.error "Did not get any repo info for #{task[:repo_fullname]} - got: #{repo_response.code}"
       else
         repo_info = JSON.parse(repo_response.body, symbolize_names: true)
+        repo_info[:repo_fullname] = task[:repo_fullname]
       end
 
       if repo_response.code == 200 and not repo_info.nil?
@@ -356,7 +357,7 @@ class BowerCrawler
   def self.create_bower_package(prod_key, pkg_info, repo_info)
     prod = create_or_update_product(prod_key, pkg_info, repo_info[:language])
 
-    Versionlink.create_project_link prod[:language], prod[:prod_key], pkg_info[:url], "SCM"
+    Versionlink.create_project_link prod[:language], prod[:prod_key], repo_info[:repo_fullname], "SCM"
     Versionlink.create_project_link prod[:language], prod[:prod_key], pkg_info[:homepage], "Homepage"
 
     to_dependencies(prod, pkg_info, :dependencies,     Dependency::A_SCOPE_REQUIRE)
