@@ -13,7 +13,7 @@ describe BowerCrawler, :vcr do
       registry_name: "backbone"
     }
   }
- 
+
   before :all do
     #FakeWeb.allow_net_connect = true
 
@@ -30,7 +30,7 @@ describe BowerCrawler, :vcr do
 
   describe "crawl_projects" do
     it "creates correct product for backbone" do
-      product_task = BowerCrawler.to_read_task(task, url) 
+      product_task = BowerCrawler.to_read_task(task, url)
       BowerCrawler.to_poison_pill(product_task[:task])
       BowerCrawler.crawl_projects(token)
 
@@ -42,7 +42,7 @@ describe BowerCrawler, :vcr do
       prod[:prod_key].should eq("versioneye/backbone")
 
       prod.all_dependencies.count.should eq(1)
-      prod.dependencies.count.should eq(1) 
+      prod.dependencies.count.should eq(1)
       dep = prod.all_dependencies.first
       dep[:name].should eq("underscore")
       dep[:version].should eq(">=1.5.0")
@@ -53,7 +53,7 @@ describe BowerCrawler, :vcr do
 
   describe "crawl_versions" do
     it "creates correct versions from tags" do
-      product_task = BowerCrawler.to_read_task(task, url) 
+      product_task = BowerCrawler.to_read_task(task, url)
       BowerCrawler.to_poison_pill(product_task[:task])
       BowerCrawler.crawl_projects(token)
 
