@@ -57,13 +57,14 @@ describe "registration" do
       response.should redirect_to("/signin")
     end
 
-    it "activates successfully" do
+    it "activates successfully and login successfully" do
+      user.verification = "asgasfg"
+      user.save
       get "/users/activate/email/#{user.verification}", nil, "HTTPS" => "on"
       assert_response 200
-      user.verification.should be_nil
-    end
+      user_db = User.find_by_username( user.username )
+      user_db.verification.should be_nil
 
-    it "login successfully" do
       get "/signin", nil, "HTTPS" => "on"
       assert_response :success
 
