@@ -327,22 +327,19 @@ class BowerCrawler
       logger.error "add_bower_package | Didnt get any project file for #{task[:repo_fullname]}"
       return nil
     end
-    pkg_file[:name] = task[:registry_name] if task.has_attribute?(:registry_name) #if task has prod_key then use it - dont trust user's unvalidated bower.json
 
-    prod_key = make_prod_key(task)
-    product  = create_bower_package(prod_key, pkg_file, repo_info)
+    pkg_file[:name] = task[:registry_name] if task.has_attribute?(:registry_name) # if task has prod_key then use it - dont trust user's unvalidated bower.json
+    prod_key        = make_prod_key(task)
+    product         = create_bower_package(prod_key, pkg_file, repo_info)
     if product.nil?
       logger.error "add_bower_package | cant create_or_find product for #{task[:repo_fullname]}"
       return nil
     end
 
-    unless product.save!
-      logger.error "add_bower_package | cant save product for #{repo_info}: #{product.errors.full_messages.to_sentence}"
-    end
-
+    product.save!
     product
   rescue => e
-    logger.error e.message
+    logger.error "add_bower_package | cant save product for #{repo_info}: #{product.errors.full_messages.to_sentence} - e.message"
     logger.error e.backtrace.join('\n')
     false
   end
@@ -351,8 +348,8 @@ class BowerCrawler
   def self.create_bower_package(prod_key, pkg_info, repo_info)
     prod = create_or_update_product(prod_key, pkg_info, repo_info[:language])
 
-    Versionlink.create_versionlink prod[:language], prod[:prod_key], prod[:version], pkg_info[:url], "SCM"
-    Versionlink.create_versionlink prod[:language], prod[:prod_key], prod[:version], pkg_info[:homepage], "Homepage"
+    Versionlink.create_project_link prod[:language], prod[:prod_key], pkg_info[:url], "SCM"
+    Versionlink.create_project_link prod[:language], prod[:prod_key], pkg_info[:homepage], "Homepage"
 
     to_dependencies(prod, pkg_info, :dependencies,     Dependency::A_SCOPE_COMPILE)
     to_dependencies(prod, pkg_info, :dev_dependencies, Dependency::A_SCOPE_DEVELOPMENT)
@@ -428,8 +425,6 @@ class BowerCrawler
 
     logger.info " -- Got package version `#{product.prod_key}` : #{tag_name} "
 
-    url = "https://www.github.com/#{repo_fullname}"
-    Versionlink.create_versionlink product.language, product.prod_key, tag_name, url, "Github"
     create_version_archive(product, tag_name, tag[:zipball_url]) if tag.has_key?(:zipball_url)
   end
 
