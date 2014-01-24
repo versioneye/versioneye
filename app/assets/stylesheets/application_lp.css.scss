@@ -6,25 +6,6 @@
  *
 */
 
-@font-face {
-  font-family: 'Droid Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Droid Sans'), local('DroidSans'),
-    url('/fonts/DroidSans.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/DroidSans.woff') format('woff'),
-    url('/fonts/DroidSans.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Droid Serif';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Droid Serif'), local('DroidSerif'),
-    url('/fonts/DroidSerif.woff') format('woff'),
-    url('/fonts/DroidSerif.ttf') format('truetype'),
-    url('/fonts/DroidSerif.svg') format('svg');
-}
 
 $gradient_start: #7F0200;
 $gradient_end: #610003;
