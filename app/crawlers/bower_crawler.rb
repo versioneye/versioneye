@@ -453,7 +453,7 @@ class BowerCrawler
     if commit_info
       released_string = commit_info[:commit][:committer][:date].to_s
     else
-      logger.error "No commit info for tag `#{tag_name}` url: #{tag[:commit][:url]}"
+      logger.error "No commit info for tag `#{tag}`"
     end
     released_string
   end
