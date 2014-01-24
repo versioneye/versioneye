@@ -82,7 +82,7 @@ class NpmCrawler
     update_product product, prod_json
 
     npm_page = "https://npmjs.org/package/#{prod_key}"
-    Versionlink.create_project_link( ( Product::A_LANGUAGE_NODEJS, product.prod_key, npm_page, 'NPM Page' ) )
+    Versionlink.create_project_link( Product::A_LANGUAGE_NODEJS, product.prod_key, npm_page, 'NPM Page' )
 
     versions.each do |version|
       version_number = CrawlerUtils.remove_version_prefix String.new(version[0])
