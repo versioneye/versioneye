@@ -41,6 +41,14 @@ class Versionlink
     Versionlink.where( language: language, prod_key: prod_key, link: link ).shift
   end
 
+  def self.create_project_link( language, prod_key, url, name )
+    link = Versionlink.where( language: language, prod_key: prod_key, link: url, :version_id => nil ).shift
+    return link if link
+    versionlink = Versionlink.new({:language => language, :prod_key => prod_key, :link => url, :name => name})
+    versionlink.save
+    versionlink
+  end
+
   def self.find_version_link(language, prod_key, version_id, link)
     Versionlink.where( language: language, prod_key: prod_key, version_id: version_id, link: link )
   end
