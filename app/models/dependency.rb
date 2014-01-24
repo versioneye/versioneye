@@ -135,7 +135,9 @@ class Dependency
   end
 
   def version_parsed
+
     return "unknown" if version.nil? || version.empty?
+
     abs_version = String.new(version)
     if prod_type.eql?( Project::A_TYPE_RUBYGEMS )
       abs_version = String.new( gem_version_parsed )
@@ -145,8 +147,11 @@ class Dependency
       abs_version = String.new( npm_version_parsed )
     elsif prod_type.eql?( Project::A_TYPE_COCOAPODS )
       abs_version = String.new( cocoapods_version_parsed )
+    elsif prod_type == Project::A_TYPE_BOWER
+      abs_version = bower_version_parsed.to_s
     end
     # TODO cases for java
+  
     abs_version
   end
 
@@ -189,8 +194,21 @@ class Dependency
     dependency.version_requested
   end
 
+  def bower_version_parsed
+    product = Product.fetch_product(language, dep_prod_key)
+    parser = BowerParser.new
+    dependency = Dependency.new
+    dependency = parser.parse_requested_version(version.to_s, dependency, product)
+    dependency[:version_requested]
+  end
+
   def dep_prod_key_for_url
-    Product.encode_prod_key dep_prod_key
+    prod_key = dep_prod_key
+    if prod_type == Project::A_TYPE_BOWER
+      doc =  Product.where(prod_type: Project::A_TYPE_BOWER, name: dep_prod_key).shift
+      prod_key =  doc[:prod_key]
+    end
+    Product.encode_prod_key prod_key
   end
 
   def version_for_url
