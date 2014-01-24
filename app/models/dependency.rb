@@ -32,13 +32,13 @@ class Dependency
   field :group_id    , type: String   # Maven specific
   field :artifact_id , type: String   # Maven specific
   field :scope       , type: String
-  field :known       , type: Boolean  # known or unknown dependency
+
+  # known or unknown dependency.
+  # If there is no product for dep_prod_key in our db then it's unknown
+  field :known       , type: Boolean
 
   # The current version of the product, which this dep is referencing
   field :current_version, type: String
-
-  index({language: -1, prod_key: -1}, {background: true})
-  index({language: -1, dep_prod_key: -1}, {background: true})
 
 
   def self.remove_dependencies language, prod_key, version_number
