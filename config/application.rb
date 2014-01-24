@@ -9,8 +9,6 @@ require "rails/test_unit/railtie"
 require "sprockets/railtie"
 require 'dalli'
 require 'tire'
-#require 'will_paginate/mongoid'
-# require 'yajl/json_gem'
 
 
 if defined?(Bundler)
@@ -74,6 +72,7 @@ module Versioneye
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += %W(#{config.root}/constraints)
     config.autoload_paths += %W(#{config.root}/crawlers)
     config.autoload_paths += %W(#{config.root}/app/api/v1)
     config.autoload_paths += Dir["#{config.root}/app/api/**/"]
