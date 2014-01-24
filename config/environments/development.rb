@@ -10,6 +10,9 @@ Versioneye::Application.configure do
     :username => Settings.memcache_username, :password => Settings.memcache_password,
     :namespace => 'veye', :expires_in => 1.day, :compress => true }
 
+  config.serve_static_assets = true
+  config.action_dispatch.x_sendfile_header = nil
+
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
 
