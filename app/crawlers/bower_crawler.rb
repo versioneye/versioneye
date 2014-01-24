@@ -126,10 +126,10 @@ class BowerCrawler
       end
 
       repo_info = nil
-      unless repo_response.body.to_s.empty?
-        repo_info = JSON.parse(repo_response.body, symbolize_names: true)
-      else
+      if repo_response.body.to_s.empty?
         logger.error "Did not get any repo info for #{task[:repo_fullname]} - got: #{repo_response.code}"
+      else
+        repo_info = JSON.parse(repo_response.body, symbolize_names: true)
       end
 
       if repo_response.code == 200 and not repo_info.nil?
