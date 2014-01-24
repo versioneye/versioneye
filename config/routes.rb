@@ -16,7 +16,7 @@ Versioneye::Application.routes.draw do
     post '/bitbucket/create',   :to => 'bitbucket#create'
   end
 
-  get   '/cloudcontrol/resources', :to => 'cloudcontrol#resources'
+  # get   '/cloudcontrol/resources', :to => 'cloudcontrol#resources'
 
   # DEBUG
   # -----
