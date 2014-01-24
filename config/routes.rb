@@ -253,7 +253,7 @@ Versioneye::Application.routes.draw do
   get   '/package_visual/:key/version/:version', :to => 'page#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/package_visual/:key/:version'        , :to => 'page#show_visual_old', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
-  get   '/:lang',                             :to => 'language#show'
+  get   '/:lang',                             :to => 'language#show',       :constraints => { :lang => /[java|php|ruby|python|nodejs|javascript|clojure|r|objective\-c]+/i }
   get   '/:lang/:key/references',             :to => 'products#references', :constraints => { :key => /[^\/]+/ }, :as => 'product_references'
   get   '/:lang/:key/badge',                  :to => 'products#badge',      :constraints => { :key => /[^\/]+/ }, :as => 'product_badge'
   get   '/:lang/:key/:version/badge',         :to => 'products#badge',      :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'product_version_badge'
@@ -272,6 +272,6 @@ Versioneye::Application.routes.draw do
   post  '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
-  # get   '*path',        :to => 'page#routing_error'
+  get   '*path',        :to => 'page#routing_error'
 
 end
