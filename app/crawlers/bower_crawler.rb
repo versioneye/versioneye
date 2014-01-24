@@ -574,14 +574,13 @@ class BowerCrawler
   end
 
   def self.create_or_update_product(prod_key, pkg_info, language = nil)
-    prod = Product.find_or_create_by(
-       prod_key: prod_key,
-       prod_type: Project::A_TYPE_BOWER
-    )
-
     language = Product::A_LANGUAGE_JAVASCRIPT if language.nil?
+
+    prod = Product.find_or_create_by( prod_key: prod_key, language: language )
+
     prod.update_attributes!(
       language:      language,
+      prod_type:     Project::A_TYPE_BOWER,
       name:          pkg_info[:name].to_s,
       name_downcase: pkg_info[:name].to_s.downcase,
       version:       pkg_info[:version],
