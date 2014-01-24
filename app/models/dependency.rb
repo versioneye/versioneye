@@ -9,7 +9,7 @@ class Dependency
   include Mongoid::Timestamps
 
   A_SCOPE_RUNTIME     = 'runtime'     # RubyGems
-  A_SCOPE_REQUIRE     = 'require'     # PHP Composer
+  A_SCOPE_REQUIRE     = 'require'     # PHP Composer, Bower
   A_SCOPE_PROVIDED    = 'provided'    # Java Maven
   A_SCOPE_TEST        = 'test'        # Java Maven
   A_SCOPE_COMPILE     = 'compile'     # NPM, Maven

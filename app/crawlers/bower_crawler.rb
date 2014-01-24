@@ -165,19 +165,32 @@ class BowerCrawler
           next
         end
 
+        product[:versions] = []
+        product.save
         tags.each do |tag|
           parse_repo_tag( task[:repo_fullname], product, tag, token )
           sleep 1/100.0 # Just force little pause asking commit info -> github may block
         end
 
-        #-- if product didnt get versionnumber from project-file
-        if product[:version].nil?
-          latest_version = product.sorted_versions.first
-          product[:version] = latest_version[:version] if latest_version
+        latest_version = product.sorted_versions.first
+        if latest_version
+          product[:version] = latest_version[:version]
+          product.save
+          update_product_dependencies(product, latest_version[:version])
         end
         result = true
       end
       result
+    end
+  end
+
+  #add latest version for dependencies missing prod_version
+  def self.update_product_dependencies(product, version_label)
+    all_dependencies = product.all_dependencies
+    deps_without_version = all_dependencies.keep_if {|dep| dep[:prod_key].nil? }
+    deps_without_version.each do |dep| 
+        dep[:prod_version] = product[:version]
+        dep.save
     end
   end
 
@@ -278,11 +291,8 @@ class BowerCrawler
     if response_code == 200
       read_task = to_read_task(task, task[:url])
       read_task.update_attributes({
-        registry_name: task[:registry_name],
-        weight: 10,
-        task_failed: false,
-        url_exists: true,
-        re_crawl: true
+        registry_name: task[:registry_name], #registered name on bower.io, not same as github repo and projectfile
+        weight: 10
       })
       success = true
     elsif response_code == 301 or response_code == 308
@@ -351,7 +361,7 @@ class BowerCrawler
     Versionlink.create_project_link prod[:language], prod[:prod_key], pkg_info[:url], "SCM"
     Versionlink.create_project_link prod[:language], prod[:prod_key], pkg_info[:homepage], "Homepage"
 
-    to_dependencies(prod, pkg_info, :dependencies,     Dependency::A_SCOPE_COMPILE)
+    to_dependencies(prod, pkg_info, :dependencies,     Dependency::A_SCOPE_REQUIRE)
     to_dependencies(prod, pkg_info, :dev_dependencies, Dependency::A_SCOPE_DEVELOPMENT)
 
     pkg_info[:licenses].to_a.each { |lic| create_or_update_license( prod, lic ) }
@@ -409,11 +419,6 @@ class BowerCrawler
     tag_name = CrawlerUtils.remove_version_prefix( tag[:name].to_s )
     if tag_name.nil?
       logger.error "Skipped tag `#{tag_name}` "
-      return
-    end
-
-    if product.version_by_number( tag_name )
-      logger.info "#{product.prod_key} : #{tag_name} exists already"
       return
     end
 
@@ -521,7 +526,9 @@ class BowerCrawler
       repo_name: task[:repo_name],
       repo_owner: task[:repo_owner],
       registry_name: task[:registry_name],
-      weight: 1 + task[:weight],
+      weight: 1 + task[:weight].to_i,
+      url_exists: true,
+      re_crawl: true,
       url: url
     })
 
@@ -578,7 +585,6 @@ class BowerCrawler
       description:   pkg_info[:description].to_s
     )
 
-    prod.add_version pkg_info[:version]
     prod.save!
     prod
   rescue => e
@@ -613,7 +619,7 @@ class BowerCrawler
     new_license
   end
 
-  def self.to_dependencies(prod, pkg_info, key, scope = Dependency::A_SCOPE_COMPILE)
+  def self.to_dependencies(prod, pkg_info, key, scope = nil)
     return nil if prod.nil? || !pkg_info.has_key?(key) || pkg_info[key].nil? || pkg_info[key].empty?
 
     deps = []
@@ -630,7 +636,7 @@ class BowerCrawler
     deps
   end
 
-  def self.to_dependency(prod, dep_name, dep_version, scope = Dependency::A_SCOPE_COMPILE)
+  def self.to_dependency(prod, dep_name, dep_version, scope = Dependency::A_SCOPE_REQUIRE)
     dependency = Dependency.find_or_create_by(
       prod_type: Project::A_TYPE_BOWER,
       language: prod[:language],
