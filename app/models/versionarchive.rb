@@ -1,5 +1,8 @@
 class Versionarchive
 
+  # A Versionarchive describes a downloadable archive.
+  # E.g. a link to a jar, zip or tar.gz file.
+
   include Mongoid::Document
   include Mongoid::Timestamps
 
