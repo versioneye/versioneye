@@ -90,10 +90,7 @@ class PackagistCrawler
 
   def self.update_packagist_link product, package_name
     packagist_page = "http://packagist.org/packages/#{package_name}"
-    versionlink = Versionlink.find_by( Product::A_LANGUAGE_PHP, product.prod_key, packagist_page )
-    return nil if versionlink
-    versionlink = Versionlink.new({:name => "Packagist Page", :link => packagist_page, :prod_key => product.prod_key, :language => Product::A_LANGUAGE_PHP })
-    versionlink.save
+    Versionlink.create_project_link( Product::A_LANGUAGE_PHP, product.prod_key, packagist_page, 'Packagist Page' )
   end
 
 

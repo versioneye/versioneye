@@ -162,15 +162,12 @@ class ProductsController < ApplicationController
   end
 
   def delete_link
-    link_url = params[:link_url]
     lang     = Product.decode_language( params[:lang] )
     key      = Product.decode_prod_key params[:key]
+    link_url = params[:link_url]
     @product = Product.fetch_product lang, key
-    versionlink = Versionlink.find_by( lang, key, link_url )
-    if versionlink && versionlink.manual
-      versionlink.remove
-      flash[:success] = "Link removed."
-    end
+    Versionlink.remove_project_link( lang, key, link_url, true )
+    flash[:success] = "Link removed."
     redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
   end
 
