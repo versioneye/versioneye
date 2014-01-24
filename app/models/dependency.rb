@@ -85,13 +85,23 @@ class Dependency
   end
 
   def product
-    if group_id && artifact_id
-      return Product.find_by_group_and_artifact( group_id, artifact_id )
-    end
-    if prod_type && prod_type.eql?(Project::A_TYPE_BOWER)
-      return Product.where(:prod_type => Project::A_TYPE_BOWER, :name => dep_prod_key).shift
-    end
+    return maven_product( group_id, artifact_id ) if group_id && artifact_id
+    return bower_product( dep_prod_key ) if prod_type && prod_type.eql?(Project::A_TYPE_BOWER)
     Product.fetch_product( language, dep_prod_key )
+  end
+
+  # In the world of Maven (Java) every package is identified by a group_id and artifact_id.
+  def maven_product( group_id, artifact_id )
+    Product.find_by_group_and_artifact( group_id, artifact_id )
+  end
+
+  # prod_key for bower packages are assembled by 'owner/bower_name'. We did it that way
+  # because on bower the names are case sensitive. To avoid case sensitive URLs we descided
+  # to take the owner into the prod_key.
+  # Unfortunately the dependencies in the bower.json only contains the bower name, without the owner.
+  # That's why we fetch dependencies for bower through prod_type and name. This combination is unique.
+  def bower_product( dep_prod_key )
+    Product.where(:prod_type => Project::A_TYPE_BOWER, :name => dep_prod_key).shift
   end
 
   def parent_product
