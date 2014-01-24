@@ -110,10 +110,7 @@ class GithubCrawler
 
   def self.create_or_update_github_link product, repository
     link = "https://github.com/#{repository.full_name}"
-    versionlink = Versionlink.find_by( product.language, product.prod_key, link )
-    return nil if versionlink
-    versionlink = Versionlink.new({language: product.language, prod_key: product.prod_key, link: link, name: 'GitHub'})
-    versionlink.save
+    Versionlink.create_project_link( ( product.language, product.prod_key, link, 'GitHub' ) )
   end
 
   def self.fetch_product repository
