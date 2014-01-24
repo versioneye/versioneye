@@ -3,7 +3,7 @@ class Versionlink
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  # If version_id is nil this link belongs to all versions of the software package.
+  # If version_id is nil this link belongs to all versions of the package. It's a so called project link.
 
   # Belongs to the product with this attributes
   field :language  , type: String
