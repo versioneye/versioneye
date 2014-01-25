@@ -38,7 +38,7 @@ class ProductsController < ApplicationController
     version  = Version.decode_version ( params[:version] )
     @product = fetch_product lang, prod_key
 
-    if @product.nil? || @product.versions.nil? || @product.versions.empty?
+    if @product.nil?
       return
     end
 
