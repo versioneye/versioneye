@@ -195,7 +195,7 @@ class Dependency
   end
 
   def bower_version_parsed
-    doc =  Product.where(prod_type: Project::A_TYPE_BOWER, name: dep_prod_key).shift
+    product =  Product.where(prod_type: Project::A_TYPE_BOWER, name: dep_prod_key).shift
     parser = BowerParser.new
     dependency = Dependency.new
     dependency = parser.parse_requested_version(version.to_s, dependency, product)
