@@ -101,7 +101,7 @@ class Dependency
   # Unfortunately the dependencies in the bower.json only contains the bower name, without the owner.
   # That's why we fetch dependencies for bower through prod_type and name. This combination is unique.
   def bower_product( dep_prod_key )
-    Product.where(:prod_type => Project::A_TYPE_BOWER, :name => dep_prod_key).shift
+    Product.fetch_bower dep_prod_key
   end
 
   def parent_product
@@ -135,9 +135,7 @@ class Dependency
   end
 
   def version_parsed
-
     return "unknown" if version.nil? || version.empty?
-
     abs_version = String.new(version)
     if prod_type.eql?( Project::A_TYPE_RUBYGEMS )
       abs_version = String.new( gem_version_parsed )
@@ -151,7 +149,6 @@ class Dependency
       abs_version = bower_version_parsed
     end
     # TODO cases for java
-
     abs_version
   end
 
