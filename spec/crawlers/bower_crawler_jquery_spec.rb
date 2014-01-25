@@ -108,9 +108,9 @@ describe BowerCrawler, :vcr do
 
       # check version archives
       Versionarchive.all.count.should eq(109)
-      link = Versionarchive.all[0]
+      link = Versionarchive.all.asc(:created_at)[0]
       link[:prod_key].should eq("versioneye/jquery")
-      link[:version_id].should eq("1.2.3b")
+      link[:version_id].should eq("2.1.0-rc1")
       link[:language].should eq(Product::A_LANGUAGE_JAVASCRIPT)
 
     end
