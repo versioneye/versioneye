@@ -153,19 +153,22 @@ class BowerCrawler
     task_name = A_TASK_READ_VERSIONS
     result = false
     crawler_task_executor(task_name, token) do |task, token|
+      prod_key = make_prod_key(task)
+      product  = Product.fetch_bower task[:registry_name]
+      if product.nil?
+        logger.error "#{task_name} | Cant find product for #{task[:repo_fullname]} with prod_key #{prod_key}"
+        next
+      end
+
       tags = Github.repo_tags(task[:repo_fullname], token)
-      if tags.nil?
+      if tags.nil? || tags.empty?
         logger.warn "`#{task[:repo_fullname]}` has no versions - going to skip."
+        if product.version.to_s.empty?
+          product.remove
+        end
         result = true
       else
         logger.info "#{task[:repo_fullname]} has #{tags.to_a.count} tags."
-        prod_key = make_prod_key(task)
-        product = Product.where(:prod_type => Project::A_TYPE_BOWER, :prod_key => prod_key).shift
-        if product.nil?
-          logger.error "#{task_name} | Cant find product for #{task[:repo_fullname]} with prod_key #{prod_key}"
-          next
-        end
-
         tags.each do |tag|
           parse_repo_tag( task[:repo_fullname], product, tag, token )
           sleep 1/100.0 # Just force little pause asking commit info -> github may block
