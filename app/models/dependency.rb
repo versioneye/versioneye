@@ -148,7 +148,7 @@ class Dependency
     elsif prod_type.eql?( Project::A_TYPE_COCOAPODS )
       abs_version = String.new( cocoapods_version_parsed )
     elsif prod_type == Project::A_TYPE_BOWER
-      abs_version = bower_version_parsed.to_s
+      abs_version = bower_version_parsed
     end
     # TODO cases for java
   
@@ -195,7 +195,7 @@ class Dependency
   end
 
   def bower_version_parsed
-    product = Product.fetch_product(language, dep_prod_key)
+    doc =  Product.where(prod_type: Project::A_TYPE_BOWER, name: dep_prod_key).shift
     parser = BowerParser.new
     dependency = Dependency.new
     dependency = parser.parse_requested_version(version.to_s, dependency, product)
