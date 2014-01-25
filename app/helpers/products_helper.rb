@@ -81,6 +81,8 @@ module ProductsHelper
   def get_language_array(lang)
     languages = Array.new
     special_languages = {'php' => 'PHP',
+                         'javascript' => 'JavaScript',
+                         'Javascript' => 'JavaScript',
                          'node.js' =>  'Node.JS',
                          'nodejs' => 'Node.JS'}
 

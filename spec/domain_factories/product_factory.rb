@@ -56,6 +56,21 @@ class ProductFactory
     product
   end
 
+  def self.create_for_bower(name, version)
+    version_obj = Version.new :version => version
+    product = Product.new(
+      {
+        :name          => name,
+        :name_downcase => name.downcase,
+        :prod_key      => name.downcase,
+        :language      => Product::A_LANGUAGE_JAVASCRIPT,
+        :prod_type     => Project::A_TYPE_BOWER,
+        :version       => version
+      })
+    product.versions.push(version_obj)
+    product
+  end
+
 
   def self.create_for_composer(name, version)
     product = Product.new
