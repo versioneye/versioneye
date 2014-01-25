@@ -120,15 +120,7 @@
 
   <div class="flash info l_margin_bottom_5" >
     <b title="<%= title_text %>">Language:</b>
-    <% if @product.language.eql?(Product::A_LANGUAGE_RUBY) ||
-          @product.language.eql?(Product::A_LANGUAGE_JAVA) ||
-          @product.language.eql?(Product::A_LANGUAGE_PHP) ||
-          @product.language.eql?(Product::A_LANGUAGE_CLOJURE) ||
-          @product.language.eql?(Product::A_LANGUAGE_NODEJS) ||
-          @product.language.eql?(Product::A_LANGUAGE_PYTHON) ||
-          @product.language.eql?(Product::A_LANGUAGE_JAVASCRIPT) ||
-          @product.language.eql?(Product::A_LANGUAGE_OBJECTIVEC) ||
-          @product.language.eql?(Product::A_LANGUAGE_R) %>
+    <% if Product::A_LANGS_LANGUAGE_PAGE.include?(@product.language) %>
       <a href="/<%= @product.language_esc %>" title="<%= @product.language_esc %>"><%= @product.language %></a>
     <% else %>
       <%= @product.language %>
