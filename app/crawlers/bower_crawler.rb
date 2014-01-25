@@ -168,7 +168,12 @@ class BowerCrawler
         end
         result = true
       else
-        logger.info "#{task[:repo_fullname]} has #{tags.to_a.count} tags."
+        tags_count = tags.to_a.count
+        logger.info "#{task[:repo_fullname]} has #{tags_count} tags."
+        if product.versions && product.versions.count == tags_count
+          logger.info "_ skip #{task[:repo_fullname]} because tags count (#{tags_count}) is equal to versions.count."
+        end
+
         tags.each do |tag|
           parse_repo_tag( task[:repo_fullname], product, tag, token )
           sleep 1/100.0 # Just force little pause asking commit info -> github may block
