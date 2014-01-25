@@ -13,7 +13,7 @@ class ProductsController < ApplicationController
       # ab_array = ['a', 'b']
       @ab = 'b' # ab_array[Random.rand(2)]
     end
-    @languages = supported_languages
+    @languages = Product::A_LANGS_FILTER
     render :layout => 'application_lp'
   end
 
@@ -29,7 +29,7 @@ class ProductsController < ApplicationController
       languages = get_language_array(@lang)
       @products = ProductService.search( @query, @groupid, languages, params[:page])
     end
-    @languages = supported_languages
+    @languages = Product::A_LANGS_FILTER
   end
 
   def show
@@ -291,12 +291,6 @@ class ProductsController < ApplicationController
 
     def admin_user
       redirect_to(root_path) unless current_user.admin?
-    end
-
-    def supported_languages
-      [Product::A_LANGUAGE_JAVA, Product::A_LANGUAGE_RUBY,
-      Product::A_LANGUAGE_PYTHON, Product::A_LANGUAGE_PHP, Product::A_LANGUAGE_NODEJS,
-      Product::A_LANGUAGE_CLOJURE, Product::A_LANGUAGE_R, Product::A_LANGUAGE_OBJECTIVEC]
     end
 
 end
