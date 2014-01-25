@@ -151,7 +151,7 @@ class Dependency
       abs_version = bower_version_parsed
     end
     # TODO cases for java
-  
+
     abs_version
   end
 
@@ -195,9 +195,9 @@ class Dependency
   end
 
   def bower_version_parsed
-    product =  Product.where(prod_type: Project::A_TYPE_BOWER, name: dep_prod_key).shift
-    parser = BowerParser.new
-    dependency = Dependency.new
+    product    = Product.fetch_bower dep_prod_key
+    parser     = BowerParser.new
+    dependency = Projectdependency.new
     dependency = parser.parse_requested_version(version.to_s, dependency, product)
     dependency[:version_requested]
   end
@@ -205,7 +205,7 @@ class Dependency
   def dep_prod_key_for_url
     prod_key = dep_prod_key
     if prod_type == Project::A_TYPE_BOWER
-      doc =  Product.where(prod_type: Project::A_TYPE_BOWER, name: dep_prod_key).shift
+      doc = Product.fetch_bower dep_prod_key
       prod_key =  doc[:prod_key]
     end
     Product.encode_prod_key prod_key

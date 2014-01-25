@@ -111,6 +111,10 @@ class Product
     product
   end
 
+  def self.fetch_bower name
+    Product.where(prod_type: Project::A_TYPE_BOWER, name: /^#{name}$/i).shift
+  end
+
   # legacy, still used by fall back search and API v1.0
   def self.find_by_key searched_key
     return nil if searched_key.to_s.strip.empty?
