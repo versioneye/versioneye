@@ -39,7 +39,7 @@ class LanguageDailyStats
   end
 
   def initialize_metrics_tables
-    Product.supported_languages.each do |lang|
+    Product::A_LANGS_SUPPORTED.each do |lang|
       lang_key       = LanguageDailyStats.language_to_sym( lang )
       self[lang_key] = LanguageDailyStats.initial_metrics_table
     end
@@ -87,7 +87,7 @@ class LanguageDailyStats
   end
 
   def count_release(release)
-    if Product.supported_languages.include?(release[:language])
+    if Product::A_LANGS_SUPPORTED.include?(release[:language])
       prod_info = Product.fetch_product(release[:language], release[:prod_key])
       metric_key = LanguageDailyStats.language_to_sym(release[:language])
 
@@ -100,7 +100,7 @@ class LanguageDailyStats
 
   def count_language_packages
     that_day = self[:date]
-    Product.supported_languages.each do |lang|
+    Product::A_LANGS_SUPPORTED.each do |lang|
       lang_total = Product.by_language(lang).where(:created_at.lt => that_day.at_midnight).count
       language_key = LanguageDailyStats.language_to_sym(lang)
       self.inc_total_package(language_key, lang_total)
@@ -109,7 +109,7 @@ class LanguageDailyStats
 
   def count_language_artifacts
     that_day = self[:date]
-    Product.supported_languages.each do |lang|
+    Product::A_LANGS_SUPPORTED.each do |lang|
       n_artifacts = 0
       Product.by_language(lang).where(:created_at.lt => that_day.at_midnight).each do |prod|
         n_artifacts += prod.versions.where(:created_at.lt => that_day.at_midnight).count
@@ -155,7 +155,7 @@ class LanguageDailyStats
   def metrics
     doc = self.attributes
     langs_keys = []
-    Product.supported_languages.each {|lang| langs_keys << LanguageDailyStats.language_to_sym(lang)}
+    Product::A_LANGS_SUPPORTED.each {|lang| langs_keys << LanguageDailyStats.language_to_sym(lang)}
     doc.keep_if {|key, val| langs_keys.include?(key.to_sym)}
   end
 
@@ -256,7 +256,7 @@ class LanguageDailyStats
   def self.to_metric_response(metric, t0_stats, t1_stats)
     rows = []
 
-    Product.supported_languages.each do |lang|
+    Product::A_LANGS_SUPPORTED.each do |lang|
       lang_key = LanguageDailyStats.language_to_sym(lang).to_s
 
       t0_metric_value = t0_stats.has_key?(lang_key) ? t0_stats[lang_key][metric] : nil
