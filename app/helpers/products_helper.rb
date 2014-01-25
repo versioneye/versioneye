@@ -102,21 +102,21 @@ module ProductsHelper
 
   def attach_version(product, version)
     return false if product.nil?
-    if version.nil? || version.empty?
-      version = product.version
-    end
+    version = product.version if version.nil? || version.empty?
     version_obj = product.version_by_number( version )
-    if version_obj
-      product.version = version_obj.to_s
-      update_release_infos( version_obj, product )
-      true
-    else
-      false
+    if version_obj.nil?
+      version_obj = Version.new(:version => product.version, :created_at => DateTime.now)
     end
+    product.version = version_obj.to_s
+    update_release_infos( version_obj, product )
+    true
   end
 
   def fetch_version( product )
     version = product.version_by_number product.version
+    if version.nil?
+      version = Version.new(:version => product.version, :created_at => DateTime.now)
+    end
     parse_semver_2( version )
     version
   rescue => e
