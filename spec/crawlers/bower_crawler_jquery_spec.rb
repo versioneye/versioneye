@@ -29,10 +29,14 @@ describe BowerCrawler, :vcr do
 
 
   describe "crawl_projects" do
+    
+
     it "creates correct product for jquery" do
       product_task = BowerCrawler.to_read_task(task, url)
       BowerCrawler.to_poison_pill(product_task[:task])
-      BowerCrawler.crawl_projects(token)
+      VCR.use_cassette 'bower_crawler_jquery_specs_projects' do
+        BowerCrawler.crawl_projects(token)
+      end
 
       Product.all.count.should eq(1)
       prod = Product.all.first
@@ -89,13 +93,13 @@ describe BowerCrawler, :vcr do
       Product.all.count.should eq(1)
       prod = Product.all.first
       prod[:prod_key].should_not be_nil
-
       versions_task = BowerCrawler.to_version_task(task, prod[:prod_key])
       BowerCrawler.to_poison_pill(versions_task[:task])
-      BowerCrawler.crawl_versions(token)
+      VCR.use_cassette('bower_crawler_jquery_specs_versions') do 
+        BowerCrawler.crawl_versions(token)
+      end
 
       prod.reload
-
       prod.versions.count.should eq(109)
       versions = prod.versions
 
