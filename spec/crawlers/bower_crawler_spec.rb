@@ -15,7 +15,7 @@ describe BowerCrawler, :vcr do
   }
 
   before :all do
-    #FakeWeb.allow_net_connect = true
+    FakeWeb.allow_net_connect = true
 
     VCR.configure do |c|
       c.cassette_library_dir = Rails.root.join("spec", "fixtures", "vcr_cassettes")
