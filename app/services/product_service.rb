@@ -41,7 +41,7 @@ class ProductService
 
   def self.updates_since_to(dt_since, dt_to)
     stats = []
-    Product.supported_languages.each do |lang|
+    Product::A_LANGS_SUPPORTED.each do |lang|
       stats << {
         title: lang.downcase,
         value: Newest.where(:language => lang,

@@ -209,7 +209,7 @@ class User::GithubReposController < ApplicationController
     def process_repo(repo, task_status = nil)
       imported_repos      = current_user.projects.by_source(Project::A_SOURCE_GITHUB)
       imported_repo_names = imported_repos.map(&:scm_fullname).to_set
-      supported_langs     = Product.supported_languages.map{ |lang| lang.downcase }
+      supported_langs     = Product::A_LANGS_SUPPORTED.map{ |lang| lang.downcase }
       repo[:supported] = supported_langs.include? repo[:language]
       repo[:imported_files] = []
 

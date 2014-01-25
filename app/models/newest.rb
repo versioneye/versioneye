@@ -36,7 +36,7 @@ class Newest
 
   def self.balanced_newest(count)
     newest = []
-    Product.supported_languages.each do |lang|
+    Product::A_LANGS_SUPPORTED.each do |lang|
       newest.concat Newest.where(language: lang).desc(:created_at).limit(count)
     end
     newest.shuffle.first(count)
@@ -44,7 +44,7 @@ class Newest
 
   def self.balanced_novel(count)
     newest = []
-    Product.supported_languages.each do |lang|
+    Product::A_LANGS_SUPPORTED.each do |lang|
       newest.concat Newest.where(language: lang, novel: true).desc(:created_at).limit(count)
     end
     newest.shuffle.first(count)
