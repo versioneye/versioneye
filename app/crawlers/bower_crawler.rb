@@ -116,7 +116,7 @@ class BowerCrawler
       repo_response = Github.repo_info(task[:repo_fullname], token, true, task[:crawled_at])
 
       if repo_response.nil? or repo_response.is_a?(Boolean)
-        logger.error "crawl_projects | Didnt get repo_info for #{task[:repo_fullname]}"
+        logger.error "crawl_projects | Did not get repo_info for #{task[:repo_fullname]}"
         next
       end
 
@@ -125,26 +125,28 @@ class BowerCrawler
         next
       end
 
-      repo_info = nil
       if repo_response.body.to_s.empty?
         logger.error "Did not get any repo info for #{task[:repo_fullname]} - got: #{repo_response.code}"
-      else
-        repo_info = JSON.parse(repo_response.body, symbolize_names: true)
-        repo_info[:repo_fullname] = task[:repo_fullname]
+        next
       end
 
-      if repo_response.code == 200 and not repo_info.nil?
-        product = add_bower_package(task, repo_info,  token)
-        if product
-          task.update_attributes({crawled_at: DateTime.now})
-          to_version_task(task, product[:prod_key]) # add new version task when everything went oK
-          result = true
-        end
-      else
+      repo_info = JSON.parse(repo_response.body, symbolize_names: true)
+      if repo_info.nil? || repo_response.code != 200
         logger.error "crawl_projects | cant read information for #{task[:repo_fullname]}."
+        next
       end
+
+      repo_info[:repo_fullname] = task[:repo_fullname]
+      product = add_bower_package(task, repo_info,  token)
+      if product.nil?
+        logger.error "crawl_projects | cant add bower package for #{task[:repo_fullname]}."
+        next
+      end
+
+      task.update_attributes({crawled_at: DateTime.now})
+      to_version_task(task, product[:prod_key]) # add new version task when everything went oK
       sleep 1/100.0 # force little pause before next iteration
-      result
+      true
     end
   end
 
@@ -346,7 +348,9 @@ class BowerCrawler
       return nil
     end
 
-    pkg_file[:name] = task[:registry_name] if task.has_attribute?(:registry_name) # if task has prod_key then use it - dont trust user's unvalidated bower.json
+    pkg_file[:name] = task[:registry_name]  if task.has_attribute?(:registry_name) # if task has prod_key then use it - dont trust user's unvalidated bower.json
+    pkg_file[:name] = repo_info[:name]      if pkg_file[:name].to_s.strip.empty?
+    pkg_file[:name] = repo_info[:full_name] if pkg_file[:name].to_s.strip.empty?
     prod_key        = make_prod_key(task)
     product         = create_bower_package(prod_key, pkg_file, repo_info)
     if product.nil?
@@ -359,7 +363,7 @@ class BowerCrawler
   rescue => e
     logger.error "add_bower_package | cant save product for #{repo_info}: #{product.errors.full_messages.to_sentence} - e.message"
     logger.error e.backtrace.join('\n')
-    false
+    nil
   end
 
   # Saves product and save sub/related docs
