@@ -593,7 +593,8 @@ class BowerCrawler
       private_repo:  pkg_info[:private_repo],
       description:   pkg_info[:description].to_s
     )
-    if pkg_info.has_key(:version) && !pkg_info[:version].to_s.strip.empty?
+  
+    if pkg_info.has_key?(:version) && !pkg_info[:version].to_s.strip.empty?
       prod.version = pkg_info[:version]
     end
     prod.save!
