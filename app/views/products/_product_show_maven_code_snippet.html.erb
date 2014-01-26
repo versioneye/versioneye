@@ -1,22 +1,25 @@
 
 <h2 class="section_header">Maven</h2>
 <div class = "well" >
-  <h5 class="dep_header">pom.xml snippet</h5>
-  <div class="row" style="margin-bottom: 5px;">
-    <div class="span7" style="width: 575px; margin-bottom: 0;">
-      <pre class="prettyprint"><code>&lt;dependency&gt;
+
+  <% if @product.group_id && @product.artifact_id %>
+    <h5 class="dep_header">pom.xml snippet</h5>
+    <div class="row" style="margin-bottom: 5px;">
+      <div class="span7" style="width: 575px; margin-bottom: 0;">
+        <pre class="prettyprint"><code>&lt;dependency&gt;
     &lt;groupId&gt;<b><%= @product.group_id %></b>&lt;/groupId&gt;
     &lt;artifactId&gt;<b><%= @product.artifact_id %></b>&lt;/artifactId&gt;
     &lt;version&gt;<b><%= @product.version %></b>&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="span7" style="width: 575px; margin-bottom: 0;">
-      <%= render "products/helpers/notify_me" %>
+    <div class="row">
+      <div class="span7" style="width: 575px; margin-bottom: 0;">
+        <%= render "products/helpers/notify_me" %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.to_s ) %>
   <% if !downloads.nil? && !downloads.empty? %>
@@ -44,21 +47,23 @@
 
   <% end %>
 
-  <div class="row">
-    <hr/>
-  </div>
+  <% if @product.repositories && @product.repositories.count > 0  %>
+    <div class="row">
+      <hr/>
+    </div>
 
-  <div class="row">
-    <div class="span2">
-      <h5 class="dep_header" style="margin-top: 0;">
-        <%= pluralize(@product.repositories.count, "Repository") %>
-      </h5>
+    <div class="row">
+      <div class="span2">
+        <h5 class="dep_header" style="margin-top: 0;">
+          <%= pluralize(@product.repositories.count, "Repository") %>
+        </h5>
+      </div>
+      <div class="span5" style="width: 430px;">
+        <% @product.repositories.each do |repo| %>
+          <div><a href="<%= repo[:src] %>" target="new" ><%= repo[:src] %></a> </div>
+        <% end %>
+      </div>
     </div>
-    <div class="span5" style="width: 430px;">
-      <% @product.repositories.each do |repo| %>
-        <div><a href="<%= repo[:src] %>" target="new" ><%= repo[:src] %></a> </div>
-      <% end %>
-    </div>
-  </div>
+  <% end %>
 
 </div>
