@@ -9,6 +9,7 @@ class GithubCrawler
   def self.crawl
     crawl = self.crawle_object
     resources = self.get_first_level_list
+    logger.info "#{resources.count} resources to crawle"
     resources.each do |resource|
       crawle_package resource.name, crawl, resource
     end
@@ -23,6 +24,7 @@ class GithubCrawler
   end
 
   def self.crawle_package name, crawl = nil, resource = nil
+    logger.info "crawl package #{name}"
     repository = OctokitApi.client.repo name
     return nil if repository.nil?
 
@@ -35,19 +37,15 @@ class GithubCrawler
       next if tag.nil?
 
       version_number = CrawlerUtils.remove_version_prefix tag.name
-      if product.version_by_number( version_number )
-        logger.info "#{product.language} : #{product.prod_key} : #{version_number} exist already "
-        next
-      end
+      next if product.version_by_number( version_number )
 
       create_version repository, tag, product, version_number
       create_archive repository, tag, product, version_number
       update_resource resource, product
     end
   rescue => e
-    self.logger.error "ERROR in crawle_package Message:   #{e.message}"
+    self.logger.error "ERROR in crawle_package(#{name}) Message: #{e.message}"
     self.logger.error e.backtrace.join('\n')
-    PackagistCrawler.store_error crawl, e.message, e.backtrace, name
     nil
   end
 
