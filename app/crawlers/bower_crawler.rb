@@ -31,10 +31,6 @@ class BowerCrawler
     Product.where(prod_type: Project::A_TYPE_BOWER).delete_all
     Newest.where(prod_type: Project::A_TYPE_BOWER).delete_all
     Dependency.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
-
-    # License.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
-    # Versionlink.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
-    # Versionarchive.where(language: Product::A_LANGUAGE_JAVASCRIPT).delete_all
     CrawlerTask.delete_all
   end
 
@@ -195,7 +191,7 @@ class BowerCrawler
 
   #add latest version for dependencies missing prod_version
   def self.update_product_dependencies(product, version_label)
-    all_dependencies = product.all_dependencies
+    all_dependencies = Dependencies.where(prod_key: product[:prod_key])
     deps_without_version = all_dependencies.keep_if {|dep| dep[:prod_key].nil? }
     deps_without_version.each do |dep|
         dep[:prod_version] = product[:version]
