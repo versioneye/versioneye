@@ -11,6 +11,7 @@ class CrawlerTask
   field :url,           type: String
   field :url_params,    type: Hash
   field :url_exists,    type: Boolean, default: false
+  field :registry_name, type: String #name used in registry
   field :repo_owner,    type: String
   field :repo_name,     type: String
   field :repo_fullname, type: String
