@@ -1,0 +1,224 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Chrome/28(www.versioneye.com, contact@versioneye.com)
+      Connection:
+      - Keep-Alive
+      - keep-alive
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 26 Jan 2014 10:28:01 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4473'
+      X-Ratelimit-Reset:
+      - '1390734742'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - user, public_repo, repo, gist
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Content-Type-Options:
+      - nosniff
+      Content-Length:
+      - '187'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5CC605F2:6646:63470B9:52E4E331
+      Vary:
+      - Accept-Encoding
+    body:
+      encoding: UTF-8
+      string: "{\"resources\":{\"core\":{\"limit\":5000,\"remaining\":4473,\"reset\":1390734742},\"search\":{\"limit\":20,\"remaining\":20,\"reset\":1390732141}},\"rate\":{\"limit\":5000,\"remaining\":4473,\"reset\":1390734742}}"
+    http_version: 
+  recorded_at: Sun, 26 Jan 2014 10:28:01 GMT
+- request:
+    method: get
+    uri: https://api.github.com/repos/versioneye/backbone
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Chrome/28(www.versioneye.com, contact@versioneye.com)
+      Connection:
+      - Keep-Alive
+      - keep-alive
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 26 Jan 2014 10:28:01 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4472'
+      X-Ratelimit-Reset:
+      - '1390734742'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Fri, 24 Jan 2014 11:00:15 GMT
+      Etag:
+      - "\"dd9c4fe8071770ebe81fa1f33ae8872b\""
+      X-Oauth-Scopes:
+      - user, public_repo, repo, gist
+      X-Accepted-Oauth-Scopes:
+      - repo
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Content-Type-Options:
+      - nosniff
+      Content-Length:
+      - '15491'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5CC605F2:6646:6347158:52E4E331
+    body:
+      encoding: UTF-8
+      string: "{\"id\":16202161,\"name\":\"backbone\",\"full_name\":\"versioneye/backbone\",\"owner\":{\"login\":\"versioneye\",\"id\":3974102,\"avatar_url\":\"https://gravatar.com/avatar/879225ddb1056345f41cdb5575ed13f7?d=https%3A%2F%2Fidenticons.github.com%2F11a280b4b747132f97c9ed8f71d740ac.png&r=x\",\"gravatar_id\":\"879225ddb1056345f41cdb5575ed13f7\",\"url\":\"https://api.github.com/users/versioneye\",\"html_url\":\"https://github.com/versioneye\",\"followers_url\":\"https://api.github.com/users/versioneye/followers\",\"following_url\":\"https://api.github.com/users/versioneye/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/versioneye/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/versioneye/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/versioneye/subscriptions\",\"organizations_url\":\"https://api.github.com/users/versioneye/orgs\",\"repos_url\":\"https://api.github.com/users/versioneye/repos\",\"events_url\":\"https://api.github.com/users/versioneye/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/versioneye/received_events\",\"type\":\"Organization\",\"site_admin\":false},\"private\":false,\"html_url\":\"https://github.com/versioneye/backbone\",\"description\":\"Give
+        your JS App some Backbone with Models, Views, Collections, and Events\",\"fork\":true,\"url\":\"https://api.github.com/repos/versioneye/backbone\",\"forks_url\":\"https://api.github.com/repos/versioneye/backbone/forks\",\"keys_url\":\"https://api.github.com/repos/versioneye/backbone/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/versioneye/backbone/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/versioneye/backbone/teams\",\"hooks_url\":\"https://api.github.com/repos/versioneye/backbone/hooks\",\"issue_events_url\":\"https://api.github.com/repos/versioneye/backbone/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/versioneye/backbone/events\",\"assignees_url\":\"https://api.github.com/repos/versioneye/backbone/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/versioneye/backbone/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/versioneye/backbone/tags\",\"blobs_url\":\"https://api.github.com/repos/versioneye/backbone/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/versioneye/backbone/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/versioneye/backbone/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/versioneye/backbone/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/versioneye/backbone/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/versioneye/backbone/languages\",\"stargazers_url\":\"https://api.github.com/repos/versioneye/backbone/stargazers\",\"contributors_url\":\"https://api.github.com/repos/versioneye/backbone/contributors\",\"subscribers_url\":\"https://api.github.com/repos/versioneye/backbone/subscribers\",\"subscription_url\":\"https://api.github.com/repos/versioneye/backbone/subscription\",\"commits_url\":\"https://api.github.com/repos/versioneye/backbone/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/versioneye/backbone/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/versioneye/backbone/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/versioneye/backbone/issues/comments/{number}\",\"contents_url\":\"https://api.github.com/repos/versioneye/backbone/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/versioneye/backbone/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/versioneye/backbone/merges\",\"archive_url\":\"https://api.github.com/repos/versioneye/backbone/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/versioneye/backbone/downloads\",\"issues_url\":\"https://api.github.com/repos/versioneye/backbone/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/versioneye/backbone/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/versioneye/backbone/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/versioneye/backbone/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/versioneye/backbone/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/versioneye/backbone/releases{/id}\",\"created_at\":\"2014-01-24T11:00:12Z\",\"updated_at\":\"2014-01-24T11:00:15Z\",\"pushed_at\":\"2014-01-16T15:45:05Z\",\"git_url\":\"git://github.com/versioneye/backbone.git\",\"ssh_url\":\"git@github.com:versioneye/backbone.git\",\"clone_url\":\"https://github.com/versioneye/backbone.git\",\"svn_url\":\"https://github.com/versioneye/backbone\",\"homepage\":\"http://backbonejs.org\",\"size\":54693,\"stargazers_count\":0,\"watchers_count\":0,\"language\":\"JavaScript\",\"has_issues\":false,\"has_downloads\":true,\"has_wiki\":true,\"forks_count\":0,\"mirror_url\":null,\"open_issues_count\":0,\"forks\":0,\"open_issues\":0,\"watchers\":0,\"default_branch\":\"master\",\"permissions\":{\"admin\":false,\"push\":false,\"pull\":true},\"organization\":{\"login\":\"versioneye\",\"id\":3974102,\"avatar_url\":\"https://gravatar.com/avatar/879225ddb1056345f41cdb5575ed13f7?d=https%3A%2F%2Fidenticons.github.com%2F11a280b4b747132f97c9ed8f71d740ac.png&r=x\",\"gravatar_id\":\"879225ddb1056345f41cdb5575ed13f7\",\"url\":\"https://api.github.com/users/versioneye\",\"html_url\":\"https://github.com/versioneye\",\"followers_url\":\"https://api.github.com/users/versioneye/followers\",\"following_url\":\"https://api.github.com/users/versioneye/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/versioneye/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/versioneye/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/versioneye/subscriptions\",\"organizations_url\":\"https://api.github.com/users/versioneye/orgs\",\"repos_url\":\"https://api.github.com/users/versioneye/repos\",\"events_url\":\"https://api.github.com/users/versioneye/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/versioneye/received_events\",\"type\":\"Organization\",\"site_admin\":false},\"parent\":{\"id\":952189,\"name\":\"backbone\",\"full_name\":\"jashkenas/backbone\",\"owner\":{\"login\":\"jashkenas\",\"id\":4732,\"avatar_url\":\"https://gravatar.com/avatar/32652ed5b8fbd2ecdb1c78e9ac567b4b?d=https%3A%2F%2Fidenticons.github.com%2Ffd1d83de2517a02d4e221ede9a681432.png&r=x\",\"gravatar_id\":\"32652ed5b8fbd2ecdb1c78e9ac567b4b\",\"url\":\"https://api.github.com/users/jashkenas\",\"html_url\":\"https://github.com/jashkenas\",\"followers_url\":\"https://api.github.com/users/jashkenas/followers\",\"following_url\":\"https://api.github.com/users/jashkenas/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/jashkenas/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/jashkenas/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/jashkenas/subscriptions\",\"organizations_url\":\"https://api.github.com/users/jashkenas/orgs\",\"repos_url\":\"https://api.github.com/users/jashkenas/repos\",\"events_url\":\"https://api.github.com/users/jashkenas/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/jashkenas/received_events\",\"type\":\"User\",\"site_admin\":false},\"private\":false,\"html_url\":\"https://github.com/jashkenas/backbone\",\"description\":\"Give
+        your JS App some Backbone with Models, Views, Collections, and Events\",\"fork\":false,\"url\":\"https://api.github.com/repos/jashkenas/backbone\",\"forks_url\":\"https://api.github.com/repos/jashkenas/backbone/forks\",\"keys_url\":\"https://api.github.com/repos/jashkenas/backbone/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/jashkenas/backbone/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/jashkenas/backbone/teams\",\"hooks_url\":\"https://api.github.com/repos/jashkenas/backbone/hooks\",\"issue_events_url\":\"https://api.github.com/repos/jashkenas/backbone/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/jashkenas/backbone/events\",\"assignees_url\":\"https://api.github.com/repos/jashkenas/backbone/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/jashkenas/backbone/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/jashkenas/backbone/tags\",\"blobs_url\":\"https://api.github.com/repos/jashkenas/backbone/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/jashkenas/backbone/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/jashkenas/backbone/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/jashkenas/backbone/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/jashkenas/backbone/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/jashkenas/backbone/languages\",\"stargazers_url\":\"https://api.github.com/repos/jashkenas/backbone/stargazers\",\"contributors_url\":\"https://api.github.com/repos/jashkenas/backbone/contributors\",\"subscribers_url\":\"https://api.github.com/repos/jashkenas/backbone/subscribers\",\"subscription_url\":\"https://api.github.com/repos/jashkenas/backbone/subscription\",\"commits_url\":\"https://api.github.com/repos/jashkenas/backbone/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/jashkenas/backbone/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/jashkenas/backbone/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/jashkenas/backbone/issues/comments/{number}\",\"contents_url\":\"https://api.github.com/repos/jashkenas/backbone/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/jashkenas/backbone/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/jashkenas/backbone/merges\",\"archive_url\":\"https://api.github.com/repos/jashkenas/backbone/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/jashkenas/backbone/downloads\",\"issues_url\":\"https://api.github.com/repos/jashkenas/backbone/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/jashkenas/backbone/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/jashkenas/backbone/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/jashkenas/backbone/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/jashkenas/backbone/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/jashkenas/backbone/releases{/id}\",\"created_at\":\"2010-09-30T19:41:28Z\",\"updated_at\":\"2014-01-17T09:53:08Z\",\"pushed_at\":\"2014-01-16T15:45:05Z\",\"git_url\":\"git://github.com/jashkenas/backbone.git\",\"ssh_url\":\"git@github.com:jashkenas/backbone.git\",\"clone_url\":\"https://github.com/jashkenas/backbone.git\",\"svn_url\":\"https://github.com/jashkenas/backbone\",\"homepage\":\"http://backbonejs.org\",\"size\":54693,\"stargazers_count\":16878,\"watchers_count\":16878,\"language\":\"JavaScript\",\"has_issues\":true,\"has_downloads\":true,\"has_wiki\":true,\"forks_count\":3652,\"mirror_url\":null,\"open_issues_count\":5,\"forks\":3652,\"open_issues\":5,\"watchers\":16878,\"default_branch\":\"master\",\"master_branch\":\"master\"},\"source\":{\"id\":952189,\"name\":\"backbone\",\"full_name\":\"jashkenas/backbone\",\"owner\":{\"login\":\"jashkenas\",\"id\":4732,\"avatar_url\":\"https://gravatar.com/avatar/32652ed5b8fbd2ecdb1c78e9ac567b4b?d=https%3A%2F%2Fidenticons.github.com%2Ffd1d83de2517a02d4e221ede9a681432.png&r=x\",\"gravatar_id\":\"32652ed5b8fbd2ecdb1c78e9ac567b4b\",\"url\":\"https://api.github.com/users/jashkenas\",\"html_url\":\"https://github.com/jashkenas\",\"followers_url\":\"https://api.github.com/users/jashkenas/followers\",\"following_url\":\"https://api.github.com/users/jashkenas/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/jashkenas/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/jashkenas/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/jashkenas/subscriptions\",\"organizations_url\":\"https://api.github.com/users/jashkenas/orgs\",\"repos_url\":\"https://api.github.com/users/jashkenas/repos\",\"events_url\":\"https://api.github.com/users/jashkenas/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/jashkenas/received_events\",\"type\":\"User\",\"site_admin\":false},\"private\":false,\"html_url\":\"https://github.com/jashkenas/backbone\",\"description\":\"Give
+        your JS App some Backbone with Models, Views, Collections, and Events\",\"fork\":false,\"url\":\"https://api.github.com/repos/jashkenas/backbone\",\"forks_url\":\"https://api.github.com/repos/jashkenas/backbone/forks\",\"keys_url\":\"https://api.github.com/repos/jashkenas/backbone/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/jashkenas/backbone/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/jashkenas/backbone/teams\",\"hooks_url\":\"https://api.github.com/repos/jashkenas/backbone/hooks\",\"issue_events_url\":\"https://api.github.com/repos/jashkenas/backbone/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/jashkenas/backbone/events\",\"assignees_url\":\"https://api.github.com/repos/jashkenas/backbone/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/jashkenas/backbone/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/jashkenas/backbone/tags\",\"blobs_url\":\"https://api.github.com/repos/jashkenas/backbone/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/jashkenas/backbone/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/jashkenas/backbone/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/jashkenas/backbone/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/jashkenas/backbone/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/jashkenas/backbone/languages\",\"stargazers_url\":\"https://api.github.com/repos/jashkenas/backbone/stargazers\",\"contributors_url\":\"https://api.github.com/repos/jashkenas/backbone/contributors\",\"subscribers_url\":\"https://api.github.com/repos/jashkenas/backbone/subscribers\",\"subscription_url\":\"https://api.github.com/repos/jashkenas/backbone/subscription\",\"commits_url\":\"https://api.github.com/repos/jashkenas/backbone/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/jashkenas/backbone/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/jashkenas/backbone/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/jashkenas/backbone/issues/comments/{number}\",\"contents_url\":\"https://api.github.com/repos/jashkenas/backbone/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/jashkenas/backbone/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/jashkenas/backbone/merges\",\"archive_url\":\"https://api.github.com/repos/jashkenas/backbone/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/jashkenas/backbone/downloads\",\"issues_url\":\"https://api.github.com/repos/jashkenas/backbone/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/jashkenas/backbone/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/jashkenas/backbone/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/jashkenas/backbone/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/jashkenas/backbone/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/jashkenas/backbone/releases{/id}\",\"created_at\":\"2010-09-30T19:41:28Z\",\"updated_at\":\"2014-01-17T09:53:08Z\",\"pushed_at\":\"2014-01-16T15:45:05Z\",\"git_url\":\"git://github.com/jashkenas/backbone.git\",\"ssh_url\":\"git@github.com:jashkenas/backbone.git\",\"clone_url\":\"https://github.com/jashkenas/backbone.git\",\"svn_url\":\"https://github.com/jashkenas/backbone\",\"homepage\":\"http://backbonejs.org\",\"size\":54693,\"stargazers_count\":16878,\"watchers_count\":16878,\"language\":\"JavaScript\",\"has_issues\":true,\"has_downloads\":true,\"has_wiki\":true,\"forks_count\":3652,\"mirror_url\":null,\"open_issues_count\":5,\"forks\":3652,\"open_issues\":5,\"watchers\":16878,\"default_branch\":\"master\",\"master_branch\":\"master\"},\"network_count\":3652,\"subscribers_count\":2}"
+    http_version: 
+  recorded_at: Sun, 26 Jan 2014 10:28:01 GMT
+- request:
+    method: get
+    uri: https://raw.github.com/versioneye/backbone/master/bower.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 26 Jan 2014 10:28:02 GMT
+      Server:
+      - GitHub.com
+      Content-Type:
+      - text/plain; charset=utf-8
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src *; script-src 'self' https://github.global.ssl.fastly.net https://ssl.google-analytics.com
+        https://collector-cdn.github.com https://analytics.githubapp.com https://embed.github.com
+        https://raw.github.com; style-src 'self' 'unsafe-inline' https://github.global.ssl.fastly.net;
+        object-src 'self' https://github.global.ssl.fastly.net
+      X-Ratelimit-Limit:
+      - '100'
+      X-Ratelimit-Remaining:
+      - '100'
+      Access-Control-Allow-Origin:
+      - https://render.github.com
+      X-Git-Blob-Oid:
+      - 1b89da8fe4f742f30af1de6a3193a57cd7c5cf69
+      Content-Disposition:
+      - inline
+      Content-Transfer-Encoding:
+      - binary
+      X-Runtime:
+      - '6'
+      Etag:
+      - "\"7959212889fab60aa645afc9a70bb1fa\""
+      X-Github-Request-Id:
+      - B91F1117:60F2:7775AAC:52E4E331
+      Content-Length:
+      - '252'
+      Accept-Ranges:
+      - bytes
+      Via:
+      - 1.1 varnish
+      Age:
+      - '0'
+      X-Served-By:
+      - cache-fra1224-FRA
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      Vary:
+      - Accept-Encoding
+      Cache-Control:
+      - private
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "name"          : "backbone",
+          "version"       : "1.1.0",
+          "main"          : "backbone.js",
+          "dependencies"  : {
+            "underscore"  : ">=1.5.0"
+          },
+          "ignore"        : ["backbone-min.js", "docs", "examples", "test", "*.yml", "*.map", ".html"]
+        }
+    http_version: 
+  recorded_at: Sun, 26 Jan 2014 10:28:02 GMT
+recorded_with: VCR 2.8.0
