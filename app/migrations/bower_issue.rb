@@ -1,7 +1,35 @@
 class BowerIssue
-  
+
   def self.logger
     ActiveSupport::BufferedLogger.new('log/bower_issue.log')
+  end
+
+  def self.count_empty_tags(token)
+    count = 0
+    Product.collection.find({'versions.1' => {'$exists' => false}, 'prod_type' => 'Bower'}).each do |pr|
+      prod_key = pr['prod_key']
+      prod = Product.where(:prod_type => "Bower", :prod_key => prod_key ).first
+      links         = prod.http_links
+      version_links = prod.http_version_links
+      merged_links  = links.concat(version_links)
+      merged_links.each do |link|
+        if link.link.match(/github\.com/).nil?
+          next
+        end
+        repo_info = BowerCrawler.url_to_repo_info(link.link)
+        if repo_info.nil?
+          p " -- try the next link"
+          next
+        end
+        tags = Github.repo_tags(repo_info[:full_name], token)
+        if tags.nil? || tags.empty?
+          count += 1
+          p "#{prod.prod_key} - #{link.link} - #{count}"
+          next
+        end
+      end
+    end
+
   end
 
   def self.post_for_repo(repo_fullname, token)
@@ -11,9 +39,9 @@ class BowerIssue
     github = Octokit::Client.new(access_token: token)
     issue_template = File.open("#{File.absolute_path('.')}#{template_path}").read
     render = ERB.new(issue_template)
-    
+
     @repo_fullname = repo_fullname
-    content = render.result binding 
+    content = render.result binding
     github.create_issue(repo_fullname, title, content).attrs.to_hash
   end
 
@@ -46,6 +74,6 @@ class BowerIssue
 
 
   def self.close_issue(issue, token)
-    
+
   end
 end
