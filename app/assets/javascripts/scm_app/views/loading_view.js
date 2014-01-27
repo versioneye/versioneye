@@ -12,7 +12,7 @@ define(['underscore', 'backbone'],
 		render: function(){
 			$(this.el).html(this.template({
 				classes: "alert alert-info",
-				message: "Please wait, we are importing data from GitHub."
+				message: "Please wait, we are importing data from SCM."
 			}));
 		}
 	});
