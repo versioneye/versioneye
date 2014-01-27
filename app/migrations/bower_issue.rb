@@ -5,18 +5,26 @@ class BowerIssue
   end
 
   def self.count_empty_tags(token)
+    if token.nil?
+      reiz = User.find_by_username("reiz")
+      token = reiz.github_token
+    end
     count = 0
-    Product.collection.find({'versions.1' => {'$exists' => false}, 'prod_type' => 'Bower'}).each do |pr|
-      prod_key = pr['prod_key']
+    prod_keys = Product.collection.find({'versions.2' => {'$exists' => false}, 'prod_type' => 'Bower'}).distinct(:prod_key)
+    prod_keys.each do |prod_key|
       prod = Product.where(:prod_type => "Bower", :prod_key => prod_key ).first
       links         = prod.http_links
       version_links = prod.http_version_links
       merged_links  = links.concat(version_links)
+      link_set = Set.new
       merged_links.each do |link|
-        if link.link.match(/github\.com/).nil?
+        if link.link.match(/http\:\/\/github\.com/).nil?
           next
         end
-        repo_info = BowerCrawler.url_to_repo_info(link.link)
+        link_set << link.link
+      end
+      link_set.each do |link|
+        repo_info = BowerCrawler.url_to_repo_info(link)
         if repo_info.nil?
           p " -- try the next link"
           next
@@ -24,12 +32,11 @@ class BowerIssue
         tags = Github.repo_tags(repo_info[:full_name], token)
         if tags.nil? || tags.empty?
           count += 1
-          p "#{prod.prod_key} - #{link.link} - #{count}"
+          p "#{prod.prod_key} - #{link} - #{count}"
           next
         end
       end
     end
-
   end
 
   def self.post_for_repo(repo_fullname, token)
