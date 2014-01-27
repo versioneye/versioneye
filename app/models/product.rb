@@ -15,7 +15,7 @@ class Product
   A_LANGUAGE_JAVASCRIPT   = 'JavaScript'
   A_LANGUAGE_CLOJURE      = 'Clojure'
   A_LANGUAGE_C            = 'C'
-  A_LANGUAGE_C++          = 'C++'
+  A_LANGUAGE_C_PP         = 'C++'
   A_LANGUAGE_OBJECTIVEC   = 'Objective-C'
   A_LANGUAGE_GO           = 'Go'
   A_LANGUAGE_CSS          = 'CSS'
