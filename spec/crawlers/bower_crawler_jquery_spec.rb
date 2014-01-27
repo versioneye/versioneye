@@ -29,7 +29,7 @@ describe BowerCrawler, :vcr do
 
 
   describe "crawl_projects" do
-    
+
 
     it "creates correct product for jquery" do
       product_task = BowerCrawler.to_read_task(task, url)
@@ -95,20 +95,21 @@ describe BowerCrawler, :vcr do
       prod[:prod_key].should_not be_nil
       versions_task = BowerCrawler.to_version_task(task, prod[:prod_key])
       BowerCrawler.to_poison_pill(versions_task[:task])
-      VCR.use_cassette('bower_crawler_jquery_specs_versions') do 
+      VCR.use_cassette('bower_crawler_jquery_specs_versions') do
         BowerCrawler.crawl_versions(token)
       end
 
       prod.reload
-      prod.versions.count.should eq(109)
+      prod.versions.count.should eq(110)
       versions = prod.versions
 
-      versions[0][:version].should eq("2.1.0-rc1")
-      versions[1][:version].should eq("2.1.0-beta3")
-      versions[2][:version].should eq("2.1.0-beta2")
-      versions[3][:version].should eq("2.1.0-beta1")
-      versions[4][:version].should eq("2.1.0")
-      versions[5][:version].should eq("2.0.3")
+      versions[0][:version].should eq("2.1.1pre")
+      versions[1][:version].should eq("2.1.0-rc1")
+      versions[2][:version].should eq("2.1.0-beta3")
+      versions[3][:version].should eq("2.1.0-beta2")
+      versions[4][:version].should eq("2.1.0-beta1")
+      versions[5][:version].should eq("2.1.0")
+      versions[6][:version].should eq("2.0.3")
 
       # check version archives
       Versionarchive.all.count.should eq(109)
