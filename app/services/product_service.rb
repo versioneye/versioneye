@@ -88,6 +88,11 @@ class ProductService
     Rails.logger.info "#{products.count} products updated."
   end
 
+  def self.remove product
+    EsProduct.remove( product )
+    product.remove
+  end
+
 
   def self.to_stats_container(title, stats)
     {
