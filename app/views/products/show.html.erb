@@ -20,6 +20,8 @@
 
     <% if ["Java", "Clojure"].member? @product.language %>
       <%= render 'products/product_show_maven' %>
+    <% elsif @product.prod_type.nil? %>
+      <%= render partial_map[Project::A_TYPE_GITHUB] %>
     <% else %>
       <%= render partial_map[@product.prod_type] %>
     <% end %>
