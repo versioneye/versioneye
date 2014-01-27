@@ -287,7 +287,7 @@ class BowerCrawler
 
   # TODO refactor. This method is to big.
   def self.check_repo_existence(task, token)
-    success =  false
+    success  = false
     repo_url = "https://github.com/#{task[:repo_fullname]}"
     response = http_head(repo_url)
     return false if response.nil? or response.is_a?(Boolean)
@@ -593,9 +593,11 @@ class BowerCrawler
       private_repo:  pkg_info[:private_repo],
       description:   pkg_info[:description].to_s
     )
-  
+
     if pkg_info.has_key?(:version) && !pkg_info[:version].to_s.strip.empty?
       prod.version = pkg_info[:version]
+      prod.add_version( pkg_info[:version] )
+      version = Product.version_by_number( prod.version )
     end
     prod.save!
     prod
