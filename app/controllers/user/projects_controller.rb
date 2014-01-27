@@ -21,13 +21,13 @@ class User::ProjectsController < ApplicationController
     if project and project.id
       redirect_to user_project_path( project._id )
     else
-      flash[:error] = "Can't import that project from Github: unparseable project file or issues with filestorage. Please send issue to versioneye."
+      flash[:error] = "Can't import that project: unparseable project file or issues with filestorage. Please contact the VersionEye team."
       redirect_to :back
     end
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
-    flash[:error] = 'VersionEye is not able to parse your project. Please contact the VersionEye Team.'
+    flash[:error] = 'VersionEye is not able to parse your project. Please contact the VersionEye team.'
     redirect_to user_projects_path
   end
 
