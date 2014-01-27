@@ -597,7 +597,6 @@ class BowerCrawler
     if pkg_info.has_key?(:version) && !pkg_info[:version].to_s.strip.empty?
       prod.version = pkg_info[:version]
       prod.add_version( pkg_info[:version] )
-      version = Product.version_by_number( prod.version )
     end
     prod.save!
     prod
