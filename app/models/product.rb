@@ -19,7 +19,10 @@ class Product
   A_LANGUAGE_OBJECTIVEC   = 'Objective-C'
   A_LANGUAGE_GO           = 'Go'
   A_LANGUAGE_CSS          = 'CSS'
-  A_LANGUAGE_COFFEESCRIPT = "CoffeeScript"
+  A_LANGUAGE_COFFEESCRIPT = 'CoffeeScript'
+  A_LANGUAGE_ACTIONSCRIPT = 'ActionScript'
+  A_LANGUAGE_TYPESCRIPT   = 'TypeScript'
+  A_LANGUAGE_LIVESCRIPT   = 'LiveScript'
   A_LANGS_ALL           = [A_LANGUAGE_JAVA, A_LANGUAGE_RUBY, A_LANGUAGE_PYTHON, A_LANGUAGE_PHP, A_LANGUAGE_NODEJS, A_LANGUAGE_JAVASCRIPT, A_LANGUAGE_CLOJURE, A_LANGUAGE_R, A_LANGUAGE_OBJECTIVEC, A_LANGUAGE_C, A_LANGUAGE_CSS, A_LANGUAGE_C_PP, A_LANGUAGE_COFFEESCRIPT, A_LANGUAGE_GO]
   A_LANGS_LANGUAGE_PAGE = [A_LANGUAGE_JAVA, A_LANGUAGE_RUBY, A_LANGUAGE_PYTHON, A_LANGUAGE_PHP, A_LANGUAGE_NODEJS, A_LANGUAGE_JAVASCRIPT, A_LANGUAGE_CLOJURE, A_LANGUAGE_R, A_LANGUAGE_OBJECTIVEC]
   A_LANGS_FILTER        = [A_LANGUAGE_JAVA, A_LANGUAGE_RUBY, A_LANGUAGE_PYTHON, A_LANGUAGE_PHP, A_LANGUAGE_NODEJS, A_LANGUAGE_JAVASCRIPT, A_LANGUAGE_CLOJURE, A_LANGUAGE_R, A_LANGUAGE_OBJECTIVEC]
@@ -203,10 +206,15 @@ class Product
 
   def self.decode_language language
     return nil if language.to_s.strip.empty?
-    return A_LANGUAGE_NODEJS     if language.match(/^node/i)
-    return A_LANGUAGE_PHP        if language.match(/^php/i)
-    return A_LANGUAGE_JAVASCRIPT if language.match(/^JavaScript/i)
-    return A_LANGUAGE_OBJECTIVEC if language.match(/^Objective-C/i)
+    return A_LANGUAGE_NODEJS       if language.match(/^node/i)
+    return A_LANGUAGE_CSS          if language.match(/^CSS/i)
+    return A_LANGUAGE_PHP          if language.match(/^php/i)
+    return A_LANGUAGE_OBJECTIVEC   if language.match(/^Objective-C/i)
+    return A_LANGUAGE_JAVASCRIPT   if language.match(/^JavaScript/i)
+    return A_LANGUAGE_COFFEESCRIPT if language.match(/^CoffeeScript/i)
+    return A_LANGUAGE_ACTIONSCRIPT if language.match(/^ActionScript/i)
+    return A_LANGUAGE_TYPESCRIPT   if language.match(/^TypeScript/i)
+    return A_LANGUAGE_LIVESCRIPT   if language.match(/^LiveScript/i)
     return language.capitalize
   end
 
