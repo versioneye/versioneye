@@ -58,6 +58,17 @@ class Bitbucket
     repos
   end
 
+  #returns all the repo user has at least read access
+  #NB! it has own data format and it just used to find out invited projects
+  def self.read_repos_v1(token, secret)
+    path = "#{A_API_V1_PATH}/user/repositories"
+    repos = get_json(path, token, secret)
+    if repos.is_a?(Array)
+      repos.each {|repo| repo[:full_name] = "#{repo[:owner]}/#{repo[:slug]}" }
+    end
+    repos
+  end
+
   def self.repo_info(repo_name, token, secret)
     path = "#{A_API_V2_PATH}/repositories/#{repo_name}"
     get_json(path, token, secret)
