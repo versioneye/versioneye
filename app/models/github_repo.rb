@@ -60,7 +60,7 @@ class GithubRepo
   end
 
 
-  def github_login_for user
+  def self.github_login_for user
     if user[:github_login].nil?
       user_info = Github.user(user.github_token)
       user_info.deep_symbolize_keys
@@ -72,7 +72,7 @@ class GithubRepo
 
 
   def self.build_new(user, repo, etag = nil)
-    return false if repo.nil? || repo.empty?
+    return nil if repo.nil? || repo.empty?
     repo = repo.deep_symbolize_keys
 
     owner_info = repo[:owner]
@@ -110,18 +110,13 @@ class GithubRepo
 
     repo
   rescue => e
-    Rails.logger.error "Cant save repo:#{repo.errors.full_messages.to_sentence}"
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
     nil
   end
 
   def self.create_new(user, repo, etag = nil)
-    new_repo = build_new(user, repo, etag)
-    unless new_repo.save
-      Rails.logger.error "Cant save new repo:#{new_repo.errors.full_messages.to_sentence}"
-    end
-    new_repo
+    build_new(user, repo, etag)
   end
 
 end
