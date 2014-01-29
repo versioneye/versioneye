@@ -71,40 +71,40 @@ class GithubRepo
   end
 
 
-  def self.build_new(user, repo, etag = nil)
-    return nil if repo.nil? || repo.empty?
-    repo = repo.deep_symbolize_keys
+  def self.build_new(user, repo_data, etag = nil)
+    return nil if repo_data.nil? || repo_data.empty?
+    repo_data = repo_data.deep_symbolize_keys
 
-    owner_info = repo[:owner]
-    owner_type = get_owner_type(user, repo[:owner])
+    owner_info = repo_data[:owner]
+    owner_type = get_owner_type(user, repo_data[:owner])
 
-    repo = GithubRepo.find_or_create_by(:github_id => user.github_id, :fullname => repo[:full_name])
+    repo = GithubRepo.find_or_create_by(:github_id => user.github_id, :fullname => repo_data[:full_name])
     repo.update_attributes!({
       user_id: user.id,
-      github_id: repo[:id],
-      name: repo[:name],
-      fullname: repo[:full_name],
+      github_id: repo_data[:id],
+      name: repo_data[:name],
+      fullname: repo_data[:full_name],
       user_login: user[:user_login],
       owner_login: owner_info[:login],
       owner_type: owner_type,
       owner_avatar: owner_info[:avatar_url],
-      language: repo[:language].to_s.downcase,
-      description: repo[:description],
-      private: repo[:private],
-      fork: repo[:fork],
-      github_url: repo[:url],
-      homepage: repo[:homepage],
-      git_url: repo[:git_url],
-      html_url: repo[:html_url],
-      forks: repo[:forks],
-      watchers: repo[:watchers],
-      size: repo[:size],
+      language: repo_data[:language].to_s.downcase,
+      description: repo_data[:description],
+      private: repo_data[:private],
+      fork: repo_data[:fork],
+      github_url: repo_data[:url],
+      homepage: repo_data[:homepage],
+      git_url: repo_data[:git_url],
+      html_url: repo_data[:html_url],
+      forks: repo_data[:forks],
+      watchers: repo_data[:watchers],
+      size: repo_data[:size],
       etag: etag.to_s,
-      branches: repo[:branches],
-      project_files: repo[:project_files],
-      created_at: repo[:created_at],
-      updated_at: repo[:updated_at],
-      pushed_at: repo[:pushed_at],
+      branches: repo_data[:branches],
+      project_files: repo_data[:project_files],
+      created_at: repo_data[:created_at],
+      updated_at: repo_data[:updated_at],
+      pushed_at: repo_data[:pushed_at],
       cached_at: DateTime.now
     })
 
