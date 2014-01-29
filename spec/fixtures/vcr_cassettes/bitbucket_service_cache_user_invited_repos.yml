@@ -1,0 +1,1684 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://bitbucket.org/api/2.0/repositories/versioneye_test
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="DxCyQKfsnR7SQrISQwoVHOA56XBG1FI2iN5Ap2K68",
+        oauth_signature="cyaaBUWDAdig2nB0o4f9jcMQXdQ%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995100", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:41 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - app12
+      X-Render-Time:
+      - '0.105673074722'
+      Content-Language:
+      - en
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      X-Version:
+      - 0a8edae404be
+      X-Request-Count:
+      - '379'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "{\"pagelen\": 10, \"values\": [{\"scm\": \"git\", \"has_wiki\": false,
+        \"description\": \"Test project for private repos\", \"links\": {\"watchers\":
+        {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/fantom_hydra_private/watchers\"},
+        \"commits\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/fantom_hydra_private/commits\"},
+        \"self\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/fantom_hydra_private\"},
+        \"html\": {\"href\": \"https://bitbucket.org/versioneye_test/fantom_hydra_private\"},
+        \"avatar\": {\"href\": \"https://d3oaxc4q5k2d6q.cloudfront.net/m/6f5a7e713ff3/img/language-avatars/default_16.png\"},
+        \"forks\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/fantom_hydra_private/forks\"},
+        \"clone\": [{\"href\": \"https://versioneye_test@bitbucket.org/versioneye_test/fantom_hydra_private.git\",
+        \"name\": \"https\"}, {\"href\": \"ssh://git@bitbucket.org/versioneye_test/fantom_hydra_private.git\",
+        \"name\": \"ssh\"}], \"pullrequests\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/fantom_hydra_private/pullrequests\"}},
+        \"fork_policy\": \"no_public_forks\", \"language\": \"\", \"created_on\":
+        \"2014-01-19T09:59:50.799913+00:00\", \"parent\": {\"links\": {\"self\": {\"href\":
+        \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/fantom_hydra\"},
+        \"avatar\": {\"href\": \"https://d3oaxc4q5k2d6q.cloudfront.net/m/6f5a7e713ff3/img/language-avatars/default_16.png\"}},
+        \"full_name\": \"versioneye_test/fantom_hydra\", \"name\": \"fantom_hydra\"},
+        \"full_name\": \"versioneye_test/fantom_hydra_private\", \"has_issues\": false,
+        \"owner\": {\"username\": \"versioneye_test\", \"display_name\": \"Version
+        Eye\", \"links\": {\"self\": {\"href\": \"https://bitbucket.org/!api/2.0/users/versioneye_test\"},
+        \"avatar\": {\"href\": \"https://secure.gravatar.com/avatar/ef4bc1256a1b06c7de9da2515680ceee?d=https%3A%2F%2Fd3oaxc4q5k2d6q.cloudfront.net%2Fm%2F6f5a7e713ff3%2Fimg%2Fdefault_avatar%2F32%2Fuser_blue.png&s=32\"}}},
+        \"updated_on\": \"2014-01-19T09:59:50.868863+00:00\", \"size\": 606137, \"is_private\":
+        true, \"name\": \"fantom_hydra_private\"}, {\"scm\": \"git\", \"has_wiki\":
+        false, \"description\": \"Test project for BitbucketSP\", \"links\": {\"watchers\":
+        {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/fantom_hydra/watchers\"},
+        \"commits\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/fantom_hydra/commits\"},
+        \"self\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/fantom_hydra\"},
+        \"html\": {\"href\": \"https://bitbucket.org/versioneye_test/fantom_hydra\"},
+        \"avatar\": {\"href\": \"https://d3oaxc4q5k2d6q.cloudfront.net/m/6f5a7e713ff3/img/language-avatars/default_16.png\"},
+        \"forks\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/fantom_hydra/forks\"},
+        \"clone\": [{\"href\": \"https://versioneye_test@bitbucket.org/versioneye_test/fantom_hydra.git\",
+        \"name\": \"https\"}, {\"href\": \"ssh://git@bitbucket.org/versioneye_test/fantom_hydra.git\",
+        \"name\": \"ssh\"}], \"pullrequests\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/fantom_hydra/pullrequests\"}},
+        \"fork_policy\": \"allow_forks\", \"language\": \"\", \"created_on\": \"2013-12-25T13:57:03.873043+00:00\",
+        \"full_name\": \"versioneye_test/fantom_hydra\", \"has_issues\": false, \"owner\":
+        {\"username\": \"versioneye_test\", \"display_name\": \"Version Eye\", \"links\":
+        {\"self\": {\"href\": \"https://bitbucket.org/!api/2.0/users/versioneye_test\"},
+        \"avatar\": {\"href\": \"https://secure.gravatar.com/avatar/ef4bc1256a1b06c7de9da2515680ceee?d=https%3A%2F%2Fd3oaxc4q5k2d6q.cloudfront.net%2Fm%2F6f5a7e713ff3%2Fimg%2Fdefault_avatar%2F32%2Fuser_blue.png&s=32\"}}},
+        \"updated_on\": \"2013-12-25T13:58:03.794584+00:00\", \"size\": 619780, \"is_private\":
+        false, \"name\": \"fantom_hydra\"}, {\"scm\": \"hg\", \"has_wiki\": false,
+        \"description\": \"Just demo repo for testing purposed.\", \"links\": {\"watchers\":
+        {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/emptyrepo/watchers\"},
+        \"commits\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/emptyrepo/commits\"},
+        \"self\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/emptyrepo\"},
+        \"html\": {\"href\": \"https://bitbucket.org/versioneye_test/emptyrepo\"},
+        \"avatar\": {\"href\": \"https://d3oaxc4q5k2d6q.cloudfront.net/m/6f5a7e713ff3/img/language-avatars/default_16.png\"},
+        \"forks\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/emptyrepo/forks\"},
+        \"clone\": [{\"href\": \"https://versioneye_test@bitbucket.org/versioneye_test/emptyrepo\",
+        \"name\": \"https\"}, {\"href\": \"ssh://hg@bitbucket.org/versioneye_test/emptyrepo\",
+        \"name\": \"ssh\"}], \"pullrequests\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/versioneye_test/emptyrepo/pullrequests\"}},
+        \"fork_policy\": \"allow_forks\", \"language\": \"\", \"created_on\": \"2013-12-23T14:02:22.766300+00:00\",
+        \"full_name\": \"versioneye_test/emptyrepo\", \"has_issues\": false, \"owner\":
+        {\"username\": \"versioneye_test\", \"display_name\": \"Version Eye\", \"links\":
+        {\"self\": {\"href\": \"https://bitbucket.org/!api/2.0/users/versioneye_test\"},
+        \"avatar\": {\"href\": \"https://secure.gravatar.com/avatar/ef4bc1256a1b06c7de9da2515680ceee?d=https%3A%2F%2Fd3oaxc4q5k2d6q.cloudfront.net%2Fm%2F6f5a7e713ff3%2Fimg%2Fdefault_avatar%2F32%2Fuser_blue.png&s=32\"}}},
+        \"updated_on\": \"2013-12-23T14:02:22.792920+00:00\", \"size\": 12744, \"is_private\":
+        false, \"name\": \"EmptyRepo\"}], \"page\": 1, \"size\": 3}"
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:41 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/versioneye_test/emptyrepo/branches
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="Ox056Q9C25LnUSEVPFyveXYuTcQFiYjbiwIjQV2o",
+        oauth_signature="tJZpTLirYnwIe4TQRiDg%2FbwOhHo%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995101", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '2'
+      Connection:
+      - keep-alive
+      X-Request-Count:
+      - '404'
+      X-Served-By:
+      - app07
+      X-Render-Time:
+      - '0.0502641201019'
+      Content-Language:
+      - en
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      X-Version:
+      - 0a8edae404be
+      Etag:
+      - "\"99914b932bd37a50b983c5e7c90ae93b\""
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "{}"
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:42 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/versioneye_test/fantom_hydra_private/branches
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="eLUwunleeidYnQiuSFjnONQs0hCtiu04Ie3DSaQF4A",
+        oauth_signature="JDaXpqNBSTF51%2FwKYMwZeupZy4I%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995101", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Request-Count:
+      - '204'
+      X-Served-By:
+      - app16
+      X-Render-Time:
+      - '0.273328065872'
+      Content-Language:
+      - en
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      X-Version:
+      - 0a8edae404be
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJqYXZhX2JyYW5jaCI6IHsibm9kZSI6ICJkMGFkNzU4YjJjZGMiLCAiZmls
+        ZXMiOiBbeyJ0eXBlIjogInJlbW92ZWQiLCAiZmlsZSI6ICJHZW1maWxlIn0s
+        IHsidHlwZSI6ICJyZW1vdmVkIiwgImZpbGUiOiAiYm93ZXIuanNvbiJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJoYWRvb3AtY29yZS0wLjIwLjIu
+        cG9tLnhtbCJ9XSwgInJhd19hdXRob3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6
+        QGdtYWlsLmNvbT4iLCAidXRjdGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMTQ6
+        NDA6MjkrMDA6MDAiLCAiYXV0aG9yIjogInRpbWdsdXoiLCAidGltZXN0YW1w
+        IjogIjIwMTMtMTEtMDEgMTU6NDA6MjkiLCAicmF3X25vZGUiOiAiZDBhZDc1
+        OGIyY2RjMDMxMTllNjdmMDE0YTM5ZWRjYjNlZGUxMWM0MCIsICJwYXJlbnRz
+        IjogWyIyMGI5YzExOTNhMTYiXSwgImJyYW5jaCI6ICJqYXZhX2JyYW5jaCIs
+        ICJtZXNzYWdlIjogImFkZGVkIGphdmEgYnJhbmNoXG4iLCAicmV2aXNpb24i
+        OiBudWxsLCAic2l6ZSI6IC0xfSwgIm1hc3RlciI6IHsibm9kZSI6ICIyMGI5
+        YzExOTNhMTYiLCAiZmlsZXMiOiBbeyJ0eXBlIjogImFkZGVkIiwgImZpbGUi
+        OiAiR2VtZmlsZSJ9LCB7InR5cGUiOiAicmVtb3ZlZCIsICJmaWxlIjogIkdl
+        bWZpbGUudHh0In0sIHsidHlwZSI6ICJtb2RpZmllZCIsICJmaWxlIjogIlJF
+        QURNRS5tZCJ9XSwgInJhd19hdXRob3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6
+        QGdtYWlsLmNvbT4iLCAidXRjdGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMTQ6
+        MzY6MzErMDA6MDAiLCAiYXV0aG9yIjogInRpbWdsdXoiLCAidGltZXN0YW1w
+        IjogIjIwMTMtMTEtMDEgMTU6MzY6MzEiLCAicmF3X25vZGUiOiAiMjBiOWMx
+        MTkzYTE2YzFkODZmMmE1MjRkMzBjM2UzN2JkMDA1MGJjNCIsICJwYXJlbnRz
+        IjogWyI5ZmRlMjE2NzIyNTYiXSwgImJyYW5jaCI6ICJtYXN0ZXIiLCAibWVz
+        c2FnZSI6ICJ1cGRhdGVkIHJlYWRtZTsgZml4ZWQgZ2VtZmlsZSBleHRlbnNp
+        b247XG4iLCAicmV2aXNpb24iOiBudWxsLCAic2l6ZSI6IC0xfSwgImNsb2p1
+        cmVfYnJhbmNoIjogeyJub2RlIjogIjI4NzU5Y2UwZjhjMSIsICJmaWxlcyI6
+        IFt7InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBh
+        cnR5IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFz
+        dGVyIMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHkuaHRtbCJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5
+        IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVy
+        IMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvMmE4ZDA5
+        MDc2OGQyMzc1NDRhN2M2OWEwZjljMjE3YzcifSwgeyJ0eXBlIjogImFkZGVk
+        IiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVu
+        dF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBw
+        ZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzLzUyZGUxZDFiYTQ1MzM4N2ViYWJl
+        ODRlNTJiMTRhZjhhIn0sIHsidHlwZSI6ICJhZGRlZCIsICJmaWxlIjogInBl
+        cnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3RlbnRfaHR0cGFydHkgdmVy
+        c2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQgcGVyc2lzdGVudF9odHRw
+        YXJ0eV9maWxlcy9hcGkuanMifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUi
+        OiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0
+        eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50
+        X2h0dHBhcnR5X2ZpbGVzL2ZyYW1ld29ya3MtZmVkZDE1MTE1YjgyYzNkNWQy
+        YWZhMzRmNDc1YmEyY2FhNjI4MzYxMy5qcyJ9LCB7InR5cGUiOiAiYWRkZWQi
+        LCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5IGxpYiBwZXJzaXN0ZW50
+        X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVyIMK3IHNvdXBtYXR0IHBl
+        cnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvZ2EuanMifSwgeyJ0eXBlIjogImFk
+        ZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lz
+        dGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0
+        dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL2dpdGh1Yi0yNjM0MmQ2NWMz
+        NDViOTQ0NWZhZTM0NzM2NjRmNDQ5ODAxNzAwMGJlLmNzcyJ9LCB7InR5cGUi
+        OiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5IGxpYiBw
+        ZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVyIMK3IHNv
+        dXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvZ2l0aHViLWExNWM4
+        NGZjZDBjZGJiZDQ3NzIxZGVhODIxYmM0MDA4ZjdjY2ZjZTEuanMifSwgeyJ0
+        eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBs
+        aWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDC
+        tyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL2dpdGh1YjIt
+        ZWZlNTJjNmZlZTc1NzNjZmZjZjUwYzdiZGMxYzA0NWIxNTNhZjQ1YS5jc3Mi
+        fSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRw
+        YXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1h
+        c3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL29j
+        dG9jYXQtc3Bpbm5lci0zMi5naWYifSwgeyJ0eXBlIjogImFkZGVkIiwgImZp
+        bGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRw
+        YXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0
+        ZW50X2h0dHBhcnR5X2ZpbGVzL3NmX21haW4oMSkuanNwIn0sIHsidHlwZSI6
+        ICJhZGRlZCIsICJmaWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBl
+        cnNpc3RlbnRfaHR0cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291
+        cG1hdHQgcGVyc2lzdGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluKDIpLmpz
+        cCJ9LCB7InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0
+        dHBhcnR5IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQg
+        bWFzdGVyIMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMv
+        c2ZfbWFpbigzKS5qc3AifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAi
+        cGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2
+        ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0
+        dHBhcnR5X2ZpbGVzL3NmX21haW4oNCkuanNwIn0sIHsidHlwZSI6ICJhZGRl
+        ZCIsICJmaWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3Rl
+        bnRfaHR0cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQg
+        cGVyc2lzdGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluKDUpLmpzcCJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5
+        IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVy
+        IMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvc2ZfbWFp
+        big2KS5qc3AifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lz
+        dGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9u
+        LnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5
+        X2ZpbGVzL3NmX21haW4oNykuanNwIn0sIHsidHlwZSI6ICJhZGRlZCIsICJm
+        aWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3RlbnRfaHR0
+        cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQgcGVyc2lz
+        dGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluLmpzcCJ9XSwgInJhd19hdXRo
+        b3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6QGdtYWlsLmNvbT4iLCAidXRjdGlt
+        ZXN0YW1wIjogIjIwMTMtMTEtMDEgMTk6MDM6NDArMDA6MDAiLCAiYXV0aG9y
+        IjogInRpbWdsdXoiLCAidGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMjA6MDM6
+        NDAiLCAicmF3X25vZGUiOiAiMjg3NTljZTBmOGMxYWQ5NTgzOTQ3OWM0OWM2
+        NDgwMWVjNTM1ZTg5YSIsICJwYXJlbnRzIjogWyJjOGFhMGE2ZmE1YmIiXSwg
+        ImJyYW5jaCI6ICJjbG9qdXJlX2JyYW5jaCIsICJtZXNzYWdlIjogImFkZCBz
+        b21lIG5vaXNlO1xuIiwgInJldmlzaW9uIjogbnVsbCwgInNpemUiOiAtMX19
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:42 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/versioneye_test/fantom_hydra_private/branches
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="AKRrbetdIfksr5ijZpnA5W8gXUXAI3cxLSy6dsPcZc",
+        oauth_signature="%2B7MeWsBagOF12grUcTJ82JgJoZU%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995101", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Request-Count:
+      - '144'
+      X-Served-By:
+      - app16
+      X-Render-Time:
+      - '0.243150949478'
+      Content-Language:
+      - en
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      X-Version:
+      - 0a8edae404be
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJqYXZhX2JyYW5jaCI6IHsibm9kZSI6ICJkMGFkNzU4YjJjZGMiLCAiZmls
+        ZXMiOiBbeyJ0eXBlIjogInJlbW92ZWQiLCAiZmlsZSI6ICJHZW1maWxlIn0s
+        IHsidHlwZSI6ICJyZW1vdmVkIiwgImZpbGUiOiAiYm93ZXIuanNvbiJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJoYWRvb3AtY29yZS0wLjIwLjIu
+        cG9tLnhtbCJ9XSwgInJhd19hdXRob3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6
+        QGdtYWlsLmNvbT4iLCAidXRjdGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMTQ6
+        NDA6MjkrMDA6MDAiLCAiYXV0aG9yIjogInRpbWdsdXoiLCAidGltZXN0YW1w
+        IjogIjIwMTMtMTEtMDEgMTU6NDA6MjkiLCAicmF3X25vZGUiOiAiZDBhZDc1
+        OGIyY2RjMDMxMTllNjdmMDE0YTM5ZWRjYjNlZGUxMWM0MCIsICJwYXJlbnRz
+        IjogWyIyMGI5YzExOTNhMTYiXSwgImJyYW5jaCI6ICJqYXZhX2JyYW5jaCIs
+        ICJtZXNzYWdlIjogImFkZGVkIGphdmEgYnJhbmNoXG4iLCAicmV2aXNpb24i
+        OiBudWxsLCAic2l6ZSI6IC0xfSwgIm1hc3RlciI6IHsibm9kZSI6ICIyMGI5
+        YzExOTNhMTYiLCAiZmlsZXMiOiBbeyJ0eXBlIjogImFkZGVkIiwgImZpbGUi
+        OiAiR2VtZmlsZSJ9LCB7InR5cGUiOiAicmVtb3ZlZCIsICJmaWxlIjogIkdl
+        bWZpbGUudHh0In0sIHsidHlwZSI6ICJtb2RpZmllZCIsICJmaWxlIjogIlJF
+        QURNRS5tZCJ9XSwgInJhd19hdXRob3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6
+        QGdtYWlsLmNvbT4iLCAidXRjdGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMTQ6
+        MzY6MzErMDA6MDAiLCAiYXV0aG9yIjogInRpbWdsdXoiLCAidGltZXN0YW1w
+        IjogIjIwMTMtMTEtMDEgMTU6MzY6MzEiLCAicmF3X25vZGUiOiAiMjBiOWMx
+        MTkzYTE2YzFkODZmMmE1MjRkMzBjM2UzN2JkMDA1MGJjNCIsICJwYXJlbnRz
+        IjogWyI5ZmRlMjE2NzIyNTYiXSwgImJyYW5jaCI6ICJtYXN0ZXIiLCAibWVz
+        c2FnZSI6ICJ1cGRhdGVkIHJlYWRtZTsgZml4ZWQgZ2VtZmlsZSBleHRlbnNp
+        b247XG4iLCAicmV2aXNpb24iOiBudWxsLCAic2l6ZSI6IC0xfSwgImNsb2p1
+        cmVfYnJhbmNoIjogeyJub2RlIjogIjI4NzU5Y2UwZjhjMSIsICJmaWxlcyI6
+        IFt7InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBh
+        cnR5IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFz
+        dGVyIMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHkuaHRtbCJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5
+        IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVy
+        IMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvMmE4ZDA5
+        MDc2OGQyMzc1NDRhN2M2OWEwZjljMjE3YzcifSwgeyJ0eXBlIjogImFkZGVk
+        IiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVu
+        dF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBw
+        ZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzLzUyZGUxZDFiYTQ1MzM4N2ViYWJl
+        ODRlNTJiMTRhZjhhIn0sIHsidHlwZSI6ICJhZGRlZCIsICJmaWxlIjogInBl
+        cnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3RlbnRfaHR0cGFydHkgdmVy
+        c2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQgcGVyc2lzdGVudF9odHRw
+        YXJ0eV9maWxlcy9hcGkuanMifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUi
+        OiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0
+        eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50
+        X2h0dHBhcnR5X2ZpbGVzL2ZyYW1ld29ya3MtZmVkZDE1MTE1YjgyYzNkNWQy
+        YWZhMzRmNDc1YmEyY2FhNjI4MzYxMy5qcyJ9LCB7InR5cGUiOiAiYWRkZWQi
+        LCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5IGxpYiBwZXJzaXN0ZW50
+        X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVyIMK3IHNvdXBtYXR0IHBl
+        cnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvZ2EuanMifSwgeyJ0eXBlIjogImFk
+        ZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lz
+        dGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0
+        dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL2dpdGh1Yi0yNjM0MmQ2NWMz
+        NDViOTQ0NWZhZTM0NzM2NjRmNDQ5ODAxNzAwMGJlLmNzcyJ9LCB7InR5cGUi
+        OiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5IGxpYiBw
+        ZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVyIMK3IHNv
+        dXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvZ2l0aHViLWExNWM4
+        NGZjZDBjZGJiZDQ3NzIxZGVhODIxYmM0MDA4ZjdjY2ZjZTEuanMifSwgeyJ0
+        eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBs
+        aWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDC
+        tyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL2dpdGh1YjIt
+        ZWZlNTJjNmZlZTc1NzNjZmZjZjUwYzdiZGMxYzA0NWIxNTNhZjQ1YS5jc3Mi
+        fSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRw
+        YXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1h
+        c3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL29j
+        dG9jYXQtc3Bpbm5lci0zMi5naWYifSwgeyJ0eXBlIjogImFkZGVkIiwgImZp
+        bGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRw
+        YXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0
+        ZW50X2h0dHBhcnR5X2ZpbGVzL3NmX21haW4oMSkuanNwIn0sIHsidHlwZSI6
+        ICJhZGRlZCIsICJmaWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBl
+        cnNpc3RlbnRfaHR0cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291
+        cG1hdHQgcGVyc2lzdGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluKDIpLmpz
+        cCJ9LCB7InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0
+        dHBhcnR5IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQg
+        bWFzdGVyIMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMv
+        c2ZfbWFpbigzKS5qc3AifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAi
+        cGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2
+        ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0
+        dHBhcnR5X2ZpbGVzL3NmX21haW4oNCkuanNwIn0sIHsidHlwZSI6ICJhZGRl
+        ZCIsICJmaWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3Rl
+        bnRfaHR0cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQg
+        cGVyc2lzdGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluKDUpLmpzcCJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5
+        IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVy
+        IMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvc2ZfbWFp
+        big2KS5qc3AifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lz
+        dGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9u
+        LnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5
+        X2ZpbGVzL3NmX21haW4oNykuanNwIn0sIHsidHlwZSI6ICJhZGRlZCIsICJm
+        aWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3RlbnRfaHR0
+        cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQgcGVyc2lz
+        dGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluLmpzcCJ9XSwgInJhd19hdXRo
+        b3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6QGdtYWlsLmNvbT4iLCAidXRjdGlt
+        ZXN0YW1wIjogIjIwMTMtMTEtMDEgMTk6MDM6NDArMDA6MDAiLCAiYXV0aG9y
+        IjogInRpbWdsdXoiLCAidGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMjA6MDM6
+        NDAiLCAicmF3X25vZGUiOiAiMjg3NTljZTBmOGMxYWQ5NTgzOTQ3OWM0OWM2
+        NDgwMWVjNTM1ZTg5YSIsICJwYXJlbnRzIjogWyJjOGFhMGE2ZmE1YmIiXSwg
+        ImJyYW5jaCI6ICJjbG9qdXJlX2JyYW5jaCIsICJtZXNzYWdlIjogImFkZCBz
+        b21lIG5vaXNlO1xuIiwgInJldmlzaW9uIjogbnVsbCwgInNpemUiOiAtMX19
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:42 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/versioneye_test/fantom_hydra/branches
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="RgJAY0Yn62H4YZf4UBN776LjKxZxTHxvd4tZNxeWc",
+        oauth_signature="ib57yemK%2Fzxe5IRiTy80Bs8zRPo%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995101", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Request-Count:
+      - '278'
+      X-Served-By:
+      - app16
+      X-Render-Time:
+      - '0.301896810532'
+      Content-Language:
+      - en
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      X-Version:
+      - 0a8edae404be
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJqYXZhX2JyYW5jaCI6IHsibm9kZSI6ICJkMGFkNzU4YjJjZGMiLCAiZmls
+        ZXMiOiBbeyJ0eXBlIjogInJlbW92ZWQiLCAiZmlsZSI6ICJHZW1maWxlIn0s
+        IHsidHlwZSI6ICJyZW1vdmVkIiwgImZpbGUiOiAiYm93ZXIuanNvbiJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJoYWRvb3AtY29yZS0wLjIwLjIu
+        cG9tLnhtbCJ9XSwgInJhd19hdXRob3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6
+        QGdtYWlsLmNvbT4iLCAidXRjdGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMTQ6
+        NDA6MjkrMDA6MDAiLCAiYXV0aG9yIjogInRpbWdsdXoiLCAidGltZXN0YW1w
+        IjogIjIwMTMtMTEtMDEgMTU6NDA6MjkiLCAicmF3X25vZGUiOiAiZDBhZDc1
+        OGIyY2RjMDMxMTllNjdmMDE0YTM5ZWRjYjNlZGUxMWM0MCIsICJwYXJlbnRz
+        IjogWyIyMGI5YzExOTNhMTYiXSwgImJyYW5jaCI6ICJqYXZhX2JyYW5jaCIs
+        ICJtZXNzYWdlIjogImFkZGVkIGphdmEgYnJhbmNoXG4iLCAicmV2aXNpb24i
+        OiBudWxsLCAic2l6ZSI6IC0xfSwgIm1hc3RlciI6IHsibm9kZSI6ICIyMGI5
+        YzExOTNhMTYiLCAiZmlsZXMiOiBbeyJ0eXBlIjogImFkZGVkIiwgImZpbGUi
+        OiAiR2VtZmlsZSJ9LCB7InR5cGUiOiAicmVtb3ZlZCIsICJmaWxlIjogIkdl
+        bWZpbGUudHh0In0sIHsidHlwZSI6ICJtb2RpZmllZCIsICJmaWxlIjogIlJF
+        QURNRS5tZCJ9XSwgInJhd19hdXRob3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6
+        QGdtYWlsLmNvbT4iLCAidXRjdGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMTQ6
+        MzY6MzErMDA6MDAiLCAiYXV0aG9yIjogInRpbWdsdXoiLCAidGltZXN0YW1w
+        IjogIjIwMTMtMTEtMDEgMTU6MzY6MzEiLCAicmF3X25vZGUiOiAiMjBiOWMx
+        MTkzYTE2YzFkODZmMmE1MjRkMzBjM2UzN2JkMDA1MGJjNCIsICJwYXJlbnRz
+        IjogWyI5ZmRlMjE2NzIyNTYiXSwgImJyYW5jaCI6ICJtYXN0ZXIiLCAibWVz
+        c2FnZSI6ICJ1cGRhdGVkIHJlYWRtZTsgZml4ZWQgZ2VtZmlsZSBleHRlbnNp
+        b247XG4iLCAicmV2aXNpb24iOiBudWxsLCAic2l6ZSI6IC0xfSwgImNsb2p1
+        cmVfYnJhbmNoIjogeyJub2RlIjogIjI4NzU5Y2UwZjhjMSIsICJmaWxlcyI6
+        IFt7InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBh
+        cnR5IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFz
+        dGVyIMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHkuaHRtbCJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5
+        IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVy
+        IMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvMmE4ZDA5
+        MDc2OGQyMzc1NDRhN2M2OWEwZjljMjE3YzcifSwgeyJ0eXBlIjogImFkZGVk
+        IiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVu
+        dF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBw
+        ZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzLzUyZGUxZDFiYTQ1MzM4N2ViYWJl
+        ODRlNTJiMTRhZjhhIn0sIHsidHlwZSI6ICJhZGRlZCIsICJmaWxlIjogInBl
+        cnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3RlbnRfaHR0cGFydHkgdmVy
+        c2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQgcGVyc2lzdGVudF9odHRw
+        YXJ0eV9maWxlcy9hcGkuanMifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUi
+        OiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0
+        eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50
+        X2h0dHBhcnR5X2ZpbGVzL2ZyYW1ld29ya3MtZmVkZDE1MTE1YjgyYzNkNWQy
+        YWZhMzRmNDc1YmEyY2FhNjI4MzYxMy5qcyJ9LCB7InR5cGUiOiAiYWRkZWQi
+        LCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5IGxpYiBwZXJzaXN0ZW50
+        X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVyIMK3IHNvdXBtYXR0IHBl
+        cnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvZ2EuanMifSwgeyJ0eXBlIjogImFk
+        ZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lz
+        dGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0
+        dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL2dpdGh1Yi0yNjM0MmQ2NWMz
+        NDViOTQ0NWZhZTM0NzM2NjRmNDQ5ODAxNzAwMGJlLmNzcyJ9LCB7InR5cGUi
+        OiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5IGxpYiBw
+        ZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVyIMK3IHNv
+        dXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvZ2l0aHViLWExNWM4
+        NGZjZDBjZGJiZDQ3NzIxZGVhODIxYmM0MDA4ZjdjY2ZjZTEuanMifSwgeyJ0
+        eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBs
+        aWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDC
+        tyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL2dpdGh1YjIt
+        ZWZlNTJjNmZlZTc1NzNjZmZjZjUwYzdiZGMxYzA0NWIxNTNhZjQ1YS5jc3Mi
+        fSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRw
+        YXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1h
+        c3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL29j
+        dG9jYXQtc3Bpbm5lci0zMi5naWYifSwgeyJ0eXBlIjogImFkZGVkIiwgImZp
+        bGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRw
+        YXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0
+        ZW50X2h0dHBhcnR5X2ZpbGVzL3NmX21haW4oMSkuanNwIn0sIHsidHlwZSI6
+        ICJhZGRlZCIsICJmaWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBl
+        cnNpc3RlbnRfaHR0cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291
+        cG1hdHQgcGVyc2lzdGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluKDIpLmpz
+        cCJ9LCB7InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0
+        dHBhcnR5IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQg
+        bWFzdGVyIMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMv
+        c2ZfbWFpbigzKS5qc3AifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAi
+        cGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2
+        ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0
+        dHBhcnR5X2ZpbGVzL3NmX21haW4oNCkuanNwIn0sIHsidHlwZSI6ICJhZGRl
+        ZCIsICJmaWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3Rl
+        bnRfaHR0cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQg
+        cGVyc2lzdGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluKDUpLmpzcCJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5
+        IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVy
+        IMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvc2ZfbWFp
+        big2KS5qc3AifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lz
+        dGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9u
+        LnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5
+        X2ZpbGVzL3NmX21haW4oNykuanNwIn0sIHsidHlwZSI6ICJhZGRlZCIsICJm
+        aWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3RlbnRfaHR0
+        cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQgcGVyc2lz
+        dGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluLmpzcCJ9XSwgInJhd19hdXRo
+        b3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6QGdtYWlsLmNvbT4iLCAidXRjdGlt
+        ZXN0YW1wIjogIjIwMTMtMTEtMDEgMTk6MDM6NDArMDA6MDAiLCAiYXV0aG9y
+        IjogInRpbWdsdXoiLCAidGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMjA6MDM6
+        NDAiLCAicmF3X25vZGUiOiAiMjg3NTljZTBmOGMxYWQ5NTgzOTQ3OWM0OWM2
+        NDgwMWVjNTM1ZTg5YSIsICJwYXJlbnRzIjogWyJjOGFhMGE2ZmE1YmIiXSwg
+        ImJyYW5jaCI6ICJjbG9qdXJlX2JyYW5jaCIsICJtZXNzYWdlIjogImFkZCBz
+        b21lIG5vaXNlO1xuIiwgInJldmlzaW9uIjogbnVsbCwgInNpemUiOiAtMX19
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:42 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/versioneye_test/emptyrepo/branches
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="3vjBPYPEaGKQj7YNUUWS5GQ39MQ13kA03eqoGSYGU",
+        oauth_signature="Fb1hXtGfsm7ivG1POYxEjsMToj0%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995101", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '2'
+      Connection:
+      - keep-alive
+      X-Request-Count:
+      - '74'
+      X-Served-By:
+      - app16
+      X-Render-Time:
+      - '0.0608649253845'
+      Content-Language:
+      - en
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      X-Version:
+      - 0a8edae404be
+      Etag:
+      - "\"99914b932bd37a50b983c5e7c90ae93b\""
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "{}"
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:43 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/versioneye_test/fantom_hydra_private/src/java_branch/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="hZnwja8mV9xOMzt4Dm59hFSm0SBwWgUCREcoTGpQ",
+        oauth_signature="LDR1TKaxaFSmjC%2Bi0TK4j%2Fhhmm8%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995102", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:43 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - app02
+      X-Render-Time:
+      - '0.0791108608246'
+      Content-Language:
+      - en
+      Cache-Control:
+      - max-age=0
+      X-Request-Count:
+      - '7'
+      Expires:
+      - Wed, 29 Jan 2014 11:31:43 GMT
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      Last-Modified:
+      - Wed, 29 Jan 2014 11:31:43 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Version:
+      - 0a8edae404be
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "{\"node\": \"d0ad758b2cdc\", \"path\": \"/\", \"directories\": [],
+        \"files\": [{\"size\": 0, \"path\": \"LICENSE\", \"timestamp\": \"2013-11-01T14:29:08Z\",
+        \"utctimestamp\": \"2013-11-01 14:29:08+00:00\", \"revision\": \"a3ffc834e602\"},
+        {\"size\": 139, \"path\": \"README.md\", \"timestamp\": \"2013-11-01T14:36:31Z\",
+        \"utctimestamp\": \"2013-11-01 14:36:31+00:00\", \"revision\": \"20b9c1193a16\"},
+        {\"size\": 4164, \"path\": \"hadoop-core-0.20.2.pom.xml\", \"timestamp\":
+        \"2013-11-01T14:40:29Z\", \"utctimestamp\": \"2013-11-01 14:40:29+00:00\",
+        \"revision\": \"d0ad758b2cdc\"}]}"
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:43 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/versioneye_test/fantom_hydra/branches
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="51lOSKYUXm0ctR1ZPN9pVdOGrpYtmcRsScF5QyTs",
+        oauth_signature="bYYraXD1mRgs3TyniBzjfex4lQc%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995101", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:44 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Request-Count:
+      - '39'
+      X-Served-By:
+      - app02
+      X-Render-Time:
+      - '0.162071943283'
+      Content-Language:
+      - en
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      X-Version:
+      - 0a8edae404be
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJqYXZhX2JyYW5jaCI6IHsibm9kZSI6ICJkMGFkNzU4YjJjZGMiLCAiZmls
+        ZXMiOiBbeyJ0eXBlIjogInJlbW92ZWQiLCAiZmlsZSI6ICJHZW1maWxlIn0s
+        IHsidHlwZSI6ICJyZW1vdmVkIiwgImZpbGUiOiAiYm93ZXIuanNvbiJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJoYWRvb3AtY29yZS0wLjIwLjIu
+        cG9tLnhtbCJ9XSwgInJhd19hdXRob3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6
+        QGdtYWlsLmNvbT4iLCAidXRjdGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMTQ6
+        NDA6MjkrMDA6MDAiLCAiYXV0aG9yIjogInRpbWdsdXoiLCAidGltZXN0YW1w
+        IjogIjIwMTMtMTEtMDEgMTU6NDA6MjkiLCAicmF3X25vZGUiOiAiZDBhZDc1
+        OGIyY2RjMDMxMTllNjdmMDE0YTM5ZWRjYjNlZGUxMWM0MCIsICJwYXJlbnRz
+        IjogWyIyMGI5YzExOTNhMTYiXSwgImJyYW5jaCI6ICJqYXZhX2JyYW5jaCIs
+        ICJtZXNzYWdlIjogImFkZGVkIGphdmEgYnJhbmNoXG4iLCAicmV2aXNpb24i
+        OiBudWxsLCAic2l6ZSI6IC0xfSwgIm1hc3RlciI6IHsibm9kZSI6ICIyMGI5
+        YzExOTNhMTYiLCAiZmlsZXMiOiBbeyJ0eXBlIjogImFkZGVkIiwgImZpbGUi
+        OiAiR2VtZmlsZSJ9LCB7InR5cGUiOiAicmVtb3ZlZCIsICJmaWxlIjogIkdl
+        bWZpbGUudHh0In0sIHsidHlwZSI6ICJtb2RpZmllZCIsICJmaWxlIjogIlJF
+        QURNRS5tZCJ9XSwgInJhd19hdXRob3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6
+        QGdtYWlsLmNvbT4iLCAidXRjdGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMTQ6
+        MzY6MzErMDA6MDAiLCAiYXV0aG9yIjogInRpbWdsdXoiLCAidGltZXN0YW1w
+        IjogIjIwMTMtMTEtMDEgMTU6MzY6MzEiLCAicmF3X25vZGUiOiAiMjBiOWMx
+        MTkzYTE2YzFkODZmMmE1MjRkMzBjM2UzN2JkMDA1MGJjNCIsICJwYXJlbnRz
+        IjogWyI5ZmRlMjE2NzIyNTYiXSwgImJyYW5jaCI6ICJtYXN0ZXIiLCAibWVz
+        c2FnZSI6ICJ1cGRhdGVkIHJlYWRtZTsgZml4ZWQgZ2VtZmlsZSBleHRlbnNp
+        b247XG4iLCAicmV2aXNpb24iOiBudWxsLCAic2l6ZSI6IC0xfSwgImNsb2p1
+        cmVfYnJhbmNoIjogeyJub2RlIjogIjI4NzU5Y2UwZjhjMSIsICJmaWxlcyI6
+        IFt7InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBh
+        cnR5IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFz
+        dGVyIMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHkuaHRtbCJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5
+        IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVy
+        IMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvMmE4ZDA5
+        MDc2OGQyMzc1NDRhN2M2OWEwZjljMjE3YzcifSwgeyJ0eXBlIjogImFkZGVk
+        IiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVu
+        dF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBw
+        ZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzLzUyZGUxZDFiYTQ1MzM4N2ViYWJl
+        ODRlNTJiMTRhZjhhIn0sIHsidHlwZSI6ICJhZGRlZCIsICJmaWxlIjogInBl
+        cnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3RlbnRfaHR0cGFydHkgdmVy
+        c2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQgcGVyc2lzdGVudF9odHRw
+        YXJ0eV9maWxlcy9hcGkuanMifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUi
+        OiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0
+        eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50
+        X2h0dHBhcnR5X2ZpbGVzL2ZyYW1ld29ya3MtZmVkZDE1MTE1YjgyYzNkNWQy
+        YWZhMzRmNDc1YmEyY2FhNjI4MzYxMy5qcyJ9LCB7InR5cGUiOiAiYWRkZWQi
+        LCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5IGxpYiBwZXJzaXN0ZW50
+        X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVyIMK3IHNvdXBtYXR0IHBl
+        cnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvZ2EuanMifSwgeyJ0eXBlIjogImFk
+        ZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lz
+        dGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0
+        dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL2dpdGh1Yi0yNjM0MmQ2NWMz
+        NDViOTQ0NWZhZTM0NzM2NjRmNDQ5ODAxNzAwMGJlLmNzcyJ9LCB7InR5cGUi
+        OiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5IGxpYiBw
+        ZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVyIMK3IHNv
+        dXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvZ2l0aHViLWExNWM4
+        NGZjZDBjZGJiZDQ3NzIxZGVhODIxYmM0MDA4ZjdjY2ZjZTEuanMifSwgeyJ0
+        eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBs
+        aWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDC
+        tyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL2dpdGh1YjIt
+        ZWZlNTJjNmZlZTc1NzNjZmZjZjUwYzdiZGMxYzA0NWIxNTNhZjQ1YS5jc3Mi
+        fSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lzdGVudF9odHRw
+        YXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9uLnJiIGF0IG1h
+        c3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5X2ZpbGVzL29j
+        dG9jYXQtc3Bpbm5lci0zMi5naWYifSwgeyJ0eXBlIjogImFkZGVkIiwgImZp
+        bGUiOiAicGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRw
+        YXJ0eSB2ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0
+        ZW50X2h0dHBhcnR5X2ZpbGVzL3NmX21haW4oMSkuanNwIn0sIHsidHlwZSI6
+        ICJhZGRlZCIsICJmaWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBl
+        cnNpc3RlbnRfaHR0cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291
+        cG1hdHQgcGVyc2lzdGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluKDIpLmpz
+        cCJ9LCB7InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0
+        dHBhcnR5IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQg
+        bWFzdGVyIMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMv
+        c2ZfbWFpbigzKS5qc3AifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAi
+        cGVyc2lzdGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2
+        ZXJzaW9uLnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0
+        dHBhcnR5X2ZpbGVzL3NmX21haW4oNCkuanNwIn0sIHsidHlwZSI6ICJhZGRl
+        ZCIsICJmaWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3Rl
+        bnRfaHR0cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQg
+        cGVyc2lzdGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluKDUpLmpzcCJ9LCB7
+        InR5cGUiOiAiYWRkZWQiLCAiZmlsZSI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5
+        IGxpYiBwZXJzaXN0ZW50X2h0dHBhcnR5IHZlcnNpb24ucmIgYXQgbWFzdGVy
+        IMK3IHNvdXBtYXR0IHBlcnNpc3RlbnRfaHR0cGFydHlfZmlsZXMvc2ZfbWFp
+        big2KS5qc3AifSwgeyJ0eXBlIjogImFkZGVkIiwgImZpbGUiOiAicGVyc2lz
+        dGVudF9odHRwYXJ0eSBsaWIgcGVyc2lzdGVudF9odHRwYXJ0eSB2ZXJzaW9u
+        LnJiIGF0IG1hc3RlciDCtyBzb3VwbWF0dCBwZXJzaXN0ZW50X2h0dHBhcnR5
+        X2ZpbGVzL3NmX21haW4oNykuanNwIn0sIHsidHlwZSI6ICJhZGRlZCIsICJm
+        aWxlIjogInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3RlbnRfaHR0
+        cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQgcGVyc2lz
+        dGVudF9odHRwYXJ0eV9maWxlcy9zZl9tYWluLmpzcCJ9XSwgInJhd19hdXRo
+        b3IiOiAiVGltbyBTdWxnIDx0aW1nbHV6QGdtYWlsLmNvbT4iLCAidXRjdGlt
+        ZXN0YW1wIjogIjIwMTMtMTEtMDEgMTk6MDM6NDArMDA6MDAiLCAiYXV0aG9y
+        IjogInRpbWdsdXoiLCAidGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMjA6MDM6
+        NDAiLCAicmF3X25vZGUiOiAiMjg3NTljZTBmOGMxYWQ5NTgzOTQ3OWM0OWM2
+        NDgwMWVjNTM1ZTg5YSIsICJwYXJlbnRzIjogWyJjOGFhMGE2ZmE1YmIiXSwg
+        ImJyYW5jaCI6ICJjbG9qdXJlX2JyYW5jaCIsICJtZXNzYWdlIjogImFkZCBz
+        b21lIG5vaXNlO1xuIiwgInJldmlzaW9uIjogbnVsbCwgInNpemUiOiAtMX19
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:44 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/versioneye_test/fantom_hydra_private/src/master/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="QZVjKOIaLHz3WOijihq6Ud7nzFP61lDR3mkos2jIaA",
+        oauth_signature="OEP56QOUkT8bpJA3Bm%2BiwgTgJ0g%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995103", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:44 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - app16
+      X-Render-Time:
+      - '0.0892550945282'
+      Content-Language:
+      - en
+      Cache-Control:
+      - max-age=0
+      X-Request-Count:
+      - '286'
+      Expires:
+      - Wed, 29 Jan 2014 11:31:44 GMT
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      Last-Modified:
+      - Wed, 29 Jan 2014 11:31:44 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Version:
+      - 0a8edae404be
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "{\"node\": \"20b9c1193a16\", \"path\": \"/\", \"directories\": [],
+        \"files\": [{\"size\": 1990, \"path\": \"Gemfile\", \"timestamp\": \"2013-11-01T14:36:31Z\",
+        \"utctimestamp\": \"2013-11-01 14:36:31+00:00\", \"revision\": \"20b9c1193a16\"},
+        {\"size\": 0, \"path\": \"LICENSE\", \"timestamp\": \"2013-11-01T14:29:08Z\",
+        \"utctimestamp\": \"2013-11-01 14:29:08+00:00\", \"revision\": \"a3ffc834e602\"},
+        {\"size\": 139, \"path\": \"README.md\", \"timestamp\": \"2013-11-01T14:36:31Z\",
+        \"utctimestamp\": \"2013-11-01 14:36:31+00:00\", \"revision\": \"20b9c1193a16\"},
+        {\"size\": 215, \"path\": \"bower.json\", \"timestamp\": \"2013-11-01T14:32:25Z\",
+        \"utctimestamp\": \"2013-11-01 14:32:25+00:00\", \"revision\": \"69f219d5fd26\"}]}"
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:44 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/versioneye_test/fantom_hydra/src/java_branch/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="oEAy8A0R2HD0GUoOI7pcoVlsiHssJ9AnwuOEJqHag",
+        oauth_signature="iL9yNmxCEb9pFlfLpAoAZBQi%2FuQ%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995104", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:45 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - app16
+      X-Render-Time:
+      - '0.0812478065491'
+      Content-Language:
+      - en
+      Cache-Control:
+      - max-age=0
+      X-Request-Count:
+      - '232'
+      Expires:
+      - Wed, 29 Jan 2014 11:31:45 GMT
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      Last-Modified:
+      - Wed, 29 Jan 2014 11:31:45 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Version:
+      - 0a8edae404be
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "{\"node\": \"d0ad758b2cdc\", \"path\": \"/\", \"directories\": [],
+        \"files\": [{\"size\": 0, \"path\": \"LICENSE\", \"timestamp\": \"2013-11-01T14:29:08Z\",
+        \"utctimestamp\": \"2013-11-01 14:29:08+00:00\", \"revision\": \"a3ffc834e602\"},
+        {\"size\": 139, \"path\": \"README.md\", \"timestamp\": \"2013-11-01T14:36:31Z\",
+        \"utctimestamp\": \"2013-11-01 14:36:31+00:00\", \"revision\": \"20b9c1193a16\"},
+        {\"size\": 4164, \"path\": \"hadoop-core-0.20.2.pom.xml\", \"timestamp\":
+        \"2013-11-01T14:40:29Z\", \"utctimestamp\": \"2013-11-01 14:40:29+00:00\",
+        \"revision\": \"d0ad758b2cdc\"}]}"
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:45 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/versioneye_test/fantom_hydra_private/src/clojure_branch/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="wHvKbbn2lRTsCZfXCLb2pi676gA7mCOslbCgf4OFBM",
+        oauth_signature="7xaZEU%2BRLgBIOwmkzN%2BdikBX2Ls%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995104", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:45 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - app10
+      X-Render-Time:
+      - '0.109154939651'
+      Content-Language:
+      - en
+      Cache-Control:
+      - max-age=0
+      X-Request-Count:
+      - '291'
+      Expires:
+      - Wed, 29 Jan 2014 11:31:45 GMT
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      Last-Modified:
+      - Wed, 29 Jan 2014 11:31:45 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Version:
+      - 0a8edae404be
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJub2RlIjogIjI4NzU5Y2UwZjhjMSIsICJwYXRoIjogIi8iLCAiZGlyZWN0
+        b3JpZXMiOiBbInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3RlbnRf
+        aHR0cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQgcGVy
+        c2lzdGVudF9odHRwYXJ0eV9maWxlcyJdLCAiZmlsZXMiOiBbeyJzaXplIjog
+        MCwgInBhdGgiOiAiTElDRU5TRSIsICJ0aW1lc3RhbXAiOiAiMjAxMy0xMS0w
+        MVQxNDoyOTowOFoiLCAidXRjdGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMTQ6
+        Mjk6MDgrMDA6MDAiLCAicmV2aXNpb24iOiAiYTNmZmM4MzRlNjAyIn0sIHsi
+        c2l6ZSI6IDEzOSwgInBhdGgiOiAiUkVBRE1FLm1kIiwgInRpbWVzdGFtcCI6
+        ICIyMDEzLTExLTAxVDE0OjM2OjMxWiIsICJ1dGN0aW1lc3RhbXAiOiAiMjAx
+        My0xMS0wMSAxNDozNjozMSswMDowMCIsICJyZXZpc2lvbiI6ICIyMGI5YzEx
+        OTNhMTYifSwgeyJzaXplIjogMTA5MywgInBhdGgiOiAicGFja2FnZS5qc29u
+        IiwgInRpbWVzdGFtcCI6ICIyMDEzLTExLTAxVDE0OjQ1OjAwWiIsICJ1dGN0
+        aW1lc3RhbXAiOiAiMjAxMy0xMS0wMSAxNDo0NTowMCswMDowMCIsICJyZXZp
+        c2lvbiI6ICJjOGFhMGE2ZmE1YmIifSwgeyJzaXplIjogMTQ4NzkyLCAicGF0
+        aCI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5IGxpYiBwZXJzaXN0ZW50X2h0dHBh
+        cnR5IHZlcnNpb24ucmIgYXQgbWFzdGVyIMK3IHNvdXBtYXR0IHBlcnNpc3Rl
+        bnRfaHR0cGFydHkuaHRtbCIsICJ0aW1lc3RhbXAiOiAiMjAxMy0xMS0wMVQx
+        OTowMzo0MFoiLCAidXRjdGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMTk6MDM6
+        NDArMDA6MDAiLCAicmV2aXNpb24iOiAiMjg3NTljZTBmOGMxIn0sIHsic2l6
+        ZSI6IDQzNSwgInBhdGgiOiAicHJvamVjdC5jbGoiLCAidGltZXN0YW1wIjog
+        IjIwMTMtMTEtMDFUMTQ6NDU6MDBaIiwgInV0Y3RpbWVzdGFtcCI6ICIyMDEz
+        LTExLTAxIDE0OjQ1OjAwKzAwOjAwIiwgInJldmlzaW9uIjogImM4YWEwYTZm
+        YTViYiJ9XX0=
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:45 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/versioneye_test/fantom_hydra/src/master/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="jdadMTJlx8R9H0kBMF0RCMewx55zUDmyq9cGa35Tc",
+        oauth_signature="39RKetQLCcu05vf7hCJYgnEoT0Q%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995105", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:46 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - app02
+      X-Render-Time:
+      - '0.0858280658722'
+      Content-Language:
+      - en
+      Cache-Control:
+      - max-age=0
+      X-Request-Count:
+      - '242'
+      Expires:
+      - Wed, 29 Jan 2014 11:31:46 GMT
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      Last-Modified:
+      - Wed, 29 Jan 2014 11:31:46 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Version:
+      - 0a8edae404be
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "{\"node\": \"20b9c1193a16\", \"path\": \"/\", \"directories\": [],
+        \"files\": [{\"size\": 1990, \"path\": \"Gemfile\", \"timestamp\": \"2013-11-01T14:36:31Z\",
+        \"utctimestamp\": \"2013-11-01 14:36:31+00:00\", \"revision\": \"20b9c1193a16\"},
+        {\"size\": 0, \"path\": \"LICENSE\", \"timestamp\": \"2013-11-01T14:29:08Z\",
+        \"utctimestamp\": \"2013-11-01 14:29:08+00:00\", \"revision\": \"a3ffc834e602\"},
+        {\"size\": 139, \"path\": \"README.md\", \"timestamp\": \"2013-11-01T14:36:31Z\",
+        \"utctimestamp\": \"2013-11-01 14:36:31+00:00\", \"revision\": \"20b9c1193a16\"},
+        {\"size\": 215, \"path\": \"bower.json\", \"timestamp\": \"2013-11-01T14:32:25Z\",
+        \"utctimestamp\": \"2013-11-01 14:32:25+00:00\", \"revision\": \"69f219d5fd26\"}]}"
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:46 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/versioneye_test/fantom_hydra/src/clojure_branch/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="UmHAsZcw0VeBIeLU7MaQegaJOo7eVJg5WvqEMgno",
+        oauth_signature="AU3ldQm04HkhfzMVwFLKgx8vrBI%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995106", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:47 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - app10
+      X-Render-Time:
+      - '0.092257976532'
+      Content-Language:
+      - en
+      Cache-Control:
+      - max-age=0
+      X-Request-Count:
+      - '193'
+      Expires:
+      - Wed, 29 Jan 2014 11:31:47 GMT
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      Last-Modified:
+      - Wed, 29 Jan 2014 11:31:47 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Version:
+      - 0a8edae404be
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJub2RlIjogIjI4NzU5Y2UwZjhjMSIsICJwYXRoIjogIi8iLCAiZGlyZWN0
+        b3JpZXMiOiBbInBlcnNpc3RlbnRfaHR0cGFydHkgbGliIHBlcnNpc3RlbnRf
+        aHR0cGFydHkgdmVyc2lvbi5yYiBhdCBtYXN0ZXIgwrcgc291cG1hdHQgcGVy
+        c2lzdGVudF9odHRwYXJ0eV9maWxlcyJdLCAiZmlsZXMiOiBbeyJzaXplIjog
+        MCwgInBhdGgiOiAiTElDRU5TRSIsICJ0aW1lc3RhbXAiOiAiMjAxMy0xMS0w
+        MVQxNDoyOTowOFoiLCAidXRjdGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMTQ6
+        Mjk6MDgrMDA6MDAiLCAicmV2aXNpb24iOiAiYTNmZmM4MzRlNjAyIn0sIHsi
+        c2l6ZSI6IDEzOSwgInBhdGgiOiAiUkVBRE1FLm1kIiwgInRpbWVzdGFtcCI6
+        ICIyMDEzLTExLTAxVDE0OjM2OjMxWiIsICJ1dGN0aW1lc3RhbXAiOiAiMjAx
+        My0xMS0wMSAxNDozNjozMSswMDowMCIsICJyZXZpc2lvbiI6ICIyMGI5YzEx
+        OTNhMTYifSwgeyJzaXplIjogMTA5MywgInBhdGgiOiAicGFja2FnZS5qc29u
+        IiwgInRpbWVzdGFtcCI6ICIyMDEzLTExLTAxVDE0OjQ1OjAwWiIsICJ1dGN0
+        aW1lc3RhbXAiOiAiMjAxMy0xMS0wMSAxNDo0NTowMCswMDowMCIsICJyZXZp
+        c2lvbiI6ICJjOGFhMGE2ZmE1YmIifSwgeyJzaXplIjogMTQ4NzkyLCAicGF0
+        aCI6ICJwZXJzaXN0ZW50X2h0dHBhcnR5IGxpYiBwZXJzaXN0ZW50X2h0dHBh
+        cnR5IHZlcnNpb24ucmIgYXQgbWFzdGVyIMK3IHNvdXBtYXR0IHBlcnNpc3Rl
+        bnRfaHR0cGFydHkuaHRtbCIsICJ0aW1lc3RhbXAiOiAiMjAxMy0xMS0wMVQx
+        OTowMzo0MFoiLCAidXRjdGltZXN0YW1wIjogIjIwMTMtMTEtMDEgMTk6MDM6
+        NDArMDA6MDAiLCAicmV2aXNpb24iOiAiMjg3NTljZTBmOGMxIn0sIHsic2l6
+        ZSI6IDQzNSwgInBhdGgiOiAicHJvamVjdC5jbGoiLCAidGltZXN0YW1wIjog
+        IjIwMTMtMTEtMDFUMTQ6NDU6MDBaIiwgInV0Y3RpbWVzdGFtcCI6ICIyMDEz
+        LTExLTAxIDE0OjQ1OjAwKzAwOjAwIiwgInJldmlzaW9uIjogImM4YWEwYTZm
+        YTViYiJ9XX0=
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:47 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/user/repositories
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="0XyuypYprf3dCg6qOWzzPSKiREU8eoYy9BAcWwU9Y",
+        oauth_signature="SN3jZnZXDbEpO6N%2F3HT3rKyJ0VA%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995107", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:48 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - app16
+      X-Render-Time:
+      - '0.091922044754'
+      Content-Language:
+      - en
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      X-Version:
+      - 0a8edae404be
+      X-Request-Count:
+      - '127'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "[{\"scm\": \"git\", \"has_wiki\": true, \"last_updated\": \"2012-10-18T22:19:17.941\",
+        \"no_forks\": null, \"created_on\": \"2012-10-18T22:16:54.614\", \"owner\":
+        \"timgluz\", \"logo\": \"https://bitbucket-assetroot.s3.amazonaws.com/c/photos/2012/Oct/18/clj-sparse-logo-2710802377-6_avatar.png\",
+        \"email_mailinglist\": \"\", \"is_mq\": false, \"size\": 5218, \"read_only\":
+        false, \"fork_of\": null, \"mq_of\": null, \"state\": \"available\", \"utc_created_on\":
+        \"2012-10-18 20:16:54+00:00\", \"website\": \"\", \"description\": \"Module
+        to perform calculations with sparse-matrices.\", \"has_issues\": true, \"is_fork\":
+        false, \"slug\": \"clj-sparse\", \"is_private\": false, \"name\": \"clj-sparse\",
+        \"language\": \"clojure\", \"utc_last_updated\": \"2012-10-18 20:19:17+00:00\",
+        \"email_writers\": true, \"no_public_forks\": false, \"creator\": null, \"resource_uri\":
+        \"/1.0/repositories/timgluz/clj-sparse\"}, {\"scm\": \"hg\", \"has_wiki\":
+        false, \"last_updated\": \"2013-12-23T15:02:22.792\", \"no_forks\": false,
+        \"created_on\": \"2013-12-23T15:02:22.766\", \"owner\": \"versioneye_test\",
+        \"logo\": \"https://d3oaxc4q5k2d6q.cloudfront.net/m/6f5a7e713ff3/img/language-avatars/default_16.png\",
+        \"email_mailinglist\": \"\", \"is_mq\": false, \"size\": 12744, \"read_only\":
+        false, \"fork_of\": null, \"mq_of\": null, \"state\": \"available\", \"utc_created_on\":
+        \"2013-12-23 14:02:22+00:00\", \"website\": \"\", \"description\": \"Just
+        demo repo for testing purposed.\", \"has_issues\": false, \"is_fork\": false,
+        \"slug\": \"emptyrepo\", \"is_private\": false, \"name\": \"EmptyRepo\", \"language\":
+        \"\", \"utc_last_updated\": \"2013-12-23 14:02:22+00:00\", \"email_writers\":
+        true, \"no_public_forks\": false, \"creator\": null, \"resource_uri\": \"/1.0/repositories/versioneye_test/emptyrepo\"},
+        {\"scm\": \"git\", \"has_wiki\": false, \"last_updated\": \"2013-12-25T14:58:03.794\",
+        \"no_forks\": false, \"created_on\": \"2013-12-25T14:57:03.873\", \"owner\":
+        \"versioneye_test\", \"logo\": \"https://d3oaxc4q5k2d6q.cloudfront.net/m/6f5a7e713ff3/img/language-avatars/default_16.png\",
+        \"email_mailinglist\": \"\", \"is_mq\": false, \"size\": 619780, \"read_only\":
+        false, \"fork_of\": null, \"mq_of\": null, \"state\": \"available\", \"utc_created_on\":
+        \"2013-12-25 13:57:03+00:00\", \"website\": \"\", \"description\": \"Test
+        project for BitbucketSP\", \"has_issues\": false, \"is_fork\": false, \"slug\":
+        \"fantom_hydra\", \"is_private\": false, \"name\": \"fantom_hydra\", \"language\":
+        \"\", \"utc_last_updated\": \"2013-12-25 13:58:03+00:00\", \"email_writers\":
+        true, \"no_public_forks\": false, \"creator\": null, \"resource_uri\": \"/1.0/repositories/versioneye_test/fantom_hydra\"},
+        {\"scm\": \"git\", \"has_wiki\": false, \"last_updated\": \"2014-01-19T10:59:50.868\",
+        \"no_forks\": false, \"created_on\": \"2014-01-19T10:59:50.799\", \"owner\":
+        \"versioneye_test\", \"logo\": \"https://d3oaxc4q5k2d6q.cloudfront.net/m/6f5a7e713ff3/img/language-avatars/default_16.png\",
+        \"email_mailinglist\": \"\", \"is_mq\": false, \"size\": 606137, \"read_only\":
+        false, \"fork_of\": {\"scm\": \"git\", \"has_wiki\": false, \"last_updated\":
+        \"2013-12-25T14:58:03.794\", \"no_forks\": false, \"created_on\": \"2013-12-25T14:57:03.873\",
+        \"owner\": \"versioneye_test\", \"logo\": \"https://d3oaxc4q5k2d6q.cloudfront.net/m/6f5a7e713ff3/img/language-avatars/default_16.png\",
+        \"email_mailinglist\": \"\", \"is_mq\": false, \"size\": 619780, \"read_only\":
+        false, \"creator\": null, \"state\": \"available\", \"utc_created_on\": \"2013-12-25
+        13:57:03+00:00\", \"website\": \"\", \"description\": \"Test project for BitbucketSP\",
+        \"has_issues\": false, \"is_fork\": false, \"slug\": \"fantom_hydra\", \"is_private\":
+        false, \"name\": \"fantom_hydra\", \"language\": \"\", \"utc_last_updated\":
+        \"2013-12-25 13:58:03+00:00\", \"email_writers\": true, \"no_public_forks\":
+        false, \"resource_uri\": \"/1.0/repositories/versioneye_test/fantom_hydra\"},
+        \"mq_of\": {\"scm\": \"git\", \"has_wiki\": false, \"last_updated\": \"2013-12-25T14:58:03.794\",
+        \"no_forks\": false, \"created_on\": \"2013-12-25T14:57:03.873\", \"owner\":
+        \"versioneye_test\", \"logo\": \"https://d3oaxc4q5k2d6q.cloudfront.net/m/6f5a7e713ff3/img/language-avatars/default_16.png\",
+        \"email_mailinglist\": \"\", \"is_mq\": false, \"size\": 619780, \"read_only\":
+        false, \"creator\": null, \"state\": \"available\", \"utc_created_on\": \"2013-12-25
+        13:57:03+00:00\", \"website\": \"\", \"description\": \"Test project for BitbucketSP\",
+        \"has_issues\": false, \"is_fork\": false, \"slug\": \"fantom_hydra\", \"is_private\":
+        false, \"name\": \"fantom_hydra\", \"language\": \"\", \"utc_last_updated\":
+        \"2013-12-25 13:58:03+00:00\", \"email_writers\": true, \"no_public_forks\":
+        false, \"resource_uri\": \"/1.0/repositories/versioneye_test/fantom_hydra\"},
+        \"state\": \"available\", \"utc_created_on\": \"2014-01-19 09:59:50+00:00\",
+        \"website\": null, \"description\": \"Test project for private repos\", \"has_issues\":
+        false, \"is_fork\": true, \"slug\": \"fantom_hydra_private\", \"is_private\":
+        true, \"name\": \"fantom_hydra_private\", \"language\": \"\", \"utc_last_updated\":
+        \"2014-01-19 09:59:50+00:00\", \"email_writers\": true, \"no_public_forks\":
+        true, \"creator\": null, \"resource_uri\": \"/1.0/repositories/versioneye_test/fantom_hydra_private\"}]"
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:48 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/2.0/repositories/timgluz/clj-sparse
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="TvPzLGdf5cWhOjS2w7CgJrXUUg3CsKL3xeGx3RfaHOE",
+        oauth_signature="3u2WdNuRfeYfWhWUdcpksKyzaJA%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995108", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:49 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Request-Count:
+      - '322'
+      X-Served-By:
+      - app16
+      X-Render-Time:
+      - '0.135749101639'
+      Content-Language:
+      - en
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      X-Version:
+      - 0a8edae404be
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "{\"scm\": \"git\", \"has_wiki\": true, \"description\": \"Module to
+        perform calculations with sparse-matrices.\", \"links\": {\"watchers\": {\"href\":
+        \"https://bitbucket.org/!api/2.0/repositories/timgluz/clj-sparse/watchers\"},
+        \"commits\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/timgluz/clj-sparse/commits\"},
+        \"self\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/timgluz/clj-sparse\"},
+        \"html\": {\"href\": \"https://bitbucket.org/timgluz/clj-sparse\"}, \"avatar\":
+        {\"href\": \"https://bitbucket-assetroot.s3.amazonaws.com/c/photos/2012/Oct/18/clj-sparse-logo-2710802377-6_avatar.png\"},
+        \"forks\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/timgluz/clj-sparse/forks\"},
+        \"clone\": [{\"href\": \"https://versioneye_test@bitbucket.org/timgluz/clj-sparse.git\",
+        \"name\": \"https\"}, {\"href\": \"ssh://git@bitbucket.org/timgluz/clj-sparse.git\",
+        \"name\": \"ssh\"}], \"pullrequests\": {\"href\": \"https://bitbucket.org/!api/2.0/repositories/timgluz/clj-sparse/pullrequests\"}},
+        \"fork_policy\": \"allow_forks\", \"language\": \"clojure\", \"created_on\":
+        \"2012-10-18T20:16:54.614768+00:00\", \"full_name\": \"timgluz/clj-sparse\",
+        \"has_issues\": true, \"owner\": {\"username\": \"timgluz\", \"display_name\":
+        \"Timo Sulg\", \"links\": {\"self\": {\"href\": \"https://bitbucket.org/!api/2.0/users/timgluz\"},
+        \"avatar\": {\"href\": \"https://secure.gravatar.com/avatar/2a8d090768d237544a7c69a0f9c217c7?d=https%3A%2F%2Fd3oaxc4q5k2d6q.cloudfront.net%2Fm%2F6f5a7e713ff3%2Fimg%2Fdefault_avatar%2F32%2Fuser_blue.png&s=32\"}}},
+        \"updated_on\": \"2012-10-18T20:19:17.941812+00:00\", \"size\": 5218, \"is_private\":
+        false, \"name\": \"clj-sparse\"}"
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:49 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/timgluz/clj-sparse/branches
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="GYmMFslM46a9Cu1ARppl7MazHf16eOIANcLHsLKtM",
+        oauth_signature="705q5CpewE6%2B1hXXRPVatVt24X4%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995109", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:50 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Request-Count:
+      - '220'
+      X-Served-By:
+      - app06
+      X-Render-Time:
+      - '0.428698062897'
+      Content-Language:
+      - en
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      X-Version:
+      - 0a8edae404be
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "{\"master\": {\"node\": \"40a6b8a4027d\", \"files\": [{\"type\": \"added\",
+        \"file\": \".gitignore\"}, {\"type\": \"added\", \"file\": \"README.md\"},
+        {\"type\": \"added\", \"file\": \"doc/intro.md\"}, {\"type\": \"added\", \"file\":
+        \"project.clj\"}, {\"type\": \"added\", \"file\": \"src/clj_sparse/core.clj\"},
+        {\"type\": \"added\", \"file\": \"src/clj_sparse/ops.clj\"}, {\"type\": \"added\",
+        \"file\": \"test/clj_sparse/core_test.clj\"}], \"raw_author\": \"TimGLuz <timgluz@gmail.com>\",
+        \"utctimestamp\": \"2012-10-18 20:14:30+00:00\", \"author\": \"timgluz\",
+        \"timestamp\": \"2012-10-18 22:14:30\", \"raw_node\": \"40a6b8a4027dc5b9c1eb97519be2b003a21974dd\",
+        \"parents\": [], \"branch\": \"master\", \"message\": \"Initial commit. Added
+        first test.\\n\", \"revision\": null, \"size\": -1}}"
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:50 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/timgluz/clj-sparse/branches
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="D6FDg247kQ7HTvx5Vz06844XsjWXiXTHwgkoheaIm8",
+        oauth_signature="QmU9D6e444Zz4MzPckDmi7IXxwg%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995109", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:50 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Request-Count:
+      - '30'
+      X-Served-By:
+      - app16
+      X-Render-Time:
+      - '0.275990962982'
+      Content-Language:
+      - en
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      X-Version:
+      - 0a8edae404be
+      X-Frame-Options:
+      - SAMEORIGIN
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "{\"master\": {\"node\": \"40a6b8a4027d\", \"files\": [{\"type\": \"added\",
+        \"file\": \".gitignore\"}, {\"type\": \"added\", \"file\": \"README.md\"},
+        {\"type\": \"added\", \"file\": \"doc/intro.md\"}, {\"type\": \"added\", \"file\":
+        \"project.clj\"}, {\"type\": \"added\", \"file\": \"src/clj_sparse/core.clj\"},
+        {\"type\": \"added\", \"file\": \"src/clj_sparse/ops.clj\"}, {\"type\": \"added\",
+        \"file\": \"test/clj_sparse/core_test.clj\"}], \"raw_author\": \"TimGLuz <timgluz@gmail.com>\",
+        \"utctimestamp\": \"2012-10-18 20:14:30+00:00\", \"author\": \"timgluz\",
+        \"timestamp\": \"2012-10-18 22:14:30\", \"raw_node\": \"40a6b8a4027dc5b9c1eb97519be2b003a21974dd\",
+        \"parents\": [], \"branch\": \"master\", \"message\": \"Initial commit. Added
+        first test.\\n\", \"revision\": null, \"size\": -1}}"
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:50 GMT
+- request:
+    method: get
+    uri: https://bitbucket.org/api/1.0/repositories/timgluz/clj-sparse/src/master/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Chrome28 (contact@versioneye.com) (OAuth gem v0.4.7)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Authorization:
+      - OAuth oauth_consumer_key="HgSkE62pTT3HmxFGAm", oauth_nonce="uQHyG9N3IGRwN0qohKE66EloR7G3ns011i33yMs5rk",
+        oauth_signature="wLnPjibew7FSl8%2B43r5KBY4NU1E%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1390995110", oauth_token="YsR6vM5qxmfZtkYt9G", oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.5.9
+      Date:
+      - Wed, 29 Jan 2014 11:31:51 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - app18
+      X-Render-Time:
+      - '0.194493055344'
+      Content-Language:
+      - en
+      Cache-Control:
+      - max-age=0
+      X-Request-Count:
+      - '249'
+      Expires:
+      - Wed, 29 Jan 2014 11:31:51 GMT
+      Vary:
+      - Authorization, Accept-Language, Cookie
+      Last-Modified:
+      - Wed, 29 Jan 2014 11:31:51 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Version:
+      - 0a8edae404be
+      X-Static-Version:
+      - 6f5a7e713ff3
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: "{\"node\": \"40a6b8a4027d\", \"path\": \"/\", \"directories\": [\"doc\",
+        \"src\", \"test\"], \"files\": [{\"size\": 99, \"path\": \".gitignore\", \"timestamp\":
+        \"2012-10-18T20:14:30Z\", \"utctimestamp\": \"2012-10-18 20:14:30+00:00\",
+        \"revision\": \"40a6b8a4027d\"}, {\"size\": 595, \"path\": \"README.md\",
+        \"timestamp\": \"2012-10-18T20:14:30Z\", \"utctimestamp\": \"2012-10-18 20:14:30+00:00\",
+        \"revision\": \"40a6b8a4027d\"}, {\"size\": 612, \"path\": \"project.clj\",
+        \"timestamp\": \"2012-10-18T20:14:30Z\", \"utctimestamp\": \"2012-10-18 20:14:30+00:00\",
+        \"revision\": \"40a6b8a4027d\"}]}"
+    http_version: 
+  recorded_at: Wed, 29 Jan 2014 11:31:51 GMT
+recorded_with: VCR 2.8.0

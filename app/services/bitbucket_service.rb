@@ -41,7 +41,7 @@ class BitbucketService
       task_status =  A_TASK_RUNNING
       memcache.set(user_task_key, task_status)
       Thread.new do
-        self.cache_user_all_repos(user)
+        cache_user_all_repos(user)
         memcache.set(user_task_key, A_TASK_DONE)
       end
     else
@@ -62,12 +62,12 @@ class BitbucketService
     user_orgs.each do |org|
       threads << Thread.new { self.cache_repos(user, org) }
     end
-
     threads.each { |worker| worker.join }
+
+    #import missing invited repos
+    cache_invited_repos(user)
   end
 
-
-  #TODO: refactor as multi-threaded
   def self.cache_repos(user, owner_name)
     token = user[:bitbucket_token]
     secret = user[:bitbucket_secret]
@@ -87,6 +87,32 @@ class BitbucketService
     return true
   end
 
+  def self.cache_invited_repos(user)
+    token = user[:bitbucket_token]
+    secret = user[:bitbucket_secret]
+    repos = Bitbucket.read_repos_v1(token, secret)
+    if repos.nil? or repos.empty?
+      Rails.logger.error "cache_invited_repos | didnt get any repos from APIv1."
+      return false
+    end
+    user.reload #pull newest updates
+    existing_repo_fullnames  = Set.new user.bitbucket_repos.map(&:fullname)
+    missing_repos = repos.keep_if {|repo| existing_repo_fullnames.include?(repo[:full_name]) == false}
+    invited_repos = missing_repos.delete_if do |repo| 
+      #remove other people forks
+      repo.has_key?(:fork_of) and repo[:fork_of].is_a?(Hash) and repo[:fork_of][:owner] == user[:bitbucket_id]
+    end
+    #add missing repos
+    invited_repos.each do |old_repo|
+      repo = Bitbucket.repo_info(old_repo[:full_name], token, secret) #fetch repo info from api2
+      if repo.nil?
+        Rails.logger.error "cache_invited_repos | didnt get repo info for `#{old_repo[:full_name]}`"
+        next
+      end
+      add_repo(user, repo, token, secret)
+    end
+    return true
+  end
 
   def self.add_repo(user, repo, token, secret)
     repo_name = repo[:full_name]
@@ -97,7 +123,7 @@ class BitbucketService
       Thread.current[:val] = Bitbucket.repo_project_files(repo_name, token, secret)
     end
     bm = Benchmark.measure {read_branches.join; read_files.join; }
-    printf("#-- Added #{repo_name}\n#{bm}\n")
+    Rails.logger.info("#-- Added #{repo_name}\n#{bm}\n")
     repo = BitbucketRepo.create_new(user, repo, read_branches[:val], read_files[:val])
     repo
   end
