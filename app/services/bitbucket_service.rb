@@ -98,8 +98,12 @@ class BitbucketService
     user.reload #pull newest updates
     existing_repo_fullnames  = Set.new user.bitbucket_repos.map(&:fullname)
     missing_repos = repos.keep_if {|repo| existing_repo_fullnames.include?(repo[:full_name]) == false}
+    invited_repos = missing_repos.delete_if do |repo| 
+      #remove other people forks
+      repo.has_key?(:fork_of) and repo[:fork_of].is_a?(Hash) and repo[:fork_of][:owner] == user[:bitbucket_id]
+    end
     #add missing repos
-    missing_repos.each do |old_repo|
+    invited_repos.each do |old_repo|
       repo = Bitbucket.repo_info(old_repo[:full_name], token, secret) #fetch repo info from api2
       if repo.nil?
         Rails.logger.error "cache_invited_repos | didnt get repo info for `#{old_repo[:full_name]}`"
