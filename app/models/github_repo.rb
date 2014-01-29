@@ -41,15 +41,7 @@ class GithubRepo
 
   def self.get_owner_type(user, owner_info)
     owner_type = "unknown"
-
-    if user[:github_login].nil?
-      user_info = Github.user(user.github_token)
-      user_info.deep_symbolize_keys #we like symbols 
-      user[:github_login] = user_info[:login]
-      user.save
-    else
-      user_login = user[:github_login]
-    end
+    user_login = github_login_for user
 
     case owner_info[:type].to_s.downcase
     when 'organization'
@@ -67,13 +59,27 @@ class GithubRepo
     owner_type
   end
 
+
+  def github_login_for user
+    if user[:github_login].nil?
+      user_info = Github.user(user.github_token)
+      user_info.deep_symbolize_keys
+      user[:github_login] = user_info[:login]
+      user.save
+    end
+    user[:github_login]
+  end
+
+
   def self.build_new(user, repo, etag = nil)
     return false if repo.nil? || repo.empty?
     repo = repo.deep_symbolize_keys
 
     owner_info = repo[:owner]
     owner_type = get_owner_type(user, repo[:owner])
-    new_repo = GithubRepo.new({
+
+    repo = GithubRepo.find_or_create_by(:github_id => user.github_id, :fullname => repo[:full_name])
+    repo.update_attributes!({
       user_id: user.id,
       github_id: repo[:id],
       name: repo[:name],
@@ -102,7 +108,12 @@ class GithubRepo
       cached_at: DateTime.now
     })
 
-    new_repo
+    repo
+  rescue => e
+    Rails.logger.error "Cant save repo:#{repo.errors.full_messages.to_sentence}"
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join("\n")
+    nil
   end
 
   def self.create_new(user, repo, etag = nil)
