@@ -24,8 +24,6 @@ class ProjectService
       project.save_dependencies
       return true
     else
-      p project
-      p "Can't save project: #{project.errors.full_messages.to_json}"
       Rails.logger.error "Can't save project: #{project.errors.full_messages.to_json}"
       return false
     end
