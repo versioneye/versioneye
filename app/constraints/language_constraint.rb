@@ -3,9 +3,9 @@ class LanguageConstraint
   def matches?(request)
     path = request.path
     path = path[1..path.length]
-    languages = Product::A_LANGS_ALL
+    languages = Product.all.distinct(:language)
     languages << "nodejs"
-    Product.all.distinct(:language).each do |lang|
+    languages.each do |lang|
       return true if path.match(/^#{lang}$/i) || path.match(/^#{lang}\/.*$/i)
     end
     false
