@@ -22,7 +22,7 @@ gem 'json'               , '~> 1.8.0'
 gem 'dalli'              , '2.7.0'      # memcache library
 gem 'kgio'               , '~> 2.8.0'   # 20% performance boost for dalli
 gem 'grape'              , '0.6.1'
-gem 'grape-entity'       , '0.4.0'
+gem 'grape-entity'       , '0.3.0'
 gem 'grape-swagger'      , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
 gem 'htmlentities'       , '4.3.1'
 gem 'whenever'           , '0.9.0'
