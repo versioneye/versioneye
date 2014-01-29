@@ -16,7 +16,7 @@ gem 'twitter_oauth'      , '0.4.94'
 gem 'aws-sdk'            , '~> 1.0'
 gem 'nokogiri'           , '~> 1.6.0'
 gem 'stripe'             , '1.9.9'
-gem 'unicorn'            , '4.8.0'
+gem 'unicorn'            , '4.8.1'
 gem 'tire'               , '0.6.2'
 gem 'json'               , '~> 1.8.0'
 gem 'dalli'              , '2.7.0'      # memcache library
