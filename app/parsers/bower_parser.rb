@@ -61,14 +61,16 @@ class BowerParser < CommonParser
 
   def parse ( url )
     return nil if url.nil? || url.empty?
+
     data = self.fetch_response_body_json( url )
     return nil if data.nil?
+
     dependencies = fetch_dependencies( data )
     return nil if dependencies.nil?
     project = init_project( url, data )
 
     dependencies.each do |package_name, version_label|
-      parse_version_label( package_name, version_label, project )
+      parse_version_label( package_name.to_s.downcase, version_label, project )
     end
     project.dep_number = project.dependencies.size
 
