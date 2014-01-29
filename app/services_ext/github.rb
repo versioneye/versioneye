@@ -30,7 +30,7 @@ class Github
   include HTTParty
   persistent_connection_adapter({
     name: 'versioneye_github_client',
-    pool_size: 10,
+    pool_size: 30,
     keep_alive: 30
   })
 

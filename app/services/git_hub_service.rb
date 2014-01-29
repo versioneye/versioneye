@@ -92,12 +92,12 @@ class GitHubService
       user[:user_login] = user_info['login'] if user_info.is_a?(Hash)
       #load data
       threads = []
-      threads << Thread.new {self.cache_user_repos(user)}
+      Rails.logger.info "reading user repos"
+      cache_user_repos(user)
       orga_names.each do |orga_name|
-        threads << Thread.new { self.cache_user_orga_repos(user, orga_name) }
+        Rails.logger.info "reading repos for orga: #{orga_name}"
+        cache_user_orga_repos(user, orga_name)
       end
-
-      threads.each { |worker| worker.join }
     end
 
 
