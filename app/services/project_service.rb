@@ -3,15 +3,15 @@ class ProjectService
   def self.type_by_filename filename
     return nil if filename.to_s.empty?
     trimmed_name = filename.split('?')[0]
-    return Project::A_TYPE_RUBYGEMS  if trimmed_name.match(/Gemfile$/)          or trimmed_name.match(/Gemfile.lock$/)
-    return Project::A_TYPE_COMPOSER  if trimmed_name.match(/composer.json$/)    or trimmed_name.match(/composer.lock$/)
-    return Project::A_TYPE_PIP       if trimmed_name.match(/requirements.txt$/) or trimmed_name.match(/setup.py$/) or trimmed_name.match(/pip.log$/)
-    return Project::A_TYPE_NPM       if trimmed_name.match(/package.json$/)
-    return Project::A_TYPE_GRADLE    if trimmed_name.match(/.gradle$/)
-    return Project::A_TYPE_MAVEN2    if trimmed_name.match(/pom.xml$/) or trimmed_name.match(/pom.json$/)
-    return Project::A_TYPE_LEIN      if trimmed_name.match(/project.clj$/)
-    return Project::A_TYPE_BOWER     if trimmed_name.match(/bower.json$/)
-    return Project::A_TYPE_COCOAPODS if trimmed_name.match(/Podfile$/) or trimmed_name.match(/.podfile$/) or trimmed_name.match(/Podfile.lock$/)
+    return Project::A_TYPE_RUBYGEMS  if (!(/Gemfile$/ =~ trimmed_name).nil?)        or (!(/Gemfile.lock$/  =~ trimmed_name).nil?)
+    return Project::A_TYPE_COMPOSER  if (!(/composer.json$/ =~ trimmed_name).nil?)  or (!(/composer.lock$/ =~ trimmed_name).nil?)
+    return Project::A_TYPE_PIP       if (!(/requirements.txt$/ =~ trimmed_name).nil?)  or (!(/setup.py$/ =~ trimmed_name).nil?) or (!(/pip.log$/ =~ trimmed_name).nil?)
+    return Project::A_TYPE_NPM       if (!(/package.json$/ =~ trimmed_name).nil?)
+    return Project::A_TYPE_GRADLE    if (!(/.gradle$/ =~ trimmed_name).nil?)
+    return Project::A_TYPE_MAVEN2    if (!(/pom.xml$/ =~ trimmed_name).nil?)  or (!(/pom.json$/ =~ trimmed_name).nil?)
+    return Project::A_TYPE_LEIN      if (!(/project.clj$/ =~ trimmed_name).nil?)
+    return Project::A_TYPE_BOWER     if (!(/bower.json$/ =~ trimmed_name).nil?)
+    return Project::A_TYPE_COCOAPODS if (!(/Podfile$/ =~ trimmed_name).nil?)  or (!(/.podfile$/ =~ trimmed_name).nil?) or (!(/Podfile.lock$/ =~ trimmed_name).nil?)
     return nil
   end
 
