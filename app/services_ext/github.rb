@@ -30,7 +30,7 @@ class Github
   include HTTParty
   persistent_connection_adapter({
     name: 'versioneye_github_client',
-    pool_size: 32,
+    pool_size: 10,
     keep_alive: 30
   })
 
@@ -232,7 +232,7 @@ class Github
       Rails.logger.error msg
       return nil
     end
-    JSON.parse(response.body, symbolize_names: true)
+    JSON.parse(response.body, symbolize_names: false)
   end
 
 
@@ -246,14 +246,17 @@ class Github
       sleep 1 #it's required to prevent bombing Github's api after our request got rejected
     end
 
-    if branch_tree.nil? or !branch_tree.has_key?(:tree)
+    if branch_tree.nil? or !branch_tree.has_key?('tree')
       msg = "Can't read tree for repo `#{repo_name}` on branch `#{branch}`."
       Rails.logger.error msg
       return
     end
 
-    project_files = branch_tree[:tree].keep_if {|file| ProjectService.type_by_filename(file[:path].to_s) != nil}
-    project_files.each {|file| file[:uuid] = SecureRandom.hex}
+    project_files = branch_tree['tree'].keep_if {|file| ProjectService.type_by_filename(file['path'].to_s) != nil}
+    project_files.each do |file|
+      file.deep_symbolize_keys!
+      file[:uuid] = SecureRandom.hex
+    end
 
     project_files
   end
