@@ -113,7 +113,7 @@ class Github
     try_n.times do
       project_files = repo_project_files(fullname, token, branch_docs)
       break unless project_files.nil? or project_files.empty?
-      p "Trying to read `#{fullname}` again"
+      logger.info "Trying to read `#{fullname}` again"
       sleep 3
     end
 
