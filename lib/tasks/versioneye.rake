@@ -35,6 +35,10 @@ namespace :versioneye do
     puts "START to LanguageDailyStats.update_counts"
     LanguageDailyStats.update_counts(3, 1)
     puts "---"
+
+    puts "START to update all github repos"
+    GitHubService.update_all_repos
+    puts "---"
   end
 
   desc "excute weekly jobs"
