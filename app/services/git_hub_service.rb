@@ -21,7 +21,8 @@ class GitHubService
     Rails.logger.debug  "Got #{user.github_repos.count} repos for #{user.fullname}."
     user.github_repos.all
   rescue => e
-    Rails.logger.error "Cant import repos for #{user.fullname} \n #{e}"
+    Rails.logger.error "Cant import repos for #{user.fullname} \n #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
   end
 
 
