@@ -46,7 +46,8 @@ class GitHubService
     if user[:github_token] and user.github_repos.all.count == 0
       Rails.logger.info 'Fetch Repositories from GitHub and cache them in DB.'
       n_repos    = Github.count_user_repos user
-      if n_repos == 0
+      orga_names = Github.orga_names(user.github_token)
+      if n_repos == 0 && orga_names.empty?
         Rails.logger.debug 'user has no repositories;'
         task_status = A_TASK_DONE
         memcache.set(user_task_key, task_status)
@@ -55,11 +56,9 @@ class GitHubService
       task_status = A_TASK_RUNNING
       memcache.set(user_task_key, task_status)
       Thread.new do
-        orga_names = Github.orga_names(user.github_token)
         self.cache_user_all_repos(user, orga_names)
         memcache.set(user_task_key, A_TASK_DONE)
       end
-
     else
       Rails.logger.info 'Nothing is changed - skipping update.'
       task_status = A_TASK_DONE
