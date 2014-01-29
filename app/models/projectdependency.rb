@@ -32,7 +32,7 @@ class Projectdependency
   belongs_to :project
 
   def product
-    Product.fetch_product( self.language, self.prod_key )
+    Product.fetch_product( self.language, self.prod_key.to_s.downcase )
   end
 
   def find_or_init_product
