@@ -34,9 +34,8 @@ class GitHubService
   NB! allows only one running task per user;
 =end
   def self.cached_user_repos user
-    memcache      = memcache_client
     user_task_key = "#{user[:username]}-#{user[:github_id]}"
-    task_status   = memcache.get user_task_key
+    task_status   = Rails.cache.read( user_task_key )
 
     if task_status == A_TASK_RUNNING
       Rails.logger.debug "We are still importing repos for `#{user[:fullname]}.`"
@@ -50,14 +49,14 @@ class GitHubService
       if n_repos == 0 && orga_names.empty?
         Rails.logger.debug 'user has no repositories;'
         task_status = A_TASK_DONE
-        memcache.set(user_task_key, task_status)
+        Rails.cache.write( user_task_key, task_status, timeToLive: 30.minutes )
         return task_status
       end
       task_status = A_TASK_RUNNING
-      memcache.set(user_task_key, task_status)
+      Rails.cache.write( user_task_key, task_status, timeToLive: 30.minutes )
       Thread.new do
         self.cache_user_all_repos(user, orga_names)
-        memcache.set(user_task_key, A_TASK_DONE)
+        Rails.cache.write( user_task_key, A_TASK_DONE, timeToLive: 30.minutes )
       end
     else
       Rails.logger.info 'Nothing is changed - skipping update.'
@@ -84,18 +83,6 @@ class GitHubService
 
 
   private
-
-
-    def self.memcache_client
-      Dalli::Client.new(
-        'localhost:11211',
-        {
-          :namespace  => 'github_app',
-          :compress   => true,
-          :expires_in => 30.minutes # Only allows import after X min; unless task unlocks!
-        }
-      )
-    end
 
 
     def self.cache_user_all_repos(user, orga_names)
