@@ -41,7 +41,7 @@ describe BowerCrawler, :vcr do
       Product.all.count.should eq(1)
       prod = Product.all.first
       prod[:name].should eq("jquery")
-      prod[:version].should eq("2.1.1pre")
+      prod[:version].should eq('0.0.0+NA') # "2.1.1pre" in bower.json
       prod[:language].should eq(Product::A_LANGUAGE_JAVASCRIPT)
       prod[:prod_key].should eq("versioneye/jquery")
 
@@ -81,9 +81,8 @@ describe BowerCrawler, :vcr do
       link2 = Versionlink.all[1]
       link2[:name].should eq("Homepage")
       link2[:prod_key].should eq("versioneye/jquery")
-
-
     end
+
 
     it "creates correct versions from repo tags" do
       product_task = BowerCrawler.to_read_task(task, url)
@@ -100,16 +99,16 @@ describe BowerCrawler, :vcr do
       end
 
       prod.reload
-      prod.versions.count.should eq(110)
+      prod.version.to_s.should eq('2.1.0')
+      prod.versions.count.should eq(109)
       versions = prod.versions
 
-      versions[0][:version].should eq("2.1.1pre")
-      versions[1][:version].should eq("2.1.0-rc1")
-      versions[2][:version].should eq("2.1.0-beta3")
-      versions[3][:version].should eq("2.1.0-beta2")
-      versions[4][:version].should eq("2.1.0-beta1")
-      versions[5][:version].should eq("2.1.0")
-      versions[6][:version].should eq("2.0.3")
+      versions[0][:version].should eq("2.1.0-rc1")
+      versions[1][:version].should eq("2.1.0-beta3")
+      versions[2][:version].should eq("2.1.0-beta2")
+      versions[3][:version].should eq("2.1.0-beta1")
+      versions[4][:version].should eq("2.1.0")
+      versions[5][:version].should eq("2.0.3")
 
       # check version archives
       Versionarchive.all.count.should eq(109)
