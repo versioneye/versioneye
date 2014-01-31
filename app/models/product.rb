@@ -34,7 +34,7 @@ class Product
   field :prod_key     , type: String # Unique identifier inside a language
   field :prod_type    , type: String # Identifies the package manager
   field :language     , type: String
-  field :version      , type: String # latest stable version
+  field :version      , type: String, default: '0.0.0+NA' # latest stable version
 
   field :group_id   , type: String # Maven specific
   field :artifact_id, type: String # Maven specific
