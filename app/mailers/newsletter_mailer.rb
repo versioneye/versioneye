@@ -7,7 +7,7 @@ class NewsletterMailer < ActionMailer::Base
     @user = user
     mail(
       :to => @user.email,
-      :subject => 'New Features - Semantic Versioning + Submit new packages + Follow All',
+      :subject => 'New Feature - Bower Integration',
       :tag => 'newsletter'
       )
   end
