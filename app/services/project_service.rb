@@ -288,17 +288,18 @@ class ProjectService
 
 
   def self.badge_for_project project_id
-    badge = Rails.cache.read project_id
+    badge = Rails.cache.read project_id.to_s
     return badge if badge
 
-    project = Project.find_by_id project_id
+    project = Project.find_by_id project_id.to_s
     return "unknown" if project.nil?
 
     update_badge_for_project project
   end
 
+
   def self.update_badge_for_project project
-    badge    = project.outdated? ? "out-of-date" : "up-to-date"
+    badge    = project.outdated?() ? 'out-of-date' : 'up-to-date'
     Rails.cache.write( project.id.to_s, badge, timeToLive: 1.day)
     badge
   rescue => e
@@ -306,6 +307,7 @@ class ProjectService
     Rails.logger.error e.backtrace.join "\n"
     "unknown"
   end
+
 
   private
 

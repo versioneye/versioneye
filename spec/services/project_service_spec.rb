@@ -152,5 +152,92 @@ describe ProjectService do
 
   end
 
+  describe "badge_for_project" do
+    it "returns the right badge up-to-date" do
+      user = UserFactory.create_new
+      product = ProductFactory.create_new
+      product.version = '10.0.0'
+      product.add_version '10.0.0'
+      product.save
+      project = ProjectFactory.create_new user
+      project_dep = ProjectdependencyFactory.create_new project, product
+      project_dep.version_current = '10.0.0'
+      project_dep.version_requested = '10.0.0'
+      project_dep.save
+      project_dep.update_outdated!
+      project_dep.save
+      project.outdated?().should be_false
+      ProjectService.badge_for_project(project.id).should eq('up-to-date')
+    end
+
+    it "returns the right badge out-of-date" do
+      user = UserFactory.create_new
+      product = ProductFactory.create_new
+      product.version = '10.0.0'
+      product.add_version '10.0.0'
+      product.save
+      project = ProjectFactory.create_new user
+      project_dep = ProjectdependencyFactory.create_new project, product
+      project_dep.version_current = '9.0.0'
+      project_dep.version_requested = '9.0.0'
+      project_dep.save
+      project_dep.update_outdated!
+      project_dep.save
+      project.outdated?().should be_true
+      ProjectService.badge_for_project(project.id).should eq('out-of-date')
+    end
+  end
+
+  describe 'update_badge_for_project' do
+    it 'updates the badge to up-to-date' do
+      user = UserFactory.create_new
+      product = ProductFactory.create_new
+      product.version = '10.0.0'
+      product.add_version '10.0.0'
+      product.save
+      project = ProjectFactory.create_new user
+      project_dep = ProjectdependencyFactory.create_new project, product
+      project_dep.version_current = '9.0.0'
+      project_dep.version_requested = '9.0.0'
+      project_dep.save
+      project_dep.update_outdated!
+      project_dep.save
+      project.outdated?().should be_true
+      ProjectService.badge_for_project(project.id).should eq('out-of-date')
+
+      project_dep.version_current = '10.0.0'
+      project_dep.version_requested = '10.0.0'
+      project_dep.save
+      project_dep.update_outdated!
+      project_dep.save
+      project.outdated?().should be_false
+      ProjectService.update_badge_for_project(project).should eq('up-to-date')
+    end
+
+    it 'updates the badge to out-of-date' do
+      user = UserFactory.create_new
+      product = ProductFactory.create_new
+      product.version = '10.0.0'
+      product.add_version '10.0.0'
+      product.save
+      project = ProjectFactory.create_new user
+      project_dep = ProjectdependencyFactory.create_new project, product
+      project_dep.version_current = '10.0.0'
+      project_dep.version_requested = '10.0.0'
+      project_dep.save
+      project_dep.update_outdated!
+      project_dep.save
+      project.outdated?().should be_true
+      ProjectService.badge_for_project(project.id).should eq('out-of-date')
+
+      project_dep.version_current = '9.0.0'
+      project_dep.version_requested = '9.0.0'
+      project_dep.save
+      project_dep.update_outdated!
+      project_dep.save
+      project.outdated?().should be_false
+      ProjectService.update_badge_for_project(project).should eq('up-to-date')
+    end
+  end
 
 end
