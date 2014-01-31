@@ -83,7 +83,7 @@ class BowerParser < CommonParser
   end
 
   def parse_version_label(package_name, version_label, project)
-    product    = Product.where(prod_type: Project::A_TYPE_BOWER, name: package_name).first
+    product    = fetch_product( package_name )
     dependency = init_dependency( product, package_name )
     if product.nil?
       Rails.logger.error "#{self.class}.parse_version_label | Cant find product for #{Project::A_TYPE_BOWER}, `#{package_name}`"
@@ -273,6 +273,16 @@ class BowerParser < CommonParser
       end
     end
     dependencies
+  end
+
+  def fetch_product package_name
+    name = package_name.downcase
+    product = Product.where(prod_type: Project::A_TYPE_BOWER, name: name).first
+    if product
+      name = "#{name}.js"
+      product = Product.where(prod_type: Project::A_TYPE_BOWER, name: name).first
+    end
+    product
   end
 
   def init_dependency( product, name )
