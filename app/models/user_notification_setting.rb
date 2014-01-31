@@ -11,6 +11,10 @@ class UserNotificationSetting
 
   belongs_to :user
 
+  def self.email_logger
+    ActiveSupport::BufferedLogger.new('log/email.log')
+  end
+
   def self.send_newsletter_features
     count = 0
     users = User.all()
@@ -34,13 +38,13 @@ class UserNotificationSetting
   end
 
   def self.send_newsletter_new_features_for_user( user )
-    Rails.logger.info "Send new feature newsletter to #{user.fullname}"
+    email_logger.info "Send new feature newsletter to #{user.fullname}"
     NewsletterMailer.newsletter_new_features_email(user).deliver
   rescue => e
     user.email_send_error = e.message
     user.save
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
+    email_logger.error e.message
+    email_logger.error e.backtrace.join("\n")
   end
 
 end
