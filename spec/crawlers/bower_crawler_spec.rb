@@ -64,7 +64,7 @@ describe BowerCrawler, :vcr do
       Product.all.count.should eq(1)
       prod = Product.all.first
       prod[:name].should eq("backbone")
-      prod[:version].should eq("1.1.0")
+      prod[:version].should eq("0.0.0+NA")
       prod[:language].should eq(Product::A_LANGUAGE_JAVASCRIPT)
       prod[:prod_key].should eq("versioneye/backbone")
 
