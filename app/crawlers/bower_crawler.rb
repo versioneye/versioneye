@@ -732,30 +732,27 @@ class BowerCrawler
   end
 
   def self.url_to_repo_info(repo_url)
-    git_url_matcher = /github.com/i
-    git_io_matcher = /\w+\.github\.[io|com]/i
-    urlpath = repo_url.gsub(/:\/+|\/+|\:/, "|")
-
-    if repo_url =~ git_io_matcher
-      _, owner, repo, _ = urlpath.split('|')
-      owner = owner.split('.').first
-    elsif repo_url =~ git_url_matcher
-      _, _, owner, repo = urlpath.split('|')
-    else
-      # TODO: add support for private hosts
-      logger.info "warning: going to ignore #{repo_url} - its not github repo, cant read bower.json"
+    if (repo_url =~ /github.com\//i).nil?
       return nil
     end
-
-    repo.to_s.gsub!(/\.git$/, "")
-    repo_name = "#{owner}/#{repo}"
+    parts = repo_url.split("/")
+    owner = parts[parts.length - 2]
+    repo  = parts[parts.length - 1]
+    if repo =~ /\.git$/i
+      repo = repo.gsub(/\.git$/i, '')
+    end
+    full_name = "#{owner}/#{repo}"
 
     {
       owner: owner,
       repo: repo,
-      full_name: repo_name,
+      full_name: full_name,
       url: repo_url
     }
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join('\n')
+    nil
   end
 
 end
