@@ -341,7 +341,7 @@ describe Product do
     it 'returns nil' do
       product = Product.new
       product.check_nil_version
-      product.version.should be_nil
+      product.version.should eq('0.0.0+NA')
     end
     it 'returns 1.0.0' do
       product = Product.new

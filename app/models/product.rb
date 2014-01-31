@@ -181,10 +181,10 @@ class Product
   end
 
   def check_nil_version
-    return nil if version
-    return nil if versions.nil? or versions.empty?
-    self.version = sorted_versions.first
-    self.save
+    if versions && !versions.empty? && (version.nil? || version.eql?('0.0.0+NA'))
+      self.version = sorted_versions.first
+      self.save
+    end
   end
 
   ######## ENCODE / DECODE ###################
