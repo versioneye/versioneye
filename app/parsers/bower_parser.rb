@@ -278,7 +278,7 @@ class BowerParser < CommonParser
   def fetch_product package_name
     name = package_name.downcase
     product = Product.where(prod_type: Project::A_TYPE_BOWER, name: name).first
-    if product.nil
+    if product.nil?
       name = "#{name}.js"
       product = Product.where(prod_type: Project::A_TYPE_BOWER, name: name).first
     end
