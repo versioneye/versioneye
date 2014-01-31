@@ -387,7 +387,7 @@ class BowerCrawler
     fullname = task[:repo_fullname]
     repo_url = task[:url]
     pkg_info = nil
-    supported_files = Set.new ['bower.json', 'component.json', 'module.json']
+    supported_files = Set.new ['bower.json', 'component.json', 'module.json', 'package.json']
     supported_files.to_a.each do |filename|
       file_url     = "https://raw.github.com/#{fullname}/#{branch}/#{filename}"
       project_file = read_project_file_from_url( file_url, token )
