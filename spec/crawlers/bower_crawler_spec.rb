@@ -67,7 +67,9 @@ describe BowerCrawler, :vcr do
       prod[:version].should eq("0.0.0+NA")
       prod[:language].should eq(Product::A_LANGUAGE_JAVASCRIPT)
       prod[:prod_key].should eq("versioneye/backbone")
+      prod.versions.should be_empty
 
+      prod.version = "1.1.0"
       prod.all_dependencies.count.should eq(1)
       prod.dependencies.count.should eq(1)
       dep = prod.all_dependencies.first
@@ -86,7 +88,6 @@ describe BowerCrawler, :vcr do
         BowerCrawler.crawl_projects(token)
       end
 
-
       Product.all.count.should eq(1)
       prod = Product.all.first
       prod[:prod_key].should_not be_nil
@@ -98,7 +99,7 @@ describe BowerCrawler, :vcr do
       end
 
       prod.reload
-
+      prod[:version].should eq("1.1.0")
       prod.versions.count.should eq(19)
       versions = prod.versions
       versions[0][:version].should eq("1.1.0")
