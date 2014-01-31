@@ -594,9 +594,12 @@ class BowerCrawler
       description:   pkg_info[:description].to_s
     )
 
+    # We don't save here the version from the bower.json file because it might
+    # be that this version is not released yet. But we need the version of the
+    # dependencies.
+    #
     # if pkg_info.has_key?(:version) && !pkg_info[:version].to_s.strip.empty?
     #   prod.version = pkg_info[:version]
-    #   prod.add_version( pkg_info[:version] )
     # end
     prod.save!
     prod
@@ -643,18 +646,31 @@ class BowerCrawler
 
     pkg_info[key].each_pair do |prod_name, version|
       next if prod_name.to_s.strip.empty?
-      dep = to_dependency(prod, prod_name, version, scope)
+      prod_version = fetch_version_for_dep(prod, pkg_info)
+      dep = to_dependency(prod, prod_version, prod_name, version, scope)
       deps << dep if dep
     end
     deps
   end
 
-  def self.to_dependency(prod, dep_name, dep_version, scope = Dependency::A_SCOPE_REQUIRE)
+  def self.fetch_version_for_dep prod, pkg_info
+    prod_version = pkg_info[:version]
+    if prod_version.to_s.empty?
+      prod_version = prod.sorted_versions.first.to_s
+    end
+    prod_version
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join('\n')
+    nil
+  end
+
+  def self.to_dependency(prod, prod_version, dep_name, dep_version, scope = Dependency::A_SCOPE_REQUIRE)
     dependency = Dependency.find_or_create_by(
       prod_type: Project::A_TYPE_BOWER,
       language: prod[:language],
       prod_key: prod[:prod_key].to_s.downcase,
-      prod_version: prod[:version],
+      prod_version: prod_version,
       dep_prod_key: dep_name
     )
     dependency.update_attributes!({
