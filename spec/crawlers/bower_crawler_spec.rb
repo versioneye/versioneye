@@ -27,12 +27,37 @@ describe BowerCrawler, :vcr do
     end
   end
 
+  describe 'url_to_repo_info' do
+    it 'returns the right infos' do
+      repo_url = "git://github.com/ZauberNerd/scroller.git"
+      repo_info = BowerCrawler.url_to_repo_info repo_url
+      repo_info.should_not be_nil
+      repo_info[:owner].should eq("ZauberNerd")
+      repo_info[:repo].should eq("scroller")
+      repo_info[:full_name].should eq("ZauberNerd/scroller")
+      repo_info[:url].should eq(repo_url)
+    end
+    it 'returns the right infos even with www' do
+      repo_url = "git://www.github.com/ZauberNerd/scroller.git"
+      repo_info = BowerCrawler.url_to_repo_info repo_url
+      repo_info.should_not be_nil
+      repo_info[:owner].should eq("ZauberNerd")
+      repo_info[:repo].should eq("scroller")
+      repo_info[:full_name].should eq("ZauberNerd/scroller")
+      repo_info[:url].should eq(repo_url)
+    end
+    it 'returns nil because not on GitHub' do
+      repo_url  = "git://bitbucket.com/ZauberNerd/scroller.git"
+      repo_info = BowerCrawler.url_to_repo_info repo_url
+      repo_info.should be_nil
+    end
+  end
 
   describe "crawl_projects" do
     it "creates correct product for backbone" do
       product_task = BowerCrawler.to_read_task(task, url)
       BowerCrawler.to_poison_pill(product_task[:task])
-      VCR.use_cassette('bower_crawler_spec_projects') do 
+      VCR.use_cassette('bower_crawler_spec_projects') do
         BowerCrawler.crawl_projects(token)
       end
 
@@ -57,7 +82,7 @@ describe BowerCrawler, :vcr do
     it "creates correct versions from tags" do
       product_task = BowerCrawler.to_read_task(task, url)
       BowerCrawler.to_poison_pill(product_task[:task])
-      VCR.use_cassette('bower_crawler_spec_projects') do 
+      VCR.use_cassette('bower_crawler_spec_projects') do
         BowerCrawler.crawl_projects(token)
       end
 
