@@ -15,6 +15,8 @@ class ProductFactory
       product = self.create_for_gemfile(name, version)
     when :podfile
       product = self.create_for_cocoapods(name, version)
+    when :npm
+      product = self.create_for_npm(name, version)
     end
 
     if save_db and not product.save
@@ -50,6 +52,21 @@ class ProductFactory
         :prod_key      => name.downcase,
         :language      => Product::A_LANGUAGE_OBJECTIVEC,
         :prod_type     => Project::A_TYPE_COCOAPODS,
+        :version       => version
+      })
+    product.versions.push(version_obj)
+    product
+  end
+
+  def self.create_for_npm(name, version)
+    version_obj = Version.new :version => version
+    product = Product.new(
+      {
+        :name          => name,
+        :name_downcase => name.downcase,
+        :prod_key      => name.downcase,
+        :language      => Product::A_LANGUAGE_NODEJS,
+        :prod_type     => Project::A_TYPE_NPM,
         :version       => version
       })
     product.versions.push(version_obj)
