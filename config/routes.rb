@@ -256,23 +256,23 @@ Versioneye::Application.routes.draw do
   constraints( LanguageConstraint.new ) do
     get   '/:lang', :to => 'language#show', :format => false, :constraints => { :lang => /[^\/]+/ }
 
-    get   '/:lang/:key/references',             :to => 'products#references', :constraints => { :key => /[^\/]+/ }, :as => 'product_references'
-    get   '/:lang/:key/badge',                  :to => 'products#badge',      :constraints => { :key => /[^\/]+/ }, :as => 'product_badge'
-    get   '/:lang/:key/:version/badge',         :to => 'products#badge',      :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'product_version_badge'
+    get   '/:lang/:key/references',             :to => 'products#references', :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_references'
+    get   '/:lang/:key/badge',                  :to => 'products#badge',      :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_badge'
+    get   '/:lang/:key/:version/badge',         :to => 'products#badge',      :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'product_version_badge'
 
-    get   '/:lang/:key/visual_dependencies'         , :to => 'products#show_visual', :constraints => { :key => /[^\/]+/ }
-    get   '/:lang/:key/:version/visual_dependencies', :to => 'products#show_visual', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'visual_dependencies'
+    get   '/:lang/:key/visual_dependencies'         , :to => 'products#show_visual', :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }
+    get   '/:lang/:key/:version/visual_dependencies', :to => 'products#show_visual', :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'visual_dependencies'
 
-    get   '/:lang/:key'                      , :to => 'products#show', :as => 'products',        :constraints => { :key => /[^\/]+/ }
-    get   '/:lang/:key/edit'                 , :to => 'products#edit',                           :constraints => { :key => /[^\/]+/ }, :as => 'product_edit'
-    get   '/:lang/:key/edit_links'           , :to => 'products#edit_links',                     :constraints => { :key => /[^\/]+/ }, :as => 'product_edit_links'
-    get   '/:lang/:key/edit_licenses'        , :to => 'products#edit_licenses',                  :constraints => { :key => /[^\/]+/ }, :as => 'product_edit_licenses'
-    post  '/:lang/:key/update'               , :to => 'products#update',                         :constraints => { :key => /[^\/]+/ }
-    post  '/:lang/:key/delete_link'          , :to => 'products#delete_link',                    :constraints => { :key => /[^\/]+/ }
-    post  '/:lang/:key/delete_license'       , :to => 'products#delete_license',                 :constraints => { :key => /[^\/]+/ }
-    get   '/:lang/:key/:version'             , :to => 'products#show', :as => "package_version", :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
-    post  '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
-    get   '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+    get   '/:lang/:key'                      , :to => 'products#show', :as => 'products',        :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }
+    get   '/:lang/:key/edit'                 , :to => 'products#edit',                           :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_edit'
+    get   '/:lang/:key/edit_links'           , :to => 'products#edit_links',                     :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_edit_links'
+    get   '/:lang/:key/edit_licenses'        , :to => 'products#edit_licenses',                  :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_edit_licenses'
+    post  '/:lang/:key/update'               , :to => 'products#update',                         :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }
+    post  '/:lang/:key/delete_link'          , :to => 'products#delete_link',                    :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }
+    post  '/:lang/:key/delete_license'       , :to => 'products#delete_license',                 :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }
+    get   '/:lang/:key/:version'             , :to => 'products#show', :as => "package_version", :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/, :version => /[^\/]+/ }
+    post  '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/, :version => /[^\/]+/ }
+    get   '/:lang/:key/:version/dependencies', :to => 'dependency_wheel#recursive_dependencies', :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/, :version => /[^\/]+/ }
   end
 
   # get   '*path',        :to => 'page#routing_error'
