@@ -40,7 +40,7 @@ GEM
     ansi (1.4.3)
     arel (3.0.3)
     awesome_print (1.2.0)
-    aws-sdk (1.32.0)
+    aws-sdk (1.33.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
@@ -308,7 +308,7 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh
       term-ansicolor
-    stripe (1.9.9)
+    stripe (1.10.0)
       mime-types (~> 1.25)
       multi_json (>= 1.0.4, < 2)
       rest-client (~> 1.4)
@@ -419,7 +419,7 @@ DEPENDENCIES
   sass-rails (= 3.2.6)
   selenium-webdriver (= 2.39.0)
   semverly (= 1.0.0)
-  stripe (= 1.9.9)
+  stripe (= 1.10.0)
   terminal-notifier (= 1.5.1)
   therubyracer (= 0.12.0)
   tire (= 0.6.2)
