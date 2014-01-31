@@ -217,6 +217,7 @@ describe ProjectService do
     it 'updates the badge to out-of-date' do
       user = UserFactory.create_new
       product = ProductFactory.create_new
+      product.versions = Array.new
       product.version = '10.0.0'
       product.add_version '10.0.0'
       product.save
@@ -227,16 +228,17 @@ describe ProjectService do
       project_dep.save
       project_dep.update_outdated!
       project_dep.save
-      project.outdated?().should be_true
-      ProjectService.badge_for_project(project.id).should eq('out-of-date')
+      project.outdated?().should be_false
+
+      ProjectService.badge_for_project(project.id).should eq('up-to-date')
 
       project_dep.version_current = '9.0.0'
       project_dep.version_requested = '9.0.0'
       project_dep.save
       project_dep.update_outdated!
       project_dep.save
-      project.outdated?().should be_false
-      ProjectService.update_badge_for_project(project).should eq('up-to-date')
+      project.outdated?().should be_true
+      ProjectService.update_badge_for_project(project).should eq('out-of-date')
     end
   end
 
