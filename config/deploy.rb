@@ -20,7 +20,7 @@ set :format   , :pretty
 set :log_level, :info   # :debug :error :info
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
-set :keep_releases, 7
+set :keep_releases, 5
 
 desc "Check that we can access everything"
 task :check_write_permissions do
