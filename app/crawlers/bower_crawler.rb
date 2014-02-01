@@ -344,11 +344,12 @@ class BowerCrawler
       return nil
     end
 
+    pkg_file[:repo_fullname] = repo_info[:repo_fullname]
     pkg_file[:name] = task[:registry_name]  if task.has_attribute?(:registry_name) # if task has prod_key then use it - dont trust user's unvalidated bower.json
     pkg_file[:name] = repo_info[:name]      if pkg_file[:name].to_s.strip.empty?
     pkg_file[:name] = repo_info[:full_name] if pkg_file[:name].to_s.strip.empty?
     prod_key        = make_prod_key(task)
-    product         = create_bower_package(prod_key, pkg_file, repo_info)
+    product         = create_bower_package(prod_key, pkg_file, repo_info, token)
     if product.nil?
       logger.error "add_bower_package | cant create_or_find product for #{task[:repo_fullname]}"
       return nil
@@ -363,8 +364,8 @@ class BowerCrawler
   end
 
   # Saves product and save sub/related docs
-  def self.create_bower_package(prod_key, pkg_info, repo_info)
-    prod = create_or_update_product(prod_key, pkg_info, repo_info[:language])
+  def self.create_bower_package(prod_key, pkg_info, repo_info, token)
+    prod = create_or_update_product(prod_key, pkg_info, token, repo_info[:language])
 
     Versionlink.create_project_link prod[:language], prod[:prod_key], "https://github.com/#{repo_info[:repo_fullname]}", "SCM"
     Versionlink.create_project_link prod[:language], prod[:prod_key], pkg_info[:homepage], "Homepage"
@@ -408,8 +409,10 @@ class BowerCrawler
   def self.read_project_file_from_url(file_url, token)
     response = HTTParty.get( file_url )
     return nil if response.nil? or response.code != 200
+
     content  = JSON.parse(response.body, symbolize_names: true)
     return nil if content.nil?
+
     content
   rescue => e
     logger.error "Error: cant parse JSON file for #{file_url}. #{e.message}"
@@ -582,7 +585,7 @@ class BowerCrawler
     "#{task_info[:repo_owner]}/#{task_info[:registry_name]}".strip.downcase
   end
 
-  def self.create_or_update_product(prod_key, pkg_info, language = nil)
+  def self.create_or_update_product(prod_key, pkg_info, token, language = nil)
     language = Product::A_LANGUAGE_JAVASCRIPT if language.nil?
     prod     = Product.find_or_create_by( prod_key: prod_key, language: language )
     prod.update_attributes!(
@@ -593,20 +596,22 @@ class BowerCrawler
       private_repo:  pkg_info[:private_repo],
       description:   pkg_info[:description].to_s
     )
-
-    # We don't save here the version from the bower.json file because it might
-    # be that this version is not released yet. But we need the version of the
-    # dependencies.
-    #
-    # if pkg_info.has_key?(:version) && !pkg_info[:version].to_s.strip.empty?
-    #   prod.version = pkg_info[:version]
-    # end
+    set_version(prod, pkg_info, token)
     prod.save!
     prod
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join('\n')
     nil
+  end
+
+  def self.set_version prod, pkg_info, token
+    tags = Github.repo_tags(pkg_info[:repo_fullname], token)
+    version_exist_in_file = pkg_info.has_key?(:version) && !pkg_info[:version].to_s.strip.empty?
+    if version_exist_in_file && tags && !tags.empty?
+      prod.version = pkg_info[:version]
+    end
+    prod
   end
 
   def self.create_version_archive(prod, version, url, name = nil)
