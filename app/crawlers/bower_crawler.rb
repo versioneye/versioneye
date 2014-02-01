@@ -608,7 +608,8 @@ class BowerCrawler
   def self.set_version prod, pkg_info, token
     tags = Github.repo_tags(pkg_info[:repo_fullname], token)
     version_exist_in_file = pkg_info.has_key?(:version) && !pkg_info[:version].to_s.strip.empty?
-    if version_exist_in_file && tags && !tags.empty?
+    no_tags_released = tags.nil? || tags.empty?
+    if version_exist_in_file && no_tags_released
       prod.version = pkg_info[:version]
     end
     prod
