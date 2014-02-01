@@ -217,7 +217,7 @@ class BowerCrawler
       unless file_content.has_key?(:version)
         logger.warn "No version found in project file on tag #{tag_name} of #{repo_name}. Going to use tag."
         cleaned_tag = CrawlerUtils.remove_version_prefix( tag_name.to_s )
-        file_content[:version] = clean_tag
+        file_content[:version] = cleaned_tag
       end
 
       pkg_info = to_pkg_info(task[:owner], task[:repo], project_info[:url], file_content)
