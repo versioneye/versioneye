@@ -408,7 +408,7 @@ class BowerCrawler
 
   def self.read_project_file_from_url(file_url, token)
     response = HTTParty.get( file_url )
-    return nil if response.nil? or response.code != 200
+    return nil if response.nil? || response.code != 200
 
     content  = JSON.parse(response.body, symbolize_names: true)
     return nil if content.nil?
