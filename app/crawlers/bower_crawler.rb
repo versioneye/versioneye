@@ -9,6 +9,7 @@ class BowerCrawler
   A_TASK_CHECK_EXISTENCE = "bower_crawler/check_existence"
   A_TASK_READ_PROJECT    = "bower_crawler/read_project"
   A_TASK_READ_VERSIONS   = "bower_crawler/read_versions"
+  A_TASK_TAG_PROJECT     = "bower_crawler/tag_project"
 
   def self.logger
     ActiveSupport::BufferedLogger.new('log/bower.log')
@@ -46,6 +47,7 @@ class BowerCrawler
     crawl_existing_sources(token)     # Checks if the github url really exists! And create tasks for the next crawler.
     crawl_projects(token)             # Crawles bower.json file and creates/updates basic project infos in DB.
     crawl_versions(token)
+    crawl_tag_project(token)
   end
 
   def self.crawl_concurrent(token, source_url)
@@ -55,6 +57,8 @@ class BowerCrawler
     tasks << Thread.new {crawl_existing_sources(token)}
     tasks << Thread.new {crawl_projects(token)}
     tasks << Thread.new {crawl_versions(token)}
+    tasks << Thread.new {crawl_tag_project(token)}
+   
     tasks.each {|task| task.join}
   end
 
@@ -169,11 +173,12 @@ class BowerCrawler
         tags_count = tags.to_a.count
         logger.info "#{task[:repo_fullname]} has #{tags_count} tags."
         if product.versions && product.versions.count == tags_count
-          logger.info "_ skip #{task[:repo_fullname]} because tags count (#{tags_count}) is equal to versions.count."
+          logger.info "-- skip #{task[:repo_fullname]} because tags count (#{tags_count}) is equal to versions.count."
         end
 
         tags.each do |tag|
           parse_repo_tag( task[:repo_fullname], product, tag, token )
+          to_tag_project_task(task, tag)
           sleep 1/100.0 # Just force little pause asking commit info -> github may block
         end
 
@@ -187,6 +192,85 @@ class BowerCrawler
       end
       result
     end
+  end
+
+  def self.crawl_tag_project(token)
+    task_name = A_TASK_TAG_PROJECT
+    result = false
+    crawler_task_executor(task_name, token) do |task, token|
+      tag_name = task[:tag_name]
+      commit_info = task[:data].deep_symbolize_keys
+      repo_name = task[:repo_fullname]
+
+      logger.debug "#-- going to read project deps for #{repo_name} with `#{tag_name}`"
+      commit_tree  = fetch_commit_tree(commit_info[:url], token)
+      next if commit_tree.nil?
+
+      project_info = fetch_project_info_by_sha(repo_name, commit_tree[:sha], token)
+      next if project_info.nil?
+
+      project_file = fetch_project_file(repo_name, project_info[:url], token)
+      next if project_file.nil?
+
+      file_content = parse_json(project_file) 
+      next if file_content.nil? or file_content.is_a?(TrueClass)
+      unless file_content.has_key?(:version)
+        logger.warn "No version found in project file on tag #{tag_name} of #{repo_name}. Going to use tag."
+        cleaned_tag = CrawlerUtils.remove_version_prefix( tag_name.to_s )
+        file_content[:version] = clean_tag
+      end
+
+      pkg_info = to_pkg_info(task[:owner], task[:repo], project_info[:url], file_content)
+      prod = Product.fetch_bower(task[:registry_name])
+      to_dependencies(prod, pkg_info, :dependencies,     Dependency::A_SCOPE_REQUIRE)
+      to_dependencies(prod, pkg_info, :dev_dependencies, Dependency::A_SCOPE_DEVELOPMENT)
+
+      result =  true
+    end
+  end
+
+  def self.parse_json(doc)
+    JSON.parse doc, symbolize_names: true
+  rescue => e
+    logger.error "cant parse doc: #{doc} \n #{e.message}"
+  end
+
+  #reads information of commit data, which includes link to commit tree
+  def self.fetch_commit_tree(commit_url, token)
+    check_request_limit(token)
+    uri = URI(commit_url)
+    data = Github.get_json(uri.path, token)
+    if data.nil?
+      logger.error "fetch_commit_tree | cant read commit information on #{commit_url}"
+    end
+    data
+  end
+
+  def self.fetch_project_info_by_sha(repo_name, sha, token)
+    check_request_limit(token)
+    project_files = Github.project_files_from_branch(repo_name, token, sha)
+    if project_files.nil?
+      logger.error "Didnt get any supported project file for #{repo_name} on the tag sha: `#{sha}`"
+      return
+    end
+
+    bower_files = project_files.keep_if do |file| 
+      ProjectService.type_by_filename(file[:path]) == Project::A_TYPE_BOWER
+    end
+
+    logger.info "-- Found #{bower_files.count} bower files for #{repo_name}"
+    bower_files.first
+  end
+
+  def self.fetch_project_file(repo_name, project_url, token)
+    logger.debug "Reading tag_project file for #{repo_name}: #{project_url}"
+    file_data = Github.fetch_file(project_url, token)
+    if file_data.nil?
+      logger.error "cant read content of project file for #{repo_name}: #{project_url}"
+      return
+    end
+
+    Base64.decode64(file_data[:content])
   end
 
   #add latest version for dependencies missing prod_version
@@ -422,30 +506,27 @@ class BowerCrawler
 
   def self.parse_repo_tag(repo_fullname, product, tag, token)
     if product.nil? or tag.nil?
-      logger.error "method: parse_repo_tag(repo_fullname, product, tag, token) - Product or tag cant be nil"
+      logger.error "-- parse_repo_tag(repo_fullname, product, tag, token) - Product or tag cant be nil"
       return
     end
 
     tag = tag.deep_symbolize_keys
     tag_name = CrawlerUtils.remove_version_prefix( tag[:name].to_s )
     if tag_name.nil?
-      logger.error "Skipped tag `#{tag_name}` "
+      logger.error "-- Skipped tag `#{tag_name}` "
       return
     end
 
     if product.version_by_number( tag_name )
-      logger.info "#{product.prod_key} : #{tag_name} exists already"
+      logger.info "-- #{product.prod_key} : #{tag_name} exists already"
       return
     end
 
-    check_request_limit(token)
     add_new_version(product, tag_name, tag, token)
-
     CrawlerUtils.create_newest product, tag_name, logger
     CrawlerUtils.create_notifications product, tag_name, logger
 
-    logger.info " -- Got package version `#{product.prod_key}` : #{tag_name} "
-
+    logger.info " -- Added version `#{product.prod_key}` : #{tag_name} "
     create_version_archive(product, tag_name, tag[:zipball_url]) if tag.has_key?(:zipball_url)
   end
 
@@ -460,6 +541,7 @@ class BowerCrawler
 
   def self.release_date_string(tag, token)
     released_string = nil
+    check_request_limit(token) #every func that calls Github api should check ratelimit first;
     commit_info = Github.get_json(tag[:commit][:url], token)
     if commit_info
       released_string = commit_info[:commit][:committer][:date].to_s
@@ -569,6 +651,28 @@ class BowerCrawler
       re_crawl: true
     })
     version_task
+  end
+
+  def self.to_tag_project_task(task, tag)
+    tag_task = CrawlerTask.find_or_create_by(
+      task: A_TASK_TAG_PROJECT,
+      repo_fullname: task[:repo_fullname],
+      tag_name: tag[:name]
+    )
+    
+    tag_task.update_attributes({
+      runs: tag_task[:runs] + 1,
+      repo_name: task[:repo_name],
+      repo_owner: task[:repo_owner],
+      registry_name: task[:registry_name],
+      tag_name: tag[:name],
+      data: tag[:commit],
+      url: tag[:commit][:url],
+      url_exists: true,
+      weight: 10,
+      re_crawl: true
+    })
+
   end
 
   def self.to_poison_pill(task_name)
