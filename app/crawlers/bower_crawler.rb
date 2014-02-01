@@ -206,7 +206,7 @@ class BowerCrawler
       commit_tree  = fetch_commit_tree(commit_info[:url], token)
       next if commit_tree.nil?
 
-      project_info = fetch_project_info_by_sha(repo_name, commit_tree[:sha], token)
+      project_info = fetch_project_info_by_sha(repo_name, commit_tree[:sha], token, tag_name)
       next if project_info.nil?
 
       project_file = fetch_project_file(repo_name, project_info[:url], token)
@@ -246,7 +246,7 @@ class BowerCrawler
     data
   end
 
-  def self.fetch_project_info_by_sha(repo_name, sha, token)
+  def self.fetch_project_info_by_sha(repo_name, sha, token, tag = nil)
     check_request_limit(token)
     project_files = Github.project_files_from_branch(repo_name, token, sha)
     if project_files.nil?
@@ -258,7 +258,7 @@ class BowerCrawler
       ProjectService.type_by_filename(file[:path]) == Project::A_TYPE_BOWER
     end
 
-    logger.info "-- Found #{bower_files.count} bower files for #{repo_name}"
+    logger.info "-- Found #{bower_files.count} bower files for #{repo_name} #{tag}"
     bower_files.first
   end
 
