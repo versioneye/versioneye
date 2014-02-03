@@ -26,7 +26,7 @@ class Projectdependency
   field :stability        , type: String, :default => VersionTagRecognizer::A_STABILITY_STABLE
 
   field :outdated           , type: Boolean
-  field :outdated_updated_at, type: DateTime, :default => Time.now
+  field :outdated_updated_at, type: DateTime, :default => DateTime.now
   field :muted              , type: Boolean, default: false
 
   belongs_to :project
@@ -123,9 +123,13 @@ class Projectdependency
 
     def update_outdated( out_value )
       self.outdated = out_value
-      self.outdated_updated_at = Time.now
+      self.outdated_updated_at = DateTime.now
       self.save
       self.outdated
+    rescue => e
+      Rails.logger.error e.message
+      Rails.logger.error e.backtrace.join '\n'
+      out_value
     end
 
 end
