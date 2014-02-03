@@ -110,4 +110,40 @@ describe BowerCrawler, :vcr do
       versions[5][:version].should eq("0.9.1")
     end
   end
+
+
+  describe "crawl_tag_project" do
+    it "creates correct dependencies for every project file on tags" do
+      product_task = BowerCrawler.to_read_task(task, url)
+      BowerCrawler.to_poison_pill(product_task[:task])
+      VCR.use_cassette('bower_crawler_spec_projects') do
+        BowerCrawler.crawl_projects(token)
+      end
+
+      Product.all.count.should eq(1)
+      prod = Product.all.first
+      prod[:prod_key].should_not be_nil
+
+      BowerCrawler.to_poison_pill(BowerCrawler::A_TASK_READ_VERSIONS)
+      VCR.use_cassette('bower_crawler_spec_versions') do
+        BowerCrawler.crawl_versions(token)
+      end
+
+      prod.reload
+      prod.versions.count.should eq(19)
+      BowerCrawler.to_poison_pill(BowerCrawler::A_TASK_TAG_PROJECT)
+      VCR.use_cassette('bower_crawler_spec_tag_projects') do
+        BowerCrawler.crawl_tag_project(token)
+      end
+
+      deps1 = Dependency.find_by_lang_key_and_version(prod.language, prod.prod_key, "1.1.0").to_a
+      deps1.should_not be_empty
+      deps1[0][:name].should eq("underscore")
+      deps1[0][:prod_key].should eq("versioneye/backbone")
+      deps1[0][:prod_version].should eq("1.1.0")
+
+      deps2 = Dependency.find_by_lang_key_and_version(prod.language, prod.prod_key, "1.0.0").to_a
+      deps2.should be_empty
+    end
+  end
 end
