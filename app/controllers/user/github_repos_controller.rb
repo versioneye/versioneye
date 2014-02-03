@@ -114,7 +114,7 @@ class User::GithubReposController < ApplicationController
 
     render json: repo
   rescue => e
-    Rails.logger.error "failed to import #{project_name}/#{filename} from Bitbucket: #{e.message}"
+    Rails.logger.error "failed to import #{project_name}/#{filename} from GitHub: #{e.message}"
     render text: e.message, status: 503
   end
 
