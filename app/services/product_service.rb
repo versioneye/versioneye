@@ -1,5 +1,32 @@
 class ProductService
 
+
+  def self.fetch_product( lang, prod_key )
+    product = Product.fetch_product lang, prod_key
+    if product.nil? && lang.eql?( Product::A_LANGUAGE_CLOJURE )
+      product = Product.fetch_product Product::A_LANGUAGE_JAVA, prod_key
+    end
+    return nil if product.nil?
+
+    product.check_nil_version
+    update_dependencies( product )
+    product
+  end
+
+
+  # This method updates the dependencies of a product.
+  # It updates the parsed_version and the outdated field.
+  def self.update_dependencies( product )
+    deps = product.all_dependencies
+    deps.each do |dependency|
+      outdated = DependencyService.cache_outdated?( dependency )
+      if outdated != dependency.outdated
+        dependency.update_attributes({outdated: outdated})
+      end
+    end
+  end
+
+
   # languages have to be an array of strings.
   def self.search(q, group_id = nil, languages = nil, page_count = 1)
     EsProduct.search(q, group_id, languages, page_count)

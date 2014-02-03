@@ -36,13 +36,10 @@ class ProductsController < ApplicationController
     lang     = Product.decode_language( params[:lang] )
     prod_key = Product.decode_prod_key( params[:key]  )
     version  = Version.decode_version ( params[:version] )
-    @product = fetch_product lang, prod_key
+    @product = ProductService.fetch_product lang, prod_key
 
-    if @product.nil?
-      return
-    end
+    return if @product.nil?
 
-    @product.check_nil_version
     if @product && lang.casecmp( @product.language ) != 0
       redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
       return
@@ -259,14 +256,6 @@ class ProductsController < ApplicationController
         followers: product[:followers],
         url: product.to_url_path
       }
-    end
-
-    def fetch_product( lang, prod_key )
-      product = Product.fetch_product lang, prod_key
-      if product.nil? && lang.eql?( Product::A_LANGUAGE_CLOJURE )
-        product = Product.fetch_product Product::A_LANGUAGE_JAVA, prod_key
-      end
-      product
     end
 
     def add_status_comment(product, user, type, license = "")

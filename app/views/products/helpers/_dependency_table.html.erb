@@ -14,7 +14,7 @@
     </thead>
     <% dependencies.each do |dep| %>
       <% dep.update_known_if_nil() %>
-      <% tr_class = DependencyService.cache_outdated?( dep ) ? "flash warn" : ""  %>
+      <% tr_class = dep[:outdated] ? "flash warn" : ""  %>
       <tr class="<%= tr_class %>">
         <td>
           <% if dep.known && dep.product %>
