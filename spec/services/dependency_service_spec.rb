@@ -3,9 +3,9 @@ require 'spec_helper'
 describe DependencyService do
 
   describe "outdated?" do
-    let(:product){FactoryGirl.build(:product, 
-                                    name: "test1", 
-                                    prod_key: "test1", 
+    let(:product){FactoryGirl.build(:product,
+                                    name: "test1",
+                                    prod_key: "test1",
                                     language: "Ruby",
                                     prod_type: Project::A_TYPE_RUBYGEMS)}
 
@@ -26,7 +26,7 @@ describe DependencyService do
       DependencyService.outdated?( dependency ).should be_true
     end
 
-    it "is not outdated, because it's equal" do 
+    it "is not outdated, because it's equal" do
       product.versions << Version.new({:version => "1.0.0"})
       product.version = "1.0.0"
       product.save
@@ -118,6 +118,205 @@ describe DependencyService do
 
       product.dependencies(nil).size.should eq(4)
       DependencyService.dependencies_outdated?( product.dependencies(nil) ).should be_true
+    end
+
+  end
+
+
+  describe "gem_version_parsed" do
+
+    it "returns valid value" do
+      product = Product.new
+      product.versions = Array.new
+      product.name = "test"
+      product.prod_key = "gasgagasgj8623_jun44444it/juasgnit23afsg"
+      product.language = Product::A_LANGUAGE_RUBY
+
+      product.versions.push(Version.new({:version => "1.0"}))
+      product.versions.push(Version.new({:version => "1.1"}))
+      product.versions.push(Version.new({:version => "1.2"}))
+      product.versions.push(Version.new({:version => "2.0"}))
+      product.save
+
+      dependency = Dependency.new
+      dependency.language = product.language
+      dependency.version = "~> 1.0"
+      dependency.dep_prod_key = product.prod_key
+
+      DependencyService.update_parsed_version dependency
+      dependency.parsed_version.should eql("1.2")
+
+      product.remove
+    end
+
+    it "returns valid value" do
+      product = Product.new({:name => "test", :prod_key => "huj_buuuuu", :language => Product::A_LANGUAGE_RUBY})
+      product.versions = Array.new
+
+      product.versions.push(Version.new({:version => "1.2"}))
+      product.versions.push(Version.new({:version => "2.0"}))
+      product.versions.push(Version.new({:version => "2.2.1"}))
+      product.versions.push(Version.new({:version => "2.2.2"}))
+      product.versions.push(Version.new({:version => "2.2.9"}))
+      product.versions.push(Version.new({:version => "2.3"}))
+      product.save
+
+      dependency = Dependency.new
+      dependency.version = "~> 2.2"
+      dependency.dep_prod_key = product.prod_key
+      dependency.language = product.language
+
+      DependencyService.update_parsed_version dependency
+      dependency.parsed_version.should eql("2.3")
+
+      dependency.version = "~> 2.0"
+      dependency.dep_prod_key = product.prod_key
+
+      DependencyService.update_parsed_version dependency
+      dependency.parsed_version.should eql("2.3")
+
+      product.remove
+    end
+
+  end
+
+ describe "cocoapods_version_parsed" do
+
+    it "returns valid value" do
+      product = Product.new
+      product.versions = Array.new
+      product.name = "test"
+      product.prod_key = "gasgagasgj8623_jun44444it/juasgnit23afsg"
+      product.language = Product::A_LANGUAGE_OBJECTIVEC
+
+      product.versions.push(Version.new({:version => "1.0"}))
+      product.versions.push(Version.new({:version => "1.1"}))
+      product.versions.push(Version.new({:version => "1.2"}))
+      product.versions.push(Version.new({:version => "2.0"}))
+      product.save
+
+      dependency = Dependency.new
+      dependency.language = product.language
+      dependency.version = "~> 1.0"
+      dependency.dep_prod_key = product.prod_key
+
+      DependencyService.update_parsed_version dependency
+      dependency.parsed_version.should eql("1.2")
+
+      product.remove
+    end
+
+    it "returns valid value" do
+      product = Product.new
+      product.versions = Array.new
+      product.name = "test"
+      product.prod_key = "huj_buuuuu"
+      product.language = Product::A_LANGUAGE_OBJECTIVEC
+
+      product.versions.push(Version.new({:version => "1.2"}))
+      product.versions.push(Version.new({:version => "2.0"}))
+      product.versions.push(Version.new({:version => "2.2.1"}))
+      product.versions.push(Version.new({:version => "2.2.2"}))
+      product.versions.push(Version.new({:version => "2.2.9"}))
+      product.versions.push(Version.new({:version => "2.3"}))
+
+      product.save
+
+      dependency = Dependency.new({:prod_type => Project::A_TYPE_COCOAPODS})
+      dependency.version = "~> 2.2"
+      dependency.dep_prod_key = product.prod_key
+      dependency.language = product.language
+      DependencyService.update_parsed_version dependency
+      dependency.parsed_version.should eql("2.3")
+
+      dependency.version = "~> 2.0"
+      dependency.dep_prod_key = product.prod_key
+
+      DependencyService.update_parsed_version dependency
+      dependency.parsed_version.should eql("2.3")
+
+      product.remove
+    end
+
+  end
+
+
+  describe "packagist_version_parsed" do
+
+    it "returns valid value" do
+      product = Product.new
+      product.versions = Array.new
+      product.name = "test"
+      product.language = Product::A_LANGUAGE_RUBY
+      product.prod_key = "gasgj8623_jun44444it/juat23afsg"
+
+      product.versions.push(Version.new({:version => "1.0"}))
+      product.versions.push(Version.new({:version => "1.1"}))
+      product.versions.push(Version.new({:version => "1.2"}))
+      product.versions.push(Version.new({:version => "2.0"}))
+      product.save
+
+      dependency = Dependency.new({:prod_type => Project::A_TYPE_COMPOSER})
+      dependency.language = product.language
+      dependency.version = "~1.0"
+      dependency.dep_prod_key = product.prod_key
+      DependencyService.update_parsed_version dependency
+      dependency.parsed_version.should eql("1.2")
+
+      product.remove
+    end
+
+    it "returns valid value" do
+      product          = Product.new
+      product.versions = Array.new
+      product.name     = "test"
+      product.prod_key = "huj_buuuuu"
+      product.language = Product::A_LANGUAGE_RUBY
+
+      product.versions.push(Version.new({:version => "1.2"}))
+      product.versions.push(Version.new({:version => "2.0"}))
+      product.versions.push(Version.new({:version => "2.2.1"}))
+      product.versions.push(Version.new({:version => "2.2.2"}))
+      product.versions.push(Version.new({:version => "2.2.9"}))
+      product.versions.push(Version.new({:version => "2.3"}))
+      product.versions.push(Version.new({:version => "3.0"}))
+      product.save
+
+      dependency = Dependency.new({:prod_type => Project::A_TYPE_COMPOSER})
+      dependency.language = product.language
+      dependency.version = "~2.2"
+      dependency.dep_prod_key = product.prod_key
+      DependencyService.update_parsed_version dependency
+      dependency.parsed_version.should eql("2.3")
+
+      product.remove
+    end
+
+  end
+
+  describe "npm_version_parsed" do
+
+    it "returns valid value" do
+      product = Product.new
+      product.versions = Array.new
+      product.name = "test"
+      product.language = Product::A_LANGUAGE_RUBY
+      product.prod_key = "gasgj8623_jun44444it/juat23afsg"
+
+      product.versions.push(Version.new({:version => "1.0"}))
+      product.versions.push(Version.new({:version => "1.1"}))
+      product.versions.push(Version.new({:version => "1.2"}))
+      product.versions.push(Version.new({:version => "2.0"}))
+      product.save
+
+      dependency = Dependency.new({:prod_type => Project::A_TYPE_NPM})
+      dependency.language = product.language
+      dependency.version = "~1.0"
+      dependency.dep_prod_key = product.prod_key
+      DependencyService.update_parsed_version dependency
+      dependency.parsed_version.should eql("1.2")
+
+      product.remove
     end
 
   end

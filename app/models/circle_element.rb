@@ -46,6 +46,7 @@ class CircleElement
     Rails.logger.error e.backtrace.join("\n")
   end
 
+  # TODO move this to service layer
   def self.dependency_circle(lang, prod_key, version, scope)
     if scope == nil
       scope = Dependency.main_scope( lang )
@@ -59,10 +60,11 @@ class CircleElement
     end
     dependencies.each do |dep|
       next if dep.name.nil? || dep.name.empty?
+      DependencyService.update_parsed_version( dep ) if dep.parsed_version.nil?
       element = CircleElement.new
       element.init_arrays
       element.dep_prod_key = dep.dep_prod_key
-      element.version      = dep.version_parsed
+      element.version      = dep.parsed_version
       element.level        = 0
       self.attach_label_to_element(element, dep)
       hash[dep.dep_prod_key] = element
@@ -88,6 +90,7 @@ class CircleElement
         if dep.name.nil? || dep.name.empty?
           next
         end
+        DependencyService.update_parsed_version( dep ) if dep.parsed_version.nil?
         key = dep.dep_prod_key
         ele = self.get_element_from_hash(new_hash, hash, parent_hash, key)
         if ele
@@ -99,7 +102,7 @@ class CircleElement
           new_element.level          = deep
           attach_label_to_element(new_element, dep)
           new_element.connections    << "#{element.dep_prod_key}"
-          new_element.version        = dep.version_parsed
+          new_element.version        = dep.parsed_version
           new_hash[dep.dep_prod_key] = new_element
         end
         element.connections  << "#{key}"
