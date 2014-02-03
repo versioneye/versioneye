@@ -124,8 +124,55 @@ describe BowerCrawler, :vcr do
       link[:prod_key].should eq("versioneye/jquery")
       link[:version_id].should eq("2.1.0-rc1")
       link[:language].should eq(Product::A_LANGUAGE_JAVASCRIPT)
+    end
+
+  describe "crawl_tag_project" do
+    it "creates correct dependencies for every project file on tags" do
+      product_task = BowerCrawler.to_read_task(task, url)
+      BowerCrawler.to_poison_pill(product_task[:task])
+      VCR.use_cassette('bower_crawler_jquery_spec_projects') do
+        BowerCrawler.crawl_projects(token)
+      end
+
+      Product.all.count.should eq(1)
+      prod = Product.all.first
+      prod[:prod_key].should_not be_nil
+
+      #versions_task = BowerCrawler.to_version_task(task, prod[:prod_key])
+      BowerCrawler.to_poison_pill(BowerCrawler::A_TASK_READ_VERSIONS)
+      VCR.use_cassette('bower_crawler_jquery_spec_versions') do
+        BowerCrawler.crawl_versions(token)
+      end
+
+      prod.reload
+      prod.versions.count.should eq(109)
+      BowerCrawler.to_poison_pill(BowerCrawler::A_TASK_TAG_PROJECT)
+      VCR.use_cassette('bower_crawler_jquery_spec_tag_projects') do
+        BowerCrawler.crawl_tag_project(token)
+      end
+
+      deps1 = Dependency.find_by_lang_key_and_version(prod.language, prod.prod_key, "2.1.0").to_a
+      deps1.size.should eq(4)
+      deps1[0][:name].should eq("sizzle")
+      deps1[0][:scope].should eq("require")
+      deps1[0][:version].should eq("1.10.16")
+      deps1[1][:name].should eq("requirejs")
+      deps1[1][:scope].should eq("development")
+      deps1[1][:version].should eq("~2.1.8")
+      deps1[2][:name].should eq("qunit")
+      deps1[2][:scope].should eq("development")
+      deps1[2][:version].should eq("~1.12.0")
+      deps1[3][:name].should eq("sinon")
+      deps1[3][:scope].should eq("development")
+      deps1[3][:version].should eq("~1.7.3")
+
+
+      deps2 = Dependency.find_by_lang_key_and_version(prod.language, prod.prod_key, "1.0.0").to_a
+      deps2.should be_empty
 
     end
+  end
+
 
   end
 end

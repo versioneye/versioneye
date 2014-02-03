@@ -221,4 +221,74 @@ http_interactions:
         }
     http_version: 
   recorded_at: Sun, 26 Jan 2014 10:28:02 GMT
+- request:
+    method: get
+    uri: https://api.github.com/repos/versioneye/backbone/tags
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Chrome/28(www.versioneye.com, contact@versioneye.com)
+      Connection:
+      - Keep-Alive
+      - keep-alive
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sat, 01 Feb 2014 17:33:49 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4224'
+      X-Ratelimit-Reset:
+      - '1391276540'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Fri, 24 Jan 2014 11:00:15 GMT
+      Etag:
+      - "\"dd9c4fe8071770ebe81fa1f33ae8872b\""
+      X-Oauth-Scopes:
+      - user, public_repo, repo, gist
+      X-Accepted-Oauth-Scopes:
+      - repo
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Content-Type-Options:
+      - nosniff
+      Content-Length:
+      - '6483'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5CC605F2:5593:539EED6:52ED2FFC
+    body:
+      encoding: UTF-8
+      string: "[{\"name\":\"1.1.0\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/1.1.0\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/1.1.0\",\"commit\":{\"sha\":\"0a4399e3de5cb2ab75a0338669582f18c1fae3ae\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/0a4399e3de5cb2ab75a0338669582f18c1fae3ae\"}},{\"name\":\"1.0.0\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/1.0.0\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/1.0.0\",\"commit\":{\"sha\":\"699fe3271262043bb137bae97bd0003d6d193f27\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/699fe3271262043bb137bae97bd0003d6d193f27\"}},{\"name\":\"0.9.10\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.9.10\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.9.10\",\"commit\":{\"sha\":\"836a8cb4d8744fcd71d6ca227dda051a4e5cb325\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/836a8cb4d8744fcd71d6ca227dda051a4e5cb325\"}},{\"name\":\"0.9.9\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.9.9\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.9.9\",\"commit\":{\"sha\":\"18b445e8a0eaf438dd244121e24a2a6041c62052\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/18b445e8a0eaf438dd244121e24a2a6041c62052\"}},{\"name\":\"0.9.2\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.9.2\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.9.2\",\"commit\":{\"sha\":\"863814e519e630806096aa3ddeef520afbb263ff\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/863814e519e630806096aa3ddeef520afbb263ff\"}},{\"name\":\"0.9.1\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.9.1\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.9.1\",\"commit\":{\"sha\":\"655bd05bc3fbe394277ffa38b51a5ca17b48d3b6\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/655bd05bc3fbe394277ffa38b51a5ca17b48d3b6\"}},{\"name\":\"0.9.0\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.9.0\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.9.0\",\"commit\":{\"sha\":\"5ce976bf6a6c795e295190bcc48c39e52f9afe6f\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/5ce976bf6a6c795e295190bcc48c39e52f9afe6f\"}},{\"name\":\"0.5.3\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.5.3\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.5.3\",\"commit\":{\"sha\":\"29b60e53fa18b6fffb4a21d0d1c8c9fdbde43b6c\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/29b60e53fa18b6fffb4a21d0d1c8c9fdbde43b6c\"}},{\"name\":\"0.5.2\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.5.2\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.5.2\",\"commit\":{\"sha\":\"9d2811a639b3ddf1867e19a8b791a4b518202c11\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/9d2811a639b3ddf1867e19a8b791a4b518202c11\"}},{\"name\":\"0.5.1\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.5.1\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.5.1\",\"commit\":{\"sha\":\"36dddfbe06606df5a78ebaf62c3f452efd501916\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/36dddfbe06606df5a78ebaf62c3f452efd501916\"}},{\"name\":\"0.5.0\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.5.0\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.5.0\",\"commit\":{\"sha\":\"0798d9767224dac51435e149c319a6051dab4843\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/0798d9767224dac51435e149c319a6051dab4843\"}},{\"name\":\"0.3.3\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.3.3\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.3.3\",\"commit\":{\"sha\":\"3505bde58ec82f15e920298813d37476242793bb\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/3505bde58ec82f15e920298813d37476242793bb\"}},{\"name\":\"0.3.2\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.3.2\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.3.2\",\"commit\":{\"sha\":\"356664a7357ddb9b4cfcda40e37918d21c0b0dd3\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/356664a7357ddb9b4cfcda40e37918d21c0b0dd3\"}},{\"name\":\"0.3.1\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.3.1\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.3.1\",\"commit\":{\"sha\":\"86c3089379676279d14489fc92780d605ecafb03\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/86c3089379676279d14489fc92780d605ecafb03\"}},{\"name\":\"0.3.0\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.3.0\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.3.0\",\"commit\":{\"sha\":\"3fa14be5a15554c4c02fd31270f0e1bd61203031\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/3fa14be5a15554c4c02fd31270f0e1bd61203031\"}},{\"name\":\"0.2.0\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.2.0\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.2.0\",\"commit\":{\"sha\":\"3ba999c8b3a92bffd10cfa39c7b331f2a3fda5a4\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/3ba999c8b3a92bffd10cfa39c7b331f2a3fda5a4\"}},{\"name\":\"0.1.2\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.1.2\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.1.2\",\"commit\":{\"sha\":\"d2ba3311843e6ac33160b31305c57b68ed162992\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/d2ba3311843e6ac33160b31305c57b68ed162992\"}},{\"name\":\"0.1.1\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.1.1\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.1.1\",\"commit\":{\"sha\":\"184687b28fb9c5a11333b32da3b485f926da6636\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/184687b28fb9c5a11333b32da3b485f926da6636\"}},{\"name\":\"0.1.0\",\"zipball_url\":\"https://api.github.com/repos/versioneye/backbone/zipball/0.1.0\",\"tarball_url\":\"https://api.github.com/repos/versioneye/backbone/tarball/0.1.0\",\"commit\":{\"sha\":\"284397f042b314eb929b3213ef0790ddf3e23be8\",\"url\":\"https://api.github.com/repos/versioneye/backbone/commits/284397f042b314eb929b3213ef0790ddf3e23be8\"}}]"
+    http_version: 
+  recorded_at: Sat, 01 Feb 2014 17:33:49 GMT
 recorded_with: VCR 2.8.0
