@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe ProductService do
 
+  let( :product ) { Product.new }
+
   describe "create_follower" do
 
     let(:product){ ProductFactory.create_new(34) }
