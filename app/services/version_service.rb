@@ -11,7 +11,7 @@ class VersionService
       end
     end
     filtered = versions if filtered.empty?
-    sorted = Naturalsorter::Sorter.sort_version_by_method( filtered, 'version', false )
+    sorted = Naturalsorter::Sorter.sort_version_by_method( filtered, 'to_s', false )
     sorted.first
   rescue => e
     Rails.logger.error e.message
@@ -98,7 +98,7 @@ class VersionService
 
   def self.versions_start_with( versions, val )
     return [] if versions.nil? || versions.empty?
-    versions.dup.keep_if {|ver| ver[:version].to_s.match(/^#{val}/)}    
+    versions.dup.keep_if {|ver| ver[:version].to_s.match(/^#{val}/)}
   end
 
   def self.versions_by_comperator(versions, operator, value, range = true)
@@ -112,7 +112,7 @@ class VersionService
     end
   end
 
-  def self.newest_but_not( versions, value, range=false, stability = "stable")    
+  def self.newest_but_not( versions, value, range=false, stability = "stable")
     filtered_versions = versions.dup.keep_if {|version| version.to_s.match(/^#{value}/i).nil?}
     return filtered_versions if range
     newest = VersionService.newest_version_from(filtered_versions, stability)
@@ -184,20 +184,6 @@ class VersionService
     return filtered_versions if range
     newest = VersionService.newest_version_from(filtered_versions, stability)
     return get_newest_or_value(newest, value)
-  end
-
-
-  def self.update_version_data( product, persist = true )
-    return nil if product.nil?
-    versions = product.versions
-    return nil if versions.nil? || versions.empty?
-    newest_stable_version = self.newest_version( versions )
-    return nil if newest_stable_version.to_s.eql?( product.version)
-    product.version      = newest_stable_version.to_s
-    product.save if persist
-  rescue => e
-    Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
   end
 
 

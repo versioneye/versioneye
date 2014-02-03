@@ -110,7 +110,7 @@ describe VersionService do
       product.versions << Version.new(version: "0.2")
       product.versions << Version.new(version: "1.2")
       allowed_versions = VersionService.versions_by_whitelist(product.versions, ["0.2", "1.0", "1.2"])
-      
+
       allowed_versions.should_not be_empty
       allowed_versions.size.should eq(2)
       allowed_versions[0][:version].should eq("0.2")
@@ -359,7 +359,7 @@ describe VersionService do
       version[:version].should eq("1.7")
     end
 
-    it "returns right range for != operator" do     
+    it "returns right range for != operator" do
       results = VersionService.versions_by_comperator(versions, "!=", "1.2", true)
       results.should_not be_nil
       results.size.should eq(4)
@@ -371,7 +371,7 @@ describe VersionService do
    end
 
     it "returns newest version for `<` operator" do
-     
+
       result = VersionService.versions_by_comperator(versions, "<", "1.3", false)
       result.should_not be_nil
       result[:version].should eq("1.2")
@@ -385,7 +385,7 @@ describe VersionService do
       result[:version].should eq("1.7")
     end
 
-    it "returns correct versions range  for `<` operator" do     
+    it "returns correct versions range  for `<` operator" do
       results = VersionService.versions_by_comperator(versions, "<", "1.3", true)
       results.should_not be_nil
       results.size.should eq(2)
@@ -405,7 +405,7 @@ describe VersionService do
       results.should_not be_nil
       results.size.should eq(4)
     end
-    
+
     it "returns newest version for `>` operator" do
       result = VersionService.versions_by_comperator(versions, ">", "1.4", false)
       result.should_not be_nil
@@ -561,36 +561,6 @@ describe VersionService do
       product.versions.push( Version.new( { :version => "1.0" } ) )
       ver = VersionService.smaller_than_or_equal(product.versions, "1.1")
       ver.version.should eql("1.0")
-    end
-
-  end
-
-
-  describe "update_version_data" do
-
-    it "returns the one" do
-      product.versions = Array.new
-      product.versions.push( Version.new( { :version => "1.0" } ) )
-      VersionService.update_version_data( product )
-      product.version.should eql("1.0")
-    end
-
-    it "returns the highest stable" do
-      product.versions = Array.new
-      product.versions.push( Version.new( { :version => "1.0"     } ) )
-      product.versions.push( Version.new( { :version => "1.1"     } ) )
-      product.versions.push( Version.new( { :version => "1.2-dev" } ) )
-      VersionService.update_version_data( product )
-      product.version.should eql("1.1")
-    end
-
-    it "returns the highest unststable because there is no stable" do
-      product.versions = Array.new
-      product.versions.push( Version.new( { :version => "1.0-beta" } ) )
-      product.versions.push( Version.new( { :version => "1.1-beta" } ) )
-      product.versions.push( Version.new( { :version => "1.2-dev"  } ) )
-      VersionService.update_version_data( product )
-      product.version.should eql("1.2-dev")
     end
 
   end

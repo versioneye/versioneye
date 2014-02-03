@@ -41,7 +41,7 @@ class PackagistCrawler
     versions.each do |version|
       self.process_version version, product
     end
-    VersionService.update_version_data( product )
+    ProductService.update_version_data( product )
   rescue => e
     self.logger.error "ERROR in crawle_package Message:   #{e.message}"
     self.logger.error e.backtrace.join('\n')

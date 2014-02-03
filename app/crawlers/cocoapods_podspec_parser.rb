@@ -170,7 +170,7 @@ class CocoapodsPodspecParser
 
   def create_version
     # versions aren't stored at product
-    # this is what VersionService.update_version_data does
+    # this is what ProductService.update_version_data does
     version_numbers = @product.versions.map(&:version)
     return nil if version_numbers.member? version
 
