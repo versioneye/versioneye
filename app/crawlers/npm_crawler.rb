@@ -92,7 +92,7 @@ class NpmCrawler
 
       create_new_version product, version_number, version_obj, time, crawl
     end
-    VersionService.update_version_data( product )
+    ProductService.update_version_data( product )
   rescue => e
     self.logger.error "ERROR in crawle_package Message: #{e.message}"
     self.logger.error e.backtrace.join('\n')

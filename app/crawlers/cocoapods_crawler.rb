@@ -26,7 +26,7 @@ class CocoapodsCrawler < GitCrawler
       parser  = CocoapodsPodspecParser.new
       product = parser.parse_file filepath
       if product
-        VersionService.update_version_data product, false
+        ProductService.update_version_data product, false
         product.save
       else
         logger.warn 'NO PRODUCT'

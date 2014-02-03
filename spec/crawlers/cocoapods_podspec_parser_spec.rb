@@ -98,7 +98,7 @@ describe CocoapodsPodspecParser do
         podspec = './spec/fixtures/files/podspec/ShareKit.podspec'
         product = parser.parse_file podspec
 
-        VersionService.update_version_data product, true
+        ProductService.update_version_data product, true
 
         puts product
 
