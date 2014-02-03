@@ -32,6 +32,11 @@ gem 'cocoapods-core'     , '0.29.0'
 gem 'octokit'            , '~> 2.7.0'
 gem 'semverly'           , '1.0.0'
 
+# This is coming soon!
+# gem 'log4r'              , '1.1.10'
+# gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v0.1.1'
+
+
 group :development do
   gem 'capistrano'        , '3.1.0'
   gem 'capistrano-rails'  , '1.1.1'
