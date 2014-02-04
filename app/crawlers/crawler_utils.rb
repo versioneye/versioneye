@@ -3,6 +3,7 @@ class CrawlerUtils
   def self.create_newest( product, version_number, logger = nil )
     newest = Newest.fetch_newest( product.language, product.prod_key, version_number )
     return nil if newest
+
     newest = Newest.new
     newest.name       = product.name
     newest.language   = product.language
@@ -12,12 +13,7 @@ class CrawlerUtils
     newest.product_id = product._id.to_s
     newest.save
   rescue => e
-    if logger
-      logger.error "Error in CrawlerUtils.create_newest. #{e.message}"
-      logger.error e.backtrace.join('\n')
-    else
-      p e.backtrace.join('\n')
-    end
+    log_exception e, logger
     false
   end
 
@@ -25,23 +21,25 @@ class CrawlerUtils
     new_notifications = 0
     subscribers = product.users
     return new_notifications if subscribers.nil? || subscribers.empty?
+
     subscribers.each do |subscriber|
-      notification            = Notification.new
-      notification.user       = subscriber
-      notification.product    = product
-      notification.version_id = version_number
-      if notification.save
-        new_notifications += 1
-      end
+      success = create_notification( subscriber, product, version_number, logger )
+      new_notifications += 1 if success
     end
     new_notifications
   rescue => e
-    if logger
-      logger.error "Error in CrawlerUtils.create_notifications. #{e.message}"
-      logger.error e.backtrace.join('\n')
-    else
-      p e.backtrace.join('\n')
-    end
+    log_exception e, logger
+    false
+  end
+
+  def self.create_notification user, product, version_number, logger
+    notification            = Notification.new
+    notification.user       = user
+    notification.product    = product
+    notification.version_id = version_number
+    notification.save
+  rescue => e
+    log_exception e, logger
     false
   end
 
@@ -60,5 +58,17 @@ class CrawlerUtils
     end
     version_number
   end
+
+  private
+
+    def self.log_exception e, logger = nil
+      if logger
+        logger.error e.message
+        logger.error e.backtrace.join('\n')
+      else
+        p e.message
+        p e.backtrace.join('\n')
+      end
+    end
 
 end
