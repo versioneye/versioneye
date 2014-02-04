@@ -6,6 +6,7 @@ class BowerParser < CommonParser
     numeric = '\d+' #numeric identifier
     non_numeric =  '\d*[a-zA-Z\-][\\w\-]*' #0 or more numbers before character
     prerelease_ident = "#{numeric}|#{non_numeric}"
+    ident = "[\\w\\-\\.]+"
     build_ident = "[\\w-]*"
     gtlt = "(?<comperator>(?:<|>)?=?)"
     xrange_ident = "#{numeric}|x|X|\\*"
@@ -42,6 +43,8 @@ class BowerParser < CommonParser
       (?<end> #{xrange}) \\s* $
     ]
     star_version = "(<|>)?=?\\s*\\*"
+    commit_version = "(?<owner>#{ident})/(?<repo>#{ident})\\#(?<sha>#{ident})"
+
     #initialize set of rules
     @rules = {
       main_version: Regexp.new(main_version, Regexp::EXTENDED),
@@ -51,7 +54,8 @@ class BowerParser < CommonParser
       tilde_version: Regexp.new(tilde_version, Regexp::EXTENDED),
       caret_version: Regexp.new(caret_version, Regexp::EXTENDED),
       hyphen_version: Regexp.new(hyphen_version, Regexp::EXTENDED),
-      star_version: Regexp.new(star_version, Regexp::EXTENDED)
+      star_version: Regexp.new(star_version, Regexp::EXTENDED),
+      commit_version: Regexp.new(commit_version, Regexp::EXTENDED)
     }
   end
 
@@ -242,6 +246,13 @@ class BowerParser < CommonParser
         version: ver_label,
         label: version,
         comperator: "<="
+      }
+
+    elsif (m = version.match(self.rules[:commit_version]))
+      version_data = {
+        version: m[:sha],
+        label: m[:sha],
+        comperator: "="
       }
     else
       Rails.logger.error %Q{BowerParser.parse_version_data | Version `#{version}` for #{product[:name]}
