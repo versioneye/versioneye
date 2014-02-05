@@ -8,9 +8,8 @@ describe Projectdependency do
     @project          = ProjectFactory.create_new( user )
     @project.language = Product::A_LANGUAGE_RUBY
 
-    @product          = Product.new({:name => 'gomezify', :prod_key => 'gomezify'})
+    @product          = Product.new({:prod_type => Project::A_TYPE_RUBYGEMS, :language => Product::A_LANGUAGE_RUBY, :prod_key => 'gomezify', :name => 'gomezify'})
     @product.versions = Array.new
-    @product.language = Product::A_LANGUAGE_RUBY
     @product.versions.push(Version.new({:version => '1.0'}))
     @product.version  = @product.versions.first.to_s
     @product.save
@@ -149,9 +148,8 @@ describe Projectdependency do
       project          = ProjectFactory.create_new( user )
       project.language = Product::A_LANGUAGE_JAVA
 
-      product          = Product.new({:name => 'lamina', :prod_key => 'lamina', :group_id => 'lamina', :artifact_id => 'lamina' })
+      product          = Product.new({:name => 'lamina', :prod_key => 'lamina', :group_id => 'lamina', :artifact_id => 'lamina', :language => Product::A_LANGUAGE_CLOJURE, :prod_type => Project::A_TYPE_LEIN })
       product.versions = Array.new
-      product.language = Product::A_LANGUAGE_CLOJURE
       product.versions.push(Version.new({:version => '1.0'}))
       product.version  = product.versions.first.to_s
       product.save

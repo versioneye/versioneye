@@ -32,8 +32,8 @@ describe Dependency do
 
     it "updates known with false" do
       dependency = Dependency.new({:prod_type => Project::A_TYPE_RUBYGEMS,
-        :language => Product::A_LANGUAGE_RUBY, :prod_key => "rails",
-        :prod_version => "4.0.0"})
+        :language => Product::A_LANGUAGE_RUBY, :prod_key => 'rails',
+        :prod_version => '4.0.0'})
       dependency.dep_prod_key = "Haste_net_gesehen"
       dependency.version = "1.0.0"
       dependency.known.should be_nil
@@ -43,13 +43,13 @@ describe Dependency do
 
     it "updates known with true" do
       product = Product.new({:prod_type => Project::A_TYPE_RUBYGEMS,
-        :language => Product::A_LANGUAGE_RUBY, :prod_key => "activerecord",
-        :version => "4.0.0"})
+        :language => Product::A_LANGUAGE_RUBY, :prod_key => 'activerecord',
+        :name => 'activerecord', :version => "4.0.0"})
       product.save
 
       dependency = Dependency.new({:prod_type => Project::A_TYPE_RUBYGEMS,
-        :language => Product::A_LANGUAGE_RUBY, :prod_key => "rails",
-        :prod_version => "4.0.0"})
+        :language => Product::A_LANGUAGE_RUBY, :prod_key => 'rails',
+        :prod_version => '4.0.0'})
       dependency.dep_prod_key = "activerecord"
       dependency.version = "4.0.0"
       dependency.known.should be_nil
