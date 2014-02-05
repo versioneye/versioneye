@@ -9,7 +9,7 @@ class BowerIssue
     user = User.find_by_username("reiz")
     token = user.github_token
 
-    producer = Thread.new do 
+    producer = Thread.new do
       version_tasks.each {|task| create_tag_task(task, token)}
       sleep 1/100.0
     end
@@ -29,7 +29,7 @@ class BowerIssue
     tags = Github.repo_tags(task[:repo_fullname], token)
     if tags.nil? || tags.empty?
       logger.warn "`#{task[:repo_fullname]}` has no versions - going to skip."
-      return 
+      return
     end
 
     tags.each {|tag| BowerCrawler.to_tag_project_task(task, tag)}
