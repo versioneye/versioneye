@@ -190,12 +190,15 @@ class VersionService
   # TODO test
   def self.average_release_time( versions )
     return nil if versions.nil? || versions.empty? || versions.size == 1
+
     released_versions = self.versions_with_released_date( versions )
     return nil if released_versions.nil? || released_versions.empty? || released_versions.size < 3
+
     sorted_versions = released_versions.sort! { |a,b| a.released_at <=> b.released_at }
     first = sorted_versions.first.released_at
     last  = sorted_versions.last.released_at
     return nil if first.nil? || last.nil?
+
     diff = last.to_i - first.to_i
     diff_days = diff / 60 / 60 / 24
     average = diff_days / sorted_versions.size
@@ -209,10 +212,12 @@ class VersionService
 
   def self.estimated_average_release_time( versions )
     return nil if versions.nil? || versions.empty? || versions.size == 1
+
     sorted_versions = versions.sort! { |a,b| a.created_at <=> b.created_at }
     first = sorted_versions.first.created_at
     last  = sorted_versions.last.created_at
     return nil if first.nil? || last.nil?
+
     diff = last.to_i - first.to_i
     diff_days = diff / 60 / 60 / 24
     average = diff_days / sorted_versions.size
