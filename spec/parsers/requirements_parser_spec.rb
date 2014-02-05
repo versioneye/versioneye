@@ -11,88 +11,12 @@ describe RequirementsParser do
     end
 
     it "parse from http the file correctly" do
-      name = "South"
-      product = Product.new
-      product.name = name
-      product.name_downcase = name
-      product.prod_key = "South"
-      product.language = Product::A_LANGUAGE_PYTHON
-      product.version = "1.0.0"
-      product.save
-      version1 = Version.new
-      version1.version = "0.7.3"
-      product.versions.push(version1)
-      version2 = Version.new
-      version2.version = "0.7.2"
-      product.versions.push(version2)
-      version3 = Version.new
-      version3.version = "1.0.0"
-      product.versions.push(version3)
-      product.save
 
-      name2 = "amqplib"
-      product2 = Product.new
-      product2.name = name2
-      product2.name_downcase = name2
-      product2.prod_key = "amqplib"
-      product2.language = Product::A_LANGUAGE_PYTHON
-      product2.version = "2.0.0"
-      product2.save
-      version2_1 = Version.new
-      version2_1.version = "1.0.2"
-      product2.versions.push(version2_1)
-      version2_2 = Version.new
-      version2_2.version = "1.0.0"
-      product2.versions.push(version2_2)
-      version2_3 = Version.new
-      version2_3.version = "2.0.0"
-      product2.versions.push(version2_3)
-      product2.save
-
-      name3 = "Django"
-      product3 = Product.new
-      product3.name = name3
-      product3.name_downcase = "django"
-      product3.prod_key = "django"
-      product3.language = Product::A_LANGUAGE_PYTHON
-      product3.version = "1.4.0"
-      product3.save
-      version3_1 = Version.new
-      version3_1.version = "1.3.1"
-      product3.versions.push(version3_1)
-      version3_2 = Version.new
-      version3_2.version = "1.3.5"
-      product3.versions.push(version3_2)
-      version3_3 = Version.new
-      version3_3.version = "1.4.0"
-      product3.versions.push(version3_3)
-      product3.save
-
-      name4 = "PIL"
-      product4 = Product.new
-      product4.name = name4
-      product4.name_downcase = name4
-      product4.prod_key = "PIL"
-      product4.language = Product::A_LANGUAGE_PYTHON
-      product4.version = "1.1.7"
-      product4.save
-      version4_1 = Version.new
-      version4_1.version = "1.1.7"
-      product4.versions.push(version4_1)
-      product4.save
-
-      name5 = "jsmin"
-      product5 = Product.new
-      product5.name = name5
-      product5.name_downcase = name5
-      product5.prod_key = "jsmin"
-      product5.language = Product::A_LANGUAGE_PYTHON
-      product5.version = "1.1.7"
-      product5.save
-      version5_1 = Version.new
-      version5_1.version = "1.1.7"
-      product5.versions.push(version5_1)
-      product5.save
+      product1  = create_product('South'  , 'South'  , '1.0.0', ['0.7.3', '0.7.2', '1.0.0' ])
+      product2  = create_product('amqplib', 'amqplib', '2.0.0', ['1.0.2', '1.0.0', '2.0.0' ])
+      product3  = create_product('Django' , 'django' , '1.4.0', ['1.3.1', '1.3.5', '1.4.0' ])
+      product4  = create_product('PIL'    , 'PIL'    , '1.1.7' )
+      product5  = create_product('jsmin'  , 'jsmin'  , '1.1.7' )
 
       parser = RequirementsParser.new
       project = parser.parse("http://s3.amazonaws.com/veye_test_env/requirements.txt")
@@ -171,6 +95,24 @@ describe RequirementsParser do
       parser.extract_comparator("django").should be_nil
     end
 
+  end
+
+  def create_product(name, prod_key, version, versions = nil )
+    product = Product.new({ :language => Product::A_LANGUAGE_PYTHON, :prod_type => Project::A_TYPE_PIP })
+    product.name = name
+    product.prod_key = prod_key
+    product.version = version
+    product.add_version( version )
+    product.save
+
+    return product if !versions
+
+    versions.each do |ver|
+      product.add_version( ver )
+    end
+    product.save
+
+    product
   end
 
 end

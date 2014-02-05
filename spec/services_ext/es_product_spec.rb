@@ -16,18 +16,18 @@ describe EsProduct do
   before :each do
     EsProduct.reset
     @prods = [
-      {:name => "club-mate",        :language => "Java",    :group_id => "org.club.mate", :followers => 1, :used_by_count => 1},
-      {:name => "club-mate-parent", :language => "Java",    :group_id => "com.club.mate", :followers => 1, :used_by_count => 1},
-      {:name => "club-mate-child",  :language => "Java",    :group_id => "net.club.mate", :followers => 1, :used_by_count => 1},
-      {:name => "club-mate-c",      :language => "C",       :group_id => "", :followers => 1, :used_by_count => 1},
-      {:name => "club-mate-ccc",    :language => "c++",     :group_id => "", :followers => 1, :used_by_count => 1},
-      {:name => "club-mate-ruby",   :language => "Ruby",    :group_id => "", :followers => 1, :used_by_count => 1},
-      {:name => "club-mate-cnet",   :language => "c#",      :group_id => "net.microsoft.crap", :followers => 1, :used_by_count => 1},
-      {:name => "bad.mate.jar",     :language => "mate",    :group_id => "club.mate.org", :followers => 1, :used_by_count => 1},
-      {:name => "good.mate.jar",    :language => "mate",    :group_id => "club.mate.org", :followers => 1, :used_by_count => 1},
-      {:name => "superb_mate.jar",  :language => "mate",    :group_id => "club.mate.org", :followers => 1, :used_by_count => 1},
-      {:name => "json_nodejs",      :language => "Node.JS", :group_id => "", :followers => 1, :used_by_count => 1},
-      {:name => "Hibernate",        :language => "Java",    :group_id => "org.hibernate", :followers => 1, :used_by_count => 1}
+      {:name => "club-mate",        :prod_key => "club-mate",         :prod_type => 'Maven'   , :language => "Java",    :group_id => "org.club.mate", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-parent", :prod_key => "club-mate-parent",  :prod_type => 'Maven'   , :language => "Java",    :group_id => "com.club.mate", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-child",  :prod_key => "club-mate-child",   :prod_type => 'Maven'   , :language => "Java",    :group_id => "net.club.mate", :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-c",      :prod_key => "club-mate-c",       :prod_type => 'GitHub'  , :language => "C",       :group_id => ""             , :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-ccc",    :prod_key => "club-mate-ccc",     :prod_type => 'GitHub'  , :language => "c++",     :group_id => ""             , :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-ruby",   :prod_key => "club-mate-ruby",    :prod_type => 'RubyGems', :language => "Ruby",    :group_id => ""             , :followers => 1, :used_by_count => 1},
+      {:name => "club-mate-cnet",   :prod_key => "club-mate-cnet",    :prod_type => 'GitHub'  , :language => "c#",      :group_id => "net.msoft.rap", :followers => 1, :used_by_count => 1},
+      {:name => "bad.mate.jar",     :prod_key => "bad.mate.jar",      :prod_type => 'Maven'   , :language => "mate",    :group_id => "club.mate.org", :followers => 1, :used_by_count => 1},
+      {:name => "good.mate.jar",    :prod_key => "good.mate.jar",     :prod_type => 'Maven'   , :language => "mate",    :group_id => "club.mate.org", :followers => 1, :used_by_count => 1},
+      {:name => "superb_mate.jar",  :prod_key => "superb_mate.jar",   :prod_type => 'Maven'   , :language => "mate",    :group_id => "club.mate.org", :followers => 1, :used_by_count => 1},
+      {:name => "json_nodejs",      :prod_key => "json_nodejs",       :prod_type => 'NPM'     , :language => "Node.JS", :group_id => ""             , :followers => 1, :used_by_count => 1},
+      {:name => "Hibernate",        :prod_key => "Hibernate",         :prod_type => 'Maven'   , :language => "Java",    :group_id => "org.hibernate", :followers => 1, :used_by_count => 1}
     ]
     @products = Array.new
     @prods.each do |prod|
@@ -64,7 +64,7 @@ describe EsProduct do
 
     it "Finds the only element in the index by name" do
       EsProduct.reset
-      product = Product.new(:name => "rails")
+      product = Product.new(:name => "rails", :prod_type => 'RubyGems', :language => 'Ruby', :prod_key => 'rails')
       product.save.should be_true
       EsProduct.index product
       sleep 3 # sleep for 2 seconds until the product gets indexed via REST.

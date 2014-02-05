@@ -113,13 +113,16 @@ class GithubCrawler
 
   def self.fetch_product repository
     return nil if repository.nil?
+
     language = substitute_language repository
-    name = substitude_name repository.name
+    name     = substitude_name repository.name
     product  = Product.fetch_product language, name
     return product if product
+
     product  = Product.fetch_product language, repository.full_name
     return product if product
-    Product.new({:language => language, :prod_key => repository.name.downcase})
+
+    Product.new({:prod_type => Project::A_TYPE_GITHUB, :language => language, :prod_key => repository.name.downcase})
   end
 
   def self.substitude_name name

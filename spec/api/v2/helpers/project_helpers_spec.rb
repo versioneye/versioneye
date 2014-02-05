@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe ProjectHelpers do
-  let(:helper) { V2::ProjectsApiV2.new }
-  let(:product1) {create(:product, name: "spec_product1", prod_key: "spec_product1")}
-  let(:product2) {create(:product, name: "spec_product2", prod_key: "spec_product2")}
 
+  let(:helper) { V2::ProjectsApiV2.new }
+  let(:product1) {create(:product, name: "spec_product1", prod_key: "spec_product1", language: 'Ruby', prod_type: 'RubyGems')}
+  let(:product2) {create(:product, name: "spec_product2", prod_key: "spec_product2", language: 'Ruby', prod_type: 'RubyGems')}
   let(:project) {create(:project_with_deps, deps_count: 2)}
   let(:licence2) {create(:license, name: "MIT", prod_key: "spec_product2")}
 
