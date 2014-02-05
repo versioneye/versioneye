@@ -62,6 +62,11 @@ class Product
 
   has_and_belongs_to_many :users
 
+  validates_presence_of :language , :message => 'language  is mandatory!'
+  validates_presence_of :prod_type, :message => 'prod_type is mandatory!'
+  validates_presence_of :prod_key , :message => 'prod_key  is mandatory!'
+  validates_presence_of :name     , :message => 'name      is mandatory!'
+
   attr_accessor :average_release_time
   attr_accessor :released_days_ago, :released_ago_in_words, :released_ago_text
   attr_accessor :in_my_products, :dependencies_cache
@@ -87,6 +92,11 @@ class Product
 
   def show_dependency_badge?
     A_LANGS_DEP_BADGE.include?(self.language)
+  end
+
+  def save(*arg)
+    self.name_downcase = self.name.downcase if self.name
+    super
   end
 
   def to_s
@@ -120,21 +130,15 @@ class Product
 
   # legacy, still used by fall back search and API v1.0
   def self.find_by_key searched_key
-    return nil if searched_key.to_s.strip.empty?
-    Product.where(prod_key: searched_key).shift
-  rescue => e
-    Rails.logger.error e.message
-    nil
+    Product.where(prod_key: searched_key).first
   end
 
   def self.find_by_lang_key language, searched_key
-    return nil if searched_key.to_s.strip.empty? || language.to_s.strip.empty?
     Product.where(language: language, prod_key: searched_key).shift
   end
 
   # This is slow!! Searches by regex are always slower than exact searches!
   def self.find_by_lang_key_case_insensitiv language, searched_key
-    return nil if searched_key.to_s.strip.empty? || language.to_s.strip.empty?
     result = Product.where( prod_key: /^#{searched_key}$/i, language: /^#{language}$/i ).shift
   end
 

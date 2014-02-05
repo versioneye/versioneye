@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe DependencyService do
 
-  describe "outdated?" do
+  describe 'outdated?' do
     let(:product){FactoryGirl.build(:product,
                                     name: "test1",
                                     prod_key: "test1",
@@ -126,17 +126,14 @@ describe DependencyService do
   describe "gem_version_parsed" do
 
     it "returns valid value" do
-      product = Product.new
+      product = Product.new({:language => Product::A_LANGUAGE_RUBY, :prod_type => Project::A_TYPE_RUBYGEMS, :prod_key => 'activesupport', :name => 'activesupport'})
       product.versions = Array.new
-      product.name = "test"
-      product.prod_key = "gasgagasgj8623_jun44444it/juasgnit23afsg"
-      product.language = Product::A_LANGUAGE_RUBY
 
       product.versions.push(Version.new({:version => "1.0"}))
       product.versions.push(Version.new({:version => "1.1"}))
       product.versions.push(Version.new({:version => "1.2"}))
       product.versions.push(Version.new({:version => "2.0"}))
-      product.save
+      product.save.should be_true
 
       dependency = Dependency.new
       dependency.language = product.language
@@ -150,7 +147,7 @@ describe DependencyService do
     end
 
     it "returns valid value" do
-      product = Product.new({:name => "test", :prod_key => "huj_buuuuu", :language => Product::A_LANGUAGE_RUBY})
+      product = Product.new({:name => "test", :prod_key => "huj_buuuuu", :language => Product::A_LANGUAGE_RUBY, :prod_type => Project::A_TYPE_RUBYGEMS})
       product.versions = Array.new
 
       product.versions.push(Version.new({:version => "1.2"}))
@@ -159,7 +156,7 @@ describe DependencyService do
       product.versions.push(Version.new({:version => "2.2.2"}))
       product.versions.push(Version.new({:version => "2.2.9"}))
       product.versions.push(Version.new({:version => "2.3"}))
-      product.save
+      product.save.should be_true
 
       dependency = Dependency.new
       dependency.version = "~> 2.2"
@@ -183,17 +180,14 @@ describe DependencyService do
  describe "cocoapods_version_parsed" do
 
     it "returns valid value" do
-      product = Product.new
+      product = Product.new({:name => 'test', :prod_key => 'test', :language => Product::A_LANGUAGE_OBJECTIVEC, :prod_type => Project::A_TYPE_COCOAPODS })
       product.versions = Array.new
-      product.name = "test"
-      product.prod_key = "gasgagasgj8623_jun44444it/juasgnit23afsg"
-      product.language = Product::A_LANGUAGE_OBJECTIVEC
 
       product.versions.push(Version.new({:version => "1.0"}))
       product.versions.push(Version.new({:version => "1.1"}))
       product.versions.push(Version.new({:version => "1.2"}))
       product.versions.push(Version.new({:version => "2.0"}))
-      product.save
+      product.save.should be_true
 
       dependency = Dependency.new
       dependency.language = product.language
@@ -207,11 +201,8 @@ describe DependencyService do
     end
 
     it "returns valid value" do
-      product = Product.new
+      product = Product.new({:name => 'test', :prod_key => 'test', :language => Product::A_LANGUAGE_OBJECTIVEC, :prod_type => Project::A_TYPE_COCOAPODS })
       product.versions = Array.new
-      product.name = "test"
-      product.prod_key = "huj_buuuuu"
-      product.language = Product::A_LANGUAGE_OBJECTIVEC
 
       product.versions.push(Version.new({:version => "1.2"}))
       product.versions.push(Version.new({:version => "2.0"}))
@@ -244,17 +235,14 @@ describe DependencyService do
   describe "packagist_version_parsed" do
 
     it "returns valid value" do
-      product = Product.new
+      product = Product.new({:name => 'test', :prod_key => 'test', :language => Product::A_LANGUAGE_PHP, :prod_type => Project::A_TYPE_COMPOSER })
       product.versions = Array.new
-      product.name = "test"
-      product.language = Product::A_LANGUAGE_RUBY
-      product.prod_key = "gasgj8623_jun44444it/juat23afsg"
 
       product.versions.push(Version.new({:version => "1.0"}))
       product.versions.push(Version.new({:version => "1.1"}))
       product.versions.push(Version.new({:version => "1.2"}))
       product.versions.push(Version.new({:version => "2.0"}))
-      product.save
+      product.save.should be_true
 
       dependency = Dependency.new({:prod_type => Project::A_TYPE_COMPOSER})
       dependency.language = product.language
@@ -267,11 +255,8 @@ describe DependencyService do
     end
 
     it "returns valid value" do
-      product          = Product.new
+      product = Product.new({:name => 'test', :prod_key => 'test', :language => Product::A_LANGUAGE_PHP, :prod_type => Project::A_TYPE_COMPOSER })
       product.versions = Array.new
-      product.name     = "test"
-      product.prod_key = "huj_buuuuu"
-      product.language = Product::A_LANGUAGE_RUBY
 
       product.versions.push(Version.new({:version => "1.2"}))
       product.versions.push(Version.new({:version => "2.0"}))
@@ -297,17 +282,14 @@ describe DependencyService do
   describe "npm_version_parsed" do
 
     it "returns valid value" do
-      product = Product.new
+      product = Product.new({:name => 'test', :prod_key => 'test', :language => Product::A_LANGUAGE_NODEJS, :prod_type => Project::A_TYPE_NPM })
       product.versions = Array.new
-      product.name = "test"
-      product.language = Product::A_LANGUAGE_RUBY
-      product.prod_key = "gasgj8623_jun44444it/juat23afsg"
 
       product.versions.push(Version.new({:version => "1.0"}))
       product.versions.push(Version.new({:version => "1.1"}))
       product.versions.push(Version.new({:version => "1.2"}))
       product.versions.push(Version.new({:version => "2.0"}))
-      product.save
+      product.save.should be_true
 
       dependency = Dependency.new({:prod_type => Project::A_TYPE_NPM})
       dependency.language = product.language

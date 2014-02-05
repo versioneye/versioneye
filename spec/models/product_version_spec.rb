@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Product do
 
-  let( :product ){ Product.new }
+  let( :product ){ Product.new({:language => Product::A_LANGUAGE_RUBY, :prod_type => Project::A_TYPE_RUBYGEMS }) }
 
   describe "versions_empty?" do
 
@@ -11,6 +11,8 @@ describe Product do
     end
 
     it "returns false" do
+      product.name = "test"
+      product.prod_key = "gasgagasgj8623_junit/junit23"
       product.versions = Array.new
       product.versions.push( Version.new({ :version => "1.0" }) )
       product.versions_empty?.should be_false

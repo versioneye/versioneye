@@ -2,10 +2,26 @@ require 'spec_helper'
 
 describe Product do
 
-  let(:product ) { Product.new(:language => Product::A_LANGUAGE_RUBY, :prod_key => "funny_bunny", :version => "1.0.0") }
+  let(:product ) { Product.new(:language => Product::A_LANGUAGE_RUBY, :prod_key => "funny_bunny", :name => 'funny_bunny', :version => "1.0.0") }
   let(:version1) {FactoryGirl.build(:product_version, version: "0.0.1")}
   let(:version2) {FactoryGirl.build(:product_version, version: "0.0.2")}
   let(:version3) {FactoryGirl.build(:product_version, version: "0.1")}
+
+
+  describe "save" do
+
+    it "downcases the name" do
+      product = described_class.new({:language => 'Java', :prod_type => 'Maven', :prod_key => 'junit', :name => 'JUnit'})
+      product.save.should be_true
+      product.name_downcase.should eq('junit')
+    end
+    it "downcases the name !" do
+      product = described_class.new({:language => 'Java', :prod_type => 'Maven', :prod_key => 'junit', :name => 'JUnit'})
+      product.save!.should be_true
+      product.name_downcase.should eq('junit')
+    end
+
+  end
 
 
   describe "find_by_id" do
@@ -25,7 +41,7 @@ describe Product do
     end
 
     it "returns the product for string id" do
-      product = described_class.new({:prod_key => 'junit', :name => 'junit'})
+      product = described_class.new({:language => 'Java', :prod_type => 'Maven', :prod_key => 'junit', :name => 'junit'})
       product.save.should be_true
       result = described_class.find_by_id( product.id.to_s )
       result.should_not be_nil
@@ -33,7 +49,7 @@ describe Product do
     end
 
     it "returns the product for object id" do
-      product = described_class.new({:prod_key => 'junit', :name => 'junit'})
+      product = described_class.new({:language => 'Java', :prod_type => 'Maven', :prod_key => 'junit', :name => 'junit'})
       product.save.should be_true
       result = described_class.find_by_id( product.id )
       result.should_not be_nil
@@ -82,13 +98,47 @@ describe Product do
       product1 = ProductFactory.create_for_gemfile('bee', '1.4.0')
       product1.versions.push( Version.new({version: '1.4.0'}) )
       product1.save
-      described_class.fetch_product( Product::A_LANGUAGE_RUBY, "Bee" ).should_not be_nil
-      described_class.fetch_product( Product::A_LANGUAGE_RUBY.downcase, "bee" ).should_not be_nil
-      result = described_class.fetch_product( Product::A_LANGUAGE_RUBY, "bee" )
+      described_class.fetch_product( Product::A_LANGUAGE_RUBY, 'Bee' ).should_not be_nil
+      described_class.fetch_product( Product::A_LANGUAGE_RUBY.downcase, 'bee' ).should_not be_nil
+      result = described_class.fetch_product( Product::A_LANGUAGE_RUBY, 'bee' )
       result.should_not be_nil
-      result.prod_key.should eql("bee")
+      result.prod_key.should eql('bee')
     end
 
+  end
+
+
+  describe "fetch_bower" do
+    it "return nil. Because input is nil" do
+      result = described_class.fetch_bower(nil)
+      result.should be_nil
+    end
+    it "return nil. Because input is empty" do
+      result = described_class.fetch_bower("  ")
+      result.should be_nil
+    end
+    it "return nil. Because there are no results." do
+      result = described_class.fetch_bower("gasflasjgfaskjgas848asjgfasgfasgf")
+      result.should be_nil
+    end
+    it "return searched product" do
+      product = described_class.new({:language => 'JavaScript', :prod_type => 'Bower', :prod_key => 'moment/moment', :name => 'moment'})
+      product.save.should be_true
+      result = described_class.fetch_bower('moment')
+      result.should_not be_nil
+      result.prod_key.should eq('moment/moment')
+      result.name.should eq('moment')
+    end
+    it "return searched product, the first one" do
+      product = described_class.new({:language => 'JavaScript', :prod_type => 'Bower', :prod_key => 'moment/moment', :name => 'moment'})
+      product.save.should be_true
+      product2 = described_class.new({:language => 'JavaScript', :prod_type => 'Bower', :prod_key => 'moment/', :name => 'moment'})
+      product2.save.should be_true
+      result = described_class.fetch_bower('moment')
+      result.should_not be_nil
+      result.prod_key.should eq('moment/moment')
+      result.name.should eq('moment')
+    end
   end
 
 
@@ -107,7 +157,7 @@ describe Product do
       result.should be_nil
     end
     it "return searched product" do
-      product = described_class.new({:prod_key => 'junit', :name => 'junit'})
+      product = described_class.new({:language => 'Java', :prod_type => 'Maven', :prod_key => 'junit', :name => 'junit'})
       product.save.should be_true
       result = described_class.find_by_key('junit')
       result.should_not be_nil
@@ -193,6 +243,8 @@ describe Product do
       product.versions = Array.new
       product.name = artifact
       product.prod_key = "#{group}/#{artifact}"
+      product.language = 'Java'
+      product.prod_type = 'Maven'
       product.group_id = group
       product.artifact_id = artifact
       product.save
@@ -344,7 +396,7 @@ describe Product do
       product.version.should eq('0.0.0+NA')
     end
     it 'returns 1.0.0' do
-      product = Product.new
+      product = Product.new(:prod_type => 'Maven', :language => 'Java', :prod_key => 'junit', :name => 'name')
       product.versions.push(Version.new({:version => '1.0.0'}))
       product.check_nil_version
       product.version.should eq('1.0.0')
