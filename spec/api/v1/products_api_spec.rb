@@ -4,11 +4,13 @@ require 'spec_helper'
 describe ProductsApiV1 do
 
   let( :product_uri ) { "/api/v1/products" }
-  let(:prod1){FactoryGirl.build(:product, 
-                                  prod_key: "product1",
-                                  name: "product1",
-                                  version: '1.0.0'
-                                  )}
+  let(:prod1){FactoryGirl.build(:product,
+                                 prod_key: "product1",
+                                 language: 'Ruby',
+                                 prod_type: 'RubyGems',
+                                 name: "product1",
+                                 version: '1.0.0'
+                                )}
 
   before :each do
     prod1.save
@@ -26,12 +28,13 @@ describe ProductsApiV1 do
   def fill_db_with_products
     EsProduct.reset
     test_products = []
-    55.times do |i| 
+    55.times do |i|
       prod = FactoryGirl.create(:product,
                                prod_key: "product#{i}",
                                name: "product#{i}",
-                               language: "Ruby",
-                               version: '1.0.#{i}')
+                               language: 'Ruby',
+                               prod_type: 'RubyGems',
+                               version: "1.0.#{i}")
       prod.save
     end
     EsProduct.index_all
