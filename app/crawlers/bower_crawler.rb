@@ -393,8 +393,8 @@ class BowerCrawler
         url_exists: false
       })
       # create new task with new url and try again with new url
-      task = to_existence_task(repo_info)
-      task.update_attributes({
+      redirected_task = to_existence_task(repo_info)
+      redirected_task.update_attributes({
         registry_name: task[:registry_name], #registered name on bower.io, not same as github repo and projectfile
         weight: 20,
         task_failed: false,
