@@ -60,12 +60,7 @@
     </span>
   </div>
 
-<% if @product.language.eql?(Product::A_LANGUAGE_JAVA) ||
-      @product.language.eql?(Product::A_LANGUAGE_RUBY) ||
-      @product.language.eql?(Product::A_LANGUAGE_CLOJURE) ||
-      @product.language.eql?(Product::A_LANGUAGE_NODEJS) ||
-      @product.language.eql?(Product::A_LANGUAGE_PHP) ||
-      @product.language.eql?(Product::A_LANGUAGE_OBJECTIVEC) %>
+<% if Product::A_LANGS_DEP_BADGE.include?(@product.language) %>
   <% references = @product.used_by_count %>
   <% ref_bg = '' %>
   <% ref_bg = 'success' if references >= 100  %>
