@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe MongoProduct do
 
-  let( :product ) { Product.new }
+  let( :product ) { Product.new({:language => 'Ruby', :prod_type => 'RubyGems'}) }
 
   describe "find_by" do
 
@@ -112,7 +112,7 @@ describe MongoProduct do
       product.prod_key = "apple_bike_pie/unit"
       product.save
 
-      product = Product.new
+      product = Product.new({:language => 'Ruby', :prod_type => 'RubyGems'})
       product.versions = Array.new
       product.name = "apple_start_with"
       product.name_downcase = "apple_start_with"
