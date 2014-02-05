@@ -104,7 +104,7 @@ class Dependency
   # Unfortunately the dependencies in the bower.json only contains the bower name, without the owner.
   # That's why we fetch dependencies for bower through prod_type and name. This combination is unique.
   def bower_product( dep_prod_key )
-    Product.fetch_bower dep_prod_key
+    Product.where(:prod_type => Project::A_TYPE_BOWER, :prod_key => dep_prod_key).shift
   end
 
   def parent_product
