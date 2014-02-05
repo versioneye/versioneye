@@ -225,7 +225,6 @@ class BowerCrawler
       prod = Product.fetch_bower(task[:registry_name])
       to_dependencies(prod, pkg_info, :dependencies,     Dependency::A_SCOPE_REQUIRE)
       to_dependencies(prod, pkg_info, :dev_dependencies, Dependency::A_SCOPE_DEVELOPMENT)
-      to_dependencies(prod, pkg_info, :devDependencies,  Dependency::A_SCOPE_DEVELOPMENT)
 
       result =  true
     end
@@ -768,7 +767,6 @@ class BowerCrawler
   def self.fetch_version_for_dep prod, pkg_info
     prod_version = pkg_info[:version]
     if prod_version.to_s.empty?
-      # TODO ERROR here we have to take the tag name
       prod_version = prod.sorted_versions.first.to_s
     end
     prod_version
