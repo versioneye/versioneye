@@ -1,6 +1,7 @@
 class ProductService
 
 
+  # This method fetches and product and initializes it for the UI.
   def self.fetch_product( lang, prod_key )
     product = Product.fetch_product lang, prod_key
     if product.nil? && lang.eql?( Product::A_LANGUAGE_CLOJURE )
@@ -27,6 +28,7 @@ class ProductService
     end
   end
 
+
   def self.update_average_release_time product
     average_release_time = VersionService.average_release_time( product.versions )
     if average_release_time.nil?
@@ -41,7 +43,7 @@ class ProductService
     EsProduct.search(q, group_id, languages, page_count)
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
+    Rails.logger.error e.backtrace.join('\n')
     Rails.logger.info  "Dam. We don't give up. Not yet! Start alternative search on awesome MongoDB."
     MongoProduct.find_by(q, '', group_id, languages, 300).paginate(:page => page_count)
   end
@@ -84,11 +86,11 @@ class ProductService
     newest_stable_version = VersionService.newest_version( versions )
     return nil if newest_stable_version.to_s.eql?( product.version)
 
-    product.version      = newest_stable_version.to_s
+    product.version = newest_stable_version.to_s
     product.save if persist
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
+    Rails.logger.error e.backtrace.join('\n')
   end
 
 
@@ -108,7 +110,7 @@ class ProductService
     end
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
+    Rails.logger.error e.backtrace.join('\n')
   end
 
 
