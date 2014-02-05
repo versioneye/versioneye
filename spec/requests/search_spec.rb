@@ -12,7 +12,8 @@ describe "search" do
                                     name: "jsonHP",
                                     name_downcase: "jsonhp",
                                     prod_key: "json/jsonhp",
-                                    language: "Java")}
+                                    language: "Java",
+                                    prod_type: 'Maven')}
 
   before :each do
     EsProduct.reset
