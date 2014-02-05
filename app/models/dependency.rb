@@ -137,12 +137,7 @@ class Dependency
   end
 
   def dep_prod_key_for_url
-    prod_key = dep_prod_key
-    if prod_type == Project::A_TYPE_BOWER
-      doc = Product.fetch_bower dep_prod_key
-      prod_key =  doc[:prod_key]
-    end
-    Product.encode_prod_key prod_key
+    Product.encode_prod_key dep_prod_key
   end
 
   def version_for_url
