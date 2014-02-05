@@ -4,6 +4,37 @@ class BowerIssue
     ActiveSupport::BufferedLogger.new('log/bower_issue.log')
   end
 
+  def self.crawl_tags
+    version_tasks = CrawlerTask.where(task: BowerCrawler::A_TASK_READ_VERSIONS)
+    user = User.find_by_username("reiz")
+    token = user.github_token
+
+    producer = Thread.new do 
+      version_tasks.each {|task| create_tag_task(task, token)}
+      sleep 1/100.0
+    end
+
+    worker = Thread.new do
+      BowerCrawler.crawl_tag_project(token)
+    end
+
+    producer.join
+    worker.join
+
+    logger.debug "crawl_tags is done."
+  end
+
+  def self.create_tag_task(task, token)
+    BowerCrawler.check_request_limit(token)
+    tags = Github.repo_tags(task[:repo_fullname], token)
+    if tags.nil? || tags.empty?
+      logger.warn "`#{task[:repo_fullname]}` has no versions - going to skip."
+      return 
+    end
+
+    tags.each {|tag| BowerCrawler.to_tag_project_task(task, tag)}
+  end
+
   def self.count_empty_tags(token)
     if token.nil?
       reiz = User.find_by_username("reiz")
