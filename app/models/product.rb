@@ -227,12 +227,7 @@ class Product
   ########## UPDATE #############
 
   def update_used_by_count persist = true
-    grouped = nil
-    if self.prod_type && self.prod_type.eql?( Project::A_TYPE_BOWER )
-      grouped = Dependency.where(:prod_type => self.prod_type, :dep_prod_key => self.name).group_by(&:name)
-    else
-      grouped = Dependency.where(:language => self.language, :dep_prod_key => self.prod_key).group_by(&:prod_key)
-    end
+    grouped = Dependency.where(:language => self.language, :dep_prod_key => self.prod_key).group_by(&:prod_key)
     count = grouped.count
     return nil if count == self.used_by_count
     self.used_by_count = count

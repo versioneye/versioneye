@@ -754,9 +754,9 @@ class BowerCrawler
       return nil
     end
 
+    prod_version = fetch_version_for_dep(prod, pkg_info)
     pkg_info[key].each_pair do |prod_name, version|
       next if prod_name.to_s.strip.empty?
-      prod_version = fetch_version_for_dep(prod, pkg_info)
       dep = to_dependency(prod, prod_version, prod_name, version, scope)
       deps << dep if dep
     end
@@ -776,12 +776,17 @@ class BowerCrawler
   end
 
   def self.to_dependency(prod, prod_version, dep_name, dep_version, scope = Dependency::A_SCOPE_REQUIRE)
+    dep_prod = Product.fetch_bower(dep_name)
+    dep_prod_key = nil
+    if dep_prod
+      dep_prod_key = dep_prod.prod_key
+    end
     dependency = Dependency.find_or_create_by(
       prod_type: Project::A_TYPE_BOWER,
       language: prod[:language],
       prod_key: prod[:prod_key].to_s.downcase,
       prod_version: prod_version,
-      dep_prod_key: dep_name
+      dep_prod_key: dep_prod_key
     )
     dependency.update_attributes!({
       name: dep_name,
