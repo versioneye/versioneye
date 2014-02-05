@@ -153,7 +153,7 @@ class Dependency
   end
 
   def to_s
-    "Dependency - #{language}:#{prod_key}:#{prod_version} depends on #{dep_prod_key}:#{version}"
+    "Dependency - #{language}:#{prod_key}:#{prod_version} depends on #{dep_prod_key}:#{version} scope: #{scope} - name: #{name}"
   end
 
 end
