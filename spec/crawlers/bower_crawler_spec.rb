@@ -136,7 +136,7 @@ describe BowerCrawler, :vcr do
         BowerCrawler.crawl_tag_project(token)
       end
 
-      deps1 = Dependency.find_by_lang_key_and_version(prod.language, prod.prod_key, "1.1.0").to_a
+      deps1 = prod.all_dependencies
       deps1.should_not be_empty
       deps1[0][:name].should eq("underscore")
       deps1[0][:prod_key].should eq("versioneye/backbone")

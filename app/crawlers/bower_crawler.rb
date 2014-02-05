@@ -214,6 +214,7 @@ class BowerCrawler
 
       file_content = parse_json(project_file)
       next if file_content.nil? or file_content.is_a?(TrueClass)
+
       unless file_content.has_key?(:version)
         logger.warn "No version found in project file on tag #{tag_name} of #{repo_name}. Going to use tag."
         cleaned_tag = CrawlerUtils.remove_version_prefix( tag_name.to_s )
@@ -224,6 +225,7 @@ class BowerCrawler
       prod = Product.fetch_bower(task[:registry_name])
       to_dependencies(prod, pkg_info, :dependencies,     Dependency::A_SCOPE_REQUIRE)
       to_dependencies(prod, pkg_info, :dev_dependencies, Dependency::A_SCOPE_DEVELOPMENT)
+      to_dependencies(prod, pkg_info, :devDependencies,  Dependency::A_SCOPE_DEVELOPMENT)
 
       result =  true
     end
@@ -754,7 +756,7 @@ class BowerCrawler
       return nil
     end
 
-    prod_version = fetch_version_for_dep(prod, pkg_info)
+    prod_version = fetch_version_for_dep(prod, pkg_info) # TODO refactor it, give as param.
     pkg_info[key].each_pair do |prod_name, version|
       next if prod_name.to_s.strip.empty?
       dep = to_dependency(prod, prod_version, prod_name, version, scope)
@@ -766,6 +768,7 @@ class BowerCrawler
   def self.fetch_version_for_dep prod, pkg_info
     prod_version = pkg_info[:version]
     if prod_version.to_s.empty?
+      # TODO ERROR here we have to take the tag name
       prod_version = prod.sorted_versions.first.to_s
     end
     prod_version
@@ -778,17 +781,17 @@ class BowerCrawler
   def self.to_dependency(prod, prod_version, dep_name, dep_version, scope = Dependency::A_SCOPE_REQUIRE)
     dep_prod = Product.fetch_bower(dep_name)
     dep_prod_key = nil
-    if dep_prod
-      dep_prod_key = dep_prod.prod_key
-    end
+    dep_prod_key = dep_prod.prod_key if dep_prod
     dependency = Dependency.find_or_create_by(
       prod_type: Project::A_TYPE_BOWER,
       language: prod[:language],
-      prod_key: prod[:prod_key].to_s.downcase,
+      prod_key: prod[:prod_key].to_s,
       prod_version: prod_version,
-      dep_prod_key: dep_prod_key
+      dep_prod_key: dep_prod_key,
+      name: dep_name
     )
     dependency.update_attributes!({
+      dep_prod_key: dep_prod_key,
       name: dep_name,
       version: dep_version, # TODO: It can be that the version is in the bower.json is a git tag / path
       scope: scope
