@@ -58,7 +58,7 @@ class BowerCrawler
     tasks << Thread.new {crawl_projects(token)}
     tasks << Thread.new {crawl_versions(token)}
     tasks << Thread.new {crawl_tag_project(token)}
-   
+
     tasks.each {|task| task.join}
   end
 
@@ -212,7 +212,7 @@ class BowerCrawler
       project_file = fetch_project_file(repo_name, project_info[:url], token)
       next if project_file.nil?
 
-      file_content = parse_json(project_file) 
+      file_content = parse_json(project_file)
       next if file_content.nil? or file_content.is_a?(TrueClass)
       unless file_content.has_key?(:version)
         logger.warn "No version found in project file on tag #{tag_name} of #{repo_name}. Going to use tag."
@@ -254,7 +254,7 @@ class BowerCrawler
       return
     end
 
-    bower_files = project_files.keep_if do |file| 
+    bower_files = project_files.keep_if do |file|
       ProjectService.type_by_filename(file[:path]) == Project::A_TYPE_BOWER
     end
 
@@ -659,7 +659,7 @@ class BowerCrawler
       repo_fullname: task[:repo_fullname],
       tag_name: tag[:name]
     )
-    
+
     tag_task.update_attributes({
       runs: tag_task[:runs] + 1,
       repo_name: task[:repo_name],
