@@ -10,6 +10,7 @@ class ProductService
 
     product.check_nil_version
     update_dependencies( product )
+    update_average_release_time( product )
     product
   end
 
@@ -24,6 +25,14 @@ class ProductService
         dependency.update_attributes({outdated: outdated})
       end
     end
+  end
+
+  def self.update_average_release_time product
+    average_release_time = VersionService.average_release_time( product.versions )
+    if average_release_time.nil?
+      average_release_time = VersionService.estimated_average_release_time( product.versions )
+    end
+    product[:average_release_time] = average_release_time
   end
 
 

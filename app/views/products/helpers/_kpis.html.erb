@@ -35,10 +35,7 @@
     </span>
   </div>
 
-  <% average_release_time = VersionService.average_release_time( @product.versions ) %>
-  <% if average_release_time.nil? %>
-    <% average_release_time = VersionService.estimated_average_release_time( @product.versions ) %>
-  <% end %>
+  <% average_release_time = @product[:average_release_time] %>
   <% art_text = '' %>
   <% art_text = 'Not Available' if average_release_time.nil? || average_release_time == 0 %>
   <% art_bg = 'info' %>
