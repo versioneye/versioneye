@@ -146,6 +146,11 @@ describe BowerParser do
       "> *".match(parser.rules[:star_version]).should_not be_nil
       "<= *".match(parser.rules[:star_version]).should_not be_nil
     end
+
+    it "matches commit versions correctly" do
+      parser.rules[:commit_version].match("jquery/jquery-ui#c0ab71056b936627e8a7821f03c044aec6280a40").should_not be_nil
+      parser.rules[:commit_version].match("jquery/jquery-ui#fadf2b312a05040436451c64bbfaf4814bc62c56").should_not be_nil
+    end
   end
 
   context "parsing project file from url" do
