@@ -21,7 +21,7 @@ describe "Feedback Button" do
 
       visit root_path
       page.should have_content("Feedback")
-      click_link "Feedback"
+      first("#feedback").click
       using_wait_time 2 do
         page.should have_content("max:1000")
       end
