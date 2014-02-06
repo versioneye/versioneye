@@ -52,3 +52,30 @@
   margin-right: 10px;
 }
 
+.footer_link_row_1{
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.footer_language_row{
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 11px;
+}
+
+
+.footer_link_row_3{
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 11px;
+
+  & a {
+    color: gray;
+  }
+}
+
+.footer_social_media_row{
+  text-align: center;
+  padding-bottom: 15px;
+}

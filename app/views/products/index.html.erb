@@ -1,104 +1,50 @@
 
-<div class="container" id="login" >
-  <div class="pull-left" style="padding-top: 10px;">
-    <% if signed_in? %>
-      <%= link_to image_tag('logos/versioneye-transparent.png'), user_projects_path %>
-    <% else %>
-      <%= image_tag 'logos/versioneye-transparent.png' %>
-    <% end %>
+<%= render 'layouts/header' %>
+
+<div id="search_container" class="container" style="margin-top: 80px;" >
+
+  <div class="l_lp_well_margin" >
+    <div style="text-align: center;">
+      <h1 class="casual ">Notification System for Software Libraries</h1>
+      <h2 class="casual ">Because software libraries don't update themselves</h2>
+    </div>
+    <div style="margin-top: 33px;">
+      <% if @ab.eql?("a") %>
+        <%= render "/products/helpers/file_upload" %>
+      <% else %>
+        <%= render "/products/helpers/big_search" %>
+      <% end %>
+    </div>
   </div>
 
-    <% if current_user %>
-      <div class="pull-right opacity_section" style="margin-left: 1px;" >
-        <a id="projects" href="<%= user_projects_path %>">
-          <i class = "icon-archive">&nbsp;</i>Projects
-        </a>
-      </div>
-    <% else %>
-      <div class="pull-right opacity_section" style="margin-left: 1px;" >
-        <a id="signin" href="/signin" ><i class="icon-signin">&nbsp;</i>Sign in</a>
-      </div>
-      <div class="pull-right opacity_section" style="margin-left: 1px;" >
-        <a id="signup" href="/signup" ><i class="icon-thumbs-up">&nbsp;</i>Sign up</a>
-      </div>
-    <% end %>
-
-  <div class="pull-right opacity_section" >
-    <% if @ab.eql?("a") %>
-      <a href="/?ab=b" ><i class="icon-search">&nbsp;</i>Search</a>
-    <% else %>
-      <a href="/?ab=a" ><i class="icon-upload">&nbsp;</i>File upload</a>
-    <% end %>
-  </div>
 </div>
 
-<div class="container l_lp_first_page" id="search_container" >
-
-  <div class="l_lp_header">
-    <h1 class="casual white">Notification System for Software Libraries</h1>
-    <h2 class="casual white">Because software libraries don't update themselves</h2>
-  </div>
-
-  <div class="l_lp_first_content" >
-    <% if @ab.eql?("a") %>
-      <%= render "/products/helpers/file_upload" %>
-    <% else %>
-      <%= render "/products/helpers/big_search" %>
-    <% end %>
-  </div>
-  <div class="l_bottom_down l_lp_next_link" >
-    <span class="opacity_section centered" >
-      <a id="what_is_versioneye_link" href="#" >What is VersionEye <i class="icon-arrow-down"></i></a>
-    </span>
-  </div>
-</div>
-
-<div id="what_is_versioneye" class="container opacity_weak">
+<div id="what_is_versioneye" class="container">
   <div class="well-white l_lp_well_margin" >
     <%= render "/products/helpers/what_is_versioneye" %>
   </div>
-  <div class="l_lp_next_link">
-    <span class="opacity_section" >
-      <a id="packagemanagers_link" href="#" >Package Managers <i class="icon-arrow-down"></i></a>
-    </span>
-  </div>
 </div>
 
-<div id="packagemanagers" class="container opacity_weak">
+<div id="packagemanagers" class="container">
   <div class="well-white l_lp_well_margin" >
     <%= render "/products/helpers/support_for_packagemanagers" %>
   </div>
-  <div class="l_lp_next_link" >
-    <span class="opacity_section centered" >
-      <a id="integration_link" href="#" >Integration <i class="icon-arrow-down"></i></a>
-    </span>
-  </div>
 </div>
 
-<div id="integration" class="container opacity_weak">
+<div id="integration" class="container">
   <div class="well-white l_lp_well_margin" >
     <%= render "/products/helpers/integration_points" %>
   </div>
-  <div class="l_lp_next_link" >
-    <span class="opacity_section" >
-      <a id="api_link" href="#" >API <i class="icon-arrow-down"></i></a>
-    </span>
-  </div>
 </div>
 
-<div id="api" class="container opacity_weak">
+<div id="api" class="container">
   <div class="well-white l_lp_well_margin" >
     <%= render "/products/helpers/api_and_addons" %>
   </div>
-  <div class="l_lp_next_link" >
-    <span class="opacity_section" >
-      <a id="reasons_link" href="#" >Why? <i class="icon-arrow-down"></i></a>
-    </span>
-  </div>
 </div>
 
 
-<div id="reasons" class="container opacity_weak" >
+<div id="reasons" class="container" >
   <div class="well-white l_lp_well_margin">
     <div class="marketing" >
       <h2 class="casual">Because software libraries don't update themselves</h2>
@@ -113,14 +59,9 @@
       <p>looking manually for updates. Save time and money by automating this process.</p>
     </div>
   </div>
-  <div class="l_lp_next_link" >
-    <span class="opacity_section" >
-      <a id="signup_link" href="#" >Sign up for free! <i class="icon-arrow-down"></i></a>
-    </span>
-  </div>
 </div>
 
-<div id="register_today" class="container opacity_weak" >
+<div id="register_today" class="container" >
   <div class="well-white row l_lp_well_margin" >
     <div style="text-align: left;">
       <div class="span5 col2-left" >
@@ -130,10 +71,5 @@
         <%= render 'shared/social_media_login' %>
       </div>
     </div>
-  </div>
-  <div class="l_lp_next_link" style="height: 50px;" >
-    <span class="opacity_section centered" >
-      <a id="back_to_top" href="#" >Back to the top <i class="icon-arrow-up"></i></a>
-    </span>
   </div>
 </div>

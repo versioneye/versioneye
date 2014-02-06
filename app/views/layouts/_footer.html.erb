@@ -1,6 +1,6 @@
 <footer class="container footer" >
 
-  <div class="container row" style="text-align: center; margin-bottom: 10px; font-size: 14px;">
+  <div class="container row footer_link_row_1" >
     <%= link_to t(:page_footer_about), about_path %> |
     <a href="/pricing">Pricing</a> |
     <a href="/faq">FAQs</a> |
@@ -10,15 +10,14 @@
     <%= link_to "API", version_eye_api_path %>
   </div>
 
-  <div class="container row" style="text-align: center; margin-bottom: 20px; font-size: 11px;">
-    <%= link_to "Imprint", imprint_path, :style=>"color: gray;" %> |
-    <%= link_to "Conditions of Use", terms_path, :style=>"color: gray;" %> |
-    <%= link_to "Data protection provisions ", dataprivacy_path, :style=>"color: gray;" %> |
-    <%= link_to "Disclaimer", disclaimer_path, :style=>"color: gray;" %>
+  <div class="container row footer_link_row_3" >
+    <%= link_to "Imprint", imprint_path %> |
+    <%= link_to "Conditions of Use", terms_path %> |
+    <%= link_to "Data protection provisions ", dataprivacy_path %> |
+    <%= link_to "Disclaimer", disclaimer_path %>
   </div>
 
-  <div class="container row" style="text-align: center; padding-bottom: 15px;">
-
+  <div class="container row footer_social_media_row" >
     <a href="https://twitter.com/VersionEye" class="footer_link_margin" target="new_Twitter" title="Twitter" ><i class="icon-twitter footer_social_icon" ></i></a>
 
     <a href="https://www.facebook.com/VersionEye" class="footer_link_margin" target="new_FB" title="Facebook" ><i class="icon-facebook footer_social_icon" ></i></a>
@@ -28,19 +27,18 @@
     <a href="https://www.youtube.com/user/VersionEye/videos" class="footer_link_margin" title="YouTube" target="new_YT" ><i class="icon-youtube footer_social_icon" ></i></a>
 
     <a href="http://pinterest.com/versioneye/pins/" class="footer_link_margin" target="new_Pinterest" title="Pinterest" ><i class="icon-pinterest footer_social_icon" ></i></a>
+  </div>
 
+  <div class="container row footer_language_row" >
+    <a href="/java" >Java</a> |
+    <a href="/ruby" >Ruby</a> |
+    <a href="/python" >Python</a> |
+    <a href="/php" >PHP</a> |
+    <a href="/nodejs" >Node.JS</a> |
+    <a href="/javascript" >JavaScript</a> |
+    <a href="/objective-c" >Objective-C</a> |
+    <a href="/clojure" >Clojure</a> |
+    <a href="/r" >R</a>
   </div>
 
 </footer>
-
-<% if 1 == 2 %>
-  <div class="span3" >
-    <h5 class="dep_header">Recht</h5>
-    <ul class="footer-links">
-      <li><%= link_to "Impressum", impressum_path %></li>
-      <li><%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path %></li>
-      <li><%= link_to "Datenschutzbestimmungen", datenschutz_path %></li>
-      <li><%= link_to "Haftungsausschluss", disclaimer_path %></li>
-    </ul>
-  </div>
-<% end %>
