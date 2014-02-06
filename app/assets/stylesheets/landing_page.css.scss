@@ -2,7 +2,7 @@
 body,html{
     height:100%;
     background-color: #fafafa;
-    background-image: url("/assets/bg/2048.jpg");
+
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: absolute;
@@ -12,20 +12,18 @@ body,html{
     background-size: cover;
 }
 
+/* background-image: url("/assets/bg/2048.jpg"); */
+
 .l_lp_first_page{
-  height: 100%;
+
   position:relative;
   min-height: 400px;
-}
-
-.l_bottom_down {
-  position: absolute;
-  bottom: 80px;
 }
 
 .l_lp_well_margin{
   margin-top: 30px;
   margin-bottom: 30px;
+  z-index: 0;
 }
 
 .l_lp_first_content{
@@ -41,7 +39,3 @@ body,html{
   top: 10%;
 }
 
-.l_lp_next_link{
-  text-align: center;
-  width: 100%;
-}

@@ -91,21 +91,6 @@ h3 code {
   padding: 20px;
 }
 
-.opacity_section {
-  background-color: gray;
-  opacity: 0.8;
-  padding: 10px;
-  color: white;
-}
-
-.opacity_section a{
-  color: white;
-}
-
-.opacity_weak{
-  opacity: 0.98;
-}
-
 .opacity_norm{
   opacity: 0.8;
 }
@@ -116,4 +101,8 @@ h3 code {
 
 .white{
   color: white;
+}
+
+.btn-signin {
+  width: 250px !important;
 }
