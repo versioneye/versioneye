@@ -12,6 +12,15 @@
   padding: 10px 0px;
   overflow: hidden;
 
+  & .slides {
+    height: 190px;
+    overflow: hidden;
+  }
+
+  & .controls {
+    font-size: 14px;
+  }
+
 }
 
 .repo-slider {
@@ -19,21 +28,14 @@
   position: relative;
   visibility: hidden;
   top: 320px;
+  overflow: hidden;
+  overflow-y: auto;
 
   -webkit-transition:all 1.0s ease-in-out;
   -moz-transition:all 1.0s ease-in-out;
   -o-transition:all 1.0s ease-in-out;
   transition:all 1.0s ease-in-out;
 
-  & .controls {
-    position: absolute;
-    right: 0px;
-    bottom: -12px;
-
-    & .controls-toggle {
-      font-size: 16px;
-    }
-  }
 
   &.current {
     visibility: visible;
