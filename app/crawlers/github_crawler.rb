@@ -28,7 +28,7 @@ class GithubCrawler
     repository = OctokitApi.client.repo name
     return nil if repository.nil?
 
-    product = fetch_product repository
+    product = fetch_product repository, resource.force_fullname
     update_product product, repository
     create_or_update_github_link product, repository
 
@@ -111,18 +111,21 @@ class GithubCrawler
     Versionlink.create_project_link( product.language, product.prod_key, link, 'GitHub' )
   end
 
-  def self.fetch_product repository
+  def self.fetch_product repository, force_fullname = false
     return nil if repository.nil?
 
+    repo_name = repository.name.to_s.downcase
+    repo_name = repository.full_name.to_s.downcase if force_fullname
+
     language = substitute_language repository
-    name     = substitude_name repository.name
+    name     = substitude_name repo_name
     product  = Product.fetch_product language, name
     return product if product
 
     product  = Product.fetch_product language, repository.full_name
     return product if product
 
-    Product.new({:prod_type => Project::A_TYPE_GITHUB, :language => language, :prod_key => repository.name.downcase})
+    Product.new({:prod_type => Project::A_TYPE_GITHUB, :language => language, :prod_key => repo_name})
   end
 
   def self.substitude_name name
@@ -153,14 +156,6 @@ class GithubCrawler
     crawl.exec_group = Time.now.strftime("%Y-%m-%d-%I-%M")
     crawl.save
     crawl
-  end
-
-  def self.store_error( crawl, subject, message, source )
-    error = ErrorMessage.new({:subject => "#{subject}", :errormessage => "#{message}", :source => "#{source}", :crawle_id => crawl.id })
-    error.save
-  rescue => e
-    self.logger.error "ERROR in store_error: #{e.message}"
-    self.logger.error e.backtrace.join("\n")
   end
 
 end

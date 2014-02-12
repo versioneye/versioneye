@@ -10,6 +10,7 @@ class ProductResource
   field :prod_key     , type: String
   field :prod_type    , type: String
   field :language     , type: String
+  field :force_fullname, type: Boolean, default: false
 
   has_one :submitted_url, autosave: true
 
