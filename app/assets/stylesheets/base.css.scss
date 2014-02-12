@@ -37,10 +37,6 @@ h2 {
   font-size: 24px;
 }
 
-.no_margin{
-  margin: 0;
-}
-
 header{
   z-index: 100;
 }
@@ -105,4 +101,16 @@ h3 code {
 
 .btn-signin {
   width: 250px !important;
+}
+
+.no_margin{
+  margin: 0;
+}
+
+.big_font{
+  font-size: 16px;
+}
+
+.large_font{
+  font-size: 18px;
 }

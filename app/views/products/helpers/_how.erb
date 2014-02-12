@@ -1,0 +1,78 @@
+
+<div class="row" >
+  <div class="span10 l_padding_surround" >
+
+    <h2 class="no_margin" > How? </h2>
+
+    <p class="l_padding_top">
+      VersionEye has different ways to monitor your dependencies and to keep you informed.
+    </p>
+
+    <div class="row l_padding_top">
+      <div class="span1 integration_icon" >
+        <span class="icon_gitcat" style="margin-left: -10px"></span>
+      </div>
+      <div class="span9">
+        <h5 class="integration_header"> GitHub </h5>
+        <p >
+          <a href='https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd'>Login with your GitHub account</a>
+          and turn on the switch beside the project file you want to monitor. VersionEye will notify you about out-dated dependencies via email.
+        </p>
+        <p>
+          <%= image_tag "marketing/github_integration.png" %>
+        </p>
+        <p class="l_padding_top">
+          VersionEye shows you all supported project files in all branches in all of your repositories.
+        </p>
+      </div>
+    </div>
+
+    <div class = "row l_padding_top">
+      <div class="span1 integration_icon" >
+        <span style="font-size: 50px;"><i class = "icon-bitbucket"></i></span>
+      </div>
+      <div class =  "span9">
+        <h5 class="integration_header"> Bitbucket </h5>
+        <p class="integration_desc">
+          <a href='<%= auth_bitbucket_signin_url %>'>Login with your Bitbucket account</a> and turn on the switch beside the project file you want to monitor.
+          Our Bitbucket integration works exactly like the GitHub integration. The only difference is that we only show supported project files in the root of a branch. Project files in subdirectories are currently not displayed.
+        </p>
+      </div>
+    </div>
+
+    <div class = "row">
+      <div class="span1 integration_icon" >
+        <span class = "icon_www"></span>
+      </div>
+      <div class = "span9">
+        <h5 class="integration_header"> URL </h5>
+        <p class="integration_desc">
+          Let VersionEye know where your project file is located on the Internet
+          and it will fetch it every day and notify you about outdated
+          dependencies.
+        </p>
+      </div>
+    </div>
+    <div class = "row">
+      <div class="span1 integration_icon" >
+        <span class = "icon_upload"></span>
+      </div>
+      <div class="span9">
+        <h5 class="integration_header"> Upload </h5>
+        <p class="integration_desc">
+          Just upload your project file and VersionEye will
+          show you the outdated dependencies.
+        </p>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+
+
+
+
+
+
