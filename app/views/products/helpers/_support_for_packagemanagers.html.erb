@@ -4,66 +4,111 @@
 
     <h2 class="no_margin" > Package Managers </h2>
 
-    <div class="span7 col2-right-r pull-right" >
+    <p class="l_padding_top">
+      VersionEye currently supports 9 package managers.
+    </p>
 
-      <div class = "row-fluid">
+    <div class="row l_padding_top">
+      <div class="span1 integration_icon" >
+        <a href="/java"><span class = "icon_java on"></span></a>
+      </div>
+      <div class="span9">
+        <h5 class="integration_header"> Java </h5>
+        <p >
+          For Java we support <a href="http://maven.apache.org/">Maven</a> of course.
+          If your project has only one pom.xml file then it works fine with our GitHub/Bitbucket
+          integration. If you project has multiple pom.xml files we recommend to use the  <a href="https://github.com/versioneye/versioneye_maven_plugin">VersionEye Maven Plugin</a>.
+        </p>
+        <p>
+          <a href="http://www.gradleware.com/">Gradle</a> is also supported. VersionEye is watching for a *.gradle file in your project.
+        </p>
+        <p>
+          <a href="https://ant.apache.org/ivy/">Apache Ivy</a> support is part of our roadmap.
+        </p>
+      </div>
+    </div>
 
-        <div class="span6 package_manager" style="margin-left: 0px;" >
-          <div class="pull-left package_managers_icon">
-            <a href="/java"><span class = "icon_java on"></span></a>
-          </div>
-          pom.xml files from Maven.
-        </div>
+    <div class="row l_padding_top">
+      <div class="span1 integration_icon" >
+        <a href="/PHP"><span class = "icon_php on" ></span></a>
+      </div>
+      <div class="span9">
+        <h5 class="integration_header"> PHP </h5>
+        <p >
+          For PHP we support <a href="https://getcomposer.org/">Composer</a>. VersionEye can monitor composer.json and composer.lock files.
+        </p>
+      </div>
+    </div>
 
-        <div class = "span5 package_manager" style="margin-left: 0px;" >
-          <div class="pull-left package_managers_icon">
-            <a href="/Node.JS"><span class = "icon_nodejs on"></span></a>
-          </div>
-          package.json files from NPM.
-        </div>
+    <div class="row l_padding_top">
+      <div class="span1 integration_icon" >
+        <a href="/Ruby"><span class = "icon_ruby on" ></span></a>
+      </div>
+      <div class="span9">
+        <h5 class="integration_header"> Ruby </h5>
+        <p >
+          For Ruby we support <a href="http://bundler.io/">Bundler</a>. VersionEye can monitor your Gemfile and Gemfile.lock.
+        </p>
+      </div>
+    </div>
 
-        <div class = "span6 package_manager" style="margin-left: 0px;">
-          <div class="pull-left package_managers_icon">
-            <a href="/Ruby"><span class = "icon_ruby on"></span></a>
-          </div>
-          Ruby Gemfiles from Bundler.
-        </div>
+    <div class="row l_padding_top">
+      <div class="span1 integration_icon" >
+        <a href="/Python"><span class = "icon_python on" ></span></a>
+      </div>
+      <div class="span9">
+        <h5 class="integration_header"> Python </h5>
+        <p >
+          For Python we support <a href="https://pypi.python.org/pypi/pip/">PIP</a>. VersionEye can monitor your requirements.txt and setup.py files.
+        </p>
+      </div>
+    </div>
 
-        <div class = "span5 package_manager" style="margin-left: 0px;" >
-          <div class="pull-left package_managers_icon">
-            <a href="/javascript"><span class = "icon_javascript on"></span></a>
-          </div>
-          Bower.json files for JavaScript.
-        </div>
+    <div class="row l_padding_top">
+      <div class="span1 integration_icon" >
+        <a href="/Node.JS"><span class = "icon_nodejs on"></span></a>
+      </div>
+      <div class="span9">
+        <h5 class="integration_header"> Java </h5>
+        <p >
+          For Node.JS <a href="https://www.npmjs.org/">NPM</a> is supported. VersionEye can monitor your package.json file.
+        </p>
+      </div>
+    </div>
 
-        <div class = "span6 package_manager" style="margin-left: 0px;" >
-          <div class="pull-left package_managers_icon">
-            <a href="/python"><span class = "icon_python on"></span></a>
-          </div>
-          PIP requirement.txt and setup.py files.
-        </div>
+    <div class="row l_padding_top">
+      <div class="span1 integration_icon" >
+        <a href="/JavaScript"><span class = "icon_javascript on"></span></a>
+      </div>
+      <div class="span9">
+        <h5 class="integration_header"> JavaScript </h5>
+        <p >
+          For frontend JavaScript we implemented support for <a href="http://bower.io/">Bower</a>. VersionEye can monitor your bower.json file.
+        </p>
+      </div>
+    </div>
 
-        <div class = "span5 package_manager" style="margin-left: 0px;" >
-          <div class="pull-left package_managers_icon">
-            <a href="/PHP"><span class = "icon_php on" ></span></a>
-          </div>
-          composer.json files from packagist.org.
-        </div>
+    <div class="row l_padding_top">
+      <div class="span1 integration_icon" >
+        <a href="/Clojure"><span class = "icon_clojure on"></span></a>
+      </div>
+      <div class="span9">
+        <h5 class="integration_header"> Clojure </h5>
+        <p >
+          For the Clojure language we implemented support for <a href="http://leiningen.org/">Leiningen</a>. VersionEye can monitor your project.clj file.
+        </p>
+      </div>
+    </div>
 
-        <div class = "span6 package_manager" style="margin-left: 0px;" >
-          <div class="pull-left package_managers_icon">
-            <a href="/Ojbective-C"><span class = "icon_objective-c on"></span></a>
-          </div>
-          CocoaPods .podspec files for Objective-C, iPhone developers.
-        </div>
-
-        <div class = "span5 package_manager" style="margin-left: 0px;" >
-          <div class="pull-left package_managers_icon">
-            <a href="/Clojure"><span class = "icon_clojure on"></span></a>
-          </div>
-          Lein project.clj files for Clojure.
-        </div>
-
+    <div class="row l_padding_top">
+      <div class="span1 integration_icon" >
+        <a href="/Objective-C"><span class = "icon_objective-c on"></span></a>
+      </div>
+      <div class="span9">
+        <h5 class="integration_header"> Objective-C </h5>
+        <p >
+          For all the iPhone devs who work with Objective-C we implemented support for <a href="http://cocoapods.org/">CocoaPods</a>. VersionEye can monitor your *.podspec file.
+        </p>
       </div>
     </div>
 
