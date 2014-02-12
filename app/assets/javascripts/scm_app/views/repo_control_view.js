@@ -11,9 +11,22 @@ define([
     var SCMRepoControlView = Backbone.View.extend({
       tagName: "table",
       className: "github-repo-control table table-striped row-fluid",
+
       render: function(){
         var project_branches = this.model.get('branches') || [];
+
+        if( _.size(project_branches) > 0 ){
+          this.render_controls(project_branches);
+        } else {
+          this.render_empty_controls();
+        }
+
+        return this;
+      },
+
+      render_controls: function(project_branches){
         var project_files = this.model.get('project_files') || [];
+
         _.each(project_branches, function(branch){
           var branch_files = project_files[branch] || [];
           var item_view = new SCMRepoControlItemView({
@@ -24,8 +37,10 @@ define([
           this.$el.append(item_view.render().$el);
 
         }, this);
+      },
 
-        return this;
+      render_empty_controls: function(){
+        this.$el.html("No supported files on branches;");
       }
     });
 

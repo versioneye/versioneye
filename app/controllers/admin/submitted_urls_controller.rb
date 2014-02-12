@@ -34,7 +34,8 @@ class Admin::SubmittedUrlsController < ApplicationController
       new_resource = ProductResource.new(:url => params[:url],
                                          :name => params[:name],
                                          :resource_type => params[:resource_type],
-                                         :submitted_url => submitted_url)
+                                         :submitted_url => submitted_url,
+                                         :force_fullname => params[:force_fullname])
       if new_resource.save
         submitted_url.declined = false
         submitted_url.product_resource = new_resource
