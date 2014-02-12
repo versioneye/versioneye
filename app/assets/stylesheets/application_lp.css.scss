@@ -1,4 +1,3 @@
-
 /*
  * This is a manifest file that'll automatically include all the stylesheets available in this directory
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
@@ -10,17 +9,17 @@
 $gradient_start: #7F0200;
 $gradient_end: #610003;
 $link_color: #7575FF;
-/*
-$text_yellow: #FBB21C;
-*/
+
+/* $text_yellow: #FBB21C; */
+
 $text_yellow: gray;
 $text_casual: #616970;
 
-$link_hover: #FBB21C;
-$link_color: #FDFDFD;
+$link_hover:   #FBB21C;
+$link_color:   #FDFDFD;
 $link_visited: #FDFDFD;
 
-$text_link: #669acb;
+$text_link:  #669acb;
 $text_hover: #a0b8cf;
 
 @import "bourbon";
