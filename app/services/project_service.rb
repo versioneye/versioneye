@@ -15,6 +15,20 @@ class ProjectService
     return nil
   end
 
+  def self.set_prod_type_if_nil dependency
+    return nil if dependency.nil?
+    return nil if dependency.prod_type
+    dependency.prod_type = Project::A_TYPE_RUBYGEMS  if dependency.language.eql?(Product::A_LANGUAGE_RUBY)
+    dependency.prod_type = Project::A_TYPE_COMPOSER  if dependency.language.eql?(Product::A_LANGUAGE_PHP)
+    dependency.prod_type = Project::A_TYPE_PIP       if dependency.language.eql?(Product::A_LANGUAGE_PYTHON)
+    dependency.prod_type = Project::A_TYPE_NPM       if dependency.language.eql?(Product::A_LANGUAGE_NODEJS)
+    dependency.prod_type = Project::A_TYPE_MAVEN2    if dependency.language.eql?(Product::A_LANGUAGE_JAVA)
+    dependency.prod_type = Project::A_TYPE_LEIN      if dependency.language.eql?(Product::A_LANGUAGE_CLOJURE)
+    dependency.prod_type = Project::A_TYPE_BOWER     if dependency.language.eql?(Product::A_LANGUAGE_JAVASCRIPT)
+    dependency.prod_type = Project::A_TYPE_COCOAPODS if dependency.language.eql?(Product::A_LANGUAGE_OBJECTIVEC)
+    dependency
+  end
+
   def self.store project
     return false if project.nil?
 
