@@ -7,7 +7,7 @@ class DependencyWheelController < ApplicationController
     scope   = params[:scope]
     respond_to do |format|
       format.json {
-        if lang.eql?(Product::A_LANGUAGE_NODEJS)
+        if lang.eql?(Product::A_LANGUAGE_NODEJS) || lang.eql?(Product::A_LANGUAGE_JAVA)
           circle = CircleElement.dependency_circle( lang, key, version, scope )
           resp = CircleElement.generate_json_for_circle_from_hash( circle )
           render :json => "[#{resp}]"
