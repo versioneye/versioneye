@@ -9,7 +9,7 @@
     <div class="span5" style="width: 430px; margin-bottom: 0;"><pre class = "prettyprint" style="background-color: #fff; margin-bottom: 0;"><code>"<%= @product.name %>": "<%= @version.to_s %>"</code></pre></div>
   </div>
 
-  <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.to_s ) %>
+  <% downloads = @product.archives %>
   <% if !downloads.nil? && !downloads.empty? %>
     <div class="row" style="margin-bottom: 5px;" >
       <div class="span2" >
@@ -18,6 +18,20 @@
       <div class="span5 download_area" style="width: 409px;" >
         <% downloads.each do |download|  %>
           <a title="<%= download.name %> download" href="<%= download.link %>"><%= download.name %></a>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% repos = @product.repositories %>
+  <% if !repos.nil? && !repos.empty? %>
+    <div class="row" style="margin-bottom: 5px;" >
+      <div class="span2" >
+        <h5 class="dep_header">Repository</h5>
+      </div>
+      <div class="span5 download_area" style="width: 409px;" >
+        <% repos.each do |repo|  %>
+          <a title="<%= repo.src %> download" href="<%= repo.src %>"><%= repo.src %></a>
         <% end %>
       </div>
     </div>

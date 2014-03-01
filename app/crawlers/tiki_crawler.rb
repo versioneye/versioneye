@@ -98,10 +98,10 @@ class TikiCrawler
 
     Versionlink.create_versionlink product.language, product.prod_key, version_number, version_obj['homepage'], "Homepage"
 
-    PackagistCrawler.create_license( product, version_number, version_obj )
-    PackagistCrawler.create_developers version_obj['authors'], product, version_number
-    PackagistCrawler.create_archive product, version_number, version_obj
-    PackagistCrawler.create_dependencies product, version_number, version_obj
+    ComposerUtils.create_license( product, version_number, version_obj )
+    ComposerUtils.create_developers version_obj['authors'], product, version_number
+    ComposerUtils.create_archive product, version_number, version_obj
+    ComposerUtils.create_dependencies product, version_number, version_obj
   rescue => e
     self.logger.error "ERROR in create_new_version Message:   #{e.message}"
     self.logger.error e.backtrace.join('\n')
