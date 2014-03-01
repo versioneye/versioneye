@@ -316,6 +316,10 @@ class Product
     Versionlink.where(language: language, prod_key: self.prod_key, version_id: self.version, link: /^http*/ ).asc(:name)
   end
 
+  def archives
+    downloads = Versionarchive.archives( self.language, self.prod_key, version.to_s )
+  end
+
   def self.unique_languages_for_product_ids(product_ids)
     Product.where(:_id.in => product_ids).distinct(:language)
   end
