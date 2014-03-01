@@ -63,8 +63,8 @@ class BowerCrawler
   end
 
   def self.crawl_registered_list(source_url)
-    content  = HTTParty.get(source_url)
-    app_list = JSON.parse(content, symbolize_names: true)
+    response = HTTParty.get(source_url)
+    app_list = JSON.parse(response.body, symbolize_names: true)
     tasks    = 0
 
     if app_list.nil? or app_list.empty?
