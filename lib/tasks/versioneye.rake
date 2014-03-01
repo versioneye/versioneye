@@ -93,6 +93,13 @@ namespace :versioneye do
     puts "---"
   end
 
+  desc "crawl Tiki"
+  task :crawl_tiki => :environment do
+    puts "START to crawle Tiki repository"
+    TikiCrawler.crawl
+    puts "---"
+  end
+
   desc "crawl NPM"
   task :crawl_npm => :environment do
     puts "START to crawle NPM repository"
