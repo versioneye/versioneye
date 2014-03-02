@@ -126,7 +126,7 @@ class ProductMigration
 
   def self.xml_site_map
     Rails.logger.info "xml_site_map"
-    uris = Array.new
+    uris = Hash.new
     sitemap_count = 1
     count = Product.count()
     pack = 100
@@ -135,14 +135,17 @@ class ProductMigration
       skip = i * pack
       products = Product.all().skip(skip).limit(pack)
       products.each do |product|
+        next if product.nil?
         uri = "#{product.language_esc}/#{product.to_param}/#{product.version_to_url_param}"
-        uris << uri
+        modified = DateTime.now.strftime("%Y-%m-%d")
+        p "#{modified} - #{uri}"
+        uris[uri] = {:uri => uri, :modified => modified}
       end
       if uris.count > 49000
         Rails.logger.info "#{uris.count}"
         Rails.logger.info "sitemap count: #{sitemap_count}"
         write_to_xml(uris, "sitemap-#{sitemap_count}.xml")
-        uris = Array.new
+        uris = Hash.new
         sitemap_count += 1
       end
     end
@@ -150,6 +153,16 @@ class ProductMigration
     Rails.logger.info "sitemap count: #{sitemap_count}"
     write_to_xml(uris, "sitemap-#{sitemap_count}.xml")
     return true
+  rescue => e
+    p e.message
+    p e.backtrace.join('\n')
+  end
+
+  def self.last_modified product
+    product.version_by_number( product.version ).updated_at.strftime("%Y-%m-%d")
+  rescue => e
+    p e.message
+    DateTime.now.strftime("%Y-%m-%d")
   end
 
   def self.write_to_xml(uris, name)
@@ -157,9 +170,12 @@ class ProductMigration
     xml = Builder::XmlMarkup.new( :indent => 2 )
     xml.instruct!(:xml, :encoding => "UTF8", :version => "1.0")
     xml.urlset(:xmlns => "http://www.sitemaps.org/schemas/sitemap/0.9") do |urlset|
-      uris.each do |uri|
+      uris.each_pair do |key, val|
         urlset.url do |url|
+          uri = val[:uri]
+          modified = val[:modified]
           url.loc "https://www.versioneye.com/#{uri}"
+          url.lastmod modified
         end
       end
     end

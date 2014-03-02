@@ -12,7 +12,7 @@
 
   <% if @product %>
     <% if @product.language.eql?('Ruby') %>
-      <title><%= @product.name %> : <%= @product.version %> - Track GEM versions at VersionEye</title>
+      <title><%= @product.name %> : <%= @product.version %> - Track your Gems at VersionEye</title>
     <% elsif @product.language.eql?('Java') %>
       <title><%= @product.name %> : <%= @product.version %> - Track your JARs at VersionEye</title>
     <% elsif @product.language.eql?('Node.JS') %>

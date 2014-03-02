@@ -223,13 +223,13 @@ Versioneye::Application.routes.draw do
   get   '/apijson_libs',        :to => redirect('/api')
 
 
-  get   'sitemap-1.xml',        :to => 'page#sitemap_1'
-  get   'sitemap-2.xml',        :to => 'page#sitemap_2'
-  get   'sitemap-3.xml',        :to => 'page#sitemap_3'
-  get   'sitemap-4.xml',        :to => 'page#sitemap_4'
-  get   'sitemap-5.xml',        :to => 'page#sitemap_5'
-  get   'sitemap-6.xml',        :to => 'page#sitemap_6'
-  get   'sitemap-7.xml',        :to => 'page#sitemap_7'
+  get   'sitemap_01.xml',        :to => 'page#sitemap_1'
+  get   'sitemap_02.xml',        :to => 'page#sitemap_2'
+  get   'sitemap_03.xml',        :to => 'page#sitemap_3'
+  get   'sitemap_04.xml',        :to => 'page#sitemap_4'
+  get   'sitemap_05.xml',        :to => 'page#sitemap_5'
+  get   'sitemap_06.xml',        :to => 'page#sitemap_6'
+  get   'sitemap_07.xml',        :to => 'page#sitemap_7'
 
   get   '/search', :to => 'products#search'
 
