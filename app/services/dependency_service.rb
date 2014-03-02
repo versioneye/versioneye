@@ -13,7 +13,7 @@ class DependencyService
   def self.cache_outdated?( dependency )
     key = "#{dependency.id.to_s}_outdated?"
     outdated = Rails.cache.read( key )
-    return outdated if outdated
+    return outdated if !outdated.nil?
 
     outdated = self.outdated?( dependency )
     Rails.cache.write( key, outdated, timeToLive: 6.hour )
