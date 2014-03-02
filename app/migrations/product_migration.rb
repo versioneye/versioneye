@@ -159,7 +159,7 @@ class ProductMigration
     xml.urlset(:xmlns => "http://www.sitemaps.org/schemas/sitemap/0.9") do |urlset|
       uris.each do |uri|
         urlset.url do |url|
-          url.loc "http://www.versioneye.com/#{uri}"
+          url.loc "https://www.versioneye.com/#{uri}"
         end
       end
     end

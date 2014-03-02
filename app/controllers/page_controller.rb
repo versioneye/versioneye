@@ -130,6 +130,9 @@ class PageController < ApplicationController
   def sitemap_6
     redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-6.xml'
   end
+  def sitemap_7
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-7.xml'
+  end
 
   private
 

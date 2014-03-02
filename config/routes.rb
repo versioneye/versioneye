@@ -227,8 +227,9 @@ Versioneye::Application.routes.draw do
   get   'sitemap-2.xml',        :to => 'page#sitemap_2'
   get   'sitemap-3.xml',        :to => 'page#sitemap_3'
   get   'sitemap-4.xml',        :to => 'page#sitemap_4'
-  get   'sitemap-5.xml',        :to => 'page#sitemap_4'
-  get   'sitemap-6.xml',        :to => 'page#sitemap_4'
+  get   'sitemap-5.xml',        :to => 'page#sitemap_5'
+  get   'sitemap-6.xml',        :to => 'page#sitemap_6'
+  get   'sitemap-7.xml',        :to => 'page#sitemap_7'
 
   get   '/search', :to => 'products#search'
 
