@@ -100,7 +100,7 @@ class Product
   end
 
   def to_s
-    "<Product #{prod_key}(#{version}) ##{language}>"
+    "<Product #{language}/#{prod_key}(#{version}) >"
   end
 
   def to_param
