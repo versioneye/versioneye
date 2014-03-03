@@ -7,3 +7,30 @@
 # User-agent: ia_archiver
 # Disallow: /
 #
+
+User-Agent: *
+Disallow: /package/
+
+User-Agent: *
+Disallow: /package_visual/
+
+User-Agent: *
+Disallow: /*badge$
+
+User-Agent: *
+Disallow: api/v2/*
+
+User-Agent: *
+Disallow: api/v1/*
+
+User-Agent: *
+Disallow: /*.txt$
+
+User-Agent: *
+Disallow: /*.md$
+
+User-Agent: *
+Disallow: /*.LICENSE$
+
+User-Agent: *
+Disallow: /*.LICENSE-MIT$
