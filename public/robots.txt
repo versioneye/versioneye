@@ -24,6 +24,12 @@ User-Agent: *
 Disallow: api/v1/*
 
 User-Agent: *
+Disallow: /*.json$
+
+User-Agent: *
+Disallow: /*.js$
+
+User-Agent: *
 Disallow: /*.txt$
 
 User-Agent: *
