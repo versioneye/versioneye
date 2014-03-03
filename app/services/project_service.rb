@@ -79,7 +79,7 @@ class ProjectService
     self.update_url project
     new_project = self.build_from_url project.url
     project.update_from new_project
-    update_badge_for_project( project )
+    Rails.cache.delete( project.id.to_s )
     if send_email && project.out_number > 0 && project.user.email_inactive == false
       Rails.logger.info "send out email notification for project: #{project.name} to user #{project.user.fullname}"
       ProjectMailer.projectnotification_email( project ).deliver
@@ -188,7 +188,6 @@ class ProjectService
    - Parsing the project_file to a new project
    - Storing the new project to DB
 =end
-
   def self.import_from_bitbucket(user, repo_name, filename, branch = "master")
     repo = BitbucketRepo.by_user(user).by_fullname(repo_name).shift
     private_project = repo[:private]
@@ -197,7 +196,8 @@ class ProjectService
     end
 
     content = Bitbucket.fetch_project_file_from_branch(
-      repo_name, branch, filename, user[:bitbucket_token], user[:bitbucket_secret]
+      repo_name, branch, filename,
+      user[:bitbucket_token], user[:bitbucket_secret]
     )
     if content.nil? or content == "error"
       error_msg = " Didn't find any project file of a supported package manager."
@@ -314,7 +314,7 @@ class ProjectService
 
   def self.update_badge_for_project project
     badge    = project.outdated?() ? 'out-of-date' : 'up-to-date'
-    Rails.cache.write( project.id.to_s, badge, timeToLive: 1.day)
+    Rails.cache.write( project.id.to_s, badge, timeToLive: 6.hour)
     badge
   rescue => e
     Rails.logger.error e.message
