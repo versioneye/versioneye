@@ -2,7 +2,11 @@ class LeinParser < CommonParser
 
   def parse(url)
     return nil if url.nil?
-    content = self.fetch_response(url).body
+
+    response = self.fetch_response(url)
+    return nil if response.nil?
+
+    content  = response.body
     return nil if content.nil?
 
     xml_content = transform_to_xml content
