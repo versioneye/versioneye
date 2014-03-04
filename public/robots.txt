@@ -10,33 +10,17 @@
 
 User-Agent: *
 Disallow: /package/
-
-User-Agent: *
 Disallow: /package_visual/
-
-User-Agent: *
-Disallow: /*badge$
-
-User-Agent: *
-Disallow: api/v2/*
-
-User-Agent: *
-Disallow: api/v1/*
-
-User-Agent: *
+Disallow: /user/packages/i_follow
+Disallow: /user/projects/
+Disallow: /api/v2/
+Disallow: /api/v1/
+Disallow: badge$
+Disallow: /com.*
+Disallow: /org.*
 Disallow: /*.json$
-
-User-Agent: *
 Disallow: /*.js$
-
-User-Agent: *
 Disallow: /*.txt$
-
-User-Agent: *
 Disallow: /*.md$
-
-User-Agent: *
 Disallow: /*.LICENSE$
-
-User-Agent: *
 Disallow: /*.LICENSE-MIT$
