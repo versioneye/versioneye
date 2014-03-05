@@ -36,7 +36,7 @@ class VersionService
     VersionService.newest_version( versions, stability )
   end
 
-  # TODO write test
+
   def self.newest_version_from_wildcard( versions, version_start, stability = 'stable')
     version_start.gsub!(/x/i, "*")
     versions_filtered = versions_start_with( versions, version_start )
