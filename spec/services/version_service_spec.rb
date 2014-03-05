@@ -169,7 +169,7 @@ describe VersionService do
 
   end
 
-  describe "static newest_version_from" do
+  describe "newest_version_from" do
 
     it "returns the correct version" do
       versions = Array.new
@@ -191,7 +191,7 @@ describe VersionService do
       versions << Version.new({version: "1.5"})
       versions << Version.new({version: "1.7"})
 
-      newest = VersionService.newest_version_from_wildcard(versions, '1.*')
+      newest = VersionService.newest_version_from_wildcard(versions, '1.X')
       newest.should_not be_nil
       newest.should eq("1.7")
     end
@@ -203,7 +203,7 @@ describe VersionService do
       versions << Version.new({version: "2.0.5-alpha"})
       versions << Version.new({version: "2.1.1"})
 
-      newest = VersionService.newest_version_from_wildcard(versions, '2.0.x')
+      newest = VersionService.newest_version_from_wildcard(versions, '2.0.*')
       newest.should_not be_nil
       newest.should eq('2.0.5')
     end
