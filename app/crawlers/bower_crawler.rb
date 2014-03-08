@@ -731,6 +731,7 @@ class BowerCrawler
 
   def self.create_or_update_license(product, license_info)
     return nil if product.nil?
+    return nil if license_info[:name].nil? || license_info[:name].empty?
 
     new_license = License.find_or_create_by(
       language: product[:language],
