@@ -22,5 +22,7 @@ Disallow: /*.json$
 Disallow: /*.js$
 Disallow: /*.txt$
 Disallow: /*.md$
+Disallow: /licenses/
 Disallow: /*.LICENSE$
+Disallow: /*.LICENSE.txt$
 Disallow: /*.LICENSE-MIT$
