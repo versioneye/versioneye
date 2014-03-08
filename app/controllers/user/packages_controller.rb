@@ -1,5 +1,6 @@
 class User::PackagesController < ApplicationController
 
+  before_filter :authenticate
   before_filter :new_project_redirect, :only => [:popular_in_my_projects]
 
   def popular_in_my_projects
