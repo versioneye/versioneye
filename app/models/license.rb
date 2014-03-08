@@ -13,6 +13,10 @@ class License
   field :comments     , type: String # Maven specific
   field :distributions, type: String # Maven specific
 
+  validates_presence_of :language, :message => 'language is mandatory!'
+  validates_presence_of :prod_key, :message => 'prod_key is mandatory!'
+  validates_presence_of :name, :message => 'name is mandatory!'
+
   def product
     Product.fetch_product(self.language, self.prod_key)
   end
