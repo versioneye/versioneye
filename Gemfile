@@ -25,7 +25,7 @@ gem 'grape'              , '0.6.1'
 gem 'grape-entity'       , '0.3.0'
 gem 'grape-swagger'      , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
 gem 'htmlentities'       , '4.3.1'
-gem 'whenever'           , '0.9.0'
+gem 'whenever'           , '0.9.2'
 gem 'bourbon'            , '3.1.8'
 gem 'ruby_regex'         , '~> 0.1.0'
 gem 'cocoapods-core'     , '0.29.0'
