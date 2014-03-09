@@ -92,7 +92,7 @@ class Project
     Project.find( id )
   rescue => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
+    Rails.logger.error e.backtrace.join('\n')
     nil
   end
 
