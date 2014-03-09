@@ -88,7 +88,7 @@ class ProductsController < ApplicationController
     @product   = Product.fetch_product language, prod_key
     response   = Dependency.references language, prod_key, page
     if response[:prod_keys].nil? || response[:prod_keys].empty?
-      redirect_to "/404.html", :status => "404"
+      render :text => "This page doesn't exist", :status => 404 and return
     end
     products   = Product.by_prod_keys language, response[:prod_keys]
     pre_amount = (page.to_i - 1) * 30
