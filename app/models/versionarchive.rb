@@ -14,6 +14,8 @@ class Versionarchive
   field :link      , type: String # URL
   field :name      , type: String # Label for the link/URL
 
+  validates_presence_of :link, :message => 'link is mandatory!'
+
   def as_json parameter
     {
       :name => self.name,
