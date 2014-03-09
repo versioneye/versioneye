@@ -148,6 +148,7 @@ module V2
         requires :project_id, type: String, desc: "Project ID"
       end
       post '/hook/:project_id' do
+        p "params: #{params}"
         authorized?
         project = Project.find_by_id( params[:project_id] )
 
@@ -261,4 +262,3 @@ module V2
     end #end of resource block
   end
 end
-
