@@ -87,6 +87,9 @@ class ProductsController < ApplicationController
     page       = parse_page params[:page]
     @product   = Product.fetch_product language, prod_key
     response   = Dependency.references language, prod_key, page
+    if response[:prod_keys].nil? || response[:prod_keys].empty?
+      redirect_to "/404.html", :status => "404"
+    end
     products   = Product.by_prod_keys language, response[:prod_keys]
     pre_amount = (page.to_i - 1) * 30
     pre        = Array.new pre_amount
