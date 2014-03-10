@@ -21,17 +21,24 @@
       </div>
     </div>
 
-    <h5 class="dep_header">Ivy snippet</h5>
+    <h5 class="dep_header">Ivy (Ant)</h5>
     <div class="row" style="margin-bottom: 5px;">
       <div class="span7" style="width: 575px; margin-bottom: 0; overflow: auto;" >
         <pre class="prettyprint"><code>&lt;dependency org="<b><%= @product.group_id %></b>" name="<b><%= @product.artifact_id %></b>" rev="<b><%= @product.version %></b>" /&gt;</code></pre>
       </div>
     </div>
 
-    <h5 class="dep_header">SBT</h5>
+    <h5 class="dep_header">SBT (Scala)</h5>
     <div class="row" style="margin-bottom: 5px;">
       <div class="span7" style="width: 575px; margin-bottom: 0; overflow: auto;" >
         <pre class="prettyprint"><code>libraryDependencies += "<b><%= @product.group_id %></b>" % "<b><%= @product.artifact_id %></b>" % "<b><%= @product.version %></b>"</code></pre>
+      </div>
+    </div>
+
+    <h5 class="dep_header">Leiningen (Clojure)</h5>
+    <div class="row" style="margin-bottom: 5px;">
+      <div class="span7" style="width: 575px; margin-bottom: 0; overflow: auto;" >
+        <pre class="prettyprint"><code>[<b><%= @product.group_id %></b>/<b><%= @product.artifact_id %></b> "<b><%= @product.version %></b>"]</code></pre>
       </div>
     </div>
 
