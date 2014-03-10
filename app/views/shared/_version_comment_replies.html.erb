@@ -1,47 +1,47 @@
-<% unless comment.versioncommentreplys.empty? %>
-	<div id="<%= comment.id %>_reply_section" class="versioncomment_reply_section" >
-	<% comment.versioncommentreplys.each do |reply| %>
-	<div style="min-height: 35px; margin-bottom: 10px;">
-		<div class="row">
-			<span class="icon_user"></span>
-			<strong>
-				<%= link_to reply.fullname, user_path(reply.username) %> at <%= reply.created_at.strftime('%b %d, %Y - %I:%m %p') %>
-			</strong>
+<div id="<%= comment.id %>_reply_section" class="versioncomment_reply_section" >
+	<% unless comment.versioncommentreplys.empty? %>
+		<% comment.versioncommentreplys.each do |reply| %>
+		<div style="min-height: 35px; margin-bottom: 10px;">
+			<div class="row">
+				<span class="icon_user"></span>
+				<strong>
+					<%= link_to reply.fullname, user_path(reply.username) %> at <%= reply.created_at.strftime('%b %d, %Y - %I:%m %p') %>
+				</strong>
+			</div>
+			<div class="row">
+				<%= reply.comment %>
+			</div>
 		</div>
-		<div class="row">
-			<%= reply.comment %>
-		</div>
-	</div>
+		<% end %>
+		<% if !comment.versioncommentreplys.empty? && signed_in? %>
+			<div class="versioncomment_reply_link_section">
+				<a id="<%= comment.id %>_reply_link" href="#" onclick="show_versioncomment_reply('<%= comment.id %>'); return false;">Reply</a>
+				<a id="<%= comment.id %>_hide_link" href="#" onclick="hide_versioncomment_reply('<%= comment.id %>'); return false;" style="display: none;">Hide</a>
+			</div>
+		<% end %>
 	<% end %>
-	<% if !comment.versioncommentreplys.empty? && signed_in? %>
-		<div class="versioncomment_reply_link_section">
-			<a id="<%= comment.id %>_reply_link" href="#" onclick="show_versioncomment_reply('<%= comment.id %>'); return false;">Reply</a>
-			<a id="<%= comment.id %>_hide_link" href="#" onclick="hide_versioncomment_reply('<%= comment.id %>'); return false;" style="display: none;">Hide</a>
-		</div>
-	<% end %>
-	</div  >
-<% end %>
+</div  >
 
 
 <% if signed_in? %>
-<% @versioncommentreply = Versioncommentreply.new if @versioncommentreply.nil? %>
-<div id="<%= comment.id %>_reply_form" style="display: none; padding-left: 0px;">
-	<%= form_for(@versioncommentreply, :remote => true) do |reply| %>
-		<input name="comment_id" type="hidden" value="<%= comment.id %>" />
-    <div class="messages">
-			<%= render 'shared/error_messages', :object => reply.object %>
-    </div>
-    <div>
-			<%= reply.text_area :comment, :class => "round", :style=>"width: 495px;", :maxlength => "250", :onKeyUp => "textCounter(this, document.getElementById('#{comment.id}_reply_counter'), 250)", :id => "#{comment.id}_textarea", :rows => 5  %>
-		</div>
-		<div style="display: inline-block; width: 495px;">
-			<div style="float: left">
-				<button type="submit" class="btn2 btn2-large">Save</button>
+	<% @versioncommentreply = Versioncommentreply.new if @versioncommentreply.nil? %>
+	<div id="<%= comment.id %>_reply_form" style="display: none; padding-left: 0px;">
+		<%= form_for(@versioncommentreply, :remote => true) do |reply| %>
+			<input name="comment_id" type="hidden" value="<%= comment.id %>" />
+	    <div class="messages">
+				<%= render 'shared/error_messages', :object => reply.object %>
+	    </div>
+	    <div>
+				<%= reply.text_area :comment, :class => "round", :style=>"width: 495px;", :maxlength => "250", :onKeyUp => "textCounter(this, document.getElementById('#{comment.id}_reply_counter'), 250)", :id => "#{comment.id}_textarea", :rows => 5  %>
 			</div>
-			<div style="float: right" class="meta-text-small">
-				Characters left: <span id="<%= comment.id %>_reply_counter">250</span>
+			<div style="display: inline-block; width: 495px;">
+				<div style="float: left">
+					<button type="submit" class="btn2 btn2-large">Save</button>
+				</div>
+				<div style="float: right" class="meta-text-small">
+					Characters left: <span id="<%= comment.id %>_reply_counter">250</span>
+				</div>
 			</div>
-		</div>
-	<% end %> 
-</div>
+		<% end %>
+	</div>
 <% end %>
