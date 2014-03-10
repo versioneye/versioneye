@@ -148,7 +148,7 @@ module V2
         requires :project_id, type: String, desc: "Project ID"
       end
       post '/hook/:project_id' do
-        p "params: #{params}"
+        Rails.logger.info "hook params: #{params}"
         authorized?
         project = Project.find_by_id( params[:project_id] )
 
