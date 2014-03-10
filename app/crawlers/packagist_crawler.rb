@@ -61,9 +61,9 @@ class PackagistCrawler
     end
     if version_number.match(/^dev\-/)
       Dependency.remove_dependencies Product::A_LANGUAGE_PHP, product.prod_key, version_number
-      create_dependencies product, version_number, version_obj
+      ComposerUtils.create_dependencies product, version_number, version_obj
       Versionarchive.remove_archives Product::A_LANGUAGE_PHP, product.prod_key, version_number
-      create_archive     product, version_number, version_obj
+      ComposerUtils.create_archive product, version_number, version_obj
     end
   end
 

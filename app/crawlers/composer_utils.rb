@@ -77,10 +77,8 @@ class ComposerUtils
         :language => Product::A_LANGUAGE_PHP })
       dependency.save
       dependency.update_known
-      self.logger.info " ---- Create new dependency: #{dependency.prod_key}:#{dependency.prod_version} depends on #{dependency.dep_prod_key}:#{dependency.version}"
     end
   end
 
 
 end
-
