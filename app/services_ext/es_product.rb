@@ -12,16 +12,24 @@ class EsProduct
                 :type => 'edgeNGram',
                 :max_gram => 100,
                 :min_gram => 2
+              },
+              :whole_words => {
+                :type => 'word_delimiter',
+                :generate_word_parts => false,
+                :generate_number_parts => false,
+                :split_on_case_change => false,
+                :split_on_numerics => false,
+                :preserve_original => true # maybe not needed anymore with all the changes from above
               }
             },
             :analyzer => {
               :product_name => {
-                :filter => ['standard', 'lowercase', 'asciifolding'],
+                :filter => ['standard', 'lowercase', 'asciifolding', 'whole_words'],
                 :type => 'custom',
                 :tokenizer => 'standard'
               },
               :ngram_name => {
-                :filter => ['standard', 'lowercase', 'asciifolding', 'name_ngrams'],
+                :filter => ['standard', 'lowercase', 'asciifolding', 'whole_words', 'name_ngrams'],
                 :type => 'custom',
                 :tokenizer => 'standard'
               }
@@ -145,7 +153,8 @@ class EsProduct
             must {string 'group_id:' + group_id + "*"}
           end
         elsif q != '*' and group_id.empty?
-          query.custom_score :script => "(_score + doc['used_by_count'].value) * (doc['followers'].value + 1)" do
+          # query.custom_score :script => "(_score + (doc['followers'].value + 1) + (doc['used_by_count'].value / 1000) )" do
+          query.custom_score :script => "(_score + (doc['followers'].value + 1) )" do
             string "name.partial:" + q
           end
         elsif q == '*' and !group_id.empty?
