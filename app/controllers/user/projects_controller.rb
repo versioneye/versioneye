@@ -299,8 +299,8 @@ class User::ProjectsController < ApplicationController
     end
 
     def upload_and_store file
-      project = upload file
-      stored = store_project(project)
+      project = ProjectService.upload file, current_user
+      stored  = store_project(project)
       return project if stored
       nil
     end
