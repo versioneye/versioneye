@@ -31,32 +31,8 @@ module ProjectHelpers
   end
 
   def upload_and_store file
-    project = upload file
+    project = ProjectService.upload file, current_user, true
     ProjectService.store project
-    project
-  end
-
-  def upload file
-    project_name = file['datafile'].original_filename
-    filename = S3.upload_fileupload(file )
-    url = S3.url_for( filename )
-    project_type = ProjectService.type_by_filename( url )
-    project = create_project(project_type, url, project_name)
-    project.make_project_key!
-    project.s3_filename = filename
-    project.source = Project::A_SOURCE_UPLOAD
-    project.api_created = true
-    project
-  end
-
-  def create_project( project_type, url, project_name )
-    project = ProjectService.build_from_url( url )
-    project.user = current_user
-    if project.name.nil? || project.name.empty?
-      project.name = project_name
-    end
-    project.project_type = project_type
-    project.url = url
     project
   end
 

@@ -29,6 +29,19 @@ class ProjectService
     dependency
   end
 
+  def self.upload file, user = nil, api_created = false
+    project_name        = file['datafile'].original_filename
+    filename            = S3.upload_fileupload(file )
+    url                 = S3.url_for( filename )
+    project             = ProjectService.build_project( url, project_name )
+    project.s3_filename = filename
+    project.source      = Project::A_SOURCE_UPLOAD
+    project.user        = user
+    project.api_created = api_created
+    project.make_project_key!
+    project
+  end
+
   def self.store project
     return false if project.nil?
 
@@ -227,6 +240,15 @@ class ProjectService
     })
 
     return parsed_project if store( parsed_project )
+  end
+
+
+  def self.build_project( url, project_name )
+    project      = ProjectService.build_from_url( url )
+    if project.name.nil? || project.name.empty?
+      project.name = project_name
+    end
+    project
   end
 
 

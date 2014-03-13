@@ -90,18 +90,21 @@ class User::ProjectsController < ApplicationController
       redirect_to user_projects_path
       return
     end
+
     project = Project.find_by_id project_id
     if project.nil?
       flash[:error] = 'No project with given key. Please contact the VersionEye Team.'
       redirect_to user_projects_path
       return
     end
-    new_project = upload file
+
+    new_project = ProjectService.upload file, current_user, false
     if new_project.nil?
       flash[:error] = 'Something went wrong. Please contact the VersionEye Team.'
       redirect_to user_projects_path
     end
     project.update_from new_project
+    Rails.cache.delete( project.id.to_s )
     flash[:success] = "ReUpload was successful."
     redirect_to user_project_path( project )
   end
@@ -302,32 +305,14 @@ class User::ProjectsController < ApplicationController
       nil
     end
 
-    def upload file
-      project_name        = file['datafile'].original_filename
-      filename            = S3.upload_fileupload( file )
-      url                 = S3.url_for( filename )
-      project             = build_project( url, project_name )
-      project.s3_filename = filename
-      project.source      = Project::A_SOURCE_UPLOAD
-      project
-    end
-
     def fetch_and_store project_url
       project_name   = project_url.split("/").last
-      project        = build_project( project_url, project_name )
+      project        = ProjectService.build_project( project_url, project_name )
+      project.user   = current_user
       project.source = Project::A_SOURCE_URL
       stored = store_project(project)
       return project if stored
       nil if not stored
-    end
-
-    def build_project( url, project_name )
-      project      = ProjectService.build_from_url( url )
-      project.user = current_user
-      if project.name.nil? || project.name.empty?
-        project.name = project_name
-      end
-      project
     end
 
     def store_project( project )

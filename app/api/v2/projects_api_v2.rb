@@ -125,13 +125,14 @@ module V2
         datafile = ActionDispatch::Http::UploadedFile.new( params[:project_file] )
         project_file = {'datafile' => datafile}
 
-        new_project = upload project_file
+        new_project = ProjectService.upload project_file, current_user, true
         if new_project.nil?
           error! "Can't save uploaded file. Probably our fileserver got cold.", 500
         end
 
         @project.update_from new_project
-        project = add_dependency_licences(project)
+        Rails.cache.delete( @project.id.to_s )
+        # project = add_dependency_licences(project)
 
         present @project, with: EntitiesV2::ProjectEntity, :type => :full
       end
