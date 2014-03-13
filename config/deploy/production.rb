@@ -10,7 +10,7 @@ set :normalize_asset_timestamps, %{public/images public/javascripts public/style
 # unless any hosts have the primary property set.
 # role :web, %w{ubuntu@aws-1}
 # role :db,  %w{ubuntu@aws-1}
-role :app, %w{ubuntu@aws-1}
+role :app, %w{ubuntu@veye_app}
 
 # Extended Server Syntax
 # ======================
