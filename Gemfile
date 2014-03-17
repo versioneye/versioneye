@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby "2.0.0"
+ruby "2.1.1"
 
 gem 'rails'              , '3.2.16'
 gem 'jquery-rails'       , '2.2.1'
@@ -43,7 +43,7 @@ group :development do
   gem 'capistrano-bundler', '1.1.2'
   gem 'psych'             , '~> 2.0.0'
   gem 'irbtools'          , '1.6.1'
-  gem 'terminal-notifier' , '1.5.1'
+  gem 'terminal-notifier' , '~> 1.5.0'
   gem 'fakes3'            , '0.1.5.2'
   gem 'debugger'          , '~> 1.6.0'
 end
@@ -53,7 +53,7 @@ group :assets do
   gem 'sass'          , :require => 'sass'
   gem 'sass-rails'    , '~> 3.2.6'
   gem 'coffee-rails'  , '~> 3.2.0'
-  gem 'uglifier'      , '~> 2.4.0'
+  gem 'uglifier'      , '~> 2.5.0'
   gem 'yui-compressor', '~> 0.12.0'
 end
 
