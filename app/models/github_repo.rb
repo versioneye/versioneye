@@ -68,6 +68,10 @@ class GithubRepo
       user.save
     end
     user[:github_login]
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join("\n")
+    nil
   end
 
 
