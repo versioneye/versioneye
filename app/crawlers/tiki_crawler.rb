@@ -58,9 +58,9 @@ class TikiCrawler
     end
     if version_number.match(/^dev\-/)
       Dependency.remove_dependencies Product::A_LANGUAGE_PHP, product.prod_key, version_number
-      PackagistCrawler.create_dependencies product, version_number, version_object
+      ComposerUtils.create_dependencies product, version_number, version_object
       Versionarchive.remove_archives Product::A_LANGUAGE_PHP, product.prod_key, version_number
-      PackagistCrawler.create_archive     product, version_number, version_object
+      ComposerUtils.create_archive     product, version_number, version_object
     end
   end
 
