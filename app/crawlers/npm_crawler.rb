@@ -39,6 +39,7 @@ class NpmCrawler
   end
 
   def self.get_first_level_list_from_html
+    self.logger.info 'Start fetching first level list from HTML'
     packages = Array.new
     20.times.each do |page|
       packages.concat( fetch_names_from( page ) )
@@ -60,6 +61,7 @@ class NpmCrawler
   end
 
   def self.get_known_packages
+    self.logger.info 'get_known_packages'
     packages = Array.new
     products = Product.where(:language => Product::A_LANGUAGE_NODEJS)
     products.each do |product|
