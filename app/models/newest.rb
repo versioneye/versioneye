@@ -1,5 +1,8 @@
 class Newest
 
+  # Every time a crawler is finding a new product or a new version of a product
+  # it has to create a 'newest' entry.
+
   include Mongoid::Document
   include Mongoid::Timestamps
 
@@ -56,4 +59,3 @@ class Newest
   end
 
 end
-
