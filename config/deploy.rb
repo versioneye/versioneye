@@ -52,13 +52,14 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      ["log", "pids"].each do |path|
-        execute "ln -fs #{shared_path}/#{path} #{release_path}/#{path}"
-      end
+      # ["log", "pids"].each do |path|
+      #   execute "ln -fs #{shared_path}/#{path} #{release_path}/#{path}"
+      # end
       execute "/etc/init.d/unicorn.sh restart"
     end
   end
 
+  after :finishing, 'deploy:restart'
   after :finishing, 'deploy:cleanup'
 
 end
