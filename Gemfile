@@ -49,12 +49,13 @@ group :development do
 end
 
 group :assets do
-  gem 'therubyracer'  , '~> 0.12.0'
-  gem 'sass'          , :require => 'sass'
-  gem 'sass-rails'    , '~> 3.2.6'
-  gem 'coffee-rails'  , '~> 3.2.0'
-  gem 'uglifier'      , '~> 2.5.0'
-  gem 'yui-compressor', '~> 0.12.0'
+  gem 'therubyracer'          , '~> 0.12.0'
+  gem 'sass'                  , :require => 'sass'
+  gem 'sass-rails'            , '~> 3.2.6'
+  gem 'coffee-rails'          , '~> 3.2.0'
+  gem 'uglifier'              , '~> 2.5.0'
+  gem 'yui-compressor'        , '~> 0.12.0'
+  gem 'turbo-sprockets-rails3', '~> 0.3.0'
 end
 
 group :test do
