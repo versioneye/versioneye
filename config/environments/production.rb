@@ -73,6 +73,8 @@ Versioneye::Application.configure do
      :port                 => 587,
      :user_name            => Settings.smtp_username,
      :password             => Settings.smtp_password,
+     :domain               => 'versioneye.com',
+     :authentication       => 'plain',
      :enable_starttls_auto => true  }
   config.action_mailer.perform_deliveries    = true
   config.action_mailer.raise_delivery_errors = true

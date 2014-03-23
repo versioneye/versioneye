@@ -44,9 +44,11 @@ Versioneye::Application.configure do
      :port                 => 587,
      :user_name            => Settings.smtp_username,
      :password             => Settings.smtp_password,
+     :domain               => 'versioneye.com',
+     :authentication       => 'plain',
      :enable_starttls_auto => true  }
-  config.action_mailer.perform_deliveries    = false
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.perform_deliveries    = true
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options   = { :host => 'localhost' }
 
   ENV['API_BASE_PATH'] = "http://localhost:3000/api"
