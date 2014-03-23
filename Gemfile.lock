@@ -344,6 +344,9 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    turbo-sprockets-rails3 (0.3.11)
+      railties (> 3.2.8, < 4.0.0)
+      sprockets (>= 2.2.0)
     turn (0.9.7)
       ansi
       minitest (~> 4)
@@ -433,6 +436,7 @@ DEPENDENCIES
   terminal-notifier (~> 1.5.0)
   therubyracer (~> 0.12.0)
   tire (= 0.6.2)
+  turbo-sprockets-rails3 (~> 0.3.0)
   turn
   twitter_oauth (= 0.4.94)
   uglifier (~> 2.5.0)

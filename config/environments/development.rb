@@ -36,10 +36,20 @@ Versioneye::Application.configure do
 
   config.log_level = :debug
 
-  config.action_mailer.delivery_method       = :postmark # :sendmail
-  config.action_mailer.perform_deliveries    = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+     :address              => 'email-smtp.eu-west-1.amazonaws.com',
+     :port                 => 587,
+     :user_name            => 'AKIAITK4543YTOJFEHXA',
+     :password             => 'AsnhSDjdGyCE3PluDu+m7CZIy6hkwQSvUD/XETF6oPhN',
+     :enable_starttls_auto => true  }
+
+  # config.action_mailer.delivery_method       = :postmark # :sendmail
+  # config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
+
+  config.action_mailer.perform_deliveries    = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
+
   config.action_mailer.default_url_options = { :host => 'localhost' }
 
   ENV['API_BASE_PATH'] = "http://127.0.0.1:3000/api"
