@@ -288,7 +288,7 @@ class NpmCrawler
 
 
   def self.parse_release_date version_db, time
-    version_db.released_string = time[version_number]
+    version_db.released_string = time[ version_db.to_s ]
     version_db.released_at     = DateTime.parse( version_db.released_string )
   rescue => e
     logger.error "Error in parse_release_date #{e.message}"
