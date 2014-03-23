@@ -19,7 +19,7 @@ class NpmCrawler
 
   def self.get_first_level_list
     packages = get_first_level_list_from_registry
-    if packages.nil? || packages.empty?
+    if packages.nil? || packages.empty? || packages.count < 50
       known_packages  = get_known_packages
       newest_packages = get_first_level_list_from_html
       packages        = (known_packages + newest_packages).uniq
