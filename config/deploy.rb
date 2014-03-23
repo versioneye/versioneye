@@ -14,7 +14,7 @@ set :branch  , "master"
 set :ssh_options, {:forward_agent => true}
 set :user       , "ubuntu"
 set :deploy_to  , '/var/www/versioneye'
-set :linked_dirs, %w(pids log)
+set :linked_dirs, %w(pids log public)
 
 set :format   , :pretty
 set :log_level, :info   # :debug :error :info
@@ -52,9 +52,6 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      # ["log", "pids"].each do |path|
-      #   execute "ln -fs #{shared_path}/#{path} #{release_path}/#{path}"
-      # end
       execute "/etc/init.d/unicorn.sh restart"
     end
   end
