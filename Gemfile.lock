@@ -230,12 +230,6 @@ GEM
       httparty (~> 0.9)
       persistent_http
     polyglot (0.3.4)
-    postmark (1.1.0)
-      json
-      rake
-    postmark-rails (0.6.0)
-      actionmailer (>= 3.0.0)
-      postmark (~> 1.1.0)
     psych (2.0.4)
     rack (1.4.5)
     rack-accept (0.4.5)
@@ -421,7 +415,6 @@ DEPENDENCIES
   oauth (= 0.4.7)
   octokit (~> 2.7.0)
   persistent_httparty (= 0.1.1)
-  postmark-rails (= 0.6.0)
   psych (~> 2.0.0)
   rails (= 3.2.16)
   rspec (~> 2.14.0)
