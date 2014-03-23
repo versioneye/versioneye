@@ -19,8 +19,7 @@ Versioneye::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
 
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
+
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
@@ -36,16 +35,24 @@ Versioneye::Application.configure do
 
   config.log_level = :debug
 
-  config.action_mailer.delivery_method       = :postmark # :sendmail
-  config.action_mailer.perform_deliveries    = false
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
-  config.action_mailer.default_url_options = { :host => 'localhost' }
+  # config.action_mailer.delivery_method       = :postmark # :sendmail
+  # config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
 
-  ENV['API_BASE_PATH'] = "http://127.0.0.1:3000/api"
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+     :address              => 'email-smtp.eu-west-1.amazonaws.com',
+     :port                 => 587,
+     :user_name            => Settings.smtp_username,
+     :password             => Settings.smtp_password,
+     :enable_starttls_auto => true  }
+  config.action_mailer.perform_deliveries    = false
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default_url_options   = { :host => 'localhost' }
+
+  ENV['API_BASE_PATH'] = "http://localhost:3000/api"
 
   Stripe.api_key = Settings.stripe_secret_key
 
-  routes.default_url_options = { host: "127.0.0.1", port: 3000 }
+  routes.default_url_options = { host: "localhost", port: 3000 }
 
 end
