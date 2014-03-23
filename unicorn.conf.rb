@@ -74,9 +74,12 @@ before_fork do |server, worker|
   old_pid = Rails.root + '/pids/unicorn.pid.oldbin'
   if File.exists?(old_pid) && server.pid != old_pid
     begin
+      pid = File.read(old_pid).to_i
       sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU
-      Process.kill(sig, File.read(old_pid).to_i)
+      server.logger.info("sending #{sig} to #{pid}")
+      Process.kill(sig, pid)
     rescue Errno::ENOENT, Errno::ESRCH
+      server.logger.info("Fuck! Something went wrong. Fix it by hand!")
     end
   end
 
