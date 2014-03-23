@@ -38,14 +38,14 @@ namespace :deploy do
   desc 'Start application'
   task :start do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "/etc/init.d/unicorn start"
+      execute "/etc/init.d/unicorn.sh start"
     end
   end
 
   desc 'Stop application'
   task :stop do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "/etc/init.d/unicorn stop"
+      execute "/etc/init.d/unicorn.sh stop"
     end
   end
 
@@ -55,7 +55,7 @@ namespace :deploy do
       ["log", "pids"].each do |path|
         execute "ln -fs #{shared_path}/#{path} #{release_path}/#{path}"
       end
-      execute "/etc/init.d/unicorn restart"
+      execute "/etc/init.d/unicorn.sh restart"
     end
   end
 
