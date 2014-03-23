@@ -15,6 +15,9 @@ Versioneye::Application.configure do
   config.serve_static_assets = true
   config.action_dispatch.x_sendfile_header = nil
 
+  # Log error messages when you accidentally call methods on nil.
+  config.whiny_nils = false
+
   # Compress JavaScripts and CSS
   config.assets.compress = true
   config.assets.css_compressor = :yui
@@ -64,19 +67,17 @@ Versioneye::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.action_mailer.delivery_method   = :postmark
-  config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
-  config.action_mailer.default_url_options = { :host => 'www.versioneye.com' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+     :address              => 'email-smtp.eu-west-1.amazonaws.com',
+     :port                 => 587,
+     :user_name            => Settings.smtp_username,
+     :password             => Settings.smtp_password,
+     :enable_starttls_auto => true  }
+  config.action_mailer.perform_deliveries    = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options   = { :host => 'www.versioneye.com' }
 
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = {
-  #    :address              => ",
-  #    :port                 => 587,
-  #    :domain               => '',
-  #    :user_name            => '',
-  #    :password             => '',
-  #    :authentication       => '',
-  #    :enable_starttls_auto => true  }
 
   ENV['API_BASE_PATH'] = "https://www.versioneye.com/api"
 
