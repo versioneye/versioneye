@@ -14,7 +14,7 @@ set :branch  , "master"
 set :ssh_options, {:forward_agent => true}
 set :user       , "ubuntu"
 set :deploy_to  , '/var/www/versioneye'
-set :linked_dirs, %w(pids log public)
+set :linked_dirs, %w(pids log)
 
 set :format   , :pretty
 set :log_level, :info   # :debug :error :info
