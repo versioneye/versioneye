@@ -84,6 +84,16 @@ namespace :versioneye do
   end
 
 
+  # ***** XML Sitemap Tasks *****
+
+  desc "create XML site map"
+  task :xml_sitemap => :environment do
+    puts "START to export xml site map"
+    ProductMigration.xml_site_map
+    puts "---"
+  end
+
+
   # ***** Crawler Tasks *****
 
   desc "crawl Packagist"
