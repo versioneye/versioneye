@@ -33,7 +33,7 @@ gem 'semverly'           , '1.0.0'
 
 # This is coming soon!
 # gem 'log4r'              , '1.1.10'
-# gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v0.1.1'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v0.2.0'
 
 
 group :development do
