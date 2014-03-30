@@ -44,17 +44,11 @@ module ProductsHelper
   end
 
   def badge_for_product( language, prod_key, version )
-    product = nil
-    if version.nil?
-      product = Product.fetch_product language, prod_key
-      version = product.version
-    end
-
     key   = "#{language}_#{prod_key}_#{version}"
     badge = Rails.cache.read key
     return badge if badge
 
-    product = Product.fetch_product language, prod_key if product.nil?
+    product = Product.fetch_product language, prod_key
     return 'unknown' if product.nil?
 
     product.version = version if version
@@ -68,7 +62,7 @@ module ProductsHelper
 
     outdated = DependencyService.dependencies_outdated?( product.dependencies )
     badge = 'out-of-date' if outdated
-    badge = 'up-to-date' if not outdated
+    badge = 'up-to-date'  if not outdated
     Rails.cache.write( key, badge, timeToLive: 2.hour )
     badge
   end
