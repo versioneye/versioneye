@@ -1,0 +1,29 @@
+<log4r_config>
+
+  <pre_config>
+    <custom_levels>DEBUG, INFO, WARN, ERROR, FATAL</custom_levels>
+    <global level="ALL"/>
+  </pre_config>
+
+  <!-- Outputters -->
+  <outputter name="console" type="StdoutOutputter" level="DEBUG" >
+    <formatter type="Log4r::PatternFormatter">
+      <pattern>=>[%5l %d] %C: %M [%t]</pattern>
+    </formatter>
+  </outputter>
+
+  <outputter name="file_outputter" type="FileOutputter">
+    <filename>log/logger.log</filename>
+    <formatter type="Log4r::PatternFormatter">
+      <pattern>=>[%5l %d] %C: %M [%t]</pattern>
+    </formatter>
+  </outputter>
+
+  <!-- Loggers -->
+  <logger name="MainLogger" level="ERROR" additive="false" trace="true">
+      <outputter>console</outputter>
+      <outputter>file_outputter</outputter>
+  </logger>
+
+</log4r_config>
+
