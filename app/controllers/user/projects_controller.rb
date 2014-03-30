@@ -26,16 +26,16 @@ class User::ProjectsController < ApplicationController
     end
   rescue => e
     logger.error e.message
-    logger.error e.backtrace.join("\n")
+    logger.error e.backtrace.join('\n')
     flash[:error] = 'VersionEye is not able to parse your project. Please contact the VersionEye team.'
     redirect_to user_projects_path
   end
 
   def show
-    id             = params[:id]
-    project        = Project.find_by_id( id )
-    project        = add_dependency_classes( project )
-    @project       = project
+    id       = params[:id]
+    project  = ProjectService.find( id )
+    project  = add_dependency_classes( project )
+    @project = project
 
     unless project.visible_for_user?(current_user)
       return if !authenticate
