@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController
 
+  require 'will_paginate/array'
+
   before_filter :authenticate                  , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license]
   before_filter :admin_user                    , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license]
   before_filter :check_redirects_package       , :only => [:show]
