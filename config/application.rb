@@ -23,6 +23,8 @@ module Versioneye
 
     VersioneyeCore.new
 
+    AWS.config(:access_key_id => Settings.instance.aws_access_key_id, :secret_access_key => Settings.instance.aws_secret_access_key )
+
     Product.send        :include, WillPaginateMongoid::MongoidPaginator
     BitbucketRepo.send  :include, WillPaginateMongoid::MongoidPaginator
     Dependency.send     :include, WillPaginateMongoid::MongoidPaginator
@@ -34,7 +36,6 @@ module Versioneye
     Versioncomment.send :include, WillPaginateMongoid::MongoidPaginator
 
     Mongoid.load!("config/mongoid.yml")
-
     Mongoid.logger.level = Logger::ERROR
     Moped.logger.level = Logger::ERROR
 
