@@ -14,4 +14,3 @@ begin
 rescue => e
   Rails.logger.error "Wrong configuration: #{e}"
 end
-

@@ -1,4 +1,4 @@
-  <link href="<%= Settings.server_url_https %>/favicon.ico" rel="shortcut icon"  />
+  <link href="<%= Settings.instance.server_url_https %>/favicon.ico" rel="shortcut icon"  />
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Droid+Serif|Droid+Serif:bold|Droid+Sans|Droid+Sans:bold">
 
   <!--[if lt IE 8]>
@@ -50,7 +50,7 @@
 
       <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
       <script type="text/javascript">
-          Stripe.setPublishableKey('<%= Settings.stripe_public_key %>');
+          Stripe.setPublishableKey('<%= Settings.instance.stripe_public_key %>');
       </script>
       <%= javascript_include_tag "application_payment",  :defer => false, :async => false %>
 

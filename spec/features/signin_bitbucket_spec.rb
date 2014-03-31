@@ -9,8 +9,8 @@ def connect_user_account(user)
 
       #when bitbucket asks testuser's credentials
       within("form.login-form") do
-        fill_in "Username", :with => Settings.bitbucket_username
-        fill_in 'Password', :with => Settings.bitbucket_password
+        fill_in "Username", :with => Settings.instance.bitbucket_username
+        fill_in 'Password', :with => Settings.instance.bitbucket_password
         click_button 'Log in'
       end
       #grant access
@@ -50,8 +50,8 @@ describe "Signin with Bitbucket" do
 
     #when bitbucket asks testuser's credentials
     within("form.login-form") do
-      fill_in "Username", :with => Settings.bitbucket_username
-      fill_in 'Password', :with => Settings.bitbucket_password
+      fill_in "Username", :with => Settings.instance.bitbucket_username
+      fill_in 'Password', :with => Settings.instance.bitbucket_password
       click_button 'Log in'
     end
     #grant access
