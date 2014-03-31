@@ -16,7 +16,7 @@ gem 'whenever'           , '~> 0.9.2'
 gem 'bourbon'            , '~> 3.1.8'
 gem 'ruby_regex'         , '~> 0.1.0'
 gem 'semverly'           , '~> 1.0.0'
-gem 'cocoapods-core'     , '~> 0.29.0'
+gem 'cocoapods-core'     , '~> 0.30.0'
 gem 'stripe'             , '~> 1.10.0'
 gem 'will_paginate_mongoid', '2.0.1'
 # gem 'will_paginate'      , '~> 3.0.0'
@@ -29,7 +29,7 @@ group :development do
   gem 'capistrano-bundler', '1.1.2'
   gem 'psych'             , '~> 2.0.0'
   gem 'irbtools'          , '1.6.1'
-  gem 'terminal-notifier' , '~> 1.5.0'
+  gem 'terminal-notifier' , '~> 1.6.0'
   gem 'fakes3'            , '0.1.5.2'
   gem 'debugger'          , '~> 1.6.0'
 end
@@ -52,9 +52,9 @@ group :test do
   gem 'rspec-mocks'       , '~> 2.14.0'
   gem 'capybara'          , '~> 2.2.0'
   gem 'capybara-firebug'  , '~> 2.0.0'
-  gem 'selenium-webdriver', '~> 2.40.0'
+  gem 'selenium-webdriver', '~> 2.41.0'
   gem 'fakeweb'           , '~> 1.3.0'
-  gem 'vcr'               , '~> 2.8.0',  :require => false
+  gem 'vcr'               , '~> 2.9.0',  :require => false
   gem 'webmock'           , '~> 1.17.0', :require => false
   gem 'database_cleaner'  , '~> 1.2.0'
   gem 'factory_girl'      , '~> 4.4.0'
