@@ -1,7 +1,5 @@
 require File.expand_path('../boot', __FILE__)
 
-# require 'rails/all' # commented out because of mongodb.
-
 require "versioneye-core"
 require "action_controller/railtie"
 require "action_mailer/railtie"
@@ -20,28 +18,20 @@ if defined?(Bundler)
 end
 
 
-class Settings
-  json = File.read("config/settings.json")
-  settings = JSON.parse(json)
-  if settings
-    settings[Rails.env].each { |name, value|
-      if value && value.is_a?(String) && value.match(/^env_/)
-        new_val = value.gsub("env_", "")
-        if name.eql?("memcache_servers")
-          value = eval ENV[new_val]
-        else
-          value = ENV[new_val]
-        end
-      end
-      instance_variable_set("@#{name}", value)
-      self.class.class_eval { attr_reader name.intern }
-    }
-  end
-end
-
-
 module Versioneye
   class Application < Rails::Application
+
+    VersioneyeCore.new
+
+    Product.send        :include, WillPaginateMongoid::MongoidPaginator
+    BitbucketRepo.send  :include, WillPaginateMongoid::MongoidPaginator
+    Dependency.send     :include, WillPaginateMongoid::MongoidPaginator
+    ErrorMessage.send   :include, WillPaginateMongoid::MongoidPaginator
+    GithubRepo.send     :include, WillPaginateMongoid::MongoidPaginator
+    SubmittedUrl.send   :include, WillPaginateMongoid::MongoidPaginator
+    Testimonial.send    :include, WillPaginateMongoid::MongoidPaginator
+    User.send           :include, WillPaginateMongoid::MongoidPaginator
+    Versioncomment.send :include, WillPaginateMongoid::MongoidPaginator
 
     Mongoid.load!("config/mongoid.yml")
 

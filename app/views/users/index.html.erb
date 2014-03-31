@@ -5,13 +5,13 @@
   <div class="span3" >
     :-)
   </div>
-  
+
   <div class="span8 content">
 
     <% @users.each do |user| %>
-      <%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :class => "round", :gravatar => { :size => 100, :default => "#{Settings.server_url}/profile_icon.png" }), user_path(user) %>
+      <%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :class => "round", :gravatar => { :size => 100, :default => "#{Settings.instance.server_url}/profile_icon.png" }), user_path(user) %>
     <% end %>
-  
+
   </div>
 
 <% end %>

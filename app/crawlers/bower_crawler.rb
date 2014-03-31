@@ -1,5 +1,5 @@
-require 'crawler_task'
-require 'github'
+# require 'crawler_task'
+# require 'github'
 
 class BowerCrawler
 

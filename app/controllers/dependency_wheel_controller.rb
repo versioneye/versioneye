@@ -54,7 +54,7 @@ class DependencyWheelController < ApplicationController
     AWS::S3::S3Object.store(
       filename,
       Base64.decode64(image_bin),
-      Settings.s3_infographics_bucket,
+      Settings.instance.s3_infographics_bucket,
       :access => 'public-read')
     url = S3.infographic_url_for(filename)
     respond_to do |format|

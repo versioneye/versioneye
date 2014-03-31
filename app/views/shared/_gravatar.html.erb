@@ -9,14 +9,14 @@
 <% user_link = user_path(user) unless user.nil? %>
 <% image_size = size.to_i unless size.nil? %>
 <% if user.nil? %>
-  <img src= "<%= "/assets/profile_icon.png" %>" 
+  <img src= "<%= "/assets/profile_icon.png" %>"
        width= "<%= image_size %>" height= "<%= image_size %>" alt = "missing @user var" />
 <% else %>
-  <%= link_to( gravatar_image_tag(user[:email], 
-                                 :alt => user[:fullname], 
-                                 :class => classes, 
-                                 :gravatar => { :size => image_size, 
-                                                :default => "#{Settings.server_url}/profile_icon.png" }), 
+  <%= link_to( gravatar_image_tag(user[:email],
+                                 :alt => user[:fullname],
+                                 :class => classes,
+                                 :gravatar => { :size => image_size,
+                                                :default => "#{Settings.instance.server_url}/profile_icon.png" }),
   user_link) %>
 
   <% if change_link && signed_in? && current_user.id.to_s.eql?(user.id.to_s) %>

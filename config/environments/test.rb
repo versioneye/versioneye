@@ -43,7 +43,7 @@ Versioneye::Application.configure do
 
   ENV['API_BASE_PATH'] = "http://127.0.0.1:3000/api"
 
-  Stripe.api_key = Settings.stripe_secret_key
+  Stripe.api_key = Settings.instance.stripe_secret_key
 
   routes.default_url_options = { host: "localhost", port: 3000 }
 

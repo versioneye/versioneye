@@ -4,8 +4,8 @@ Versioneye::Application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
   config.action_controller.perform_caching = false
-  config.cache_store = :dalli_store, Settings.memcache_servers,{
-    :username => Settings.memcache_username, :password => Settings.memcache_password,
+  config.cache_store = :dalli_store, Settings.instance.memcache_servers,{
+    :username => Settings.instance.memcache_username, :password => Settings.instance.memcache_password,
     :namespace => 'veye', :expires_in => 1.day, :compress => true }
 
   # Full error reports are disabled and caching is turned on
@@ -71,8 +71,8 @@ Versioneye::Application.configure do
   config.action_mailer.smtp_settings = {
      :address              => 'email-smtp.eu-west-1.amazonaws.com',
      :port                 => 587,
-     :user_name            => Settings.smtp_username,
-     :password             => Settings.smtp_password,
+     :user_name            => Settings.instance.smtp_username,
+     :password             => Settings.instance.smtp_password,
      :domain               => 'versioneye.com',
      :authentication       => 'plain',
      :enable_starttls_auto => true  }
@@ -83,6 +83,6 @@ Versioneye::Application.configure do
 
   ENV['API_BASE_PATH'] = "https://www.versioneye.com/api"
 
-  Stripe.api_key = Settings.stripe_secret_key
+  Stripe.api_key = Settings.instance.stripe_secret_key
 
 end

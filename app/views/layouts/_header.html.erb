@@ -32,7 +32,7 @@
             <li class="divider-vertical"></li>
             <li>
               <a href="<%= user_path( current_user ) %>" class="profile_pic_tiny" title="Profile" >
-                <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.server_url}/profile_icon.png" }) %> <%= current_user.username %>
+                <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= current_user.username %>
               </a>
             </li>
             <li class="divider-vertical"></li>

@@ -93,13 +93,13 @@
       <li class="list-cell share-on-icon">
         <a href="https://twitter.com/share"
            class="twitter-share-button"
-           data-url="<%= Settings.server_url %>/services/<%= @project.id %>"
+           data-url="<%= Settings.instance.server_url %>/services/<%= @project.id %>"
            data-text="Check out my project @VersionEye "
            data-count="horizontal" >Twitter</a>
            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
       </li>
       <li class="list-cell share-on-icon" >
-        <div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="<%= Settings.server_url %>/services/<%= @project.id %>" style="width: 90px;"></div>
+        <div class="g-plusone" data-annotation="bubble" data-size="medium" data-href="<%= Settings.instance.server_url %>/services/<%= @project.id %>" style="width: 90px;"></div>
       </li>
     </ul>
   </div>

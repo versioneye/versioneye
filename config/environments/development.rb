@@ -6,8 +6,8 @@ Versioneye::Application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
   config.action_controller.perform_caching = false
-  config.cache_store = :dalli_store, Settings.memcache_servers,{
-    :username => Settings.memcache_username, :password => Settings.memcache_password,
+  config.cache_store = :dalli_store, Settings.instance.memcache_servers,{
+    :username => Settings.instance.memcache_username, :password => Settings.instance.memcache_password,
     :namespace => 'veye', :expires_in => 1.day, :compress => true }
 
   config.serve_static_assets = true
@@ -36,14 +36,14 @@ Versioneye::Application.configure do
   config.log_level = :debug
 
   # config.action_mailer.delivery_method       = :postmark # :sendmail
-  # config.action_mailer.postmark_settings = { :api_key => Settings.postmark_api_key }
+  # config.action_mailer.postmark_settings = { :api_key => Settings.instance.postmark_api_key }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
      :address              => 'email-smtp.eu-west-1.amazonaws.com',
      :port                 => 587,
-     :user_name            => Settings.smtp_username,
-     :password             => Settings.smtp_password,
+     :user_name            => Settings.instance.smtp_username,
+     :password             => Settings.instance.smtp_password,
      :domain               => 'versioneye.com',
      :authentication       => 'plain',
      :enable_starttls_auto => true  }
@@ -53,7 +53,7 @@ Versioneye::Application.configure do
 
   ENV['API_BASE_PATH'] = "http://localhost:3000/api"
 
-  Stripe.api_key = Settings.stripe_secret_key
+  Stripe.api_key = Settings.instance.stripe_secret_key
 
   routes.default_url_options = { host: "localhost", port: 3000 }
 
