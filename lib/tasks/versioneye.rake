@@ -7,7 +7,7 @@ namespace :versioneye do
     puts "---"
 
     puts "START to update integration status of submitted urls"
-    SubmittedUrl.update_integration_statuses()
+    SubmittedUrlService.update_integration_statuses()
     puts "---"
 
     puts "START update meta data on products. Update followers, version and used_by_count"

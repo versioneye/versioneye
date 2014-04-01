@@ -188,7 +188,7 @@ class UsersController < ApplicationController
     if user.nil?
       flash[:error] = "A user with the given E-Mail address could not be found."
     else
-      user.reset_password
+      UserService.reset_password user
       flash[:success] = "Please check your E-Mails. You should receive an E-Mail with a new password."
     end
     redirect_to iforgotmypassword_path
