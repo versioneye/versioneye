@@ -21,7 +21,7 @@ gem 'stripe'             , '~> 1.10.0'
 gem 'will_paginate_mongoid', '2.0.1'
 # gem 'will_paginate'      , '~> 3.0.0'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v0.2.3'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v0.2.4'
 
 group :development do
   gem 'capistrano'        , '3.1.0'

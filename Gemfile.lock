@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: ee6fd54eca105de0d2496e041c6e497d2e75807b
-  tag: v0.2.3
+  revision: f6e3b8714f43b7c4f5ebd0417ebd1ae7c28978d6
+  tag: v0.2.4
   specs:
-    versioneye-core (0.2.2)
+    versioneye-core (0.2.4)
       aws-sdk (~> 1.0)
       dalli (= 2.7.0)
       httparty (= 0.13.0)
