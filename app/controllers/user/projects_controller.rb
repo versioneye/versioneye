@@ -16,9 +16,7 @@ class User::ProjectsController < ApplicationController
     if project.nil?
       flash[:error] = 'Please put in a URL OR select a file from your computer.' if flash[:error].nil?
       redirect_to new_user_project_path
-      return nil
-    end
-    if project and project.id
+    elsif project and project.id
       redirect_to user_project_path( project._id )
     else
       flash[:error] = "Can't import that project: unparseable project file or issues with filestorage. Please contact the VersionEye team."
@@ -289,10 +287,7 @@ class User::ProjectsController < ApplicationController
 
     def fetch_project( params )
       file        = params[:upload]
-      project_url = nil
-      if params[:project]
-        project_url = params[:project][:url]
-      end
+      project_url = params[:project][:url] if params[:project]
       return upload_and_store( file )       if file && !file.empty?
       return fetch_and_store( project_url ) if project_url && !project_url.empty?
       nil

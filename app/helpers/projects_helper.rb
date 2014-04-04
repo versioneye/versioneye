@@ -18,8 +18,10 @@ module ProjectsHelper
 
   def add_dependency_classes project
     return nil if project.nil?
+
     deps = project.dependencies
     return project if deps.nil? or deps.empty?
+
     deps.each do |dep|
       if dep.unknown?
         dep[:status_class] = 'info'
