@@ -146,14 +146,15 @@ class UsersController < ApplicationController
     user      = User.where(verification: verification).shift
     activated = User.activate!( verification )
 
-    if activated && github_source?( source )
-      sign_in user
-      flash.now[:success] = message
-      redirect_to user_packages_i_follow_path
-      return
-    end
-
     if activated
+
+      if github_source?( source ) || bitbucket_source?( source )
+        sign_in user
+        flash.now[:success] = message
+        redirect_to user_packages_i_follow_path
+        return
+      end
+
       flash[:success] = message
       return
     end
@@ -168,10 +169,7 @@ class UsersController < ApplicationController
 
   def users_location
     user = User.find_by_username(params[:id])
-    location = "Berlin"
-    if user
-      location = user.location
-    end
+    location = user ? user.location : 'Berlin'
     respond_to do |format|
       format.json {
         render :json => "{\"location\": \"#{location}\"}"
@@ -263,6 +261,10 @@ class UsersController < ApplicationController
 
     def github_source?( source )
       !source.nil? && !source.empty? && source.eql?("github")
+    end
+
+    def bitbucket_source?( source )
+      !source.nil? && !source.empty? && source.eql?("bitbucket")
     end
 
     def format_autocompletion(matched_users)
