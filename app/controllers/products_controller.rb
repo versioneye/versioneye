@@ -87,15 +87,15 @@ class ProductsController < ApplicationController
     language   = Product.decode_language params[:lang]
     prod_key   = Product.decode_prod_key params[:key]
     page       = parse_page params[:page]
-    @product   = Product.fetch_product language, prod_key
-    if @product.nil? && language.eql?(Product::A_LANGUAGE_JAVA)
-      redirect_to product_references_path(Product::A_LANGUAGE_CLOJURE, params[:key])
+    @product   = fetch_product language, prod_key
+    if @product.nil?
+      render :text => "This page doesn't exist", :status => 404 and return
     end
-    response   = Dependency.references language, prod_key, page
+    response   = Dependency.references @product.language, prod_key, page
     if response[:prod_keys].nil? || response[:prod_keys].empty?
       render :text => "This page doesn't exist", :status => 404 and return
     end
-    products   = Product.by_prod_keys language, response[:prod_keys]
+    products   = Product.by_prod_keys @product.language, response[:prod_keys]
     pre_amount = (page.to_i - 1) * 30
     pre        = Array.new pre_amount
     @products  = pre + products
@@ -246,6 +246,14 @@ class ProductsController < ApplicationController
   end
 
   private
+
+    def fetch_product language, prod_key
+      product = Product.fetch_product language, prod_key
+      if product.nil? && language.eql?(Product::A_LANGUAGE_JAVA)
+        product = Product.fetch_product Product::A_LANGUAGE_CLOJURE, prod_key
+      end
+      product
+    end
 
     def parse_page page
       return 1 if page.to_s.empty?
