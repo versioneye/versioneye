@@ -88,6 +88,9 @@ class ProductsController < ApplicationController
     prod_key   = Product.decode_prod_key params[:key]
     page       = parse_page params[:page]
     @product   = Product.fetch_product language, prod_key
+    if @product.nil? && language.eql?(Product::A_LANGUAGE_JAVA)
+      redirect_to product_references_path(Product::A_LANGUAGE_CLOJURE, params[:key])
+    end
     response   = Dependency.references language, prod_key, page
     if response[:prod_keys].nil? || response[:prod_keys].empty?
       render :text => "This page doesn't exist", :status => 404 and return
