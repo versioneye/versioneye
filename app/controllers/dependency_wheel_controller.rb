@@ -8,8 +8,8 @@ class DependencyWheelController < ApplicationController
     respond_to do |format|
       format.json {
         if lang.eql?(Product::A_LANGUAGE_NODEJS) || lang.eql?(Product::A_LANGUAGE_JAVA)
-          circle = CircleElement.dependency_circle( lang, key, version, scope )
-          resp = CircleElement.generate_json_for_circle_from_hash( circle )
+          circle = CircleElementService.dependency_circle( lang, key, version, scope )
+          resp = CircleElementService.generate_json_for_circle_from_hash( circle )
           render :json => "[#{resp}]"
         else
           render :json => "[{\"success\": \"ok\"}]"
