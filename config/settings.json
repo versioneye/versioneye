@@ -26,11 +26,11 @@
     "smtp_port": "587",
     "smtp_username": "env_SMTP_USER",
     "smtp_password": "env_SMTP_PASS",
-    "aws_access_key_id": "env_AWS_S3_ACCESS_KEY_ID",
-    "aws_secret_access_key": "env_AWS_S3_SECRET_ACCESS_KEY",
     "aws_s3_endpoint": "localhost",
-    "aws_s3_port": "4567",
-    "aws_use_ssl": false
+    "aws_s3_port": 4567,
+    "aws_use_ssl": false,
+    "aws_access_key_id": "env_AWS_S3_ACCESS_KEY_ID",
+    "aws_secret_access_key": "env_AWS_S3_SECRET_ACCESS_KEY"
   },
   "test": {
     "bitbucket_password": "qwerty12345",
@@ -61,11 +61,11 @@
     "smtp_port": "587",
     "smtp_username": "env_SMTP_USER",
     "smtp_password": "env_SMTP_PASS",
-    "aws_access_key_id": "env_AWS_S3_ACCESS_KEY_ID",
-    "aws_secret_access_key": "env_AWS_S3_SECRET_ACCESS_KEY",
     "aws_s3_endpoint": "localhost",
-    "aws_s3_port": "4567",
-    "aws_use_ssl": false
+    "aws_s3_port": 4567,
+    "aws_use_ssl": false,
+    "aws_access_key_id": "env_AWS_S3_ACCESS_KEY_ID",
+    "aws_secret_access_key": "env_AWS_S3_SECRET_ACCESS_KEY"
   },
   "production": {
     "bitbucket_secret": "env_BITBUCKET_SECRET",
@@ -92,6 +92,9 @@
     "smtp_port": "587",
     "smtp_username": "env_SMTP_USER",
     "smtp_password": "env_SMTP_PASS",
+    "aws_s3_endpoint": "s3.amazonaws.com",
+    "aws_s3_port": 443,
+    "aws_use_ssl": true,
     "aws_access_key_id": "env_AWS_S3_ACCESS_KEY_ID",
     "aws_secret_access_key": "env_AWS_S3_SECRET_ACCESS_KEY"
   }
