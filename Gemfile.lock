@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 3425d6df36371adb77e82310ef0017761b7f4ab8
-  tag: v0.2.7
+  revision: 3c2b119c07ee86a918e9b6fd89d73db103498168
+  tag: v0.2.8
   specs:
-    versioneye-core (0.2.7)
+    versioneye-core (0.2.8)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       cocoapods-core (~> 0.31.0)
@@ -63,7 +63,6 @@ GEM
     alias (0.2.3)
     ansi (1.4.3)
     arel (3.0.3)
-    atomic (1.1.16)
     awesome_print (1.2.0)
     aws-sdk (1.38.0)
       json (~> 1.4)
@@ -237,7 +236,7 @@ GEM
     multi_json (1.9.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    nap (0.6.0)
+    nap (0.7.0)
     naturalsorter (2.0.8)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
@@ -313,7 +312,7 @@ GEM
       rake
     ruby_version (1.0.1)
     rubyzip (1.1.2)
-    safe_yaml (1.0.1)
+    safe_yaml (1.0.2)
     sass (3.3.4)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -355,8 +354,7 @@ GEM
       libv8 (~> 3.16.14.0)
       ref
     thor (0.19.1)
-    thread_safe (0.3.1)
-      atomic (>= 1.1.7, < 2)
+    thread_safe (0.3.2)
     tilt (1.4.1)
     tins (1.0.1)
     tire (0.6.2)
