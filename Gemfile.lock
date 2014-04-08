@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: d705853eb7bff27d88a4c8cef52337790c94761d
-  tag: v0.2.10
+  revision: 368ecbbdca75c84b824dd2d4230ac89b4796b3b5
+  tag: v0.2.12
   specs:
-    versioneye-core (0.2.9)
+    versioneye-core (0.2.12)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       cocoapods-core (~> 0.31.0)
@@ -172,12 +172,12 @@ GEM
       activesupport
       multi_json (>= 1.3.2)
     gravatar_image_tag (1.2.0)
-    hashie (2.0.5)
+    hashie (2.1.0)
     hashr (0.0.22)
     hike (1.2.3)
     hirb (0.7.1)
     htmlentities (4.3.1)
-    httparty (0.13.0)
+    httparty (0.13.1)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.6.9)
@@ -311,7 +311,7 @@ GEM
     ruby_regex (0.1.1)
       rake
     ruby_version (1.0.1)
-    rubyzip (1.1.2)
+    rubyzip (1.1.3)
     safe_yaml (1.0.2)
     sass (3.3.4)
     sass-rails (3.2.6)
@@ -354,9 +354,9 @@ GEM
       libv8 (~> 3.16.14.0)
       ref
     thor (0.19.1)
-    thread_safe (0.3.2)
+    thread_safe (0.3.3)
     tilt (1.4.1)
-    tins (1.0.1)
+    tins (1.1.0)
     tire (0.6.2)
       activemodel (>= 3.0)
       activesupport
