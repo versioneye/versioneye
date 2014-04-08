@@ -5,6 +5,7 @@ class DependencyWheelController < ApplicationController
     key     = Product.decode_prod_key params[:key]
     version = Version.decode_version params[:version]
     scope   = params[:scope]
+    scope   = nil if scope.to_s.strip.empty? 
     respond_to do |format|
       format.json {
         if lang.eql?(Product::A_LANGUAGE_NODEJS) || lang.eql?(Product::A_LANGUAGE_JAVA)
