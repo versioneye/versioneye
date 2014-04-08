@@ -20,7 +20,7 @@ gem 'cocoapods-core'     , '~> 0.31.0'
 gem 'stripe'             , '~> 1.10.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v0.2.10'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v0.2.12'
 
 group :development do
   gem 'capistrano'        , '3.1.0'
