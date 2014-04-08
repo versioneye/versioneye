@@ -19,7 +19,7 @@ Disallow: badge$
 Disallow: /com.*
 Disallow: /org.*
 Disallow: /*.json$
-Disallow: /*.json?.*$
+Disallow: /*.json?*$
 Disallow: /*.js$
 Disallow: /*.txt$
 Disallow: /*.md$
