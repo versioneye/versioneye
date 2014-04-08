@@ -25,7 +25,7 @@ namespace :versioneye do
     puts "---"
 
     puts "START to send out the notification E-Mails."
-    Notification.send_notifications
+    NotificationService.send_notifications
     puts "---"
 
     puts "START to send out daily project notification E-Mails."
@@ -65,7 +65,7 @@ namespace :versioneye do
   desc "send out new version email notifications"
   task :send_notifications => :environment do
     puts "START to send out the notification E-Mails."
-    Notification.send_notifications
+    NotificationService.send_notifications
     puts "---"
   end
 
