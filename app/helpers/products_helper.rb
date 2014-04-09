@@ -96,6 +96,7 @@ module ProductsHelper
 
   def attach_version(product, version)
     return false if product.nil?
+
     version = product.version if version.nil? || version.empty?
     version_obj = product.version_by_number( version )
     if version_obj.nil?

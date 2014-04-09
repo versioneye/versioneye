@@ -38,19 +38,26 @@ class ProductsController < ApplicationController
     lang     = Product.decode_language( params[:lang] )
     prod_key = Product.decode_prod_key( params[:key]  )
     version  = Version.decode_version ( params[:version] )
+    build    = Version.decode_version ( params[:build] )
     @product = ProductService.fetch_product lang, prod_key
-
     return if @product.nil?
 
+    # if product language is different from language in param than do a redirect!
     if @product && lang.casecmp( @product.language ) != 0
-      redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version )
-      return
+      redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version ) and return
+    end
+
+    if !build.to_s.strip.empty?
+      params[:version] = version = "#{version}:#{build}"
+      params[:build] = nil
+      redirect_to( {:action => 'show'}.merge(params) ) and return
     end
 
     if version.nil? || (!attach_version(@product, version))
       params[:version] = @product.version
       redirect_to( {:action => 'show'}.merge(params) ) and return
     end
+
     @version             = fetch_version @product
     @current_version     = VersionService.newest_version( @product.versions )
     @versioncomment      = Versioncomment.new
