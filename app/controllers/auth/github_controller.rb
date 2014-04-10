@@ -97,9 +97,11 @@ class Auth::GithubController < ApplicationController
       user.github_id    = json_user['id']
       user.github_token = token
       scopes            = Github.oauth_scopes( token )
-      scopes            = "no_scope" if scopes.size == 0
-      scopes            = scopes.first if scopes.size > 0
-      user.github_scope = scopes
+      if scopes && scopes.is_a?(Array) && scopes.size > 0
+        user.github_scope = scopes.first
+      else
+        user.github_scope = "no_scope"
+      end
       # next line is mandatory otherwise the private repos don't get
       # fetched immediately (reiz)
       user.github_repos.delete_all
