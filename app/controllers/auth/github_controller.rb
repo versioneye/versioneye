@@ -98,6 +98,7 @@ class Auth::GithubController < ApplicationController
       user.github_token = token
       scopes            = Github.oauth_scopes( token )
       scopes            = "no_scope" if scopes.size == 0
+      scopes            = scopes.first if scopes.size > 0
       user.github_scope = scopes
       # next line is mandatory otherwise the private repos don't get
       # fetched immediately (reiz)
