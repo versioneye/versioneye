@@ -1,0 +1,77 @@
+
+<div class="span3" >
+  <%= render 'settings/navi' %>
+</div>
+
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    Email Server Settings
+  </div>
+
+  <div class="span8 content" >
+
+    <%= form_tag( settings_emailsettings_path, :method => "post", :class => "form-horizontal") do  %>
+
+      <div class="control-group">
+        <%= label_tag :address, "Address", :class => "control-label", :for => "address" %>
+        <div class="controls">
+          <%= text_field_tag :address, @emailsetting.address, :id => "address" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :port, "Port", :class => "control-label", :for => "port" %>
+        <div class="controls">
+          <%= text_field_tag :port, @emailsetting.port, :id => "port" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :username, "Username", :class => "control-label", :for => "username" %>
+        <div class="controls">
+          <%= text_field_tag :username, @emailsetting.username, :id => "username" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :password, "Password", :class => "control-label", :for => "password" %>
+        <div class="controls">
+          <%= password_field_tag :password, @emailsetting.password, :id => "password" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :domain, "Domain", :class => "control-label", :for => "domain" %>
+        <div class="controls">
+          <%= text_field_tag :domain, @emailsetting.domain, :id => "domain" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :authentication, "Authentication", :class => "control-label", :for => "authentication" %>
+        <div class="controls">
+          <%= text_field_tag :authentication, @emailsetting.authentication, :id => "authentication" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <label for="enable_starttls_auto" style="font-size: 12px;" class="checkbox">
+            <%= check_box_tag "enable_starttls_auto", true, @emailsetting.enable_starttls_auto, :id => "enable_starttls_auto" %>
+            Start TLS if available
+          </label>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn btn-large btn-primary" >Save</button>
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

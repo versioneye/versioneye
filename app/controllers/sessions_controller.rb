@@ -17,12 +17,16 @@ class SessionsController < ApplicationController
       redirect_to :back
     else
       sign_in user
-      if redirect_url
-        redirect_to redirect_url
-      elsif user.projects.empty?
-        redirect_back_or( user_packages_i_follow_path )
+      if current_user.admin?
+        redirect_to settings_emailsettings_path
       else
-        redirect_back_or( user_projects_path )
+        if redirect_url
+          redirect_to redirect_url
+        elsif user.projects.empty?
+          redirect_back_or( user_packages_i_follow_path )
+        else
+          redirect_back_or( user_projects_path )
+        end
       end
     end
   end
