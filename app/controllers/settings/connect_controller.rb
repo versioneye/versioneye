@@ -16,7 +16,6 @@ class Settings::ConnectController < ApplicationController
     elsif service && service.eql?('bitbucket')
       user[:bitbucket_token] = nil
       user[:bitbucket_scope] = nil
-      user[:bitbucket_id] = nil
       user[:bitbucket_secret] = nil
       user.bitbucket_repos.delete_all
     end
