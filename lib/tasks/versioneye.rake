@@ -93,6 +93,15 @@ namespace :versioneye do
     puts "---"
   end
 
+  # ***** Admin tasks *****
+
+  desc "create default admin"
+  task :create_default_admin => :environment do
+    puts "START to create default admin"
+    AdminService.create_default_admin
+    puts "---"
+  end
+
 
   # ***** Crawler Tasks *****
 
