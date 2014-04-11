@@ -115,7 +115,7 @@ module V2
         end
 
         if params[:project_file].nil?
-          error! "Didnt submit file or used wrong parameter.", 400
+          error! "No file submitted or used wrong parameter name.", 400
         end
 
         if params[:project_file].is_a? String
