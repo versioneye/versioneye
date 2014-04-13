@@ -60,9 +60,9 @@ module ProductsHelper
       return badge
     end
 
-    outdated = DependencyService.dependencies_outdated?( product.dependencies )
-    badge = 'out-of-date' if outdated
-    badge = 'up-to-date'  if not outdated
+    outdated = DependencyService.dependencies_outdated?( dependencies )
+    badge = 'out-of-date' if outdated == true
+    badge = 'up-to-date'  if outdated == false
     Rails.cache.write( key, badge, timeToLive: 2.hour )
     badge
   end
