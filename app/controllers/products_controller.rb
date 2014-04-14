@@ -39,7 +39,7 @@ class ProductsController < ApplicationController
     prod_key = Product.decode_prod_key( params[:key]  )
     version  = Version.decode_version ( params[:version] )
     build    = Version.decode_version ( params[:build] )
-    @product = ProductService.fetch_product lang, prod_key
+    @product = ProductService.fetch_product lang, prod_key, version
     return if @product.nil?
 
     # if product language is different from language in param than do a redirect!
