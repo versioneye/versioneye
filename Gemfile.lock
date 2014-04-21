@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: d01f4a41532f4154b8fa7565cdf8f8662d305461
-  tag: v0.5.4
+  revision: 44a01f8fa5ebb013e5a0ca561b04ef08ecde01b5
+  tag: v0.5.5
   specs:
-    versioneye-core (0.5.4)
+    versioneye-core (0.5.5)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       cocoapods-core (~> 0.31.0)
