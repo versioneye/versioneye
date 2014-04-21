@@ -60,11 +60,11 @@
     <% elsif current_page?( user_projects_bitbucket_repositories_path ) %>
       <%= javascript_include_tag "application_bitbucket",  :defer => false, :async => false %>
 
-<!--     <% elsif current_page?(version_eye_api_path) %>
+    <% elsif current_page?(version_eye_api_path) %>
 
       <%= javascript_include_tag "application_swagger",     :defer => false %>
       <link href='css/swagger/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
-      <link href='assets/swagger/screen.css'          media='screen' rel='stylesheet' type='text/css'/> -->
+      <link href='assets/swagger/screen.css'          media='screen' rel='stylesheet' type='text/css'/>
 
     <% elsif current_page?(package_latest_path) %>
       <link rel="stylesheet" href="/assets/release_plots.css">
