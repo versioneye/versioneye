@@ -95,11 +95,18 @@ class User::GithubReposController < ApplicationController
     project_name = params[:fullname]
     branch       = command_data.has_key?(:scmBranch) ? command_data[:scmBranch] : "master"
     filename     = command_data[:scmFilename]
-    branch_files = params[:project_files][branch]
+    branch_files = params[:project_files][branch] # TODO remove this
+
+    # p "command: #{params[:command]}"
+    # p "command_data: #{command_data}"
+    # p "project_name: #{project_name}"
+    # p "branch: #{branch}"
+    # p "filename: #{filename}"
+    # p "branch_files: #{branch_files}"
 
     case params[:command]
     when "import"
-      repo = import_repo(command_data, project_name, branch, filename, branch_files)
+      repo = import_repo(command_data, project_name, branch, filename)
     when "remove"
       repo = remove_repo(command_data)
     when "update"
@@ -146,11 +153,8 @@ class User::GithubReposController < ApplicationController
   private
 
 
-    def import_repo(command_data, project_name, branch, filename, branch_files)
+    def import_repo(command_data, project_name, branch, filename)
       err_message = 'Something went wrong. It was not possible to save the project. Please contact the VersionEye team.'
-      matching_files = branch_files.keep_if {|file| file['path'] == filename}
-
-      raise err_message if matching_files.empty?
 
       project = ProjectService.import_from_github current_user, project_name, filename, branch
 
