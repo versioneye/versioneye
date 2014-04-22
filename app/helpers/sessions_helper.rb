@@ -47,6 +47,12 @@ module SessionsHelper
     false
   end
 
+  def authenticate_admin
+    return true if signed_in_admin?
+    deny_access
+    false
+  end
+
   def deny_access
     store_location
     redirect_to signin_path, :notice => 'Please sign in to access this page.'
