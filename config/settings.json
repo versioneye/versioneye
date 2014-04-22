@@ -119,12 +119,12 @@
     "aws_s3_port": 4567,
     "aws_use_ssl": false,
     "aws_access_key_id": "aws_bullshit_bingo_access_key",
-    "aws_secret_access_key": "aws_bullshit_bingo_secret"
+    "aws_secret_access_key": "aws_bullshit_bingo_secret",
     "github_client_id": "env_GITHUB_CLIENT_ID",
     "github_client_secret": "env_GITHUB_CLIENT_SECRET",
     "github_pass": "env_GITHUB_PASS",
     "github_user": "env_GITHUB_USER",
     "bitbucket_secret": "env_BITBUCKET_SECRET",
-    "bitbucket_token": "env_BITBUCKET_TOKEN",
+    "bitbucket_token": "env_BITBUCKET_TOKEN"
   }
 }
