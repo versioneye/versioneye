@@ -32,9 +32,9 @@ module Versioneye
 
     Product.send        :include, WillPaginateMongoid::MongoidPaginator
     BitbucketRepo.send  :include, WillPaginateMongoid::MongoidPaginator
+    GithubRepo.send     :include, WillPaginateMongoid::MongoidPaginator
     Dependency.send     :include, WillPaginateMongoid::MongoidPaginator
     ErrorMessage.send   :include, WillPaginateMongoid::MongoidPaginator
-    GithubRepo.send     :include, WillPaginateMongoid::MongoidPaginator
     SubmittedUrl.send   :include, WillPaginateMongoid::MongoidPaginator
     Testimonial.send    :include, WillPaginateMongoid::MongoidPaginator
     User.send           :include, WillPaginateMongoid::MongoidPaginator

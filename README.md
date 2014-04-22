@@ -22,11 +22,11 @@ for example
 313_github_singlepage_app
 ```
 
-Every branch have to be merged in to the `develop` branch as soon it is done.
+Every branch has to be merged in to the `develop` branch as soon it is done.
 Merges from develop to master are like tags and deployments. The master branch must always be stable and deployable!
 
 
-## VersionEye Stack
+## Tech Stack
 
 This is the stack in this project:
 
@@ -34,8 +34,7 @@ This is the stack in this project:
  * MongoDB
  * Memcache
  * ElasticSearch
- * Amazon S3
- * Postmarkapp (Email)
+ * Amazon S3 / SES
 
 To start the application you need Ruby 1.9.3 and a running MongoDB instance.
 
@@ -71,17 +70,13 @@ fakes3 -r /tmp -p 4567
 For memcache we are using the dalli GEM. It requires at least memcache 1.4. For a little performance boost
 we are using kgio. You can find a quick tutorial to Rails an Memcache on Heroku: <https://devcenter.heroku.com/articles/building-a-rails-3-application-with-the-memcache-addon>.
 
-### Postmarkapp
-
-For sending out emails we use <https://postmarkapp.com/>. Here we use the postmark-rails GEM : <http://www.versioneye.com/package/postmark-rails> to interact with the postmark API.
-
 
 ## Configuration
 
-VersionEye is using many 3rd part services in the Internet. Services like GitHub, Twitter, Facebook, Amazon, Postmark and so on. All Access Tokens and Access Keys are centralized in `config/settings.yml`. If some keys are missing just add your own and don't commit it back. Inside the application you can access all values over the "Settings" class like this:
+VersionEye is using many 3rd part services in the Internet. Services like GitHub, Bitbucket, Amazon and so on. All Access Tokens and Access Keys are centralized in `config/settings.yml`. If some keys are missing just add your own and don't commit it back. Inside the application you can access all values over the "Settings" class like this:
 
 ```
-Settings.github_client_id
+Settings.instance.github_client_id
 ```
 
 ## Tests
@@ -113,8 +108,35 @@ rake versioneye:weekly_jobs
 This task will execute all jobs we have to run once a week. For example sending out the weekly project notifications.
 
 
-## Model
+## Deployment
 
-VersionEye's model currently looks like this (2013-10-23):
+The deployment works with [Capistrano](https://www.versioneye.com/ruby/capistrano/3.2.0).
+The main deployment script is placed in:
 
-![VersionEye Model](https://github.com/versioneye/versioneye/raw/master/doc/versioneye-model.png)
+```
+config/deploy.rb
+```
+
+Specific configurations for the environments are placed in:
+
+```
+config/environments/*
+```
+
+the deployment scripts work with domain names. They assume that you have configured the IP address to the
+domain `veye_www` locally, for example in `/etc/hosts`. And Capistrano assumes that you can access the
+`veye_www` server without entering a password. You can achieve that by copying your public key to the `veye_www` server.
+
+This command will deploy the HEAD from the master branch to production.
+
+```
+cap production deploy
+```
+
+If something goes wrong you can rollback to the previous deployment like this:
+
+```
+cap production deploy:revert_release
+```
+
+Keep in mind that Capistrano deploys the `master` branch, not the default `development` branch!

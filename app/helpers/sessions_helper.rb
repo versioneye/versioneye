@@ -21,14 +21,14 @@ module SessionsHelper
 
   def current_user?(user)
     return false if user.nil?
-    return nil if current_user.nil?
+    return nil   if current_user.nil?
     user.username.eql? current_user.username
   end
 
   def signed_in?
     !current_user.nil?
   rescue => e
-    Rails.logger.info e.message
+    Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
     false
   end
@@ -36,7 +36,7 @@ module SessionsHelper
   def signed_in_admin?
     signed_in? && current_user.admin?
   rescue => e
-    Rails.logger.info e.message
+    Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
     false
   end
