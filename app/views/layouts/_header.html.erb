@@ -14,39 +14,57 @@
 
       <div class = "span7 pull-right">
         <ul class="nav pull-right">
+
+          <!-- menu for guest user, not logged in -->
           <% unless signed_in? %>
             <li>
               <%= link_to "Pricing", "/pricing" %>
             </li>
+            <li class="divider-vertical"></li>
+            <li style="font-weight: bold; font-size: 16px;">
+              <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0;") do  %>
+                <button type="submit" class="btn btn-success" ><%= t(:page_header_signup) %></button>
+              <% end %>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <%= form_tag(signin_path, :method => "GET", :style=>"margin: 0;") do  %>
+                <button type="submit" class="btn" ><%= t(:page_header_signin) %></button>
+              <% end %>
+            </li>
           <% end %>
-        <!-- menu for logged-in user -->
+
+          <!-- menu for logged-in user -->
           <% if signed_in? %>
-            <li class="divider-vertical"></li>
-            <li>
-              <%= link_to "I follow",  :controller => 'user/packages', :action => "i_follow" %>
-            </li>
-            <li class="divider-vertical"></li>
-            <li>
-              <%= link_to "Projects", user_projects_path %>
-            </li>
-            <li class="divider-vertical"></li>
-            <li>
-              <a href="<%= user_path( current_user ) %>" class="profile_pic_tiny" title="Profile" >
-                <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= current_user.username %>
-              </a>
-            </li>
-            <li class="divider-vertical"></li>
-            <li>
-              <a href="/search?q=suggest_a_new_package_to_versioneye" title="Suggest a new package">
-                <i class="icon-plus" ></i>
-              </a>
-            </li>
-            <li class="divider-vertical"></li>
-            <li>
-              <a href="JavaScript: load_dialog_feedback()" title="Feedback" id="feedback">
-                <i class="icon-comment" ></i>
-              </a>
-            </li>
+
+            <% unless signed_in_admin? %>
+              <li class="divider-vertical"></li>
+              <li>
+                <%= link_to "I follow",  :controller => 'user/packages', :action => "i_follow" %>
+              </li>
+              <li class="divider-vertical"></li>
+              <li>
+                <%= link_to "Projects", user_projects_path %>
+              </li>
+              <li class="divider-vertical"></li>
+              <li>
+                <a href="<%= user_path( current_user ) %>" class="profile_pic_tiny" title="Profile" >
+                  <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= current_user.username %>
+                </a>
+              </li>
+              <li class="divider-vertical"></li>
+              <li>
+                <a href="/search?q=suggest_a_new_package_to_versioneye" title="Suggest a new package">
+                  <i class="icon-plus" ></i>
+                </a>
+              </li>
+              <li class="divider-vertical"></li>
+              <li>
+                <a href="JavaScript: load_dialog_feedback()" title="Feedback" id="feedback">
+                  <i class="icon-comment" ></i>
+                </a>
+              </li>
+            <% end %>
             <li class="divider-vertical"></li>
             <li>
               <a href="<%= settings_profile_path %>" title="Settings" >
@@ -59,6 +77,7 @@
                 <i class="icon-signout" ></i>
               </a>
             </li>
+
             <!-- menu for admin -->
             <% if signed_in_admin? && 1 == 2 %>
               <li class= "divider-vertical"></li>
@@ -76,30 +95,6 @@
                </ul>
               </li>
             <% end %>
-          <% else %>
-            <li class="divider-vertical"></li>
-            <li style="font-weight: bold; font-size: 16px;">
-              <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0;") do  %>
-                <button type="submit" class="btn btn-success" ><%= t(:page_header_signup) %></button>
-              <% end %>
-            </li>
-            <li class="divider-vertical"></li>
-            <li>
-              <%= form_tag(signin_path, :method => "GET", :style=>"margin: 0;") do  %>
-                <button type="submit" class="btn" ><%= t(:page_header_signin) %></button>
-              <% end %>
-            </li>
-          <% end %>
-
-          <% if 1 == 2 %>
-            <li class="divider-vertical"></li>
-            <li>
-              <a href="#"><span class = "flag de"></span></a>
-            </li>
-            <li class="divider-vertical"></li>
-            <li>
-              <a href = "#"><span class = "flag gb on"></span></a>
-            </li>
           <% end %>
 
         </ul>
