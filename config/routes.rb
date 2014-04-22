@@ -79,6 +79,9 @@ Versioneye::Application.routes.draw do
     post 'delete_email'        , :to => 'emails#delete_email'
     post 'make_email_default'  , :to => 'emails#make_email_default'
 
+    get  'emailsettings'       , :to => 'emailsettings#index'
+    post 'emailsettings'       , :to => 'emailsettings#update'
+
     get  'notifications'       , :to => 'user_notification_settings#index'
     post 'update_notifications', :to => 'user_notification_settings#update'
 

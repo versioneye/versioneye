@@ -1,0 +1,71 @@
+
+<div class="span3" >
+  <%= render 'settings/navi' %>
+</div>
+
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    Email Server Settings
+  </div>
+
+  <div class="span8 content" >
+
+    <%= form_tag( settings_update_profile_path, :method => "post", :class => "form-horizontal") do  %>
+
+      <div class="control-group">
+        <%= label_tag :fullname, "Full Name", :class => "control-label", :for => "fullname" %>
+        <div class="controls">
+          <%= text_field_tag :fullname, @user.fullname, :id => "fullname" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :username, "Username", :class => "control-label", :for => "username" %>
+        <div class="controls">
+          <%= text_field_tag :new_username, @user.username, :id => "username" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :location, "Location", :class => "control-label", :for => "location" %>
+        <div class="controls">
+          <%= text_field_tag :location, @user.location, :id => "location" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :description, "About me", :class => "control-label", :for => "description" %>
+        <div class="controls">
+          <%= text_area_tag :description, @user.description, :style => "width: 400px; height: 100px;", :maxlength => "177", :onKeyUp => "textCounter(this, document.getElementById('counter'), 177)", :id => "description"  %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          Characters left: <span id="counter">177</span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :blog, "Blog", :class => "control-label", :for => "blog" %>
+        <div class="controls">
+          <%= text_field_tag :blog, @user.blog, :id => "blog" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn btn-large btn-primary" >Save</button>
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  textCounter(document.getElementById('description'), document.getElementById('counter'), 177);
+</script>
