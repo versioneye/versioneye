@@ -14,6 +14,20 @@
     <%= form_tag( settings_emailsettings_path, :method => "post", :class => "form-horizontal") do  %>
 
       <div class="control-group">
+        <%= label_tag :sender_name, "Sender Name", :class => "control-label", :for => "sender_name" %>
+        <div class="controls">
+          <%= text_field_tag :sender_name, @emailsetting.sender_name, :id => "sender_name" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :sender_email, "Sender Email", :class => "control-label", :for => "sender_email" %>
+        <div class="controls">
+          <%= text_field_tag :sender_email, @emailsetting.sender_email, :id => "sender_email" %>
+        </div>
+      </div>
+
+      <div class="control-group">
         <%= label_tag :address, "Address", :class => "control-label", :for => "address" %>
         <div class="controls">
           <%= text_field_tag :address, @emailsetting.address, :id => "address" %>
