@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: a4cc519e4345f1fc96a3365b9060ac00223c0b50
-  tag: v0.5.7
+  revision: 8d2dc00af0d6f7590ab03c663b2c55223e9ad7d6
+  tag: v0.6.0
   specs:
-    versioneye-core (0.5.7)
+    versioneye-core (0.6.0)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       cocoapods-core (~> 0.32.0)
@@ -88,7 +88,7 @@ GEM
     capybara-firebug (2.0.0)
       capybara (>= 1.0, < 3.0)
       selenium-webdriver
-    childprocess (0.5.2)
+    childprocess (0.5.3)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
     clipboard (1.0.5)
