@@ -1,14 +1,5 @@
 Versioneye::Application.routes.draw do
 
-  # mount VersionEye::API => '/api'
-
-  # get   '/api',                 :to => 'swaggers#index'
-  # get   '/swaggers',            :to => redirect('/api')
-  # get   '/apijson',             :to => 'swaggers#index'
-  # get   '/apijson_tools',       :to => redirect('/api')
-  # get   '/apijson_libs',        :to => redirect('/api')
-
-
   root :to => "products#index"
 
   namespace :auth do
