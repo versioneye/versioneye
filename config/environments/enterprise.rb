@@ -21,12 +21,12 @@ Versioneye::Application.configure do
   config.assets.compress = true
   config.assets.css_compressor = :yui
   config.assets.js_compressor = :uglifier
-
-  # Don't fallback to assets pipeline if a precompiled asset is missed
+  config.assets.debug = false
   config.assets.compile = true
-
-  # Generate digests for assets URLs
   config.assets.digest = true
+
+  # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
+  config.assets.precompile += %w( application.css application_lp.css *.js )
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = false
@@ -34,26 +34,18 @@ Versioneye::Application.configure do
   # See everything in the log (default is :info)
   config.log_level = :info
 
-  # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( application.css application_lp.css *.js )
-
-  # Disable delivery errors, bad email addresses will be ignored
-  config.action_mailer.raise_delivery_errors = true
-
-  # Enable threaded mode
-  # config.threadsafe!
-
-  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-  # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-
   config.action_mailer.delivery_method = :smtp
   EmailSettingService.update_action_mailer_from_db
+  Settings.instance.smtp_sender_email = EmailSettingService.email_setting.sender_email
+  Settings.instance.smtp_sender_name  = EmailSettingService.email_setting.sender_name
   config.action_mailer.perform_deliveries    = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options   = { :host => 'www.versioneye.com' }
+  # Disable delivery errors, bad email addresses will be ignored
+  config.action_mailer.raise_delivery_errors = true
 
 end
