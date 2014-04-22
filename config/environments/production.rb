@@ -80,9 +80,6 @@ Versioneye::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options   = { :host => 'www.versioneye.com' }
 
-
-  ENV['API_BASE_PATH'] = "https://www.versioneye.com/api"
-
   Stripe.api_key = Settings.instance.stripe_secret_key
 
 end
