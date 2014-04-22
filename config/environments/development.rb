@@ -19,8 +19,6 @@ Versioneye::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
 
-
-
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
@@ -50,8 +48,6 @@ Versioneye::Application.configure do
   config.action_mailer.perform_deliveries    = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options   = { :host => 'localhost' }
-
-  ENV['API_BASE_PATH'] = "http://localhost:3000/api"
 
   Stripe.api_key = Settings.instance.stripe_secret_key
 
