@@ -30,3 +30,13 @@ production:
   username: postgres
   password: abcdef
   timeout: 5000
+
+enterprise:
+  adapter: postgresql
+  encoding: unicode
+  database: veye_prod
+  pool: 50
+  host: localhost
+  username: postgres
+  password: abcdef
+  timeout: 5000
