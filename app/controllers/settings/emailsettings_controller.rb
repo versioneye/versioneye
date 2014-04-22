@@ -1,9 +1,13 @@
 class Settings::EmailsettingsController < ApplicationController
 
-  before_filter :authenticate
+  before_filter :authenticate_admin
 
   def index
     @emailsetting = EmailSetting.first
+    if @emailsetting.nil?
+      @emailsetting = EmailSetting.new
+      @emailsetting.save
+    end
   end
 
   def update
