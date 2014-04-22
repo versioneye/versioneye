@@ -34,9 +34,9 @@
       <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
       <%= javascript_include_tag "application_product",     :defer => false, :async => false %>
 
-    <% elsif current_page?( url_for(:controller => 'users', :action => 'show') )   ||
-             current_page?( url_for(:controller => 'users', :action => 'favoritepackages') ) ||
-             current_page?( url_for(:controller => 'users', :action => 'comments') ) %>
+    <% elsif current_page?( user_path(:id) )   ||
+             current_page?( favoritepackages_user_path(:id) ) ||
+             current_page?( comments_user_path(:id) ) %>
 
       <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
 
@@ -46,7 +46,7 @@
 
     <% elsif current_page?( settings_payments_path )   ||
              current_page?( settings_creditcard_path ) ||
-             current_page?( url_for(:controller => 'settings/payments', :action => 'receipt') )  %>
+             current_page?( settings_receipt_path(:invoice_id) )  %>
 
       <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
       <script type="text/javascript">
@@ -60,17 +60,11 @@
     <% elsif current_page?( user_projects_bitbucket_repositories_path ) %>
       <%= javascript_include_tag "application_bitbucket",  :defer => false, :async => false %>
 
-    <% elsif current_page?(version_eye_api_path) %>
-
-      <%= javascript_include_tag "application_swagger",     :defer => false %>
-      <link href='css/swagger/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
-      <link href='assets/swagger/screen.css'          media='screen' rel='stylesheet' type='text/css'/>
-
-    <% elsif current_page?(package_latest_path) %>
+    <% elsif current_page?( package_latest_path ) %>
       <link rel="stylesheet" href="/assets/release_plots.css">
       <script src="/assets/latest_release_plots/main.js"></script>
 
-    <% elsif current_page?(package_novel_path) %>
+    <% elsif current_page?( package_novel_path ) %>
       <link rel="stylesheet" href="/assets/release_plots.css">
       <script src="/assets/novel_release_plots/main.js"></script>
     <% end %>

@@ -1,7 +1,5 @@
 Versioneye::Application.routes.draw do
 
-  mount VersionEye::API => '/api'
-
   root :to => "products#index"
 
   namespace :auth do
@@ -217,14 +215,6 @@ Versioneye::Application.routes.draw do
   get   '/datacollection',      :to => 'page#datacollection'
   get   '/disclaimer',          :to => 'page#disclaimer'
   get   '/logos',               :to => 'page#logos'
-
-
-  get   '/api',                 :to => 'swaggers#index'
-  get   '/swaggers',            :to => redirect('/api')
-  get   '/apijson',             :to => redirect('/api')
-  get   '/apijson_tools',       :to => redirect('/api')
-  get   '/apijson_libs',        :to => redirect('/api')
-
 
   get   'sitemap__01.xml',        :to => 'page#sitemap_1'
   get   'sitemap__02.xml',        :to => 'page#sitemap_2'

@@ -8,22 +8,21 @@ gem 'gravatar_image_tag' , '~> 1.2.0'
 gem 'oauth'              , '~> 0.4.7'
 gem 'twitter_oauth'      , '~> 0.4.94'
 gem 'unicorn'            , '~> 4.8.2'
-gem 'grape'              , '~> 0.6.1'
-gem 'grape-entity'       , '~> 0.3.0'
-gem 'grape-swagger'      , :path => "vendor/gems" # , :github => "timgluz/grape-swagger", :branch => "master"
 gem 'htmlentities'       , '~> 4.3.1'
 gem 'whenever'           , '~> 0.9.2'
-gem 'bourbon'            , '~> 3.1.8'
+gem 'bourbon'            , '~> 4.0.0'
 gem 'ruby_regex'         , '~> 0.1.0'
 gem 'semverly'           , '~> 1.0.0'
-gem 'cocoapods-core'     , '~> 0.31.0'
-gem 'stripe'             , '~> 1.10.0'
+gem 'cocoapods-core'     , '~> 0.32.0'
+gem 'stripe'             , '~> 1.11.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v0.5.1'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v0.5.7'
+# gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
+
 
 group :development do
-  gem 'capistrano'        , '3.1.0'
+  gem 'capistrano'        , '3.2.0'
   gem 'capistrano-rails'  , '1.1.1'
   gem 'capistrano-bundler', '1.1.2'
   gem 'psych'             , '~> 2.0.5'
