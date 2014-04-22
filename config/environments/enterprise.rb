@@ -34,9 +34,6 @@ Versioneye::Application.configure do
   # See everything in the log (default is :info)
   config.log_level = :info
 
-  # Use a different logger for distributed setups
-  # config.logger = SyslogLogger.new
-
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += %w( application.css application_lp.css *.js )
 
@@ -54,14 +51,7 @@ Versioneye::Application.configure do
   config.active_support.deprecation = :notify
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-     :address              => 'email-smtp.eu-west-1.amazonaws.com',
-     :port                 => 587,
-     :user_name            => Settings.instance.smtp_username,
-     :password             => Settings.instance.smtp_password,
-     :domain               => 'versioneye.com',
-     :authentication       => 'plain',
-     :enable_starttls_auto => true  }
+  EmailSettingService.update_action_mailer_from_db
   config.action_mailer.perform_deliveries    = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options   = { :host => 'www.versioneye.com' }
