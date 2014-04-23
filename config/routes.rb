@@ -85,6 +85,9 @@ Versioneye::Application.routes.draw do
     get  'globalsettings'       , :to => 'globalsettings#index'
     post 'globalsettings'       , :to => 'globalsettings#update'
 
+    get  'githubsettings'       , :to => 'globalsettings#index_github'
+    post 'githubsettings'       , :to => 'globalsettings#update_github'
+
     get  'notifications'       , :to => 'user_notification_settings#index'
     post 'update_notifications', :to => 'user_notification_settings#update'
 
