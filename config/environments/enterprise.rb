@@ -40,6 +40,10 @@ Versioneye::Application.configure do
   Settings.instance.server_host = GlobalSetting.default.server_host
   Settings.instance.server_port = GlobalSetting.default.server_port
 
+  Settings.instance.github_api_url       = GlobalSetting.default.github_api_url
+  Settings.instance.github_client_id     = GlobalSetting.default.github_client_id
+  Settings.instance.github_client_secret = GlobalSetting.default.github_client_secret
+
   config.active_support.deprecation = :notify
   config.action_mailer.delivery_method = :smtp
   EmailSettingService.update_action_mailer_from_db
