@@ -78,7 +78,8 @@ Versioneye::Application.configure do
      :enable_starttls_auto => true  }
   config.action_mailer.perform_deliveries    = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options   = { :host => 'www.versioneye.com' }
+
+  routes.default_url_options = { host: "www.versioneye.com", port: 80 }
 
   Stripe.api_key = Settings.instance.stripe_secret_key
 

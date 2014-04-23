@@ -82,6 +82,9 @@ Versioneye::Application.routes.draw do
     get  'emailsettings'       , :to => 'emailsettings#index'
     post 'emailsettings'       , :to => 'emailsettings#update'
 
+    get  'globalsettings'       , :to => 'globalsettings#index'
+    post 'globalsettings'       , :to => 'globalsettings#update'
+
     get  'notifications'       , :to => 'user_notification_settings#index'
     post 'update_notifications', :to => 'user_notification_settings#update'
 

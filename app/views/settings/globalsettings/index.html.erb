@@ -1,0 +1,50 @@
+
+<div class="span3" >
+  <%= render 'settings/navi' %>
+</div>
+
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    Global Server Settings
+  </div>
+
+  <div class="span8 content" >
+
+    <%= form_tag( settings_globalsettings_path, :method => "post", :class => "form-horizontal") do  %>
+
+      <p>
+        Under which URL is this server available in this network? This URL is used in Emails.
+      </p>
+      <div class="control-group">
+        <%= label_tag :server_url, "Server URL", :class => "control-label", :for => "server_url" %>
+        <div class="controls">
+          <%= text_field_tag :server_url, @globalsetting.server_url, :id => "server_url" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :server_host, "Server Host", :class => "control-label", :for => "server_host" %>
+        <div class="controls">
+          <%= text_field_tag :server_host, @globalsetting.server_host, :id => "server_host" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :server_port, "Server Port", :class => "control-label", :for => "server_port" %>
+        <div class="controls">
+          <%= text_field_tag :server_port, @globalsetting.server_port, :id => "server_port" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn btn-large btn-primary" >Save</button>
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

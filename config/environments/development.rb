@@ -47,10 +47,9 @@ Versioneye::Application.configure do
      :enable_starttls_auto => true  }
   config.action_mailer.perform_deliveries    = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options   = { :host => 'localhost' }
-
-  Stripe.api_key = Settings.instance.stripe_secret_key
 
   routes.default_url_options = { host: "localhost", port: 3000 }
+
+  Stripe.api_key = Settings.instance.stripe_secret_key
 
 end
