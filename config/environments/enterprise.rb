@@ -36,7 +36,10 @@ Versioneye::Application.configure do
 
   config.i18n.fallbacks = true
 
-  # Send deprecation notices to registered listeners
+  Settings.instance.server_url  = GlobalSetting.default.server_url
+  Settings.instance.server_host = GlobalSetting.default.server_host
+  Settings.instance.server_port = GlobalSetting.default.server_port
+
   config.active_support.deprecation = :notify
   config.action_mailer.delivery_method = :smtp
   EmailSettingService.update_action_mailer_from_db
@@ -44,8 +47,8 @@ Versioneye::Application.configure do
   Settings.instance.smtp_sender_name  = EmailSettingService.email_setting.sender_name
   config.action_mailer.perform_deliveries    = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options   = { :host => 'www.versioneye.com' }
-  # Disable delivery errors, bad email addresses will be ignored
   config.action_mailer.raise_delivery_errors = true
+
+  routes.default_url_options = { host: Settings.instance.server_host, port: Settings.instance.server_port }
 
 end
