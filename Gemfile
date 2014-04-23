@@ -22,13 +22,13 @@ gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.gi
 
 
 group :development do
-  gem 'capistrano'        , '3.2.0'
-  gem 'capistrano-rails'  , '1.1.1'
-  gem 'capistrano-bundler', '1.1.2'
+  gem 'capistrano'        , '~> 3.2.1'
+  gem 'capistrano-rails'  , '~> 1.1.1'
+  gem 'capistrano-bundler', '~> 1.1.2'
   gem 'psych'             , '~> 2.0.5'
-  gem 'irbtools'          , '1.6.1'
+  gem 'irbtools'          , '~> 1.6.1'
   gem 'terminal-notifier' , '~> 1.6.0'
-  gem 'fakes3'            , '0.1.5.2'
+  gem 'fakes3'            , '~> 0.1.5.2'
   gem 'debugger'          , '~> 1.6.0'
 end
 
