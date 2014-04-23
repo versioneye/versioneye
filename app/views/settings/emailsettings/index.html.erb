@@ -13,6 +13,10 @@
 
     <%= form_tag( settings_emailsettings_path, :method => "post", :class => "form-horizontal") do  %>
 
+      <p class="description">
+        Configure here your internal SMTP server, which should be used to send out the notification emails.
+      </p>
+
       <div class="control-group">
         <%= label_tag :sender_name, "Sender Name", :class => "control-label", :for => "sender_name" %>
         <div class="controls">
