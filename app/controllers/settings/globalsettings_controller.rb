@@ -6,6 +6,10 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting = GlobalSetting.default
   end
 
+  def index_github
+    @globalsetting = GlobalSetting.default
+  end
+
   def update
     @globalsetting = GlobalSetting.default
     @globalsetting.server_url  = params[:server_url]
@@ -21,12 +25,32 @@ class Settings::GlobalsettingsController < ApplicationController
     redirect_to settings_globalsettings_path
   end
 
+  def update_github
+    @globalsetting = GlobalSetting.default
+    @globalsetting.github_api_url       = params[:github_api_url]
+    @globalsetting.github_client_id     = params[:github_client_id]
+    @globalsetting.github_client_secret = params[:github_client_secret]
+    if @globalsetting.save
+      update_github_settings @globalsetting
+      flash[:success] = "GitHub Settings changed successfully"
+    else
+      flash[:error] = "Something went wrong - #{es.errors.full_messages.to_sentence}"
+    end
+    redirect_to settings_githubsettings_path
+  end
+
   private
 
     def update_settings globalsetting
       Settings.instance.server_url  = globalsetting.server_url
       Settings.instance.server_host = globalsetting.server_host
       Settings.instance.server_port = globalsetting.server_port
+    end
+
+    def update_github_settings globalsetting
+      Settings.instance.github_api_url       = globalsetting.github_api_url
+      Settings.instance.github_client_id     = globalsetting.github_client_id
+      Settings.instance.github_client_secret = globalsetting.github_client_secret
     end
 
     def update_routes globalsetting
