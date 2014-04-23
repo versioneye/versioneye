@@ -49,6 +49,20 @@ describe "Update Global Settings" do
       Settings.instance.github_client_secret.should eq("gal898su8uuuhbn")
     end
 
+    it "updates nexus settings" do
+      click_link("Sonatype Nexus")
+      page.should have_content("Nexus Settings")
+
+      Settings.instance.nexus_url.should eq("http://nexus.pro")
+
+      fill_in 'nexus_url', :with => "http://nixen.nexus.orp"
+      click_button "Save"
+
+      page.should have_content("successfully")
+
+      Settings.instance.nexus_url.should eq("http://nixen.nexus.orp")
+    end
+
   end
 
 end
