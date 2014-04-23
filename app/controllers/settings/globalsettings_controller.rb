@@ -10,6 +10,10 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting = GlobalSetting.default
   end
 
+  def index_nexus
+    @globalsetting = GlobalSetting.default
+  end
+
   def update
     @globalsetting = GlobalSetting.default
     @globalsetting.server_url  = params[:server_url]
@@ -39,6 +43,18 @@ class Settings::GlobalsettingsController < ApplicationController
     redirect_to settings_githubsettings_path
   end
 
+  def update_nexus
+    @globalsetting = GlobalSetting.default
+    @globalsetting.nexus_url = params[:nexus_url]
+    if @globalsetting.save
+      update_nexus_settings @globalsetting
+      flash[:success] = "Nexus Settings changed successfully"
+    else
+      flash[:error] = "Something went wrong - #{es.errors.full_messages.to_sentence}"
+    end
+    redirect_to settings_nexussettings_path
+  end
+
   private
 
     def update_settings globalsetting
@@ -51,6 +67,10 @@ class Settings::GlobalsettingsController < ApplicationController
       Settings.instance.github_api_url       = globalsetting.github_api_url
       Settings.instance.github_client_id     = globalsetting.github_client_id
       Settings.instance.github_client_secret = globalsetting.github_client_secret
+    end
+
+    def update_nexus_settings globalsetting
+      Settings.instance.nexus_url = globalsetting.nexus_url
     end
 
     def update_routes globalsetting

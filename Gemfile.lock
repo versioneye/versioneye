@@ -1,7 +1,7 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 6c59c87b28c174c4a88bb2673c49425a8bcde488
-  tag: v0.8.0
+  revision: e077a3d2dc5bf9c65a0de3e043a16138f0053697
+  tag: v0.9.0
   specs:
     versioneye-core (0.8.0)
       actionmailer (~> 3.2.17)

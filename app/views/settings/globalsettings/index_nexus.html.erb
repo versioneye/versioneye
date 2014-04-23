@@ -1,0 +1,37 @@
+
+<div class="span3" >
+  <%= render 'settings/navi' %>
+</div>
+
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    Nexus Settings
+  </div>
+
+  <div class="span8 content" >
+
+    <%= form_tag( settings_nexussettings_path, :method => "post", :class => "form-horizontal") do  %>
+
+      <p class="description">
+        If you are using the Maven Repository Nexus from Sonatype, you can configure here the URL to it.
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :nexus_url, "Nexus URL", :class => "control-label", :for => "nexus_url" %>
+        <div class="controls">
+          <%= text_field_tag :nexus_url, @globalsetting.nexus_url, :id => "nexus_url" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn btn-large btn-primary" >Save</button>
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

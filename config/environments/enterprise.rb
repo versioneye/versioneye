@@ -44,6 +44,8 @@ Versioneye::Application.configure do
   Settings.instance.github_client_id     = GlobalSetting.default.github_client_id
   Settings.instance.github_client_secret = GlobalSetting.default.github_client_secret
 
+  Settings.instance.nexus_url = GlobalSetting.default.nexus_url
+
   config.active_support.deprecation = :notify
   config.action_mailer.delivery_method = :smtp
   EmailSettingService.update_action_mailer_from_db
