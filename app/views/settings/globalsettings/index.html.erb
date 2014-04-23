@@ -13,9 +13,10 @@
 
     <%= form_tag( settings_globalsettings_path, :method => "post", :class => "form-horizontal") do  %>
 
-      <p>
+      <p class="description">
         Under which URL is this server available in this network? This URL is used in Emails.
       </p>
+
       <div class="control-group">
         <%= label_tag :server_url, "Server URL", :class => "control-label", :for => "server_url" %>
         <div class="controls">
