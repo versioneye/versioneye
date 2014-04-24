@@ -69,6 +69,10 @@ class Settings::GlobalsettingsController < ApplicationController
       Settings.instance.github_api_url       = globalsetting.github_api_url
       Settings.instance.github_client_id     = globalsetting.github_client_id
       Settings.instance.github_client_secret = globalsetting.github_client_secret
+      Octokit.configure do |c|
+        c.api_endpoint = Settings.instance.github_api_url
+        c.web_endpoint = Settings.instance.github_base_url
+      end
     end
 
     def update_nexus_settings globalsetting
