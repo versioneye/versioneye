@@ -2,11 +2,11 @@
     This is a project from
 
     <% if project.source.eql? Project::A_SOURCE_GITHUB %>
-      <a href="https://github.com/<%= project.scm_fullname %>/tree/<%= project.scm_branch %>">GitHub <%= project.scm_branch %> branch</a>.
+      <a href="<%= Settings.instance.github_base_url %>/<%= project.scm_fullname %>/tree/<%= project.scm_branch %>">GitHub <%= project.scm_branch %> branch</a>.
 
       <% filename = project[:s3_filename].to_s.gsub(/\S+\_/, '') %>
       We parsed this file:
-      <a href = "https://github.com/<%= project.scm_fullname %>/blob/<%= project.scm_branch %>/<%= filename %>" >
+      <a href = "<%= Settings.instance.github_base_url %>/<%= project.scm_fullname %>/blob/<%= project.scm_branch %>/<%= filename %>" >
         <%= filename %>
       </a>
     <% elsif project.source.eql? Project::A_SOURCE_BITBUCKET %>
