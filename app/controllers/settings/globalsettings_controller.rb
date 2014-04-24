@@ -31,6 +31,7 @@ class Settings::GlobalsettingsController < ApplicationController
 
   def update_github
     @globalsetting = GlobalSetting.default
+    @globalsetting.github_base_url       = params[:github_base_url]
     @globalsetting.github_api_url       = params[:github_api_url]
     @globalsetting.github_client_id     = params[:github_client_id]
     @globalsetting.github_client_secret = params[:github_client_secret]
@@ -64,6 +65,7 @@ class Settings::GlobalsettingsController < ApplicationController
     end
 
     def update_github_settings globalsetting
+      Settings.instance.github_base_url      = globalsetting.github_base_url
       Settings.instance.github_api_url       = globalsetting.github_api_url
       Settings.instance.github_client_id     = globalsetting.github_client_id
       Settings.instance.github_client_secret = globalsetting.github_client_secret

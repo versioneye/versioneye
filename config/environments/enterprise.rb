@@ -40,6 +40,7 @@ Versioneye::Application.configure do
   Settings.instance.server_host = GlobalSetting.default.server_host
   Settings.instance.server_port = GlobalSetting.default.server_port
 
+  Settings.instance.github_base_url      = GlobalSetting.default.github_base_url
   Settings.instance.github_api_url       = GlobalSetting.default.github_api_url
   Settings.instance.github_client_id     = GlobalSetting.default.github_client_id
   Settings.instance.github_client_secret = GlobalSetting.default.github_client_secret
@@ -56,5 +57,10 @@ Versioneye::Application.configure do
   config.action_mailer.raise_delivery_errors = true
 
   routes.default_url_options = { host: Settings.instance.server_host, port: Settings.instance.server_port }
+
+  Octokit.configure do |c|
+    c.api_endpoint = Settings.instance.github_api_url
+    c.web_endpoint = Settings.instance.github_base_url
+  end
 
 end

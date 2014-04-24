@@ -48,8 +48,13 @@ Versioneye::Application.configure do
   config.action_mailer.perform_deliveries    = true
   config.action_mailer.raise_delivery_errors = true
 
-  routes.default_url_options = { host: "localhost", port: 3000 }
+  routes.default_url_options = { host: Settings.instance.server_host, port: Settings.instance.server_port }
 
   Stripe.api_key = Settings.instance.stripe_secret_key
+
+  Octokit.configure do |c|
+    c.api_endpoint = Settings.instance.github_api_url
+    c.web_endpoint = Settings.instance.github_base_url
+  end
 
 end

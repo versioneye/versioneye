@@ -31,12 +31,13 @@ describe "Update Global Settings" do
       Settings.instance.server_port.should == 900
     end
 
-    it "updates github api settings" do
-      click_link("GitHub API Settings")
-      page.should have_content("GitHub API Settings")
+    it "updates github settings" do
+      click_link("GitHub Settings")
+      page.should have_content("GitHub Settings")
 
       Settings.instance.github_api_url.should eq("https://api.github.com")
 
+      fill_in 'github_base_url'     , :with => "http://gitomat.it"
       fill_in 'github_api_url'      , :with => "http://api.gitomat.it"
       fill_in 'github_client_id'    , :with => "gasfgasi888a"
       fill_in 'github_client_secret', :with => "gal898su8uuuhbn"
@@ -44,6 +45,7 @@ describe "Update Global Settings" do
 
       page.should have_content("successfully")
 
+      Settings.instance.github_base_url.should eq("http://gitomat.it")
       Settings.instance.github_api_url.should eq("http://api.gitomat.it")
       Settings.instance.github_client_id.should eq("gasfgasi888a")
       Settings.instance.github_client_secret.should eq("gal898su8uuuhbn")

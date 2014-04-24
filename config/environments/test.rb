@@ -42,6 +42,11 @@ Versioneye::Application.configure do
 
   Stripe.api_key = Settings.instance.stripe_secret_key
 
-  routes.default_url_options = { host: "localhost", port: 3000 }
+  routes.default_url_options = { host: Settings.instance.server_host, port: Settings.instance.server_port }
+
+  Octokit.configure do |c|
+    c.api_endpoint = Settings.instance.github_api_url
+    c.web_endpoint = Settings.instance.github_base_url
+  end
 
 end

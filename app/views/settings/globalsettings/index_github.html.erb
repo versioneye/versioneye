@@ -6,7 +6,7 @@
 <div class="span8" >
 
   <div class="row content_header_def" >
-    GitHub API Settings
+    GitHub Settings
   </div>
 
   <div class="span8 content" >
@@ -16,6 +16,13 @@
       <p class="description">
         If you are using GitHub Enterprise you can configure it here.
       </p>
+
+      <div class="control-group">
+        <%= label_tag :github_base_url, "WEB URL", :class => "control-label", :for => "github_base_url" %>
+        <div class="controls">
+          <%= text_field_tag :github_base_url, @globalsetting.github_base_url, :id => "github_base_url" %>
+        </div>
+      </div>
 
       <div class="control-group">
         <%= label_tag :github_api_url, "API URL", :class => "control-label", :for => "github_api_url" %>
