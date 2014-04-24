@@ -73,7 +73,6 @@ class Auth::GithubController < ApplicationController
     user.create_verification
     if user.save
       user.send_verification_email
-      User.new_user_email user
       check_promo_code @promo, user
       cookies.delete(:promo_code)
       cookies.delete(:github_token)
