@@ -85,7 +85,6 @@ class Auth::BitbucketController < ApplicationController
     @user = create_user(@email, access_token, access_secret)
     if @user.save
       @user.send_verification_email
-      User.new_user_email @user
       check_promo_code @promo, @user
       session.clear
     else
