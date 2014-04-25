@@ -15,7 +15,7 @@ class LotteriesController < ApplicationController
   def show_verification
     verification = params[:verification]
     if User.activate!(verification)
-      flash[:success] = 'Congratulation. Your Account is activated. Please Sign In.'
+      flash[:success] = 'Congratulation. Your Account is activated. Please Sign in.'
       redirect_to '/lottery/signin' and return
     end
 

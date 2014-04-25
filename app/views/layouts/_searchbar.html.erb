@@ -7,7 +7,7 @@
     <% end %>
   </div>
   <div class="span4 pull-right">
-    <% if !yield(:title).eql?("Sign Up") && !yield(:title).eql?("Sign In") && !yield(:title).eql?("Search Results") && !signed_in_admin? %>
+    <% if !yield(:title).eql?("Sign Up") && !yield(:title).eql?("Sign in") && !yield(:title).eql?("Search Results") && !signed_in_admin? %>
     <form id="form" action="/search" method="GET">
       <div class="input-append pull-right" >
           <input name="q" type="text" value="<%= @query %>" />

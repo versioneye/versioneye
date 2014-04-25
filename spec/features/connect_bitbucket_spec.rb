@@ -23,7 +23,7 @@ describe "Connect with Bitbucket" do
     within("form.form-horizontal") do
       fill_in "Email", with: user1[:email]
       fill_in "Password", with: 'password'
-      click_on "Sign In"
+      click_on "Sign in"
     end
 
     visit settings_connect_path
