@@ -35,7 +35,7 @@ describe "Signup with Bitbucket" do
     within("form.form-horizontal") do
       fill_in "Email", :with => user1[:email]
       check "terms"
-      click_on "Sign Up"
+      click_on "Sign up"
     end
 
     User.all.count.should eql(1)
