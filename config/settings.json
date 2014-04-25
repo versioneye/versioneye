@@ -40,10 +40,10 @@
   },
   "test": {
     "nexus_url": "http://nexus.pro",
-    "bitbucket_password": "qwerty12345",
     "bitbucket_secret": "yYdshg5ndaCdkdvJMvkJAwAajjJWg8HZ",
     "bitbucket_token": "HgSkE62pTT3HmxFGAm",
     "bitbucket_username": "versioneye_test",
+    "bitbucket_password": "qwerty12345",
     "cocoapods_spec": "/home/versioneye/cocoapods/cocoapods-specs",
     "elasticsearch_product_index": "/product_test",
     "elasticsearch_url": "localhost:9200",
@@ -52,8 +52,8 @@
     "github_api_url": "https://api.github.com",
     "github_client_id": "23baa3ad794ac9a9214b",
     "github_client_secret": "bf2bc9df8933e9a1784bbcec2b46527b6e8098dd",
-    "github_pass": "xxxxxxxx",
-    "github_user": "xxxxxxxx",
+    "github_pass": "test_version_12",
+    "github_user": "testveye",
     "memcache_password": null,
     "memcache_servers": [
       "127.0.0.1:11211"

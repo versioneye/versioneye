@@ -30,7 +30,7 @@
                       :class => "meta-text-small" %>
           <% scopes = current_user.github_scope %>
           <% if scopes && !scopes.empty? %>
-            scopes: [<%= scopes %>]
+            scopes: <%= scopes %>
           <% end %>
         <% else %>
           <a href='<%= Settings.instance.github_base_url %>/login/oauth/authorize?client_id=<%= Settings.instance.github_client_id %>'  >
@@ -63,7 +63,6 @@
          <% end %>
        </div>
     </div>
-
 
   </div>
 </div>
