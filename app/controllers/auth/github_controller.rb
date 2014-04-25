@@ -14,25 +14,44 @@ class Auth::GithubController < ApplicationController
     end
 
     user = user_for_github_id( json_user )
-    if user.nil? # than create a new user
-      prepare_new_page user, token
-      render auth_github_new_path
-      return
-    end
-
-    user.github_token = token
-    user.save
-    if user.activated?
+    if user && user.activated?
+      user.github_token = token
+      user.save
       sign_in user
       redirect_back_or user_packages_i_follow_path
       return
     end
 
-    flash[:error] = 'Your account is not activated. Did you click the verification link in the email we sent to you?'
-    redirect_to signin_path
+    if user && !user.activated?
+      flash[:error] = 'Your account is not activated. Did you click the verification link in the email we sent to you?'
+      redirect_to signin_path
+      return
+    end
+
+    email = primary_email token
+    email_available = User.email_valid?(email)
+    email_already_taken = !email_available
+
+    if user.nil? && email_already_taken # than ask for a new email
+      flash.now[:error] = "The email address is already taken."
+      prepare_new_page user, token
+      render auth_github_new_path
+      return
+    end
+
+    if user.nil? && email_available # Than login the user
+      user = new_user( token, email, true )
+      if user.save
+        login user
+      else
+        flash.now[:error] = 'An error occured.'
+        init_variables_for_new_page user, email
+        render auth_github_new_path
+      end
+    end
   end
 
-  # TODO validate email address !!
+
   def create
     @email = params[:email]
     @terms = params[:terms]
@@ -51,7 +70,9 @@ class Auth::GithubController < ApplicationController
     end
 
     user = new_user( token, @email, @terms )
+    user.create_verification
     if user.save
+      user.send_verification_email
       login user, @promo
       return
     end
@@ -65,7 +86,8 @@ class Auth::GithubController < ApplicationController
   private
 
 
-    def primary_email emails
+    def primary_email token
+      emails = Github.emails token
       primary_email = emails.first[:email]
       emails.each do |em|
         if em[:primary] == true
@@ -133,13 +155,12 @@ class Auth::GithubController < ApplicationController
 
     def prepare_new_page user, token
       cookies.permanent.signed[:github_token] = token
-      emails = Github.emails token
-      email  = primary_email emails
+      email = primary_email token
       init_variables_for_new_page user, email
     end
 
 
-    def login user, promo
+    def login user, promo = nil
       sign_in( user )
       check_promo_code promo, user
       cookies.delete(:promo_code)

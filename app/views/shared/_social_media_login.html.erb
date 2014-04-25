@@ -1,12 +1,29 @@
+
   <div class = "well transparent social_media_login_box" >
     <div class = "sml_header">
       <span class  = "icon_profile48 rounded"></span>
     </div>
     <h2> Or sign in with one of your social media accounts </h2>
     <div >
-      <ul class="sml_list" >
+      <ul class="sml_list" id="sm_list" >
         <li class="sml_list_item"><%= render 'shared/login_with_github'   , :btn => 'login' %></li>
         <li class="sml_list_item"><%= render 'shared/login_with_bitbucket', :btn => 'login' %></li>
       </ul>
     </div>
+  </div>
+
+  <div>
+    Using the GitHub/Bitbucket login you automatically confirm that you have read the
+    <% if I18n.locale == :de %>
+      <%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "new_terms" %>
+    <% else %>
+      <%= link_to "Conditions of Use", terms_path, :target => "new_terms" %>
+    <% end %>
+    <%= t(:terms_part_2) %>
+    <% if I18n.locale == :de %>
+      <%= link_to "Datenerhebung", datenerhebung_path, :target => "new_data" %>
+    <% else %>
+      <%= link_to "Data Acquisition", datacollection_path, :target => "new_data" %>
+    <% end %>
+    <%= t(:terms_part_3) %>
   </div>
