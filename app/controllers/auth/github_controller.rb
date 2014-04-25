@@ -124,10 +124,11 @@ class Auth::GithubController < ApplicationController
     end
 
 
-    def update_scope user, token
+    def update_scope user, token, save_user == false
       scopes = Github.oauth_scopes( token )
       if scopes && scopes.is_a?(Array)
         user.github_scope = scopes.join ', '
+        user.save if save_user == true
       end
     end
 
@@ -162,6 +163,7 @@ class Auth::GithubController < ApplicationController
 
     def login user, promo = nil
       sign_in( user )
+      update_scope user, user.github_token, true
       check_promo_code promo, user
       cookies.delete(:promo_code)
       cookies.delete(:github_token)
