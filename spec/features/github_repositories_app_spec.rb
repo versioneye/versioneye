@@ -23,25 +23,17 @@ describe "frontend APP for importing Github repositories", :js => true do
   let(:project1) {build(:project_with_deps, deps_count: 3,
                       name: "spec_projectX", user_id: user.id.to_s)}
 
+
   describe "as authorized user without github token" do
     before :each do
-      FakeWeb.allow_net_connect = %r[^https?://127\.0\.0\.1]
-      FakeWeb.register_uri(
-        :get,
-        %r|https://api\.github\.com/user|,
-        {status: [304, "Not modified"], body: {message: "Not modified"}.to_json}
-      )
+      FakeWeb.allow_net_connect = true
+      FakeWeb.clean_registry
 
       visit signin_path
       fill_in 'session[email]', with: user_without_token.email
       fill_in 'session[password]', with: user_without_token.password
 
       find('#sign_in_button').click
-      page.should have_content('My Projects')
-    end
-
-    after :each do
-      FakeWeb.allow_net_connect = true
     end
 
     it "shows button for connecting Github account, when token is missing" do
@@ -72,6 +64,7 @@ describe "frontend APP for importing Github repositories", :js => true do
 
     after :each do
       FakeWeb.allow_net_connect = true
+      FakeWeb.clean_registry
     end
 
     it "should show proper message when user dont have any repos" do

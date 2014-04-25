@@ -44,6 +44,7 @@ describe "Signin with GitHub" do
     User.all.count.should eql(1)
     user = User.first
     user.verification.should be_nil
+    user.github_scope.should eq("user:email")
   end
 
 end
