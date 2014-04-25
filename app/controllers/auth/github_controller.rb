@@ -15,10 +15,7 @@ class Auth::GithubController < ApplicationController
 
     user = user_for_github_id( json_user )
     if user && user.activated?
-      user.github_token = token
-      user.save
-      sign_in user
-      redirect_back_or user_packages_i_follow_path
+      login user, nil, token
       return
     end
 
@@ -124,11 +121,10 @@ class Auth::GithubController < ApplicationController
     end
 
 
-    def update_scope user, token, save_user = false
+    def update_scope user, token
       scopes = Github.oauth_scopes( token )
       if scopes && scopes.is_a?(Array)
         user.github_scope = scopes.join ', '
-        user.save if save_user == true
       end
     end
 
@@ -149,7 +145,6 @@ class Auth::GithubController < ApplicationController
       user.email         = email
       user.terms         = terms
       user.datenerhebung = terms
-      update_scope( user, token )
       user
     end
 
@@ -161,9 +156,11 @@ class Auth::GithubController < ApplicationController
     end
 
 
-    def login user, promo = nil
+    def login user, promo = nil, token = nil
       sign_in( user )
-      update_scope user, user.github_token, true
+      update_scope user, user.github_token
+      user.github_token = token if token
+      user.save
       check_promo_code promo, user
       cookies.delete(:promo_code)
       cookies.delete(:github_token)
