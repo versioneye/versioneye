@@ -124,7 +124,7 @@ class Auth::GithubController < ApplicationController
     end
 
 
-    def update_scope user, token, save_user == false
+    def update_scope user, token, save_user = false
       scopes = Github.oauth_scopes( token )
       if scopes && scopes.is_a?(Array)
         user.github_scope = scopes.join ', '
