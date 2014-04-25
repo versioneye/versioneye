@@ -1,0 +1,5 @@
+<% if model.errors && model.errors.messages[key] %>
+  <span style="color: red">
+    <%= model.errors.messages[key].join(' - ') %>
+  </span>
+<% end %>
