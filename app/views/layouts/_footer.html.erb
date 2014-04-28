@@ -1,0 +1,3 @@
+
+<%= render "/layouts/footer_content" if !Rails.env.enterprise? %>
+<%= render "/layouts/footer_enterprise_content" if Rails.env.enterprise? %>
