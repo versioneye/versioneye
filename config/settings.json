@@ -13,6 +13,7 @@
     "github_client_secret": "1bfa476846fa530e53b8c804f40a8d44ee030b3a",
     "github_pass": "xxxxxxxx",
     "github_user": "xxxxxxxx",
+    "projects_unlimited": false,
     "memcache_password": null,
     "memcache_servers": [
       "127.0.0.1:11211"
@@ -54,6 +55,7 @@
     "github_client_secret": "bf2bc9df8933e9a1784bbcec2b46527b6e8098dd",
     "github_pass": "test_version_12",
     "github_user": "testveye",
+    "projects_unlimited": false,
     "memcache_password": null,
     "memcache_servers": [
       "127.0.0.1:11211"
@@ -93,6 +95,7 @@
     "github_client_secret": "env_GITHUB_CLIENT_SECRET",
     "github_pass": "env_GITHUB_PASS",
     "github_user": "env_GITHUB_USER",
+    "projects_unlimited": false,
     "memcache_password": "env_MEMCACHE_PASSWORD",
     "memcache_servers": ["127.0.0.1:11211"],
     "memcache_username": "env_MEMCACHE_USERNAME",
@@ -117,6 +120,7 @@
     "aws_secret_access_key": "env_AWS_S3_SECRET_ACCESS_KEY"
   },
   "enterprise": {
+    "projects_unlimited": true,
     "nexus_url": "http://nexus.pro",
     "server_url": "http://localhost:3000",
     "server_host": "localhost",
