@@ -4,7 +4,7 @@ require 'capistrano/deploy'
 require 'capistrano/bundler'
 require 'capistrano/rails'
 require 'capistrano/rails/assets'
-require 'capistrano/rvm'
+require 'rvm1/capistrano3'
 # require 'capistrano/rails/migrations'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
