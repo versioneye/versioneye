@@ -24,7 +24,6 @@ group :development do
   gem 'capistrano'        , '~> 3.2.1'
   gem 'capistrano-rails'  , '~> 1.1.1'
   gem 'capistrano-bundler', '~> 1.1.2'
-  gem 'rvm1-capistrano3'   
   gem 'psych'             , '~> 2.0.5'
   gem 'irbtools'          , '~> 1.6.1'
   gem 'terminal-notifier' , '~> 1.6.0'
