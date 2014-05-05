@@ -50,12 +50,15 @@ class User::CollaborationsController < ApplicationController
 
     collab = ProjectCollaborator.find_by_id(collab_id)
 
-    if collab.current?(current_user)
-      collab.update_attributes?({
-        active: true,
-        email: current_user[:email],
-        user_id: current_user[:_id].to_s
-      })
+    if collab.user_id.to_s.eql?( current_user.id.to_s ) ||
+       collab.invitation_email.eql?( current_user.email )
+      collab.active  = true
+      collab.email   = current_user[:email]
+      collab.user_id = current_user[:_id].to_s
+      collab.save
+      flash[:success] = 'Thanks for approving.'
+    else
+      flash[:error] = "It seems you don't have access to this project. Contact the VersionEye Team if you think that's wrong."
     end
 
     redirect_to :back
