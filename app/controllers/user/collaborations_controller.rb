@@ -50,11 +50,10 @@ class User::CollaborationsController < ApplicationController
 
     collab = ProjectCollaborator.find_by_id(collab_id)
 
-    if collab.user_id.to_s.eql?( current_user.id.to_s ) ||
-       collab.invitation_email.eql?( current_user.email )
-      collab.active  = true
-      collab.email   = current_user[:email]
+    if collab.user_id.to_s.eql?( current_user.id.to_s ) || collab.invitation_email.eql?( current_user.email )
+      collab.active = true
       collab.user_id = current_user[:_id].to_s
+      collab.invitation_email = current_user[:email]
       collab.save
       flash[:success] = 'Thanks for approving.'
     else
