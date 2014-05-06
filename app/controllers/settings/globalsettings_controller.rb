@@ -14,6 +14,10 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting = GlobalSetting.default
   end
 
+  def index_cocoapods
+    @globalsetting = GlobalSetting.default
+  end
+
   def update
     @globalsetting = GlobalSetting.default
     @globalsetting.server_url  = params[:server_url]
@@ -54,6 +58,18 @@ class Settings::GlobalsettingsController < ApplicationController
       flash[:error] = "Something went wrong - #{@globalsetting.errors.full_messages.to_sentence}"
     end
     redirect_to settings_nexussettings_path
+  end
+
+  def update_cocoapods
+    @globalsetting = GlobalSetting.default
+    @globalsetting.cocoapods_spec_git = params[:cocoapods_spec_git]
+    if @globalsetting.save
+      Settings.instance.cocoapods_spec_git = @globalsetting.cocoapods_spec_git
+      flash[:success] = "CocoaPods Specs changed successfully"
+    else
+      flash[:error] = "Something went wrong - #{@globalsetting.errors.full_messages.to_sentence}"
+    end
+    redirect_to settings_cocoapods_path
   end
 
   private

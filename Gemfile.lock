@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: af6d4257ded8207a2d7c43d8b20f409d452610e4
-  tag: v0.12.3
+  revision: ab4fe429b5ce8361c322a06438dfa14e89460ee0
+  tag: v0.13.0
   specs:
-    versioneye-core (0.12.3)
+    versioneye-core (0.13.0)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       cocoapods-core (~> 0.32.0)
@@ -201,7 +201,7 @@ GEM
       origin (~> 1.0)
       tzinfo (~> 0.3.29)
     moped (1.5.2)
-    multi_json (1.9.3)
+    multi_json (1.10.0)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     nap (0.7.0)
