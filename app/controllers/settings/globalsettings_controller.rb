@@ -24,7 +24,7 @@ class Settings::GlobalsettingsController < ApplicationController
       update_settings @globalsetting
       flash[:success] = "Global Server Settings changed successfully"
     else
-      flash[:error] = "Something went wrong - #{es.errors.full_messages.to_sentence}"
+      flash[:error] = "Something went wrong - #{@globalsetting.errors.full_messages.to_sentence}"
     end
     redirect_to settings_globalsettings_path
   end
@@ -39,7 +39,7 @@ class Settings::GlobalsettingsController < ApplicationController
       update_github_settings @globalsetting
       flash[:success] = "GitHub Settings changed successfully"
     else
-      flash[:error] = "Something went wrong - #{es.errors.full_messages.to_sentence}"
+      flash[:error] = "Something went wrong - #{@globalsetting.errors.full_messages.to_sentence}"
     end
     redirect_to settings_githubsettings_path
   end
@@ -51,7 +51,7 @@ class Settings::GlobalsettingsController < ApplicationController
       update_nexus_settings @globalsetting
       flash[:success] = "Nexus Settings changed successfully"
     else
-      flash[:error] = "Something went wrong - #{es.errors.full_messages.to_sentence}"
+      flash[:error] = "Something went wrong - #{@globalsetting.errors.full_messages.to_sentence}"
     end
     redirect_to settings_nexussettings_path
   end
