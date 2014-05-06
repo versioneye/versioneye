@@ -20,7 +20,6 @@
       "127.0.0.1:11211"
     ],
     "memcache_username": null,
-    "postmark_api_key": "env_POSTMARK_API_KEY",
     "s3_infographics_bucket": "veye_dev_infographics",
     "s3_projects_bucket": "veye_dev_projects",
     "server_url": "http://localhost:3000",
@@ -63,7 +62,6 @@
       "127.0.0.1:11211"
     ],
     "memcache_username": null,
-    "postmark_api_key": "env_POSTMARK_API_KEY",
     "s3_infographics_bucket": "veye_test_infographics",
     "s3_projects_bucket": "veye_test_projects",
     "server_url": "http://localhost:3000",
@@ -102,7 +100,6 @@
     "memcache_password": "env_MEMCACHE_PASSWORD",
     "memcache_servers": ["127.0.0.1:11211"],
     "memcache_username": "env_MEMCACHE_USERNAME",
-    "postmark_api_key": "env_POSTMARK_API_KEY",
     "s3_infographics_bucket": "veye_prod_infographics",
     "s3_projects_bucket": "veye_prod_projects",
     "server_url": "http://www.versioneye.com",
