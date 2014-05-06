@@ -82,11 +82,14 @@ Versioneye::Application.routes.draw do
     get  'emailsettings'       , :to => 'emailsettings#index'
     post 'emailsettings'       , :to => 'emailsettings#update'
 
-    get  'globalsettings'       , :to => 'globalsettings#index'
-    post 'globalsettings'       , :to => 'globalsettings#update'
+    get  'globalsettings'      , :to => 'globalsettings#index'
+    post 'globalsettings'      , :to => 'globalsettings#update'
 
-    get  'githubsettings'       , :to => 'globalsettings#index_github'
-    post 'githubsettings'       , :to => 'globalsettings#update_github'
+    get  'githubsettings'      , :to => 'globalsettings#index_github'
+    post 'githubsettings'      , :to => 'globalsettings#update_github'
+
+    get  'cocoapods'           , :to => 'globalsettings#index_cocoapods'
+    post 'cocoapods'           , :to => 'globalsettings#update_cocoapods'
 
     get  'nexussettings'       , :to => 'globalsettings#index_nexus'
     post 'nexussettings'       , :to => 'globalsettings#update_nexus'

@@ -11,7 +11,7 @@ class CocoapodsCrawler < GitCrawler
   end
 
   def initialize
-    super 'https://github.com/CocoaPods/Specs.git', Settings.instance.cocoapods_spec
+    super Settings.instance.cocoapods_spec_git, Settings.instance.cocoapods_spec
   end
 
   def crawl

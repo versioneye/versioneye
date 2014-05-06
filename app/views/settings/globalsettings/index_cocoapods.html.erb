@@ -1,0 +1,37 @@
+
+<div class="span3" >
+  <%= render 'settings/navi' %>
+</div>
+
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    CocoaPods Settings
+  </div>
+
+  <div class="span8 content" >
+
+    <%= form_tag( settings_cocoapods_path, :method => "post", :class => "form-horizontal") do  %>
+
+      <p class="description">
+        Where do you host your private CocoaPods?
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :cocoapods_spec_git, "Specs", :class => "control-label", :for => "cocoapods_spec_git" %>
+        <div class="controls">
+          <%= text_field_tag :cocoapods_spec_git, @globalsetting.cocoapods_spec_git, :id => "cocoapods_spec_git" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn btn-large btn-primary" >Save</button>
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>
