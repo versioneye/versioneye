@@ -63,8 +63,10 @@ class Settings::GlobalsettingsController < ApplicationController
   def update_cocoapods
     @globalsetting = GlobalSetting.default
     @globalsetting.cocoapods_spec_git = params[:cocoapods_spec_git]
+    @globalsetting.cocoapods_spec_url = params[:cocoapods_spec_url]
     if @globalsetting.save
       Settings.instance.cocoapods_spec_git = @globalsetting.cocoapods_spec_git
+      Settings.instance.cocoapods_spec_url = @globalsetting.cocoapods_spec_url
       flash[:success] = "CocoaPods Specs changed successfully"
     else
       flash[:error] = "Something went wrong - #{@globalsetting.errors.full_messages.to_sentence}"

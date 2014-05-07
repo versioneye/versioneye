@@ -18,9 +18,16 @@
       </p>
 
       <div class="control-group">
-        <%= label_tag :cocoapods_spec_git, "Specs", :class => "control-label", :for => "cocoapods_spec_git" %>
+        <%= label_tag :cocoapods_spec_git, "Specs Git", :class => "control-label", :for => "cocoapods_spec_git" %>
         <div class="controls">
           <%= text_field_tag :cocoapods_spec_git, @globalsetting.cocoapods_spec_git, :id => "cocoapods_spec_git" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :cocoapods_spec_url, "Specs URL", :class => "control-label", :for => "cocoapods_spec_url" %>
+        <div class="controls">
+          <%= text_field_tag :cocoapods_spec_url, @globalsetting.cocoapods_spec_url, :id => "cocoapods_spec_url" %>
         </div>
       </div>
 

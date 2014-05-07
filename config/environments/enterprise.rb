@@ -47,6 +47,9 @@ Versioneye::Application.configure do
 
   Settings.instance.nexus_url = GlobalSetting.default.nexus_url
 
+  Settings.instance.cocoapods_spec_git = GlobalSetting.default.cocoapods_spec_git
+  Settings.instance.cocoapods_spec_url = GlobalSetting.default.cocoapods_spec_url
+
   config.active_support.deprecation = :notify
   config.action_mailer.delivery_method = :smtp
   EmailSettingService.update_action_mailer_from_db
