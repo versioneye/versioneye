@@ -10,12 +10,14 @@ class GitCrawler
   end
 
   def clone
+    p "git clone #{@git_url} #{@dir}"
     run "git clone #{@git_url} #{@dir}"
   end
 
   alias_method :setup, :clone
 
   def pull
+    p "(cd #{@dir} && git pull)"
     run "(cd #{@dir} && git pull)"
   end
 
