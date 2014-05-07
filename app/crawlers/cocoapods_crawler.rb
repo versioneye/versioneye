@@ -16,15 +16,18 @@ class CocoapodsCrawler < GitCrawler
 
   def crawl
     logger.info 'crawl.start'
+    p "crawl.start"
     setup
 
     logger.info 'crawl.update'
+    p "crawl.update"
     update
 
     i = 0
     all_spec_files do |filepath|
       i += 1
       logger.info "Parse CocoaPods Spec ##{i}: #{filepath}"
+      p "Parse CocoaPods Spec ##{i}: #{filepath}"
       parse_spec filepath
     end
   end
