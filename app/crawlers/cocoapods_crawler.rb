@@ -15,23 +15,32 @@ class CocoapodsCrawler < GitCrawler
   end
 
   def crawl
+    logger.info 'crawl.start'
     setup
+
+    logger.info 'crawl.update'
     update
 
     i = 0
     all_spec_files do |filepath|
-      # parse every podspec file
       i += 1
       logger.info "Parse CocoaPods Spec ##{i}: #{filepath}"
-      parser  = CocoapodsPodspecParser.new
-      product = parser.parse_file filepath
-      if product
-        ProductService.update_version_data product, false
-        product.save
-      else
-        logger.warn 'NO PRODUCT'
-      end
+      parse_spec filepath
     end
+  end
+
+  def parse_spec filepath
+    # parse every podspec file
+    parser  = CocoapodsPodspecParser.new
+    product = parser.parse_file filepath
+    if product
+      ProductService.update_version_data product, false
+      product.save
+    else
+      logger.warn 'NO PRODUCT'
+    end
+  rescue => e
+    logger.error e.message
   end
 
   # traverse directory, search for .podspec files
