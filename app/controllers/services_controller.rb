@@ -42,33 +42,6 @@ class ServicesController < ApplicationController
     @project = add_dependency_classes( project )
   end
 
-  def recursive_dependencies
-    id = params[:id]
-    project = Project.find_by_id(id)
-    dependencies = project.known_dependencies
-    hash = Hash.new
-    dependencies.each do |dep|
-      element = CircleElement.new
-      element.init_arrays
-      element.dep_prod_key = dep.prod_key
-      element.version = dep.version_requested
-      element.level = 0
-      element.text = dep.name
-      element.text = dep.prod_key if element.text.nil?
-      if dep.version_requested && !dep.version_requested.empty?
-        element.text += ":#{dep.version_requested}"
-      end
-      hash[dep.prod_key] = element
-    end
-    circle = CircleElement.fetch_deps(1, hash, Hash.new, project.language)
-    respond_to do |format|
-      format.json {
-        resp = CircleElement.generate_json_for_circle_from_hash(circle)
-        render :json => "[#{resp}]"
-      }
-    end
-  end
-
   def pricing
     @plan = current_user.plan if signed_in?
   end

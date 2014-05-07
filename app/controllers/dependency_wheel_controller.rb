@@ -8,7 +8,7 @@ class DependencyWheelController < ApplicationController
     scope   = nil if scope.to_s.strip.empty?
     respond_to do |format|
       format.json {
-        if lang.eql?(Product::A_LANGUAGE_NODEJS) || lang.eql?(Product::A_LANGUAGE_JAVA)
+        if Product::A_LANGS_DEP_GRAPH.include?(lang)
           circle = CircleElementService.dependency_circle( lang, key, version, scope )
           resp = CircleElementService.generate_json_for_circle_from_hash( circle )
           render :json => "[#{resp}]"
@@ -25,6 +25,33 @@ class DependencyWheelController < ApplicationController
         # end
         # render :json => "[#{resp}]"
         # render :json => "[{\"success\": \"ok\"}]"
+      }
+    end
+  end
+
+  def project_recursive_dependencies
+    id = params[:id]
+    project = Project.find_by_id(id)
+    dependencies = project.known_dependencies
+    hash = Hash.new
+    dependencies.each do |dep|
+      element = CircleElement.new
+      element.init_arrays
+      element.dep_prod_key = dep.prod_key
+      element.version = dep.version_requested
+      element.level = 0
+      element.text = dep.name
+      element.text = dep.prod_key if element.text.nil?
+      if dep.version_requested && !dep.version_requested.empty?
+        element.text += ":#{dep.version_requested}"
+      end
+      hash[dep.prod_key] = element
+    end
+    circle = CircleElementService.fetch_deps(1, hash, Hash.new, project.language)
+    respond_to do |format|
+      format.json {
+        resp = CircleElementService.generate_json_for_circle_from_hash(circle)
+        render :json => "[#{resp}]"
       }
     end
   end

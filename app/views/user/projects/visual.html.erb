@@ -1,0 +1,69 @@
+<% if @project.nil? %>
+
+  Product not found!
+
+<% else %>
+
+  <div>
+
+    <div class="row" >
+      <h1 style="margin-bottom: 5px;"><%= @project.name %></h1>
+    </div>
+
+    <br/>
+    <br/>
+
+    <div id="canvas-container" >
+      <%= image_tag "loadingbar.gif" %>
+    </div>
+    <div>
+      <h4 style="text-align: center; display: none; width: 100%" id="infoBox" >
+        <%= @project.name %> has <span style="font-weight: bold;" id="recursive_number"></span> recursive dependencies
+      </h4>
+    </div>
+    <div style="text-align: center;">
+      <a href="/user/projects/<%= @project.to_param %>/">Back to project detail page</a>
+    </div>
+    <br/>
+    <br/>
+
+    <script type="text/javascript">
+      function render_wheel(scope){
+        if (scope == null){
+          scope = "all"
+        }
+        uri = "/user/projects/<%= @project.to_param %>/recursive_dependencies.json";
+        var wheel = new DependencyWheel.Remote(false, document.getElementById("canvas-container"), {
+          url: uri,
+          width: "940",
+          height: "940",
+          data_border: 70,
+          infoBox: "infoBox",
+          infoNumber: "recursive_number",
+          canvas_id: "canvas",
+          canvas_hover_id: "canvas_hover",
+          product_key: "<%= @project.to_param%>",
+          product_version: "",
+          product_name: "<%= @project.name%>",
+          version: "",
+          show_label: false,
+          resize: true,
+          resize_factor: 11,
+          resize_ids: "section,container",
+          container_id: "canvas-container",
+          scope: scope,
+          onItemClick: function(item, event){
+            key = item.id;
+            key = key.replace(/\//g, ":");
+            version = item.version;
+            version = version.replace(/\//g, ":");
+            window.location.href = "/user/projects/<%= @project.to_param %>/";
+          }
+        } );
+      }
+    </script>
+
+  </div>
+
+<% end %>
+
