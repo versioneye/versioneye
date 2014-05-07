@@ -133,14 +133,15 @@ Versioneye::Application.routes.draw do
   get '/user/projects/github_repositories'      , :to => 'user/github_repos#init'
   get '/user/projects/bitbucket_repositories'   , :to => 'user/bitbucket_repos#init'
 
+  get  '/user/projects/:id/recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
+  post '/user/projects/:id/recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
+
   namespace :user do
 
     resources :projects do
       member do
         get  'badge'
         get  'visual'
-        get  'recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
-        post 'recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
         post 'save_period'
         post 'save_email'
         post 'save_visibility'
