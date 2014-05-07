@@ -132,7 +132,12 @@
 
         <div class="tab-content" style="width: 100%;" >
           <div id="dependencies" class="tab-pane active" style="width: 617px;" >
-            <%= render partial: "project_dependency_table", locals: {deps: @project.sorted_dependencies_by_rank} %>
+            <div>
+              <%= render partial: "project_dependency_table", locals: {deps: @project.sorted_dependencies_by_rank} %>
+            </div>
+            <div style="padding-top: 7px;">
+              <%= link_to "Visual Dependencies", visual_user_project_path( @project ) %>
+            </div>
           </div>
 
           <div id="licenses" class="tab-pane">

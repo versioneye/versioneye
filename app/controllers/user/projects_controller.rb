@@ -41,6 +41,11 @@ class User::ProjectsController < ApplicationController
     end
   end
 
+  def visual
+    @project = ProjectService.find( params[:id] )
+    render :layout => 'application_visual'
+  end
+
   def transitive_dependencies
     id             = params[:id]
     project        = Project.find_by_id( id )
@@ -49,8 +54,10 @@ class User::ProjectsController < ApplicationController
     circle = CircleElement.fetch_deps(1, hash, Hash.new, project.language)
     circle.each do |dep|
       next if dep.last[:level] == 0
+
       product = Product.fetch_product( project.language, dep.last['dep_prod_key'] )
       next if product.nil?
+
       version = dep.last['version']
       if !version.to_s.empty? && !version.to_s.eql?('unknown')
         product.version = version

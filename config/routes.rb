@@ -138,6 +138,9 @@ Versioneye::Application.routes.draw do
     resources :projects do
       member do
         get  'badge'
+        get  'visual'
+        get  'recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
+        post 'recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
         post 'save_period'
         post 'save_email'
         post 'save_visibility'
@@ -176,8 +179,8 @@ Versioneye::Application.routes.draw do
   post  '/services/choose_plan'               ,  :to => 'services#choose_plan'
   post  '/services'                           ,  :to => 'services#create'
   get   '/services/:id'                       ,  :to => 'services#show', :as => 'service'
-  get   '/services/:id/recursive_dependencies',  :to => 'services#recursive_dependencies'
-  post  '/services/:id/recursive_dependencies',  :to => 'services#recursive_dependencies'
+  get   '/services/:id/recursive_dependencies',  :to => 'dependency_wheel#project_recursive_dependencies'
+  post  '/services/:id/recursive_dependencies',  :to => 'dependency_wheel#project_recursive_dependencies'
 
   get   '/pricing',            :to => 'services#pricing'
   get   '/news',               :to => 'news#news'
