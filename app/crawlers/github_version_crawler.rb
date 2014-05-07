@@ -137,7 +137,7 @@ class GithubVersionCrawler
   end
 
   def self.parse_github_url (git_url)
-    match = /https:\/\/github.com\/(.+)\/(.+)\.git/.match git_url
+    match = /#{Settings.instance.github_base_url}\/(.+)\/(.+)\.git/.match git_url
     owner_repo = {:owner => $1, :repo => $2}
     if match.nil? || match == false
       logger.error "Couldn't parse #{git_url}"
