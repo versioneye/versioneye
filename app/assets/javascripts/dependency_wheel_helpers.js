@@ -7,7 +7,7 @@ function handle_path(options){
         dataType: 'text',
         success: function(data) {
           if (data == "nil" ){
-            upload_file(options);
+            // upload_file(options);
           } else {
             show_pinit_button(data, options);
           }
