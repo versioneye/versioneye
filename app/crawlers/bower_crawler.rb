@@ -23,7 +23,7 @@ class BowerCrawler
   end
 
   def self.github_rate_limit(token)
-    Github.rate_limit(token)
+    OctokitApi.client(token).rate_limit
   end
 
   # Just for debugging to clear old noise
@@ -563,34 +563,34 @@ class BowerCrawler
   def self.check_request_limit(token)
     10.times do |i|
       break unless rate_limits.nil?
-      val = github_rate_limit(token) #ask rate limits from API
+      val = github_rate_limit(token) #ask rate limit from API
       rate_limits(val)
       break unless rate_limits.nil?
       sleep A_SLEEP_TIME
     end
 
-    if rate_limits.nil?  or not rate_limits.has_key?(:core)
+    if rate_limits.nil?
       logger.error "Get no rate_limits from Github API - smt very bad is going on."
       sleep A_SLEEP_TIME
       return
     end
 
-    @@rate_limits[:core][:remaining] -= 1
-    limits = rate_limits[:core]
-    time_left = (limits[:reset] - Time.now.to_i) / 60 #in minutes
+    @@rate_limits[:remaining] -= 1
+    limit = rate_limits[:limit]
+    time_left = (rate_limits[:resets_in] - Time.now.to_i) / 60 #in minutes
     time_left += 1 #add additional minute for rounding errors and warming up
-    if limits[:remaining] <= A_MINIMUM_RATE_LIMIT and time_left > 0
-      logger.info "Remaining rate limits. #{limits}"
+    if limit <= A_MINIMUM_RATE_LIMIT and time_left > 0
+      logger.info "Remaining rate limit. #{limit}"
       logger.info "Going to stop crawling for next #{time_left} minutes"
       rate_limits(nil)
       sleep time_left.minutes
       logger.info "Waking up and going to continue crawling."
     end
 
-    if (limits[:remaining] % 100) == 0 or limits[:remaining] < (A_MINIMUM_RATE_LIMIT + 10)
+    if (limit % 100) == 0 or limit < (A_MINIMUM_RATE_LIMIT + 10)
       val = github_rate_limit(token)
       rate_limits(val)
-      logger.info "#-- Remaining request limits: #{limits}"
+      logger.info "#-- Remaining request limit: #{limit}"
       sleep 1
     end
     rate_limits

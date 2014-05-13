@@ -1,24 +1,25 @@
 require 'spec_helper'
 
 describe "Getting data from github_repos_controller" do
+
   let(:user) {create(:user, username: "pupujuku", fullname: "Pupu Juku", email: "juku@pupu.com")}
 
-  let(:repo1) {build(:github_repo, 
-                      user_id: user.id.to_s, 
-                      github_id: 1, 
+  let(:repo1) {build(:github_repo,
+                      user_id: user.id.to_s,
+                      github_id: 1,
                       fullname: "spec/repo1",
-                      user_login: "a", 
-                      owner_login: "versioneye", 
+                      user_login: "a",
+                      owner_login: "versioneye",
                       owner_type: "user",
                       project_files: {'master' => {}}
                      )
                 }
-  let(:repo2) {build(:github_repo, 
-                      user_id: user.id.to_s, 
-                      github_id: 2, 
+  let(:repo2) {build(:github_repo,
+                      user_id: user.id.to_s,
+                      github_id: 2,
                       fullname: "spec/repo2",
-                      user_login: "a", 
-                      owner_login: "versioneye", 
+                      user_login: "a",
+                      owner_login: "versioneye",
                       owner_type: "user",
                       project_files: {'master' => {}}
                      )
@@ -51,7 +52,7 @@ describe "Getting data from github_repos_controller" do
       user.github_repos.all.count.should > 0 #factory should fill GithubRepo
 
       get user_github_repos_path
-      response.status.should eql(200) 
+      response.status.should eql(200)
       response_data = JSON.parse response.body
       response_data.has_key?('repos').should be_true
       response_data['repos'].count.should eq(user.github_repos.count)
@@ -110,11 +111,11 @@ describe "Getting data from github_repos_controller" do
       response.status.should eql(200)
       response_data = JSON.parse response.body
 
-      user.github_repos.all.count.should > 0 #caching should fill GithubRepo
+      user.github_repos.all.count.should > 0 # caching should fill GithubRepo
       response_data.has_key?('repos').should be_true
       response_data['repos'].count.should eql(user.github_repos.count)
       resp_repo1 = response_data['repos'].first
-      resp_repo1['fullname'].should eq("spec/repo1")
+      resp_repo1['fullname'].should match("spec/repo")
       resp_repo1['user_id'].should eq(user.id.to_s)
 
     end

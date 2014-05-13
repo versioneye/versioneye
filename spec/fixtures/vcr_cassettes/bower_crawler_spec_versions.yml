@@ -22693,4 +22693,1444 @@ http_interactions:
       string: '{"resources":{"core":{"limit":5000,"remaining":4932,"reset":1393685120},"search":{"limit":30,"remaining":30,"reset":1393682964}},"rate":{"limit":5000,"remaining":4932,"reset":1393685120}}'
     http_version: 
   recorded_at: Sat, 01 Mar 2014 14:08:23 GMT
-recorded_with: VCR 2.8.0
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:06 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988766'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:689C:9AC66C:5372140D
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 132026e9262a0093e437f99db5f1e499
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988766},"search":{"limit":30,"remaining":30,"reset":1399985226}},"rate":{"limit":5000,"remaining":5000,"reset":1399988766}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:06 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:07 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988767'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:689B:625DF4:5372140F
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 88d924ed861736d2749ce1a55766cb53
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988767},"search":{"limit":30,"remaining":30,"reset":1399985227}},"rate":{"limit":5000,"remaining":5000,"reset":1399988767}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:07 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:08 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988768'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:689C:9ACA1F:53721410
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - c436b2b44345c72ff906059f604991e7
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988768},"search":{"limit":30,"remaining":30,"reset":1399985228}},"rate":{"limit":5000,"remaining":5000,"reset":1399988768}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:09 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:10 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988770'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:689A:31241D:53721412
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - a8d8e492d6966f0c23dee2eed64c678a
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988770},"search":{"limit":30,"remaining":30,"reset":1399985230}},"rate":{"limit":5000,"remaining":5000,"reset":1399988770}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:10 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:11 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988771'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:689C:9ACD4D:53721413
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 03d91026ad8428f4d9966d7434f9d82e
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988771},"search":{"limit":30,"remaining":30,"reset":1399985231}},"rate":{"limit":5000,"remaining":5000,"reset":1399988771}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:11 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:13 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988773'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:689F:46D686:53721415
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 3061975e1f37121b3751604ad153c687
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988773},"search":{"limit":30,"remaining":30,"reset":1399985233}},"rate":{"limit":5000,"remaining":5000,"reset":1399988773}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:13 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:14 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988774'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:689C:9AD051:53721416
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 03d91026ad8428f4d9966d7434f9d82e
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988774},"search":{"limit":30,"remaining":30,"reset":1399985234}},"rate":{"limit":5000,"remaining":5000,"reset":1399988774}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:14 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988776'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:689B:626328:53721417
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - a1d8c69b807c8e21f06cad9da377d1b0
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988776},"search":{"limit":30,"remaining":30,"reset":1399985236}},"rate":{"limit":5000,"remaining":5000,"reset":1399988776}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:16 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:17 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988777'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:689E:10B25C3:53721419
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 3061975e1f37121b3751604ad153c687
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988777},"search":{"limit":30,"remaining":30,"reset":1399985237}},"rate":{"limit":5000,"remaining":5000,"reset":1399988777}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:17 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:19 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988779'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:689B:6264C0:5372141A
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 6d7de9e645814cac34ea2a8d72ba3141
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988779},"search":{"limit":30,"remaining":30,"reset":1399985239}},"rate":{"limit":5000,"remaining":5000,"reset":1399988779}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:19 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:20 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988780'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:689F:46D9F2:5372141C
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - c436b2b44345c72ff906059f604991e7
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988780},"search":{"limit":30,"remaining":30,"reset":1399985240}},"rate":{"limit":5000,"remaining":5000,"reset":1399988780}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:20 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:21 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988781'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:689B:626691:5372141D
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 03d91026ad8428f4d9966d7434f9d82e
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988781},"search":{"limit":30,"remaining":30,"reset":1399985241}},"rate":{"limit":5000,"remaining":5000,"reset":1399988781}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:21 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:23 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988783'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:6899:13F51D:5372141F
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 88d924ed861736d2749ce1a55766cb53
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988783},"search":{"limit":30,"remaining":30,"reset":1399985243}},"rate":{"limit":5000,"remaining":5000,"reset":1399988783}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:23 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:24 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988784'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:689E:10B3326:53721420
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - a8d8e492d6966f0c23dee2eed64c678a
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988784},"search":{"limit":30,"remaining":30,"reset":1399985244}},"rate":{"limit":5000,"remaining":5000,"reset":1399988784}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:24 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:26 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988786'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:689E:10B3602:53721422
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 971af40390ac4398fcdd45c8dab0fbe7
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988786},"search":{"limit":30,"remaining":30,"reset":1399985246}},"rate":{"limit":5000,"remaining":5000,"reset":1399988786}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:26 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:28 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988788'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:545B:118353C:53721423
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - a1d8c69b807c8e21f06cad9da377d1b0
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988788},"search":{"limit":30,"remaining":30,"reset":1399985248}},"rate":{"limit":5000,"remaining":5000,"reset":1399988788}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:28 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:29 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988789'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:545C:1A23B53:53721425
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 6d7de9e645814cac34ea2a8d72ba3141
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988789},"search":{"limit":30,"remaining":30,"reset":1399985249}},"rate":{"limit":5000,"remaining":5000,"reset":1399988789}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:29 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:30 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988790'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:545B:11837ED:53721426
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 62a1303ae95931e56e387e87d354bb24
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988790},"search":{"limit":30,"remaining":30,"reset":1399985250}},"rate":{"limit":5000,"remaining":5000,"reset":1399988790}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:31 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988792'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:545A:9B93B0:53721428
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 62a1303ae95931e56e387e87d354bb24
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988792},"search":{"limit":30,"remaining":30,"reset":1399985252}},"rate":{"limit":5000,"remaining":5000,"reset":1399988792}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:32 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:46:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '5000'
+      X-Ratelimit-Reset:
+      - '1399988793'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:545E:2AE648A:53721429
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - c436b2b44345c72ff906059f604991e7
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":5000,"reset":1399988793},"search":{"limit":30,"remaining":30,"reset":1399985253}},"rate":{"limit":5000,"remaining":5000,"reset":1399988793}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:46:33 GMT
+recorded_with: VCR 2.9.0

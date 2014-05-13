@@ -29,7 +29,7 @@ namespace :versioneye do
     puts "---"
 
     puts "START to send out daily project notification E-Mails."
-    ProjectService.update_all( Project::A_PERIOD_DAILY )
+    ProjectUpdateService.update_all( Project::A_PERIOD_DAILY )
     puts "---"
 
     puts "START to LanguageDailyStats.update_counts"
@@ -44,7 +44,7 @@ namespace :versioneye do
   desc "excute weekly jobs"
   task :weekly_jobs => :environment do
     puts "START to send out weekly project notification E-Mails."
-    ProjectService.update_all( Project::A_PERIOD_WEEKLY )
+    ProjectUpdateService.update_all( Project::A_PERIOD_WEEKLY )
     puts "---"
 
     puts "START to send out verification reminder E-Mails."
@@ -55,7 +55,7 @@ namespace :versioneye do
   desc "excute monthly jobs"
   task :monthly_jobs => :environment do
     puts "START to send out monthly project notification emails."
-    ProjectService.update_all( Project::A_PERIOD_MONTHLY )
+    ProjectUpdateService.update_all( Project::A_PERIOD_MONTHLY )
     puts "---"
   end
 
