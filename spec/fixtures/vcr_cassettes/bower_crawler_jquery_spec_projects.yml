@@ -312,4 +312,148 @@ http_interactions:
       string: '{"resources":{"core":{"limit":5000,"remaining":4948,"reset":1391615089},"search":{"limit":30,"remaining":30,"reset":1391614044}},"rate":{"limit":5000,"remaining":4948,"reset":1391615089}}'
     http_version: 
   recorded_at: Wed, 05 Feb 2014 15:26:24 GMT
-recorded_with: VCR 2.8.0
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:54:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4996'
+      X-Ratelimit-Reset:
+      - '1399989041'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:545D:23D237C:53721623
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 3061975e1f37121b3751604ad153c687
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":4996,"reset":1399989041},"search":{"limit":30,"remaining":30,"reset":1399985759}},"rate":{"limit":5000,"remaining":4996,"reset":1399989041}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:54:59 GMT
+- request:
+    method: get
+    uri: https://api.github.com/rate_limit
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 3.1.0
+      Authorization:
+      - token 8db49bc64f46ec9d73a4570903a24bf997b32a7e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 13 May 2014 12:55:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4996'
+      X-Ratelimit-Reset:
+      - '1399989041'
+      Cache-Control:
+      - no-cache
+      X-Oauth-Scopes:
+      - gist, repo, user
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 5DBEFA5B:545E:2B2291E:53721624
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Accept-Encoding
+      X-Served-By:
+      - 971af40390ac4398fcdd45c8dab0fbe7
+    body:
+      encoding: UTF-8
+      string: '{"resources":{"core":{"limit":5000,"remaining":4996,"reset":1399989041},"search":{"limit":30,"remaining":30,"reset":1399985760}},"rate":{"limit":5000,"remaining":4996,"reset":1399989041}}'
+    http_version: 
+  recorded_at: Tue, 13 May 2014 12:55:00 GMT
+recorded_with: VCR 2.9.0

@@ -164,7 +164,7 @@ class User::ProjectsController < ApplicationController
   def reparse
     id = params[:id]
     project = Project.find_by_id id
-    ProjectService.update project
+    ProjectUpdateService.update project
     flash[:info] = "Project re parse is done."
     redirect_to user_project_path( project )
   end
@@ -301,29 +301,23 @@ class User::ProjectsController < ApplicationController
     end
 
     def upload_and_store file
-      project = ProjectService.upload file, current_user
-      stored  = store_project(project)
-      return project if stored
-      nil
+      project = ProjectImportService.import_from_upload file, current_user
+      set_message_for project
+      project
     end
 
     def fetch_and_store project_url
       project_name   = project_url.split("/").last
-      project        = ProjectService.build_project( project_url, project_name )
-      project.user   = current_user
-      project.source = Project::A_SOURCE_URL
-      stored = store_project(project)
-      return project if stored
-      nil if not stored
+      project        = ProjectImportService.import_from_url( project_url, project_name, current_user )
+      set_message_for project
+      project
     end
 
-    def store_project( project )
-      if ProjectService.store project
+    def set_message_for( project )
+      if project
         flash[:success] = "Project was created successfully."
-        true
       else
         flash[:error] = "An error occured. Something is wrong with your file. Please contact the VersionEye Team on Twitter."
-        false
       end
     end
 

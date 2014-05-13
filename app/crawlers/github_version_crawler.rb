@@ -53,7 +53,7 @@ class GithubVersionCrawler
       product.save
       logger.info "update #{product.name} v #{version} was released at #{version.released_at}"
     end
-    remaining = OctokitApi.instance.ratelimit.remaining
+    remaining = OctokitApi.client.ratelimit.remaining
     logger.info "check version dates for #{product.prod_key} - Remaining API requests: #{remaining}"
   end
 
@@ -109,7 +109,7 @@ class GithubVersionCrawler
 
   def self.fetch_commit_date( owner_repo, sha )
     return nil unless owner_repo
-    api = OctokitApi.instance
+    api = OctokitApi.client
     commit = api.commit(owner_repo, sha)
     commit_json = JSON.parse commit.to_json
     return commit_json["commit"]["committer"]["date"].to_s
@@ -131,7 +131,7 @@ class GithubVersionCrawler
   end
 
   def self.repo_data owner_repo
-    api  = OctokitApi.instance
+    api  = OctokitApi.client
     root = api.root
     root.rels[:repository].get(:uri => owner_repo).data
   end
