@@ -156,7 +156,7 @@ class User::GithubReposController < ApplicationController
     def import_repo(command_data, project_name, branch, filename)
       err_message = 'Something went wrong. It was not possible to save the project. Please contact the VersionEye team.'
 
-      project = ProjectService.import_from_github current_user, project_name, filename, branch
+      project = ProjectImportService.import_from_github current_user, project_name, filename, branch
 
       raise err_message if project.nil?
       raise project if project.is_a? String
