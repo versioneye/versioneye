@@ -17,14 +17,21 @@
         <a href="/java"><span class = "icon_java on"></span></a>
       </div>
       <div class="span9">
-        <h5 class="integration_header"> Java </h5>
+        <h5 class="integration_header"> JVM - Maven / Gradle / Ivy </h5>
         <p >
-          For Java we support <a href="http://maven.apache.org/">Maven</a> of course.
+          For Java we support <a href="http://maven.apache.org/">Maven</a> of course!
           If your project has only one pom.xml file then it works fine with our GitHub/Bitbucket
-          integration. If you project has multiple pom.xml files we recommend to use the  <a href="https://github.com/versioneye/versioneye_maven_plugin">VersionEye Maven Plugin</a>.
+          integration. If you project has multiple pom.xml files we recommend to use the
+          <a href="https://github.com/versioneye/versioneye_maven_plugin">VersionEye Maven Plugin</a>.
+          This plugin resolves the dependencies locally and creates/updates a project at VersionEye.
+          This is especially useful for bigger projects with parent poms and reactor builds.
         </p>
         <p>
-          <a href="http://www.gradleware.com/">Gradle</a> is also supported. VersionEye is watching for a *.gradle file in your project.
+          <a href="http://www.gradleware.com/">Gradle</a> is also supported. VersionEye is watching for
+          a *.gradle file in your project. In addition to that you can use the
+          <a href="https://github.com/stempler/gradle-versioneye-plugin">Gradle VersionEye Plugin</a>
+          from Simon Templer. It works similar to the
+          <a href="https://github.com/versioneye/versioneye_maven_plugin">Maven Plugin</a>.
         </p>
         <p>
           <a href="https://ant.apache.org/ivy/">Apache Ivy</a> support is part of our roadmap.
