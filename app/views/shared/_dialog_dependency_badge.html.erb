@@ -49,10 +49,10 @@
     </form>
 
     <script type="text/javascript">
-      image_url = document.URL.split("?")[0] + "/badge.png";
+      image_url = document.URL.split("?")[0] + "/badge.svg";
       url       = document.URL.split("?")[0]
       <% if @product %>
-        image_url = "<%= product_version_badge_url(:lang => @product.language_esc, :key => @product.to_param, :version => Version.encode_version(@product.version) ) %>" + ".png";
+        image_url = "<%= product_version_badge_url(:lang => @product.language_esc, :key => @product.to_param, :version => Version.encode_version(@product.version) ) %>" + ".svg";
         url = "<%= package_version_url(:lang => @product.language_esc, :key => @product.to_param, :version => Version.encode_version(@product.version)) %>";
       <% end %>
 
