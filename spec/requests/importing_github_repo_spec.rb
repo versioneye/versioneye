@@ -38,7 +38,7 @@ describe "Importing github repo as new project via github_repos_controller" do
     end
 
     it "should raise exception when user tries to import not existing repo" do
-      ProjectService.should_receive(:import_from_github).and_return nil
+      ProjectImportService.should_receive(:import_from_github).and_return nil
       repo1['command'] = "import"
       repo1['command_data'] = {
         "scmFullname" => "timgluz/mallet-lda",
@@ -64,7 +64,7 @@ describe "Importing github repo as new project via github_repos_controller" do
       project1.save.should be_true
 
       project1.projectdependencies.size.should > 0
-      ProjectService.should_receive(:import_from_github).and_return(project1)
+      ProjectImportService.should_receive(:import_from_github).and_return(project1)
       repo1['command'] = "import"
       repo1['command_data'] = {
         "scmFullname" => "timgluz/mallet-lda",
