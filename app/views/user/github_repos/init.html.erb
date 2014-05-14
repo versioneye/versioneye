@@ -47,4 +47,4 @@
 
 <% end %>
 
-<%= render "shared/scm_app_templates" %>
+<%= render "shared/scm_app_templates", :locals => { :scm_base_url => Settings.instance.github_base_url } %>
