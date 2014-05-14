@@ -4,13 +4,13 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Versioneye::Application.load_tasks
-
 namespace :db do
 
   desc "db:migration fakes"
-  task :migrate => :environment do
+  task :migrate do
     p 'No. We will not migrate!'
   end
 
 end
+
+Versioneye::Application.load_tasks
