@@ -36,4 +36,4 @@
 <% end %>
 
 <!-- templates for frontend app -->
-<%= render "shared/scm_app_templates" %>
+<%= render :partial => "shared/scm_app_templates", :locals => { :scm_base_url => 'https://bitbucket.org' } %>

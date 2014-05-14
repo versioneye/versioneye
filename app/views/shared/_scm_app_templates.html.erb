@@ -54,7 +54,7 @@
               {{ var logo_path = "/assets/language/" }}
               {{ var logo_name = (repo.supported) ? repo.language : "default" }}
               <img  class = "pull-left" src = {{= logo_path + logo_name + ".png"}} style = " height: 72px; " />
-              <a href= "http://www.github.com/{{= repo.fullname}}" target="_blank">
+              <a href= "<%= scm_base_url %>/{{= repo.fullname}}" target="_blank">
                 <h5>{{= repo.fullname }}</h5>
               </a>
               <div class ="repo-labels"></div>
@@ -68,7 +68,7 @@
         <div class = "span12">
           <div class = "repo-controls-container">
             <div class = "span12">
-              <a href= "http://www.github.com/{{= repo.fullname}}" target="_blank">
+              <a href= "<%= scm_base_url %>/{{= repo.fullname}}" target="_blank">
                 <h5>{{= repo.fullname }}</h5>
               </a>
             </div>
