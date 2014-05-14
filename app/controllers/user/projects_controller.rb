@@ -165,7 +165,7 @@ class User::ProjectsController < ApplicationController
     id = params[:id]
     project = Project.find_by_id id
     ProjectUpdateService.update project
-    flash[:info] = "Project re parse is done."
+    flash[:success] = "Project re parsed successfully"
     redirect_to user_project_path( project )
   end
 
