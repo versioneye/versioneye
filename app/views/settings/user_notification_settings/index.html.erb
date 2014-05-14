@@ -31,6 +31,15 @@
       </div>
 
       <div class="control-group">
+        <div class="controls">
+          <label for="notification_emails" style="font-size: 12px;" class="checkbox">
+            <%= check_box_tag "notification_emails", true, @user_notification.notification_emails, :id => "notification_emails" %>
+            I want to receive notification emails for the libraries I follow.
+          </label>
+        </div>
+      </div>
+
+      <div class="control-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>
