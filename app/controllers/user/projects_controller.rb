@@ -73,7 +73,12 @@ class User::ProjectsController < ApplicationController
     id    = params[:id]
     badge = ProjectService.badge_for_project id
     path  = 'app/assets/images/badges'
-    send_file "#{path}/dep_#{badge}.png", :type => 'image/png', :disposition => 'inline'
+    # send_file "#{path}/dep_#{badge}.png", :type => 'image/png', :disposition => 'inline'
+    badge    = badge.gsub("-", "_")
+    color    = badge.eql?('up_to_date') ? 'green' : 'yellow'
+    url = "http://img.shields.io/badge/dependencies-#{badge}-#{color}.svg"
+    response = HttpService.fetch_response url
+    send_data response.body, :type => "image/svg+xml", :disposition => 'inline'
   end
 
   def update_name
