@@ -87,7 +87,12 @@ class ProductsController < ApplicationController
     prod_key = Product.decode_prod_key params[:key]
     version  = Version.decode_version  params[:version]
     badge    = badge_for_product language, prod_key, version
-    send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
+    # send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
+    badge    = badge.gsub("-", "_")
+    color    = badge.eql?('up_to_date') ? 'green' : 'yellow'
+    url = "http://img.shields.io/badge/dependencies-#{badge}-#{color}.svg"
+    response = HttpService.fetch_response url
+    send_data response.body, :type => "image/svg+xml", :disposition => 'inline'
   end
 
   def references
