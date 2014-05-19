@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 87ac311501d098a09b9a644a74d98fd63ca77cff
-  tag: v1.2.0
+  revision: 84403f94c4995d878559c599438523135f48ad9a
+  tag: v1.2.3
   specs:
-    versioneye-core (1.2.0)
+    versioneye-core (1.2.3)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       cocoapods-core (~> 0.32.0)
@@ -57,7 +57,7 @@ GEM
     ansi (1.4.3)
     arel (3.0.3)
     awesome_print (1.2.0)
-    aws-sdk (1.40.2)
+    aws-sdk (1.40.3)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
     binding.repl (1.0.4.1)
@@ -107,7 +107,7 @@ GEM
     columnize (0.8.9)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
-    dalli (2.7.1)
+    dalli (2.7.2)
     database_cleaner (1.2.0)
     debugger (1.6.6)
       columnize (>= 0.3.1)
