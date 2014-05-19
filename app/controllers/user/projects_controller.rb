@@ -108,11 +108,12 @@ class User::ProjectsController < ApplicationController
       return
     end
 
-    new_project = ProjectService.upload file, current_user, false
+    new_project = ProjectImportService.import_from_upload file, current_user, false
     if new_project.nil?
       flash[:error] = 'Something went wrong. Please contact the VersionEye Team.'
       redirect_to user_projects_path
     end
+
     project.update_from new_project
     Rails.cache.delete( project.id.to_s )
     flash[:success] = "ReUpload was successful."
