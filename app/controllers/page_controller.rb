@@ -142,13 +142,13 @@ class PageController < ApplicationController
 
     def fetch_lang_and_key( key )
       language = ""
-      if key.match(/^npm\//)
+      if key.match(/\Anpm\//)
         key = key.gsub("npm\/", "")
         language = Product::A_LANGUAGE_NODEJS
-      elsif key.match(/^pip\//)
+      elsif key.match(/\Apip\//)
         key = key.gsub("pip\/", "")
         language = Product::A_LANGUAGE_PYTHON
-      elsif key.match(/^php\//)
+      elsif key.match(/\Aphp\//)
         key = key.gsub("php\/", "")
         language = Product::A_LANGUAGE_PHP
       end

@@ -68,7 +68,7 @@ module SessionsHelper
     if locale && !locale.empty?
       I18n.locale = locale
     elsif I18n.locale.nil?
-      I18n.locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+      I18n.locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/\A[a-z]{2}/).first
     end
   rescue => e
     Rails.logger.error e.message

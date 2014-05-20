@@ -6,7 +6,7 @@ class LanguageConstraint
     languages = distinct_languages
     languages << 'nodejs'
     languages.each do |lang|
-      return true if /^#{lang}$/i =~ path || /^#{lang}\/.*$/i =~ path
+      return true if /\A#{lang}\z/i =~ path || /\A#{lang}\/.*\z/i =~ path
       return true if path.match(/c\+\+/i)
     end
     false
