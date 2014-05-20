@@ -7,10 +7,18 @@ class Settings::UserNotificationSettingsController < ApplicationController
   end
 
   def update
+    general_news  = params[:general_news]
+    feature_news  = params[:new_feature_news]
+    notifications = params[:notification_emails]
+
+    general_news  = false if general_news.to_s.empty?
+    feature_news  = false if feature_news.to_s.empty?
+    notifications = false if notifications.to_s.empty?
+
     @user_notification                     = current_user.user_notification_setting
-    @user_notification.newsletter_news     = params[:general_news]
-    @user_notification.newsletter_features = params[:new_feature_news]
-    @user_notification.notification_emails = params[:notification_emails]
+    @user_notification.newsletter_news     = general_news
+    @user_notification.newsletter_features = feature_news
+    @user_notification.notification_emails = notifications
     if @user_notification.save
       flash[:success] = 'Your changes have been saved successfully.'
     else
