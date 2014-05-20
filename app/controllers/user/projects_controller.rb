@@ -5,6 +5,7 @@ class User::ProjectsController < ApplicationController
 
   def index
     @project = Project.new
+    @projects = Project.where(:user_id => current_user.id.to_s).asc(:language, :name)
   end
 
   def new

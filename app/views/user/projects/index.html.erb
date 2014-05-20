@@ -7,12 +7,12 @@
 <div class="span8">
 
   <div class="row content_header_def" >
-    VersionEye is watching <b><%= pluralize(current_user.projects.size, "Project") %></b> for you.
+    VersionEye is watching <b><%= pluralize( @projects.size, "Project" ) %></b> for you.
   </div>
 
   <div class="span8 content" >
     <div id="projects" >
-      <%= render partial: "/user/projects/helpers/project" , collection: current_user.projects %>
+      <%= render partial: "/user/projects/helpers/project" , collection: @projects %>
     </div>
   </div>
 
