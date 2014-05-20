@@ -39,6 +39,10 @@ namespace :versioneye do
     puts "START to update all github repos"
     GitHubService.update_all_repos
     puts "---"
+
+    puts "START to update all user languages"
+    UserService.update_languages
+    puts "---"
   end
 
   desc "excute weekly jobs"

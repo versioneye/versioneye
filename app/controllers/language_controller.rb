@@ -15,15 +15,13 @@ class LanguageController < ApplicationController
     @languages = Product::A_LANGS_LANGUAGE_PAGE
     @language  = Language.where(name: @lang).first
 
-    #build sample population of followers
     population = []
-    User.all().each do |user|
-      population << user if user.products.where(language: @lang).exists?
-      break if population.count >= 50
+    users = User.where(:languages => /\"#{@lang}\"/).limit(48)
+    users.each do |user|
+      population << user
     end
 
-    #pick random followers from population
-    @followers = population.sample(24)
+    @followers = population.sample(24) # pick random followers from population
 
     # lang_pattern = Regexp.new(@lang.downcase, true)
     # @vulnerabilities = SecurityNotification.all.in(languages: [lang_pattern]).desc(:modified).limit(30)
