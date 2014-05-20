@@ -92,7 +92,7 @@ class ProductMigration
   def self.remove_bad_links lang
     Product.where(language: lang).each do |product|
       product.http_links.each do |link|
-        if link.link.match(/^http.*/).nil?
+        if link.link.match(/\Ahttp.*/).nil?
           Rails.logger.info "remove #{link.link}"
           link.remove
         end

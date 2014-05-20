@@ -56,7 +56,7 @@ class TikiCrawler
       create_new_version( product, version_number, version_object )
       return nil
     end
-    if version_number.match(/^dev\-/)
+    if version_number.match(/\Adev\-/)
       Dependency.remove_dependencies Product::A_LANGUAGE_PHP, product.prod_key, version_number
       ComposerUtils.create_dependencies product, version_number, version_object
       Versionarchive.remove_archives Product::A_LANGUAGE_PHP, product.prod_key, version_number
