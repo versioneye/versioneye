@@ -9,11 +9,11 @@ class Settings::BillingController < ApplicationController
   def update
     @billing_address = current_user.fetch_or_create_billing_address
     if @billing_address.update_from_params params
-      flash[:success] = "Your billing address was saved successfully."
+      flash.now[:success] = "Your billing address was saved successfully."
     else
-      flash[:error] = "An error occured. Please try again."
+      flash.now[:error] = "An error occured. Please try again."
     end
-    redirect_to settings_billing_path
+    render "index"
   end
 
 end

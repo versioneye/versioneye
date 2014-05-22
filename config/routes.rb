@@ -120,6 +120,7 @@ Versioneye::Application.routes.draw do
 
     get  'billing'             , :to => 'billing#index'
     post 'update_billing'      , :to => 'billing#update'
+    get  'update_billing'      , :to => 'billing#index'
 
     get  'payments'            , :to => 'payments#index'
     get  'receipt/:invoice_id' , :to => 'payments#receipt', :as => 'receipt'

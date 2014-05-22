@@ -3,6 +3,7 @@
   <%= label_tag :name, "Name", :class => "control-label-big", :for => "name" %>
   <div class="controls" style="margin-left: 155px;">
     <input type="text" size="20" autocomplete="off" class="round" id="name" name="name" value="<%= @billing_address.name %>" /> *
+    <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :name} %>
   </div>
 </div>
 
@@ -17,6 +18,7 @@
   <%= label_tag :street, "Street", :class => "control-label-big", :for => "street" %>
   <div class="controls" style="margin-left: 155px;">
     <input type="text" size="20" autocomplete="off" class="round" id="street" name="street" value="<%= @billing_address.street %>" /> *
+    <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :street} %>
   </div>
 </div>
 
@@ -24,6 +26,7 @@
   <%= label_tag :zip_code, "Zip / City", :class => "control-label-big", :for => "zip_code" %>
   <div class="controls" style="margin-left: 155px;">
     <input type="text" size="20" autocomplete="off" class="round" id="zip_code" name="zip_code" style="width: 40px;" value="<%= @billing_address.zip %>" /> / <input type="text" size="20" autocomplete="off" class="round" id="city" name="city" style="width: 140px;" value="<%= @billing_address.city %>" /> *
+    <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :city} %>
   </div>
 </div>
 
@@ -31,5 +34,6 @@
   <%= label_tag :country, "Country", :class => "control-label-big", :for => "country" %>
   <div class="controls" style="margin-left: 155px;">
     <input type="text" size="20" autocomplete="off" class="round" id="country" name="country" value="<%= @billing_address.country %>" /> *
+    <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :country} %>
   </div>
 </div>
