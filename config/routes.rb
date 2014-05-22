@@ -118,6 +118,10 @@ Versioneye::Application.routes.draw do
     get  'creditcard'          , :to => 'creditcard#index'
     post 'update_creditcard'   , :to => 'creditcard#update'
 
+    get  'billing'             , :to => 'billing#index'
+    post 'update_billing'      , :to => 'billing#update'
+    get  'update_billing'      , :to => 'billing#index'
+
     get  'payments'            , :to => 'payments#index'
     get  'receipt/:invoice_id' , :to => 'payments#receipt', :as => 'receipt'
 

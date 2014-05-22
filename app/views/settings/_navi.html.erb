@@ -19,6 +19,7 @@
     <% if !Rails.env.enterprise? %>
       <li><%= link_to 'Plans & Pricing'    , settings_plans_path %></li>
       <li><%= link_to 'Payments'           , settings_payments_path %></li>
+      <li><%= link_to 'Billing Address'    , settings_billing_path %></li>
     <% end %>
 
     <li><%= link_to 'Connect'            , settings_connect_path %></li>
