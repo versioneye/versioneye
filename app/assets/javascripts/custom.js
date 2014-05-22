@@ -1,17 +1,4 @@
 
-var winWidth = 950;
-var winHeigh = 550;
-var left = (screen.width/2)-(winWidth/2);
-var top = (screen.height/2)-(winHeigh/2);
-
-var fb_domainlink = "https://graph.facebook.com/oauth/authorize?";
-var fb_req_perms = "req_perms=email&";
-var fb_clientid = "client_id=230574627021570&";
-var fb_scope = "scope=email,offline_access&";
-var fb_redirect = "redirect_uri=https://www.versioneye.com/auth/facebook/callback";
-var oauth_facebook_link = fb_domainlink + fb_req_perms + fb_clientid + fb_scope + fb_redirect;
-var values = [{ label: "Choice1", va: "value1" }, { label: "Choice2", va: "value2" }]
-
 jQuery(document).ready(function(){
   jQuery('#q').tbHinter({
     text: "Search for a software library"
@@ -105,16 +92,12 @@ jQuery(document).ready(function(){
 function stripeResponseHandler(status, response) {
   if (response.error) {
     alert(response.error.message)
-    // show the errors on the form
     $(".payment-errors").text(response.error.message);
     jQuery(".submit-button").removeAttr("disabled");
   } else {
     var form$ = jQuery("#payment-form");
-    // token contains id, last4, and card type
-    var token = response['id'];
-    // insert the token into the form so it gets submitted to the server
+    var token = response['id']; // token contains id, last4, and card type
     form$.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-    // and submit
     form$.get(0).submit();
   }
 }
