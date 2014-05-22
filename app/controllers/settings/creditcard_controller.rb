@@ -11,26 +11,36 @@ class Settings::CreditcardController < ApplicationController
   end
 
   def update
-    plan_name_id = params[:plan]
-    stripe_token = params[:stripeToken]
-    if stripe_token.nil? || stripe_token.empty?
-      flash[:error] = 'Sorry. But something went wrong. Please try again later.'
-      redirect_to settings_plans_path
+    user = current_user
+    billing_address = user.fetch_or_create_billing_address
+    if billing_address.update_from_params( params ) == false
+      flash[:error] = 'Please complete the billing information.'
+      redirect_to settings_creditcard_path
       return
     end
-    user = current_user
-    customer = StripeService.create_or_update_customer user, stripe_token, plan_name_id
-    if customer
-      user.stripe_token = stripe_token
-      user.stripe_customer_id = customer.id
-      user.plan = Plan.by_name_id plan_name_id
-      user.save
-      user.billing_address.update_from_params( params )
-      flash[:success] = 'Many Thanks. We just updated your plan.'
-    else
-      flash[:error] = 'Something went wrong. Please contact the VersionEye Team.'
+
+    plan_name_id = params[:plan]
+    stripe_token = params[:stripeToken]
+    if stripe_token.to_s.empty? || plan_name_id.to_s.empty?
+      flash[:error] = 'Stripe token is missing. Please contact the VersionEye Team.'
+      redirect_to settings_creditcard_path
+      return
     end
-    redirect_to settings_plans_path
+
+    customer = StripeService.create_or_update_customer user, stripe_token, plan_name_id
+    if customer.nil?
+      flash[:error] = 'Stripe customer is missing. Please contact the VersionEye Team.'
+      redirect_to settings_creditcard_path
+      return
+    end
+
+    user.stripe_token = stripe_token
+    user.stripe_customer_id = customer.id
+    user.plan = Plan.by_name_id plan_name_id
+    user.save
+
+    flash[:success] = 'Many Thanks. We just updated your plan.'
+    redirect_to settings_creditcard_path
   end
 
 end
