@@ -27,9 +27,29 @@ describe "Payment Process" do
       page.should have_content(Plan.business_small_plan.name)
       page.should have_content(Plan.business_normal_plan.name)
 
+
+      ### It doesn't save because billing info is missing!
+
       click_button "#{Plan.personal_plan.name_id}_button"
       page.should have_content("Credit Card Information")
       page.should have_content("VersionEye doesn't store any Credit Card data")
+      fill_in 'cardnumber', :with => "5105 1051 0510 5100"
+      fill_in 'cvc',        :with => "777"
+      fill_in 'month',      :with => "10"
+      fill_in 'year',       :with => "2017"
+      click_button 'Save'
+
+      page.should have_content("Please complete the billing information.")
+
+
+      ### Now it will save becasue billing info is complete
+
+      fill_in 'name',       :with => "Hans Meier"
+      fill_in 'street',     :with => "Johanniterstrasse 17"
+      fill_in 'city',       :with => "Mannheim"
+      fill_in 'zip_code',   :with => "68199"
+      fill_in 'country',    :with => "Germany"
+
       fill_in 'cardnumber', :with => "5105 1051 0510 5100"
       fill_in 'cvc',        :with => "777"
       fill_in 'month',      :with => "10"
