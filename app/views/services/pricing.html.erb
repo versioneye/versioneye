@@ -2,8 +2,8 @@
 
 <div class = "col2-left col2-right">
   <p style="padding-top: 30px; margin-bottom: 45px; font-size: 18px;">
-    VersionEye allows you to register and monitor your projects for free.
-    We only charge a small fee for monitoring private repositories.
+    VersionEye allows you to monitor your open source projects for free!
+    We only charge a small fee for monitoring project files in private repositories.
     VersionEye has a variety of plans to suit everyone`s needs. <br/>
     <br/>
     <b>All of our plans can be cancelled or changed on a monthly base.</b>
@@ -12,10 +12,10 @@
 
 <div class="row well pricing success">
   <div class="span4" >
-    <h3 class="success pricing_h" >Free</h3>
+    <h3 class="success pricing_h" >Trial</h3>
     <p>
-      Try VersionEye for free.<br/>
-      You can monitor unlimited public, but no private repositories.
+      Try VersionEye for free!<br/>
+      And try a little bit more for only € 1/month ;-)
     </p>
   </div>
   <div class = "span6">
@@ -34,29 +34,50 @@
           <button class="btn2 btn2-big pull-right">Sign Up</button>
         </form>
       <% end %>
-      <h4> $0/month </h4>
+      <h4> € 0/month </h4>
       <ul class = "subscription">
         <li>
-          Unlimited public repositories
+          Unlimited public projects
         </li>
         <li>
-          0 private repositories
+          <b>1 private project</b>
+        </li>
+      </ul>
+    </div>
+    <hr />
+    <div class="subscription-item" style="padding-left: 40px;">
+      <% if signed_in? %>
+        <% if @plan && @plan.name_id.eql?( '02_personal' ) %>
+          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
+        <% else %>
+          <form action="/settings/update_plan" method="POST" >
+            <input type="hidden" name="plan" value="02_personal" />
+            <button id="personal_button" type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+          </form>
+        <% end %>
+      <% else %>
+        <form action="/signup" >
+          <button class="btn2 btn2-big pull-right">Sign Up</button>
+        </form>
+      <% end %>
+      <h4> € 1/month </h4>
+      <ul class = "subscription">
+        <li>
+          Unlimited public projects
         </li>
         <li>
-          No support for GitHub organizations
-        </li>
-        <li>
-          1 email
+          <b>2 private projects</b>
         </li>
       </ul>
     </div>
   </div>
+
 </div>
 
-<div class="row well pricing warning">
+<div class="row well pricing alert-info">
   <div class= "span4">
     <h3 class = "pricing_h">Personal</h3>
-    <p>Use the personal plan to track your private repositories.</p>
+    <p>Do the next step with the personal plan to track your personal projects.</p>
   </div>
   <div class = "span6">
     <div class="subscription-item" style="padding-left: 40px;">
@@ -74,31 +95,17 @@
           <button class="btn2 btn2-big pull-right">Sign Up</button>
         </form>
       <% end %>
-      <h4> $3/month </h4>
+      <h4> € 3/month </h4>
       <ul class = "subscription">
         <li>
-          Unlimited public repositories
+          Unlimited public projects
         </li>
         <li>
-          5 private repositories
-        </li>
-        <li>
-          No support for GitHub organizations
-        </li>
-        <li>
-          1 email
+          <b>5 private projects</b>
         </li>
       </ul>
     </div>
-  </div>
-</div>
-
-<div class="row well pricing info">
-  <div class= "span4">
-    <h3 class = "pricing_h">Business</h3>
-    <p>Use the business plans as an organization and take advantage of the advanced features.</p>
-  </div>
-  <div class="span6">
+    <hr/>
     <div class="subscription-item" style="padding-left: 40px;">
       <% if signed_in? %>
         <% if @plan && @plan.name_id.eql?( '02_business_small' ) %>
@@ -114,19 +121,73 @@
           <button class="btn2 btn2-big pull-right">Sign Up</button>
         </form>
       <% end %>
-      <h4> $7/month </h4>
+      <h4> € 6/month </h4>
       <ul class = "subscription">
         <li>
-          Unlimited public repositories
+          Unlimited public projects
         </li>
         <li>
-          10 private repositories
+          <b>10 private projects</b>
+        </li>
+      </ul>
+    </div>
+    <hr />
+    <div class="subscription-item" style="padding-left: 40px;">
+      <% if signed_in? %>
+        <% if @plan && @plan.name_id.eql?( '02_business_small_' ) %>
+          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
+        <% else %>
+          <form action="/settings/update_plan" method="POST" >
+            <input type="hidden" name="plan" value="02_business_small" />
+            <button id="business_small_button" type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+          </form>
+        <% end %>
+      <% else %>
+        <form action="/signup" >
+          <button class="btn2 btn2-big pull-right">Sign Up</button>
+        </form>
+      <% end %>
+      <h4> € 9/month </h4>
+      <ul class = "subscription">
+        <li>
+          Unlimited public projects
         </li>
         <li>
-          Unlimited email addresses
+          <b>15 private projects</b>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row well pricing info">
+  <div class= "span4">
+    <h3 class = "pricing_h">Business</h3>
+    <p>Be brave and be proffessional! You are a team leader now. Keep your team up-to-date.</p>
+  </div>
+  <div class="span6">
+    <div class  = "subscription-item" style="padding-left: 40px;">
+      <% if signed_in? %>
+        <% if @plan && @plan.name_id.eql?( '02_business_normal' ) %>
+          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
+        <% else %>
+          <form action="/settings/update_plan" method="POST" >
+            <input type="hidden" name="plan" value="02_business_normal" />
+            <button id="business_normal_button" type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+          </form>
+        <% end %>
+      <% else %>
+        <form action="/signup" >
+          <button class="btn2 btn2-big pull-right">Sign Up</button>
+        </form>
+      <% end %>
+      <h4> € 25/month </h4>
+      <ul class = "subscription">
+        <li>
+          Unlimited public projects
         </li>
         <li>
-          Support for GitHub organizations
+          <b>50 private projects</b>
         </li>
       </ul>
     </div>
@@ -146,22 +207,49 @@
           <button class="btn2 btn2-big pull-right">Sign Up</button>
         </form>
       <% end %>
-      <h4> $25/month </h4>
+      <h4> € 50/month </h4>
       <ul class = "subscription">
         <li>
-          Unlimited public repositories
+          Unlimited public projects
         </li>
         <li>
-          50 private repositories
+          <b>100 private projects</b>
+        </li>
+      </ul>
+    </div>
+    <hr />
+    <div class  = "subscription-item" style="padding-left: 40px;">
+      <% if signed_in? %>
+        <% if @plan && @plan.name_id.eql?( '02_business_normal' ) %>
+          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
+        <% else %>
+          <form action="/settings/update_plan" method="POST" >
+            <input type="hidden" name="plan" value="02_business_normal" />
+            <button id="business_normal_button" type="submit" class="btn2 btn2-big pull-right" >Book It</button>
+          </form>
+        <% end %>
+      <% else %>
+        <form action="/signup" >
+          <button class="btn2 btn2-big pull-right">Sign Up</button>
+        </form>
+      <% end %>
+      <h4> € 100/month </h4>
+      <ul class = "subscription">
+        <li>
+          Unlimited public projects
         </li>
         <li>
-          Unlimited email addresses
-        </li>
-        <li>
-          Support for GitHub organizations
+          <b>200 private projects</b>
         </li>
       </ul>
     </div>
 
   </div>
+</div>
+
+<div class = "col2-left col2-right">
+  <p style="margin-bottom: 45px; font-size: 18px;">
+    We're also offering bigger plans and an on-premise version of VersionEye. <br/>
+    For any questions, contact us at <a href="mailto:support@versioneye.com">support@versioneye.com</a>!
+  </p>
 </div>
