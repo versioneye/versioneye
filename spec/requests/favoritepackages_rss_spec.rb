@@ -12,7 +12,7 @@ describe "UsersController" do
 
     product = Product.fetch_product( product.language, product.prod_key )
 
-    created = CrawlerUtils.create_notifications product, "1.0.0"
+    created = create_notifications product, "1.0.0"
     created.should eq(1)
 
     fav_path = "/users/#{user1.username}/favoritepackages.rss"
@@ -21,6 +21,32 @@ describe "UsersController" do
     response.body.should match( product.name     )
     response.body.should match( product.language )
     response.body.should match( "1.0.0"          )
+  end
+
+  def create_notifications(product, version_number, logger = nil)
+    new_notifications = 0
+    subscribers = product.users
+    return new_notifications if subscribers.nil? || subscribers.empty?
+
+    subscribers.each do |subscriber|
+      success = create_notification( subscriber, product, version_number, logger )
+      new_notifications += 1 if success
+    end
+    new_notifications
+  rescue => e
+    p e
+    false
+  end
+
+  def create_notification user, product, version_number, logger
+    notification            = Notification.new
+    notification.user       = user
+    notification.product    = product
+    notification.version_id = version_number
+    notification.save
+  rescue => e
+    p e
+    false
   end
 
 end
