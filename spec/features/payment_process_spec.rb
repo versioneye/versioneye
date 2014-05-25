@@ -68,10 +68,10 @@ describe "Payment Process" do
 
       visit pricing_path
       Plan.count.should eq(4)
-      page.should have_content(Plan.free_plan.name)
-      page.should have_content("You can monitor unlimited public, but no private repositories.")
-      page.should have_content("Use the personal plan to track your private repositories.")
-      page.should have_content("Use the business plans as an organization and take advantage of the advanced features.")
+      page.should have_content("Trial")
+      page.should have_content("Try VersionEye for free!")
+      page.should have_content("Do the next step with the personal plan to track your personal projects.")
+      page.should have_content("Be brave and be proffessional! You are a team leader now. Keep your team up-to-date.")
 
       click_button "business_normal_button"
       page.should have_content("We updated your plan successfully")
