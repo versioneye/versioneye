@@ -50,9 +50,9 @@ group :test do
   gem 'capybara'          , '~> 2.2.0'
   gem 'capybara-firebug'  , '~> 2.0.0'
   gem 'selenium-webdriver', '~> 2.41.0'
-  gem 'fakeweb'           , '~> 1.3.0'
   gem 'vcr'               , '~> 2.9.0',  :require => false
   gem 'webmock'           , '~> 1.17.0', :require => false
+  gem "fakeweb"           , '~> 1.3'
   gem 'database_cleaner'  , '~> 1.2.0'
   gem 'factory_girl'      , '~> 4.4.0'
   gem 'factory_girl_rails', '~> 4.4.0'
