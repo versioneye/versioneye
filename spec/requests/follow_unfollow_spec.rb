@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "follow and unfollow" do
 
   let(:prod_key){ "json_goba" }
-  let(:prod_lang){ "Ruby" }
+  let(:prod_lang){ Product::A_LANGUAGE_RUBY }
   let(:version){"1.0"}
   let(:user){ FactoryGirl.create(:default_user) }
 
@@ -16,7 +16,7 @@ describe "follow and unfollow" do
     product.prod_type     = "RubyGem"
     product.language      = Product::A_LANGUAGE_RUBY
     product.version       = "1.0"
-    product.save
+    product.save.should be_true
     version               = Version.new
     version.version       = "1.0"
     product.versions.push(version)
@@ -26,9 +26,17 @@ describe "follow and unfollow" do
   context "logged out" do
     it "fetches product page successfully" do
       init_product
-      get "/#{prod_lang}/#{prod_key}/#{version}"
+      p Product.count
+      p Product.first.to_s
+      begin
+        get "/#{prod_lang}/#{prod_key}/#{version}"
+      rescue => e
+        p e.message
+        p e.backtrace.messages.join(" - ")
+      end
       assert_response :success
       assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-primary", :type => "submit" }
+
     end
   end
 

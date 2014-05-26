@@ -1,4 +1,5 @@
-module BitbucketHelpers 
+module BitbucketHelpers
+
   def connect_account(user)
     visit signin_path
     click_button "Login with Bitbucket"
@@ -15,7 +16,6 @@ module BitbucketHelpers
     end
 
     user
-
   end
-end
 
+end
