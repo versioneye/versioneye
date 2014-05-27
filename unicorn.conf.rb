@@ -18,6 +18,7 @@ worker_processes 5
 # If running the master process as root and the workers as an unprivileged
 # user, do this to switch euid/egid in the workers (also chowns logs):
 # user "unprivileged_user", "unprivileged_group"
+user "ubuntu"
 
 # Help ensure your application will always spawn in the symlinked
 # "current" directory that Capistrano sets up.
@@ -38,7 +39,7 @@ pid "/var/www/versioneye/current/pids/unicorn.pid"
 # Additionally, ome applications/frameworks log to stderr or stdout,
 # so prevent them from going to /dev/null when daemonized here:
 stderr_path "/var/www/versioneye/shared/log/unicorn.stderr.log"
-# stdout_path "/var/www/versioneye/shared/log/unicorn.stdout.log"
+stdout_path "/var/www/versioneye/shared/log/unicorn.stdout.log"
 
 # combine Ruby 2.0.0dev or REE with "preload_app true" for memory savings
 # http://rubyenterpriseedition.com/faq.html#adapt_apps_for_cow
