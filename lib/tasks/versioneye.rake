@@ -100,12 +100,13 @@ namespace :versioneye do
   # ***** Admin tasks *****
 
   desc "create default admin"
-  task :create_default_admin => :environment do
+  task :init_enterprise => :environment do
     puts "START to create default admin"
     AdminService.create_default_admin
+    EsProduct.reset
+    EsUser.reset
     puts "---"
   end
-
 
   # ***** Crawler Tasks *****
 
