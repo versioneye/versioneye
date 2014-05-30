@@ -11,6 +11,7 @@ class Settings::EmailsettingsController < ApplicationController
     if es.update_attributes params
       EmailSettingService.update_action_mailer es
       flash[:success] = 'Email settings updated'
+      `service api.sh restart`
     else
       flash[:error] = "Something went wrong - #{es.errors.full_messages.to_sentence}"
     end
