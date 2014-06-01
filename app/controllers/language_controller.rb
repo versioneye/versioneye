@@ -11,17 +11,11 @@ class LanguageController < ApplicationController
     @latest_products = Newest.by_language(@lang).desc(:created_at).limit(10)
     @latest_stats    = LanguageDailyStats.latest_stats(@lang)
 
-    @followers = []
     @languages = Product::A_LANGS_LANGUAGE_PAGE
     @language  = Language.where(name: @lang).first
+    @followers = []
 
-    population = []
-    users = User.where(:languages => /\"#{@lang}\"/).limit(48)
-    users.each do |user|
-      population << user
-    end
-
-    @followers = population.sample(24) # pick random followers from population
+    @followers = fetch_followers @lang
 
     # lang_pattern = Regexp.new(@lang.downcase, true)
     # @vulnerabilities = SecurityNotification.all.in(languages: [lang_pattern]).desc(:modified).limit(30)
@@ -80,4 +74,22 @@ class LanguageController < ApplicationController
 
     render json: rows
   end
+
+  private
+
+    def fetch_followers lang
+      key = "#{lang}_followers"
+      followers = Rails.cache.read key
+      return followers if !followers.to_s.empty?
+
+      population = []
+      users = User.where(:languages => /\"#{lang}\"/).limit(40)
+      users.each do |user|
+        population << user
+      end
+      followers = population.sample(24) # pick random followers from population
+      Rails.cache.write( key, followers, timeToLive: 1.day )
+      followers
+    end
+
 end
