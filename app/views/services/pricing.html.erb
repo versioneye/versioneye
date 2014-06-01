@@ -19,57 +19,13 @@
     </p>
   </div>
   <div class = "span6">
-    <div class="subscription-item" style="padding-left: 40px;">
-      <% if signed_in? %>
-        <% if @plan && @plan.name_id.eql?( '03_trial_0' ) %>
-          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
-        <% else %>
-          <form action="/settings/update_plan" method="POST" >
-            <input type="hidden" name="plan" value="03_trial_0" />
-            <button type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-          </form>
-        <% end %>
-      <% else %>
-        <form action="/signup" >
-          <button class="btn2 btn2-big pull-right">Sign Up</button>
-        </form>
-      <% end %>
-      <h4> € 0/month </h4>
-      <ul class = "subscription">
-        <li>
-          Unlimited public projects
-        </li>
-        <li>
-          <b>1 private project</b>
-        </li>
-      </ul>
-    </div>
+
+    <%= render :partial => 'plan', :locals => { :plan_id => '03_trial_0' } %>
+
     <hr />
-    <div class="subscription-item" style="padding-left: 40px;">
-      <% if signed_in? %>
-        <% if @plan && @plan.name_id.eql?( '03_trial_1' ) %>
-          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
-        <% else %>
-          <form action="/settings/update_plan" method="POST" >
-            <input type="hidden" name="plan" value="03_trial_1" />
-            <button id="personal_button" type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-          </form>
-        <% end %>
-      <% else %>
-        <form action="/signup" >
-          <button class="btn2 btn2-big pull-right">Sign Up</button>
-        </form>
-      <% end %>
-      <h4> € 1/month </h4>
-      <ul class = "subscription">
-        <li>
-          Unlimited public projects
-        </li>
-        <li>
-          <b>2 private projects</b>
-        </li>
-      </ul>
-    </div>
+
+    <%= render :partial => 'plan', :locals => { :plan_id => '03_trial_1' } %>
+
   </div>
 
 </div>
@@ -80,83 +36,17 @@
     <p>Do the next step with the personal plan to track your personal projects.</p>
   </div>
   <div class = "span6">
-    <div class="subscription-item" style="padding-left: 40px;">
-      <% if signed_in? %>
-        <% if @plan && @plan.name_id.eql?( '03_personal_3' ) %>
-          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
-        <% else %>
-          <form action="/settings/update_plan" method="POST" >
-            <input type="hidden" name="plan" value="03_personal_3" />
-            <button id="personal_button" type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-          </form>
-        <% end %>
-      <% else %>
-        <form action="/signup" >
-          <button class="btn2 btn2-big pull-right">Sign Up</button>
-        </form>
-      <% end %>
-      <h4> € 3/month </h4>
-      <ul class = "subscription">
-        <li>
-          Unlimited public projects
-        </li>
-        <li>
-          <b>5 private projects</b>
-        </li>
-      </ul>
-    </div>
+
+    <%= render :partial => 'plan', :locals => { :plan_id => '03_personal_3' } %>
+
     <hr/>
-    <div class="subscription-item" style="padding-left: 40px;">
-      <% if signed_in? %>
-        <% if @plan && @plan.name_id.eql?( '03_personal_6' ) %>
-          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
-        <% else %>
-          <form action="/settings/update_plan" method="POST" >
-            <input type="hidden" name="plan" value="03_personal_6" />
-            <button id="business_small_button" type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-          </form>
-        <% end %>
-      <% else %>
-        <form action="/signup" >
-          <button class="btn2 btn2-big pull-right">Sign Up</button>
-        </form>
-      <% end %>
-      <h4> € 6/month </h4>
-      <ul class = "subscription">
-        <li>
-          Unlimited public projects
-        </li>
-        <li>
-          <b>10 private projects</b>
-        </li>
-      </ul>
-    </div>
+
+    <%= render :partial => 'plan', :locals => { :plan_id => '03_personal_6' } %>
+
     <hr />
-    <div class="subscription-item" style="padding-left: 40px;">
-      <% if signed_in? %>
-        <% if @plan && @plan.name_id.eql?( '03_personal_9' ) %>
-          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
-        <% else %>
-          <form action="/settings/update_plan" method="POST" >
-            <input type="hidden" name="plan" value="03_personal_9" />
-            <button id="business_small_button" type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-          </form>
-        <% end %>
-      <% else %>
-        <form action="/signup" >
-          <button class="btn2 btn2-big pull-right">Sign Up</button>
-        </form>
-      <% end %>
-      <h4> € 9/month </h4>
-      <ul class = "subscription">
-        <li>
-          Unlimited public projects
-        </li>
-        <li>
-          <b>15 private projects</b>
-        </li>
-      </ul>
-    </div>
+
+    <%= render :partial => 'plan', :locals => { :plan_id => '03_personal_9' } %>
+
   </div>
 </div>
 
@@ -166,83 +56,16 @@
     <p>Be brave and be proffessional! You are a team leader now. Keep your team up-to-date.</p>
   </div>
   <div class="span6">
-    <div class  = "subscription-item" style="padding-left: 40px;">
-      <% if signed_in? %>
-        <% if @plan && @plan.name_id.eql?( '03_business_25' ) %>
-          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
-        <% else %>
-          <form action="/settings/update_plan" method="POST" >
-            <input type="hidden" name="plan" value="03_business_25" />
-            <button id="business_normal_button" type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-          </form>
-        <% end %>
-      <% else %>
-        <form action="/signup" >
-          <button class="btn2 btn2-big pull-right">Sign Up</button>
-        </form>
-      <% end %>
-      <h4> € 25/month </h4>
-      <ul class = "subscription">
-        <li>
-          Unlimited public projects
-        </li>
-        <li>
-          <b>50 private projects</b>
-        </li>
-      </ul>
-    </div>
+
+    <%= render :partial => 'plan', :locals => { :plan_id => '03_business_25' } %>
+
     <hr />
-    <div class  = "subscription-item" style="padding-left: 40px;">
-      <% if signed_in? %>
-        <% if @plan && @plan.name_id.eql?( '03_business_50' ) %>
-          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
-        <% else %>
-          <form action="/settings/update_plan" method="POST" >
-            <input type="hidden" name="plan" value="03_business_50" />
-            <button id="business_normal_big" type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-          </form>
-        <% end %>
-      <% else %>
-        <form action="/signup" >
-          <button class="btn2 btn2-big pull-right">Sign Up</button>
-        </form>
-      <% end %>
-      <h4> € 50/month </h4>
-      <ul class = "subscription">
-        <li>
-          Unlimited public projects
-        </li>
-        <li>
-          <b>100 private projects</b>
-        </li>
-      </ul>
-    </div>
+
+    <%= render :partial => 'plan', :locals => { :plan_id => '03_business_50' } %>
+
     <hr />
-    <div class  = "subscription-item" style="padding-left: 40px;">
-      <% if signed_in? %>
-        <% if @plan && @plan.name_id.eql?( '03_business_100' ) %>
-          <button type="submit" class="btn2 btn2-big pull-right" >Current</button>
-        <% else %>
-          <form action="/settings/update_plan" method="POST" >
-            <input type="hidden" name="plan" value="03_business_100" />
-            <button id="business_normal_large" type="submit" class="btn2 btn2-big pull-right" >Book It</button>
-          </form>
-        <% end %>
-      <% else %>
-        <form action="/signup" >
-          <button class="btn2 btn2-big pull-right">Sign Up</button>
-        </form>
-      <% end %>
-      <h4> € 100/month </h4>
-      <ul class = "subscription">
-        <li>
-          Unlimited public projects
-        </li>
-        <li>
-          <b>200 private projects</b>
-        </li>
-      </ul>
-    </div>
+
+    <%= render :partial => 'plan', :locals => { :plan_id => '03_business_100' } %>
 
   </div>
 </div>

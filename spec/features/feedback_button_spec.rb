@@ -11,7 +11,7 @@ describe "Feedback Button" do
       page.should have_content("Please login to give us feedback")
 
       user = UserFactory.create_new
-      Plan.create_default_plans
+      Plan.create_defaults
 
       visit signin_path
       fill_in 'session[email]',    :with => user.email

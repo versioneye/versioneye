@@ -40,7 +40,7 @@ describe "Computer Language Filter" do
       end
 
       user = UserFactory.create_new
-      Plan.create_default_plans
+      Plan.create_defaults
       visit signin_path
       fill_in 'session[email]',    :with => user.email
       fill_in 'session[password]', :with => user.password

@@ -1,22 +1,28 @@
 <div class="plans" id="plans" >
-	<% @plans = Plan.current_plans() %>
-	<% @plans.each do |plan| %>
-	<div class="row search-item" style="height: 30px; margin-left: 0;" >
-		<div class="span2" style="padding: 0px;" ><%= plan.name %></div>
-		<div class="span2" style="padding: 0px; width: 100px; "><%= plan.price %> $ / Month</div>
-		<div class="span2" style="padding: 0px; "><%= plan.private_projects %> Private Projects</div>
-		<% if @plan %>
-			<div class="span2 pull-right" style="padding: 0px; width: 150px;" >
-				<% if @plan && @plan.name_id.eql?( plan.name_id ) %>
-					<span style="color: green; font-weight:bold">Current</span>
-				<% else %>
-					<form action="/settings/update_plan" method="POST" >
-						<input  type="hidden" name="plan" value="<%= plan.name_id %>" />
-						<button type="submit" class="btn btn-primary" id="<%= plan.name_id %>_button" >Book It</button>
-					</form>
-				<% end %>
-			</div>
-		<% end %>
-	</div>
-	<% end %>
+  <% @plans = Plan.current_plans() %>
+  <% @plans.each do |plan| %>
+  <div class="row search-item" style="height: 30px; margin-left: 0;" >
+    <div class="span2" style="padding: 0px;" ><%= plan.name %></div>
+    <div class="span2" style="padding: 0px; width: 100px; ">€ <%= plan.price %>/Month</div>
+    <div class="span2" style="padding: 0px; "><%= pluralize(plan.private_projects, 'private project') %></div>
+    <% if @plan %>
+      <div class="span2 pull-right" style="padding: 0px; width: 150px;" >
+        <% if @plan && @plan.name_id.eql?( plan.name_id ) %>
+          <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
+        <% else %>
+          <% btn_txt = 'Upgrade' %>
+          <% btn_txt = 'Downgrade' if @plan.price.to_i > plan.price.to_i %>
+          <% btn_class = 'success' %>
+          <% btn_class = 'danger' if btn_txt.eql?('Downgrade') %>
+          <% btn_style = 'font-size: 17px;' %>
+          <% btn_style = '' if btn_txt.eql?('Downgrade') %>
+          <form action="/settings/update_plan" method="POST" >
+            <input  type="hidden" name="plan" value="<%= plan.name_id %>" />
+            <button type="submit" class="btn btn-<%= btn_class %>" style="<%= btn_style %>" id="<%= plan.name_id %>_button" ><%=btn_txt%></button>
+          </form>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <% end %>
 </div>
