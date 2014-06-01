@@ -1,0 +1,34 @@
+
+<% plan = Plan.by_name_id( plan_id ) %>
+
+<div class="subscription-item" style="padding-left: 40px;">
+  <% if signed_in? %>
+    <% if @plan && @plan.name_id.eql?( plan_id ) %>
+      <p class="badge badge-info pull-right" style="font-size: 24px; middle; padding: 10px;">Current</p>
+    <% else %>
+      <% btn_txt = 'Upgrade' %>
+      <% btn_txt = 'Downgrade' if @plan.price.to_i > plan.price.to_i %>
+      <% btn_class = 'success' %>
+      <% btn_class = 'danger' if btn_txt.eql?('Downgrade') %>
+      <% btn_size = 'large' %>
+      <% btn_size = 'big' if btn_txt.eql?('Downgrade') %>
+      <form action="/settings/update_plan" method="POST" >
+        <input type="hidden" name="plan" value="<%=plan_id%>" />
+        <button id="<%=plan.name_id%>_button" type="submit" class="btn btn-<%= btn_size %> btn-<%= btn_class %> pull-right" ><%= btn_txt %></button>
+      </form>
+    <% end %>
+  <% else %>
+    <form action="/signup" >
+      <button class="btn btn-big pull-right">Sign up for free</button>
+    </form>
+  <% end %>
+  <h4> € <%= plan.price %>/Month </h4>
+  <ul class = "subscription">
+    <li>
+      Unlimited public projects
+    </li>
+    <li>
+      <b><%= pluralize(plan.private_projects, 'private project') %></b>
+    </li>
+  </ul>
+</div>

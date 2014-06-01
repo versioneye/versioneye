@@ -4,7 +4,7 @@ describe "Settings click throgh" do
 
   before :each do
     @user = UserFactory.create_new
-    Plan.create_default_plans
+    Plan.create_defaults
     visit signin_path
     fill_in 'session[email]',    :with => @user.email
     fill_in 'session[password]', :with => @user.password
@@ -36,7 +36,7 @@ describe "Settings click throgh" do
       page.should have_content("New E-Mail")
 
       click_link "Plans & Pricing"
-      page.should have_content("Business - Small")
+      page.should have_content("Business / Small")
 
       click_link "Payments"
       page.should have_content("Payment History")

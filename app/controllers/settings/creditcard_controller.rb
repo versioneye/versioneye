@@ -40,7 +40,7 @@ class Settings::CreditcardController < ApplicationController
     user.save
 
     flash[:success] = 'Many Thanks. We just updated your plan.'
-    redirect_to settings_creditcard_path
+    redirect_to settings_plans_path
   end
 
 end

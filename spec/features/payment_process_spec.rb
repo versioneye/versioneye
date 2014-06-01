@@ -13,7 +13,7 @@ describe "Payment Process" do
 
     it "updates the credit card information and books the first plan" do
       user = UserFactory.create_new
-      Plan.create_default_plans
+      Plan.create_defaults
       visit signin_path
       fill_in 'session[email]',    :with => user.email
       fill_in 'session[password]', :with => user.password
@@ -21,7 +21,7 @@ describe "Payment Process" do
       page.should have_content("My Projects")
 
       visit settings_plans_path
-      Plan.count.should eq(4)
+      Plan.count.should eq(8)
       page.should have_content(Plan.free_plan.name)
       page.should have_content(Plan.personal_plan.name)
       page.should have_content(Plan.business_small_plan.name)
@@ -67,13 +67,13 @@ describe "Payment Process" do
       ### upgrades the plan to business normal
 
       visit pricing_path
-      Plan.count.should eq(4)
+      Plan.count.should eq(8)
       page.should have_content("Trial")
       page.should have_content("Try VersionEye for free!")
       page.should have_content("Do the next step with the personal plan to track your personal projects.")
       page.should have_content("Be brave and be proffessional! You are a team leader now. Keep your team up-to-date.")
 
-      click_button "business_normal_button"
+      click_button "03_business_50_button"
       page.should have_content("We updated your plan successfully")
       user = User.find_by_email(user.email)
       user.stripe_token.should_not be_nil
@@ -81,10 +81,11 @@ describe "Payment Process" do
       user.plan.should_not be_nil
       user.plan.name_id.should eql(Plan.business_normal_plan.name_id)
 
+
       ### upgrades the plan to business small
 
       visit settings_plans_path
-      Plan.count.should eq(4)
+      Plan.count.should eq(8)
       page.should have_content(Plan.free_plan.name)
       page.should have_content(Plan.personal_plan.name)
       page.should have_content(Plan.business_small_plan.name)
@@ -108,7 +109,7 @@ describe "Payment Process" do
         find_by_id("invoice_table")
         page.should have_content("View receipt")
         page.should have_content("Personal")
-        page.should have_content("3.00 USD")
+        page.should have_content("#{Plan.personal_plan.price}.00 EUR")
         # The Business Small plan is the upcoming invoice
       end
 
@@ -123,8 +124,8 @@ describe "Payment Process" do
 
       visit settings_receipt_path( invoice.id )
       page.should have_content("This is a receipt for your VersionEye subscription.")
-      page.should have_content("Personal")
-      page.should have_content("3.00 USD")
+      page.should have_content(Plan.personal_plan.name)
+      page.should have_content("#{Plan.personal_plan.price}.00 EUR")
     end
 
   end
