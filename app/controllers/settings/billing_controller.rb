@@ -4,6 +4,7 @@ class Settings::BillingController < ApplicationController
 
   def index
     @billing_address = current_user.fetch_or_create_billing_address
+    @billing_address.errors.messages.clear
   end
 
   def update

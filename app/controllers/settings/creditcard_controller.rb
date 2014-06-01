@@ -37,9 +37,14 @@ class Settings::CreditcardController < ApplicationController
     user.stripe_token = stripe_token
     user.stripe_customer_id = customer.id
     user.plan = Plan.by_name_id plan_name_id
-    user.save
 
-    flash[:success] = 'Many Thanks. We just updated your plan.'
+    if user.save
+      flash[:success] = 'Many Thanks. We just updated your plan.'
+    else
+      flash[:error] = "Something went wrong. Please contact the VersionEye team."
+      Rails.logger.error "Can't save user - #{user.errors.messages}"
+    end
+
     redirect_to settings_plans_path
   end
 

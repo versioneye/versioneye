@@ -48,7 +48,7 @@ describe "Payment Process" do
       fill_in 'street',     :with => "Johanniterstrasse 17"
       fill_in 'city',       :with => "Mannheim"
       fill_in 'zip_code',   :with => "68199"
-      fill_in 'country',    :with => "Germany"
+      find('#country').find(:xpath, "option[@value = 'DE']").select_option
 
       fill_in 'cardnumber', :with => "5105 1051 0510 5100"
       fill_in 'cvc',        :with => "777"

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Settings click throgh" do
+describe "Settings click through" do
 
   before :each do
     @user = UserFactory.create_new
@@ -20,6 +20,7 @@ describe "Settings click throgh" do
       page.should have_content("Links")
       page.should have_content("E-Mails")
       page.should have_content("Plans & Pricing")
+      page.should have_content("Billing Address")
       page.should have_content("Payments")
       page.should have_content("Connect")
       page.should have_content("Password")
@@ -41,6 +42,9 @@ describe "Settings click throgh" do
       click_link "Payments"
       page.should have_content("Payment History")
       page.should have_content("t have any Payment history")
+
+      click_link "Billing Address"
+      page.should have_content("Edit your billing address")
 
       click_link "Connect"
       page.should have_content("Connect with GitHub")

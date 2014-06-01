@@ -41,6 +41,7 @@
   <%= label_tag :zip_code, "Zip / City", :class => "control-label-big", :for => "zip_code" %>
   <div class="controls" style="margin-left: 155px;">
     <input type="text" size="20" autocomplete="off" class="round" id="zip_code" name="zip_code" style="width: 40px;" value="<%= @billing_address.zip %>" /> / <input type="text" size="20" autocomplete="off" class="round" id="city" name="city" style="width: 140px;" value="<%= @billing_address.city %>" />
+    <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :zip} %>
     <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :city} %>
   </div>
 </div>

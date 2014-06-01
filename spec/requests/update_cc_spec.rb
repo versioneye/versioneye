@@ -17,7 +17,10 @@ describe "update credit card information" do
       assert_response :success
       assert_select "form[action=?]", settings_update_creditcard_path
 
-      post settings_update_creditcard_path, {:plan => "plan_id", :name => "Hans", :street => "Joko 1", :zip_code => "12345", :city => "Hambi", :country => "Germany"}, "HTTPS" => "on"
+      post settings_update_creditcard_path, {:plan => "plan_id",
+        :type => BillingAddress::A_TYPE_INDIVIDUAL,
+        :name => "Hans", :street => "Joko 1", :zip_code => "12345",
+        :city => "Hambi", :country => "DE"}, "HTTPS" => "on"
       response.should redirect_to( settings_creditcard_path )
       flash[:error].should eql("Stripe token is missing. Please contact the VersionEye Team.")
     end
@@ -27,7 +30,10 @@ describe "update credit card information" do
       assert_response :success
       assert_select "form[action=?]", settings_update_creditcard_path
 
-      post settings_update_creditcard_path, {:plan => "plan_id", :stripeToken => "token", :name => "Hans", :street => "Joko 1", :zip_code => "12345", :city => "Hambi", :country => "Germany"}, "HTTPS" => "on"
+      post settings_update_creditcard_path, {:plan => "plan_id", :stripeToken => "token",
+        :type => BillingAddress::A_TYPE_INDIVIDUAL,
+        :name => "Hans", :street => "Joko 1", :zip_code => "12345",
+        :city => "Hambi", :country => "DE"}, "HTTPS" => "on"
       response.should redirect_to( settings_creditcard_path )
       flash[:error].should eql("Stripe customer is missing. Please contact the VersionEye Team.")
     end
