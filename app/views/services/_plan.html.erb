@@ -7,7 +7,7 @@
       <p class="badge badge-info pull-right" style="font-size: 24px; middle; padding: 10px;">Current</p>
     <% else %>
       <% btn_txt = 'Upgrade' %>
-      <% btn_txt = 'Downgrade' if @plan.price.to_i > plan.price.to_i %>
+      <% btn_txt = 'Downgrade' if ( @plan && (@plan.price.to_i > plan.price.to_i) ) %>
       <% btn_class = 'success' %>
       <% btn_class = 'danger' if btn_txt.eql?('Downgrade') %>
       <% btn_size = 'large' %>
