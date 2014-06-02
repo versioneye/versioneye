@@ -5,14 +5,10 @@ class Settings::PaymentsController < ApplicationController
 
 
   def index
-    customer_id       = current_user.stripe_customer_id
-    customer          = StripeService.fetch_customer(customer_id) if customer_id
-    customer_invoices = customer.invoices unless customer.nil?
-
+    invoices = fetch_combined_invoices
     respond_to do |format|
       format.html
       format.json do
-        invoices = fetch_invoices customer_invoices
         render json: invoices
       end
     end
@@ -25,7 +21,8 @@ class Settings::PaymentsController < ApplicationController
 
 
   def receipt
-    @invoice = StripeService.get_invoice( params['invoice_id'] )
+    @invoice = fetch_invoice params['invoice_id']
+
     # Ensure that the invoice belongs to the current logged in user!
     if @invoice && !@invoice.customer.eql?( current_user.stripe_customer_id )
       @invoice = nil
@@ -35,6 +32,55 @@ class Settings::PaymentsController < ApplicationController
 
 
   private
+
+
+    def fetch_invoice invoice_id
+      invoice = StripeService.get_invoice( invoice_id )
+      return invoice if invoice
+
+      api_key = Settings.instance.stripe_legacy_secret_key
+      StripeService.get_invoice( invoice_id, api_key )
+    end
+
+
+    def fetch_combined_invoices
+      combined_invoices = []
+
+      if current_user.stripe_customer_id
+        customer_id       = current_user.stripe_customer_id
+        customer_invoices = fetch_customer_invoices( customer_id )
+        combined_invoices += fetch_invoices(customer_invoices)
+      end
+
+      if current_user.stripe_legacy_customer_id
+        customer_id = current_user.stripe_legacy_customer_id
+        legacy_invoices = fetch_legacy_invoices( customer_id )
+        combined_invoices += fetch_invoices(legacy_invoices)
+      end
+
+      combined_invoices
+    end
+
+
+    def fetch_customer_invoices customer_id
+      customer          = StripeService.fetch_customer( customer_id )
+      customer.invoices
+    rescue => e
+      logger.error e.message
+      logger.error e.backtrace.join('\n')
+      []
+    end
+
+
+    def fetch_legacy_invoices customer_id
+      api_key         = Settings.instance.stripe_legacy_secret_key
+      customer        = StripeService.fetch_customer(customer_id, api_key)
+      customer.invoices
+    rescue => e
+      logger.error e.message
+      logger.error e.backtrace.join('\n')
+      []
+    end
 
 
     def fetch_invoices customer_invoices
@@ -55,6 +101,10 @@ class Settings::PaymentsController < ApplicationController
         invoices << invoice
       end
       invoices
+    rescue => e
+      logger.error e.message
+      logger.error e.backtrace.join('\n')
+      []
     end
 
 
