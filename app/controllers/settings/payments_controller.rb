@@ -24,10 +24,11 @@ class Settings::PaymentsController < ApplicationController
     @invoice = fetch_invoice params['invoice_id']
 
     # Ensure that the invoice belongs to the current logged in user!
-    if @invoice && !@invoice.customer.eql?( current_user.stripe_customer_id )
+    if @invoice &&
+       !@invoice.customer.eql?( current_user.stripe_customer_id ) &&
+       !@invoice.customer.eql?( current_user.stripe_legacy_customer_id )
       @invoice = nil
     end
-    @billing_address = current_user.billing_address
   end
 
 
@@ -49,13 +50,16 @@ class Settings::PaymentsController < ApplicationController
       if current_user.stripe_customer_id
         customer_id       = current_user.stripe_customer_id
         customer_invoices = fetch_customer_invoices( customer_id )
-        combined_invoices += fetch_invoices(customer_invoices)
+        combined_invoices += fetch_invoice_array(customer_invoices)
       end
 
       if current_user.stripe_legacy_customer_id
         customer_id = current_user.stripe_legacy_customer_id
         legacy_invoices = fetch_legacy_invoices( customer_id )
-        combined_invoices += fetch_invoices(legacy_invoices)
+        invoices = fetch_invoice_array(legacy_invoices)
+        invoices.each do |inv|
+          combined_invoices << inv
+        end
       end
 
       combined_invoices
@@ -83,15 +87,14 @@ class Settings::PaymentsController < ApplicationController
     end
 
 
-    def fetch_invoices customer_invoices
+    def fetch_invoice_array customer_invoices
       invoices = []
       return invoices if customer_invoices.nil?
 
       customer_invoices.each do |invoice|
         next if invoice['lines'].to_s.empty?
-        next if invoice['lines']['data'].to_s.empty?
 
-        plan = invoice['lines']['data'].first['plan']
+        plan = fetch_plan invoice
         next if plan.nil?
 
         invoice[:date_s]    = Time.at( invoice.date ).to_date
@@ -105,6 +108,17 @@ class Settings::PaymentsController < ApplicationController
       logger.error e.message
       logger.error e.backtrace.join('\n')
       []
+    end
+
+
+    def fetch_plan invoice
+      plan = nil
+      if invoice['lines']['data']
+        plan = invoice['lines']['data'].first['plan']
+      elsif invoice['lines']['subscriptions']
+        plan = invoice['lines']['subscriptions'].first['plan']
+      end
+      plan
     end
 
 
