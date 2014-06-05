@@ -6,6 +6,9 @@ body {
 body, td, th, input, textarea, select, a {
   font-size: 12px;
 }
+h1{
+  font-family: Arial, Helvetica, sans-serif;
+}
 p {
   margin-top: 0px;
   margin-bottom: 20px;
@@ -68,7 +71,40 @@ table.list .center {
 }
 </style>
 
-<% billing_address = current_user.billing_address %> 
+<% billing_address = current_user.billing_address %>
+
+  <h1>Receipt - VersionEye</h1>
+
+  <table class="list">
+    <cols>
+      <col width="50%" />
+      <col width="50%" />
+    </cols>
+    <thead>
+      <tr>
+        <td class="left">Receiver</td>
+        <td class="right"></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="left">
+          <%= billing_address.name %><br/>
+          <% if billing_address.type.eql?(BillingAddress::A_TYPE_INDIVIDUAL) %>
+            <%= billing_address.company %><br/>
+          <% end %>
+          <%= billing_address.street %><br/>
+          <%= billing_address.zip %> <%= billing_address.city %><br/>
+          <%= BillingAddress::A_COUNTRIES[billing_address.country] %>
+        </td>
+        <td class="right">
+          Receipt Nr: 123456<br/>
+          Invoice ID: kasasalk<br/>
+          Account billed: reiz (reiz@versioneye.com)<br/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
   <p>
     <br />
@@ -76,31 +112,6 @@ table.list .center {
     <br />
     This is a receipt for your VersionEye subscription.
   </p>
-
-  <table class="list">
-    <thead>
-      <tr>
-        <td class="left">Receiver</td>
-        <td class="right">Sender</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="left">
-          <%= billing_address.name %><br/>
-          <%= billing_address.street %><br/>
-          <%= billing_address.zip %> <%= billing_address.city %><br/>
-          <%= billing_address.country %>
-        </td>
-        <td class="right">
-          VersionEye GmbH<br />
-          Rudolf-Breitscheid-Straße 187<br />
-          14482 Potsdam<br />
-          Germany<br />
-        </td>
-      </tr>
-    </tbody>
-  </table>
 
   <table class="list">
     <thead>
@@ -145,12 +156,12 @@ table.list .center {
   <p>
     Best regards, <br/>
     Your VersionEye Team<br/>
-    <a href="http://www.versioneye.com">http://www.versioneye.com</a>
+    <a href="https://www.versioneye.com">https://www.versioneye.com</a>
   </p>
   <hr>
   <div >
-    VersionEye GmbH | Invalidenstrasse 50/51 | 10557 Berlin | Germany | E-Mail: contact [at] versioneye.com | Amtsgericht: Berlin / Charlottenburg | Handelsregister: Berlin, HRB 144242 B | USt-IdNr.: DE282045007 | CEO: Robert Reiz.
-    <a href="https://www.versioneye.com/imprint">Imprint</a> / <a href="https://www.versioneye.com/impressum">Impressum</a>.
+    VersionEye GmbH | Rudolf-Breitscheid-Strasse 187 | 14482 Potsdam | Germany | E-Mail: contact@versioneye.com | Amtsgericht: Potsdam | Handelsregister: Potsdam, HRB 26748 P | USt-IdNr.: DE282045007 | CEO: Robert Reiz.
+    <a href="https://www.versioneye.com/imprint">Imprint</a>.
   </div>
   <br/>
   <br/>
