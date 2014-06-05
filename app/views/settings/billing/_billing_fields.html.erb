@@ -5,7 +5,7 @@
     if (type == "<%= BillingAddress::A_TYPE_INDIVIDUAL %>"){
       element.style.display = "none"
     }
-    if (type == "<%= BillingAddress::A_TYPE_COROPORATE %>"){
+    if (type == "<%= BillingAddress::A_TYPE_CORPORATE %>"){
       element.style.display = "block"
     }
   }
@@ -16,7 +16,7 @@
   <div class="controls" style="margin-left: 155px;">
     <select name="type" id="type" onchange="handleAddressType(this.value);" >
       <option value="<%= BillingAddress::A_TYPE_INDIVIDUAL %>"  <%= "selected" if @billing_address.type == BillingAddress::A_TYPE_INDIVIDUAL %> >Individual</option>
-      <option value="<%= BillingAddress::A_TYPE_COROPORATE %>"  <%= "selected" if @billing_address.type == BillingAddress::A_TYPE_COROPORATE %> >Corporation</option>
+      <option value="<%= BillingAddress::A_TYPE_CORPORATE %>"  <%= "selected" if @billing_address.type == BillingAddress::A_TYPE_CORPORATE %> >Corporation</option>
     </select>
   </div>
 </div>
@@ -59,7 +59,7 @@
 </div>
 
 <% display_style = "none" %>
-<% display_style = "block" if @billing_address.type == BillingAddress::A_TYPE_COROPORATE %>
+<% display_style = "block" if @billing_address.type == BillingAddress::A_TYPE_CORPORATE %>
 <div id="company_fields" style="display: <%= display_style %>;">
   <div class="control-group" >
     <%= label_tag :name, "Company", :class => "control-label-big", :for => "company" %>

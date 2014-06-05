@@ -21,7 +21,7 @@ describe "Settings click through" do
       page.should have_content("E-Mails")
       page.should have_content("Plans & Pricing")
       page.should have_content("Billing Address")
-      page.should have_content("Payments")
+      page.should have_content("Payment History")
       page.should have_content("Connect")
       page.should have_content("Password")
       page.should have_content("Notification Center")
@@ -39,7 +39,7 @@ describe "Settings click through" do
       click_link "Plans & Pricing"
       page.should have_content("Business / Small")
 
-      click_link "Payments"
+      click_link "Payment History"
       page.should have_content("Payment History")
       page.should have_content("t have any Payment history")
 
