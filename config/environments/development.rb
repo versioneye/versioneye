@@ -45,7 +45,7 @@ Versioneye::Application.configure do
      :domain               => 'versioneye.com',
      :authentication       => 'plain',
      :enable_starttls_auto => true  }
-  config.action_mailer.perform_deliveries    = true
+  config.action_mailer.perform_deliveries    = false
   config.action_mailer.raise_delivery_errors = true
 
   routes.default_url_options = { host: Settings.instance.server_host, port: Settings.instance.server_port }
