@@ -49,7 +49,7 @@
     </form>
 
     <script type="text/javascript">
-      image_url = document.URL.split("?")[0] + "/badge.svg";
+      image_url = document.URL.split("?")[0] + "/badge.svg?style=flat";
       url       = document.URL.split("?")[0]
       <% if @product %>
         image_url = "<%= product_version_badge_url(:lang => @product.language_esc, :key => @product.to_param, :version => Version.encode_version(@product.version) ) %>" + ".svg";
