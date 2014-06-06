@@ -108,9 +108,9 @@
             <td class="left"><%= plan_name %></td>
             <td class="right">
               <% if taxable %>
-                Price:       <%= sprintf("%.2f", (amount.to_i / 100 * 0.81) ) %> <%= currency.upcase %><br/>
-                Tax (Mwst.): <%= sprintf("%.2f", (amount.to_i / 100 * 0.19) ) %> <%= currency.upcase %><br/>
-                Total:       <%= sprintf("%.2f", (amount.to_i / 100       ) ) %> <%= currency.upcase %>
+                Price:           <%= sprintf("%.2f", (amount.to_i / 100 * 0.81) ) %> <%= currency.upcase %><br/>
+                Tax (19% Mwst.): <%= sprintf("%.2f", (amount.to_i / 100 * 0.19) ) %> <%= currency.upcase %><br/>
+                Total:           <%= sprintf("%.2f", (amount.to_i / 100       ) ) %> <%= currency.upcase %>
               <% else %>
                 <%= sprintf("%.2f", (amount.to_i / 100) ) %> <%= currency.upcase %>
               <% end %>
