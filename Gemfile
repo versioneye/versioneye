@@ -13,11 +13,11 @@ gem 'whenever'           , '~> 0.9.2'
 gem 'bourbon'            , '~> 4.0.0'
 gem 'ruby_regex'         , '~> 0.1.0'
 gem 'semverly'           , '~> 1.0.0'
-gem 'cocoapods-core'     , '~> 0.32.0'
-gem 'stripe'             , '~> 1.11.0'
+gem 'cocoapods-core'     , '~> 0.33.0'
+gem 'stripe'             , '~> 1.13.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v1.8.2'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v1.8.3'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :development do
@@ -49,11 +49,11 @@ group :test do
   gem 'rspec-mocks'       , '~> 2.14.0'
   gem 'capybara'          , '~> 2.2.0'
   gem 'capybara-firebug'  , '~> 2.0.0'
-  gem 'selenium-webdriver', '~> 2.41.0'
-  gem 'vcr'               , '~> 2.9.0',  :require => false
-  gem 'webmock'           , '~> 1.17.0', :require => false
+  gem 'selenium-webdriver', '~> 2.42.0'
+  gem 'vcr'               , '~> 2.9.2',  :require => false
+  gem 'webmock'           , '~> 1.18.0', :require => false
   gem "fakeweb"           , '~> 1.3'
-  gem 'database_cleaner'  , '~> 1.2.0'
+  gem 'database_cleaner'  , '~> 1.3.0'
   gem 'factory_girl'      , '~> 4.4.0'
   gem 'factory_girl_rails', '~> 4.4.0'
 end
