@@ -73,6 +73,7 @@
     <%= label_tag :taxid, "Tax ID", :class => "control-label-big", :for => "company" %>
     <div class="controls" style="margin-left: 155px;">
       <input type="text" size="20" autocomplete="off" class="round" id="taxid" name="taxid" value="<%= @billing_address.taxid %>" />
+      <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :taxid} %>
     </div>
   </div>
 </div>
