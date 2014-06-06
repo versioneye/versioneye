@@ -137,9 +137,9 @@ table.list .center {
           <td class="left"><%= plan_name %></td>
           <td class="right">
             <% one_percent = @invoice.total / 10000.0 %>
-            Price: <%= sprintf("%.2f", (one_percent * 81) ) %> <%= @invoice.currency.upcase %><br/>
-            Tax (Mwst.): <%= sprintf("%.2f", (one_percent * 19) ) %> <%= @invoice.currency.upcase %><br/>
-            Total: <%= sprintf("%.2f", (@invoice.total / 100) )  %> <%= @invoice.currency.upcase %>
+            Price:           <%= sprintf("%.2f", (one_percent * 81) ) %> <%= @invoice.currency.upcase %><br/>
+            Tax (19% Mwst.): <%= sprintf("%.2f", (one_percent * 19) ) %> <%= @invoice.currency.upcase %><br/>
+            Total:           <%= sprintf("%.2f", (@invoice.total / 100) )  %> <%= @invoice.currency.upcase %>
           </td>
         </tr>
       </tbody>
