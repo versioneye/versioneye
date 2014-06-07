@@ -72,7 +72,11 @@
         <br/>
         <%= name %><br/>
         <% if type.eql?(A_TYPE_CORPORATE) %>
-          <%= company %><br/>
+          <%= company %>
+          <% if taxid_mandatory? %>
+            (TaxID: <%= taxid %>)
+          <% end %>
+          <br/>
         <% end %>
         <%= street %><br/>
         <%= zip %> <%= city %><br/>
