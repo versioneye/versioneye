@@ -36,7 +36,6 @@ module Versioneye
     Dependency.send     :include, WillPaginateMongoid::MongoidPaginator
     ErrorMessage.send   :include, WillPaginateMongoid::MongoidPaginator
     SubmittedUrl.send   :include, WillPaginateMongoid::MongoidPaginator
-    Testimonial.send    :include, WillPaginateMongoid::MongoidPaginator
     User.send           :include, WillPaginateMongoid::MongoidPaginator
     Versioncomment.send :include, WillPaginateMongoid::MongoidPaginator
 
