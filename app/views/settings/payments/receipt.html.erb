@@ -98,9 +98,8 @@ table.list .center {
           <%= BillingAddress::A_COUNTRIES[billing_address.country] %>
         </td>
         <td class="right">
-          Receipt Nr: 123456<br/>
-          Invoice ID: kasasalk<br/>
-          Account billed: reiz (reiz@versioneye.com)<br/>
+          Invoice ID: <%= @invoice.id %> <br/>
+          Account billed: <%= current_user.username %> (<%= current_user.email %>)<br/>
         </td>
       </tr>
     </tbody>
