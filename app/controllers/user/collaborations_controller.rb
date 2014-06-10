@@ -1,4 +1,5 @@
 class User::CollaborationsController < ApplicationController
+
   before_filter :authenticate
 
   def index
@@ -34,13 +35,14 @@ class User::CollaborationsController < ApplicationController
       redirect_to :back and return
     end
 
-    if collaborator.owner.id == current_user.id or (!collaborator.nil? and collaborator.user.id == current_user.id)
-      flash[:success] = 'Collaborator is now removed.'
-      collaborator.delete
-    else
+    user_id = current_user.id
+    if collaborator.owner.id != user_id && collaborator.user.id != user_id
       flash[:error] = 'You can not remove this.'
+      redirect_to :back and return
     end
 
+    flash[:success] = 'Collaborator is now removed.'
+    collaborator.delete
     redirect_to :back
   end
 
