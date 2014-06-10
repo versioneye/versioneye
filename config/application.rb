@@ -43,6 +43,10 @@ module Versioneye
     Mongoid.logger.level = Logger::ERROR
     Moped.logger.level = Logger::ERROR
 
+    PDFKit.configure do |config|
+      config.default_options[:ignore_load_errors] = true
+    end
+
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
