@@ -12,7 +12,6 @@ namespace :versioneye do
 
     puts "START update meta data on products. Update followers, version and used_by_count"
     ProductService.update_meta_data_global
-    ProductService.update_followers
     puts "---"
 
     puts "START reindex newest products for elastic search"
@@ -42,6 +41,10 @@ namespace :versioneye do
 
     puts "START to update all user languages"
     UserService.update_languages
+    puts "---"
+
+    puts "START to send out receipts "
+    ReceiptService.process_receipts
     puts "---"
   end
 
