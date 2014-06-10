@@ -1,5 +1,6 @@
 
 jQuery(document).ready(function(){
+
   jQuery('#q').tbHinter({
     text: "Search for a software library"
   });
