@@ -120,7 +120,7 @@ class User::BitbucketReposController < ApplicationController
   private
 
     def import_repo(command_data, project_name, branch, filename)
-      project        = ProjectService.import_from_bitbucket(current_user, project_name, filename, branch)
+      project = ProjectImportService.import_from_bitbucket(current_user, project_name, filename, branch)
 
       if project.nil?
         raise "Something went wrong. It was not possible to save the project. Please contact the VersionEye team."
