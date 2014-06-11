@@ -1,5 +1,6 @@
 {
   "development": {
+    "ga_account": "",
     "nexus_url": "http://nexus.pro",
     "bitbucket_secret": "yYdshg5ndaCdkdvJMvkJAwAajjJWg8HZ",
     "bitbucket_token": "HgSkE62pTT3HmxFGAm",
@@ -46,6 +47,7 @@
     "aws_secret_access_key": "aws_bullshit_bingo_secret"
   },
   "test": {
+    "ga_account": "",
     "nexus_url": "http://nexus.pro",
     "bitbucket_secret": "yYdshg5ndaCdkdvJMvkJAwAajjJWg8HZ",
     "bitbucket_token": "HgSkE62pTT3HmxFGAm",
@@ -94,6 +96,7 @@
     "aws_secret_access_key": "aws_bullshit_bingo_secret"
   },
   "production": {
+    "ga_account": "UA-32702672-1",
     "nexus_url": "http://nexus.pro",
     "bitbucket_secret": "env_BITBUCKET_SECRET",
     "bitbucket_token": "env_BITBUCKET_TOKEN",
@@ -138,6 +141,7 @@
     "aws_secret_access_key": "env_AWS_S3_SECRET_ACCESS_KEY"
   },
   "enterprise": {
+    "ga_account": "",
     "projects_unlimited": true,
     "nexus_url": "http://nexus.pro",
     "server_url": "http://localhost:3000",

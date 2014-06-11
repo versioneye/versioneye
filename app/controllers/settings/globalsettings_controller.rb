@@ -18,6 +18,7 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting = GlobalSetting.default
   end
 
+
   def update
     @globalsetting = GlobalSetting.default
     @globalsetting.server_url  = params[:server_url]
@@ -27,11 +28,13 @@ class Settings::GlobalsettingsController < ApplicationController
       update_routes   @globalsetting
       update_settings @globalsetting
       flash[:success] = "Global Server Settings changed successfully"
+      restart_api
     else
       flash[:error] = "Something went wrong - #{@globalsetting.errors.full_messages.to_sentence}"
     end
     redirect_to settings_globalsettings_path
   end
+
 
   def update_github
     @globalsetting = GlobalSetting.default
@@ -48,6 +51,7 @@ class Settings::GlobalsettingsController < ApplicationController
     redirect_to settings_githubsettings_path
   end
 
+
   def update_nexus
     @globalsetting = GlobalSetting.default
     @globalsetting.nexus_url = params[:nexus_url]
@@ -59,6 +63,7 @@ class Settings::GlobalsettingsController < ApplicationController
     end
     redirect_to settings_nexussettings_path
   end
+
 
   def update_cocoapods
     @globalsetting = GlobalSetting.default
@@ -100,6 +105,11 @@ class Settings::GlobalsettingsController < ApplicationController
     def update_routes globalsetting
       Rails.application.routes.default_url_options[:host] = globalsetting.server_host
       Rails.application.routes.default_url_options[:port] = globalsetting.server_port
+    end
+
+    def restart_api
+      return nil if !Rails.env.enterprise?
+      Thread.new{ `service api.sh restart` }
     end
 
 end
