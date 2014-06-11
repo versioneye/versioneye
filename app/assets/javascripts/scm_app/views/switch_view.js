@@ -110,7 +110,7 @@ define(['underscore', 'backbone'],
         classes: "alert alert-info",
         content: ['<img src="/assets/loadingbar2.gif" style="height: 20px;" alt="loading" >',
           '<strong>Please wait!</strong> We are still importing data from SCM.',
-          'It may take up-to 4seconds. But we are almost there.'].join(' ')
+          'It may take up-to 4 seconds. But we are almost there.'].join(' ')
       });
 
       if(this_switch.attr("checked")){
