@@ -1,7 +1,9 @@
-PATH
-  remote: ~/workspace/versioneye/versioneye-core
+GIT
+  remote: git@github.com:versioneye/versioneye-core.git
+  revision: dbd8be8a037faeb230f1420263398b579746de7a
+  tag: v1.10.7
   specs:
-    versioneye-core (1.10.6)
+    versioneye-core (1.10.7)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       cocoapods-core (~> 0.33.0)
