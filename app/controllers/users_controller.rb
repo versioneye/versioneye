@@ -48,7 +48,7 @@ class UsersController < ApplicationController
     check_promo_code promo_code, @user
 
     if @user.save
-      @user.send_verification_email
+      Thread.new{ @user.send_verification_email }
     else
       flash[:error] = "#{t(:general_error)} - #{@user.errors.full_messages.to_sentence}"
       redirect_to signup_path
