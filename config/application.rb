@@ -21,37 +21,6 @@ end
 module Versioneye
   class Application < Rails::Application
 
-    begin
-      VersioneyeCore.new
-    rescue => e
-      p e.message
-      p e.backtrace.join("\n")
-    end
-
-    AWS.config(
-      :s3_endpoint => Settings.instance.aws_s3_endpoint,
-      :s3_port => Settings.instance.aws_s3_port,
-      :use_ssl => Settings.instance.aws_use_ssl,
-      :access_key_id => Settings.instance.aws_access_key_id,
-      :secret_access_key => Settings.instance.aws_secret_access_key )
-
-    Product.send        :include, WillPaginateMongoid::MongoidPaginator
-    BitbucketRepo.send  :include, WillPaginateMongoid::MongoidPaginator
-    GithubRepo.send     :include, WillPaginateMongoid::MongoidPaginator
-    Dependency.send     :include, WillPaginateMongoid::MongoidPaginator
-    ErrorMessage.send   :include, WillPaginateMongoid::MongoidPaginator
-    SubmittedUrl.send   :include, WillPaginateMongoid::MongoidPaginator
-    User.send           :include, WillPaginateMongoid::MongoidPaginator
-    Versioncomment.send :include, WillPaginateMongoid::MongoidPaginator
-
-    Mongoid.load!("config/mongoid.yml")
-    Mongoid.logger.level = Logger::ERROR
-    Moped.logger.level = Logger::ERROR
-
-    PDFKit.configure do |config|
-      config.default_options[:ignore_load_errors] = true
-    end
-
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
@@ -95,6 +64,42 @@ module Versioneye
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :en
+
+    begin
+      VersioneyeCore.new
+    rescue => e
+      p e.message
+      p e.backtrace.join("\n")
+    end
+
+    AWS.config(
+      :s3_endpoint => Settings.instance.aws_s3_endpoint,
+      :s3_port => Settings.instance.aws_s3_port,
+      :use_ssl => Settings.instance.aws_use_ssl,
+      :access_key_id => Settings.instance.aws_access_key_id,
+      :secret_access_key => Settings.instance.aws_secret_access_key )
+
+    Product.send        :include, WillPaginateMongoid::MongoidPaginator
+    BitbucketRepo.send  :include, WillPaginateMongoid::MongoidPaginator
+    GithubRepo.send     :include, WillPaginateMongoid::MongoidPaginator
+    Dependency.send     :include, WillPaginateMongoid::MongoidPaginator
+    ErrorMessage.send   :include, WillPaginateMongoid::MongoidPaginator
+    SubmittedUrl.send   :include, WillPaginateMongoid::MongoidPaginator
+    User.send           :include, WillPaginateMongoid::MongoidPaginator
+    Versioncomment.send :include, WillPaginateMongoid::MongoidPaginator
+
+    begin
+      Mongoid.load!("config/mongoid.yml")
+      Mongoid.logger.level = Logger::ERROR
+      Moped.logger.level = Logger::ERROR
+    rescue => e
+      p e.message
+      p e.backtrace.join("\n")
+    end
+
+    PDFKit.configure do |config|
+      config.default_options[:ignore_load_errors] = true
+    end
 
   end
 end
