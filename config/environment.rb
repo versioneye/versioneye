@@ -9,7 +9,7 @@ begin
   Tire.configure do
     # logger STDOUT
     # logger STDERR
-    url Settings.instance.elasticsearch_url
+    url Settings.instance.elasticsearch_url ||= "#{Settings.instance.elasticsearch_addr}:#{Settings.instance.elasticsearch_port}"
   end
 rescue => e
   Rails.logger.error "Wrong configuration: #{e}"
