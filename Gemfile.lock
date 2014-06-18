@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 4cdd2da44a2132a1cb37a5e2ac19700428b22f4c
-  tag: v1.12.0
+  revision: bdfe3953a9a0a5d72e6a5956a437e5c840530465
+  tag: v1.12.1
   specs:
-    versioneye-core (1.11.0)
+    versioneye-core (1.12.1)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       cocoapods-core (~> 0.33.0)
@@ -60,7 +60,7 @@ GEM
     ansi (1.4.3)
     arel (3.0.3)
     awesome_print (1.2.0)
-    aws-sdk (1.43.2)
+    aws-sdk (1.43.3)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
     binding.repl (1.0.4.1)
