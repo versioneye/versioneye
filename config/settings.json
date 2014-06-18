@@ -161,6 +161,7 @@
     "smtp_sender_email": "notify@versioneye.com",
     "elasticsearch_product_index": "/product_enterprise",
     "elasticsearch_user_index": "/user_enterprise",
+    "elasticsearch_url": "",
     "elasticsearch_addr": "env_ES_PORT_9200_TCP_ADDR",
     "elasticsearch_port": "env_ES_PORT_9200_TCP_PORT",
     "memcache_password": null,
