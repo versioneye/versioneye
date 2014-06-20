@@ -20,28 +20,28 @@
       <div class="control-group">
         <%= label_tag :github_base_url, "WEB URL", :class => "control-label", :for => "github_base_url" %>
         <div class="controls">
-          <%= text_field_tag :github_base_url, @globalsetting.github_base_url, :id => "github_base_url" %>
+          <%= text_field_tag :github_base_url, @globalsetting['github_base_url'], :id => "github_base_url" %>
         </div>
       </div>
 
       <div class="control-group">
         <%= label_tag :github_api_url, "API URL", :class => "control-label", :for => "github_api_url" %>
         <div class="controls">
-          <%= text_field_tag :github_api_url, @globalsetting.github_api_url, :id => "github_api_url" %>
+          <%= text_field_tag :github_api_url, @globalsetting['github_api_url'], :id => "github_api_url" %>
         </div>
       </div>
 
       <div class="control-group">
         <%= label_tag :github_client_id, "Client ID", :class => "control-label", :for => "github_client_id" %>
         <div class="controls">
-          <%= text_field_tag :github_client_id, @globalsetting.github_client_id, :id => "github_client_id" %>
+          <%= text_field_tag :github_client_id, @globalsetting['github_client_id'], :id => "github_client_id" %>
         </div>
       </div>
 
       <div class="control-group">
         <%= label_tag :github_client_secret, "Client Secret", :class => "control-label", :for => "github_client_secret" %>
         <div class="controls">
-          <%= text_field_tag :github_client_secret, @globalsetting.github_client_secret, :id => "github_client_secret" %>
+          <%= text_field_tag :github_client_secret, @globalsetting['github_client_secret'], :id => "github_client_secret" %>
         </div>
       </div>
 

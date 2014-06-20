@@ -4,7 +4,7 @@ require File.expand_path('../application', __FILE__)
 
 Versioneye::Application.initialize!
 
-es_url = Settings.instance.elasticsearch_url
+es_url = 'localhost:9200'
 if !Settings.instance.elasticsearch_addr.to_s.empty? && !Settings.instance.elasticsearch_port.to_s.empty?
   es_url = "#{Settings.instance.elasticsearch_addr}:#{Settings.instance.elasticsearch_port}"
 end

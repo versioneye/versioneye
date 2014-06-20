@@ -20,21 +20,21 @@
       <div class="control-group">
         <%= label_tag :server_url, "Server URL", :class => "control-label", :for => "server_url" %>
         <div class="controls">
-          <%= text_field_tag :server_url, @globalsetting.server_url, :id => "server_url" %>
+          <%= text_field_tag :server_url, @globalsetting['server_url'], :id => "server_url" %>
         </div>
       </div>
 
       <div class="control-group">
         <%= label_tag :server_host, "Server Host", :class => "control-label", :for => "server_host" %>
         <div class="controls">
-          <%= text_field_tag :server_host, @globalsetting.server_host, :id => "server_host" %>
+          <%= text_field_tag :server_host, @globalsetting['server_host'], :id => "server_host" %>
         </div>
       </div>
 
       <div class="control-group">
         <%= label_tag :server_port, "Server Port", :class => "control-label", :for => "server_port" %>
         <div class="controls">
-          <%= text_field_tag :server_port, @globalsetting.server_port, :id => "server_port" %>
+          <%= text_field_tag :server_port, @globalsetting['server_port'], :id => "server_port" %>
         </div>
       </div>
 

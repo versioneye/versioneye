@@ -6,7 +6,7 @@ Versioneye::Application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
   config.action_controller.perform_caching = false
-  config.cache_store = :dalli_store, Settings.instance.memcache_servers,{
+  config.cache_store = :dalli_store, ["#{Settings.instance.memcache_addr}:#{Settings.instance.memcache_port}"], {
     :username => Settings.instance.memcache_username, :password => Settings.instance.memcache_password,
     :namespace => 'veye', :expires_in => 1.day, :compress => true }
 
