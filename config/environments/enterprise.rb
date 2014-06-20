@@ -36,20 +36,6 @@ Versioneye::Application.configure do
 
   config.i18n.fallbacks = true
 
-  Settings.instance.server_url  = GlobalSetting.default.server_url
-  Settings.instance.server_host = GlobalSetting.default.server_host
-  Settings.instance.server_port = GlobalSetting.default.server_port
-
-  Settings.instance.github_base_url      = GlobalSetting.default.github_base_url
-  Settings.instance.github_api_url       = GlobalSetting.default.github_api_url
-  Settings.instance.github_client_id     = GlobalSetting.default.github_client_id
-  Settings.instance.github_client_secret = GlobalSetting.default.github_client_secret
-
-  Settings.instance.nexus_url = GlobalSetting.default.nexus_url
-
-  Settings.instance.cocoapods_spec_git = GlobalSetting.default.cocoapods_spec_git
-  Settings.instance.cocoapods_spec_url = GlobalSetting.default.cocoapods_spec_url
-
   config.active_support.deprecation = :notify
   config.action_mailer.delivery_method = :smtp
   EmailSettingService.update_action_mailer_from_db
