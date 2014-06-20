@@ -66,6 +66,7 @@ module Versioneye
     # config.i18n.default_locale = :en
 
     begin
+      p " instantiate VersioneyeCore ... "
       VersioneyeCore.new
     rescue => e
       p e.message
@@ -87,15 +88,6 @@ module Versioneye
     SubmittedUrl.send   :include, WillPaginateMongoid::MongoidPaginator
     User.send           :include, WillPaginateMongoid::MongoidPaginator
     Versioncomment.send :include, WillPaginateMongoid::MongoidPaginator
-
-    begin
-      Mongoid.load!("config/mongoid.yml")
-      Mongoid.logger.level = Logger::ERROR
-      Moped.logger.level = Logger::ERROR
-    rescue => e
-      p e.message
-      p e.backtrace.join("\n")
-    end
 
     PDFKit.configure do |config|
       config.default_options[:ignore_load_errors] = true
