@@ -14,10 +14,10 @@ gem 'bourbon'              , '~> 4.0.0'
 gem 'ruby_regex'           , '~> 0.1.0'
 gem 'semverly'             , '~> 1.0.0'
 gem 'cocoapods-core'       , '~> 0.33.0'
-gem 'stripe'               , '~> 1.13.0'
+gem 'stripe'               , '~> 1.14.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v1.12.2'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v2.0.0'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :development do

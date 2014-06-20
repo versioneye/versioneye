@@ -28,7 +28,7 @@ describe "Update Global Settings" do
 
       Settings.instance.server_url.should eq("http://union.on:900")
       Settings.instance.server_host.should eq("union.on")
-      Settings.instance.server_port.should == 900
+      Settings.instance.server_port.should eq("900")
     end
 
     it "updates github settings" do

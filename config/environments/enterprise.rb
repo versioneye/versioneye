@@ -4,7 +4,7 @@ Versioneye::Application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
   config.action_controller.perform_caching = false
-  config.cache_store = :dalli_store, Settings.instance.memcache_servers,{
+  config.cache_store = :dalli_store, ["#{Settings.instance.memcache_addr}:#{Settings.instance.memcache_port}"],{
     :username => Settings.instance.memcache_username, :password => Settings.instance.memcache_password,
     :namespace => 'veye', :expires_in => 1.day, :compress => true }
 

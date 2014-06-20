@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: aea8ed2f52b5eca952e7290d8447cfaf2dbdc961
-  tag: v1.12.2
+  revision: 4a416c490459057f3353bf1f2cbd9540e1580c8b
+  tag: v2.0.0
   specs:
-    versioneye-core (1.12.2)
+    versioneye-core (2.0.0)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       cocoapods-core (~> 0.33.0)
@@ -20,7 +20,7 @@ GIT
       pdfkit (~> 0.6.2)
       persistent_httparty (~> 0.1.0)
       semverly (~> 1.0.0)
-      stripe (~> 1.13.0)
+      stripe (~> 1.14.0)
       tire (~> 0.6.2)
       will_paginate_mongoid (= 2.0.1)
       wkhtmltopdf-binary (~> 0.9.9.1)
@@ -312,7 +312,7 @@ GEM
       colorize
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    stripe (1.13.0)
+    stripe (1.14.0)
       json (~> 1.8.1)
       mime-types (~> 1.25)
       rest-client (~> 1.4)
@@ -407,7 +407,7 @@ DEPENDENCIES
   selenium-webdriver (~> 2.42.0)
   semverly (~> 1.0.0)
   simplecov (~> 0.8.0)
-  stripe (~> 1.13.0)
+  stripe (~> 1.14.0)
   terminal-notifier (~> 1.6.0)
   therubyracer (~> 0.12.0)
   turbo-sprockets-rails3 (~> 0.3.0)
