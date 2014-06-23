@@ -2,6 +2,8 @@ Versioneye::Application.routes.draw do
 
   root :to => "products#index"
 
+  get  'docker/remote_images', :to => 'docker#remote_images'
+
   namespace :auth do
     get  '/github/callback',   :to => 'github#callback'
     get  '/github/new',        :to => 'github#new'
