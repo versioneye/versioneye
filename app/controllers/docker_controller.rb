@@ -51,7 +51,7 @@ class DockerController < ApplicationController
 
       images['reiz/elasticsearch:1.0.1'] = {
         'container_start_opts' => {
-          'PortBindings' => { '9200/tcp'  => [{'HostPort' => '9200'}], '9300' => [{'HostPort' => '9200'}]},
+          'PortBindings' => { '9200/tcp'  => [{'HostPort' => '9200'}], '9300' => [{'HostPort' => '9300'}]},
           'Binds' => ['/mnt/elasticsearch:/data']
         },
         'comments' => 'First version'
