@@ -28,8 +28,19 @@ class Settings::GlobalsettingsController < ApplicationController
   def index_cocoapods
     Settings.instance.reload_from_db GlobalSetting.new
     @globalsetting = {}
+
     @globalsetting['cocoapods_spec_git'] = Settings.instance.cocoapods_spec_git
     @globalsetting['cocoapods_spec_url'] = Settings.instance.cocoapods_spec_url
+
+    @globalsetting['cocoapods_spec_git_2'] = ''
+    @globalsetting['cocoapods_spec_url_2'] = ''
+
+    begin
+      @globalsetting['cocoapods_spec_git_2'] = Settings.instance.cocoapods_spec_git_2
+      @globalsetting['cocoapods_spec_url_2'] = Settings.instance.cocoapods_spec_url_2
+    rescue => e
+      p "index_cocoapods: #{e.message}" # No big deal. It might be that there is no 2nd cocoapods repo!
+    end
   end
 
 
@@ -75,8 +86,13 @@ class Settings::GlobalsettingsController < ApplicationController
 
   def update_cocoapods
     env = Settings.instance.environment
+
     GlobalSetting.set( env, 'cocoapods_spec_git', params[:cocoapods_spec_git] )
     GlobalSetting.set( env, 'cocoapods_spec_url', params[:cocoapods_spec_url] )
+
+    GlobalSetting.set( env, 'cocoapods_spec_git_2', params[:cocoapods_spec_git_2] )
+    GlobalSetting.set( env, 'cocoapods_spec_url_2', params[:cocoapods_spec_url_2] )
+
     Settings.instance.reload_from_db GlobalSetting.new
     flash[:success] = "CocoaPods Specs changed successfully"
     redirect_to settings_cocoapods_path
