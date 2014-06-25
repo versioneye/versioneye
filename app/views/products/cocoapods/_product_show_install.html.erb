@@ -9,13 +9,6 @@
     <div class="span5 w430"><pre class="download_area"><code>pod '<%= @product.name %>', '<%= @version.to_s %>'</code></pre></div>
   </div>
 
-  <div class="row mb5">
-    <div class="span2">
-      <h5 class="dep_header">Install with</h5>
-    </div>
-    <div class="span5 w430"><pre class="download_area"><code>pod install <%= @product.name %> --version <%= @version.to_s %></code></pre></div>
-  </div>
-
   <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.to_s ) %>
   <% unless downloads.empty? %>
     <div class="row mb5">
