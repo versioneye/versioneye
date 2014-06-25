@@ -14,7 +14,7 @@
     <%= form_tag( settings_cocoapods_path, :method => "post", :class => "form-horizontal") do  %>
 
       <p class="description">
-        Where do you host your private CocoaPods?
+        Where do you host your primary private CocoaPods?
       </p>
 
       <div class="control-group">
@@ -30,6 +30,27 @@
           <%= text_field_tag :cocoapods_spec_url, @globalsetting['cocoapods_spec_url'], :id => "cocoapods_spec_url" %>
         </div>
       </div>
+
+      <hr/>
+
+      <p class="description">
+        Do you have a secondary CocoaPods?
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :cocoapods_spec_git_2, "Specs Git", :class => "control-label", :for => "cocoapods_spec_git_2" %>
+        <div class="controls">
+          <%= text_field_tag :cocoapods_spec_git_2, @globalsetting['cocoapods_spec_git_2'], :id => "cocoapods_spec_git_2" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :cocoapods_spec_url_2, "Specs URL", :class => "control-label", :for => "cocoapods_spec_url_2" %>
+        <div class="controls">
+          <%= text_field_tag :cocoapods_spec_url_2, @globalsetting['cocoapods_spec_url_2'], :id => "cocoapods_spec_url_2" %>
+        </div>
+      </div>
+
 
       <div class="control-group">
         <div class="control-label"></div>
