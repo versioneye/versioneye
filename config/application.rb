@@ -6,7 +6,7 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 require "active_resource/railtie"
 require "rails/test_unit/railtie"
-# require "sprockets/railtie" # MongoID # Uncomment this line for Rails 3.1+
+require "sprockets/railtie" # MongoID # Uncomment this line for Rails 3.1+
 
 require 'dalli'
 require 'tire'
@@ -68,7 +68,7 @@ module Versioneye
     # config.i18n.default_locale = :en
 
     begin
-      p " instantiate VersioneyeCore ... "
+      p "application.rb ... instantiate VersioneyeCore ... "
       VersioneyeCore.new
     rescue => e
       p e.message
