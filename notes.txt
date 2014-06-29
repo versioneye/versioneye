@@ -1,24 +1,4 @@
 
-
-Dependency.where(:scope => /\n/).delete
-Dependency.where(:dep_prod_key => /\n/).delete
-Dependency.find("5185862de4b04c4c6674d0c3").remove
-Dependency.where(:dep_prod_key => /dk.apaq.filter\n/).delete
-Dependency.where(:id => "51801b83e4b088fd8c7dd323").first.delete
-Product.where(:prod_key => /A simple implementation of JNDI/).delete
-Product.where(:prod_key => "null").delete
-Dependency.where(:version => /\$\{spring\.framework\.version\}\n/).delete
-
-
-
-
-<% elsif current_page?(version_eye_api_path) %>
-
-      <%= javascript_include_tag "application_swagger",     :defer => false %>
-      <link href='css/swagger/hightlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
-      <link href='assets/swagger/screen.css'          media='screen' rel='stylesheet' type='text/css'/>
-
-
 kill -s USR2 12113
 
 
