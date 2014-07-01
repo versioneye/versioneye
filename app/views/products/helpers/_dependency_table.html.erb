@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <% dependencies.each do |dep| %>
-      <% dep.update_known_if_nil() %>
+      <% dep.update_known if dep.known.nil? || dep.known == false %>
       <% tr_class = dep[:outdated] ? "flash warn" : ""  %>
       <tr class="<%= tr_class %>">
         <td>
