@@ -63,7 +63,7 @@ class ProductsController < ApplicationController
     @versioncomment      = Versioncomment.new
     @versioncommentreply = Versioncommentreply.new
   rescue => e
-    flash[:error] => "An error occured (#{e.message}). Please contact the VersionEye Team."
+    flash[:error] = "An error occured (#{e.message}). Please contact the VersionEye Team."
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
   end
@@ -122,7 +122,7 @@ class ProductsController < ApplicationController
     @products  = @products.paginate(:page => page, :per_page => 30)
     @products.total_entries = response[:count]
   rescue => e
-    flash[:error] => "An error occured. Please contact the VersionEye Team."
+    flash[:error] = "An error occured. Please contact the VersionEye Team."
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
   end
