@@ -62,6 +62,10 @@ class ProductsController < ApplicationController
     @current_version     = VersionService.newest_version( @product.versions )
     @versioncomment      = Versioncomment.new
     @versioncommentreply = Versioncommentreply.new
+  rescue => e
+    flash[:error] => "An error occured (#{e.message}). Please contact the VersionEye Team."
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
   end
 
   def show_visual
@@ -117,6 +121,10 @@ class ProductsController < ApplicationController
     @products  = pre + products
     @products  = @products.paginate(:page => page, :per_page => 30)
     @products.total_entries = response[:count]
+  rescue => e
+    flash[:error] => "An error occured. Please contact the VersionEye Team."
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
   end
 
   def edit
