@@ -263,6 +263,7 @@ class ProductsController < ApplicationController
     results = []
     products = EsProduct.autocomplete(term)
     products.each_with_index do |product, index|
+      next if product.nil?
       results << format_autocomplete(product)
       break if index > 9
     end
@@ -286,6 +287,7 @@ class ProductsController < ApplicationController
     end
 
     def format_autocomplete(product)
+      return {} if product.nil?
       {
         value: "#{product[:name_downcase]}",
         name: product[:name],
