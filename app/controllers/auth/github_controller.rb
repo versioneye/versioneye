@@ -26,6 +26,12 @@ class Auth::GithubController < ApplicationController
     end
 
     email = primary_email token
+    if email.to_s.empty?
+      flash.now[:error] = 'We are not able to fetch your email from the GitHub API. Please complete your email address.'
+      init_variables_for_new_page user, email
+      render auth_github_new_path and return
+    end
+
     email_available = User.email_valid?(email)
     email_already_taken = !email_available
 
@@ -41,7 +47,7 @@ class Auth::GithubController < ApplicationController
       if user.save
         login user
       else
-        flash.now[:error] = 'An error occured.'
+        flash.now[:error] = 'An error occured during saving your data.'
         init_variables_for_new_page user, email
         render auth_github_new_path
       end
@@ -140,6 +146,8 @@ class Auth::GithubController < ApplicationController
 
     def new_user token, email, terms
       json_user = Github.user token
+      return nil if json_user.nil?
+
       user      = User.new
       user.update_from_github_json( json_user, token )
       user.email         = email
