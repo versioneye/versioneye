@@ -5,7 +5,11 @@
 <div class="row">
 	<div class="span6">
 		<h5 class="dep_header">
-			<%= pluralize( main_dependencies.count, 'Compile Dependencies') %>
+      <% if main_dependencies && main_dependencies.count %>
+			  <%= pluralize( main_dependencies.count, 'Compile Dependencies') %>
+      <% else %>
+        0 Compile Dependencies
+      <% end %>
 		</h5>
 	</div>
 	<div class="span7" >
@@ -18,7 +22,7 @@
 </div>
 
 <% test_deps = @product.dependencies( Dependency::A_SCOPE_TEST ) %>
-<% if test_deps.count > 0 %>
+<% if test_deps && test_deps.count > 0 %>
 	<hr/>
 	<h5 class="dep_header">
     <%= pluralize(test_deps.count, "Test Dependencies") %>
@@ -27,13 +31,13 @@
 <% end %>
 
 <% provided_deps = @product.dependencies( Dependency::A_SCOPE_PROVIDED ) %>
-<% if provided_deps.count > 0 && provided_deps.count <= 30 %>
+<% if provided_deps && provided_deps.count > 0 && provided_deps.count <= 30 %>
 	<hr />
 	<h5 class="dep_header">
     <%= pluralize(provided_deps.count, "Provided Dependencies") %>
   </h5>
   <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => provided_deps }  %>
-<% elsif provided_deps.count > 30 %>
+<% elsif provided_deps && provided_deps.count > 30 %>
   <hr />
   <h5 class="dep_header">
     <%= pluralize(provided_deps.count, "Provided Dependencies") %>
