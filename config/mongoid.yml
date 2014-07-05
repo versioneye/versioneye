@@ -18,7 +18,7 @@ development:
         # Change the default consistency model to :eventual or :strong.
         # :eventual will send reads to secondaries, :strong sends everything
         # to master. (default: :eventual)
-        consistency: :strong
+        consistency: :eventual
 
         # How many times Moped should attempt to retry an operation after
         # failure. (default: 30)
@@ -96,6 +96,8 @@ production:
       # of host:port pairs. (required)
       hosts:
         - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
+        - <%= ENV['MONGO_RS_2_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_2_PORT'] ||= '27017' %>
+        - <%= ENV['MONGO_RS_3_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_3_PORT'] ||= '27017' %>
       options:
         # Change whether the session persists in safe mode by default.
         # (default: false)
@@ -104,7 +106,7 @@ production:
         # Change the default consistency model to :eventual or :strong.
         # :eventual will send reads to secondaries, :strong sends everything
         # to master. (default: :eventual)
-        consistency: :strong
+        consistency: :eventual
 
         # How many times Moped should attempt to retry an operation after
         # failure. (default: 30)
