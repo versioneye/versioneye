@@ -5,7 +5,7 @@
     <div class="row search-item" >
 
       <div class="icon56 span2 pull-left">
-        <% prog_lang = product.language.downcase.gsub(/\./, '') %>
+        <% prog_lang = product.language.to_s.downcase.gsub(/\./, '') %>
         <span class = "icon_<%= prog_lang %> on" ></span>
       </div>
 
