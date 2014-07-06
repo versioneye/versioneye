@@ -4,6 +4,9 @@ module ProjectsHelper
     if signed_in? && current_user.projects.empty?
       redirect_to new_user_project_path
     end
+  rescue => e
+    Rails.logger.error e.message
+    nil
   end
 
   def outdated_color project

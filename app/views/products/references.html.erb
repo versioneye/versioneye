@@ -9,12 +9,27 @@
 
 </div>
 
-<div class="span8" >
-  <div class="row content_header_def" >
-    <em> `<%= @product.name %>`</em> has <%= pluralize( @products.total_entries , "reference")  %>
+<% if @product %>
+
+  <div class="span8" >
+    <div class="row content_header_def" >
+      <em> `<%= @product.name %>`</em> has <%= pluralize( @products.total_entries , "reference")  %>
+    </div>
+    <div class="content">
+      <%= render :partial => "products/show_search_results",
+                 :locals => { :products => @products, :paginate => true, :prefix => "references", :name_limit => 70 }  %>
+    </div>
   </div>
-  <div class="content">
-    <%= render :partial => "products/show_search_results",
-               :locals => { :products => @products, :paginate => true, :prefix => "references", :name_limit => 70 }  %>
+
+<% else %>
+
+  <div class="span8" >
+    <div class="row content_header_def" >
+      No Package selected.
+    </div>
+    <div class="content">
+      There is package selected for this page.
+    </div>
   </div>
-</div>
+
+<% end %>
