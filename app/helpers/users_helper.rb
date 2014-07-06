@@ -15,7 +15,9 @@ module UsersHelper
   end
 
   def has_permission_to_see_products( user, current_user )
-    return true if !current_user.nil? && user.id == current_user.id
+    return false if user.nil?
+    return true  if !current_user.nil? && user.id == current_user.id
+
     if user.privacy_products.eql?('nobody')
       return false
     elsif user.privacy_products.eql?('ru')
