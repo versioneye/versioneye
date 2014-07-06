@@ -43,7 +43,7 @@ class ProductsController < ApplicationController
     return if @product.nil?
 
     # if product language is different from language in param than do a redirect!
-    if @product && lang && lang.casecmp( @product.language ) != 0
+    if !@product.nil? && !lang.nil? && lang.to_s.casecmp( @product.language.to_s ) != 0
       redirect_to package_version_path( @product.language_esc.downcase, @product.to_param, @product.version ) and return
     end
 
