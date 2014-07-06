@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby "2.1.1"
 
-gem 'rails'                , '~> 3.2.17'
+gem 'rails'                , '~> 3.2.19'
 gem 'jquery-rails'         , '~> 2.2.1'
 gem 'execjs'               , '~> 2.0.2'
 gem 'gravatar_image_tag'   , '~> 1.2.0'
@@ -17,7 +17,7 @@ gem 'cocoapods-core'       , '~> 0.33.0'
 gem 'stripe'               , '~> 1.14.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v2.0.7'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v2.0.8'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :development do
@@ -25,7 +25,7 @@ group :development do
   gem 'capistrano-rails'  , '~> 1.1.1'
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'psych'             , '~> 2.0.5'
-  gem 'irbtools'          , '~> 1.6.1'
+  # gem 'irbtools'          , '~> 1.6.1'
   gem 'terminal-notifier' , '~> 1.6.0'
   gem 'fakes3'            , '~> 0.1.5.2'
   gem 'debugger'          , '~> 1.6.0'
