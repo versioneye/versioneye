@@ -11,8 +11,8 @@
   </div>
 
   <% this_color_class = 'info' %>
-  <% this_color_class = 'success' if @version.semver_2 %>
-  <% this_color_class = 'error' if !@version.semver_2 %>
+  <% this_color_class = 'success' if @version && @version.semver_2 %>
+  <% this_color_class = 'error' if @version && !@version.semver_2 %>
   <div class="flash <%= this_color_class %>" style="margin-bottom: 5px;">
     <b>This:</b> <%= @product.version %>
   </div>
