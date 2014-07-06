@@ -36,7 +36,7 @@ class User::ProjectsController < ApplicationController
     project  = add_dependency_classes( project )
     @project = project
 
-    unless project.visible_for_user?(current_user)
+    if !project.visible_for_user?(current_user)
       return if !authenticate
       redirect_to(root_path) unless current_user?(project.user)
     end
