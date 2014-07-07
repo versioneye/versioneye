@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby "2.1.0"
+ruby "2.1.1"
 
 gem 'rails'                , '~> 3.2.19'
 gem 'jquery-rails'         , '~> 2.2.1'
@@ -7,8 +7,8 @@ gem 'execjs'               , '~> 2.0.2'
 gem 'gravatar_image_tag'   , '~> 1.2.0'
 gem 'oauth'                , '~> 0.4.7'
 gem 'twitter_oauth'        , '~> 0.4.94'
-# gem 'unicorn'              , '~> 4.8.2'
-gem 'puma'                 , '~> 2.8.2'
+gem 'unicorn'              , '~> 4.8.2'
+# gem 'puma'                 , '~> 2.8.2'
 gem 'htmlentities'         , '~> 4.3.1'
 gem 'whenever'             , '~> 0.9.2'
 gem 'bourbon'              , '~> 4.0.0'
