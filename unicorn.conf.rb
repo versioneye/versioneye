@@ -10,7 +10,7 @@
 
 # Use at least one worker per core if you're on a dedicated server,
 # more will usually help for _short_ waits on databases/caches.
-worker_processes 5
+worker_processes 1
 
 # Since Unicorn is never exposed to outside clients, it does not need to
 # run on the standard HTTP port (80), there is no reason to start Unicorn
@@ -100,7 +100,7 @@ after_fork do |server, worker|
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.establish_connection
 
-  ::Mongoid.default_session.disconnect
+  # ::Mongoid.default_session.disconnect
 
   # if preload_app is true, then you may also want to check and
   # restart any other shared sockets/descriptors such as Memcached,
