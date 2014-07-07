@@ -70,7 +70,6 @@ module Versioneye
     begin
       p "application.rb ... instantiate VersioneyeCore ... "
       VersioneyeCore.new
-      # Indexer.create_indexes
     rescue => e
       p e.message
       p e.backtrace.join("\n")
