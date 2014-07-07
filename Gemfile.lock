@@ -174,8 +174,6 @@ GEM
       persistent_http
     polyglot (0.3.5)
     psych (2.0.5)
-    puma (2.8.2)
-      rack (>= 1.1, < 2.0)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -198,6 +196,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
+    raindrops (0.13.0)
     rake (10.3.2)
     rdoc (3.12.2)
       json (~> 1.4)
@@ -288,6 +287,10 @@ GEM
     uglifier (2.5.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unicorn (4.8.3)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     vcr (2.9.2)
     webmock (1.18.0)
       addressable (>= 2.3.6)
@@ -328,7 +331,6 @@ DEPENDENCIES
   jquery-rails (~> 2.2.1)
   oauth (~> 0.4.7)
   psych (~> 2.0.5)
-  puma (~> 2.8.2)
   rails (~> 3.2.19)
   rspec (~> 2.14.0)
   rspec-mocks (~> 2.14.0)
@@ -346,6 +348,7 @@ DEPENDENCIES
   turn
   twitter_oauth (~> 0.4.94)
   uglifier (~> 2.5.0)
+  unicorn (~> 4.8.2)
   vcr (~> 2.9.2)
   versioneye-core!
   webmock (~> 1.18.0)
