@@ -2,6 +2,15 @@ namespace :versioneye do
 
   desc "execute the daily jobs"
   task :daily_jobs => :environment do
+    puts "START to update Indexes."
+    begin
+      Indexer.create_indexes
+    rescue => e
+      p e.message
+      p e.backtrace.join("\n")
+    end
+    puts "---"
+
     puts "START to update the json strings for the statistic page."
     StatisticService.update_all
     puts "---"
