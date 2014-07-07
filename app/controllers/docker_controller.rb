@@ -22,6 +22,7 @@ class DockerController < ApplicationController
           'PortBindings' => { '8080/tcp' => [{'HostPort' => '8080'}]},
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc']
         },
+        'auth' => true,
         'comments' => 'First version'
       }
 
@@ -30,6 +31,7 @@ class DockerController < ApplicationController
           'PortBindings' => { '9090/tcp' => [{'HostPort' => '9090'}]},
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc']
         },
+        'auth' => true,
         'comments' => 'First version'
       }
 
@@ -38,29 +40,33 @@ class DockerController < ApplicationController
           'Links' => ['mongodb:db'],
           'Binds' => ['/mnt/cocoapods:/mnt/cocoapods']
         },
+        'auth' => true,
         'comments' => 'First version'
       }
 
-      images['reiz/mongodb:1.0.0'] = {
+      images['reiz/mongodb:1.0.2'] = {
         'container_start_opts' => {
           'PortBindings' => { '27017/tcp' => [{'HostPort' => '27017'}]},
           'Binds' => ['/mnt/mongodb:/data']
         },
-        'comments' => 'First version'
+        'auth' => false,
+        'comments' => 'With MongoDB 2.6.3'
       }
 
-      images['reiz/elasticsearch:1.0.1'] = {
+      images['reiz/elasticsearch:0.9.0'] = {
         'container_start_opts' => {
           'PortBindings' => { '9200/tcp'  => [{'HostPort' => '9200'}], '9300' => [{'HostPort' => '9300'}]},
           'Binds' => ['/mnt/elasticsearch:/data']
         },
-        'comments' => 'First version'
+        'auth' => false,
+        'comments' => 'With ElasticSearch 1.0.0'
       }
 
       images['reiz/memcached:1.0.0'] = {
         'container_start_opts' => {
           'PortBindings' => { '11211/tcp' => [{'HostPort' => '11211'}]}
         },
+        'auth' => false,
         'comments' => 'First version'
       }
 
