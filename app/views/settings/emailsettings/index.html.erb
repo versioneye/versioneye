@@ -91,5 +91,22 @@
 
     <% end %>
 
+    <hr/>
+
+    <%= form_tag( settings_test_email_path, :method => "post", :class => "form-horizontal") do  %>
+
+      <p class="description">
+        Send out a test email.
+      </p>
+
+      <div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn btn-large btn-primary" >Send</button>
+        </div>
+      </div>
+
+    <% end %>
+
   </div>
 </div>
