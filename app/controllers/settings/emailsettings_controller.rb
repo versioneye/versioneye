@@ -18,4 +18,14 @@ class Settings::EmailsettingsController < ApplicationController
     redirect_to settings_emailsettings_path
   end
 
+  def test_email
+    UserMailer.suggest_packages_email( current_user ).deliver
+    flash[:success] = "Email is out to #{current_user.email}"
+    redirect_to settings_emailsettings_path
+  rescue => e
+    flash[:error] = "Something went wrong! It's your fault! - #{e.message}"
+    Rails.logger.error e.message
+    redirect_to settings_emailsettings_path
+  end
+
 end
