@@ -253,8 +253,9 @@ Versioneye::Application.routes.draw do
   get   '/package/name'           , :to => 'products#autocomplete_product_name'
   post  '/package/follow'         , :to => 'products#follow'
   post  '/package/unfollow'       , :to => 'products#unfollow'
-  post  '/package/image_path'     , :to => 'dependency_wheel#image_path'
-  post  '/package/upload_image'   , :to => 'dependency_wheel#upload_image'
+  # The next 2 lines are currently disabled for performance reasons
+  # post  '/package/image_path'     , :to => 'dependency_wheel#image_path'
+  # post  '/package/upload_image'   , :to => 'dependency_wheel#upload_image'
 
   # Rewriting old legacy paths
   get   '/package/:key'                       , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/ }

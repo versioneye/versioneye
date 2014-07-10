@@ -601,7 +601,7 @@ function show_info_box(data, options){
       scope_name.innerHTML = options.scope;
     }
   }
-  if (typeof(handle_path) == 'function'){
-    handle_path(options);
-  }
+  // if (typeof(handle_path) == 'function'){
+  //   handle_path(options);
+  // }
 }
