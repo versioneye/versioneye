@@ -115,6 +115,7 @@ namespace :versioneye do
   task :init_enterprise => :environment do
     puts "START to create default admin"
     AdminService.create_default_admin
+    Plan.create_defaults
     EsProduct.reset
     EsUser.reset
     puts "---"
