@@ -71,8 +71,8 @@ Versioneye::Application.configure do
   config.action_mailer.smtp_settings = {
      :address              => 'email-smtp.eu-west-1.amazonaws.com',
      :port                 => 587,
-     :user_name            => Settings.instance.smtp_username,
-     :password             => Settings.instance.smtp_password,
+     :user_name            => Settings.instance.smtp_user,
+     :password             => Settings.instance.smtp_pass,
      :domain               => 'versioneye.com',
      :authentication       => 'plain',
      :enable_starttls_auto => true  }
