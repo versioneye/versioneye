@@ -6,7 +6,7 @@
 //
 //= require jquery
 //= require jquery_textbox_hinter
-//= require bootstrap.min
+//= require bootstrap
 //= require bootstrap_fileupload
 //= require libs/hogan-2.0.0
 //= require libs/typeahead
