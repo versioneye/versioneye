@@ -7,7 +7,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery_textbox_hinter
-//= require bootstrap.min
+//= require bootstrap
 //= require bootstrap_fileupload
 //= require libs/bootstrap-maxlength.min
 
