@@ -18,11 +18,7 @@
 //= require custom_feedback
 //= require custom_update_language
 
-//= require libs/require
-//= require libs/underscore-min
-//= require libs/moment.min
-//= require libs/jquery.feeds.min
-//= require libs/hogan-2.0.0
-//= require libs/typeahead.min
+//= require react
+//= require JSXTransformer
 
 //= require custom_language

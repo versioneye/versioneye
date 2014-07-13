@@ -19,32 +19,47 @@
 <% else %>
 
   <div class="span8">
-    <div class="row content_header_def" style = "padding-bottom: 0px;" >
-      <div id = "github-menu" ></div>
-      <div id = "github-loader-notification" class = "notification">&nbsp;</div>
-    </div>
-    <% if !current_user.github_scope.to_s.split(", ").include?("repo") %>
-      <div class="content flash warning" >
-        With the current scope VersionEye can only fetch your public repositories.
-        If you want us to monitor your private repositories, you need to grant VersionEye access:
-        <a href='<%= Settings.instance.github_base_url %>/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&amp;scope=repo,user:email' style="margin-right: 5px;" >
-          Grant access to private repositories.
-        </a><br/><br/>
-        Unfortunately, GitHub doesn't have a read-only scope for private repositories currently.
-        But we promise you that we don't have any git write operations in our code base.
-        <br/>
-      </div>
-    <% end %>
-
-    <div id = "github-repos" class="content row-fluid" >
-      <div>
-        <strong>Please wait!</strong> Our App is initializing.
-        <img src = "/assets/loadingbar.gif" style = "margin-left: 25%; margin-right: 25%;"/>
-      </div>
-    </div>
-    <div id = "github-pagination"></div>
+    <div id="content"> . </div>
   </div>
+  <script type="text/jsx">
+    /** @jsx React.DOM */
+
+    var data = [
+      {fullname: "Pete Hunt", text: "This is one comment"},
+      {fullname: "Jordan Walke", text: "This is *another* comment"}
+    ];
+
+    var RepoList = React.createClass({
+      render: function() {
+        var scm_repos = this.props.data.map(function (repo) {
+          return (
+            <ScmRepo data={repo} />
+          );
+        });
+        return (
+          <div className="" >
+            {scm_repos}
+          </div>
+        );
+      }
+    });
+
+    var ScmRepo = React.createClass({
+      render: function() {
+        return (
+          <div className="scm_repo" >
+            {this.props.data.fullname}
+          </div>
+        );
+      }
+    });
+
+    React.renderComponent(
+      <RepoList data={data} />,
+      document.getElementById('content')
+    );
+
+  </script>
 
 <% end %>
 
-<%= render :partial => "shared/scm_app_templates", :locals => { :scm_base_url => Settings.instance.github_base_url } %>

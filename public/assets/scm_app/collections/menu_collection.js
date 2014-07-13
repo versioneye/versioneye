@@ -1,1 +1,0 @@
-define(["underscore","backbone"],function(e,t){e.templateSettings={interpolate:/\{\{\=(.+?)\}\}/g,evaluate:/\{\{(.+?)\}\}/g};var n=t.Model.extend({}),i=t.Collection.extend({url:"/urls/menu",model:n,initialize:function(e,t){this.url=t.urls.menu}});return i});
