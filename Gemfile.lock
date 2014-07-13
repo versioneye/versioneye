@@ -1,7 +1,7 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 3b665496c7989b3bc99363e2c1062f6c082dabf0
-  tag: v3.0.0
+  revision: 53a7f06f85f4f927617be5c8862434623fa750fb
+  tag: v3.1.1
   specs:
     versioneye-core (3.0.0)
       actionmailer (~> 3.2.17)
@@ -99,10 +99,10 @@ GEM
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
-    coffee-script (2.2.0)
+    coffee-script (2.3.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.7.0)
+    coffee-script-source (1.7.1)
     colorize (0.7.3)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
@@ -134,7 +134,7 @@ GEM
     httparty (0.13.1)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    i18n (0.6.9)
+    i18n (0.6.11)
     journey (1.0.4)
     jquery-rails (2.2.2)
       railties (>= 3.0, < 5.0)
@@ -164,6 +164,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
+    netrc (0.7.7)
     nokogiri (1.6.2.1)
       mini_portile (= 0.6.0)
     oauth (0.4.7)
@@ -206,9 +207,9 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
-    rest-client (1.6.8)
-      mime-types (~> 1.16)
-      rdoc (>= 2.4.2)
+    rest-client (1.7.1)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -229,7 +230,7 @@ GEM
       rake
     rubyzip (1.1.6)
     safe_yaml (1.0.3)
-    sass (3.3.9)
+    sass (3.3.10)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -289,7 +290,7 @@ GEM
       json (>= 1.8.0)
       mime-types (>= 1.16)
       oauth (>= 0.4.7)
-    tzinfo (0.3.39)
+    tzinfo (0.3.40)
     uglifier (2.5.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
