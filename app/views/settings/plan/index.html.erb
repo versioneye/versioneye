@@ -10,9 +10,13 @@
 
   <div class="span8 content" >
     <p>
-      Open source projects are for free!
+      Open source projects are for free!<br/>
+      <% if current_user.free_private_projects > 0 %>
+        There are <b><%= current_user.free_private_projects %></b> private projects assigned to your account, for free!
+      <% end %>
     </p>
     <hr />
     <%= render "pricing" %>
   </div>
+
 </div>
