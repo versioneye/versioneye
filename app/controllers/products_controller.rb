@@ -94,9 +94,14 @@ class ProductsController < ApplicationController
     if params[:style]
       par = "?style=#{params[:style]}"
     end
-    badge    = badge_for_product language, prod_key, version
-    # send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
-    badge    = badge.gsub("-", "_")
+
+    badge = "unknown"
+    if language.casecmp( Product::A_LANGUAGE_JAVA ) != 0
+      badge    = badge_for_product language, prod_key, version
+      # send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
+      badge    = badge.gsub("-", "_")
+    end
+
     color    = badge.eql?('up_to_date') || badge.eql?('none') ? 'green' : 'yellow'
     url = "http://img.shields.io/badge/dependencies-#{badge}-#{color}.svg#{par}"
     response = HttpService.fetch_response url
