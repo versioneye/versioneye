@@ -1,48 +1,52 @@
 <div class="well box_dep">
 
-<% main_dependencies = @product.dependencies(nil) %>
+<% if 1 == 2 %>
 
-<div class="row">
-	<div class="span6">
-		<h5 class="dep_header">
-      <% if main_dependencies && main_dependencies.count %>
-			  <%= pluralize( main_dependencies.count, 'Compile Dependencies') %>
-      <% else %>
-        0 Compile Dependencies
+  <% main_dependencies = @product.dependencies(nil) %>
+
+  <div class="row">
+  	<div class="span6">
+  		<h5 class="dep_header">
+        <% if main_dependencies && main_dependencies.count %>
+  			  <%= pluralize( main_dependencies.count, 'Compile Dependencies') %>
+        <% else %>
+          0 Compile Dependencies
+        <% end %>
+  		</h5>
+  	</div>
+  	<div class="span7" >
+  		<% if main_dependencies.count > 0 && main_dependencies.count <= 30 %>
+        <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => main_dependencies }  %>
+      <% elsif main_dependencies.count > 30 %>
+        Because of performance reasons we can not show all <%= pluralize(main_dependencies.count, "compile dependencies") %> here. <%= main_dependencies.count %>
       <% end %>
-		</h5>
-	</div>
-	<div class="span7" >
-		<% if main_dependencies.count > 0 && main_dependencies.count <= 30 %>
-      <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => main_dependencies }  %>
-    <% elsif main_dependencies.count > 30 %>
-      Because of performance reasons we can not show all <%= pluralize(main_dependencies.count, "compile dependencies") %> here. <%= main_dependencies.count %>
-    <% end %>
-	</div>
-</div>
+  	</div>
+  </div>
 
-<% test_deps = @product.dependencies( Dependency::A_SCOPE_TEST ) %>
-<% if test_deps && test_deps.count > 0 %>
-	<hr/>
-	<h5 class="dep_header">
-    <%= pluralize(test_deps.count, "Test Dependencies") %>
-  </h5>
-  <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => test_deps }  %>
-<% end %>
+  <% test_deps = @product.dependencies( Dependency::A_SCOPE_TEST ) %>
+  <% if test_deps && test_deps.count > 0 %>
+  	<hr/>
+  	<h5 class="dep_header">
+      <%= pluralize(test_deps.count, "Test Dependencies") %>
+    </h5>
+    <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => test_deps }  %>
+  <% end %>
 
-<% provided_deps = @product.dependencies( Dependency::A_SCOPE_PROVIDED ) %>
-<% if provided_deps && provided_deps.count > 0 && provided_deps.count <= 30 %>
-	<hr />
-	<h5 class="dep_header">
-    <%= pluralize(provided_deps.count, "Provided Dependencies") %>
-  </h5>
-  <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => provided_deps }  %>
-<% elsif provided_deps && provided_deps.count > 30 %>
-  <hr />
-  <h5 class="dep_header">
-    <%= pluralize(provided_deps.count, "Provided Dependencies") %>
-  </h5>
-  Because of performance reasons we can not show all <%= pluralize(provided_deps.count, "provided dependencies") %> here.
+  <% provided_deps = @product.dependencies( Dependency::A_SCOPE_PROVIDED ) %>
+  <% if provided_deps && provided_deps.count > 0 && provided_deps.count <= 30 %>
+  	<hr />
+  	<h5 class="dep_header">
+      <%= pluralize(provided_deps.count, "Provided Dependencies") %>
+    </h5>
+    <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => provided_deps }  %>
+  <% elsif provided_deps && provided_deps.count > 30 %>
+    <hr />
+    <h5 class="dep_header">
+      <%= pluralize(provided_deps.count, "Provided Dependencies") %>
+    </h5>
+    Because of performance reasons we can not show all <%= pluralize(provided_deps.count, "provided dependencies") %> here.
+  <% end %>
+
 <% end %>
 
 </div>
