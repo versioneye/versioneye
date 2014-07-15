@@ -34,12 +34,14 @@ class User::GithubReposController < ApplicationController
       end
     end
 
-    render json: {
-      success: status_success,
-      task_status: task_status,
-      repos: processed_repos,
-      message: status_message
-    }.to_json
+    # render json: {
+    #   success: status_success,
+    #   task_status: task_status,
+    #   repos: processed_repos,
+    #   message: status_message
+    # }.to_json
+
+    render json: processed_repos
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
