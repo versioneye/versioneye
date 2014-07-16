@@ -31,6 +31,10 @@ Versioneye::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
+  # config.lograge.enabled = true
+  # config.lograge.log_format = :graylog2
+  # config.logger = GELF::Logger.new("172.16.22.130", 12201, "WAN", { :host => "veye-dev", :facility => "localhost" })
+
   config.log_level = :debug
 
   # config.action_mailer.delivery_method       = :postmark # :sendmail

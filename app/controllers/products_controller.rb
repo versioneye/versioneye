@@ -112,20 +112,24 @@ class ProductsController < ApplicationController
     language   = Product.decode_language params[:lang]
     prod_key   = Product.decode_prod_key params[:key]
     page       = parse_page params[:page]
-    @product   = fetch_product language, prod_key
-    if @product.nil?
-      render :text => "This page doesn't exist", :status => 404 and return
-    end
-    response   = Dependency.references @product.language, prod_key, page
-    if response[:prod_keys].nil? || response[:prod_keys].empty?
-      render :text => "This page doesn't exist", :status => 404 and return
-    end
-    products   = Product.by_prod_keys @product.language, response[:prod_keys]
-    pre_amount = (page.to_i - 1) * 30
-    pre        = Array.new pre_amount
-    @products  = pre + products
-    @products  = @products.paginate(:page => page, :per_page => 30)
-    @products.total_entries = response[:count]
+
+    # @Author: Reiz. Currently turned on because of performance issues. Mongos Aggregation feature is to slow for 8 Million entries!
+    #
+    # @product   = fetch_product language, prod_key
+    # if @product.nil?
+    #   render :text => "This page doesn't exist", :status => 404 and return
+    # end
+    # response   = Dependency.references @product.language, prod_key, page
+    # if response[:prod_keys].nil? || response[:prod_keys].empty?
+    #   render :text => "This page doesn't exist", :status => 404 and return
+    # end
+    # products   = Product.by_prod_keys @product.language, response[:prod_keys]
+    # pre_amount = (page.to_i - 1) * 30
+    # pre        = Array.new pre_amount
+    # @products  = pre + products
+    # @products  = @products.paginate(:page => page, :per_page => 30)
+    # @products.total_entries = response[:count]
+
   rescue => e
     flash[:error] = "An error occured. Please contact the VersionEye Team."
     Rails.logger.error e.message
