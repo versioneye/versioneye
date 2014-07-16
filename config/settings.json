@@ -7,6 +7,7 @@
     "cocoapods_spec_git": "https://github.com/CocoaPods/Specs.git",
     "cocoapods_spec_url": "https://github.com/CocoaPods/Specs",
     "cocoapods_spec": "~/cocoapods/cocoapods-specs",
+    "elasticsearch_dep_index": "dependency",
     "elasticsearch_product_index": "product",
     "elasticsearch_user_index": "user",
     "elasticsearch_addr": "localhost",
