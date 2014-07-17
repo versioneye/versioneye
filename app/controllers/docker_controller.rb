@@ -17,10 +17,10 @@ class DockerController < ApplicationController
     def remote_images_hash
       images = {}
 
-      images['veye/rails_app:1.0.0'] = {
+      images['veye/rails_app:2.0.12'] = {
         'container_start_opts' => {
           'PortBindings' => { '8080/tcp' => [{'HostPort' => '8080'}]},
-          'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc']
+          'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm']
         },
         'auth' => true,
         'comments' => 'First version'
@@ -68,6 +68,14 @@ class DockerController < ApplicationController
         },
         'auth' => false,
         'comments' => 'First version'
+      }
+
+      images['reiz/rabbitmq:1.0.0'] = {
+        'container_start_opts' => {
+          'PortBindings' => { '5672/tcp' => [{'HostPort' => '5672'}]}
+        },
+        'auth' => false,
+        'comments' => 'Run the Rabbit!'
       }
 
       images
