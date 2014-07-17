@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 7df703abd6830c144daaa632d11bf93c2a8af986
-  tag: v3.1.11
+  revision: 631e7ed119be9d790fa9bbb57bc98e45dad8f4a0
+  tag: v3.1.12
   specs:
-    versioneye-core (3.1.11)
+    versioneye-core (3.1.12)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       bunny (= 1.3.1)
@@ -172,7 +172,7 @@ GEM
       sawyer (~> 0.5.3)
     origin (1.1.0)
     pdfkit (0.6.2)
-    persistent_http (1.0.6)
+    persistent_http (2.0.0)
       gene_pool (>= 1.3)
     persistent_httparty (0.1.1)
       httparty (~> 0.9)
