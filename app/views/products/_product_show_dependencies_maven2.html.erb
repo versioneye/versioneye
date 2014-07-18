@@ -1,7 +1,5 @@
 <div class="well box_dep">
 
-<% if 1 == 2 %>
-
   <% main_dependencies = @product.dependencies(nil) %>
 
   <div class="row">
@@ -46,7 +44,5 @@
     </h5>
     Because of performance reasons we can not show all <%= pluralize(provided_deps.count, "provided dependencies") %> here.
   <% end %>
-
-<% end %>
 
 </div>
