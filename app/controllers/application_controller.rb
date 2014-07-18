@@ -8,13 +8,13 @@ class ApplicationController < ActionController::Base
   include ProjectsHelper
   include RefersHelper
 
-  after_filter :disconnect
+  after_filter :disconnect_from_mongo
 
   # Explicitly close the connection to MongoDB.
   # This is a bug in MongoID 3.X.
   # http://grokbase.com/t/gg/mongoid/129cezk75h/no-of-connections-to-mongo-not-closing
   #
-  def disconnect
+  def disconnect_from_mongo
     Mongoid.default_session.disconnect
   rescue => e
     p e.message
