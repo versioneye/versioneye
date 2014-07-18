@@ -1,4 +1,4 @@
-development:
+production:
   # Configure available database sessions. (required)
   sessions:
     # Defines the default session. (required)
@@ -84,44 +84,44 @@ test:
         max_retries: 1
         retry_interval: 0
 
-production:
-  # Configure available database sessions. (required)
-  sessions:
-    # Defines the default session. (required)
-    default:
-      # Defines the name of the default database that Mongoid can connect to.
-      # (required).
-      database: veye_prod
-      # Provides the hosts the default session can connect to. Must be an array
-      # of host:port pairs. (required)
-      hosts:
-        - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
-        - <%= ENV['MONGO_RS_2_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_2_PORT'] ||= '27017' %>
-        - <%= ENV['MONGO_RS_3_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_3_PORT'] ||= '27017' %>
-      options:
-        # Change whether the session persists in safe mode by default.
-        # (default: false)
-        safe: true
+# production:
+#   # Configure available database sessions. (required)
+#   sessions:
+#     # Defines the default session. (required)
+#     default:
+#       # Defines the name of the default database that Mongoid can connect to.
+#       # (required).
+#       database: veye_prod
+#       # Provides the hosts the default session can connect to. Must be an array
+#       # of host:port pairs. (required)
+#       hosts:
+#         - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
+#         - <%= ENV['MONGO_RS_2_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_2_PORT'] ||= '27017' %>
+#         - <%= ENV['MONGO_RS_3_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_3_PORT'] ||= '27017' %>
+#       options:
+#         # Change whether the session persists in safe mode by default.
+#         # (default: false)
+#         safe: true
 
-        # Change the default consistency model to :eventual or :strong.
-        # :eventual will send reads to secondaries, :strong sends everything
-        # to master. (default: :eventual)
-        consistency: :eventual
+#         # Change the default consistency model to :eventual or :strong.
+#         # :eventual will send reads to secondaries, :strong sends everything
+#         # to master. (default: :eventual)
+#         consistency: :eventual
 
-        # How many times Moped should attempt to retry an operation after
-        # failure. (default: 30)
-        max_retries: 15
+#         # How many times Moped should attempt to retry an operation after
+#         # failure. (default: 30)
+#         max_retries: 15
 
-        # The time in seconds that Moped should wait before retrying an
-        # operation on failure. (default: 1)
-        retry_interval: 1
+#         # The time in seconds that Moped should wait before retrying an
+#         # operation on failure. (default: 1)
+#         retry_interval: 1
 
-        # The default timeout is 5, which is the time in seconds for an operation to time out.
-        # We recommend 15 because it allows for plenty of time in most operating environments.
-        # Mongoid doubles the configured value (known issue) so 15 results in a timeout of 30s.
-        # Note that if you have a long-running query (over 30 seconds), it will time out.
-        # See our example for long-running queries in the blog post referenced above.
-        timeout: 15
+#         # The default timeout is 5, which is the time in seconds for an operation to time out.
+#         # We recommend 15 because it allows for plenty of time in most operating environments.
+#         # Mongoid doubles the configured value (known issue) so 15 results in a timeout of 30s.
+#         # Note that if you have a long-running query (over 30 seconds), it will time out.
+#         # See our example for long-running queries in the blog post referenced above.
+#         timeout: 15
 
 enterprise:
   # Configure available database sessions. (required)
