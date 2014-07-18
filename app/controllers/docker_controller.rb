@@ -26,6 +26,14 @@ class DockerController < ApplicationController
         'comments' => 'First version'
       }
 
+      images['veye/tasks:1.0.6'] = {
+        'container_start_opts' => {
+          'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm']
+        },
+        'auth' => true,
+        'comments' => 'First version'
+      }
+
       images['veye/rails_api:1.0.0'] = {
         'container_start_opts' => {
           'PortBindings' => { '9090/tcp' => [{'HostPort' => '9090'}]},
