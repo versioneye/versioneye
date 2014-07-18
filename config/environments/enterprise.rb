@@ -34,6 +34,9 @@ Versioneye::Application.configure do
   # See everything in the log (default is :info)
   config.log_level = :info
 
+  # Enable threaded mode
+  config.threadsafe!
+
   config.i18n.fallbacks = true
 
   config.active_support.deprecation = :notify
