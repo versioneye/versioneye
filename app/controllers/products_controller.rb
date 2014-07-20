@@ -113,23 +113,24 @@ class ProductsController < ApplicationController
     prod_key   = Product.decode_prod_key params[:key]
     page       = parse_page params[:page]
 
-    # @Author: Reiz. Currently turned on because of performance issues. Mongos Aggregation feature is to slow for 8 Million entries!
-    #
-    # @product   = fetch_product language, prod_key
-    # if @product.nil?
-    #   render :text => "This page doesn't exist", :status => 404 and return
-    # end
-    # response   = Dependency.references @product.language, prod_key, page
-    # if response[:prod_keys].nil? || response[:prod_keys].empty?
-    #   render :text => "This page doesn't exist", :status => 404 and return
-    # end
-    # products   = Product.by_prod_keys @product.language, response[:prod_keys]
-    # pre_amount = (page.to_i - 1) * 30
-    # pre        = Array.new pre_amount
-    # @products  = pre + products
-    # @products  = @products.paginate(:page => page, :per_page => 30)
-    # @products.total_entries = response[:count]
+    @product   = fetch_product language, prod_key
+    if @product.nil?
+      render :text => "This page doesn't exist", :status => 404 and return
+    end
 
+    reference = Reference.where(:language => language, :prod_key => prod_key).shift
+    if reference.nil?
+      @products = paged_products 1, nil, 0
+      return
+    end
+
+    products   = reference.products page
+    if products.nil? || products.empty?
+      @products = paged_products 1, nil, reference.ref_count
+      return
+    end
+
+    paged_products page, products, reference.ref_count
   rescue => e
     flash[:error] = "An error occured. Please contact the VersionEye Team."
     Rails.logger.error e.message
@@ -331,6 +332,17 @@ class ProductsController < ApplicationController
 
     def admin_user
       redirect_to(root_path) unless current_user.admin?
+    end
+
+    def paged_products page = 1, products, count
+      products = [] if products.nil?
+      per_page   = 30
+      pre_amount = (page.to_i - 1) * per_page
+      pre        = Array.new pre_amount
+      @products  = pre + products
+      @products  = @products.paginate(:page => page, :per_page => per_page)
+      @products.total_entries = count
+      @products
     end
 
 end
