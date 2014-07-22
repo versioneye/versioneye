@@ -198,4 +198,8 @@ module ProductsHelper
     key
   end
 
+  def ref_count product
+    @products.respond_to?("total_entries") ? @products.total_entries : 0
+  end
+
 end
