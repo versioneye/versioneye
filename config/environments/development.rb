@@ -32,7 +32,7 @@ Versioneye::Application.configure do
   config.assets.debug = true
 
   # Enable threaded mode
-  config.threadsafe!
+  # config.threadsafe!
 
   # config.lograge.enabled = true
   # config.lograge.log_format = :graylog2
