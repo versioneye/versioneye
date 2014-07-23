@@ -86,6 +86,8 @@ class ProductsController < ApplicationController
     render :layout => 'application_visual'
   end
 
+  # Dependency Badge
+  # send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
   def badge
     language = Product.decode_language params[:lang]
     prod_key = Product.decode_prod_key params[:key]
@@ -96,14 +98,11 @@ class ProductsController < ApplicationController
     end
 
     badge = "unknown"
-    if language.casecmp( Product::A_LANGUAGE_JAVA ) != 0
-      badge    = badge_for_product language, prod_key, version
-      # send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
-      badge    = badge.gsub("-", "_")
-    end
+    badge = badge_for_product language, prod_key, version
+    badge = badge.gsub("-", "_")
 
-    color    = badge.eql?('up_to_date') || badge.eql?('none') ? 'green' : 'yellow'
-    url = "http://img.shields.io/badge/dependencies-#{badge}-#{color}.svg#{par}"
+    color = badge.eql?('up_to_date') || badge.eql?('none') ? 'green' : 'yellow'
+    url   = "http://img.shields.io/badge/dependencies-#{badge}-#{color}.svg#{par}"
     response = HttpService.fetch_response url
     send_data response.body, :type => "image/svg+xml", :disposition => 'inline'
   end
