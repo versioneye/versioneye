@@ -128,7 +128,7 @@
     "s3_infographics_bucket": "veye_prod_infographics",
     "s3_projects_bucket": "veye_prod_projects",
     "s3_receipt_bucket": "veye-prod-receipt",
-    "server_url": "http://www.versioneye.com",
+    "server_url": "https://www.versioneye.com",
     "server_host": "www.versioneye.com",
     "server_port": 80,
     "stripe_public_key": "env_STRIPE_PUBLIC_KEY",
