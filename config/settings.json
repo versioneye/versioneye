@@ -191,6 +191,7 @@
     "bitbucket_token": "env_BITBUCKET_TOKEN",
     "cocoapods_spec_git": "https://github.com/CocoaPods/Specs.git",
     "cocoapods_spec_url": "https://github.com/CocoaPods/Specs",
-    "cocoapods_spec": "/mnt/cocoapods/cocoapods-specs"
+    "cocoapods_spec": "/mnt/cocoapods/cocoapods-specs",
+    "references_live_update": true
   }
 }
