@@ -1,0 +1,9 @@
+
+  <%= render 'shared/dialog_ref_badge' %>
+  <a href="#dialog_ref_badge" id="show_ref_badge_window" role="button" data-toggle="modal">
+    <img id="reference_badge" src="#" alt="Reference Badge" />
+  </a>
+  <script type="text/javascript">
+    element = document.getElementById("reference_badge");
+    element.src = "/<%= @product.language_esc %>/<%= @product.to_param %>/reference_badge.svg?style=flat"
+  </script>
