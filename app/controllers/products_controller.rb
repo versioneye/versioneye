@@ -117,7 +117,7 @@ class ProductsController < ApplicationController
       render :text => "This page doesn't exist", :status => 404 and return
     end
 
-    reference = Reference.where(:language => language, :prod_key => prod_key).shift
+    reference = ReferenceService.find_by language, prod_key
     if reference.nil?
       @products = paged_products 1, nil, 0
       return
