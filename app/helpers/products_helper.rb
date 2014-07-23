@@ -67,6 +67,25 @@ module ProductsHelper
     badge
   end
 
+  def ref_badge_for_product( language, prod_key )
+    key   = "ref_badge_#{language}_#{prod_key}"
+    badge = Rails.cache.read key
+    return badge if badge
+
+    reference = ReferenceService.find_by language, prod_key
+    return '0' if reference.nil?
+
+    Rails.cache.write( key, reference.ref_count, timeToLive: 24.hour )
+    return "#{reference.ref_count}"
+  end
+
+  def ref_color_for count
+    return "red" if count.to_i < 1
+    return "orange" if count.to_i < 11
+    return "yellow" if count.to_i < 101
+    return "green"
+  end
+
   def get_lang_value( lang )
     lang = ',' if lang.nil? || lang.empty?
     lang
