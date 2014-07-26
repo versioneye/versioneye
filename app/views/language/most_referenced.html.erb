@@ -1,0 +1,20 @@
+
+<% title "Most referenced #{@lang} packages" %>
+
+<div class="span3">
+
+  <% if !signed_in? %>
+    <%= render "/shared/github_ad" %>
+  <% end %>
+
+</div>
+
+<div class="span8" >
+  <div class="row content_header_def" >
+    Most referenced <a href="/<%= @lang %>"><%= @lang %></a> packages.
+  </div>
+  <div class="content">
+    <%= render :partial => "products/show_search_results",
+               :locals => { :products => @products, :paginate => true, :prefix => "search", :name_limit => 70 }  %>
+  </div>
+</div>
