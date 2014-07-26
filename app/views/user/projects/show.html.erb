@@ -79,11 +79,6 @@
                   <button class="btn btn-success btn-mini">Re Parse Now</button>
                 </form>
               </div>
-              <div class="span2" style="width: 100px;" >
-                <form action="<%= followall_user_project_path(@project) %>" method="post" style="padding-top: 5px;">
-                  <button class="btn btn-success btn-mini">Follow All</button>
-                </form>
-              </div>
               <div class="span2" style="width: 120px;" >
                 <form action="<%= user_project_path(@project) %>" method="post" style="padding-top: 5px;">
                   <input name="_method" type="hidden" value="delete" />
@@ -132,6 +127,11 @@
 
         <div class="tab-content" style="width: 100%;" >
           <div id="dependencies" class="tab-pane active" style="width: 617px;" >
+            <div class="pull-right">
+              <form action="<%= followall_user_project_path(@project) %>" method="post" style="margin: 0;">
+                <button class="btn btn-success btn-mini">Follow All</button>
+              </form>
+            </div>
             <div>
               <%= render partial: "project_dependency_table", locals: {deps: @project.sorted_dependencies_by_rank} %>
             </div>
