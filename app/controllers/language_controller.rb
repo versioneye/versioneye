@@ -66,6 +66,12 @@ class LanguageController < ApplicationController
     end
   end
 
+  def most_referenced
+    page = params[:page]
+    @lang = Product.decode_language(params[:lang])
+    @products = ProductService.most_referenced @lang, page
+  end
+
   def random30
     rows = []
     30.times do |n|
