@@ -1,4 +1,4 @@
-production:
+development:
   # Configure available database sessions. (required)
   sessions:
     # Defines the default session. (required)
@@ -84,7 +84,7 @@ test:
         max_retries: 1
         retry_interval: 0
 
-development:
+production:
   # Configure available database sessions. (required)
   sessions:
     # Defines the default session. (required)
