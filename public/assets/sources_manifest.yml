@@ -215,7 +215,7 @@ scm_app/views/repo_select_view.js: 50c3cd0dc6f58f28248fd652582b5d91
 scm_app/views/repo_view.js: 30fd9b14481e305d531cbbb852460ea2
 scm_app/views/switch_view.js: b8158e3a8df3ae7065d9eae2a1283c77
 twitter.js: c10ccadfeecbad183c2374818bd00f9f
-application.css: b38ee5dfe8548ebfad555e8e7bd27d5f
+application.css: a1cb6c78c612ec2b05c8e02663b9be65
 application_lp.css: e94694c30a5b11963825ff4ad8c96882
 font/FontAwesome.otf: cb72ce5d1d34bf9381660a73b39c95b8
 font/fontawesome-webfont.eot: 9a124c723758e78e28109aab9221d837
