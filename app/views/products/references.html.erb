@@ -16,10 +16,10 @@
       <%= link_to @product.name, product_version_path(@product) %> has <%= pluralize( count , "reference")  %>
     </div>
     <div class="content">
-      <p>
+      <div>
         These <%= pluralize( count , "software package") %> all depend on <%= link_to @product.name, product_version_path(@product) %> <br/>
-        Use the reference badge to share this information <%= render :partial => "shared/ref_badge" %>
-      </p>
+        Use the reference badge to share this information: <%= render :partial => "shared/ref_badge" %>
+      </div>
       <%= render :partial => "products/show_search_results",
                  :locals => { :products => @products, :paginate => true, :prefix => "references", :name_limit => 70 }  %>
     </div>
