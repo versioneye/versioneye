@@ -32,7 +32,8 @@
           url: this.props.url,
           dataType: 'json',
           success: function(data) {
-            if (data.repos.length != store.length || data.task_status != this.state.task_status){
+            something_changed = data.repos.length != store.length || data.task_status != this.state.task_status
+            if (something_changed){
               store = data.repos;
               this.setState(
                 {data: data.repos,
