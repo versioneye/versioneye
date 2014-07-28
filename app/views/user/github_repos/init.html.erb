@@ -27,13 +27,13 @@
     var store = []
 
     var RepoList = React.createClass({
-      loadCommentsFromServer: function() {
+      loadReposFromServer: function() {
         $.ajax({
           url: this.props.url,
           dataType: 'json',
           success: function(data) {
             store = data;
-            this.setState({data: data});
+            this.setState({data: data, list_size: data.length});
           }.bind(this),
           error: function(xhr, status, err) {
             console.error(this.props.url, status, err.toString());
@@ -41,24 +41,26 @@
         });
       },
       getInitialState: function() {
-        return {data: [], text: ''};
+        return {data: [], text: '', list_size: 0};
       },
       componentWillMount: function() {
-        this.loadCommentsFromServer();
-        setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+        this.loadReposFromServer();
+        setInterval(this.loadReposFromServer, this.props.pollInterval);
       },
       onChange: function( e ) {
         filtered = [];
         data = store; // this.state.data
+        count = 0;
         for (var key in data) {
            if (data.hasOwnProperty(key)) {
               if (data[key]['fullname'].indexOf( e.target.value ) != -1) {
                 filtered[key] = data[key];
                 console.info(data[key]['fullname'])
+                count += 1;
               }
            }
         }
-        this.setState({data: filtered, text: e.target.value})
+        this.setState({data: filtered, list_size: count, text: e.target.value})
       },
       render: function() {
         var scm_repos = this.state.data.map(function (repo) {
@@ -72,7 +74,7 @@
               <input type="text" id="filter_input" value={this.state.text} onChange={this.onChange} />
             </div>
             <div className="scm_meta" >
-              {this.state.data.length} Repositories
+              {this.state.list_size} Repositories
             </div>
             {scm_repos}
           </div>
