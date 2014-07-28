@@ -32,8 +32,13 @@
           url: this.props.url,
           dataType: 'json',
           success: function(data) {
-            store = data;
-            this.setState({data: data, list_size: data.length});
+            if (data.repos.length != store.length || data.task_status != this.state.task_status){
+              store = data.repos;
+              this.setState(
+                {data: data.repos,
+                 list_size: data.repos.length,
+                 task_status: data.task_status});
+            }
           }.bind(this),
           error: function(xhr, status, err) {
             console.error(this.props.url, status, err.toString());
@@ -41,7 +46,7 @@
         });
       },
       getInitialState: function() {
-        return {data: [], text: '', list_size: 0};
+        return {data: [], text: '', list_size: 0, task_status: ''};
       },
       componentWillMount: function() {
         this.loadReposFromServer();
@@ -63,6 +68,7 @@
         this.setState({data: filtered, list_size: count, text: e.target.value})
       },
       render: function() {
+        var clear_link = "/user/" + this.props.scm + "/clear";
         var scm_repos = this.state.data.map(function (repo) {
           return (
             <ScmRepo data={repo} />
@@ -74,8 +80,9 @@
               <input type="text" id="filter_input" value={this.state.text} onChange={this.onChange} />
             </div>
             <div className="scm_meta" >
-              {this.state.list_size} Repositories
+              {this.state.list_size} Repositories - <a href={clear_link}>Reimport all Repositories</a>
             </div>
+            <TaskStatusMessage data={this.state.task_status} />
             {scm_repos}
           </div>
         );
@@ -92,8 +99,22 @@
       }
     });
 
+    var TaskStatusMessage = React.createClass({
+      render: function() {
+        if (this.props.data == 'running'){
+          return (
+            <div><img src="/assets/progress.gif" alt="work in progress" /> Import is running ... be patient and drink a soda.</div>
+          );
+        } else {
+          return (
+            <div>We importet everything we could find.</div>
+          );
+        }
+      }
+    });
+
     React.renderComponent(
-      <RepoList url="/user/github_repos" pollInterval={200000} />,
+      <RepoList url="/user/github_repos" scm="github" pollInterval={7000} />,
       document.getElementById('content')
     );
     // data={data}

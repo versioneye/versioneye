@@ -34,14 +34,13 @@ class User::GithubReposController < ApplicationController
       end
     end
 
-    # render json: {
-    #   success: status_success,
-    #   task_status: task_status,
-    #   repos: processed_repos,
-    #   message: status_message
-    # }.to_json
-
-    render json: processed_repos
+    render json: {
+      success: status_success,
+      task_status: task_status,
+      repos: processed_repos,
+      message: status_message
+    }.to_json
+    # render json: processed_repos
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
@@ -79,7 +78,6 @@ class User::GithubReposController < ApplicationController
   If command attr in model is "import", then imports new project from github.
   If commant attr in model is "remove", then removes current project
 =end
-
   def update
     if params[:github_id].nil? and params[:fullname].nil?
       msg =  "Unknown data object - don't satisfy githubrepo model."
@@ -148,7 +146,8 @@ class User::GithubReposController < ApplicationController
 
   def clear
     results = GithubRepo.by_user( current_user ).delete_all
-    render json: {success: !results.nil?, msg: "Cache is cleaned. Ready for import."}
+    flash[:success] = "Cache is cleaned. Ready to re-import."
+    redirect_to :back
   end
 
 
