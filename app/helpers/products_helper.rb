@@ -56,15 +56,34 @@ module ProductsHelper
 
     if dependencies.nil? || dependencies.empty?
       badge = 'none'
-      Rails.cache.write( key, badge, timeToLive: 1.hour )
+      Rails.cache.write( key, badge, timeToLive: 2.hour )
       return badge
     end
 
-    outdated = DependencyService.dependencies_outdated?( dependencies )
+    outdated = DependencyService.dependencies_outdated?( dependencies, true )
     badge = 'out-of-date' if outdated == true
     badge = 'up-to-date'  if outdated == false
-    Rails.cache.write( key, badge, timeToLive: 2.hour )
+    Rails.cache.write( key, badge, timeToLive: 24.hour )
     badge
+  end
+
+  def ref_badge_for_product( language, prod_key )
+    key   = "ref_badge_#{language}_#{prod_key}"
+    badge = Rails.cache.read key
+    return badge if badge
+
+    reference = ReferenceService.find_by language, prod_key
+    return '0' if reference.nil?
+
+    Rails.cache.write( key, reference.ref_count, timeToLive: 24.hour )
+    return "#{reference.ref_count}"
+  end
+
+  def ref_color_for count
+    return "red" if count.to_i < 1
+    return "orange" if count.to_i < 11
+    return "yellow" if count.to_i < 101
+    return "green"
   end
 
   def get_lang_value( lang )
@@ -196,6 +215,10 @@ module ProductsHelper
   def check_group_sep key
     return key.gsub("--", ":") if key.match(/.+\-\-.+/)
     key
+  end
+
+  def ref_count product
+    @products.respond_to?("total_entries") ? @products.total_entries : 0
   end
 
 end

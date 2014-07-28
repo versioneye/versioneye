@@ -86,6 +86,8 @@ class ProductsController < ApplicationController
     render :layout => 'application_visual'
   end
 
+  # Dependency Badge
+  # send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
   def badge
     language = Product.decode_language params[:lang]
     prod_key = Product.decode_prod_key params[:key]
@@ -94,33 +96,57 @@ class ProductsController < ApplicationController
     if params[:style]
       par = "?style=#{params[:style]}"
     end
-    badge    = badge_for_product language, prod_key, version
-    # send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
-    badge    = badge.gsub("-", "_")
-    color    = badge.eql?('up_to_date') || badge.eql?('none') ? 'green' : 'yellow'
-    url = "http://img.shields.io/badge/dependencies-#{badge}-#{color}.svg#{par}"
+
+    badge = "unknown"
+    badge = badge_for_product language, prod_key, version
+    badge = badge.gsub("-", "_")
+
+    color = badge.eql?('up_to_date') || badge.eql?('none') ? 'green' : 'yellow'
+    url   = "http://img.shields.io/badge/dependencies-#{badge}-#{color}.svg#{par}"
     response = HttpService.fetch_response url
     send_data response.body, :type => "image/svg+xml", :disposition => 'inline'
+  end
+
+  def ref_badge
+    language = Product.decode_language params[:lang]
+    prod_key = Product.decode_prod_key params[:key]
+    par = ""
+    if params[:style]
+      par = "?style=#{params[:style]}"
+    end
+
+    badge = ref_badge_for_product language, prod_key
+    color = ref_color_for badge
+    url   = "http://img.shields.io/badge/references-#{badge}-#{color}.svg#{par}"
+    response = HttpService.fetch_response url
+    send_data response.body, :type => "image/svg+xml", :disposition => 'inline'
+  rescue => e
+    p e.message
   end
 
   def references
     language   = Product.decode_language params[:lang]
     prod_key   = Product.decode_prod_key params[:key]
     page       = parse_page params[:page]
+
     @product   = fetch_product language, prod_key
     if @product.nil?
       render :text => "This page doesn't exist", :status => 404 and return
     end
-    response   = Dependency.references @product.language, prod_key, page
-    if response[:prod_keys].nil? || response[:prod_keys].empty?
-      render :text => "This page doesn't exist", :status => 404 and return
+
+    reference = ReferenceService.find_by language, prod_key
+    if reference.nil?
+      @products = paged_products 1, nil, 0
+      return
     end
-    products   = Product.by_prod_keys @product.language, response[:prod_keys]
-    pre_amount = (page.to_i - 1) * 30
-    pre        = Array.new pre_amount
-    @products  = pre + products
-    @products  = @products.paginate(:page => page, :per_page => 30)
-    @products.total_entries = response[:count]
+
+    products   = reference.products page
+    if products.nil? || products.empty?
+      @products = paged_products 1, nil, reference.ref_count
+      return
+    end
+
+    paged_products page, products, reference.ref_count
   rescue => e
     flash[:error] = "An error occured. Please contact the VersionEye Team."
     Rails.logger.error e.message
@@ -322,6 +348,17 @@ class ProductsController < ApplicationController
 
     def admin_user
       redirect_to(root_path) unless current_user.admin?
+    end
+
+    def paged_products page = 1, products, count
+      products = [] if products.nil?
+      per_page   = 30
+      pre_amount = (page.to_i - 1) * per_page
+      pre        = Array.new pre_amount
+      @products  = pre + products
+      @products  = @products.paginate(:page => page, :per_page => per_page)
+      @products.total_entries = count
+      @products
     end
 
 end

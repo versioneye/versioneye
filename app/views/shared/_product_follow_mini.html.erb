@@ -8,10 +8,10 @@
             data-product-lang = "<%= product[:language] %>">
       <% if user_follows?(product, user) %>
         <i class="follow-icon icon-check">&nbsp;</i>
-        <span class = "btn-title">Unfollow</span>
+        <span class="btn-title">Unfollow</span>
       <% else %>
         <i class="follow-icon icon-check-empty">&nbsp;</i>
-        <span class = "btn-title">Follow</span>
+        <span class="btn-title" title="Follow this software package and get notified as soon a new version comes out.">Follow</span>
       <% end %>
     </button>
   </div>

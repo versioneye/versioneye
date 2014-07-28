@@ -7,11 +7,12 @@
     "cocoapods_spec_git": "https://github.com/CocoaPods/Specs.git",
     "cocoapods_spec_url": "https://github.com/CocoaPods/Specs",
     "cocoapods_spec": "~/cocoapods/cocoapods-specs",
+    "elasticsearch_dep_index": "dependency",
     "elasticsearch_product_index": "product",
     "elasticsearch_user_index": "user",
     "elasticsearch_addr": "localhost",
     "elasticsearch_port": "9200",
-    "rabbitmq_addr": "localhost",
+    "rabbitmq_addr": "172.16.22.130",
     "rabbitmq_port": "5672",
     "github_base_url": "https://github.com",
     "github_api_url": "https://api.github.com",
@@ -127,7 +128,7 @@
     "s3_infographics_bucket": "veye_prod_infographics",
     "s3_projects_bucket": "veye_prod_projects",
     "s3_receipt_bucket": "veye-prod-receipt",
-    "server_url": "http://www.versioneye.com",
+    "server_url": "https://www.versioneye.com",
     "server_host": "www.versioneye.com",
     "server_port": 80,
     "stripe_public_key": "env_STRIPE_PUBLIC_KEY",
@@ -190,6 +191,7 @@
     "bitbucket_token": "env_BITBUCKET_TOKEN",
     "cocoapods_spec_git": "https://github.com/CocoaPods/Specs.git",
     "cocoapods_spec_url": "https://github.com/CocoaPods/Specs",
-    "cocoapods_spec": "/mnt/cocoapods/cocoapods-specs"
+    "cocoapods_spec": "/mnt/cocoapods/cocoapods-specs",
+    "references_live_update": true
   }
 }
