@@ -1,0 +1,76 @@
+
+<div id="dialog_ref_badge" class="modal hide fade" style="text-align: left;">
+  <div class = "modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Reference Badge</h3>
+  </div>
+  <div class = "modal-body " style="text-align: left;" >
+
+    <div style="padding-bottom: 20px;">
+      For your copy-and-paste convenience.
+    </div>
+
+    <form>
+      <div class="dialog_badge_group">
+        <div class="dialog_badge_header">
+          Markdown
+        </div>
+        <div>
+          <input id="ref_badge_for_markdown" class="input-bigger" type="text" value="test" />
+        </div>
+      </div>
+
+      <div class="dialog_badge_group">
+        <div class="dialog_badge_header">
+          Textile
+        </div>
+        <div>
+          <input id="ref_badge_for_textile" class="input-bigger" type="text" value="test" />
+        </div>
+      </div>
+
+      <div class="dialog_badge_group">
+        <div class="dialog_badge_header">
+          RDoc
+        </div>
+        <div>
+          <input id="ref_badge_for_rdoc" class="input-bigger" type="text" value="test" />
+        </div>
+      </div>
+
+      <div class="dialog_badge_group">
+        <div class="dialog_badge_header">
+          HTML
+        </div>
+        <div>
+          <input id="ref_badge_for_html" class="input-bigger" type="text" value="test" />
+        </div>
+      </div>
+    </form>
+
+    <script type="text/javascript">
+      image_url = "<%= Settings.instance.server_url %>/<%= @product.language_esc %>/<%= @product.to_param %>/reference_badge.svg?style=flat";
+      url       = "<%= Settings.instance.server_url %>/<%= @product.language_esc %>/<%= @product.to_param %>/references"
+
+      markdown_url = "[![Reference Status](" + image_url + ")](" + url + ")";
+      element = document.getElementById("ref_badge_for_markdown");
+      element.value = markdown_url;
+
+      textile_url = "!" + image_url + "(Reference Status)!:" + url + "";
+      element_textile = document.getElementById("ref_badge_for_textile");
+      element_textile.value = textile_url;
+
+      rdoc_url = "{<img src=\"" + image_url + "\" alt=\"Reference Status\" />}[" + url + "]";
+      element_rdoc = document.getElementById("ref_badge_for_rdoc");
+      element_rdoc.value = rdoc_url;
+
+      html_url = "<a href='" + url + "'><img src='" + image_url + "' alt=\"Reference Status\" /></a>";
+      element_html = document.getElementById("ref_badge_for_html");
+      element_html.value = html_url
+    </script>
+
+  </div>
+  <div class="modal-footer">
+    <button id="reference_dialog_cancel" type="button" class="btn btn-large" data-dismiss="modal" aria-hidden="true">Cancel</button>
+  </div>
+</div>

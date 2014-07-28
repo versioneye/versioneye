@@ -10,9 +10,14 @@
 
   <div class="span8 content" >
     <p>
-      Monitoring open source projects is for free! <br/>
+      Open source projects are for free! We only charge a small fee for monitoring project files in private GitHub/Bitbucket repositories.<br/>
+      <% if current_user.free_private_projects > 0 %>
+        <br/>
+        There are <b><%= current_user.free_private_projects %></b> private projects assigned to your account, for free!
+      <% end %>
     </p>
     <hr />
     <%= render "pricing" %>
   </div>
+
 </div>

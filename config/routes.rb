@@ -273,10 +273,13 @@ Versioneye::Application.routes.draw do
 
   constraints( LanguageConstraint.new ) do
     get   '/:lang', :to => 'language#show', :format => false, :constraints => { :lang => /[^\/]+/ }
+    get   '/:lang/most_referenced', :to => 'language#most_referenced', :format => false, :constraints => { :lang => /[^\/]+/ }, :as => 'most_referenced'
 
-    get   '/:lang/:key/references',             :to => 'products#references', :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_references'
-    get   '/:lang/:key/badge',                  :to => 'products#badge',      :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_badge'
-    get   '/:lang/:key/:version/badge',         :to => 'products#badge',      :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'product_version_badge'
+    get   '/:lang/:key/references',               :to => 'products#references', :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_references'
+    get   '/:lang/:key/badge',                    :to => 'products#badge',      :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_badge'
+    get   '/:lang/:key/reference_badge',          :to => 'products#ref_badge',  :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_ref_badge'
+    get   '/:lang/:key/:version/reference_badge', :to => 'products#ref_badge',  :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_ref_badge'
+    get   '/:lang/:key/:version/badge',           :to => 'products#badge',      :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'product_version_badge'
 
     get   '/:lang/:key/visual_dependencies'         , :to => 'products#show_visual', :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }
     get   '/:lang/:key/:version/visual_dependencies', :to => 'products#show_visual', :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'visual_dependencies'

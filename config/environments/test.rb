@@ -40,6 +40,9 @@ Versioneye::Application.configure do
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
   config.assets.allow_debugging = true
 
+  # Enable threaded mode
+  config.threadsafe!
+
   Stripe.api_key = Settings.instance.stripe_secret_key
 
   routes.default_url_options = { host: Settings.instance.server_host, port: Settings.instance.server_port }

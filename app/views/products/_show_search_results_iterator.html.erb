@@ -12,10 +12,14 @@
       <div class = "span5">
         <a href="<%= product_version_path(product) %>" class="searchResultLink"><span ><%= product.name_version(name_limit) %></span></a><br/>
         <% if product.prod_type == "Maven2" %>
-          <span class="meta-text-small">GroupId: <%= product.group_id %></span>
+          <span class="group_id_small">GroupId: <%= product.group_id %></span><br/>
+          <% if !product.short_summary.to_s.empty? %>
+            <span class="meta_prod_description"><%= product.short_summary %></span><br/>
+          <% end %>
         <% else %>
-          <span class="meta-text-small"><%= product.short_summary %></span>
+          <span class="meta_prod_description"><%= product.short_summary %></span><br/>
         <% end %>
+        <span class="meta_reference" >References: <%= link_to product.used_by_count, product_references_path( :lang => product.language_esc, :key => product.to_param ) %></span>
       </div>
 
       <div class = "span1 pull-right">
