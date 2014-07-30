@@ -10,6 +10,8 @@
 //= require bootstrap
 //= require bootstrap_fileupload
 //= require libs/bootstrap-maxlength.min
+//= require libs/underscore-min
+//= require libs/require
 
 //= require google
 //= require gmap
