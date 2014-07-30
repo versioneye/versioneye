@@ -18,7 +18,4 @@
 //= require custom_feedback
 //= require custom_update_language
 
-//= require react
-//= require JSXTransformer
-
 //= require custom_language

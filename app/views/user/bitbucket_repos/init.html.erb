@@ -19,21 +19,16 @@
 <% else %>
 
   <div class="span8">
-    <div class="row content_header_def" style = "padding-bottom: 0px;" >
-      <div id = "github-menu" ></div>
-      <div id = "github-loader-notification" class = "notification">&nbsp;</div>
+    <div class="row content_header_def" >
+      Your Bitbucket Repositories
     </div>
-
-    <div id = "github-repos" class="content row-fluid" >
-      <div>
-        <strong>Please wait!</strong> Our App is initializing.
-        <img src = "/assets/loadingbar.gif" style = "margin-left: 25%; margin-right: 25%;"/>
-      </div>
-    </div>
-    <div id = "github-pagination"></div>
+    <div class="span8 content" id="content"> . </div>
   </div>
+  <script type="text/javascript">
+    React.renderComponent(
+      RepoList({url: "/user/bitbucket_repos", scm: "bitbucket", pollInterval: 3000}),
+      document.getElementById('content')
+    );
+  </script>
 
 <% end %>
-
-<!-- templates for frontend app -->
-<%= render :partial => "shared/scm_app_templates", :locals => { :scm_base_url => 'https://bitbucket.org' } %>

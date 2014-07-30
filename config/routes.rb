@@ -138,7 +138,16 @@ Versioneye::Application.routes.draw do
   get '/user/packages/i_follow'                 , :to => "user/packages#i_follow"
 
   get '/user/projects/github_repositories'      , :to => 'user/github_repos#init'
-  get '/user/projects/bitbucket_repositories'   , :to => 'user/bitbucket_repos#init'
+  get '/user/projects/github/:owner/:repo/show' , :to => 'user/github_repos#show',       :constraints => { :owner => /[^\/]+/, :repo => /[^\/]+/ }, :as => 'user_projects_github_files'
+  get '/user/projects/github/:owner/:repo/files', :to => 'user/github_repos#repo_files', :constraints => { :owner => /[^\/]+/, :repo => /[^\/]+/ }
+  get '/user/projects/github/:id/import'        , :to => 'user/github_repos#import',     :constraints => { :id => /[^\/]+/ }
+  get '/user/projects/github/:id/remove'        , :to => 'user/github_repos#remove',     :constraints => { :id => /[^\/]+/ }
+
+  get '/user/projects/bitbucket_repositories'      , :to => 'user/bitbucket_repos#init'
+  get '/user/projects/bitbucket/:owner/:repo/show' , :to => 'user/bitbucket_repos#show',       :constraints => { :owner => /[^\/]+/, :repo => /[^\/]+/ }, :as => 'user_projects_bitbucket_files'
+  get '/user/projects/bitbucket/:owner/:repo/files', :to => 'user/bitbucket_repos#repo_files', :constraints => { :owner => /[^\/]+/, :repo => /[^\/]+/ }
+  get '/user/projects/bitbucket/:id/import'        , :to => 'user/bitbucket_repos#import',     :constraints => { :id => /[^\/]+/ }
+  get '/user/projects/bitbucket/:id/remove'        , :to => 'user/bitbucket_repos#remove',     :constraints => { :id => /[^\/]+/ }
 
   get  '/user/projects/:id/recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
   post '/user/projects/:id/recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
@@ -172,14 +181,10 @@ Versioneye::Application.routes.draw do
     end
 
     resources :github_repos
-    get '/github/fetch_all' , :to => 'github_repos#fetch_all'
     get '/github/clear'     , :to => 'github_repos#clear'
-    get '/github/menu'      , :to => 'github_repos#show_menu_items'
 
     resources :bitbucket_repos
-    get '/bitbucket/fetch_all'  , :to => 'bitbucket_repos#fetch_all'
     get '/bitbucket/clear'      , :to => 'bitbucket_repos#clear'
-    get '/bitbucket/menu'       , :to => 'bitbucket_repos#show_menu_items'
 
     resource :testimonials
   end
