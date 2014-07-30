@@ -17,6 +17,11 @@
 
   <% else %>
 
+    <% if params[:controller] == 'user/github_repos' ||
+          params[:controller] == 'user/bitbucket_repos'  %>
+      <%= javascript_include_tag "application_scm",  :defer => false, :async => false %>
+    <% end %>
+
     <%= stylesheet_link_tag "application" %>
     <%= javascript_include_tag "application",               :defer => false, :async => false %>
 
@@ -44,10 +49,6 @@
           Stripe.setPublishableKey('<%= Settings.instance.stripe_public_key %>');
       </script>
       <%= javascript_include_tag "application_payment",  :defer => false, :async => false %>
-
-    <% elsif params[:controller] == 'user/github_repos' ||
-             params[:controller] == 'user/bitbucket_repos'  %>
-      <%= javascript_include_tag "application_scm",  :defer => false, :async => false %>
 
     <% elsif current_page?( package_latest_path ) %>
       <link rel="stylesheet" href="/assets/release_plots.css">
