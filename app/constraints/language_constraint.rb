@@ -16,12 +16,26 @@ class LanguageConstraint
 
     def distinct_languages
       key = "distinct_languages"
-      languages = Rails.cache.read key
+      languages = cached_languages key
       if languages.to_s.empty?
         languages = Product.all.distinct(:language)
-        Rails.cache.write( key, languages, timeToLive: 1.hour )
+        save_in_cache key, languages
       end
       languages
+    end
+
+    def cached_languages key
+      Rails.cache.read key
+    rescue => e
+      Rails.logger.error e.message
+      nil
+    end
+
+    def save_in_cache key, languages
+      Rails.cache.write( key, languages, timeToLive: 1.hour )
+    rescue => e
+      Rails.logger.error e.message
+      nil
     end
 
 end
