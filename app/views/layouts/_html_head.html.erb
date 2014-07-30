@@ -45,11 +45,9 @@
       </script>
       <%= javascript_include_tag "application_payment",  :defer => false, :async => false %>
 
-    <% elsif current_page?( user_projects_github_repositories_path ) %>
-
-
-    <% elsif current_page?( user_projects_bitbucket_repositories_path ) %>
-      <%= javascript_include_tag "application_bitbucket",  :defer => false, :async => false %>
+    <% elsif params[:controller] == 'user/github_repos' ||
+             params[:controller] == 'user/bitbucket_repos'  %>
+      <%= javascript_include_tag "application_scm",  :defer => false, :async => false %>
 
     <% elsif current_page?( package_latest_path ) %>
       <link rel="stylesheet" href="/assets/release_plots.css">

@@ -9,7 +9,6 @@ class User::BitbucketReposController < ApplicationController
   def index
     status_message = ''
     status_success = true
-    processed_repos = []
     task_status = ''
 
     if current_user.bitbucket_token.nil?
@@ -21,7 +20,6 @@ class User::BitbucketReposController < ApplicationController
       user_repos = current_user.bitbucket_repos
       if user_repos && user_repos.count > 0
         user_repos = user_repos.desc(:commited_at)
-        user_repos.each {|repo| processed_repos << process_repo(repo, task_status)}
       end
 
       if task_status == BitbucketService::A_TASK_DONE and user_repos.count == 0
@@ -36,7 +34,7 @@ class User::BitbucketReposController < ApplicationController
     render json: {
       success: status_success,
       task_status: task_status,
-      repos: processed_repos,
+      repos: user_repos,
       message: status_message
     }.to_json
   rescue => e
@@ -47,120 +45,92 @@ class User::BitbucketReposController < ApplicationController
 
 
   def show
-    id = params[:id]
-    repo = BitbucketRepo.where(_id: id.to_s).first
-    if repo
-      render json: process_repo(repo)
-    else
-      render text: "No such BitBucket repository with id: `#{id}`", status: 400
-    end
+    owner = params[:owner]
+    repo  = params[:repo]
+    fullname = "#{owner}/#{repo}"
+    @repo = current_user.bitbucket_repos.by_fullname( fullname ).first
+  end
+
+  def repo_files
+    task_status = ''
+    owner = params[:owner]
+    repo  = params[:repo]
+    fullname = "#{owner}/#{repo}"
+    repo = current_user.bitbucket_repos.by_fullname( fullname ).first
+
+    task_status = BitbucketService.status_for current_user, repo
+
+    processed_repo = process_repo( repo )
+
+    render json: {
+      task_status: task_status,
+      repo: processed_repo
+    }.to_json
   end
 
 
-  def show_menu_items
-    menu_items = []
-    user_orgs  = current_user.bitbucket_repos.distinct(:owner_login)
-    user_orgs.each do |owner_login|
-      repo = current_user.bitbucket_repos.by_owner_login(owner_login).first
-      menu_items << {
-        name: repo[:owner_login],
-        type: repo[:owner_type]
-      }
+  def import
+    id = params[:id]
+    sps = id.split("::")
+    repo_fullname = sps[0].gsub(":", "/")
+    branch = sps[1].gsub(":", "/")
+    path = sps[2].gsub(":", "/")
+    repo = import_repo( repo_fullname, branch, path )
+    if repo.is_a?(String)
+      render text: repo, status: 405 and return
     end
-    render json: menu_items
+    render json: repo
+  rescue => e
+    Rails.logger.error "failed to import: #{e.message}"
+    render text: e.message, status: 503
+  end
+
+
+  def remove
+    id = params[:id]
+    result = remove_repo( id )
+    render json: result
+  rescue => e
+    Rails.logger.error "failed to remove: #{e.message}"
+    render text: e.message, status: 503
   end
 
 
   def clear
-    results = current_user.bitbucket_repos.delete_all
-    render json: {success: !results.nil?, msg: "Cache is cleaned. Ready for import."}
+    results = BitbucketRepo.by_user( current_user ).delete_all
+    flash[:success] = "Cache is cleaned. Ready to re-import."
+    redirect_to :back
   end
 
-=begin
-  Unified updated method for SCM app.
-  If command attr in model is "import", then imports new project from bitbucket.
-  If commant attr in model is "remove", then removes current project
-=end
-
-  def update
-    if params[:command].nil? || params[:fullname].nil? || params[:command_data].nil?
-      error_msg = "Wrong command (`#{params[:command]}`) or project fullname is missing."
-      Rails.logger.error error_msg
-      render text: error_msg, status: 400 and return
-    end
-
-    repo = []
-    command_data = params[:command_data]
-    project_name = params[:fullname]
-    branch       = command_data.has_key?(:scmBranch) ? command_data[:scmBranch] : "master"
-    filename     = command_data[:scmFilename]
-    project_id   = command_data[:scmProjectId]
-
-    case params[:command]
-    when "import"
-      repo = import_repo(command_data, project_name, branch, filename)
-    when "remove"
-      repo = remove_repo(command_data, project_id)
-    when "update"
-      repo = update_repo(command_data)
-    else
-      render text: "Wrong command: `#{params[:command]}`", status: 400 and return
-    end
-
-    if repo.is_a?(String)
-      render text: repo, status: 405 and return
-    end
-
-    render json: repo
-  rescue => e
-    Rails.logger.error "failed to import #{project_name}/#{filename} from Bitbucket: #{e.message}"
-    render text: e.message, status: 503
-  end
 
   private
 
-    def import_repo(command_data, project_name, branch, filename)
+    def import_repo(project_name, branch, filename)
+      err_message = 'Something went wrong. It was not possible to save the project. Please contact the VersionEye team.'
+
       project = ProjectImportService.import_from_bitbucket(current_user, project_name, filename, branch)
 
-      if project.nil?
-        raise "Something went wrong. It was not possible to save the project. Please contact the VersionEye team."
-      end
+      raise err_message if project.nil?
+      raise project if project.is_a? String
 
-      if project.is_a? String
-        raise project
-      end
-
-      command_data[:scmProjectId] = project[:_id].to_s
-      repo = BitbucketRepo.find(params[:_id])
-      repo = process_repo(repo)
-      repo[:command_data] = command_data
-      repo[:command_result] = {
-        project_id: project[:_id].to_s,
+      repo = {
+        repo: project_name,
         filename: filename,
         branch: branch,
-        repo: project_name,
-        project_url: url_for(controller: 'projects', action: "show", id: project.id),
-        created_at: project[:created_at]
+        project_id: project.id,
+        project_url: url_for(controller: 'projects', action: "show", id: project.id)
       }
       repo
     end
 
 
-    def remove_repo(command_data, project_name)
-      id = command_data[:scmProjectId]
-      project_exists = Project.where(_id: id).exists?
-
-      unless project_exists
-        error_msg  = "Can't remove project with id: `#{id}` - it does not exist. Please refresh the page."
-        render text: error_msg, status: 400
+    def remove_repo(project_id)
+      project = Project.by_user( current_user ).by_id( project_id ).first
+      if project.nil?
+        raise "Can't remove project with id: `#{project_id}` - it does not exist. Please refresh the page."
       end
 
-      ProjectService.destroy id
-      repo = BitbucketRepo.find(params[:_id])
-      repo = process_repo(repo)
-      repo[:command_data] = command_data
-      repo[:command_result] = {status: "removed"}
-      repo
+      ProjectService.destroy project_id
     end
 
 
