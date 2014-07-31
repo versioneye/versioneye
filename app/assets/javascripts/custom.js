@@ -211,14 +211,6 @@ function hide_versioncomment_reply(id){
   return false;
 }
 
-function shareOnFacebook(link, message){
-  var picture = 'https://www.versioneye.com/assets/icon_114.png'
-  FB.ui({ method: 'feed',
-        link: link,
-        picture: picture,
-        description: message});
-}
-
 function setCookie(name, value, days){
   var date = new Date();
   new_date = new Date(date.getFullYear(), date.getMonth(), date.getDate()+days);
