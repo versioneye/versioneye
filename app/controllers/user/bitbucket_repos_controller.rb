@@ -1,10 +1,7 @@
-class User::BitbucketReposController < ApplicationController
+class User::BitbucketReposController < User::ScmReposController
 
   before_filter :authenticate
 
-  def init
-    render 'init', layout: 'application'
-  end
 
   def index
     status_message = ''
@@ -57,42 +54,13 @@ class User::BitbucketReposController < ApplicationController
     repo  = params[:repo]
     fullname = "#{owner}/#{repo}"
     repo = current_user.bitbucket_repos.by_fullname( fullname ).first
-
     task_status = BitbucketService.status_for current_user, repo
-
     processed_repo = process_repo( repo )
 
     render json: {
       task_status: task_status,
       repo: processed_repo
     }.to_json
-  end
-
-
-  def import
-    id = params[:id]
-    sps = id.split("::")
-    repo_fullname = sps[0].gsub(":", "/")
-    branch = sps[1].gsub(":", "/")
-    path = sps[2].gsub(":", "/")
-    repo = import_repo( repo_fullname, branch, path )
-    if repo.is_a?(String)
-      render text: repo, status: 405 and return
-    end
-    render json: repo
-  rescue => e
-    Rails.logger.error "failed to import: #{e.message}"
-    render text: e.message, status: 503
-  end
-
-
-  def remove
-    id = params[:id]
-    result = remove_repo( id )
-    render json: result
-  rescue => e
-    Rails.logger.error "failed to remove: #{e.message}"
-    render text: e.message, status: 503
   end
 
 
@@ -104,6 +72,7 @@ class User::BitbucketReposController < ApplicationController
 
 
   private
+
 
     def import_repo(project_name, branch, filename)
       err_message = 'Something went wrong. It was not possible to save the project. Please contact the VersionEye team.'
@@ -121,16 +90,6 @@ class User::BitbucketReposController < ApplicationController
         project_url: url_for(controller: 'projects', action: "show", id: project.id)
       }
       repo
-    end
-
-
-    def remove_repo(project_id)
-      project = Project.by_user( current_user ).by_id( project_id ).first
-      if project.nil?
-        raise "Can't remove project with id: `#{project_id}` - it does not exist. Please refresh the page."
-      end
-
-      ProjectService.destroy project_id
     end
 
 
@@ -189,4 +148,5 @@ class User::BitbucketReposController < ApplicationController
       end
       decoded_map
     end
+
 end
