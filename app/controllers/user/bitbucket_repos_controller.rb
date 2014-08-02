@@ -121,32 +121,13 @@ class User::BitbucketReposController < User::ScmReposController
         imported_files = imported_repos.where(scm_fullname: repo[:fullname])
         imported_files.each do |imported_project|
           filename = imported_project.filename
-          project_info = {
-            repo: repo[:fullname],
-            branch: imported_project[:scm_branch],
-            filename: filename,
-            project_url: url_for(controller: 'projects', action: "show", id: imported_project.id),
-            project_id:  imported_project.id,
-            created_at: imported_project[:created_at]
-          }
+          project_info = create_project_info( repo, imported_project )
           repo[:imported_files] << project_info
         end
       end
-      repo[:project_files] = decode_branch_names(repo[:project_files])
+      repo[:project_files] = decode_branch_names( repo[:project_files], "bitbucket" )
       repo[:task_status] = task_status
       repo
-    end
-
-
-    #function that decodes encoded branch-keys to plain string
-    def decode_branch_names(project_files)
-      return if project_files.nil?
-      decoded_map = {}
-      project_files.each_pair do |branch, files|
-        decoded_branch = Bitbucket.decode_db_key(branch)
-        decoded_map[decoded_branch] = files
-      end
-      decoded_map
     end
 
 end

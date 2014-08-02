@@ -46,4 +46,30 @@ class User::ScmReposController < ApplicationController
     end
 
 
+    def create_project_info( repo, imported_project )
+      filename = imported_project.filename
+      project_info = {
+          repo: repo[:fullname],
+          branch: imported_project[:scm_branch],
+          filename: filename,
+          project_url: url_for(controller: 'projects', action: "show", id: imported_project.id),
+          project_id:  imported_project.id,
+          created_at: imported_project[:created_at]
+        }
+    end
+
+
+    def decode_branch_names(project_files, scm = "github")
+      return if project_files.nil?
+      decoded_map = {}
+      project_files.each_pair do |branch, files|
+        decoded_branch = nil
+        decoded_branch = Github.decode_db_key(branch)    if scm.eql? "github"
+        decoded_branch = Bitbucket.decode_db_key(branch) if scm.eql? "bitbucket"
+        decoded_map[decoded_branch] = files
+      end
+      decoded_map
+    end
+
+
 end
