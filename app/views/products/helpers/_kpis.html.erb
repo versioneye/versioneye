@@ -100,7 +100,7 @@
     <% if licenses && !licenses.empty? %>
       <% licenses.each do |license| %>
         <% if license.link && !license.link.empty? %>
-          <a href="<%= license.url %>" target="license"><%= license.name_substitute %></a><br/>
+          <a href="<%= license.link %>" target="license"><%= license.name_substitute %></a><br/>
         <% else %>
           <%= license.name_substitute %><br/>
         <% end %>
