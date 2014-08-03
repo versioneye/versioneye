@@ -17,24 +17,26 @@
 
   <% else %>
 
+
     <% if params[:controller] == 'user/github_repos' ||
           params[:controller] == 'user/bitbucket_repos'  %>
       <%= javascript_include_tag "application_scm",  :defer => false, :async => false %>
     <% end %>
 
+
+    <% if params[:controller] == 'users' %>
+      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+    <% end %>
+
+
     <%= stylesheet_link_tag "application" %>
     <%= javascript_include_tag "application",               :defer => false, :async => false %>
+
 
     <% if @product || @project %>
 
       <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
       <%= javascript_include_tag "application_product",     :defer => false, :async => false %>
-
-    <% elsif current_page?( user_path(:id) )   ||
-             current_page?( favoritepackages_user_path(:id) ) ||
-             current_page?( comments_user_path(:id) ) %>
-
-      <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
 
     <% elsif current_page?( statistics_path ) %>
 
@@ -58,4 +60,5 @@
       <link rel="stylesheet" href="/assets/release_plots.css">
       <script src="/assets/novel_release_plots/main.js"></script>
     <% end %>
+
   <% end %>

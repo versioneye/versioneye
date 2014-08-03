@@ -53,9 +53,9 @@ jQuery(document).ready(function(){
     jQuery.ajax({
         url: path + "/users_location.json"
     }).done(function (data){
-          if (data){
-              initialize_profile(data.location);
-          }
+      if (data){
+          initialize_profile(data.location);
+      }
     } );
   }
 
