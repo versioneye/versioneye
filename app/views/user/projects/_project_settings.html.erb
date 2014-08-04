@@ -11,6 +11,7 @@
             <option value="<%= Project::A_PERIOD_DAILY %>"   <%= "selected" if @project.period == Project::A_PERIOD_DAILY   %> >Daily</option>
             <option value="<%= Project::A_PERIOD_WEEKLY %>"  <%= "selected" if @project.period == Project::A_PERIOD_WEEKLY  %> >Weekly</option>
             <option value="<%= Project::A_PERIOD_MONTHLY %>" <%= "selected" if @project.period == Project::A_PERIOD_MONTHLY %> >Monthly</option>
+            <option value="NEVER" <%= "selected" if @project.period == 'NEVER' %> >Never</option>
           </select> <button type="submit" class="btn btn-primary" >Save</button>
         </div>
       </div>
