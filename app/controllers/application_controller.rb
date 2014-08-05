@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   include UsersHelper
   include ProjectsHelper
   include RefersHelper
+  include PlanHelper
 
   after_filter :disconnect_from_mongo
 
