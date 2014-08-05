@@ -18,6 +18,15 @@
     </p>
     <hr />
     <%= render "pricing" %>
+    <% if has_current_plan?( current_user ) %>
+      <p>
+        <br/>
+        <form action="/settings/update_plan" method="POST" >
+          <input  type="hidden" name="plan" value="<%= current_user.plan.name_id %>" />
+          <button type="submit" class="btn btn-primary" id="update_cc_button" >Update Credit Card</button>
+        </form>
+      </p>
+    <% end %>
   </div>
 
 </div>
