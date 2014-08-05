@@ -28,6 +28,10 @@ describe "follow and unfollow" do
       init_product
       p Product.count
       p Product.first.to_s
+
+      Rails.cache.clear
+      LanguageService.cache.delete "distinct_languages"
+
       begin
         get "/#{prod_lang}/#{prod_key}/#{version}"
       rescue => e
@@ -43,6 +47,9 @@ describe "follow and unfollow" do
   context "logged in" do
 
     before :each do
+      Rails.cache.clear
+      LanguageService.cache.delete "distinct_languages"
+
       post "/sessions", {:session => {:email => user.email, :password => user.password}}, "HTTPS" => "on"
       assert_response 302
       response.should redirect_to( user_packages_i_follow_path )

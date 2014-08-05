@@ -13,6 +13,9 @@ describe "show_package_controller" do
     results.should_not be_nil
     results.size.should eq(1)
 
+    Rails.cache.clear
+    LanguageService.cache.delete "distinct_languages"
+
     get "/ruby/json/1.0"
     assert_response :success
     assert_select "form[action=?]", "/search"
@@ -34,6 +37,9 @@ describe "show_package_controller" do
     results = MongoProduct.find_by_name( "json_g" )
     results.should_not be_nil
     results.size.should eq(1)
+
+    Rails.cache.clear
+    LanguageService.cache.delete "distinct_languages"
 
     get "/ruby/json_g/1.0/visual_dependencies"
     assert_response :success
