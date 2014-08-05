@@ -10,6 +10,9 @@ describe "Submit a Comment to specific package" do
                                    language:       "Ruby"
                                 )}
   before :each do
+    Rails.cache.clear
+    LanguageService.cache.delete "distinct_languages"
+
     @user = UserFactory.create_new
     visit signin_path
     fill_in 'session[email]',    :with => @user.email

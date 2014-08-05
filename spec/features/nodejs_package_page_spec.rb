@@ -8,6 +8,9 @@ describe "NodeJS path tester" do
       prod1 = ProductFactory.create_for_npm('json', '1.0.0')
       prod1.save
 
+      Rails.cache.clear
+      LanguageService.cache.delete "distinct_languages"
+
       visit "/nodejs/json/1.0.0"
       page.should have_content("json : 1.0.0")
     end
@@ -16,6 +19,9 @@ describe "NodeJS path tester" do
       prod1 = ProductFactory.create_for_npm('json', '1.0.0')
       prod1.save
 
+      Rails.cache.clear
+      LanguageService.cache.delete "distinct_languages"
+
       visit "/node.js"
       page.should have_content("json")
     end
@@ -23,6 +29,9 @@ describe "NodeJS path tester" do
     it "shows the nodejs page with a dot in the language name" do
       prod1 = ProductFactory.create_for_npm('json', '1.0.0')
       prod1.save
+
+      Rails.cache.clear
+      LanguageService.cache.delete "distinct_languages"
 
       visit "/node.js/json/1.0.0"
       page.should have_content("json : 1.0.0")
