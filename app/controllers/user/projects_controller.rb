@@ -12,6 +12,10 @@ class User::ProjectsController < ApplicationController
     @project = Project.new(params)
   end
 
+  def upload
+    @project = Project.new(params)
+  end
+
   def create
     project = fetch_project params
     if project.nil?
