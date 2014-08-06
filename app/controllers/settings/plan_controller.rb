@@ -8,6 +8,7 @@ class Settings::PlanController < ApplicationController
       current_user.save
     end
     @plan = current_user.plan
+    cookies.permanent.signed[:plan_selected] = @plan.name_id
   end
 
   def update
