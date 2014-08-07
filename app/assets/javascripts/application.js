@@ -11,6 +11,7 @@
 //= require bootstrap_fileupload
 //= require libs/bootstrap-maxlength.min
 //= require libs/underscore-min
+//= require libs/hogan-2.0.0
 //= require libs/require
 
 //= require google

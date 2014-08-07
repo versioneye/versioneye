@@ -18,6 +18,16 @@ module ProductsHelper
     "/#{lang.downcase}/#{product.to_param}"
   end
 
+  def url_for_dep dependency
+    return "" if dependency.nil?
+    language = dependency.language_escaped
+    if dependency.prod_type.eql?(Project::A_TYPE_BOWER)
+      product = Product.fetch_bower dependency.dep_prod_key
+      language = product.language_escaped
+    end
+    return "/#{language}/#{dependency.dep_prod_key_for_url}/#{dependency.version_for_url}"
+  end
+
   def user_follows?(product, user)
     return false if user.products.nil? || user.products.empty?
     return true if user.products.include?(product)
@@ -219,6 +229,28 @@ module ProductsHelper
 
   def ref_count product
     @products.respond_to?("total_entries") ? @products.total_entries : 0
+  end
+
+  def font_size_for_dep_table( product )
+    if product.language.eql?( Product::A_LANGUAGE_JAVA )
+      return '12'
+    end
+    '14'
+  end
+
+  def current_version( dependency )
+    if dependency.known && dependency.product
+      return dependency[:current_version]
+      # return dependency.product.version
+    end
+    'UNKNOWN'
+  end
+
+  def dependency_name( dependency )
+    if dependency.group_id && dependency.artifact_id
+      return "#{dependency.group_id}:#{dependency.artifact_id}"
+    end
+    dependency.name
   end
 
 end
