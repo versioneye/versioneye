@@ -1,9 +1,6 @@
 
-  <% if @product.language.eql?( Product::A_LANGUAGE_JAVA ) %>
-    <% font_size = '12' %>
-  <% else %>
-    <% font_size = '14' %>
-  <% end %>
+  <% font_size = font_size_for_dep_table( @product ) %>
+
   <table class="dependency_table" style="width: 570px; font-size: <%=font_size%>px;">
     <thead>
       <tr>
@@ -17,11 +14,7 @@
       <% tr_class = dep[:outdated] ? "flash warn" : ""  %>
       <tr class="<%= tr_class %>">
         <td>
-          <% if dep.known && dep.product %>
-            <%= dep[:current_version] %>
-          <% else %>
-            UNKNOWN
-          <% end %>
+          <%= current_version( dep ) %>
         </td>
         <td>
           <span ><%= dep.version %></span>
@@ -29,12 +22,8 @@
         <td>
           <% if dep.known %>
             <span >
-              <a class="#a dep_link" href="/<%= dep.language_escaped %>/<%= dep.dep_prod_key_for_url %>/<%= dep.version_for_url %>" >
-                <% if dep.group_id && dep.artifact_id %>
-                  <span ><%= dep.group_id %> : <%= dep.artifact_id %></span>
-                <% else %>
-                  <span ><%= dep.name %></span>
-                <% end %>
+              <a class="#a dep_link" href="<%= url_for_dep( dep ) %>" >
+                <span> <%= dependency_name( dep ) %> </span>
               </a>
             </span>
           <% else %>
