@@ -1,5 +1,5 @@
 <% if products && !products.empty? %>
-  <% user = current_user %>
+
   <% products.each do |product| %>
     <% next if product.nil? %>
     <div class="row search-item" >
@@ -23,29 +23,9 @@
       </div>
 
       <div class = "span1 pull-right">
-        <% if signed_in? %>
 
-          <div class = "pull-right" id="follow_<%=product.language_esc %>_<%=product.to_param%>" style="display: <%= display_follow(product, user) %>">
-            <%= form_tag("/package/follow", :remote => true) do  %>
-              <input  name="product_key"  type="hidden" value="<%= product.to_param %>" />
-              <input  name="product_lang" type="hidden" value="<%= product.language %>"/>
-              <button id="button_<%= product.language_esc %>_<%= product.prod_key %>" type="submit" class="btn btn-success btn-medium" >Follow</button>
-            <% end %>
-          </div>
+        <%= render :partial => '/shared/product_follow', :locals => { :product => product } %>
 
-          <div class = "pull-right" id="unfollow_<%=product.language_esc %>_<%=product.to_param%>" style="display: <%= display_unfollow(product, user) %>">
-            <%= form_tag("/package/unfollow", :remote => true) do  %>
-              <input  name="product_key"  type="hidden" value="<%= product.to_param %>" />
-              <input  name="product_lang" type="hidden" value="<%= product.language %>"/>
-              <button type="submit" class="btn2 btn-big" >Unfollow</button>
-            <% end %>
-          </div>
-
-        <% else %>
-
-          <button id="button_<%= product.language_esc %>_<%= product.prod_key %>" type="submit" class="btn btn-success btn-medium" onclick="load_dialog_follow('<%= product.name %>', '<%= product.prod_key %>', '<%= product.language %>');" >Follow</button>
-
-        <% end %>
       </div>
 
     </div>

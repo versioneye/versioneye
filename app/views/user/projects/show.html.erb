@@ -96,9 +96,9 @@
             <div id="reupload_form" style="display: none;" >
               <%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do  %>
                 <input name="project_id" id="project_id" type="hidden" value="<%= @project._id.to_s %>" />
-                <%= file_field 'upload', 'datafile', :class => "round" %>
-                <button type="submit" class="btn2 btn2-large">Upload</button>
-                <button class="btn2 btn2-large" onClick="document.getElementById('reupload_form').style.display='none'; return false;">Hide</button>
+                <%= render '/user/helpers/stylish_fileupload' %>
+                <button type="submit" class="btn btn-primary">Upload</button>
+                <button class="btn" onClick="document.getElementById('reupload_form').style.display='none'; return false;">Hide</button>
               <% end %>
             </div>
           <% end %>
