@@ -6,31 +6,6 @@
   margin: 0px 0px 45px 0px;
   text-align: center;
   color: #5a5a5a;
-
-  & h1 {
-    font-weight: 200;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-
-  & h2 {
-    font-weight: 200;
-    margin-bottom: 5px;
-    &.casual {
-      color: $text_casual;
-    }
-  }
-
-  & p {
-    font-size: 20px;
-    line-height: 1.5;
-  }
-
-  & img {
-    display: block;
-    margin: 0 auto 30px;
-  }
-
 }
 
 .marketing_exp{
@@ -74,4 +49,12 @@ h5.marketing {
 
 .integration_desc{
   height: 70px;
+}
+
+.img-border {
+  border: 1px solid lightgray !important;
+}
+
+.casual{
+  color: gray;
 }
