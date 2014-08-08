@@ -7,7 +7,7 @@
         <input name="src_hidden"   type="hidden" value="detail"/>
         <input name="product_key"  type="hidden" value="<%= @product.to_param %>"/>
         <input name="product_lang" type="hidden" value="<%= @product.language %>"/>
-        <button type="submit" class="btn btn-large btn-warning" style="width: 100%" >Unfollow</button>
+        <button type="submit" class="btn btn-large" style="width: 100%" >Unfollow</button>
       <% end %>
     <% else %>
       <%= form_tag("/package/follow", :style=>"margin: 0;") do  %>
