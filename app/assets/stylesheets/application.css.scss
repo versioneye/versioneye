@@ -22,9 +22,9 @@ $text_link:  #669acb;
 $text_hover: #a0b8cf;
 
 @import "bootstrap.css.scss";
-@import "bootstrap_responsive.css";
-@import "bootstrap_switch.css";
-@import "bootstrap_upload.css";
+@import "bootstrap_responsive.css.scss";
+@import "bootstrap_switch.css.scss";
+@import "bootstrap_upload.css.scss";
 @import "font-awesome.css.scss";
 @import "sprite.css.scss";
 @import "colorschema.css.scss";
@@ -40,8 +40,8 @@ $text_hover: #a0b8cf;
 
 @import "main.css.scss";
 @import "typeahead.js-bootstrap.css";
-@import "social-buttons.css";
+@import "social-buttons.css.scss";
 @import "product.css.scss";
 @import "user.css.scss";
 @import "plots.css.scss";
-@import "scm_app.css";
+@import "scm_app.css.scss";
