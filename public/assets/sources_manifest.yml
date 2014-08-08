@@ -88,9 +88,9 @@ lottery/logo1.png: ac2c1f07b3d95f24a293c43a9388ecb4
 lottery/logo2.png: 0426fef170954048599a990e08d4310d
 lottery/logo3.png: e3b316ca0d1c7231e479daa13c6b6f0e
 lottery/logo4.png: b43ac853cbc1db88c4c62975c342b180
-marketing/github_integration.png: 259ff23a35bdbcfc90abca0c80485af8
-marketing/versioneye_project.jpg: 4dd9baec6524e9dcbf4c63ff2e4c5e78
-marketing/versioneye_project.png: c9eeedc2d0c123865eb9ccca83ba6e1b
+marketing/github_integration.png: 2a97698d1e0cf373a3b834c55928dc0b
+marketing/versioneye_project.png: 307b728df52b0f66d7093f63ca815839
+marketing/versioneye_project_2.png: d7a85354cd4a104c04fcdfa2a5bcad78
 noise.png: d6dcb07e48eb0993ebb0544dbea508a6
 profile_icon.png: 411369691ab7614a692c3d88b4ceaa27
 progress-small.gif: 3cc8b7f6663aefdb7905e59f0d6914c8
@@ -201,8 +201,8 @@ react.js: 80d7ce749d5bb314e61958f4451864aa
 scm/build/repo_files.js: 44e0826a69abf03eee117eca911a810b
 scm/build/repo_list.js: 70992f0f5076939563dd0d7fe9851a49
 twitter.js: c10ccadfeecbad183c2374818bd00f9f
-application.css: 4628e01b36962e4f1bc19a6ec7e3fe37
-application_lp.css: a83e846a42a19628593b5a2467e7c1cb
+application.css: 2c38ba28d7eb67097d38dfe6185cb1a7
+application_lp.css: 0d0e0bc53bacd10f3bc2f2ec3df326df
 font/FontAwesome.otf: cb72ce5d1d34bf9381660a73b39c95b8
 font/fontawesome-webfont.eot: 9a124c723758e78e28109aab9221d837
 font/fontawesome-webfont.svg: 89cf8bbd19eca7d6789f8100a8834ff0
