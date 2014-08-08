@@ -12,7 +12,7 @@
     <%= form_tag("/package/unfollow", :remote => true) do  %>
       <input  name="product_key"  type="hidden" value="<%= product.to_param %>" />
       <input  name="product_lang" type="hidden" value="<%= product.language %>"/>
-      <button type="submit" class="btn btn-warning" >Unfollow</button>
+      <button type="submit" class="btn" >Unfollow</button>
     <% end %>
   </div>
 
