@@ -68,7 +68,7 @@ describe "follow and unfollow" do
       subscribers.first.email.should eql( user.email )
 
       get "/ruby/json_goba/1.0"
-      assert_tag :tag => "button", :attributes => { :class => "btn2 btn-large btn-warning", :type => "submit" }
+      assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-warning", :type => "submit" }
       response.body.should match(prod_key)
     end
 
