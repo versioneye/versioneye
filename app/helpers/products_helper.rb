@@ -22,8 +22,8 @@ module ProductsHelper
     return "" if dependency.nil?
     language = dependency.language_escaped
     if dependency.prod_type.eql?(Project::A_TYPE_BOWER)
-      product = Product.fetch_bower dependency.dep_prod_key
-      language = product.language_escaped
+      product = Product.fetch_bower dependency.name
+      language = product.language_esc if product
     end
     return "/#{language}/#{dependency.dep_prod_key_for_url}/#{dependency.version_for_url}"
   end
