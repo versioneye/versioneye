@@ -384,63 +384,6 @@ h2 + .row {
   position: relative;
 }
 
-.btn2 {
-  display: inline-block;
-  *display: inline;
-  padding: 5px 10px;
-  margin-bottom: 0;
-  *margin-left: .3em;
-  font-size: 14px;
-  line-height: 20px;
-  *line-height: 20px;
-  text-decoration:none;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  color: #ffffff !important;
-  background-color: #c1c1c1;
-  *background-color: #c2c2c2;
-  background-image: -moz-linear-gradient(-180deg, rgb(130, 156, 177), rgb(81, 99, 116));
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, from(rgb(130, 156, 177)), to(rgb(81, 99, 116)));
-  background-image: linear-gradient(-180deg, rgb(130, 156, 177), rgb(81, 99, 116));
-  background-image: -webkit-linear-gradient(-90deg, rgb(130, 156, 177), rgb(81, 99, 116));
-  background-image: -o-linear-gradient(-180deg, rgb(130, 156, 177), rgb(81, 99, 116));
-  background-repeat: no-repeat;
-  border: 1px solid rgb(153, 153, 153);
-  *border: 0;
-  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  border-bottom-color: #a2a2a2;
-  -webkit-border-radius: 5px;
-     -moz-border-radius: 5px;
-          border-radius: 5px;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-  *zoom: 1;
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.btn2:hover,
-.btn2:active {
-  color: #ffffff;
-  background-color: #c1c1c1;
-  background-image: -webkit-linear-gradient(-90deg, rgb(183, 200, 213), rgb(113, 136, 156));
-  background-image: -o-linear-gradient(-180deg, rgb(183, 200, 213), rgb(113, 136, 156));
-  background-image: linear-gradient(-180deg, rgb(183, 200, 213), rgb(113, 136, 156));
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, from(rgb(183, 200, 213)), to(rgb(113, 136, 156)));
-  background-image: -moz-linear-gradient(-180deg, rgb(183, 200, 213), rgb(113, 136, 156));
-}
-
-.btn2-big {
-  color: #ffffff;
-  height: 42px;
-  font-size: 19px;
-  padding: 5px 15px 5px 15px;
-}
-
-
 /* Fake the :focus state to demo it */
 .focused {
   border-color: rgba(82,168,236,.8);
