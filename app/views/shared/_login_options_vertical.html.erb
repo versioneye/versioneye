@@ -1,7 +1,7 @@
 <ul class = "nav list-social">
   <li>
     <% btn  ||= 'login' %>
-    <a href='<%= Settings.instance.github_base_url %>/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd' style="margin-right: 5px;" >
+    <a href='<%= Settings.instance.github_base_url %>/login/oauth/authorize?client_id=<%=Settings.instance.github_client_id%>&amp;scope=user:email' style="margin-right: 5px;" >
       <span class="btn_github small <%= btn %>"></span>
     </a>
   </li>
