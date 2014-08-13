@@ -5,7 +5,7 @@ describe "Create Project from file uplaod on the service page - guest area" do
   it "create a project from file upload as singned in user." do
     get root_path
     assert_response :success
-    response.body.should match("What is VersionEye")
+    response.body.should match("Notification System for Software Libraries")
 
     gemfile = "#{Rails.root}/spec/assets/Gemfile"
     file_attachment = Rack::Test::UploadedFile.new(gemfile, "application/octet-stream")
