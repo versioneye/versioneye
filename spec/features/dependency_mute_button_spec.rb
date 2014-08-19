@@ -40,7 +40,7 @@ describe "Mute project dependency", :js => true do
       end
 
       project.reload
-      project.dependencies.first[:muted].should be_true
+      project.dependencies.first[:muted].should be_truthy
 
 
       first(".btn-mute-version").click
@@ -49,7 +49,7 @@ describe "Mute project dependency", :js => true do
       end
 
       project.reload
-      project.dependencies.first[:muted].should be_false
+      project.dependencies.first[:muted].should be_falsey
 
     end
   end

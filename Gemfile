@@ -49,9 +49,9 @@ end
 group :test do
   gem 'simplecov'         , '~> 0.9.0'
   gem 'turn'              , :require => false
-  gem 'rspec'             , '~> 2.14.0'
-  gem 'rspec-rails'       , '~> 2.14.0'
-  gem 'rspec-mocks'       , '~> 2.14.0'
+  gem 'rspec'             , '~> 3.0.0'
+  gem 'rspec-rails'       , '~> 3.0.2'
+  gem 'rspec-mocks'       , '~> 3.0.3'
   gem 'capybara'          , '~> 2.4.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'selenium-webdriver', '~> 2.42.0'

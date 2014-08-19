@@ -22,7 +22,7 @@ describe "Connect with GitHub" do
     user = User.first
     user.github_token = nil
     user.github_id = nil
-    user.save.should be_true
+    user.save.should be_truthy
 
     visit signin_path
     within("form.form-horizontal") do

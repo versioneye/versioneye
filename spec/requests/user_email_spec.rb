@@ -30,7 +30,7 @@ describe "user_email" do
       user_email.email = email_2
       user_email.user_id = user._id.to_s
       user_email.create_verification
-      user_email.save.should be_true
+      user_email.save.should be_truthy
 
       get "/users/activate/email/wrong_verifaction_code", nil, "HTTPS" => "on"
 
