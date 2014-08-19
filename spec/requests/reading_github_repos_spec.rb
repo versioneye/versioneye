@@ -54,7 +54,7 @@ describe "Getting data from github_repos_controller" do
       get user_github_repos_path
       response.status.should eql(200)
       response_data = JSON.parse response.body
-      response_data.has_key?('repos').should be_true
+      response_data.has_key?('repos').should be_truthy
       response_data['repos'].count.should eq(user.github_repos.count)
 
       resp_repo1, resp_repo2 = response_data['repos']
@@ -112,7 +112,7 @@ describe "Getting data from github_repos_controller" do
       response_data = JSON.parse response.body
 
       user.github_repos.all.count.should > 0 # caching should fill GithubRepo
-      response_data.has_key?('repos').should be_true
+      response_data.has_key?('repos').should be_truthy
       response_data['repos'].count.should eql(user.github_repos.count)
       resp_repo1 = response_data['repos'].first
       resp_repo1['fullname'].should match("spec/repo")

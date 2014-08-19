@@ -20,8 +20,8 @@ describe VersioncommentsController do
 
     controller = VersioncommentsController.new
     send_to_users = controller.send("send_comment_mails", product, user_1, comment)
-    send_to_users.count.should eq(1)
-    send_to_users.first.id.to_s.should eql(user_2.id.to_s)
+    expect(send_to_users.count).to eq(1)
+    expect(send_to_users.first.id.to_s).to eql(user_2.id.to_s)
   end
 
 end

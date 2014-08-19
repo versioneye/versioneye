@@ -8,7 +8,7 @@ describe "UsersController" do
 
     product = ProductFactory.create_new(103)
     follow  = ProductService.follow(product.language, product.prod_key, user1)
-    follow.should be_true
+    follow.should be_truthy
 
     product = Product.fetch_product( product.language, product.prod_key )
 

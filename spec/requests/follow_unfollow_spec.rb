@@ -16,7 +16,7 @@ describe "follow and unfollow" do
     product.prod_type     = "RubyGem"
     product.language      = Product::A_LANGUAGE_RUBY
     product.version       = "1.0"
-    product.save.should be_true
+    product.save.should be_truthy
     version               = Version.new
     version.version       = "1.0"
     product.versions.push(version)
