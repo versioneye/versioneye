@@ -20,7 +20,8 @@ class DockerController < ApplicationController
       images['veye/rails_app:2.3.20'] = {
         'container_start_opts' => {
           'PortBindings' => { '8080/tcp' => [{'HostPort' => '8080'}]},
-          'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm']
+          'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
+          'Binds' => ['/mnt/logs:/rails/log']
         },
         'auth' => true,
         'comments' => 'First version'
