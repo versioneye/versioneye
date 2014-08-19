@@ -14,6 +14,10 @@
   <% end %>
 </div>
 
+<div class = "media">
+  <%= render partial: "collaborator" , collection: @project.collaborators %>
+</div>
+
 <script>
   jQuery(document).ready(function(){
     console.debug("Collaborators autocomplete is initialized.");
@@ -35,7 +39,3 @@
     });
   });
 </script>
-
-<div class = "media">
-  <%= render partial: "collaborator" , collection: @project.collaborators %>
-</div>
