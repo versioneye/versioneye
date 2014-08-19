@@ -1,4 +1,5 @@
 class VersionlinkMigration
+
   def self.rename_version_id
     links = Versionlink.all
     total = links.count
@@ -9,4 +10,5 @@ class VersionlinkMigration
       end
     end
   end
+
 end
