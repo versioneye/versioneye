@@ -16,11 +16,6 @@
       </div>
     <% end %>
   </div>
-  <% if @product.language.eql?(Product::A_LANGUAGE_JAVA) %>
-    <div style="margin-top: 10px; font-size: 12px;">
-      For Maven based packages currently we don't have the real release dates. We can only show the date we detected a specific version.
-    </div>
-  <% end %>
   <% if @product.language.eql?(Product::A_LANGUAGE_OBJECTIVEC) %>
     <div style="margin-top: 10px; font-size: 12px;">
       Since Cocoapods doesn’t have the original release dates we now try to get them from the corresponding git tag. We use the Github API to do this, so this currently works only for pods hosted on Github.
