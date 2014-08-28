@@ -58,6 +58,14 @@
   </div>
 </div>
 
+<div class="control-group">
+  <%= label_tag :email, "Email", :class => "control-label-big", :for => "email" %>
+  <div class="controls" style="margin-left: 155px;">
+    <input type="text" size="20" autocomplete="off" class="round" id="email" name="email" value="<%= @billing_address.email %>" />
+    <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :email} %>
+  </div>
+</div>
+
 <% display_style = "none" %>
 <% display_style = "block" if @billing_address.type == BillingAddress::A_TYPE_CORPORATE %>
 <div id="company_fields" style="display: <%= display_style %>;">
