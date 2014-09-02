@@ -6,12 +6,47 @@
 <div class="span8" >
 
   <div class="row content_header_def" >
-    License Whitelists
+    License Whitelist <b><%= @license_whitelist %></b>
   </div>
 
   <div class="span8 content" >
 
-    TADA <%= @license_whitelist.name %>
+    <%= form_tag(settings_license_whitelists_add_path(:list => @license_whitelist.name), :class => 'form-horizontal') do %>
+      <div class="control-group">
+        <%= label_tag :name, nil, :class => 'control-label' %>
+        <div class="controls">
+          <%= text_field_tag :name, '', :class => "round" %>
+          <%= submit_tag 'Add License', :class => "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+
+    <br/>
+    <br/>
+
+    <table>
+      <colgroup>
+        <col width="80px;"j />
+        <col width="*" />
+      </colgroup>
+
+      <% @license_whitelist.license_elements.each do |license| %>
+        <% if !license.name.to_s.empty? %>
+          <%= form_tag( settings_license_whitelists_remove_path(:list => @license_whitelist.name), :method => "post") do  %>
+          <tr>
+            <td>
+              <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+            </td>
+            <td>
+              <input id="name" name="name" type="hidden" value="<%= license.name.to_s %>" />
+              <%= license.name %>
+            </td>
+          </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+
+    </table>
 
   </div>
 

@@ -21,33 +21,32 @@
     <% end %>
 
     <br/>
-
     <br/>
 
-      <table>
-        <colgroup>
-          <col width="80px;"j />
-          <col width="*" />
-        </colgroup>
+    <table>
+      <colgroup>
+        <col width="80px;"j />
+        <col width="*" />
+      </colgroup>
 
-        <% @whitelists.each do |wlist| %>
-          <% if !wlist.name.to_s.empty? %>
-            <%= form_tag( settings_license_whitelists_destroy_path , :method => "post") do  %>
-            <tr>
-              <td>
-                <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
-              </td>
-              <td>
-                <input id="name" name="name" type="hidden" value="<%= wlist.name.to_s %>" />
-                <%= link_to wlist.name, settings_license_whitelists_show_path(wlist) %>
+      <% @whitelists.each do |wlist| %>
+        <% if !wlist.name.to_s.empty? %>
+          <%= form_tag( settings_license_whitelists_destroy_path , :method => "post") do  %>
+          <tr>
+            <td>
+              <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+            </td>
+            <td>
+              <input id="name" name="name" type="hidden" value="<%= wlist.name.to_s %>" />
+              <%= link_to wlist.name, settings_license_whitelists_show_path(wlist) %>
 
-              </td>
-            </tr>
-            <% end %>
+            </td>
+          </tr>
           <% end %>
         <% end %>
+      <% end %>
 
-      </table>
+    </table>
 
   </div>
 

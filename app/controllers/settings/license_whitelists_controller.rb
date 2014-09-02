@@ -38,4 +38,26 @@ class Settings::LicenseWhitelistsController < ApplicationController
     redirect_to :back
   end
 
+  def add
+    license_whitelist = LicenseWhitelist.fetch_by current_user, params[:list]
+    license_whitelist.add_license_element params[:name]
+    flash[:success] = "License added successfully."
+    redirect_to :back
+  rescue => e
+    logger.error e.message
+    flash[:error] = "An error occured. We couldn't delete the Whitelist."
+    redirect_to :back
+  end
+
+  def remove
+    license_whitelist = LicenseWhitelist.fetch_by current_user, params[:list]
+    license_whitelist.remove_license_element params[:name]
+    flash[:success] = "License removed successfully."
+    redirect_to :back
+  rescue => e
+    logger.error e.message
+    flash[:error] = "An error occured. We couldn't delete the Whitelist."
+    redirect_to :back
+  end
+
 end
