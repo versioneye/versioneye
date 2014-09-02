@@ -40,7 +40,7 @@ class Settings::LicenseWhitelistsController < ApplicationController
 
   def add
     license_whitelist = LicenseWhitelist.fetch_by current_user, params[:list]
-    license_whitelist.add_license_element params[:name]
+    license_whitelist.add_license_element params[:license_name]
     flash[:success] = "License added successfully."
     redirect_to :back
   rescue => e
@@ -59,5 +59,32 @@ class Settings::LicenseWhitelistsController < ApplicationController
     flash[:error] = "An error occured. We couldn't delete the Whitelist."
     redirect_to :back
   end
+
+  def autocomplete
+    term = params[:term]
+    if term.nil?
+      render json: [] and return
+    end
+    results = LicenseService.search(term)
+    render json: format_autocompletion(results)
+  end
+
+  private
+
+    def format_autocompletion(matched_licenses)
+      results = []
+      return results if matched_licenses.nil?
+
+      matched_licenses.each_with_index do |spdx, i|
+        results << {
+          value: spdx[:fullname],
+          license_name: spdx[:fullname],
+          identifier: spdx[:identifier]
+        }
+        break if i > 12
+      end
+
+      results
+    end
 
 end

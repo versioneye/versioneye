@@ -12,13 +12,14 @@
   <div class="span8 content" >
 
     <%= form_tag(settings_license_whitelists_add_path(:list => @license_whitelist.name), :class => 'form-horizontal') do %>
-      <div class="control-group">
-        <%= label_tag :name, nil, :class => 'control-label' %>
-        <div class="controls">
-          <%= text_field_tag :name, '', :class => "round" %>
-          <%= submit_tag 'Add License', :class => "btn btn-primary" %>
-        </div>
+
+      <div class="input-append">
+        <input id="license_name" name="license_name" class="span6 input" type="text" autocomplete="off" />
+        <button class="btn btn-primary" onclick="preventSubmit('license_name', 'License Name')" type="submit" >
+          Add License
+        </button>
       </div>
+
     <% end %>
 
     <br/>
@@ -51,3 +52,26 @@
   </div>
 
 </div>
+
+<script>
+  jQuery(document).ready(function(){
+    console.debug("License autocomplete is initialized.");
+
+    jQuery("input#license_name").typeahead({
+      name: "contacts",
+      remote: {
+        url: "/settings/license_whitelists/autocomplete?term=%QUERY"
+      },
+      engine: Hogan,
+      template: [
+        '<div>',
+          '<p>',
+            '<i class="icon-male">&nbsp;</i>',
+            '<strong>{{ license_name }}</strong> ( {{ identifier }} )',
+          '</p>',
+        '</div>'
+      ].join('')
+    });
+  });
+</script>
+

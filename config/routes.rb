@@ -86,8 +86,9 @@ Versioneye::Application.routes.draw do
     post 'test_email'          , :to => 'emailsettings#test_email'
 
     get  'license_whitelists'              , :to => 'license_whitelists#index'
-    post 'license_whitelists/create'       , :to => 'license_whitelists#create'
+    get  'license_whitelists/autocomplete' , :to => 'license_whitelists#autocomplete'
     get  'license_whitelists/:name'        , :to => 'license_whitelists#show'   , :as => 'license_whitelists_show'
+    post 'license_whitelists/create'       , :to => 'license_whitelists#create'
     post 'license_whitelists/destroy'      , :to => 'license_whitelists#destroy', :as => 'license_whitelists_destroy'
     post 'license_whitelists/:list/add'    , :to => 'license_whitelists#add'    , :as => 'license_whitelists_add'
     post 'license_whitelists/:list/remove' , :to => 'license_whitelists#remove' , :as => 'license_whitelists_remove'
