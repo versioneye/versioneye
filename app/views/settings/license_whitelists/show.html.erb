@@ -24,28 +24,28 @@
     <br/>
     <br/>
 
-    <table>
+    <table class="table table-hover" >
       <colgroup>
         <col width="80px;"j />
         <col width="*" />
       </colgroup>
-
-      <% @license_whitelist.license_elements.each do |license| %>
-        <% if !license.name.to_s.empty? %>
-          <%= form_tag( settings_license_whitelists_remove_path(:list => @license_whitelist.name), :method => "post") do  %>
-          <tr>
-            <td>
-              <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
-            </td>
-            <td>
-              <input id="name" name="name" type="hidden" value="<%= license.name.to_s %>" />
-              <%= license.name %>
-            </td>
-          </tr>
+      <tbody>
+        <% @license_whitelist.license_elements.each do |license| %>
+          <% if !license.name.to_s.empty? %>
+            <%= form_tag( settings_license_whitelists_remove_path(:list => @license_whitelist.name), :method => "post") do  %>
+            <tr >
+              <td >
+                <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+              </td>
+              <td>
+                <input id="name" name="name" type="hidden" value="<%= license.name.to_s %>" />
+                <%= license.name %>
+              </td>
+            </tr>
+            <% end %>
           <% end %>
         <% end %>
-      <% end %>
-
+      </tbody>
     </table>
 
   </div>
