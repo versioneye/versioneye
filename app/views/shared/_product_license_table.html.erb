@@ -15,7 +15,14 @@
       <% licenses.each do |license| %>
         <% license_hash[license.name_substitute] = Array.new if license_hash[license.name_substitute].nil? %>
         <% license_hash[license.name_substitute] << product if !product.nil?  %>
-        <tr class="<%= sep_class %>">
+
+        <% whitelist_class = '' %>
+        <% if @project && @project.license_whitelist_id %>
+          <% whitelist_class = 'error' %>
+          <% whitelist_class = 'success' if @project.license_whitelist.include_license_substitute?( license.name_substitute ) %>
+        <% end %>
+
+        <tr class="<%= sep_class %> <%= whitelist_class %> ">
           <td><a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></td>
           <td>
             <% if license.link && !license.link.empty? %>
