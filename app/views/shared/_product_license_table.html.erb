@@ -19,9 +19,9 @@
           <td><a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></td>
           <td>
             <% if license.link && !license.link.empty? %>
-              <a href="<%= license.link %> "><%= license.name %> </a>
+              <a href="<%= license.link %> "><%= license.name_substitute %> </a>
             <% else %>
-              <%= license.name %>
+              <%= license.name_substitute %>
             <% end %>
           </td>
         </tr>
