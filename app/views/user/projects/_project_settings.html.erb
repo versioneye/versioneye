@@ -74,7 +74,7 @@
             <% @whitelists.each do |list| %>
               <option value="<%= list.name %>" <%= @project.license_whitelist.to_s.eql?(list.name) ? 'selected' : '' %> ><%= list.name %></option>
             <% end %>
-          </select> <button type="submit" class="btn btn-primary" >Save</button>
+          </select> <button type="submit" class="btn btn-primary" >Save</button> <button type="button" onclick="window.location.href='/settings/license_whitelists'" class="btn btn-success" >Manage Whitelists</button>
         </div>
       </div>
     </form>
