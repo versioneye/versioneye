@@ -8,6 +8,7 @@ class Settings::LicenseWhitelistsController < ApplicationController
 
   def show
     @license_whitelist = LicenseWhitelist.fetch_by current_user, params[:name]
+    @license_whitelist.license_elements.sort_by! &:name_substitute
   end
 
   def create
