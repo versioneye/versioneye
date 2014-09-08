@@ -1,2 +1,2 @@
-jQuery('#trans_deps').append('<%=j render :partial => 'shared/product_license_table', :locals => {:products => @products, :width => '615'} %>');
+jQuery('#trans_deps').html('<%=j render :partial => 'shared/product_license_table', :locals => {:products => @products, :width => '615'} %>');
 document.getElementById('progress_bar').style.display='none';

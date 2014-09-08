@@ -44,6 +44,7 @@ class User::ProjectsController < ApplicationController
       return if !authenticate
       redirect_to(root_path) unless current_user?(project.user)
     end
+    @whitelists = LicenseWhitelist.by_user( current_user ) if current_user
   end
 
   def visual
@@ -52,15 +53,15 @@ class User::ProjectsController < ApplicationController
   end
 
   def transitive_dependencies
-    id             = params[:id]
-    project        = Project.find_by_id( id )
-    hash = circle_hash_for_dependencies project
+    id       = params[:id]
+    @project = Project.find_by_id( id )
+    hash = circle_hash_for_dependencies @project
     @products = Array.new
-    circle = CircleElementService.fetch_deps(1, hash, Hash.new, project.language)
+    circle = CircleElementService.fetch_deps(1, hash, Hash.new, @project.language)
     circle.each do |dep|
       next if dep.last[:level] == 0
 
-      product = Product.fetch_product( project.language, dep.last['dep_prod_key'] )
+      product = Product.fetch_product( @project.language, dep.last['dep_prod_key'] )
       next if product.nil?
 
       version = dep.last['version']
@@ -269,6 +270,24 @@ class User::ProjectsController < ApplicationController
       @project.notify_after_api_update = true
     else
       @project.notify_after_api_update = false
+    end
+    if @project.save
+      flash[:success] = "We saved your changes."
+    else
+      flash[:error] = "Something went wrong. Please try again later."
+    end
+    redirect_to user_project_path(@project)
+  end
+
+  def save_whitelist
+    id        = params[:id]
+    list_name = params[:whitelist]
+    @project  = Project.find_by_id id
+    if list_name.eql?('none')
+      @project.license_whitelist_id = nil
+    else
+      lw = LicenseWhitelist.fetch_by current_user, list_name
+      @project.license_whitelist_id = lw.id.to_s
     end
     if @project.save
       flash[:success] = "We saved your changes."
