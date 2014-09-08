@@ -39,12 +39,12 @@ class User::ProjectsController < ApplicationController
     project  = ProjectService.find( id )
     project  = add_dependency_classes( project )
     @project = project
-    @whitelists = LicenseWhitelist.by_user( current_user )
 
     if !project.visible_for_user?(current_user)
       return if !authenticate
       redirect_to(root_path) unless current_user?(project.user)
     end
+    @whitelists = LicenseWhitelist.by_user( current_user ) if current_user
   end
 
   def visual
