@@ -150,6 +150,8 @@
               <% end %>
             <% end %>
 
+            <%= render "user/projects/helpers/license_whitelist_picker" %>
+
             <%= render :partial => "shared/product_license_table", :locals => {:products => products, :width => "615"} %>
 
             <% if (@project.source.eql?(Project::A_SOURCE_URL) && !@project.url.to_s.empty? && @project.url.match(/\.lock$/).nil?) ||

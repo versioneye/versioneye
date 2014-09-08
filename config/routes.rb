@@ -85,6 +85,14 @@ Versioneye::Application.routes.draw do
     post 'emailsettings'       , :to => 'emailsettings#update'
     post 'test_email'          , :to => 'emailsettings#test_email'
 
+    get  'license_whitelists'              , :to => 'license_whitelists#index'
+    get  'license_whitelists/autocomplete' , :to => 'license_whitelists#autocomplete'
+    get  'license_whitelists/:name'        , :to => 'license_whitelists#show'   , :as => 'license_whitelists_show'
+    post 'license_whitelists/create'       , :to => 'license_whitelists#create'
+    post 'license_whitelists/destroy'      , :to => 'license_whitelists#destroy', :as => 'license_whitelists_destroy'
+    post 'license_whitelists/:list/add'    , :to => 'license_whitelists#add'    , :as => 'license_whitelists_add'
+    post 'license_whitelists/:list/remove' , :to => 'license_whitelists#remove' , :as => 'license_whitelists_remove'
+
     get  'globalsettings'      , :to => 'globalsettings#index'
     post 'globalsettings'      , :to => 'globalsettings#update'
 
@@ -163,6 +171,7 @@ Versioneye::Application.routes.draw do
         post 'save_period'
         post 'save_email'
         post 'save_visibility'
+        post 'save_whitelist'
         post 'transitive_dependencies'
         post 'save_notify_after_api_update'
         post 'reparse'

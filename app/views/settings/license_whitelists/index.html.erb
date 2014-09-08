@@ -1,0 +1,53 @@
+
+<div class="span3" >
+  <%= render 'settings/navi' %>
+</div>
+
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    License Whitelists
+  </div>
+
+  <div class="span8 content" >
+
+    <%= form_for(:license_whitelist, :url => settings_license_whitelists_create_path, :html => {:class => 'form-horizontal'} ) do |f|  %>
+      <div class="control-group">
+        <%= f.label :name, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :name, :class => "round" %> <button id="sign_in_button" type="submit" class="btn btn-big" >Create New Whitelist</button>
+        </div>
+      </div>
+    <% end %>
+
+    <br/>
+    <br/>
+
+    <table>
+      <colgroup>
+        <col width="80px;"j />
+        <col width="*" />
+      </colgroup>
+
+      <% @whitelists.each do |wlist| %>
+        <% if !wlist.name.to_s.empty? %>
+          <%= form_tag( settings_license_whitelists_destroy_path , :method => "post") do  %>
+          <tr>
+            <td>
+              <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+            </td>
+            <td>
+              <input id="name" name="name" type="hidden" value="<%= wlist.name.to_s %>" />
+              <%= link_to wlist.name, settings_license_whitelists_show_path(wlist) %>
+
+            </td>
+          </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+
+    </table>
+
+  </div>
+
+</div>

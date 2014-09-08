@@ -26,12 +26,14 @@ describe "Private Project" do
     assert_response 302
     response.should redirect_to( user_projects_path )
 
+    p "GET: /user/projects/#{@project._id.to_s}"
     get "/user/projects/#{@project._id.to_s}"
     assert_response :success
     response.body.should match("symfony/doctrine-bundle")
 
     get "/signout"
 
+    p "GET: /user/projects/#{@project._id.to_s}"
     get "/user/projects/#{@project._id.to_s}"
     assert_response 302
     response.should redirect_to("/signin")
