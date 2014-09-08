@@ -1,0 +1,5 @@
+<% if license.link && !license.link.empty? %>
+  <a href="<%= license.link %> "><%= license.name_substitute %> </a>
+<% else %>
+  <%= license.name_substitute %>
+<% end %>
