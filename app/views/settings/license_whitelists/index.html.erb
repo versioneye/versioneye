@@ -11,14 +11,21 @@
 
   <div class="span8 content" >
 
-    <%= form_for(:license_whitelist, :url => settings_license_whitelists_create_path, :html => {:class => 'form-horizontal'} ) do |f|  %>
-      <div class="control-group">
-        <%= f.label :name, :class => 'control-label' %>
-        <div class="controls">
-          <%= f.text_field :name, :class => "round" %> <button id="sign_in_button" type="submit" class="btn btn-big" >Create New Whitelist</button>
+    <p>
+      Create a license whitelist and assign it to your projects to ensure a license policy.
+    </p>
+
+    <p>
+      </br>
+      <%= form_for(:license_whitelist, :url => settings_license_whitelists_create_path, :html => {:class => 'form-horizontal'} ) do |f|  %>
+        <div class="control-group">
+          <%= f.label :name, :class => 'control-label' %>
+          <div class="controls">
+            <%= f.text_field :name, :class => "round" %> <button id="sign_in_button" type="submit" class="btn btn-big" >Create New Whitelist</button>
+          </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </p>
 
     <br/>
     <br/>
