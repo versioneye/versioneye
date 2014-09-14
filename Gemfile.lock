@@ -1,7 +1,9 @@
-PATH
-  remote: ~/workspace/versioneye/versioneye-core
+GIT
+  remote: git@github.com:versioneye/versioneye-core.git
+  revision: b709c6ef9b81da53e15c34c768323a96df95ac01
+  tag: v5.6.1
   specs:
-    versioneye-core (5.5.5)
+    versioneye-core (5.6.1)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       bunny (~> 1.4.0)
@@ -58,9 +60,9 @@ GEM
     amq-protocol (1.9.2)
     ansi (1.4.3)
     arel (3.0.3)
-    aws-sdk (1.52.0)
-      aws-sdk-v1 (= 1.52.0)
-    aws-sdk-v1 (1.52.0)
+    aws-sdk (1.53.0)
+      aws-sdk-v1 (= 1.53.0)
+    aws-sdk-v1 (1.53.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
     bourbon (4.0.2)
