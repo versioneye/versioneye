@@ -17,26 +17,26 @@ class DockerController < ApplicationController
     def remote_images_hash
       images = {}
 
-      images['veye/rails_app:2.3.20'] = {
+      images['veye/rails_app:2.6.4'] = {
         'container_start_opts' => {
           'PortBindings' => { '8080/tcp' => [{'HostPort' => '8080'}]},
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
           'Binds' => ['/mnt/logs:/rails/log']
         },
         'auth' => true,
-        'comments' => 'First version'
+        'comments' => 'With License Whitelist'
       }
 
-      images['veye/rails_api:1.0.3'] = {
+      images['veye/rails_api:2.1.8'] = {
         'container_start_opts' => {
           'PortBindings' => { '9090/tcp' => [{'HostPort' => '9090'}]},
-          'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc']
+          'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm']
         },
         'auth' => true,
-        'comments' => 'First version'
+        'comments' => 'With updated versioneye-core'
       }
 
-      images['veye/tasks:1.0.12'] = {
+      images['veye/tasks:1.2.4'] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm']
         },
