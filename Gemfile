@@ -49,12 +49,12 @@ end
 group :test do
   gem 'simplecov'         , '~> 0.9.0'
   gem 'turn'              , :require => false
-  gem 'rspec'             , '~> 3.0.0'
-  gem 'rspec-rails'       , '~> 3.0.2'
-  gem 'rspec-mocks'       , '~> 3.0.3'
+  gem 'rspec'             , '~> 3.1.0'
+  gem 'rspec-rails'       , '~> 3.1.0'
+  gem 'rspec-mocks'       , '~> 3.1.0'
   gem 'capybara'          , '~> 2.4.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
-  gem 'selenium-webdriver', '~> 2.42.0'
+  gem 'selenium-webdriver', '~> 2.43.0'
   gem 'vcr'               , '~> 2.9.2',  :require => false
   gem 'webmock'           , '~> 1.18.0', :require => false
   gem "fakeweb"           , '~> 1.3'
