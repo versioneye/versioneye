@@ -26,6 +26,7 @@ class Settings::GlobalsettingsController < ApplicationController
   end
 
   def index_cocoapods
+    env = Settings.instance.environment
     Settings.instance.reload_from_db GlobalSetting.new
     @globalsetting = {}
 
@@ -34,6 +35,8 @@ class Settings::GlobalsettingsController < ApplicationController
 
     @globalsetting['cocoapods_spec_git_2'] = ''
     @globalsetting['cocoapods_spec_url_2'] = ''
+
+    @globalsetting['cocoapods_schedule'] = GlobalSetting.get(env, 'SCHEDULE_CRAWL_COCOAPODS')
 
     begin
       @globalsetting['cocoapods_spec_git_2'] = Settings.instance.cocoapods_spec_git_2
@@ -92,6 +95,8 @@ class Settings::GlobalsettingsController < ApplicationController
 
     GlobalSetting.set( env, 'cocoapods_spec_git_2', params[:cocoapods_spec_git_2] )
     GlobalSetting.set( env, 'cocoapods_spec_url_2', params[:cocoapods_spec_url_2] )
+
+    GlobalSetting.set(env, 'SCHEDULE_CRAWL_COCOAPODS', params[:cocoapods_schedule] )
 
     Settings.instance.reload_from_db GlobalSetting.new
     flash[:success] = "CocoaPods Specs changed successfully"
