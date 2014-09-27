@@ -1,11 +1,12 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 8a8e4b1743a3d2ba65ad04e8b0e68a0fe8d7a8cb
-  tag: v5.12.2
+  revision: f2d98dc8f5fbd2dc81f4e70802c266075059e5fa
+  tag: v5.13.0
   specs:
-    versioneye-core (5.12.2)
+    versioneye-core (5.13.0)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
+      bundler (= 1.7.3)
       bunny (~> 1.4.0)
       cocoapods-core (~> 0.34.0.rc2)
       dalli (~> 2.7.0)
@@ -322,6 +323,7 @@ PLATFORMS
 
 DEPENDENCIES
   bourbon (~> 4.0.0)
+  bundler (= 1.7.3)
   bunny (~> 1.4.0)
   capistrano (~> 3.2.1)
   capistrano-bundler (~> 1.1.2)

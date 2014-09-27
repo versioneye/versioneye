@@ -39,6 +39,7 @@ class ProductsController < ApplicationController
     prod_key = Product.decode_prod_key( params[:key]  )
     version  = Version.decode_version ( params[:version] )
     build    = Version.decode_version ( params[:build] )
+
     @product = ProductService.fetch_product lang, prod_key, version
     return if @product.nil?
 
@@ -59,7 +60,7 @@ class ProductsController < ApplicationController
     end
 
     @version             = fetch_version @product
-    @current_version     = VersionService.newest_version( @product.versions )
+    @current_version     = @product.version_newest
     @versioncomment      = Versioncomment.new
     @versioncommentreply = Versioncommentreply.new
   rescue => e
