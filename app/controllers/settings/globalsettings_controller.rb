@@ -50,6 +50,20 @@ class Settings::GlobalsettingsController < ApplicationController
     end
   end
 
+  def index_scheduler
+    env = Settings.instance.environment
+    @globalsetting = {}
+    @globalsetting['schedule_follow_notifications']         = GlobalSetting.get env, 'schedule_follow_notifications'
+    @globalsetting['schedule_project_notification_daily']   = GlobalSetting.get env, 'schedule_project_notification_daily'
+    @globalsetting['schedule_project_notification_weekly']  = GlobalSetting.get env, 'schedule_project_notification_weekly'
+    @globalsetting['schedule_project_notification_monthly'] = GlobalSetting.get env, 'schedule_project_notification_monthly'
+
+    @globalsetting['schedule_follow_notifications']         = '15 8 * * *'  if @globalsetting['schedule_follow_notifications'].to_s.empty?
+    @globalsetting['schedule_project_notification_daily']   = '15 9 * * *'  if @globalsetting['schedule_project_notification_daily'].to_s.empty?
+    @globalsetting['schedule_project_notification_weekly']  = '15 11 * * 2' if @globalsetting['schedule_project_notification_weekly'].to_s.empty?
+    @globalsetting['schedule_project_notification_monthly'] = '1 11 1 * *'  if @globalsetting['schedule_project_notification_monthly'].to_s.empty?
+  end
+
 
   def update
     env = Settings.instance.environment
@@ -115,6 +129,20 @@ class Settings::GlobalsettingsController < ApplicationController
     Settings.instance.reload_from_db GlobalSetting.new
     flash[:success] = "CocoaPods Specs changed successfully"
     redirect_to settings_cocoapods_path
+  end
+
+
+  def update_scheduler
+    env = Settings.instance.environment
+
+    GlobalSetting.set( env, 'schedule_follow_notifications',         params[:schedule_follow_notifications] )
+    GlobalSetting.set( env, 'schedule_project_notification_daily',   params[:schedule_project_notification_daily] )
+    GlobalSetting.set( env, 'schedule_project_notification_weekly',  params[:schedule_project_notification_weekly] )
+    GlobalSetting.set( env, 'schedule_project_notification_monthly', params[:schedule_project_notification_monthly] )
+
+    Settings.instance.reload_from_db GlobalSetting.new
+    flash[:success] = "Scheduler updated successfully"
+    redirect_to settings_scheduler_path
   end
 
 end

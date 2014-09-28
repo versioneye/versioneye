@@ -102,6 +102,9 @@ Versioneye::Application.routes.draw do
     get  'cocoapods'           , :to => 'globalsettings#index_cocoapods'
     post 'cocoapods'           , :to => 'globalsettings#update_cocoapods'
 
+    get  'scheduler'           , :to => 'globalsettings#index_scheduler'
+    post 'scheduler'           , :to => 'globalsettings#update_scheduler'
+
     get  'mvnrepos'            , :to => 'globalsettings#index_mvnrepos'
     post 'mvnrepos'            , :to => 'globalsettings#update_mvnrepos'
 

@@ -1,0 +1,89 @@
+
+<div class="span3" >
+  <%= render 'settings/navi' %>
+</div>
+
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    Scheduler
+  </div>
+
+  <div class="span8 content" >
+
+    <%= form_tag( settings_scheduler_path, :method => "post", :class => "form-horizontal") do  %>
+
+      <p class="description">
+        Here you can configure when VersionEye should perform several tasks.
+      </p>
+
+      <hr/>
+      <p class="description">
+        When should VersionEye send out the notification emails for software packages users follow directly?
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :schedule_follow_notifications, "Notifications", :class => "control-label", :for => "schedule_follow_notifications" %>
+        <div class="controls">
+          <%= text_field_tag :schedule_follow_notifications, @globalsetting['schedule_follow_notifications'], :id => "schedule_follow_notifications" %>
+        </div>
+      </div>
+
+
+      <hr/>
+      <p class="description">
+        User projects an be monitored daily, weekly and monthly.
+        When should VersionEye send out the notification emails for projects which are monitored <b>daily</b>?
+        Use a <a href="https://en.wikipedia.org/wiki/Cron#CRON_expression" target="_Cron">cron expression</a>. For example <b>15 9 * * *</b> for every day at 9:15 AM in the morning.
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :schedule_project_notification_daily, "Daily", :class => "control-label", :for => "schedule_project_notification_daily" %>
+        <div class="controls">
+          <%= text_field_tag :schedule_project_notification_daily, @globalsetting['schedule_project_notification_daily'], :id => "schedule_project_notification_daily" %>
+        </div>
+      </div>
+
+
+      <hr/>
+      <p class="description">
+        User projects an be monitored daily, weekly and monthly.
+        When should VersionEye send out the notification emails for projects which are monitored <b>weekly</b>?
+        Use a <a href="https://en.wikipedia.org/wiki/Cron#CRON_expression" target="_Cron">cron expression</a>. For example <b>15 11 * * 2</b> for every 2nd day of the week at 11:15 AM in the morning.
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :schedule_project_notification_weekly, "Weekly", :class => "control-label", :for => "schedule_project_notification_weekly" %>
+        <div class="controls">
+          <%= text_field_tag :schedule_project_notification_weekly, @globalsetting['schedule_project_notification_weekly'], :id => "schedule_project_notification_weekly" %>
+        </div>
+      </div>
+
+
+      <hr/>
+      <p class="description">
+        User projects an be monitored daily, weekly and monthly.
+        When should VersionEye send out the notification emails for projects which are monitored <b>monthly</b>?
+        Use a <a href="https://en.wikipedia.org/wiki/Cron#CRON_expression" target="_Cron">cron expression</a>. For example <b>1 11 1 * *</b> for every first day of the month at 11:01 AM in the morning.
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :schedule_project_notification_monthly, "Monthly", :class => "control-label", :for => "schedule_project_notification_monthly" %>
+        <div class="controls">
+          <%= text_field_tag :schedule_project_notification_monthly, @globalsetting['schedule_project_notification_monthly'], :id => "schedule_project_notification_monthly" %>
+        </div>
+      </div>
+
+
+      <div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn btn-large btn-primary" >Save</button>
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>
+
