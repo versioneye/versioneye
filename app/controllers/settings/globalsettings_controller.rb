@@ -19,10 +19,14 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting['github_client_secret'] = Settings.instance.github_client_secret
   end
 
-  def index_nexus
+  def index_mvnrepos
     Settings.instance.reload_from_db GlobalSetting.new
     @globalsetting = {}
-    @globalsetting['nexus_url'] = Settings.instance.nexus_url
+    @globalsetting['mvn_repo_1']          = Settings.instance.mvn_repo_1
+    @globalsetting['mvn_repo_1_type']     = Settings.instance.mvn_repo_1_type
+    @globalsetting['mvn_repo_1_user']     = Settings.instance.mvn_repo_1_user
+    @globalsetting['mvn_repo_1_password'] = Settings.instance.mvn_repo_1_password
+    @globalsetting['mvn_repo_1_schedule'] = Settings.instance.mvn_repo_1_schedule
   end
 
   def index_cocoapods
@@ -78,12 +82,22 @@ class Settings::GlobalsettingsController < ApplicationController
   end
 
 
-  def update_nexus
+  def update_mvnrepos
     env = Settings.instance.environment
-    GlobalSetting.set( env, 'nexus_url', params[:nexus_url] )
+    url = params[:mvn_repo_1]
+    if url.match(/\/\z/)
+      url = url.gsub(/\/\z/, "")
+    end
+    GlobalSetting.set( env, 'mvn_repo_1', url )
+    GlobalSetting.set( env, 'mvn_repo_1_type', params[:mvn_repo_1_type] )
+    GlobalSetting.set( env, 'mvn_repo_1_user', params[:mvn_repo_1_user] )
+    GlobalSetting.set( env, 'mvn_repo_1_password', params[:mvn_repo_1_password] )
+    GlobalSetting.set( env, 'mvn_repo_1_schedule', params[:mvn_repo_1_schedule] )
+
     Settings.instance.reload_from_db GlobalSetting.new
-    flash[:success] = "Nexus Settings changed successfully"
-    redirect_to settings_nexussettings_path
+
+    flash[:success] = "Maven Repository Settings changed successfully!"
+    redirect_to settings_mvnrepos_path
   end
 
 

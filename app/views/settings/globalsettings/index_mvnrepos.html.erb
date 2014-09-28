@@ -1,0 +1,83 @@
+
+<div class="span3" >
+  <%= render 'settings/navi' %>
+</div>
+
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    Maven Repository Settings
+  </div>
+
+  <div class="span8 content" >
+
+    <%= form_tag( settings_mvnrepos_path, :method => "post", :class => "form-horizontal") do  %>
+
+      <p class="description">
+        <a href="http://maven.apache.org">Maven</a> is a Package Manager and Repository Server for Java. <br/>
+        Configure here the coordinates of your private Maven Repository Server.
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :mvn_repo_1, "MVN URL", :class => "control-label", :for => "mvn_repo_1" %>
+        <div class="controls">
+          <%= text_field_tag :mvn_repo_1, @globalsetting['mvn_repo_1'], :id => "mvn_repo_1" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :mvn_repo_1_type, "Repository type", :class => "control-label", :for => "mvn_repo_1_type" %>
+        <div class="controls" >
+          <select name="mvn_repo_1_type"  id="mvn_repo_1_type" >
+            <option value="artifactory" <%= "selected" if @globalsetting['mvn_repo_1_type'] == 'artifactory' %> >Artifactory (JFrog)</option>
+            <option value="nexus" <%= "selected" if @globalsetting['mvn_repo_1_type'] == 'nexus' %> >Nexus (Sonatype)</option>
+          </select>
+        </div>
+      </div>
+
+      <hr/>
+      <p>
+        Some API calls require basic authentication. Please provide here a user/password pair which exist in your Maven Repository Server.
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :mvn_repo_1_user, "User", :class => "control-label", :for => "mvn_repo_1_user" %>
+        <div class="controls">
+          <%= text_field_tag :mvn_repo_1_user, @globalsetting['mvn_repo_1_user'], :id => "mvn_repo_1_user" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :mvn_repo_1_password, "Password", :class => "control-label", :for => "mvn_repo_1_password" %>
+        <div class="controls">
+          <%= password_field_tag :mvn_repo_1_password, @globalsetting['mvn_repo_1_password'], :id => "mvn_repo_1_password" %>
+        </div>
+      </div>
+
+
+      <hr/>
+
+      <p class="description">
+        At which time should this be crawled? Use a <a href="https://en.wikipedia.org/wiki/Cron#CRON_expression" target="_Cron">cron expression</a>. For example <b>10 1 * * *</b> for every day at 1:10 AM.
+        If the field is empty it will not be crawled.
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :mvn_repo_1_schedule, "Schedule", :class => "control-label", :for => "mvn_repo_1_schedule" %>
+        <div class="controls">
+          <%= text_field_tag :mvn_repo_1_schedule, @globalsetting['mvn_repo_1_schedule'], :id => "mvn_repo_1_schedule" %>
+        </div>
+      </div>
+
+
+      <div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn btn-large btn-primary" >Save</button>
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>
