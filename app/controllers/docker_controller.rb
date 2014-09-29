@@ -36,7 +36,7 @@ class DockerController < ApplicationController
         'comments' => 'With updated versioneye-core'
       }
 
-      images['veye/tasks:1.7.2'] = {
+      images['veye/tasks:1.7.3'] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm']
         },
