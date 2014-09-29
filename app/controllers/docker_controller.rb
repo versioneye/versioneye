@@ -17,7 +17,7 @@ class DockerController < ApplicationController
     def remote_images_hash
       images = {}
 
-      images['veye/rails_app:2.6.8'] = {
+      images['veye/rails_app:2.6.14'] = {
         'container_start_opts' => {
           'PortBindings' => { '8080/tcp' => [{'HostPort' => '8080'}]},
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
@@ -36,7 +36,24 @@ class DockerController < ApplicationController
         'comments' => 'With updated versioneye-core'
       }
 
-      images['veye/tasks:1.3.0'] = {
+      images['veye/tasks:1.7.2'] = {
+        'container_start_opts' => {
+          'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm']
+        },
+        'auth' => true,
+        'comments' => 'With new scheduler'
+      }
+
+      images['veye/crawlr:1.1.1'] = {
+        'container_start_opts' => {
+          'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
+          'Binds' => ['/mnt/cocoapods:/mnt/cocoapods']
+        },
+        'auth' => true,
+        'comments' => 'Improvements for CocoaPods'
+      }
+
+      images['veye/crawlj:1.0.0'] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm']
         },
@@ -44,14 +61,6 @@ class DockerController < ApplicationController
         'comments' => 'First version'
       }
 
-      images['veye/crawlr:1.0.0'] = {
-        'container_start_opts' => {
-          'Links' => ['mongodb:db'],
-          'Binds' => ['/mnt/cocoapods:/mnt/cocoapods']
-        },
-        'auth' => true,
-        'comments' => 'First version'
-      }
 
       images['reiz/mongodb:1.0.2'] = {
         'container_start_opts' => {
