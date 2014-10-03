@@ -97,7 +97,7 @@ class Auth::StashController < ApplicationController
     end
 
     def update_user_with user_info, access_token
-      current_user[:stash_slug]   = user_info[:username]
+      current_user[:stash_slug]   = user_info[:slug]
       current_user[:stash_token]  = access_token.token
       current_user[:stash_secret] = access_token.secret
     end
