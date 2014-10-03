@@ -103,6 +103,9 @@ Versioneye::Application.routes.draw do
     get  'githubsettings'      , :to => 'globalsettings#index_github'
     post 'githubsettings'      , :to => 'globalsettings#update_github'
 
+    get  'stashsettings'      , :to => 'globalsettings#index_stash'
+    post 'stashsettings'      , :to => 'globalsettings#update_stash'
+
     get  'cocoapods'           , :to => 'globalsettings#index_cocoapods'
     post 'cocoapods'           , :to => 'globalsettings#update_cocoapods'
 
