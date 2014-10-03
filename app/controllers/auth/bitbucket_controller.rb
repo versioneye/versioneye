@@ -14,7 +14,7 @@ class Auth::BitbucketController < ApplicationController
 
   def connect
     if not signed_in?
-      flash[:error] = "You have to signed in to connect BitBucket account with your VersionEye account."
+      flash[:error] = "You have to sign in to be able to connect your BitBucket account with your VersionEye account."
       redirect_to signin_path and return
     end
     connect_with_bitbucket

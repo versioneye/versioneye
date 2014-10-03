@@ -14,6 +14,10 @@ Versioneye::Application.routes.draw do
     get  '/bitbucket/callback', :to => 'bitbucket#callback'
     get  '/bitbucket/new',      :to => 'bitbucket#new'
     post '/bitbucket/create',   :to => 'bitbucket#create'
+
+    get  '/stash/signin',   :to => 'stash#signin'
+    get  '/stash/connect',  :to => 'stash#connect'
+    get  '/stash/callback', :to => 'stash#callback'
   end
 
   # get   '/cloudcontrol/resources', :to => 'cloudcontrol#resources'
