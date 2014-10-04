@@ -41,4 +41,18 @@ class User::StashReposController < User::ScmReposController
   end
 
 
+  def show
+    owner = params[:owner]
+    repo  = params[:repo]
+    fullname = "#{owner}/#{repo}"
+    @repo = current_user.stash_repos.by_fullname( fullname ).first
+  end
+
+
+  def clear
+    results = StashRepo.by_user( current_user ).delete_all
+    flash[:success] = "Cache is cleaned. Ready to re-import."
+    redirect_to :back
+  end
+
 end

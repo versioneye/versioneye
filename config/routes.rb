@@ -170,6 +170,7 @@ Versioneye::Application.routes.draw do
   get '/user/projects/stash_repositories'      , :to => 'user/stash_repos#init'
 
   get '/user/prjects/upload', :to => 'user/projects#upload'
+  get '/user/projects/stash/:owner/:repo/show' , :to => 'user/stash_repos#show',       :constraints => { :owner => /[^\/]+/, :repo => /[^\/]+/ }, :as => 'user_projects_stash_files'
 
   get  '/user/projects/:id/recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
   post '/user/projects/:id/recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
