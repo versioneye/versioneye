@@ -48,6 +48,7 @@ class User::BitbucketReposController < User::ScmReposController
     @repo = current_user.bitbucket_repos.by_fullname( fullname ).first
   end
 
+
   def repo_files
     task_status = ''
     owner = params[:owner]
