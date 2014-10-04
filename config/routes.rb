@@ -167,6 +167,8 @@ Versioneye::Application.routes.draw do
   get '/user/projects/bitbucket/:id/import'        , :to => 'user/bitbucket_repos#import',     :constraints => { :id => /[^\/]+/ }
   get '/user/projects/bitbucket/:id/remove'        , :to => 'user/bitbucket_repos#remove',     :constraints => { :id => /[^\/]+/ }
 
+  get '/user/projects/stash_repositories'      , :to => 'user/stash_repos#init'
+
   get '/user/prjects/upload', :to => 'user/projects#upload'
 
   get  '/user/projects/:id/recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
@@ -206,6 +208,9 @@ Versioneye::Application.routes.draw do
 
     resources :bitbucket_repos
     get '/bitbucket/clear'      , :to => 'bitbucket_repos#clear'
+
+    resources :stash_repos
+    get '/stash/clear'      , :to => 'stash_repos#clear'
 
     resource :testimonials
   end
