@@ -49,10 +49,52 @@ class User::StashReposController < User::ScmReposController
   end
 
 
+  def repo_files
+    task_status = ''
+    owner = params[:owner]
+    repo  = params[:repo]
+    fullname = "#{owner}/#{repo}"
+    repo = current_user.stash_repos.by_fullname( fullname ).first
+    task_status = StashService.status_for current_user, repo
+    processed_repo = process_repo( repo )
+
+    render json: {
+      task_status: task_status,
+      repo: processed_repo
+    }.to_json
+  end
+
+
   def clear
     results = StashRepo.by_user( current_user ).delete_all
     flash[:success] = "Cache is cleaned. Ready to re-import."
     redirect_to :back
   end
+
+
+  private
+
+=begin
+  adds additional metadata for each item in repo collection,
+  for example is this project already imported etc
+=end
+    def process_repo(repo, task_status = nil)
+      imported_repos      = current_user.projects.by_source(Project::A_SOURCE_STASH)
+      imported_repo_names = imported_repos.map(&:scm_fullname).to_set
+      repo[:supported] = true
+      repo[:imported_files] = []
+
+      if imported_repo_names.include?(repo[:fullname])
+        imported_files = imported_repos.where(scm_fullname: repo[:fullname])
+        imported_files.each do |imported_project|
+          filename = imported_project.filename
+          project_info = create_project_info( repo, imported_project )
+          repo[:imported_files] << project_info
+        end
+      end
+      repo[:project_files] = decode_branch_names( repo[:project_files], "stash" )
+      repo[:task_status] = task_status
+      repo
+    end
 
 end
