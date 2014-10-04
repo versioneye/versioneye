@@ -50,7 +50,7 @@ class Auth::StashController < ApplicationController
       sign_in user
       update_user_with user_info, access_token
       user.save
-      redirect_back_or user_packages_i_follow_path and return
+      redirect_back_or user_projects_stash_repositories_path and return
     end
   end
 
