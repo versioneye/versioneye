@@ -170,6 +170,8 @@ Versioneye::Application.routes.draw do
   get '/user/projects/stash_repositories'      , :to => 'user/stash_repos#init'
   get '/user/projects/stash/:owner/:repo/show' , :to => 'user/stash_repos#show',       :constraints => { :owner => /[^\/]+/, :repo => /[^\/]+/ }, :as => 'user_projects_stash_files'
   get '/user/projects/stash/:owner/:repo/files', :to => 'user/stash_repos#repo_files', :constraints => { :owner => /[^\/]+/, :repo => /[^\/]+/ }
+  get '/user/projects/stash/:id/import'        , :to => 'user/stash_repos#import',     :constraints => { :id => /[^\/]+/ }
+  get '/user/projects/stash/:id/remove'        , :to => 'user/stash_repos#remove',     :constraints => { :id => /[^\/]+/ }
 
   get '/user/prjects/upload', :to => 'user/projects#upload'
 

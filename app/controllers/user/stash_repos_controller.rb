@@ -74,6 +74,26 @@ class User::StashReposController < User::ScmReposController
 
   private
 
+
+    def import_repo(project_name, branch, filename)
+      err_message = 'Something went wrong. It was not possible to save the project. Please contact the VersionEye team.'
+
+      project = ProjectImportService.import_from_stash current_user, project_name, filename, branch
+
+      raise err_message if project.nil?
+      raise project if project.is_a? String
+
+      repo = {
+        repo: project_name,
+        filename: filename,
+        branch: branch,
+        project_id: project.id,
+        project_url: url_for(controller: 'projects', action: "show", id: project.id)
+      }
+      repo
+    end
+
+
 =begin
   adds additional metadata for each item in repo collection,
   for example is this project already imported etc
@@ -96,5 +116,6 @@ class User::StashReposController < User::ScmReposController
       repo[:task_status] = task_status
       repo
     end
+
 
 end
