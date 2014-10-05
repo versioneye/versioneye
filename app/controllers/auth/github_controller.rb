@@ -172,7 +172,9 @@ class Auth::GithubController < ApplicationController
       check_promo_code promo, user
       cookies.delete(:promo_code)
       cookies.delete(:github_token)
-      redirect_back_or( user_packages_i_follow_path )
+      rpath = user_projects_github_repositories_path
+      rpath = user_projects_path if user.projects && !user.projects.empty?
+      redirect_back_or( rpath )
     end
 
 end
