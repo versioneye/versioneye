@@ -41,16 +41,18 @@ class Auth::BitbucketController < ApplicationController
     if user.nil?
       cookies.permanent.signed[:access_token] = access_token.token
       cookies.permanent.signed[:access_token_secret] = access_token.secret
-      redirect_to auth_bitbucket_new_path(email: session[:email], promo_code: session[:promo_code]) and return
+      rpath = auth_bitbucket_new_path(email: session[:email], promo_code: session[:promo_code])
     elsif user.activated?
       sign_in user
       update_user_with user_info, access_token
       user.save
-      redirect_back_or user_packages_i_follow_path and return
+      rpath = user_projects_bitbucket_repositories_path
+      rpath = user_projects_path if user.projects && !user.projects.empty?
     else
       flash[:error] = "Your account is no activated. Please check your email account."
-      redirect_to signin_path and return
+      rpath = signin_path
     end
+    redirect_back_or rpath
   end
 
 
