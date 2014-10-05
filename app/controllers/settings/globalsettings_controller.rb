@@ -19,6 +19,19 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting['github_client_secret'] = Settings.instance.github_client_secret
   end
 
+  def index_stash
+    Settings.instance.reload_from_db GlobalSetting.new
+    consumer_key = Settings.instance.stash_consumer_key
+    if consumer_key.to_s.empty?
+      consumer_key = create_random_value
+      GlobalSetting.set env, 'stash_consumer_key' , consumer_key
+    end
+    @globalsetting = {}
+    @globalsetting['stash_base_url'] = Settings.instance.stash_base_url
+    @globalsetting['stash_consumer_key'] = consumer_key
+    @globalsetting['stash_private_rsa'] = Settings.instance.stash_private_rsa
+  end
+
   def index_mvnrepos
     Settings.instance.reload_from_db GlobalSetting.new
     @globalsetting = {}
@@ -96,6 +109,21 @@ class Settings::GlobalsettingsController < ApplicationController
   end
 
 
+  def update_stash
+    consumer_key = params[:stash_consumer_key]
+    if consumer_key.to_s.empty?
+      consumer_key = create_random_value
+    end
+    env = Settings.instance.environment
+    GlobalSetting.set env, 'stash_base_url'     , params[:stash_base_url]
+    GlobalSetting.set env, 'stash_consumer_key' , consumer_key
+    GlobalSetting.set env, 'stash_private_rsa'  , params[:stash_private_rsa]
+    Settings.instance.reload_from_db GlobalSetting.new
+    flash[:success] = "Stash Settings changed successfully"
+    redirect_to settings_stashsettings_path
+  end
+
+
   def update_mvnrepos
     env = Settings.instance.environment
     url = params[:mvn_repo_1]
@@ -144,5 +172,14 @@ class Settings::GlobalsettingsController < ApplicationController
     flash[:success] = "Scheduler updated successfully"
     redirect_to settings_scheduler_path
   end
+
+  private
+
+    def create_random_value
+      chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+      value = ''
+      12.times { value << chars[rand(chars.size)] }
+      value
+    end
 
 end

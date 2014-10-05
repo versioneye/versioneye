@@ -7,13 +7,17 @@
     <div >
       <ul class="sml_list" id="sm_list" >
         <li class="sml_list_item"><%= render 'shared/login_with_github'   , :btn => 'login' %></li>
-        <li class="sml_list_item"><%= render 'shared/login_with_bitbucket', :btn => 'login' %></li>
+        <% if Settings.instance.environment.eql?('enterprise') %>
+          <li class="sml_list_item"><%= render 'shared/login_with_stash', :btn => 'login' %></li>
+        <% else %>
+          <li class="sml_list_item"><%= render 'shared/login_with_bitbucket', :btn => 'login' %></li>
+        <% end %>
       </ul>
     </div>
   </div>
 
   <div>
-    Using the GitHub/Bitbucket login you automatically confirm that you have read the
+    Using one of these logins you automatically confirm that you have read the
     <% if I18n.locale == :de %>
       <%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "new_terms" %>
     <% else %>

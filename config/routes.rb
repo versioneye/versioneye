@@ -14,6 +14,10 @@ Versioneye::Application.routes.draw do
     get  '/bitbucket/callback', :to => 'bitbucket#callback'
     get  '/bitbucket/new',      :to => 'bitbucket#new'
     post '/bitbucket/create',   :to => 'bitbucket#create'
+
+    get  '/stash/signin',   :to => 'stash#signin'
+    get  '/stash/connect',  :to => 'stash#connect'
+    get  '/stash/callback', :to => 'stash#callback'
   end
 
   # get   '/cloudcontrol/resources', :to => 'cloudcontrol#resources'
@@ -99,6 +103,9 @@ Versioneye::Application.routes.draw do
     get  'githubsettings'      , :to => 'globalsettings#index_github'
     post 'githubsettings'      , :to => 'globalsettings#update_github'
 
+    get  'stashsettings'      , :to => 'globalsettings#index_stash'
+    post 'stashsettings'      , :to => 'globalsettings#update_stash'
+
     get  'cocoapods'           , :to => 'globalsettings#index_cocoapods'
     post 'cocoapods'           , :to => 'globalsettings#update_cocoapods'
 
@@ -160,6 +167,12 @@ Versioneye::Application.routes.draw do
   get '/user/projects/bitbucket/:id/import'        , :to => 'user/bitbucket_repos#import',     :constraints => { :id => /[^\/]+/ }
   get '/user/projects/bitbucket/:id/remove'        , :to => 'user/bitbucket_repos#remove',     :constraints => { :id => /[^\/]+/ }
 
+  get '/user/projects/stash_repositories'      , :to => 'user/stash_repos#init'
+  get '/user/projects/stash/:owner/:repo/show' , :to => 'user/stash_repos#show',       :constraints => { :owner => /[^\/]+/, :repo => /[^\/]+/ }, :as => 'user_projects_stash_files'
+  get '/user/projects/stash/:owner/:repo/files', :to => 'user/stash_repos#repo_files', :constraints => { :owner => /[^\/]+/, :repo => /[^\/]+/ }
+  get '/user/projects/stash/:id/import'        , :to => 'user/stash_repos#import',     :constraints => { :id => /[^\/]+/ }
+  get '/user/projects/stash/:id/remove'        , :to => 'user/stash_repos#remove',     :constraints => { :id => /[^\/]+/ }
+
   get '/user/prjects/upload', :to => 'user/projects#upload'
 
   get  '/user/projects/:id/recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
@@ -199,6 +212,9 @@ Versioneye::Application.routes.draw do
 
     resources :bitbucket_repos
     get '/bitbucket/clear'      , :to => 'bitbucket_repos#clear'
+
+    resources :stash_repos
+    get '/stash/clear'      , :to => 'stash_repos#clear'
 
     resource :testimonials
   end
