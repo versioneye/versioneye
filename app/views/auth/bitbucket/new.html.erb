@@ -17,12 +17,14 @@
       </div>
     </div>
 
-    <div class="control-group">
-        <%= label_tag :promo_code, "Promo code", :class => "control-label", :for => "promo_code" %>
-      <div class="controls">
-        <%= text_field_tag :promo_code, @promo, :id => "promo_code" %> optional
+    <% if Settings.instance.show_promocode %>
+      <div class="control-group">
+          <%= label_tag :promo_code, "Promo code", :class => "control-label", :for => "promo_code" %>
+        <div class="controls">
+          <%= text_field_tag :promo_code, @promo, :id => "promo_code" %> optional
+        </div>
       </div>
-    </div>
+    <% end %>
 
     <div class="control-group">
       <div class="controls">
