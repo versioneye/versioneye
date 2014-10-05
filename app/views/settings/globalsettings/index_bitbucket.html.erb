@@ -1,0 +1,51 @@
+
+<div class="span3" >
+  <%= render 'settings/navi' %>
+</div>
+
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    BitBucket Settings
+  </div>
+
+  <div class="span8 content" >
+
+    <%= form_tag( settings_bitbucketsettings_path, :method => "post", :class => "form-horizontal") do  %>
+
+      <p class="description">
+        If you are using <a href="https://bitbucket.org/">Bitbucket</a> you can configure it here.
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :bitbucket_base_url, "WEB URL", :class => "control-label", :for => "bitbucket_base_url" %>
+        <div class="controls">
+          <%= text_field_tag :bitbucket_base_url, @globalsetting['bitbucket_base_url'], :id => "bitbucket_base_url" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :bitbucket_token, "OAuth token", :class => "control-label", :for => "bitbucket_token" %>
+        <div class="controls">
+          <%= text_field_tag :bitbucket_token, @globalsetting['bitbucket_token'], :id => "bitbucket_token" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :bitbucket_secret, "OAuth secret", :class => "control-label", :for => "bitbucket_secret" %>
+        <div class="controls">
+          <%= text_field_tag :bitbucket_secret, @globalsetting['bitbucket_secret'], :id => "bitbucket_secret" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn btn-large btn-primary" >Save</button>
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

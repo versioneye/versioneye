@@ -103,6 +103,9 @@ Versioneye::Application.routes.draw do
     get  'githubsettings'      , :to => 'globalsettings#index_github'
     post 'githubsettings'      , :to => 'globalsettings#update_github'
 
+    get  'bitbucketsettings'      , :to => 'globalsettings#index_bitbucket'
+    post 'bitbucketsettings'      , :to => 'globalsettings#update_bitbucket'
+
     get  'stashsettings'      , :to => 'globalsettings#index_stash'
     post 'stashsettings'      , :to => 'globalsettings#update_stash'
 
