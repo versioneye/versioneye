@@ -45,13 +45,15 @@ class Auth::StashController < ApplicationController
 
     if user.nil?
       flash[:error] = "An error occured. Please contact the VersionEye Team."
-      redirect_to signin_path and return
+      rpath = signin_path
     else
       sign_in user
       update_user_with user_info, access_token
       user.save
-      redirect_back_or user_projects_stash_repositories_path and return
+      rpath = user_projects_stash_repositories_path
+      rpath = user_projects_path if user.projects && !user.projects.empty?
     end
+    redirect_back_or rpath and return
   end
 
   private
