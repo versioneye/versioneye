@@ -6,6 +6,11 @@
     <li><hr/></li>
     <li><%= link_to 'Create From GitHub', user_projects_github_repositories_path %></li>
     <li><%= link_to 'Create From Bitbucket', user_projects_bitbucket_repositories_path %></li>
+
+    <% if Settings.instance.environment == 'enterprise' %>
+      <li><%= link_to 'Create From Stash', user_projects_stash_repositories_path %></li>
+    <% end %>
+
     <li><%= link_to 'Create From URL', new_user_project_path %></li>
     <li><%= link_to 'Create From Upload', user_prjects_upload_path %></li>
     <li><hr/></li>

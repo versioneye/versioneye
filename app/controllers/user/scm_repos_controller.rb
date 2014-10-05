@@ -61,11 +61,13 @@ class User::ScmReposController < ApplicationController
 
     def decode_branch_names(project_files, scm = "github")
       return if project_files.nil?
+
       decoded_map = {}
       project_files.each_pair do |branch, files|
         decoded_branch = nil
         decoded_branch = Github.decode_db_key(branch)    if scm.eql? "github"
         decoded_branch = Bitbucket.decode_db_key(branch) if scm.eql? "bitbucket"
+        decoded_branch = Stash.decode_db_key(branch)     if scm.eql? "stash"
         decoded_map[decoded_branch] = files
       end
       decoded_map

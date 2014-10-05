@@ -1,0 +1,34 @@
+<% title 'Stash Repositories' %>
+
+<div class="span3" >
+  <%= render '/user/helpers/navi' %>
+</div>
+
+
+<% if !current_user.stash_account_connected? %>
+
+  <div class="span8">
+    <div class="row content_header_def" >
+      Connect with Stash to monitor your Bitbucket Repositories.
+    </div>
+    <div class="content " >
+      <%= render 'shared/connect_with_bitbucket', :btn => "signup" %>
+    </div>
+  </div>
+
+<% else %>
+
+  <div class="span8">
+    <div class="row content_header_def" >
+      Your Stash Repositories
+    </div>
+    <div class="span8 content" id="content"> . </div>
+  </div>
+  <script type="text/javascript">
+    React.renderComponent(
+      RepoList({url: "/user/stash_repos", scm: "stash", pollInterval: 3000}),
+      document.getElementById('content')
+    );
+  </script>
+
+<% end %>
