@@ -4,13 +4,15 @@
     <li><%= link_to 'My Projects', user_projects_path, id: 'my_projects' %></li>
     <li><%= link_to 'Shared with me', user_collaborations_path %></li>
     <li><hr/></li>
-    <li><%= link_to 'Create From GitHub', user_projects_github_repositories_path %></li>
-    <li><%= link_to 'Create From Bitbucket', user_projects_bitbucket_repositories_path %></li>
-
-    <% if Settings.instance.environment == 'enterprise' %>
+    <% if github_enabled? %>
+      <li><%= link_to 'Create From GitHub', user_projects_github_repositories_path %></li>
+    <% end %>
+    <% if bitbucket_enabled? %>
+      <li><%= link_to 'Create From Bitbucket', user_projects_bitbucket_repositories_path %></li>
+    <% end %>
+    <% if stash_enabled? %>
       <li><%= link_to 'Create From Stash', user_projects_stash_repositories_path %></li>
     <% end %>
-
     <li><%= link_to 'Create From URL', new_user_project_path %></li>
     <li><%= link_to 'Create From Upload', user_prjects_upload_path %></li>
     <li><hr/></li>

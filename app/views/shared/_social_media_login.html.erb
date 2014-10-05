@@ -5,29 +5,38 @@
     </div>
     <h2> Or sign in with one of your social media accounts </h2>
     <div >
+      <% if social_logins_enabled? %>
       <ul class="sml_list" id="sm_list" >
-        <li class="sml_list_item"><%= render 'shared/login_with_github'   , :btn => 'login' %></li>
-        <% if Settings.instance.environment.eql?('enterprise') %>
+        <% if github_enabled? %>
+          <li class="sml_list_item"><%= render 'shared/login_with_github'   , :btn => 'login' %></li>
+        <% end %>
+        <% if stash_enabled? %>
           <li class="sml_list_item"><%= render 'shared/login_with_stash', :btn => 'login' %></li>
-        <% else %>
+        <% end %>
+        <% if bitbucket_enabled? %>
           <li class="sml_list_item"><%= render 'shared/login_with_bitbucket', :btn => 'login' %></li>
         <% end %>
       </ul>
+      <% else %>
+        Social login buttons not setup yet.
+      <% end %>
     </div>
   </div>
 
-  <div>
-    Using one of these logins you automatically confirm that you have read the
-    <% if I18n.locale == :de %>
-      <%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "new_terms" %>
-    <% else %>
-      <%= link_to "Conditions of Use", terms_path, :target => "new_terms" %>
-    <% end %>
-    <%= t(:terms_part_2) %>
-    <% if I18n.locale == :de %>
-      <%= link_to "Datenerhebung", datenerhebung_path, :target => "new_data" %>
-    <% else %>
-      <%= link_to "Data Acquisition", datacollection_path, :target => "new_data" %>
-    <% end %>
-    <%= t(:terms_part_3) %>
-  </div>
+  <% if social_logins_enabled? %>
+    <div>
+      Using one of these logins you automatically confirm that you have read the
+      <% if I18n.locale == :de %>
+        <%= link_to "Nutzungsbedingungen", nutzungsbedingungen_path, :target => "new_terms" %>
+      <% else %>
+        <%= link_to "Conditions of Use", terms_path, :target => "new_terms" %>
+      <% end %>
+      <%= t(:terms_part_2) %>
+      <% if I18n.locale == :de %>
+        <%= link_to "Datenerhebung", datenerhebung_path, :target => "new_data" %>
+      <% else %>
+        <%= link_to "Data Acquisition", datacollection_path, :target => "new_data" %>
+      <% end %>
+      <%= t(:terms_part_3) %>
+    </div>
+  <% end %>
