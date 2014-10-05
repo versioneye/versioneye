@@ -19,6 +19,14 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting['github_client_secret'] = Settings.instance.github_client_secret
   end
 
+  def index_bitbucket
+    Settings.instance.reload_from_db GlobalSetting.new
+    @globalsetting = {}
+    @globalsetting['bitbucket_base_url'] = Settings.instance.bitbucket_base_url
+    @globalsetting['bitbucket_token'] = Settings.instance.bitbucket_token
+    @globalsetting['bitbucket_secret'] = Settings.instance.bitbucket_secret
+  end
+
   def index_stash
     Settings.instance.reload_from_db GlobalSetting.new
     consumer_key = Settings.instance.stash_consumer_key
@@ -106,6 +114,17 @@ class Settings::GlobalsettingsController < ApplicationController
     end
     flash[:success] = "GitHub Settings changed successfully"
     redirect_to settings_githubsettings_path
+  end
+
+
+  def update_bitbucket
+    env = Settings.instance.environment
+    GlobalSetting.set env, 'bitbucket_base_url', params[:bitbucket_base_url]
+    GlobalSetting.set env, 'bitbucket_token'   , params[:bitbucket_token]
+    GlobalSetting.set env, 'bitbucket_secret'  , params[:bitbucket_secret]
+    Settings.instance.reload_from_db GlobalSetting.new
+    flash[:success] = "GitHub Settings changed successfully"
+    redirect_to settings_bitbucketsettings_path
   end
 
 
