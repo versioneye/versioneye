@@ -31,12 +31,14 @@
       </div>
     </div>
 
-    <div class="control-group">
-        <%= f.label :promo_code,  :class => "control-label", :for => "promo_code" %>
-      <div class="controls">
-        <%= f.text_field :promo_code, :id => "promo_code" %>
+    <% if Settings.instance.show_promocode %>
+      <div class="control-group">
+          <%= f.label :promo_code,  :class => "control-label", :for => "promo_code" %>
+        <div class="controls">
+          <%= f.text_field :promo_code, :id => "promo_code" %>
+        </div>
       </div>
-    </div>
+    <% end %>
 
     <div class="control-group">
       <div class="controls">
