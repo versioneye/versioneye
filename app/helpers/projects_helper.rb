@@ -25,21 +25,30 @@ module ProjectsHelper
     deps = project.dependencies
     return project if deps.nil? or deps.empty?
 
+    out_number = 0
+    unknown_number = 0
+
     deps.each do |dep|
       if dep.unknown?
         dep[:status_class] = 'info'
         dep[:status_rank] = 4
+        unknown_number += 1
       elsif dep.outdated and dep.release? == false
         dep[:status_class] = 'warn'
         dep[:status_rank] = 2
+        out_number += 1
       elsif dep.outdated and dep.release? == true
         dep[:status_class] = 'error'
         dep[:status_rank] = 1
+        out_number += 1
       else
         dep[:status_class] = 'success'
         dep[:status_rank] = 3
       end
     end
+    project.out_number = out_number
+    project.unknown_number = unknown_number
+    project.save
     project
   end
 
