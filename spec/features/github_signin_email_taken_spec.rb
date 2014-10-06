@@ -66,7 +66,7 @@ describe "Signin with GitHub" do
       click_button "Sign up"
     end
 
-    page.should have_content("You follow 0")
+    page.should have_content("GitHub Repositories")
     User.all.count.should eql(2)
 
     visit signout_path
@@ -79,7 +79,7 @@ describe "Signin with GitHub" do
     user.save
 
     click_button "Login with GitHub"
-    page.should have_content("You follow 0")
+    page.should have_content("GitHub Repositories")
   end
 
 end
