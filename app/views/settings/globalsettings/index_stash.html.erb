@@ -34,7 +34,7 @@
       <div class="control-group">
         <%= label_tag :stash_private_rsa, "Private RSA Key", :class => "control-label", :for => "stash_private_rsa" %>
         <div class="controls">
-          <%= text_area_tag :stash_private_rsa, @globalsetting['stash_private_rsa'], :id => "stash_private_rsa", :style => "width: 400px; height: 160px; font-size: 10px;" %>
+          <%= text_area_tag :stash_private_rsa, @globalsetting['stash_private_rsa'], :id => "stash_private_rsa", :style => "width: 400px; height: 170px; font-size: 10px;" %>
         </div>
       </div>
 
@@ -46,6 +46,14 @@
       </div>
 
     <% end %>
+
+    <hr/>
+
+    <p>
+      Connecting Stash enables VersionEye to use Stash as <a href="http://oauth.net/">OAuth</a> SSO (Single Sign On) provider.
+      If setup correctly users can login to VersionEye with their existing Stash accounts.
+      For more information read the blog post about <a href="http://blog.versioneye.com/2014/10/06/how-to-connect-versioneye-enterprise-with-atlassian-stash/" target="_versioneye_blog">How to connect VersionEye Enterprise with Atlassian Stash</a>.
+    </p>
 
   </div>
 </div>
