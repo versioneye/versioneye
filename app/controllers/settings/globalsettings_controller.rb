@@ -28,6 +28,7 @@ class Settings::GlobalsettingsController < ApplicationController
   end
 
   def index_stash
+    env = Settings.instance.environment
     Settings.instance.reload_from_db GlobalSetting.new
     consumer_key = Settings.instance.stash_consumer_key
     if consumer_key.to_s.empty?
