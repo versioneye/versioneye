@@ -127,6 +127,11 @@ module ProductsHelper
     return false if product.nil?
 
     version = product.version if version.nil? || version.empty?
+    if version.to_s.empty?
+      add_default_version product
+      version = "0.0.0+NA"
+    end
+
     version_obj = product.version_by_number( version )
     if version_obj.nil?
       version_obj = Version.new(:version => product.version, :created_at => DateTime.now)
@@ -134,6 +139,17 @@ module ProductsHelper
     product.version = version_obj.to_s
     update_release_infos( version_obj, product )
     true
+  end
+
+  def add_default_version product
+    version = "0.0.0+NA"
+    product.version = version
+    product.add_version version
+    product.save
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
+    nil
   end
 
   def fetch_version( product )
