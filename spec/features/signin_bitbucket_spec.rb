@@ -59,7 +59,7 @@ describe "Signin with Bitbucket" do
       click_button "Grant access"
     end
 
-    current_path.should == user_packages_i_follow_path
+    current_path.should == user_projects_bitbucket_repositories_path
     User.all.count.should eql(1)
     u = User.all.first
     u.bitbucket_token.should_not be_nil
