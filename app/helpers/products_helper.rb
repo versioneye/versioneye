@@ -126,7 +126,7 @@ module ProductsHelper
   def attach_version(product, version)
     return false if product.nil?
 
-    version = product.version if version.nil? || version.empty?
+    version = product.version if version.to_s.empty?
     if version.to_s.empty?
       add_default_version product
       version = "0.0.0+NA"

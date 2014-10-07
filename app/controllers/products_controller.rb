@@ -55,6 +55,7 @@ class ProductsController < ApplicationController
     end
 
     if version.nil? || (!attach_version(@product, version))
+      add_default_version @product if @product.version.to_s.empty?
       params[:version] = @product.version
       redirect_to( {:action => 'show'}.merge(params) ) and return
     end
