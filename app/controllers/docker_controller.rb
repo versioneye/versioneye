@@ -74,7 +74,7 @@ class DockerController < ApplicationController
       }
 
 
-      version = DockerImage.version("veye/mongodb")
+      version = DockerImage.version("reiz/mongodb")
       version = '1.0.2' if version.to_s.empty?
       images["reiz/mongodb:#{version}"] = {
         'container_start_opts' => {
@@ -85,7 +85,7 @@ class DockerController < ApplicationController
         'comments' => 'With MongoDB 2.6.3'
       }
 
-      version = DockerImage.version("veye/elasticsearch")
+      version = DockerImage.version("reiz/elasticsearch")
       version = '0.9.0' if version.to_s.empty?
       images["reiz/elasticsearch:#{version}"] = {
         'container_start_opts' => {
@@ -96,7 +96,7 @@ class DockerController < ApplicationController
         'comments' => 'With ElasticSearch 1.0.0'
       }
 
-      version = DockerImage.version("veye/memcached")
+      version = DockerImage.version("reiz/memcached")
       version = '1.0.0' if version.to_s.empty?
       images["reiz/memcached:#{version}"] = {
         'container_start_opts' => {
@@ -106,7 +106,7 @@ class DockerController < ApplicationController
         'comments' => 'First version'
       }
 
-      version = DockerImage.version("veye/rabbitmq")
+      version = DockerImage.version("reiz/rabbitmq")
       version = '1.0.0' if version.to_s.empty?
       images["reiz/rabbitmq:#{version}"] = {
         'container_start_opts' => {
