@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: c4e5212f1650fc9b0267a0ab2a1cbe68536f8b5f
-  tag: v6.1.0
+  revision: e17c76414e49c815818763058c76be5db3b7d65c
+  tag: v6.1.1
   specs:
-    versioneye-core (6.1.0)
+    versioneye-core (6.1.1)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       bundler (= 1.7.3)
@@ -61,9 +61,9 @@ GEM
     amq-protocol (1.9.2)
     ansi (1.4.3)
     arel (3.0.3)
-    aws-sdk (1.54.0)
-      aws-sdk-v1 (= 1.54.0)
-    aws-sdk-v1 (1.54.0)
+    aws-sdk (1.55.0)
+      aws-sdk-v1 (= 1.55.0)
+    aws-sdk-v1 (1.55.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
     bourbon (4.0.2)
