@@ -114,9 +114,14 @@ var BranchFile = React.createClass({
           this.setState({import_status: '', checked: true});
         }.bind(this),
         error: function(xhr, status, err) {
-          alert("An error occured. We are not able to import the selected file. Please contact the VersionEye team.")
+          var err_msg = xhr.responseText
+          if (err_msg == null || err_msg == ""){
+            err_msg = "We are not able to import the selected file. Please contact the VersionEye team."
+          }
+          alert("ERROR: " + err_msg);
           this.setState({import_status: '', checked: false});
           console.error(err.toString());
+          console.error(err_msg);
         }.bind(this)
       });
     } else {

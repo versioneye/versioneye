@@ -36,7 +36,7 @@ class Auth::StashController < ApplicationController
 
     user = User.find_by_stash_slug(user_info[:slug])
     if user.nil?
-      user = create_new_user user_info
+      user = create_new_user user_info, access_token
       if !user.save
         flash[:error] = "An error occured (#{user.errors.full_messages.to_sentence}). Please contact the VersionEye Team."
         redirect_to signin_path and return
@@ -48,8 +48,6 @@ class Auth::StashController < ApplicationController
       rpath = signin_path
     else
       sign_in user
-      update_user_with user_info, access_token
-      user.save
       rpath = user_projects_stash_repositories_path
       rpath = user_projects_path if user.projects && !user.projects.empty?
     end
@@ -92,11 +90,9 @@ class Auth::StashController < ApplicationController
       end
     end
 
-    def create_new_user user_info
-      user = User.new({username: user_info[:slug], fullname: user_info[:name],
-        email: user_info[:emailAddress], terms: true, datenerhebung: true})
-      user.username = user.replacements_for_username( user.username )
-      User.ensure_unique_username( user )
+    def create_new_user user_info, access_token
+      user = User.new
+      user.update_from_stash_json( user_info, access_token.token, access_token.secret )
       user
     end
 
