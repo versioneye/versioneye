@@ -95,6 +95,8 @@ class Auth::StashController < ApplicationController
     def create_new_user user_info
       user = User.new({username: user_info[:slug], fullname: user_info[:name],
         email: user_info[:emailAddress], terms: true, datenerhebung: true})
+      user.username = user.replacements_for_username( user.username )
+      User.ensure_unique_username( user )
       user
     end
 
