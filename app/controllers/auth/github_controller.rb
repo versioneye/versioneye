@@ -128,8 +128,6 @@ class Auth::GithubController < ApplicationController
 
 
     def update_scope user, token
-      return nil if user.github_scope.eql?("repo, user:email")
-
       scopes = Github.oauth_scopes( token )
       if scopes && scopes.is_a?(Array)
         user.github_scope = scopes.join ', '
