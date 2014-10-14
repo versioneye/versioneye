@@ -142,6 +142,7 @@ socialnetworks/stackoverflow.png: f7369799b53516d0f800259d57c9d14f
 socialnetworks/twitter-bird.png: ed89419acc7101773fc6ad5c83ef33c3
 socialnetworks/twitter.png: 7931f7880b6e7f40f27f5fc4451019eb
 socialnetworks/xing.png: 187fd19ce7eb2527a58f1d92e452fc1a
+stash-icon.png: a6c44b03fbeddaca945011366cbf3bc6
 swagger/logo_small.png: 6e5245fc1bf86dbf2b9003fb53a9c7af
 swagger/pet_store_api.png: 33e19398d8b5f6ae3c5db7e97fc49450
 swagger/throbber.gif: d0f0e1d9eccad6f2ff75461010a4ed16
@@ -153,7 +154,7 @@ application.js: 2f224051b8b54143205fb526c3f8f8dd
 application_lp.js: 6f124501a584ab57c9607720b5fc6f2a
 application_payment.js: 67dd4c1bd5738479e232fe40b103b355
 application_product.js: b590257f7afbcf8d56550bb43e7df1a5
-application_scm.js: 4647acc72379fea5b4eda79f6140b67b
+application_scm.js: ce514e0ebf908cdaa39a5693bd8a6732
 application_statistics.js: 57405bca631933905a5e82abb6ef0959
 bootstrap.js: 0e90ef53cf9fe0530fd59c2537c7f931
 bootstrap_fileupload.js: c9175b2cbdd76c874335f3ca1c2be5d1
@@ -196,10 +197,10 @@ plots/timebar.js: 92fd0416ebefee80ff92c21c47b25a52
 plots/timeline.js: b9da98b73c59b277e73727f7d0ec1963
 plots_language.js: ca6dd89960b621d7bc82fad4c93f3e51
 react.js: 80d7ce749d5bb314e61958f4451864aa
-scm/build/repo_files.js: 44e0826a69abf03eee117eca911a810b
+scm/build/repo_files.js: 703fc091a896f5ab09a525bb45a24fc8
 scm/build/repo_list.js: 70992f0f5076939563dd0d7fe9851a49
 twitter.js: c10ccadfeecbad183c2374818bd00f9f
-application.css: 5a650e36692f5ee70e5fdcc183a33baa
+application.css: 8bd5a3413c0c68f37dee755af30fe46d
 application_lp.css: f56952257b45d3d071eb32dfe5bec732
 font/FontAwesome.otf: cb72ce5d1d34bf9381660a73b39c95b8
 font/fontawesome-webfont.eot: 9a124c723758e78e28109aab9221d837
@@ -229,7 +230,7 @@ moowheel/license.txt: 28a74a152bef44cc38433db78add6601
 moowheel/mootools-1.2-core-nc.js: adb37e2c737310c087abd1a138319948
 moowheel/mootools-1.2-more.js: 0adb70d96bba28b6a1f64d7d2fff2313
 moowheel/updates.txt: ab275a41665acaa8932c04f8323700a5
-coffee-script.js: 4decf760b17dd500dcef8374eb94078b
+coffee-script.js: 8680db52076f5ae1cde60cb65cf3bf00
 jquery-ui.js: 4e12f47acc60d842da8e44ee0ee1e6f6
 jquery-ui.min.js: f26d34b7759aefdfd3b04bd48b5c78fd
 jquery.js: fd876eb56edb5b765dd2601ad5f95370
