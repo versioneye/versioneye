@@ -1,6 +1,4 @@
-<% links         = @product.http_links %>
-<% version_links = @product.http_version_links %>
-<% merged_links  = links.concat(version_links) %>
+<% merged_links  = @product.http_version_links_combined  %>
 
 <% if !merged_links.empty? %>
   <% hash = Hash.new %>
