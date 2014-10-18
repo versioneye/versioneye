@@ -19,6 +19,24 @@ module ProjectsHelper
     ''
   end
 
+  def path_to_stash_file project
+    repo = project.scm_fullname.gsub("/", "/repos/")
+    branch = URI.encode("refs/heads/#{project.scm_branch}")
+    "#{Settings.instance.stash_base_url}/projects/#{repo}/browse/#{project.filename}?at=#{branch}"
+  end
+
+  def path_to_bitbucket_branch project
+    "https://bitbucket.org/#{project.scm_fullname}/branch/#{project.scm_branch}"
+  end
+
+  def path_to_github_branch project
+    "#{Settings.instance.github_base_url}/#{project.scm_fullname}/tree/#{project.scm_branch}"
+  end
+
+  def path_to_github_file project
+    "#{Settings.instance.github_base_url}/#{project.scm_fullname}/blob/#{project.scm_branch}/#{project.filename}"
+  end
+
   def add_dependency_classes project
     return nil if project.nil?
 

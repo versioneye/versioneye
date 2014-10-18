@@ -1,20 +1,26 @@
 
-    This is a project from
+
 
     <% if project.source.eql? Project::A_SOURCE_GITHUB %>
-      <a href="<%= Settings.instance.github_base_url %>/<%= project.scm_fullname %>/tree/<%= project.scm_branch %>">GitHub <%= project.scm_branch %> branch</a>.
+      This is a project from
+      <a href=<%= path_to_github_branch project %> target="_GITHUB">GitHub <%= project.scm_branch %> branch</a>.
 
-      <% filename = project[:s3_filename].to_s.gsub(/\S+\_/, '') %>
       We parsed this file:
-      <a href = "<%= Settings.instance.github_base_url %>/<%= project.scm_fullname %>/blob/<%= project.scm_branch %>/<%= filename %>" >
-        <%= filename %>
+      <a href=<%= path_to_github_file project %> target="_GITHUB" >
+        <%= project.filename %>
       </a>
     <% elsif project.source.eql? Project::A_SOURCE_BITBUCKET %>
-      <a href="https://bitbucket.org/<%= project.scm_fullname%>/branch/<%= project.scm_branch %>">BitBucket <%= project.scm_branch %> branch</a>.
+      This is a project from
+      <a href=<%= path_to_bitbucket_branch project %> target="_BITBUCKET">BitBucket <%= project.scm_branch %> branch</a>.
 
       <% # TODO show link to file %>
+    <% elsif project.source.eql? Project::A_SOURCE_STASH %>
+      Stash project from <a href=<%= path_to_stash_file( project ) %> target="_STASH" ><%= project.filename %></a> in branch <b><%= project.scm_branch %></b>
+      from the repository <b><%= project.scm_fullname %></b>.
+
     <% elsif project.source.eql? "url" %>
-      <a href="<%= project.url%>">URL</a>.
+      This is a project from
+      <a href="<%= project.url%>" target="_URL">URL</a>.
     <% else %>
-      file upload.
+      This is a project from file upload.
     <% end %>
