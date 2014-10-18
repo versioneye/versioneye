@@ -179,8 +179,12 @@ class User::ProjectsController < ApplicationController
   def reparse
     id = params[:id]
     project = Project.find_by_id id
-    ProjectUpdateService.update project
-    flash[:success] = "Project re parsed successfully"
+    resp = ProjectUpdateService.update project
+    if resp.nil?
+      flash[:error]   = "Something went wrong. It's not possible to update the project!"
+    else
+      flash[:success] = "Project re parsed successfully."
+    end
     redirect_to user_project_path( project )
   end
 
