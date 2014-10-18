@@ -21,9 +21,11 @@
 
           <!-- menu for guest user, not logged in -->
           <% unless signed_in? %>
-            <li>
-              <%= link_to "Pricing", "/pricing" %>
-            </li>
+            <% if !Rails.env.enterprise? %>
+              <li>
+                <%= link_to "Pricing", "/pricing" %>
+              </li>
+            <% end %>
             <li class="divider-vertical"></li>
             <li style="font-weight: bold; font-size: 16px;">
               <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0;") do  %>
