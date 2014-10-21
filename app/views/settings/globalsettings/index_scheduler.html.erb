@@ -75,6 +75,20 @@
       </div>
 
 
+      <hr/>
+      <p class="description">
+        VersionEye Enterprise can fetch information from VersionEye.com about software packages in the VersionEye Enterprise database. That is especially useful for software packages not hosted in your network. When should VersionEye perform this partial sync?
+        Use a <a href="https://en.wikipedia.org/wiki/Cron#CRON_expression" target="_Cron">cron expression</a>. For example <b>17 2 * * *</b> for every day at 02:17 AM in the morning.
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :sync_db, "DB Sync", :class => "control-label", :for => "sync_db" %>
+        <div class="controls">
+          <%= text_field_tag :sync_db, @globalsetting['sync_db'], :id => "sync_db" %>
+        </div>
+      </div>
+
+
       <div class="control-group">
         <div class="control-label"></div>
         <div class="controls">

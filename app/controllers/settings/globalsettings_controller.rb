@@ -79,6 +79,7 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting['schedule_project_notification_daily']   = GlobalSetting.get env, 'schedule_project_notification_daily'
     @globalsetting['schedule_project_notification_weekly']  = GlobalSetting.get env, 'schedule_project_notification_weekly'
     @globalsetting['schedule_project_notification_monthly'] = GlobalSetting.get env, 'schedule_project_notification_monthly'
+    @globalsetting['sync_db']                               = GlobalSetting.get env, 'sync_db'
 
     @globalsetting['schedule_follow_notifications']         = '15 8 * * *'  if @globalsetting['schedule_follow_notifications'].to_s.empty?
     @globalsetting['schedule_project_notification_daily']   = '15 9 * * *'  if @globalsetting['schedule_project_notification_daily'].to_s.empty?
@@ -175,7 +176,7 @@ class Settings::GlobalsettingsController < ApplicationController
     GlobalSetting.set(env, 'SCHEDULE_CRAWL_COCOAPODS', params[:cocoapods_schedule] )
 
     Settings.instance.reload_from_db GlobalSetting.new
-    flash[:success] = "CocoaPods Specs changed successfully"
+    flash[:success] = "CocoaPods Specs changed successfully. Please restart the veye/crawlr Docker container to activate the changes."
     redirect_to settings_cocoapods_path
   end
 
@@ -187,9 +188,10 @@ class Settings::GlobalsettingsController < ApplicationController
     GlobalSetting.set( env, 'schedule_project_notification_daily',   params[:schedule_project_notification_daily] )
     GlobalSetting.set( env, 'schedule_project_notification_weekly',  params[:schedule_project_notification_weekly] )
     GlobalSetting.set( env, 'schedule_project_notification_monthly', params[:schedule_project_notification_monthly] )
+    GlobalSetting.set( env, 'sync_db', params[:sync_db] )
 
     Settings.instance.reload_from_db GlobalSetting.new
-    flash[:success] = "Scheduler updated successfully"
+    flash[:success] = "Scheduler updated successfully. Please restart the veye/tasks Docker container to activate the changes."
     redirect_to settings_scheduler_path
   end
 
