@@ -44,7 +44,7 @@ class User::ProjectsController < ApplicationController
       return if !authenticate
       redirect_to(root_path) unless current_user?(project.user)
     end
-    @whitelists = LicenseWhitelist.by_user( current_user ) if current_user
+    @whitelists = LicenseWhitelistService.index( current_user ) if current_user
   end
 
   def visual
@@ -290,7 +290,7 @@ class User::ProjectsController < ApplicationController
     if list_name.eql?('none')
       @project.license_whitelist_id = nil
     else
-      lw = LicenseWhitelist.fetch_by current_user, list_name
+      lw = LicenseWhitelistService.fetch_by current_user, list_name
       @project.license_whitelist_id = lw.id.to_s
     end
     if @project.save
