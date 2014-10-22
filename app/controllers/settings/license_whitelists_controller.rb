@@ -3,20 +3,19 @@ class Settings::LicenseWhitelistsController < ApplicationController
   before_filter :authenticate
 
   def index
-    @whitelists = LicenseWhitelist.by_user current_user
+    @whitelists = LicenseWhitelistService.index current_user
   end
 
   def show
-    @license_whitelist = LicenseWhitelist.fetch_by current_user, params[:name]
+    @license_whitelist = LicenseWhitelistService.fetch_by current_user, params[:name]
     @license_whitelist.license_elements.sort_by! &:name_substitute
   end
 
   def create
-    whitelist = LicenseWhitelist.new
-    whitelist.update_from params[:license_whitelist]
-    whitelist.user = current_user
-    if whitelist.save
-      flash[:success] = "Whitelist #{params[:name]} was created successfully."
+    list_name = params[:license_whitelist][:name]
+    resp = LicenseWhitelistService.create current_user, list_name
+    if resp
+      flash[:success] = "Whitelist #{list_name} was created successfully."
       redirect_to :back
     else
       flash[:error] = "An error occured. We couldn't save the new Whitelist."
@@ -40,9 +39,12 @@ class Settings::LicenseWhitelistsController < ApplicationController
   end
 
   def add
-    license_whitelist = LicenseWhitelist.fetch_by current_user, params[:list]
-    license_whitelist.add_license_element params[:license_name]
-    flash[:success] = "License added successfully."
+    resp = LicenseWhitelistService.add current_user, params[:list], params[:license_name]
+    if resp
+      flash[:success] = "License added successfully."
+    else
+      flash[:error] = "An error occured. Not able to add the license to the list."
+    end
     redirect_to :back
   rescue => e
     logger.error e.message
@@ -51,9 +53,12 @@ class Settings::LicenseWhitelistsController < ApplicationController
   end
 
   def remove
-    license_whitelist = LicenseWhitelist.fetch_by current_user, params[:list]
-    license_whitelist.remove_license_element params[:name]
-    flash[:success] = "License removed successfully."
+    resp = LicenseWhitelistService.remove current_user, params[:list], params[:name]
+    if resp
+      flash[:success] = "License removed successfully."
+    else
+      flash[:error] = "An error occured. Not able to remove the license from the list."
+    end
     redirect_to :back
   rescue => e
     logger.error e.message
