@@ -8,6 +8,7 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting['server_url'] = Settings.instance.server_url
     @globalsetting['server_host'] = Settings.instance.server_host
     @globalsetting['server_port'] = Settings.instance.server_port
+    @globalsetting['default_project_period'] = Settings.instance.default_project_period
   end
 
   def index_github
@@ -97,6 +98,7 @@ class Settings::GlobalsettingsController < ApplicationController
     if GlobalSetting.set( env, 'server_port', params[:server_port] )
       Rails.application.routes.default_url_options[:port] = params[:server_port]
     end
+    GlobalSetting.set( env, 'default_project_period', params[:default_project_period] )
     Settings.instance.reload_from_db GlobalSetting.new
     flash[:success] = "Global Server Settings changed successfully"
     redirect_to settings_globalsettings_path

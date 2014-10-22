@@ -38,6 +38,23 @@
         </div>
       </div>
 
+      <hr/>
+
+      <p class="description">
+        Default project settings.
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :default_project_period, "Update Period", :class => "control-label", :for => "default_project_period" %>
+        <div class="controls" >
+          <select name="default_project_period"  id="default_project_period" >
+            <option value="daily"   <%= "selected" if @globalsetting['default_project_period'] == 'daily'   %> >daily</option>
+            <option value="weekly"  <%= "selected" if @globalsetting['default_project_period'] == 'weekly'  %> >weekly</option>
+            <option value="monthly" <%= "selected" if @globalsetting['default_project_period'] == 'monthly' %> >monthly</option>
+          </select>
+        </div>
+      </div>
+
       <div class="control-group">
         <div class="control-label"></div>
         <div class="controls">
