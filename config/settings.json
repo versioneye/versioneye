@@ -57,7 +57,9 @@
     "aws_access_key_id": "aws_bullshit_bingo_access_key",
     "aws_secret_access_key": "aws_bullshit_bingo_secret",
     "max_dep_update": "60",
-    "show_promocode": true
+    "show_promocode": true,
+    "default_project_period": "daily",
+    "default_project_public": false
   },
   "test": {
     "ga_account": "",
@@ -118,7 +120,9 @@
     "aws_access_key_id": "aws_bullshit_bingo_access_key",
     "aws_secret_access_key": "aws_bullshit_bingo_secret",
     "max_dep_update": "60",
-    "show_promocode": true
+    "show_promocode": true,
+    "default_project_period": "daily",
+    "default_project_public": false
   },
   "production": {
     "ga_account": "UA-32702672-1",
@@ -177,7 +181,9 @@
     "aws_access_key_id": "env_AWS_S3_ACCESS_KEY_ID",
     "aws_secret_access_key": "env_AWS_S3_SECRET_ACCESS_KEY",
     "max_dep_update": "60",
-    "show_promocode": true
+    "show_promocode": true,
+    "default_project_period": "daily",
+    "default_project_public": false
   },
   "enterprise": {
     "ga_account": "",
@@ -232,6 +238,8 @@
     "cocoapods_spec": "/mnt/cocoapods/cocoapods-specs",
     "references_live_update": true,
     "max_dep_update": "60",
-    "show_promocode": false
+    "show_promocode": false,
+    "default_project_period": "daily",
+    "default_project_public": true
   }
 }
