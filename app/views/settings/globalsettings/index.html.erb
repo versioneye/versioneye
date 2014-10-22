@@ -56,6 +56,16 @@
       </div>
 
       <div class="control-group">
+        <%= label_tag :default_project_public, "Public by defalt", :class => "control-label", :for => "default_project_public" %>
+        <div class="controls" >
+          <select name="default_project_public"  id="default_project_public" >
+            <option value="true"   <%= "selected" if @globalsetting['default_project_public'] == true   %> >true</option>
+            <option value="false"  <%= "selected" if @globalsetting['default_project_public'] == false  %> >false</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>
