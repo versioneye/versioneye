@@ -10,6 +10,8 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting['server_port'] = Settings.instance.server_port
     @globalsetting['default_project_period'] = Settings.instance.default_project_period
     @globalsetting['default_project_public'] = Settings.instance.default_project_public
+    @globalsetting['show_signup_form'] = Settings.instance.show_signup_form
+    @globalsetting['show_login_form'] = Settings.instance.show_login_form
   end
 
   def index_github
@@ -99,10 +101,27 @@ class Settings::GlobalsettingsController < ApplicationController
     if GlobalSetting.set( env, 'server_port', params[:server_port] )
       Rails.application.routes.default_url_options[:port] = params[:server_port]
     end
+
     GlobalSetting.set( env, 'default_project_period', params[:default_project_period] )
-    dpp = true  if params[:default_project_public].eql?("true")
-    dpp = false if params[:default_project_public].eql?("false")
-    GlobalSetting.set( env, 'default_project_public', dpp )
+
+    if params[:default_project_public] && params[:default_project_public].eql?("true")
+      GlobalSetting.set( env, 'default_project_public', "true" )
+    else
+      GlobalSetting.set( env, 'default_project_public', "false" )
+    end
+
+    if params[:show_signup_form] && params[:show_signup_form].eql?("true")
+      GlobalSetting.set( env, 'show_signup_form', "true" )
+    else
+      GlobalSetting.set( env, 'show_signup_form', "false" )
+    end
+
+    if params[:show_login_form] && params[:show_login_form].eql?("true")
+      GlobalSetting.set( env, 'show_login_form', "true" )
+    else
+      GlobalSetting.set( env, 'show_login_form', "false" )
+    end
+
     Settings.instance.reload_from_db GlobalSetting.new
     flash[:success] = "Global Server Settings changed successfully"
     redirect_to settings_globalsettings_path

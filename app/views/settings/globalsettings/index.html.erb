@@ -65,6 +65,30 @@
         </div>
       </div>
 
+      <hr/>
+
+      <p class="description">
+        Signup &amp; login settings
+      </p>
+
+      <div class="control-group">
+        <div class="controls">
+          <label for="show_signup_form" style="font-size: 12px;" class="checkbox">
+            <%= check_box_tag "show_signup_form", true, @globalsetting['show_signup_form'], :id => "show_signup_form" %>
+            Show signup form
+          </label>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <label for="show_login_form" style="font-size: 12px;" class="checkbox">
+            <%= check_box_tag "show_login_form", true, @globalsetting['show_login_form'], :id => "show_login_form" %>
+            Show login form (Not needed if VersionEye is linked with GitHub, Bitbucket, Stash or another SSO Provider)
+          </label>
+        </div>
+      </div>
+
       <div class="control-group">
         <div class="control-label"></div>
         <div class="controls">

@@ -27,11 +27,13 @@
               </li>
             <% end %>
             <li class="divider-vertical"></li>
-            <li style="font-weight: bold; font-size: 16px;">
-              <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0;") do  %>
-                <button type="submit" class="btn btn-success" ><%= t(:page_header_signup) %></button>
-              <% end %>
-            </li>
+            <% if Settings.instance.show_signup_form == true %>
+              <li style="font-weight: bold; font-size: 16px;">
+                <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0;") do  %>
+                  <button type="submit" class="btn btn-success" ><%= t(:page_header_signup) %></button>
+                <% end %>
+              </li>
+            <% end %>
             <li class="divider-vertical"></li>
             <li>
               <%= form_tag(signin_path, :method => "GET", :style=>"margin: 0;") do  %>
