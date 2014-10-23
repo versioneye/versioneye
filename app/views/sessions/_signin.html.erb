@@ -1,5 +1,7 @@
 
 <% display_login = 'none'  if Settings.instance.show_login_form == false %>
+<% display_login = 'block' if Settings.instance.show_login_form == true  %>
+<% display_link  = 'none'  if Settings.instance.show_login_form == true  %>
 <% display_link  = 'block' if Settings.instance.show_login_form == false %>
 
 <div id="login_form" style="display: <%= display_login %>">
