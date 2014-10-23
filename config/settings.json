@@ -59,7 +59,9 @@
     "max_dep_update": "60",
     "show_promocode": true,
     "default_project_period": "daily",
-    "default_project_public": false
+    "default_project_public": false,
+    "show_signup_form": true,
+    "show_login_form": true
   },
   "test": {
     "ga_account": "",
@@ -122,7 +124,9 @@
     "max_dep_update": "60",
     "show_promocode": true,
     "default_project_period": "daily",
-    "default_project_public": false
+    "default_project_public": false,
+    "show_signup_form": true,
+    "show_login_form": true
   },
   "production": {
     "ga_account": "UA-32702672-1",
@@ -183,7 +187,9 @@
     "max_dep_update": "60",
     "show_promocode": true,
     "default_project_period": "daily",
-    "default_project_public": false
+    "default_project_public": false,
+    "show_signup_form": true,
+    "show_login_form": true
   },
   "enterprise": {
     "ga_account": "",
@@ -240,6 +246,8 @@
     "max_dep_update": "60",
     "show_promocode": false,
     "default_project_period": "daily",
-    "default_project_public": true
+    "default_project_public": true,
+    "show_signup_form": true,
+    "show_login_form": true
   }
 }
