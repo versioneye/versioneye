@@ -20,9 +20,9 @@ class Settings::EmailsController < ApplicationController
     user_email = UserEmail.new
     user_email.email = email
     user_email.user_id = current_user.id
-    user_email.create_verification
+    user_email.create_verification if !Settings.instance.environment.eql?('enterprise')
     if user_email.save
-      UserMailer.verification_email_only(current_user, user_email.verification, user_email.email).deliver
+      send_verification_email current_user, user_email
       flash[:success] = 'E-Mail Address added.'
     else
       flash[:error] = 'E-Mail Address is not valid.'
@@ -55,5 +55,12 @@ class Settings::EmailsController < ApplicationController
     end
     redirect_to settings_emails_path()
   end
+
+  private
+
+    def send_verification_email user, user_email
+      return false if Settings.instance.environment.eql?('enterprise')
+      UserMailer.verification_email_only(user, user_email.verification, user_email.email).deliver
+    end
 
 end
