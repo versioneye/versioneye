@@ -130,24 +130,25 @@ class User::ProjectsController < ApplicationController
   end
 
   def add_collaborator
-    collaborator_info = params[:collaborator]
-    if collaborator_info[:username].to_s.empty?
-      flash[:error] = "You have to type in a name or an email address!"
-      redirect_to :back and return
-    end
-
     project = Project.find_by_id params[:id]
 
     if project.nil?
       flash[:error] = "Failure: Can't add collaborator - wrong project id."
       redirect_to :back and return
     end
+    url = "/user/projects/#{project.id.to_s}#collaborators"
+
+    collaborator_info = params[:collaborator]
+    if collaborator_info[:username].to_s.empty?
+      flash[:error] = "You have to type in a name or an email address!"
+      redirect_to( url ) and return
+    end
 
     user = User.find_by_username(collaborator_info[:username])
 
     if user and ProjectCollaborator.collaborator?(project[:_id].to_s, user[:_id].to_s)
       flash[:error] = "Warning: #{user[:fullname]} is already a collaborator in your project."
-      redirect_to :back and return
+      redirect_to( url ) and return
     end
 
     new_collaborator = ProjectCollaborator.new project_id: project[:_id].to_s,
@@ -166,14 +167,14 @@ class User::ProjectsController < ApplicationController
 
     unless new_collaborator.save
       flash[:error] = "Failure: can't add new collaborator - #{new_collaborator.errors.full_messages.to_sentence}"
-      redirect_to :back and return
+      redirect_to( url ) and return
     end
 
     project.collaborators << new_collaborator
     UserMailer.new_collaboration(new_collaborator).deliver if new_collaborator[:active]
 
     flash[:success] = "We added a new collaborator to the project."
-    redirect_to :back
+    redirect_to( url )
   end
 
   def reparse
@@ -298,7 +299,7 @@ class User::ProjectsController < ApplicationController
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
-    redirect_to user_project_path(@project)
+    redirect_to "/user/projects/#{id}#licenses"
   end
 
   def mute_dependency
