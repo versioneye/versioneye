@@ -4,6 +4,7 @@ class Settings::EmailsettingsController < ApplicationController
 
   def index
     @emailsetting = EmailSettingService.email_setting
+    @testemail = ''
   end
 
   def update
@@ -22,11 +23,11 @@ class Settings::EmailsettingsController < ApplicationController
   end
 
   def test_email
-    UserMailer.suggest_packages_email( current_user ).deliver
+    UserMailer.test_email( params[:testemail] ).deliver
     flash[:success] = "Email is out to #{current_user.email}"
     redirect_to settings_emailsettings_path
   rescue => e
-    flash[:error] = "Something went wrong! It's your fault! - #{e.message}"
+    flash[:error] = "Something went wrong! #{e.message}"
     Rails.logger.error e.message
     redirect_to settings_emailsettings_path
   end
