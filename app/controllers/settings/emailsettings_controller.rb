@@ -13,7 +13,7 @@ class Settings::EmailsettingsController < ApplicationController
     if enable_starttls_auto.to_s.empty?
       params['enable_starttls_auto'] = false
     end
-    if es.update_attributes params
+    if es.update_from params
       EmailSettingService.update_action_mailer es
       flash[:success] = 'Email settings updated'
     else
