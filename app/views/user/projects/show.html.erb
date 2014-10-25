@@ -197,12 +197,6 @@
 
 <script>
     jQuery('#projectTabs a').click(function (e) {
-        e.preventDefault();
-        jQuery(this).tab('show');
-    });
-
-    // store the currently selected tab in the hash value
-    jQuery("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
         var id = jQuery(e.target).attr("href").substr(1);
         window.location.hash = id;
     });
@@ -210,6 +204,8 @@
     // on load of the page: switch to the currently selected tab
     var hash = window.location.hash;
     jQuery('#projectTabs a[href="' + hash + '"]').tab('show');
+    jQuery('html, body').animate({scrollTop:0}, 'fast');
+
 </script>
 
 <% end %>
