@@ -107,13 +107,13 @@
 
       </div>
 
-      <div style = "margin-top: 20px;">
-        <ul class = "nav nav-tabs" style="margin-bottom: 0" id="projectTabs">
-          <li class = "active">
-            <a href = "#dependencies" data-toggle="tab" onclick="page_view('ga_project_dependencies')"><i class = "icon-puzzle-piece">&nbsp;</i>Dependencies</a>
+      <div style="margin-top: 20px;">
+        <ul class="nav nav-tabs" style="margin-bottom: 0" id="projectTabs">
+          <li class="active">
+            <a href="#dependencies" data-toggle="tab" onclick="page_view('ga_project_dependencies')"><i class = "icon-puzzle-piece">&nbsp;</i>Dependencies</a>
           </li>
           <li>
-            <a href = "#licenses" data-toggle="tab" onclick="page_view('ga_project_licenses')"><i class = "icon-tasks">&nbsp;</i>Licenses</a>
+            <a href="#licenses" data-toggle="tab" onclick="page_view('ga_project_licenses')"><i class = "icon-tasks">&nbsp;</i>Licenses</a>
           </li>
           <% if signed_in? && @project.collaborator?( current_user ) %>
             <li>
@@ -173,11 +173,11 @@
           </div>
 
           <% if signed_in? && @project.collaborator?( current_user ) %>
-            <div id = "collaborators" class = "tab-pane" style = "min-height: 360px;">
+            <div id="collaborators" class="tab-pane" style="min-height: 360px;">
               <%= render partial: "collaborators" %>
             </div>
 
-            <div id = "settings" class = "tab-pane">
+            <div id="settings" class="tab-pane">
               <%=  render partial: "project_settings" %>
             </div>
           <% end %>
@@ -202,10 +202,9 @@
     });
 
     // on load of the page: switch to the currently selected tab
-    var hash = window.location.hash;
+    var hash = window.location.hash.substr(0);
     jQuery('#projectTabs a[href="' + hash + '"]').tab('show');
     jQuery('html, body').animate({scrollTop:0}, 'fast');
-
 </script>
 
 <% end %>
