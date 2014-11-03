@@ -76,6 +76,13 @@ class Settings::GlobalsettingsController < ApplicationController
     end
   end
 
+  def index_satis
+    env = Settings.instance.environment
+    @globalsetting = {}
+    @globalsetting['satis_base_url'] = GlobalSetting.get env, 'satis_base_url'
+    @globalsetting['satis_schedule'] = GlobalSetting.get env, 'satis_schedule'
+  end
+
   def index_scheduler
     env = Settings.instance.environment
     @globalsetting = {}
@@ -167,6 +174,16 @@ class Settings::GlobalsettingsController < ApplicationController
     Settings.instance.reload_from_db GlobalSetting.new
     flash[:success] = "Stash Settings changed successfully"
     redirect_to settings_stashsettings_path
+  end
+
+
+  def update_satis
+    env = Settings.instance.environment
+    GlobalSetting.set env, 'satis_base_url'     , params[:satis_base_url]
+    GlobalSetting.set env, 'satis_schedule'     , params[:satis_schedule]
+    Settings.instance.reload_from_db GlobalSetting.new
+    flash[:success] = "Satis Settings changed successfully"
+    redirect_to settings_satis_path
   end
 
 
