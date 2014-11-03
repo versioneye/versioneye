@@ -1,0 +1,55 @@
+
+<div class="span3" >
+  <%= render 'settings/navi' %>
+</div>
+
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    Satis Settings
+  </div>
+
+  <div class="span8 content" >
+
+    <%= form_tag( settings_satis_path, :method => "post", :class => "form-horizontal") do  %>
+
+      <p class="description">
+        <a href="https://getcomposer.org/doc/articles/handling-private-packages-with-satis.md" target="_SATIS">Satis</a>
+        is a static composer repository generator for PHP. It's used to handle private packages. For example http://packages.company.com/
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :satis_base_url, "Satis Base URL", :class => "control-label", :for => "satis_base_url" %>
+        <div class="controls">
+          <%= text_field_tag :satis_base_url, @globalsetting['satis_base_url'], :id => "satis_base_url" %>
+        </div>
+      </div>
+
+      <hr/>
+
+      <p class="description">
+        At which time should this be crawled? Use a <a href="https://en.wikipedia.org/wiki/Cron#CRON_expression" target="_Cron">cron expression</a>. For example <b>11 2 * * *</b> for every day at 2:11 AM.
+        If the field is empty it will not be crawled.
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :satis_schedule, "Schedule", :class => "control-label", :for => "satis_schedule" %>
+        <div class="controls">
+          <%= text_field_tag :satis_schedule, @globalsetting['satis_schedule'], :id => "satis_schedule" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn btn-large btn-primary" >Save</button>
+        </div>
+      </div>
+
+    <% end %>
+
+    <hr/>
+
+  </div>
+</div>
+
