@@ -10,11 +10,6 @@ class ProductsController < ApplicationController
 
   def index
     @user = User.new
-    @ab = params['ab']
-    if @ab.nil?
-      # ab_array = ['a', 'b']
-      @ab = 'b' # ab_array[Random.rand(2)]
-    end
     @languages = Product::A_LANGS_FILTER
     render :layout => 'application_lp'
   end
