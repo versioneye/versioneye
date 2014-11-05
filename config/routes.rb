@@ -280,13 +280,16 @@ Versioneye::Application.routes.draw do
   get   '/disclaimer',          :to => 'page#disclaimer'
   get   '/logos',               :to => 'page#logos'
 
-  get   'sitemap__01.xml',        :to => 'page#sitemap_1'
-  get   'sitemap__02.xml',        :to => 'page#sitemap_2'
-  get   'sitemap__03.xml',        :to => 'page#sitemap_3'
-  get   'sitemap__04.xml',        :to => 'page#sitemap_4'
-  get   'sitemap__05.xml',        :to => 'page#sitemap_5'
-  get   'sitemap__06.xml',        :to => 'page#sitemap_6'
-  get   'sitemap__07.xml',        :to => 'page#sitemap_7'
+  get   'sitemap-1.xml',        :to => 'page#sitemap_1'
+  get   'sitemap-2.xml',        :to => 'page#sitemap_2'
+  get   'sitemap-3.xml',        :to => 'page#sitemap_3'
+  get   'sitemap-4.xml',        :to => 'page#sitemap_4'
+  get   'sitemap-5.xml',        :to => 'page#sitemap_5'
+  get   'sitemap-6.xml',        :to => 'page#sitemap_6'
+  get   'sitemap-7.xml',        :to => 'page#sitemap_7'
+  get   'sitemap-8.xml',        :to => 'page#sitemap_8'
+  get   'sitemap-9.xml',        :to => 'page#sitemap_9'
+  get   'sitemap-10.xml',       :to => 'page#sitemap_10'
 
   get   '/search', :to => 'products#search'
 
