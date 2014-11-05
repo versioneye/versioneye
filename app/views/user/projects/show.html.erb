@@ -110,17 +110,17 @@
       <div style="margin-top: 20px;">
         <ul class="nav nav-tabs" style="margin-bottom: 0" id="projectTabs">
           <li class="active">
-            <a href="#dependencies" data-toggle="tab" onclick="page_view('ga_project_dependencies')"><i class = "icon-puzzle-piece">&nbsp;</i>Dependencies</a>
+            <a data-target="#dependencies" data-toggle="tab" onclick="page_view('ga_project_dependencies')"><i class = "icon-puzzle-piece">&nbsp;</i>Dependencies</a>
           </li>
           <li>
-            <a href="#licenses" data-toggle="tab" onclick="page_view('ga_project_licenses')"><i class = "icon-tasks">&nbsp;</i>Licenses</a>
+            <a data-target="#licenses" data-toggle="tab" onclick="page_view('ga_project_licenses')"><i class = "icon-tasks">&nbsp;</i>Licenses</a>
           </li>
           <% if signed_in? && @project.collaborator?( current_user ) %>
             <li>
-              <a href="#collaborators" data-toggle="tab" onclick="page_view('ga_project_collaborators')"><i class = "icon-group">&nbsp;</i>Collaborators</a>
+              <a data-target="#collaborators" data-toggle="tab" onclick="page_view('ga_project_collaborators')"><i class = "icon-group">&nbsp;</i>Collaborators</a>
             </li>
             <li>
-              <a href="#settings" data-toggle="tab" onclick="page_view('ga_project_settings')"><i class = "icon-cogs">&nbsp;</i>Settings </a>
+              <a data-target="#settings" data-toggle="tab" onclick="page_view('ga_project_settings')"><i class = "icon-cogs">&nbsp;</i>Settings </a>
             </li>
           <% end %>
         </ul>
@@ -197,7 +197,7 @@
 
 <script>
     jQuery('#projectTabs a').click(function (e) {
-        var id = jQuery(e.target).attr("href").substr(1);
+        var id = jQuery(e.target).attr("data-target").substr(1);
         window.location.hash = id;
     });
 
