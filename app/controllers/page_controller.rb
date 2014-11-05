@@ -113,25 +113,34 @@ class PageController < ApplicationController
   end
 
   def sitemap_1
-    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap__01.xml'
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-1.xml'
   end
   def sitemap_2
-    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap__02.xml'
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-2.xml'
   end
   def sitemap_3
-    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap__03.xml'
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-3.xml'
   end
   def sitemap_4
-    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap__04.xml'
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-4.xml'
   end
   def sitemap_5
-    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap__05.xml'
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-5.xml'
   end
   def sitemap_6
-    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap__06.xml'
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-6.xml'
   end
   def sitemap_7
-    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap__07.xml'
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-7.xml'
+  end
+  def sitemap_8
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-8.xml'
+  end
+  def sitemap_9
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-9.xml'
+  end
+  def sitemap_10
+    redirect_to 'https://s3.amazonaws.com/veye_assets/sitemap-10.xml'
   end
 
   private
