@@ -6,7 +6,7 @@ class FeedbackController < ApplicationController
     feedback = params[:feedback]
     if name && !name.empty? && email && !email.empty? && feedback && !feedback.empty?
       FeedbackMailer.feedback_email(name, email, feedback).deliver
-    end    
+    end
     respond_to do |format|
       format.js
     end
