@@ -46,6 +46,8 @@ Versioneye::Application.routes.draw do
     end
   end
 
+  post '/enterprise/activate', :to => 'enterprise#activate'
+
   get   '/created'                             , :to => 'users#created'
   get   '/signup'                              , :to => 'users#new'
   get   '/users/activate/:source/:verification', :to => 'users#activate'
@@ -267,18 +269,19 @@ Versioneye::Application.routes.draw do
   get   '/statistics/proglangs',  :to => 'statistics#proglangs'
   get   '/statistics/langtrends', :to => 'statistics#langtrends'
 
-  get   '/about',               :to => 'page#about'
-  get   '/impressum',           :to => 'page#impressum'
-  get   '/faq',                 :to => 'page#faq'
-  get   '/imprint',             :to => 'page#imprint'
-  get   '/nutzungsbedingungen', :to => 'page#nutzungsbedingungen'
-  get   '/terms',               :to => 'page#terms'
-  get   '/datenschutz',         :to => 'page#datenschutz'
-  get   '/dataprivacy',         :to => 'page#dataprivacy'
-  get   '/datenerhebung',       :to => 'page#datenerhebung'
-  get   '/datacollection',      :to => 'page#datacollection'
-  get   '/disclaimer',          :to => 'page#disclaimer'
-  get   '/logos',               :to => 'page#logos'
+  get   '/about'                ,:to => 'page#about'
+  get   '/impressum'            ,:to => 'page#impressum'
+  get   '/faq'                  ,:to => 'page#faq'
+  get   '/imprint'              ,:to => 'page#imprint'
+  get   '/nutzungsbedingungen'  ,:to => 'page#nutzungsbedingungen'
+  get   '/terms'                ,:to => 'page#terms'
+  get   '/enterprise_agreements',:to => 'page#enterprise_agreements'
+  get   '/datenschutz'          ,:to => 'page#datenschutz'
+  get   '/dataprivacy'          ,:to => 'page#dataprivacy'
+  get   '/datenerhebung'        ,:to => 'page#datenerhebung'
+  get   '/datacollection'       ,:to => 'page#datacollection'
+  get   '/disclaimer'           ,:to => 'page#disclaimer'
+  get   '/logos'                ,:to => 'page#logos'
 
   get   'sitemap-1.xml',        :to => 'page#sitemap_1'
   get   'sitemap-2.xml',        :to => 'page#sitemap_2'

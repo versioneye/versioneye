@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   before_filter :admin_user,   :only => [:destroy, :index]
   before_filter :admin_user,   :only => [:index]
   before_filter :set_locale
+  before_filter :enterprise_activated?
 
   def index
     @users = User.find_all(params[:page])

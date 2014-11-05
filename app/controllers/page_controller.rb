@@ -100,6 +100,9 @@ class PageController < ApplicationController
   def terms
   end
 
+  def enterprise_agreements
+  end
+
   def signin
   end
 

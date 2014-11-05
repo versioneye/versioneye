@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 
+  before_filter :enterprise_activated?
+
   def new
   end
 
