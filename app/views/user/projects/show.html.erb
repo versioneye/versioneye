@@ -182,12 +182,6 @@
             </div>
           <% end %>
 
-          <script>
-            $(function () {
-              $('#projectTabs a:first').tab('show');
-            });
-          </script>
-
         </div>
       </div>
 
@@ -198,12 +192,12 @@
 <script>
     jQuery('#projectTabs a').click(function (e) {
         var id = jQuery(e.target).attr("data-target").substr(1);
-        window.location.hash = id;
+        window.location.hash = "tab-" + id;
     });
 
     // on load of the page: switch to the currently selected tab
-    var hash = window.location.hash.substr(0);
-    jQuery('#projectTabs a[href="' + hash + '"]').tab('show');
+    var hash = window.location.hash.substr(5);
+    jQuery('#projectTabs a[data-target="#' + hash + '"]').tab('show');
     jQuery('html, body').animate({scrollTop:0}, 'fast');
 </script>
 
