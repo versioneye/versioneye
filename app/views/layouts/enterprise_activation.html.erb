@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head >
+
+    <title>VersionEye Enterprise - Notification System for Software Packages</title>
+
+    <link href="https://s3.amazonaws.com/veye_assets/versioneye-search.xml"
+          title="VersionEye"
+          rel="search"
+          type="application/opensearchdescription+xml">
+
+    <meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="author"      content="VersionEye GmbH" />
+
+    <%= render 'layouts/html_head' %>
+
+  </head>
+
+  <body >
+
+    <%= render 'layouts/header' %>
+
+    <%= render 'shared/messages' %>
+
+    <section class="container l_margin_top_75" >
+      <div class="well-white row">
+
+        <div>
+          <%= render "shared/enterprise_agreements" %>
+        </div>
+
+        <div>
+          <p>
+            Please activate this instance with your API Key. If you don't have one, please sign up at <a href="https://www.VersionEye.com">https://www.VersionEye.com</a> and get one here <a href="https://www.versioneye.com/settings/api">https://www.versioneye.com/settings/api</a>.
+          </p>
+        </div>
+
+        <div class="l_margin_top_50" >
+
+          <form id="activate-form" class="form-horizontal" action="/enterprise/activate" method="POST">
+            <div class="control-group">
+              <label for="api_key" class="col-lg-2 control-label">API Key</label>
+              <div class="controls">
+                <input type="text" class="form-control" id="api_key" name="api_key" placeholder="API Key">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label for="user_password" class="col-lg-2 control-label"></label>
+              <div class="controls">
+                <div class="checkbox">
+                  <input type="checkbox" id="agreement" name="agreement" class="l_padding_right_5" >
+                  <label for="agreement" style="display: inline;">
+                    I have read the VersionEye Enterprise License Agreement and agree to their validity.
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label for="user" class="col-lg-2 control-label">&nbsp;</label>
+              <div class="controls">
+                <button type="submit" class="btn btn-primary btn-large" id="btn-signup">Activate</button>
+              </div>
+            </div>
+          </form>
+
+        </div>
+
+      </div>
+    </section>
+
+    <%= render 'layouts/footer' %>
+    <%= debug(params) if Rails.env.development? %>
+
+  </body>
+
+</html>

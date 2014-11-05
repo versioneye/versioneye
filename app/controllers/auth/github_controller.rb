@@ -1,6 +1,7 @@
 class Auth::GithubController < ApplicationController
 
   before_filter :set_locale
+  before_filter :enterprise_activated?
 
   def callback
     code      = params['code']

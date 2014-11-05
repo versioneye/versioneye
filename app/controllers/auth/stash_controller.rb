@@ -1,6 +1,7 @@
 class Auth::StashController < ApplicationController
 
   before_filter :set_locale
+  before_filter :enterprise_activated?
 
   def signin
     if signed_in?

@@ -1,5 +1,13 @@
 module SessionsHelper
 
+  def enterprise_activated?
+    if !EnterpriseService.activated?
+      redirect_to "/"
+      return false
+    end
+    return true
+  end
+
   def sign_in(user)
     reset_session
     cookies.permanent.signed[:remember_token] = [user.id, user.salt]
