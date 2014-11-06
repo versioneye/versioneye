@@ -14,91 +14,6 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting['show_login_form'] = Settings.instance.show_login_form
   end
 
-  def index_github
-    Settings.instance.reload_from_db GlobalSetting.new
-    @globalsetting = {}
-    @globalsetting['github_base_url'] = Settings.instance.github_base_url
-    @globalsetting['github_api_url'] = Settings.instance.github_api_url
-    @globalsetting['github_client_id'] = Settings.instance.github_client_id
-    @globalsetting['github_client_secret'] = Settings.instance.github_client_secret
-  end
-
-  def index_bitbucket
-    Settings.instance.reload_from_db GlobalSetting.new
-    @globalsetting = {}
-    @globalsetting['bitbucket_base_url'] = Settings.instance.bitbucket_base_url
-    @globalsetting['bitbucket_token'] = Settings.instance.bitbucket_token
-    @globalsetting['bitbucket_secret'] = Settings.instance.bitbucket_secret
-  end
-
-  def index_stash
-    env = Settings.instance.environment
-    Settings.instance.reload_from_db GlobalSetting.new
-    consumer_key = Settings.instance.stash_consumer_key
-    if consumer_key.to_s.empty?
-      consumer_key = create_random_value
-      GlobalSetting.set env, 'stash_consumer_key' , consumer_key
-    end
-    @globalsetting = {}
-    @globalsetting['stash_base_url'] = Settings.instance.stash_base_url
-    @globalsetting['stash_consumer_key'] = consumer_key
-    @globalsetting['stash_private_rsa'] = Settings.instance.stash_private_rsa
-  end
-
-  def index_mvnrepos
-    Settings.instance.reload_from_db GlobalSetting.new
-    @globalsetting = {}
-    @globalsetting['mvn_repo_1']          = Settings.instance.mvn_repo_1
-    @globalsetting['mvn_repo_1_type']     = Settings.instance.mvn_repo_1_type
-    @globalsetting['mvn_repo_1_user']     = Settings.instance.mvn_repo_1_user
-    @globalsetting['mvn_repo_1_password'] = Settings.instance.mvn_repo_1_password
-    @globalsetting['mvn_repo_1_schedule'] = Settings.instance.mvn_repo_1_schedule
-  end
-
-  def index_cocoapods
-    env = Settings.instance.environment
-    Settings.instance.reload_from_db GlobalSetting.new
-    @globalsetting = {}
-
-    @globalsetting['cocoapods_spec_git'] = Settings.instance.cocoapods_spec_git
-    @globalsetting['cocoapods_spec_url'] = Settings.instance.cocoapods_spec_url
-
-    @globalsetting['cocoapods_spec_git_2'] = ''
-    @globalsetting['cocoapods_spec_url_2'] = ''
-
-    @globalsetting['cocoapods_schedule'] = GlobalSetting.get(env, 'SCHEDULE_CRAWL_COCOAPODS')
-
-    begin
-      @globalsetting['cocoapods_spec_git_2'] = Settings.instance.cocoapods_spec_git_2
-      @globalsetting['cocoapods_spec_url_2'] = Settings.instance.cocoapods_spec_url_2
-    rescue => e
-      p "index_cocoapods: #{e.message}" # No big deal. It might be that there is no 2nd cocoapods repo!
-    end
-  end
-
-  def index_satis
-    env = Settings.instance.environment
-    @globalsetting = {}
-    @globalsetting['satis_base_url'] = GlobalSetting.get env, 'satis_base_url'
-    @globalsetting['satis_schedule'] = GlobalSetting.get env, 'satis_schedule'
-  end
-
-  def index_scheduler
-    env = Settings.instance.environment
-    @globalsetting = {}
-    @globalsetting['schedule_follow_notifications']         = GlobalSetting.get env, 'schedule_follow_notifications'
-    @globalsetting['schedule_project_notification_daily']   = GlobalSetting.get env, 'schedule_project_notification_daily'
-    @globalsetting['schedule_project_notification_weekly']  = GlobalSetting.get env, 'schedule_project_notification_weekly'
-    @globalsetting['schedule_project_notification_monthly'] = GlobalSetting.get env, 'schedule_project_notification_monthly'
-    @globalsetting['sync_db']                               = GlobalSetting.get env, 'sync_db'
-
-    @globalsetting['schedule_follow_notifications']         = '15 8 * * *'  if @globalsetting['schedule_follow_notifications'].to_s.empty?
-    @globalsetting['schedule_project_notification_daily']   = '15 9 * * *'  if @globalsetting['schedule_project_notification_daily'].to_s.empty?
-    @globalsetting['schedule_project_notification_weekly']  = '15 11 * * 2' if @globalsetting['schedule_project_notification_weekly'].to_s.empty?
-    @globalsetting['schedule_project_notification_monthly'] = '1 11 1 * *'  if @globalsetting['schedule_project_notification_monthly'].to_s.empty?
-  end
-
-
   def update
     env = Settings.instance.environment
     GlobalSetting.set env, 'server_url' , params[:server_url]
@@ -135,6 +50,15 @@ class Settings::GlobalsettingsController < ApplicationController
   end
 
 
+  def index_github
+    Settings.instance.reload_from_db GlobalSetting.new
+    @globalsetting = {}
+    @globalsetting['github_base_url'] = Settings.instance.github_base_url
+    @globalsetting['github_api_url'] = Settings.instance.github_api_url
+    @globalsetting['github_client_id'] = Settings.instance.github_client_id
+    @globalsetting['github_client_secret'] = Settings.instance.github_client_secret
+  end
+
   def update_github
     env = Settings.instance.environment
     GlobalSetting.set env, 'github_base_url'     , params[:github_base_url]
@@ -151,6 +75,14 @@ class Settings::GlobalsettingsController < ApplicationController
   end
 
 
+  def index_bitbucket
+    Settings.instance.reload_from_db GlobalSetting.new
+    @globalsetting = {}
+    @globalsetting['bitbucket_base_url'] = Settings.instance.bitbucket_base_url
+    @globalsetting['bitbucket_token'] = Settings.instance.bitbucket_token
+    @globalsetting['bitbucket_secret'] = Settings.instance.bitbucket_secret
+  end
+
   def update_bitbucket
     env = Settings.instance.environment
     GlobalSetting.set env, 'bitbucket_base_url', params[:bitbucket_base_url]
@@ -161,6 +93,20 @@ class Settings::GlobalsettingsController < ApplicationController
     redirect_to settings_bitbucketsettings_path
   end
 
+
+  def index_stash
+    env = Settings.instance.environment
+    Settings.instance.reload_from_db GlobalSetting.new
+    consumer_key = Settings.instance.stash_consumer_key
+    if consumer_key.to_s.empty?
+      consumer_key = create_random_value
+      GlobalSetting.set env, 'stash_consumer_key' , consumer_key
+    end
+    @globalsetting = {}
+    @globalsetting['stash_base_url'] = Settings.instance.stash_base_url
+    @globalsetting['stash_consumer_key'] = consumer_key
+    @globalsetting['stash_private_rsa'] = Settings.instance.stash_private_rsa
+  end
 
   def update_stash
     consumer_key = params[:stash_consumer_key]
@@ -177,15 +123,15 @@ class Settings::GlobalsettingsController < ApplicationController
   end
 
 
-  def update_satis
-    env = Settings.instance.environment
-    GlobalSetting.set env, 'satis_base_url'     , params[:satis_base_url]
-    GlobalSetting.set env, 'satis_schedule'     , params[:satis_schedule]
+  def index_mvnrepos
     Settings.instance.reload_from_db GlobalSetting.new
-    flash[:success] = "Satis Settings changed successfully"
-    redirect_to settings_satis_path
+    @globalsetting = {}
+    @globalsetting['mvn_repo_1']          = Settings.instance.mvn_repo_1
+    @globalsetting['mvn_repo_1_type']     = Settings.instance.mvn_repo_1_type
+    @globalsetting['mvn_repo_1_user']     = Settings.instance.mvn_repo_1_user
+    @globalsetting['mvn_repo_1_password'] = Settings.instance.mvn_repo_1_password
+    @globalsetting['mvn_repo_1_schedule'] = Settings.instance.mvn_repo_1_schedule
   end
-
 
   def update_mvnrepos
     env = Settings.instance.environment
@@ -206,6 +152,27 @@ class Settings::GlobalsettingsController < ApplicationController
   end
 
 
+  def index_cocoapods
+    env = Settings.instance.environment
+    Settings.instance.reload_from_db GlobalSetting.new
+    @globalsetting = {}
+
+    @globalsetting['cocoapods_spec_git'] = Settings.instance.cocoapods_spec_git
+    @globalsetting['cocoapods_spec_url'] = Settings.instance.cocoapods_spec_url
+
+    @globalsetting['cocoapods_spec_git_2'] = ''
+    @globalsetting['cocoapods_spec_url_2'] = ''
+
+    @globalsetting['cocoapods_schedule'] = GlobalSetting.get(env, 'SCHEDULE_CRAWL_COCOAPODS')
+
+    begin
+      @globalsetting['cocoapods_spec_git_2'] = Settings.instance.cocoapods_spec_git_2
+      @globalsetting['cocoapods_spec_url_2'] = Settings.instance.cocoapods_spec_url_2
+    rescue => e
+      p "index_cocoapods: #{e.message}" # No big deal. It might be that there is no 2nd cocoapods repo!
+    end
+  end
+
   def update_cocoapods
     env = Settings.instance.environment
 
@@ -222,6 +189,38 @@ class Settings::GlobalsettingsController < ApplicationController
     redirect_to settings_cocoapods_path
   end
 
+
+  def index_satis
+    env = Settings.instance.environment
+    @globalsetting = {}
+    @globalsetting['satis_base_url'] = GlobalSetting.get env, 'satis_base_url'
+    @globalsetting['satis_schedule'] = GlobalSetting.get env, 'satis_schedule'
+  end
+
+  def update_satis
+    env = Settings.instance.environment
+    GlobalSetting.set env, 'satis_base_url'     , params[:satis_base_url]
+    GlobalSetting.set env, 'satis_schedule'     , params[:satis_schedule]
+    Settings.instance.reload_from_db GlobalSetting.new
+    flash[:success] = "Satis Settings changed successfully"
+    redirect_to settings_satis_path
+  end
+
+
+  def index_scheduler
+    env = Settings.instance.environment
+    @globalsetting = {}
+    @globalsetting['schedule_follow_notifications']         = GlobalSetting.get env, 'schedule_follow_notifications'
+    @globalsetting['schedule_project_notification_daily']   = GlobalSetting.get env, 'schedule_project_notification_daily'
+    @globalsetting['schedule_project_notification_weekly']  = GlobalSetting.get env, 'schedule_project_notification_weekly'
+    @globalsetting['schedule_project_notification_monthly'] = GlobalSetting.get env, 'schedule_project_notification_monthly'
+    @globalsetting['sync_db']                               = GlobalSetting.get env, 'sync_db'
+
+    @globalsetting['schedule_follow_notifications']         = '15 8 * * *'  if @globalsetting['schedule_follow_notifications'].to_s.empty?
+    @globalsetting['schedule_project_notification_daily']   = '15 9 * * *'  if @globalsetting['schedule_project_notification_daily'].to_s.empty?
+    @globalsetting['schedule_project_notification_weekly']  = '15 11 * * 2' if @globalsetting['schedule_project_notification_weekly'].to_s.empty?
+    @globalsetting['schedule_project_notification_monthly'] = '1 11 1 * *'  if @globalsetting['schedule_project_notification_monthly'].to_s.empty?
+  end
 
   def update_scheduler
     env = Settings.instance.environment
