@@ -50,6 +50,31 @@ class Settings::GlobalsettingsController < ApplicationController
   end
 
 
+  def index_activation
+    env = Settings.instance.environment
+    @globalsetting = {}
+    @globalsetting['api_key']         = GlobalSetting.get env, 'api_key'
+    @globalsetting['e_projects']      = GlobalSetting.get env, 'e_projects'
+    @globalsetting['activation_date'] = GlobalSetting.get env, 'activation_date'
+  end
+
+  def update_activation
+    env = Settings.instance.environment
+    api_key = params[:api_key]
+    resp = EnterpriseService.activate!(api_key)
+    if EnterpriseService.activate!(api_key) == true
+      flash[:success] = "API Key validated successfully!"
+    else
+      flash[:error] = "The API Key couldn't be validated. Please ensure that the VersionEye Enterprise instance is connected to the internet."
+    end
+    @globalsetting = {}
+    @globalsetting['api_key']         = GlobalSetting.get env, 'api_key'
+    @globalsetting['e_projects']      = GlobalSetting.get env, 'e_projects'
+    @globalsetting['activation_date'] = GlobalSetting.get env, 'activation_date'
+    redirect_to settings_activation_path
+  end
+
+
   def index_github
     Settings.instance.reload_from_db GlobalSetting.new
     @globalsetting = {}

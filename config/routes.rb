@@ -102,6 +102,9 @@ Versioneye::Application.routes.draw do
     get  'globalsettings'      , :to => 'globalsettings#index'
     post 'globalsettings'      , :to => 'globalsettings#update'
 
+    get  'activation'          , :to => 'globalsettings#index_activation'
+    post 'activation'          , :to => 'globalsettings#update_activation'
+
     get  'githubsettings'      , :to => 'globalsettings#index_github'
     post 'githubsettings'      , :to => 'globalsettings#update_github'
 
