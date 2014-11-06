@@ -177,6 +177,9 @@ class ProductsController < ApplicationController
     license         = params[:license]
     license_link    = params[:licenseLink]
     license_version = params[:licenseVersion]
+    if license_version.to_s.eql?("ALL")
+      license_version = nil
+    end
     twitter_name    = params[:twitter_name]
     link_url        = params[:link_url]
     link_name       = params[:link_name]
@@ -193,9 +196,8 @@ class ProductsController < ApplicationController
       @product.save
       add_status_comment(@product, current_user, "description")
       flash[:success] = "Description updated."
-    elsif license && !license.empty?
-      license = License.new({:name => license, :url => license_link, :language => @product.language, :prod_key => @product.prod_key, :version => license_version})
-      license.save
+    elsif !license.to_s.empty?
+      license = License.find_or_create @product.language, @product.prod_key, license_version, license, license_link
       add_status_comment(@product, current_user, "license", license.name)
       flash[:success] = "License updated."
     elsif twitter_name && !twitter_name.empty?
@@ -221,7 +223,7 @@ class ProductsController < ApplicationController
     key      = Product.decode_prod_key params[:key]
     link_url = params[:link_url]
     @product = Product.fetch_product lang, key
-    Versionlink.remove_project_link( lang, key, link_url, true )
+    Versionlink.remove_project_link( lang, key, link_url )
     flash[:success] = "Link removed."
     redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
   end

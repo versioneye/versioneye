@@ -34,11 +34,14 @@
             <%= label_tag(:licenseVersion, "Belongs to this version of #{@product.name}") %>
           </div>
           <div class="inputCel" style="width: 450px;">
-            <%= text_field_tag :licenseVersion, "", :class => "round", :style=>"width: 420px;" %>
+            <select name="licenseVersion" id="licenseVersion" >
+              <% @product.versions.each do |version| %>
+                <option value="<%= version.to_s %>" ><%= version.to_s %></option>
+              <% end %>
+              <option value="ALL" >ALL Versions</option>
+            </select>
           </div>
         </div>
-
-
         <div class="inputCel" style="width: 450px;">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>
         </div>
@@ -46,7 +49,7 @@
     </div>
 
     <div class="boxContainer">
-      <% licenses = @product.licenses(true) %>
+      <% licenses = @product.licenses_all %>
       <% if licenses && !licenses.empty? %>
 
         <table>
@@ -56,7 +59,7 @@
           </colgroup>
 
           <% licenses.each do |license| %>
-            <% if license.url && !license.url.empty? %>
+            <% if !license.name.to_s.empty? %>
               <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/delete_license", :method => "post") do  %>
               <tr>
                 <td>
@@ -64,7 +67,11 @@
                 </td>
                 <td>
                   <input id="license_id" name="license_id" type="hidden" value="<%= license._id.to_s %>" />
-                  <a href="<%= license.url %>" target="license"><%= license.name %></a> for version <%= license.version %>
+                  <% if !license.link.to_s.empty? %>
+                    <a href="<%= license.url %>" target="license"><%= license.name %></a> for version <%= license.version %>
+                  <% else %>
+                    "<%= license.name %>" for version <%= license.version %>
+                  <% end %>
                 </td>
               </tr>
               <% end %>
