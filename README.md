@@ -71,6 +71,15 @@ For memcache we are using the dalli GEM. It requires at least memcache 1.4. For 
 we are using kgio. You can find a quick tutorial to Rails an Memcache on Heroku: <https://devcenter.heroku.com/articles/building-a-rails-3-application-with-the-memcache-addon>.
 
 
+## React.JS
+
+for autocompiling the JSX files in ReactJS use the `jsx` node package.
+
+```
+jsx --watch src/ build/
+```
+
+
 ## Configuration
 
 VersionEye is using many 3rd part services in the Internet. Services like GitHub, Bitbucket, Amazon and so on. All Access Tokens and Access Keys are centralized in `config/settings.yml`. If some keys are missing just add your own and don't commit it back. Inside the application you can access all values over the "Settings" class like this:
