@@ -121,7 +121,7 @@
 
 </div>
 
-<% if signed_in_admin? %>
+<% if maintainer?( @product ) %>
   <div  >
     <%= link_to 'edit', product_edit_path %>
   </div>

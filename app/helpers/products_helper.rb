@@ -269,4 +269,29 @@ module ProductsHelper
     dependency.name
   end
 
+  def maintainer?( product = nil )
+    return false if current_user.nil?
+    return false if current_user.maintainer.nil? || current_user.maintainer.empty?
+
+    product = find_product if product.nil?
+    return false if product.nil?
+
+    @product = product
+
+    return true  if current_user.admin == true
+    return true if current_user.maintainer.include?("ALL")
+    key = "#{product.language}::#{product.prod_key}"
+    return true if current_user.maintainer.inlculde?(key)
+
+    return false
+  end
+
+  private
+
+    def find_product
+      lang    = Product.decode_language params[:lang]
+      key     = Product.decode_prod_key params[:key]
+      Product.fetch_product lang, key
+    end
+
 end
