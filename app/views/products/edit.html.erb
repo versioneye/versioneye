@@ -6,24 +6,17 @@
 <div class="span8" >
 
   <div class="row content_header_def" >
-    Edit <%= @product.name %>
+    Edit description of <b><%= @product.name %></b>
   </div>
 
   <div class="span8 content" >
-    <div>
-      You are not allowed to edit crawled data. But you can add additional data.
-    </div>
-    <div class="boxHeader">
-      Description
-    </div>
+    <p>
+      You are not allowed to edit crawled data. But you can add additional information.
+    </p>
     <% if @product.description && !@product.description.empty? %>
       <div class="boxContainer" >
         <div class="meta-text-small">[ crawled data ]</div>
-        <% if @product.description.include? "\n" %>
-          <%= @product.description.gsub!("\n", "<br/>").html_safe %>
-        <% else %>
-          <%= @product.description %>
-        <% end %>
+        <%= @product.description.gsub("\n", "<br/>").html_safe %>
       </div>
     <% end %>
     <br/>
