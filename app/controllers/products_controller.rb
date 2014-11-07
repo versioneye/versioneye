@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
   require 'will_paginate/array'
 
   before_filter :authenticate                  , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license]
-  before_filter :admin_user                    , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license]
+  before_filter :maintainer?                   , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license]
   before_filter :check_redirects_package       , :only => [:show]
   before_filter :check_redirects_package_visual, :only => [:show_visual]
   before_filter :check_refer                   , :only => [:index]
@@ -155,21 +155,12 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    lang     = Product.decode_language( params[:lang] )
-    key      = Product.decode_prod_key params[:key]
-    @product = Product.fetch_product lang, key
   end
 
   def edit_links
-    lang     = Product.decode_language( params[:lang] )
-    key      = Product.decode_prod_key params[:key]
-    @product = Product.fetch_product lang, key
   end
 
   def edit_licenses
-    lang     = Product.decode_language( params[:lang] )
-    key      = Product.decode_prod_key params[:key]
-    @product = Product.fetch_product lang, key
   end
 
   def update
@@ -183,11 +174,8 @@ class ProductsController < ApplicationController
     twitter_name    = params[:twitter_name]
     link_url        = params[:link_url]
     link_name       = params[:link_name]
-    lang            = Product.decode_language( params[:lang] )
-    key             = Product.decode_prod_key params[:key]
-    @product = Product.fetch_product lang, key
-    if @product.nil? || !current_user.admin
-      flash[:success] = "An error occured. Please try again later."
+    if @product.nil?
+      flash[:error] = "An error occured. Please try again later."
       redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
       return
     end
@@ -222,7 +210,6 @@ class ProductsController < ApplicationController
     lang     = Product.decode_language( params[:lang] )
     key      = Product.decode_prod_key params[:key]
     link_url = params[:link_url]
-    @product = Product.fetch_product lang, key
     Versionlink.remove_project_link( lang, key, link_url )
     flash[:success] = "Link removed."
     redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
@@ -230,9 +217,6 @@ class ProductsController < ApplicationController
 
   def delete_license
     license_id = params[:license_id]
-    lang     = Product.decode_language( params[:lang] )
-    key      = Product.decode_prod_key params[:key]
-    @product = Product.fetch_product lang, key
     license = License.find( license_id )
     if license
       license.remove
