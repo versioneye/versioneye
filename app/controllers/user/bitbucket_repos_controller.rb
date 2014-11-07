@@ -49,6 +49,23 @@ class User::BitbucketReposController < User::ScmReposController
   end
 
 
+  def reimport
+    owner = params[:owner]
+    repo  = params[:repo]
+    fullname = "#{owner}/#{repo}"
+    repos = BitbucketRepo.by_user( current_user ).by_fullname( fullname )
+    repos.each do |repo|
+      repo.branches = nil
+      repo.project_files = nil
+      repo.save
+    end
+    redirect_to :back
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join("\n")
+  end
+
+
   def repo_files
     task_status = ''
     owner = params[:owner]

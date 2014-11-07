@@ -89,10 +89,15 @@ var TaskStatusMessage = React.createClass({displayName: 'TaskStatusMessage',
       return (
         React.DOM.div(null, React.DOM.img({src: "/assets/progress.gif", alt: "work in progress"}), " Import is running ... be patient and drink a soda.")
       );
+    } else if (this.props.show_reimport_link == "true")  {
+      url = "/user/projects/" + this.props.scm + "/" + this.props.repo_fullname + "/reimport";
+      return (
+        React.DOM.p(null, React.DOM.a({href: url}, "Update meta-data about this repository"), React.DOM.br(null), React.DOM.br(null))
+      );
     } else {
       return (
         React.DOM.div(null)
-      );
+      )
     }
   }
 });
