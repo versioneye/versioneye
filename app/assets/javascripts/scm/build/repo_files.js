@@ -56,8 +56,9 @@ var RepoFiles = React.createClass({displayName: 'RepoFiles',
     });
 
     return (
-      React.DOM.div(null, 
-        TaskStatusMessage({data: this.state.task_status}), 
+      React.DOM.div({id: "branches"}, 
+
+        TaskStatusMessage({data: this.state.task_status, repo_fullname: repo_fullname, scm: scm, show_reimport_link: "true"}), 
 
         scm_branches
 

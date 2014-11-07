@@ -56,8 +56,9 @@ var RepoFiles = React.createClass({
     });
 
     return (
-      <div >
-        <TaskStatusMessage data={this.state.task_status} />
+      <div id="branches" >
+
+        <TaskStatusMessage data={this.state.task_status} repo_fullname={repo_fullname} scm={scm} show_reimport_link="true" />
 
         {scm_branches}
 
