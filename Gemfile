@@ -17,13 +17,13 @@ gem 'ruby_regex'           , '~> 0.1.0'
 gem 'semverly'             , '~> 1.0.0'
 gem 'cocoapods-core'       , '~> 0.34.0.rc2'
 gem 'stripe'               , '~> 1.14.0'
-gem 'bunny'                , '~> 1.4.0'
+gem 'bunny'                , '~> 1.6.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
 # gem "gelf"
 # gem "lograge"
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v6.14.0'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v6.14.1'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :development do
