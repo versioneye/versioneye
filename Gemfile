@@ -32,7 +32,7 @@ group :development do
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'psych'             , '~> 2.0.5'
   gem 'terminal-notifier' , '~> 1.6.0'
-  gem 'fakes3'            , '~> 0.1.5.2'
+  gem 'fakes3'            , '~> 0.1.6.0'
   # gem 'debugger'          , '~> 1.6.0'
   # gem 'irbtools'          , '~> 1.6.1'
 end
@@ -55,11 +55,11 @@ group :test do
   gem 'rspec-mocks'       , '~> 3.1.0'
   gem 'capybara'          , '~> 2.4.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
-  gem 'selenium-webdriver', '~> 2.43.0'
+  gem 'selenium-webdriver', '~> 2.44.0'
   gem 'vcr'               , '~> 2.9.2',  :require => false
-  gem 'webmock'           , '~> 1.18.0', :require => false
+  gem 'webmock'           , '~> 1.20.0', :require => false
   gem "fakeweb"           , '~> 1.3'
   gem 'database_cleaner'  , '~> 1.3.0'
-  gem 'factory_girl'      , '~> 4.4.0'
-  gem 'factory_girl_rails', '~> 4.4.0'
+  gem 'factory_girl'      , '~> 4.5.0'
+  gem 'factory_girl_rails', '~> 4.5.0'
 end
