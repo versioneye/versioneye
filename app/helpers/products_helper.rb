@@ -280,8 +280,8 @@ module ProductsHelper
 
     return true  if current_user.admin == true
     return true if current_user.maintainer.include?("ALL")
-    key = "#{product.language}::#{product.prod_key}"
-    return true if current_user.maintainer.inlculde?(key)
+    key = "#{product.language}\:\:#{product.prod_key}"
+    return true if current_user.maintainer.include?(key)
 
     return false
   end
