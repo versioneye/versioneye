@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: d5ef50469d8c4eab3c10977404adace8de5ec35a
-  tag: v6.14.1
+  revision: bfa1ea69278683bbb26117146aaa371e109b5e7d
+  tag: v6.15.0
   specs:
-    versioneye-core (6.14.1)
+    versioneye-core (6.15.0)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       bundler (= 1.7.4)
@@ -70,7 +70,7 @@ GEM
       sass (~> 3.3)
       thor
     builder (3.0.4)
-    bunny (1.6.2)
+    bunny (1.6.3)
       amq-protocol (>= 1.9.2)
     capistrano (3.2.1)
       i18n
@@ -302,7 +302,7 @@ GEM
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     vcr (2.9.3)
-    webmock (1.20.3)
+    webmock (1.20.4)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
     websocket (1.2.1)
