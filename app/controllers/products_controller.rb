@@ -185,16 +185,16 @@ class ProductsController < ApplicationController
     if description && !description.empty?
       @product.description_manual = description
       @product.save
-      add_status_comment(@product, current_user, "description")
+      Auditlog.add current_user, 'Product', @product.id.to_s, "Updated description. New Value: #{description}"
       flash[:success] = "Description updated."
     elsif !license.to_s.empty?
       license = License.find_or_create @product.language, @product.prod_key, license_version, license, license_link
-      add_status_comment(@product, current_user, "license", license.name)
+      Auditlog.add current_user, 'Product', @product.id.to_s, "Added License #{license}"
       flash[:success] = "License updated."
     elsif twitter_name && !twitter_name.empty?
       @product.twitter_name = twitter_name
       @product.save
-      add_status_comment(@product, current_user, "twitter")
+      Auditlog.add current_user, 'Product', @product.id.to_s, "Added Twitter name #{twitter_name}"
       flash[:success] = "Twitter name updated."
     elsif link_url && !link_url.empty?
       versionlink = Versionlink.new
@@ -204,6 +204,7 @@ class ProductsController < ApplicationController
       versionlink.name = link_name
       versionlink.manual = true
       versionlink.save
+      Auditlog.add current_user, 'Product', @product.id.to_s, "Added Link #{link_url}."
       flash[:success] = "New link added."
     end
     redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
@@ -214,6 +215,7 @@ class ProductsController < ApplicationController
     key      = Product.decode_prod_key params[:key]
     link_url = params[:link_url]
     Versionlink.remove_project_link( lang, key, link_url )
+    Auditlog.add current_user, 'Product', @product.id.to_s, "Remove Link #{link_url}"
     flash[:success] = "Link removed."
     redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
   end
@@ -222,6 +224,7 @@ class ProductsController < ApplicationController
     license_id = params[:license_id]
     license = License.find( license_id )
     if license
+      Auditlog.add current_user, 'Product', @product.id.to_s, "Remove License #{license.name}"
       license.remove
       flash[:success] = "License removed."
     end
@@ -230,9 +233,16 @@ class ProductsController < ApplicationController
 
   def delete_version
     if @product.remove_version params[:version]
+      Auditlog.add current_user, 'Product', @product.id.to_s, "Remove Version #{params[:version]}"
       flash[:success] = "Version removed."
     end
     redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
+  end
+
+  def auditlogs
+    language    = Product.decode_language params[:lang]
+    product_key = Product.decode_prod_key params[:key]
+    @product    = fetch_product language, product_key
   end
 
   def follow
@@ -321,26 +331,6 @@ class ProductsController < ApplicationController
         followers: product[:followers],
         url: product.to_url_path
       }
-    end
-
-    def add_status_comment(product, user, type, license = "")
-      comment             = Versioncomment.new
-      comment.user_id     = user.id
-      comment.product_key = product.prod_key
-      comment.prod_name   = product.name
-      comment.language    = product.language
-      comment.version     = product.version
-      if type.eql?("description")
-        comment.comment = "UPDATE: #{user.fullname} updated the description"
-        comment.update_type = type
-      elsif type.eql?("license")
-        comment.comment = "UPDATE: #{user.fullname} updated the license to #{license}"
-        comment.update_type = type
-      elsif type.eql?("twitter")
-        comment.comment = "UPDATE: #{user.fullname} updated the Twitter name to #{@product.twitter_name}"
-        comment.update_type = type
-      end
-      comment.save
     end
 
     def admin_user
