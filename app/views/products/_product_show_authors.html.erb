@@ -8,7 +8,7 @@
   </div>
   <div class="box content" >
     <% authors.each do |author| %>
-      <div style="border-bottom: 1px dotted gray;"><%= author.name %></div>
+      <%= gravatar_image_tag( author.email, :alt => author.name, :title => author.name, :style => 'width: 45px;', :gravatar => { :size => 45, :default => "#{Settings.instance.server_url}/profile_icon.png" } ) %>
     <% end %>
   </div>
 <% end %>
