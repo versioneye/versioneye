@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
   require 'will_paginate/array'
 
   before_filter :authenticate                  , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license]
-  before_filter :maintainer?                   , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license]
+  before_filter :maintainer?                   , :only => [:edit, :edit_links, :edit_licenses, :edit_versions, :update, :delete_link, :delete_license, :delete_version]
   before_filter :check_redirects_package       , :only => [:show]
   before_filter :check_redirects_package_visual, :only => [:show_visual]
   before_filter :check_refer                   , :only => [:index]
@@ -163,6 +163,9 @@ class ProductsController < ApplicationController
   def edit_licenses
   end
 
+  def edit_versions
+  end
+
   def update
     description     = params[:description_manual]
     license         = params[:license]
@@ -221,6 +224,13 @@ class ProductsController < ApplicationController
     if license
       license.remove
       flash[:success] = "License removed."
+    end
+    redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
+  end
+
+  def delete_version
+    if @product.remove_version params[:version]
+      flash[:success] = "Version removed."
     end
     redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
   end

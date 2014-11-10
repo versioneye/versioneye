@@ -1,0 +1,47 @@
+<div class="span3" >
+  <%= render 'products/helpers/edit_navi' %>
+</div>
+
+<div class="span8" >
+
+  <div class="row content_header_def" >
+    Edit <b><%= @product.name %></b>
+  </div>
+
+  <div class="span8 content" >
+
+    <span>
+      Caution! Please delete only versions which are removed from the corresponding package manager as well.
+      <br/><br/>
+    </span>
+
+    <div class="boxContainer">
+      <% versions = @product.versions %>
+      <% if !versions.empty? %>
+        <table>
+          <colgroup>
+            <col width="80px;" />
+            <col width="*" />
+          </colgroup>
+          <% versions.each do |version| %>
+            <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/delete_version", :method => "post") do  %>
+              <tr>
+                <td>
+                  <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+                </td>
+                <td>
+                  <input id="version" name="version" type="hidden" value="<%= version.to_s %>" />
+                  <a href="<%= version.to_s %>" target="new"><%= version.to_s %></a>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </table>
+        <br/>
+        <br/>
+      <% end %>
+    </div>
+
+  <div>
+
+</div>
