@@ -207,7 +207,7 @@ class ProductsController < ApplicationController
       Auditlog.add current_user, 'Product', @product.id.to_s, "Added Link #{link_url}."
       flash[:success] = "New link added."
     end
-    redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
+    redirect_to :back
   end
 
   def delete_link
@@ -217,18 +217,18 @@ class ProductsController < ApplicationController
     Versionlink.remove_project_link( lang, key, link_url )
     Auditlog.add current_user, 'Product', @product.id.to_s, "Remove Link #{link_url}"
     flash[:success] = "Link removed."
-    redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
+    redirect_to :back
   end
 
   def delete_license
     license_id = params[:license_id]
     license = License.find( license_id )
     if license
-      Auditlog.add current_user, 'Product', @product.id.to_s, "Remove License #{license.name}"
+      Auditlog.add current_user, 'Product', @product.id.to_s, "Remove License #{license.name} - #{license.to_s}"
       license.remove
       flash[:success] = "License removed."
     end
-    redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
+    redirect_to :back
   end
 
   def delete_version
@@ -236,7 +236,7 @@ class ProductsController < ApplicationController
       Auditlog.add current_user, 'Product', @product.id.to_s, "Remove Version #{params[:version]}"
       flash[:success] = "Version removed."
     end
-    redirect_to package_version_path(@product.language_esc, @product.to_param, @product.version)
+    redirect_to :back
   end
 
   def auditlogs

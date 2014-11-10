@@ -50,7 +50,7 @@
             <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/delete_link", :method => "post") do  %>
             <tr>
               <td>
-                <button type="submit" class="btn btn-danger" >Delete</button>
+                <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
               </td>
               <td>
                 <input id="link_url" name="link_url" type="hidden" value="<%= link.get_link %>" />

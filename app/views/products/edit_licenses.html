@@ -63,7 +63,7 @@
               <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/delete_license", :method => "post") do  %>
               <tr>
                 <td>
-                  <button type="submit" class="btn btn-danger" >Delete</button>
+                  <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
                 </td>
                 <td>
                   <input id="license_id" name="license_id" type="hidden" value="<%= license._id.to_s %>" />
