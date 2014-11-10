@@ -338,6 +338,7 @@ Versioneye::Application.routes.draw do
     get   '/:lang/:key/:version/visual_dependencies', :to => 'products#show_visual', :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/, :version => /[^\/]+/ }, :as => 'visual_dependencies'
 
     get   '/:lang/:key'                      , :to => 'products#show', :as => 'products',        :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }
+    get   '/:lang/:key/auditlogs'            , :to => 'products#auditlogs',                      :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_auditlogs'
     get   '/:lang/:key/edit'                 , :to => 'products#edit',                           :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_edit'
     get   '/:lang/:key/edit_links'           , :to => 'products#edit_links',                     :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_edit_links'
     get   '/:lang/:key/edit_licenses'        , :to => 'products#edit_licenses',                  :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_edit_licenses'
