@@ -55,6 +55,12 @@
 
   </div>
 
+  <div class="span8 content" >
+    <% @license_whitelist.auditlogs.each do |audit| %>
+      <%= render :partial => 'shared/auditlog', :locals => {:audit => audit} %>
+    <% end %>
+  </div>
+
 </div>
 
 <script>
