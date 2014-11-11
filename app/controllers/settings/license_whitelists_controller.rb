@@ -41,6 +41,8 @@ class Settings::LicenseWhitelistsController < ApplicationController
   def add
     resp = LicenseWhitelistService.add current_user, params[:list], params[:license_name]
     if resp
+      lwl = LicenseWhitelistService.fetch_by current_user, params[:list]
+      Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Added \"#{params[:license_name]}\" to \"#{params[:list]}\""
       flash[:success] = "License added successfully."
     else
       flash[:error] = "An error occured. Not able to add the license to the list."
@@ -55,6 +57,8 @@ class Settings::LicenseWhitelistsController < ApplicationController
   def remove
     resp = LicenseWhitelistService.remove current_user, params[:list], params[:name]
     if resp
+      lwl = LicenseWhitelistService.fetch_by current_user, params[:list]
+      Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Removed \"#{params[:name]}\" from \"#{params[:list]}\""
       flash[:success] = "License removed successfully."
     else
       flash[:error] = "An error occured. Not able to remove the license from the list."
