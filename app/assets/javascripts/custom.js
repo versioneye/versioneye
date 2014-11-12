@@ -235,10 +235,8 @@ function muteProjectDependency(btn){
 
   var api_url = "/user/projects/" + btn.data('projectId') + "/mute_dependency";
   var dep_data = {
-    "language": btn.data('language'),
-    "prod_key": btn.data('prodKey')
+    "dependency_id": btn.data('dependencyId')
   };
-
   var jqxhr = jQuery.post(api_url, dep_data)
     .done(function(data){
       console.debug(data);
@@ -255,8 +253,7 @@ function demuteProjectDependency(btn){
 
   var api_url = "/user/projects/" + btn.data('projectId') + "/demute_dependency";
   var dep_data = {
-    "language": btn.data('language'),
-    "prod_key": btn.data('prodKey')
+    "dependency_id": btn.data('dependencyId')
   };
   var jqxhr = jQuery.post(api_url, dep_data)
     .done(function(data){

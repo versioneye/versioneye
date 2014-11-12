@@ -4,16 +4,13 @@
   <button class = "btn btn-link btn-mini btn-mute-version mute-off"
           title = "Mute alerts for this version"
           data-project-id = "<%= dep.project[:_id].to_s %>"
-          data-language = "<%= dep[:language] %>"
-          data-prod-key = "<%= dep[:prod_key] %>">
+          data-dependency-id = "<%= dep[:_id].to_s %>" >
     <i class = "dep-icon icon-volume-up"></i>
   </button>
 <% elsif dep[:muted] %>
   <button class = "btn btn-link btn-mini btn-mute-version mute-on"
           title = "Allow notification for this version."
-          data-project-id = "<%= dep.project[:_id].to_s %>"
-          data-language = "<%= dep[:language] %>"
-          data-prod-key = "<%= dep[:prod_key] %>">
+          data-project-id = "<%= dep.project[:_id].to_s %>" >
     <i class = "dep-icon icon-volume-off"></i>
   </button>
 <% end %>

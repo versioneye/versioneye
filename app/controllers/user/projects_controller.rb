@@ -303,32 +303,24 @@ class User::ProjectsController < ApplicationController
   end
 
   def mute_dependency
-    render update_project_dependency(params, {muted: true})
+    project_id    = params[:id]
+    dependency_id = params[:dependency_id]
+    muted = ProjectdependencyService.mute! project_id, dependency_id, true
+    dependency = Projectdependency.find_by_id dependency_id
+    # render json: ["dependency_id": dependency_id, "outdated": dependency.outdated, "muted": muted]
+    render json: params
   end
 
   def demute_dependency
-    render update_project_dependency(params, {muted: false})
+    project_id    = params[:id]
+    dependency_id = params[:dependency_id]
+    muted = ProjectdependencyService.mute! project_id, dependency_id, false
+    dependency = Projectdependency.find_by_id dependency_id
+    # render json: ["dependency_id": dependency_id, "outdated": dependency.outdated, "muted": muted]
+    render json: params
   end
 
   private
-
-    def update_project_dependency(params, update_map)
-      project_id = params[:id]
-      lang = Product.decode_language(params[:language])
-      prod_key = Product.decode_prod_key(params[:prod_key])
-      project = Project.find_by_id(project_id)
-      if project.nil?
-        return {text: "project with id `#{project_id}` doesnt exists", status: 400}
-      end
-
-      dep = project.projectdependencies.where(language: lang, prod_key: prod_key).first
-      if dep.nil?
-        return {text: "Projects doesnt have dependency with product: `#{lang}/#{prod_key}`", status: 400}
-      end
-
-      dep.update_attributes(update_map)
-      {json: params}
-    end
 
     def fetch_project( params )
       file        = params[:upload]
