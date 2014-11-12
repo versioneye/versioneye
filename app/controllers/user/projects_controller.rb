@@ -307,8 +307,7 @@ class User::ProjectsController < ApplicationController
     dependency_id = params[:dependency_id]
     muted = ProjectdependencyService.mute! project_id, dependency_id, true
     dependency = Projectdependency.find_by_id dependency_id
-    # render json: ["dependency_id": dependency_id, "outdated": dependency.outdated, "muted": muted]
-    render json: params
+    render json: {"dependency_id" => dependency_id, "outdated" => dependency.outdated, "muted" => muted}
   end
 
   def demute_dependency
@@ -316,8 +315,7 @@ class User::ProjectsController < ApplicationController
     dependency_id = params[:dependency_id]
     muted = ProjectdependencyService.mute! project_id, dependency_id, false
     dependency = Projectdependency.find_by_id dependency_id
-    # render json: ["dependency_id": dependency_id, "outdated": dependency.outdated, "muted": muted]
-    render json: params
+    render json: {"dependency_id" => dependency_id, "outdated" => dependency.outdated, "muted" => muted}
   end
 
   private

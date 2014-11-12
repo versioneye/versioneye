@@ -217,6 +217,8 @@ function setCookie(name, value, days){
   document.cookie = name +"=" + value + ";expires=" + new_date + ";path=/";
 }
 
+
+
 function showMuteLoader(btn){
   console.debug("Loading");
   btn.addClass("disabled");
@@ -240,6 +242,7 @@ function muteProjectDependency(btn){
   var jqxhr = jQuery.post(api_url, dep_data)
     .done(function(data){
       console.debug(data);
+      updateColorForPD( data.dependency_id, data.outdated )
       btn.removeClass("mute-off").addClass("mute-on");
       btn.find("i.dep-icon").removeClass("icon-volume-up").addClass("icon-volume-off");
     })
@@ -258,6 +261,7 @@ function demuteProjectDependency(btn){
   var jqxhr = jQuery.post(api_url, dep_data)
     .done(function(data){
       console.debug(data);
+      updateColorForPD( data.dependency_id, data.outdated )
       btn.removeClass("mute-on").addClass("mute-off");
       btn.find("i.dep-icon").removeClass("icon-volume-off").addClass("icon-volume-up")
     })
@@ -280,6 +284,16 @@ function toggleProjectDependencyMute(ev){
 
   return false;
 }
+
+function updateColorForPD(projectdependency_id, outdated){
+  rows = jQuery("#" + projectdependency_id + "__row")
+  if (outdated == true){
+    rows[0].className = "flash error"
+  } else {
+    rows[0].className = "flash success"
+  }
+}
+
 
 function preventSubmit(id, name){
   element = document.getElementById(id)
