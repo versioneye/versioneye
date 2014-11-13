@@ -80,6 +80,16 @@ module SessionsHelper
     nil
   end
 
+  def set_gh_scope scope = 'repo,user:email'
+    cookies.permanent.signed[:gh_scope] = scope
+  end
+
+  def get_gh_scope
+    scope = cookies.signed[:gh_scope]
+    scope = 'user:email' if scope.to_s.empty?
+    scope
+  end
+
   private
 
     def user_from_remember_token

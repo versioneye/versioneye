@@ -10,6 +10,7 @@ class Auth::GithubController < ApplicationController
 
     if signed_in?
       update_user json_user, token
+      set_github_scope token
       redirect_to settings_connect_path
       return
     end
@@ -176,6 +177,21 @@ class Auth::GithubController < ApplicationController
       rpath = user_projects_github_repositories_path
       rpath = user_projects_path if user.projects && !user.projects.empty?
       redirect_back_or( rpath )
+    end
+
+
+    def set_github_scope token
+      scopes = Github.oauth_scopes( token )
+      if scopes.is_a? Array
+        set_gh_scope scopes.join ','
+        return nil
+      end
+
+      if scopes.is_a?(String) && scopes.to_s.empty?
+        return nil
+      end
+
+      set_gh_scope scopes
     end
 
 end

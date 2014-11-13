@@ -13,6 +13,7 @@ class Settings::ConnectController < ApplicationController
       user.github_token = nil
       user.github_scope = nil
       user.github_repos.delete_all
+      cookies.delete(:gh_scope)
     elsif service && service.eql?('bitbucket')
       user[:bitbucket_token] = nil
       user[:bitbucket_scope] = nil
