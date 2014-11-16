@@ -6,9 +6,9 @@
         <div class="pull-left l_margin_top_15">
           <% if signed_in? %>
             <% if Rails.env.enterprise? %>
-              <%= link_to image_tag('logos/versioneye-transparent.png'), settings_emails_path %>
+              <%= link_to image_tag('logos/versioneye-transparent.png'), settings_emails_path, :rel => "nofollow" %>
             <% else %>
-              <%= link_to image_tag('logos/versioneye-transparent.png'), user_projects_path %>
+              <%= link_to image_tag('logos/versioneye-transparent.png'), user_projects_path, :rel => "nofollow" %>
             <% end %>
           <% else %>
             <a href="/" ><%= image_tag "logos/versioneye-transparent.png" %></a>

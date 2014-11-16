@@ -3,42 +3,42 @@
 <ul class = "nav nav-pills nav-stacked">
 
   <% if signed_in_admin? %>
-    <li><%= link_to 'Activation'         , settings_activation_path %></li>
-    <li><%= link_to 'Profile'            , settings_profile_path %></li>
-    <li><%= link_to 'Global Settings'    , settings_globalsettings_path %></li>
-    <li><%= link_to 'SMTP Settings'      , settings_emailsettings_path %></li>
-    <li><%= link_to 'Email Addresses'    , settings_emails_path %></li>
-    <li><%= link_to 'Password'           , settings_password_path %></li>
-    <li><%= link_to 'Connect'            , settings_connect_path %></li>
-    <li><%= link_to 'License Whitelists' , settings_license_whitelists_path %></li>
+    <li><%= link_to 'Activation'         , settings_activation_path    , :rel => "nofollow" %></li>
+    <li><%= link_to 'Profile'            , settings_profile_path       , :rel => "nofollow" %></li>
+    <li><%= link_to 'Global Settings'    , settings_globalsettings_path, :rel => "nofollow" %></li>
+    <li><%= link_to 'SMTP Settings'      , settings_emailsettings_path , :rel => "nofollow" %></li>
+    <li><%= link_to 'Email Addresses'    , settings_emails_path        , :rel => "nofollow" %></li>
+    <li><%= link_to 'Password'           , settings_password_path      , :rel => "nofollow" %></li>
+    <li><%= link_to 'Connect'            , settings_connect_path       , :rel => "nofollow" %></li>
+    <li><%= link_to 'License Whitelists' , settings_license_whitelists_path, :rel => "nofollow" %></li>
     <hr/>
-    <li><%= link_to 'Maven Repository'   , settings_mvnrepos_path %></li>
-    <li><%= link_to 'Satis Repository'   , settings_satis_path %></li>
-    <li><%= link_to 'CocoaPods Specs'    , settings_cocoapods_path %></li>
+    <li><%= link_to 'Maven Repository'   , settings_mvnrepos_path , :rel => "nofollow" %></li>
+    <li><%= link_to 'Satis Repository'   , settings_satis_path    , :rel => "nofollow" %></li>
+    <li><%= link_to 'CocoaPods Specs'    , settings_cocoapods_path, :rel => "nofollow" %></li>
     <hr/>
-    <li><%= link_to 'GitHub Settings'    , settings_githubsettings_path %></li>
-    <li><%= link_to 'Bitbucket Settings' , settings_bitbucketsettings_path %></li>
-    <li><%= link_to 'Stash Settings'     , settings_stashsettings_path %></li>
+    <li><%= link_to 'GitHub Settings'    , settings_githubsettings_path   , :rel => "nofollow" %></li>
+    <li><%= link_to 'Bitbucket Settings' , settings_bitbucketsettings_path, :rel => "nofollow" %></li>
+    <li><%= link_to 'Stash Settings'     , settings_stashsettings_path    , :rel => "nofollow" %></li>
     <hr/>
-    <li><%= link_to 'Scheduler'          , settings_scheduler_path %></li>
+    <li><%= link_to 'Scheduler'          , settings_scheduler_path, :rel => "nofollow" %></li>
   <% else %>
-    <li><%= link_to 'Profile'            , settings_profile_path %></li>
-    <li><%= link_to 'Links'              , settings_links_path %></li>
-    <li><%= link_to 'E-Mails'            , settings_emails_path %></li>
+    <li><%= link_to 'Profile'            , settings_profile_path, :rel => "nofollow" %></li>
+    <li><%= link_to 'Links'              , settings_links_path  , :rel => "nofollow" %></li>
+    <li><%= link_to 'E-Mails'            , settings_emails_path , :rel => "nofollow" %></li>
 
     <% if !Rails.env.enterprise? %>
-      <li><%= link_to 'Plans & Pricing'    , settings_plans_path %></li>
-      <li><%= link_to 'Payment History'    , settings_payments_path %></li>
-      <li><%= link_to 'Billing Address'    , settings_billing_path %></li>
-      <li><%= link_to 'License Whitelists' , settings_license_whitelists_path %></li>
+      <li><%= link_to 'Plans & Pricing'    , settings_plans_path   , :rel => "nofollow" %></li>
+      <li><%= link_to 'Payment History'    , settings_payments_path, :rel => "nofollow" %></li>
+      <li><%= link_to 'Billing Address'    , settings_billing_path , :rel => "nofollow" %></li>
+      <li><%= link_to 'License Whitelists' , settings_license_whitelists_path, :rel => "nofollow" %></li>
     <% end %>
 
-    <li><%= link_to 'Connect'            , settings_connect_path %></li>
-    <li><%= link_to 'Password'           , settings_password_path %></li>
-    <li><%= link_to 'Notification Center', settings_notifications_path %></li>
-    <li><%= link_to 'Privacy'            , settings_privacy_path %></li>
-    <li><%= link_to 'API Key'            , settings_api_path %></li>
-    <li><%= link_to 'Delete'             , settings_delete_path %></li>
+    <li><%= link_to 'Connect'            , settings_connect_path , :rel => "nofollow" %></li>
+    <li><%= link_to 'Password'           , settings_password_path, :rel => "nofollow" %></li>
+    <li><%= link_to 'Notification Center', settings_notifications_path, :rel => "nofollow" %></li>
+    <li><%= link_to 'Privacy'            , settings_privacy_path , :rel => "nofollow" %></li>
+    <li><%= link_to 'API Key'            , settings_api_path     , :rel => "nofollow" %></li>
+    <li><%= link_to 'Delete'             , settings_delete_path  , :rel => "nofollow" %></li>
   <% end %>
 
 </ul>
