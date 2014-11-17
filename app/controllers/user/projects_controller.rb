@@ -136,7 +136,7 @@ class User::ProjectsController < ApplicationController
       flash[:error] = "Failure: Can't add collaborator - wrong project id."
       redirect_to :back and return
     end
-    url = "/user/projects/#{project.id.to_s}#collaborators"
+    url = "/user/projects/#{project.id.to_s}#tab-collaborators"
 
     collaborator_info = params[:collaborator]
     if collaborator_info[:username].to_s.empty?
@@ -299,7 +299,7 @@ class User::ProjectsController < ApplicationController
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
-    redirect_to "/user/projects/#{id}#licenses"
+    redirect_to "/user/projects/#{id}#tab-licenses"
   end
 
   def mute_dependency
