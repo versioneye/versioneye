@@ -48,11 +48,11 @@
             <% unless signed_in_admin? %>
               <li class="divider-vertical"></li>
               <li>
-                <%= link_to "I follow",  :controller => 'user/packages', :action => "i_follow" %>
+                <%= link_to "I follow",  :controller => 'user/packages', :action => "i_follow", :rel => "nofollow" %>
               </li>
               <li class="divider-vertical"></li>
               <li>
-                <%= link_to "Projects", user_projects_path %>
+                <%= link_to "Projects", user_projects_path, :rel => "nofollow" %>
               </li>
               <li class="divider-vertical"></li>
               <li>
