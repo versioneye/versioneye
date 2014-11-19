@@ -45,4 +45,19 @@
     Because of performance reasons we can not show all <%= pluralize(provided_deps.count, "provided dependencies") %> here.
   <% end %>
 
+  <% runtime_deps = @product.dependencies( Dependency::A_SCOPE_RUNTIME ) %>
+  <% if runtime_deps && runtime_deps.count > 0 && runtime_deps.count <= 30 %>
+    <hr />
+    <h5 class="dep_header">
+      <%= pluralize(runtime_deps.count, "Runtime Dependencies") %>
+    </h5>
+    <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => runtime_deps }  %>
+  <% elsif runtime_deps && runtime_deps.count > 30 %>
+    <hr />
+    <h5 class="dep_header">
+      <%= pluralize(runtime_deps.count, "Provided Dependencies") %>
+    </h5>
+    Because of performance reasons we can not show all <%= pluralize(runtime_deps.count, "provided dependencies") %> here.
+  <% end %>
+
 </div>
