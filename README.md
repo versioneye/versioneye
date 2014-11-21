@@ -6,7 +6,6 @@
 
 This is the source code for the web application <http://www.versioneye.com>.
 
-
 ## Git Flow
 
 We are using the git workflow which is described here <http://nvie.com/posts/a-successful-git-branching-model/>!
