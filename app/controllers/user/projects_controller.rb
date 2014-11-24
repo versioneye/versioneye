@@ -5,7 +5,7 @@ class User::ProjectsController < ApplicationController
 
   def index
     @project = Project.new
-    @projects = Project.where(:user_id => current_user.id.to_s).asc(:language, :name)
+    @projects = Project.where(:user_id => current_user.id.to_s).desc(:out_number, :unknown_number).asc(:name)
   end
 
   def new

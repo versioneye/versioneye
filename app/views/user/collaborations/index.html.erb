@@ -12,7 +12,23 @@
 
   <div class="span8 content" >
     <div id="projects" >
-      <%= render partial: "/user/collaborations/helpers/project" , collection: @projects %>
+      <table class="table table-striped" style="width: 100%">
+        <colgroup>
+          <col width="35px;"j />
+          <col width="*" />
+          <col width="*" />
+          <col width="*" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th>Outdated</th>
+            <th>Unknown</th>
+          </tr>
+        </thead>
+        <%= render partial: "/user/collaborations/helpers/project" , collection: @projects %>
+      </table>
     </div>
   </div>
 
