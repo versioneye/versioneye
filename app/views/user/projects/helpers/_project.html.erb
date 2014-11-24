@@ -1,12 +1,17 @@
-<div class="row search-item" >
-  <div class="icon56 span2 pull-left">
-    <% prog_lang = Product.encode_language(project.language) %>
-    <span class = "icon_<%= prog_lang %> on" ></span>
-  </div>
-  <div class = "span5">
-    <%= link_to project.name, user_project_path(project), :class => 'searchResultLink' %><br/>
-    <span class="meta-text-small">
-      <%= render :partial => 'user/projects/helpers/project_numbers_sentence', :locals => { :project => project } %>
-    </span>
-  </div>
-</div>
+<tr>
+    <td>
+      <% prog_lang = Product.encode_language(project.language) %>
+      <span class="icon_<%= prog_lang %> small on" ></span>
+    </td>
+    <td>
+      <%= link_to project.name, user_project_path(project), :class => 'searchResultLink' %>
+    </td>
+    <td>
+      <span style="color: <%= outdated_color(project) %>; font-size: 14px; font-weight: bold;" >
+        <%= project.out_number %>
+      </span>
+    </td>
+    <td>
+      <span style="color: <%= unknown_color(project)%>; font-weight: bold; font-size: 14px;" ><%= project.unknown_number %></span>
+    </td>
+</tr>
