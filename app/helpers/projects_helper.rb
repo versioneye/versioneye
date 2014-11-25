@@ -10,13 +10,23 @@ module ProjectsHelper
   end
 
   def outdated_color project
-    return 'red' if project.out_number > 0
+    return 'red' if project.out_number.to_i > 0
     'green'
   end
 
   def unknown_color project
-    return 'orange' if project.unknown_number > 0
-    ''
+    return 'orange' if project.unknown_number.to_i > 0
+    'green'
+  end
+
+  def licenses_red_color project
+    return 'red' if project.licenses_red.to_i > 0
+    'green'
+  end
+
+  def licenses_unknown_color project
+    return 'orange' if project.licenses_unknown.to_i > 0
+    'green'
   end
 
   def path_to_stash_file project
