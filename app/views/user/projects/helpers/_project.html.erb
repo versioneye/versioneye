@@ -15,10 +15,10 @@
       </span>
     </td>
     <td>
-      <span title="licenses violating the license whitelist">
+      <span style="color: <%= licenses_red_color(project) %>; font-size: 14px; font-weight: bold;" title="licenses violating the license whitelist">
         <%= project.licenses_red %>
       </span> /
-      <span title="unknown licenses">
+      <span style="color: <%= licenses_unknown_color(project) %>; font-size: 14px; font-weight: bold;" title="unknown licenses">
         <%= project.licenses_unknown %>
       </span>
     </td>
