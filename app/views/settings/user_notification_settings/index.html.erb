@@ -40,6 +40,15 @@
       </div>
 
       <div class="control-group">
+        <div class="controls">
+          <label for="project_emails" style="font-size: 12px;" class="checkbox">
+            <%= check_box_tag "project_emails", true, @user_notification.project_emails, :id => "project_emails" %>
+            I want to receive notification emails for my own projects which VersionEye is watching for me.
+          </label>
+        </div>
+      </div>
+
+      <div class="control-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>
