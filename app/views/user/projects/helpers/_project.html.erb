@@ -7,11 +7,19 @@
       <%= link_to project.name, user_project_path(project), :class => 'searchResultLink' %>
     </td>
     <td>
-      <span style="color: <%= outdated_color(project) %>; font-size: 14px; font-weight: bold;" >
+      <span style="color: <%= outdated_color(project) %>; font-size: 14px; font-weight: bold;" title="out-dated dependencies" >
         <%= project.out_number %>
+      </span> /
+      <span style="color: <%= unknown_color(project)%>; font-weight: bold; font-size: 14px;" title="unknown dependencies" >
+        <%= project.unknown_number %>
       </span>
     </td>
     <td>
-      <span style="color: <%= unknown_color(project)%>; font-weight: bold; font-size: 14px;" ><%= project.unknown_number %></span>
+      <span title="licenses violating the license whitelist">
+        <%= project.licenses_red %>
+      </span> /
+      <span title="unknown licenses">
+        <%= project.licenses_unknown %>
+      </span>
     </td>
 </tr>
