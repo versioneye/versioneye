@@ -216,7 +216,6 @@ Versioneye::Application.routes.draw do
     resources :collaborations do
       post 'approve'
       post 'delete'
-      post 'invite'
       post 'save_period'
       post 'save_email'
     end
