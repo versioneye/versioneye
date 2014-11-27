@@ -5,12 +5,3 @@
       :class => 'btn btn-mini btn-danger'
     )
 %>
-
-<!-- invitation button -->
-<% unless collaborator[:active] %>
-  <%= button_to(
-        'Invite',
-        user_collaboration_invite_path(collaboration_id: collaborator[:_id].to_s),
-        :class => "btn btn-mini btn-success"
-  ) %>
-<% end %>

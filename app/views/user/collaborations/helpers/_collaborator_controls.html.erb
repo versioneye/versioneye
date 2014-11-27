@@ -1,10 +1,12 @@
-<%= button_to(
-      'Remove',
-      user_collaboration_delete_path(collaboration_id: collaboration[:_id].to_s),
-      :confirm => 'Are you sure?',
-      :class => 'btn btn-mini btn-danger'
-    )
-%>
+<% if !Settings.instance.environment.eql?('enterprise') %>
+  <%= button_to(
+        'Remove',
+        user_collaboration_delete_path(collaboration_id: collaboration[:_id].to_s),
+        :confirm => 'Are you sure?',
+        :class => 'btn btn-mini btn-danger'
+      )
+  %>
+<% end %> 
 
 <% if !collaboration[:active] %>
   <%= button_to(
