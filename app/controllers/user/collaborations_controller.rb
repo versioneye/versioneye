@@ -35,15 +35,17 @@ class User::CollaborationsController < ApplicationController
       redirect_to :back and return
     end
 
+    url = "/user/projects/#{collaborator.project.id.to_s}#tab-collaborators"
+    url = "/user/collaborations" if !collaborator.owner_id.to_s.eql?( current_user.id.to_s )
     user_id = current_user.id
     if collaborator.owner.id != user_id && collaborator.user.id != user_id
       flash[:error] = 'You can not remove this.'
-      redirect_to :back and return
+      redirect_to( url ) and return
     end
 
     flash[:success] = 'Collaborator is now removed.'
     collaborator.delete
-    redirect_to :back
+    redirect_to( url ) and return
   end
 
   def approve
@@ -62,18 +64,6 @@ class User::CollaborationsController < ApplicationController
       flash[:error] = "It seems you don't have access to this project. Contact the VersionEye Team if you think that's wrong."
     end
 
-    redirect_to :back
-  end
-
-  def invite
-    collab_id = params[:id]
-    collab_id ||= params[:collaboration_id]
-
-    collaborator = ProjectCollaborator.find_by_id(collab_id)
-    UserMailer.collaboration_invitation(collaborator).deliver
-    collaborator.update_attribute('invitation_sent', true)
-
-    flash[:success] = "Invitation successfully sent to #{collaborator[:invitation_email]}"
     redirect_to :back
   end
 

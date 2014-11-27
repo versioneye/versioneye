@@ -136,45 +136,28 @@ class User::ProjectsController < ApplicationController
       flash[:error] = "Failure: Can't add collaborator - wrong project id."
       redirect_to :back and return
     end
-    url = "/user/projects/#{project.id.to_s}#tab-collaborators"
 
+    url = "/user/projects/#{project.id.to_s}#tab-collaborators"
+    if !project.collaborator?( current_user )
+      flash[:error] = "Permission denied. You are not a collaborator of this project!"
+      redirect_to( url ) and return
+    end
+    
     collaborator_info = params[:collaborator]
     if collaborator_info[:username].to_s.empty?
       flash[:error] = "You have to type in a name or an email address!"
       redirect_to( url ) and return
     end
 
-    user = User.find_by_username(collaborator_info[:username])
-
-    if user and ProjectCollaborator.collaborator?(project[:_id].to_s, user[:_id].to_s)
-      flash[:error] = "Warning: #{user[:fullname]} is already a collaborator in your project."
-      redirect_to( url ) and return
-    end
-
-    new_collaborator = ProjectCollaborator.new project_id: project[:_id].to_s,
-                                               caller_id: current_user[:_id].to_s,
-                                               owner_id: project[:user_id].to_s
-
-    if user.nil?
-      # activate invitation
-      new_collaborator[:invitation_email] = collaborator_info[:username]
-      new_collaborator[:invitation_code] = UserService.create_random_token
-    else
-      # add to collaborator
-      new_collaborator[:active]  = true
-      new_collaborator[:user_id] = user[:_id].to_s
-    end
-
-    unless new_collaborator.save
-      flash[:error] = "Failure: can't add new collaborator - #{new_collaborator.errors.full_messages.to_sentence}"
-      redirect_to( url ) and return
-    end
-
-    project.collaborators << new_collaborator
-    UserMailer.new_collaboration(new_collaborator).deliver if new_collaborator[:active]
+    ProjectCollaboratorService.add_new project, current_user, collaborator_info[:username] 
 
     flash[:success] = "We added a new collaborator to the project."
     redirect_to( url )
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    flash[:error] = "ERROR: #{e.message}"
+    redirect_to :back
   end
 
   def reparse
@@ -220,14 +203,16 @@ class User::ProjectsController < ApplicationController
   def save_period
     id = params[:id]
     period = params[:period]
-    @project = Project.find_by_id(id)
+    @project = Project.find_by_id( id )
+    url = "/user/projects/#{@project.id.to_s}#tab-settings"
     @project.period = period
     if @project.save
-      flash[:success] = "Status saved."
+      flash[:success] = "Status saved." 
+      update_collaborators @project 
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
-    redirect_to user_project_path(@project)
+    redirect_to url 
   end
 
   def save_visibility
@@ -360,6 +345,14 @@ class User::ProjectsController < ApplicationController
         hash[dep.prod_key] = element
       end
       hash
+    end
+
+    def update_collaborators project 
+      return nil if project.collaborators.nil? || project.collaborators.empty? 
+      project.collaborators.each do |collaborator| 
+        collaborator.period = period
+        collaborator.save 
+      end  
     end
 
 end
