@@ -7,15 +7,27 @@
       <th >License</th>
     </tr>
   </thead>
-  <% @project.dependencies.sort! { |a,b| a.name.downcase <=> b.name.downcase } %>
-  <% @project.dependencies.each do |dependency| %>
+  <% dependencies.sort! { |a,b| a.name.downcase <=> b.name.downcase } %>
+  <% dependencies.each do |dependency| %>
     <% sep_class = "license_seperator" %>
-    <% licenses = dependency.license_caches %>
+    <% licenses = [] %>
+    <% licenses = dependency.license_caches if dependency.respond_to?( 'license_caches' ) %>
+    <% licenses = dependency.licenses if dependency.respond_to?( 'licenses' ) %>
     <% if licenses && !licenses.empty? %>
       <% licenses.each do |license| %>
 
-        <% whitelist_class = 'error'   if license.on_whitelist == false %>
-        <% whitelist_class = 'success' if license.on_whitelist == true  %>
+        <% license_hash[license.name] = [] if license_hash[license.name].nil? %> 
+        <% license_hash[license.name] << dependency %> 
+
+        <% whitelist_class = '' %>
+        <% if license.respond_to? 'on_whitelist' %>
+          <% whitelist_class = 'error'   if license.on_whitelist == false %>
+          <% whitelist_class = 'success' if license.on_whitelist == true  %>
+        <% elsif @project.license_whitelist %>
+          <% on_whitelist = @project.license_whitelist.include_license_substitute?( license.name_substitute ) %>
+          <% whitelist_class = 'error'   if on_whitelist == false %>
+          <% whitelist_class = 'success' if on_whitelist == true  %>
+        <% end %>
 
         <tr class="<%= sep_class %> <%= whitelist_class %> ">
           <td><a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %></a></td>
@@ -26,6 +38,8 @@
         <% sep_class = "" %>
       <% end %>
     <% else %>
+      <% license_hash['unknown'] = [] if license_hash['unknown'].nil? %> 
+      <% license_hash['unknown'] << dependency %> 
       <tr class="flash warning">
         <td>
           <% if dependency.prod_key %>
@@ -50,8 +64,8 @@
       <span ><%= license_name %></span>
     <% end %>
   </div>
-  <% license_hash[license_name].each do |product| %>
-    <span class="license_box"><a href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></span>
+  <% license_hash[license_name].each do |dependency| %>
+    <span class="license_box"><a href="<%= product_url_for_projectdependency( dependency ) %>" ><%= dependency.name %></a></span>
   <% end %>
   <br/><br/>
 <% end %>
