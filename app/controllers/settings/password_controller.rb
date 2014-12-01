@@ -20,7 +20,7 @@ class Settings::PasswordController < ApplicationController
       flash[:error] = 'The password is wrong. Please try again.'
     else
       @user = current_user
-      if @user.update_password(current_user.email, password, new_password)
+      if @user.update_password( new_password )
         flash[:success] = 'Profile updated.'
       else
         flash[:error] = 'Something went wrong. Please try again later.'
