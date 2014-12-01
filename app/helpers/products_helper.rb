@@ -18,6 +18,14 @@ module ProductsHelper
     "/#{lang.downcase}/#{product.to_param}"
   end
 
+  def product_url_for_projectdependency dependency
+    return "" if dependency.nil? || dependency.prod_key.to_s.empty? 
+    language = Product.encode_language dependency.language
+    prod_key = Product.encode_prod_key dependency.prod_key 
+    version  = Version.encode_version dependency.version_requested
+    return "/#{language}/#{prod_key}/#{version}"
+  end
+
   def url_for_dep dependency
     return "" if dependency.nil?
     language = dependency.language_escaped
