@@ -141,18 +141,10 @@
           </div>
 
           <div id="licenses" class="tab-pane">
-            <% products = Array.new %>
-            <% unless @project.dependencies.nil? && @project.dependencies.empty? %>
-              <% @project.dependencies.each do |dep| %>
-                <% product = dep.find_or_init_product %>
-                <% product.version = dep.version_requested %>
-                <% products << product %>
-              <% end %>
-            <% end %>
 
             <%= render "user/projects/helpers/license_whitelist_picker" %>
 
-            <%= render :partial => "shared/product_license_table", :locals => {:products => products, :width => "615"} %>
+            <%= render :partial => "shared/product_license_table", :locals => {:dependencies => @project.dependencies, :width => "615"} %>
 
             <% if (@project.source.eql?(Project::A_SOURCE_URL) && !@project.url.to_s.empty? && @project.url.match(/\.lock$/).nil?) ||
                   (!@project.s3_filename.to_s.empty? && @project.s3_filename.match(/\.lock$/).nil?)  %>

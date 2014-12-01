@@ -34,7 +34,7 @@
               <% product.version = dep.version_requested %>
               <% products << product %>
             <% end %>
-            <%= render :partial => "shared/product_license_table", :locals => {:products => products, :width => "670"} %>
+            <%= render :partial => "shared/product_license_table", :locals => {:dependencies => products, :width => "670"} %>
           </div>
 
           <script>
