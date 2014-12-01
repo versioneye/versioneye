@@ -7,23 +7,18 @@
       <th >License</th>
     </tr>
   </thead>
-  <% products.sort! { |a,b| a.name.downcase <=> b.name.downcase } %>
-  <% products.each do |product| %>
+  <% @project.dependencies.sort! { |a,b| a.name.downcase <=> b.name.downcase } %>
+  <% @project.dependencies.each do |dependency| %>
     <% sep_class = "license_seperator" %>
-    <% licenses = product.licenses %>
+    <% licenses = dependency.license_caches %>
     <% if licenses && !licenses.empty? %>
       <% licenses.each do |license| %>
-        <% license_hash[license.name_substitute] = Array.new if license_hash[license.name_substitute].nil? %>
-        <% license_hash[license.name_substitute] << product if !product.nil?  %>
 
-        <% whitelist_class = '' %>
-        <% if @project && @project.license_whitelist %>
-          <% whitelist_class = 'error' %>
-          <% whitelist_class = 'success' if @project.license_whitelist.include_license_substitute?( license.name_substitute ) %>
-        <% end %>
+        <% whitelist_class = 'error'   if license.on_whitelist == false %>
+        <% whitelist_class = 'success' if license.on_whitelist == true  %>
 
         <tr class="<%= sep_class %> <%= whitelist_class %> ">
-          <td><a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a></td>
+          <td><a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %></a></td>
           <td>
             <%= render :partial => "shared/license_name", :locals => {:license => license } %>
           </td>
@@ -31,17 +26,15 @@
         <% sep_class = "" %>
       <% end %>
     <% else %>
-      <% license_hash["unknown"] = Array.new if license_hash["unknown"].nil? %>
-      <% license_hash["unknown"] << product if !product.nil?  %>
       <tr class="flash warning">
         <td>
-          <% if product.prod_key %>
-            <a class="#a dep_link" href="<%= product_version_path( product, product.version ) %>" ><%= product.name %></a>
+          <% if dependency.prod_key %>
+            <a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %></a>
           <% else %>
-            <%= product.name %>
+            <%= dependency.name %>
           <% end %>
         </td>
-        <td> unknown </td>
+        <td> UNKNOWN </td>
       </tr>
     <% end %>
   <% end %>
