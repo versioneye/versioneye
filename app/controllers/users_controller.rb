@@ -220,7 +220,7 @@ class UsersController < ApplicationController
       has_failure = true
     end
 
-    unless user.update_password(verification_code, password)
+    unless user.update_password( password )
       has_failure = true
       flash[:error] = "Can't save new password:\n #{user.errors.full_messages.to_sentence}"
     end
