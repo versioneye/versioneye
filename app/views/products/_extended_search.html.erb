@@ -27,11 +27,7 @@
 				<% @languages.each do |language| %>
 					<div class = "controls">
 						<label for="<%= language %>" id="label_<%= language %>__" class = "checkbox" style = "color: #669acb;">
-							<% if signed_in? %>
-								<input id="<%= language %>" type="checkbox" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.any?{ |s| s.casecmp(language)==0 }  %> />
-							<% else %>
-								<input id="<%= language %>" type="checkbox" value="<%= language %>" style="height: 16px;" onclick="jQuery('#dialog_login_feature').modal({keyboard : true}); $('#<%= language %>').attr('checked', false)" />
-							<% end %>
+							<input id="<%= language %>" type="checkbox" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.any?{ |s| s.casecmp(language)==0 }  %> />
 							<%= language %>
 						</label>
 					</div>
