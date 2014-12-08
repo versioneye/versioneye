@@ -242,6 +242,7 @@ Versioneye::Application.routes.draw do
   get   '/news',               :to => 'news#news'
   get   '/mynews',             :to => 'news#news'
   get   '/hotnews',            :to => 'news#news'
+  get   '/notifications',      :to => 'notifications#index'
 
   namespace :admin do
 
