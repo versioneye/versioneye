@@ -219,6 +219,7 @@ class User::ProjectsController < ApplicationController
     id = params[:id]
     visibility = params[:visibility]
     @project = Project.find_by_id(id)
+    url = "/user/projects/#{@project.id.to_s}#tab-settings"
     if visibility.eql? "public"
       @project.public = true
     else
@@ -229,14 +230,14 @@ class User::ProjectsController < ApplicationController
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
-    redirect_to user_project_path(@project)
+    redirect_to url
   end
 
   def save_email
     id       = params[:id]
     email    = params[:email]
     @project = Project.find_by_id(id)
-
+    url = "/user/projects/#{@project.id.to_s}#tab-settings"
     new_email  = nil
     user       = current_user
     user_email = user.get_email(email)
@@ -249,13 +250,14 @@ class User::ProjectsController < ApplicationController
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
-    redirect_to user_project_path(@project)
+    redirect_to url 
   end
 
   def save_notify_after_api_update
     id     = params[:id]
     notify = params[:notify]
     @project = Project.find_by_id id
+    url = "/user/projects/#{@project.id.to_s}#tab-settings"
     if notify.eql?('notify')
       @project.notify_after_api_update = true
     else
@@ -266,7 +268,7 @@ class User::ProjectsController < ApplicationController
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
-    redirect_to user_project_path(@project)
+    redirect_to url
   end
 
   def save_whitelist
