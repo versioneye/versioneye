@@ -350,7 +350,7 @@ class User::ProjectsController < ApplicationController
     def update_collaborators project 
       return nil if project.collaborators.nil? || project.collaborators.empty? 
       project.collaborators.each do |collaborator| 
-        collaborator.period = period
+        collaborator.period = project.period
         collaborator.save 
       end  
     end
