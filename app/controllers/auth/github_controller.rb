@@ -6,16 +6,16 @@ class Auth::GithubController < ApplicationController
   def callback
     code      = params['code']
     token     = Github.token code
-    json_user = Github.user token
+    hash_user = Github.user token
 
     if signed_in?
-      update_user json_user, token
+      update_user hash_user, token
       set_github_scope token
       redirect_to settings_connect_path
       return
     end
 
-    user = user_for_github_id( json_user )
+    user = user_for_github_id( hash_user )
     if user && user.activated?
       login user, nil, token
       return
@@ -115,9 +115,9 @@ class Auth::GithubController < ApplicationController
     end
 
 
-    def update_user(json_user, token)
+    def update_user(hash_user, token)
       user = current_user
-      user.github_id = json_user['id']
+      user.github_id = hash_user[:id]
       user.github_token = token
 
       update_scope user, token
@@ -139,8 +139,8 @@ class Auth::GithubController < ApplicationController
 
     def user_for_github_id(json_user)
       return nil if json_user.nil?
-      return nil if json_user['id'].nil?
-      user = User.find_by_github_id( json_user['id'].to_s )
+      return nil if json_user[:id].nil?
+      user = User.find_by_github_id( json_user[:id].to_s )
       return nil if user.nil?
       user
     end
