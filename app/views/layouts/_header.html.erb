@@ -47,6 +47,9 @@
 
             <% unless signed_in_admin? %>
               <li class="divider-vertical"></li>
+              <li style="padding-right: 25px;">
+                <%= link_to "Notifications", notifications_path %>
+              </li>
               <li>
                 <%= link_to "I follow",  :controller => 'user/packages', :action => "i_follow", :rel => "nofollow" %>
               </li>
