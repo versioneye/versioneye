@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby "2.1.1"
 
-gem 'bundler'              , '1.7.8'
+gem 'bundler'              , '~> 1.7.9'
 gem 'rails'                , '~> 3.2.19'
 gem 'jquery-rails'         , '~> 2.2.1'
 gem 'execjs'               , '~> 2.2.1'
@@ -23,13 +23,13 @@ gem 'will_paginate_mongoid', '2.0.1'
 # gem "gelf"
 # gem "lograge"
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v6.20.4'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v6.21.2'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :development do
-  gem 'capistrano'        , '~> 3.2.1'
-  gem 'capistrano-rails'  , '~> 1.1.1'
-  gem 'capistrano-bundler', '~> 1.1.2'
+  # gem 'capistrano'        , '~> 3.2.1'
+  # gem 'capistrano-rails'  , '~> 1.1.1'
+  # gem 'capistrano-bundler', '~> 1.1.2'
   gem 'psych'             , '~> 2.0.5'
   gem 'terminal-notifier' , '~> 1.6.0'
   gem 'fakes3'            , '~> 0.1.6.0'
