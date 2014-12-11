@@ -2,6 +2,7 @@
 
 var repoFilesInterval = 0;
 var imported_files = [];
+var fileImportTimeout;
 
 var RepoFiles = React.createClass({displayName: 'RepoFiles',
   loadRepoFilesFromServer: function() {
@@ -47,18 +48,18 @@ var RepoFiles = React.createClass({displayName: 'RepoFiles',
 
     var scm_branches = branches.map(function (branch) {
       return (
-        React.DOM.div({className: "repo-controls span8"}, 
-          React.DOM.div({className: "table table-striped"}, 
-            RepoBranch({data: branch, project_files: project_files, repo_fullname: repo_fullname, scm: scm})
+        React.DOM.div( {className:"repo-controls span8"}, 
+          React.DOM.div( {className:"table table-striped"}, 
+            RepoBranch( {data:branch, project_files:project_files, repo_fullname:repo_fullname, scm:scm} )
           )
         )
       );
     });
 
     return (
-      React.DOM.div({id: "branches"}, 
+      React.DOM.div( {id:"branches"} , 
 
-        TaskStatusMessage({data: this.state.task_status, repo_fullname: repo_fullname, scm: scm, show_reimport_link: "true"}), 
+        TaskStatusMessage( {data:this.state.task_status, repo_fullname:repo_fullname, scm:scm, show_reimport_link:"true"} ),
 
         scm_branches
 
@@ -78,7 +79,7 @@ var RepoBranch = React.createClass({displayName: 'RepoBranch',
     if (project_files && project_files != ""){
       branch_files = project_files[branch].map(function (project_file) {
         return (
-          BranchFile({data: project_file, branch: branch, repo_fullname: repo_fullname, scm: scm})
+          BranchFile( {data:project_file, branch:branch, repo_fullname:repo_fullname, scm:scm} )
         );
       });
     }
@@ -87,12 +88,12 @@ var RepoBranch = React.createClass({displayName: 'RepoBranch',
     }
     return (
       React.DOM.div(null, 
-        React.DOM.div({className: "scm_branch_head"}, 
+        React.DOM.div( {className:"scm_branch_head"} , 
           React.DOM.p(null, 
-            React.DOM.i({className: "icon-code-fork"}), " ", branch
+            React.DOM.i( {className:"icon-code-fork"}), " ", branch
           )
-        ), 
-        React.DOM.div({className: "scm_branch_files_cell"}, 
+        ),
+        React.DOM.div( {className:"scm_branch_files_cell"} , 
           branch_files
         )
       )
@@ -100,33 +101,44 @@ var RepoBranch = React.createClass({displayName: 'RepoBranch',
   }
 });
 
+
 var BranchFile = React.createClass({displayName: 'BranchFile',
+  fileImport: function(checked, id) {
+    
+  },
   onChange: function( e ) {
     scm = this.props.scm
-
-    if (e.target.checked == true ){
+    checked = e.target.checked
+    if (checked == true ){
       this.setState({import_status: 'running', checked: false});
-      url = "/user/projects/"+ scm +"/" + e.target.id.replace(/\//g,':') + "/import";
-      $.ajax({
-        url: url,
-        dataType: 'json',
-        success: function(data) {
-          imported_files.push(data);
-          this.setState({import_status: '', checked: true});
-        }.bind(this),
-        error: function(xhr, status, err) {
-          var err_msg = xhr.responseText
-          if (err_msg == null || err_msg == ""){
-            err_msg = "We are not able to import the selected file. Please contact the VersionEye team."
-          }
-          alert("ERROR: " + err_msg);
-          this.setState({import_status: '', checked: false});
-          console.error(err.toString());
-          console.error(err_msg);
-        }.bind(this)
-      });
+      id = e.target.id 
+      thisComponent = this 
+      fileImportTimeout = setInterval(function(){
+        url = "/user/projects/"+ scm +"/" + id.replace(/\//g,':') + "/import";
+        $.ajax({
+          url: url,
+          dataType: 'json',
+          success: function(data, status) {
+            if (data.status == 'done'){
+              imported_files.push(data);  
+              thisComponent.setState({import_status: data.status, checked: true});
+              clearInterval( fileImportTimeout )
+            } 
+          }.bind(this),
+          error: function(xhr, status, err) {
+            var err_msg = xhr.responseText
+            if (err_msg == null || err_msg == ""){
+              err_msg = "We are not able to import the selected file. Please contact the VersionEye team."
+            }
+            alert("ERROR: " + err_msg);
+            thisComponent.setState({import_status: '', checked: false});
+            console.error(err_msg);
+            clearInterval( fileImportTimeout )
+          }.bind(this)
+        });
+      }, 1000) // end setInterval() - 1 Second
     } else {
-      this.setState({import_status: 'runnin', checked: false});
+      this.setState({import_status: 'off', checked: false});
       url = "/user/projects/"+ scm +"/" + this.state.project_id + "/remove";
       $.ajax({
         url: url,
@@ -140,6 +152,7 @@ var BranchFile = React.createClass({displayName: 'BranchFile',
         }.bind(this)
       });
     }
+
   },
   getInitialState: function() {
     return {checked: false, import_status: '', project_id: '', project_url: ''};
@@ -164,23 +177,23 @@ var BranchFile = React.createClass({displayName: 'BranchFile',
     }
 
     return (
-      React.DOM.div({className: "row-fluid"}, 
-        React.DOM.div({className: "scm_switch_cell"}, 
-          React.DOM.div({className: "onoffswitch"}, 
-              React.DOM.input({type: "checkbox", 
-                     name: "onoffswitch", 
-                     checked: this.state.checked, 
-                     onChange: this.onChange, 
-                     className: "onoffswitch-checkbox", 
-                     id: uid}), 
-              React.DOM.label({className: "onoffswitch-label", htmlFor: uid}, 
-                  React.DOM.span({className: "onoffswitch-inner"}), 
-                  React.DOM.span({className: "onoffswitch-switch"})
+      React.DOM.div( {className:"row-fluid"}, 
+        React.DOM.div( {className:"scm_switch_cell"} , 
+          React.DOM.div( {className:"onoffswitch"}, 
+              React.DOM.input( {type:"checkbox",
+                     name:"onoffswitch",
+                     checked:this.state.checked,
+                     onChange:this.onChange,
+                     className:"onoffswitch-checkbox",
+                     id:uid} ),
+              React.DOM.label( {className:"onoffswitch-label", htmlFor:uid}, 
+                  React.DOM.span( {className:"onoffswitch-inner"}),
+                  React.DOM.span( {className:"onoffswitch-switch"})
               )
           )
-        ), 
-        React.DOM.div({className: "scm_switch_text_cell"}, 
-          ProjectFile({import_status: this.state.import_status, project_id: this.state.project_id, project_url: this.state.project_url, id: uids, name: this.props.data.path})
+        ),
+        React.DOM.div( {className:"scm_switch_text_cell"}, 
+          ProjectFile( {import_status:this.state.import_status, project_id:this.state.project_id, project_url:this.state.project_url, id:uids, name:this.props.data.path}  )
         )
       )
     );
@@ -199,16 +212,16 @@ var ProjectFile = React.createClass({displayName: 'ProjectFile',
     this.state.project_id = this.props.project_id;
     if (this.state.import_status == 'running'){
       return (
-        React.DOM.table({className: "scm_table"}, 
+        React.DOM.table( {className:"scm_table"}, 
           React.DOM.tr(null, 
-            React.DOM.td({className: "scm_td"}, React.DOM.img({src: "/assets/progress-small.gif", alt: "work in progress"})), 
-            React.DOM.td({className: "scm_td"}, this.props.name)
+            React.DOM.td( {className:"scm_td"} , React.DOM.img( {src:"/assets/progress-small.gif", alt:"work in progress"} )),
+            React.DOM.td( {className:"scm_td"} , this.props.name)
           )
         )
       );
     } else if (this.state.project_url) {
       return (
-        React.DOM.a({href: this.state.project_url}, " ", this.props.name, " ")
+        React.DOM.a( {href:this.state.project_url} ,  " ", this.props.name, " " )
       );
     } else {
       return (

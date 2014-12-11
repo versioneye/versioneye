@@ -92,15 +92,30 @@ class User::StashReposController < User::ScmReposController
   private
 
 
+    def clear_import_cache project 
+      key = "stash:::#{current_user.username}:::#{project.scm_fullname}:::#{project.filename}:::#{project.scm_branch}"
+      ProjectService.cache.delete key 
+    end
+
+
     def import_repo(project_name, branch, filename)
-      project = ProjectImportService.import_from_stash current_user, project_name, filename, branch
+      project_id = ''
+      project_url = ''
+      status = ProjectImportService.import_from_stash_async current_user, project_name, filename, branch
+      if status && status.match(/\Adone_/)
+        project_id = status.gsub("done_", "")
+        project = Project.find project_id 
+        project_url = url_for(controller: 'projects', action: "show", id: project.id) 
+        status = 'done'
+      end
 
       {
         repo: project_name,
         filename: filename,
         branch: branch,
-        project_id: project.id,
-        project_url: url_for(controller: 'projects', action: "show", id: project.id)
+        status: status,
+        project_id: project_id,
+        project_url: project_url
       }
     end
 
