@@ -7,6 +7,11 @@ class User::ScmReposController < ApplicationController
 
 
   def import
+    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
+    response.headers['Last-Modified'] = Time.now.httpdate
+    
     id = params[:id]
     sps = id.split("::")
     repo_fullname = sps[0].gsub(":", "/")
@@ -18,7 +23,7 @@ class User::ScmReposController < ApplicationController
     end
     render json: repo
   rescue => e
-    Rails.logger.error "failed to import: #{e.message}"
+    logger.error "failed to import: #{e.message}"
     render text: e.message, status: 503
   end
 
@@ -41,7 +46,7 @@ class User::ScmReposController < ApplicationController
       if project.nil?
         raise "Can't remove project with id: `#{project_id}` - it does not exist. Please refresh the page."
       end
-
+      clear_import_cache project 
       ProjectService.destroy project_id
     end
 
