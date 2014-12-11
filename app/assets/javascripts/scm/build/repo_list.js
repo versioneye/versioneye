@@ -52,18 +52,18 @@ var RepoList = React.createClass({displayName: 'RepoList',
     var clear_link = "/user/" + this.props.scm + "/clear";
     var scm_repos = this.state.data.map(function (repo) {
       return (
-        ScmRepo({data: repo, scm: scm})
+        ScmRepo( {data:repo, scm:scm} )
       );
     });
     return (
-      React.DOM.div(null, 
+      React.DOM.div(null , 
         React.DOM.div(null, 
-          React.DOM.input({type: "text", id: "filter_input", value: this.state.text, onChange: this.onChange})
-        ), 
-        React.DOM.div({className: "scm_meta"}, 
-          this.state.list_size, " Repositories - ", React.DOM.a({href: clear_link}, "Reimport all Repositories")
-        ), 
-        TaskStatusMessage({data: this.state.task_status}), 
+          React.DOM.input( {type:"text", id:"filter_input", value:this.state.text, onChange:this.onChange} )
+        ),
+        React.DOM.div( {className:"scm_meta"} , 
+          this.state.list_size, " Repositories - ", React.DOM.a( {href:clear_link}, "Reimport all Repositories")
+        ),
+        TaskStatusMessage( {data:this.state.task_status} ),
         scm_repos
       )
     );
@@ -75,8 +75,8 @@ var ScmRepo = React.createClass({displayName: 'ScmRepo',
   render: function() {
     var url = "/user/projects/" + this.props.scm + "/" + this.props.data.fullname + "/show"
     return (
-      React.DOM.div({className: "scm_repo"}, 
-        React.DOM.a({href: url}, this.props.data.fullname)
+      React.DOM.div( {className:"scm_repo"} , 
+        React.DOM.a( {href:url} , this.props.data.fullname)
       )
     );
   }
@@ -87,12 +87,12 @@ var TaskStatusMessage = React.createClass({displayName: 'TaskStatusMessage',
   render: function() {
     if (this.props.data == 'running'){
       return (
-        React.DOM.div(null, React.DOM.img({src: "/assets/progress.gif", alt: "work in progress"}), " Import is running ... be patient and drink a soda.")
+        React.DOM.div(null, React.DOM.img( {src:"/assets/progress.gif", alt:"work in progress"} ), " Import is running ... be patient and drink a soda.")
       );
     } else if (this.props.show_reimport_link == "true")  {
       url = "/user/projects/" + this.props.scm + "/" + this.props.repo_fullname + "/reimport";
       return (
-        React.DOM.p(null, React.DOM.a({href: url}, "Update meta-data about this repository"), React.DOM.br(null), React.DOM.br(null))
+        React.DOM.p(null, React.DOM.a( {href:url} , "Update meta-data about this repository"),React.DOM.br(null),React.DOM.br(null))
       );
     } else {
       return (

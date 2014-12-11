@@ -2,6 +2,7 @@
 
 var repoFilesInterval = 0;
 var imported_files = [];
+var fileImportTimeout;
 
 var RepoFiles = React.createClass({
   loadRepoFilesFromServer: function() {
@@ -100,33 +101,44 @@ var RepoBranch = React.createClass({
   }
 });
 
+
 var BranchFile = React.createClass({
+  fileImport: function(checked, id) {
+    
+  },
   onChange: function( e ) {
     scm = this.props.scm
-
-    if (e.target.checked == true ){
+    checked = e.target.checked
+    if (checked == true ){
       this.setState({import_status: 'running', checked: false});
-      url = "/user/projects/"+ scm +"/" + e.target.id.replace(/\//g,':') + "/import";
-      $.ajax({
-        url: url,
-        dataType: 'json',
-        success: function(data) {
-          imported_files.push(data);
-          this.setState({import_status: '', checked: true});
-        }.bind(this),
-        error: function(xhr, status, err) {
-          var err_msg = xhr.responseText
-          if (err_msg == null || err_msg == ""){
-            err_msg = "We are not able to import the selected file. Please contact the VersionEye team."
-          }
-          alert("ERROR: " + err_msg);
-          this.setState({import_status: '', checked: false});
-          console.error(err.toString());
-          console.error(err_msg);
-        }.bind(this)
-      });
+      id = e.target.id 
+      thisComponent = this 
+      fileImportTimeout = setInterval(function(){
+        url = "/user/projects/"+ scm +"/" + id.replace(/\//g,':') + "/import";
+        $.ajax({
+          url: url,
+          dataType: 'json',
+          success: function(data, status) {
+            if (data.status == 'done'){
+              imported_files.push(data);  
+              thisComponent.setState({import_status: data.status, checked: true});
+              clearInterval( fileImportTimeout )
+            } 
+          }.bind(this),
+          error: function(xhr, status, err) {
+            var err_msg = xhr.responseText
+            if (err_msg == null || err_msg == ""){
+              err_msg = "We are not able to import the selected file. Please contact the VersionEye team."
+            }
+            alert("ERROR: " + err_msg);
+            thisComponent.setState({import_status: '', checked: false});
+            console.error(err_msg);
+            clearInterval( fileImportTimeout )
+          }.bind(this)
+        });
+      }, 1000) // end setInterval() - 1 Second
     } else {
-      this.setState({import_status: 'runnin', checked: false});
+      this.setState({import_status: 'off', checked: false});
       url = "/user/projects/"+ scm +"/" + this.state.project_id + "/remove";
       $.ajax({
         url: url,
@@ -140,6 +152,7 @@ var BranchFile = React.createClass({
         }.bind(this)
       });
     }
+
   },
   getInitialState: function() {
     return {checked: false, import_status: '', project_id: '', project_url: ''};
