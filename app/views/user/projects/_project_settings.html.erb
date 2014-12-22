@@ -65,6 +65,7 @@
 
     <%= render "user/projects/helpers/license_whitelist_picker" %>
 
+    <% if @project.parent_id.nil? && @project.children.empty? %> 
     <form action="<%= merge_user_project_path( @project ) %>" method="post" class="form-horizontal" >
       <div>
         Merge this project as subproject into another project.
@@ -80,6 +81,7 @@
         </div>
       </div>
     </form>
+    <% end %> 
 
   </div>
 <% else %>
