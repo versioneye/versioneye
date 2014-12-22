@@ -141,8 +141,8 @@ class Auth::GithubController < ApplicationController
       return nil if json_user.nil?
       return nil if json_user[:id].nil?
       user = User.find_by_github_id( json_user[:id].to_s )
-      return nil if user.nil?
-      user
+      return user if user
+      nil 
     end
 
 
