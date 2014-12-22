@@ -8,18 +8,18 @@
     </td>
     <td>
       <span style="color: <%= outdated_color(project) %>; font-size: 14px; font-weight: bold;" title="out-dated dependencies" >
-        <%= project.out_number %>
+        <%= project.out_number_sum %>
       </span> /
       <span style="color: <%= unknown_color(project)%>; font-weight: bold; font-size: 14px;" title="unknown dependencies" >
-        <%= project.unknown_number %>
+        <%= project.unknown_number_sum %>
       </span>
     </td>
     <td>
       <span style="color: <%= licenses_red_color(project) %>; font-size: 14px; font-weight: bold;" title="licenses violating the license whitelist">
-        <%= project.licenses_red %>
+        <%= project.licenses_red_sum %>
       </span> /
       <span style="color: <%= licenses_unknown_color(project) %>; font-size: 14px; font-weight: bold;" title="unknown licenses">
-        <%= project.licenses_unknown %>
+        <%= project.licenses_unknown_sum %>
       </span>
     </td>
 </tr>
