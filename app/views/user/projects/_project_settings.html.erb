@@ -65,6 +65,22 @@
 
     <%= render "user/projects/helpers/license_whitelist_picker" %>
 
+    <form action="<%= merge_user_project_path( @project ) %>" method="post" class="form-horizontal" >
+      <div>
+        Merge this project as subproject into another project.
+      </div>
+      <div class="control-group">
+        <div class="controls" style="margin-left: 0px;">
+          <select name="parent" >
+            <% current_user.projects.each do |project| %> 
+              <% next if project.id.to_s.eql?(@project.id.to_s) %> 
+              <option value="<%= project.id %>" ><%= project.name %></option>
+            <% end %> 
+          </select> <button type="submit" class="btn btn-primary" >Merge</button>
+        </div>
+      </div>
+    </form>
+
   </div>
 <% else %>
   <% collaboration = @project.collaborator( current_user ) %>
@@ -72,5 +88,3 @@
     <%= render :partial => "/user/collaborations/helpers/project_settings", :locals => { :collaboration => collaboration } %>
   <% end %>
 <% end %>
-
-

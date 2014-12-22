@@ -127,16 +127,19 @@
 
         <div class="tab-content" style="width: 100%;" >
           <div id="dependencies" class="tab-pane active" style="width: 617px;" >
+            
+            <%= render partial: "user/projects/helpers/show_subprojects", locals: {parent_project: @project, child_project: @child, tab_id: 'dependencies'} %>
+
             <div class="pull-right">
               <form action="<%= followall_user_project_path(@project) %>" method="post" style="margin: 0;">
                 <button class="btn btn-success btn-mini" title="Follow all software packages in this project and receive notifications independently from this project">Follow All</button>
               </form>
             </div>
             <div>
-              <%= render partial: "project_dependency_table", locals: {deps: @project.sorted_dependencies_by_rank} %>
+              <%= render partial: "project_dependency_table", locals: {deps: @child.sorted_dependencies_by_rank} %>
             </div>
             <div style="padding-top: 7px;">
-              <%= link_to "Visual Dependencies", visual_user_project_path( @project ) %>
+              <%= link_to "Visual Dependencies", visual_user_project_path( @child ) %>
             </div>
           </div>
 
@@ -144,7 +147,9 @@
 
             <%= render "user/projects/helpers/license_whitelist_picker" %>
 
-            <%= render :partial => "shared/product_license_table", :locals => {:dependencies => @project.dependencies, :width => "615"} %>
+            <%= render partial: "user/projects/helpers/show_subprojects", locals: {parent_project: @project, child_project: @child, tab_id: 'licenses'} %>
+
+            <%= render :partial => "shared/product_license_table", :locals => {:dependencies => @child.dependencies, :width => "615"} %>
 
             <% if (@project.source.eql?(Project::A_SOURCE_URL) && !@project.url.to_s.empty? && @project.url.match(/\.lock$/).nil?) ||
                   (!@project.s3_filename.to_s.empty? && @project.s3_filename.match(/\.lock$/).nil?)  %>

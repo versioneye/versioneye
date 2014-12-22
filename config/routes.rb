@@ -198,6 +198,8 @@ Versioneye::Application.routes.draw do
       member do
         get  'badge'
         get  'visual'
+        post 'merge'
+        get  'unmerge'
         post 'save_period'
         post 'save_email'
         post 'save_visibility'

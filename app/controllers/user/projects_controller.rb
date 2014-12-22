@@ -5,7 +5,7 @@ class User::ProjectsController < ApplicationController
 
   def index
     @project = Project.new
-    @projects = Project.where(:user_id => current_user.id.to_s).desc(:out_number, :unknown_number).asc(:name)
+    @projects = Project.where(:user_id => current_user.id.to_s, :parent_id => nil).desc(:out_number_sum, :unknown_number_sum).asc(:name)
   end
 
   def new
@@ -16,6 +16,7 @@ class User::ProjectsController < ApplicationController
     @project = Project.new(params)
   end
 
+  # Create a new project from file upload or URL. 
   def create
     project = fetch_project params
     if project.nil?
@@ -36,13 +37,14 @@ class User::ProjectsController < ApplicationController
 
   def show
     id       = params[:id]
-    project  = ProjectService.find( id )
-    project  = add_dependency_classes( project )
-    @project = project
-
-    if !project.visible_for_user?(current_user)
+    child_id = params[:child]
+    @project = ProjectService.find( id )
+    @child   = ProjectService.find_child( id, child_id )
+    @child   = @project if @child.nil? 
+    @child   = add_dependency_classes( @child )
+    if !@project.visible_for_user?(current_user)
       return if !authenticate
-      redirect_to(root_path) unless current_user?(project.user)
+      redirect_to(root_path) unless current_user?(@project.user)
     end
     @whitelists = LicenseWhitelistService.index( current_user ) if current_user
   end
@@ -164,12 +166,8 @@ class User::ProjectsController < ApplicationController
   def reparse
     id = params[:id]
     project = Project.find_by_id id
-    resp = ProjectUpdateService.update project
-    if resp.nil?
-      flash[:error]   = "Something went wrong. It's not possible to update the project!"
-    else
-      flash[:success] = "Project re parsed successfully."
-    end
+    ProjectUpdateService.update_async project 
+    flash[:success] = "A background process was started to reparse the project. This can take a couple seconds."
     redirect_to user_project_path( project )
   end
 
@@ -184,21 +182,46 @@ class User::ProjectsController < ApplicationController
   end
 
   def destroy
-    id = params[:id]
-    success = false
-    msg = ""
-    if Project.where(_id: id).exists?
-      ProjectService.destroy id
-      success = true
-    else
-      msg = "Can't remove project with id: `#{id}` - it doesnt exist. Please refresh page."
-      Rails.logger.error msg
+    id = params[:id] 
+    if ProjectService.destroy_by current_user, id
+      flash[:success] = "Project removed successfully."
+    else 
+      flash[:success] = "Something went wrong. Please contact the VersionEye Team."
     end
-    respond_to do |format|
-      format.html {redirect_to user_projects_path}
-      format.json {
-        render json: {success: success, project_id: id, msg: msg}}
+    redirect_to user_projects_path
+  rescue => e 
+    flash[:error] = "ERROR: #{e.message}"
+    redirect_to :back
+  end
+
+  def merge 
+    child_id  = params[:id] 
+    parent_id = params[:parent]
+    if ProjectService.merge(parent_id, child_id, current_user.id) 
+      flash[:success] = "Project merged successfully."
+    else 
+      flash[:success] = "Something went wrong. Merge not possible."
     end
+    redirect_to "/user/projects/#{parent_id}"
+  rescue => e 
+    flash[:error] = "ERROR: (#{e.message})."
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
+  end
+
+  def unmerge 
+    id = params[:id] 
+    child_id = params[:child]
+    if ProjectService.unmerge(id, child_id, current_user.id) 
+      flash[:success] = "Project unmerged successfully."
+    else 
+      flash[:success] = "Something went wrong. Unmerge not possible."
+    end
+    redirect_to :back 
+  rescue => e 
+    flash[:error] = "ERROR: (#{e.message})."
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
   end
 
   def save_period
@@ -275,19 +298,17 @@ class User::ProjectsController < ApplicationController
   def save_whitelist
     id        = params[:id]
     list_name = params[:whitelist]
-    @project  = Project.find_by_id id
-    if list_name.eql?('none')
-      @project.license_whitelist_id = nil
-    else
-      lw = LicenseWhitelistService.fetch_by current_user, list_name
-      @project.license_whitelist_id = lw.id.to_s
-    end
-    if @project.save
+    project  = Project.find_by_id id
+    if LicenseWhitelistService.update_project project, current_user, list_name
       flash[:success] = "We saved your changes."
-    else
+    else 
       flash[:error] = "Something went wrong. Please try again later."
     end
     redirect_to "/user/projects/#{id}#tab-licenses"
+  rescue => e 
+    flash[:error] = "An error occured (#{e.message}). Please contact the VersionEye Team."
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
   end
 
   def mute_dependency
