@@ -75,6 +75,7 @@
           <select name="parent" >
             <% current_user.projects.each do |project| %> 
               <% next if project.id.to_s.eql?(@project.id.to_s) %> 
+              <% next if project.parent_id %> 
               <option value="<%= project.id %>" ><%= project.name %></option>
             <% end %> 
           </select> <button type="submit" class="btn btn-primary" >Merge</button>
