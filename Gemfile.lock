@@ -1,13 +1,13 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 5b8869a90364855aad761bfc62c9a7d288865757
-  tag: v7.0.3
+  revision: 45ec672aac036343068fd21815c12dbe80c349d1
+  tag: v7.0.5
   specs:
-    versioneye-core (7.0.3)
+    versioneye-core (7.0.5)
       actionmailer (~> 3.2.17)
       aws-sdk (~> 1.0)
       bundler (~> 1.7.9)
-      bunny (~> 1.6.0)
+      bunny (~> 1.6.3)
       cocoapods-core (~> 0.35.0)
       dalli (~> 2.7.0)
       httparty (~> 0.13.1)
@@ -121,7 +121,7 @@ GEM
     gravatar_image_tag (1.2.0)
     hashr (0.0.22)
     hike (1.2.3)
-    htmlentities (4.3.2)
+    htmlentities (4.3.3)
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)

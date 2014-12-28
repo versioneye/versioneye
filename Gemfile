@@ -1,5 +1,4 @@
 source 'http://rubygems.org'
-ruby "2.1.1"
 
 gem 'bundler'              , '~> 1.7.9'
 gem 'rails'                , '~> 3.2.19'
@@ -23,7 +22,7 @@ gem 'will_paginate_mongoid', '2.0.1'
 # gem "gelf"
 # gem "lograge"
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.0.3'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.0.5'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :development do
