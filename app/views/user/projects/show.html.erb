@@ -131,7 +131,7 @@
             <%= render partial: "user/projects/helpers/show_subprojects", locals: {parent_project: @project, child_project: @child, tab_id: 'dependencies'} %>
 
             <div class="pull-right">
-              <form action="<%= followall_user_project_path(@project) %>" method="post" style="margin: 0;">
+              <form action="<%= followall_user_project_path(@child) %>" method="post" style="margin: 0;">
                 <button class="btn btn-success btn-mini" title="Follow all software packages in this project and receive notifications independently from this project">Follow All</button>
               </form>
             </div>
