@@ -178,7 +178,7 @@ class User::ProjectsController < ApplicationController
       ProductService.follow dep.language, dep.prod_key, current_user
     end
     flash[:success] = "You follow now all packages from this project."
-    redirect_to user_project_path( project )
+    redirect_to :back 
   end
 
   def destroy
