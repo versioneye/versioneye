@@ -47,7 +47,7 @@ class User::ScmReposController < ApplicationController
         raise "Can't remove project with id: `#{project_id}` - it does not exist. Please refresh the page."
       end
       clear_import_cache project 
-      ProjectService.destroy project_id
+      ProjectService.destroy_by current_user, project_id
     end
 
 
