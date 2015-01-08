@@ -103,9 +103,6 @@ var RepoBranch = React.createClass({
 
 
 var BranchFile = React.createClass({
-  fileImport: function(checked, id) {
-    
-  },
   onChange: function( e ) {
     scm = this.props.scm
     checked = e.target.checked
@@ -120,7 +117,7 @@ var BranchFile = React.createClass({
           dataType: 'json',
           success: function(data, status) {
             if (data.status == 'done'){
-              imported_files.push(data);  
+              imported_files.push(data);
               thisComponent.setState({import_status: data.status, checked: true});
               clearInterval( fileImportTimeout )
             } 
@@ -152,7 +149,6 @@ var BranchFile = React.createClass({
         }.bind(this)
       });
     }
-
   },
   getInitialState: function() {
     return {checked: false, import_status: '', project_id: '', project_url: ''};
