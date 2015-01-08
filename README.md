@@ -78,6 +78,13 @@ for autocompiling the JSX files in ReactJS use the `jsx` node package.
 jsx --watch src/ build/
 ```
 
+`jsx` can be installed via NPM with this command: 
+
+```
+sudo npm install -g react-tools
+sudo npm install -g jsx
+```
+
 
 ## Configuration
 
