@@ -17,8 +17,8 @@ class DockerController < ApplicationController
     def remote_images_hash
       images = {}
 
-      version = DockerImage.version("veye/rails_app")
-      version = '2.6.14' if version.to_s.empty?
+      di = DockerImage.by_name("veye/rails_app")
+      version = '3.1.5' if di.image_version.to_s.empty?
       images["veye/rails_app:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '8080/tcp' => [{'HostPort' => '8080'}]},
@@ -26,11 +26,11 @@ class DockerController < ApplicationController
           'Binds' => ['/mnt/logs:/rails/log']
         },
         'auth' => true,
-        'comments' => 'With License Whitelist'
+        'comments' => di.description
       }
 
-      version = DockerImage.version("veye/rails_api")
-      version = '2.1.12' if version.to_s.empty?
+      di = DockerImage.by_name("veye/rails_api")
+      version = '2.2.22' if di.image_version.to_s.empty?
       images["veye/rails_api:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '9090/tcp' => [{'HostPort' => '9090'}]},
@@ -38,82 +38,82 @@ class DockerController < ApplicationController
           'Binds' => ['/mnt/logs:/rails/log']
         },
         'auth' => true,
-        'comments' => 'With updated versioneye-core'
+        'comments' => di.description
       }
 
-      version = DockerImage.version("veye/tasks")
-      version = '1.7.4' if version.to_s.empty?
+      di = DockerImage.by_name("veye/tasks")
+      version = '1.13.8' if di.image_version.to_s.empty?
       images["veye/tasks:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
           'Binds' => ['/mnt/tasks/logs:/versioneye-tasks/log']
         },
         'auth' => true,
-        'comments' => 'With new scheduler'
+        'comments' => di.description
       }
 
-      version = DockerImage.version("veye/crawlr")
-      version = '1.1.1' if version.to_s.empty?
+      di = DockerImage.by_name("veye/crawlr")
+      version = '1.5.0' if di.image_version.to_s.empty?
       images["veye/crawlr:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
           'Binds' => ['/mnt/cocoapods:/mnt/cocoapods']
         },
         'auth' => true,
-        'comments' => 'Improvements for CocoaPods'
+        'comments' => di.description
       }
 
-      version = DockerImage.version("veye/crawlj")
-      version = '1.0.0' if version.to_s.empty?
+      di = DockerImage.by_name("veye/crawlj")
+      version = '1.0.10' if di.image_version.to_s.empty?
       images["veye/crawlj:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm']
         },
         'auth' => true,
-        'comments' => 'First version'
+        'comments' => di.description
       }
 
 
-      version = DockerImage.version("reiz/mongodb")
-      version = '1.0.2' if version.to_s.empty?
+      di = DockerImage.by_name("reiz/mongodb")
+      version = '1.0.2' if di.image_version.to_s.empty?
       images["reiz/mongodb:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '27017/tcp' => [{'HostPort' => '27017'}]},
           'Binds' => ['/mnt/mongodb:/data']
         },
         'auth' => false,
-        'comments' => 'With MongoDB 2.6.3'
+        'comments' => di.description
       }
 
-      version = DockerImage.version("reiz/elasticsearch")
-      version = '0.9.0' if version.to_s.empty?
+      di = DockerImage.by_name("reiz/elasticsearch")
+      version = '0.9.0' if di.image_version.to_s.empty?
       images["reiz/elasticsearch:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '9200/tcp'  => [{'HostPort' => '9200'}], '9300' => [{'HostPort' => '9300'}]},
           'Binds' => ['/mnt/elasticsearch:/data']
         },
         'auth' => false,
-        'comments' => 'With ElasticSearch 1.0.0'
+        'comments' => di.description
       }
 
-      version = DockerImage.version("reiz/memcached")
-      version = '1.0.0' if version.to_s.empty?
+      di = DockerImage.by_name("reiz/memcached")
+      version = '1.0.0' if di.image_version.to_s.empty?
       images["reiz/memcached:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '11211/tcp' => [{'HostPort' => '11211'}]}
         },
         'auth' => false,
-        'comments' => 'First version'
+        'comments' => di.description
       }
 
-      version = DockerImage.version("reiz/rabbitmq")
-      version = '1.0.0' if version.to_s.empty?
+      di = DockerImage.by_name("reiz/rabbitmq")
+      version = '1.0.0' if di.image_version.to_s.empty?
       images["reiz/rabbitmq:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '5672/tcp' => [{'HostPort' => '5672'}]}
         },
         'auth' => false,
-        'comments' => 'Run the Rabbit!'
+        'comments' => di.description
       }
 
       images
