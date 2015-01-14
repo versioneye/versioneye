@@ -18,7 +18,7 @@ class DockerController < ApplicationController
       images = {}
 
       di = DockerImage.by_name("veye/rails_app")
-      version = '3.1.5' if di.image_version.to_s.empty?
+      version = di.image_version.to_s
       images["veye/rails_app:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '8080/tcp' => [{'HostPort' => '8080'}]},
@@ -30,7 +30,7 @@ class DockerController < ApplicationController
       }
 
       di = DockerImage.by_name("veye/rails_api")
-      version = '2.2.22' if di.image_version.to_s.empty?
+      version = di.image_version.to_s
       images["veye/rails_api:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '9090/tcp' => [{'HostPort' => '9090'}]},
@@ -42,7 +42,7 @@ class DockerController < ApplicationController
       }
 
       di = DockerImage.by_name("veye/tasks")
-      version = '1.13.8' if di.image_version.to_s.empty?
+      version = di.image_version.to_s
       images["veye/tasks:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
@@ -53,7 +53,7 @@ class DockerController < ApplicationController
       }
 
       di = DockerImage.by_name("veye/crawlr")
-      version = '1.5.0' if di.image_version.to_s.empty?
+      version = di.image_version.to_s
       images["veye/crawlr:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
@@ -64,7 +64,7 @@ class DockerController < ApplicationController
       }
 
       di = DockerImage.by_name("veye/crawlj")
-      version = '1.0.10' if di.image_version.to_s.empty?
+      version = di.image_version.to_s
       images["veye/crawlj:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm']
@@ -75,7 +75,7 @@ class DockerController < ApplicationController
 
 
       di = DockerImage.by_name("reiz/mongodb")
-      version = '1.0.2' if di.image_version.to_s.empty?
+      version = di.image_version.to_s
       images["reiz/mongodb:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '27017/tcp' => [{'HostPort' => '27017'}]},
@@ -86,7 +86,7 @@ class DockerController < ApplicationController
       }
 
       di = DockerImage.by_name("reiz/elasticsearch")
-      version = '0.9.0' if di.image_version.to_s.empty?
+      version = di.image_version.to_s
       images["reiz/elasticsearch:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '9200/tcp'  => [{'HostPort' => '9200'}], '9300' => [{'HostPort' => '9300'}]},
@@ -97,7 +97,7 @@ class DockerController < ApplicationController
       }
 
       di = DockerImage.by_name("reiz/memcached")
-      version = '1.0.0' if di.image_version.to_s.empty?
+      version = di.image_version.to_s
       images["reiz/memcached:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '11211/tcp' => [{'HostPort' => '11211'}]}
@@ -107,7 +107,7 @@ class DockerController < ApplicationController
       }
 
       di = DockerImage.by_name("reiz/rabbitmq")
-      version = '1.0.0' if di.image_version.to_s.empty?
+      version = di.image_version.to_s
       images["reiz/rabbitmq:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '5672/tcp' => [{'HostPort' => '5672'}]}
