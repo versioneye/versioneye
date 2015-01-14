@@ -22,7 +22,7 @@ gem 'will_paginate_mongoid', '2.0.1'
 # gem "gelf"
 # gem "lograge"
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.0.9'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.0.14'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :development do
@@ -41,7 +41,7 @@ group :assets do
   gem 'sass'                  , :require => 'sass'
   gem 'sass-rails'            , '~> 3.2.6'
   gem 'coffee-rails'          , '~> 3.2.0'
-  gem 'uglifier'              , '~> 2.6.0'
+  gem 'uglifier'              , '~> 2.7.0'
   gem 'yui-compressor'        , '~> 0.12.0'
   gem 'turbo-sprockets-rails3', '~> 0.3.0'
 end
@@ -58,7 +58,7 @@ group :test do
   gem 'vcr'               , '~> 2.9.2',  :require => false
   gem 'webmock'           , '~> 1.20.0', :require => false
   gem "fakeweb"           , '~> 1.3'
-  gem 'database_cleaner'  , '~> 1.3.0'
+  gem 'database_cleaner'  , '~> 1.4.0'
   gem 'factory_girl'      , '~> 4.5.0'
   gem 'factory_girl_rails', '~> 4.5.0'
 end
