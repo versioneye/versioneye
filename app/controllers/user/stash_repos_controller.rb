@@ -84,6 +84,8 @@ class User::StashReposController < User::ScmReposController
 
   def clear
     results = StashRepo.by_user( current_user ).delete_all
+    user_task_key = "#{user[:username]}-stash"
+    StashService.cache.delete( user_task_key )
     flash[:success] = "Cache is cleaned. Ready to re-import."
     redirect_to :back
   end

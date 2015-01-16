@@ -85,6 +85,9 @@ class User::GithubReposController < User::ScmReposController
 
   def clear
     results = GithubRepo.by_user( current_user ).delete_all
+    user = current_user
+    user_task_key = "#{user[:username]}-#{user[:github_id]}"
+    GitHubService.cache.delete( user_task_key )
     flash[:success] = "Cache is cleaned. Ready to re-import."
     redirect_to :back
   end
