@@ -84,6 +84,8 @@ class User::BitbucketReposController < User::ScmReposController
 
   def clear
     results = BitbucketRepo.by_user( current_user ).delete_all
+    user_task_key = "#{user[:username]}-bitbucket"
+    BitbucketService.cache.delete( user_task_key )
     flash[:success] = "Cache is cleaned. Ready to re-import."
     redirect_to :back
   end
