@@ -135,7 +135,7 @@ class ProductsController < ApplicationController
       render :text => "This page doesn't exist", :status => 404 and return
     end
 
-    reference = ReferenceService.find_by language, prod_key
+    reference = ReferenceService.find_by @product.language, prod_key
     if reference.nil?
       @products = paged_products 1, nil, 0
       return
@@ -306,7 +306,7 @@ class ProductsController < ApplicationController
   private
 
     def fetch_product language, prod_key
-      product = Product.fetch_product language, prod_key
+      product = ProductService.fetch_product language, prod_key
       if product.nil? && language.eql?(Product::A_LANGUAGE_JAVA)
         product = Product.fetch_product Product::A_LANGUAGE_CLOJURE, prod_key
       end
