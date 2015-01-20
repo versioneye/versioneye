@@ -1,11 +1,10 @@
 <% title 'Profile' %>
 
-<% if !@user.nil? && @user.deleted %>
+<% if @user.nil?  %>
+	There is no user with given username!
+<% elsif @user && @user.deleted == true %>
 	This Account does not exist anymore.
-<% end %>
-
-<% if !@user.nil? && !@user.deleted %>
-
+<% else  %>
 	<%= render 'header' %>
 
 	<div class="span3" >
