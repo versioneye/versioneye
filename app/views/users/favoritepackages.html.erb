@@ -1,12 +1,12 @@
-<% title "Favorite packages of #{@user.username} (#{@user.fullname}) at VersionEye" %>
+
 <% page_header 'Favorite packages' %>
 
-
-<% if !@user.nil? && @user.deleted %>
+<% if @user.nil? %>
+  There is no user with given username!
+<% elsif @user && @user.deleted == true %>
   This Account does not exist anymore.
-<% end %>
-
-<% if !@user.nil? && !@user.deleted %>
+<% else %>
+  <% title "Favorite packages of #{@user.username} (#{@user.fullname}) at VersionEye" %>
   <%= render "header" %>
 
   <div class="span3" >

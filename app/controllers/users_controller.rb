@@ -130,6 +130,7 @@ class UsersController < ApplicationController
   def comments
     @page = "profile"
     @user = User.find_by_username(params[:id])
+    return nil if @user.nil? 
     @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
     @comments = Array.new
     if has_permission_to_see_comments( @user, current_user ) && !@user.nil?
