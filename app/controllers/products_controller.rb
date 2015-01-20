@@ -60,7 +60,6 @@ class ProductsController < ApplicationController
     end
 
     @version             = fetch_version @product
-    @current_version     = @product.version_newest
     @versioncomment      = Versioncomment.new
     @versioncommentreply = Versioncommentreply.new
   rescue => e
