@@ -5,6 +5,12 @@ jQuery(document).ready(function(){
     text: "Search for a software library"
   });
 
+  jQuery( "#ext_searchform" ).submit(function( event ) {
+    if (document.getElementById("q").value == "Search for a software library"){
+      document.getElementById("q").value = '';  
+    }
+  });
+
   if(jQuery("#payment-form").length){
     jQuery("#payment-form").submit( function(event) {
       jQuery('.submit-button').attr("disabled", "disabled");
