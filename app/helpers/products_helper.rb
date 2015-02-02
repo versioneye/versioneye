@@ -57,8 +57,9 @@ module ProductsHelper
   end
 
   def do_parse_search_input( query )
-    query_empty = query.nil? || query.empty? || query.strip.empty? || query.eql?('search for a software library')
-    query = 'json' if query_empty
+    if query.eql?('Search for a software library')
+      query = 'json' 
+    end
     query = query.strip()
     query.downcase
   end
