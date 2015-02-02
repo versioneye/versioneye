@@ -58,7 +58,7 @@ group :test do
   gem 'vcr'               , '~> 2.9.2',  :require => false
   gem 'webmock'           , '~> 1.20.0', :require => false
   gem "fakeweb"           , '~> 1.3'
-  gem 'database_cleaner'  , '~> 1.4.0'
+  gem 'database_cleaner'  , '~> 1.3.0'
   gem 'factory_girl'      , '~> 4.5.0'
   gem 'factory_girl_rails', '~> 4.5.0'
 end
