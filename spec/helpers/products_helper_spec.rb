@@ -27,8 +27,14 @@ describe ProductsHelper do
       expect(query).to eql('spring org')
     end
 
-    it "returns the default string json" do
+    it "returns the default empty string" do
       query = nil
+      query = @products_controller.do_parse_search_input( query )
+      expect(query).to eql('')
+    end
+
+    it "returns the default string json" do
+      query = 'Search for a software library'
       query = @products_controller.do_parse_search_input( query )
       expect(query).to eql('json')
     end

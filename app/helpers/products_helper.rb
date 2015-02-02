@@ -60,7 +60,7 @@ module ProductsHelper
     if query.eql?('Search for a software library')
       query = 'json' 
     end
-    query = query.strip()
+    query = query.to_s.strip()
     query.downcase
   end
 
