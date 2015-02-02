@@ -59,6 +59,7 @@ class User::GithubReposController < User::ScmReposController
       repo.branches = nil
       repo.project_files = nil
       repo.save
+      clear_repo_cache repo
     end
     redirect_to :back
   rescue => e
@@ -94,6 +95,16 @@ class User::GithubReposController < User::ScmReposController
 
 
   private
+
+
+    def clear_repo_cache repo 
+      user  = current_user
+      repo_task_key = "github:::#{user.id.to_s}:::#{repo.id.to_s}"
+      GitHubService.cache.delete( repo_task_key )
+    rescue => e 
+      Rails.logger.error e.message 
+      Rails.logger.error e.backtrace.join "\n"
+    end
 
 
     def clear_import_cache project 
