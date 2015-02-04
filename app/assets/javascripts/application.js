@@ -19,7 +19,6 @@
 //= require gmap
 
 //= require custom
-//= require custom_feedback
 //= require custom_update_language
 
 //= require custom_language

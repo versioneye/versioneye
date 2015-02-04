@@ -13,4 +13,3 @@
 //= require google
 
 //= require custom_lp
-//= require custom_feedback
