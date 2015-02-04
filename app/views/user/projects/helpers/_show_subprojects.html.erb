@@ -1,17 +1,17 @@
 
 <% if !parent_project.children.empty? %>
-  <div>
-    <a href="/user/projects/<%= parent_project.id %>#tab-<%= tab_id %>"><span class="label label-<%= subproject_label_color child_project.id, parent_project.id %>"><%= parent_project.filename %></span></span></a>
+  <div style="padding-bottom: 5px;">
+    <a href="/user/projects/<%= parent_project.id %>#tab-<%= tab_id %>"><span class="label label-<%= subproject_label_color child_project.id, parent_project.id %>"><%= subproject_name( parent_project ) %></span></span></a>
     <% parent_project.children.each do |project| %>
       <a href="/user/projects/<%= parent_project.id %>?child=<%= project.id %>#tab-<%= tab_id %>">
-        <span class="label label-<%= subproject_label_color child_project.id, project.id %>"><%= project.filename %></span>
+        <span class="label label-<%= subproject_label_color child_project.id, project.id %>"><%= subproject_name(project) %></span>
       </a>
     <% end %>
   </div>
   <% if child_project.parent_id != nil %>
     <div>
       <a href="/user/projects/<%= parent_project.id %>/unmerge?child=<%= @child.id %>#tab-<%= tab_id %>">
-        unmerge <%= child_project.filename %>
+        unmerge <%= subproject_name(child_project) %>
       </a>
     </div>
   <% end %> 
