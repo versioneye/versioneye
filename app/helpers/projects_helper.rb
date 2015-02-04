@@ -34,6 +34,14 @@ module ProjectsHelper
     "warn"
   end
 
+  def subproject_name( project )
+    name = project.filename 
+    if name.to_s.empty? 
+      name = project.name 
+    end 
+    name 
+  end
+
   def path_to_stash_file project
     repo = project.scm_fullname.gsub("/", "/repos/")
     branch = URI.encode("refs/heads/#{project.scm_branch}")
