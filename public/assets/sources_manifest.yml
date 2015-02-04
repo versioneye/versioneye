@@ -150,8 +150,8 @@ swagger/wordnik_api.png: fb7553a47ca55ead4a6daf0ff52f324e
 worldmap_sf_b.jpg: 466f729214cbb4d1597b4bfde7dc9cf7
 worldmap_sf_ma.jpg: 286fff9c5796616a122ed8ca7017cbea
 JSXTransformer.js: 12c2723619ced0057e025ff2b714f012
-application.js: 8d4778d8aa52e608766c28b505fdcb2a
-application_lp.js: b7c88095f513e4f0b3f6a5b8921fdb74
+application.js: 4c5c900655508bcfcf9ec88b81298a69
+application_lp.js: 87516fad4fe7c130ae3ce390521e1254
 application_payment.js: a668709165bf9e4ba50c162216adc8bf
 application_product.js: b3e3525e592cf4d64ce3adbdadc1bae9
 application_scm.js: d8e57c0a3101939d4b6e9f8ac3480ec3
@@ -160,7 +160,6 @@ bootstrap.js: c416da15417afa500b01859454141893
 bootstrap_fileupload.js: a1e0ac7a433b43dc5a376f5a6ddbf334
 custom.js: 098bacdb8a2d6e998f6f034fd24c5c06
 custom_bitbucket.js: 445e1d9668135eb409552e59c0433659
-custom_feedback.js: 8262bceae2821a600f6633f7f2dc4bfe
 custom_github.js: 354b2ec7ffbcfd7cb1acea420ccec972
 custom_language.js: 78300b0843f306d08c297baead46c76d
 custom_lp.js: e63805d00b1e9882bd7bdcf00a93ddf5
