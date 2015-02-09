@@ -26,11 +26,12 @@
       </div>
 
       <div class="control-group">
-        <%= label_tag :mvn_repo_1_type, "Repository type", :class => "control-label", :for => "mvn_repo_1_type" %>
+        <%= label_tag :mvn_repo_1_type, "Crawler", :class => "control-label", :for => "mvn_repo_1_type" %>
         <div class="controls" >
           <select name="mvn_repo_1_type"  id="mvn_repo_1_type" >
-            <option value="artifactory" <%= "selected" if @globalsetting['mvn_repo_1_type'] == 'artifactory' %> >Artifactory (JFrog)</option>
-            <option value="nexus" <%= "selected" if @globalsetting['mvn_repo_1_type'] == 'nexus' %> >Nexus (Sonatype)</option>
+            <option value="artifactory" <%= "selected" if @globalsetting['mvn_repo_1_type'] == 'artifactory' %> >Artifactory API (JFrog)</option>
+            <option value="maven_index" <%= "selected" if @globalsetting['mvn_repo_1_type'] == 'maven_index' %> >Maven Index</option>
+            <option value="html" <%= "selected" if @globalsetting['mvn_repo_1_type'] == 'html' %> >HTML (Maven directory structure)</option>
           </select>
         </div>
       </div>
