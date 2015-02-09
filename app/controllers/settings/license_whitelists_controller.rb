@@ -1,6 +1,6 @@
 class Settings::LicenseWhitelistsController < ApplicationController
 
-  before_filter :authenticate
+  before_filter :authenticate_lwl
 
   def index
     @whitelists = LicenseWhitelistService.index current_user
@@ -80,6 +80,11 @@ class Settings::LicenseWhitelistsController < ApplicationController
   end
 
   private
+
+    def authenticate_lwl 
+      return authenticate_admin if Rails.env.enterprise?
+      authenticate
+    end
 
     def format_autocompletion(matched_licenses)
       results = []
