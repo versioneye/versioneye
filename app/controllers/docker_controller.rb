@@ -24,7 +24,7 @@ class DockerController < ApplicationController
           'PortBindings' => { '8080/tcp' => [{'HostPort' => '8080'}]},
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
           'Binds' => ['/mnt/logs:/rails/log'], 
-          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
+          'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
         'comments' => di.description
@@ -37,7 +37,7 @@ class DockerController < ApplicationController
           'PortBindings' => { '9090/tcp' => [{'HostPort' => '9090'}]},
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
           'Binds' => ['/mnt/logs:/rails/log'], 
-          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
+          'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
         'comments' => di.description
@@ -49,7 +49,7 @@ class DockerController < ApplicationController
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
           'Binds' => ['/mnt/tasks/logs:/versioneye-tasks/log'], 
-          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
+          'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
         'comments' => di.description
@@ -61,7 +61,7 @@ class DockerController < ApplicationController
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
           'Binds' => ['/mnt/cocoapods:/mnt/cocoapods'], 
-          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
+          'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
         'comments' => di.description
@@ -72,7 +72,7 @@ class DockerController < ApplicationController
       images["veye/crawlj:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'], 
-          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
+          'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
         'comments' => di.description
@@ -85,7 +85,7 @@ class DockerController < ApplicationController
         'container_start_opts' => {
           'PortBindings' => { '27017/tcp' => [{'HostPort' => '27017'}]},
           'Binds' => ['/mnt/mongodb:/data'], 
-          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
+          'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => false,
         'comments' => di.description
@@ -97,7 +97,7 @@ class DockerController < ApplicationController
         'container_start_opts' => {
           'PortBindings' => { '9200/tcp'  => [{'HostPort' => '9200'}], '9300' => [{'HostPort' => '9300'}]},
           'Binds' => ['/mnt/elasticsearch:/data'], 
-          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
+          'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => false,
         'comments' => di.description
@@ -108,7 +108,7 @@ class DockerController < ApplicationController
       images["reiz/memcached:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '11211/tcp' => [{'HostPort' => '11211'}]}, 
-          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
+          'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => false,
         'comments' => di.description
@@ -119,7 +119,7 @@ class DockerController < ApplicationController
       images["reiz/rabbitmq:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '5672/tcp' => [{'HostPort' => '5672'}]}, 
-          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
+          'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => false,
         'comments' => di.description
