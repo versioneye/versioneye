@@ -59,7 +59,7 @@
     "max_dep_update": "60",
     "show_promocode": true,
     "default_project_period": "daily",
-    "default_project_public": false,
+    "default_project_public": true,
     "show_signup_form": true,
     "show_login_form": true
   },
@@ -124,7 +124,7 @@
     "max_dep_update": "60",
     "show_promocode": true,
     "default_project_period": "daily",
-    "default_project_public": false,
+    "default_project_public": true,
     "show_signup_form": true,
     "show_login_form": true
   },
@@ -187,7 +187,7 @@
     "max_dep_update": "60",
     "show_promocode": true,
     "default_project_period": "daily",
-    "default_project_public": false,
+    "default_project_public": true,
     "show_signup_form": true,
     "show_login_form": true
   },
