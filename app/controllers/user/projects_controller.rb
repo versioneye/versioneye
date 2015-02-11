@@ -89,7 +89,8 @@ class User::ProjectsController < ApplicationController
     end
     badge    = badge.gsub("-", "_")
     color    = badge.eql?('up_to_date') ? 'green' : 'yellow'
-    url = "http://img.shields.io/badge/#{project.language}_dependencies-#{badge}-#{color}.svg#{par}"
+    language = calculate_language project
+    url = "http://img.shields.io/badge/#{language}dependencies-#{badge}-#{color}.svg#{par}"
     response = HttpService.fetch_response url
     send_data response.body, :type => "image/svg+xml", :disposition => 'inline'
   end
@@ -328,6 +329,19 @@ class User::ProjectsController < ApplicationController
   end
 
   private
+
+    def calculate_language project
+      children = project.children  
+      return "#{project.language}_" if children.nil? || children.empty? 
+      
+      lang = project.language
+      children.each do |child| 
+        if !child.language.eql?(lang)
+          return ''
+        end
+      end
+      "#{lang}_"
+    end
 
     def fetch_project( params )
       file        = params[:upload]
