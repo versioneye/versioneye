@@ -23,7 +23,8 @@ class DockerController < ApplicationController
         'container_start_opts' => {
           'PortBindings' => { '8080/tcp' => [{'HostPort' => '8080'}]},
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
-          'Binds' => ['/mnt/logs:/rails/log']
+          'Binds' => ['/mnt/logs:/rails/log'], 
+          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
         },
         'auth' => true,
         'comments' => di.description
@@ -35,7 +36,8 @@ class DockerController < ApplicationController
         'container_start_opts' => {
           'PortBindings' => { '9090/tcp' => [{'HostPort' => '9090'}]},
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
-          'Binds' => ['/mnt/logs:/rails/log']
+          'Binds' => ['/mnt/logs:/rails/log'], 
+          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
         },
         'auth' => true,
         'comments' => di.description
@@ -46,7 +48,8 @@ class DockerController < ApplicationController
       images["veye/tasks:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
-          'Binds' => ['/mnt/tasks/logs:/versioneye-tasks/log']
+          'Binds' => ['/mnt/tasks/logs:/versioneye-tasks/log'], 
+          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
         },
         'auth' => true,
         'comments' => di.description
@@ -57,7 +60,8 @@ class DockerController < ApplicationController
       images["veye/crawlr:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
-          'Binds' => ['/mnt/cocoapods:/mnt/cocoapods']
+          'Binds' => ['/mnt/cocoapods:/mnt/cocoapods'], 
+          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
         },
         'auth' => true,
         'comments' => di.description
@@ -67,7 +71,8 @@ class DockerController < ApplicationController
       version = di.image_version.to_s
       images["veye/crawlj:#{version}"] = {
         'container_start_opts' => {
-          'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm']
+          'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'], 
+          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
         },
         'auth' => true,
         'comments' => di.description
@@ -79,7 +84,8 @@ class DockerController < ApplicationController
       images["reiz/mongodb:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '27017/tcp' => [{'HostPort' => '27017'}]},
-          'Binds' => ['/mnt/mongodb:/data']
+          'Binds' => ['/mnt/mongodb:/data'], 
+          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
         },
         'auth' => false,
         'comments' => di.description
@@ -90,7 +96,8 @@ class DockerController < ApplicationController
       images["reiz/elasticsearch:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '9200/tcp'  => [{'HostPort' => '9200'}], '9300' => [{'HostPort' => '9300'}]},
-          'Binds' => ['/mnt/elasticsearch:/data']
+          'Binds' => ['/mnt/elasticsearch:/data'], 
+          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
         },
         'auth' => false,
         'comments' => di.description
@@ -100,7 +107,8 @@ class DockerController < ApplicationController
       version = di.image_version.to_s
       images["reiz/memcached:#{version}"] = {
         'container_start_opts' => {
-          'PortBindings' => { '11211/tcp' => [{'HostPort' => '11211'}]}
+          'PortBindings' => { '11211/tcp' => [{'HostPort' => '11211'}]}, 
+          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
         },
         'auth' => false,
         'comments' => di.description
@@ -110,7 +118,8 @@ class DockerController < ApplicationController
       version = di.image_version.to_s
       images["reiz/rabbitmq:#{version}"] = {
         'container_start_opts' => {
-          'PortBindings' => { '5672/tcp' => [{'HostPort' => '5672'}]}
+          'PortBindings' => { '5672/tcp' => [{'HostPort' => '5672'}]}, 
+          'RestartPolicy' => {'Name' => 'always', 'MaximumRetryCount' => '100'}
         },
         'auth' => false,
         'comments' => di.description
