@@ -136,7 +136,18 @@
               </form>
             </div>
             <div>
-              <%= render partial: "project_dependency_table", locals: {deps: @child.sorted_dependencies_by_rank} %>
+
+              <% @child.scopes.each do |scope| %>
+                <% deps = @child.dependencies( scope ) %>
+                <% if deps && !deps.empty? %>
+                  <% deps = deps.sort_by {|dep| dep[:status_rank] } %> 
+                  <div style="padding-top: 15px;">
+                    <span style="color: gray;"><%= scope %> scope</span>
+                    <%= render partial: "project_dependency_table", locals: {deps: deps } %>
+                  </div>
+                <% end %>
+              <% end %> 
+
             </div>
             <% if !@child.language.to_s.eql?(Product::A_LANGUAGE_PYTHON) && !@child.language.to_s.eql?(Product::A_LANGUAGE_R) %> 
               <div style="padding-top: 7px;">
