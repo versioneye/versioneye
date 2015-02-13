@@ -158,7 +158,9 @@
 
           <div id="licenses" class="tab-pane">
 
-            <%= render "user/projects/helpers/license_whitelist_picker" %>
+            <% if signed_in? && @project.user.id.to_s.eql?( current_user.id.to_s ) %>
+              <%= render "user/projects/helpers/license_whitelist_picker" %>
+            <% end %>
 
             <%= render partial: "user/projects/helpers/show_subprojects", locals: {parent_project: @project, child_project: @child, tab_id: 'licenses'} %>
 
