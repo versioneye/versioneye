@@ -2,7 +2,7 @@
 
 <% if @user.nil?  %>
 	There is no user with given username!
-<% elsif @user && @user.deleted == true %>
+<% elsif @user && @user.deleted_user == true %>
 	This Account does not exist anymore.
 <% else  %>
 	<%= render 'header' %>

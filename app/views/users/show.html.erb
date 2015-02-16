@@ -4,11 +4,11 @@
 	<% title "#{@user.username} (#{@user.fullname}) is following Libraries at VersionEye" %>
 <% end %>
 
-<% if @user && @user.deleted %>
+<% if @user && @user.deleted_user %>
 	This Account does not exist anymore.
 <% end %>
 
-<% if @user && !@user.deleted %>
+<% if @user && !@user.deleted_user %>
 
 	<%= render "header" %>
 

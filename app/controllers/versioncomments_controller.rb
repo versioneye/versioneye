@@ -38,7 +38,7 @@ class VersioncommentsController < ApplicationController
       return nil if product.users.nil? || product.users.empty?
       send_to_users = Array.new
       product.users.each do |follower|
-        if !follower.id.to_s.eql?(user.id.to_s) && follower.deleted == false
+        if !follower.id.to_s.eql?(user.id.to_s) && follower.deleted_user == false
           VersioncommentMailer.versioncomment_email(product, follower, user, comment).deliver
           send_to_users << follower
         end
