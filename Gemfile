@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'bundler'              , '~> 1.8.0'
-gem 'rails'                , '~> 3.2.19'
+gem 'rails'                , '~> 3.2.21'
 gem 'jquery-rails'         , '~> 2.2.1'
 gem 'execjs'               , '~> 2.3.0'
 gem 'gravatar_image_tag'   , '~> 1.2.0'
@@ -22,7 +22,7 @@ gem 'will_paginate_mongoid', '2.0.1'
 # gem "gelf"
 # gem "lograge"
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.3.6'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.3.9'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :development do
