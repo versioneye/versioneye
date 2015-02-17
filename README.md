@@ -1,6 +1,4 @@
-[![Dependency Status](https://www.versioneye.com/user/projects/52878714632bac28c200006d/badge.png)](https://www.versioneye.com/user/projects/52878714632bac28c200006d)
-
-![Tests](https://www.codeship.io/projects/de2efdb0-1d42-0131-839e-26fabeabc570/status)
+[![Dependency Status](https://www.versioneye.com/user/projects/54985cc0818b9377d2000002/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54985cc0818b9377d2000002)
 
 # VersionEye
 
