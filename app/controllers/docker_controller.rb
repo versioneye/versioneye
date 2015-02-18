@@ -83,7 +83,7 @@ class DockerController < ApplicationController
       version = di.image_version.to_s
       images["reiz/mongodb:#{version}"] = {
         'container_start_opts' => {
-          'PortBindings' => { '27017/tcp' => [{'HostPort' => '27017'}]},
+          # 'PortBindings' => { '27017/tcp' => [{'HostPort' => '27017'}]},
           'Binds' => ['/mnt/mongodb:/data'], 
           'RestartPolicy' => {'Name' => 'always'}
         },
@@ -95,7 +95,7 @@ class DockerController < ApplicationController
       version = di.image_version.to_s
       images["reiz/elasticsearch:#{version}"] = {
         'container_start_opts' => {
-          'PortBindings' => { '9200/tcp'  => [{'HostPort' => '9200'}], '9300' => [{'HostPort' => '9300'}]},
+          # 'PortBindings' => { '9200/tcp'  => [{'HostPort' => '9200'}], '9300' => [{'HostPort' => '9300'}]},
           'Binds' => ['/mnt/elasticsearch:/data'], 
           'RestartPolicy' => {'Name' => 'always'}
         },
@@ -107,7 +107,7 @@ class DockerController < ApplicationController
       version = di.image_version.to_s
       images["reiz/memcached:#{version}"] = {
         'container_start_opts' => {
-          'PortBindings' => { '11211/tcp' => [{'HostPort' => '11211'}]}, 
+          # 'PortBindings' => { '11211/tcp' => [{'HostPort' => '11211'}]}, 
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => false,
@@ -118,7 +118,7 @@ class DockerController < ApplicationController
       version = di.image_version.to_s
       images["reiz/rabbitmq:#{version}"] = {
         'container_start_opts' => {
-          'PortBindings' => { '5672/tcp' => [{'HostPort' => '5672'}]}, 
+          # 'PortBindings' => { '5672/tcp' => [{'HostPort' => '5672'}]}, 
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => false,
