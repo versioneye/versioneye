@@ -53,6 +53,18 @@
 
       <% end %>
 
+      <% if @project.group_id %> 
+        <div style="padding-top: 10px;">
+          <b>GroupID:</b> <%= @project.group_id %>
+        </div>
+      <% end %> 
+
+      <% if @project.artifact_id %> 
+        <div style="padding-top: 10px;">
+          <b>ArtifactID:</b> <%= @project.artifact_id %>
+        </div>
+      <% end %> 
+
       <div style="padding-top: 10px;">
         <b>Project ID:</b> <%= @project.id.to_s %>
       </div>
