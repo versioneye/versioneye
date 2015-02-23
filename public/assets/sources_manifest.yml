@@ -25,8 +25,6 @@ badges/dep_out-of-date_old.png: 385c00887db5bed19b431c64893464d3
 badges/dep_unknown.png: 2906ef9dfe5860c64d12274e4a5e054d
 badges/dep_up-to-date.png: af08698d9299fa8ce4cbb6ead7ec6fa9
 badges/dep_update.png: 699340310823c76edc1bfbcadab707b2
-bg/2048.jpg: 9553ce2ff8d067e1eefa2b8a361246d1
-bg/awesome_berlin_night.jpg: b6a8217b0773810cd1b6046558c7ae0d
 c.png: 583b1b26d14ed2c9d5d1d49c79c6d807
 ccs.png: d5b8bf885952a59cd42f55214ff883b8
 eye_off.png: e15e92c710220eaf5494ada5cd03d2c5
@@ -91,8 +89,20 @@ lottery/logo1.png: 886c6ace98b9bcad1b275b35a28cb282
 lottery/logo2.png: b2da764e5420a1194791611f55cd760f
 lottery/logo3.png: ae8378ea7eeba6364ec408e4d0051c92
 lottery/logo4.png: 41aeb1388175fc059986d3eb76f94bff
+marketing/VersionEyeEnterpriseArchitecture.png: a55487484c31fbdd9d4f4415d0bf7315
+marketing/artifactory.png: cd563bd436d55a042d8e50740b3e8da9
+marketing/cocoapods.png: 5701227a9fc20f7a1ff1235f397b2ee4
 marketing/github_integration.png: c178830b07c90d560b6b115b62df69a6
+marketing/github_repository.png: 99fb8f98bfc14aae1731a6ddb8f3f25c
+marketing/login_with_github.png: 8daeb0464266d0203cff957dd7aa2f5f
+marketing/login_with_stash.png: 4621153065d2e9d796e289f1bbe2233b
+marketing/nexus.png: 6759e3056800fd8038602d4ee9eb805e
+marketing/satis.png: 927e3557a2fb51323076d3e2147ed2e0
+marketing/stash_repository.png: 5027bb71dc8293fce1096e742fa27583
+marketing/versioneye-docker.png: 96220f25d1cd2456a596a4d20b80a162
+marketing/versioneye_license_view.png: 3f32887d3782aae4af21f04d4dffc34c
 marketing/versioneye_project.png: f77ac06012f915c92516bc9ecdce9355
+marketing/versioneye_smtp.png: e57c0259f5ab14e2e8c0e2d2f09c15ff
 noise.png: 742bfca1dbc874651664ee66553c95e2
 profile_icon.png: d21015fdb2bbe43c1a15f78291d09b08
 progress-small.gif: 23d519f68ccb9e733b9533097ab8b983
@@ -147,6 +157,7 @@ swagger/logo_small.png: 707955e9197ceabdf92defefed057f5c
 swagger/pet_store_api.png: e8be860fd52af4a4ebae16a46ba29e39
 swagger/throbber.gif: 6f56c2f8c49a162ff4f355ceb218f046
 swagger/wordnik_api.png: fb7553a47ca55ead4a6daf0ff52f324e
+versioneye-round-logo.png: 38b258f66beb63ce36c4ba966f7153f4
 worldmap_sf_b.jpg: 466f729214cbb4d1597b4bfde7dc9cf7
 worldmap_sf_ma.jpg: 286fff9c5796616a122ed8ca7017cbea
 JSXTransformer.js: 12c2723619ced0057e025ff2b714f012
@@ -229,7 +240,7 @@ moowheel/license.txt: d4a142f137c76bb50992aaa90fc262f5
 moowheel/mootools-1.2-core-nc.js: d400e91df754c6a2faf9c1409cfc7034
 moowheel/mootools-1.2-more.js: 47512090a05495f9304b0db67dc0d462
 moowheel/updates.txt: f2a5ce3efe62c3c48fa0d0f9c919a0b6
-coffee-script.js: 6c214d47f538ec7e91cb8db8f5db2d8f
+coffee-script.js: 203ea28c737dc5653a85f2fb6c29777a
 jquery-ui.js: 4defaaa8dec405de6f8aee9eb15e6d2e
 jquery-ui.min.js: 5eb5cf94bd5af9e587d96f161081bd99
 jquery.js: 00f85fb35690e5722a734a4973d8a967
