@@ -15,7 +15,16 @@
     <%= stylesheet_link_tag "application_lp" %>
     <%= javascript_include_tag "application_lp",            :defer => false, :async => false %>
 
+  <% elsif current_page?( enterprise_path ) %>
+
+    <%= stylesheet_link_tag "application_enterprise" %>
+    <%= javascript_include_tag "application_lp",            :defer => false, :async => false %>
+
   <% else %>
+
+
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application",               :defer => false, :async => false %>
 
 
     <% if params[:controller] == 'user/github_repos' ||
@@ -28,10 +37,6 @@
     <% if params[:controller] == 'users' %>
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
     <% end %>
-
-
-    <%= stylesheet_link_tag "application" %>
-    <%= javascript_include_tag "application",               :defer => false, :async => false %>
 
 
     <% if @product || @project %>

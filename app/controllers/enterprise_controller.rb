@@ -1,5 +1,9 @@
 class EnterpriseController < ApplicationController
 
+  def show 
+    render :layout => 'application_lp'
+  end
+
   def activate
     api_key = params[:api_key]
     if !Set['1', 'on', 'true'].include?(params[:agreement])

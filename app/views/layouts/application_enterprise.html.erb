@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head >
+
+    <title>VersionEye - Notification System for Software Packages</title>
+
+    <link href="https://s3.amazonaws.com/veye_assets/versioneye-search.xml"
+          title="VersionEye"
+          rel="search"
+          type="application/opensearchdescription+xml">
+
+    <meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="author"      content="VersionEye GmbH" />
+    <meta name="keywords"    content="Continuous Updating, Dependency Management, License Management" />
+    <meta name="description" content="Get insight about your open source dependencies and licenses!" />
+
+    <%= render 'layouts/html_head' %>
+
+  </head>
+
+  <body >
+
+    <%= render 'shared/messages' %>
+
+    <%= yield %>
+
+    <%= render 'layouts/footer' %>
+    <%= debug(params) if Rails.env.development? %>
+
+  </body>
+
+</html>

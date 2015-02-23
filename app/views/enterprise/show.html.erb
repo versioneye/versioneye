@@ -1,0 +1,250 @@
+
+
+
+<div class="container" style=";" >
+
+  <div style='padding: 20px 0 20px 0; height: 215px;' >
+    <div class='pull-left' >
+      <%= image_tag('versioneye-round-logo.png') %> 
+    </div>
+    <div class="pull-left enterprise_header">Enterprise</div>
+    <div class="pull-left enterprise_subheader">
+      On your own server! Integrated with your private repositories and your continuous integration system! 
+    </div>
+  </div>
+
+  <div class="well-white l_lp_well_margin" >
+    <h2 class="no_margin">What is VersionEye doing for me?</h2>
+    <div class="row">
+      <div class="cell2 pull-left">
+        <h3>Version Notifications</h3>
+        <p>
+          VersionEye notifies you about out-dated dependencies in your 
+          software projects. Nowadays software projects are based on many
+          open source and self developed components. Checking manually 
+          for updates for these components is a very time consuming task and not fun at all! 
+          VersionEye notifies software developers via email about out-dated 
+          dependencies in their projects. That way they can save a lot of 
+          time and focus on development.
+        </p>
+        <p> 
+          <%= image_tag "marketing/versioneye_project.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; width: 394px;" %>
+        </p> 
+      </div>
+      <div class="cell2 pull-left">
+        <h3>License Notifications</h3>
+        <p>
+          Nowadays software projects are based on up to 100 open source 
+          components or even more! Some of the components are published under a 
+          <a href="http://en.wikipedia.org/wiki/Permissive_free_software_licence">permissive</a>
+          and others under a 
+          <a href="http://en.wikipedia.org/wiki/Copyleft">copyleft</a> license. 
+          If you develop closed source software you should avoid some licenses! 
+          VersionEye can check all your open source components against a <a href="http://blog.versioneye.com/2014/09/15/license-whitelist/">license whitelist</a> 
+          and notify you about violations! Depending on your software development process 
+          this checks can happen in real time and your software team can react immediately! 
+        </p>
+        <p>
+          <%= image_tag "marketing/versioneye_license_view.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; width: 410px;" %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="well-white l_lp_well_margin" >
+    <h2 class="no_margin">Which repository servers are supported by VersionEye?</h2>
+    <p style="padding-top: 15px;">
+      The whole point of VersionEye Enterprise is that it can crawl internal repositories, such as <a href="http://www.sonatype.com/nexus">Nexus Pro</a>, <a href="http://www.jfrog.com/open-source/#os-arti">Artifactory Enterprise</a> or other ones. That way VersionEye gets a complete list of ALL your dependencies! Not just the open source ones, but your private components as well! 
+    </p>
+    <div class="row">
+      <div class="cell2 pull-left">
+        <h3>Java Repositories</h3>
+        <p>
+          VersionEye Enterprise can crawl private Maven repositories and generate metrics for the private components. 
+          Every time a new artifact gets released in the private Maven repository VersionEye will notify the teams 
+          which are using an out-dated version of that component in their projects! Currently <a href="http://www.sonatype.com/nexus">Nexus Pro</a> and <a href="http://www.jfrog.com/open-source/#os-arti">Artifactory Enterprise</a>
+          servers are supported! 
+        </p>
+        <p style="text-align: center;">
+          <%= image_tag "marketing/nexus.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray;" %>
+          <%= image_tag "marketing/artifactory.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; margin-top: 5px;" %>
+        </p>
+      </div>
+      <div class="cell2 pull-left">
+        <h3>PHP Repositories</h3>
+        <p>
+          <a href="https://packagist.org/">Packagist</a> is the repository server for the PHP dependency manager <a href="https://getcomposer.org/">Composer</a>. But for the distribution of closed source PHP components big companies are using <a href="https://github.com/composer/satis">Satis</a>! A package repository generator! VersionEye can crawl private Satis servers several times a day and notify developers about new artifacts. Beside that VersionEye can monitor composer.json files in Git repositories and notify developers about out-dated dependencies in composer.json files. 
+        </p>
+        <p style="text-align: center;">
+          <%= image_tag "marketing/satis.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray;" %>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="cell2 pull-left">
+        <h3>Objective-C</h3>
+        <p>
+          <a href="http://cocoapods.org/">CocoaPods</a> is a dependency manager and repository server for Objective-C libraries. Specially used by iOS (iPhone) developers. Big companies are hosting their own private CocoaPods repositories for the distribution of their 
+          closed source Objecitve-C components. VersionEye is very well integrated with CocoaPods. It can crawl multiple private CocoaPods repositories and monitor Podfiles in Git repositories. 
+        </p>
+        <p style="text-align: center;">
+          <%= image_tag "marketing/cocoapods.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray;" %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="well-white l_lp_well_margin" >
+    <h2 class="no_margin">Which Git servers are supported by VersionEye?</h2>
+    <div class="row">
+      <div class="cell2 pull-left">
+        <h3>GitHub Enterprise</h3>
+        <p>
+          VersionEye Enterprise can be connected with <a href="https://enterprise.github.com/">GitHub Enterprise</a>. 
+          That way it's possible to use GitHub Enterprise as single sign on (OAuth) 
+          for VersionEye Enterprise. 
+        </p>
+        <p style="text-align: center;"> 
+          <%= image_tag "marketing/login_with_github.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray;" %>
+        </p>
+        <p>
+          Simply turn on the switch for project files in git repositories which should be monitored by VersionEye! 
+        </p>
+        <p style="text-align: center;"> 
+          <%= image_tag "marketing/github_repository.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; width: 394px;" %>
+        </p> 
+        <p>
+          Simply turn on the switch and receive daily email notifications about your dependencies. It was never easier! 
+        </p>
+      </div>
+      <div class="cell2 pull-left">
+        <h3>Atlassian Stash</h3>
+        <p>
+          VersionEye Enterprise can be connected with Atlassian <a href="https://www.atlassian.com/software/stash">Stash</a> to use it as a single sign on (OAuth) mechanism 
+          for VersionEye Enterprise. 
+        </p>
+        <p style="text-align: center;"> 
+          <%= image_tag "marketing/login_with_stash.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; width: 262px;" %>
+        </p>
+        <p>
+          Simply turn on the switch for project files in git repositories which should be monitored by VersionEye! 
+        </p>
+        <p style="text-align: center;"> 
+          <%= image_tag "marketing/stash_repository.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; width: 410px;" %>
+        </p> 
+        <p>
+          Simply turn on the switch and receive daily email notifications about your dependencies. It was never easier! 
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="well-white l_lp_well_margin" >
+    <h2 class="no_margin">How do I install VersionEye Enterprise?</h2>
+    <p style="padding-top: 15px;">
+      We provide VersionEye Enterprise as an virtual machine image. To be more exact, we provide an <a href="http://www.vmware.com">VMWare</a> instance. All you need is a <a href="http://www.vmware.com/products/player">VMWare Player</a> or <a href="http://www.vmware.com/products/vsphere">VMWare vSpehere</a> to start the instance. After the instance bootet successfully you can open a browser and navigate to the IP address of the VM instance. On the default HTTP port 80 the VersionEye web application will come up, where you can activate the instance with an valid API key.
+    </p>
+    <p>
+      After activation you can login with admin/admin and connect VersionEye Enterprise with your private SMTP, repository and git server. 
+    </p> 
+    <p style="text-align: center;">
+      <%= image_tag "marketing/versioneye_smtp.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; width: 600px;" %>
+    </p>
+  </div>
+
+
+  <div class="well-white l_lp_well_margin" >
+    <h2 class="no_margin">Which resources are needed for the Enterprise VM?</h2>
+    <p style="padding-top: 15px;">
+      The minimum requirements are: 
+      <ul>
+        <li>1 CPU 2.0 GHz</li>
+        <li>2 GB RAM</li>
+        <li>20 GB HD</li>
+      </ul>
+    </p>
+    <p>
+      Depending on your setup and the amount of the components in your private repositories more resources are required. We recommend to run it with: 
+      <ul>
+        <li>2 CPU 2.5 GHz</li>
+        <li>8 GB RAM</li>
+        <li>100 GB HD</li>
+      </ul>
+    </p>
+  </div>
+
+
+  <div class="well-white l_lp_well_margin" >
+    <h2 class="no_margin">How are software updates rolled out?</h2>
+    <p style="padding-top: 15px;">
+      VersionEye is running on <a href="https://www.docker.com/">Docker</a>! Currently the whole software for VersionEye and all the backend systems are distributed over multiple Docker containers. On Port 9999 we provide a web interface to manage the Docker containers. 
+    </p>
+    <p style="text-align: center;">
+      <%= image_tag "marketing/versioneye-docker.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; " %>
+    </p>
+    <p>
+      Updates are provided as new Docker containers. With a single click the current Docker containers can be downloaded directly into the VM, via a secure SSL connection! Updating software was never easier! 
+    </p>
+  </div>
+
+
+  <div class="well-white l_lp_well_margin" >
+    <h2 class="no_margin">How to keep the database up-to-date?</h2>
+    <p style="padding-top: 15px;">
+      <a href="https://www.versioneye.com">VersionEye.com</a> is monitoring 550K open source projects on a daily basis. The crawlers are running 24/7 to keep our database in the cloud up-to-date. VersionEye Enterprise can crawl your private repositories in-house, but then your are still missing all the open source libraries from the internet. For sure you don't want to run &amp; maintain a huge crawling cluster in your company ;-) That's why there is a sync mechanism between VersionEye Enterprise and VersionEye.com. The Enterprise VM pulls data from the VersionEye.com API to keep your local database up-to-date. 
+    </p>
+    <p>
+      If you upload a pom.xml (or any other project file) to the VersionEye Enterprise VM, first it will display all open source dependencies as unknown. But in the background it will resolve all dependendencies via the VersionEye API and pull in the desired data into the local database. Dependending on the number of the dependencies this can take a couple minutes. Beside that there is a nightly sync, to keep the meta data for the local dependencies up-to-date. 
+    </p>
+    <p style="text-align: center;">
+      <%= image_tag "marketing/VersionEyeEnterpriseArchitecture.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; " %>
+    </p>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

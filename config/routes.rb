@@ -46,6 +46,7 @@ Versioneye::Application.routes.draw do
     end
   end
 
+  get  '/enterprise',          :to => 'enterprise#show'
   post '/enterprise/activate', :to => 'enterprise#activate'
 
   get   '/created'                             , :to => 'users#created'
