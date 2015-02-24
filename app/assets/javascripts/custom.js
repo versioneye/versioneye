@@ -2,11 +2,11 @@
 jQuery(document).ready(function(){
 
   jQuery('#q').tbHinter({
-    text: "Search for a software library"
+    text: "Follow your software libraries"
   });
 
   jQuery( "#ext_searchform" ).submit(function( event ) {
-    if (document.getElementById("q").value == "Search for a software library"){
+    if (document.getElementById("q").value == "Follow your software libraries"){
       document.getElementById("q").value = '';  
     }
   });
