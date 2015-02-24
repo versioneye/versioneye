@@ -2,7 +2,7 @@
 jQuery(document).ready(function() {
 
 	jQuery('#q').tbHinter({
-		text: "Search for a software library"
+		text: "Follow your software libraries"
 	});
 
   jQuery('#what_is_versioneye_link').on('click', function (e) {

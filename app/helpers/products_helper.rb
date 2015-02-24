@@ -57,7 +57,7 @@ module ProductsHelper
   end
 
   def do_parse_search_input( query )
-    if query.eql?('Search for a software library')
+    if query.eql?('Follow your software libraries')
       query = 'json' 
     end
     query = query.to_s.strip()
