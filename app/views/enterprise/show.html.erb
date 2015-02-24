@@ -80,8 +80,8 @@
       The whole point of VersionEye Enterprise is that it can crawl internal repositories, 
       such as <a href="http://www.sonatype.com/nexus">Nexus Pro</a>, 
       <a href="http://www.jfrog.com/open-source/#os-arti">Artifactory Enterprise</a> 
-      or other ones. That way VersionEye gets a complete list of ALL your dependencies! 
-      Not just the open source ones, but your private components as well! 
+      or other ones. That way VersionEye gets a complete list of <b>ALL</b> your dependencies! 
+      The open source dependencies AND your private components as well! 
     </p>
     <div class="row">
       <div class="cell2 pull-left">
@@ -151,7 +151,7 @@
           <%= image_tag "marketing/login_with_github.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray;" %>
         </p>
         <p>
-          Simply turn on the switch for project files in git repositories 
+          Simply turn on the switch for project files in Git repositories 
           which should be monitored by VersionEye! 
         </p>
         <p style="text-align: center;"> 
@@ -174,7 +174,7 @@
           <%= image_tag "marketing/login_with_stash.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; width: 262px;" %>
         </p>
         <p>
-          Simply turn on the switch for project files in git repositories 
+          Simply turn on the switch for project files in Git repositories 
           which should be monitored by VersionEye! 
         </p>
         <p style="text-align: center;"> 
@@ -202,7 +202,7 @@
     </p>
     <p>
       After activation you can login with admin/admin and connect VersionEye 
-      Enterprise with your private SMTP, repository and git server. 
+      Enterprise with your private SMTP, Repository and Git server. 
     </p> 
     <p style="text-align: center;">
       <%= image_tag "marketing/versioneye_smtp.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; width: 600px;" %>
@@ -264,6 +264,9 @@
       The Enterprise VM pulls data from the VersionEye.com API to keep your 
       local database up-to-date. 
     </p>
+    <p style="text-align: center;">
+      <%= image_tag "marketing/VersionEyeEnterpriseArchitecture.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; " %>
+    </p>
     <p>
       If you upload a pom.xml (or any other project file) to the 
       VersionEye Enterprise VM, first it will display all open source dependencies as unknown. 
@@ -271,9 +274,6 @@
       the desired data into the local database. Depending on the number of the dependencies 
       this can take a couple minutes. Beside that there is a nightly sync, to keep the Meta data 
       for the local dependencies up-to-date. 
-    </p>
-    <p style="text-align: center;">
-      <%= image_tag "marketing/VersionEyeEnterpriseArchitecture.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; " %>
     </p>
   </div>
 
