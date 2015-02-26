@@ -241,6 +241,99 @@
   </div>
 
 
+  <div class="well-white l_lp_well_margin" >
+
+    <%= form_tag( enterprise_create_path, :method => "post", :class => "form-horizontal") do  %>
+
+      <p class="description" style="padding-bottom: 15px;">
+        Please fill out the form bellow if you are interested in VersionEye Enterprise. We will contact you soon. 
+      </p>
+
+      <div class="control-group">
+        <%= label_tag :scm, "Git Server", :class => "control-label", :for => "scm" %>
+        <div class="controls" >
+          <select name="scm"  id="scm" >
+            <option value="github" <%= "selected" if @ent_lead['scm'] == 'github' %> >GitHub Enterprise</option>
+            <option value="stash" <%= "selected" if @ent_lead['scm'] == 'stash' %> >Atlassian Stash</option>
+            <option value="gitlab" <%= "selected" if @ent_lead['scm'] == 'gitlab' %> >GitLab</option>
+            <option value="else" <%= "selected" if @ent_lead['scm'] == 'else' %> >Else</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :repository, "Binary Repository", :class => "control-label", :for => "repository" %>
+        <div class="controls" >
+          <select name="repository"  id="repository" >
+            <option value="nexus" <%= "selected" if @ent_lead['repository'] == 'nexus' %> >Sonatype Nexus</option>
+            <option value="artifactory" <%= "selected" if @ent_lead['repository'] == 'artifactory' %> >JFrog Artifactory</option>
+            <option value="archiva" <%= "selected" if @ent_lead['repository'] == 'archiva' %> >Apache Archiva</option>
+            <option value="cocoapods" <%= "selected" if @ent_lead['repository'] == 'cocoapods' %> >CocoaPods</option>
+            <option value="satis" <%= "selected" if @ent_lead['repository'] == 'satis' %> >Satis</option>
+            <option value="else" <%= "selected" if @ent_lead['repository'] == 'else' %> >Else</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :ci, "CI Server", :class => "control-label", :for => "ci" %>
+        <div class="controls" >
+          <select name="ci"  id="ci" >
+            <option value="jenkins" <%= "selected" if @ent_lead['ci'] == 'jenkins' %> >Jenkins</option>
+            <option value="teamcity" <%= "selected" if @ent_lead['ci'] == 'teamcity' %> >TeamCity</option>
+            <option value="bamboo" <%= "selected" if @ent_lead['ci'] == 'bamboo' %> >Atlassian Bamboo</option>
+            <option value="else" <%= "selected" if @ent_lead['ci'] == 'else' %> >Else</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :virtualization, "Virtualization", :class => "control-label", :for => "virtualization" %>
+        <div class="controls" >
+          <select name="virtualization"  id="virtualization" >
+            <option value="vmware" <%= "selected" if @ent_lead['virtualization'] == 'vmware' %> >VMWare</option>
+            <option value="vb" <%= "selected" if @ent_lead['virtualization'] == 'vb' %> >VirtualBox</option>
+            <option value="kvm" <%= "selected" if @ent_lead['virtualization'] == 'kvm' %> >KVM</option>
+            <option value="parallels" <%= "selected" if @ent_lead['virtualization'] == 'parallels' %> >Parallels</option>
+            <option value="xen" <%= "selected" if @ent_lead['virtualization'] == 'xen' %> >Xen</option>
+            <option value="else" <%= "selected" if @ent_lead['virtualization'] == 'else' %> >Else</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :name, "Name", :class => "control-label", :for => "name" %>
+        <div class="controls">
+          <%= text_field_tag :name, @ent_lead['name'], :id => "name" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :email, "Email", :class => "control-label", :for => "email" %>
+        <div class="controls">
+          <%= text_field_tag :email, @ent_lead['email'], :id => "email" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= label_tag :note, "Your use case", :class => "control-label", :for => "note" %>
+        <div class="controls">
+          <%= text_area_tag :note, nil, :size=>"27x4", :class => "span4" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn btn-large btn-primary" >Submit</button>
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+
+
 </div>
 
 
