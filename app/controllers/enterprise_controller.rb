@@ -1,8 +1,24 @@
 class EnterpriseController < ApplicationController
 
   def show 
+    @ent_lead = EnterpriseLead.new 
     render :layout => 'application_lp'
   end
+
+  def create 
+    @ent_lead = EnterpriseLead.new 
+    @ent_lead.scm = params[:scm]
+    @ent_lead.repository = params[:repository]
+    @ent_lead.ci = params[:ci]
+    @ent_lead.virtualization = params[:virtualization]
+    @ent_lead.name = params[:name]
+    @ent_lead.email = params[:email]
+    @ent_lead.note = params[:note]
+    if @ent_lead.save != true 
+      flash[:error] = "Something went wrong - #{@ent_lead.errors.full_messages.to_sentence}"
+      redirect_to :back 
+    end 
+  end 
 
   def activate
     api_key = params[:api_key]
