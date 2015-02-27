@@ -22,16 +22,16 @@
 
   <% else %>
 
-
-    <%= stylesheet_link_tag "application" %>
-    <%= javascript_include_tag "application",               :defer => false, :async => false %>
-
-
+    <% # It's important that this gets loaded before -> " javascript_include_tag 'application' " %>
     <% if params[:controller] == 'user/github_repos' ||
           params[:controller] == 'user/stash_repos' ||
           params[:controller] == 'user/bitbucket_repos'  %>
       <%= javascript_include_tag "application_scm",  :defer => false, :async => false %>
     <% end %>
+
+
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application",               :defer => false, :async => false %>
 
 
     <% if params[:controller] == 'users' %>
