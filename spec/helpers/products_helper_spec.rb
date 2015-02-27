@@ -34,7 +34,7 @@ describe ProductsHelper do
     end
 
     it "returns the default string json" do
-      query = 'Search for a software library'
+      query = 'Follow your software libraries'
       query = @products_controller.do_parse_search_input( query )
       expect(query).to eql('json')
     end
