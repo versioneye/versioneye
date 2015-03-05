@@ -180,12 +180,11 @@
 
             <%= render :partial => "shared/product_license_table", :locals => {:dependencies => @child.dependencies, :width => "615"} %>
 
-            <% if (@project.source.eql?(Project::A_SOURCE_URL) && !@project.url.to_s.empty? && @project.url.match(/\.lock$/).nil?) ||
-                  (!@project.s3_filename.to_s.empty? && @project.s3_filename.match(/\.lock$/).nil?)  %>
+            <% if ( subproject_name( @child ).match(/\.lock$/).nil? && !@child.dependencies.empty? ) %>
               <div id="trans_deps" style="margin-top: 15px;">
                 <h3>Licenses of transitive dependencies</h3>
-                <form id="trans_dep_form" action="<%= transitive_dependencies_user_project_path(@project) %>" data-remote="true" method="post" >
-                  <input hidden="true" name="id" value="<%= @project.id.to_s %>" />
+                <form id="trans_dep_form" action="<%= transitive_dependencies_user_project_path(@child) %>" data-remote="true" method="post" >
+                  <input hidden="true" name="id" value="<%= @child.id.to_s %>" />
                   <button type="submit" class="btn btn-primary"
                     onclick="document.getElementById('progress_bar').style.display='block';
                              document.getElementById('trans_dep_form').style.display='none'; " >Show licenses for transitive dependencies</button>
