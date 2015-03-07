@@ -53,21 +53,17 @@
 
       <% end %>
 
-      <% if @project.group_id %> 
+      <% if @project.group_id && @project.artifact_id %> 
         <div style="padding-top: 10px;">
-          <b>GroupID:</b> <%= @project.group_id %>
+          <span title="GroupdId / ArtifactId"><b>GA:</b></span> <%= @project.group_id %> / <%= @project.artifact_id %>
         </div>
       <% end %> 
 
-      <% if @project.artifact_id %> 
+      <% if current_user.nil? || !@project.user.id.to_s.eql?(current_user.id.to_s) %>
         <div style="padding-top: 10px;">
-          <b>ArtifactID:</b> <%= @project.artifact_id %>
+          <b>Created by:</b> <%= link_to @project.user.fullname, user_path(@project.user) %>
         </div>
-      <% end %> 
-
-      <div style="padding-top: 10px;">
-        <b>Project ID:</b> <%= @project.id.to_s %>
-      </div>
+      <% end %>
 
     </div>
     <div class="span8 content" >
