@@ -44,8 +44,9 @@ module UsersHelper
 
   def check_promo_code( code, user )
     return nil if code.to_s.empty? || user.nil?
+
     promo = PromoCode.by_name code
-    if promo.nil?
+    if promo.nil? || promo.to_s.empty? 
       flash.now[:warn] = 'Sorry. But the promo code you entered does not exist!'
     elsif !promo.is_valid?
       flash.now[:warn] = 'Sorry. But the promo code you entered is not valid anymore!'
