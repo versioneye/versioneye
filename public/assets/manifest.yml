@@ -183,6 +183,8 @@ lottery/logo3.png: lottery/logo3-ae8378ea7eeba6364ec408e4d0051c92.png
 lottery/logo3/index.png: lottery/logo3-ae8378ea7eeba6364ec408e4d0051c92.png
 lottery/logo4.png: lottery/logo4-41aeb1388175fc059986d3eb76f94bff.png
 lottery/logo4/index.png: lottery/logo4-41aeb1388175fc059986d3eb76f94bff.png
+mafinex.jpg: mafinex-a38a494b3184fbb479cc3e6493965125.jpg
+mafinex/index.jpg: mafinex-a38a494b3184fbb479cc3e6493965125.jpg
 marketing/VersionEyeEnterpriseArchitecture.png: marketing/VersionEyeEnterpriseArchitecture-a55487484c31fbdd9d4f4415d0bf7315.png
 marketing/VersionEyeEnterpriseArchitecture/index.png: marketing/VersionEyeEnterpriseArchitecture-a55487484c31fbdd9d4f4415d0bf7315.png
 marketing/artifactory.png: marketing/artifactory-cd563bd436d55a042d8e50740b3e8da9.png
@@ -321,10 +323,8 @@ swagger/wordnik_api.png: swagger/wordnik_api-fb7553a47ca55ead4a6daf0ff52f324e.pn
 swagger/wordnik_api/index.png: swagger/wordnik_api-fb7553a47ca55ead4a6daf0ff52f324e.png
 versioneye-round-logo.png: versioneye-round-logo-38b258f66beb63ce36c4ba966f7153f4.png
 versioneye-round-logo/index.png: versioneye-round-logo-38b258f66beb63ce36c4ba966f7153f4.png
-worldmap_sf_b.jpg: worldmap_sf_b-466f729214cbb4d1597b4bfde7dc9cf7.jpg
-worldmap_sf_b/index.jpg: worldmap_sf_b-466f729214cbb4d1597b4bfde7dc9cf7.jpg
-worldmap_sf_ma.jpg: worldmap_sf_ma-286fff9c5796616a122ed8ca7017cbea.jpg
-worldmap_sf_ma/index.jpg: worldmap_sf_ma-286fff9c5796616a122ed8ca7017cbea.jpg
+worldmap.jpg: worldmap-2128a222f3652735ee465ad7db9cda6b.jpg
+worldmap/index.jpg: worldmap-2128a222f3652735ee465ad7db9cda6b.jpg
 JSXTransformer.js: JSXTransformer-68f73dfbaa7be0861d6295bb5ddecc3e.js
 JSXTransformer/index.js: JSXTransformer-68f73dfbaa7be0861d6295bb5ddecc3e.js
 application.js: application-61273e725ef0d71a26b964cf172aeaf1.js

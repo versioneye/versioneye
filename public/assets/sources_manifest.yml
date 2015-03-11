@@ -91,6 +91,7 @@ lottery/logo1.png: 886c6ace98b9bcad1b275b35a28cb282
 lottery/logo2.png: b2da764e5420a1194791611f55cd760f
 lottery/logo3.png: ae8378ea7eeba6364ec408e4d0051c92
 lottery/logo4.png: 41aeb1388175fc059986d3eb76f94bff
+mafinex.jpg: a38a494b3184fbb479cc3e6493965125
 marketing/VersionEyeEnterpriseArchitecture.png: a55487484c31fbdd9d4f4415d0bf7315
 marketing/artifactory.png: cd563bd436d55a042d8e50740b3e8da9
 marketing/cocoapods.png: 5701227a9fc20f7a1ff1235f397b2ee4
@@ -160,8 +161,7 @@ swagger/pet_store_api.png: e8be860fd52af4a4ebae16a46ba29e39
 swagger/throbber.gif: 6f56c2f8c49a162ff4f355ceb218f046
 swagger/wordnik_api.png: fb7553a47ca55ead4a6daf0ff52f324e
 versioneye-round-logo.png: 38b258f66beb63ce36c4ba966f7153f4
-worldmap_sf_b.jpg: 466f729214cbb4d1597b4bfde7dc9cf7
-worldmap_sf_ma.jpg: 286fff9c5796616a122ed8ca7017cbea
+worldmap.jpg: 2128a222f3652735ee465ad7db9cda6b
 JSXTransformer.js: 12c2723619ced0057e025ff2b714f012
 application.js: 7ce23002c090c71366ed3e5ad7113fce
 application_lp.js: 1a60e2976788919f87492c8f6bbf9057
