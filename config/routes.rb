@@ -331,7 +331,8 @@ Versioneye::Application.routes.draw do
     get   '/:lang', :to => 'language#show', :format => false, :constraints => { :lang => /[^\/]+/ }
     get   '/:lang/most_referenced', :to => 'language#most_referenced', :format => false, :constraints => { :lang => /[^\/]+/ }, :as => 'most_referenced'
 
-    get   '/:lang/:key/references',               :to => 'products#references', :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_references'
+    get   '/:lang/:key/project_usage',            :to => 'products#project_usage', :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'project_usage'
+    get   '/:lang/:key/references',               :to => 'products#references'   , :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_references'
     get   '/:lang/:key/badge',                    :to => 'products#badge',      :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_badge'
     get   '/:lang/:key/reference_badge',          :to => 'products#ref_badge',  :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_ref_badge'
     get   '/:lang/:key/:version/reference_badge', :to => 'products#ref_badge',  :constraints => { :lang => /[^\/]+/, :key => /[^\/]+/ }, :as => 'product_ref_badge'
