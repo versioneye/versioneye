@@ -165,7 +165,6 @@ Versioneye::Application.routes.draw do
   resources :versioncomments
   resources :versioncommentreplies
 
-  get '/user/packages/popular_in_my_projects'   , :to => "user/packages#popular_in_my_projects"
   get '/user/packages/i_follow'                 , :to => "user/packages#i_follow"
 
   get '/user/projects/github_repositories'          , :to => 'user/github_repos#init'

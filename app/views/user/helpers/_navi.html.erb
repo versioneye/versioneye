@@ -20,9 +20,6 @@
     <% end %>
     <li><%= link_to 'Create From URL', new_user_project_path, :rel => "nofollow" %></li>
     <li><%= link_to 'Create From Upload', user_prjects_upload_path, :rel => "nofollow" %></li>
-    <li><hr/></li>
-    <li><%= link_to 'Most used packages', :controller => 'user/packages', :action => 'popular_in_my_projects', :rel => "nofollow"  %> </li>
-    <li><%= link_to 'Packages I follow',  :controller => 'user/packages', :action => 'i_follow', :rel => "nofollow" %></li>
 </ul>
   <% else %>
     <%= render '/shared/github_ad' %>
