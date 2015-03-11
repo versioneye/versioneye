@@ -1,0 +1,55 @@
+
+<% title 'Project Usage' %>
+
+<div class="span3">
+
+  <% if !signed_in? && !Rails.env.enterprise? %>
+    <%= render '/shared/github_ad' %>
+  <% end %>
+
+</div>
+
+<% if @product %>
+  
+  <div class="span8" >
+    <div class="row content_header_def" >
+      <%= link_to @product.name, product_version_path(@product) %> is used in <%= pluralize(@product.project_usage , "project")  %>
+    </div>
+    <div class="content">
+      
+      <% @project_ids.each do |project_id| %>
+        <%  project = ProjectService.find project_id %>
+        <%  next if project.nil? %> 
+        <%  next if project.user.nil? %> 
+        <% dep = fetch_projectdependency(@product, project_id) %>
+        <%  color = '' %> 
+        <% if !dep.version_requested.eql?(@product.version) %>
+          <%  color = 'flash warning' %>   
+        <% end %>
+        <div class="row search-item <%= color %>">
+          <div class="icon56 span2 pull-left">
+            <% prog_lang = project.language.to_s.downcase.gsub(/\./, '') %>
+            <span class = "icon_<%= prog_lang %> on" ></span>
+          </div>
+          <div class = "span5">
+            <%= link_to project.name, user_project_path(project) %> by <%= link_to project.user.fullname, user_path(project.user) %><br/> 
+            Using <%= link_to @product.name, product_version_path(@product) %> <%= dep.version_requested %>. Current is <%= @product.version %>
+          </div>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+
+<% else %>
+
+  <div class="span8" >
+    <div class="row content_header_def" >
+      No Package selected.
+    </div>
+    <div class="content">
+      There is no package selected for this page.
+    </div>
+  </div>
+
+<% end %>

@@ -18,7 +18,7 @@ describe "Submit a Comment to specific package" do
     fill_in 'session[email]',    :with => @user.email
     fill_in 'session[password]', :with => @user.password
     find('#sign_in_button').click
-    page.should have_content("My Projects")
+    page.should have_content("Projects")
   end
 
   describe "test the comment feature", :js => true do

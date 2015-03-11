@@ -297,6 +297,10 @@ module ProductsHelper
     return false
   end
 
+  def fetch_projectdependency(product, project_id)
+    Projectdependency.where(:language => product.language, :prod_key => product.prod_key, :project_id => project_id).first
+  end
+
   private
 
     def find_product
