@@ -31,7 +31,7 @@
             <% prog_lang = project.language.to_s.downcase.gsub(/\./, '') %>
             <span class = "icon_<%= prog_lang %> on" ></span>
           </div>
-          <div class = "span5">
+          <div class = "span6">
             <%= link_to project.name, user_project_path(project) %> by <%= link_to project.user.fullname, user_path(project.user) %><br/> 
             Using <%= link_to @product.name, product_version_path(@product) %> <%= dep.version_requested %>. Current is <%= @product.version %>
           </div>
