@@ -80,6 +80,19 @@
   </div>
 <% end %>
 
+<% if Settings.instance.environment.to_s.eql?('enterprise') %>
+  <div class="flash info l_margin_bottom_5" >
+    <b title="<%= @product.project_usage %> projects are referencing this component.">Project Usage:</b>
+    <span title="<%= ref_text %>">
+      <% if @product.project_usage > 0 %>
+        <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/project_usage"><%= @product.project_usage %></a>
+      <% else %>
+        <%= @product.project_usage %>
+      <% end %>
+    </span>
+  </div>
+<% end %>
+
   <% main_dep_count = @product.dependencies(nil).count %>
   <% dep_bg = '' %>
   <% dep_bg = 'success' if main_dep_count <= 9  %>

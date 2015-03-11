@@ -8,6 +8,7 @@ class ProductsController < ApplicationController
   before_filter :check_redirects_package_visual, :only => [:show_visual]
   before_filter :check_refer                   , :only => [:index]
 
+
   def index
     @user = User.new
     @languages = Product::A_LANGS_FILTER
@@ -17,6 +18,7 @@ class ProductsController < ApplicationController
       render :layout => 'enterprise_activation'
     end
   end
+
 
   def search
     @query   = do_parse_search_input( params[:q] )
@@ -32,6 +34,7 @@ class ProductsController < ApplicationController
     end
     @languages = Product::A_LANGS_FILTER
   end
+
 
   def show
     lang     = Product.decode_language( params[:lang] )
@@ -67,6 +70,7 @@ class ProductsController < ApplicationController
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
   end
+
 
   def show_visual
     lang = Product.decode_language( params[:lang] )
@@ -124,6 +128,7 @@ class ProductsController < ApplicationController
     p e.message
   end
 
+  
   def references
     language   = Product.decode_language params[:lang]
     prod_key   = Product.decode_prod_key params[:key]
@@ -152,6 +157,24 @@ class ProductsController < ApplicationController
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
   end
+
+
+  def project_usage 
+    language   = Product.decode_language params[:lang]
+    prod_key   = Product.decode_prod_key params[:key]
+
+    @product   = fetch_product language, prod_key
+    if @product.nil?
+      render :text => "This page doesn't exist", :status => 404 and return
+    end
+
+    @project_ids = ReferenceService.project_references language, prod_key
+  rescue => e
+    flash[:error] = "An error occured. Please contact the VersionEye Team."
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')      
+  end
+
 
   def edit
   end

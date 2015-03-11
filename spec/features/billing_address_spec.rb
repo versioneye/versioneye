@@ -9,7 +9,7 @@ describe "Billing Address" do
     fill_in 'session[email]',    :with => @user.email
     fill_in 'session[password]', :with => @user.password
     find('#sign_in_button').click
-    page.should have_content("My Projects")
+    page.should have_content("Projects")
   end
 
   describe "update the billing address", :js => true do
