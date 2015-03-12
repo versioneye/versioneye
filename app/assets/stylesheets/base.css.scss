@@ -117,8 +117,16 @@ h3 code {
 
 cite { 
     font-style: italic;
+    font-family: times;
+    font-size: 26px; 
+    color: gray;
+    line-height: 1.2;
 }
 
 .cite_section {
   padding-top: 10px;
+}
+
+.two_col_box{
+  padding: 0 5px 0 15px; 
 }
