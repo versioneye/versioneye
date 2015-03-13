@@ -1,6 +1,4 @@
 
-
-
 <div class="container" style=";" >
 
   <div style='padding: 20px 0 20px 0; height: 215px;' >
@@ -12,37 +10,6 @@
       On your own server! Integrated with your private repositories and your continuous integration system! 
     </div>
   </div>
-
-<!-- 
-  <div class="well-white l_lp_well_margin" >
-    <p>
-      Enterprise grade software projects are complex, products contain many libraries 
-      from inside and outside of the enterprise, development is spread over many locations. 
-      It is a tough job for developers and managers to keep up with changes of a multitude of 
-      software libraries.
-    </p>
-    <p>
-      You wish you had a reliable and automatic notification system for changes in software libraries, because software libraries don't update themselves? 
-    </p>
-    <p> 
-      <b>You need VersionEye Enterprise!</b>      
-    </p>
-    <p>
-      VersionEye Enterprise brings the best practices from open source development to 
-      the enterprise world! It runs on your own server and it is fully integrated with 
-      your existing software development infrastructure and processes! 
-    </p>
-    <p>
-      <ul>
-        <li>Support for both - open source and proprietary software components.</li>
-        <li>Better software quality in agile software development.</li>
-        <li>Lower risks and better compliance.</li>
-        <li>Higher productivity of your software development team.</li>
-        <li>Better leverage of open source components.</li>
-      </ul>
-    </p>
-  </div>
---> 
 
   <%= render "/shared/features" %>
 
@@ -73,9 +40,9 @@
         for VersionEye Enterprise. <a href="https://about.gitlab.com/">GitLab</a> support is coming soon! 
       </p>
       <p > 
-        <%= image_tag "marketing/login_with_github.png "%> 
-        <%= image_tag "marketing/login_with_bitbucket.png" %> 
-        <%= image_tag "marketing/login_with_stash.png", :style => "width: 262px;" %>
+        <%= image_tag "marketing/login_with_github_wb.png "%> 
+        <%= image_tag "marketing/login_with_bitbucket_wb.png" %> 
+        <%= image_tag "marketing/login_with_stash_wb.png", :style => "width: 262px;" %>
       </p>
       <p>
         Simply turn on the switch for project files in Git repositories 
@@ -117,11 +84,11 @@
   <h2 >How do I install VersionEye Enterprise?</h2>
   <div class="well-white" >
     <p >
-      We provide VersionEye Enterprise as an virtual machine image. To be more exact, 
-      we provide an <a href="http://www.vmware.com">VMWare</a> instance. All you need 
+      We provide VersionEye Enterprise as a virtual machine image. To be more exact, 
+      we provide a <a href="http://www.vmware.com">VMWare</a> instance. All you need 
       is a <a href="http://www.vmware.com/products/player">VMWare Player</a> or 
-      <a href="http://www.vmware.com/products/vsphere">VMWare vSpehere</a> to start the instance. 
-      After the instance booted successfully you can open a browser and navigate to the 
+      <a href="http://www.vmware.com/products/vsphere">VMWare vSphere</a> to start the instance. 
+      After the instance has booted successfully you can open a browser and navigate to the 
       IP address of the VM instance. On the default HTTP port 80 the VersionEye web 
       application will come up, where you can activate the instance with an valid API key.
     </p>
@@ -171,7 +138,7 @@
     <p>
       Updates are provided as new Docker containers. With a single click the current 
       Docker containers can be downloaded directly into the VM, via a secure SSL 
-      connection! <b>Updating software was never easier!</b> 
+      connection! <b>Updating software has never been easier!</b> 
     </p>
   </div>
 
@@ -190,14 +157,14 @@
       local database up-to-date. 
     </p>
     <p style="text-align: center;">
-      <%= image_tag "marketing/VersionEyeEnterpriseArchitecture.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; " %>
+      <%= image_tag "marketing/VersionEyeEnterpriseArchitecture.png" %>
     </p>
     <p>
-      If you upload a pom.xml (or any other project file) to the 
-      VersionEye Enterprise VM, first it will display all open source dependencies as unknown. 
-      But in the background it will resolve all dependencies via the VersionEye API and pull in 
+      When uploading a pom.xml (or any other project file) to the VersionEye Enterprise VM, 
+      all open source dependencies are displayed as unknown. 
+      But in the background VersionEye Enterprise will resolve all dependencies via the VersionEye API and pull in 
       the desired data into the local database. Depending on the number of the dependencies 
-      this can take a couple minutes. Beside that there is a nightly sync, to keep the Meta data 
+      this can take a couple of minutes. Besides that there is a nightly sync, to keep the metadata 
       for the local dependencies up-to-date. 
     </p>
   </div>
@@ -206,7 +173,7 @@
 <div style="margin-left: 50px; margin-right: 50px;">
   <h2 >Interested?</h2>
     <p >
-      Please fill out the form bellow if you are interested in VersionEye Enterprise. We will contact you soon. 
+      Please fill out the form below if you are interested in VersionEye Enterprise. We will contact you soon. 
     </p>
 
     <p style="padding-top: 15px;">
@@ -219,7 +186,7 @@
             <option value="github" <%= "selected" if @ent_lead['scm'] == 'github' %> >GitHub Enterprise</option>
             <option value="stash" <%= "selected" if @ent_lead['scm'] == 'stash' %> >Atlassian Stash</option>
             <option value="gitlab" <%= "selected" if @ent_lead['scm'] == 'gitlab' %> >GitLab</option>
-            <option value="else" <%= "selected" if @ent_lead['scm'] == 'else' %> >Else</option>
+            <option value="other" <%= "selected" if @ent_lead['scm'] == 'else' %> >Other</option>
           </select>
         </div>
       </div>
@@ -233,7 +200,7 @@
             <option value="archiva" <%= "selected" if @ent_lead['repository'] == 'archiva' %> >Apache Archiva</option>
             <option value="cocoapods" <%= "selected" if @ent_lead['repository'] == 'cocoapods' %> >CocoaPods</option>
             <option value="satis" <%= "selected" if @ent_lead['repository'] == 'satis' %> >Satis</option>
-            <option value="else" <%= "selected" if @ent_lead['repository'] == 'else' %> >Else</option>
+            <option value="other" <%= "selected" if @ent_lead['repository'] == 'else' %> >Other</option>
           </select>
         </div>
       </div>
@@ -245,7 +212,7 @@
             <option value="jenkins" <%= "selected" if @ent_lead['ci'] == 'jenkins' %> >Jenkins</option>
             <option value="teamcity" <%= "selected" if @ent_lead['ci'] == 'teamcity' %> >TeamCity</option>
             <option value="bamboo" <%= "selected" if @ent_lead['ci'] == 'bamboo' %> >Atlassian Bamboo</option>
-            <option value="else" <%= "selected" if @ent_lead['ci'] == 'else' %> >Else</option>
+            <option value="other" <%= "selected" if @ent_lead['ci'] == 'else' %> >Other</option>
           </select>
         </div>
       </div>
@@ -259,7 +226,7 @@
             <option value="kvm" <%= "selected" if @ent_lead['virtualization'] == 'kvm' %> >KVM</option>
             <option value="parallels" <%= "selected" if @ent_lead['virtualization'] == 'parallels' %> >Parallels</option>
             <option value="xen" <%= "selected" if @ent_lead['virtualization'] == 'xen' %> >Xen</option>
-            <option value="else" <%= "selected" if @ent_lead['virtualization'] == 'else' %> >Else</option>
+            <option value="other" <%= "selected" if @ent_lead['virtualization'] == 'else' %> >Other</option>
           </select>
         </div>
       </div>
@@ -297,47 +264,4 @@
 
   </div>
 
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
