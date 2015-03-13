@@ -30,7 +30,7 @@
         <% end %>
 
         <tr class="<%= sep_class %> <%= whitelist_class %> ">
-          <td><a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %></a></td>
+          <td><a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %> : <%= dependency.version_requested %></a></td>
           <td>
             <%= render :partial => "shared/license_name", :locals => {:license => license } %>
           </td>
@@ -43,7 +43,7 @@
       <tr class="flash warning">
         <td>
           <% if dependency.prod_key %>
-            <a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %></a>
+            <a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %> : <%= dependency.version_requested %></a>
           <% else %>
             <%= dependency.name %>
           <% end %>
