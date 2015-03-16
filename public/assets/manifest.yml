@@ -185,8 +185,8 @@ lottery/logo4.png: lottery/logo4-41aeb1388175fc059986d3eb76f94bff.png
 lottery/logo4/index.png: lottery/logo4-41aeb1388175fc059986d3eb76f94bff.png
 mafinex.jpg: mafinex-a38a494b3184fbb479cc3e6493965125.jpg
 mafinex/index.jpg: mafinex-a38a494b3184fbb479cc3e6493965125.jpg
-marketing/VersionEyeEnterpriseArchitecture.png: marketing/VersionEyeEnterpriseArchitecture-ec457929dc6c88fd6f26575fb4a925fc.png
-marketing/VersionEyeEnterpriseArchitecture/index.png: marketing/VersionEyeEnterpriseArchitecture-ec457929dc6c88fd6f26575fb4a925fc.png
+marketing/VersionEyeEnterpriseArchitecture.png: marketing/VersionEyeEnterpriseArchitecture-f1173cd1a34021dfeadaee4b42720ed4.png
+marketing/VersionEyeEnterpriseArchitecture/index.png: marketing/VersionEyeEnterpriseArchitecture-f1173cd1a34021dfeadaee4b42720ed4.png
 marketing/artifactory.png: marketing/artifactory-cd563bd436d55a042d8e50740b3e8da9.png
 marketing/artifactory/index.png: marketing/artifactory-cd563bd436d55a042d8e50740b3e8da9.png
 marketing/cocoapods.png: marketing/cocoapods-5701227a9fc20f7a1ff1235f397b2ee4.png
@@ -397,6 +397,8 @@ libs/bootstrap3.min.js: libs/bootstrap3.min-9ff73f5c53893b5f2f3af18e48072651.js
 libs/bootstrap3/index.min.js: libs/bootstrap3.min-9ff73f5c53893b5f2f3af18e48072651.js
 libs/d3.v3.min.js: libs/d3.v3.min-a2cdb6087a958e8f20d7f6b9619c5075.js
 libs/d3/index.v3.min.js: libs/d3.v3.min-a2cdb6087a958e8f20d7f6b9619c5075.js
+libs/d3pie.min.js: libs/d3pie.min-1318f9c0441c6cb71543ab5e96e61366.js
+libs/d3pie/index.min.js: libs/d3pie.min-1318f9c0441c6cb71543ab5e96e61366.js
 libs/hogan-2.0.0.js: libs/hogan-2.0.0-fb70e1a6fb43c9a5aea35eee6ade7f2d.js
 libs/hogan-2/index.0.0.js: libs/hogan-2.0.0-fb70e1a6fb43c9a5aea35eee6ade7f2d.js
 libs/jquery.feeds.min.js: libs/jquery.feeds.min-9bb4f803cd462a18af7fded16581bf9c.js
