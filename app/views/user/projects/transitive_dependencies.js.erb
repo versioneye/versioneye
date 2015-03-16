@@ -1,2 +1,2 @@
-jQuery('#trans_deps').html('<%=j render :partial => 'shared/product_license_table', :locals => {:dependencies => @products, :width => '615'} %>');
+jQuery('#trans_deps').html('<%=j render :partial => 'shared/product_license_table', :locals => {:dependencies => @products, :width => '615', :project_id => nil, :license_whitelist_id => nil, :display_charts => false} %>');
 document.getElementById('progress_bar').style.display='none';
