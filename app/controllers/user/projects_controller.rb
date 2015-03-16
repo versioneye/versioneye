@@ -3,6 +3,7 @@ class User::ProjectsController < ApplicationController
   before_filter :authenticate        , :except => [:show, :badge, :transitive_dependencies]
   before_filter :new_project_redirect, :only   => [:index]
 
+
   def index
     all_public = params[:all_public]
     @project = Project.new
@@ -15,13 +16,16 @@ class User::ProjectsController < ApplicationController
     end
   end
 
+
   def new
     @project = Project.new(params)
   end
 
+
   def upload
     @project = Project.new(params)
   end
+
 
   # Create a new project from file upload or URL. 
   def create
@@ -42,6 +46,7 @@ class User::ProjectsController < ApplicationController
     redirect_to :back
   end
 
+
   def show
     id       = params[:id]
     child_id = params[:child]
@@ -57,10 +62,22 @@ class User::ProjectsController < ApplicationController
     @whitelists = LicenseWhitelistService.index( current_user ) if current_user
   end
 
+
+  def lwl_export
+    id      = params[:id]
+    project = ProjectService.find( id )
+    date_string = DateTime.now.strftime("%d_%m_%Y")
+    project_name = project.name.gsub("/", "-")
+    pdf = LwlPdfService.process project
+    send_data pdf, type: 'application/pdf', filename: "#{date_string}_#{project_name}.pdf"
+  end
+
+
   def visual
     @project = ProjectService.find( params[:id] )
     render :layout => 'application_visual'
   end
+
 
   def transitive_dependencies
     id       = params[:id]
@@ -85,6 +102,7 @@ class User::ProjectsController < ApplicationController
     end
   end
 
+
   # send_file "#{path}/dep_#{badge}.png", :type => 'image/png', :disposition => 'inline'
   def badge
     id    = params[:id]
@@ -103,6 +121,7 @@ class User::ProjectsController < ApplicationController
     send_data response.body, :type => "image/svg+xml", :disposition => 'inline'
   end
 
+
   def update_name
     @name        = params[:name]
     id           = params[:id]
@@ -113,6 +132,7 @@ class User::ProjectsController < ApplicationController
       format.js
     end
   end
+
 
   def update
     file       = params[:upload]
@@ -140,6 +160,7 @@ class User::ProjectsController < ApplicationController
     flash[:success] = "ReUpload was successful."
     redirect_to user_project_path( project )
   end
+
 
   def add_collaborator
     project = Project.find_by_id params[:id]
@@ -172,6 +193,7 @@ class User::ProjectsController < ApplicationController
     redirect_to :back
   end
 
+
   def reparse
     id = params[:id]
     project = Project.find_by_id id
@@ -179,6 +201,7 @@ class User::ProjectsController < ApplicationController
     flash[:success] = "A background process was started to reparse the project. This can take a couple seconds."
     redirect_to user_project_path( project )
   end
+
 
   def followall
     id = params[:id]
@@ -189,6 +212,7 @@ class User::ProjectsController < ApplicationController
     flash[:success] = "You follow now all packages from this project."
     redirect_to :back 
   end
+
 
   def destroy
     id = params[:id] 
@@ -202,6 +226,7 @@ class User::ProjectsController < ApplicationController
     flash[:error] = "ERROR: #{e.message}"
     redirect_to :back
   end
+
 
   def merge 
     child_id  = params[:id] 
@@ -218,6 +243,7 @@ class User::ProjectsController < ApplicationController
     Rails.logger.error e.backtrace.join('\n')
   end
 
+
   def unmerge 
     id = params[:id] 
     child_id = params[:child]
@@ -233,6 +259,7 @@ class User::ProjectsController < ApplicationController
     Rails.logger.error e.backtrace.join('\n')
   end
 
+
   def save_period
     id = params[:id]
     period = params[:period]
@@ -247,6 +274,7 @@ class User::ProjectsController < ApplicationController
     end
     redirect_to url 
   end
+
 
   def save_visibility
     id = params[:id]
@@ -265,6 +293,7 @@ class User::ProjectsController < ApplicationController
     end
     redirect_to url
   end
+
 
   def save_email
     id       = params[:id]
@@ -286,6 +315,7 @@ class User::ProjectsController < ApplicationController
     redirect_to url 
   end
 
+
   def save_notify_after_api_update
     id     = params[:id]
     notify = params[:notify]
@@ -304,6 +334,7 @@ class User::ProjectsController < ApplicationController
     redirect_to url
   end
 
+
   def save_whitelist
     id        = params[:id]
     list_name = params[:whitelist]
@@ -320,6 +351,7 @@ class User::ProjectsController < ApplicationController
     Rails.logger.error e.backtrace.join('\n')
   end
 
+
   def mute_dependency
     project_id    = params[:id]
     dependency_id = params[:dependency_id]
@@ -327,6 +359,7 @@ class User::ProjectsController < ApplicationController
     dependency = Projectdependency.find_by_id dependency_id
     render json: {"dependency_id" => dependency_id, "outdated" => dependency.outdated, "muted" => muted}
   end
+
 
   def demute_dependency
     project_id    = params[:id]
@@ -336,7 +369,9 @@ class User::ProjectsController < ApplicationController
     render json: {"dependency_id" => dependency_id, "outdated" => dependency.outdated, "muted" => muted}
   end
 
+
   private
+
 
     def calculate_language project
       children = project.children  
