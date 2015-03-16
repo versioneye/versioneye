@@ -92,7 +92,7 @@ lottery/logo2.png: b2da764e5420a1194791611f55cd760f
 lottery/logo3.png: ae8378ea7eeba6364ec408e4d0051c92
 lottery/logo4.png: 41aeb1388175fc059986d3eb76f94bff
 mafinex.jpg: a38a494b3184fbb479cc3e6493965125
-marketing/VersionEyeEnterpriseArchitecture.png: ec457929dc6c88fd6f26575fb4a925fc
+marketing/VersionEyeEnterpriseArchitecture.png: f1173cd1a34021dfeadaee4b42720ed4
 marketing/artifactory.png: cd563bd436d55a042d8e50740b3e8da9
 marketing/cocoapods.png: 5701227a9fc20f7a1ff1235f397b2ee4
 marketing/git_repo_integration.png: b98532398832fc2264a2ae87c553990b
@@ -198,6 +198,7 @@ latest_release_plots/main.js: cd3ef4ca8864d5dab0841b16230c6cf6
 libs/bootstrap-maxlength.min.js: 4906aa7c52d468041779bdfb40f66ec0
 libs/bootstrap3.min.js: fc94a768d63e7297913be4920969d27c
 libs/d3.v3.min.js: 7cdced641136fbd4e44902b155606b61
+libs/d3pie.min.js: a095fefb5e801d39951c39f1cc6b2299
 libs/hogan-2.0.0.js: 6da019bd49485c1b69e4a1fe5e632c85
 libs/jquery.feeds.min.js: 2d4c606e06d8c97d386d30de6edbb11e
 libs/moment.min.js: deb15a232a054de42a0b2a1e776ad663
