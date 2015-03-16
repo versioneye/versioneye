@@ -72,6 +72,7 @@ class DockerController < ApplicationController
       images["veye/crawlj:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'], 
+          'Binds' => ['/mnt/logs:/mnt/logs'], 
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
