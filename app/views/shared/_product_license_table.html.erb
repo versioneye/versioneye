@@ -15,6 +15,12 @@
     <% sep_class = "license_seperator" %>
     
     <% licenses = [] %>
+    <% dep_version = '0' %> 
+    <% if dependency.respond_to?('version_requested') %> 
+      <% dep_version = dependency.version_requested %> 
+    <% else %> 
+      <% dep_version = dependency.version %> 
+    <% end %>
     <% licenses = dependency.license_caches if dependency.respond_to?( 'license_caches' ) %>
     <% licenses = dependency.licenses if dependency.respond_to?( 'licenses' ) %>
     
@@ -47,7 +53,7 @@
         <% end %>
 
         <tr class="<%= sep_class %> <%= whitelist_class %> ">
-          <td><a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %> : <%= dependency.version_requested %></a></td>
+          <td><a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %> : <%= dep_version %></a></td>
           <td>
             <%= render :partial => "shared/license_name", :locals => {:license => license } %>
           </td>
@@ -61,7 +67,7 @@
       <tr class="flash warning">
         <td>
           <% if dependency.prod_key %>
-            <a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %> : <%= dependency.version_requested %></a>
+            <a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %> : <%= dep_version %></a>
           <% else %>
             <%= dependency.name %>
           <% end %>
@@ -72,14 +78,14 @@
 
   <% end %>
 </table>
-<% if !project_id.to_s.empty? && !license_whitelist_id.to_s.empty? %> 
+<% if !project_id.nil? && !project_id.to_s.empty? && !license_whitelist_id.to_s.empty? %> 
   <div style="margin-top: 10px;">
     <%= link_to 'PDF Export', lwl_export_user_project_path( project_id ) %>
   </div>
 <% end %> 
 <br/><br/>
 
-<% if !license_whitelist_id.to_s.empty? %> 
+<% if display_charts == true && !license_whitelist_id.to_s.empty? %> 
 <div id='pie1' style="text-align: center;">
 </div>  
 <script type="text/javascript">
@@ -121,7 +127,7 @@
   <br/><br/>
 <% end %>
 
-<% if license_hash.count > 1 %> 
+<% if display_charts == true && license_hash.count > 1 %> 
 <div id='pie2' style="text-align: center;">
 </div>  
 <script type="text/javascript">

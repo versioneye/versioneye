@@ -174,7 +174,7 @@
 
             <%= render partial: "user/projects/helpers/show_subprojects", locals: {parent_project: @project, child_project: @child, tab_id: 'licenses'} %>
 
-            <%= render :partial => "shared/product_license_table", :locals => {:dependencies => @child.dependencies, :width => "615", :project_id => @child.id.to_s, :license_whitelist_id => @project.license_whitelist_id} %>
+            <%= render :partial => "shared/product_license_table", :locals => {:dependencies => @child.dependencies, :width => "615", :project_id => @child.id.to_s, :license_whitelist_id => @project.license_whitelist_id, :display_charts => true} %>
 
             <% if ( subproject_name( @child ).match(/\.lock$/).nil? && !@child.dependencies.empty? ) %>
               <div id="trans_deps" style="margin-top: 15px;">
