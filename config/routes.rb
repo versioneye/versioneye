@@ -197,6 +197,7 @@ Versioneye::Application.routes.draw do
 
     resources :projects do
       member do
+        get  'lwl_export'
         get  'badge'
         get  'visual'
         post 'merge'

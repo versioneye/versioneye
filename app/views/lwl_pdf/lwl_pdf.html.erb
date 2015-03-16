@@ -1,0 +1,120 @@
+<html>
+  <head>
+    <meta name='pdfkit-orientation' content='portrait' />
+
+    <style type="text/css">
+      body {
+        color: #000000;
+        font-family: Courier;
+        font-size: 14px;
+      }
+      body, td, th, input, textarea, select, a {
+        font-size: 14px;
+      }
+      h1{
+        font-family: Courier;
+      }
+      p {
+        margin-top: 0px;
+        margin-bottom: 20px;
+      }
+      #container {
+        width: 680px;
+      }
+      table.list {
+        border-collapse: collapse;
+        width: 100%;
+        border-top: 1px solid #DDDDDD;
+        border-left: 1px solid #DDDDDD;
+        margin-bottom: 20px;
+      }
+      table.list td {
+        border-right: 1px solid #DDDDDD;
+        border-bottom: 1px solid #DDDDDD;
+      }
+      table.list thead td {
+        background-color: #EFEFEF;
+        padding: 0px 5px;
+      }
+      table.list thead td a, .list thead td {
+        text-decoration: none;
+        color: #222222;
+        font-weight: bold;
+      }
+      table.list tbody td a {
+        text-decoration: underline;
+      }
+      table.list tbody td {
+        vertical-align: top;
+        padding: 0px 5px;
+      }
+      table.list .left {
+        text-align: left;
+        padding: 7px;
+      }
+      table.list .right {
+        text-align: right;
+        padding: 7px;
+      }
+      table.list .center {
+        text-align: center;
+        padding: 7px;
+      }
+      .small{
+        font-size: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+
+      <p>
+        <b>Date:</b> <%= DateTime.now.strftime("%d.%m.%Y") %> <br/>
+      </p>
+
+      <p>
+        <b>Project:</b> <%= name %> <span class="small">(<%= id.to_s %>)</span> <br/>
+        <b>Bill of materials:</b>
+      </p>
+
+      <table class="list">
+        <thead>
+          <tr>
+            <td class="left">Status</td>
+            <td class="left">Component</td>
+            <td class="left">Version</td>
+            <td class="left">License</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% [:whitelisted, :unknown, :violated].each do |key| %>
+            <% lwl_pdf_list[key].each do |dep| %> 
+              <tr>
+                <td class="left"> <%= key.to_s %> </td>
+                <td class="left"> 
+                  <%= dep[:component] %> 
+                  <% if dep[:group_id] %> 
+                    <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
+                  <% end %> 
+                </td>
+                <td class="left"> <%= dep[:version] %> </td>
+                <td class="left"> <%= dep[:license] %> </td>
+              </tr>  
+            <% end %> 
+          <% end %> 
+        </tbody>
+      </table>
+
+      <p>
+        <b>Whitelist:</b> <%= license_whitelist.name %> <span class="small">(<%= license_whitelist.id %>)</span></br>
+        <b>Bill of materials:</b>
+      </p>
+
+      <% license_whitelist.license_elements.each do |lwle| %> 
+        <div>- <%= lwle.name %> </div>
+      <% end %> 
+
+
+    </div>
+  </body>
+</html>
