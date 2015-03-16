@@ -1,4 +1,7 @@
 
+<% whitelisted_count = 0 %>
+<% unknown_count = 0 %>
+<% violated_count = 0 %>
 <% license_hash = Hash.new %>
 <table class="dependency_table" style="width: <%= width %>px;">
   <thead>
@@ -10,9 +13,11 @@
   <% dependencies.sort! { |a,b| a.name.downcase <=> b.name.downcase } %>
   <% dependencies.each do |dependency| %>
     <% sep_class = "license_seperator" %>
+    
     <% licenses = [] %>
     <% licenses = dependency.license_caches if dependency.respond_to?( 'license_caches' ) %>
     <% licenses = dependency.licenses if dependency.respond_to?( 'licenses' ) %>
+    
     <% if licenses && !licenses.empty? %>
       <% licenses.each do |license| %>
 
@@ -21,12 +26,24 @@
 
         <% whitelist_class = '' %>
         <% if license.respond_to? 'on_whitelist' %>
-          <% whitelist_class = 'error'   if license.on_whitelist == false %>
-          <% whitelist_class = 'success' if license.on_whitelist == true  %>
+          <% if license.on_whitelist == false %> 
+            <% whitelist_class = 'error'    %>
+            <% violated_count += 1 %>
+          <% end %> 
+          <% if license.on_whitelist == true %> 
+            <% whitelist_class = 'success'   %>
+            <% whitelisted_count += 1 %>
+          <% end %> 
         <% elsif @project.license_whitelist %>
           <% on_whitelist = @project.license_whitelist.include_license_substitute?( license.name_substitute ) %>
-          <% whitelist_class = 'error'   if on_whitelist == false %>
-          <% whitelist_class = 'success' if on_whitelist == true  %>
+          <% if on_whitelist == false %> 
+            <% whitelist_class = 'error'    %>
+            <% violated_count += 1 %>
+          <% end %>
+          <% if on_whitelist == true %>
+            <% whitelist_class = 'success'  %>
+            <% whitelisted_count += 1 %>
+          <% end %>
         <% end %>
 
         <tr class="<%= sep_class %> <%= whitelist_class %> ">
@@ -38,6 +55,7 @@
         <% sep_class = "" %>
       <% end %>
     <% else %>
+      <% unknown_count += 1 %>
       <% license_hash['unknown'] = [] if license_hash['unknown'].nil? %> 
       <% license_hash['unknown'] << dependency %> 
       <tr class="flash warning">
@@ -51,6 +69,7 @@
         <td> UNKNOWN </td>
       </tr>
     <% end %>
+
   <% end %>
 </table>
 <% if !project_id.to_s.empty? && !license_whitelist_id.to_s.empty? %> 
@@ -59,6 +78,34 @@
   </div>
 <% end %> 
 <br/><br/>
+
+<% if !license_whitelist_id.to_s.empty? %> 
+<div id='pie1' style="text-align: center;">
+</div>  
+<script type="text/javascript">
+  var pie = new d3pie("pie1", {
+    header: {
+      title: {
+        text: ""
+      },
+      location: "pie-center"
+    },
+    size: {
+      pieInnerRadius: "70%"
+    },
+    data: {
+      sortOrder: "label-asc",
+      content: [
+        { label: "Whitelisted", value: <%= whitelisted_count %>, color: "green" },
+        { label: "Unknown", value: <%= unknown_count %>, color: "orange" },
+        { label: "Violated", value: <%= violated_count %>, color: "red" },
+      ]
+    }
+  });
+</script>
+<br/><br/>
+<% end %> 
+
 
 <% license_hash.sort.map do |license_name, value| %>
   <div>
@@ -73,3 +120,31 @@
   <% end %>
   <br/><br/>
 <% end %>
+
+<% if license_hash.count > 1 %> 
+<div id='pie2' style="text-align: center;">
+</div>  
+<script type="text/javascript">
+  var pie = new d3pie("pie2", {
+    header: {
+      title: {
+        text: ""
+      },
+      location: "pie-center"
+    },
+    size: {
+      pieInnerRadius: "70%"
+    },
+    data: {
+      sortOrder: "label-asc",
+      content: [
+        <% license_hash.sort.map do |license_name, value| %>
+          { label: "<%= license_name %>", value: <%= license_hash[license_name].count %> },  
+        <% end %> 
+      ]
+    }
+  });
+</script>
+<br/><br/>
+<% end %>
+

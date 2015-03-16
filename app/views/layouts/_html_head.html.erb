@@ -10,6 +10,11 @@
 
   <%= csrf_meta_tag %>
 
+  <% if params[:controller] == 'user/projects' %>
+    <script src="/assets/libs/d3.v3.min.js"></script>
+    <script src="/assets/libs/d3pie.min.js"></script>
+  <% end %> 
+
   <% if current_page?( root_path )  %>
 
     <%= stylesheet_link_tag "application_lp" %>
