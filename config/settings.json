@@ -18,9 +18,9 @@
     "elasticsearch_dep_index": "dependency",
     "elasticsearch_product_index": "product",
     "elasticsearch_user_index": "user",
-    "elasticsearch_addr": "192.168.118.133",
+    "elasticsearch_addr": "172.16.172.128",
     "elasticsearch_port": "9200",
-    "rabbitmq_addr": "192.168.118.133",
+    "rabbitmq_addr": "172.16.172.128",
     "rabbitmq_port": "5672",
     "github_base_url": "https://github.com",
     "github_api_url": "https://api.github.com",
@@ -31,7 +31,7 @@
     "projects_unlimited": false,
     "memcache_password": null,
     "memcache_username": null,
-    "memcache_addr": "192.168.118.133",
+    "memcache_addr": "172.16.172.128",
     "memcache_port": "11211",
     "s3_infographics_bucket": "veye_dev_infographics",
     "s3_projects_bucket": "veye_dev_projects",
@@ -61,7 +61,6 @@
     "default_project_period": "daily",
     "default_project_public": true,
     "show_signup_form": true,
-    "show_login_form": true
     "show_login_form": true, 
     "lwl_pdf_content": "app/views/lwl_pdf/lwl_pdf.html.erb", 
     "lwl_pdf_footer": "app/views/lwl_pdf/footer.html"
@@ -86,9 +85,9 @@
     "cocoapods_spec": "/home/versioneye/cocoapods/cocoapods-specs",
     "elasticsearch_product_index": "product_test",
     "elasticsearch_user_index": "user_test",
-    "elasticsearch_addr": "192.168.118.133",
+    "elasticsearch_addr": "172.16.172.128",
     "elasticsearch_port": "9200",
-    "rabbitmq_addr": "192.168.118.133",
+    "rabbitmq_addr": "172.16.172.128",
     "rabbitmq_port": "5672",
     "github_base_url": "https://github.com",
     "github_api_url": "https://api.github.com",
@@ -99,7 +98,7 @@
     "projects_unlimited": false,
     "memcache_password": null,
     "memcache_username": null,
-    "memcache_addr": "192.168.118.133",
+    "memcache_addr": "172.16.172.128",
     "memcache_port": "11211",
     "s3_infographics_bucket": "veye_test_infographics",
     "s3_projects_bucket": "veye_test_projects",
@@ -129,7 +128,6 @@
     "default_project_period": "daily",
     "default_project_public": true,
     "show_signup_form": true,
-    "show_login_form": true
     "show_login_form": true, 
     "lwl_pdf_content": "app/views/lwl_pdf/lwl_pdf.html.erb", 
     "lwl_pdf_footer": "app/views/lwl_pdf/footer.html"
@@ -195,7 +193,6 @@
     "default_project_period": "daily",
     "default_project_public": true,
     "show_signup_form": true,
-    "show_login_form": true
     "show_login_form": true, 
     "lwl_pdf_content": "app/views/lwl_pdf/lwl_pdf.html.erb", 
     "lwl_pdf_footer": "app/views/lwl_pdf/footer.html"
@@ -257,7 +254,6 @@
     "default_project_period": "daily",
     "default_project_public": true,
     "show_signup_form": true,
-    "show_login_form": true
     "show_login_form": true, 
     "lwl_pdf_content": "app/views/lwl_pdf/lwl_pdf.html.erb", 
     "lwl_pdf_footer": "app/views/lwl_pdf/footer.html"
