@@ -62,6 +62,9 @@
     "default_project_public": true,
     "show_signup_form": true,
     "show_login_form": true
+    "show_login_form": true, 
+    "lwl_pdf_content": "app/views/lwl_pdf/lwl_pdf.html.erb", 
+    "lwl_pdf_footer": "app/views/lwl_pdf/footer.html"
   },
   "test": {
     "ga_account": "",
@@ -127,6 +130,9 @@
     "default_project_public": true,
     "show_signup_form": true,
     "show_login_form": true
+    "show_login_form": true, 
+    "lwl_pdf_content": "app/views/lwl_pdf/lwl_pdf.html.erb", 
+    "lwl_pdf_footer": "app/views/lwl_pdf/footer.html"
   },
   "production": {
     "ga_account": "UA-32702672-1",
@@ -190,6 +196,9 @@
     "default_project_public": true,
     "show_signup_form": true,
     "show_login_form": true
+    "show_login_form": true, 
+    "lwl_pdf_content": "app/views/lwl_pdf/lwl_pdf.html.erb", 
+    "lwl_pdf_footer": "app/views/lwl_pdf/footer.html"
   },
   "enterprise": {
     "ga_account": "",
@@ -249,5 +258,8 @@
     "default_project_public": true,
     "show_signup_form": true,
     "show_login_form": true
+    "show_login_form": true, 
+    "lwl_pdf_content": "app/views/lwl_pdf/lwl_pdf.html.erb", 
+    "lwl_pdf_footer": "app/views/lwl_pdf/footer.html"
   }
 }
