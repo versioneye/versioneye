@@ -50,6 +50,7 @@ class Auth::StashController < ApplicationController
     else
       sign_in user
       rpath = user_projects_stash_repositories_path
+      rpath = user_projects_path(:all_public => true) if Project.where(:public => true, :parent_id => nil).count > 0 
       rpath = user_projects_path if user.projects && !user.projects.empty?
     end
     redirect_back_or rpath and return
