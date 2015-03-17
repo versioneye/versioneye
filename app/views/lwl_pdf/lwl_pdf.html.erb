@@ -72,48 +72,88 @@
         <b>Date:</b> <%= DateTime.now.strftime("%d.%m.%Y") %> <br/>
       </p>
 
-      <p>
-        <b>Project:</b> <%= name %> <span class="small">(<%= id.to_s %>)</span> <br/>
-        <b>Bill of materials:</b>
-      </p>
+      <div>
+        <p>
+          <b>Project:</b> <%= project.name %> <span class="small">(<%= project.id.to_s %>)</span> <br/>
+          <b>Bill of materials:</b>
+        </p>
 
-      <table class="list">
-        <thead>
-          <tr>
-            <td class="left">Status</td>
-            <td class="left">Component</td>
-            <td class="left">Version</td>
-            <td class="left">License</td>
-          </tr>
-        </thead>
-        <tbody>
-          <% [:whitelisted, :unknown, :violated].each do |key| %>
-            <% lwl_pdf_list[key].each do |dep| %> 
-              <tr>
-                <td class="left"> <%= key.to_s %> </td>
-                <td class="left"> 
-                  <%= dep[:component] %> 
-                  <% if dep[:group_id] %> 
-                    <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
-                  <% end %> 
-                </td>
-                <td class="left"> <%= dep[:version] %> </td>
-                <td class="left"> <%= dep[:license] %> </td>
-              </tr>  
+        <table class="list">
+          <thead>
+            <tr>
+              <td class="left">Status</td>
+              <td class="left">Component</td>
+              <td class="left">Version</td>
+              <td class="left">License</td>
+            </tr>
+          </thead>
+          <tbody>
+            <% [:whitelisted, :unknown, :violated].each do |key| %>
+              <% project.lwl_pdf_list[key].each do |dep| %> 
+                <tr>
+                  <td class="left"> <%= key.to_s %> </td>
+                  <td class="left"> 
+                    <%= dep[:component] %> 
+                    <% if dep[:group_id] %> 
+                      <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
+                    <% end %> 
+                  </td>
+                  <td class="left"> <%= dep[:version] %> </td>
+                  <td class="left"> <%= dep[:license] %> </td>
+                </tr>  
+              <% end %> 
             <% end %> 
-          <% end %> 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
 
-      <p>
-        <b>Whitelist:</b> <%= license_whitelist.name %> <span class="small">(<%= license_whitelist.id %>)</span></br>
-        <b>Bill of materials:</b>
-      </p>
+      <% if children && !children.empty? %>
+        <% children.each do |project| %> 
+          <div>
+            <p>
+              <b>Project:</b> <%= project.name %> <span class="small">(<%= project.id.to_s %>)</span> <br/>
+              <b>Bill of materials:</b>
+            </p>
 
-      <% license_whitelist.license_elements.each do |lwle| %> 
-        <div>- <%= lwle.name %> </div>
+            <table class="list">
+              <thead>
+                <tr>
+                  <td class="left">Status</td>
+                  <td class="left">Component</td>
+                  <td class="left">Version</td>
+                  <td class="left">License</td>
+                </tr>
+              </thead>
+              <tbody>
+                <% [:whitelisted, :unknown, :violated].each do |key| %>
+                  <% project.lwl_pdf_list[key].each do |dep| %> 
+                    <tr>
+                      <td class="left"> <%= key.to_s %> </td>
+                      <td class="left"> 
+                        <%= dep[:component] %> 
+                        <% if dep[:group_id] %> 
+                          <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
+                        <% end %> 
+                      </td>
+                      <td class="left"> <%= dep[:version] %> </td>
+                      <td class="left"> <%= dep[:license] %> </td>
+                    </tr>  
+                  <% end %> 
+                <% end %> 
+              </tbody>
+            </table>
+          </div>
+        <% end %>   
       <% end %> 
 
+      <p>
+        <b>Whitelist:</b> <%= project.license_whitelist.name %> <span class="small">(<%= project.license_whitelist.id %>)</span></br>
+        <b>Bill of materials:</b>
+      </p>
+
+      <% project.license_whitelist.license_elements.each do |lwle| %> 
+        <div>- <%= lwle.name %> </div>
+      <% end %> 
 
     </div>
   </body>
