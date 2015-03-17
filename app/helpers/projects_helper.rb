@@ -1,7 +1,8 @@
 module ProjectsHelper
 
   def new_project_redirect
-    if signed_in? && current_user.projects.empty?
+    all_public = params[:all_public]
+    if signed_in? && current_user.projects.empty? && (all_public.to_s.empty? || all_public.to_s.eql?('false')) 
       redirect_to new_user_project_path
     end
   rescue => e
