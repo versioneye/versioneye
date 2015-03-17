@@ -94,4 +94,26 @@ module ProjectsHelper
     project
   end
 
+  def merge_to_projects project 
+    projs = []
+    parents = []
+    singles = []
+    current_user.projects.each do |pro|
+      next if pro.id.to_s.eql?(project.id.to_s)
+      next if pro.parent_id
+      if pro.children.count > 0 
+        pro.has_kids = 1
+        parents << pro 
+      else 
+        pro.has_kids = 0
+        singles << pro 
+      end 
+    end
+    parents = parents.sort_by {|obj| obj.name}
+    singles = singles.sort_by {|obj| obj.name}
+    projs << parents
+    projs << singles
+    projs.flatten
+  end
+
 end

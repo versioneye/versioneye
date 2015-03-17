@@ -73,10 +73,15 @@
       <div class="control-group">
         <div class="controls" style="margin-left: 0px;">
           <select name="parent" >
-            <% current_user.projects.each do |project| %> 
-              <% next if project.id.to_s.eql?(@project.id.to_s) %> 
-              <% next if project.parent_id %> 
-              <option value="<%= project.id %>" ><%= project.name %></option>
+            <% merge_to_projects(@project).each do |project| %> 
+              <option value="<%= project.id %>" >
+                <% if project.has_kids == 1 %>
+                  parent:  
+                <% else %> 
+                  single: 
+                <% end %>  
+                <%= project.name %>
+              </option>
             <% end %> 
           </select> <button type="submit" class="btn btn-primary" >Merge</button>
         </div>
