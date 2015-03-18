@@ -187,10 +187,12 @@ mafinex.jpg: mafinex-a38a494b3184fbb479cc3e6493965125.jpg
 mafinex/index.jpg: mafinex-a38a494b3184fbb479cc3e6493965125.jpg
 marketing/VersionEyeEnterpriseArchitecture.png: marketing/VersionEyeEnterpriseArchitecture-f1173cd1a34021dfeadaee4b42720ed4.png
 marketing/VersionEyeEnterpriseArchitecture/index.png: marketing/VersionEyeEnterpriseArchitecture-f1173cd1a34021dfeadaee4b42720ed4.png
-marketing/artifactory.png: marketing/artifactory-cd563bd436d55a042d8e50740b3e8da9.png
-marketing/artifactory/index.png: marketing/artifactory-cd563bd436d55a042d8e50740b3e8da9.png
-marketing/cocoapods.png: marketing/cocoapods-5701227a9fc20f7a1ff1235f397b2ee4.png
-marketing/cocoapods/index.png: marketing/cocoapods-5701227a9fc20f7a1ff1235f397b2ee4.png
+marketing/chart-license-ratio-1.png: marketing/chart-license-ratio-1-be695fc5efada7f0dd46808db47486be.png
+marketing/chart-license-ratio-1/index.png: marketing/chart-license-ratio-1-be695fc5efada7f0dd46808db47486be.png
+marketing/chart-out-dated-ratio-1.png: marketing/chart-out-dated-ratio-1-bc157afd55a6d466ecfbf99ca9874cf5.png
+marketing/chart-out-dated-ratio-1/index.png: marketing/chart-out-dated-ratio-1-bc157afd55a6d466ecfbf99ca9874cf5.png
+marketing/chart-whitelist-ratio-1.png: marketing/chart-whitelist-ratio-1-bbbe9420a0b83a79ef185d6f474d2af1.png
+marketing/chart-whitelist-ratio-1/index.png: marketing/chart-whitelist-ratio-1-bbbe9420a0b83a79ef185d6f474d2af1.png
 marketing/git_repo_integration.png: marketing/git_repo_integration-b98532398832fc2264a2ae87c553990b.png
 marketing/git_repo_integration/index.png: marketing/git_repo_integration-b98532398832fc2264a2ae87c553990b.png
 marketing/github_integration.png: marketing/github_integration-c178830b07c90d560b6b115b62df69a6.png
@@ -213,10 +215,6 @@ marketing/login_with_stash.png: marketing/login_with_stash-4621153065d2e9d796e28
 marketing/login_with_stash/index.png: marketing/login_with_stash-4621153065d2e9d796e289f1bbe2233b.png
 marketing/login_with_stash_wb.png: marketing/login_with_stash_wb-7b0f46c35a8a50910bf1c98be8df0f1e.png
 marketing/login_with_stash_wb/index.png: marketing/login_with_stash_wb-7b0f46c35a8a50910bf1c98be8df0f1e.png
-marketing/nexus.png: marketing/nexus-6759e3056800fd8038602d4ee9eb805e.png
-marketing/nexus/index.png: marketing/nexus-6759e3056800fd8038602d4ee9eb805e.png
-marketing/satis.png: marketing/satis-927e3557a2fb51323076d3e2147ed2e0.png
-marketing/satis/index.png: marketing/satis-927e3557a2fb51323076d3e2147ed2e0.png
 marketing/stash_repository.png: marketing/stash_repository-5027bb71dc8293fce1096e742fa27583.png
 marketing/stash_repository/index.png: marketing/stash_repository-5027bb71dc8293fce1096e742fa27583.png
 marketing/version_screen.png: marketing/version_screen-d5c9897ebe301b6e5f15f811da4667fc.png

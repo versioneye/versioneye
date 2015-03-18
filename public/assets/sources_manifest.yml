@@ -93,8 +93,9 @@ lottery/logo3.png: ae8378ea7eeba6364ec408e4d0051c92
 lottery/logo4.png: 41aeb1388175fc059986d3eb76f94bff
 mafinex.jpg: a38a494b3184fbb479cc3e6493965125
 marketing/VersionEyeEnterpriseArchitecture.png: f1173cd1a34021dfeadaee4b42720ed4
-marketing/artifactory.png: cd563bd436d55a042d8e50740b3e8da9
-marketing/cocoapods.png: 5701227a9fc20f7a1ff1235f397b2ee4
+marketing/chart-license-ratio-1.png: be695fc5efada7f0dd46808db47486be
+marketing/chart-out-dated-ratio-1.png: bc157afd55a6d466ecfbf99ca9874cf5
+marketing/chart-whitelist-ratio-1.png: bbbe9420a0b83a79ef185d6f474d2af1
 marketing/git_repo_integration.png: b98532398832fc2264a2ae87c553990b
 marketing/github_integration.png: c178830b07c90d560b6b115b62df69a6
 marketing/github_repository.png: 99fb8f98bfc14aae1731a6ddb8f3f25c
@@ -106,8 +107,6 @@ marketing/login_with_github.png: dbc5a606bfd43427608f90d3fea03413
 marketing/login_with_github_wb.png: 7d1f801110632d6908410241c580b45c
 marketing/login_with_stash.png: 4621153065d2e9d796e289f1bbe2233b
 marketing/login_with_stash_wb.png: 7b0f46c35a8a50910bf1c98be8df0f1e
-marketing/nexus.png: 6759e3056800fd8038602d4ee9eb805e
-marketing/satis.png: 927e3557a2fb51323076d3e2147ed2e0
 marketing/stash_repository.png: 5027bb71dc8293fce1096e742fa27583
 marketing/version_screen.png: d5c9897ebe301b6e5f15f811da4667fc
 marketing/versioneye-docker.png: 96220f25d1cd2456a596a4d20b80a162
