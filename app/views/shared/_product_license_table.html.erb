@@ -144,8 +144,13 @@
     data: {
       sortOrder: "label-asc",
       content: [
-        <% license_hash.sort.map do |license_name, value| %>
-          { label: "<%= license_name %>", value: <%= license_hash[license_name].count %> },  
+        <% license_hash.sort.map do |license_name, value| %> 
+          <% if license_name.match(/\AGPL/) %>
+            { label: "<%= license_name %>", value: <%= license_hash[license_name].count %> , color: '#FF4000'},  
+          <% else %> 
+            { label: "<%= license_name %>", value: <%= license_hash[license_name].count %> },  
+          <% end %>  
+          
         <% end %> 
       ]
     }

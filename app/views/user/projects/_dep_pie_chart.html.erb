@@ -1,0 +1,34 @@
+<% outofdate = 0 %>
+<% uptodate  = 0 %>
+<% unknown   = 0 %>
+
+<% deps.each do |dep| %> 
+  <% outofdate += 1 if dep.outdated == true %> 
+  <% uptodate += 1 if dep.outdated == false %> 
+  <% unknown += 1 if dep.prod_key.nil? %> 
+<% end %> 
+
+<div id='dep_pie' style="text-align: center; width: 410px;">
+</div>  
+<script type="text/javascript">
+  var pie = new d3pie("dep_pie", {
+    header: {
+      title: {
+        text: ""
+      },
+      location: "pie-center"
+    },
+    size: {
+      pieInnerRadius: "70%"
+    },
+    data: {
+      sortOrder: "label-asc",
+      content: [
+        { label: "out-of-date", value: <%= outofdate %>, color: "#FF4000" },
+        { label: "up-to-date" , value: <%= uptodate %> , color: "#5FB404" },
+        { label: "unknown"    , value: <%= unknown %>  , color: "#A4A4A4" },
+      ]
+    }
+  });
+</script>
+<br/><br/>

@@ -161,6 +161,7 @@
                   <%= link_to "Visual Dependencies", visual_user_project_path( @child ) %>
                 </div>
               <% end %> 
+              <%= render partial: "dep_pie_chart", locals: {deps: @child.dependencies } %>
             <% else %> 
               No dependencies available for <b><%= @child.name %></b>
             <% end %>
