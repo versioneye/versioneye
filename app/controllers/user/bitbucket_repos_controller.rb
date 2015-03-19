@@ -84,6 +84,7 @@ class User::BitbucketReposController < User::ScmReposController
 
 
   def clear
+    user = current_user
     results = BitbucketRepo.by_user( current_user ).delete_all
     user_task_key = "#{user[:username]}-bitbucket"
     BitbucketService.cache.delete( user_task_key )
