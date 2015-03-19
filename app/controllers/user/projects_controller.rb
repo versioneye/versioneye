@@ -66,7 +66,7 @@ class User::ProjectsController < ApplicationController
     project = ProjectService.find( id )
     date_string = DateTime.now.strftime("%d_%m_%Y")
     project_name = project.name.gsub("/", "-")
-    pdf = LwlPdfService.process project
+    pdf = LwlPdfService.process project, true, true 
     send_data pdf, type: 'application/pdf', filename: "#{date_string}_#{project_name}.pdf"
   end
 
