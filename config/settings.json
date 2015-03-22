@@ -166,7 +166,7 @@
     "memcache_addr": "env_MC_PORT_11211_TCP_ADDR",
     "memcache_port": "env_MC_PORT_11211_TCP_PORT",
     "s3_infographics_bucket": "veye_prod_infographics",
-    "s3_projects_bucket": "veye_prod_projects",
+    "s3_projects_bucket": "veye-prod-projects",
     "s3_receipt_bucket": "veye-prod-receipt",
     "server_url": "https://www.versioneye.com",
     "server_host": "www.versioneye.com",

@@ -236,13 +236,7 @@ Versioneye::Application.routes.draw do
     resource :testimonials
   end
 
-  post  '/services/choose_plan'               ,  :to => 'services#choose_plan'
-  post  '/services'                           ,  :to => 'services#create'
-  get   '/services/:id'                       ,  :to => 'services#show', :as => 'service'
-  get   '/services/:id/recursive_dependencies',  :to => 'dependency_wheel#project_recursive_dependencies'
-  post  '/services/:id/recursive_dependencies',  :to => 'dependency_wheel#project_recursive_dependencies'
-
-  get   '/pricing',            :to => 'services#pricing'
+  get   '/pricing',            :to => 'pricing#index'
   get   '/news',               :to => 'news#news'
   get   '/mynews',             :to => 'news#news'
   get   '/hotnews',            :to => 'news#news'
