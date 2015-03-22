@@ -75,13 +75,6 @@ module Versioneye
       p e.backtrace.join("\n")
     end
 
-    AWS.config(
-      :s3_endpoint => Settings.instance.aws_s3_endpoint,
-      :s3_port => Settings.instance.aws_s3_port,
-      :use_ssl => Settings.instance.aws_use_ssl,
-      :access_key_id => Settings.instance.aws_access_key_id,
-      :secret_access_key => Settings.instance.aws_secret_access_key )
-
     Product.send        :include, WillPaginateMongoid::MongoidPaginator
     BitbucketRepo.send  :include, WillPaginateMongoid::MongoidPaginator
     GithubRepo.send     :include, WillPaginateMongoid::MongoidPaginator

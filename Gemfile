@@ -1,34 +1,27 @@
 source 'http://rubygems.org'
 
-gem 'bundler'              , '~> 1.8.0'
+gem 'bundler'              , '~> 1.9.1'
 gem 'rails'                , '~> 3.2.21'
 gem 'jquery-rails'         , '~> 2.2.1'
 gem 'execjs'               , '~> 2.3.0'
 gem 'gravatar_image_tag'   , '~> 1.2.0'
 gem 'oauth'                , '~> 0.4.7'
 gem 'twitter_oauth'        , '~> 0.4.94'
-# gem 'unicorn'              , '~> 4.8.2'
 gem 'puma'                 , '~> 2.11.1'
 gem 'htmlentities'         , '~> 4.3.1'
 gem 'whenever'             , '~> 0.9.2'
 gem 'bourbon'              , '~> 4.2.0'
 gem 'ruby_regex'           , '~> 0.1.0'
 gem 'semverly'             , '~> 1.0.0'
-gem 'cocoapods-core'       , '~> 0.35.0'
+gem 'cocoapods-core'       , '~> 0.36.0'
 gem 'stripe'               , '~> 1.14.0'
 gem 'bunny'                , '~> 1.7.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-# gem "gelf"
-# gem "lograge"
-
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.6.8'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.6.14'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :development do
-  # gem 'capistrano'        , '~> 3.2.1'
-  # gem 'capistrano-rails'  , '~> 1.1.1'
-  # gem 'capistrano-bundler', '~> 1.1.2'
   gem 'psych'             , '~> 2.0.5'
   gem 'terminal-notifier' , '~> 1.6.0'
   gem 'fakes3'            , '~> 0.1.7'
