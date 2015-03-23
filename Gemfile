@@ -18,13 +18,13 @@ gem 'stripe'               , '~> 1.14.0'
 gem 'bunny'                , '~> 1.7.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.6.14'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.6.18'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :development do
   gem 'psych'             , '~> 2.0.5'
   gem 'terminal-notifier' , '~> 1.6.0'
-  gem 'fakes3'            , '~> 0.1.7'
+  gem 'fakes3'            , '~> 0.2.1'
   # gem 'debugger'          , '~> 1.6.0'
   # gem 'irbtools'          , '~> 1.6.1'
 end
@@ -42,16 +42,16 @@ end
 group :test do
   gem 'simplecov'         , '~> 0.9.0'
   gem 'turn'              , :require => false
-  gem 'rspec'             , '~> 3.1.0'
-  gem 'rspec-rails'       , '~> 3.1.0'
-  gem 'rspec-mocks'       , '~> 3.1.0'
+  gem 'rspec'             , '~> 3.2.0'
+  gem 'rspec-rails'       , '~> 3.2.0'
+  gem 'rspec-mocks'       , '~> 3.2.0'
   gem 'capybara'          , '~> 2.4.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
-  gem 'selenium-webdriver', '~> 2.44.0'
+  gem 'selenium-webdriver', '~> 2.45.0'
   gem 'vcr'               , '~> 2.9.2',  :require => false
   gem 'webmock'           , '~> 1.20.0', :require => false
   gem "fakeweb"           , '~> 1.3'
-  gem 'database_cleaner'  , '~> 1.3.0'
+  gem 'database_cleaner'  , '~> 1.4.0'
   gem 'factory_girl'      , '~> 4.5.0'
   gem 'factory_girl_rails', '~> 4.5.0'
 end
