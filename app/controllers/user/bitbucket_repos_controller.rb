@@ -13,7 +13,7 @@ class User::BitbucketReposController < User::ScmReposController
       status_success = false
       task_status = BitbucketService::A_TASK_DONE
     else
-      task_status  = BitbucketService.cached_user_repos current_user
+      task_status = BitbucketService.cached_user_repos current_user
       user_repos = current_user.bitbucket_repos
       if user_repos && user_repos.count > 0
         user_repos = user_repos.desc(:commited_at)
