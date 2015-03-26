@@ -2,7 +2,7 @@
 <% if @product.users.size > 0 %>
 <div class="box header" style="border-top: 0;">
   <h3 class="side_header">
-    Followers
+    <%= pluralize(@product.followers, "Followers") %>
   </h3>
 </div>
 <div class="box content" >
