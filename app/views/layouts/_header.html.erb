@@ -2,7 +2,7 @@
   <div class="navbar navbar-fixed-top">
     <div class = "container row" >
 
-      <div class="span4 main_logo" >
+      <div class="span3 main_logo" >
         <div class="pull-left l_margin_top_15">
           <% if signed_in? %>
             <% if Rails.env.enterprise? %>
@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <div class = "span8 pull-right">
+      <div class = "span9 pull-right">
         <ul class="nav pull-right">
 
           <!-- menu for guest user, not logged in -->
@@ -60,7 +60,7 @@
               <li class="divider-vertical"></li>
               <li>
                 <a href="<%= user_path( current_user ) %>" class="profile_pic_tiny" title="Profile" >
-                  <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= current_user.username %>
+                  <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= username_max_30( current_user.username ) %>
                 </a>
               </li>
               <li class="divider-vertical"></li>
