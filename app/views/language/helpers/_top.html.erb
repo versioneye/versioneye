@@ -10,7 +10,7 @@
       </h5>
       <p>
         <%= prod.short_summary %> <br/>
-        <span> References: <%= link_to prod.used_by_count, product_references_path( :lang => prod.language_esc, :key => prod.to_param ) %> </span>
+        <span> Followers: <%= prod.followers %> </span>
       </p>
     </div>
   <% end %>
