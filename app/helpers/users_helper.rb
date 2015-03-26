@@ -64,4 +64,12 @@ module UsersHelper
     nil
   end
 
+  def username_max_30 username 
+    if username.to_s.length > 30 
+      part = username.to_s[0..28]
+      return "#{part}.."
+    end
+    username
+  end
+
 end
