@@ -32,24 +32,35 @@
 
     <table>
       <colgroup>
-        <col width="80px;"j />
+        <col width="75px;"j />
+        <col width="120px;"j />
         <col width="*" />
       </colgroup>
 
       <% @whitelists.each do |wlist| %>
         <% if !wlist.name.to_s.empty? %>
-          <%= form_tag( settings_license_whitelists_destroy_path , :method => "post") do  %>
+          
           <tr>
             <td>
-              <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+              <%= form_tag( settings_license_whitelists_destroy_path , :method => "post", :style => 'margin: 0;') do  %>
+                <input id="name" name="name" type="hidden" value="<%= wlist.name.to_s %>" />
+                <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+              <% end %>
             </td>
             <td>
-              <input id="name" name="name" type="hidden" value="<%= wlist.name.to_s %>" />
+              <% if wlist.default == false %> 
+                <%= form_tag( settings_license_whitelists_default_path(:list => wlist.name.to_s) , :method => "post", :style => 'margin: 0;') do %>
+                  <button type="submit" class="btn" >Make Default</button>
+                <% end %>
+              <% else %> 
+                <span class="label label-success" >DEFAULT</span>
+              <% end %>
+            </td>
+            <td>
               <%= link_to wlist.name, settings_license_whitelists_show_path(wlist) %>
-
             </td>
           </tr>
-          <% end %>
+          
         <% end %>
       <% end %>
 

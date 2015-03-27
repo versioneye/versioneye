@@ -100,6 +100,7 @@ Versioneye::Application.routes.draw do
     post 'license_whitelists/destroy'      , :to => 'license_whitelists#destroy', :as => 'license_whitelists_destroy'
     post 'license_whitelists/:list/add'    , :to => 'license_whitelists#add'    , :as => 'license_whitelists_add'
     post 'license_whitelists/:list/remove' , :to => 'license_whitelists#remove' , :as => 'license_whitelists_remove'
+    post 'license_whitelists/:list/default', :to => 'license_whitelists#default', :as => 'license_whitelists_default'
 
     get  'globalsettings'      , :to => 'globalsettings#index'
     post 'globalsettings'      , :to => 'globalsettings#update'

@@ -54,6 +54,20 @@ class Settings::LicenseWhitelistsController < ApplicationController
     redirect_to :back
   end
 
+  def default 
+    LicenseWhitelistService.default current_user, params[:list]
+    
+    lwl = LicenseWhitelistService.fetch_by current_user, params[:list]
+    Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Marked \"#{params[:list]}\" to default list."
+    flash[:success] = "License Whitelist updated successfully."
+    
+    redirect_to :back
+  rescue => e
+    logger.error e.message
+    flash[:error] = "An error occured. We couldn't delete the Whitelist."
+    redirect_to :back  
+  end
+
   def remove
     resp = LicenseWhitelistService.remove current_user, params[:list], params[:name]
     if resp
