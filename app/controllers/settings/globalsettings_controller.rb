@@ -12,6 +12,8 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting['default_project_public'] = Settings.instance.default_project_public
     @globalsetting['show_signup_form'] = Settings.instance.show_signup_form
     @globalsetting['show_login_form'] = Settings.instance.show_login_form
+    @globalsetting['unique_ga']  = Settings.instance.projects_unique_ga
+    @globalsetting['unique_scm'] = Settings.instance.projects_unique_scm
   end
 
   def update
@@ -42,6 +44,18 @@ class Settings::GlobalsettingsController < ApplicationController
       GlobalSetting.set( env, 'show_login_form', "true" )
     else
       GlobalSetting.set( env, 'show_login_form', "false" )
+    end
+
+    if params[:unique_ga] && params[:unique_ga].eql?("true")
+      GlobalSetting.set( env, 'projects_unique_ga', "true" )
+    else
+      GlobalSetting.set( env, 'projects_unique_ga', "false" )
+    end
+
+    if params[:unique_scm] && params[:unique_scm].eql?("true")
+      GlobalSetting.set( env, 'projects_unique_scm', "true" )
+    else
+      GlobalSetting.set( env, 'projects_unique_scm', "false" )
     end
 
     Settings.instance.reload_from_db GlobalSetting.new
