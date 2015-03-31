@@ -376,7 +376,7 @@ class User::ProjectsController < ApplicationController
 
     def calculate_language project
       children = project.children  
-      return "#{project.language}_" if children.nil? || children.empty? 
+      return "#{project.language}_".downcase if children.nil? || children.empty? 
       
       lang = project.language
       children.each do |child| 
@@ -384,7 +384,7 @@ class User::ProjectsController < ApplicationController
           return ''
         end
       end
-      "#{lang}_"
+      "#{lang}_".downcase
     end
 
     def fetch_project( params )
