@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 5067cf5eb58e1b4f51e0801acad394012c33cf97
-  tag: v7.7.7
+  revision: e6cbc4479be940f7362fdbf41e617176c9dff947
+  tag: v7.7.11
   specs:
-    versioneye-core (7.7.7)
+    versioneye-core (7.7.11)
       actionmailer (~> 3.2.21)
       aws-sdk (~> 2.0.31)
       bundler (~> 1.9.1)
@@ -61,16 +61,15 @@ GEM
     amq-protocol (1.9.2)
     ansi (1.5.0)
     arel (3.0.3)
-    aws-sdk (2.0.33)
-      aws-sdk-resources (= 2.0.33)
-    aws-sdk-core (2.0.33)
+    aws-sdk (2.0.37)
+      aws-sdk-resources (= 2.0.37)
+    aws-sdk-core (2.0.37)
       builder (~> 3.0)
       jmespath (~> 1.0)
       multi_json (~> 1.0)
-      multi_xml (~> 0.5)
-    aws-sdk-resources (2.0.33)
-      aws-sdk-core (= 2.0.33)
-    bourbon (4.2.1)
+    aws-sdk-resources (2.0.37)
+      aws-sdk-core (= 2.0.37)
+    bourbon (4.2.2)
       sass (~> 3.4)
       thor
     builder (3.0.4)
@@ -85,17 +84,17 @@ GEM
     capybara-firebug (2.1.0)
       capybara (>= 1.0, < 3.0)
       selenium-webdriver
-    childprocess (0.5.5)
+    childprocess (0.5.6)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
-    cocoapods-core (0.36.1)
+    cocoapods-core (0.36.3)
       activesupport (>= 3.2.15)
       fuzzy_match (~> 2.0.4)
       nap (~> 0.8.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
-    coffee-script (2.3.0)
+    coffee-script (2.4.1)
       coffee-script-source
       execjs
     coffee-script-source (1.9.1)
@@ -212,9 +211,9 @@ GEM
       rspec-core (~> 3.2.0)
       rspec-expectations (~> 3.2.0)
       rspec-mocks (~> 3.2.0)
-    rspec-core (3.2.2)
+    rspec-core (3.2.3)
       rspec-support (~> 3.2.0)
-    rspec-expectations (3.2.0)
+    rspec-expectations (3.2.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.2.0)
     rspec-mocks (3.2.1)
@@ -261,8 +260,8 @@ GEM
       json (~> 1.8.1)
       mime-types (~> 1.25)
       rest-client (~> 1.4)
-    terminal-notifier (1.6.2)
-    therubyracer (0.12.1)
+    terminal-notifier (1.6.3)
+    therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
     thor (0.19.1)
