@@ -13,7 +13,12 @@
       This is a project from
       <a href=<%= path_to_bitbucket_branch project %> target="_BITBUCKET">BitBucket <%= project.scm_branch %> branch</a>.
 
-      <% # TODO show link to file %>
+      <% if project.scm_revision %> 
+        We parsed this file:
+        <a href=<%= path_to_bitbucket_file project %> target="_BITBUCKET" >
+          <%= project.filename %>
+        </a>
+      <% end %> 
     <% elsif project.source.eql? Project::A_SOURCE_STASH %>
       Stash project from <a href=<%= path_to_stash_file( project ) %> target="_STASH" ><%= project.filename %></a> in branch <b><%= project.scm_branch %></b>
       from the repository <b><%= project.scm_fullname %></b>.
