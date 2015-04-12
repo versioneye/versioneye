@@ -53,6 +53,10 @@ module ProjectsHelper
     "https://bitbucket.org/#{project.scm_fullname}/branch/#{project.scm_branch}"
   end
 
+  def path_to_bitbucket_file project
+    "https://api.bitbucket.org/1.0/repositories/#{project.scm_fullname}/raw/#{project.scm_revision}/#{project.filename}"
+  end
+
   def path_to_github_branch project
     "#{Settings.instance.github_base_url}/#{project.scm_fullname}/tree/#{project.scm_branch}"
   end
