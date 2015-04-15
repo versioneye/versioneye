@@ -95,11 +95,6 @@ class Settings::LicenseWhitelistsController < ApplicationController
 
   private
 
-    def authenticate_lwl 
-      return authenticate_admin if Rails.env.enterprise?
-      authenticate
-    end
-
     def format_autocompletion(matched_licenses)
       results = []
       return results if matched_licenses.nil?

@@ -3,14 +3,54 @@
 <% if !@users.nil? && !@users.empty? %>
 
   <div class="span3" >
-    :-)
+    
   </div>
 
-  <div class="span8 content">
+  <div class="span8">
 
-    <% @users.each do |user| %>
-      <%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :class => "round", :gravatar => { :size => 100, :default => "#{Settings.instance.server_url}/profile_icon.png" }), user_path(user) %>
-    <% end %>
+    <div class="row content_header_def" >
+      User Management  
+    </div>
+    <div class="content">
+      <% @users.each do |user| %>
+        <div class="row search-item">
+          <div class="span2">
+            <%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :class => "round", :gravatar => { :size => 100, :default => "#{Settings.instance.server_url}/profile_icon.png" }), user_path(user) %>
+          </div>
+
+          <div class="span5">
+            <%= user.fullname %> 
+            <%= form_tag( update_permissions_user_path(user), :method => "post", :class => "form-horizontal") do  %>
+
+              <label for="<%=user.username%>_admin" style="font-size: 12px;" class="checkbox">
+                <%= check_box_tag "admin", true, user.admin, :id => "#{user.username}_admin" %>
+                Admin
+              </label>
+
+              <% if Rails.env.enterprise? %> 
+                <label for="<%=user.username%>_lwl" style="font-size: 12px;" class="checkbox">
+                  <%= check_box_tag "lwl", true, user.fetch_or_create_permissions.lwl, :id => "#{user.username}_lwl" %>
+                  Manage License Whitelists
+                </label>
+              <% end %> 
+
+              <div class="control-group">
+                <div>
+                  <button type="submit" name="commit" value="save" class="btn btn-primary" >Save</button>
+                  <button type="submit" name="commit" value="delete" class="btn btn-danger" onClick="return confirmAction()">Delete</button>
+                </div>
+              </div>
+
+            <% end %>
+            
+          </div>
+        </div>
+      <% end %>  
+    </div>
+
+    <div class = "pagination pagination-right pagination-mini" >
+      <%= will_paginate @users %>
+    </div>
 
   </div>
 
