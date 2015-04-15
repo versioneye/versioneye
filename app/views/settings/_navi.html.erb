@@ -29,8 +29,11 @@
       <li><%= link_to 'Plans & Pricing'    , settings_plans_path   , :rel => "nofollow" %></li>
       <li><%= link_to 'Payment History'    , settings_payments_path, :rel => "nofollow" %></li>
       <li><%= link_to 'Billing Address'    , settings_billing_path , :rel => "nofollow" %></li>
-      <li><%= link_to 'License Whitelists' , settings_license_whitelists_path, :rel => "nofollow" %></li>
     <% end %>
+
+    <% if !Rails.env.enterprise? || current_user.fetch_or_create_permissions.lwl == true %>
+      <li><%= link_to 'License Whitelists' , settings_license_whitelists_path, :rel => "nofollow" %></li>
+    <% end %> 
 
     <li><%= link_to 'Connect'            , settings_connect_path , :rel => "nofollow" %></li>
     <li><%= link_to 'Password'           , settings_password_path, :rel => "nofollow" %></li>

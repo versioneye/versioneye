@@ -1,14 +1,13 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate, :only => [:update, :destroy, :index]
+  before_filter :authenticate, :only => [:update, :index, :update_permissions]
   before_filter :correct_user, :only => [:update]
-  before_filter :admin_user,   :only => [:destroy, :index]
-  before_filter :admin_user,   :only => [:index]
+  before_filter :admin_user,   :only => [:index, :update_permissions]
   before_filter :set_locale
   before_filter :enterprise_activated?
 
   def index
-    @users = User.find_all(params[:page])
+    @users = User.where(:deleted_user => false).page(params[:page])
   end
 
   def new
@@ -247,13 +246,21 @@ class UsersController < ApplicationController
   end
 
   # Only for Admins!
-  def destroy
+  def update_permissions 
     user = User.find_by_username(params[:id])
     if user.nil?
       flash[:error] = "User could't find in the database."
     else
-      UserService.delete user
-      flash[:success] = "User deleted"
+      if params[:commit].eql?('delete') 
+        UserService.delete user
+        flash[:success] = "User deleted"  
+      else 
+        user.admin = params[:admin]
+        user.fetch_or_create_permissions.lwl = params[:lwl]
+        user.fetch_or_create_permissions.save 
+        user.save 
+        flash[:success] = "User updated"  
+      end
     end
     redirect_to users_path
   end
