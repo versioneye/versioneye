@@ -2,11 +2,11 @@
   <% if products.nil? or products.empty? %>
     <%= render :partial => 'products/show_empty_results' %>
   <% else %>
-		<%= render :partial => 'products/show_search_results_iterator', :locals => { :products => products, :prefix => 'search', :name_limit => name_limit } %>
-		<% if paginate == true && !products.nil? && !products.empty? %>
-			<div class = "pagination pagination-right pagination-mini" >
-				<%= will_paginate products %>
-			</div>
-		<% end %>
-	<% end %>
+    <%= render :partial => 'products/show_search_results_iterator', :locals => { :products => products, :prefix => 'search', :name_limit => name_limit } %>
+    <% if paginate == true && !products.nil? && !products.empty? %>
+      <div class = "pagination pagination-right pagination-mini" >
+        <%= will_paginate products %>
+      </div>
+    <% end %>
+  <% end %>
 </div>
