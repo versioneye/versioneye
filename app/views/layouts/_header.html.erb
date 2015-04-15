@@ -45,37 +45,38 @@
           <!-- menu for logged-in user -->
           <% if signed_in? %>
 
-            <% unless signed_in_admin? %>
-              <li class="divider-vertical"></li>
-              <li style="padding-right: 25px;">
-                <%= link_to "Notifications", notifications_path %>
-              </li>
-              <li>
-                <%= link_to "I follow",  :controller => 'user/packages', :action => "i_follow", :rel => "nofollow" %>
-              </li>
-              <li class="divider-vertical"></li>
-              <li>
-                <%= link_to "Projects", user_projects_path, :rel => "nofollow" %>
-              </li>
-              <li class="divider-vertical"></li>
-              <li>
-                <a href="<%= user_path( current_user ) %>" class="profile_pic_tiny" title="Profile" >
-                  <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= username_max_30( current_user.username ) %>
-                </a>
-              </li>
-              <li class="divider-vertical"></li>
-              <li>
-                <a href="/search?q=suggest_a_new_package_to_versioneye" title="Suggest a new package">
-                  <i class="icon-plus" ></i>
-                </a>
-              </li>
-              <li class="divider-vertical"></li>
-              <li>
-                <a href="https://bitbucket.org/versioneye/versioneye/issues" title="Feedback" id="feedback_link" target="_TICKETS">
-                  <i class="icon-comment" ></i>
-                </a>
-              </li>
-            <% end %>
+            
+            <li class="divider-vertical"></li>
+            <li style="padding-right: 25px;">
+              <%= link_to "Notifications", notifications_path %>
+            </li>
+            <li>
+              <%= link_to "I follow",  :controller => 'user/packages', :action => "i_follow", :rel => "nofollow" %>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <%= link_to "Projects", user_projects_path, :rel => "nofollow" %>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <a href="<%= user_path( current_user ) %>" class="profile_pic_tiny" title="Profile" >
+                <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= username_max_30( current_user.username ) %>
+              </a>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <a href="/search?q=suggest_a_new_package_to_versioneye" title="Suggest a new package">
+                <i class="icon-plus" ></i>
+              </a>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+              <a href="https://bitbucket.org/versioneye/versioneye/issues" title="Feedback" id="feedback_link" target="_TICKETS">
+                <i class="icon-comment" ></i>
+              </a>
+            </li>
+            
+            
             <li class="divider-vertical"></li>
             <li>
               <a href="<%= settings_profile_path %>" title="Settings" >
