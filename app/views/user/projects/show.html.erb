@@ -78,7 +78,7 @@
         <%= render :partial => "user/projects/helpers/project_numbers_sentence", :locals => { :project => @project } %><br/>
         <%= render :partial => "user/projects/helpers/project_source", :locals => { :project => @project } %>
 
-        <% if current_user?(@project.user) %>
+        <% if current_user?(@project.user) || current_user.admin == true %>
 
           <div style="font-size: 16px; margin-bottom: 0px;">
             <div class="row">
