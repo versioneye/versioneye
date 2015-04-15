@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   before_filter :enterprise_activated?
 
   def index
-    @users = User.where(:deleted_user => false).page(params[:page])
+    @users = User.where(:deleted_user => false).asc(:fullname).page(params[:page])
   end
 
   def new
