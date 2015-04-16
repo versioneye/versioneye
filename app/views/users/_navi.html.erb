@@ -19,22 +19,22 @@
       </div>
       <div class="box content" >
         <% if !@userlinkcollection.github_empty? %>
-          <%= link_to image_tag("socialnetworks/github.png"), @userlinkcollection.github, :target => "github" %>
+          <%= link_to image_tag("socialnetworks/github.png"), @userlinkcollection.github_url, :target => "github" %>
         <% end %>
         <% if !@userlinkcollection.stackoverflow_empty? %>
-          <%= link_to image_tag("socialnetworks/stackoverflow.png"), @userlinkcollection.stackoverflow, :target => "stackoverflow" %>
+          <%= link_to image_tag("socialnetworks/stackoverflow.png"), @userlinkcollection.stackoverflow_url, :target => "stackoverflow" %>
         <% end %>
         <% if !@userlinkcollection.twitter_empty? %>
-          <%= link_to image_tag("socialnetworks/twitter-bird.png"), @userlinkcollection.twitter, :target => "twitter" %>
+          <%= link_to image_tag("socialnetworks/twitter-bird.png"), @userlinkcollection.twitter_url, :target => "twitter" %>
         <% end %>
         <% if !@userlinkcollection.facebook_empty? %>
-          <%= link_to image_tag("socialnetworks/facebook.png"), @userlinkcollection.facebook, :target => "facebook" %>
+          <%= link_to image_tag("socialnetworks/facebook.png"), @userlinkcollection.facebook_url, :target => "facebook" %>
         <% end %>
         <% if !@userlinkcollection.linkedin_empty? %>
-          <%= link_to image_tag("socialnetworks/linkedin.png"), @userlinkcollection.linkedin, :target => "linkedin" %>
+          <%= link_to image_tag("socialnetworks/linkedin.png"), @userlinkcollection.linkedin_url, :target => "linkedin" %>
         <% end %>
         <% if !@userlinkcollection.xing_empty? %>
-          <%= link_to image_tag("socialnetworks/xing.png"), @userlinkcollection.xing, :target => "xing" %>
+          <%= link_to image_tag("socialnetworks/xing.png"), @userlinkcollection.xing_url, :target => "xing" %>
         <% end %>
       </div>
     <% end %>
