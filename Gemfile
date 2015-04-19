@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 gem 'bundler'              , '~> 1.9.1'
 gem 'rails'                , '~> 3.2.21'
 gem 'jquery-rails'         , '~> 2.2.1'
-gem 'execjs'               , '~> 2.4.0'
+gem 'execjs'               , '~> 2.5.2'
 gem 'gravatar_image_tag'   , '~> 1.2.0'
 gem 'oauth'                , '~> 0.4.7'
 gem 'twitter_oauth'        , '~> 0.4.94'
@@ -18,7 +18,7 @@ gem 'stripe'               , '~> 1.14.0'
 gem 'bunny'                , '~> 1.7.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.8.6'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.8.7'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :development do
@@ -40,7 +40,7 @@ group :assets do
 end
 
 group :test do
-  gem 'simplecov'         , '~> 0.9.0'
+  gem 'simplecov'         , '~> 0.10.0'
   gem 'turn'              , :require => false
   gem 'rspec'             , '~> 3.2.0'
   gem 'rspec-rails'       , '~> 3.2.0'
@@ -49,7 +49,7 @@ group :test do
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'selenium-webdriver', '~> 2.45.0'
   gem 'vcr'               , '~> 2.9.2',  :require => false
-  gem 'webmock'           , '~> 1.20.0', :require => false
+  gem 'webmock'           , '~> 1.21.0', :require => false
   gem "fakeweb"           , '~> 1.3'
   gem 'database_cleaner'  , '~> 1.4.0'
   gem 'factory_girl'      , '~> 4.5.0'
