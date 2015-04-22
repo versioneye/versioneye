@@ -1,7 +1,9 @@
-PATH
-  remote: ~/workspace/versioneye/versioneye-core
+GIT
+  remote: git@github.com:versioneye/versioneye-core.git
+  revision: 908a07f20d04b9404b679746b5c1400915f2553a
+  tag: v7.8.14
   specs:
-    versioneye-core (7.8.13)
+    versioneye-core (7.8.14)
       actionmailer (~> 3.2.21)
       aws-sdk (~> 2.0.31)
       bundler (~> 1.9.1)
