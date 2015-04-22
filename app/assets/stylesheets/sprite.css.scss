@@ -155,6 +155,14 @@ $biicode_url: "/assets/biicode.png";
 }
 
 
+.icon_biicode_small_container{
+	margin: 0;
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+}
+
+
 .icon_r {
 	@include sprite_toggle(-185px, -76px, -126px, -76px, 44px, 36px);
 	&.small {@include sprite_toggle(-128px, -128px, -89px, -128px, 31px, 25px);}
@@ -298,6 +306,13 @@ $biicode_url: "/assets/biicode.png";
 	padding: 0;
 	width: 56px;
 	height: 56px;
+	display: inline-block;
+}
+.icon_biicode.small.on{
+	background: url(/assets/language/biicode_small.png) no-repeat;
+	margin: 0;
+	width: 25px;
+	height: 25px;
 	display: inline-block;
 }
 

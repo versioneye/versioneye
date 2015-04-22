@@ -46,7 +46,6 @@ class Admin::LanguageController < ApplicationController
 
   def destroy
     lang = Language.by_language(params[:id]).shift
-    p 'deleting language:', lang
     if lang.nil?
       flash[:error] = "Failure: can't delete language `#{params[:id]}`."
     else

@@ -16,6 +16,7 @@ Disallow: /user/projects/
 Disallow: /api/v2/
 Disallow: /api/v1/
 Disallow: badge$
+Disallow: /*badge.svg
 Disallow: /com.*
 Disallow: /org.*
 Disallow: /*.json$

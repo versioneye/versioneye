@@ -37,6 +37,7 @@ glyphicons-halflings-white.png: e51bc46b5cacd096c75f8fe3d2c6d638
 glyphicons-halflings.png: 63cbb0c528e6fc8feabc69247183a49e
 icon_114.png: 64905e9310ce47eac7ba06e12c3f58ca
 integration/github.png: 2cec00cf7700f6d21b91dd1063f2eb91
+language/biicode_small.png: aea31c8002f09176a4329a1245f8007c
 language/c.png: 41aef16238a052732c81c4db1016ff92
 language/c_bw.png: b9e4f638956121c07e7af89d1726782b
 language/clojure.png: a14b4e232b74281a4e41cd9913e99b42
@@ -222,8 +223,8 @@ react.js: abe310a386733893af71cc9eece1d53c
 scm/build/repo_files.js: d6cabeb8be289bb5379e1b64bde281e9
 scm/build/repo_list.js: a784be0f40b86ec41c6c9d1f7688fed6
 twitter.js: 1c80f19b35d4ec5611daa4202f63aa98
-application.css: c104c2382227500e6cb88033bae00ef4
-application_lp.css: 35bca3473b470ee6c70e28fbe2fba7f9
+application.css: b3b96b69ddab45b9e0f677855c3586fa
+application_lp.css: c7097a759c29b45c7551cb3e5dadd05a
 font/FontAwesome.otf: 8d818553081ddcd620bfc25611d7aff6
 font/fontawesome-webfont.eot: 2a2685ff3f9577fd6b6b6d2812f2801f
 font/fontawesome-webfont.svg: f10236cb1f3a6badc366fffc428b713c
