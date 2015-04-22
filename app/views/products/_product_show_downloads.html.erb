@@ -9,6 +9,7 @@
     <div class="span5 download_area" >
       <ul class="download_list" >
       <% downloads.each do |download|  %>
+        <% next if !download.link.to_s.match(/\Ahttp/i) %> 
         <li >
           <a title = "Download here." href="<%= download.link %>"><%= download.name %></a>
         </li>
