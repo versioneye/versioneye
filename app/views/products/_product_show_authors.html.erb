@@ -7,8 +7,11 @@
     </h3>
   </div>
   <div class="box content" >
+    <% names = [] %>
     <% authors.each do |author| %>
+      <% next if names.include?(author.name) %>
       <%= gravatar_image_tag( author.email, :alt => author.name, :title => author.name, :style => 'width: 45px;', :gravatar => { :size => 45, :default => "#{Settings.instance.server_url}/profile_icon.png" } ) %>
+      <% names.push(author.name) %>
     <% end %>
   </div>
 <% end %>
