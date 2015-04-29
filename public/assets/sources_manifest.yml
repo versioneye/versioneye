@@ -37,7 +37,8 @@ glyphicons-halflings-white.png: e51bc46b5cacd096c75f8fe3d2c6d638
 glyphicons-halflings.png: 63cbb0c528e6fc8feabc69247183a49e
 icon_114.png: 64905e9310ce47eac7ba06e12c3f58ca
 integration/github.png: 2cec00cf7700f6d21b91dd1063f2eb91
-language/biicode_small.png: aea31c8002f09176a4329a1245f8007c
+language/biicode.png: c684203c9577280de3adb81fb9549923
+language/biicode_bw.png: 0fb547c2bbb4825f1a51cb4bd8aa5123
 language/c.png: 41aef16238a052732c81c4db1016ff92
 language/c_bw.png: b9e4f638956121c07e7af89d1726782b
 language/clojure.png: a14b4e232b74281a4e41cd9913e99b42
