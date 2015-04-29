@@ -75,8 +75,10 @@ icon_114.png: icon_114-64905e9310ce47eac7ba06e12c3f58ca.png
 icon_114/index.png: icon_114-64905e9310ce47eac7ba06e12c3f58ca.png
 integration/github.png: integration/github-2cec00cf7700f6d21b91dd1063f2eb91.png
 integration/github/index.png: integration/github-2cec00cf7700f6d21b91dd1063f2eb91.png
-language/biicode_small.png: language/biicode_small-aea31c8002f09176a4329a1245f8007c.png
-language/biicode_small/index.png: language/biicode_small-aea31c8002f09176a4329a1245f8007c.png
+language/biicode.png: language/biicode-c684203c9577280de3adb81fb9549923.png
+language/biicode/index.png: language/biicode-c684203c9577280de3adb81fb9549923.png
+language/biicode_bw.png: language/biicode_bw-0fb547c2bbb4825f1a51cb4bd8aa5123.png
+language/biicode_bw/index.png: language/biicode_bw-0fb547c2bbb4825f1a51cb4bd8aa5123.png
 language/c.png: language/c-41aef16238a052732c81c4db1016ff92.png
 language/c/index.png: language/c-41aef16238a052732c81c4db1016ff92.png
 language/c_bw.png: language/c_bw-b9e4f638956121c07e7af89d1726782b.png
