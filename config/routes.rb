@@ -59,6 +59,8 @@ Versioneye::Application.routes.draw do
   get   '/updatepassword/:verification'        , :to => 'users#show_update_password'
   post  '/updatepassword'                      , :to => 'users#update_password'
 
+  get   '/unsubscribe/:email/:newsletter', :to => 'unsubscribe#unsubscribe'
+
   resource :lottery do
     get  '/verify',    :to => "lotteries#show_verification"
     get  '/signin',    :to => "lotteries#show_signin"
