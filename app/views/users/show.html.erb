@@ -1,58 +1,58 @@
 <% page_header 'Profile' %>
 
 <% if @user %>
-	<% title "#{@user.username} (#{@user.fullname}) is following Libraries at VersionEye" %>
+  <% title "#{@user.username} (#{@user.fullname}) is following Libraries at VersionEye" %>
 <% end %>
 
 <% if @user && @user.deleted_user %>
-	This Account does not exist anymore.
+  This Account does not exist anymore.
 <% end %>
 
 <% if @user && !@user.deleted_user %>
 
-	<%= render "header" %>
+  <%= render "header" %>
 
-	<div class="span3" style="border-top: 1px solid #ddd;" >
-		<%= render "users/navi" %>
-	</div>
+  <div class="span3" style="border-top: 1px solid #ddd;" >
+    <%= render "users/navi" %>
+  </div>
 
-	<div class="span8 content">
+  <div class="span8 content">
 
-		<% if !@products.nil? && @products.size > 0 %>
-		<div >
-			<h2 class="section_header">
-				Follows <%= pluralize(@user['product_ids'].count, "Package") %>
-				<a href="<%= url_for(favoritepackages_user_url(@user)) %>.rss"><%= image_tag "rss.png", :title => "Subscribe via RSS", :alt => "Subscribe via RSS" %></a>
-			</h2>
-		</div>
-		<div style="margin-bottom: 30px;" >
-			<% if @user['product_ids'].count > 0 %>
-				<%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
-			<% end %>
-			<% if @user['product_ids'].count > 3 %>
-				<div style="padding-top: 10px;">
-					<a href="/users/<%=@user.username%>/favoritepackages" style="padding-left: 30px;">See all</a>
-				</div>
-			<% end %>
-		</div>
-		<% end %>
+    <% if !@products.nil? && @products.size > 0 %>
+    <div >
+      <h2 class="section_header">
+        Follows <%= pluralize(@user['product_ids'].count, "Package") %>
+        <a href="<%= url_for(favoritepackages_user_url(@user)) %>.rss"><%= image_tag "rss.png", :title => "Subscribe via RSS", :alt => "Subscribe via RSS" %></a>
+      </h2>
+    </div>
+    <div style="margin-bottom: 30px;" >
+      <% if @user['product_ids'].count > 0 %>
+        <%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
+      <% end %>
+      <% if @user['product_ids'].count > 3 %>
+        <div style="padding-top: 10px;">
+          <a href="/users/<%=@user.username%>/favoritepackages" style="padding-left: 30px;">See all</a>
+        </div>
+      <% end %>
+    </div>
+    <% end %>
 
-		<div >
-			<h2 class="section_header">
-				Commented on <%= pluralize(@comments_count, "Package") %>
-			</h2>
-		</div>
-		<div class="" >
-			<% if !@comments_count.nil? && @comments_count > 0 %>
-				<%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %>
-			<% end %>
-			<% if !@comments_count.nil? && @comments_count > 3 %>
-				<div style="padding-top: 10px;">
-					<a href="/users/<%=@user.username%>/comments" style="padding-left: 30px; ">See all</a>
-				</div>
-			<% end %>
-		</div>
+    <div >
+      <h2 class="section_header">
+        Commented on <%= pluralize(@comments_count, "Package") %>
+      </h2>
+    </div>
+    <div class="" >
+      <% if !@comments_count.nil? && @comments_count > 0 %>
+        <%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => false } %>
+      <% end %>
+      <% if !@comments_count.nil? && @comments_count > 3 %>
+        <div style="padding-top: 10px;">
+          <a href="/users/<%=@user.username%>/comments" style="padding-left: 30px; ">See all</a>
+        </div>
+      <% end %>
+    </div>
 
-	</div>
+  </div>
 
 <% end %>
