@@ -11,13 +11,13 @@
   </div>
   
   <div class="span8 content" >
-  	<h1 ><%= @product.name_and_version %></h1>
+    <h1 ><%= @product.name_and_version %></h1>
 
-  	<%= render :partial => 'shared/show_version_comment', :locals => {:comment => @comment} %>
+    <%= render :partial => 'shared/show_version_comment', :locals => {:comment => @comment} %>
 
-  	<div style="margin-top: 20px;">
-  		<a href="<%= product_version_path(@product) %>" >See all comments</a>
-  	</div>
+    <div style="margin-top: 20px;">
+      <a href="<%= product_version_path(@product) %>" >See all comments</a>
+    </div>
   </div>
 </div>
 
