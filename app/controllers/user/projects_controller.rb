@@ -389,7 +389,7 @@ class User::ProjectsController < ApplicationController
 
     def fetch_project( params )
       file        = params[:upload]
-      project_url = params[:project][:url] if params[:project]
+      project_url = params[:project][:url]  if params[:project]
       return upload_and_store( file )       if file && !file.empty?
       return fetch_and_store( project_url ) if project_url && !project_url.empty?
       nil
@@ -402,6 +402,11 @@ class User::ProjectsController < ApplicationController
     end
 
     def fetch_and_store project_url
+      if (project_url.match(/\Ahttps\:\/\/github\.com/) && project_url.count("/") == 4) || (project_url.match(/\/\z/))
+        flash[:error] = "Please put in the complete URL to the file, not just the directory."
+        return 
+      end
+
       project_name   = project_url.split("/").last
       project        = ProjectImportService.import_from_url( project_url, project_name, current_user )
       set_message_for project
