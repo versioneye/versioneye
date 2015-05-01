@@ -57,7 +57,11 @@
                     color: gray;" >
 
           VersionEye GmbH | Julius-Hatry-Strasse 1 | 68163 Mannheim | Germany |
-          E-Mail: contact@versioneye.com | Amtsgericht: Mannheim | Handelsregister: Mannheim, HRB 720830 | USt-IdNr.: DE282045007 | CEO: Robert Reiz | <a href="https://www.versioneye.com/imprint?utm_medium=email">Imprint</a><br/> Unsubscribe here: <a href="https://www.versioneye.com/settings/notifications?utm_medium=email">Notification Center</a>
+          E-Mail: contact@versioneye.com | Amtsgericht: Mannheim | Handelsregister: Mannheim, HRB 720830 | USt-IdNr.: DE282045007 | CEO: Robert Reiz | <a href="<%= Settings.instance.server_url %>/imprint?utm_medium=email">Imprint</a> | 
+          <% if @user && @newsletter %> 
+            <% email_val = @user.email.unpack("H*").first %> 
+            <a href="<%= Settings.instance.server_url %>/unsubscribe/<%= email_val %>/<%= @newsletter %>?utm_medium=email">Unsubscribe from <%= @newsletter %></a>
+          <% end %> 
       </div>
 
     </div>
