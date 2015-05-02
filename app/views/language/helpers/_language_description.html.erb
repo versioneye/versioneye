@@ -1,18 +1,18 @@
 <% if @language %>
-  <div class  = "span8">
+  <div class="span8">
 
-    <br />
+    <br/>
     <p><%= @language[:description] %></p>
-    <br />
-    <br />
+    <br/>
+    <br/>
 
     <h5> New versions </h5>
-    <div id = "plot_latest"></div>
+    <div id="plot_latest"></div>
     <h5> New packages </h5>
-    <div id = "plot_novel"></div>
+    <div id="plot_novel"></div>
 
   </div>
-  <div class = "span4">
+  <div class="span4">
     <%= render partial: "language/helpers/language_block", locals: {language: @language} %>
   </div>
 <% end %>
