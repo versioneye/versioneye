@@ -9,7 +9,7 @@ development:
       # Provides the hosts the default session can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
-        - localhost:27017
+        - 172.16.172.128:27017
       options:
         # Change whether the session persists in safe mode by default.
         # (default: false)
@@ -72,7 +72,7 @@ test:
     default:
       database: veye_test
       hosts:
-        - localhost:27017
+        - 172.16.172.128:27017
       options:
         options:
         # Change whether the session persists in safe mode by default.
@@ -96,8 +96,8 @@ production:
       # of host:port pairs. (required)
       hosts:
         - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
-        - <%= ENV['MONGO_RS_2_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_2_PORT'] ||= '27017' %>
-        - <%= ENV['MONGO_RS_3_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_3_PORT'] ||= '27017' %>
+        # - <%= ENV['MONGO_RS_2_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_2_PORT'] ||= '27017' %>
+        # - <%= ENV['MONGO_RS_3_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_3_PORT'] ||= '27017' %>
       options:
         # Change whether the session persists in safe mode by default.
         # (default: false)
@@ -121,7 +121,7 @@ production:
         # Mongoid doubles the configured value (known issue) so 15 results in a timeout of 30s.
         # Note that if you have a long-running query (over 30 seconds), it will time out.
         # See our example for long-running queries in the blog post referenced above.
-        timeout: 15
+        timeout: 30
 
 enterprise:
   # Configure available database sessions. (required)
