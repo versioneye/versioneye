@@ -6,61 +6,61 @@ $c_url: "/assets/c.png";
 $biicode_url: "/assets/biicode.png";
 
 @mixin sprite($x, $y, $width, $height){
-	background: url($sprite_url) $x $y no-repeat;
-	display: inline-block;
-	vertical-align: middle;
-	width: $width;
-	height: $height;
+  background: url($sprite_url) $x $y no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  width: $width;
+  height: $height;
 }
 @mixin c_icon($x, $y, $width, $height){
-	background: url($c_url) $x $y no-repeat;
-	display: inline-block;
-	vertical-align: middle;
-	width: $width;
-	height: $height;
+  background: url($c_url) $x $y no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  width: $width;
+  height: $height;
 }
 
 @mixin biicode_icon($x, $y, $width, $height){
-	background: url($biicode_url) $x $y no-repeat;
-	display: inline-block;
-	vertical-align: middle;
-	width: $width;
-	height: $height;
+  background: url($biicode_url) $x $y no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  width: $width;
+  height: $height;
 }
 
 /* helper to build on off toggling
-	x1, y1 are  coordinates of off-button
-	x2, y2 are coordinates of on-button
+  x1, y1 are  coordinates of off-button
+  x2, y2 are coordinates of on-button
 */
 @mixin sprite_toggle($x1, $y1, $x2, $y2, $width, $height){
-	@include sprite($x1, $y1, $width, $height);
-	&.on { @include sprite($x2, $y2, $width, $height);}
-	&:hover { @include sprite($x2, $y2, $width, $height);}
-	&:active { @include sprite($x2, $y2, $width, $height);}
+  @include sprite($x1, $y1, $width, $height);
+  &.on { @include sprite($x2, $y2, $width, $height);}
+  &:hover { @include sprite($x2, $y2, $width, $height);}
+  &:active { @include sprite($x2, $y2, $width, $height);}
 }
 @mixin c_toggle($x1, $y1, $x2, $y2, $width, $height){
-	@include c_icon($x1, $y1, $width, $height);
-	&.on { @include c_icon($x2, $y2, $width, $height);}
-	&:hover { @include c_icon($x2, $y2, $width, $height);}
-	&:active { @include c_icon($x2, $y2, $width, $height);}
+  @include c_icon($x1, $y1, $width, $height);
+  &.on { @include c_icon($x2, $y2, $width, $height);}
+  &:hover { @include c_icon($x2, $y2, $width, $height);}
+  &:active { @include c_icon($x2, $y2, $width, $height);}
 }
 @mixin biicode_toggle($x1, $y1, $x2, $y2, $width, $height){
-	@include biicode_icon($x1, $y1, $width, $height);
-	&.on { @include biicode_icon($x2, $y2, $width, $height);}
-	&:hover { @include biicode_icon($x2, $y2, $width, $height);}
-	&:active { @include biicode_icon($x2, $y2, $width, $height);}
+  @include biicode_icon($x1, $y1, $width, $height);
+  &.on { @include biicode_icon($x2, $y2, $width, $height);}
+  &:hover { @include biicode_icon($x2, $y2, $width, $height);}
+  &:active { @include biicode_icon($x2, $y2, $width, $height);}
 }
 
 @mixin sprite_btn($x, $y, $height){
-	background: url($sprite_url) $x $y repeat-x;
-	display: inline-block;
-	height: $height;
+  background: url($sprite_url) $x $y repeat-x;
+  display: inline-block;
+  height: $height;
 }
 
 @mixin list_icon($x, $y, $width, $height){
-	background: url($sprite_url) $x $y no-repeat;
-	padding-left: $width;
-	line-height: $height;
+  background: url($sprite_url) $x $y no-repeat;
+  padding-left: $width;
+  line-height: $height;
 }
 
 
@@ -80,245 +80,253 @@ $biicode_url: "/assets/biicode.png";
 /*  ICONS */
 
 .flag{
-	&.de { @include sprite_toggle(-268px, -7px, -295px, -7px, 24px, 19px);}
-	&.gb { @include sprite_toggle(-324px, -6px, -351px, -6px, 24px, 19px);}
+  &.de { @include sprite_toggle(-268px, -7px, -295px, -7px, 24px, 19px);}
+  &.gb { @include sprite_toggle(-324px, -6px, -351px, -6px, 24px, 19px);}
 
 }
 /* PROGRAMMING LANGUAGES */
 
 /* big icons */
 .icon_ruby {
-	@include sprite_toggle(-71px, -76px, -13px, -76px, 36px, 36px);
-	&.small {
-		@include sprite_toggle(-52px, -128px, -13px, -128px, 25px, 25px);
-	}
+  @include sprite_toggle(-71px, -76px, -13px, -76px, 36px, 36px);
+  &.small {
+    @include sprite_toggle(-52px, -128px, -13px, -128px, 25px, 25px);
+  }
 }
 .icon_ruby_big_container{
-	padding: 10px 10px 10px 10px;
-	width: 36px;
-	height: 36px;
-	display: inline-block;
+  padding: 10px 10px 10px 10px;
+  width: 36px;
+  height: 36px;
+  display: inline-block;
 }
 .icon_ruby_small_container{
-	padding: 7px 7px 8px 8px;
-	margin: 0;
-	width: 25px;
-	height: 25px;
-	display: inline-block;
+  padding: 7px 7px 8px 8px;
+  margin: 0;
+  width: 25px;
+  height: 25px;
+  display: inline-block;
 }
 
 .icon_objective-c{
-	background: url(/assets/language/objective-c.png) no-repeat;
-	margin: 0;
-	width: 56px;
-	height: 56px;
-	display: inline-block;
+  background: url(/assets/language/objective-c.png) no-repeat;
+  margin: 0;
+  width: 56px;
+  height: 56px;
+  display: inline-block;
 }
-
 .icon_objective-c.small.on{
-	background: url(/assets/language/objective-c_small.png) no-repeat;
-	margin: 0;
-	width: 25px;
-	height: 25px;
-	display: inline-block;
+  background: url(/assets/language/objective-c_small.png) no-repeat;
+  margin: 0;
+  width: 25px;
+  height: 25px;
+  display: inline-block;
 }
-
 .icon_objective-c_small_container{
-	margin: 0;
-	width: 30px;
-	height: 30px;
-	display: inline-block;
+  margin: 0;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+}
+.icon_objective-c_big_container{
+  padding: 16px 0 10px 0;
+  width: 56px;
+  height: 56px;
+  display: inline-block;
 }
 
 
 .icon_css{
-	background: url(/assets/language/css.png) no-repeat;
-	margin: 0;
-	width: 56px;
-	height: 56px;
-	display: inline-block;
+  background: url(/assets/language/css.png) no-repeat;
+  margin: 0;
+  width: 56px;
+  height: 56px;
+  display: inline-block;
 }
-
 .icon_css.small.on{
-	background: url(/assets/language/css_small.png) no-repeat;
-	margin: 0;
-	width: 25px;
-	height: 25px;
-	display: inline-block;
+  background: url(/assets/language/css_small.png) no-repeat;
+  margin: 0;
+  width: 25px;
+  height: 25px;
+  display: inline-block;
 }
-
 .icon_css_small_container{
-	margin: 0;
-	width: 30px;
-	height: 30px;
-	display: inline-block;
+  margin: 0;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+}
+.icon_css_big_container{
+  padding: 16px 0 10px 0;
+  width: 56px;
+  height: 56px;
+  display: inline-block;
 }
 
 
 .icon_biicode_small_container{
-	margin: 0;
-	width: 30px;
-	height: 30px;
-	display: inline-block;
+  margin: 0;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
 }
 
 
 .icon_r {
-	@include sprite_toggle(-185px, -76px, -126px, -76px, 44px, 36px);
-	&.small {@include sprite_toggle(-128px, -128px, -89px, -128px, 31px, 25px);}
+  @include sprite_toggle(-185px, -76px, -126px, -76px, 44px, 36px);
+  &.small {@include sprite_toggle(-128px, -128px, -89px, -128px, 31px, 25px);}
 }
 .icon_r_big_container{
-	padding: 16px 0 10px 0;
-	width: 56px;
-	height: 30px;
-	display: inline-block;
+  padding: 16px 0 10px 0;
+  width: 56px;
+  height: 30px;
+  display: inline-block;
 }
 .icon_r_small_container{
-	padding: 7px 4px 8px 5px;
-	margin: 0;
-	width: 31px;
-	height: 25px;
-	display: inline-block;
+  padding: 7px 4px 8px 5px;
+  margin: 0;
+  width: 31px;
+  height: 25px;
+  display: inline-block;
 }
 
 .icon_java {
-	@include sprite_toggle(-243px, -68px, -300px, -68px, 35px, 56px);
-	&.small {@include sprite_toggle(-169px, -122px, -207px, -122px, 22px, 38px);}
+  @include sprite_toggle(-243px, -68px, -300px, -68px, 35px, 56px);
+  &.small {@include sprite_toggle(-169px, -122px, -207px, -122px, 22px, 38px);}
 }
 .icon_java_big_container{
-	padding: 0 11px 0 10px;
-	width: 35px;
-	height: 56px;
-	display: inline-block;
+  padding: 0 11px 0 10px;
+  width: 35px;
+  height: 56px;
+  display: inline-block;
 }
 .icon_java_small_container{
-	padding: 1px 9px 1px 9px;
-	margin: 0;
-	width: 22px;
-	height: 38px;
-	display: inline-block;
+  padding: 1px 9px 1px 9px;
+  margin: 0;
+  width: 22px;
+  height: 38px;
+  display: inline-block;
 }
 
 .icon_php {
-	@include sprite_toggle(-410px, -81px, -352px, -81px, 52px, 30px);
-	&.small {@include sprite_toggle(-281px, -131px, -241px, -131px, 36px, 20px);}
+  @include sprite_toggle(-410px, -81px, -352px, -81px, 52px, 30px);
+  &.small {@include sprite_toggle(-281px, -131px, -241px, -131px, 36px, 20px);}
 }
 .icon_php_big_container{
-	padding: 13px 2px 13px 2px;
-	width: 52px;
-	height: 30px;
-	display: inline-block;
+  padding: 13px 2px 13px 2px;
+  width: 52px;
+  height: 30px;
+  display: inline-block;
 }
 .icon_php_small_container{
-	padding: 10px 2px 10px 2px;
-	margin: 0;
-	width: 36px;
-	height: 20px;
-	display: inline-block;
+  padding: 10px 2px 10px 2px;
+  margin: 0;
+  width: 36px;
+  height: 20px;
+  display: inline-block;
 }
 
 .icon_nodejs {
-	@include sprite_toggle(-534px, -86px, -474px, -86px, 56px, 30px);
-	&.small {@include sprite_toggle(-364px, -135px, -323px, -135px, 39px, 12px);}
+  @include sprite_toggle(-534px, -86px, -474px, -86px, 56px, 30px);
+  &.small {@include sprite_toggle(-364px, -135px, -323px, -135px, 39px, 12px);}
 }
 .icon_nodejs_big_container{
-	padding: 26px 0 0px 0;
-	width: 56px;
-	height: 30px;
-	display: inline-block;
+  padding: 26px 0 0px 0;
+  width: 56px;
+  height: 30px;
+  display: inline-block;
 }
 .icon_nodejs_small_container{
-	padding: 11px 1px 11px 0;
-	margin: 0;
-	width: 39px;
-	height: 12px;
-	display: inline-block;
+  padding: 11px 1px 11px 0;
+  margin: 0;
+  width: 39px;
+  height: 12px;
+  display: inline-block;
 }
 
 .icon_javascript {
-	@include sprite_toggle(-658px, -80px, -599px, -80px, 43px, 31px);
-	&.small {@include sprite_toggle(-448px, -131px, -408px, -131px, 30px, 22px);}
+  @include sprite_toggle(-658px, -80px, -599px, -80px, 43px, 31px);
+  &.small {@include sprite_toggle(-448px, -131px, -408px, -131px, 30px, 22px);}
 }
 .icon_javascript_big_container{
-	padding: 12px 6px 13px 7px;
-	width: 43px;
-	height: 31px;
-	display: inline-block;
+  padding: 12px 6px 13px 7px;
+  width: 43px;
+  height: 31px;
+  display: inline-block;
 }
 .icon_javascript_small_container{
-	padding: 9px 5px 9px 5px;
-	margin: 0;
-	width: 30px;
-	height: 22px;
-	display: inline-block;
+  padding: 9px 5px 9px 5px;
+  margin: 0;
+  width: 30px;
+  height: 22px;
+  display: inline-block;
 }
 
 .icon_python {
-	@include sprite_toggle(-780px, -84px, -722px, -83px, 34px, 35px);
-	&.small {@include sprite_toggle(-530px, -133px, -491px, -133px, 24px, 24px);}
+  @include sprite_toggle(-780px, -84px, -722px, -83px, 34px, 35px);
+  &.small {@include sprite_toggle(-530px, -133px, -491px, -133px, 24px, 24px);}
 }
 .icon_python_big_container{
-	padding: 10px 11px 11px 11px;
-	width: 34px;
-	height: 35px;
-	display: inline-block;
+  padding: 10px 11px 11px 11px;
+  width: 34px;
+  height: 35px;
+  display: inline-block;
 }
 .icon_python_small_container{
-	padding: 8px 8px 8px 8px;
-	margin: 0;
-	width: 24px;
-	height: 24px;
-	display: inline-block;
+  padding: 8px 8px 8px 8px;
+  margin: 0;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
 }
 
 .icon_clojure {
-	@include sprite_toggle(-891px, -79px, -833px, -80px, 44px, 43px);
-	&.small {@include sprite_toggle(-605px, -130px, -566px, -131px, 30px, 29px);}
+  @include sprite_toggle(-891px, -79px, -833px, -80px, 44px, 43px);
+  &.small {@include sprite_toggle(-605px, -130px, -566px, -131px, 30px, 29px);}
 }
 .icon_clojure_big_container{
-	padding: 16px 0 10px 0;
-	width: 56px;
-	height: 30px;
-	display: inline-block;
+  padding: 16px 0 10px 0;
+  width: 56px;
+  height: 30px;
+  display: inline-block;
 }
 .icon_clojure_small_container{
-	padding: 5px 5px 6px 5px;
-	margin: 0;
-	width: 30px;
-	height: 29px;
-	display: inline-block;
+  padding: 5px 5px 6px 5px;
+  margin: 0;
+  width: 30px;
+  height: 29px;
+  display: inline-block;
 }
 
 .icon_c {
-	@include c_toggle(0px, 0px, 0px, -56px, 56px, 56px);
+  @include c_toggle(0px, 0px, 0px, -56px, 56px, 56px);
 }
 .icon_c_big_container{
-	padding: 0;
-	width: 56px;
-	height: 56px;
-	display: inline-block;
+  padding: 0;
+  width: 56px;
+  height: 56px;
+  display: inline-block;
 }
 
 .icon_biicode {
-	@include biicode_toggle(0px, 0px, 0px, -56px, 56px, 56px);
+  @include biicode_toggle(0px, 0px, 0px, -56px, 56px, 56px);
 }
 .icon_biicode_big_container{
-	padding: 0;
-	width: 56px;
-	height: 56px;
-	display: inline-block;
+  padding: 0;
+  width: 56px;
+  height: 56px;
+  display: inline-block;
 }
 .icon_biicode.small.on{
-	background: url(/assets/language/biicode_small.png) no-repeat;
-	margin: 0;
-	width: 25px;
-	height: 25px;
-	display: inline-block;
+  background: url(/assets/language/biicode_small.png) no-repeat;
+  margin: 0;
+  width: 25px;
+  height: 25px;
+  display: inline-block;
 }
 
 
 /* ----------------------------------------------------------------------------
-	ICONS
+  ICONS
 */
 
 /* marketing icons */
@@ -342,8 +350,8 @@ $biicode_url: "/assets/biicode.png";
 .icon_trangel {@include sprite(-380px, -3px, 16px, 16px);}
 .icon_tringel {@include sprite(-400px, -3px, 160px, 16px);}
 .icon_user {
-	@include sprite(-565px, -3px, 16px, 16px);
-	&.on {@include sprite(-710px, -3px, 16px, 16px);}
+  @include sprite(-565px, -3px, 16px, 16px);
+  &.on {@include sprite(-710px, -3px, 16px, 16px);}
 }
 .icon_settings {@include sprite(-585px, -3px, 16px, 16px);}
 .icon_logout {@include sprite(-603px, -2px, 16px, 16px);}
@@ -360,77 +368,77 @@ $biicode_url: "/assets/biicode.png";
 
 /* Profile pictures*/
 .icon_profile48 {
-	@include sprite(-876px, 0px, 48px, 48px);
-	&.rounded {@include sprite(-826px, 0px, 48px, 48px);};
+  @include sprite(-876px, 0px, 48px, 48px);
+  &.rounded {@include sprite(-826px, 0px, 48px, 48px);};
 }
 .icon_profile32 {@include sprite(-928px, 0px, 32px, 32px);}
 
 
 /* eye pictures */
 .separator_eye {
-	border: 0px;
-	@include sprite_toggle(-13px, -347px, -13px, -420px, 940px, 65px);
+  border: 0px;
+  @include sprite_toggle(-13px, -347px, -13px, -420px, 940px, 65px);
 }
 .logo_eye {@include sprite(-4px, -487px, 264px, 134px);}
 .logo_eye_text {@include sprite(-279px, -487px, 107px, 83px);}
 
 
 /* ----------------------------------------------------------------------------
-	BUTTONS
+  BUTTONS
 */
 
 /* social buttons */
 .btn_facebook {
-	display: block;
-	&.login {@include sprite(0px, -242px, 230px, 40px);display: block;}
-	&.signup {@include sprite(0px, -285px, 230px, 40px);display: block;}
-	&.small {@include sprite(-698px, -242px, 77px, 24px);}
+  display: block;
+  &.login {@include sprite(0px, -242px, 230px, 40px);display: block;}
+  &.signup {@include sprite(0px, -285px, 230px, 40px);display: block;}
+  &.small {@include sprite(-698px, -242px, 77px, 24px);}
 }
 
 .btn_twitter {
-	display:  block;
-	&.login {@include sprite(-233px, -242px, 230px, 40px);display: block;}
-	&.signup {@include sprite(-233px, -285px, 230px, 40px);display: block;}
-	&.small {@include sprite(-776px, -242px, 77px, 24px);}
+  display:  block;
+  &.login {@include sprite(-233px, -242px, 230px, 40px);display: block;}
+  &.signup {@include sprite(-233px, -285px, 230px, 40px);display: block;}
+  &.small {@include sprite(-776px, -242px, 77px, 24px);}
 }
 
 .btn_github {
-	display: block;
-	&.login {@include sprite(-465px, -242px, 230px, 40px);display: block;}
-	&.signup {@include sprite(-465px, -285px, 230px, 40px);display: block;}
-	&.small {@include sprite(-856px, -242px, 77px, 24px);}
+  display: block;
+  &.login {@include sprite(-465px, -242px, 230px, 40px);display: block;}
+  &.signup {@include sprite(-465px, -285px, 230px, 40px);display: block;}
+  &.small {@include sprite(-856px, -242px, 77px, 24px);}
 }
 
 
 /* buttons */
 
 .bg_btn {
-	@include sprite_btn(-712px, -283px, 42px);
-	& .closure-left {@include sprite(-704px, -283px, 6px, 42px);}
-	& .closure-right {@include sprite(-715px, -283px, 6px, 42px);}
+  @include sprite_btn(-712px, -283px, 42px);
+  & .closure-left {@include sprite(-704px, -283px, 6px, 42px);}
+  & .closure-right {@include sprite(-715px, -283px, 6px, 42px);}
 
 }
 
 .bg_btn_on {@include sprite_btn(-734px, -283px, 42px);}
 
 .bg_btn_small {
-	@include sprite_btn(-759px, -283px, 30px);
-	& .on {@include sprite_btn(-781px, -283px, 30px);}
+  @include sprite_btn(-759px, -283px, 30px);
+  & .on {@include sprite_btn(-781px, -283px, 30px);}
 }
 
 
 /*
-	SPECIAL LIST
+  SPECIAL LIST
 */
 
 .subscription {
-	list-style-type: none;
-	padding: 0;
-	margin: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 
-	& > li {
-		display: block;
-		margin: 0px, 0px, 10px, 0px;
-		min-height: 20px;
-	}
+  & > li {
+    display: block;
+    margin: 0px, 0px, 10px, 0px;
+    min-height: 20px;
+  }
 }
