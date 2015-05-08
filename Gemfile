@@ -13,12 +13,12 @@ gem 'whenever'             , '~> 0.9.2'
 gem 'bourbon'              , '~> 4.2.0'
 gem 'ruby_regex'           , '~> 0.1.0'
 gem 'semverly'             , '~> 1.0.0'
-gem 'cocoapods-core'       , '~> 0.36.0'
+gem 'cocoapods-core'       , '~> 0.37.1'
 gem 'stripe'               , '~> 1.14.0'
 gem 'bunny'                , '~> 1.7.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.8.27'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.9.3'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :development do

@@ -1,14 +1,14 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: ff21c164ab082d15609082bd30b9c3b53b6c063f
-  tag: v7.8.27
+  revision: 8454870fbf42d33de652a7394cc08455440fd69d
+  tag: v7.9.3
   specs:
-    versioneye-core (7.8.27)
+    versioneye-core (7.9.3)
       actionmailer (~> 3.2.21)
       aws-sdk (~> 2.0.31)
       bundler (~> 1.9.1)
       bunny (~> 1.7.0)
-      cocoapods-core (~> 0.36.0)
+      cocoapods-core (~> 0.37.1)
       dalli (~> 2.7.0)
       httparty (~> 0.13.1)
       json (~> 1.8.0)
@@ -61,14 +61,14 @@ GEM
     amq-protocol (1.9.2)
     ansi (1.5.0)
     arel (3.0.3)
-    aws-sdk (2.0.41)
-      aws-sdk-resources (= 2.0.41)
-    aws-sdk-core (2.0.41)
+    aws-sdk (2.0.42)
+      aws-sdk-resources (= 2.0.42)
+    aws-sdk-core (2.0.42)
       builder (~> 3.0)
       jmespath (~> 1.0)
       multi_json (~> 1.0)
-    aws-sdk-resources (2.0.41)
-      aws-sdk-core (= 2.0.41)
+    aws-sdk-resources (2.0.42)
+      aws-sdk-core (= 2.0.42)
     bourbon (4.2.2)
       sass (~> 3.4)
       thor
@@ -87,7 +87,7 @@ GEM
     childprocess (0.5.6)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
-    cocoapods-core (0.36.4)
+    cocoapods-core (0.37.1)
       activesupport (>= 3.2.15)
       fuzzy_match (~> 2.0.4)
       nap (~> 0.8.0)
@@ -320,7 +320,7 @@ DEPENDENCIES
   bunny (~> 1.7.0)
   capybara (~> 2.4.0)
   capybara-firebug (~> 2.1.0)
-  cocoapods-core (~> 0.36.0)
+  cocoapods-core (~> 0.37.1)
   coffee-rails (~> 3.2.0)
   database_cleaner (~> 1.4.0)
   execjs (~> 2.5.2)
