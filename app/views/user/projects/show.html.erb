@@ -123,6 +123,9 @@
           <li>
             <a data-target="#licenses" data-toggle="tab" onclick="page_view('ga_project_licenses')"><i class = "icon-tasks">&nbsp;</i>Licenses</a>
           </li>
+          <li>
+            <a data-target="#security" data-toggle="tab" onclick="page_view('ga_project_security')"><i class = "icon-tasks">&nbsp;</i>Security</a>
+          </li>
           <% if signed_in? && @project.user.id.to_s.eql?( current_user.id.to_s ) %>
             <li>
               <a data-target="#collaborators" data-toggle="tab" onclick="page_view('ga_project_collaborators')"><i class = "icon-group">&nbsp;</i>Collaborators</a>
@@ -191,6 +194,14 @@
                 </div>
               </div>
             <% end %>
+
+          </div>
+
+          <div id="security" class="tab-pane">
+
+            <%= render partial: "user/projects/helpers/show_subprojects", locals: {parent_project: @project, child_project: @child, tab_id: 'licenses'} %>
+
+            <%= render partial: "user/projects/helpers/security" %>  
 
           </div>
 

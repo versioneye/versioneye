@@ -1,0 +1,19 @@
+
+<% svs = @version.security_vulnerabilities %> 
+<% if svs && !svs.empty?  %> 
+  
+  <h2 class="section_header">Security Vulnerabilities</h2>
+  
+  <div style="margin-bottom: 20px;" >
+    <% svs.each do |sv| %> 
+      <% next if sv.links.nil? || sv.links.empty? %> 
+      <div class="flash error" style="margin-bottom: 2px;" >
+        <% sv.links.keys.each do |key| %>
+          <a href="<%= sv.links[key] %>"><%= key %></a><br/> 
+        <% end %> 
+        Affected versions: <%= sv.affected_versions_string %>
+      </div>
+    <% end %> 
+  </div> 
+
+<% end %> 
