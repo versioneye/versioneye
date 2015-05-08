@@ -9,6 +9,7 @@
       <table>
         <tr>
           <% languages.each do |language| %>
+            
             <% next if !Product::A_LANGS_SUPPORTED.include?( language ) %>
 
             <td style="width: 56px; height: 56px; text-align: center; vertical-align: middle;">
@@ -22,7 +23,7 @@
             <% end %>
 
             <% z = z + 1 %>
-
+            
           <% end %>
         <tr> 
       </table>

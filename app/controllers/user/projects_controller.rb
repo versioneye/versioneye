@@ -113,6 +113,7 @@ class User::ProjectsController < ApplicationController
     end
     badge    = badge.gsub("-", "_")
     color    = badge.eql?('up_to_date') ? 'green' : 'yellow'
+    color    = 'red' if badge.eql?('update!')
     language = calculate_language(project).gsub("-", "")
     url = "http://img.shields.io/badge/#{language}dependencies-#{badge}-#{color}.svg#{par}"
     response = HttpService.fetch_response url
