@@ -224,8 +224,8 @@ react.js: abe310a386733893af71cc9eece1d53c
 scm/build/repo_files.js: d6cabeb8be289bb5379e1b64bde281e9
 scm/build/repo_list.js: a784be0f40b86ec41c6c9d1f7688fed6
 twitter.js: 1c80f19b35d4ec5611daa4202f63aa98
-application.css: b3b96b69ddab45b9e0f677855c3586fa
-application_lp.css: c7097a759c29b45c7551cb3e5dadd05a
+application.css: fd2a520e7e48375863de69bcefc43cbb
+application_lp.css: 4d66dd7b65d79ee113f4ded3519bc8f7
 font/FontAwesome.otf: 8d818553081ddcd620bfc25611d7aff6
 font/fontawesome-webfont.eot: 2a2685ff3f9577fd6b6b6d2812f2801f
 font/fontawesome-webfont.svg: f10236cb1f3a6badc366fffc428b713c
