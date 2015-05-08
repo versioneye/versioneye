@@ -5,12 +5,27 @@
     <div class="box content" >
       <% @user['product_ids'] ||= [] %>
       <% languages = Product.unique_languages_for_product_ids( @user['product_ids'] ) %>
-      <% languages.each do |language| %>
-        <% prog_lang = language.downcase.gsub(/\./, "") %>
-        <div class="icon_<%= prog_lang %>_big_container">
-          <div class = "icon_<%= prog_lang %> fix_big on" ></div>
-        </div>
-      <% end %>
+      <% z = 1 %> 
+      <table>
+        <tr>
+          <% languages.each do |language| %>
+            <% next if !Product::A_LANGS_SUPPORTED.include?( language ) %>
+
+            <td style="width: 56px; height: 56px; text-align: center; vertical-align: middle;">
+              <% prog_lang = language.downcase.gsub(/\./, "") %>
+              <div class="icon_<%= prog_lang %> on" style="cursor: pointer" onClick="document.location.href='/<%= language %>'"></div>
+            </td>
+
+            <% if (z % 3) == 0 %>
+                </tr> 
+                <tr>
+            <% end %>
+
+            <% z = z + 1 %>
+
+          <% end %>
+        <tr> 
+      </table>
     </div>
 
     <% if @userlinkcollection && !@userlinkcollection.empty? %>
