@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 8454870fbf42d33de652a7394cc08455440fd69d
-  tag: v7.9.3
+  revision: 554ee4eeac776bb4723c8375edb5f381877e8a49
+  tag: v7.9.6
   specs:
-    versioneye-core (7.9.3)
+    versioneye-core (7.9.6)
       actionmailer (~> 3.2.21)
       aws-sdk (~> 2.0.31)
       bundler (~> 1.9.1)
@@ -69,7 +69,7 @@ GEM
       multi_json (~> 1.0)
     aws-sdk-resources (2.0.42)
       aws-sdk-core (= 2.0.42)
-    bourbon (4.2.2)
+    bourbon (4.2.3)
       sass (~> 3.4)
       thor
     builder (3.0.4)
