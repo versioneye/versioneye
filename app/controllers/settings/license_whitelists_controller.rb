@@ -42,7 +42,8 @@ class Settings::LicenseWhitelistsController < ApplicationController
     resp = LicenseWhitelistService.add current_user, params[:list], params[:license_name]
     if resp
       lwl = LicenseWhitelistService.fetch_by current_user, params[:list]
-      Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Added \"#{params[:license_name]}\" to \"#{params[:list]}\""
+      le  = LicenseElement.new({:name => params[:license_name]})
+      Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Added \"#{le.name_substitute}\" to \"#{params[:list]}\""
       flash[:success] = "License added successfully."
     else
       flash[:error] = "An error occured. Not able to add the license to the list."
