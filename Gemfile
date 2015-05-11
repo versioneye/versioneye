@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'bundler'              , '~> 1.9.1'
+gem 'bundler'              , '~> 1.9.6'
 gem 'rails'                , '~> 3.2.21'
 gem 'jquery-rails'         , '~> 2.2.1'
 gem 'execjs'               , '~> 2.5.2'
