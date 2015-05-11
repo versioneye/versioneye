@@ -316,7 +316,7 @@ PLATFORMS
 
 DEPENDENCIES
   bourbon (~> 4.2.0)
-  bundler (~> 1.9.1)
+  bundler (~> 1.9.6)
   bunny (~> 1.7.0)
   capybara (~> 2.4.0)
   capybara-firebug (~> 2.1.0)
