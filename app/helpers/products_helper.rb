@@ -83,6 +83,9 @@ module ProductsHelper
 
     DependencyBadgeProducer.new("#{language}:::#{prod_key}:::#{product.version}")
     're_calculating_..'
+  rescue => e 
+    logger.error e.message
+    're_calculating_..'
   end
 
   def ref_badge_for_product( language, prod_key )
