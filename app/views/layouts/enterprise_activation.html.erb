@@ -39,6 +39,7 @@
         <div class="l_margin_top_50" >
 
           <form id="activate-form" class="form-horizontal" action="/enterprise/activate" method="POST">
+            <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
             <div class="control-group">
               <label for="api_key" class="col-lg-2 control-label">API Key</label>
               <div class="controls">

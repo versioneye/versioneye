@@ -1,6 +1,7 @@
 
 <div style="" id="settings_area">
   <form action="<%= user_collaboration_save_period_path(collaboration_id: collaboration[:_id].to_s) %>" method="post" class="form-horizontal" >
+    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
     <div class="control-group">
       <label class="control-label" style="width: 200px;" >Monitor it</label>
       <div class="controls" style="margin-left: 210px;">
@@ -14,6 +15,7 @@
   </form>
 
   <form action="<%= user_collaboration_save_email_path(collaboration_id: collaboration[:_id].to_s) %>" method="post" class="form-horizontal" >
+    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
     <div class="control-group">
       <label class="control-label" style="width: 200px;" >Send notifications to</label>
       <div class="controls" style="margin-left: 210px;">

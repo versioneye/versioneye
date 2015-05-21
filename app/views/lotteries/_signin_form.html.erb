@@ -4,6 +4,8 @@
   Your account is now created. Please login with your credentials.
 </p>
 <form id = "signin_form" class="form-horizontal" action = "/sessions?redirect_url=/lottery/libraries" method = "POST">
+
+  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
   <div class="form-group">
     <label for="session_email" class="col-lg-2 control-label">Email</label>
     <div class="col-lg-10">

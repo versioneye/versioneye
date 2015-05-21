@@ -1,6 +1,7 @@
 
 <% if @whitelists %>
   <form action="<%= save_whitelist_user_project_path(@project) %>" method="post" class="form-horizontal" >
+    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
     <div>
       Choose a License Whitelist we should check against your dependencies.
       If a dependency has a license which is not on your Whitelist we will mark it red and send you notifications.

@@ -84,11 +84,13 @@
             <div class="row">
               <div class="span2" style="width: 100px;" >
                 <form action="<%= reparse_user_project_path(@project) %>" method="post" style="padding-top: 5px;">
+                  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
                   <button class="btn btn-success btn-mini">Re Parse Now</button>
                 </form>
               </div>
               <div class="span2" style="width: 120px;" >
                 <form action="<%= user_project_path(@project) %>" method="post" style="padding-top: 5px;">
+                  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
                   <input name="_method" type="hidden" value="delete" />
                   <button class="btn btn-danger btn-mini" onClick="return confirmAction()" >Delete this project</button>
                 </form>
@@ -146,6 +148,7 @@
             <% if @child.dependencies && !@child.dependencies.empty? %>
               <div class="pull-right">
                 <form action="<%= followall_user_project_path(@child) %>" method="post" style="margin: 0;">
+                  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
                   <button class="btn btn-success btn-mini" title="Follow all software packages in this project and receive notifications independently from this project">Follow All</button>
                 </form>
               </div>
@@ -186,6 +189,7 @@
               <div id="trans_deps" style="margin-top: 15px;">
                 <h3>Licenses of transitive dependencies</h3>
                 <form id="trans_dep_form" action="<%= transitive_dependencies_user_project_path(@child) %>" data-remote="true" method="post" >
+                  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
                   <input hidden="true" name="id" value="<%= @child.id.to_s %>" />
                   <button type="submit" class="btn btn-primary"
                     onclick="document.getElementById('progress_bar').style.display='block';
