@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
-gem 'bundler'              , '~> 1.9.6'
-gem 'rails'                , '~> 3.2.21'
-gem 'jquery-rails'         , '~> 2.2.1'
+gem 'bundler'              , '~> 1.9.9'
+gem 'rails'                , '~> 4.2.1'
+gem 'jquery-rails'         , '~> 4.0.3'
 gem 'execjs'               , '~> 2.5.2'
 gem 'gravatar_image_tag'   , '~> 1.2.0'
 gem 'oauth'                , '~> 0.4.7'
@@ -18,7 +18,7 @@ gem 'stripe'               , '~> 1.14.0'
 gem 'bunny'                , '~> 1.7.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.10.4'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.10.14'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :development do
@@ -32,11 +32,11 @@ end
 group :assets do
   gem 'therubyracer'          , '~> 0.12.0'
   gem 'sass'                  , :require => 'sass'
-  gem 'sass-rails'            , '~> 3.2.6'
-  gem 'coffee-rails'          , '~> 3.2.0'
+  gem 'sass-rails'            , '~> 5.0.3'
+  gem 'coffee-rails'          , '~> 4.1.0'
   gem 'uglifier'              , '~> 2.7.0'
   gem 'yui-compressor'        , '~> 0.12.0'
-  gem 'turbo-sprockets-rails3', '~> 0.3.0'
+  # gem 'turbo-sprockets-rails3', '~> 0.3.0'
 end
 
 group :test do

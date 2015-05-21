@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
+    @user = create_user_form params
     if Set['1', 'on', 'true'].include? params[:user][:terms]
       @user[:terms] = true
     else
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
   end
 
   def create_mobile
-    @user = User.new(params[:user])
+    @user = create_user_form params
     if Set['1', 'on', 'true'].include? params[:user][:terms]
       @user[:terms] = true
     else
@@ -266,6 +266,15 @@ class UsersController < ApplicationController
   end
 
   private
+
+    def create_user_form params 
+      user = User.new 
+      user.fullname   = params[:user][:fullname]
+      user.email      = params[:user][:email]
+      user.password   = params[:user][:password]
+      user.promo_code = params[:user][:promo_code]
+      user 
+    end
 
     def github_source?( source )
       !source.nil? && !source.empty? && source.eql?("github")
