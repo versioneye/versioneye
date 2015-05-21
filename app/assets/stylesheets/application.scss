@@ -1,0 +1,47 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *
+*/
+
+$gradient_start: #7F0200;
+$gradient_end: #610003;
+$link_color: #7575FF;
+
+/* $text_yellow: #FBB21C; */
+
+$text_yellow: gray;
+$text_casual: black;  /* #616970 */
+
+$link_hover:   #FBB21C;
+$link_color:   #FDFDFD;
+$link_visited: #FDFDFD;
+
+$text_link:  #669acb;
+$text_hover: #a0b8cf;
+
+@import "bootstrap.scss";
+@import "bootstrap_responsive.scss";
+@import "bootstrap_switch.scss";
+@import "bootstrap_upload.scss";
+@import "font-awesome.scss";
+@import "sprite.scss";
+@import "colorschema.scss";
+
+@import "layout.scss";
+@import "base.scss";
+@import "well.scss";
+@import "search.scss";
+@import "marketing.scss";
+@import "social_media_login.scss";
+@import "header.scss";
+@import "footer.scss";
+
+@import "main.scss";
+@import "typeahead.js-bootstrap.scss";
+@import "social-buttons.scss";
+@import "product.scss";
+@import "user.scss";
+@import "plots.scss";
+@import "scm_app.scss";

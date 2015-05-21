@@ -16,12 +16,13 @@ class User::ProjectsController < ApplicationController
 
 
   def new
-    @project = Project.new(params)
+    @project = Project.new
+    @project.url = params[:url]
   end
 
 
   def upload
-    @project = Project.new(params)
+    @project = Project.new
   end
 
 

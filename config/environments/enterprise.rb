@@ -11,7 +11,7 @@ Versioneye::Application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local = false
 
-  config.serve_static_assets = true
+  config.serve_static_files = true
   config.action_dispatch.x_sendfile_header = nil
 
   # Log error messages when you accidentally call methods on nil.
@@ -33,9 +33,6 @@ Versioneye::Application.configure do
 
   # See everything in the log (default is :info)
   config.log_level = :info
-
-  # Enable threaded mode
-  config.threadsafe!
 
   config.i18n.fallbacks = true
 

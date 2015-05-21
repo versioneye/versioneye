@@ -4,7 +4,11 @@ class VersioncommentsController < ApplicationController
 
   def create
     user                      = current_user
-    @versioncomment           = Versioncomment.new(params[:versioncomment])
+    @versioncomment           = Versioncomment.new()
+    @versioncomment.comment   = params[:versioncomment][:comment]
+    @versioncomment.language  = params[:versioncomment][:language]
+    @versioncomment.product_key  = params[:versioncomment][:product_key]
+    @versioncomment.version   = params[:versioncomment][:version]
     @versioncomment.user_id   = user.id
     version                   = @versioncomment.version
     @product                  = @versioncomment.product

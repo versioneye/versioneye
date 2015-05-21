@@ -116,8 +116,7 @@ describe "Getting data from github_repos_controller" do
       response_data['repos'].count.should eql(user.github_repos.count)
       resp_repo1 = response_data['repos'].first
       resp_repo1['fullname'].should match("spec/repo")
-      resp_repo1['user_id'].should eq(user.id.to_s)
-
+      resp_repo1['user_id']["$oid"].should eq(user.id.to_s)
     end
   end
 end
