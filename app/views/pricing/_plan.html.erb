@@ -13,6 +13,7 @@
       <% btn_size = 'large' %>
       <% btn_size = 'big' if btn_txt.eql?('Downgrade') %>
       <form action="/settings/update_plan" method="POST" >
+        <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
         <input type="hidden" name="plan" value="<%=plan_id%>" />
         <button id="<%=plan.name_id%>_button" type="submit" class="btn btn-<%= btn_size %> btn-<%= btn_class %> pull-right" ><%= btn_txt %></button>
       </form>

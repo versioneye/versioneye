@@ -17,6 +17,7 @@
         <% btn_style = 'font-size: 17px;' %>
         <% btn_style = '' if btn_txt.eql?('Downgrade') %>
         <form action="/settings/update_plan" method="POST" >
+          <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
           <input  type="hidden" name="plan" value="<%= plan.name_id %>" />
           <button type="submit" class="btn btn-<%= btn_class %>" style="<%= btn_style %>" id="<%= plan.name_id %>_button" ><%=btn_txt%></button>
         </form>

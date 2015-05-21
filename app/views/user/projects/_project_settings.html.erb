@@ -1,6 +1,7 @@
 <% if current_user?(@project.user) %>
   <div style="margin-top: 20px;" id="settings_area">
     <form action="<%= save_period_user_project_path(@project) %>" method="post" class="form-horizontal" >
+      <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
       <div>
         How often do you want us to check your project's dependencies? We will send you an email notification whenever we check your dependencies.
       </div>
@@ -18,6 +19,7 @@
     </form>
 
     <form action="<%= save_email_user_project_path(@project) %>" method="post" class="form-horizontal" >
+      <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
       <div>
         What's the email address we should send the notifications to?
       </div>
@@ -34,6 +36,7 @@
     </form>
 
     <form action="<%= save_visibility_user_project_path(@project) %>" method="post" class="form-horizontal" >
+      <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
       <div>
         All projects are public by default. Everybody who knows the URL to the project can see the dependencies and the licenses of the project.
         By setting it to private only you and your collaborators can see this project!
@@ -49,6 +52,7 @@
     </form>
 
     <form action="<%= save_notify_after_api_update_user_project_path(@project) %>" method="post" class="form-horizontal" >
+      <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
       <div>
         Do you want receive email notifications whenever the dependency file for this project changes?
         This might happen through the VersionEye API, GitHub or Maven integration.
@@ -67,6 +71,7 @@
 
     <% if @project.parent_id.nil? && @project.children.empty? %> 
     <form action="<%= merge_user_project_path( @project ) %>" method="post" class="form-horizontal" >
+      <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
       <div>
         Merge this project as subproject into another project.
       </div>
