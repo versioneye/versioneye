@@ -105,20 +105,8 @@ class User::ProjectsController < ApplicationController
   # send_file "#{path}/dep_#{badge}.png", :type => 'image/png', :disposition => 'inline'
   def badge
     id    = params[:id]
-    project = Project.find id 
-    badge = ProjectService.badge_for_project id
-    path  = 'app/assets/images/badges'
-    par = ""
-    if params[:style]
-      par = "?style=#{params[:style]}"
-    end
-    badge    = badge.gsub("-", "_")
-    color    = badge.eql?('up_to_date') ? 'green' : 'yellow'
-    color    = 'red' if badge.eql?('update!')
-    language = calculate_language(project).gsub("-", "")
-    url = "http://img.shields.io/badge/#{language}dependencies-#{badge}-#{color}.svg#{par}"
-    response = HttpService.fetch_response url
-    send_data response.body, :type => "image/svg+xml", :disposition => 'inline'
+    badge = BadgeService.badge_for id 
+    send_data badge.svg, :type => "image/svg+xml", :disposition => 'inline'
   rescue => e 
     p e.message 
     p e.backtrace

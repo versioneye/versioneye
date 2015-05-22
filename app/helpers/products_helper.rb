@@ -64,30 +64,6 @@ module ProductsHelper
     query.downcase
   end
 
-  def badge_for_product( language, prod_key, version )
-    key   = "#{language}_#{prod_key}_#{version}"
-    badge = Rails.cache.read key
-    return badge if badge
-
-    product = Product.fetch_product language, prod_key
-    return 'unknown' if product.nil?
-
-    product.version = version if version
-    dependencies    = product.dependencies
-
-    if dependencies.nil? || dependencies.empty?
-      badge = 'none'
-      Rails.cache.write( key, badge, timeToLive: 2.hour )
-      return badge
-    end
-
-    DependencyBadgeProducer.new("#{language}:::#{prod_key}:::#{product.version}")
-    're_calculating_..'
-  rescue => e 
-    logger.error e.message
-    're_calculating_..'
-  end
-
   def ref_badge_for_product( language, prod_key )
     key   = "ref_badge_#{language}_#{prod_key}"
     badge = Rails.cache.read key
