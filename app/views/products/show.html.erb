@@ -23,6 +23,8 @@
       <%= render 'products/product_show_maven' %>
     <% elsif @product.prod_type.nil? %>
       <%= render partial_map[Project::A_TYPE_GITHUB] %>
+    <% elsif @product.prod_type.eql?("opa") %>
+      OPA is not supported anymore.
     <% else %>
       <%= render partial_map[@product.prod_type] %>
     <% end %>
