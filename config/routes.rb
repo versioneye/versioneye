@@ -319,8 +319,10 @@ Versioneye::Application.routes.draw do
   get   '/product/:key'                       , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/ }
   get   '/package/:key/badge'                 , :to => 'page#legacy_badge_route', :constraints => { :key => /[^\/]+/ }
   get   '/package/:key/version/:version'      , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/package/:key/version/:version/:so'  , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/package/:key/version/:version/badge', :to => 'page#legacy_badge_route', :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/product/:key/version/:version'      , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
+  get   '/product/:key/version/:version/:so'  , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/package/:key/:version'              , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
   get   '/product/:key/:version'              , :to => 'page#legacy_route',       :constraints => { :key => /[^\/]+/, :version => /[^\/]+/ }
 
