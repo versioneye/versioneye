@@ -96,19 +96,12 @@ class ProductsController < ApplicationController
     language = Product.decode_language params[:lang]
     prod_key = Product.decode_prod_key params[:key]
     version  = Version.decode_version  params[:version]
-    par = ""
-    if params[:style]
-      par = "?style=#{params[:style]}"
-    end
-
-    badge = "unknown"
-    badge = badge_for_product language, prod_key, version
-    badge = badge.gsub("-", "_")
-
-    color = badge.eql?('up_to_date') || badge.eql?('none') ? 'green' : 'yellow'
-    url   = "http://img.shields.io/badge/dependencies-#{badge}-#{color}.svg#{par}"
-    response = HttpService.fetch_response url
-    send_data response.body, :type => "image/svg+xml", :disposition => 'inline'
+    key = "#{language}:::#{prod_key}:::#{version}"
+    badge = BadgeService.badge_for key 
+    send_data badge.svg, :type => "image/svg+xml", :disposition => 'inline'
+  rescue => e 
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
   end
 
   def ref_badge
@@ -125,7 +118,8 @@ class ProductsController < ApplicationController
     response = HttpService.fetch_response url
     send_data response.body, :type => "image/svg+xml", :disposition => 'inline'
   rescue => e
-    p e.message
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
   end
 
   
