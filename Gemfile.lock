@@ -1,12 +1,11 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 648565839c52ed80cb94e806b1facda918c8a3f6
-  tag: v7.10.14
+  revision: 3eaed1480f79513b4972fe61ed40c326ea11b70c
+  tag: v7.10.15
   specs:
-    versioneye-core (7.10.14)
+    versioneye-core (7.10.15)
       actionmailer (~> 4.2.1)
-      aws-sdk (~> 2.0.31)
-      bson (~> 2.3.0)
+      aws-sdk (~> 2.0.45)
       bundler (~> 1.9.1)
       bunny (~> 1.7.0)
       cocoapods-core (~> 0.37.1)
@@ -16,7 +15,6 @@ GIT
       kgio (~> 2.9.0)
       log4r (~> 1.1.0)
       mongoid (~> 4.0.2)
-      moped (~> 2.0.0)
       naturalsorter (~> 3.0.6)
       nokogiri (~> 1.6.0)
       oauth (~> 0.4.7)
@@ -24,7 +22,7 @@ GIT
       pdfkit (~> 0.7.0)
       persistent_httparty (~> 0.1.0)
       semverly (~> 1.0.0)
-      stripe (~> 1.14.0)
+      stripe (~> 1.21.0)
       tire (~> 0.6.2)
       will_paginate_mongoid (= 2.0.1)
       wkhtmltopdf-binary (~> 0.9.9.1)
@@ -71,14 +69,14 @@ GEM
     amq-protocol (1.9.2)
     ansi (1.5.0)
     arel (6.0.0)
-    aws-sdk (2.0.44)
-      aws-sdk-resources (= 2.0.44)
-    aws-sdk-core (2.0.44)
+    aws-sdk (2.0.45)
+      aws-sdk-resources (= 2.0.45)
+    aws-sdk-core (2.0.45)
       builder (~> 3.0)
       jmespath (~> 1.0)
       multi_json (~> 1.0)
-    aws-sdk-resources (2.0.44)
-      aws-sdk-core (= 2.0.44)
+    aws-sdk-resources (2.0.45)
+      aws-sdk-core (= 2.0.45)
     bourbon (4.2.3)
       sass (~> 3.4)
       thor
@@ -160,7 +158,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
-    mime-types (1.25.1)
+    mime-types (2.5)
     mini_portile (0.6.2)
     minitest (5.6.1)
     mongoid (4.0.2)
@@ -279,9 +277,8 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
-    stripe (1.14.0)
+    stripe (1.21.0)
       json (~> 1.8.1)
-      mime-types (~> 1.25)
       rest-client (~> 1.4)
     terminal-notifier (1.6.3)
     therubyracer (0.12.2)
@@ -361,7 +358,7 @@ DEPENDENCIES
   selenium-webdriver (~> 2.45.0)
   semverly (~> 1.0.0)
   simplecov (~> 0.10.0)
-  stripe (~> 1.14.0)
+  stripe (~> 1.21.0)
   terminal-notifier (~> 1.6.0)
   therubyracer (~> 0.12.0)
   turn
