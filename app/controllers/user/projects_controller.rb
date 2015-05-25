@@ -5,13 +5,8 @@ class User::ProjectsController < ApplicationController
 
 
   def index
-    all_public = params[:all_public]
-    @project = Project.new
-    if all_public
-      @projects = Project.where(:public => true, :parent_id => nil).desc(:out_number_sum, :unknown_number_sum).asc(:name)
-    else 
-      @projects = Project.where(:user_id => current_user.id.to_s, :parent_id => nil).desc(:out_number_sum, :unknown_number_sum).asc(:name)
-    end
+    @project  = Project.new
+    @projects = ProjectService.index current_user, params[:all_public]
   end
 
 
