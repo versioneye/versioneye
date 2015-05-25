@@ -1,7 +1,7 @@
 class BowerIssue
 
   def self.logger
-    ActiveSupport::BufferedLogger.new('log/bower_issue.log')
+    ActiveSupport::Logger.new('log/bower_issue.log')
   end
 
   def self.crawl_tags
