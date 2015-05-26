@@ -1,7 +1,7 @@
 <tr>
   <td>
     <% prog_lang = Product.encode_language(project[:language]) %>
-    <span class = "icon_<%= prog_lang || 'default' %> on" ></span>
+    <span class = "icon_<%= prog_lang || 'default' %> small on" ></span>
   </td>
   <td>
     <%= link_to project.name, user_project_path(project), class: 'searchResultLink' %><br/>
@@ -9,11 +9,19 @@
     <%= render partial: "user/collaborations/helpers/collaborator_controls", locals: {project: project, collaboration: collaboration} %>
   </td>
   <td>
-    <span style="color: <%= outdated_color(project) %>; font-size: 14px; font-weight: bold;" >
-      <%= project.out_number %>
+    <span style="color: <%= outdated_color(project) %>; font-size: 14px; font-weight: bold;" title="out-dated dependencies" >
+      <%= project.out_number_sum %>
+    </span> /
+    <span title="all dependencies" >
+      <%= project.dep_number_sum %>
     </span>
   </td>
   <td>
-    <span style="color: <%= unknown_color(project)%>; font-weight: bold; font-size: 14px;" ><%= project.unknown_number %></span>
+    <span style="color: <%= licenses_red_color(project) %>; font-size: 14px; font-weight: bold;" title="licenses violating the license whitelist">
+      <%= project.licenses_red_sum %>
+    </span> :
+    <span style="color: <%= licenses_unknown_color(project) %>; font-size: 14px; font-weight: bold;" title="unknown licenses">
+      <%= project.licenses_unknown_sum %>
+    </span>
   </td>
 </tr>
