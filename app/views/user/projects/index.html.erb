@@ -11,6 +11,66 @@
   </div>
 
   <div class="span8 content" >
+    <a id='projects_filter_link' href="javascript:show_project_filter();">
+      Show filter >>  
+    </a>
+    <div id='projects_filter' style="display: none">
+      <form id="form" action="/user/projects" method="GET" class='form-horizontal' style="padding: 0; margin:0;" >
+        
+        <div class="control-group">
+          <%= label_tag :name, "Name", :class => "control-label", :for => "name" %>
+          <div class="controls">
+            <%= text_field_tag :name, params[:name], :id => "name" %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <%= label_tag :language, "Language", :class => "control-label", :for => "language" %>
+          <div class="controls" >
+            <select name="language"  id="language" >
+              <option value="ALL"  >ALL</option>
+              <% LanguageService.distinct_languages.sort.each do |language| %> 
+                <option value="<%= language %>" <%= "selected" if params[:language].to_s.eql?(language) %> ><%= language %></option>
+              <% end %> 
+            </select>
+          </div>
+        </div>
+
+        <% if Settings.instance.environment.eql?('enterprise') || signed_in_admin? %> 
+          <div class="control-group">
+            <%= label_tag :scope, "Scope", :class => "control-label", :for => "scope" %>
+            <div class="controls" >
+              <select name="scope"  id="scope" >
+                <option value="user"  >My own projects</option>
+                <option value="all_public" <%= 'selected' if params[:scope].to_s.eql?('all_public') %> >All public projects</option>
+              </select>
+            </div>
+          </div>
+        <% end %> 
+
+        <div class="control-group">
+          <%= label_tag :sort, "Sort by", :class => "control-label", :for => "sort" %>
+          <div class="controls" >
+            <select name="sort"  id="sort" >
+              <option value="out_dated"  >number of out-dated dependencies (desc)</option>
+              <option value="license_violations" <%= 'selected' if params[:sort].to_s.eql?('license_violations') %> >number of license violations (desc)</option>
+              <option value="name"               <%= 'selected' if params[:sort].to_s.eql?('name') %>               >name (asc)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label"></div>
+          <div class="controls">
+            <button type="submit" class="btn btn-primary" >Filter</button>
+            <a id='projects_filter_link' href="javascript:hide_project_filter();">
+              Hide filter
+            </a>
+          </div>
+        </div>
+        
+      </form>
+    </div>
     <div id="projects" >
       <table class="table table-striped" style="width: 100%">
         <colgroup>
@@ -33,3 +93,16 @@
   </div>
 
 </div>
+
+<script type="text/javascript">
+  function show_project_filter(){
+    document.getElementById('projects_filter_link').style.display = 'none';
+    document.getElementById('projects_filter').style.display = 'inline';
+    return false;
+  }
+  function hide_project_filter(){
+    document.getElementById('projects_filter_link').style.display = 'inline';
+    document.getElementById('projects_filter').style.display = 'none';
+    return false;
+  }
+</script>
