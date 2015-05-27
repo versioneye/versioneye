@@ -1,15 +1,5 @@
 module ProjectsHelper
 
-  def new_project_redirect
-    all_public = params[:all_public]
-    if signed_in? && current_user.projects.empty? && (all_public.to_s.empty? || all_public.to_s.eql?('false')) 
-      redirect_to new_user_project_path
-    end
-  rescue => e
-    Rails.logger.error e.message
-    nil
-  end
-
   def outdated_color project
     return 'red' if project.out_number_sum.to_i > 0
     'green'
