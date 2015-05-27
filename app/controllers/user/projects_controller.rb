@@ -118,11 +118,13 @@ class User::ProjectsController < ApplicationController
 
 
   def update_name
-    @name        = params[:name]
+    @name         = params[:name]
     id           = params[:id]
     project      = Project.find_by_id(id)
-    project.name = @name
-    project.save
+    if current_user?(project.user) || signed_in_admin?
+      project.name = @name
+      project.save
+    end
     respond_to do |format|
       format.js
     end
