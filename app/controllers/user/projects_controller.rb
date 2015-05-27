@@ -13,8 +13,10 @@ class User::ProjectsController < ApplicationController
     else 
       filter[:scope] = 'user'  
     end
+    filter[:scope]    = 'user' if filter[:scope].to_s.empty? 
     filter[:name]     = params[:name]
     filter[:language] = params[:language]
+    filter[:language] = 'ALL' if filter[:language].to_s.empty? 
     @projects = ProjectService.index current_user, filter, params[:sort]
   end
 
