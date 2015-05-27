@@ -2,13 +2,13 @@
 <h2 class="section_header">Maven</h2>
 <div class = "well" >
 
-  <% if @product.group_id && @product.artifact_id %>
+  <% if @product.group_id_original && @product.artifact_id_original %>
     <h5 class="dep_header">pom.xml snippet for Maven</h5>
     <div class="row" style="margin-bottom: 5px;">
       <div class="span7" style="width: 575px; margin-bottom: 0;">
         <pre class="prettyprint"><code>&lt;dependency&gt;
-    &lt;groupId&gt;<b><%= @product.group_id %></b>&lt;/groupId&gt;
-    &lt;artifactId&gt;<b><%= @product.artifact_id %></b>&lt;/artifactId&gt;
+    &lt;groupId&gt;<b><%= @product.group_id_original %></b>&lt;/groupId&gt;
+    &lt;artifactId&gt;<b><%= @product.artifact_id_original %></b>&lt;/artifactId&gt;
     &lt;version&gt;<b><%= @product.version %></b>&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
       </div>
@@ -17,28 +17,28 @@
     <h5 class="dep_header">Gradle</h5>
     <div class="row" style="margin-bottom: 5px;">
       <div class="span7" style="width: 575px; margin-bottom: 0; overflow: auto;" >
-        <pre class="prettyprint"><code>'<b><%= @product.group_id %></b>:<b><%= @product.artifact_id %></b>:<b><%= @product.version %></b>'</code></pre>
+        <pre class="prettyprint"><code>'<b><%= @product.group_id_original %></b>:<b><%= @product.artifact_id_original %></b>:<b><%= @product.version %></b>'</code></pre>
       </div>
     </div>
 
     <h5 class="dep_header">Ivy (Ant)</h5>
     <div class="row" style="margin-bottom: 5px;">
       <div class="span7" style="width: 575px; margin-bottom: 0; overflow: auto;" >
-        <pre class="prettyprint"><code>&lt;dependency org="<b><%= @product.group_id %></b>" name="<b><%= @product.artifact_id %></b>" rev="<b><%= @product.version %></b>" /&gt;</code></pre>
+        <pre class="prettyprint"><code>&lt;dependency org="<b><%= @product.group_id_original %></b>" name="<b><%= @product.artifact_id_original %></b>" rev="<b><%= @product.version %></b>" /&gt;</code></pre>
       </div>
     </div>
 
     <h5 class="dep_header">SBT (Scala)</h5>
     <div class="row" style="margin-bottom: 5px;">
       <div class="span7" style="width: 575px; margin-bottom: 0; overflow: auto;" >
-        <pre class="prettyprint"><code>libraryDependencies += "<b><%= @product.group_id %></b>" % "<b><%= @product.artifact_id %></b>" % "<b><%= @product.version %></b>"</code></pre>
+        <pre class="prettyprint"><code>libraryDependencies += "<b><%= @product.group_id_original %></b>" % "<b><%= @product.artifact_id_original %></b>" % "<b><%= @product.version %></b>"</code></pre>
       </div>
     </div>
 
     <h5 class="dep_header">Leiningen (Clojure)</h5>
     <div class="row" style="margin-bottom: 5px;">
       <div class="span7" style="width: 575px; margin-bottom: 0; overflow: auto;" >
-        <pre class="prettyprint"><code>[<b><%= @product.group_id %></b>/<b><%= @product.artifact_id %></b> "<b><%= @product.version %></b>"]</code></pre>
+        <pre class="prettyprint"><code>[<b><%= @product.group_id_original %></b>/<b><%= @product.artifact_id_original %></b> "<b><%= @product.version %></b>"]</code></pre>
       </div>
     </div>
 
