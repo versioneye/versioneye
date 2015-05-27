@@ -17,7 +17,7 @@
         <span class = "namelabel" >
           <b>Name:</b> <%= @project.name %>
         </span>
-        <% if current_user?(@project.user) %>
+        <% if current_user?(@project.user) || signed_in_admin? %>
           <div class="icon-edit open-editor"
             style="width: 16px; height: 16px; margin: 0; padding: 0;
             background-image: url('/assets/glyphicons-halflings.png');
@@ -25,7 +25,7 @@
         <% end %>
       </div>
 
-      <% if current_user?(@project.user) %>
+      <% if current_user?(@project.user) || signed_in_admin? %>
 
         <div class="project-inline-editor row" style="display:none;">
           <%= form_tag(update_name_user_project_path(@project), :method => "post", :remote => true, :class => "form-inline") do %>
