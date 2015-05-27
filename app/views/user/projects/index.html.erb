@@ -11,14 +11,16 @@
   </div>
 
   <div class="span8 content" >
-    <a id='projects_filter_link' href="javascript:show_project_filter();">
-      Show filter >>  
-    </a>
+    <div style="margin-bottom: 10px;">
+      <a id='projects_filter_link' href="javascript:show_project_filter();">
+        Show filter >>  
+      </a>
+    </div>
     <div id='projects_filter' style="display: none">
       <form id="form" action="/user/projects" method="GET" class='form-horizontal' style="padding: 0; margin:0;" >
         
         <div class="control-group">
-          <%= label_tag :name, "Name", :class => "control-label", :for => "name" %>
+          <%= label_tag :name, "Project name", :class => "control-label", :for => "name" %>
           <div class="controls">
             <%= text_field_tag :name, params[:name], :id => "name" %>
           </div>
@@ -49,17 +51,6 @@
         <% end %> 
 
         <div class="control-group">
-          <%= label_tag :sort, "Sort by", :class => "control-label", :for => "sort" %>
-          <div class="controls" >
-            <select name="sort"  id="sort" >
-              <option value="out_dated"  >number of out-dated dependencies (desc)</option>
-              <option value="license_violations" <%= 'selected' if params[:sort].to_s.eql?('license_violations') %> >number of license violations (desc)</option>
-              <option value="name"               <%= 'selected' if params[:sort].to_s.eql?('name') %>               >name (asc)</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="control-group">
           <div class="control-label"></div>
           <div class="controls">
             <button type="submit" class="btn btn-primary" >Filter</button>
@@ -82,9 +73,9 @@
         <thead>
           <tr>
             <th></th>
-            <th></th>
-            <th>Versions</th>
-            <th>Licenses</th>
+            <th><a href="/user/projects?name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=name">Projects</a></th>
+            <th><a href="/user/projects?name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=out_dated">Versions</a></th>
+            <th><a href="/user/projects?name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=license_violations">Licenses</a></th>
           </tr>
         </thead>
         <%= render partial: "/user/projects/helpers/project" , collection: @projects %>
