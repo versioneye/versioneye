@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 6b3c96b20dde6f19323445d79b5725aa4da732c3
-  tag: v7.13.1
+  revision: aacd8cabb97f27a87a30ebd5e93253be8cb59a39
+  tag: v7.13.2
   specs:
-    versioneye-core (7.13.1)
+    versioneye-core (7.13.2)
       actionmailer (~> 4.2.1)
       aws-sdk (~> 2.0.45)
       bundler (~> 1.9.1)
@@ -96,7 +96,7 @@ GEM
     childprocess (0.5.6)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
-    cocoapods-core (0.37.1)
+    cocoapods-core (0.37.2)
       activesupport (>= 3.2.15)
       fuzzy_match (~> 2.0.4)
       nap (~> 0.8.0)
@@ -160,7 +160,7 @@ GEM
       mime-types (>= 1.16, < 3)
     mime-types (2.6.1)
     mini_portile (0.6.2)
-    minitest (5.6.1)
+    minitest (5.7.0)
     mongoid (4.0.2)
       activemodel (~> 4.0)
       moped (~> 2.0.0)
