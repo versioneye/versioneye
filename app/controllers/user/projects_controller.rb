@@ -405,6 +405,7 @@ class User::ProjectsController < ApplicationController
       end
 
       project_name   = project_url.split("/").last
+      project_name   = project_name.split('?')[0]
       project        = ProjectImportService.import_from_url( project_url, project_name, current_user )
       set_message_for project
       project
