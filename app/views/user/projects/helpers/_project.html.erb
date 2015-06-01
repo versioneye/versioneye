@@ -4,7 +4,10 @@
       <span class="icon_<%= prog_lang %> small on" ></span>
     </td>
     <td>
-      <%= link_to project.name, user_project_path(project), :class => 'searchResultLink' %>
+      <%= link_to project.name, user_project_path(project), :class => 'searchResultLink' %> 
+      <% if project.public == false %>
+        <span class="icon-lock" title="Private VersionEye Project"></span>
+      <% end %> 
     </td>
     <td>
       <span style="color: <%= outdated_color(project) %>; font-size: 14px; font-weight: bold;" title="out-dated dependencies" >
