@@ -1,12 +1,12 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: aacd8cabb97f27a87a30ebd5e93253be8cb59a39
-  tag: v7.13.2
+  revision: d3bf2b8354539f28f103a7490f97e23982d06103
+  tag: v7.13.3
   specs:
-    versioneye-core (7.13.2)
+    versioneye-core (7.13.3)
       actionmailer (~> 4.2.1)
       aws-sdk (~> 2.0.45)
-      bundler (~> 1.9.1)
+      bundler (~> 1.10.2)
       bunny (~> 1.7.0)
       cocoapods-core (~> 0.37.1)
       dalli (~> 2.7.0)
@@ -330,7 +330,7 @@ PLATFORMS
 
 DEPENDENCIES
   bourbon (~> 4.2.0)
-  bundler (~> 1.9.9)
+  bundler (~> 1.10.0)
   bunny (~> 1.7.0)
   capybara (~> 2.4.0)
   capybara-firebug (~> 2.1.0)
@@ -370,3 +370,6 @@ DEPENDENCIES
   whenever (~> 0.9.2)
   will_paginate_mongoid (= 2.0.1)
   yui-compressor (~> 0.12.0)
+
+BUNDLED WITH
+   1.10.2
