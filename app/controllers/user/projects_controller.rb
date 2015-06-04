@@ -58,7 +58,7 @@ class User::ProjectsController < ApplicationController
     @child   = ProjectService.find_child( id, child_id )
     @child   = @project if @child.nil? 
     @child   = add_dependency_classes( @child )
-    if !@project.visible_for_user?(current_user)
+    if @project.visible_for_user?(current_user) == false
       flash[:error] = "You have no access to this project!"      
       return if !authenticate
       redirect_to(root_path) unless current_user?(@project.user)
