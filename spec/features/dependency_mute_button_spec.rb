@@ -14,6 +14,13 @@ describe "Mute project dependency", :js => true do
     it "mutes&unmutes project dependency when authorized user clicks on mute-button" do
       project[:name].should eql("spec_project_1")
       project.dependencies.first.save
+      dep = project.dependencies.first 
+      dep.version_label = '0.0'
+      dep.version_requested = '0.0'
+      dep.version_current = '0.1'
+      dep.outdated = true 
+      dep.save 
+
       project.update_attributes({user_id: user[:_id].to_s})
       project.reload
       ProjectUpdateService.update( project )
@@ -31,9 +38,9 @@ describe "Mute project dependency", :js => true do
       page.should have_content(project[:name])
       click_link project[:name]
       page.should have_content("#{project[:name]}")
+      
       page.should have_css(".btn-mute-version")
       page.should have_css(".mute-off")
-
       first(".btn-mute-version").click
       using_wait_time 2 do
         page.should have_css(".mute-on")
