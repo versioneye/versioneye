@@ -1,6 +1,6 @@
-<% if !signed_in? || dep.nil? || dep.unknown? || (signed_in? && !@project.collaborator?( current_user ) ) %>
+<% if !signed_in? || dep.nil? || dep.unknown? || (signed_in? && !@project.collaborator?( current_user ) && !current_user.admin ) %>
   <span>&nbsp;</span>
-<% elsif !dep[:muted] %>
+<% elsif !dep.muted && dep.outdated %>
   <button id="<%= dep.id.to_s %>_button"
           class = "btn btn-link btn-mini btn-mute-version mute-off"
           title = "Mute alerts for this version"
@@ -8,7 +8,7 @@
           data-dependency-id = "<%= dep[:_id].to_s %>" >
     <i class = "dep-icon icon-volume-up"></i>
   </button>
-<% elsif dep[:muted] %>
+<% elsif dep.muted %>
   <button id="<%= dep.id.to_s %>_button"
           class = "btn btn-link btn-mini btn-mute-version mute-on"
           title = "Allow notification for this version."
