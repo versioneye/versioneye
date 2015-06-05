@@ -45,6 +45,9 @@
               <select name="scope"  id="scope" >
                 <option value="user"  >My own projects</option>
                 <option value="all_public" <%= 'selected' if params[:scope].to_s.eql?('all_public') %> >All public projects</option>
+                <% if current_user.admin == true %>
+                  <option value="all" <%= 'selected' if params[:scope].to_s.eql?('all') %> >All projects</option>
+                <% end %> 
               </select>
             </div>
           </div>
