@@ -55,14 +55,15 @@ class User::ProjectsController < ApplicationController
     id       = params[:id]
     child_id = params[:child]
     @project = ProjectService.find( id )
-    @child   = ProjectService.find_child( id, child_id )
-    @child   = @project if @child.nil? 
-    @child   = add_dependency_classes( @child )
     if @project.visible_for_user?(current_user) == false
       flash[:error] = "You have no access to this project!"      
       return if !authenticate
       redirect_to(root_path) unless current_user?(@project.user)
     end
+
+    @child   = ProjectService.find_child( id, child_id )
+    @child   = @project if @child.nil? 
+    @child   = add_dependency_classes( @child )
     @whitelists = LicenseWhitelistService.index( current_user ) if current_user
   end
 
@@ -198,6 +199,13 @@ class User::ProjectsController < ApplicationController
     ProjectUpdateService.update_async project 
     flash[:success] = "A background process was started to reparse the project. This can take a couple seconds."
     redirect_to user_project_path( project )
+  end
+
+  def status 
+    id = params[:id]
+    respond_to do |format|
+      format.json { render :json => {:status => ProjectUpdateService.status_for(id)}.to_json }
+    end
   end
 
 

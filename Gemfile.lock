@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 8c6389e0ceaf90b4ded7386e67e9dd213c7b1ca9
-  tag: v7.13.10
+  revision: 071f1c96d597ef33e6f106cbfa2b5c5914532fe0
+  tag: v7.15.0
   specs:
-    versioneye-core (7.13.10)
+    versioneye-core (7.15.0)
       actionmailer (~> 4.2.1)
       aws-sdk (~> 2.0.45)
       bundler (~> 1.10.2)
@@ -237,7 +237,7 @@ GEM
     rspec-mocks (3.2.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.2.0)
-    rspec-rails (3.2.2)
+    rspec-rails (3.2.3)
       actionpack (>= 3.0, < 4.3)
       activesupport (>= 3.0, < 4.3)
       railties (>= 3.0, < 4.3)

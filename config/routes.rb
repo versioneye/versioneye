@@ -201,6 +201,7 @@ Versioneye::Application.routes.draw do
 
     resources :projects do
       member do
+        get  'status'
         get  'lwl_export'
         get  'badge'
         get  'visual'
