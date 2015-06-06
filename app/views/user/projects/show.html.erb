@@ -59,7 +59,7 @@
         </div>
       <% end %> 
 
-      <% if current_user.nil? || ( @project.user && current_user && !@project.user.id.to_s.eql?(current_user.id.to_s) ) %>
+      <% if (current_user.nil? && @project.user) || ( @project.user && current_user && !@project.user.id.to_s.eql?(current_user.id.to_s) ) %>
         <div style="padding-top: 10px;">
           <b>Created by:</b> <%= link_to @project.user.fullname, user_path(@project.user) %>
         </div>
