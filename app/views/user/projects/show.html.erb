@@ -70,6 +70,10 @@
 
       <div class="row" >
 
+        <div id="project_status" class="flash warn" style="padding-bottom: 5px; margin-bottom: 10px; display: none;" >
+          <%= image_tag "progress.gif" %> Project is processed by a background job. This page will reload if the job is done. 
+        </div>
+
         <div>
           <%= render :partial => "shared/dependency_badge", :locals => { :project => @project } %>
         </div>
@@ -230,7 +234,7 @@
 
   </div>
 
-<script>
+<script type="text/javascript">
     jQuery('#projectTabs a').click(function (e) {
         var id = jQuery(e.target).attr("data-target").substr(1);
         window.location.hash = "tab-" + id;
@@ -240,6 +244,32 @@
     var hash = window.location.hash.substr(5);
     jQuery('#projectTabs a[data-target="#' + hash + '"]').tab('show');
     jQuery('html, body').animate({scrollTop:0}, 'fast');
+
+
+
+    checkInterval = 0 
+    showedProgressBar = false;
+
+    function checkStatus(){
+      jQuery.getJSON( "/user/projects/<%= @project.ids %>/status.json").done(function( data ) {
+        console.info(data.status);
+        console.info(showedProgressBar);
+        if (data.status === "done"){
+          clearInterval( checkInterval );
+          console.info("clear interval");
+          document.getElementById('project_status').style.display = "none";
+          if (showedProgressBar === true){
+            location.reload();
+          }
+        } else {
+          document.getElementById('project_status').style.display = "block";
+          showedProgressBar = true;
+        }
+      });
+    }
+
+    checkInterval = setInterval(this.checkStatus, 2000);
+
 </script>
 
 <% end %>
