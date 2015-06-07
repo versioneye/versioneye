@@ -5,7 +5,8 @@ class VersioncommentrepliesController < ApplicationController
   def create
     user = current_user
     @versioncomment               = Versioncomment.find_by_id(params[:comment_id])
-    @versioncommentreply          = Versioncommentreply.new(params[:versioncommentreply])
+    @versioncommentreply          = Versioncommentreply.new
+    @versioncommentreply.comment  = params[:versioncommentreply][:comment]
     @versioncommentreply.user_id  = user.id
     @versioncommentreply.fullname = user.fullname
     @versioncommentreply.username = user.username
