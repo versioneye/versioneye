@@ -1,7 +1,16 @@
 
-<% if !parent_project.children.empty? %>
+  <% selected_id = child_project.id %>
+  <% summary_selected = 'nan' %>
+  <% if @summary %>
+    <% selected_id = 'nan' %>
+    <% summary_selected = 'summary' %>
+  <% end %>
+
   <div style="padding-bottom: 5px;">
-    <a href="/user/projects/<%= parent_project.id %>#tab-<%= tab_id %>"><span class="label label-<%= subproject_label_color child_project.id, parent_project.id %>"><%= subproject_name( parent_project ) %></span></span></a>
+    <a href="/user/projects/<%= parent_project.id %>?child=summary#tab-<%= tab_id %>">
+      <span class="label label-<%= subproject_label_color summary_selected, parent_project.id %>">Summary</span>
+    </a>
+    <a href="/user/projects/<%= parent_project.id %>#tab-<%= tab_id %>"><span class="label label-<%= subproject_label_color selected_id, parent_project.id %>"><%= subproject_name( parent_project ) %></span></span></a>
     <% parent_project.children.each do |project| %>
       <a href="/user/projects/<%= parent_project.id %>?child=<%= project.id %>#tab-<%= tab_id %>">
         <span class="label label-<%= subproject_label_color child_project.id, project.id %>"><%= subproject_name(project) %></span>
@@ -15,4 +24,4 @@
       </a>
     </div>
   <% end %> 
-<% end %> 
+

@@ -79,7 +79,7 @@
         </div>
         <%= render :partial => "user/projects/helpers/show_description" %>
         <%= render :partial => "user/projects/helpers/show_license" %>
-        <%= render :partial => "user/projects/helpers/project_numbers_sentence", :locals => { :project => @project } %><br/>
+        <%= render :partial => "user/projects/helpers/project_numbers_sentence", :locals => { :project => @project, :show_license_number => true } %><br/>
         <%= render :partial => "user/projects/helpers/project_source", :locals => { :project => @project } %>
 
         <% if current_user && (current_user?(@project.user) || current_user.admin == true) %>
@@ -149,34 +149,8 @@
             
             <%= render partial: "user/projects/helpers/show_subprojects", locals: {parent_project: @project, child_project: @child, tab_id: 'dependencies'} %>
 
-            <% if @child.dependencies && !@child.dependencies.empty? %>
-              <div class="pull-right">
-                <form action="<%= followall_user_project_path(@child) %>" method="post" style="margin: 0;">
-                  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-                  <button class="btn btn-success btn-mini" title="Follow all software packages in this project and receive notifications independently from this project">Follow All</button>
-                </form>
-              </div>
-              <div>
-                <% @child.scopes.each do |scope| %>
-                  <% deps = @child.dependencies( scope ) %>
-                  <% if deps && !deps.empty? %>
-                    <% deps = deps.sort_by {|dep| dep[:status_rank] } %> 
-                    <div style="padding-top: 15px;">
-                      <span style="color: gray;"><%= scope %> scope</span>
-                      <%= render partial: "project_dependency_table", locals: {deps: deps } %>
-                    </div>
-                  <% end %>
-                <% end %> 
-              </div>
-              <% if !@child.language.to_s.eql?(Product::A_LANGUAGE_PYTHON) && !@child.language.to_s.eql?(Product::A_LANGUAGE_R) %> 
-                <div style="padding-top: 7px;">
-                  <%= link_to "Visual Dependencies", visual_user_project_path( @child ) %>
-                </div>
-              <% end %> 
-              <%= render partial: "dep_pie_chart", locals: {deps: @child.dependencies } %>
-            <% else %> 
-              No dependencies available for <b><%= @child.name %></b>
-            <% end %>
+            <%= render partial: "user/projects/helpers/show_dependencies", locals: {parent_project: @project, child_project: @child, tab_id: 'dependencies'} %>
+
           </div>
 
           <div id="licenses" class="tab-pane">
@@ -187,23 +161,7 @@
 
             <%= render partial: "user/projects/helpers/show_subprojects", locals: {parent_project: @project, child_project: @child, tab_id: 'licenses'} %>
 
-            <%= render :partial => "shared/product_license_table", :locals => {:dependencies => @child.dependencies, :width => "615", :project_id => @child.id.to_s, :license_whitelist_id => @project.license_whitelist_id, :display_charts => true} %>
-
-            <% if ( subproject_name( @child ).match(/\.lock$/).nil? && !@child.dependencies.empty? ) %>
-              <div id="trans_deps" style="margin-top: 15px;">
-                <h3>Licenses of transitive dependencies</h3>
-                <form id="trans_dep_form" action="<%= transitive_dependencies_user_project_path(@child) %>" data-remote="true" method="post" >
-                  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-                  <input hidden="true" name="id" value="<%= @child.id.to_s %>" />
-                  <button type="submit" class="btn btn-primary"
-                    onclick="document.getElementById('progress_bar').style.display='block';
-                             document.getElementById('trans_dep_form').style.display='none'; " >Show licenses for transitive dependencies</button>
-                </form>
-                <div id="progress_bar" style="display: none">
-                  <%= image_tag "loadingbar.gif" %>
-                </div>
-              </div>
-            <% end %>
+            <%= render partial: "user/projects/helpers/show_licenses", locals: {parent_project: @project, child_project: @child, tab_id: 'licenses'} %>
 
           </div>
 

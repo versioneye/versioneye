@@ -1,4 +1,10 @@
+<span style="font-size: 14px; font-weight: bold;"><%= project[:dep_number_sum] %></span> dependencies. 
 <span style="color: <%= outdated_color(project) %>; font-size: 14px; font-weight: bold;" >
-  <%= project.out_number_sum %>
-</span> of <span style="font-size: 14px; font-weight: bold;"><%= project.dep_number_sum %></span> 
-Dependencies are outdated and <span style="color: <%= unknown_color(project)%>; font-weight: bold; font-size: 14px;" ><%= project.unknown_number_sum %></span> are unknown.
+  <%= project[:out_number_sum] %>
+</span> are outdated and <span style="color: <%= unknown_color(project)%>; font-weight: bold; font-size: 14px;" ><%= project[:unknown_number_sum] %></span> are unknown.
+<% show_license_number ||= nil %>
+<% if show_license_number && show_license_number == true && project.license_whitelist_id %> 
+  <span style="color: <%= outdated_color(project) %>; font-size: 14px; font-weight: bold;" >
+    <%= project[:licenses_red_sum] %>
+  </span> violate the license whitelist.
+<% end %> 
