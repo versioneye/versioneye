@@ -60,8 +60,11 @@ class User::ProjectsController < ApplicationController
       return if !authenticate
       redirect_to(root_path) unless current_user?(@project.user)
     end
-
-    @child   = ProjectService.find_child( id, child_id )
+    if child_id.to_s.eql?('summary')
+      @summary = ProjectService.summary id 
+    else 
+      @child   = ProjectService.find_child( id, child_id )
+    end 
     @child   = @project if @child.nil? 
     @child   = add_dependency_classes( @child )
     @whitelists = LicenseWhitelistService.index( current_user ) if current_user

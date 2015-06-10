@@ -39,8 +39,9 @@ describe "Payment Process" do
       fill_in 'year',       :with => "2017"
       click_button 'Save'
 
-      page.should have_content("Please complete the billing information.")
+      sleep 5
 
+      page.should have_content("Please complete the billing information")
 
       ### Now it will save becasue billing info is complete
 

@@ -1,28 +1,29 @@
 module ProjectsHelper
 
   def outdated_color project
-    return 'red' if project.out_number_sum.to_i > 0
+    return 'red' if project[:out_number_sum].to_i > 0
     'green'
   end
 
   def unknown_color project
-    return 'orange' if project.unknown_number_sum.to_i > 0
+    return 'orange' if project[:unknown_number_sum].to_i > 0
     'green'
   end
 
   def licenses_red_color project
-    return 'red' if project.licenses_red_sum.to_i > 0
+    return 'red' if project[:licenses_red_sum].to_i > 0
     'green'
   end
 
   def licenses_unknown_color project
-    return 'orange' if project.licenses_unknown_sum.to_i > 0
+    return 'orange' if project[:licenses_unknown_sum].to_i > 0
     'green'
   end
 
   def subproject_label_color selected_id, sub_id 
-    return "success" if selected_id.eql?(sub_id)
-    "warn"
+    return 'success' if selected_id.eql?('summary')
+    return 'success' if selected_id.eql?(sub_id)
+    'warn'
   end
 
   def subproject_name( project )
@@ -58,7 +59,12 @@ module ProjectsHelper
   def add_dependency_classes project
     return nil if project.nil?
 
-    deps = project.dependencies
+    deps = nil 
+    if project.is_a? Hash 
+      deps = project[:dependencies] 
+    else 
+      deps = project.dependencies
+    end
     return project if deps.nil? or deps.empty?
 
     out_number = 0
@@ -82,9 +88,9 @@ module ProjectsHelper
         dep[:status_rank] = 3
       end
     end
-    project.out_number = out_number
-    project.unknown_number = unknown_number
-    project.save
+    # project.out_number = out_number
+    # project.unknown_number = unknown_number
+    # project.save
     project
   end
 

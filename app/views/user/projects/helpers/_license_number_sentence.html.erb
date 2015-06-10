@@ -1,0 +1,6 @@
+<span style="font-size: 14px; font-weight: bold;"><%= project[:dep_number_sum] %></span> dependencies. 
+<% if !@project.license_whitelist_id.to_s.empty? %> 
+  <span >
+    <%= project[:licenses_red] %> violate the license whitelist.
+  </span> 
+<% end %> 
