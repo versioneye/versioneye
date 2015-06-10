@@ -78,6 +78,11 @@ class User::ProjectsController < ApplicationController
     project_name = project.name.gsub("/", "-")
     pdf = LwlPdfService.process project, true, true 
     send_data pdf, type: 'application/pdf', filename: "#{date_string}_#{project_name}.pdf"
+  rescue => e 
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    flash[:error] = "ERROR: #{e.message}"
+    redirect_to :back
   end
 
 
