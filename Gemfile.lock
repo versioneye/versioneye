@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: feb23a5849ba5cbb6e9701810495d09f41606156
-  tag: v7.16.2
+  revision: 25e2decc49c84802975177cdb8812fa92965e80b
+  tag: v7.16.3
   specs:
-    versioneye-core (7.16.2)
+    versioneye-core (7.16.3)
       actionmailer (~> 4.2.1)
       aws-sdk (~> 2.0.45)
       bundler (~> 1.10.2)
@@ -80,7 +80,7 @@ GEM
     bourbon (4.2.3)
       sass (~> 3.4)
       thor
-    bson (3.0.4)
+    bson (3.1.0)
     builder (3.2.2)
     bunny (1.7.0)
       amq-protocol (>= 1.9.2)
@@ -166,11 +166,11 @@ GEM
       moped (~> 2.0.0)
       origin (~> 2.1)
       tzinfo (>= 0.3.37)
-    moped (2.0.5)
-      bson (~> 3.0.4)
+    moped (2.0.6)
+      bson (~> 3.0)
       connection_pool (~> 2.0)
       optionable (~> 0.2.0)
-    multi_json (1.11.0)
+    multi_json (1.11.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     nap (0.8.0)
