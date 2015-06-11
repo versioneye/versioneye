@@ -14,11 +14,11 @@ gem 'bourbon'              , '~> 4.2.0'
 gem 'ruby_regex'           , '~> 0.1.0'
 gem 'semverly'             , '~> 1.0.0'
 gem 'cocoapods-core'       , '~> 0.37.1'
-gem 'stripe'               , '~> 1.21.0'
+gem 'stripe'               , '~> 1.22.0'
 gem 'bunny'                , '~> 1.7.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.16.4'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.16.6'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 group :development do
@@ -47,7 +47,7 @@ group :test do
   gem 'rspec-mocks'       , '~> 3.2.0'
   gem 'capybara'          , '~> 2.4.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
-  gem 'selenium-webdriver', '~> 2.45.0'
+  gem 'selenium-webdriver', '~> 2.46.2'
   gem 'vcr'               , '~> 2.9.2',  :require => false
   gem 'webmock'           , '~> 1.21.0', :require => false
   gem "fakeweb"           , '~> 1.3'
