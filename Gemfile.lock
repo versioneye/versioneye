@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 6f2e15323c1eba2ac41f788dba05a2637076e7e3
-  tag: v7.16.4
+  revision: 7549408e3cdaa3db27e198e6c211052de47e6533
+  tag: v7.16.6
   specs:
-    versioneye-core (7.16.4)
+    versioneye-core (7.16.6)
       actionmailer (~> 4.2.1)
       aws-sdk (~> 2.0.45)
       bundler (~> 1.10.2)
@@ -22,7 +22,7 @@ GIT
       pdfkit (~> 0.7.0)
       persistent_httparty (~> 0.1.0)
       semverly (~> 1.0.0)
-      stripe (~> 1.21.0)
+      stripe (~> 1.22.0)
       tire (~> 0.6.2)
       will_paginate_mongoid (= 2.0.1)
       wkhtmltopdf-binary (~> 0.9.9.1)
@@ -260,7 +260,7 @@ GEM
     sawyer (0.6.0)
       addressable (~> 2.3.5)
       faraday (~> 0.8, < 0.10)
-    selenium-webdriver (2.45.0)
+    selenium-webdriver (2.46.2)
       childprocess (~> 0.5)
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
@@ -277,7 +277,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
-    stripe (1.21.0)
+    stripe (1.22.0)
       json (~> 1.8.1)
       rest-client (~> 1.4)
     terminal-notifier (1.6.3)
@@ -355,10 +355,10 @@ DEPENDENCIES
   ruby_regex (~> 0.1.0)
   sass
   sass-rails (~> 5.0.3)
-  selenium-webdriver (~> 2.45.0)
+  selenium-webdriver (~> 2.46.2)
   semverly (~> 1.0.0)
   simplecov (~> 0.10.0)
-  stripe (~> 1.21.0)
+  stripe (~> 1.22.0)
   terminal-notifier (~> 1.6.0)
   therubyracer (~> 0.12.0)
   turn
