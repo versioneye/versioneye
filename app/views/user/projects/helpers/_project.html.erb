@@ -1,4 +1,8 @@
-<tr>
+<% tr_class='' %> 
+<% if project.sv_count > 0 %>
+  <% tr_class='flash error' %>
+<% end %> 
+<tr class="<%= tr_class %>">
     <td>
       <% prog_lang = Product.encode_language(project.language) %>
       <span class="icon_<%= prog_lang %> small on" ></span>
@@ -7,6 +11,9 @@
       <%= link_to project.name, user_project_path(project, :child => 'summary'), :class => 'searchResultLink' %> 
       <% if project.public == false %>
         <span class="icon-lock" title="Private VersionEye Project"></span>
+      <% end %> 
+      <% if project.sv_count > 0 %>
+        <span class="icon-shield" title="Security Alert!"> <%= project.sv_count_sum %>  </span>
       <% end %> 
     </td>
     <td>
