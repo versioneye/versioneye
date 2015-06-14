@@ -73,7 +73,7 @@ module ProjectsHelper
     deps.each do |dep|
       if dep.unknown?
         dep[:status_class] = 'info'
-        dep[:status_rank] = 4
+        dep[:status_rank] = 3
         unknown_number += 1
       elsif dep.outdated and dep.release? == false
         dep[:status_class] = 'warn'
@@ -85,12 +85,9 @@ module ProjectsHelper
         out_number += 1
       else
         dep[:status_class] = 'success'
-        dep[:status_rank] = 3
+        dep[:status_rank] = 4
       end
     end
-    # project.out_number = out_number
-    # project.unknown_number = unknown_number
-    # project.save
     project
   end
 
