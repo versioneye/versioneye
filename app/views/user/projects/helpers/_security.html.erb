@@ -1,7 +1,7 @@
 
 <% no_security_alerts = true %> 
 
-<% if @project.language.eql?(Product::A_LANGUAGE_PHP) && !@project.filename.eql?('composer.lock') %> 
+<% if @child.language.eql?(Product::A_LANGUAGE_PHP) && !@child.filename.eql?('composer.lock') %> 
   <div class="alert falsh warning">
     For a composer.json file we don't know exactly which versions are locked on production. We assume that all version constraints are resolved to the newest version. For a more accurate resolution we need the composer.lock file. 
     For more details read the 
@@ -9,7 +9,7 @@
   </div>
 <% end %> 
 
-<% @project.dependencies.each do |dep| %>
+<% @child.dependencies.each do |dep| %>
   <% next if dep.sv_ids.to_a.empty?  %> 
   <% no_security_alerts = false %> 
   <div class="alert flash error" style="margin-bottom: 5px;"> 
@@ -26,7 +26,7 @@
         <% end %> 
         <li>Affected versions: <%= sv.affected_versions_string %></li>
       </ul>
-    <% end %> 
+    <% end %>
 
   </div>  
 <% end %>
