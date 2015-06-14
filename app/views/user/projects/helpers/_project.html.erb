@@ -12,7 +12,7 @@
       <% if project.public == false %>
         <span class="icon-lock" title="Private VersionEye Project"></span>
       <% end %> 
-      <% if project.sv_count > 0 %>
+      <% if project.sv_count_sum > 0 %>
         <span class="icon-shield" title="Security Alert!"> <%= project.sv_count_sum %>  </span>
       <% end %> 
     </td>
