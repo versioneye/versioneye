@@ -1,0 +1,30 @@
+
+  <% no_security_alerts = true %> 
+  
+  <% dependencies.each do |dep| %>
+    <% next if dep.sv_ids.to_a.empty?  %> 
+    <% no_security_alerts = false %> 
+    <div class="alert flash error" style="margin-bottom: 5px;"> 
+      <a class="#a dep_link" href="<%= product_version_path( dep.product, dep.version_requested ) %>" >
+        <%= dep.product.name %> : <%= dep.version_requested %> 
+      </a>
+      <br/><br/>
+      
+      <% dep.security_vulnerabilities.each do |sv| %>
+        <ul> 
+          <% sv.links.keys.each do |key| %>
+            <% next if key.to_s.empty? %>
+            <li><a href="<%= sv.links[key] %>"><%= key %></a></li>
+          <% end %> 
+          <li>Affected versions: <%= sv.affected_versions_string %></li>
+        </ul>
+      <% end %>
+
+    </div>  
+  <% end %>
+
+  <% if no_security_alerts == true %> 
+    <div class="alert falsh success">
+      There are no known security vulnerabilities. 
+    </div>
+  <% end %> 
