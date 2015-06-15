@@ -76,7 +76,7 @@ var RepoBranch = React.createClass({displayName: "RepoBranch",
     project_files = this.props.project_files
 
     var branch_files = null;
-    if (project_files && project_files != ""){
+    if (project_files && project_files != "" && project_files[branch]){
       branch_files = project_files[branch].map(function (project_file) {
         return (
           React.createElement(BranchFile, {data: project_file, branch: branch, repo_fullname: repo_fullname, scm: scm})
