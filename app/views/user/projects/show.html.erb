@@ -170,7 +170,7 @@
 
               <%= render partial: "user/projects/helpers/show_subprojects", locals: {parent_project: @project, child_project: @child, tab_id: 'security'} %>
 
-              <%= render partial: "user/projects/helpers/security" %>  
+              <%= render partial: "user/projects/helpers/security", locals: {tab_id: 'security'} %>  
 
             </div>
           <% end %>
