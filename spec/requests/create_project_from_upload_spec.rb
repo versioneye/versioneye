@@ -33,7 +33,7 @@ describe "Create Project from file uplaod" do
     response.body.should match("rails")
     response.body.should match("jquery-rails")
     response.body.should match("therubyracer")
-    response.body.should match("are outdated and")
+    response.body.should match("outdated")
   end
 
 end
