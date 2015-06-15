@@ -12,7 +12,7 @@
 
   <div class="span8 content" >
     <div style="margin-bottom: 10px;">
-      <a id='projects_filter_link' href="javascript:show_project_filter();">
+      <a id='projects_filter_link' onClick="show_project_filter(); return false;" href="" >
         Show filter >>  
       </a>
     </div>
@@ -57,7 +57,7 @@
           <div class="control-label"></div>
           <div class="controls">
             <button type="submit" class="btn btn-primary" >Filter</button>
-            <a id='projects_filter_link' href="javascript:hide_project_filter();">
+            <a id='projects_filter_link' onClick="hide_project_filter(); return false;" href="">
               Hide filter
             </a>
           </div>
