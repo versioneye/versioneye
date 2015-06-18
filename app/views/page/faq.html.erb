@@ -11,14 +11,30 @@
   </div>
 
   <div class="span8 content" >
-    <h2>Why not just using bundle outdated?</h2>
+    <h2>Why do I need that?</h2>
     <p class="l_faq_section">
-      Why are you using a continuous integration system to run your tests if you could simply run "rspec" in the command line? The reason why you are using a CI system is automation! And for the same reason you should use a Continuous Updating tool like VersionEye. VersionEye will never forget to check your project. It will do the job everyday, notify you and it will never get sick or go on vacation. VersionEye is working 24/7 only for you! It keeps you informed and makes you a better developer!
+      Why are you using a continuous integration system to run your tests? You could start your tests from the command line! Right? The reason why you are using a CI system is automation! And for the same reason you should use a continuous ypdating tool like VersionEye. VersionEye will never forget to check your project. It will do the job everyday, notify you and it will never get sick or go on vacation. VersionEye is working 24/7 only for you! It keeps you informed and makes you a better developer!
     </p>
 
-    <h2>How can I use VersionEye if my project is not on GitHub</h2>
+    <h2>How can I use VersionEye if my project is not on GitHub/Bitbucket</h2>
     <p class="l_faq_section">
-      There are many ways to use VersionEye. But the GitHub integration is by far the best way to use it because it's integrated into your daily coding routine. <br/>
+      The GitHub/Bitbucket integration is by far the most used integration at VersionEye. But there are many other ways to use this service.
+    </p>
+    <ul>
+      <li style="margin-bottom: 10px;">
+        <b>File Upload:</b> You can simply upload a project file to see the out-dated dependencies and the licenses. However that is more a one-time-thing for testing. You don't really want to manually upload your project files every day because that's a lot of work.
+      </li>
+      <li style="margin-bottom: 10px;">
+        <b>URL:</b> You can create a VersionEye project from a URL to a project file. VersionEye will fetch your project file every day from the URL and notify you about out-dated dependencies and license violations.
+      </li>
+      <li style="margin-bottom: 10px;">
+        <b>API:</b> You can use the <a href="https://www.versioneye.com/api/">VersionEye API</a> to create/update a project. There are already many open source tools build on top of the VersionEye API. For example the <a href="https://github.com/versioneye/versioneye_maven_plugin">VersionEye Maven Plugin</a>. 
+      </li>
+      <li style="margin-bottom: 10px;">
+        <b>VersionEye Enterprise:</b> Everything you see here you can have as an on-premise solution. You can host <a href="https://www.versioneye.com/enterprise">VersionEye Enterprise</a> on your own hardware in your own datacenter. That way you are in full control of the privacy. 
+      </li>
+    </ul>
+    <p>
       You can also use the URL feature. Just add the URL to your project file at VersionEye.com and we will fetch your file once a day and notify you about outdated dependencies.<br/>
       Another way to use VersionEye is through our API. Simply send your project file programatically to our API and we'll send you a JSON object back with all the information you need to know about outdated dependencies. In that way you can integrate our service into your workflow.
     </p>
@@ -42,7 +58,7 @@
     <p class="l_faq_section">
       Yes! We are based in Germany and you probably already know that the Germans are going crazy for privacy! VersionEye is always respecting your privacy! We are not interested in your code! We don't change it and we don't read it. We are only looking in your project root for a project file we can parse. That's all.<br/>
       Besides, we do this only for the repositories you have choosen. We will never scan ALL your repositories automatically, like some of our competitors. We only scan the repositories and branches you have selected.<br/>
-      If you're still suspicious, simply use the file upload or URL feature to submit your project files. With those 2 features we don't get any access to your source code.
+      If you're still suspicious, simply use the file upload, URL feature or the <a href="https://www.versioneye.com/api/">VersionEye API</a> to submit your project files. With those 3 features we don't get any access to your source code. Beside that we have <a href="https://www.versioneye.com/enterprise">VersionEye Enterprise</a>, which you can host on your own hardware. 
     </p>
 
     <h2>How quick do notifications happen?</h2>
