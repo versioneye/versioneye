@@ -38,6 +38,27 @@ class Settings::LicenseWhitelistsController < ApplicationController
     redirect_to :back
   end
 
+  def update_pessimistic
+    license_whitelist = LicenseWhitelistService.fetch_by current_user, params[:list]
+    ps = params[:pessimistic]
+    if ps.to_s.eql?('true')
+      license_whitelist.pessimistic_mode = true
+    else 
+      license_whitelist.pessimistic_mode = false
+    end
+    if license_whitelist.save 
+      Auditlog.add current_user, 'LicenseWhitelist', license_whitelist.ids, "Update pessimistic_mode to \"#{license_whitelist.pessimistic_mode}\" "
+      flash[:success] = "Pessimistic mode updated successfully."
+    else
+      flash[:error] = "An error occured. "
+    end
+    redirect_to :back
+  rescue => e
+    logger.error e.message
+    flash[:error] = "An error occured. We could not update the status."
+    redirect_to :back
+  end
+
   def add
     resp = LicenseWhitelistService.add current_user, params[:list], params[:license_name]
     if resp
@@ -51,7 +72,7 @@ class Settings::LicenseWhitelistsController < ApplicationController
     redirect_to :back
   rescue => e
     logger.error e.message
-    flash[:error] = "An error occured. We couldn't delete the Whitelist."
+    flash[:error] = "An error occured. We could not add the license."
     redirect_to :back
   end
 
@@ -65,7 +86,7 @@ class Settings::LicenseWhitelistsController < ApplicationController
     redirect_to :back
   rescue => e
     logger.error e.message
-    flash[:error] = "An error occured. We couldn't delete the Whitelist."
+    flash[:error] = "An error occured. We could not update the status."
     redirect_to :back  
   end
 
@@ -81,7 +102,7 @@ class Settings::LicenseWhitelistsController < ApplicationController
     redirect_to :back
   rescue => e
     logger.error e.message
-    flash[:error] = "An error occured. We couldn't delete the Whitelist."
+    flash[:error] = "An error occured. We could not remove the license from the list."
     redirect_to :back
   end
 

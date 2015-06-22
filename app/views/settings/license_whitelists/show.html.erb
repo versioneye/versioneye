@@ -27,6 +27,19 @@
     <% end %>
 
     <br/>
+    <%= form_tag(settings_license_whitelists_update_pessimistic_path(:list => @license_whitelist.name), :class => 'form-horizontal') do %>
+      <div class="control-group">
+        <div class="">
+          <label for="pessimistic" style="font-size: 12px;" class="checkbox">
+              <%= check_box_tag "pessimistic", true, @license_whitelist.pessimistic_mode, :id => "pessimistic" %>
+              Pessimistic mode. If a project dependency has multiple licenses and one of them is violating this license whitelist than count the dependency as violated. 
+          </label>  
+        </div>
+      </div>
+      <button class="btn btn-primary" type="submit" >
+        Update
+      </button>
+    <% end %>
     <br/>
 
     <table class="table table-hover" >
