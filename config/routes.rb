@@ -102,6 +102,7 @@ Versioneye::Application.routes.draw do
     post 'license_whitelists/create'       , :to => 'license_whitelists#create'
     post 'license_whitelists/destroy'      , :to => 'license_whitelists#destroy', :as => 'license_whitelists_destroy'
     post 'license_whitelists/:list/add'    , :to => 'license_whitelists#add'    , :as => 'license_whitelists_add'
+    post 'license_whitelists/:list/update_pessimistic'    , :to => 'license_whitelists#update_pessimistic'    , :as => 'license_whitelists_update_pessimistic'
     post 'license_whitelists/:list/remove' , :to => 'license_whitelists#remove' , :as => 'license_whitelists_remove'
     post 'license_whitelists/:list/default', :to => 'license_whitelists#default', :as => 'license_whitelists_default'
 
