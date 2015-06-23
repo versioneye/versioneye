@@ -1,5 +1,10 @@
 
 <% if @summary  %>
+  
+  <div style="margin: 10px 0 7px 0;">
+    <%= link_to 'BoM PDF Export', lwl_export_user_project_path( @project.ids ) %>
+  </div>
+
   <% @summary.keys.each do |key| %>
     <% proj = @summary[key] %> 
     <a href="/user/projects/<%= @project.id %>?child=<%= proj[:id] %>#tab-<%= tab_id %>">
@@ -9,12 +14,12 @@
     <% if !proj[:licenses].empty? %>
       <% add_dependency_classes proj %>
         
-      <%= render :partial => "shared/product_license_table", :locals => {:dependencies => proj[:licenses], :width => "615", :project_id => @child.id.to_s, :license_whitelist_id => @project.license_whitelist_id, :display_charts => false, :display_grouping => false, :display_pdf_expoert => false} %>
+      <%= render :partial => "shared/product_license_table", :locals => {:dependencies => proj[:licenses], :width => "615", :project_id => @child.id.to_s, :license_whitelist_id => @project.license_whitelist_id, :display_charts => false, :display_grouping => false, :display_pdf_export => false} %>
 
     <% end %> 
   <% end %>
 <% else %> 
-  <%= render :partial => "shared/product_license_table", :locals => {:dependencies => @child.dependencies, :width => "615", :project_id => @child.id.to_s, :license_whitelist_id => @project.license_whitelist_id, :display_charts => true, :display_grouping => true, :display_pdf_expoert => true} %>
+  <%= render :partial => "shared/product_license_table", :locals => {:dependencies => @child.dependencies, :width => "615", :project_id => @child.id.to_s, :license_whitelist_id => @project.license_whitelist_id, :display_charts => true, :display_grouping => true, :display_pdf_export => true} %>
 <% end %>
 
   <% if @summary.nil? && ( subproject_name( @child ).match(/\.lock$/).nil? && !@child.dependencies.empty? ) %>
