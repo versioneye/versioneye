@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: eae5a8e90f57af4fc5ee858fe46a0c60dea5f395
-  tag: v7.17.0
+  revision: 7711cb9db3423ad6590d53a8e89e314564d44469
+  tag: v7.17.1
   specs:
-    versioneye-core (7.17.0)
+    versioneye-core (7.17.1)
       actionmailer (~> 4.2.2)
       aws-sdk (~> 2.1.0)
       bundler (~> 1.10.4)
@@ -78,7 +78,7 @@ GEM
     bourbon (4.2.3)
       sass (~> 3.4)
       thor
-    bson (3.1.0)
+    bson (3.1.1)
     builder (3.2.2)
     bunny (1.7.0)
       amq-protocol (>= 1.9.2)
@@ -248,7 +248,7 @@ GEM
       rake
     rubyzip (1.1.7)
     safe_yaml (1.0.4)
-    sass (3.4.14)
+    sass (3.4.15)
     sass-rails (5.0.3)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.1)
