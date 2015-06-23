@@ -1,4 +1,11 @@
 
+
+<% if display_pdf_export && display_pdf_export == true && !project_id.nil? && !project_id.to_s.empty? && !license_whitelist_id.to_s.empty? %> 
+  <div style="margin: 10px 0 7px 0;">
+    <%= link_to 'BoM PDF Export', lwl_export_user_project_path( project_id ) %>
+  </div>
+<% end %> 
+
 <% whitelisted_count = 0 %>
 <% unknown_count = 0 %>
 <% violated_count = 0 %>
@@ -78,11 +85,6 @@
 
   <% end %>
 </table>
-<% if display_pdf_expoert && display_pdf_expoert == true && !project_id.nil? && !project_id.to_s.empty? && !license_whitelist_id.to_s.empty? %> 
-  <div style="margin-top: 10px;">
-    <%= link_to 'PDF Export', lwl_export_user_project_path( project_id ) %>
-  </div>
-<% end %> 
 <br/><br/>
 
 <% if display_charts == true && !license_whitelist_id.to_s.empty? %> 
