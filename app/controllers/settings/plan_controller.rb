@@ -24,14 +24,24 @@ class Settings::PlanController < ApplicationController
       update_plan( user, customer, @plan_name_id )
       redirect_to settings_plans_path
     else
-      flash[:info] = 'Please update your Credit Card information.'
-      cookies.permanent.signed[:plan_selected] = @plan_name_id
-      @billing_address = current_user.fetch_or_create_billing_address
+      prepare_update_cc @plan_name_id      
       redirect_to settings_creditcard_path
     end
+  rescue => e 
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    flash[:error] = "ERROR: #{e.message}"
+    prepare_update_cc @plan_name_id      
+    redirect_to settings_creditcard_path
   end
 
   private
+
+    def prepare_update_cc plan_name_id
+      flash[:info] = 'Please update your Credit Card information.'
+      cookies.permanent.signed[:plan_selected] = plan_name_id
+      @billing_address = current_user.fetch_or_create_billing_address
+    end
 
     def update_plan user, customer, plan_name_id
       customer.update_subscription( :plan => plan_name_id )

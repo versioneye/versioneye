@@ -11,15 +11,11 @@ jQuery(document).ready(function(){
     }
   });
 
-  if(jQuery("#payment-form").length){
+  if (jQuery("#payment-form").length) {
     jQuery("#payment-form").submit( function(event) {
-      jQuery('.submit-button').attr("disabled", "disabled");
-      Stripe.createToken({
-          number: jQuery('.card-number').val(),
-          cvc: jQuery('.card-cvc').val(),
-          exp_month: jQuery('.card-expiry-month').val(),
-          exp_year: jQuery('.card-expiry-year').val()
-      }, stripeResponseHandler);
+      var $form = jQuery("#payment-form");
+      $form.find('button').prop('disabled', true);
+      Stripe.card.createToken($form, stripeResponseHandler);
       // prevent the form from submitting with the default action
       return false;
     });
@@ -97,15 +93,15 @@ jQuery(document).ready(function(){
 }); // end-of-ready
 
 function stripeResponseHandler(status, response) {
+  var $form = jQuery("#payment-form");
   if (response.error) {
-    alert(response.error.message)
-    $(".payment-errors").text(response.error.message);
-    jQuery(".submit-button").removeAttr("disabled");
+    alert( response.error.message )
+    // jQuery(".payment-errors").text(response.error.message);
+    $form.find('button').prop('disabled', false);
   } else {
-    var form$ = jQuery("#payment-form");
-    var token = response['id']; // token contains id, last4, and card type
-    form$.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-    form$.get(0).submit();
+    var token = response.id; // token contains id, last4, and card type
+    $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+    $form.get(0).submit();
   }
 }
 
