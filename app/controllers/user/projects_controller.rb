@@ -5,17 +5,23 @@ class User::ProjectsController < ApplicationController
 
   def index
     @project  = Project.new
+    
     filter = {}
-    if Settings.instance.environment.eql?('enterprise') || signed_in_admin?
-      filter[:scope]    = params[:scope]
-      filter[:scope]    = 'all_public' if params[:all_public].to_s.eql?("true")
-    else 
-      filter[:scope] = 'user'  
-    end
-    filter[:scope]    = 'user' if filter[:scope].to_s.empty? 
     filter[:name]     = params[:name]
     filter[:language] = params[:language]
     filter[:language] = 'ALL' if filter[:language].to_s.empty? 
+    
+    if Settings.instance.environment.eql?('enterprise') || signed_in_admin?
+      default_scope = 'user' 
+      default_scope = 'all_public' if current_user.projects.empty?  
+
+      filter[:scope]    = params[:scope]
+      filter[:scope]    = 'all_public'  if params[:all_public].to_s.eql?("true")
+      filter[:scope]    = default_scope if filter[:scope].to_s.empty? 
+    else 
+      filter[:scope] = 'user'  
+    end
+    
     @projects = ProjectService.index current_user, filter, params[:sort]
   end
 
