@@ -25,6 +25,8 @@
 
       <input type="hidden" name="plan" id="plan" value="<%= @plan_name_id %>" />
 
+      <span class='payment-errors'></span>
+
       <%= render "settings/billing/billing_fields" %>
 
       <hr />
@@ -32,30 +34,30 @@
       <div class="control-group">
         <%= label_tag :card_number, "Card Number", :class => "control-label-big", :for => "cardnumber" %>
         <div class="controls" style="margin-left: 155px;">
-          <input type="text" size="20" autocomplete="off" class="card-number round" id="cardnumber"/>
+          <input data-stripe="number" id="cardnumber" type="text" size="20" autocomplete="off" class="card-number round" />
         </div>
       </div>
 
       <div class="control-group">
         <%= label_tag :cvc, "CVC", :class => "control-label-big", :for => "cvc" %>
         <div class="controls" style="margin-left: 155px;">
-          <input type="text" size="4" autocomplete="off" class="card-cvc round" style="width: 60px;" id="cvc"/>
+          <input data-stripe="cvc" id="cvc" type="text" size="4" autocomplete="off" class="card-cvc round" style="width: 60px;" />
         </div>
       </div>
 
       <div class="control-group">
         <%= label_tag :Expiration, "Expiration (MM/YYYY)", :class => "control-label-big", :for => "Expiration" %>
         <div class="controls" style="margin-left: 155px;">
-          <input type="text" size="2" class="card-expiry-month round" style="width: 40px;" id="month" />
+          <input data-stripe="exp-month" id="month" type="text" size="2" class="card-expiry-month round" style="width: 40px;" />
           <span> / </span>
-          <input type="text" size="4" class="card-expiry-year round" style="width: 60px;" id="year" />
+          <input data-stripe="exp-year" id="year" type="text" size="4" class="card-expiry-year round" style="width: 60px;" />
         </div>
       </div>
 
       <div class="control-group">
         <div class="control-label-big"></div>
         <div class="controls" style="margin-left: 155px;">
-          <button type="submit" class="btn btn-large btn-primary"  >Save</button>
+          <button type="submit" id="cc_submit" class="btn btn-large btn-primary" >Save</button>
         </div>
       </div>
 
