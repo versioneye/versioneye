@@ -7,7 +7,15 @@
     <div>
   </td>
   <td>
-    <%= dep.version_current || "UNKNOWN" %>
+    <span >
+      <% if dep.known? %>
+        <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" >
+          <span><%= product.name %></span>
+        </a>
+      <% else %>
+        <span><%= dep.name %></span>
+      <% end %>
+    </span>
   </td>
   <td>
     <span >
@@ -21,15 +29,7 @@
     </span>
   </td>
   <td>
-    <span >
-      <% if dep.known? %>
-        <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" >
-          <span><%= product.name %></span>
-        </a>
-      <% else %>
-        <span><%= dep.name %></span>
-      <% end %>
-    </span>
+    <%= dep.version_current || "UNKNOWN" %>
   </td>
   <td>
     <% unless dep.unknown? %>
