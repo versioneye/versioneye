@@ -60,7 +60,11 @@
             <li class="divider-vertical"></li>
             <li>
               <a href="<%= user_path( current_user ) %>" class="profile_pic_tiny" title="Profile" >
-                <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= username_max_30( current_user.username ) %>
+                <% if Rails.env.enterprise? %>
+                  <%= image_tag "profile_icon.png", size: "30" %> <%= username_max_30( current_user.username ) %>
+                <% else %> 
+                  <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= username_max_30( current_user.username ) %>
+                <% end %>
               </a>
             </li>
             <li class="divider-vertical"></li>
