@@ -94,12 +94,13 @@ module SessionsHelper
   end
 
   def get_gh_scope
-    if Rails.env.enterprise?
-     return 'repo, user:email'
-    end
-    scope = cookies.signed[:gh_scope]
-    scope = 'user:email' if scope.to_s.empty?
-    scope
+    'repo, user:email'
+    # if Rails.env.enterprise?
+    #  return 'repo, user:email'
+    # end
+    # scope = cookies.signed[:gh_scope]
+    # scope = 'user:email' if scope.to_s.empty?
+    # scope
   rescue => e 
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
