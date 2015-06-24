@@ -4,21 +4,15 @@
   <table class="dependency_table" style="width: 570px; font-size: <%=font_size%>px;">
     <thead>
       <tr>
-        <th >Current</th>
-        <th >Required</th>
         <th class="name_col"></th>
+        <th >Required</th>
+        <th >Newest</th>
       </tr>
     </thead>
     <% dependencies.each do |dep| %>
       <% dep.update_known if dep.known.nil? || dep.known == false %>
       <% tr_class = dep[:outdated] ? "flash warn" : ""  %>
       <tr class="<%= tr_class %>">
-        <td>
-          <%= current_version( dep ) %>
-        </td>
-        <td>
-          <span ><%= dep.version %></span>
-        </td>
         <td>
           <% if dep.known %>
             <span >
@@ -29,6 +23,12 @@
           <% else %>
             <span ><%= dep.name %></span>
           <% end %>
+        </td>
+        <td>
+          <span ><%= dep.version %></span>
+        </td>
+        <td>
+          <%= current_version( dep ) %>
         </td>
       </tr>
     <% end %>
