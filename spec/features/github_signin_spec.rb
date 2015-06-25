@@ -36,7 +36,7 @@ describe "Signin with GitHub" do
     click_button 'Sign in'
 
     # Grant access
-    if page.has_css? 'button.primary'
+    if page.has_css?('button-primary') || page.has_css?('button.primary') || page.has_content?('Authorize application')
       click_button "Authorize application"
     end
 
@@ -44,7 +44,7 @@ describe "Signin with GitHub" do
     User.all.count.should eql(1)
     user = User.first
     user.verification.should be_nil
-    user.github_scope.should eq("user:email")
+    user.github_scope.should eq("repo,user:email")
   end
 
 end

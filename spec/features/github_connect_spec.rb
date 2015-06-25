@@ -39,13 +39,12 @@ describe "Connect with GitHub" do
     fill_in 'Password', :with => Settings.instance.github_pass
     click_button 'Sign in'
 
-    # Grant access
-    if page.has_css? 'button.primary'
+    if page.has_css?('button-primary') || page.has_css?('button.primary') || page.has_content?("Authorize application")
       click_button "Authorize application"
     end
 
     page.should have_content "Connected"
-    page.should have_content "scopes: user:email"
+    page.should have_content "scopes: repo,user:email"
 
     user = User.first
     user.github_token.should_not be_nil
