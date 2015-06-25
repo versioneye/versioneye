@@ -17,8 +17,8 @@ class Auth::GithubController < ApplicationController
 
     user = user_for_github_id( hash_user )
     if user && user.activated?
-      update_user hash_user, token, true 
       login user, nil, token
+      update_user hash_user, token, true 
       return
     end
 

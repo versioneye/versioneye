@@ -40,7 +40,7 @@ describe "Signin with GitHub" do
     click_button 'Sign in'
 
     # Grant access
-    if page.has_css? 'button.primary'
+    if page.has_css?('button-primary') || page.has_css?('button.primary') || page.has_content?("Authorize application")
       click_button "Authorize application"
     end
 
