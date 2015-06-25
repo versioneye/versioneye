@@ -9,7 +9,7 @@ class Auth::GithubController < ApplicationController
     hash_user = Github.user token
 
     if signed_in?
-      update_user hash_user, token
+      update_user hash_user, token, true 
       set_github_scope token
       redirect_to settings_connect_path
       return
@@ -17,6 +17,7 @@ class Auth::GithubController < ApplicationController
 
     user = user_for_github_id( hash_user )
     if user && user.activated?
+      update_user hash_user, token, true 
       login user, nil, token
       return
     end
@@ -115,13 +116,20 @@ class Auth::GithubController < ApplicationController
     end
 
 
-    def update_user(hash_user, token)
+    def update_user(hash_user, token, repo_reset)
       user = current_user
       user.github_id = hash_user[:id]
       user.github_token = token
 
       update_scope user, token
 
+      reset_repos(user) if repo_reset == true 
+
+      user.save 
+    end
+
+
+    def reset_repos user 
       # The next line is mandatory otherwise the private
       # repos don't get fetched immediately (reiz)
       user.github_repos.delete_all
@@ -132,8 +140,11 @@ class Auth::GithubController < ApplicationController
     def update_scope user, token
       scopes = Github.oauth_scopes( token )
       if scopes && scopes.is_a?(Array)
-        user.github_scope = scopes.join ', '
+        user.github_scope = scopes.join ','
       end
+    rescue => e 
+      logger.error e.message
+      logger.error e.backtrace.join("\n")
     end
 
 

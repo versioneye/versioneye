@@ -94,7 +94,7 @@ module SessionsHelper
   end
 
   def get_gh_scope
-    'repo, user:email'
+    'repo,user:email'
     # if Rails.env.enterprise?
     #  return 'repo, user:email'
     # end
@@ -104,7 +104,7 @@ module SessionsHelper
   rescue => e 
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
-    'user:email'
+    'repo,user:email'
   end
 
   private

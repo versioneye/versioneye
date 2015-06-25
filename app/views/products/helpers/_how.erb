@@ -9,7 +9,7 @@
       <div class="span9">
         <h4 class="integration_header"> GitHub </h4>
         <p >
-          <a href='<%= Settings.instance.github_base_url %>/login/oauth/authorize?client_id=<%=Settings.instance.github_client_id%>&amp;scope=user:email'>Login with your GitHub account</a>
+          <a href='<%= Settings.instance.github_base_url %>/login/oauth/authorize?client_id=<%=Settings.instance.github_client_id%>&amp;scope=repo,user:email'>Login with your GitHub account</a>
           and turn on the switch beside the project file you want to monitor. VersionEye will notify you about outdated dependencies via email.
         </p>
         <p>
