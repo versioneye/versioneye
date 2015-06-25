@@ -46,7 +46,6 @@
 
     <% if @product || @project %>
 
-      <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
       <%= javascript_include_tag "application_product",     :defer => false, :async => false %>
 
     <% elsif current_page?( statistics_path ) %>
