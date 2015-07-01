@@ -1,6 +1,6 @@
 class User::ProjectsController < ApplicationController
 
-  before_filter :authenticate        , :except => [:show, :badge, :transitive_dependencies]
+  before_filter :authenticate        , :except => [:show, :badge, :transitive_dependencies, :lwl_export]
 
 
   def index
