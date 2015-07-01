@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: af5936ce4406387f0ef78599a56ed1a129e4c05b
-  tag: v7.17.5
+  revision: 8354dcdccbc4028a0a79a55cdb73ab2c20fd3e00
+  tag: v7.18.3
   specs:
-    versioneye-core (7.17.5)
+    versioneye-core (7.18.3)
       actionmailer (~> 4.2.2)
       aws-sdk (~> 2.1.0)
       bundler (~> 1.10.4)
@@ -127,7 +127,7 @@ GEM
     fakeweb (1.3.0)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.9)
+    ffi (1.9.10)
     fuzzy_match (2.0.4)
     gene_pool (1.4.1)
       thread_safe
