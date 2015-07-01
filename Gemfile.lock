@@ -150,7 +150,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.3)
     kgio (2.9.3)
-    libv8 (3.16.14.9)
+    libv8 (3.16.14.8)
     log4r (1.1.10)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
