@@ -328,7 +328,7 @@ PLATFORMS
 
 DEPENDENCIES
   bourbon (~> 4.2.0)
-  bundler (~> 1.10.4)
+  bundler (~> 1.10.5)
   bunny (~> 1.7.0)
   capybara (~> 2.4.0)
   capybara-firebug (~> 2.1.0)
@@ -370,4 +370,4 @@ DEPENDENCIES
   yui-compressor (~> 0.12.0)
 
 BUNDLED WITH
-   1.10.4
+   1.10.5
