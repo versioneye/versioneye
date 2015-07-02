@@ -12,4 +12,6 @@ mv config/mongoid_save.yml config/mongoid.yml
 
 mv src app/assets/javascripts/scm/
 
+cp app/assets/javascripts/libs/* public/assets/libs/
+
 export RAILS_ENV=development
