@@ -160,7 +160,7 @@ module ProductsHelper
   end
 
   def update_release_infos( version_obj, product )
-    return nil if version_obj.nil?
+    return nil if version_obj.nil? 
     today = DateTime.now.to_date
     if version_obj.released_at
       diff_release = today - version_obj.released_at.to_date
@@ -275,6 +275,32 @@ module ProductsHelper
 
   def fetch_projectdependency(product, project_id)
     Projectdependency.where(:language => product.language, :prod_key => product.prod_key, :project_id => project_id).first
+  end
+
+  def color_for_avg_release_time product 
+    art_bg = 'info'
+    average_release_time = product[:average_release_time]
+    if !average_release_time.nil? && average_release_time > 0
+      art_bg = 'success' if average_release_time > 0 && average_release_time <= 31
+      art_bg = 'info'  if average_release_time > 31 && average_release_time <= 62 
+      art_bg = 'warn'  if average_release_time > 62 && average_release_time <= 124 
+      art_bg = 'error' if average_release_time > 124 
+    else 
+      art_bg = "error"
+    end
+    art_bg
+  end
+
+  def color_for_released_ago product
+    rel_bg = ''
+    return rel_bg if product.nil? || product.released_days_ago.to_s.empty? 
+    
+    days_ago = product.released_days_ago
+    rel_bg = 'success' if days_ago < 30  
+    rel_bg = 'info'    if days_ago >= 30 && days_ago <= 180  
+    rel_bg = 'warn'    if days_ago > 180  && days_ago <= 365  
+    rel_bg = 'error'   if days_ago > 365
+    rel_bg
   end
 
   private
