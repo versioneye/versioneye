@@ -12,8 +12,8 @@
 </script>
 
 <div class="form-group">
-  <%= label_tag :type, "Type", :class => "control-label-big", :for => "following_products" %>
-  <div class="controls" style="margin-left: 155px;">
+  <%= label_tag :type, "Type", :class => "control-label", :for => "following_products" %>
+  <div class="controls" >
     <select name="type" id="type" onchange="handleAddressType(this.value);" class="form-control" >
       <option value="<%= BillingAddress::A_TYPE_INDIVIDUAL %>"  <%= "selected" if @billing_address.type == BillingAddress::A_TYPE_INDIVIDUAL %> >Individual</option>
       <option value="<%= BillingAddress::A_TYPE_CORPORATE %>"  <%= "selected" if @billing_address.type == BillingAddress::A_TYPE_CORPORATE %> >Corporation</option>
@@ -22,40 +22,40 @@
 </div>
 
 <div class="form-group">
-  <%= label_tag :name, "Name", :class => "control-label-big", :for => "name" %>
-  <div class="controls" style="margin-left: 155px;">
-    <input type="text" size="20" autocomplete="off" class="round form-control" id="name" name="name" value="<%= @billing_address.name %>" />
+  <%= label_tag :name, "Name", :class => "control-label", :for => "name" %>
+  <div class="controls" >
+    <input type="text" size="20" autocomplete="off" class="form-control" id="name" name="name" value="<%= @billing_address.name %>" />
     <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :name} %>
   </div>
 </div>
 
 <div class="form-group">
-  <%= label_tag :street, "Street", :class => "control-label-big", :for => "street" %>
-  <div class="controls" style="margin-left: 155px;">
+  <%= label_tag :street, "Street", :class => "control-label", :for => "street" %>
+  <div class="controls" >
     <input type="text" size="20" autocomplete="off" class="round form-control" id="street" name="street" value="<%= @billing_address.street %>" />
     <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :street} %>
   </div>
 </div>
 
 <div class="form-group">
-  <%= label_tag :zip_code, "Zip", :class => "control-label-big", :for => "zip_code" %>
-  <div class="controls" style="margin-left: 155px;">
+  <%= label_tag :zip_code, "Zip", :class => "control-label", :for => "zip_code" %>
+  <div class="controls" >
     <input type="text" size="20" autocomplete="off" class="round form-control" id="zip_code" name="zip_code" style="width: 40px;" value="<%= @billing_address.zip %>" /> 
     <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :zip} %>
   </div>
 </div>
 
 <div class="form-group">
-  <%= label_tag :city, "City", :class => "control-label-big", :for => "city" %>
-  <div class="controls" style="margin-left: 155px;">
+  <%= label_tag :city, "City", :class => "control-label", :for => "city" %>
+  <div class="controls" >
     <input type="text" size="20" autocomplete="off" class="round form-control" id="city" name="city" style="width: 140px;" value="<%= @billing_address.city %>" />
     <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :city} %>
   </div>
 </div>
 
 <div class="form-group">
-  <%= label_tag :country, "Country", :class => "control-label-big", :for => "country" %>
-  <div class="controls" style="margin-left: 155px;">
+  <%= label_tag :country, "Country", :class => "control-label", :for => "country" %>
+  <div class="controls" >
     <select id="country" name="country" class="form-control" >
       <% BillingAddress::A_COUNTRIES.keys.each do |key| %>
         <option value="<%= key %>"  <%= "selected" if @billing_address.country.eql?(key) %> ><%= BillingAddress::A_COUNTRIES[key] %></option>
@@ -66,8 +66,8 @@
 </div>
 
 <div class="form-group">
-  <%= label_tag :email, "Email", :class => "control-label-big", :for => "email" %>
-  <div class="controls" style="margin-left: 155px;">
+  <%= label_tag :email, "Email", :class => "control-label", :for => "email" %>
+  <div class="controls" >
     <input type="text" size="20" autocomplete="off" class="round form-control" id="email" name="email" value="<%= @billing_address.email %>" />
     <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :email} %>
   </div>
@@ -77,16 +77,16 @@
 <% display_style = "block" if @billing_address.type == BillingAddress::A_TYPE_CORPORATE %>
 <div id="company_fields" style="display: <%= display_style %>;">
   <div class="form-group" >
-    <%= label_tag :name, "Company", :class => "control-label-big", :for => "company" %>
-    <div class="controls" style="margin-left: 155px;">
+    <%= label_tag :name, "Company", :class => "control-label", :for => "company" %>
+    <div class="controls" >
       <input type="text" size="20" autocomplete="off" class="round form-control" id="company" name="company" value="<%= @billing_address.company %>" />
       <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :company} %>
     </div>
   </div>
 
   <div class="form-group">
-    <%= label_tag :taxid, "Tax ID", :class => "control-label-big", :for => "company" %>
-    <div class="controls" style="margin-left: 155px;">
+    <%= label_tag :taxid, "Tax ID", :class => "control-label", :for => "company" %>
+    <div class="controls" >
       <input type="text" size="20" autocomplete="off" class="round form-control" id="taxid" name="taxid" value="<%= @billing_address.taxid %>" />
       <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :taxid} %>
     </div>
