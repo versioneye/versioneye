@@ -44,7 +44,8 @@
     <% end %>
 
 
-    <% if @product || @project %>
+    <% if current_page?( visual_user_project_path(:id) ) || 
+          current_page?( visual_dependencies_path(:lang, :key, :version) )  %>
 
       <%= javascript_include_tag "application_product",     :defer => false, :async => false %>
 

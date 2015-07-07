@@ -1,0 +1,180 @@
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand topnav" href="#">
+                  <%= image_tag "verisoneye-logo-small.png", :style => 'margin-top: -12px;' %> 
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                  <% if !Rails.env.enterprise? %>
+                    <li>
+                      <%= link_to "Pricing", "/pricing" %>
+                    </li>
+                  <% end %>
+
+                  <% if Settings.instance.show_signup_form == true %>
+                    <li style="font-weight: bold; font-size: 16px;">
+                      <%= form_tag(signup_path, :method => "GET", :style=>"margin: 7px;") do  %>
+                        <button type="submit" class="btn btn-success" ><%= t(:page_header_signup) %></button>
+                      <% end %>
+                    </li>
+                  <% end %>
+                  
+                  <li>
+                    <%= form_tag(signin_path, :method => "GET", :style=>"margin: 7px 0 0 7px;") do  %>
+                      <button type="submit" class="btn btn-primary" ><%= t(:page_header_signin) %></button>
+                    <% end %>
+                  </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
+    <!-- Header -->
+    <a name="about"></a>
+    <div class="intro-header">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                        <h1>Version<span style="color: orange;">Eye</span></h1>
+                        <%= render "/products/helpers/big_search" %>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.intro-header -->
+
+    <!-- Page Content -->
+
+  <a  name="services"></a>
+    <div class="content-section-a">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Version Notifications</h2>
+                    <p class="lead">
+                      VersionEye notifies you about outdated dependencies in your software projects. Nowadays software projects are based on many open source and self developed components. Checking manually for updates for these components is a very time consuming task and not fun at all! VersionEye notifies software developers via email about outdated dependencies in their projects. That way they can save a lot of time and focus on development.
+                    </p>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6" style="padding-top: 50px; text-align: center;" >
+                    <%= image_tag "marketing/chart-out-dated-ratio-2.png", :class=>"chart-outdated" %> 
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+    <div class="content-section-b">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">License Notifications</h2>
+                    <p class="lead">
+                      Nowadays software projects are based on up to 100 open source 
+      components or even more! Some of the components are published under a 
+      <a href="http://en.wikipedia.org/wiki/Permissive_free_software_licence">permissive</a>
+      and others under a 
+      <a href="http://en.wikipedia.org/wiki/Copyleft">copyleft</a> license. 
+      If you develop closed source software you should avoid some licenses! 
+      VersionEye can check all your open source components against a 
+      <a href="http://blog.versioneye.com/2014/09/15/license-whitelist/">license whitelist</a> 
+      and notify you about violations! Depending on your software development process 
+      this checks can happen in real time and your software team can react immediately! 
+                    </p>
+                </div>
+                <div class="col-lg-5 col-sm-pull-6 col-sm-6" style="padding-top: 50px; text-align: center;">
+                    <%= image_tag "marketing/chart-license-ratio-1.png", :style => "width: 280px;" %> 
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-b -->
+
+    <div class="content-section-a">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Security Notifications</h2>
+                    <p class="lead">
+
+                    </p>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <span class="icon-shield" style="font-size: 40px;"> </span>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+  <a  name="contact"></a>
+    <div class="banner">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2>Connect to Start Bootstrap:</h2>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="list-inline banner-social-buttons">
+                        <li>
+                            <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                        </li>
+                        <li>
+                            <a href="#" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linkedin</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.banner -->

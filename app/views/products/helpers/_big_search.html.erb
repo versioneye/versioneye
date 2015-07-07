@@ -1,28 +1,28 @@
 
 <div id="search_section" class="search_container" >
-  <div id="search_bar" style="text-align: center;" >
+
+  <div id="search_bar"  >
     <form id="form" action="/search" method="GET" style="padding: 0; margin:0;" >
       <div class="input-append">
-        <input id="q" name="q" class="span7 input-huge" type="text" autofocus="autofocus" />
+        <input id="q" name="q" class="typeahead input-huge" type="text" placeholder="Search for a software library" autofocus="autofocus" autocomplete="off" >
         <button class="btn btn-primary btn-huge" type="submit" >
-          <i class="icon-search icon-white"></i>&nbsp;Search
+          Search
         </button>
       </div>
     </form>
   </div>
-  <div class="row" style="text-align: center; vertical-align: middle;" >
-    <span class="search_icons round4" >
-    <% if !@languages.nil? && !@languages.empty? %>
-        <% @languages.each do |language| %>
+  
+  <% if !@languages.nil? && !@languages.empty? %>
+    <ul class="list-inline intro-social-buttons">
+      <% @languages.each do |language| %>
+        <li>
           <% langname = language.downcase.gsub(/\./, "") %>
-          <span onclick="document.location.href='<%=language%>'" class="icon_<%= langname %>_small_container" style="cursor: pointer;" >
-              <span  id="icon_<%= langname %>" class="icon_<%= langname %> small on" title="<%= langname %>">&nbsp;</span>
-          </span>
-        <% end %>
-    <% end %>
-    </span>
-  </div>
-  <div style="margin-top: 25px; text-align: center; font-family: 'Droid Serif'; font-size: 16px;">
-    CONTINUOUS UPDATING
-  </div>
+          <a href="<%=language%>">
+            <span  id="icon_<%= langname %>" class="icon_<%= langname %> small on" title="<%= langname %>">&nbsp;</span>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
 </div>

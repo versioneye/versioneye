@@ -4,8 +4,8 @@
 
   <% if @product.group_id_original && @product.artifact_id_original %>
     <h5 class="dep_header">pom.xml snippet for Maven</h5>
-    <div class="row" style="margin-bottom: 5px;">
-      <div class="span7" style="width: 575px; margin-bottom: 0;">
+    <div  style="margin-bottom: 5px;">
+      <div  style="margin-bottom: 0;">
         <pre class="prettyprint"><code>&lt;dependency&gt;
     &lt;groupId&gt;<b><%= @product.group_id_original %></b>&lt;/groupId&gt;
     &lt;artifactId&gt;<b><%= @product.artifact_id_original %></b>&lt;/artifactId&gt;
@@ -15,35 +15,35 @@
     </div>
 
     <h5 class="dep_header">Gradle</h5>
-    <div class="row" style="margin-bottom: 5px;">
-      <div class="span7" style="width: 575px; margin-bottom: 0; overflow: auto;" >
+    <div style="margin-bottom: 5px;">
+      <div style="margin-bottom: 0; overflow: auto;" >
         <pre class="prettyprint"><code>'<b><%= @product.group_id_original %></b>:<b><%= @product.artifact_id_original %></b>:<b><%= @product.version %></b>'</code></pre>
       </div>
     </div>
 
     <h5 class="dep_header">Ivy (Ant)</h5>
-    <div class="row" style="margin-bottom: 5px;">
-      <div class="span7" style="width: 575px; margin-bottom: 0; overflow: auto;" >
+    <div style="margin-bottom: 5px;">
+      <div style="margin-bottom: 0; overflow: auto;" >
         <pre class="prettyprint"><code>&lt;dependency org="<b><%= @product.group_id_original %></b>" name="<b><%= @product.artifact_id_original %></b>" rev="<b><%= @product.version %></b>" /&gt;</code></pre>
       </div>
     </div>
 
     <h5 class="dep_header">SBT (Scala)</h5>
-    <div class="row" style="margin-bottom: 5px;">
-      <div class="span7" style="width: 575px; margin-bottom: 0; overflow: auto;" >
+    <div style="margin-bottom: 5px;">
+      <div style="margin-bottom: 0; overflow: auto;" >
         <pre class="prettyprint"><code>libraryDependencies += "<b><%= @product.group_id_original %></b>" % "<b><%= @product.artifact_id_original %></b>" % "<b><%= @product.version %></b>"</code></pre>
       </div>
     </div>
 
     <h5 class="dep_header">Leiningen (Clojure)</h5>
-    <div class="row" style="margin-bottom: 5px;">
-      <div class="span7" style="width: 575px; margin-bottom: 0; overflow: auto;" >
+    <div style="margin-bottom: 5px;">
+      <div style="margin-bottom: 0; overflow: auto;" >
         <pre class="prettyprint"><code>[<b><%= @product.group_id_original %></b>/<b><%= @product.artifact_id_original %></b> "<b><%= @product.version %></b>"]</code></pre>
       </div>
     </div>
 
-    <div class="row">
-      <div class="span7" style="width: 575px; margin-bottom: 0;">
+    <div >
+      <div style="margin-bottom: 0;">
         <%= render "products/helpers/notify_me" %>
       </div>
     </div>
@@ -52,17 +52,17 @@
   <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.to_s ) %>
   <% if !downloads.nil? && !downloads.empty? %>
 
-    <div class="row">
+    <div >
       <hr/>
     </div>
 
     <div class="row">
-      <div class="span2">
+      <div class="col-md-2">
         <h5 class="dep_header" style="margin-top: 0;">
           <%= pluralize(downloads.count, "Download") %>
         </h5>
       </div>
-      <div class="span5" >
+      <div class="col-md-9" >
         <ul class="download_list" >
         <% downloads.each do |download|  %>
           <li >
@@ -76,22 +76,18 @@
   <% end %>
 
   <% if @product.repositories && @product.repositories.count > 0  %>
-    <div class="row">
+    <div >
       <hr/>
     </div>
 
-    <div class="row">
-      <div class="span2">
-        <h5 class="dep_header" style="margin-top: 0;">
-          <%= pluralize(@product.repositories.count, "Repository") %>
-        </h5>
-      </div>
-      <div class="span5" style="width: 430px;">
-        <% @product.repositories.each do |repo| %>
-          <div><a href="<%= repo[:src] %>" target="new" ><%= repo[:src] %></a> </div>
-        <% end %>
-      </div>
-    </div>
+    <h5 class="dep_header" style="margin-top: 0;">
+      <%= pluralize(@product.repositories.count, "Repository") %>
+    </h5>
+  
+    <% @product.repositories.each do |repo| %>
+      <div><a href="<%= repo[:src] %>" target="new" ><%= repo[:src] %></a> </div>
+    <% end %>
+          
   <% end %>
 
 </div>

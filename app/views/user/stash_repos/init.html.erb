@@ -1,13 +1,13 @@
 <% title 'Stash Repositories' %>
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render '/user/helpers/navi' %>
 </div>
 
 
 <% if !current_user.stash_account_connected? %>
 
-  <div class="span8">
+  <div class="col-md-9">
     <div class="row content_header_def" >
       Connect with Stash to monitor your Stash Repositories.
     </div>
@@ -18,11 +18,11 @@
 
 <% else %>
 
-  <div class="span8">
-    <div class="row content_header_def" >
+  <div class="col-md-9">
+    <div class="content_header_def" >
       Your Stash Repositories
     </div>
-    <div class="span8 content" id="content"> . </div>
+    <div class="content" id="content"> . </div>
   </div>
   <script type="text/javascript">
     React.renderComponent(

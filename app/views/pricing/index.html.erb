@@ -11,14 +11,14 @@
 </div>
 
 <div class="row well pricing success">
-  <div class="span4" >
+  <div class="col-md-4 col-xs-12" >
     <h3 class="success pricing_h" >Trial</h3>
     <p>
       Try VersionEye for free!<br/>
       And try a little bit more for only € 1/month ;-)
     </p>
   </div>
-  <div class = "span6">
+  <div class = "col-md-6 col-xs-12">
 
     <%= render :partial => 'plan', :locals => { :plan_id => '03_trial_0' } %>
 
@@ -31,11 +31,11 @@
 </div>
 
 <div class="row well pricing alert-info">
-  <div class= "span4">
+  <div class="col-md-4 col-xs-12" >
     <h3 class = "pricing_h">Personal</h3>
     <p>Do the next step with the personal plan to track your personal projects.</p>
   </div>
-  <div class = "span6">
+  <div class = "col-md-6 col-xs-12">
 
     <%= render :partial => 'plan', :locals => { :plan_id => '03_personal_3' } %>
 
@@ -51,11 +51,11 @@
 </div>
 
 <div class="row well pricing info">
-  <div class= "span4">
+  <div class="col-md-4 col-xs-12" >
     <h3 class = "pricing_h">Business</h3>
     <p>Be brave and be proffessional! You are a team leader now. Keep your team up-to-date.</p>
   </div>
-  <div class="span6">
+  <div class = "col-md-6 col-xs-12">
 
     <%= render :partial => 'plan', :locals => { :plan_id => '03_business_25' } %>
 

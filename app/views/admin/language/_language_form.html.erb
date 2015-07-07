@@ -1,96 +1,96 @@
 
 <%= form_for @language, url: admin_language_index_path, html: {:class => 'form-horizontal'} do |f| %>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :name, 'Language', class: 'control-label' %>
     <div class="controls">
       <%= f.text_field :name, placeholder: 'Language', class: 'input-large span6' %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :description, class: "control-label" %>
     <div class="controls">
       <%= f.text_area :description, size: "60x3", placeholder: "Description", class: "input-large span6" %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :supported_managers, class: "control-label" %>
     <div class="controls">
       <%= f.text_field :supported_managers, placeholder: "", class: "input-large span6" %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :latest_version, class: "control-label" %>
     <div class="controls">
       <%= f.text_field :latest_version, placeholder: "latest version", class: "input-large span4" %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :stable_version, class: "control-label" %>
     <div class="controls">
       <%= f.text_field :stable_version, placeholder: "stable version", class: "input-large span4" %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :licence, class: "control-label" %>
     <div class="controls">
       <%= f.text_field :licence, placeholder: "licence", class: "input-large span4" %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :licence_url, class: "control-label" %>
     <div class="controls">
       <%= f.text_field :licence_url, placeholder: "licence_url", class: "input-large span4" %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :main_url, "Homepage", class: "control-label" %>
     <div class="controls">
       <%= f.text_field :main_url, placeholder: "mainpage", class: "input-large span4" %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :wiki_url, class: "control-label" %>
     <div class="controls">
       <%= f.text_field :wiki_url, placeholder: "url", class: "input-large span4" %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :repo_url, class: "control-label" %>
     <div class="controls">
       <%= f.text_field :repo_url, placeholder: "url", class: "input-large span4" %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :issue_url, class: "control-label" %>
     <div class="controls">
       <%= f.text_field :issue_url, placeholder: "url", class: "input-large span4" %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :mailinglist_url, class: "control-label" %>
     <div class="controls">
       <%= f.text_field :mailinglist_url, placeholder: "url", class: "input-large span4" %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :irc, class: "control-label" %>
     <div class="controls">
       <%= f.text_field :irc, placeholder: "url", class: "input-large span4" %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :irc_url, class: "control-label" %>
     <div class="controls">
       <%= f.text_field :irc_url, placeholder: "url", class: "input-large span4" %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <%= f.label :twitter_name, class: "control-label" %>
     <div class="controls">
       <%= f.text_field :twitter_name, placeholder: "url", class: "input-large span4" %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <label class = "control-label">
     <div class="controls">
       <%= f.submit class: "btn btn-primary btn-large "%>

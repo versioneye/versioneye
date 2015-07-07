@@ -1,47 +1,49 @@
 <form id="ext_searchform" action="/search" method="GET" class="form" >
 
-	<input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
+  <input id="lang" name="lang" type="hidden" value="<%= @lang %>" />
 
-	<div id="extended_search_container" >
+  <div id="extended_search_container" >
 
-		<div class="side_nav_content">
+    <div class="side_nav_content">
 
-			<div  class="control-group">
-				<%= label_tag(:q, "Name", :class => "control-label" )%>
-				<div class="controls">
-					<%= text_field_tag :q, @query, :class => "input-medium" %>
-				</div>
-			</div>
-			<div class="control-group">
-				<%= label_tag(:g, "GroupId") %>
-				<div class="controls">
-					<%= text_field_tag :g, @groupid, :class => "input-medium" %>
-					<span class = "help-block">
-						<small>GroupId is (Java) Maven2 specific</small>
-					</span>
-				</div>
-			</div>
+      <div class="form-group">
+        <%= label_tag(:q, "Name", :class => "control-label" )%>
+        <div class="controls">
+          <%= text_field_tag :q, @query, :class => "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= label_tag(:g, "GroupId") %>
+        <div class="controls">
+          <%= text_field_tag :g, @groupid, :class => "form-control" %>
+          <span class = "help-block">
+            <small>GroupId is (Java) Maven2 specific</small>
+          </span>
+        </div>
+      </div>
 
-			<% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
-				<% @langs = @lang.split(",") %>
-				<% @languages.each do |language| %>
-					<div class = "controls">
-						<label for="<%= language %>" id="label_<%= language %>__" class = "checkbox" style = "color: #669acb;">
-							<input id="<%= language %>" type="checkbox" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.any?{ |s| s.casecmp(language)==0 }  %> />
-							<%= language %>
-						</label>
-					</div>
-				<% end %>
-			<% end %>
+      <% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
+        <% @langs = @lang.split(",") %>
+        <% @languages.each do |language| %>
 
-			<div class="control-group" style = "height: 30px; padding: 10px 0px 20px 0;">
-				<div >
-					<button type="submit" class="btn btn-primary" >Search</button>
-				</div>
-			</div>
+          <div class="checkbox">
+            <label for="<%= language %>" id="label_<%= language %>__">
+              <input id="<%= language %>" type="checkbox" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.any?{ |s| s.casecmp(language)==0 }  %> >
+              <%= language %>
+            </label>
+          </div>
+          
+        <% end %>
+      <% end %>
 
-		</div>
+      <div class="form-group" style = "height: 30px; padding: 10px 0px 20px 0;">
+        <div >
+          <button type="submit" class="btn btn-primary" >Search</button>
+        </div>
+      </div>
 
-	</div>
+    </div>
+
+  </div>
 
 </form>

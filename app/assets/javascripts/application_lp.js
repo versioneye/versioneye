@@ -9,7 +9,8 @@
 //= require bootstrap
 //= require bootstrap_fileupload
 //= require libs/hogan-2.0.0
-//= require libs/typeahead
+//= require libs/typeahead_0.9.3
+
 //= require google
 
 //= require custom_lp

@@ -1,16 +1,16 @@
 <% title 'My collaborations' %>
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render '/user/helpers/navi' %>
 </div>
 
-<div class="span8">
+<div class="col-md-9">
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     You're included as collaborator in  <b><%= pluralize( @projects.count, "Project") %></b>.
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
     <div id="projects" >
       <table class="table table-striped" style="width: 100%">
         <colgroup>

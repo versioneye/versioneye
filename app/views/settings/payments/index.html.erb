@@ -1,14 +1,13 @@
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
-
-  <div class="row content_header_def" >
+<div class="col-md-9" >
+  <div class="content_header_def" >
     Payment History
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
     <div id = "payment_history">Iniatilizing ...</div>
     <%= render :partial => "/settings/payments/helpers/stripe_payment_history" %>
   </div>

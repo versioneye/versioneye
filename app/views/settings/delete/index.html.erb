@@ -1,32 +1,32 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Here you can delete this Account
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <%= form_tag(settings_destroy_path, :method => "post", :class => "form-horizontal") do  %>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :password, "Password", :class => "control-label", :for => "password" %>
         <div class="controls">
-          <%= password_field_tag :password, "", :id => "password" %>
+          <%= password_field_tag :password, "", :id => "password", :class => "form-control" %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="controls" style="">
           <%= link_to "I need a new password", iforgotmypassword_path %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-danger" >Delete this Account</button>

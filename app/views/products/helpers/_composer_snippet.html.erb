@@ -2,20 +2,20 @@
 <h2 class="section_header">Composer</h2>
 <div class = "well" >
 
-  <div class="row" style="margin-bottom: 5px;">
-    <div class="span2">
+  <div style="margin-bottom: 5px;">
+    <div >
       <h5 class="dep_header">Composer entry</h5>
     </div>
-    <div class="span5" style="width: 430px; margin-bottom: 0;"><pre class = "prettyprint" style="background-color: #fff; margin-bottom: 0;"><code>"<%= @product.name %>": "<%= @version.to_s %>"</code></pre></div>
+    <div style="margin-bottom: 0;"><pre class = "prettyprint" style="background-color: #fff; margin-bottom: 0;"><code>"<%= @product.name %>": "<%= @version.to_s %>"</code></pre></div>
   </div>
 
   <% downloads = @product.archives %>
   <% if !downloads.nil? && !downloads.empty? %>
-    <div class="row" style="margin-bottom: 5px;" >
-      <div class="span2" >
+    <div style="margin-bottom: 5px;" >
+      <div >
         <h5 class="dep_header">Download</h5>
       </div>
-      <div class="span5 download_area" style="width: 409px;" >
+      <div class="download_area" >
         <% downloads.each do |download|  %>
           <a title="<%= download.name %> download" href="<%= download.link %>"><%= download.name %></a>
         <% end %>
@@ -25,11 +25,11 @@
 
   <% repos = @product.repositories %>
   <% if !repos.nil? && !repos.empty? %>
-    <div class="row" style="margin-bottom: 5px;" >
-      <div class="span2" >
+    <div style="margin-bottom: 5px;" >
+      <div >
         <h5 class="dep_header">Repository</h5>
       </div>
-      <div class="span5 download_area" style="width: 409px;" >
+      <div class="download_area" >
         <% repos.each do |repo|  %>
           <a title="<%= repo.src %> download" href="<%= repo.src %>"><%= repo.src %></a><br/>
         <% end %>
@@ -37,11 +37,8 @@
     </div>
   <% end %>
 
-  <div class="row" style="margin-bottom: 5px;">
-    <div class="span2">
-
-    </div>
-    <div class="span5" style="width: 430px; margin-bottom: 0;">
+  <div style="margin-bottom: 5px;">
+    <div style="margin-bottom: 0;">
       <%= render "products/helpers/notify_me" %>
     </div>
   </div>

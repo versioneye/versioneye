@@ -4,12 +4,12 @@
     <% next if product.nil? %>
     <div class="row search-item" >
 
-      <div class="icon56 span2 pull-left">
+      <div class="col-md-1 pull-left" >
         <% prog_lang = product.language.to_s.downcase.gsub(/\./, '') %>
-        <span class = "icon_<%= prog_lang %> on" ></span>
+        <span class="icon_<%= prog_lang %> on" style="margin-left: -12px;" ></span>
       </div>
 
-      <div class = "span5">
+      <div class = "col-md-11">
         <a href="<%= product_version_path(product) %>" class="searchResultLink"><span ><%= product.name_version(name_limit) %></span></a><br/>
         <% if product.prod_type == "Maven2" %>
           <span class="group_id_small">GroupId: <%= product.group_id %></span><br/>
@@ -28,12 +28,6 @@
           <span class="meta_info" >Released:</span> <span class="meta_info_bold" ><%= product.released_ago_in_words %> ago.</span>
         </div>
         
-      </div>
-
-      <div class = "span1 pull-right">
-
-        <%= render :partial => '/shared/product_follow', :locals => { :product => product } %>
-
       </div>
 
     </div>

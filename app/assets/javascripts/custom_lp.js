@@ -1,10 +1,6 @@
 
 jQuery(document).ready(function() {
 
-	jQuery('#q').tbHinter({
-		text: "Follow your software libraries"
-	});
-
   jQuery('#what_is_versioneye_link').on('click', function (e) {
     $.scrollTo($('#what_is_versioneye'), 600,  {easing:'easeOutCubic'});
     return false;
@@ -58,6 +54,7 @@ function regulate_height(){
   setTimeout( function(){ regulate_height() }  , 1000 );
 }
 
+
 function initialize_searchbox(){
   console.log("Initializing searchbox");
   var $ = jQuery;
@@ -69,18 +66,9 @@ function initialize_searchbox(){
       url: "/package/autocomplete?term=%QUERY"
     },
     engine: Hogan,
-    template: [
-      '<div>',
-          '<img src="/assets/language/{{ language }}.png" alt="{{ language }}" class = "pull-left" style = "height: 2.0em;" />',
-          '<p>',
-              '<a href = "{{ url }}">',
-                '<strong>{{ name }}</strong>',
-               '</a>',
-             ' - {{ description }}',
-           '</p>',
-      '</div>'
-    ].join('')
+    template: '<div><img src="/assets/language/{{ language }}.png" alt="{{ language }}" class="pull-left" style="height: 2.0em;" /><p><a href="{{ url }}">{{ name }}</a>: <span class="tt-meta">{{ description }}</span></p></div>'
   });
 
   $('input#q').focus();
 }
+ 

@@ -1,6 +1,8 @@
 <!-- signup -->
 <form id = "signup-form" class="form-horizontal" action= "/users/mobile" method="POST">
+  
   <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+  
   <div class="form-group">
     <label for="user_fullname" class="col-lg-2 control-label">Name</label>
     <div class="col-lg-10">

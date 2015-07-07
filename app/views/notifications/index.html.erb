@@ -1,15 +1,15 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   
 </div>
-<div class="span8">
+<div class="col-md-9">
 
-  <div class="span8 content_header_def" >
+  <div class="content_header_def" >
     Your latest notifications for the software packages you follow directly. 
     <a href="<%= url_for(favoritepackages_user_url(current_user)) %>.rss"><%= image_tag "rss.png", :title => "Subscribe via RSS", :alt => "Subscribe via RSS" %></a>
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
     <% if !@notifications.nil? && !@notifications.empty? %>
       <% @notifications.each do |noti| %> 
         <div class="row search-item" >

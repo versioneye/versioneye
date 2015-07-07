@@ -1,16 +1,16 @@
 <% title 'Projects' %>
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render '/user/helpers/navi' %>
 </div>
 
-<div class="span8">
+<div class="col-md-9">
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     VersionEye is watching <b><%= pluralize( @projects.size, "Project" ) %></b> for you.
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
     <div style="margin-bottom: 10px;">
       <a id='projects_filter_link' onClick="show_project_filter(); return false;" href="" >
         Show filter >>  
@@ -19,17 +19,17 @@
     <div id='projects_filter' style="display: none">
       <form id="form" action="/user/projects" method="GET" class='form-horizontal' style="padding: 0; margin:0;" >
         
-        <div class="control-group">
+        <div class="form-group">
           <%= label_tag :name, "Project name", :class => "control-label", :for => "name" %>
           <div class="controls">
-            <%= text_field_tag :name, params[:name], :id => "name" %>
+            <%= text_field_tag :name, params[:name], :id => "name", :class => 'form-control' %>
           </div>
         </div>
 
-        <div class="control-group">
+        <div class="form-group">
           <%= label_tag :language, "Language", :class => "control-label", :for => "language" %>
           <div class="controls" >
-            <select name="language"  id="language" >
+            <select name="language"  id="language" class="form-control" >
               <option value="ALL"  >ALL</option>
               <% LanguageService.distinct_languages.sort.each do |language| %> 
                 <option value="<%= language %>" <%= "selected" if params[:language].to_s.eql?(language) %> ><%= language %></option>
@@ -39,10 +39,10 @@
         </div>
 
         <% if Settings.instance.environment.eql?('enterprise') || signed_in_admin? %> 
-          <div class="control-group">
+          <div class="form-group">
             <%= label_tag :scope, "Scope", :class => "control-label", :for => "scope" %>
             <div class="controls" >
-              <select name="scope"  id="scope" >
+              <select name="scope"  id="scope" class="form-control" >
                 <option value="user"  >My own projects</option>
                 <option value="all_public" <%= 'selected' if params[:scope].to_s.eql?('all_public') %> >All public projects</option>
                 <% if current_user.admin == true %>
@@ -53,7 +53,7 @@
           </div>
         <% end %> 
 
-        <div class="control-group">
+        <div class="form-group">
           <div class="control-label"></div>
           <div class="controls">
             <button type="submit" class="btn btn-primary" >Filter</button>

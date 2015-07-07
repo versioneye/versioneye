@@ -1,120 +1,117 @@
-<header>
-  <div class="navbar navbar-fixed-top">
-    <div class = "container row" >
-
-      <div class="span3 main_logo" >
-        <div class="pull-left l_margin_top_15">
-          <% if signed_in? %>
-            <% if Rails.env.enterprise? %>
-              <%= link_to image_tag('logos/versioneye-transparent.png'), settings_emails_path, :rel => "nofollow" %>
-            <% else %>
-              <%= link_to image_tag('logos/versioneye-transparent.png'), user_projects_path, :rel => "nofollow" %>
-            <% end %>
-          <% else %>
-            <a href="/" ><%= image_tag "logos/versioneye-transparent.png" %></a>
-          <% end %>
-        </div>
-      </div>
-
-      <div class = "span9 pull-right">
-        <ul class="nav pull-right">
-
-          <!-- menu for guest user, not logged in -->
-          <% unless signed_in? %>
-            <% if !Rails.env.enterprise? %>
-              <li>
-                <%= link_to "Pricing", "/pricing" %>
-              </li>
-            <% end %>
-            <li class="divider-vertical"></li>
-            <% if Settings.instance.show_signup_form == true %>
-              <li style="font-weight: bold; font-size: 16px;">
-                <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0;") do  %>
-                  <button type="submit" class="btn btn-success" ><%= t(:page_header_signup) %></button>
-                <% end %>
-              </li>
-            <% end %>
-            <li class="divider-vertical"></li>
-            <li>
-              <%= form_tag(signin_path, :method => "GET", :style=>"margin: 0;") do  %>
-                <button type="submit" class="btn" ><%= t(:page_header_signin) %></button>
-              <% end %>
-            </li>
-          <% end %>
-
-          <!-- menu for logged-in user -->
-          <% if signed_in? %>
-            
-            <li class="divider-vertical"></li>
-            <li style="padding-right: 25px;">
-              <%= link_to "Notifications", notifications_path %>
-            </li>
-            <li>
-              <%= link_to "I follow",  :controller => 'user/packages', :action => "i_follow", :rel => "nofollow" %>
-            </li>
-            <li class="divider-vertical"></li>
-            <li>
-              <%= link_to "Projects", user_projects_path, :rel => "nofollow" %>
-            </li>
-            <li class="divider-vertical"></li>
-            <li>
-              <a href="<%= user_path( current_user ) %>" class="profile_pic_tiny" title="Profile" >
-                <% if Rails.env.enterprise? %>
-                  <%= image_tag "profile_icon.png", size: "30" %> <%= username_max_30( current_user.username ) %>
-                <% else %> 
-                  <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= username_max_30( current_user.username ) %>
-                <% end %>
-              </a>
-            </li>
-            <li class="divider-vertical"></li>
-            <li>
-              <a href="/search?q=suggest_a_new_package_to_versioneye" title="Suggest a new package">
-                <i class="icon-plus" ></i>
-              </a>
-            </li>
-            <li class="divider-vertical"></li>
-            <li>
-              <a href="https://bitbucket.org/versioneye/versioneye/issues" title="Feedback" id="feedback_link" target="_TICKETS">
-                <i class="icon-comment" ></i>
-              </a>
-            </li>
-            
-            
-            <li class="divider-vertical"></li>
-            <li>
-              <a href="<%= settings_profile_path %>" title="Settings" >
-                <i class="icon-cogs" ></i>
-              </a>
-            </li>
-            <li class="divider-vertical"></li>
-            <li>
-              <a href="<%= signout_path %>" title="Logout" >
-                <i class="icon-signout" ></i>
-              </a>
-            </li>
-
-            <!-- menu for admin -->
-            <% if signed_in_admin? && 1 == 2 %>
-              <li class= "divider-vertical"></li>
-              <li class= "dropdown">
-                <a class = "dropdown-toggle" data-toggle= "dropdown" href= "#">
-                  Admin
-                  <b class = "caret"></b>
-                </a>
-                <ul class= "dropdown-menu">
-                  <li><%= link_to :Crawls, admin_crawles_path %></li>
-                  <li><%= link_to :ErrorMessages, admin_error_messages_path %></li>
-                  <li><%= link_to "Submitted URLs", admin_submitted_urls_path %></li>
-                  <li><%= link_to "Submitted testimonials", admin_testimonials_path %></li>
-                  <li><%= link_to "Update languages", admin_language_index_path %></li>
-               </ul>
-              </li>
-            <% end %>
-          <% end %>
-
-        </ul>
-      </div>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <% if signed_in? %>
+        <% if Rails.env.enterprise? %>
+          <%= link_to image_tag("verisoneye-logo-small.png", :class => 'logo_small'), settings_emails_path, :rel => "nofollow" %>
+        <% else %>
+          <%= link_to image_tag("verisoneye-logo-small.png", :class => 'logo_small'), user_projects_path, :rel => "nofollow" %>
+        <% end %>
+      <% else %>
+        <a href="/" >
+          <%= image_tag "verisoneye-logo-small.png", :class => 'logo_small' %>
+        </a>
+      <% end %>
 
     </div>
-  </div>
-</header>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <form id="form" action="/search" method="GET" class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input name="q" type="text" value="<%= @query %>" class="form-control" placeholder="Search" />
+        </div>
+        <button type="submit" class="btn btn-default">Search</button>
+      </form>
+      
+      
+      <!-- menu for guest user, not logged in -->
+      <% if signed_in? == false %>
+        <%= form_tag(signin_path, :method => "GET", :style=>"margin: 0; padding: 0 0 0 10px;", :class=>"navbar-form navbar-right") do  %>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary navbar-btn" ><%= t(:page_header_signin) %></button>
+          </div>
+        <% end %>
+        <% if Settings.instance.show_signup_form == true %>
+          <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0; padding: 0 0 0 10px;", :class=>"navbar-form navbar-right") do  %>
+            <div class="form-group">
+              <button type="submit" class="btn btn-success navbar-btn" ><%= t(:page_header_signup) %></button>
+            </div>
+          <% end %>
+        <% end %>
+        <% if !Rails.env.enterprise? %>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <%= link_to "Pricing", "/pricing" %>
+            </li>
+          </ul>  
+        <% end %>
+      <% end %>
+
+      <!-- menu for logged-in user -->
+      <% if signed_in? %>
+        <ul class="nav navbar-nav navbar-right">
+          
+          
+          <li>
+            <%= link_to "Notifications", notifications_path %>
+          </li>
+          
+          <li>
+            <%= link_to "I follow",  :controller => 'user/packages', :action => "i_follow", :rel => "nofollow" %>
+          </li>
+          
+          <li>
+            <a href="<%= user_projects_path %>" title="Projects">
+              <i class="fa fa-list-ol"></i>
+            </a>
+          </li>
+          
+          <li>
+            <a href="<%= user_path( current_user ) %>" class="profile_pic_tiny" title="Profile" >
+              <% if Rails.env.enterprise? %>
+                <%= image_tag "profile_icon.png", size: "30" %> <%= username_max_30( current_user.username ) %>
+              <% else %> 
+                <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= username_max_30( current_user.username ) %>
+              <% end %>
+            </a>
+          </li>
+          
+          <li>
+            <a href="/search?q=suggest_a_new_package_to_versioneye" title="Suggest a new package">
+              <i class="fa fa-plus"></i>
+            </a>
+          </li>
+          
+          <li>
+            <a href="https://bitbucket.org/versioneye/versioneye/issues" title="Feedback" id="feedback_link" target="_TICKETS">
+              <i class="fa fa-comment"></i>
+            </a>
+          </li>
+          
+          <li>
+            <a href="<%= settings_profile_path %>" title="Settings" >
+              <i class="fa fa-cogs"></i>
+            </a>
+          </li>
+          
+          <li>
+            <a href="<%= signout_path %>" title="Logout" >
+              <i class="fa fa-sign-out"></i>
+            </a>
+          </li>
+        </ul>
+      <% end %>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+

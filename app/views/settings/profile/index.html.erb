@@ -1,60 +1,54 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Profile Settings
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <%= form_tag(settings_update_profile_path, :method => "post", :class => "form-horizontal") do  %>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :fullname, "Full Name", :class => "control-label", :for => "fullname" %>
         <div class="controls">
-          <%= text_field_tag :fullname, @user.fullname, :id => "fullname" %>
+          <%= text_field_tag :fullname, @user.fullname, :id => "fullname", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :username, "Username", :class => "control-label", :for => "username" %>
         <div class="controls">
-          <%= text_field_tag :new_username, @user.username, :id => "username" %>
+          <%= text_field_tag :new_username, @user.username, :id => "username", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :location, "Location", :class => "control-label", :for => "location" %>
         <div class="controls">
-          <%= text_field_tag :location, @user.location, :id => "location" %>
+          <%= text_field_tag :location, @user.location, :id => "location", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :description, "About me", :class => "control-label", :for => "description" %>
         <div class="controls">
-          <%= text_area_tag :description, @user.description, :style => "width: 400px; height: 100px;", :maxlength => "177", :onKeyUp => "textCounter(this, document.getElementById('counter'), 177)", :id => "description"  %>
+          <%= text_area_tag :description, @user.description, :style => "height: 100px;", :maxlength => "177", :onKeyUp => "textCounter(this, document.getElementById('counter'), 177)", :id => "description", :class => "form-control" %>
         </div>
       </div>
 
-      <div class="control-group">
-        <div class="controls">
-          Characters left: <span id="counter">177</span>
-        </div>
-      </div>
-
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :blog, "Blog", :class => "control-label", :for => "blog" %>
         <div class="controls">
-          <%= text_field_tag :blog, @user.blog, :id => "blog" %>
+          <%= text_field_tag :blog, @user.blog, :id => "blog", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>
