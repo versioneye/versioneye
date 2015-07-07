@@ -1,15 +1,15 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Stash Settings
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <%= form_tag( settings_stashsettings_path, :method => "post", :class => "form-horizontal") do  %>
 
@@ -17,28 +17,28 @@
         If you are using <a href="https://www.atlassian.com/software/stash">Atlassian Stash</a> you can configure it here.
       </p>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :stash_base_url, "WEB URL", :class => "control-label", :for => "stash_base_url" %>
         <div class="controls">
-          <%= text_field_tag :stash_base_url, @globalsetting['stash_base_url'], :id => "stash_base_url" %>
+          <%= text_field_tag :stash_base_url, @globalsetting['stash_base_url'], :id => "stash_base_url", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :stash_consumer_key, "Customer Key", :class => "control-label", :for => "stash_consumer_key" %>
         <div class="controls">
-          <%= text_field_tag :stash_consumer_key, @globalsetting['stash_consumer_key'], :id => "stash_consumer_key" %>
+          <%= text_field_tag :stash_consumer_key, @globalsetting['stash_consumer_key'], :id => "stash_consumer_key", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :stash_private_rsa, "Private RSA Key", :class => "control-label", :for => "stash_private_rsa" %>
         <div class="controls">
-          <%= text_area_tag :stash_private_rsa, @globalsetting['stash_private_rsa'], :id => "stash_private_rsa", :style => "width: 400px; height: 170px; font-size: 10px;" %>
+          <%= text_area_tag :stash_private_rsa, @globalsetting['stash_private_rsa'], :id => "stash_private_rsa", :style => "height: 170px; font-size: 10px;", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>

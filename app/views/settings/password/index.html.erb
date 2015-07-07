@@ -1,46 +1,46 @@
 
-<div class="span3" >
+<div class="col-md-3" >
 	<%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Password
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <%= form_tag(settings_update_password_path, :method => "post", :class => "form-horizontal") do  %>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :password, "Cur. Password", :class => "control-label", :for => "password" %>
         <div class="controls">
-          <%= password_field_tag :password, "", :id => "password" %>
+          <%= password_field_tag :password, "", :id => "password", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :new_password, "New Password", :class => "control-label", :for => "new_password" %>
         <div class="controls">
-          <%= password_field_tag :new_password, "", :id => "new_password" %>
+          <%= password_field_tag :new_password, "", :id => "new_password", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :repeat_new_password, "Rep. New Pas.", :class => "control-label", :for => "repeat_new_password" %>
         <div class="controls">
-          <%= password_field_tag :repeat_new_password, "", :id => "repeat_new_password" %>
+          <%= password_field_tag :repeat_new_password, "", :id => "repeat_new_password", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="controls" style="">
           <%= link_to "I need a new password", iforgotmypassword_path %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>

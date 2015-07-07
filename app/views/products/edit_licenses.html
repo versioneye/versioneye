@@ -1,50 +1,50 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render "products/helpers/edit_navi" %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Edit <b><%= @product.name %></b>
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <div class="boxContainer">
-      <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/update", :method => "post") do  %>
-        <div style="display:table-row;">
-          <div class="labelCelMiddle" >
-            <%= label_tag(:license, "License Name") %>
-          </div>
-          <div class="inputCel" style="width: 450px;">
-            <%= text_field_tag :license, "", :class => "round", :style=>"width: 420px;" %>
-          </div>
-        </div>
-        <div style="display:table-row;">
-          <div class="labelCelMiddle" >
-            <%= label_tag(:licenseLink, "Link to License") %>
-          </div>
-          <div class="inputCel" style="width: 450px;">
-            <%= text_field_tag :licenseLink, "", :class => "round", :style=>"width: 420px;" %>
+      <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/update", :method => "post", :class => "form-horizontal") do  %>
+        
+        <div class="form-group">
+          <%= label_tag(:license, "License Name", :class => "control-label") %>
+          <div class="controls">
+            <%= text_field_tag :license, "", :class => "form-control" %>
           </div>
         </div>
-        <div style="display:table-row;">
-          <div class="labelCelMiddle" >
-            <%= label_tag(:licenseVersion, "Belongs to this version of #{@product.name}") %>
+
+        <div class="form-group">
+          <%= label_tag(:licenseLink, "License Link", :class => "control-label") %>
+          <div class="controls">
+            <%= text_field_tag :licenseLink, "", :class => "form-control" %>
           </div>
-          <div class="inputCel" style="width: 450px;">
-            <select name="licenseVersion" id="licenseVersion" >
+        </div>
+
+        <div class="form-group">
+          <%= label_tag(:licenseVersion, "Version", :class => "control-label") %>
+          <div class="controls">
+            <select name="licenseVersion" id="licenseVersion" class="form-control" >
               <% @product.versions.each do |version| %>
                 <option value="<%= version.to_s %>" ><%= version.to_s %></option>
               <% end %>
-              <option value="ALL" >ALL Versions</option>
             </select>
           </div>
         </div>
-        <div class="inputCel" style="width: 450px;">
-          <button type="submit" class="btn btn-large btn-primary" >Save</button>
+
+        <div class="form-group">
+          <div class="controls">
+            <button type="submit" class="btn btn-large btn-primary" >Save</button>
+          </div>
         </div>
+
       <% end %>
     </div>
 

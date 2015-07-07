@@ -33,11 +33,11 @@ describe "Computer Language Filter" do
       page.should have_content("jsonG")
       page.should have_content("jsonC")
 
-      find(:xpath, '//button[contains(@id, "button_ruby_json2")]' ).click
-      using_wait_time 3 do
-        page.should have_content("Follow")
-        page.should have_content("to get notified about new versions.")
-      end
+      # find(:xpath, '//button[contains(@id, "button_ruby_json2")]' ).click
+      # using_wait_time 3 do
+      #   page.should have_content("Follow")
+      #   page.should have_content("to get notified about new versions.")
+      # end
 
       user = UserFactory.create_new
       Plan.create_defaults
@@ -45,7 +45,7 @@ describe "Computer Language Filter" do
       fill_in 'session[email]',    :with => user.email
       fill_in 'session[password]', :with => user.password
       find('#sign_in_button').click
-      page.should have_content("Projects")
+      page.should have_content("I follow")
 
       visit "/?ab=b"
       fill_in 'q', :with => "json*"
@@ -57,12 +57,12 @@ describe "Computer Language Filter" do
       page.should have_content("jsonG")
       page.should have_content("jsonC")
 
-      find(:xpath, '//button[contains(@id, "button_ruby_json2")]' ).click
-      page.should_not have_content("to get notified about new versions.")
-      page.should     have_content("Unfollow")
+      # find(:xpath, '//button[contains(@id, "button_ruby_json2")]' ).click
+      # page.should_not have_content("to get notified about new versions.")
+      # page.should     have_content("Unfollow")
 
       find(:xpath, '//label[contains(@for, "Ruby")]' ).click
-      click_button "Search"
+      click_button "Find"
 
       page.should     have_content("json2")
       page.should     have_content("jsonG")
@@ -74,7 +74,7 @@ describe "Computer Language Filter" do
       find(:xpath, '//label[contains(@id, "label_Java__")]' ).click
       find(:xpath, '//label[contains(@for, "Ruby")]' ).click
       find(:xpath, '//label[contains(@for, "PHP")]' ).click
-      click_button "Search"
+      click_button "Find"
 
       page.should     have_content("json-test")
       page.should     have_content("jsonJ")
@@ -83,7 +83,7 @@ describe "Computer Language Filter" do
       page.should_not have_content("jsonG")
 
       find(:xpath, '//label[contains(@for, "JavaScript")]' ).click
-      click_button "Search"
+      click_button "Find"
 
       page.should     have_content("json-test")
       page.should     have_content("jsonJ")
@@ -91,18 +91,6 @@ describe "Computer Language Filter" do
       page.should_not have_content("json2")
       page.should_not have_content("jsonG")
 
-      fill_in 'q', :with => "jquery"
-      find(:xpath, '//label[contains(@id, "label_Java__")]' ).click
-      find(:xpath, '//label[contains(@for, "PHP")]' ).click
-      find(:xpath, '//label[contains(@for, "Ruby")]' ).click
-      click_button "Search"
-
-      page.should     have_content("jquery")
-      page.should_not have_content("json-test")
-      page.should_not have_content("jsonJ")
-      page.should_not have_content("jsonC")
-      page.should_not have_content("json2")
-      page.should_not have_content("jsonG")
     end
 
   end

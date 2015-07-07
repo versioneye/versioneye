@@ -1,15 +1,15 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     VersionEye Enterprise Activation
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <%= form_tag( settings_activation_path, :method => "post", :class => "form-horizontal") do  %>
 
@@ -17,28 +17,28 @@
         Here you can activate and update your API Key.
       </p>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :api_key, "API Key", :class => "control-label", :for => "api_key" %>
         <div class="controls">
-          <%= text_field_tag :api_key, @globalsetting['api_key'], :id => "api_key" %>
+          <%= text_field_tag :api_key, @globalsetting['api_key'], :id => "api_key", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :e_projects, "Max Projects", :class => "control-label", :for => "e_projects" %>
         <div class="controls">
-          <%= text_field_tag :e_projects, @globalsetting['e_projects'], :id => "e_projects", :readonly => true %>
+          <%= text_field_tag :e_projects, @globalsetting['e_projects'], :id => "e_projects", :readonly => true, :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
-        <%= label_tag :activation_date, "Activation Date", :class => "control-label", :for => "activation_date" %>
+      <div class="form-group">
+        <%= label_tag :activation_date, "Activated at", :class => "control-label", :for => "activation_date" %>
         <div class="controls">
-          <%= text_field_tag :activation_date, @globalsetting['activation_date'], :id => "activation_date", :readonly => true %>
+          <%= text_field_tag :activation_date, @globalsetting['activation_date'], :id => "activation_date", :readonly => true, :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>

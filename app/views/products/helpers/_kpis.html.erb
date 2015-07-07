@@ -1,5 +1,5 @@
 
-<div class="row" >
+<div>
 
   <div class="flash info l_margin_bottom_5" >
     <b>Current:</b>
@@ -19,11 +19,7 @@
 
 
   <% days_ago = @product.released_days_ago %>
-  <% rel_bg = '' %>
-  <% rel_bg = 'success' if days_ago < 30  %>
-  <% rel_bg = 'info'    if days_ago >= 30 && days_ago <= 90  %>
-  <% rel_bg = 'warn'    if days_ago > 90  && days_ago <= 180  %>
-  <% rel_bg = 'error'   if days_ago > 180 %>
+  <% rel_bg = color_for_released_ago @product %>
   <div class="flash <%= rel_bg %> l_margin_bottom_5"  >
     <b title="<%= @product.released_ago_text %>" >Released:</b>
     <span title="<%= @product.released_ago_text %>">
@@ -38,17 +34,10 @@
   <% average_release_time = @product[:average_release_time] %>
   <% art_text = '' %>
   <% art_text = 'Not Available' if average_release_time.nil? || average_release_time == 0 %>
-  <% art_bg = 'info' %>
+  <% art_bg = color_for_avg_release_time(@product) %>
   <% if !average_release_time.nil? && average_release_time > 0 %>
-    <% art_bg = 'success' if average_release_time > 0 && average_release_time <= 31  %>
-    <% art_bg = 'info'  if average_release_time > 31 && average_release_time <= 62  %>
-    <% art_bg = 'warn'  if average_release_time > 62 && average_release_time <= 124  %>
-    <% art_bg = 'error' if average_release_time > 124 %>
     <% art_text = "In average this dev team is releasing a new version every #{average_release_time} days." %>
-  <% else %>
-    <% art_bg = "error" %>
   <% end %>
-
   <div class="flash <%= art_bg %> l_margin_bottom_5">
     <b title="<%= art_text %>" >Avg. Rel. Time:</b>
     <span title="<%= art_text %>">

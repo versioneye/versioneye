@@ -1,15 +1,15 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Links
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <p>
       Enter the absolute links to your profiles to show your reputation.<br/>
@@ -18,49 +18,49 @@
 
     <%= form_tag(settings_update_links_path, :method => "post", :class => "form-horizontal") do  %>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :github, "GitHub", :class => "control-label", :for => "github" %>
         <div class="controls">
-          <%= text_field_tag :github, @userlinkcollection.github, :id => "github", :class => "input-big" %>
+          <%= text_field_tag :github, @userlinkcollection.github, :id => "github", :class => "input-big", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :stackoverflow, "Stackoverflow", :class => "control-label", :for => "stackoverflow" %>
         <div class="controls">
-          <%= text_field_tag :stackoverflow, @userlinkcollection.stackoverflow, :id => "stackoverflow", :class => "input-big" %>
+          <%= text_field_tag :stackoverflow, @userlinkcollection.stackoverflow, :id => "stackoverflow", :class => "input-big", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :twitter, "Twitter", :class => "control-label", :for => "twitter" %>
         <div class="controls">
-          <%= text_field_tag :twitter, @userlinkcollection.twitter, :id => "twitter", :class => "input-big" %>
+          <%= text_field_tag :twitter, @userlinkcollection.twitter, :id => "twitter", :class => "input-big", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :linkedin, "LinkedIn", :class => "control-label", :for => "linkedin" %>
         <div class="controls">
-          <%= text_field_tag :linkedin, @userlinkcollection.linkedin, :id => "linkedin", :class => "input-big" %>
+          <%= text_field_tag :linkedin, @userlinkcollection.linkedin, :id => "linkedin", :class => "input-big", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :facebook, "Facebook", :class => "control-label", :for => "facebook" %>
         <div class="controls">
-          <%= text_field_tag :facebook, @userlinkcollection.facebook, :id => "facebook", :class => "input-big" %>
+          <%= text_field_tag :facebook, @userlinkcollection.facebook, :id => "facebook", :class => "input-big", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :xing, "Xing", :class => "control-label", :for => "xing" %>
         <div class="controls">
-          <%= text_field_tag :xing, @userlinkcollection.xing, :id => "xing", :class => "input-big" %>
+          <%= text_field_tag :xing, @userlinkcollection.xing, :id => "xing", :class => "input-big", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>

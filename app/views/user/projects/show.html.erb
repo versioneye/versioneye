@@ -6,38 +6,37 @@
 
   <% title "#{@project.name}" %>
 
-  <div class="span3" >
+  <div class="col-md-3" >
     <%= render "/user/helpers/navi" %>
   </div>
 
-  <div class="span8">
+  <div class="col-md-9">
 
-    <div class="row content_header_def">
+    <div class="content_header_def">
       <div id="project-title">
         <span class = "namelabel" >
           <b>Name:</b> <%= @project.name %>
         </span>
         <% if current_user?(@project.user) || signed_in_admin? %>
-          <div class="icon-edit open-editor"
-            style="width: 16px; height: 16px; margin: 0; padding: 0;
-            background-image: url('/assets/glyphicons-halflings.png');
-            background-position: -96px -72px; background-repeat: no-repeat;" title="Change title"></div>
+          <i class="fa fa-pencil-square-o" 
+            style="width: 16px; height: 16px; margin: 0; padding: 0;"
+            title="Change project name"></i>
         <% end %>
       </div>
 
       <% if current_user?(@project.user) || signed_in_admin? %>
 
-        <div class="project-inline-editor row" style="display:none;">
+        <div class="project-inline-editor" style="display:none;">
           <%= form_tag(update_name_user_project_path(@project), :method => "post", :remote => true, :class => "form-inline") do %>
-            <input type ="text" name = "name" value = "<%= @project.name %>" />
-            <button class = "btn btn-primary"> Save</button>
-            <button href = "#" class = "btn btn-danger close-editor"
+            <input type="text" name="name" value="<%= @project.name %>" class="input form-control" />
+            <button class="btn btn-primary"> Save</button>
+            <button href="#" class="btn btn-danger close-editor"
               data-dismiss="alert" title = "Cancel">Cancel</button>
           <% end %>
         </div>
         <script>
           jQuery(document).ready(function(){
-            jQuery("#project-title .open-editor").on("click", function(){
+            jQuery("#project-title .fa-pencil-square-o").on("click", function(){
               jQuery(".project-inline-editor").css("display", "block");
               jQuery("#project-title").css("display", "none");
             });
@@ -66,9 +65,9 @@
       <% end %>
 
     </div>
-    <div class="span8 content" >
+    <div class="content" >
 
-      <div class="row" >
+      <div >
 
         <div id="project_status" class="flash warn" style="padding-bottom: 5px; margin-bottom: 10px; display: none;" >
           <%= image_tag "progress.gif" %> Project is processed by a background job. This page will reload if the job is done. 
@@ -86,13 +85,13 @@
 
           <div style="font-size: 16px; margin-bottom: 0px;">
             <div class="row">
-              <div class="span2" style="width: 100px;" >
+              <div class="col-md-2" style="width: 120px;" >
                 <form action="<%= reparse_user_project_path(@project) %>" method="post" style="padding-top: 5px;">
                   <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
                   <button class="btn btn-success btn-mini">Re Parse Now</button>
                 </form>
               </div>
-              <div class="span2" style="width: 120px;" >
+              <div class="col-md-2" style="width: 150px;" >
                 <form action="<%= user_project_path(@project) %>" method="post" style="padding-top: 5px;">
                   <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
                   <input name="_method" type="hidden" value="delete" />
@@ -100,7 +99,7 @@
                 </form>
               </div>
               <% if @project.source.eql?( Project::A_SOURCE_UPLOAD ) %>
-                <div class="span2" style="width: 150px;" >
+                <div class="col-md-2" style="width: 150px;" >
                   <button style="margin-top: 5px;" class="btn btn-mini" onClick="document.getElementById('reupload_form').style.display='block'" >ReUpload</button>
                 </div>
               <% end %>
@@ -145,7 +144,7 @@
         </ul>
 
         <div class="tab-content" style="width: 100%;" >
-          <div id="dependencies" class="tab-pane active" style="width: 617px;" >
+          <div id="dependencies" class="tab-pane active" >
             
             <%= render partial: "user/projects/helpers/show_subprojects", locals: {parent_project: @project, child_project: @child, tab_id: 'dependencies'} %>
 
@@ -193,6 +192,7 @@
   </div>
 
 <script type="text/javascript">
+
     jQuery('#projectTabs a').click(function (e) {
         var id = jQuery(e.target).attr("data-target").substr(1);
         window.location.hash = "tab-" + id;
@@ -203,16 +203,20 @@
     jQuery('#projectTabs a[data-target="#' + hash + '"]').tab('show');
     jQuery('html, body').animate({scrollTop:0}, 'fast');
 
-
-
     checkInterval = 0 
     showedProgressBar = false;
 
     function checkStatus(){
-      jQuery.getJSON( "/user/projects/<%= @project.ids %>/status.json").done(function( data ) {
-        console.info(data.status);
-        console.info(showedProgressBar);
-        if (data.status === "done"){
+      jQuery.getJSON( "/user/projects/<%= @project.ids %>/status.text", function (data){
+        console.info(" first success " + data);
+      }).done(function( data ) {
+        console.info(" done " + data)
+      }).fail(function(data) {
+        console.info(" error " + data );
+      }).always(function(data) {
+        console.info(" always data.responseText " + data.responseText);
+        if (data.responseText === "done" || data.status === "done" ){
+          console.info(" status is done" );
           clearInterval( checkInterval );
           console.info("clear interval");
           document.getElementById('project_status').style.display = "none";
@@ -220,6 +224,7 @@
             location.reload();
           }
         } else {
+          console.info(" status is NOT done" );
           document.getElementById('project_status').style.display = "block";
           showedProgressBar = true;
         }

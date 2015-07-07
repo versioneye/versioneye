@@ -18,7 +18,7 @@ describe "Payment Process" do
       fill_in 'session[email]',    :with => user.email
       fill_in 'session[password]', :with => user.password
       find('#sign_in_button').click
-      page.should have_content("Projects")
+      page.should have_content("I follow")
 
       visit settings_plans_path
       Plan.count.should eq(8)

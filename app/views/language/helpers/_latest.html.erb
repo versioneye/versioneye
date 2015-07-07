@@ -3,20 +3,21 @@
   <% @latest_products.each_with_index do |latest_prod, i| %>
     <% if latest_prod && latest_prod.product %>
       <% prod = latest_prod.product %>
-      <div class = "media-body product-item">
-        <h5 class = "media-heading">
-           <%= i + 1 %>. <a href = "<%= products_path(lang: prod.language_esc, key: prod.to_param) %>">
+      <div class = "prod-item">
+        <div>
+          <span class="product_page_sm_header">
+            <a href = "<%= products_path(lang: prod.language_esc, key: prod.to_param) %>">
                           <%= prod.name %>
                         </a>
-          <span class = "pull-right">
-            <%= render partial: "shared/product_follow_mini", locals: {product: prod, user: current_user} %>
-          </span>
-        </h5>
-        <p>
+            </span>
+        </div>
+        <div>
           <%= prod.short_summary %> <br/>
-          <span> References: <%= link_to prod.used_by_count, product_references_path( :lang => prod.language_esc, :key => prod.to_param ) %> </span>
-        </p>
-
+        </div>
+        <div>
+          <span>References: <%= link_to prod.used_by_count, product_references_path( :lang => prod.language_esc, :key => prod.to_param ) %> </span> | 
+          License: <span class="bold"><%= prod.license_info %> </span>
+        </div>
       </div>
     <% end %>
   <% end %>

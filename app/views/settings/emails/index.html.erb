@@ -1,35 +1,34 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Here you can manage your E-Mail Addresses.
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
-    <%= form_tag(settings_add_email_path, :method => "post", :class => "form-horizontal") do  %>
-      <div class="control-group">
+    <%= form_tag(settings_add_email_path, :method => "post", :class => "form-inline") do  %>
+      <div class="form-group">
         <%= label_tag :new_email, "New E-Mail", :class => "control-label", :for => "new_email" %>
-        <div class="controls">
-          <%= text_field_tag :email, "", :id => "new_email" %> <button type="submit" class="btn btn-primary">Add</button>
-        </div>
+        <%= text_field_tag :email, "", :id => "new_email", :class=>"form-control" %> 
+        <button type="submit" class="btn btn-primary">Add</button>
       </div>
     <% end %>
 
     <br/>
 
     <div class="row" style="height: 52px;">
-      <div class="span1" style="width: 80px; padding-top: 7px;">
+      <div class="col-md-1" style="width: 80px; padding-top: 7px;">
         <span class="label label-success">Default</span>
       </div>
-      <div class="span3" style="padding-top: 7px;">
+      <div class="col-md-4" style="padding-top: 7px;">
         <%= current_user.email %>
       </div>
-      <div class="span2" style="padding-top: 7px;">
+      <div class="col-md-2" style="padding-top: 7px;">
         <% if current_user.verification.nil? %>
           <span style="color: #91D473; padding-left: 10px;">[ verified ]</span>
         <% else %>
@@ -43,16 +42,16 @@
       <% emails.each do |user_email| %>
 
         <div class="row">
-          <div class="span1" style="width: 80px;">
+          <div class="col-md-1" style="width: 80px;">
             <%= form_tag(settings_delete_email_path, :method => "post") do  %>
               <input type="hidden" name="email" value="<%= user_email.email %>" />
               <button type="submit" class="btn btn-danger" >Delete</button>
             <% end %>
           </div>
-          <div class="span3" style="padding-top: 7px;">
+          <div class="col-md-4" style="padding-top: 7px;">
             <%= user_email.email %>
           </div>
-          <div class="span2" style="padding-top: 7px;">
+          <div class="col-md-2" style="padding-top: 7px;">
             <% if user_email.verified? %>
               <il class="list-cell">
                 <span style="color: #91D473; padding-left: 10px;">[ verified ]</span>
@@ -63,7 +62,7 @@
               </il>
             <% end %>
           </div>
-          <div class="span2">
+          <div class="col-md-2">
             <% if user_email.verified? %>
               <%= form_tag(settings_make_email_default_path, :method => "post") do  %>
                 <input type="hidden" name="email" value="<%= user_email.email %>" />

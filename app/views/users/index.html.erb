@@ -2,23 +2,23 @@
 
 <% if !@users.nil? && !@users.empty? %>
 
-  <div class="span3" >
+  <div class="col-md-3" >
     <%= render 'settings/navi' %>
   </div>
 
-  <div class="span8">
+  <div class="col-md-9">
 
-    <div class="row content_header_def" >
+    <div class="content_header_def" >
       User Management  
     </div>
     <div class="content">
       <% @users.each do |user| %>
         <div class="row search-item">
-          <div class="span2">
-            <%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :class => "round", :gravatar => { :size => 100, :default => "#{Settings.instance.server_url}/profile_icon.png" }), user_path(user) %>
+          <div class="col-md-2">
+            <%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :class => "round12", :gravatar => { :size => 100, :default => "#{Settings.instance.server_url}/profile_icon.png" }), user_path(user) %>
           </div>
 
-          <div class="span5">
+          <div class="col-md-10">
             <%= user.fullname %> 
             <%= form_tag( update_permissions_user_path(user), :method => "post", :class => "form-horizontal") do  %>
 

@@ -2,20 +2,20 @@
 
 <div class = "well box_snippet" >
 
-  <div class="row mb5">
-    <div class="span2">
+  <div class="mb5">
+    <div >
       <h5 class="dep_header">Podfile entry</h5>
     </div>
-    <div class="span5 w430"><pre class="download_area"><code>pod '<%= @product.name %>', '<%= @version.to_s %>'</code></pre></div>
+    <div ><pre class="download_area"><code>pod '<%= @product.name %>', '<%= @version.to_s %>'</code></pre></div>
   </div>
 
   <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.to_s ) %>
   <% unless downloads.empty? %>
-    <div class="row mb5">
-      <div class="span2">
+    <div class="mb5">
+      <div >
         <h5 class="dep_header">Download</h5>
       </div>
-      <div class="span5 download_area" style="width: 409px;" >
+      <div class="download_area" >
         <% downloads.each do |download|  %>
           <a title="<%= download.name %> download" href="<%= download.link %>"><%= download.name %></a>
         <% end %>
@@ -23,11 +23,8 @@
     </div>
   <% end %>
 
-  <div class="row mb5">
-    <div class="span2">
-
-    </div>
-    <div class="span5 w430">
+  <div class="mb5">
+    <div >
       <%= render "products/helpers/notify_me" %>
     </div>
   </div>

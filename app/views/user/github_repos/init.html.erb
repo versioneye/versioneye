@@ -1,14 +1,14 @@
 <% title 'Github Repositories' %>
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render '/user/helpers/navi' %>
 </div>
 
 
 <% if !current_user.github_account_connected? %>
 
-  <div class="span8">
-    <div class="row content_header_def" >
+  <div class="col-md-9">
+    <div class="content_header_def" >
       Connect with GitHub to monitor your GitHub Repositories.
     </div>
     <div class="content " >
@@ -18,13 +18,13 @@
 
 <% else %>
 
-  <div class="span8">
-    <div class="row content_header_def" >
+  <div class="col-md-9">
+    <div class="content_header_def" >
       Your GitHub Repositories
     </div>
 
     <% if !current_user.github_scope.to_s.split(",").include?("repo") %>
-      <div class="span8 content flash warning" >
+      <div class="content flash warning" >
          With the current scope VersionEye can only fetch your public repositories.
          If you want VersionEye to monitor your private repositories, you need to grant VersionEye access:<br/><br/>
          <a href='<%= Settings.instance.github_base_url %>/login/oauth/authorize?client_id=<%=Settings.instance.github_client_id%>&amp;scope=repo,user:email' style="margin-right: 5px;" >
@@ -37,7 +37,7 @@
       </div>
     <% end %>
 
-    <div class="span8 content" id="content"> . </div>
+    <div class="content" id="content"> . </div>
   </div>
   <script type="text/javascript">
     React.renderComponent(

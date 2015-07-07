@@ -1,15 +1,14 @@
 <% title 'Github Repositories' %>
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render '/user/helpers/navi' %>
 </div>
 
-
-<div class="span8">
-  <div class="row content_header_def" >
+<div class="col-md-9">
+  <div class="content_header_def" >
     Files for repository <b><%= @repo.fullname %></b>
   </div>
-  <div class="span8 content" id="content"> . </div>
+  <div class="content" id="content"> . </div>
 </div>
 <script type="text/javascript">
   React.renderComponent(

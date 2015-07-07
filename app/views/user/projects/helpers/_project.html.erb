@@ -1,6 +1,6 @@
 <% tr_class='' %> 
 <% if project.sv_count_sum > 0 %>
-  <% tr_class='flash error' %>
+  <% tr_class='flash danger' %>
 <% end %> 
 <tr class="<%= tr_class %>">
     <td>
@@ -13,7 +13,7 @@
         <span class="icon-lock" title="Private VersionEye Project"></span>
       <% end %> 
       <% if project.sv_count_sum > 0 %>
-        <span class="icon-shield" title="Security Alert!"> <%= project.sv_count_sum %>  </span>
+        <span class="fa fa-shield" title="Security Alert!"> <%= project.sv_count_sum %>  </span>
       <% end %> 
     </td>
     <td>

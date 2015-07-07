@@ -6,15 +6,15 @@
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); 
   width: 400px; 
-  font-family: 'Droid Serif'; 
+  font-family: "Droid Sans", "Helvetica"; 
   font-size: 70px;
 }
 
 .enterprise_subheader{
   position: relative;
-  top: 150px;
+  top: 66px;
   left: 10px;
-  font-family: 'Droid Serif'; 
+  font-family: "Droid Sans", "Helvetica"; 
   font-size: 20px;
   width: 700px;
 }
@@ -30,9 +30,22 @@ h2{
 
 h3{
   font-size: 20px;
-  font-family: 'Droid Serif'
+  font-family: "Droid Sans", "Helvetica"
 }
 
 .two_col_box{
   padding: 0 5px 0 15px; 
 }
+
+cite { 
+    font-style: italic;
+    font-family: times;
+    font-size: 26px; 
+    color: gray;
+    line-height: 1.2;
+}
+
+.cite_section {
+  padding-top: 10px;
+}
+

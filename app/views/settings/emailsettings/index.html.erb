@@ -1,15 +1,15 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Email Server Settings
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <%= form_tag( settings_emailsettings_path, :method => "post", :class => "form-horizontal") do  %>
 
@@ -17,63 +17,63 @@
         Configure here your internal SMTP server, which should be used to send out the notification emails.
       </p>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :sender_name, "Sender Name", :class => "control-label", :for => "sender_name" %>
         <div class="controls">
-          <%= text_field_tag :sender_name, @emailsetting.sender_name, :id => "sender_name" %>
+          <%= text_field_tag :sender_name, @emailsetting.sender_name, :id => "sender_name", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :sender_email, "Sender Email", :class => "control-label", :for => "sender_email" %>
         <div class="controls">
-          <%= text_field_tag :sender_email, @emailsetting.sender_email, :id => "sender_email" %>
+          <%= text_field_tag :sender_email, @emailsetting.sender_email, :id => "sender_email", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :address, "Address", :class => "control-label", :for => "address" %>
         <div class="controls">
-          <%= text_field_tag :address, @emailsetting.address, :id => "address" %>
+          <%= text_field_tag :address, @emailsetting.address, :id => "address", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :port, "Port", :class => "control-label", :for => "port" %>
         <div class="controls">
-          <%= text_field_tag :port, @emailsetting.port, :id => "port" %>
+          <%= text_field_tag :port, @emailsetting.port, :id => "port", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :username, "Username", :class => "control-label", :for => "username" %>
         <div class="controls">
-          <%= text_field_tag :username, @emailsetting.username, :id => "username" %>
+          <%= text_field_tag :username, @emailsetting.username, :id => "username", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :password, "Password", :class => "control-label", :for => "password" %>
         <div class="controls">
-          <%= password_field_tag :password, @emailsetting.password, :id => "password" %>
+          <%= password_field_tag :password, @emailsetting.password, :id => "password", :class => "form-control" %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :domain, "Domain", :class => "control-label", :for => "domain" %>
         <div class="controls">
-          <%= text_field_tag :domain, @emailsetting.domain, :id => "domain" %>
+          <%= text_field_tag :domain, @emailsetting.domain, :id => "domain", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :authentication, "Authentication", :class => "control-label", :for => "authentication" %>
         <div class="controls">
-          <%= text_field_tag :authentication, @emailsetting.authentication, :id => "authentication" %>
+          <%= text_field_tag :authentication, @emailsetting.authentication, :id => "authentication", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="controls">
           <label for="enable_starttls_auto" style="font-size: 12px;" class="checkbox">
             <%= check_box_tag "enable_starttls_auto", true, @emailsetting.enable_starttls_auto, :id => "enable_starttls_auto" %>
@@ -82,7 +82,7 @@
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>
@@ -99,14 +99,14 @@
         Send out a test email.
       </p>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :testemail, "Test email to", :class => "control-label", :for => "domain" %>
         <div class="controls">
-          <%= text_field_tag :testemail, @testemail, :id => "testemail" %>
+          <%= text_field_tag :testemail, @testemail, :id => "testemail", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Send</button>
