@@ -35,7 +35,7 @@ describe "Submit a Comment to specific package" do
       visit "/ruby/json_gobi/1.0"
 
       fill_in 'versioncomment[comment]', :with => "This is a versioncomment XYZ123"
-      click_button 'Save'
+      click_button 'Submit'
       page.should have_content("Comment saved!")
 
       visit "/ruby/json_gobi/1.0"
