@@ -1,22 +1,22 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Privacy Settings
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <%= form_tag(settings_update_privacy_path, :method => "post", :class => "form-horizontal") do  %>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :following_products, "Who can see the packages I'm following?", :class => "control-label", :for => "following_products", :style => "width: 300px" %>
         <div class="controls" style="margin-left: 305px;">
-          <select name="following_products"  id="following_products" >
+          <select name="following_products"  id="following_products" class="form-control" >
             <option value="nobody" <%= "selected" if @user.privacy_products == 'nobody' %> >Nobody</option>
             <option value="ru" <%= "selected" if @user.privacy_products == 'ru' %> >Registered Users</option>
             <option value="everybody" <%= "selected" if @user.privacy_products == 'everybody' %> >Everybody</option>
@@ -24,10 +24,10 @@
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :fcomment, "Who can see my comments on my profile?", :class => "control-label", :for => "comments", :style => "width: 300px" %>
         <div class="controls" style="margin-left: 305px;">
-          <select name="comments"  >
+          <select name="comments" class="form-control" >
             <option value="nobody" <%= "selected" if @user.privacy_comments == 'nobody' %> >Nobody</option>
             <option value="ru" <%= "selected" if @user.privacy_comments == 'ru' %> >Registered Users</option>
             <option value="everybody" <%= "selected" if @user.privacy_comments == 'everybody' %> >Everybody</option>
@@ -35,20 +35,20 @@
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :password, "Password", :class => "control-label", :for => "password", :style => "width: 300px" %>
         <div class="controls" style="margin-left: 305px;">
-          <%= password_field_tag :password, "", :id => "password" %>
+          <%= password_field_tag :password, "", :id => "password", :class => "form-control" %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="controls" style="margin-left: 305px;">
           <%= link_to "I need a new password", iforgotmypassword_path %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="control-label" style="width: 300px;"></div>
         <div class="controls" style="margin-left: 305px;">
           <button type="submit" class="btn btn-primary btn-large" >Save</button>

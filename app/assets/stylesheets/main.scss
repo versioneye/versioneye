@@ -1,13 +1,10 @@
 
+.dependency_table{
+  width: 100%;
+}
 
 .dependency_table .icon_col{
   width: 10px;
-}
-.dependency_table .name_col{
-  width: 270px;
-}
-.dependency_table .name_col_after_icon{
-  width: 245px;
 }
 .dependency_table th{
   text-align: left;
@@ -435,9 +432,9 @@ h2 + .row {
   }
 
   &.content {
-    padding: 0 10px 20px 0;
+    padding: 0 0px 20px 0;
     padding-left: 0px;
-    width: 95%;
+    width: 100%;
     border: 0;
   }
 

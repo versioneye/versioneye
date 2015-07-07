@@ -1,7 +1,7 @@
 
 <% title 'Search Results' %>
 
-<div class="span3">
+<div class="col-md-3">
 
   <%= render 'extended_search' %>
 
@@ -11,14 +11,16 @@
 
 </div>
 
-<div class="span8" >
-  <div class="row content_header_def" >
+<div class="col-md-9" >
+  <div class="content_header_def" >
     <% if @products && !@products.empty? %>
       <em> `<%= params[:q] %>`</em> has returned <%= @products.total_entries %> results
     <% end %>
   </div>
   <div class="content">
+
     <%= render :partial => "products/show_search_results",
                :locals => { :products => @products, :paginate => true, :prefix => "search", :name_limit => 70 }  %>
+
   </div>
 </div>

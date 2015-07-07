@@ -1,27 +1,27 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Connect with GitHub and others
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <p>
       Connect your VersionEye account with other networks. In that way you can login
       with your GitHub or Bitbucket account.
     </p>
 
-    <div class="row-fluid span12" >
-      <div class="span2">
-        <i class = "icon icon-github-alt"></i>
+    <div style="margin-bottom: 20px; margin-top: 20px;" >
+      <div >
+        <i class="fa fa-github"></i>
         <strong>GitHub</strong>
       </div>
-      <div class="span8" >
+      <div  >
         <% if @user.github_token %>
           <span style="color: green">Connected</span>
           <%= link_to "[ disconnect ]",
@@ -39,13 +39,14 @@
         <% end %>
       </div>
     </div>
+    
     <!-- Bitbucket connections -->
-    <div class="row-fluid span12" >
-      <div class="span2" >
-        <i class = "icon icon-bitbucket"></i>
+    <div  >
+      <div >
+        <i class="fa fa-bitbucket"></i>
         <strong>Bitbucket</strong>
       </div>
-       <div class="span8" >
+       <div  >
          <% if not @user.bitbucket_token.nil? %>
            <span style="color: green">Connected</span>
            <%= link_to "[ disconnect ]",

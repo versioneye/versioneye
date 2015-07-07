@@ -3,6 +3,10 @@
 
 <head >
 
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8"/>
 
   <link href="https://s3.amazonaws.com/veye_assets/versioneye-search.xml"
@@ -38,15 +42,16 @@
 
   <%= render 'layouts/header' %>
 
-  <%= render 'shared/messages' %>
+  
 
   <% if !signed_in? && (@product || @products)  %>
     <%= render 'shared/dialog_follow' %>
     <%= render 'shared/dialog_login_feature' %>
   <% end %>
 
-  <section class="container l_margin_top_50" >
+  <section class="container" >
     <%= render 'layouts/searchbar' %>
+    <%= render 'shared/messages' %>
     <div class="well-white row">
       <%= yield %>
     </div>

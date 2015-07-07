@@ -4,9 +4,11 @@
 </p>
 
 <div>
-  <%= form_tag(add_collaborator_user_project_path(id: params[:id]),  class: 'form-inline', style: 'vertical-align:top;') do %>
+  <%= form_tag(add_collaborator_user_project_path(id: params[:id]),  class: 'form-group', style: 'vertical-align:top;') do %>
     <div class="input-append">
-      <input id="collaborator_username" name="collaborator[username]" class="span6 input" type="text" autocomplete="off" />
+      
+      <input id="collaborator_username" name="collaborator[username]" class="typeahead  form-control" type="text" autofocus="autofocus" autocomplete="off" style="width: 400px; margin-top: -5px; display: inline-block;" />
+
       <button class="btn btn-primary" onclick="preventSubmit('collaborator_username', 'collaborator username')" type="submit" >
         Add collaborator
       </button>
@@ -14,28 +16,26 @@
   <% end %>
 </div>
 
-<div class = "media">
-  <%= render partial: "collaborator" , collection: @project.collaborators %>
-</div>
+<% @project.collaborators.each do |collaborator| %> 
+  <div class = "row">
+    <%= render partial: "collaborator", :locals => {collaborator: collaborator} %>
+  </div>
+<% end %> 
 
-<script>
-  jQuery(document).ready(function(){
-    console.debug("Collaborators autocomplete is initialized.");
+<script type="text/javascript">
 
-    jQuery("input#collaborator_username").typeahead({
-      name: "contacts",
-      remote: {
-        url: "/users/autocomplete?term=%QUERY"
-      },
-      engine: Hogan,
-      template: [
-        '<div>',
-          '<p>',
-            '<i class="icon-male">&nbsp;</i>',
-            '<strong>{{ fullname }}</strong> ( {{ username }} )',
-          '</p>',
-        '</div>'
-      ].join('')
+    jQuery(document).ready(function(){
+      jQuery("input#collaborator_username").typeahead({
+        name: "users",
+        limit: 10,
+        allowDuplicates: true,
+        remote: {
+          url: "/users/autocomplete?term=%QUERY"
+        },
+        engine: Hogan,
+        template: "{{username}} - ({{ fullname }})"
+      });
+      console.debug("Collaborators autocomplete is initialized.");
     });
-  });
+  
 </script>

@@ -1,11 +1,11 @@
 <div class="row" style="margin-bottom: 20px;" >
-	<div class="span3"  >
+	<div class="col-md-3"  >
 		<%= link_to gravatar_image_tag( @user.email, :alt => @user.fullname, :class => 'round4', :gravatar => { :size => 200, :default => "#{Settings.instance.server_url}/profile_icon.png" }), user_path(@user) %><br/>
 		<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
 			<a href="http://gravatar.com/emails">Change profile picture</a><br/>
 		<% end %>
 	</div>
-	<div class="span5" style="width: 424px;" >
+	<div class="col-md-5" style="width: 424px;" >
 		<h2 ><%= @user.fullname %></h2>
 		<div>
 			<p><%= @user.description %></p>
@@ -19,7 +19,7 @@
 			<% end %>
 		</div>
 	</div>
-	<div class="span3 pull-right" >
+	<div class="col-md-3 pull-right" >
 		<div class="pull-right" >
 			<% if @user.location && !@user.location.empty? %>
 				<div id="map_for_user_profile" class="map_for_user_profile round" ></div>

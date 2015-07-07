@@ -3,7 +3,7 @@
 
   <%= form_tag(admin_submitted_url_path(@submitted_url),
                :class => 'form-horizontal', :method => 'delete')  do %>
-  <div class= "control-group">
+  <div class= "form-group">
 
       <label class= "control-label">
         <span class="label label-warning">Warning!</span>
@@ -14,7 +14,7 @@
       </div>
   </div>
 
-  <div class = "control-group">
+  <div class = "form-group">
     <div class = "controls">
       <button type = "button" class = "btn" onclick="jQuery('.admin-form').addClass('hide')"> Cancel </button>
       <%= submit_tag "Delete", :confirm => "Are you sure?",

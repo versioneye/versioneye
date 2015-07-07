@@ -9,11 +9,11 @@
   <% title "Favorite packages of #{@user.username} (#{@user.fullname}) at VersionEye" %>
   <%= render "header" %>
 
-  <div class="span3" >
+  <div class="col-md-3" >
     <%= render "users/navi" %>
   </div>
 
-  <div class="span8 content">
+  <div class="col-md-9 content">
     <% if !@products.nil? && @products.size > 0 %>
 
       <div >

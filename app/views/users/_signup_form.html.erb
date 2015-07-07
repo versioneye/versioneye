@@ -10,37 +10,37 @@
         <%= render 'shared/error_messages', :object => f.object %>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :nickname, :class => "control-label", :for => "fullname" %>
       <div class="controls">
-        <%= f.text_field :fullname, :id => "fullname" %>
+        <%= f.text_field :fullname, :id => "fullname", :class => "form-control" %>
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :email,  :class => "control-label", :for => "email" %>
       <div class="controls">
-        <%= f.text_field :email, :id => "email" %>
+        <%= f.text_field :email, :id => "email", :class => "form-control" %>
       </div>
     </div>
 
-    <div class="control-group">
-        <%= f.label :password,  :class => "control-label", :for => "password" %>
+    <div class="form-group">
+      <%= f.label :password,  :class => "control-label", :for => "password" %>
       <div class="controls">
-        <%= f.password_field :password, :id => "password" %>
+        <%= f.password_field :password, :id => "password", :class => "form-control" %>
       </div>
     </div>
 
     <% if Settings.instance.show_promocode %>
-      <div class="control-group">
-          <%= f.label :promo_code,  :class => "control-label", :for => "promo_code" %>
-        <div class="controls" style="padding:0">
-          <%= f.text_field :promo_code, :id => "promo_code" %> opt.
+      <div class="form-group">
+        <%= f.label :promo_code,  :class => "control-label", :for => "promo_code" %>
+        <div class="controls">
+          <%= f.text_field :promo_code, :id => "promo_code", :class => "form-control", :placeholder => "Optional" %>
         </div>
       </div>
     <% end %>
 
-    <div class="control-group">
+    <div class="form-group">
       <div class="controls">
         <%= f.check_box :terms, :style => "vertical-align: top; margin-right: 5px;", :id => "terms" %>
         <label for="terms" style="display: inline; font-size: 12px;">
@@ -61,10 +61,10 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <div class="control-label"></div>
       <div class="controls">
-        <button type="submit" class="btn btn-large" ><%= t(:page_signup_button_signup) %></button>
+        <button type="submit" class="btn btn-large btn-primary" ><%= t(:page_signup_button_signup) %></button>
       </div>
     </div>
 

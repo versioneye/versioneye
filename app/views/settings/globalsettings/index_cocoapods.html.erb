@@ -1,15 +1,15 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     CocoaPods Settings
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <%= form_tag( settings_cocoapods_path, :method => "post", :class => "form-horizontal") do  %>
 
@@ -18,17 +18,17 @@
         Where do you host your primary <a href="http://cocoapods.org">CocoaPods</a> Repository?
       </p>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :cocoapods_spec_git, "Specs Git", :class => "control-label", :for => "cocoapods_spec_git" %>
         <div class="controls">
-          <%= text_field_tag :cocoapods_spec_git, @globalsetting['cocoapods_spec_git'], :id => "cocoapods_spec_git" %>
+          <%= text_field_tag :cocoapods_spec_git, @globalsetting['cocoapods_spec_git'], :id => "cocoapods_spec_git", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :cocoapods_spec_url, "Specs URL", :class => "control-label", :for => "cocoapods_spec_url" %>
         <div class="controls">
-          <%= text_field_tag :cocoapods_spec_url, @globalsetting['cocoapods_spec_url'], :id => "cocoapods_spec_url" %>
+          <%= text_field_tag :cocoapods_spec_url, @globalsetting['cocoapods_spec_url'], :id => "cocoapods_spec_url", :class => 'form-control' %>
         </div>
       </div>
 
@@ -38,17 +38,17 @@
         Do you have a secondary CocoaPods Repository?
       </p>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :cocoapods_spec_git_2, "Specs Git", :class => "control-label", :for => "cocoapods_spec_git_2" %>
         <div class="controls">
-          <%= text_field_tag :cocoapods_spec_git_2, @globalsetting['cocoapods_spec_git_2'], :id => "cocoapods_spec_git_2" %>
+          <%= text_field_tag :cocoapods_spec_git_2, @globalsetting['cocoapods_spec_git_2'], :id => "cocoapods_spec_git_2", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :cocoapods_spec_url_2, "Specs URL", :class => "control-label", :for => "cocoapods_spec_url_2" %>
         <div class="controls">
-          <%= text_field_tag :cocoapods_spec_url_2, @globalsetting['cocoapods_spec_url_2'], :id => "cocoapods_spec_url_2" %>
+          <%= text_field_tag :cocoapods_spec_url_2, @globalsetting['cocoapods_spec_url_2'], :id => "cocoapods_spec_url_2", :class => 'form-control' %>
         </div>
       </div>
 
@@ -59,15 +59,15 @@
         If the field is empty it will not be crawled.
       </p>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :cocoapods_schedule, "Schedule", :class => "control-label", :for => "cocoapods_schedule" %>
         <div class="controls">
-          <%= text_field_tag :cocoapods_schedule, @globalsetting['cocoapods_schedule'], :id => "cocoapods_schedule" %>
+          <%= text_field_tag :cocoapods_schedule, @globalsetting['cocoapods_schedule'], :id => "cocoapods_schedule", :class => 'form-control' %>
         </div>
       </div>
 
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>

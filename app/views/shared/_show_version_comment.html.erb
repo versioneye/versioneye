@@ -1,38 +1,34 @@
-<div class="row well well-mini" style="margin-top: 5px; margin-bottom: 5px;">
+<div class="well well-mini" style="margin-top: 5px; margin-bottom: 5px;">
 
-	<div class="span1" style = "width:60px; text-align: left;">
-		<a href="/users/<%= comment.user.username %>">
-			<%= gravatar_image_tag( comment.user.email, :style => 'width: 50px;', :alt => comment.user.fullname, :gravatar => { :size => 50, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %>
-		</a>
-	</div>
+  <div class="row">
 
-	<div class="span6" style="width: 515px;">
-		<div class="row">
-			<a href="/users/<%= comment.user.username %>">
-				<span ><%= comment.user.fullname %></span>
-			</a>
-			at <b><%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %></b>
-		</div>
-		<div class="user_comment">
-			<%= comment.comment %>
-		</div>
-		<div class="row">
-			<div class="span2" >
-				<a href="https://twitter.com/share"
-					   class="twitter-share-button"
-					   data-url="<%= Settings.instance.server_url %>/vc/<%= comment.id %>"
-					   data-text="<%= comment.user.fullname %> commented <%= @product.name_and_version %> @VersionEye read the #review here:"
-					   data-count="horizontal" >Twitter</a>
-				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-			</div>
-			<div class="span2">
-				<%= render :partial => "shared/list_reply_link", :locals => { :comment => comment } %>
-			</div>
-		</div>
-		<div class="row">
-			<%= render :partial => "shared/version_comment_replies",
-				:locals => {:comment => comment} %>
-		</div>
-	</div>
+  <div class="col-md-2" style="text-align: right;">
+    <a href="/users/<%= comment.user.username %>">
+      <%= gravatar_image_tag( comment.user.email, :style => 'width: 50px;', :alt => comment.user.fullname, :gravatar => { :size => 50, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %>
+    </a>
+  </div>
+
+  <div class="col-md-10" >
+    <div >
+      <a href="/users/<%= comment.user.username %>">
+        <span ><%= comment.user.fullname %></span>
+      </a>
+      at <b><%= comment.created_at.strftime("%b %d, %Y - %I:%m %p") %></b>
+    </div>
+    <div class="user_comment">
+      <%= comment.comment %>
+    </div>
+    <div >
+      <div >
+        <%= render :partial => "shared/list_reply_link", :locals => { :comment => comment } %>
+      </div>
+    </div>
+    <div >
+      <%= render :partial => "shared/version_comment_replies",
+        :locals => {:comment => comment} %>
+    </div>
+  </div>
+
+  </div>
 
 </div>

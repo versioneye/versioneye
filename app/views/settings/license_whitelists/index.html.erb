@@ -1,15 +1,15 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     License Whitelists
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <p>
       Create a license whitelist and assign it to your projects to ensure a license policy.
@@ -17,12 +17,11 @@
 
     <p>
       </br>
-      <%= form_for(:license_whitelist, :url => settings_license_whitelists_create_path, :html => {:class => 'form-horizontal'} ) do |f|  %>
-        <div class="control-group">
+      <%= form_for(:license_whitelist, :url => settings_license_whitelists_create_path, :html => {:class => 'form-inline'} ) do |f|  %>
+        <div class="form-group">
           <%= f.label :name, :class => 'control-label' %>
-          <div class="controls">
-            <%= f.text_field :name, :class => "round" %> <button id="sign_in_button" type="submit" class="btn btn-big" >Create New Whitelist</button>
-          </div>
+          <%= f.text_field :name, :class => "form-control" %> 
+          <button id="sign_in_button" type="submit" class="btn btn-big btn-primary" >Create New Whitelist</button>
         </div>
       <% end %>
     </p>
@@ -50,7 +49,7 @@
             <td>
               <% if wlist.default == false %> 
                 <%= form_tag( settings_license_whitelists_default_path(:list => wlist.name.to_s) , :method => "post", :style => 'margin: 0;') do %>
-                  <button type="submit" class="btn" >Make Default</button>
+                  <button type="submit" class="btn btn-success" >Make Default</button>
                 <% end %>
               <% else %> 
                 <span class="label label-success" >DEFAULT</span>

@@ -1,10 +1,9 @@
 
 .navbar {
 
-  & .main_logo {
-    padding: 0px 0px 0px 0px;
-    margin-left: 0;
-    height: 50px;
+  .logo_small{
+    margin-top: 2px;
+    margin-left: 5px;
   }
 
   & img.flag {
@@ -13,19 +12,11 @@
     height: 25px;
   }
 
-  /* link separators */
-  .divider-vertical {
-    height: 10px;
-    margin: 15px 12px 0px 12px;
-    background-color: white;
-    border-style: ridge;
-    border: 1px solid white;
-  }
 }
 
 .navbar .nav > li {
   float: left;
-  padding: 5px 0px 0px 0px;
+  padding: 5px 0px 0px 15px;
 }
 
 

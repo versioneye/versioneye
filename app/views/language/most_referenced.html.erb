@@ -1,7 +1,7 @@
 
 <% title "Most referenced #{@lang} packages" %>
 
-<div class="span3">
+<div class="col-md-3">
 
   <% if !signed_in? %>
     <%= render "/shared/github_ad" %>
@@ -9,8 +9,8 @@
 
 </div>
 
-<div class="span8" >
-  <div class="row content_header_def" >
+<div class="col-md-9" >
+  <div class="content_header_def" >
     Most referenced <a href="/<%= @lang %>"><%= @lang %></a> packages.
   </div>
   <div class="content">

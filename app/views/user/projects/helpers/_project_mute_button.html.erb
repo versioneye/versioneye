@@ -6,7 +6,7 @@
           title = "Mute alerts for this version"
           data-project-id = "<%= dep.project[:_id].to_s %>"
           data-dependency-id = "<%= dep[:_id].to_s %>" >
-    <i class = "dep-icon icon-volume-up"></i>
+    <i class = "dep-icon fa fa-volume-off"></i>
   </button>
 <% elsif dep.muted %>
   <button id="<%= dep.id.to_s %>_button"
@@ -14,6 +14,6 @@
           title = "Allow notification for this version."
           data-project-id = "<%= dep.project[:_id].to_s %>"
           data-dependency-id = "<%= dep[:_id].to_s %>" >
-    <i class = "dep-icon icon-volume-off"></i>
+    <i class = "dep-icon fa fa-volume-up"></i>
   </button>
 <% end %>

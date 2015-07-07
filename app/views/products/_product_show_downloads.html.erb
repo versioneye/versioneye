@@ -1,12 +1,12 @@
 <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.to_s ) %>
 <% if !downloads.nil? && !downloads.empty? %>
-  <div class="row well box_download" >
-    <div class="span2">
+  <div class="well box_download" >
+    <div >
       <h5 class="dep_header" >
         <%= pluralize(downloads.count, 'Download') %>
       </h5>
     </div>
-    <div class="span5 download_area" >
+    <div class="download_area" >
       <ul class="download_list" >
       <% downloads.each do |download|  %>
         <% next if !download.link.to_s.match(/\Ahttp/i) %> 

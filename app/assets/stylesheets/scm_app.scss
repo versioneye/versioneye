@@ -75,7 +75,9 @@
     text-align: right;
 }
 .onoffswitch-switch {
-    display: block; width: 18px; margin: 3.5px;
+    display: block; 
+    width: 22px; 
+    margin: 3.5px;
     background: #FFFFFF;
     border: 2px solid #999999; border-radius: 50px;
     position: absolute; top: 0; bottom: 0; right: 51px;
@@ -88,3 +90,4 @@
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px;
 }
+

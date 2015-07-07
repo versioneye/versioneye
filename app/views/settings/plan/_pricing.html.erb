@@ -1,12 +1,12 @@
 <div class="plans" id="plans" >
   <% @plans = Plan.current_plans() %>
   <% @plans.each do |plan| %>
-  <div class="row search-item" style="height: 30px; margin-left: 0;" >
-    <div class="span2" style="padding: 0px;" ><%= plan.name %></div>
-    <div class="span2" style="padding: 0px; width: 100px; ">€ <%= plan.price %>/Month</div>
-    <div class="span2" style="padding: 0px; "><%= pluralize(plan.private_projects, 'private project') %></div>
+  <div class="row search-item" style="height: 50px; margin-left: 0;" >
+    <div class="col-md-3" style="padding: 0px;" ><%= plan.name %></div>
+    <div class="col-md-3" style="padding: 0px; width: 100px; ">€ <%= plan.price %>/Month</div>
+    <div class="col-md-3" style="padding: 0px; "><%= pluralize(plan.private_projects, 'private project') %></div>
 
-    <div class="span2 pull-right" style="padding: 0px; width: 150px;" >
+    <div class="col-md-3 pull-right" style="padding: 0px; width: 150px;" >
       <% if @plan && @plan.name_id.eql?( plan.name_id ) %>
         <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
       <% else %>

@@ -1,17 +1,19 @@
-<div id = "most-referenced-container" class = "media">
+<div id = "most-referenced-container" class="media">
   <h2 class="section_header"> Most referenced libraries </h2>
   <% @most_referenced_products.each_with_index do |prod, i| %>
-    <div class = "media-body product-item">
-      <h5 class = "media-heading">
-        <%= i + 1 %>. <a href = "<%= products_path(lang: prod.language_esc, key: prod.to_param) %>"><%= prod.name %></a>
-        <span class = "pull-right">
-          <%= render partial: 'shared/product_follow_mini', locals: {product: prod, user: current_user} %>
+    <div class="prod-item" >
+      <div >
+        <span class="product_page_sm_header">
+          <%= i + 1 %>. <a href="<%= products_path(lang: prod.language_esc, key: prod.to_param) %>"><%= prod.name %></a>
         </span>
-      </h5>
-      <p>
+      </div>
+      <div>
         <%= prod.short_summary %> <br/>
-        <span> References: <%= link_to prod.used_by_count, product_references_path( :lang => prod.language_esc, :key => prod.to_param ) %> </span>
-      </p>
+      </div>
+      <div>
+        <span>References: <%= link_to prod.used_by_count, product_references_path( :lang => prod.language_esc, :key => prod.to_param ) %> </span> | 
+        License: <span class="bold"><%= prod.license_info %> </span>
+      </div>
     </div>
   <% end %>
   <div>

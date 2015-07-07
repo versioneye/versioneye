@@ -1,18 +1,18 @@
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Manage your notifications
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <%= form_tag(settings_update_notifications_path, :method => "post", :class => "form-horizontal") do  %>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="controls">
           <label for="general_news" style="font-size: 12px;" class="checkbox">
             <%= check_box_tag "general_news", true, @user_notification.newsletter_news, :id => "general_news" %>
@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="controls">
           <label for="new_feature_news" style="font-size: 12px;" class="checkbox">
             <%= check_box_tag "new_feature_news", true, @user_notification.newsletter_features, :id => "new_feature_news" %>
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="controls">
           <label for="notification_emails" style="font-size: 12px;" class="checkbox">
             <%= check_box_tag "notification_emails", true, @user_notification.notification_emails, :id => "notification_emails" %>
@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="controls">
           <label for="project_emails" style="font-size: 12px;" class="checkbox">
             <%= check_box_tag "project_emails", true, @user_notification.project_emails, :id => "project_emails" %>
@@ -48,7 +48,7 @@
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>

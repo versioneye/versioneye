@@ -2,21 +2,22 @@
 <% title "#{@lang} at VersionEye - Continuous Updating" %>
 <% page_header @lang %>
 
-<div id = "language" class = "hide" data-language = "<%= Product.encode_language(@lang) %>"></div>
-<section class = "">
-  <div class = "row-fluid" >
+<div id="language" class="hide" data-language="<%= Product.encode_language(@lang) %>"></div>
+
+<section class = "content">
+  <div class = "row" >
     <%=  render 'language/helpers/language_description' %>
   </div>
 
-  <div class = "row">
+  <div >
     <%= render "language/helpers/followers" %>
   </div>
 
   <div class = "row">
-    <div class = "span5">
+    <div class = "col-md-6">
       <%= render "language/helpers/most_referenced" %>
     </div>
-    <div class = "span5 offset1">
+    <div class = "col-md-6 offset1">
       <%= render "language/helpers/top" %>
     </div>
   </div>
@@ -25,7 +26,7 @@
     <%= render "language/helpers/latest" %>
   </div>
 
-  <div class = "row">
+  <div >
     <%=  render "language/helpers/other_languages" %>
   </div>
 

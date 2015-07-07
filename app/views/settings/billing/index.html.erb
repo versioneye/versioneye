@@ -1,21 +1,21 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Edit your billing address
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <%= form_tag(settings_update_billing_path, :method => "post", :class => "form-horizontal", :id => "payment-form") do %>
 
       <%= render "billing_fields" %>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="control-label-big"></div>
         <div class="controls" style="margin-left: 155px;">
           <button type="submit" class="btn btn-large btn-primary">Save</button>
