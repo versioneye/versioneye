@@ -4,7 +4,6 @@ gem 'bundler'              , '~> 1.10.5'
 gem 'rails'                , '~> 4.2.2'
 gem 'jquery-rails'         , '~> 4.0.4'
 gem 'execjs'               , '~> 2.5.2'
-gem 'gravatar_image_tag'   , '~> 1.2.0'
 gem 'oauth'                , '~> 0.4.7'
 gem 'twitter_oauth'        , '~> 0.4.94'
 gem 'puma'                 , '~> 2.11.1'
@@ -20,6 +19,9 @@ gem 'will_paginate_mongoid', '2.0.1'
 
 gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.19.1'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
+
+# gem 'gravatar_image_tag'  , '~> 1.2.0'
+gem 'gravatar_image_tag'    , :git => 'git@github.com:reiz/gravatar_image_tag.git', :tag => 'v1.2.1'
 
 group :development do
   gem 'psych'             , '~> 2.0.5'
