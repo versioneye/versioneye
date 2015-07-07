@@ -15,6 +15,7 @@
   <%= link_to( gravatar_image_tag(user[:email],
                                  :alt => user[:fullname],
                                  :class => classes,
+                                 :class => "round12",
                                  :gravatar => { :size => image_size,
                                                 :default => "#{Settings.instance.server_url}/profile_icon.png" }),
   user_link) %>

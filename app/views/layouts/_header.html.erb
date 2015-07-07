@@ -9,17 +9,7 @@
         <span class="icon-bar"></span>
       </button>
       
-      <% if signed_in? %>
-        <% if Rails.env.enterprise? %>
-          <%= link_to image_tag("verisoneye-logo-small.png", :class => 'logo_small'), settings_emails_path, :rel => "nofollow" %>
-        <% else %>
-          <%= link_to image_tag("verisoneye-logo-small.png", :class => 'logo_small'), user_projects_path, :rel => "nofollow" %>
-        <% end %>
-      <% else %>
-        <a href="/" >
-          <%= image_tag "verisoneye-logo-small.png", :class => 'logo_small' %>
-        </a>
-      <% end %>
+      <%= render "shared/header_logo" %>
 
     </div>
 
@@ -81,7 +71,7 @@
               <% if Rails.env.enterprise? %>
                 <%= image_tag "profile_icon.png", size: "30" %> <%= username_max_30( current_user.username ) %>
               <% else %> 
-                <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round4", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= username_max_30( current_user.username ) %>
+                <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round8", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= username_max_30( current_user.username ) %>
               <% end %>
             </a>
           </li>

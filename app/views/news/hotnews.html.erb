@@ -1,14 +1,14 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'news/navi' %>
 </div>
-<div class="span8">
+<div class="col-md-9">
 
-  <div class="span8 content_header_def" >
+  <div class="content_header_def" >
     Comments to the hottest packages from the community.
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
     <% if !@comments.nil? && !@comments.empty? %>
       <%= render :partial => "shared/comments", :locals => { :comments => @comments, :show_gravatar => true } %>
     <% end %>

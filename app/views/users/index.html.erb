@@ -15,7 +15,7 @@
       <% @users.each do |user| %>
         <div class="row search-item">
           <div class="col-md-2">
-            <%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :class => "round", :gravatar => { :size => 100, :default => "#{Settings.instance.server_url}/profile_icon.png" }), user_path(user) %>
+            <%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :class => "round12", :gravatar => { :size => 100, :default => "#{Settings.instance.server_url}/profile_icon.png" }), user_path(user) %>
           </div>
 
           <div class="col-md-10">

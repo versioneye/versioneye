@@ -4,7 +4,7 @@
 
   <div class="col-md-2" style="text-align: right;">
     <a href="/users/<%= comment.user.username %>">
-      <%= gravatar_image_tag( comment.user.email, :style => 'width: 50px;', :alt => comment.user.fullname, :gravatar => { :size => 50, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %>
+      <%= gravatar_image_tag( comment.user.email, :style => 'width: 50px;', :alt => comment.user.fullname, :class => "round12", :gravatar => { :size => 50, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %>
     </a>
   </div>
 

@@ -126,15 +126,19 @@ h6 {
 
 .banner {
     padding: 100px 0;
-    color: #f8f8f8;
-    background: url(../img/banner-bg.jpg) no-repeat center center;
-    background-size: cover;
 }
 
 .banner h2 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
     font-size: 3em;
+    color: black;
+}
+
+.banner h3 {
+    margin: 0;
+    font-size: 2em;
+    color: black;
+    margin-bottom: 30px;
 }
 
 .banner ul {
@@ -156,8 +160,14 @@ h6 {
 @media(max-width:767px) {
     .banner h2 {
         margin: 0;
-        text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
-        font-size: 3em;
+        font-size: 2em;
+        margin-bottom: 30px;
+    }
+
+    .banner h2 {
+        margin: 0;
+        font-size: 2em;
+        margin-bottom: 15px;
     }
 
     ul.banner-social-buttons > li {
@@ -173,7 +183,6 @@ h6 {
 
 footer {
     padding: 50px 0;
-    background-color: #f8f8f8;
 }
 
 p.copyright {
