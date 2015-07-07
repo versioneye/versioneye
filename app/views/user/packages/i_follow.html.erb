@@ -13,7 +13,7 @@
       You follow 0 Software Packages
     <% end %>
   </div>
-  <div class="span8 content" >
+  <div class="content" >
     <% if !@products.nil? && !@products.empty? %>
       <%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
       <div style="margin-top: 20px; text-align: right;">

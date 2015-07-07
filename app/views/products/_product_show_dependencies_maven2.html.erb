@@ -3,7 +3,7 @@
   <% main_dependencies = @product.dependencies(nil) %>
 
   <div class="row">
-  	<div class="span6">
+  	<div class="col-md-12">
   		<h5 class="dep_header">
         <% if main_dependencies && main_dependencies.count %>
   			  <%= pluralize( main_dependencies.count, 'Compile Dependencies') %>
@@ -12,7 +12,7 @@
         <% end %>
   		</h5>
   	</div>
-  	<div class="span7" >
+  	<div class="col-md-12" >
   		<% if main_dependencies.count > 0 && main_dependencies.count <= 30 %>
         <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => main_dependencies }  %>
       <% elsif main_dependencies.count > 30 %>

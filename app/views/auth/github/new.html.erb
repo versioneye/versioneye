@@ -1,6 +1,6 @@
 <% title 'Sign Up' %>
 
-<div class="span10 col2-left" >
+<div class="col-md-10 col2-left" >
 
   <%= form_tag('/auth/github/create', :method => 'post', :class => 'form-horizontal', :id => "new_github_user_form") do  %>
 
@@ -13,16 +13,16 @@
     <div class="form-group">
       <%= label_tag(:email, "E-Mail", :class => "control-label", :for => "email") %>
       <div class="controls">
-        <%= text_field_tag :email, @email, :class => "round", :id => "email"  %>
+        <%= text_field_tag :email, @email, :class => "form-control", :id => "email", :placeholder => "mandatory"  %>
         <%= render :partial => 'shared/input_error', :locals => {:model => @user, :key => :email} %>
       </div>
     </div>
 
     <% if Settings.instance.show_promocode %>
       <div class="form-group">
-          <%= label_tag :promo_code, "Promo code", :class => "control-label", :for => "promo_code" %>
+        <%= label_tag :promo_code, "Promo code", :class => "control-label", :for => "promo_code" %>
         <div class="controls">
-          <%= text_field_tag :promo_code, @promo, :id => "promo_code" %> optional
+          <%= text_field_tag :promo_code, @promo, :id => "promo_code", :class => "form-control", :placeholder => "optional"  %>
         </div>
       </div>
     <% end %>

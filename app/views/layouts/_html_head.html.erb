@@ -15,14 +15,9 @@
     <script src="/assets/libs/d3pie.min.js"></script>
   <% end %> 
 
-  <% if current_page?( root_path )  %>
+  <% if current_page?( root_path ) || current_page?( enterprise_path ) %>
 
     <%= stylesheet_link_tag "application_lp" %>
-    <%= javascript_include_tag "application_lp",            :defer => false, :async => false %>
-
-  <% elsif current_page?( enterprise_path ) %>
-
-    <%= stylesheet_link_tag "application_enterprise" %>
     <%= javascript_include_tag "application_lp",            :defer => false, :async => false %>
 
   <% else %>

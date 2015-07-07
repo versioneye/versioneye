@@ -1,7 +1,7 @@
 
 <% title 'References' %>
 
-<div class="span3">
+<div class="col-md-3">
 
   <% if !signed_in? %>
     <%= render '/shared/github_ad' %>
@@ -11,8 +11,8 @@
 
 <% if @product %>
   <% count = ref_count(@product) %>
-  <div class="span8" >
-    <div class="row content_header_def" >
+  <div class="col-md-9" >
+    <div class="content_header_def" >
       <%= link_to @product.name, product_version_path(@product) %> has <%= pluralize( count , "reference")  %>
     </div>
     <div class="content">
@@ -27,7 +27,7 @@
 
 <% else %>
 
-  <div class="span8" >
+  <div class="col-md-9" >
     <div class="row content_header_def" >
       No Package selected.
     </div>

@@ -8,7 +8,13 @@
 <div class="box content" >
   <% @product.users[0..15].each do |user| %>
     <% if !user.nil? && !user.email.nil? %>
-      <%= link_to gravatar_image_tag( user.email, :alt => user.fullname, :title => user.fullname, :style => 'width: 45px;', :gravatar => { :size => 45, :default => "#{Settings.instance.server_url}/profile_icon.png" } ), user_path(user) %>
+      <%= link_to gravatar_image_tag(user.email, 
+                    :alt => user.fullname, 
+                    :title => user.fullname, 
+                    :style => 'width: 45px;', 
+                    :class => "round12", 
+                    :gravatar => { :size => 45, 
+                                   :default => "#{Settings.instance.server_url}/profile_icon.png" } ), user_path(user) %>
     <% end %>
   <% end %>
   <% if @product.users.count > 16 %>

@@ -1,6 +1,6 @@
 <div class="row" style="margin-bottom: 20px;" >
 	<div class="col-md-3"  >
-		<%= link_to gravatar_image_tag( @user.email, :alt => @user.fullname, :class => 'round4', :gravatar => { :size => 200, :default => "#{Settings.instance.server_url}/profile_icon.png" }), user_path(@user) %><br/>
+		<%= link_to gravatar_image_tag( @user.email, :alt => @user.fullname, :class => 'round12', :gravatar => { :size => 200, :default => "#{Settings.instance.server_url}/profile_icon.png" }), user_path(@user) %><br/>
 		<% if signed_in? && current_user.id.to_s.eql?(@user.id.to_s) %>
 			<a href="http://gravatar.com/emails">Change profile picture</a><br/>
 		<% end %>
