@@ -97,16 +97,10 @@ class ProductsController < ApplicationController
   def ref_badge
     language = Product.decode_language params[:lang]
     prod_key = Product.decode_prod_key params[:key]
-    par = ""
-    if params[:style]
-      par = "?style=#{params[:style]}"
-    end
-
-    badge = ref_badge_for_product language, prod_key
-    color = ref_color_for badge
-    url   = "http://img.shields.io/badge/references-#{badge}-#{color}.svg#{par}"
-    response = HttpService.fetch_response url
-    send_data response.body, :type => "image/svg+xml", :disposition => 'inline'
+    
+    key = "#{language}:::#{prod_key}:::ref"
+    badge = BadgeRefService.badge_for key 
+    send_data badge.svg, :type => "image/svg+xml", :disposition => 'inline'
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
