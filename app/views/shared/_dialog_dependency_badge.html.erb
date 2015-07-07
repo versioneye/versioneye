@@ -1,85 +1,91 @@
 
-<div id="dialog_dependency_badge" class="modal hide fade" style="text-align: left;">
-  <div class = "modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Dependency Badge</h3>
-  </div>
-  <div class = "modal-body " style="text-align: left;" >
+<div id="dialog_dependency_badge" class="modal fade" style="text-align: left;">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
-    <div style="padding-bottom: 20px;">
-      For your copy-and-paste convenience.
+      <div class = "modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Dependency Badge</h3>
+      </div>
+      <div class = "modal-body " style="text-align: left;" >
+
+        <div style="padding-bottom: 20px;">
+          For your copy-and-paste convenience.
+        </div>
+
+        <form>
+          <div class="dialog_badge_group">
+            <div class="dialog_badge_header">
+              Markdown
+            </div>
+            <div>
+              <input id="badge_for_markdown" class="form-control" type="text" value="test" />
+            </div>
+          </div>
+
+          <div class="dialog_badge_group">
+            <div class="dialog_badge_header">
+              Textile
+            </div>
+            <div>
+              <input id="badge_for_textile" class="form-control" type="text" value="test" />
+            </div>
+          </div>
+
+          <div class="dialog_badge_group">
+            <div class="dialog_badge_header">
+              RDoc
+            </div>
+            <div>
+              <input id="badge_for_rdoc" class="form-control" type="text" value="test" />
+            </div>
+          </div>
+
+          <div class="dialog_badge_group">
+            <div class="dialog_badge_header">
+              HTML
+            </div>
+            <div>
+              <input id="badge_for_html" class="form-control" type="text" value="test" />
+            </div>
+          </div>
+        </form>
+
+        <script type="text/javascript">
+          purl = document.URL.split("#")[0].split("?")[0]
+          image_url = purl + "/badge.svg?style=flat";
+          url       = purl 
+          <% if @product && !@product.version.to_s.empty? %>
+            image_url = "<%= product_version_badge_url(:lang => @product.language_esc, :key => @product.to_param, :version => Version.encode_version(@product.version) ) %>" + ".svg";
+            url = "<%= package_version_url(:lang => @product.language_esc, :key => @product.to_param, :version => Version.encode_version(@product.version)) %>";
+          <% end %>
+          <% if @product && @product.version.to_s.empty? %>
+            image_url = "<%= product_badge_url(:lang => @product.language_esc, :key => @product.to_param ) %>" + ".svg";
+            url = "<%= products_url( :lang => @product.language_esc, :key => @product.to_param ) %>";
+          <% end %>
+
+          markdown_url = "[![Dependency Status](" + image_url + ")](" + url + ")";
+          element = document.getElementById("badge_for_markdown");
+          element.value = markdown_url;
+
+          textile_url = "!" + image_url + "(Dependency Status)!:" + url + "";
+          element_textile = document.getElementById("badge_for_textile");
+          element_textile.value = textile_url;
+
+          rdoc_url = "{<img src=\"" + image_url + "\" alt=\"Dependency Status\" />}[" + url + "]";
+          element_rdoc = document.getElementById("badge_for_rdoc");
+          element_rdoc.value = rdoc_url;
+
+          html_url = "<a href='" + url + "'><img src='" + image_url + "' alt=\"Dependency Status\" /></a>";
+          element_html = document.getElementById("badge_for_html");
+          element_html.value = html_url
+        </script>
+
+      </div>
+      <div class="modal-footer">
+        <button id="dependency_dialog_cancel" type="button" class="btn btn-large btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      </div>
+
     </div>
-
-    <form>
-      <div class="dialog_badge_group">
-        <div class="dialog_badge_header">
-          Markdown
-        </div>
-        <div>
-          <input id="badge_for_markdown" class="input-bigger" type="text" value="test" />
-        </div>
-      </div>
-
-      <div class="dialog_badge_group">
-        <div class="dialog_badge_header">
-          Textile
-        </div>
-        <div>
-          <input id="badge_for_textile" class="input-bigger" type="text" value="test" />
-        </div>
-      </div>
-
-      <div class="dialog_badge_group">
-        <div class="dialog_badge_header">
-          RDoc
-        </div>
-        <div>
-          <input id="badge_for_rdoc" class="input-bigger" type="text" value="test" />
-        </div>
-      </div>
-
-      <div class="dialog_badge_group">
-        <div class="dialog_badge_header">
-          HTML
-        </div>
-        <div>
-          <input id="badge_for_html" class="input-bigger" type="text" value="test" />
-        </div>
-      </div>
-    </form>
-
-    <script type="text/javascript">
-      purl = document.URL.split("#")[0].split("?")[0]
-      image_url = purl + "/badge.svg?style=flat";
-      url       = purl 
-      <% if @product && !@product.version.to_s.empty? %>
-        image_url = "<%= product_version_badge_url(:lang => @product.language_esc, :key => @product.to_param, :version => Version.encode_version(@product.version) ) %>" + ".svg";
-        url = "<%= package_version_url(:lang => @product.language_esc, :key => @product.to_param, :version => Version.encode_version(@product.version)) %>";
-      <% end %>
-      <% if @product && @product.version.to_s.empty? %>
-        image_url = "<%= product_badge_url(:lang => @product.language_esc, :key => @product.to_param ) %>" + ".svg";
-        url = "<%= products_url( :lang => @product.language_esc, :key => @product.to_param ) %>";
-      <% end %>
-
-      markdown_url = "[![Dependency Status](" + image_url + ")](" + url + ")";
-      element = document.getElementById("badge_for_markdown");
-      element.value = markdown_url;
-
-      textile_url = "!" + image_url + "(Dependency Status)!:" + url + "";
-      element_textile = document.getElementById("badge_for_textile");
-      element_textile.value = textile_url;
-
-      rdoc_url = "{<img src=\"" + image_url + "\" alt=\"Dependency Status\" />}[" + url + "]";
-      element_rdoc = document.getElementById("badge_for_rdoc");
-      element_rdoc.value = rdoc_url;
-
-      html_url = "<a href='" + url + "'><img src='" + image_url + "' alt=\"Dependency Status\" /></a>";
-      element_html = document.getElementById("badge_for_html");
-      element_html.value = html_url
-    </script>
-
-  </div>
-  <div class="modal-footer">
-    <button id="dependency_dialog_cancel" type="button" class="btn btn-large" data-dismiss="modal" aria-hidden="true">Cancel</button>
   </div>
 </div>
