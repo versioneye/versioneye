@@ -10,10 +10,9 @@ h1.product{
 
 h2.section_header{
   padding: 0 0 10px 0;
-  margin: 0;
+  margin: 25px 0 0 0;
   color: $text_casual;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 22px;
 }
 
 h3.side_header{
@@ -86,11 +85,32 @@ h3.side_header{
   font-style: italic;
 }
 
-.meta_reference{
+.meta_info_bold{
   font-size: 13px;
   font-weight: bold;
 }
 
+.meta_info{
+  font-size: 13px;
+}
+
 .meta_prod_description{
   font-size: 13px;
+}
+
+.btn-follow-product{
+  padding: 0;
+}
+
+.product_page_sm_header{
+  font-size: 20px; 
+  font-weight: bold;
+}
+
+.prod-item {
+  margin-top: 15px;
+}
+
+.bold{
+  font-weight: bold;
 }

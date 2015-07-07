@@ -1,5 +1,5 @@
 <% if @language %>
-  <div class="span8">
+  <div class="col-md-8">
 
     <br/>
     <p><%= @language[:description] %></p>
@@ -12,7 +12,7 @@
     <div id="plot_novel"></div>
 
   </div>
-  <div class="span4">
+  <div class="col-md-4">
     <%= render partial: "language/helpers/language_block", locals: {language: @language} %>
   </div>
 <% end %>

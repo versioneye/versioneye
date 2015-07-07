@@ -1,15 +1,15 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Satis Settings
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <%= form_tag( settings_satis_path, :method => "post", :class => "form-horizontal") do  %>
 
@@ -18,10 +18,10 @@
         is a static composer repository generator for PHP. It's used to handle private packages. For example http://packages.company.com/
       </p>
 
-      <div class="control-group">
-        <%= label_tag :satis_base_url, "Satis Base URL", :class => "control-label", :for => "satis_base_url" %>
+      <div class="form-group">
+        <%= label_tag :satis_base_url, "Base URL", :class => "control-label", :for => "satis_base_url" %>
         <div class="controls">
-          <%= text_field_tag :satis_base_url, @globalsetting['satis_base_url'], :id => "satis_base_url" %>
+          <%= text_field_tag :satis_base_url, @globalsetting['satis_base_url'], :id => "satis_base_url", :class => 'form-control' %>
         </div>
       </div>
 
@@ -32,14 +32,14 @@
         If the field is empty it will not be crawled.
       </p>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :satis_schedule, "Schedule", :class => "control-label", :for => "satis_schedule" %>
         <div class="controls">
-          <%= text_field_tag :satis_schedule, @globalsetting['satis_schedule'], :id => "satis_schedule" %>
+          <%= text_field_tag :satis_schedule, @globalsetting['satis_schedule'], :id => "satis_schedule", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>

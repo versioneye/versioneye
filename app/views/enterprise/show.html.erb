@@ -1,7 +1,7 @@
 
 <div class="container" style=";" >
 
-  <div style='padding: 20px 0 20px 0; height: 215px;' >
+  <div style='margin: 20px 0 40px 0; height: 215px;' >
     <div class='pull-left' >
       <%= link_to image_tag('versioneye-round-logo.png'), root_path %> 
     </div>
@@ -11,171 +11,220 @@
     </div>
   </div>
 
-  <%= render "/shared/features" %>
-
-
-  <div style="margin-left: 50px; margin-right: 50px;">
-    <h2 class="no_margin">Who is using it?</h2>
-    <p class="cite_section">
-      <cite>“Automated version notifications of open source and self developed closed source components by VersionEye Enterprise are very helpful especially to our distributed iOS teams. They help reducing coordination and communication efforts. The VersionEye team always did a great job supporting us with individual features!”</cite><br/>
-      <div>
-        <%= image_tag 'cites/alexander-greim_75.jpg', :class => "img-rounded" %> <b>Alexander Greim (Director Mobile Engineering @ <a href="https://www.xing.com">XING</a> AG)</b>
-      </div>
-    </p> 
-    <p>
-      Download the full <a href="/docs/XING-Customer-Success-Story.pdf">customer success story with XING</a>. 
-    </p>
-    <p>
-      More success stories are coming soon! The other Enterprise clients are bigger than XING and that's why the approval process takes a bit longer for them. 
-    </p>
-  </div>
-
-
-
-<div >
-  <h2 >Which Git servers are supported?</h2>
-  <div class="well-white" style="margin-bottom: 0px;" >
-      <p>
-        VersionEye Enterprise can be connected with <a href="https://enterprise.github.com/">GitHub Enterprise</a>, 
-        Atlassian <a href="https://www.atlassian.com/software/stash">Stash</a> and <a href="https://bitbucket.org/">Bitbucket</a>. That way it's possible to use the Git servers API as single sign on (OAuth) 
-        for VersionEye Enterprise. <a href="https://about.gitlab.com/">GitLab</a> support is coming soon! 
-      </p>
-      <p > 
-        <%= image_tag "marketing/login_with_github_wb.png"%> 
-        <%= image_tag "marketing/login_with_bitbucket_wb.png" %> 
-        <%= image_tag "marketing/login_with_stash_wb.png", :style => "width: 262px;" %>
-      </p>
-      <p>
-        Simply turn on the switch for project files in Git repositories 
-        which should be monitored by VersionEye! 
-      </p>
-  </div>
 </div>
-<p > 
-  <%= image_tag "marketing/git_repo_integration.png", :style => "margin-left: 1px;" %>
-</p> 
-<p>
-  Turn on the switch and receive daily email notifications 
-  about your dependencies. <br/><b>It was never easier to stay up-to-date!</b>
-</p>
 
 
-  <h2 >Which repository servers are supported?</h2>
+    <div class="content-section-a">
+        <%= render "shared/feature_version" %> 
+    </div>
+
+    <div class="content-section-b">
+        <%= render "shared/feature_license" %> 
+    </div>
+  
+    <div class="content-section-a">
+        <%= render "shared/feature_security" %>
+    </div>
+
+
+    <div class="content-section-b">
+      <div class="container">
+
+        <div >
+          <h2 class="no_margin">Who is using it?</h2>
+          <p class="cite_section">
+            <cite>“Automated version notifications of open source and self developed closed source components by VersionEye Enterprise are very helpful especially to our distributed iOS teams. They help reducing coordination and communication efforts. The VersionEye team always did a great job supporting us with individual features!”</cite><br/>
+            <div>
+              <%= image_tag 'cites/alexander-greim_75.jpg', :class => "img-rounded" %> <b>Alexander Greim (Director Mobile Engineering @ <a href="https://www.xing.com">XING</a> AG)</b>
+            </div>
+          </p> 
+          <p class="lead">
+            Download the full <a href="/docs/XING-Customer-Success-Story.pdf">customer success story with XING</a>. 
+          </p>
+          <p class="lead">
+            More success stories are coming soon! The other Enterprise clients are bigger than XING and that's why the approval process takes a bit longer for them. 
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  
+    <div class="content-section-a">
+      <div class="container">
+        <h2 >Which repository servers are supported?</h2>
+        <div class="well-white" >  
+          <p class="lead">
+            The whole point of VersionEye Enterprise is that it can crawl internal repositories, 
+            such as <a href="http://www.sonatype.com/nexus">Nexus Pro</a>, 
+            <a href="http://www.jfrog.com/open-source/#os-arti">Artifactory Enterprise</a> 
+            and other ones. That way VersionEye gets a complete list of <b>ALL</b> your dependencies! 
+            The open source dependencies AND your private components as well! 
+          </p>
+          <p class="lead">
+            Currently we support <a href="http://www.sonatype.com/nexus">Nexus Pro</a> (Java), 
+            <a href="http://www.jfrog.com/open-source/#os-arti">Artifactory Enterprise</a> (Java), 
+            <a href="http://cocoapods.org/">CocoaPods</a> (Objective-C) and <a href="https://github.com/composer/satis">Satis</a> (PHP)!
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="content-section-b">
+      <div class="container">
+
+        <div >
+          <h2 >Which Git servers are supported?</h2>
+          <div class="well-white" style="margin-bottom: 0px;" >
+              <p class="lead">
+                VersionEye Enterprise can be connected with <a href="https://enterprise.github.com/">GitHub Enterprise</a>, 
+                Atlassian <a href="https://www.atlassian.com/software/stash">Stash</a> and <a href="https://bitbucket.org/">Bitbucket</a>. That way it's possible to use the Git servers API as single sign on (OAuth) 
+                for VersionEye Enterprise. <a href="https://about.gitlab.com/">GitLab</a> support is coming soon! 
+              </p>
+              <p class="lead">
+                <%= image_tag "marketing/login_with_github_wb.png"%> 
+                <%= image_tag "marketing/login_with_bitbucket_wb.png" %> 
+                <%= image_tag "marketing/login_with_stash_wb.png", :style => "width: 262px;" %>
+              </p>
+              <p class="lead">
+                Simply turn on the switch for project files in Git repositories 
+                which should be monitored by VersionEye! 
+              </p>
+          </div>
+        </div>
+        <p class="lead">
+          <%= image_tag "marketing/git_repo_integration.png", :style => "margin-left: 1px;" %>
+        </p> 
+        <p class="lead">
+          Turn on the switch and receive daily email notifications 
+          about your dependencies. <br/><b>It was never easier to stay up-to-date!</b>
+        </p>
+
+      </div>
+    </div>
+
+
+    <div class="content-section-a">
+      <%= render "shared/feature_package_managers" %>
+    </div>
+
+  
+    <div class="content-section-b">
+      <div class="container">
+
+        <h2 >How do I install VersionEye Enterprise?</h2>
+        <div class="well-white" >
+          <p class="lead">
+            We provide VersionEye Enterprise as a virtual machine image. To be more exact, 
+            we provide a <a href="http://www.vmware.com">VMWare</a> instance. All you need 
+            is a <a href="http://www.vmware.com/products/player">VMWare Player</a> or 
+            <a href="http://www.vmware.com/products/vsphere">VMWare vSphere</a> to start the instance. 
+            After the instance has booted successfully you can open a browser and navigate to the 
+            IP address of the VM instance. On the default HTTP port 80 the VersionEye web 
+            application will come up, where you can activate the instance with an valid API key.
+          </p>
+          <p class="lead">
+            After activation you can login with admin/admin and connect VersionEye 
+            Enterprise with your private SMTP, Repository and Git server. 
+          </p> 
+          <p class="lead" style="text-align: center;">
+            <%= image_tag "marketing/versioneye_settings.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; width: 700px;" %>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="content-section-a">
+      <div class="container">
+        <h2>Which resources are needed for the Enterprise VM?</h2>
+        <div class="well-white" >
+          <p class="lead">
+            The minimum requirements are: 
+            <ul>
+              <li>1 CPU 2.0 GHz</li>
+              <li>2 GB RAM</li>
+              <li>20 GB HD</li>
+            </ul>
+          </p>
+          <p class="lead">
+            Depending on your setup and the amount of the components in your private 
+            repositories more resources are required. We recommend to run it with: 
+            <ul>
+              <li>2 CPU 2.5 GHz</li>
+              <li>8 GB RAM</li>
+              <li>100 GB HD</li>
+            </ul>
+          </p>
+        </div>
+      </div>
+    </div>  
+
+
+    <div class="content-section-b">
+      <div class="container">
+        <h2 >How to keep the database up-to-date?</h2>
+        <div class="well-white" >  
+          <p class="lead">
+            <a href="https://www.versioneye.com">VersionEye.com</a> is monitoring 
+            550K open source projects on a daily basis. The crawlers are running 24/7 to 
+            keep our database in the cloud up-to-date. VersionEye Enterprise can crawl your 
+            private repositories in-house, but then your are still missing all the open 
+            source libraries from the Internet. For sure you don't want to run &amp; 
+            maintain a huge crawling cluster in your company ;-) That's why there is a 
+            sync mechanism between VersionEye Enterprise and VersionEye.com. 
+            The Enterprise VM pulls data from the VersionEye.com API to keep your 
+            local database up-to-date. 
+          </p>
+          <p style="text-align: center;">
+            <%= image_tag "marketing/VersionEyeEnterpriseArchitecture.png" %>
+          </p>
+          <p class="lead">
+            When uploading a pom.xml (or any other project file) to the VersionEye Enterprise VM, 
+            all open source dependencies are displayed as unknown. 
+            But in the background VersionEye Enterprise will resolve all dependencies via the VersionEye API and pull in 
+            the desired data into the local database. Depending on the number of the dependencies 
+            this can take a couple of minutes. Besides that there is a nightly sync, to keep the metadata 
+            for the local dependencies up-to-date. 
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="content-section-a">
+      <div class="container">
+        <h2 >How are software updates rolled out?</h2>
+        <div class="well-white" >
+          <p class="lead">
+            VersionEye is running on <a href="https://www.docker.com/">Docker</a>! Currently 
+            the whole software for VersionEye and all the backend systems are distributed 
+            over multiple Docker containers. On Port 9999 we provide a web interface to 
+            manage the Docker containers. 
+          </p>
+          <p style="text-align: center;">
+            <%= image_tag "marketing/versioneye-docker.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; " %>
+          </p>
+          <p class="lead">
+            Updates are provided as new Docker containers. With a single click the current 
+            Docker containers can be downloaded directly into the VM, via a secure SSL 
+            connection! <b>Updating software has never been easier!</b> 
+          </p>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="content-section-b">
+      <div class="container">
+        <h2 >Pricing</h2>
   <div class="well-white" >  
-    <p >
-      The whole point of VersionEye Enterprise is that it can crawl internal repositories, 
-      such as <a href="http://www.sonatype.com/nexus">Nexus Pro</a>, 
-      <a href="http://www.jfrog.com/open-source/#os-arti">Artifactory Enterprise</a> 
-      and other ones. That way VersionEye gets a complete list of <b>ALL</b> your dependencies! 
-      The open source dependencies AND your private components as well! 
-    </p>
-    <p> 
-      Currently we support <a href="http://www.sonatype.com/nexus">Nexus Pro</a> (Java), 
-      <a href="http://www.jfrog.com/open-source/#os-arti">Artifactory Enterprise</a> (Java), 
-      <a href="http://cocoapods.org/">CocoaPods</a> (Objective-C) and <a href="https://github.com/composer/satis">Satis</a> (PHP)!
-    </p>
-  </div>
-
-  <h2 >Which package managers are supported?</h2>
-  <div class="well-white l_lp_well_margin" >
-    <%= render "/products/helpers/support_for_packagemanagers" %>
-  </div>
-
-
-  <h2 >How do I install VersionEye Enterprise?</h2>
-  <div class="well-white" >
-    <p >
-      We provide VersionEye Enterprise as a virtual machine image. To be more exact, 
-      we provide a <a href="http://www.vmware.com">VMWare</a> instance. All you need 
-      is a <a href="http://www.vmware.com/products/player">VMWare Player</a> or 
-      <a href="http://www.vmware.com/products/vsphere">VMWare vSphere</a> to start the instance. 
-      After the instance has booted successfully you can open a browser and navigate to the 
-      IP address of the VM instance. On the default HTTP port 80 the VersionEye web 
-      application will come up, where you can activate the instance with an valid API key.
-    </p>
-    <p>
-      After activation you can login with admin/admin and connect VersionEye 
-      Enterprise with your private SMTP, Repository and Git server. 
-    </p> 
-    <p style="text-align: center;">
-      <%= image_tag "marketing/versioneye_settings.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; width: 700px;" %>
-    </p>
-  </div>
-
-
-  <h2>Which resources are needed for the Enterprise VM?</h2>
-  <div class="well-white" >
-    <p >
-      The minimum requirements are: 
-      <ul>
-        <li>1 CPU 2.0 GHz</li>
-        <li>2 GB RAM</li>
-        <li>20 GB HD</li>
-      </ul>
-    </p>
-    <p>
-      Depending on your setup and the amount of the components in your private 
-      repositories more resources are required. We recommend to run it with: 
-      <ul>
-        <li>2 CPU 2.5 GHz</li>
-        <li>8 GB RAM</li>
-        <li>100 GB HD</li>
-      </ul>
-    </p>
-  </div>
-
-
-  <h2 >How are software updates rolled out?</h2>
-  <div class="well-white" >
-    <p >
-      VersionEye is running on <a href="https://www.docker.com/">Docker</a>! Currently 
-      the whole software for VersionEye and all the backend systems are distributed 
-      over multiple Docker containers. On Port 9999 we provide a web interface to 
-      manage the Docker containers. 
-    </p>
-    <p style="text-align: center;">
-      <%= image_tag "marketing/versioneye-docker.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; " %>
-    </p>
-    <p>
-      Updates are provided as new Docker containers. With a single click the current 
-      Docker containers can be downloaded directly into the VM, via a secure SSL 
-      connection! <b>Updating software has never been easier!</b> 
-    </p>
-  </div>
-
-
-  <h2 >How to keep the database up-to-date?</h2>
-  <div class="well-white" >  
-    <p >
-      <a href="https://www.versioneye.com">VersionEye.com</a> is monitoring 
-      550K open source projects on a daily basis. The crawlers are running 24/7 to 
-      keep our database in the cloud up-to-date. VersionEye Enterprise can crawl your 
-      private repositories in-house, but then your are still missing all the open 
-      source libraries from the Internet. For sure you don't want to run &amp; 
-      maintain a huge crawling cluster in your company ;-) That's why there is a 
-      sync mechanism between VersionEye Enterprise and VersionEye.com. 
-      The Enterprise VM pulls data from the VersionEye.com API to keep your 
-      local database up-to-date. 
-    </p>
-    <p style="text-align: center;">
-      <%= image_tag "marketing/VersionEyeEnterpriseArchitecture.png" %>
-    </p>
-    <p>
-      When uploading a pom.xml (or any other project file) to the VersionEye Enterprise VM, 
-      all open source dependencies are displayed as unknown. 
-      But in the background VersionEye Enterprise will resolve all dependencies via the VersionEye API and pull in 
-      the desired data into the local database. Depending on the number of the dependencies 
-      this can take a couple of minutes. Besides that there is a nightly sync, to keep the metadata 
-      for the local dependencies up-to-date. 
-    </p>
-  </div>
-
-
-  <h2 >Pricing</h2>
-  <div class="well-white" >  
-    <p >
+    <p class="lead">
       <div class="row"> 
-        <div class="span5 pull-left">
+        <div class="col-md-5 col-xs-12 pull-left">
           <table class="table table-striped">
             <tr>
               <th>Projects</th>
@@ -233,122 +282,139 @@
               <td>99.000,00 €</td>
             </tr>
           </table>
-
         </div>
-        <div class="span6 pull-right">
+        <div class="col-md-6 col-xs-12 pull-right">
           <h4>30 Day Free Testing</h4>
-          The VersionEye Enterprise VM can be tested for 30 days for free!<br/><br/>
-
+          <p class="lead">
+            The VersionEye Enterprise VM can be tested for 30 days for free!
+          </p>
           <h4>How do you define a project?</h4>
-          A project on VersionEye is currently the representation of a project file. For example a pom.xml or a Gemfile.
-          Maven multi module projects are counted as 1 project! 
-          <br/><br/>
-
+          <p class="lead">
+            A project on VersionEye is currently the representation of a project file. For example a pom.xml or a Gemfile.
+            Maven multi module projects are counted as 1 project! 
+          </p>
           <h4>Updates</h4>
-          VersionEye provides all updates as Docker containers for free!<br/><br/>
-
+          <p class="lead">
+            VersionEye provides all updates as Docker containers for free!
+          </p>
           <h4>Server Limitations</h4>
-          This is the pricing for a one server installation. There are no limitations regarding CPUs and RAM.<br/><br/>
+          <p class="lead">
+            This is the pricing for a one server installation. There are no limitations regarding CPUs and RAM.<br/><br/>
+          </p>
         </div>
 
       </div>
       
     </p>
+  </div>      
+      </div>
+    </div>
+
+  
+
+
+  <div class="content-section-a">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-md-12">
+        <h2 >Interested?</h2>
+          <p class="lead">
+            Please fill out the form below if you are interested in VersionEye Enterprise. We will contact you soon. 
+          </p>
+
+          <p style="padding-top: 15px;">
+          <%= form_tag( enterprise_create_path, :method => "post", :class => "form-horizontal") do  %>
+
+            <div >
+              <%= label_tag :scm, "Git Server", :class => "control-label", :for => "scm" %>
+              <div class="controls" >
+                <select name="scm"  id="scm" class="form-control">
+                  <option value="github" <%= "selected" if @ent_lead['scm'] == 'github' %> >GitHub Enterprise</option>
+                  <option value="stash" <%= "selected" if @ent_lead['scm'] == 'stash' %> >Atlassian Stash</option>
+                  <option value="gitlab" <%= "selected" if @ent_lead['scm'] == 'gitlab' %> >GitLab</option>
+                  <option value="other" <%= "selected" if @ent_lead['scm'] == 'else' %> >Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div >
+              <%= label_tag :repository, "Binary Repository", :class => "control-label", :for => "repository" %>
+              <div class="controls" >
+                <select name="repository"  id="repository" class="form-control" >
+                  <option value="nexus" <%= "selected" if @ent_lead['repository'] == 'nexus' %> >Sonatype Nexus</option>
+                  <option value="artifactory" <%= "selected" if @ent_lead['repository'] == 'artifactory' %> >JFrog Artifactory</option>
+                  <option value="archiva" <%= "selected" if @ent_lead['repository'] == 'archiva' %> >Apache Archiva</option>
+                  <option value="cocoapods" <%= "selected" if @ent_lead['repository'] == 'cocoapods' %> >CocoaPods</option>
+                  <option value="satis" <%= "selected" if @ent_lead['repository'] == 'satis' %> >Satis</option>
+                  <option value="other" <%= "selected" if @ent_lead['repository'] == 'else' %> >Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div >
+              <%= label_tag :ci, "CI Server", :class => "control-label", :for => "ci" %>
+              <div class="controls" >
+                <select name="ci"  id="ci" class="form-control" >
+                  <option value="jenkins" <%= "selected" if @ent_lead['ci'] == 'jenkins' %> >Jenkins</option>
+                  <option value="teamcity" <%= "selected" if @ent_lead['ci'] == 'teamcity' %> >TeamCity</option>
+                  <option value="bamboo" <%= "selected" if @ent_lead['ci'] == 'bamboo' %> >Atlassian Bamboo</option>
+                  <option value="other" <%= "selected" if @ent_lead['ci'] == 'else' %> >Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div >
+              <%= label_tag :virtualization, "Virtualization", :class => "control-label", :for => "virtualization" %>
+              <div class="controls" >
+                <select name="virtualization"  id="virtualization" class="form-control" >
+                  <option value="vmware" <%= "selected" if @ent_lead['virtualization'] == 'vmware' %> >VMWare</option>
+                  <option value="vb" <%= "selected" if @ent_lead['virtualization'] == 'vb' %> >VirtualBox</option>
+                  <option value="kvm" <%= "selected" if @ent_lead['virtualization'] == 'kvm' %> >KVM</option>
+                  <option value="parallels" <%= "selected" if @ent_lead['virtualization'] == 'parallels' %> >Parallels</option>
+                  <option value="xen" <%= "selected" if @ent_lead['virtualization'] == 'xen' %> >Xen</option>
+                  <option value="other" <%= "selected" if @ent_lead['virtualization'] == 'else' %> >Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div >
+              <%= label_tag :name, "Name", :class => "control-label", :for => "name" %>
+              <div class="controls">
+                <%= text_field_tag :name, @ent_lead['name'], :id => "name", :class => 'form-control' %>
+              </div>
+            </div>
+
+            <div >
+              <%= label_tag :email, "Email", :class => "control-label", :for => "email" %>
+              <div class="controls">
+                <%= text_field_tag :email, @ent_lead['email'], :id => "email", :class => 'form-control' %>
+              </div>
+            </div>
+
+            <div >
+              <%= label_tag :note, "Your use case", :class => "control-label", :for => "note" %>
+              <div class="controls">
+                <%= text_area_tag :note, nil, :size=>"27x4", :class => "span4", :class => 'form-control' %>
+              </div>
+            </div>
+
+            <div >
+              <div class="control-label"></div>
+              <div class="controls">
+                <button type="submit" class="btn btn-large btn-primary" >Submit</button>
+              </div>
+            </div>
+
+          <% end %>
+          </p>
+
+          </div>
+        </div>
+
+      </div>
   </div>
 
 
-<div style="margin-left: 50px; margin-right: 50px;">
-  <h2 >Interested?</h2>
-    <p >
-      Please fill out the form below if you are interested in VersionEye Enterprise. We will contact you soon. 
-    </p>
 
-    <p style="padding-top: 15px;">
-    <%= form_tag( enterprise_create_path, :method => "post", :class => "form-horizontal") do  %>
 
-      <div class="control-group">
-        <%= label_tag :scm, "Git Server", :class => "control-label", :for => "scm" %>
-        <div class="controls" >
-          <select name="scm"  id="scm" >
-            <option value="github" <%= "selected" if @ent_lead['scm'] == 'github' %> >GitHub Enterprise</option>
-            <option value="stash" <%= "selected" if @ent_lead['scm'] == 'stash' %> >Atlassian Stash</option>
-            <option value="gitlab" <%= "selected" if @ent_lead['scm'] == 'gitlab' %> >GitLab</option>
-            <option value="other" <%= "selected" if @ent_lead['scm'] == 'else' %> >Other</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <%= label_tag :repository, "Binary Repository", :class => "control-label", :for => "repository" %>
-        <div class="controls" >
-          <select name="repository"  id="repository" >
-            <option value="nexus" <%= "selected" if @ent_lead['repository'] == 'nexus' %> >Sonatype Nexus</option>
-            <option value="artifactory" <%= "selected" if @ent_lead['repository'] == 'artifactory' %> >JFrog Artifactory</option>
-            <option value="archiva" <%= "selected" if @ent_lead['repository'] == 'archiva' %> >Apache Archiva</option>
-            <option value="cocoapods" <%= "selected" if @ent_lead['repository'] == 'cocoapods' %> >CocoaPods</option>
-            <option value="satis" <%= "selected" if @ent_lead['repository'] == 'satis' %> >Satis</option>
-            <option value="other" <%= "selected" if @ent_lead['repository'] == 'else' %> >Other</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <%= label_tag :ci, "CI Server", :class => "control-label", :for => "ci" %>
-        <div class="controls" >
-          <select name="ci"  id="ci" >
-            <option value="jenkins" <%= "selected" if @ent_lead['ci'] == 'jenkins' %> >Jenkins</option>
-            <option value="teamcity" <%= "selected" if @ent_lead['ci'] == 'teamcity' %> >TeamCity</option>
-            <option value="bamboo" <%= "selected" if @ent_lead['ci'] == 'bamboo' %> >Atlassian Bamboo</option>
-            <option value="other" <%= "selected" if @ent_lead['ci'] == 'else' %> >Other</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <%= label_tag :virtualization, "Virtualization", :class => "control-label", :for => "virtualization" %>
-        <div class="controls" >
-          <select name="virtualization"  id="virtualization" >
-            <option value="vmware" <%= "selected" if @ent_lead['virtualization'] == 'vmware' %> >VMWare</option>
-            <option value="vb" <%= "selected" if @ent_lead['virtualization'] == 'vb' %> >VirtualBox</option>
-            <option value="kvm" <%= "selected" if @ent_lead['virtualization'] == 'kvm' %> >KVM</option>
-            <option value="parallels" <%= "selected" if @ent_lead['virtualization'] == 'parallels' %> >Parallels</option>
-            <option value="xen" <%= "selected" if @ent_lead['virtualization'] == 'xen' %> >Xen</option>
-            <option value="other" <%= "selected" if @ent_lead['virtualization'] == 'else' %> >Other</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <%= label_tag :name, "Name", :class => "control-label", :for => "name" %>
-        <div class="controls">
-          <%= text_field_tag :name, @ent_lead['name'], :id => "name" %>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <%= label_tag :email, "Email", :class => "control-label", :for => "email" %>
-        <div class="controls">
-          <%= text_field_tag :email, @ent_lead['email'], :id => "email" %>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <%= label_tag :note, "Your use case", :class => "control-label", :for => "note" %>
-        <div class="controls">
-          <%= text_area_tag :note, nil, :size=>"27x4", :class => "span4" %>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <div class="control-label"></div>
-        <div class="controls">
-          <button type="submit" class="btn btn-large btn-primary" >Submit</button>
-        </div>
-      </div>
-
-    <% end %>
-    </p>
-
-  </div>
-
-</div>

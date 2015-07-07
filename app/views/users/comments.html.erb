@@ -7,11 +7,11 @@
 <% else  %>
 	<%= render 'header' %>
 
-	<div class="span3" >
+	<div class="col-md-3" >
 		<%= render "users/navi" %>
 	</div>
 
-	<div class="span8 content">
+	<div class="col-md-9 content">
 		<% if @comments %>
 			<div>
 				<h2 class="section_header">
@@ -26,4 +26,5 @@
 			<% end %>
 		<% end %>
 	</div>
+	
 <% end %>

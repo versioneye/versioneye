@@ -218,7 +218,8 @@ class User::ProjectsController < ApplicationController
   def status 
     id = params[:id]
     respond_to do |format|
-      format.json { render :json => {:status => ProjectUpdateService.status_for(id)}.to_json }
+      format.json { render :json => {"status": ProjectUpdateService.status_for(id) } }
+      format.text { render :text => ProjectUpdateService.status_for(id) }
     end
   end
 

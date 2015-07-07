@@ -1,39 +1,37 @@
 <div class="margin-top:20px;">
-	<h2 class="section_header">Leave a comment</h2>
+  <h2 class="section_header">Leave a comment</h2>
 </div>
 
 <% if signed_in? %>
-	<div class="boxContainer">
-		<%= form_for @versioncomment do |f| %>
-	    <div class="messages">
-	        <%= render 'shared/error_messages', :object => f.object %>
-	    </div>
-			<div class = "controls-group">
-				<%= f.text_area :comment,
-					:class => "input span7", :style => "width: 600px;",
-					:maxlength => "1000", :rows => 5, :cols => 70,
-					:onKeyUp => "textCounter(this, document.getElementById('counter'), 1000)"  %>
-				<span class = "help-block pull-right">
-					<small> Characters left: <span id="counter">1000</span></small>
-				</span>
-				<%= f.hidden_field :language,    :value => @product.language %>
-				<%= f.hidden_field :product_key, :value => @product.prod_key %>
-				<%= f.hidden_field :version,     :value => @product.version %>
-			</div>
-			<div class = "controls-group">
-				<div class = "pull-left">
-					<button type="submit" class="btn btn-large" >Save</button>
-				</div>
-			</div>
-		<% end %>
-	</div>
+  <div class="boxContainer">
+    <%= form_for @versioncomment do |f| %>
+      <div class="messages">
+          <%= render 'shared/error_messages', :object => f.object %>
+      </div>
+      <div class = "form-group">
+        <%= f.text_area :comment,
+          :class => "input form-control",
+          :maxlength => "1000", :rows => 5, :cols => 70
+        %>
+        
+        <%= f.hidden_field :language,    :value => @product.language %>
+        <%= f.hidden_field :product_key, :value => @product.prod_key %>
+        <%= f.hidden_field :version,     :value => @product.version %>
+      </div>
+      <div class = "form-group">
+        <div class = "pull-left">
+          <button type="submit" class="btn btn-large btn-primary" >Submit</button>
+        </div>
+      </div>
+    <% end %>
+  </div>
 <% elsif %>
-	<div class="well well-small">
-		<div class = "span3" style="font-size: 14px;">
-			<%= link_to "Sign in", signin_path %> to leave a comment.
-		</div>
-		<div class = "span4 pull-right">
-			<%= render 'shared/login_options_vertical' %>
-		</div>
-	</div>
+  <div class="well well-small">
+    <div class = "span3" style="font-size: 14px;">
+      <%= link_to "Sign in", signin_path %> to leave a comment.
+    </div>
+    <div class = "span4 pull-right">
+      <%= render 'shared/login_options_vertical' %>
+    </div>
+  </div>
 <% end %>

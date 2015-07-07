@@ -1,5 +1,5 @@
 
-<div class="row" style="padding-bottom: 20px;">
+<div style="padding-bottom: 20px;">
   <% if signed_in? %>
     <% @product['user_ids'] = Array.new() if @product['user_ids'].nil? %>
     <% if @product['user_ids'].include? current_user.id %>

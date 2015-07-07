@@ -1,6 +1,7 @@
 Versioneye::Application.routes.draw do
 
-  root :to => "products#index"
+  # root :to => "products#index"
+  root :to => "landing_page#index"
 
   get  'docker/remote_images', :to => 'docker#remote_images'
 

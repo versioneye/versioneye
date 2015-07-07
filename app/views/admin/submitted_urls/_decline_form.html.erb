@@ -3,21 +3,21 @@
 
   <%= form_tag(admin_submitted_url_decline_path(@submitted_url), :class => 'form-horizontal') do %>
 
-    <div class = "control-group">
+    <div class = "form-group">
       <%= label_tag :url,nil, :class => 'control-label' %>
       <div class = "controls">
         <%= text_field_tag :url, @submitted_url.url, :class => 'span4', :readonly => true %>
       </div>
     </div>
 
-    <div class = "control-group">
+    <div class = "form-group">
       <%= label_tag :declined_message, nil, :class => "control-label" %>
       <div class = "controls">
         <%= text_area_tag :declined_message, nil, :size=>"27x4", :class => "span4" %>
       </div>
     </div>
 
-    <div class = "control-group">
+    <div class = "form-group">
       <div class = "controls">
         <button type="button" class="btn" onclick="jQuery('.admin-form').addClass('hide')">Cancel</button>
         <%= submit_tag "Decline", :class => "btn btn-danger" %>

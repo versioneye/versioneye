@@ -1,16 +1,6 @@
 
 jQuery(document).ready(function(){
 
-  jQuery('#q').tbHinter({
-    text: "Follow your software libraries"
-  });
-
-  jQuery( "#ext_searchform" ).submit(function( event ) {
-    if (document.getElementById("q").value == "Follow your software libraries"){
-      document.getElementById("q").value = '';  
-    }
-  });
-
   if (jQuery("#payment-form").length) {
     jQuery("#payment-form").submit( function(event) {
       var $form = jQuery("#payment-form");

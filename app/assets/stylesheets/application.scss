@@ -3,6 +3,8 @@
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *
+ *= require bootstrap
+ *= require font-awesome
 */
 
 $gradient_start: #7F0200;
@@ -21,13 +23,11 @@ $link_visited: #FDFDFD;
 $text_link:  #669acb;
 $text_hover: #a0b8cf;
 
-@import "bootstrap.scss";
-@import "bootstrap_responsive.scss";
-@import "bootstrap_switch.scss";
 @import "bootstrap_upload.scss";
-@import "font-awesome.scss";
 @import "sprite.scss";
 @import "colorschema.scss";
+
+@import "typeahead.js-bootstrap.scss";
 
 @import "layout.scss";
 @import "base.scss";
@@ -39,7 +39,6 @@ $text_hover: #a0b8cf;
 @import "footer.scss";
 
 @import "main.scss";
-@import "typeahead.js-bootstrap.scss";
 @import "social-buttons.scss";
 @import "product.scss";
 @import "user.scss";

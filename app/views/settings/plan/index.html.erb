@@ -1,14 +1,14 @@
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Plans &amp; Pricing - Manage your subscription here
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
     <p>
       Open source projects are for free! We only charge a small fee for monitoring project files in private GitHub/Bitbucket repositories.<br/>
       <% if current_user.free_private_projects > 0 %>

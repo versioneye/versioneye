@@ -1,6 +1,6 @@
  <% if signed_in? %>
   <% user = current_user %>
-  <div class = "pull-right" id="follow_<%=product.language_esc %>_<%=product.to_param%>" style="display: <%= display_follow(product, user) %>">
+  <div class="pull-right" id="follow_<%=product.language_esc %>_<%=product.to_param%>" style="display: <%= display_follow(product, user) %>">
     <%= form_tag("/package/follow", :remote => true) do  %>
       <input  name="product_key"  type="hidden" value="<%= product.to_param %>" />
       <input  name="product_lang" type="hidden" value="<%= product.language %>"/>
@@ -8,7 +8,7 @@
     <% end %>
   </div>
 
-  <div class = "pull-right" id="unfollow_<%=product.language_esc %>_<%=product.to_param%>" style="display: <%= display_unfollow(product, user) %>">
+  <div class="pull-right" id="unfollow_<%=product.language_esc %>_<%=product.to_param%>" style="display: <%= display_unfollow(product, user) %>">
     <%= form_tag("/package/unfollow", :remote => true) do  %>
       <input  name="product_key"  type="hidden" value="<%= product.to_param %>" />
       <input  name="product_lang" type="hidden" value="<%= product.language %>"/>

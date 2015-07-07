@@ -1,0 +1,11 @@
+<% if signed_in? %>
+  <% if Rails.env.enterprise? %>
+    <%= link_to image_tag("verisoneye-logo-small.png", :class => 'logo_small'), settings_emails_path, :rel => "nofollow" %>
+  <% else %>
+    <%= link_to image_tag("verisoneye-logo-small.png", :class => 'logo_small'), user_projects_path, :rel => "nofollow" %>
+  <% end %>
+<% else %>
+  <a href="/" >
+    <%= image_tag "verisoneye-logo-small.png", :class => 'logo_small' %>
+  </a>
+<% end %>

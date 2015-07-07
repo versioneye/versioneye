@@ -1,19 +1,19 @@
 <% title 'Packages I follow' %>
 
-<div class="span3" >
+<div class="col-md-3" >
   
 </div>
 
-<div class="span8">
+<div class="col-md-9">
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     <% if @products && !@products.empty? %>
       You follow <%= pluralize(@products.total_entries, 'software package') %> <a href="<%= url_for(favoritepackages_user_url( current_user )) %>.rss"><%= image_tag "rss.png", :title => "Subscribe via RSS", :alt => "Subscribe via RSS" %></a>
     <% else %>
       You follow 0 Software Packages
     <% end %>
   </div>
-  <div class="span8 content" >
+  <div class="content" >
     <% if !@products.nil? && !@products.empty? %>
       <%= render :partial => "products/show_search_results_iterator", :locals => { :products => @products, :prefix => "user", :name_limit => 70 } %>
       <div style="margin-top: 20px; text-align: right;">

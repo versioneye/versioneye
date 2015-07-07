@@ -80,7 +80,6 @@ jsx --watch src/ build/
 
 ```
 sudo npm install -g react-tools
-sudo npm install -g jsx
 ```
 
 

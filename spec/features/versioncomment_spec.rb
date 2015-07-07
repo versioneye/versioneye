@@ -18,7 +18,7 @@ describe "Submit a Comment to specific package" do
     fill_in 'session[email]',    :with => @user.email
     fill_in 'session[password]', :with => @user.password
     find('#sign_in_button').click
-    page.should have_content("Projects")
+    page.should have_content("I follow")
   end
 
   describe "test the comment feature", :js => true do
@@ -35,7 +35,7 @@ describe "Submit a Comment to specific package" do
       visit "/ruby/json_gobi/1.0"
 
       fill_in 'versioncomment[comment]', :with => "This is a versioncomment XYZ123"
-      click_button 'Save'
+      click_button 'Submit'
       page.should have_content("Comment saved!")
 
       visit "/ruby/json_gobi/1.0"

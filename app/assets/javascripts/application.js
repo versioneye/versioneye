@@ -11,8 +11,10 @@
 //= require bootstrap_fileupload
 //= require libs/bootstrap-maxlength.min
 //= require libs/underscore-min
+
 //= require libs/hogan-2.0.0
-//= require libs/typeahead
+//= require libs/typeahead_0.9.3
+
 //= require libs/require
 
 //= require google

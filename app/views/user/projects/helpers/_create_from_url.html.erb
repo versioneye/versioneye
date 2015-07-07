@@ -10,7 +10,7 @@
 
 <%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do |f|  %>
   <div >
-    <%= f.text_field :url, :class => "round", :style => "width: 430px;", :placeholder =>"Paste your URL here" %>
+    <%= f.text_field :url, :class => "round form-control", :placeholder =>"Paste your URL here" %>
   </div>
   <div class="pull-left" style="padding-top: 10px;">
     <button type="submit" class="btn btn-primary btn-large ">Create</button>

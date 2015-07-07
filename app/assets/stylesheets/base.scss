@@ -24,16 +24,16 @@ h4,
 h5,
 h6 {
   color: $text_yellow;
-  font-family: "Droid Sans";
+  font-family: "Droid Sans", "Helvetica";
 }
 
 h1 {
-  font-family: "Droid Serif";
+  font-family: "Droid Sans", "Helvetica";
   font-size: 30px;
 }
 
 h2 {
-  font-family: "Droid Serif";
+  font-family: "Droid Sans", "Helvetica";
   font-size: 24px;
 }
 
@@ -69,9 +69,8 @@ h3 code {
 
 .flash-container {
     overflow: auto;
-    position: fixed;
     top: 80px !important;
-    width: 940px;
+    width: 100%;
     z-index: 2000;
 }
 
@@ -79,6 +78,18 @@ h3 code {
   -webkit-border-radius: 4px 4px 4px 4px;
   -moz-border-radius: 4px 4px 4px 4px;
   border-radius: 4px 4px 4px 4px;
+}
+
+.round8{
+  -webkit-border-radius: 8px 8px 8px 8px;
+  -moz-border-radius: 8px 8px 8px 8px;
+  border-radius: 8px 8px 8px 8px;
+}
+
+.round12{
+  -webkit-border-radius: 12px 12px 12px 12px;
+  -moz-border-radius: 12px 12px 12px 12px;
+  border-radius: 12px 12px 12px 12px;
 }
 
 .modal-body{
@@ -113,18 +124,6 @@ h3 code {
 
 .large_font{
   font-size: 18px;
-}
-
-cite { 
-    font-style: italic;
-    font-family: times;
-    font-size: 26px; 
-    color: gray;
-    line-height: 1.2;
-}
-
-.cite_section {
-  padding-top: 10px;
 }
 
 .two_col_box{

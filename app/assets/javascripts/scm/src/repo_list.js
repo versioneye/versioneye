@@ -58,7 +58,7 @@ var RepoList = React.createClass({
     return (
       <div >
         <div>
-          <input type="text" id="filter_input" value={this.state.text} onChange={this.onChange} />
+          <input type="text" id="filter_input" class="form-control" value={this.state.text} onChange={this.onChange} />
         </div>
         <div className="scm_meta" >
           {this.state.list_size} Repositories - <a href={clear_link}>Reimport all Repositories</a>

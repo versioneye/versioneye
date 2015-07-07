@@ -1,16 +1,16 @@
 <% if signed_in? %>
-  <div class = "pull-right">
-    <%# form_tag("/package/follow") %>
+  <% rl = "right" if rl.to_s.empty? %>
+  <div class="pull-<%= rl %>">
     <button type="submit"
             class="btn btn-mini btn-link btn-follow-product"
             data-follow-state = "<%= user_follows?(product, user)%>"
             data-product-key  = "<%= product.to_param %>"
             data-product-lang = "<%= product[:language] %>">
       <% if user_follows?(product, user) %>
-        <i class="follow-icon icon-check">&nbsp;</i>
+        <i class="fa fa-check-square-o">&nbsp;</i>
         <span class="btn-title">Unfollow</span>
       <% else %>
-        <i class="follow-icon icon-check-empty">&nbsp;</i>
+        <i class="fa fa-square-o">&nbsp;</i>
         <span class="btn-title" title="Follow this software package and get notified as soon a new version comes out.">Follow</span>
       <% end %>
     </button>

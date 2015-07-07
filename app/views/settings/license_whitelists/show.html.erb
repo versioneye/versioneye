@@ -1,45 +1,46 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     License Whitelist <b>"<%= @license_whitelist %>"</b>
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <p>
       Just start typing and add as many licenses to your whitelist as you want.
     </p>
 
-    <%= form_tag(settings_license_whitelists_add_path(:list => @license_whitelist.name), :class => 'form-horizontal') do %>
+    <%= form_tag(settings_license_whitelists_add_path(:list => @license_whitelist.name), :class => 'form-inline', :style => "padding: 0; margin:0;") do %>
+      <div class="form-group input-append">
+        
+        <input id="license_name" name="license_name" class="typeahead form-control" type="text"  autofocus="autofocus" autocomplete="off" style="margin-top: -6px; width: 450px;" />
 
-      <div class="input-append">
-        <input id="license_name" name="license_name" class="span6 input" type="text" autocomplete="off" />
         <button class="btn btn-primary" onclick="preventSubmit('license_name', 'License Name')" type="submit" >
           Add License
         </button>
+        
       </div>
-
     <% end %>
 
     <br/>
+
     <%= form_tag(settings_license_whitelists_update_pessimistic_path(:list => @license_whitelist.name), :class => 'form-horizontal') do %>
-      <div class="control-group">
-        <div class="">
-          <label for="pessimistic" style="font-size: 12px;" class="checkbox">
-              <%= check_box_tag "pessimistic", true, @license_whitelist.pessimistic_mode, :id => "pessimistic" %>
-              Pessimistic mode. If a project dependency has multiple licenses and one of them is violating this license whitelist than count the dependency as violated. 
-          </label>  
-        </div>
+      <div class="checkbox">
+        <label for="pessimistic" style="font-size: 12px;" >
+          <%= check_box_tag "pessimistic", true, @license_whitelist.pessimistic_mode, :id => "pessimistic" %>
+          Pessimistic mode. If a project dependency has multiple licenses and one of them is violating this license whitelist than count the dependency as violated. 
+        </label>  
       </div>
       <button class="btn btn-primary" type="submit" >
         Update
       </button>
     <% end %>
+    
     <br/>
 
     <table class="table table-hover" >
@@ -68,7 +69,7 @@
 
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
     <% @license_whitelist.auditlogs.each do |audit| %>
       <%= render :partial => 'shared/auditlog', :locals => {:audit => audit} %>
     <% end %>
@@ -76,10 +77,10 @@
 
 </div>
 
+
 <script>
   jQuery(document).ready(function(){
     console.debug("License autocomplete is initialized.");
-
     jQuery("input#license_name").typeahead({
       name: "contacts",
       remote: {
@@ -89,11 +90,10 @@
       template: [
         '<div>',
           '<p>',
-            '<strong>{{ license_name }}</strong> ( {{ identifier }} )',
+            '<strong>{{ identifier }}</strong> ( {{ license_name }} )',
           '</p>',
         '</div>'
       ].join('')
     });
   });
 </script>
-

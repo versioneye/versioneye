@@ -1,0 +1,121 @@
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+                <% if signed_in? %>
+                  <% if Rails.env.enterprise? && signed_in_admin? %>
+                    <%= link_to image_tag("verisoneye-logo-small.png", :style => 'margin-top: -12px;'), settings_emails_path, :rel => "nofollow", :class => "navbar-brand topnav" %>
+                  <% else %>
+                    <%= link_to image_tag("verisoneye-logo-small.png", :style => 'margin-top: -12px;'), user_projects_path, :rel => "nofollow", :class => "navbar-brand topnav" %>
+                  <% end %>
+                <% else %>
+                  <a href="/" class="navbar-brand topnav" >
+                    <%= image_tag "verisoneye-logo-small.png", :style => 'margin-top: -12px;' %> 
+                  </a>
+                <% end %>
+
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                  <% if !Rails.env.enterprise? %>
+                    <li>
+                      <%= link_to "Pricing", "/pricing" %>
+                    </li>
+                  <% end %>
+
+                  <% if Settings.instance.show_signup_form == true %>
+                    <li style="font-weight: bold; font-size: 16px;">
+                      <%= form_tag(signup_path, :method => "GET", :style=>"margin: 7px;") do  %>
+                        <button type="submit" class="btn btn-success" ><%= t(:page_header_signup) %></button>
+                      <% end %>
+                    </li>
+                  <% end %>
+                  
+                  <li>
+                    <%= form_tag(signin_path, :method => "GET", :style=>"margin: 7px 0 0 7px;") do  %>
+                      <button type="submit" class="btn btn-primary" ><%= t(:page_header_signin) %></button>
+                    <% end %>
+                  </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
+    <!-- Header -->
+    <a name="about"></a>
+    <div class="intro-header">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                        <h1>Version<span style="color: orange;">Eye</span></h1>
+                        <%= render "/products/helpers/big_search" %>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.intro-header -->
+
+    <!-- Page Content -->
+
+  <a  name="services"></a>
+    
+    <div class="content-section-a">
+        <%= render "shared/feature_version" %> 
+    </div>
+    
+
+    <div class="content-section-b">
+        <%= render "shared/feature_license" %> 
+    </div>
+
+
+    <div class="content-section-a">
+        <%= render "shared/feature_security" %>
+    </div>
+
+  
+    <div class="content-section-b">
+        <%= render "shared/feature_package_managers" %>
+    </div>
+    
+
+    <div class="content-section-a">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>VersionEye Enterprise</h3>
+
+                    <p class="lead">
+                        We're also offering an on-premises version of VersionEye. More information is available at our <%= link_to 'VersionEye Enterprise', enterprise_path %> page!
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>

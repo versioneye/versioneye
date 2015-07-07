@@ -1,15 +1,15 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render 'settings/navi' %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     BitBucket Settings
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <%= form_tag( settings_bitbucketsettings_path, :method => "post", :class => "form-horizontal") do  %>
 
@@ -17,28 +17,28 @@
         If you are using <a href="https://bitbucket.org/">Bitbucket</a> you can configure it here.
       </p>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :bitbucket_base_url, "WEB URL", :class => "control-label", :for => "bitbucket_base_url" %>
         <div class="controls">
-          <%= text_field_tag :bitbucket_base_url, @globalsetting['bitbucket_base_url'], :id => "bitbucket_base_url" %>
+          <%= text_field_tag :bitbucket_base_url, @globalsetting['bitbucket_base_url'], :id => "bitbucket_base_url", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :bitbucket_token, "OAuth token", :class => "control-label", :for => "bitbucket_token" %>
         <div class="controls">
-          <%= text_field_tag :bitbucket_token, @globalsetting['bitbucket_token'], :id => "bitbucket_token" %>
+          <%= text_field_tag :bitbucket_token, @globalsetting['bitbucket_token'], :id => "bitbucket_token", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <%= label_tag :bitbucket_secret, "OAuth secret", :class => "control-label", :for => "bitbucket_secret" %>
         <div class="controls">
-          <%= text_field_tag :bitbucket_secret, @globalsetting['bitbucket_secret'], :id => "bitbucket_secret" %>
+          <%= text_field_tag :bitbucket_secret, @globalsetting['bitbucket_secret'], :id => "bitbucket_secret", :class => 'form-control' %>
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>

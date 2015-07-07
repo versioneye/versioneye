@@ -90,7 +90,7 @@ var RepoBranch = React.createClass({
       <div>
         <div className="scm_branch_head" >
           <p>
-            <i className="icon-code-fork"></i> {branch}
+            <i className="fa fa-code-fork"></i> {branch}
           </p>
         </div>
         <div className="scm_branch_files_cell" >
@@ -173,7 +173,7 @@ var BranchFile = React.createClass({
     }
 
     return (
-      <div className="row-fluid">
+      <div className="">
         <div className="scm_switch_cell" >
           <div className="onoffswitch">
               <input type="checkbox"

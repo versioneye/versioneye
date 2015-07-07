@@ -4,25 +4,24 @@
 
     <%= hidden_field_tag :search_term, params[:q] %>
 
-    <div class = "control-group">
+    <div class = "form-group">
       <%= label_tag :url,nil, :class => 'control-label' %>
       <div class = "controls">
-        <%= text_field_tag :url, nil, :class => "span5" %>
+        <%= text_field_tag :url, nil, :class => "form-control" %>
       </div>
     </div>
 
-    <div class = "control-group">
+    <div class = "form-group">
       <%= label_tag :message, nil, :class => "control-label" %>
       <div class = "controls">
-        <%= text_area_tag :message, nil, :size => "29x4", :class => "span5",
+        <%= text_area_tag :message, nil, :size => "29x4", :class => " form-control",
             :maxlength => "255",
             :onKeyUp => "textCounter(this, document.getElementById('new_url_counter'), 255)" %>
           <br />
-          <span id="new_url_counter" class="help-block label-danger">max:255</span>
       </div>
     </div>
 
-    <div class= "control-group">
+    <div class= "form-group">
       <div class= "controls">
         <button type= "submit" class = "btn btn-large btn-primary"> Submit</button>
       </div>

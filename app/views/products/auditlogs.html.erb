@@ -1,15 +1,15 @@
 
-<div class="span3" >
+<div class="col-md-3" >
   <%= render "products/helpers/edit_navi" %>
 </div>
 
-<div class="span8" >
+<div class="col-md-9" >
 
-  <div class="row content_header_def" >
+  <div class="content_header_def" >
     Auditlogs for <b><%= @product.name %></b>
   </div>
 
-  <div class="span8 content" >
+  <div class="content" >
 
     <div class="boxContainer">
       <% @product.auditlogs.each do |audit| %>

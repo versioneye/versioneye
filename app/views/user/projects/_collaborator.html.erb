@@ -2,12 +2,19 @@
 <% user = nil %>
 <% user = collaborator.user if collaborator[:active] %>
 
-<div class = "media-body">
-  <div class = "row-fluid">
-    <div class = "span1">
+
+  <div style="vertical-align: middle">
+    <div class = "col-md-2" style="width: 85px;">
+      <%  if collaborator.owner?(current_user)  %>
+        <%= render partial: 'user/projects/helpers/collaborator_owner_controls', locals: {collaborator: collaborator} %>
+      <% elsif collaborator.current?(current_user) %>
+        <%= render partial: 'user/projects/helpers/collaborator_controls', locals: {collaborator: collaborator} %>
+      <% end %>
+    </div>
+    <div class = "col-md-1">
       <%= render partial: 'shared/gravatar', locals: {size: 48, show_link: false, user: user, classes: 'centered'} %>
     </div>
-    <div class="span8">
+    <div class="col-md-8">
       <% if user %>
         <p>
           <strong> <%= user[:fullname] %></strong>
@@ -20,13 +27,5 @@
         <p>
       <% end %>
     </div>
-    <div class = "span3">
-      <%  if collaborator.owner?(current_user)  %>
-        <%= render partial: 'user/projects/helpers/collaborator_owner_controls', locals: {collaborator: collaborator} %>
-      <% elsif collaborator.current?(current_user) %>
-        <%= render partial: 'user/projects/helpers/collaborator_controls', locals: {collaborator: collaborator} %>
-      <% end %>
-
-    </div>
   </div>
-</div>
+

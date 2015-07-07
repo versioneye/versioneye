@@ -23,7 +23,7 @@ module ProjectsHelper
   def subproject_label_color selected_id, sub_id 
     return 'success' if selected_id.eql?('summary')
     return 'success' if selected_id.eql?(sub_id)
-    'warn'
+    'default'
   end
 
   def subproject_name( project )
@@ -76,7 +76,7 @@ module ProjectsHelper
         dep[:status_rank] = 3
         unknown_number += 1
       elsif dep.outdated and dep.release? == false
-        dep[:status_class] = 'warn'
+        dep[:status_class] = 'warning'
         dep[:status_rank] = 2
         out_number += 1
       elsif dep.outdated and dep.release? == true

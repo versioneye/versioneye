@@ -1,32 +1,32 @@
 <% title 'Sign Up' %>
 
-<div class="span10 col2-left" >
+<div class="col-md-10 col2-left" >
 
   <%= form_tag('/auth/bitbucket/create', :method => 'post', :class => 'form-horizontal') do  %>
 
-    <div class="control-group">
+    <div class="form-group">
       <div class="controls">
         Almost done. We just need your email address.
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= label_tag(:email, "Email", :class => "control-label", :for => "email") %>
       <div class="controls">
-        <%= text_field_tag :email, @email, :class => "round", :id => "email"  %> mandatory
+        <%= text_field_tag :email, @email, :class => "round form-control", :id => "email", :placeholder => "mandatory"  %>
       </div>
     </div>
 
     <% if Settings.instance.show_promocode %>
-      <div class="control-group">
+      <div class="form-group">
           <%= label_tag :promo_code, "Promo code", :class => "control-label", :for => "promo_code" %>
         <div class="controls">
-          <%= text_field_tag :promo_code, @promo, :id => "promo_code" %> optional
+          <%= text_field_tag :promo_code, @promo, :id => "promo_code", :class => "form-control", :placeholder => "optional" %> 
         </div>
       </div>
     <% end %>
 
-    <div class="control-group">
+    <div class="form-group">
       <div class="controls">
         <%= check_box_tag :terms, "1", false, :style => "vertical-align: top; margin-right: 5px;", :id => "terms" %>
         <label for="terms" style="display: inline; font-size: 12px;">
@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <div class="control-label"></div>
       <div class="controls">
         <button type="submit" class="btn btn-large btn-primary" ><%= t(:page_signup_button_signup) %></button>
