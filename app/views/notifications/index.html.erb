@@ -14,14 +14,16 @@
       <% @notifications.each do |noti| %> 
         <div class="row search-item" >
           <% product = noti.product %>
-          <div class="icon56 span2 pull-left">
+          
+          <div class="icon56 col-md-1 pull-left">
             <% prog_lang = product.language.to_s.downcase.gsub(/\./, '') %>
             <span class = "icon_<%= prog_lang %> on" ></span>
           </div>
-          <div class = "span5">
+          
+          <div class="col-md-11">
             <a href="<%= product_version_path(product, noti.version_id) %>" class="searchResultLink"><span ><%= product.name %>:<%= noti.version_id %></span></a> 
-              <span class="meta_prod_description">found at <%= noti.created_at.strftime('%b %d, %Y - %I:%m %p') %></span>
-              <br/>
+            <span class="meta_prod_description">found at <%= noti.created_at.strftime('%b %d, %Y - %I:%m %p') %></span>
+            <br/>
             <% if product.prod_type == "Maven2" %>
               <span class="group_id_small">GroupId: <%= product.group_id %></span><br/>
               <% if !product.short_summary.to_s.empty? %>
@@ -30,8 +32,18 @@
             <% else %>
               <span class="meta_prod_description"><%= product.short_summary %></span><br/>
             <% end %>
-            <span class="meta_info" >References: <%= link_to product.used_by_count, product_references_path( :lang => product.language_esc, :key => product.to_param ) %></span>
+            
+            <span class="meta_info" >References:</span> <span class="meta_info_bold"> <%= link_to product.used_by_count, product_references_path( :lang => product.language_esc, :key => product.to_param ) %></span> | 
+            <span class="meta_info" >License:</span> <span class="meta_info_bold"><%= product.license_info %></span> 
+
+            <% update_release_infos( product.version_by_number(product.version), product ) %>
+            <% rel_bg = color_for_released_ago product %>
+            <div class="flash <%= rel_bg %>">
+              <span class="meta_info" >Released:</span> <span class="meta_info_bold" ><%= product.released_ago_in_words %> ago.</span>
+            </div>
+            
           </div>
+
         </div>
       <% end %>
     <% else %> 
