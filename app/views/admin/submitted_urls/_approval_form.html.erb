@@ -8,28 +8,28 @@
       <%= hidden_field_tag :submitted_url_id, @submitted_url.id %>
       <%= label_tag :url,nil, :class => 'control-label' %>
       <div class = "controls">
-        <%= text_field_tag :url, @submitted_url.url_guessed, :class => "span4" %>
+        <%= text_field_tag :url, @submitted_url.url_guessed, :class => "form-control" %>
       </div>
     </div>
 
     <div class = "form-group">
       <%= label_tag :name, nil, :class => "control-label" %>
       <div class = "controls">
-        <%= text_field_tag :name, @submitted_url.name_guessed, :class => "span4" %>
+        <%= text_field_tag :name, @submitted_url.name_guessed, :class => "form-control" %>
       </div>
     </div>
 
     <div class = "form-group">
       <%= label_tag :resource_type, nil, :class => "control-label" %>
       <div class = "controls">
-        <%= text_field_tag :resource_type, @submitted_url.type_guessed, :class => "span4" %>
+        <%= text_field_tag :resource_type, @submitted_url.type_guessed, :class => "form-control" %>
       </div>
     </div>
 
     <div class = "form-group">
-      <%= label_tag :force_fullname, nil, :class => "control-label" %>
       <div class = "controls">
-        <%= check_box_tag 'force_fullname', 'true', true, :class => "span4" %>
+        <%= check_box_tag 'force_fullname', 'true', true, :class => "" %>
+        <%= label_tag :force_fullname, nil, :class => "" %>
       </div>
     </div>
 
