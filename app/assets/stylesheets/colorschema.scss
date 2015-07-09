@@ -3,7 +3,7 @@
 @mixin color-schema ($fg, $bg, $border-color){
 	color: $fg;
 	background-color: $bg;
-	border-color: transparent;
+	border-color: $border-color;
 }
 
 .default {
