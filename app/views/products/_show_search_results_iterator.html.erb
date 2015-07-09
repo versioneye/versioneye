@@ -19,6 +19,7 @@
         <% else %>
           <span class="meta_prod_description"><%= product.short_summary %></span><br/>
         <% end %>
+        
         <span class="meta_info" >References:</span> <span class="meta_info_bold"> <%= link_to product.used_by_count, product_references_path( :lang => product.language_esc, :key => product.to_param ) %></span> | 
         <span class="meta_info" >License:</span> <span class="meta_info_bold"><%= product.license_info %></span> 
 
