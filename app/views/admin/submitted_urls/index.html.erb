@@ -25,20 +25,20 @@
     <% @submitted_url = item %>
     <% @form_index = i %>
     <tr>
-      <td class = "span2">
+      <td class="">
         <% @user = @users[item[:user_id]] %>
         <%= render "shared/gravatar", :object => @user, :size => 100, :show_link => false %>
       </td>
       <td> 
-          <% status_colors = {"new" => "warning", "declined" => "important", "accepted" => "success"} %>
-          <% item_status = "new" %>
-          <% item_status = "declined" if @submitted_url.declined %>
-          <% item_status = "accepted" if !@submitted_url.declined %>
+        <% status_colors = {"new" => "warning", "declined" => "important", "accepted" => "success"} %>
+        <% item_status = "new" %>
+        <% item_status = "declined" if @submitted_url.declined %>
+        <% item_status = "accepted" if @submitted_url.declined == false %>
         <p>
           <span class ="label label-<%= status_colors[item_status] %>">
-            <%= item_status %>
+            <%= item_status %> 
           </span>
-            <%= link_to item.url.html_safe, item.url%>
+          <span style="padding-left: 5px;"> <%= link_to item.url.html_safe, item.url%></span>
         </p>
         <p>
           <%= item.message.html_safe %>
