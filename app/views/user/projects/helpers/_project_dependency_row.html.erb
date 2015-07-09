@@ -31,7 +31,7 @@
   <td>
     <%= dep.version_current || "UNKNOWN" %>
   </td>
-  <td>
+  <td style="padding-right: 5px;">
     <% unless dep.unknown? %>
         <%= render partial: "shared/product_follow_mini",
                    locals: {product: product, user: current_user} %>
