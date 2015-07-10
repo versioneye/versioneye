@@ -11,6 +11,10 @@ class UsersController < ApplicationController
   end
 
   def new
+    if signed_in?
+      redirect_to user_projects_path and return 
+    end
+
     promo_code = params[:promo_code]
     @user = User.new
     return if promo_code.to_s.empty?
