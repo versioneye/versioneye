@@ -28,6 +28,10 @@ jQuery(document).ready(function(){
     });
   }
 
+  if (jQuery('button[rel=tooltip]')){
+    jQuery('button[rel=tooltip]').tooltip({ placement: 'bottom', html: true })
+  }
+
   if (window.FB){
     FB.init({
           appId:'230574627021570',
