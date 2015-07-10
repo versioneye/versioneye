@@ -13,11 +13,11 @@ gem 'bourbon'              , '~> 4.2.0'
 gem 'ruby_regex'           , '~> 0.1.0'
 gem 'semverly'             , '~> 1.0.0'
 gem 'cocoapods-core'       , '~> 0.37.1'
-gem 'stripe'               , '~> 1.22.0'
+gem 'stripe'               , '~> 1.23.0'
 gem 'bunny'                , '~> 1.7.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.19.1'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.19.3'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
