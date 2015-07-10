@@ -15,8 +15,11 @@
     <div class="content_header_def">
       <div id="project-title">
         <span class = "namelabel" >
-          <b>Name:</b> <%= @project.name %>
+          <b>Name:</b> <%= @project.name %> 
         </span>
+        <% if @project.public == false %>
+          <span class="fa fa-lock" title="Private VersionEye Project"></span>
+        <% end %> 
         <% if current_user?(@project.user) || signed_in_admin? %>
           <i class="fa fa-pencil-square-o" 
             style="width: 16px; height: 16px; margin: 0; padding: 0;"
