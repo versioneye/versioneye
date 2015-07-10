@@ -98,7 +98,15 @@
                       <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
                     <% end %> 
                   </td>
-                  <td class="left"> <%= dep[:version] %> </td>
+                  <td class="left"> 
+                    <% if dep[:version].to_s.strip.match(/\A\:path/) %>
+                      :path
+                    <% elsif dep[:version].to_s.strip.match(/\A\:git/) %>
+                      :git
+                    <% else %>
+                      <%= dep[:version].to_s.strip %> 
+                    <% end %>
+                  </td>
                   <td class="left"> <%= dep[:license] %> </td>
                 </tr>  
               <% end %> 
@@ -135,7 +143,15 @@
                           <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
                         <% end %> 
                       </td>
-                      <td class="left"> <%= dep[:version] %> </td>
+                      <td class="left"> 
+                        <% if dep[:version].to_s.strip.match(/\A\:path/) %>
+                          :path
+                        <% elsif dep[:version].to_s.strip.match(/\A\:git/) %>
+                          :git
+                        <% else %>
+                          <%= dep[:version].to_s.strip %> 
+                        <% end %>
+                      </td>
                       <td class="left"> <%= dep[:license] %> </td>
                     </tr>  
                   <% end %> 
