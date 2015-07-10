@@ -3,6 +3,11 @@ module ProductsHelper
   include ActionView::Helpers::DateHelper
   require 'semverly'
 
+  def product_page_title( product )
+    return product.short_summary if product && !product.short_summary.to_s.strip.empty?
+    return 'Track your Open Source Libraries at VersionEye'
+  end
+
   def product_version_path( product, version = nil )
     return '/0/0/0' if product.nil? || product.prod_key.nil?
     lang = product.language.gsub("\.", '')
