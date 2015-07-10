@@ -5,9 +5,9 @@
       <%= form_tag('/package/follow', :style=> 'margin: 0;') do  %>
         <input  name="product_key"  type="hidden" value="<%= @product.to_param %>"/>
         <input  name="product_lang" type="hidden" value="<%= @product.language %>"/>
-        <button type="submit" class="btn btn-large btn-success" style="width: 100%" >Notify me about new versions</button>
+        <button type="submit" class="btn btn-large btn-success notifyme" >Notify me about new versions</button>
       <% end %>
     <% end %>
   <% else %>
-    <button type="submit" class="btn btn-large btn-success" style="width: 100%" onclick="load_dialog_follow('<%= @product.name %>', '<%= @product.prod_key %>', '<%= @product.language %>');">Notify me about new versions</button>
+    <button type="submit" class="btn btn-large btn-success notifyme" onclick="load_dialog_follow('<%= @product.name %>', '<%= @product.prod_key %>', '<%= @product.language %>');">Notify me about new versions</button>
   <% end %>
