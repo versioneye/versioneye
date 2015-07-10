@@ -13,8 +13,8 @@
 <table class="dependency_table">
   <thead>
     <tr>
-      <th >Dependency</th>
-      <th >License</th>
+      <th style="padding-left: 5px;" >Dependency</th>
+      <th style="padding-left: 5px;" >License</th>
     </tr>
   </thead>
   <% dependencies.sort! { |a,b| a.name.downcase <=> b.name.downcase } %>
@@ -60,8 +60,8 @@
         <% end %>
 
         <tr class="<%= sep_class %> <%= whitelist_class %> ">
-          <td><a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %> : <%= dep_version %></a></td>
-          <td>
+          <td style="padding-left: 5px;"><a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %> : <%= dep_version %></a></td>
+          <td style="padding-left: 5px;">
             <%= render :partial => "shared/license_name", :locals => {:license => license } %>
           </td>
         </tr>
@@ -72,14 +72,14 @@
       <% license_hash['unknown'] = [] if license_hash['unknown'].nil? %> 
       <% license_hash['unknown'] << dependency %> 
       <tr class="flash warning">
-        <td>
+        <td style="padding-left: 5px;">
           <% if dependency.prod_key %>
             <a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %> : <%= dep_version %></a>
           <% else %>
             <%= dependency.name %>
           <% end %>
         </td>
-        <td> UNKNOWN </td>
+        <td style="padding-left: 5px;"> UNKNOWN </td>
       </tr>
     <% end %>
 
