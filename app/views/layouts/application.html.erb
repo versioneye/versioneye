@@ -16,15 +16,15 @@
 
   <% if @product %>
     <% if @product.language.eql?('Ruby') %>
-      <title><%= @product.name %> : <%= @product.version %> - Track your Gems at VersionEye</title>
+      <title><%= @product.name %> : <%= @product.version %> - <%= product_page_title( @product ) %></title>
     <% elsif @product.language.eql?('Java') %>
-      <title><%= @product.name %> : <%= @product.version %> - Track your JARs at VersionEye</title>
+      <title><%= @product.name %> : <%= @product.version %> - <%= product_page_title( @product ) %></title>
     <% elsif @product.language.eql?('Node.JS') %>
-      <title><%= @product.name %> : <%= @product.version %> - Track your Node.JS libraries at VersionEye</title>
+      <title><%= @product.name %> : <%= @product.version %> - <%= product_page_title( @product ) %></title>
     <% elsif @product.language.eql?('PHP') %>
-      <title><%= @product.name %> : <%= @product.version %> - Track your PHP libraries at VersionEye</title>
+      <title><%= @product.name %> : <%= @product.version %> - <%= product_page_title( @product ) %></title>
     <% else %>
-      <title><%= @product.name %> : <%= @product.version %> - Track your libraries at VersionEye</title>
+      <title><%= @product.name %> : <%= @product.version %> - <%= product_page_title( @product ) %></title>
     <% end %>
     <meta name="keywords" content="<%= @product.language %>, <%= @product.name %>, <%= @product.prod_type %>" />
     <% if !@product.description.nil? && !@product.description.empty? %>
@@ -41,8 +41,6 @@
 <body>
 
   <%= render 'layouts/header' %>
-
-  
 
   <% if !signed_in? && (@product || @products)  %>
     <%= render 'shared/dialog_follow' %>
