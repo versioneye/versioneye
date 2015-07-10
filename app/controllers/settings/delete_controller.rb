@@ -7,6 +7,7 @@ class Settings::DeleteController < ApplicationController
 
   def destroy
     password = params[:password]
+    why      = params[:why]
     user = current_user
     unless user.password_valid?(password)
       flash[:error] = 'The password is wrong. Please try again.'
@@ -14,7 +15,7 @@ class Settings::DeleteController < ApplicationController
       return
     end
     user.password = password
-    UserService.delete user
+    UserService.delete user, why 
     sign_out
     redirect_to root_path
   end
