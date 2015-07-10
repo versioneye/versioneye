@@ -117,8 +117,8 @@ function toggleProductFollow(ev){
   var follow_url = "/package/follow.json";
   var unfollow_url = "/package/unfollow.json";
   var api_url = follow_url;
-  var on_icon = "icon-check";
-  var off_icon = "icon-check-empty";
+  var on_icon = "fa fa-check-square-o";
+  var off_icon = "fa fa-square-o";
   console.debug(prod_info);
 
   if(prod_info['followState'] == true){
@@ -155,11 +155,11 @@ function toggleProductFollow(ev){
 
   var showFollowLoader = function(){
     console.debug("Show follow  header");
-    btn.find("i.follow-icon").addClass("icon-spin");
+    btn.find("i.follow-icon").addClass("fa fa-spinner");
   }
   var hideFollowLoader = function(){
     console.debug("Hide follow loader.");
-    btn.find("i.follow-icon").removeClass("icon-spin");
+    btn.find("i.follow-icon").removeClass("fa fa-spinner");
   }
 
   showFollowLoader();
@@ -214,13 +214,13 @@ function setCookie(name, value, days){
 function showMuteLoader(btn){
   console.debug("Loading");
   btn.addClass("disabled");
-  btn.find("i.dep-icon").addClass("icon-spin");
+  btn.find("i.dep-icon").addClass("fa-spinner");
 }
 
 function hideMuteLoader(btn){
   console.debug("Hiding loader.");
   btn.removeClass("disabled");
-  btn.find("i.dep-icon").removeClass("icon-spin");
+  btn.find("i.dep-icon").removeClass("fa-spinner");
 }
 
 function muteProjectDependency(btn){
@@ -236,7 +236,7 @@ function muteProjectDependency(btn){
       console.debug(data);
       updateColorForPD( data.dependency_id, data.outdated )
       btn.removeClass("mute-off").addClass("mute-on");
-      btn.find("i.dep-icon").removeClass("icon-volume-up").addClass("icon-volume-off");
+      btn.find("i.dep-icon").removeClass("fa-volume-up").addClass("fa-volume-off");
     })
     .fail(function(){console.error("Failed");})
     .always(function(){hideMuteLoader(btn);});
@@ -255,7 +255,7 @@ function demuteProjectDependency(btn){
       console.debug(data);
       updateColorForPD( data.dependency_id, data.outdated )
       btn.removeClass("mute-on").addClass("mute-off");
-      btn.find("i.dep-icon").removeClass("icon-volume-off").addClass("icon-volume-up")
+      btn.find("i.dep-icon").removeClass("fa-volume-off").addClass("fa-volume-up")
     })
     .fail(function(){console.error("Failed");})
     .always(function(){hideMuteLoader(btn);});

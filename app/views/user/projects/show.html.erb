@@ -123,22 +123,22 @@
       <div style="margin-top: 20px;">
         <ul class="nav nav-tabs" style="margin-bottom: 0" id="projectTabs">
           <li class="active">
-            <a data-target="#dependencies" data-toggle="tab" onclick="page_view('ga_project_dependencies')"><i class = "icon-puzzle-piece">&nbsp;</i>Versions</a>
+            <a data-target="#dependencies" data-toggle="tab" onclick="page_view('ga_project_dependencies')"><i class = "fa fa-puzzle-piece">&nbsp;</i>Versions</a>
           </li>
           <li>
-            <a data-target="#licenses" data-toggle="tab" onclick="page_view('ga_project_licenses')"><i class = "icon-tasks">&nbsp;</i>Licenses</a>
+            <a data-target="#licenses" data-toggle="tab" onclick="page_view('ga_project_licenses')"><i class = "fa fa-tasks">&nbsp;</i>Licenses</a>
           </li>
           <% if @project.language.eql?(Product::A_LANGUAGE_PHP) %> 
             <li>
-              <a data-target="#security" data-toggle="tab" onclick="page_view('ga_project_security')"><i class = "icon-tasks">&nbsp;</i>Security</a>
+              <a data-target="#security" data-toggle="tab" onclick="page_view('ga_project_security')"><i class = "fa fa-tasks">&nbsp;</i>Security</a>
             </li>
           <% end %>
           <% if signed_in? && @project.user && @project.user.id.to_s.eql?( current_user.id.to_s ) %>
             <li>
-              <a data-target="#collaborators" data-toggle="tab" onclick="page_view('ga_project_collaborators')"><i class = "icon-group">&nbsp;</i>Collaborators</a>
+              <a data-target="#collaborators" data-toggle="tab" onclick="page_view('ga_project_collaborators')"><i class = "fa fa-users">&nbsp;</i>Collaborators</a>
             </li>
             <li>
-              <a data-target="#settings" data-toggle="tab" onclick="page_view('ga_project_settings')"><i class = "icon-cogs">&nbsp;</i>Settings </a>
+              <a data-target="#settings" data-toggle="tab" onclick="page_view('ga_project_settings')"><i class = "fa fa-cogs">&nbsp;</i>Settings </a>
             </li>
           <% end %>
         </ul>
