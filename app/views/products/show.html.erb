@@ -29,4 +29,10 @@
       <%= render partial_map[@product.prod_type] %>
     <% end %>
 
+    <% if signed_in? == false %>
+      <script type="text/javascript">
+        load_dialog_follow('<%= @product.name %>', '<%= @product.prod_key %>', '<%= @product.language %>');
+      </script>
+    <% end %>
+
 <% end %>
