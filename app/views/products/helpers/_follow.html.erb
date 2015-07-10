@@ -1,5 +1,5 @@
 
-<div style="padding-bottom: 20px;">
+<div style="padding-bottom: 20px;" id="follow_unfollow_section" >
   <% if signed_in? %>
     <% @product['user_ids'] = Array.new() if @product['user_ids'].nil? %>
     <% if @product['user_ids'].include? current_user.id %>
@@ -7,7 +7,7 @@
         <input name="src_hidden"   type="hidden" value="detail"/>
         <input name="product_key"  type="hidden" value="<%= @product.to_param %>"/>
         <input name="product_lang" type="hidden" value="<%= @product.language %>"/>
-        <button type="submit" class="btn btn-large" style="width: 100%" >Unfollow</button>
+        <button type="submit" class="btn btn-large" style="width: 100%" title='<img src="/assets/grumpy_cat_no.jpg" style="width:100%;" />' data-html="true" data-container="body" rel="tooltip" >Unfollow</button>
       <% end %>
     <% else %>
       <%= form_tag("/package/follow", :style=>"margin: 0;") do  %>

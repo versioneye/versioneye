@@ -118,3 +118,18 @@ h3.side_header{
 .kpi_box{
   border: 0;
 }
+
+
+.tooltip.bottom {
+  margin-top: 0px;
+  padding: 0;
+}
+.tooltip-inner {
+  max-width: 150px;
+  padding: 0;
+  text-align: center;
+  background-color: #000000;
+  border: 0;
+  width: 150px;
+  margin-left: -40px;
+}
