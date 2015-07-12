@@ -1,7 +1,6 @@
 <div class="well box_dep">
 
-<% main_dependencies = @product.dependencies(nil) %>
-
+<% main_dependencies = @product.dependencies( Dependency::A_SCOPE_REQUIRE ) %>
 <div class="row">
 	<div class="col-md-12">
 		<h5 class="dep_header">
@@ -24,7 +23,8 @@
   <%= render :partial => "products/helpers/dependency_table", :locals => { :dependencies => test_deps }  %>
 <% end %>
 
-<% dev_deps = @product.dependencies("development") %>
+
+<% dev_deps = @product.dependencies( Dependency::A_SCOPE_DEVELOPMENT ) %>
 <% if dev_deps.count > 0 %>
 	<hr />
 	<h5 class="dep_header">
