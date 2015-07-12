@@ -68,7 +68,7 @@
                 <td>
                   <input id="license_id" name="license_id" type="hidden" value="<%= license._id.to_s %>" />
                   <% if !license.link.to_s.empty? %>
-                    <a href="<%= license.url %>" target="license"><%= license.name %></a> for version <%= license.version %>
+                    <a href="<%= license.link %>" target="license"><%= license.name %></a> for version <%= license.version %>
                   <% else %>
                     "<%= license.name %>" for version <%= license.version %>
                   <% end %>
