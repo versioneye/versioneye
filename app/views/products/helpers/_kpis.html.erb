@@ -49,25 +49,7 @@
     </span>
   </div>
 
-<% if Product::A_LANGS_DEP_BADGE.include?(@product.language) %>
-  <% references = @product.used_by_count %>
-  <% ref_bg = '' %>
-  <% ref_bg = 'success' if references >= 100  %>
-  <% ref_bg = 'info'    if references >= 10 and references < 100  %>
-  <% ref_bg = 'warn'    if references >  0  and references < 10  %>
-  <% ref_bg = 'error'   if references == 0 %>
-  <% ref_text = "#{references} packages are referencing this project" %>
-  <div class="kpi_box flash <%= ref_bg %> l_margin_bottom_5" >
-    <b title="<%= ref_text %>">References:</b>
-    <span title="<%= ref_text %>">
-      <% if references > 0 %>
-        <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/references"><%= references %></a>
-      <% else %>
-        <%= references %>
-      <% end %>
-    </span>
-  </div>
-<% end %>
+
 
 <% if Settings.instance.environment.to_s.eql?('enterprise') %>
   <div class="kpi_box flash info l_margin_bottom_5" >
@@ -93,6 +75,26 @@
   <div class="kpi_box flash <%= dep_bg %>" style="margin-bottom: 5px;">
     <b title="<%= title_text %>">Dependencies:</b> <span title="<%= title_text %>"><%= main_dep_count %></span>
   </div>
+
+
+<% if Product::A_LANGS_DEP_BADGE.include?(@product.language) %>
+  <% references = @product.used_by_count %>
+  <% ref_bg = '' %>
+  <% ref_bg = 'success' if references >= 100  %>
+  <% ref_bg = 'info'    if references >= 10 and references < 100  %>
+  <% ref_bg = 'warn'    if references >  0  and references < 10  %>
+  <% ref_bg = 'error'   if references == 0 %>
+  <% ref_text = "#{references} packages are referencing this project" %>
+  <div class="kpi_box flash <%= ref_bg %> l_margin_bottom_5" >
+    <%= render :partial => "shared/ref_badge" %>
+    <span title="<%= ref_text %>">
+      <% if references > 0 %>
+        <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/references"><%= references %></a>
+      <% end %>
+    </span>
+  </div>
+<% end %>
+
 
   <% licenses = @product.licenses %>
   <% license_bg = 'info' %>

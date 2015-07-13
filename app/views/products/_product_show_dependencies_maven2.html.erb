@@ -10,6 +10,7 @@
         <% else %>
           0 compile dependencies found
         <% end %>
+        <%= render :partial => "shared/dependency_badge", :locals => { :project => @product } %>
   		</h5>
   	</div>
   	<div class="col-md-12" >

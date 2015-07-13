@@ -5,7 +5,8 @@
 <div class="row">
   <div class="col-md-12">
     <h5 class="dep_header">
-      <%= pluralize( main_dependencies.count, 'Require Dependencies') %>
+      <%= pluralize( main_dependencies.count, 'Require Dependencies') %> 
+      <%= render :partial => "shared/dependency_badge", :locals => { :project => @product } %>
     </h5>
   </div>
   <div class="col-md-12" >
