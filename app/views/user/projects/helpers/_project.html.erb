@@ -15,6 +15,9 @@
       <% if project.sv_count_sum > 0 %>
         <span class="fa fa-shield" title="Security Alert!"> <%= project.sv_count_sum %>  </span>
       <% end %> 
+      <% if !project.parsing_errors.to_a.empty? %>
+        <i class="fa fa-exclamation-triangle" title="Some errors occured by parsing this project."></i>
+      <% end %>
     </td>
     <td>
       <span style="color: <%= outdated_color(project) %>; font-size: 14px; font-weight: bold;" title="out-dated dependencies" >
