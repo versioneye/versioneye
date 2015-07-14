@@ -1,6 +1,6 @@
 class User::ProjectsController < ApplicationController
 
-  before_filter :authenticate        , :except => [:show, :badge, :transitive_dependencies, :lwl_export]
+  before_filter :authenticate, :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export]
 
 
   def index
@@ -215,6 +215,7 @@ class User::ProjectsController < ApplicationController
     redirect_to user_project_path( project )
   end
 
+  
   def status 
     id = params[:id]
     respond_to do |format|
