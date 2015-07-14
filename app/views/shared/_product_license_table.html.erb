@@ -1,6 +1,6 @@
 
 
-<% if display_pdf_export && display_pdf_export == true && !project_id.nil? && !project_id.to_s.empty? && !license_whitelist_id.to_s.empty? %> 
+<% if defined?(display_pdf_export) && display_pdf_export && display_pdf_export == true && !project_id.nil? && !project_id.to_s.empty? && !license_whitelist_id.to_s.empty? %> 
   <div style="margin: 10px 0 7px 0;">
     <%= link_to 'BoM PDF Export', lwl_export_user_project_path( project_id ) %>
   </div>
@@ -114,7 +114,7 @@
 <br/><br/>
 <% end %> 
 
-<% if display_grouping && display_grouping == true %>
+<% if defined?(display_grouping) && display_grouping && display_grouping == true %>
   <% license_hash.sort.map do |license_name, value| %>
     <div>
       <% if license_name.eql?("unknown") %>
