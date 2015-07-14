@@ -72,6 +72,14 @@
 
       <div >
 
+        <% if !@project.parsing_errors.to_a.empty? %>
+          <% @project.parsing_errors.each do |error| %>
+            <div id="project_errors" class="flash error" style="padding-bottom: 5px; margin-bottom: 10px;" >
+              <%= error %>  
+            </div>  
+          <% end %> 
+        <% end %>
+
         <div id="project_status" class="flash warn" style="padding-bottom: 5px; margin-bottom: 10px; display: none;" >
           <%= image_tag "progress.gif" %> Project is processed by a background job. This page will reload if the job is done. 
         </div>
