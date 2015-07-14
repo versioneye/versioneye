@@ -72,10 +72,10 @@
 
       <div >
 
-        <% if !@project.parsing_errors.to_a.empty? %>
-          <% @project.parsing_errors.each do |error| %>
+        <% if !@child.parsing_errors.to_a.empty? %>
+          <% @child.parsing_errors.each do |error| %>
             <div id="project_errors" class="flash error" style="padding-bottom: 5px; margin-bottom: 10px;" >
-              <%= error %>  
+              <i class="fa fa-exclamation-triangle" title="Some errors occured by parsing this project."></i> <%= error %>
             </div>  
           <% end %> 
         <% end %>
