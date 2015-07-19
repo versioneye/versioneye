@@ -1,7 +1,9 @@
 class ProductsController < ApplicationController
 
+  
   require 'will_paginate/array'
 
+  
   before_filter :authenticate                  , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license]
   before_filter :maintainer?                   , :only => [:edit, :edit_links, :edit_licenses, :edit_versions, :update, :delete_link, :delete_license, :delete_version]
   before_filter :check_redirects_package       , :only => [:show]
@@ -80,6 +82,7 @@ class ProductsController < ApplicationController
     render :layout => 'application_visual'
   end
 
+
   # Dependency Badge
   # send_file "app/assets/images/badges/dep_#{badge}.png", :type => "image/png", :disposition => 'inline'
   def badge
@@ -93,6 +96,7 @@ class ProductsController < ApplicationController
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
   end
+
 
   def ref_badge
     language = Product.decode_language params[:lang]
@@ -166,6 +170,7 @@ class ProductsController < ApplicationController
   def edit_versions
   end
 
+
   def update
     description     = params[:description_manual]
     license         = params[:license]
@@ -210,6 +215,7 @@ class ProductsController < ApplicationController
     redirect_to :back
   end
 
+
   def delete_link
     lang     = Product.decode_language( params[:lang] )
     key      = Product.decode_prod_key params[:key]
@@ -219,6 +225,7 @@ class ProductsController < ApplicationController
     flash[:success] = "Link removed."
     redirect_to :back
   end
+
 
   def delete_license
     license_id = params[:license_id]
@@ -231,6 +238,7 @@ class ProductsController < ApplicationController
     redirect_to :back
   end
 
+
   def delete_version
     if @product.remove_version params[:version]
       Auditlog.add current_user, 'Product', @product.id.to_s, "Remove Version #{params[:version]}"
@@ -239,11 +247,13 @@ class ProductsController < ApplicationController
     redirect_to :back
   end
 
+
   def auditlogs
     language    = Product.decode_language params[:lang]
     product_key = Product.decode_prod_key params[:key]
     @product    = fetch_product language, product_key
   end
+
 
   def follow
     lang_param       = params[:product_lang]
@@ -264,6 +274,7 @@ class ProductsController < ApplicationController
       }
     end
   end
+
 
   def unfollow
     src_hidden       = params[:src_hidden]
@@ -290,6 +301,7 @@ class ProductsController < ApplicationController
     end
   end
 
+
   def autocomplete_product_name
     term = params[:term] || "nothing"
     term.gsub!(/\W/, "?") #replace all not-prinable chars with ?
@@ -303,7 +315,9 @@ class ProductsController < ApplicationController
     render :json => results
   end
 
+
   private
+
 
     def fetch_product language, prod_key
       product = ProductService.fetch_product language, prod_key
@@ -313,11 +327,13 @@ class ProductsController < ApplicationController
       product
     end
 
+
     def parse_page page
       return 1 if page.to_s.empty?
       return 1 if page.to_i < 1
       page
     end
+
 
     def format_autocomplete(product)
       return {} if product.nil?
