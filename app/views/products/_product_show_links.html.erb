@@ -11,9 +11,21 @@
     </h3>
   </div>
   <div class="box content">
+
     <% hash.each do |key, value| %>
-      <a href="<%= key %>" target="new"><%= value %></a><br/>
+      <% if key.to_s.match(/github.com/i) %>
+        <a href="<%= key %>" title="<%= value %>" target="new"><i class="fa fa-github" style="font-size: 32px;"></i></a>
+      <% elsif key.to_s.match(/bitbucket.org/i) %>
+        <a href="<%= key %>" title="<%= value %>" target="new"><i class="fa fa-bitbucket" style="font-size: 32px;"></i></a>
+      <% end %> 
     <% end %>
+
+    <% hash.each do |key, value| %>
+      <% if !key.to_s.match(/github.com/i) && !key.to_s.match(/bitbucket.org/i) %>
+        <br/><a href="<%= key %>" title="<%= value %>" target="new"><%= value %></a> 
+      <% end %> 
+    <% end %>
+
   </div>
 <% else %>
   <div class="box header"><h3 class="side_header">0 Links</h3></div>
