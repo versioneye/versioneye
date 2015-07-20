@@ -48,7 +48,7 @@ Versioneye::Application.routes.draw do
     end
   end
 
-  resources :authors
+  resources :authors, :constraints => { :id => /[^\/]+/}
 
   get  '/enterprise',          :to => 'enterprise#show'
   post '/enterprise',          :to => 'enterprise#create', :as => 'enterprise_create'
