@@ -17,6 +17,8 @@ class LanguageController < ApplicationController
 
     @followers = fetch_followers @lang
 
+    @authors = Author.where(:languages => @lang).desc(:products_count).limit(10)
+
     # lang_pattern = Regexp.new(@lang.downcase, true)
     # @vulnerabilities = SecurityNotification.all.in(languages: [lang_pattern]).desc(:modified).limit(30)
 
@@ -89,11 +91,11 @@ class LanguageController < ApplicationController
       return followers if !followers.to_s.empty?
 
       population = []
-      users = User.where(:languages => /\"#{lang}\"/).limit(40)
+      users = User.where(:languages => /\"#{lang}\"/).limit(50)
       users.each do |user|
         population << user
       end
-      followers = population.sample(24) # pick random followers from population
+      followers = population.sample(30) # pick random followers from population
       Rails.cache.write( key, followers, timeToLive: 1.day )
       followers
     end
