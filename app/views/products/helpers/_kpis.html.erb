@@ -14,8 +14,29 @@
   <% this_color_class = 'success' if @version && @version.semver_2 %>
   <% this_color_class = 'error' if @version && !@version.semver_2 %>
   <div class="kpi_box flash <%= this_color_class %>" style="margin-bottom: 5px;">
-    <b>This:</b> <%= @product.version %>
+    <div>
+      <b>This:</b> <%= @product.version %> 
+      <a id="show_versions_link" href="" onClick="return show_versions()" > &gt; </a> 
+      <a id="hide_versions_link" href="" onClick="return hide_versions()" style="display:none;" > &lt; </a>
+    </div>
+    <div id="other_versions" style="display:none;">
+      <%= render 'products/product_show_other_versions' %>
+    </div>
   </div>
+  <script type="text/javascript">
+    function show_versions(){
+      document.getElementById('other_versions').style.display = 'block'; 
+      document.getElementById('show_versions_link').style.display = 'none'; 
+      document.getElementById('hide_versions_link').style.display = 'inline-block'; 
+      return false;
+    }
+    function hide_versions(){
+      document.getElementById('other_versions').style.display = 'none'; 
+      document.getElementById('show_versions_link').style.display = 'inline-block'; 
+      document.getElementById('hide_versions_link').style.display = 'none'; 
+      return false;
+    }
+  </script>
 
 
   <% days_ago = @product.released_days_ago %>
