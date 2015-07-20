@@ -48,6 +48,8 @@ Versioneye::Application.routes.draw do
     end
   end
 
+  resources :authors
+
   get  '/enterprise',          :to => 'enterprise#show'
   post '/enterprise',          :to => 'enterprise#create', :as => 'enterprise_create'
   post '/enterprise/activate', :to => 'enterprise#activate'
