@@ -1,6 +1,6 @@
 <div id  = "followers-container">
   <% if @followers && !@followers.empty? %>
-    <h2 class="section_header"> They like <%= @lang.to_s.capitalize %> too. </h2>
+    <h2 class="section_header"> They and others follow <%= @lang.to_s.capitalize %> libraries at VersionEye</h2>
     <ul class = "nav nav-followers">
       <% @followers.each do |user| %>
         <li class = "follower-item">
@@ -14,9 +14,9 @@
                                       :class => "round12",
                                       :gravatar => {:size => 68,
                                                     :default => "#{Settings.instance.server_url}/profile_icon.png" }) %>
-              </div>
-            </a>
-          <% end %>
+            </div>
+          </a>
+        <% end %>
 
         </li>
       <% end %>
