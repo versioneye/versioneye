@@ -1,0 +1,13 @@
+<% if @product.tags && !@product.tags.empty? %>
+
+  <h2 class="section_header"> Keywords </h2>
+
+  <div style="margin-bottom: 20px;" >
+    <p>
+      <% @product.tags.each do |tag| %>
+        <span class="label label-default keyword_tag"><%= tag %></span>
+      <% end %> 
+    </p>
+  </div>
+
+<% end %>
