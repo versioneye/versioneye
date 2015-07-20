@@ -10,6 +10,8 @@ development:
       # of host:port pairs. (required)
       hosts:
         - 172.16.172.128:27017
+  options: 
+    raise_not_found_error: false
 
 test:
   sessions:
@@ -34,6 +36,8 @@ production:
         - <%= ENV['MONGO_RS_3_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_3_PORT'] ||= '27017' %>
       options:
         read: :secondary
+  options: 
+    raise_not_found_error: false
 
 enterprise:
   # Configure available database sessions. (required)
@@ -47,3 +51,5 @@ enterprise:
       # of host:port pairs. (required)
       hosts:
         - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
+  options: 
+    raise_not_found_error: false
