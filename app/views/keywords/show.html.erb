@@ -5,11 +5,26 @@
         
         <%= pluralize(@products.total_entries, 'software library') %> taged with the keyword <span style="font-weight: bold;"><%= params[:id] %></span>
 
+        <div style="padding-top: 30px;">
+
+            <% if @languages && !@languages.empty? && !@lang.nil? %>
+              <% @langs = @lang.split(",") %>
+              <% @languages.each do |lang| %>
+                <% if params[:language].to_s.include?(lang) %> 
+                  <% new_langs = params[:language].gsub(/#{lang}\z/i, '').gsub(/#{lang}\,/i, '').gsub(/\,+/, ",").gsub(/\A\,/, "").gsub(/\,\z/, "") %>
+                  <i class="fa fa-check-square-o"></i> <a href="/keywords/<%= params[:id] %>?language=<%= new_langs %>"><%= lang %></a><br/>
+                <% else %> 
+                  <% new_langs = params[:language].to_s.strip.empty? ? lang : "#{params[:language]},#{lang}" %>
+                  <i class="fa fa-square-o"></i> <a href="/keywords/<%= params[:id] %>?language=<%= new_langs %>"><%= lang %></a><br/>
+                <% end %>                
+              <% end %>
+            <% end %>
+
+        </div>
+
       </div>  
       <div class="col-md-8 col-xs-12 pull-left">
         
-
-
         <%= render :partial => "products/show_search_results",
                :locals => { :products => @products, :paginate => true, :prefix => "keyword", :name_limit => 70 }  %>
 

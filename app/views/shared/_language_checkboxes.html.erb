@@ -1,0 +1,14 @@
+
+  <% if !@languages.nil? && !@languages.empty? && !@lang.nil? %>
+    <% @langs = @lang.split(",") %>
+    <% @languages.each do |language| %>
+
+      <div class="checkbox">
+        <label for="<%= language %>" id="label_<%= language %>__">
+          <input id="<%= language %>" type="checkbox" value="<%= language %>" style="height: 16px;" onclick="update_lang(this.value)" <%= "checked='checked'" if @langs.any?{ |s| s.casecmp(language)==0 }  %> >
+          <%= language %>
+        </label>
+      </div>
+      
+    <% end %>
+  <% end %>
