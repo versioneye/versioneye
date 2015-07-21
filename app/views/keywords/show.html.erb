@@ -1,0 +1,18 @@
+
+<% if @products %>
+    <div class="row">
+      <div class="col-md-3 col-xs-12 pull-left">
+        
+        <%= pluralize(@products.total_entries, 'software library') %> taged with the keyword <span style="font-weight: bold;"><%= params[:id] %></span>
+
+      </div>  
+      <div class="col-md-8 col-xs-12 pull-left">
+        
+
+
+        <%= render :partial => "products/show_search_results",
+               :locals => { :products => @products, :paginate => true, :prefix => "keyword", :name_limit => 70 }  %>
+
+      </div>  
+    </div>
+<% end %>
