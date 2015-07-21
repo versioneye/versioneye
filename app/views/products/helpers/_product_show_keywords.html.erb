@@ -5,7 +5,7 @@
   <div style="margin-bottom: 20px;" >
     <p>
       <% @product.tags.each do |tag| %>
-        <span class="label label-default keyword_tag"><%= tag %></span>
+        <span class="label label-default keyword_tag"><%= link_to tag, keyword_path(tag) %></span>
       <% end %> 
     </p>
   </div>
