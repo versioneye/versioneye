@@ -1,26 +1,37 @@
 
 <% if @author %>
-    <div class="row">
-      <div class="col-md-3 col-xs-12 pull-left">
-        
-        <%=  gravatar_image_tag( @author.email, :alt => @author.name, :class => 'round12', :gravatar => { :size => 200, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %><br/>
-        <% if !@author.homepage.to_s.empty? %>
-          <br/><a href="<%= @author.homepage %>">Homepage</a>
-        <% end %>
-        <% if !@author.role.to_s.empty? %>
-          <br/><span style="font-weight:bold;">Role:</span> <%= @author.role %>
-        <% end %>
+  
+  <% title @author.name %>
 
-      </div>  
-      <div class="col-md-8 col-xs-12 pull-left">
-        
-        <span style="font-weight: bold;"><%= @author.name %></span> contributed code to <%= pluralize( @author.products.count, "software library" ) %>.
+  <div class="row">
+    <div class="col-md-3 col-xs-12 pull-left">
+      
+      <%=  gravatar_image_tag( @author.email, :alt => @author.name, :class => 'round12', :gravatar => { :size => 200, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %><br/>
+      <% if !@author.homepage.to_s.empty? %>
+        <br/><a href="<%= @author.homepage %>">Homepage</a>
+      <% end %>
+      <% if !@author.role.to_s.empty? %>
+        <br/><span style="font-weight:bold;">Role:</span> <%= @author.role %>
+      <% end %>
 
-        <% products = Product.where(:id.in => @author.product_ids).desc(:used_by_count) %> 
+      <% if @keywords && !@keywords.empty? %> 
+        <h2 class="section_header"> Keywords </h2>
+        <div style="margin-bottom: 20px;" >
+          <% @keywords.each do |tag| %>
+            <span class="label label-default keyword_tag"><%= link_to tag, keyword_path(tag) %></span>
+          <% end %>
+        </div>
+      <% end %>
 
-        <%= render :partial => "products/show_search_results",
-               :locals => { :products => products, :paginate => false, :prefix => "author", :name_limit => 70 }  %>
+    </div>  
+    <div class="col-md-8 col-xs-12 pull-left">
+      
+      <span style="font-weight: bold;"><%= @author.name %></span> contributed code to <%= pluralize( @author.products.count, "software library" ) %>.
 
-      </div>  
-    </div>
+      <%= render :partial => "products/show_search_results",
+             :locals => { :products => @products, :paginate => false, :prefix => "author", :name_limit => 70 }  %>
+
+    </div>  
+  </div>
+
 <% end %>
