@@ -1,0 +1,66 @@
+<div class="col-md-3" >
+  <%= render 'products/helpers/edit_navi' %>
+</div>
+
+<div class="col-md-9" >
+
+  <div class="content_header_def" >
+    Edit <b><%= @product.name %></b>
+  </div>
+
+  <div class="content" >
+
+    <span>
+      Add keywords to better categorise this software library.
+      <br/><br/>
+    </span>
+
+    <div class="boxContainer">
+      <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/add_keyword", :method => "post", :class => "form-horizontal") do  %>
+        
+        <div class="form-group">
+          <%= label_tag(:license, "Keyword", :class => "control-label") %>
+          <div class="controls">
+            <%= text_field_tag :keyword, "", :class => "form-control" %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="controls">
+            <button type="submit" class="btn btn-large btn-primary" >Add</button>
+          </div>
+        </div>
+
+      <% end %>
+    </div>
+
+    <div class="boxContainer">
+      <% tags = @product.tags %>
+      <% if tags && !tags.empty? %>
+        <table>
+          <colgroup>
+            <col width="80px;" />
+            <col width="*" />
+          </colgroup>
+          <% tags.each do |keyword| %>
+            <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/delete_keyword", :method => "post") do  %>
+              <tr>
+                <td>
+                  <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+                </td>
+                <td>
+                  <input id="keyword" name="keyword" type="hidden" value="<%= keyword.to_s %>" />
+                  <a href="/keywords/<%= keyword.to_s %>" target="new"><%= keyword.to_s %></a>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </table>
+        <br/>
+        <br/>
+      <% end %>
+    </div>
+
+  <div>
+
+</div>

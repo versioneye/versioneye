@@ -4,8 +4,8 @@ class ProductsController < ApplicationController
   require 'will_paginate/array'
 
   
-  before_filter :authenticate                  , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license]
-  before_filter :maintainer?                   , :only => [:edit, :edit_links, :edit_licenses, :edit_versions, :update, :delete_link, :delete_license, :delete_version]
+  before_filter :authenticate                  , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license, :edit_keywords, :delete_keyword, :add_keyword]
+  before_filter :maintainer?                   , :only => [:edit, :edit_links, :edit_licenses, :edit_versions, :edit_keywords, :update, :delete_link, :delete_license, :delete_version, :delete_keyword, :add_keyword]
   before_filter :check_redirects_package       , :only => [:show]
   before_filter :check_redirects_package_visual, :only => [:show_visual]
   before_filter :check_refer                   , :only => [:index]
@@ -170,6 +170,9 @@ class ProductsController < ApplicationController
   def edit_versions
   end
 
+  def edit_keywords
+  end
+
 
   def update
     description     = params[:description_manual]
@@ -244,6 +247,24 @@ class ProductsController < ApplicationController
       Auditlog.add current_user, 'Product', @product.id.to_s, "Remove Version #{params[:version]}"
       flash[:success] = "Version removed."
     end
+    redirect_to :back
+  end
+
+
+  def delete_keyword
+    keyword = params[:keyword]
+    @product.remove_tag keyword
+    @product.save 
+    flash[:success] = "Keyword removed."
+    redirect_to :back
+  end
+
+
+  def add_keyword 
+    keyword = params[:keyword]
+    @product.add_tag keyword
+    @product.save 
+    flash[:success] = "Keyword added."
     redirect_to :back
   end
 
