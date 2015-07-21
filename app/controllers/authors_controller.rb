@@ -9,12 +9,21 @@ class AuthorsController < ApplicationController
   def show 
     name_id = params[:id]
     @author = Author.find_by :name_id => name_id
-    @products = Product.where(:id.in => @author.product_ids).desc(:used_by_count)
+    @products = find_products @author
     @keywords = fill_keywords @products
   end
 
 
   private 
+
+
+      def find_products author 
+        Product.where( :id.in => author.product_ids ).desc( :used_by_count )
+      rescue => e 
+        Rails.logger.error e.message
+        Rails.logger.error e.backtrace.join('\n')
+        nil 
+      end
 
 
       def fill_keywords products 
@@ -29,6 +38,10 @@ class AuthorsController < ApplicationController
           end
         end
         keywords
+      rescue => e 
+        Rails.logger.error e.message
+        Rails.logger.error e.backtrace.join('\n')
+        []
       end
 
 
