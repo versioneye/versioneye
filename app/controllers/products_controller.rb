@@ -254,8 +254,10 @@ class ProductsController < ApplicationController
   def delete_keyword
     keyword = params[:keyword]
     @product.remove_tag keyword
-    @product.save 
-    flash[:success] = "Keyword removed."
+    if @product.save       
+      flash[:success] = "Keyword removed."
+      Auditlog.add current_user, 'Product', @product.id.to_s, "Removed keyword #{keyword}"
+    end
     redirect_to :back
   end
 
@@ -263,8 +265,10 @@ class ProductsController < ApplicationController
   def add_keyword 
     keyword = params[:keyword]
     @product.add_tag keyword
-    @product.save 
-    flash[:success] = "Keyword added."
+    if @product.save 
+      Auditlog.add current_user, 'Product', @product.id.to_s, "Added keyword #{keyword}"
+      flash[:success] = "Keyword added."
+    end
     redirect_to :back
   end
 
