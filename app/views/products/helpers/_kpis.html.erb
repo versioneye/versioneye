@@ -16,8 +16,8 @@
   <div class="kpi_box flash <%= this_color_class %>" style="margin-bottom: 5px;">
     <div>
       <b>This:</b> <%= @product.version %> 
-      <a id="show_versions_link" href="" onClick="return show_versions()" > &gt; </a> 
-      <a id="hide_versions_link" href="" onClick="return hide_versions()" style="display:none;" > &lt; </a>
+      <a id="show_versions_link" href="" onClick="return show_versions()" title="Other versions" > <i class="fa fa-arrow-right"></i> </a> 
+      <a id="hide_versions_link" href="" onClick="return hide_versions()" title="Hide other versions" style="display:none;" > <i class="fa fa-arrow-left"></i> </a>
     </div>
     <div id="other_versions" style="display:none;">
       <%= render 'products/product_show_other_versions' %>
