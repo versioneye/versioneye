@@ -38,9 +38,9 @@
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
     <% end %>
 
-
-    <% if current_page?( visual_user_project_path(:id) ) || 
-          current_page?( visual_dependencies_path(:lang, :key, :version) )  %>
+    
+    <% if request.original_url.to_s.match(/\/visual_dependencies\z/i) || 
+          request.original_url.to_s.match(/\/visual\z/i)  %>
 
       <%= javascript_include_tag "application_product",     :defer => false, :async => false %>
 
