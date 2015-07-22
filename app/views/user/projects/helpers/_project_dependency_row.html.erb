@@ -1,5 +1,5 @@
 <% product = dep.find_or_init_product %>
-<tr class="flash <%= dep[:status_class] || 'info' %>" id="<%= dep.id.to_s %>__row">
+<tr class="flash <%= dep[:status_class] || 'info' %> dep_row" id="<%= dep.id.to_s %>__row"  >
   <td>
     <div>
       <%= render partial: '/user/projects/helpers/project_mute_button',
