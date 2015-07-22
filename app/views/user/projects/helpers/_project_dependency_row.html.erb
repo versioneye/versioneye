@@ -23,8 +23,8 @@
     </span>
   </td>
   <td>
-    <%= dep.version_current || "UNKNOWN" %>
     <%= render partial: '/user/projects/helpers/project_mute_button', locals: {dep: dep} %>
+    <%= dep.version_current || "UNKNOWN" %>
   </td>
   <td style="padding-right: 5px;">
     <% unless dep.unknown? %>
