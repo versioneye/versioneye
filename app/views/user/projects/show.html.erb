@@ -117,7 +117,7 @@
             </div>
           </div>
           <% if @project.source.eql?( Project::A_SOURCE_UPLOAD ) %>
-            <div id="reupload_form" style="display: none;" >
+            <div id="reupload_form" style="display: none; padding-top: 10px;" >
               <%= form_for [:user, @project], :html => {:multipart => true, :accept => "text/xml" } do  %>
                 <input name="project_id" id="project_id" type="hidden" value="<%= @project._id.to_s %>" />
                 <%= render '/user/helpers/stylish_fileupload' %>
