@@ -2,18 +2,26 @@
   <span>&nbsp;</span>
 <% elsif !dep.muted && dep.outdated %>
   <button id="<%= dep.id.to_s %>_button"
-          class = "btn btn-link btn-mini btn-mute-version mute-off"
-          title = "Mute alerts for this version"
-          data-project-id = "<%= dep.project[:_id].to_s %>"
-          data-dependency-id = "<%= dep[:_id].to_s %>" >
-    <i class = "dep-icon fa fa-volume-off"></i>
+          class="btn btn-link btn-mini btn-mute-version mute-off"
+          title="Mute alerts for this version"
+          data-id="<%= dep.ids %>"
+          data-project-id="<%= dep.project[:_id].to_s %>"
+          data-dependency-id="<%= dep[:_id].to_s %>" 
+          data-dependency-name="<%= dep[:name].to_s %>"
+          data-dependency-version="<%= dep[:version_current].to_s %>" >
+    <i class="dep-icon fa fa-volume-off"></i>
   </button>
 <% elsif dep.muted %>
+  <% title = "Allow notification for this version." %>
+  <% title = "Muted because: #{dep.mute_message}" if !dep.mute_message.to_s.empty? %>
   <button id="<%= dep.id.to_s %>_button"
-          class = "btn btn-link btn-mini btn-mute-version mute-on"
-          title = "Allow notification for this version."
-          data-project-id = "<%= dep.project[:_id].to_s %>"
-          data-dependency-id = "<%= dep[:_id].to_s %>" >
-    <i class = "dep-icon fa fa-volume-up"></i>
+          class="btn btn-link btn-mini btn-mute-version mute-on"
+          title="<%= title %>"
+          data-id="<%= dep.ids %>"
+          data-project-id="<%= dep.project[:_id].to_s %>"
+          data-dependency-id="<%= dep[:_id].to_s %>"
+          data-dependency-name="<%= dep[:name].to_s %>"
+          data-dependency-version="<%= dep[:version_current].to_s %>" >
+    <i class="dep-icon fa fa-volume-up"></i>
   </button>
 <% end %>

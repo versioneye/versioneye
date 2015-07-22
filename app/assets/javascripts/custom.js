@@ -80,7 +80,6 @@ jQuery(document).ready(function(){
     render_wheel_require_dev();
   }
 
-
   if(jQuery(".btn-mute-version").length > 0){
     jQuery(".btn-mute-version").on("click", toggleProjectDependencyMute);
   }
@@ -107,7 +106,7 @@ function confirmAction(){
   }
 }
 
-function load_dialog_follow(product_name, prod_key, prod_lang){
+function load_dialog_follow( product_name, prod_key, prod_lang ){
   document.getElementById('product_to_follow').innerHTML = product_name;
   setCookie( "prod_key" , prod_key,  1 );
   setCookie( "prod_lang", prod_lang, 1 )
@@ -215,6 +214,14 @@ function setCookie(name, value, days){
 
 
 
+function load_dialog_mute( button_id, dependency_name, dependency_version ){
+  document.getElementById('mute_button_id').value = id;
+  document.getElementById('mute_dependency_name').innerHTML = dependency_name;
+  document.getElementById('mute_dependency_version').innerHTML = dependency_version;
+  jQuery('#dialog_mute').modal({keyboard : true});
+  page_view('ga_mute_dialog='+ dependency_name +'/'+ dependency_version)
+}
+
 function showMuteLoader(btn){
   console.debug("Loading");
   btn.addClass("disabled");
@@ -227,13 +234,22 @@ function hideMuteLoader(btn){
   btn.find("i.dep-icon").removeClass("fa-spinner");
 }
 
+function muteProjectDep(){
+  jQuery('#dialog_mute').modal("hide");
+  id = document.getElementById('mute_button_id').value
+  btn = jQuery(document.getElementById(id + "_button"));
+  muteProjectDependency(btn);
+}
+
 function muteProjectDependency(btn){
   console.debug("Going to mute dependency.");
   showMuteLoader(btn);
 
+  var message = document.getElementById('mute_message').value 
   var api_url = "/user/projects/" + btn.data('projectId') + "/mute_dependency";
   var dep_data = {
-    "dependency_id": btn.data('dependencyId')
+    "dependency_id": btn.data('dependencyId'),
+    "mute_message": message
   };
   var jqxhr = jQuery.post(api_url, dep_data)
     .done(function(data){
@@ -273,7 +289,11 @@ function toggleProjectDependencyMute(ev){
   } else if(btn.hasClass("mute-on")){
     demuteProjectDependency(btn);
   } else if(btn.hasClass("mute-off")){
-    muteProjectDependency(btn);
+    // muteProjectDependency(btn);
+    id      = btn.data('id')
+    name    = btn.data('dependency-name')
+    version = btn.data('dependency-version')
+    load_dialog_mute(id, name, version);
   } else {
     console.debug("Hmm, mute button misses classes. Going to ignore that");
   }

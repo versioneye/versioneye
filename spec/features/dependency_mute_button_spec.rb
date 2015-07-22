@@ -42,6 +42,9 @@ describe "Mute project dependency", :js => true do
       page.should have_css(".btn-mute-version")
       page.should have_css(".mute-off")
       first(".btn-mute-version").click
+
+      click_button "Mute"
+
       using_wait_time 2 do
         page.should have_css(".mute-on")
       end
