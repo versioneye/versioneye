@@ -377,7 +377,8 @@ class User::ProjectsController < ApplicationController
   def mute_dependency
     project_id    = params[:id]
     dependency_id = params[:dependency_id]
-    muted = ProjectdependencyService.mute! project_id, dependency_id, true
+    mute_message  = params[:mute_message]
+    muted = ProjectdependencyService.mute! project_id, dependency_id, true, mute_message
     dependency = Projectdependency.find_by_id dependency_id
     render json: {"dependency_id" => dependency_id, "outdated" => dependency.outdated, "muted" => muted}
   end
