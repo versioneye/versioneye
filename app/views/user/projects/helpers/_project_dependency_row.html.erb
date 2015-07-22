@@ -1,12 +1,6 @@
 <% product = dep.find_or_init_product %>
 <tr class="flash <%= dep[:status_class] || 'info' %> dep_row" id="<%= dep.id.to_s %>__row"  >
-  <td>
-    <div>
-      <%= render partial: '/user/projects/helpers/project_mute_button',
-                 locals: {dep: dep} %>
-    <div>
-  </td>
-  <td>
+  <td style="padding-left: 5px;">
     <span >
       <% if dep.known? %>
         <a class="#a dep_link" href="<%= product_version_path( product, dep.version_requested ) %>" >
@@ -30,6 +24,7 @@
   </td>
   <td>
     <%= dep.version_current || "UNKNOWN" %>
+    <%= render partial: '/user/projects/helpers/project_mute_button', locals: {dep: dep} %>
   </td>
   <td style="padding-right: 5px;">
     <% unless dep.unknown? %>
