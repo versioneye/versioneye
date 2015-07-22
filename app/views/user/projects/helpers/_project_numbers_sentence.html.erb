@@ -13,6 +13,12 @@
   </span>
 <% end %> 
 
+<% if !project.is_a?(Hash) && project.muted_dependencies_count.to_i > 0 %> 
+  <span style="color: orange; font-size: 14px;" >
+    <%= project.muted_dependencies_count %> muted.
+  </span>
+<% end %> 
+
 <span style="color: <%= unknown_color(project)%>; font-size: 14px;" >
   <%= project[:unknown_number_sum] %> unknown.
 </span> 
