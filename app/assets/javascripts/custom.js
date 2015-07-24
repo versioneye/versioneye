@@ -83,6 +83,10 @@ jQuery(document).ready(function(){
   if(jQuery(".btn-mute-version").length > 0){
     jQuery(".btn-mute-version").on("click", toggleProjectDependencyMute);
   }
+
+  jQuery('.user_comment').linkify();
+  jQuery('.versioncomment_reply_section').linkify()
+
 }); // end-of-ready
 
 function stripeResponseHandler(status, response) {
