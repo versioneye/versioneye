@@ -9,6 +9,7 @@
   <div class="box content" >
     <% names = [] %>
     <% authors.each do |author| %>
+      <% next if author.nil? %>
       <% next if names.include?(author.name) %>
       <%= link_to gravatar_image_tag( author.email, 
                       :alt => author.name, 
