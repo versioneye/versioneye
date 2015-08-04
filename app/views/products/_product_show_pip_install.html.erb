@@ -2,23 +2,19 @@
 <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.to_s ) %>
 <% if !downloads.nil? && !downloads.empty? %>
 
-  <div class = "well row box_snippet" style="margin-bottom: 5px;" >
-    <div class="row">
-      <div class="span2">
-        <h5 class="dep_header">Install with PIP</h5>
-      </div>
-      <div class="span5" style="width: 430px; margin-bottom: 0; overflow:scroll;">
-        <pre class = "prettyprint" style = "background-color: #fff; margin-bottom: 0;"><code class = "">pip install <%= downloads[0].link %></code></pre>
-      </div>
-    </div>
-    <div class = "row" >
-      <div class="span2">
+  <div class = "well box_snippet" style="margin-bottom: 5px;" >
 
-      </div>
-      <div class="span5" style="width: 430px; margin-bottom: 0; ">
-        <%= render "products/helpers/notify_me" %>
-      </div>
+    <div >
+      <h5 class="dep_header">Install with PIP</h5>
     </div>
+    <div style="margin-bottom: 0; overflow: scroll;">
+      <pre class = "prettyprint" style = "background-color: #fff; margin-bottom: 0;"><code class = "">pip install <%= downloads[0].link %></code></pre>
+    </div>
+
+    <div style="margin-bottom: 0; margin-top: 5px; ">
+      <%= render "products/helpers/notify_me" %>
+    </div>
+
   </div>
 
 <% end %>
