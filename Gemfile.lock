@@ -77,16 +77,16 @@ GEM
     amq-protocol (1.9.2)
     ansi (1.5.0)
     arel (6.0.2)
-    aws-sdk (2.1.9)
-      aws-sdk-resources (= 2.1.9)
-    aws-sdk-core (2.1.9)
+    aws-sdk (2.1.11)
+      aws-sdk-resources (= 2.1.11)
+    aws-sdk-core (2.1.11)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.1.9)
-      aws-sdk-core (= 2.1.9)
+    aws-sdk-resources (2.1.11)
+      aws-sdk-core (= 2.1.11)
     bourbon (4.2.3)
       sass (~> 3.4)
       thor
-    bson (3.2.0)
+    bson (3.2.1)
     builder (3.2.2)
     bunny (1.7.0)
       amq-protocol (>= 1.9.2)
@@ -195,7 +195,7 @@ GEM
       httparty (~> 0.9)
       persistent_http (< 2)
     psych (2.0.13)
-    puma (2.12.2)
+    puma (2.12.3)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -388,4 +388,4 @@ DEPENDENCIES
   yui-compressor (~> 0.12.0)
 
 BUNDLED WITH
-   1.10.5
+   1.10.6
