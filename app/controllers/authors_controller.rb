@@ -6,7 +6,7 @@ class AuthorsController < ApplicationController
   end
 
 
-  def show 
+  def show
     name_id = params[:id]
     @author = Author.find_by :name_id => name_id
     @products = find_products @author
@@ -14,31 +14,31 @@ class AuthorsController < ApplicationController
   end
 
 
-  private 
+  private
 
 
-      def find_products author 
+      def find_products author
         Product.where( :id.in => author.product_ids ).desc( :used_by_count )
-      rescue => e 
+      rescue => e
         Rails.logger.error e.message
         Rails.logger.error e.backtrace.join('\n')
-        nil 
+        nil
       end
 
 
-      def fill_keywords products 
+      def fill_keywords products
         keywords = []
-        return keywords if products.nil? || products.empty? 
-        
+        return keywords if products.nil? || products.empty?
+
         products.each do |product|
-          next if product.nil? || product.tags.to_a.empty? 
-          
-          product.tags.each do |tag| 
+          next if product.nil? || product.tags.to_a.empty?
+
+          product.tags.each do |tag|
             keywords << tag if !keywords.include?(tag)
           end
         end
         keywords
-      rescue => e 
+      rescue => e
         Rails.logger.error e.message
         Rails.logger.error e.backtrace.join('\n')
         []
