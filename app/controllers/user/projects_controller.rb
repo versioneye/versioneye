@@ -5,23 +5,23 @@ class User::ProjectsController < ApplicationController
 
   def index
     @project  = Project.new
-    
+
     filter = {}
     filter[:name]     = params[:name]
     filter[:language] = params[:language]
-    filter[:language] = 'ALL' if filter[:language].to_s.empty? 
-    
+    filter[:language] = 'ALL' if filter[:language].to_s.empty?
+
     if Settings.instance.environment.eql?('enterprise') || signed_in_admin?
-      default_scope = 'user' 
-      default_scope = 'all_public' if current_user.projects.empty?  
+      default_scope = 'user'
+      default_scope = 'all_public' if current_user.projects.empty?
 
       filter[:scope]    = params[:scope]
       filter[:scope]    = 'all_public'  if params[:all_public].to_s.eql?("true")
-      filter[:scope]    = default_scope if filter[:scope].to_s.empty? 
-    else 
-      filter[:scope] = 'user'  
+      filter[:scope]    = default_scope if filter[:scope].to_s.empty?
+    else
+      filter[:scope] = 'user'
     end
-    
+
     @projects = ProjectService.index current_user, filter, params[:sort]
   end
 
@@ -37,7 +37,7 @@ class User::ProjectsController < ApplicationController
   end
 
 
-  # Create a new project from file upload or URL. 
+  # Create a new project from file upload or URL.
   def create
     project = fetch_project params
     if project.nil?
@@ -62,16 +62,16 @@ class User::ProjectsController < ApplicationController
     child_id = params[:child]
     @project = ProjectService.find( id )
     if @project.visible_for_user?(current_user) == false
-      flash[:error] = "You have no access to this project!"      
+      flash[:error] = "You have no access to this project!"
       return if !authenticate
       redirect_to(root_path) unless current_user?(@project.user)
     end
     if child_id.to_s.eql?('summary')
-      @summary = ProjectService.summary id 
-    else 
+      @summary = ProjectService.summary id
+    else
       @child   = ProjectService.find_child( id, child_id )
-    end 
-    @child   = @project if @child.nil? 
+    end
+    @child   = @project if @child.nil?
     @child   = add_dependency_classes( @child )
     @whitelists = LicenseWhitelistService.index( current_user ) if current_user
   end
@@ -82,9 +82,9 @@ class User::ProjectsController < ApplicationController
     project = ProjectService.find( id )
     date_string = DateTime.now.strftime("%d_%m_%Y")
     project_name = project.name.gsub("/", "-")
-    pdf = LwlPdfService.process project, true, true 
+    pdf = LwlPdfService.process project, true, true
     send_data pdf, type: 'application/pdf', filename: "#{date_string}_#{project_name}.pdf"
-  rescue => e 
+  rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
     flash[:error] = "ERROR: #{e.message}"
@@ -125,10 +125,10 @@ class User::ProjectsController < ApplicationController
   # send_file "#{path}/dep_#{badge}.png", :type => 'image/png', :disposition => 'inline'
   def badge
     id    = params[:id]
-    badge = BadgeService.badge_for id 
+    badge = BadgeService.badge_for id
     send_data badge.svg, :type => "image/svg+xml", :disposition => 'inline'
-  rescue => e 
-    p e.message 
+  rescue => e
+    p e.message
     p e.backtrace
   end
 
@@ -188,14 +188,14 @@ class User::ProjectsController < ApplicationController
       flash[:error] = "Permission denied. You are not a collaborator of this project!"
       redirect_to( url ) and return
     end
-    
+
     collaborator_info = params[:collaborator]
     if collaborator_info[:username].to_s.empty?
       flash[:error] = "You have to type in a name or an email address!"
       redirect_to( url ) and return
     end
 
-    ProjectCollaboratorService.add_new project, current_user, collaborator_info[:username] 
+    ProjectCollaboratorService.add_new project, current_user, collaborator_info[:username]
 
     flash[:success] = "We added a new collaborator to the project."
     redirect_to( url )
@@ -210,13 +210,13 @@ class User::ProjectsController < ApplicationController
   def reparse
     id = params[:id]
     project = Project.find_by_id id
-    ProjectUpdateService.update_async project 
+    ProjectUpdateService.update_async project
     flash[:success] = "A background process was started to reparse the project. This can take a couple seconds."
     redirect_to user_project_path( project )
   end
 
-  
-  def status 
+
+  def status
     id = params[:id]
     respond_to do |format|
       format.json { render :json => {"status": ProjectUpdateService.status_for(id) } }
@@ -232,50 +232,50 @@ class User::ProjectsController < ApplicationController
       ProductService.follow dep.language, dep.prod_key, current_user
     end
     flash[:success] = "You follow now all packages from this project."
-    redirect_to :back 
+    redirect_to :back
   end
 
 
   def destroy
-    id = params[:id] 
+    id = params[:id]
     if ProjectService.destroy_by current_user, id
       flash[:success] = "Project removed successfully."
-    else 
+    else
       flash[:success] = "Something went wrong. Please contact the VersionEye Team."
     end
     redirect_to user_projects_path
-  rescue => e 
+  rescue => e
     flash[:error] = "ERROR: #{e.message}"
     redirect_to :back
   end
 
 
-  def merge 
-    child_id  = params[:id] 
+  def merge
+    child_id  = params[:id]
     parent_id = params[:parent]
-    if ProjectService.merge(parent_id, child_id, current_user.id) 
+    if ProjectService.merge(parent_id, child_id, current_user.id)
       flash[:success] = "Project merged successfully."
-    else 
+    else
       flash[:success] = "Something went wrong. Merge not possible."
     end
     redirect_to "/user/projects/#{parent_id}"
-  rescue => e 
+  rescue => e
     flash[:error] = "ERROR: (#{e.message})."
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
   end
 
 
-  def unmerge 
-    id = params[:id] 
+  def unmerge
+    id = params[:id]
     child_id = params[:child]
-    if ProjectService.unmerge(id, child_id, current_user.id) 
+    if ProjectService.unmerge(id, child_id, current_user.id)
       flash[:success] = "Project unmerged successfully."
-    else 
+    else
       flash[:success] = "Something went wrong. Unmerge not possible."
     end
-    redirect_to :back 
-  rescue => e 
+    redirect_to :back
+  rescue => e
     flash[:error] = "ERROR: (#{e.message})."
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
@@ -289,12 +289,12 @@ class User::ProjectsController < ApplicationController
     url = "/user/projects/#{@project.id.to_s}#tab-settings"
     @project.period = period
     if @project.save
-      flash[:success] = "Status saved." 
-      update_collaborators @project 
+      flash[:success] = "Status saved."
+      update_collaborators @project
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
-    redirect_to url 
+    redirect_to url
   end
 
 
@@ -334,7 +334,7 @@ class User::ProjectsController < ApplicationController
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
-    redirect_to url 
+    redirect_to url
   end
 
 
@@ -363,11 +363,11 @@ class User::ProjectsController < ApplicationController
     project  = Project.find_by_id id
     if LicenseWhitelistService.update_project project, current_user, list_name
       flash[:success] = "We saved your changes."
-    else 
+    else
       flash[:error] = "Something went wrong. Please try again later."
     end
     redirect_to "/user/projects/#{id}#tab-licenses"
-  rescue => e 
+  rescue => e
     flash[:error] = "An error occured (#{e.message}). Please contact the VersionEye Team."
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
@@ -397,11 +397,11 @@ class User::ProjectsController < ApplicationController
 
 
     def calculate_language project
-      children = project.children  
-      return "#{project.language}_".downcase if children.nil? || children.empty? 
-      
+      children = project.children
+      return "#{project.language}_".downcase if children.nil? || children.empty?
+
       lang = project.language
-      children.each do |child| 
+      children.each do |child|
         if !child.language.eql?(lang)
           return ''
         end
@@ -426,7 +426,7 @@ class User::ProjectsController < ApplicationController
     def fetch_and_store project_url
       if (project_url.match(/\Ahttps\:\/\/github\.com/) && project_url.count("/") == 4) || (project_url.match(/\/\z/))
         flash[:error] = "Please put in the complete URL to the file, not just the directory."
-        return 
+        return
       end
 
       project_name   = project_url.split("/").last
@@ -457,12 +457,12 @@ class User::ProjectsController < ApplicationController
       hash
     end
 
-    def update_collaborators project 
-      return nil if project.collaborators.nil? || project.collaborators.empty? 
-      project.collaborators.each do |collaborator| 
+    def update_collaborators project
+      return nil if project.collaborators.nil? || project.collaborators.empty?
+      project.collaborators.each do |collaborator|
         collaborator.period = project.period
-        collaborator.save 
-      end  
+        collaborator.save
+      end
     end
 
 end
