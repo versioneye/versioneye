@@ -1,9 +1,9 @@
 class ProductsController < ApplicationController
 
-  
+
   require 'will_paginate/array'
 
-  
+
   before_filter :authenticate                  , :only => [:edit, :edit_links, :edit_licenses, :update, :delete_link, :delete_license, :edit_keywords, :delete_keyword, :add_keyword]
   before_filter :maintainer?                   , :only => [:edit, :edit_links, :edit_licenses, :edit_versions, :edit_keywords, :update, :delete_link, :delete_license, :delete_version, :delete_keyword, :add_keyword]
   before_filter :check_redirects_package       , :only => [:show]
@@ -90,9 +90,9 @@ class ProductsController < ApplicationController
     prod_key = Product.decode_prod_key params[:key]
     version  = Version.decode_version  params[:version]
     key = "#{language}:::#{prod_key}:::#{version}"
-    badge = BadgeService.badge_for key 
+    badge = BadgeService.badge_for key
     send_data badge.svg, :type => "image/svg+xml", :disposition => 'inline'
-  rescue => e 
+  rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
   end
@@ -101,16 +101,16 @@ class ProductsController < ApplicationController
   def ref_badge
     language = Product.decode_language params[:lang]
     prod_key = Product.decode_prod_key params[:key]
-    
+
     key = "#{language}:::#{prod_key}:::ref"
-    badge = BadgeRefService.badge_for key 
+    badge = BadgeRefService.badge_for key
     send_data badge.svg, :type => "image/svg+xml", :disposition => 'inline'
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
   end
 
-  
+
   def references
     language   = Product.decode_language params[:lang]
     prod_key   = Product.decode_prod_key params[:key]
@@ -141,7 +141,7 @@ class ProductsController < ApplicationController
   end
 
 
-  def project_usage 
+  def project_usage
     language   = Product.decode_language params[:lang]
     prod_key   = Product.decode_prod_key params[:key]
 
@@ -154,7 +154,7 @@ class ProductsController < ApplicationController
   rescue => e
     flash[:error] = "An error occured. Please contact the VersionEye Team."
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join('\n')      
+    Rails.logger.error e.backtrace.join('\n')
   end
 
 
@@ -254,7 +254,7 @@ class ProductsController < ApplicationController
   def delete_keyword
     keyword = params[:keyword]
     @product.remove_tag keyword
-    if @product.save       
+    if @product.save
       flash[:success] = "Keyword removed."
       Auditlog.add current_user, 'Product', @product.id.to_s, "Removed keyword #{keyword}"
     end
@@ -262,10 +262,10 @@ class ProductsController < ApplicationController
   end
 
 
-  def add_keyword 
+  def add_keyword
     keyword = params[:keyword]
     @product.add_tag keyword
-    if @product.save 
+    if @product.save
       Auditlog.add current_user, 'Product', @product.id.to_s, "Added keyword #{keyword}"
       flash[:success] = "Keyword added."
     end
