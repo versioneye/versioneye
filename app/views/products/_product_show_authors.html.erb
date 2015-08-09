@@ -12,15 +12,15 @@
       <% next if author.nil? %>
       <% next if author.to_param.to_s.empty? %>
       <% next if names.include?(author.to_param.to_s) %>
-      <% next if author.to_param.to_s.match(/https\:\/\/github\.com\/(.*)/) %> 
-      <% next if author.to_param.to_s.match(/http\:\/\/github\.com/) %> 
-      <%= link_to gravatar_image_tag( author.email, 
-                      :alt => author.name, 
-                      :title => author.name, 
-                      :style => 'width: 45px;', 
+      <% next if author.to_param.to_s.match(/https\:\/\/github\.com\/(.*)/) %>
+      <% next if author.to_param.to_s.match(/http\:\/\/github\.com/) %>
+      <%= link_to gravatar_image_tag( author.email,
+                      :alt => author.name,
+                      :title => author.name,
+                      :style => 'width: 45px;',
                       :class => "round12",
                       :gravatar => { :size => 45, :default => "#{Settings.instance.server_url}/profile_icon.png" } ), author_path(author) %>
-      <% names.push(author.name) %>
+      <% names.push(author.to_param.to_s) %>
     <% end %>
   </div>
 <% end %>
