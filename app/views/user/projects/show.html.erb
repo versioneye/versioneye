@@ -4,7 +4,7 @@
 
 <% else %>
 
-  <%= render "/shared/dialog_mute" %> 
+  <%= render "/shared/dialog_mute" %>
 
   <% title "#{@project.name}" %>
 
@@ -17,13 +17,13 @@
     <div class="content_header_def">
       <div id="project-title">
         <span class = "namelabel" >
-          <b>Name:</b> <%= @project.name %> 
+          <b>Name:</b> <%= @project.name %>
         </span>
         <% if @project.public == false %>
           <span class="fa fa-lock" title="Private VersionEye Project"></span>
-        <% end %> 
+        <% end %>
         <% if current_user?(@project.user) || signed_in_admin? %>
-          <i class="fa fa-pencil-square-o" 
+          <i class="fa fa-pencil-square-o"
             style="width: 16px; height: 16px; margin: 0; padding: 0;"
             title="Change project name"></i>
         <% end %>
@@ -57,11 +57,11 @@
 
       <% end %>
 
-      <% if @project.group_id && @project.artifact_id %> 
+      <% if @project.group_id && @project.artifact_id %>
         <div style="padding-top: 10px;">
           <span title="GroupdId / ArtifactId"><b>GA:</b></span> <%= @project.group_id %> / <%= @project.artifact_id %>
         </div>
-      <% end %> 
+      <% end %>
 
       <% if (current_user.nil? && @project.user) || ( @project.user && current_user && !@project.user.id.to_s.eql?(current_user.id.to_s) ) %>
         <div style="padding-top: 10px;">
@@ -78,12 +78,12 @@
           <% @child.parsing_errors.each do |error| %>
             <div id="project_errors" class="flash error" style="padding-bottom: 5px; margin-bottom: 10px;" >
               <i class="fa fa-exclamation-triangle" title="Some errors occured by parsing this project."></i> <%= error %>
-            </div>  
-          <% end %> 
+            </div>
+          <% end %>
         <% end %>
 
         <div id="project_status" class="flash warn" style="padding-bottom: 5px; margin-bottom: 10px; display: none;" >
-          <%= image_tag "progress.gif" %> Project is processed by a background job. This page will reload if the job is done. 
+          <%= image_tag "progress.gif" %> Project is processed by a background job. This page will reload if the job is done.
         </div>
 
         <div>
@@ -141,7 +141,7 @@
           <li>
             <a data-target="#licenses" data-toggle="tab" onclick="page_view('ga_project_licenses')"><i class = "fa fa-tasks">&nbsp;</i>Licenses</a>
           </li>
-          <% if @project.language.eql?(Product::A_LANGUAGE_PHP) %> 
+          <% if @project.language.eql?(Product::A_LANGUAGE_PHP) %>
             <li>
               <a data-target="#security" data-toggle="tab" onclick="page_view('ga_project_security')"><i class = "fa fa-tasks">&nbsp;</i>Security</a>
             </li>
@@ -158,7 +158,7 @@
 
         <div class="tab-content" style="width: 100%;" >
           <div id="dependencies" class="tab-pane active" >
-            
+
             <%= render partial: "user/projects/helpers/show_subprojects", locals: {parent_project: @project, child_project: @child, tab_id: 'dependencies'} %>
 
             <%= render partial: "user/projects/helpers/show_dependencies", locals: {parent_project: @project, child_project: @child, tab_id: 'dependencies'} %>
@@ -177,12 +177,12 @@
 
           </div>
 
-          <% if @project.language.eql?(Product::A_LANGUAGE_PHP) %> 
+          <% if @project.language.eql?(Product::A_LANGUAGE_PHP) %>
             <div id="security" class="tab-pane">
 
               <%= render partial: "user/projects/helpers/show_subprojects", locals: {parent_project: @project, child_project: @child, tab_id: 'security'} %>
 
-              <%= render partial: "user/projects/helpers/security", locals: {tab_id: 'security'} %>  
+              <%= render partial: "user/projects/helpers/security", locals: {tab_id: 'security'} %>
 
             </div>
           <% end %>
@@ -216,7 +216,7 @@
     jQuery('#projectTabs a[data-target="#' + hash + '"]').tab('show');
     jQuery('html, body').animate({scrollTop:0}, 'fast');
 
-    checkInterval = 0 
+    checkInterval = 0
     showedProgressBar = false;
 
     function checkStatus(){

@@ -13,12 +13,12 @@
   <div class="content" >
     <div style="margin-bottom: 10px;">
       <a id='projects_filter_link' onClick="show_project_filter(); return false;" href="" >
-        Show filter >>  
+        Show filter >>
       </a>
     </div>
     <div id='projects_filter' style="display: none">
       <form id="form" action="/user/projects" method="GET" class='form-horizontal' style="padding: 0; margin:0;" >
-        
+
         <div class="form-group">
           <%= label_tag :name, "Project name", :class => "control-label", :for => "name" %>
           <div class="controls">
@@ -31,14 +31,14 @@
           <div class="controls" >
             <select name="language"  id="language" class="form-control" >
               <option value="ALL"  >ALL</option>
-              <% LanguageService.distinct_languages.sort.each do |language| %> 
+              <% LanguageService.distinct_languages.sort.each do |language| %>
                 <option value="<%= language %>" <%= "selected" if params[:language].to_s.eql?(language) %> ><%= language %></option>
-              <% end %> 
+              <% end %>
             </select>
           </div>
         </div>
 
-        <% if Settings.instance.environment.eql?('enterprise') || signed_in_admin? %> 
+        <% if Settings.instance.environment.eql?('enterprise') || signed_in_admin? %>
           <div class="form-group">
             <%= label_tag :scope, "Scope", :class => "control-label", :for => "scope" %>
             <div class="controls" >
@@ -47,11 +47,11 @@
                 <option value="all_public" <%= 'selected' if params[:scope].to_s.eql?('all_public') %> >All public projects</option>
                 <% if current_user.admin == true %>
                   <option value="all" <%= 'selected' if params[:scope].to_s.eql?('all') %> >All projects</option>
-                <% end %> 
+                <% end %>
               </select>
             </div>
           </div>
-        <% end %> 
+        <% end %>
 
         <div class="form-group">
           <div class="control-label"></div>
@@ -62,7 +62,7 @@
             </a>
           </div>
         </div>
-        
+
       </form>
     </div>
     <div id="projects" >
