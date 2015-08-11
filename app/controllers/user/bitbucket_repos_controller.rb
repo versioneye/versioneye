@@ -58,7 +58,7 @@ class User::BitbucketReposController < User::ScmReposController
       repo.branches = nil
       repo.project_files = nil
       repo.save
-      clear_repo_cache repo 
+      clear_repo_cache repo
     end
     redirect_to :back
   rescue => e
@@ -96,19 +96,19 @@ class User::BitbucketReposController < User::ScmReposController
   private
 
 
-    def clear_repo_cache repo 
+    def clear_repo_cache repo
       user  = current_user
       repo_task_key = "bitbucket:::#{user.id.to_s}:::#{repo.id.to_s}"
       BitbucketService.cache.delete( repo_task_key )
-    rescue => e 
-      Rails.logger.error e.message 
+    rescue => e
+      Rails.logger.error e.message
       Rails.logger.error e.backtrace.join "\n"
     end
 
 
-    def clear_import_cache project 
+    def clear_import_cache project
       key = "bitbucket:::#{current_user.username}:::#{project.scm_fullname}:::#{project.filename}:::#{project.scm_branch}"
-      ProjectService.cache.delete key 
+      ProjectService.cache.delete key
     end
 
 
@@ -118,8 +118,8 @@ class User::BitbucketReposController < User::ScmReposController
       status = ProjectImportService.import_from_bitbucket_async current_user, project_name, filename, branch
       if status && status.match(/\Adone_/)
         project_id = status.gsub("done_", "")
-        project = Project.find project_id 
-        project_url = url_for(controller: 'projects', action: "show", id: project.id) 
+        project = Project.find project_id
+        project_url = url_for(controller: 'projects', action: "show", id: project.id)
         status = 'done'
       elsif status && status.match(/\Aerror_/)
         return status.gsub("error_", "")
@@ -133,8 +133,8 @@ class User::BitbucketReposController < User::ScmReposController
         project_id: project_id,
         project_url: project_url
       }
-    rescue => e 
-      Rails.logger.error e.message 
+    rescue => e
+      Rails.logger.error e.message
       Rails.logger.error e.backtrace.join "\n"
       "Something went wrong. Please contact the VersionEye Team."
     end

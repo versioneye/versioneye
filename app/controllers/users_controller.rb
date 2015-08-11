@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 
   def new
     if signed_in?
-      redirect_to user_projects_path and return 
+      redirect_to user_projects_path and return
     end
 
     promo_code = params[:promo_code]
@@ -133,7 +133,7 @@ class UsersController < ApplicationController
   def comments
     @page = "profile"
     @user = User.find_by_username(params[:id])
-    return nil if @user.nil? 
+    return nil if @user.nil?
     @userlinkcollection = Userlinkcollection.find_all_by_user( @user.id )
     @comments = Array.new
     if has_permission_to_see_comments( @user, current_user ) && !@user.nil?
@@ -250,20 +250,20 @@ class UsersController < ApplicationController
   end
 
   # Only for Admins!
-  def update_permissions 
+  def update_permissions
     user = User.find_by_username(params[:id])
     if user.nil?
       flash[:error] = "User could't find in the database."
     else
-      if params[:commit].eql?('delete') 
+      if params[:commit].eql?('delete')
         UserService.delete user
-        flash[:success] = "User deleted"  
-      else 
+        flash[:success] = "User deleted"
+      else
         user.admin = params[:admin]
         user.fetch_or_create_permissions.lwl = params[:lwl]
-        user.fetch_or_create_permissions.save 
-        user.save 
-        flash[:success] = "User updated"  
+        user.fetch_or_create_permissions.save
+        user.save
+        flash[:success] = "User updated"
       end
     end
     redirect_to users_path
@@ -271,13 +271,13 @@ class UsersController < ApplicationController
 
   private
 
-    def create_user_form params 
-      user = User.new 
+    def create_user_form params
+      user = User.new
       user.fullname   = params[:user][:fullname]
       user.email      = params[:user][:email]
       user.password   = params[:user][:password]
       user.promo_code = params[:user][:promo_code]
-      user 
+      user
     end
 
     def github_source?( source )

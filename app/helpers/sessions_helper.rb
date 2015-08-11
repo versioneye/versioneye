@@ -63,10 +63,10 @@ module SessionsHelper
 
   def authenticate_lwl
     if Rails.env.enterprise?
-      return true if signed_in_admin? || current_user.fetch_or_create_permissions.lwl == true 
+      return true if signed_in_admin? || current_user.fetch_or_create_permissions.lwl == true
       deny_access
       return false
-    end 
+    end
     authenticate
   end
 
@@ -101,7 +101,7 @@ module SessionsHelper
     # scope = cookies.signed[:gh_scope]
     # scope = 'user:email' if scope.to_s.empty?
     # scope
-  rescue => e 
+  rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
     'repo,user:email'
