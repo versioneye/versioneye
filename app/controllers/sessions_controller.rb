@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
 
   def new
     if signed_in?
-      redirect_to user_projects_path and return 
+      redirect_to user_projects_path and return
     end
   end
 
