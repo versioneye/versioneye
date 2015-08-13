@@ -214,7 +214,6 @@ Versioneye::Application.routes.draw do
         post 'merge'
         get  'unmerge'
         post 'save_period'
-        post 'save_email'
         post 'save_visibility'
         post 'save_whitelist'
         post 'transitive_dependencies'
@@ -232,7 +231,6 @@ Versioneye::Application.routes.draw do
       post 'approve'
       post 'delete'
       post 'save_period'
-      post 'save_email'
     end
 
     resources :github_repos
