@@ -1,4 +1,4 @@
-<% if current_user?(@project.user) %>
+<% if current_user?(@project.user) || signed_in_admin? %>
   <div style="margin-top: 20px;" id="settings_area">
     <form action="<%= save_period_user_project_path(@project) %>" method="post" class="form-inline" >
       <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
@@ -48,8 +48,6 @@
       <button type="submit" class="btn btn-primary" >Save</button>
     </form>
     <br/>
-
-    <%= render "user/projects/helpers/license_whitelist_picker" %>
 
     <% if @project.parent_id.nil? && @project.children.empty? %>
     <form action="<%= merge_user_project_path( @project ) %>" method="post" class="form-inline" >
