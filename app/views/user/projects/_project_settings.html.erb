@@ -11,30 +11,12 @@
           <option value="<%= Project::A_PERIOD_WEEKLY %>"  <%= "selected" if @project.period == Project::A_PERIOD_WEEKLY  %> >Weekly</option>
           <option value="<%= Project::A_PERIOD_MONTHLY %>" <%= "selected" if @project.period == Project::A_PERIOD_MONTHLY %> >Monthly</option>
           <option value="NEVER" <%= "selected" if @project.period == 'NEVER' %> >Never</option>
-        </select> 
+        </select>
       </div>
       <button type="submit" class="btn btn-primary" >Save</button>
     </form>
     <br/>
-    
-    <form action="<%= save_email_user_project_path(@project) %>" method="post" class="form-inline" >
-      <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-      <div>
-        What's the email address we should send the notifications to?
-      </div>
-      <div class="form-group">
-        <select name="email" class="form-control" >
-          <option value="<%= current_user.email %>"  <%= "selected" if @project.email == current_user.email %> ><%= current_user.email %></option>
-          <% current_user.emails_verified.each do |user_email| %>
-            <option value="<%= user_email.email %>" <%= "selected" if @project.email == user_email.email %> ><%= user_email.email %></option>
-          <% end %>
-        </select> 
-      </div>
-      <button type="submit" class="btn btn-primary" >Save</button> 
-      <button type="button" onclick="window.location.href='/settings/emails'" class="btn btn-success" >Add E-Mail</button>
-    </form>
-    <br/>
-    
+
     <form action="<%= save_visibility_user_project_path(@project) %>" method="post" class="form-inline" >
       <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
       <div>
@@ -45,7 +27,7 @@
         <select name="visibility" class="form-control" >
           <option value="private"  <%= "selected" if !@project.public %> >Private</option>
           <option value="public"   <%= "selected" if  @project.public %> >Public</option>
-        </select> 
+        </select>
       </div>
       <button type="submit" class="btn btn-primary" >Save</button>
     </form>
@@ -61,7 +43,7 @@
         <select name="notify" class="form-control" >
           <option value="notify"  <%= @project.notify_after_api_update.to_s.eql?('true')  ? 'selected' : '' %> >Notify after update via API</option>
           <option value="silent"  <%= @project.notify_after_api_update.to_s.eql?('false') ? 'selected' : '' %> >Stay silent</option>
-        </select> 
+        </select>
       </div>
       <button type="submit" class="btn btn-primary" >Save</button>
     </form>
@@ -69,7 +51,7 @@
 
     <%= render "user/projects/helpers/license_whitelist_picker" %>
 
-    <% if @project.parent_id.nil? && @project.children.empty? %> 
+    <% if @project.parent_id.nil? && @project.children.empty? %>
     <form action="<%= merge_user_project_path( @project ) %>" method="post" class="form-inline" >
       <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
       <div>
@@ -77,19 +59,19 @@
       </div>
       <div class="form-group">
         <select name="parent" class="form-control" >
-          <% merge_to_projects(@project).each do |project| %> 
+          <% merge_to_projects(@project).each do |project| %>
             <option value="<%= project.id %>" >
               <% if project.has_kids == 1 %>
-                parent:  
-              <% end %>  
+                parent:
+              <% end %>
               <%= project.name %>
             </option>
-          <% end %> 
-        </select> 
+          <% end %>
+        </select>
       </div>
       <button type="submit" class="btn btn-primary" >Merge</button>
     </form>
-    <% end %> 
+    <% end %>
 
   </div>
 <% else %>

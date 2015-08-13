@@ -1,33 +1,19 @@
 
 <div style="" id="settings_area">
-  <form action="<%= user_collaboration_save_period_path(collaboration_id: collaboration[:_id].to_s) %>" method="post" class="form-horizontal" >
+  <form action="<%= user_collaboration_save_period_path(collaboration_id: collaboration[:_id].to_s) %>" method="post" class="form-inline" >
     <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-    <div class="control-group">
-      <label class="control-label" style="width: 200px;" >Monitor it</label>
-      <div class="controls" style="margin-left: 210px;">
-        <select name="period" style="width: 150px; margin: 0px;" >
-          <option value="<%= Project::A_PERIOD_DAILY %>"   <%= 'selected' if collaboration[:period] == Project::A_PERIOD_DAILY   %> >Daily</option>
-          <option value="<%= Project::A_PERIOD_WEEKLY %>"  <%= "selected" if collaboration[:period] == Project::A_PERIOD_WEEKLY  %> >Weekly</option>
-          <option value="<%= Project::A_PERIOD_MONTHLY %>" <%= "selected" if collaboration[:period] == Project::A_PERIOD_MONTHLY %> >Monthly</option>
-        </select> <button type="submit" class="btn btn-primary" >Save</button>
-      </div>
+    <div>
+      How often do you want us to check your project's dependencies? We will send you an email notification whenever we check your dependencies.
     </div>
-  </form>
-
-  <form action="<%= user_collaboration_save_email_path(collaboration_id: collaboration[:_id].to_s) %>" method="post" class="form-horizontal" >
-    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-    <div class="control-group">
-      <label class="control-label" style="width: 200px;" >Send notifications to</label>
-      <div class="controls" style="margin-left: 210px;">
-        <select name="email" style="width: 150px; margin: 0px;" >
-          <option value="<%= current_user.email %>"  <%= "selected" if collaboration.user[:email] == current_user.email %> ><%= current_user.email %></option>
-          <% current_user.emails_verified.each do |user_email| %>
-            <option value="<%= user_email.email %>" <%= "selected" if collaboration.user[:email] == user_email.email %> ><%= user_email.email %></option>
-          <% end %>
-        </select>
-        <button type="submit" class="btn btn-primary" >Save</button>
-        <button type="button" onclick="window.location.href='/settings/emails'" class="btn btn-success" >Add E-Mail</button>
-      </div>
+    <div class="form-group">
+      <select name="period" class="form-control" >
+        <option value="<%= Project::A_PERIOD_DAILY %>"   <%= 'selected' if collaboration[:period] == Project::A_PERIOD_DAILY   %> >Daily</option>
+        <option value="<%= Project::A_PERIOD_WEEKLY %>"  <%= "selected" if collaboration[:period] == Project::A_PERIOD_WEEKLY  %> >Weekly</option>
+        <option value="<%= Project::A_PERIOD_MONTHLY %>" <%= "selected" if collaboration[:period] == Project::A_PERIOD_MONTHLY %> >Monthly</option>
+        <option value="NEVER"                            <%= "selected" if collaboration[:period] == 'NEVER' %> >Never</option>
+      </select>
     </div>
+    <button type="submit" class="btn btn-primary" >Save</button>
   </form>
+  <br/>
 </div>

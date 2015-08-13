@@ -317,27 +317,6 @@ class User::ProjectsController < ApplicationController
   end
 
 
-  def save_email
-    id       = params[:id]
-    email    = params[:email]
-    @project = Project.find_by_id(id)
-    url = "/user/projects/#{@project.id.to_s}#tab-settings"
-    new_email  = nil
-    user       = current_user
-    user_email = user.get_email(email)
-    new_email  = user_email.email if user_email
-    new_email  = user.email unless user_email
-
-    @project.email = new_email
-    if @project.save
-      flash[:success] = "Status saved."
-    else
-      flash[:error] = "Something went wrong. Please try again later."
-    end
-    redirect_to url
-  end
-
-
   def save_notify_after_api_update
     id     = params[:id]
     notify = params[:notify]

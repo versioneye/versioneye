@@ -78,25 +78,5 @@ class User::CollaborationsController < ApplicationController
     redirect_to :back
   end
 
-  def save_email
-    id       = params[:collaboration_id]
-    email    = params[:email]
-    @collab = ProjectCollaborator.find_by_id(id)
-
-    new_email  = nil
-    user       = current_user
-    user_email = user.get_email(email)
-    new_email  = user_email.email if user_email
-    new_email  = user.email unless user_email
-
-    @collab.update_attributes({email: new_email})
-    if @collab.save
-      flash[:success] = 'Status saved.'
-    else
-      flash[:error] = 'Something went wrong. Please try again later.'
-    end
-    redirect_to user_collaboration_path(@collab)
-  end
-
 
 end
