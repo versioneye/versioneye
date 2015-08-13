@@ -1,6 +1,8 @@
 class User::CollaborationsController < ApplicationController
 
+
   before_filter :authenticate
+
 
   def index
     collaborations = ProjectCollaborator.by_user(current_user)
@@ -15,6 +17,7 @@ class User::CollaborationsController < ApplicationController
     end
   end
 
+
   def show
     collab_id = params[:id]
 
@@ -24,6 +27,7 @@ class User::CollaborationsController < ApplicationController
       render text: 'Contributions doesnt exist anymore.', layout: 'application'
     end
   end
+
 
   def delete
     collab_id = params[:id]
@@ -38,7 +42,7 @@ class User::CollaborationsController < ApplicationController
     url = "/user/projects/#{collaborator.project.id.to_s}#tab-collaborators"
     url = "/user/collaborations" if !collaborator.owner_id.to_s.eql?( current_user.id.to_s )
     user_id = current_user.id
-    if collaborator.owner.id != user_id && collaborator.user.id != user_id
+    if collaborator.owner.id != user_id && collaborator.user.id != user_id && current_user.admin != true
       flash[:error] = 'You can not remove this.'
       redirect_to( url ) and return
     end
@@ -47,6 +51,7 @@ class User::CollaborationsController < ApplicationController
     collaborator.delete
     redirect_to( url ) and return
   end
+
 
   def approve
     collab_id = params[:id]
@@ -66,6 +71,7 @@ class User::CollaborationsController < ApplicationController
 
     redirect_to :back
   end
+
 
   def save_period
     id = params[:collaboration_id]
