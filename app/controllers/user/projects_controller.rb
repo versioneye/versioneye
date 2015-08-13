@@ -1,6 +1,7 @@
 class User::ProjectsController < ApplicationController
 
-  before_filter :authenticate, :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export]
+  before_filter :authenticate,  :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export]
+  before_filter :collaborator?, :only   => [:add_collaborator, :save_period, :save_visibility, :update, :update_name, :destroy]
 
 
   def index
@@ -134,12 +135,10 @@ class User::ProjectsController < ApplicationController
 
 
   def update_name
-    @name         = params[:name]
-    id           = params[:id]
-    project      = Project.find_by_id(id)
-    if current_user?(project.user) || signed_in_admin?
-      project.name = @name
-      project.save
+    @name        = params[:name]
+    if current_user?(@project.user) || signed_in_admin?
+      @project.name = @name
+      @project.save
     end
     respond_to do |format|
       format.js
@@ -149,42 +148,28 @@ class User::ProjectsController < ApplicationController
 
   def update
     file       = params[:upload]
-    project_id = params[:project_id]
-    if file.nil? || project_id.nil?
+    if file.nil?
       flash[:error] = 'Something went wrong. Please contact the VersionEye Team.'
       redirect_to user_projects_path
       return
     end
 
-    project = Project.find_by_id project_id
-    if project.nil?
-      flash[:error] = 'No project with given key. Please contact the VersionEye Team.'
-      redirect_to user_projects_path
-      return
-    end
-
-    project = ProjectUpdateService.update_from_upload project, file, current_user, false
-    if project.nil?
+    @project = ProjectUpdateService.update_from_upload @project, file, current_user, false
+    if @project.nil?
       flash[:error] = 'Something went wrong. Please contact the VersionEye Team.'
       redirect_to user_projects_path
     end
 
-    Rails.cache.delete( project.id.to_s )
+    Rails.cache.delete( @project.id.to_s )
     flash[:success] = "ReUpload was successful."
-    redirect_to user_project_path( project )
+    redirect_to user_project_path( @project )
   end
 
 
   def add_collaborator
-    project = Project.find_by_id params[:id]
-
-    if project.nil?
-      flash[:error] = "Failure: Can't add collaborator - wrong project id."
-      redirect_to :back and return
-    end
-
+    project = @project
     url = "/user/projects/#{project.id.to_s}#tab-collaborators"
-    if !project.collaborator?( current_user )
+    if !project.collaborator?( current_user ) && current_user.admin != true
       flash[:error] = "Permission denied. You are not a collaborator of this project!"
       redirect_to( url ) and return
     end
@@ -283,9 +268,7 @@ class User::ProjectsController < ApplicationController
 
 
   def save_period
-    id = params[:id]
     period = params[:period]
-    @project = Project.find_by_id( id )
     url = "/user/projects/#{@project.id.to_s}#tab-settings"
     @project.period = period
     if @project.save
@@ -299,9 +282,7 @@ class User::ProjectsController < ApplicationController
 
 
   def save_visibility
-    id = params[:id]
     visibility = params[:visibility]
-    @project = Project.find_by_id(id)
     url = "/user/projects/#{@project.id.to_s}#tab-settings"
     if visibility.eql? "public"
       @project.public = true
@@ -373,6 +354,24 @@ class User::ProjectsController < ApplicationController
 
 
   private
+
+
+    def collaborator?
+      id = params[:id]
+      id = params[:project_id] if id.to_s.empty?
+      @project = Project.find_by_id id
+      if @project.nil?
+        flash[:error] = "The project you are looking for doesn't exist."
+        redirect_to :back
+        false
+      end
+
+      return true if project_member?( @project, current_user )
+
+      flash[:error] = "Permission denied. You are not a collaborator of this project!"
+      redirect_to :back
+      false
+    end
 
 
     def calculate_language project
