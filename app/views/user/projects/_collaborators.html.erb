@@ -6,7 +6,7 @@
 <div>
   <%= form_tag(add_collaborator_user_project_path(id: params[:id]),  class: 'form-group', style: 'vertical-align:top;') do %>
     <div class="input-append">
-      
+
       <input id="collaborator_username" name="collaborator[username]" class="typeahead  form-control" type="text" autofocus="autofocus" autocomplete="off" style="width: 400px; margin-top: -5px; display: inline-block;" />
 
       <button class="btn btn-primary" onclick="preventSubmit('collaborator_username', 'collaborator username')" type="submit" >
@@ -16,11 +16,11 @@
   <% end %>
 </div>
 
-<% @project.collaborators.each do |collaborator| %> 
+<% @project.collaborators.each do |collaborator| %>
   <div class = "row">
     <%= render partial: "collaborator", :locals => {collaborator: collaborator} %>
   </div>
-<% end %> 
+<% end %>
 
 <script type="text/javascript">
 
@@ -37,5 +37,5 @@
       });
       console.debug("Collaborators autocomplete is initialized.");
     });
-  
+
 </script>
