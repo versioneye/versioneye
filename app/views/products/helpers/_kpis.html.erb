@@ -15,7 +15,7 @@
   <% this_color_class = 'error' if @version && !@version.semver_2 %>
   <div class="kpi_box flash <%= this_color_class %>" style="margin-bottom: 5px;">
     <div>
-      <b>This:</b> <%= @product.version %> 
+      <b>This:</b> <%= @product.version %>
 
       <a class="btn btn-default btn-xs pull-right" title="other versions" onclick="return show_versions()" href="" id="show_versions_link" style="font-size: 11px; display: inline-block; border: 0px none; line-height: 18px;">show all <i class="fa fa-arrow-down"></i></a>
 
@@ -28,15 +28,15 @@
   </div>
   <script type="text/javascript">
     function show_versions(){
-      document.getElementById('other_versions').style.display = 'block'; 
-      document.getElementById('show_versions_link').style.display = 'none'; 
-      document.getElementById('hide_versions_link').style.display = 'inline-block'; 
+      document.getElementById('other_versions').style.display = 'block';
+      document.getElementById('show_versions_link').style.display = 'none';
+      document.getElementById('hide_versions_link').style.display = 'inline-block';
       return false;
     }
     function hide_versions(){
-      document.getElementById('other_versions').style.display = 'none'; 
-      document.getElementById('show_versions_link').style.display = 'inline-block'; 
-      document.getElementById('hide_versions_link').style.display = 'none'; 
+      document.getElementById('other_versions').style.display = 'none';
+      document.getElementById('show_versions_link').style.display = 'inline-block';
+      document.getElementById('hide_versions_link').style.display = 'none';
       return false;
     }
   </script>
@@ -73,21 +73,6 @@
     </span>
   </div>
 
-
-
-<% if Settings.instance.environment.to_s.eql?('enterprise') %>
-  <div class="kpi_box flash info l_margin_bottom_5" >
-    <b title="<%= @product.project_usage %> projects are referencing this component.">Project Usage:</b>
-    <span title="<%= ref_text %>">
-      <% if @product.project_usage > 0 %>
-        <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/project_usage"><%= @product.project_usage %></a>
-      <% else %>
-        <%= @product.project_usage %>
-      <% end %>
-    </span>
-  </div>
-<% end %>
-
   <% main_dep_count = @product.dependencies(nil).count %>
   <% dep_bg = '' %>
   <% dep_bg = 'success' if main_dep_count <= 9  %>
@@ -114,6 +99,20 @@
     <span title="<%= ref_text %>">
       <% if references > 0 %>
         <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/references"><%= references %></a>
+      <% end %>
+    </span>
+  </div>
+<% end %>
+
+
+<% if Settings.instance.environment.to_s.eql?('enterprise') %>
+  <div class="kpi_box flash info l_margin_bottom_5" >
+    <b title="<%= @product.project_usage %> projects are referencing this component.">Project Usage:</b>
+    <span >
+      <% if @product.project_usage > 0 %>
+        <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/project_usage"><%= @product.project_usage %></a>
+      <% else %>
+        <%= @product.project_usage %>
       <% end %>
     </span>
   </div>
