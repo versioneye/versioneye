@@ -5,7 +5,7 @@
 
   <div style="vertical-align: middle">
     <div class = "col-md-2" style="width: 85px;">
-      <%  if collaborator.owner?(current_user)  %>
+      <%  if collaborator.owner?(current_user) || current_user.admin == true  %>
         <%= render partial: 'user/projects/helpers/collaborator_owner_controls', locals: {collaborator: collaborator} %>
       <% elsif collaborator.current?(current_user) %>
         <%= render partial: 'user/projects/helpers/collaborator_controls', locals: {collaborator: collaborator} %>
