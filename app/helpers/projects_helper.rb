@@ -20,18 +20,18 @@ module ProjectsHelper
     'green'
   end
 
-  def subproject_label_color selected_id, sub_id 
+  def subproject_label_color selected_id, sub_id
     return 'success' if selected_id.eql?('summary')
     return 'success' if selected_id.eql?(sub_id)
     'default'
   end
 
   def subproject_name( project )
-    name = project.filename 
-    if name.to_s.empty? 
-      name = project.name 
-    end 
-    name 
+    name = project.filename
+    if name.to_s.empty?
+      name = project.name
+    end
+    name
   end
 
   def path_to_stash_file project
@@ -56,13 +56,25 @@ module ProjectsHelper
     "#{Settings.instance.github_base_url}/#{project.scm_fullname}/blob/#{project.scm_branch}/#{project.filename}"
   end
 
+  def project_member?(project, user)
+    return false if project.nil?
+    return false if project.user.nil?
+    return false if user.nil?
+
+    return true if user.admin == true
+    return true if project.user.ids.eql?( user.ids )
+    return true if !project.collaborator( user ).nil?
+
+    return false
+  end
+
   def add_dependency_classes project
     return nil if project.nil?
 
-    deps = nil 
-    if project.is_a? Hash 
-      deps = project[:dependencies] 
-    else 
+    deps = nil
+    if project.is_a? Hash
+      deps = project[:dependencies]
+    else
       deps = project.dependencies
     end
     return project if deps.nil? or deps.empty?
@@ -91,20 +103,20 @@ module ProjectsHelper
     project
   end
 
-  def merge_to_projects project 
+  def merge_to_projects project
     projs = []
     parents = []
     singles = []
     current_user.projects.each do |pro|
       next if pro.id.to_s.eql?(project.id.to_s)
       next if pro.parent_id
-      if pro.children.count > 0 
+      if pro.children.count > 0
         pro.has_kids = 1
-        parents << pro 
-      else 
+        parents << pro
+      else
         pro.has_kids = 0
-        singles << pro 
-      end 
+        singles << pro
+      end
     end
     parents = parents.sort_by {|obj| obj.name}
     singles = singles.sort_by {|obj| obj.name}
