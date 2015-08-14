@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 0f34d3bd1bb4a04f25dbcf68f85a179cd5d7e75b
-  tag: v7.23.0
+  revision: 18ee70385bbfa5cdac173bd3ac59e22eb39b1157
+  tag: v7.23.1
   specs:
-    versioneye-core (7.23.0)
+    versioneye-core (7.23.1)
       actionmailer (~> 4.2.2)
       aws-sdk (~> 2.1.3)
       bundler (~> 1.10.6)
@@ -219,7 +219,7 @@ GEM
       rails-assets-jquery (>= 1.9.0)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
-    rails-dom-testing (1.0.6)
+    rails-dom-testing (1.0.7)
       activesupport (>= 4.2.0.beta, < 5.0)
       nokogiri (~> 1.6.0)
       rails-deprecated_sanitizer (>= 1.0.1)
