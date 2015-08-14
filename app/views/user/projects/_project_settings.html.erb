@@ -1,4 +1,4 @@
-<% if current_user?(@project.user) || signed_in_admin? %>
+
   <div style="margin-top: 20px;" id="settings_area">
     <form action="<%= save_period_user_project_path(@project) %>" method="post" class="form-inline" >
       <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
@@ -72,9 +72,10 @@
     <% end %>
 
   </div>
-<% else %>
-  <% collaboration = @project.collaborator( current_user ) %>
-  <% if !collaboration.nil? %>
-    <%= render :partial => "/user/collaborations/helpers/project_settings", :locals => { :collaboration => collaboration } %>
-  <% end %>
-<% end %>
+
+  <div style="margin-top: 30px;" >
+    <h2>Auditlogs</h2>
+    <% @project.auditlogs.each do |audit| %>
+      <%= render :partial => 'shared/auditlog', :locals => {:audit => audit} %>
+    <% end %>
+  </div>
