@@ -1,7 +1,7 @@
 class User::ProjectsController < ApplicationController
 
   before_filter :authenticate,  :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export]
-  before_filter :collaborator?, :only   => [:add_collaborator, :save_period, :save_visibility, :update, :update_name, :destroy]
+  before_filter :collaborator?, :only   => [:add_collaborator, :save_period, :save_visibility, :save_whitelist, :update, :update_name, :destroy]
 
 
   def index
@@ -136,7 +136,8 @@ class User::ProjectsController < ApplicationController
 
   def update_name
     @name        = params[:name]
-    if current_user?(@project.user) || signed_in_admin?
+    if project_member?(@project, current_user)
+      Auditlog.add current_user, "Project", @project.ids, "Changed project name from `#{@project.name}` to `#{@name}`"
       @project.name = @name
       @project.save
     end
@@ -147,7 +148,7 @@ class User::ProjectsController < ApplicationController
 
 
   def update
-    file       = params[:upload]
+    file = params[:upload]
     if file.nil?
       flash[:error] = 'Something went wrong. Please contact the VersionEye Team.'
       redirect_to user_projects_path
@@ -169,10 +170,6 @@ class User::ProjectsController < ApplicationController
   def add_collaborator
     project = @project
     url = "/user/projects/#{project.id.to_s}#tab-collaborators"
-    if !project.collaborator?( current_user ) && current_user.admin != true
-      flash[:error] = "Permission denied. You are not a collaborator of this project!"
-      redirect_to( url ) and return
-    end
 
     collaborator_info = params[:collaborator]
     if collaborator_info[:username].to_s.empty?
@@ -181,6 +178,7 @@ class User::ProjectsController < ApplicationController
     end
 
     ProjectCollaboratorService.add_new project, current_user, collaborator_info[:username]
+    Auditlog.add current_user, "Project", @project.ids, "Added collaborator `#{collaborator_info[:username]}`"
 
     flash[:success] = "We added a new collaborator to the project."
     redirect_to( url )
@@ -270,10 +268,12 @@ class User::ProjectsController < ApplicationController
   def save_period
     period = params[:period]
     url = "/user/projects/#{@project.id.to_s}#tab-settings"
+    old_period = @project.period
     @project.period = period
     if @project.save
       flash[:success] = "Status saved."
       update_collaborators @project
+      Auditlog.add current_user, "Project", @project.ids, "Changed period from `#{old_period}` to `#{period}`"
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
@@ -284,6 +284,7 @@ class User::ProjectsController < ApplicationController
   def save_visibility
     visibility = params[:visibility]
     url = "/user/projects/#{@project.id.to_s}#tab-settings"
+    old_visibility = @project.public
     if visibility.eql? "public"
       @project.public = true
     else
@@ -291,6 +292,7 @@ class User::ProjectsController < ApplicationController
     end
     if @project.save
       flash[:success] = "We saved your changes."
+      Auditlog.add current_user, "Project", @project.ids, "Changed visibility.public from `#{old_visibility}` to `#{@project.public}`"
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
@@ -302,6 +304,7 @@ class User::ProjectsController < ApplicationController
     id     = params[:id]
     notify = params[:notify]
     @project = Project.find_by_id id
+    old_notify_after_api_update = @project.notify_after_api_update
     url = "/user/projects/#{@project.id.to_s}#tab-settings"
     if notify.eql?('notify')
       @project.notify_after_api_update = true
@@ -310,6 +313,7 @@ class User::ProjectsController < ApplicationController
     end
     if @project.save
       flash[:success] = "We saved your changes."
+      Auditlog.add current_user, "Project", @project.ids, "Changed notify_after_api_update from `#{old_notify_after_api_update}` to `#{@project.notify_after_api_update}`"
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
@@ -320,9 +324,10 @@ class User::ProjectsController < ApplicationController
   def save_whitelist
     id        = params[:id]
     list_name = params[:whitelist]
-    project  = Project.find_by_id id
-    if LicenseWhitelistService.update_project project, current_user, list_name
+    old_lwl_name = @project.license_whitelist_name
+    if LicenseWhitelistService.update_project @project, current_user, list_name
       flash[:success] = "We saved your changes."
+      Auditlog.add current_user, "Project", @project.ids, "Changed License Whitelist from `#{old_lwl_name}` to `#{list_name}`"
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
@@ -437,6 +442,7 @@ class User::ProjectsController < ApplicationController
 
     def update_collaborators project
       return nil if project.collaborators.nil? || project.collaborators.empty?
+
       project.collaborators.each do |collaborator|
         collaborator.period = project.period
         collaborator.save
