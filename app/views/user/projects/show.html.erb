@@ -22,14 +22,14 @@
         <% if @project.public == false %>
           <span class="fa fa-lock" title="Private VersionEye Project"></span>
         <% end %>
-        <% if current_user?(@project.user) || signed_in_admin? %>
+        <% if project_member?(@project, current_user) %>
           <i class="fa fa-pencil-square-o"
             style="width: 16px; height: 16px; margin: 0; padding: 0;"
             title="Change project name"></i>
         <% end %>
       </div>
 
-      <% if current_user?(@project.user) || signed_in_admin? %>
+      <% if project_member?(@project, current_user) %>
 
         <div class="project-inline-editor" style="display:none;">
           <%= form_tag(update_name_user_project_path(@project), :method => "post", :remote => true, :class => "form-inline") do %>
