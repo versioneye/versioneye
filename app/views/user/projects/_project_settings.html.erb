@@ -73,9 +73,12 @@
 
   </div>
 
-  <div style="margin-top: 30px;" >
-    <h2>Auditlogs</h2>
-    <% @project.auditlogs.each do |audit| %>
-      <%= render :partial => 'shared/auditlog', :locals => {:audit => audit} %>
-    <% end %>
-  </div>
+  <% auditlogs = @project.auditlogs %>
+  <% if !auditlogs.nil? && !auditlogs.empty? %>
+    <div style="margin-top: 30px;" >
+      <h2>Auditlogs</h2>
+      <% @project.auditlogs.each do |audit| %>
+        <%= render :partial => 'shared/auditlog', :locals => {:audit => audit} %>
+      <% end %>
+    </div>
+  <% end %>
