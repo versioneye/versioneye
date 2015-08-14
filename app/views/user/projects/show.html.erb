@@ -104,13 +104,15 @@
                   <button class="btn btn-success btn-mini">Re Parse Now</button>
                 </form>
               </div>
-              <div class="col-md-2" style="width: 150px;" >
-                <form action="<%= user_project_path(@project) %>" method="post" style="padding-top: 5px;">
-                  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-                  <input name="_method" type="hidden" value="delete" />
-                  <button class="btn btn-danger btn-mini" onClick="return confirmAction()" >Delete this project</button>
-                </form>
-              </div>
+              <% if current_user?(@project.user) || signed_in_admin? %>
+                <div class="col-md-2" style="width: 150px;" >
+                  <form action="<%= user_project_path(@project) %>" method="post" style="padding-top: 5px;">
+                    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+                    <input name="_method" type="hidden" value="delete" />
+                    <button class="btn btn-danger btn-mini" onClick="return confirmAction()" >Delete this project</button>
+                  </form>
+                </div>
+              <% end %>
               <% if @project.source.eql?( Project::A_SOURCE_UPLOAD ) %>
                 <div class="col-md-2" style="width: 150px;" >
                   <button style="margin-top: 5px;" class="btn btn-mini" onClick="document.getElementById('reupload_form').style.display='block'" >ReUpload</button>
