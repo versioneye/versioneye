@@ -48,6 +48,7 @@ class User::CollaborationsController < ApplicationController
     end
 
     flash[:success] = 'Collaborator is now removed.'
+    Auditlog.add current_user, "Project", collaborator.project_id, "Removed collaborator `#{collaborator.user.username}`"
     collaborator.delete
     redirect_to( url ) and return
   end
