@@ -195,7 +195,7 @@ GEM
       httparty (~> 0.9)
       persistent_http (< 2)
     psych (2.0.13)
-    puma (2.13.0)
+    puma (2.13.1)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -358,7 +358,7 @@ DEPENDENCIES
   jquery-rails (~> 4.0.4)
   oauth (~> 0.4.7)
   psych (~> 2.0.5)
-  puma (~> 2.13.0)
+  puma (~> 2.13.1)
   rails (~> 4.2.2)
   rails-assets-bootstrap (= 3.3.5)!
   rails-assets-font-awesome (= 4.3.0)!
