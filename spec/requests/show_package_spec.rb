@@ -22,7 +22,6 @@ describe "show_package_controller" do
     assert_select "input[name=?]", "q"
 
     assert_tag :tag => "section", :attributes => { :class => "container"}
-    assert_tag :tag => "ul", :attributes => { :class => "nav pull-right"}
 
     product.remove
   end
