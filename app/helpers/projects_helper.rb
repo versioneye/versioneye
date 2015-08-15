@@ -15,6 +15,11 @@ module ProjectsHelper
     'green'
   end
 
+  def licenses_color sum
+    return 'red' if sum.to_i > 0
+    'green'
+  end
+
   def licenses_unknown_color project
     return 'orange' if project[:licenses_unknown_sum].to_i > 0
     'green'
