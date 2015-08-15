@@ -3,8 +3,8 @@
   <%= pluralize(project[:dep_number_sum], "unique dependencies") %>.
 </span>
 
-<% if !@project.license_whitelist_id.to_s.empty? %> 
-  <span style="color: <%= licenses_red_color(project) %>; font-size: 14px; font-weight: bold;" >
+<% if !@project.license_whitelist_id.to_s.empty? %>
+  <span style="color: <%= licenses_color(project[:licenses_red]) %>; font-size: 14px; font-weight: bold;" >
     <%= pluralize( project[:licenses_red], "license whitelist violation") %>.
   </span>
-<% end %> 
+<% end %>
