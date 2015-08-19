@@ -159,7 +159,7 @@ GEM
     kgio (2.9.3)
     libv8 (3.16.14.11)
     log4r (1.1.10)
-    loofah (2.0.2)
+    loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
