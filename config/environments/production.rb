@@ -11,7 +11,7 @@ Versioneye::Application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
 
-  # Disable Rails's static asset server (Apache or nginx will already do this)
+  # Enable Rails's static asset server (NGinx will cahce it automatically)
   config.serve_static_files = true
   config.action_dispatch.x_sendfile_header = nil
 
