@@ -1,7 +1,7 @@
 class User::ProjectsController < ApplicationController
 
   before_filter :authenticate,  :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export]
-  before_filter :collaborator?, :only   => [:add_collaborator, :save_period, :save_visibility, :save_whitelist, :update, :update_name, :destroy]
+  before_filter :collaborator?, :only   => [:add_collaborator, :save_period, :save_visibility, :save_whitelist, :save_cwl, :update, :update_name, :destroy]
 
 
   def index
@@ -75,6 +75,7 @@ class User::ProjectsController < ApplicationController
     @child   = @project if @child.nil?
     @child   = add_dependency_classes( @child )
     @whitelists = LicenseWhitelistService.index( current_user ) if current_user
+    @cwls    = ComponentWhitelistService.index( current_user ) if current_user
   end
 
 
@@ -328,6 +329,24 @@ class User::ProjectsController < ApplicationController
     if LicenseWhitelistService.update_project @project, current_user, list_name
       flash[:success] = "We saved your changes."
       Auditlog.add current_user, "Project", @project.ids, "Changed License Whitelist from `#{old_lwl_name}` to `#{list_name}`"
+    else
+      flash[:error] = "Something went wrong. Please try again later."
+    end
+    redirect_to "/user/projects/#{id}#tab-licenses"
+  rescue => e
+    flash[:error] = "An error occured (#{e.message}). Please contact the VersionEye Team."
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
+  end
+
+
+  def save_cwl
+    id        = params[:id]
+    list_name = params[:whitelist]
+    old_lwl_name = @project.component_whitelist_name
+    if ComponentWhitelistService.update_project @project, current_user, list_name
+      flash[:success] = "We saved your changes."
+      Auditlog.add current_user, "Project", @project.ids, "Changed Component Whitelist from `#{old_lwl_name}` to `#{list_name}`"
     else
       flash[:error] = "Something went wrong. Please try again later."
     end

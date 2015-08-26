@@ -1,10 +1,10 @@
 
 
-<% if defined?(display_pdf_export) && display_pdf_export && display_pdf_export == true && !project_id.nil? && !project_id.to_s.empty? && !license_whitelist_id.to_s.empty? %> 
+<% if defined?(display_pdf_export) && display_pdf_export && display_pdf_export == true && !project_id.nil? && !project_id.to_s.empty? && !license_whitelist_id.to_s.empty? %>
   <div style="margin: 10px 0 7px 0;">
     <%= link_to 'BoM PDF Export', lwl_export_user_project_path( project_id ) %>
   </div>
-<% end %> 
+<% end %>
 
 <% whitelisted_count = 0 %>
 <% unknown_count = 0 %>
@@ -20,36 +20,36 @@
   <% dependencies.sort! { |a,b| a.name.downcase <=> b.name.downcase } %>
   <% dependencies.each do |dependency| %>
     <% sep_class = "license_seperator" %>
-    
+
     <% licenses = [] %>
-    <% dep_version = '0' %> 
-    <% if dependency.respond_to?('version_requested') %> 
-      <% dep_version = dependency.version_requested %> 
-    <% else %> 
-      <% dep_version = dependency.version %> 
+    <% dep_version = '0' %>
+    <% if dependency.respond_to?('version_requested') %>
+      <% dep_version = dependency.version_requested %>
+    <% else %>
+      <% dep_version = dependency.version %>
     <% end %>
     <% licenses = dependency.license_caches if dependency.respond_to?( 'license_caches' ) %>
     <% licenses = dependency.licenses if dependency.respond_to?( 'licenses' ) %>
-    
+
     <% if licenses && !licenses.empty? %>
       <% licenses.each do |license| %>
 
-        <% license_hash[license.name] = [] if license_hash[license.name].nil? %> 
-        <% license_hash[license.name] << dependency %> 
+        <% license_hash[license.name] = [] if license_hash[license.name].nil? %>
+        <% license_hash[license.name] << dependency %>
 
         <% whitelist_class = '' %>
-        <% if license.respond_to? 'on_whitelist' %>
-          <% if license.on_whitelist == false %> 
+        <% if license.respond_to? 'is_whitelisted?' %>
+          <% if license.is_whitelisted? == false %>
             <% whitelist_class = 'error'    %>
             <% violated_count += 1 %>
-          <% end %> 
-          <% if license.on_whitelist == true %> 
+          <% end %>
+          <% if license.is_whitelisted? == true %>
             <% whitelist_class = 'success'   %>
             <% whitelisted_count += 1 %>
-          <% end %> 
+          <% end %>
         <% elsif @project.license_whitelist %>
           <% on_whitelist = @project.license_whitelist.include_license_substitute?( license.name_substitute ) %>
-          <% if on_whitelist == false %> 
+          <% if on_whitelist == false %>
             <% whitelist_class = 'error'    %>
             <% violated_count += 1 %>
           <% end %>
@@ -69,8 +69,8 @@
       <% end %>
     <% else %>
       <% unknown_count += 1 %>
-      <% license_hash['unknown'] = [] if license_hash['unknown'].nil? %> 
-      <% license_hash['unknown'] << dependency %> 
+      <% license_hash['unknown'] = [] if license_hash['unknown'].nil? %>
+      <% license_hash['unknown'] << dependency %>
       <tr class="flash warning">
         <td style="padding-left: 5px;">
           <% if dependency.prod_key %>
@@ -87,9 +87,9 @@
 </table>
 <br/><br/>
 
-<% if display_charts == true && !license_whitelist_id.to_s.empty? %> 
+<% if display_charts == true && !license_whitelist_id.to_s.empty? %>
 <div id='pie1' style="text-align: center;">
-</div>  
+</div>
 <script type="text/javascript">
   var pie = new d3pie("pie1", {
     header: {
@@ -112,7 +112,7 @@
   });
 </script>
 <br/><br/>
-<% end %> 
+<% end %>
 
 <% if defined?(display_grouping) && display_grouping && display_grouping == true %>
   <% license_hash.sort.map do |license_name, value| %>
@@ -129,9 +129,9 @@
     <br/><br/>
   <% end %>
 
-  <% if display_charts == true && license_hash.count > 1 %> 
+  <% if display_charts == true && license_hash.count > 1 %>
   <div id='pie2' style="text-align: center;">
-  </div>  
+  </div>
   <script type="text/javascript">
     var pie = new d3pie("pie2", {
       header: {
@@ -146,14 +146,14 @@
       data: {
         sortOrder: "label-asc",
         content: [
-          <% license_hash.sort.map do |license_name, value| %> 
+          <% license_hash.sort.map do |license_name, value| %>
             <% if license_name.match(/\AGPL/) %>
-              { label: "<%= license_name %>", value: <%= license_hash[license_name].count %> , color: '#FF4000'},  
-            <% else %> 
-              { label: "<%= license_name %>", value: <%= license_hash[license_name].count %> },  
-            <% end %>  
-            
-          <% end %> 
+              { label: "<%= license_name %>", value: <%= license_hash[license_name].count %> , color: '#FF4000'},
+            <% else %>
+              { label: "<%= license_name %>", value: <%= license_hash[license_name].count %> },
+            <% end %>
+
+          <% end %>
         ]
       }
     });

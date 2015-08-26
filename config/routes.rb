@@ -111,6 +111,14 @@ Versioneye::Application.routes.draw do
     post 'license_whitelists/:list/remove' , :to => 'license_whitelists#remove' , :as => 'license_whitelists_remove'
     post 'license_whitelists/:list/default', :to => 'license_whitelists#default', :as => 'license_whitelists_default'
 
+    get  'component_whitelists'              , :to => 'component_whitelists#index'
+    get  'component_whitelists/:name'        , :to => 'component_whitelists#show'   , :as => 'component_whitelists_show'
+    post 'component_whitelists/create'       , :to => 'component_whitelists#create'
+    post 'component_whitelists/destroy'      , :to => 'component_whitelists#destroy', :as => 'component_whitelists_destroy'
+    post 'component_whitelists/:list/add'    , :to => 'component_whitelists#add'    , :as => 'component_whitelists_add'
+    post 'component_whitelists/:list/remove' , :to => 'component_whitelists#remove' , :as => 'component_whitelists_remove'
+    post 'component_whitelists/:list/default', :to => 'component_whitelists#default', :as => 'component_whitelists_default'
+
     get  'globalsettings'      , :to => 'globalsettings#index'
     post 'globalsettings'      , :to => 'globalsettings#update'
 
@@ -216,6 +224,7 @@ Versioneye::Application.routes.draw do
         post 'save_period'
         post 'save_visibility'
         post 'save_whitelist'
+        post 'save_cwl'
         post 'transitive_dependencies'
         post 'save_notify_after_api_update'
         post 'reparse'
