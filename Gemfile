@@ -17,7 +17,7 @@ gem 'stripe'               , '~> 1.25.0'
 gem 'bunny'                , '~> 2.1.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.24.0'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.24.1'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
@@ -49,7 +49,7 @@ group :test do
   gem 'rspec'             , '~> 3.3.0'
   gem 'rspec-rails'       , '~> 3.3.1'
   gem 'rspec-mocks'       , '~> 3.3.0'
-  gem 'capybara'          , '~> 2.4.0'
+  gem 'capybara'          , '~> 2.5.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'selenium-webdriver', '~> 2.47.1'
   gem 'vcr'               , '~> 2.9.2',  :require => false
