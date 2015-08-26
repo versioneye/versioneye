@@ -1,0 +1,84 @@
+
+<div class="col-md-3" >
+  <%= render 'settings/navi' %>
+</div>
+
+<div class="col-md-9" >
+
+  <div class="content_header_def" >
+    Component Whitelist <b>"<%= @component_whitelist %>"</b>
+  </div>
+
+  <div class="content" >
+
+    <p>
+      With a component whitelist you can whitelist artifacts or whole groupIds. Dependencies who are on a component
+      whitelist are marked green in the license tab, even if they violate the license whitelist or the license
+      is unknown.
+    </p>
+    <p>
+      To whitelist a certain artifact put it on the component whitelist with this pattern:
+    </p>
+    <pre>GROUP_ID : ARTIFACT_ID : VERSION</pre>
+    <p>
+      For example:
+    </p>
+    <pre>org.apache.httpcomponents:httpmime:4.5</pre>
+    <p>
+      To whitelist all versions of httpmime use this expression:
+    </p>
+    <pre>org.apache.httpcomponents:httpmime</pre>
+    <p>
+      To whitelist all artifacts in the `org.apache` group use this:
+    </p>
+    <pre>org.apache</pre>
+
+    <%= form_tag(settings_component_whitelists_add_path(:list => @component_whitelist.name), :class => 'form-inline', :style => "padding: 15px 0 0 0; margin:0;") do %>
+      <div class="form-group input-append">
+
+        <input id="cwl_key" name="cwl_key" class="typeahead form-control" type="text"  autofocus="autofocus" autocomplete="off" style="width: 450px;" />
+
+        <button class="btn btn-primary" type="submit" >
+          Add Component
+        </button>
+
+      </div>
+    <% end %>
+
+    <br/>
+
+    <br/>
+
+    <table class="table table-hover" >
+      <colgroup>
+        <col width="80px;"j />
+        <col width="*" />
+      </colgroup>
+      <tbody>
+        <% @component_whitelist.components.each do |component| %>
+          <% if !component.to_s.empty? %>
+            <%= form_tag( settings_component_whitelists_remove_path(:list => @component_whitelist.name), :method => "post") do  %>
+            <tr >
+              <td >
+                <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+              </td>
+              <td>
+                <input id="cwl_key" name="cwl_key" type="hidden" value="<%= component %>" />
+                <%= component %>
+              </td>
+            </tr>
+            <% end %>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+
+  <div class="content" >
+    <% @component_whitelist.auditlogs.each do |audit| %>
+      <%= render :partial => 'shared/auditlog', :locals => {:audit => audit} %>
+    <% end %>
+  </div>
+
+</div>

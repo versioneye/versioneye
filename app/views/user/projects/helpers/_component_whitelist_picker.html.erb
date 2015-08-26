@@ -1,0 +1,23 @@
+
+<% if @cwls %>
+  <form action="<%= save_cwl_user_project_path(@project) %>" method="post" class="form-inline" >
+    <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+    <div>
+      Choose a component whitelist which should be checked against your dependencies.
+      Dependencies who are on the component whitelist will be marked green, even if they violate the license whitelist!
+    </div>
+    <div class="form-group">
+      <select name="whitelist" class="form-control" >
+        <option value="none"  <%= @project.license_whitelist == nil ? 'selected' : '' %> >Don't check</option>
+        <% @cwls.each do |list| %>
+          <option value="<%= list.name %>" <%= @project.component_whitelist.to_s.eql?(list.name) ? 'selected' : '' %> ><%= list.name %></option>
+        <% end %>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary" >Save</button>
+    <% if !Rails.env.enterprise? %>
+      <button type="button" onclick="window.location.href='/settings/component_whitelists'" class="btn btn-success" >Manage Component Whitelists</button>
+    <% end %>
+  </form>
+  <br/>
+<% end %>
