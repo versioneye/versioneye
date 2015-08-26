@@ -12,8 +12,8 @@
       <% next if author.nil? %>
       <% next if author.to_param.to_s.empty? %>
       <% next if names.include?(author.to_param.to_s) %>
-      <% next if author.to_param.to_s.match(/https\:\/\/github\.com\/(.*)/) %>
-      <% next if author.to_param.to_s.match(/http\:\/\/github\.com/) %>
+      <% next if author.to_param.to_s.match(/http\:\/\//) %>
+      <% next if author.to_param.to_s.match(/https\:\/\//) %>
       <%= link_to gravatar_image_tag( author.email,
                       :alt => author.name,
                       :title => author.name,
