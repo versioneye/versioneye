@@ -43,10 +43,10 @@ class Settings::LicenseWhitelistsController < ApplicationController
     ps = params[:pessimistic]
     if ps.to_s.eql?('true')
       license_whitelist.pessimistic_mode = true
-    else 
+    else
       license_whitelist.pessimistic_mode = false
     end
-    if license_whitelist.save 
+    if license_whitelist.save
       Auditlog.add current_user, 'LicenseWhitelist', license_whitelist.ids, "Update pessimistic_mode to \"#{license_whitelist.pessimistic_mode}\" "
       flash[:success] = "Pessimistic mode updated successfully."
     else
@@ -76,18 +76,18 @@ class Settings::LicenseWhitelistsController < ApplicationController
     redirect_to :back
   end
 
-  def default 
+  def default
     LicenseWhitelistService.default current_user, params[:list]
-    
+
     lwl = LicenseWhitelistService.fetch_by current_user, params[:list]
     Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Marked \"#{params[:list]}\" to default list."
     flash[:success] = "License Whitelist updated successfully."
-    
+
     redirect_to :back
   rescue => e
     logger.error e.message
     flash[:error] = "An error occured. We could not update the status."
-    redirect_to :back  
+    redirect_to :back
   end
 
   def remove
