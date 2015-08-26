@@ -20,7 +20,7 @@
       <%= form_for(:license_whitelist, :url => settings_license_whitelists_create_path, :html => {:class => 'form-inline'} ) do |f|  %>
         <div class="form-group">
           <%= f.label :name, :class => 'control-label' %>
-          <%= f.text_field :name, :class => "form-control" %> 
+          <%= f.text_field :name, :class => "form-control" %>
           <button id="sign_in_button" type="submit" class="btn btn-big btn-primary" >Create New Whitelist</button>
         </div>
       <% end %>
@@ -38,7 +38,7 @@
 
       <% @whitelists.each do |wlist| %>
         <% if !wlist.name.to_s.empty? %>
-          
+
           <tr>
             <td>
               <%= form_tag( settings_license_whitelists_destroy_path , :method => "post", :style => 'margin: 0;') do  %>
@@ -47,11 +47,11 @@
               <% end %>
             </td>
             <td>
-              <% if wlist.default == false %> 
+              <% if wlist.default == false %>
                 <%= form_tag( settings_license_whitelists_default_path(:list => wlist.name.to_s) , :method => "post", :style => 'margin: 0;') do %>
                   <button type="submit" class="btn btn-success" >Make Default</button>
                 <% end %>
-              <% else %> 
+              <% else %>
                 <span class="label label-success" >DEFAULT</span>
               <% end %>
             </td>
@@ -59,7 +59,7 @@
               <%= link_to wlist.name, settings_license_whitelists_show_path(wlist) %>
             </td>
           </tr>
-          
+
         <% end %>
       <% end %>
 
