@@ -89,34 +89,34 @@
           </thead>
           <tbody>
             <% [:whitelisted, :unknown, :violated].each do |key| %>
-              <% project.lwl_pdf_list[key].each do |dep| %> 
+              <% project.lwl_pdf_list[key].each do |dep| %>
                 <tr>
                   <td class="left"> <%= key.to_s %> </td>
-                  <td class="left"> 
-                    <%= dep[:component] %> 
-                    <% if dep[:group_id] %> 
+                  <td class="left">
+                    <%= dep[:component] %>
+                    <% if dep[:group_id] %>
                       <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
-                    <% end %> 
+                    <% end %>
                   </td>
-                  <td class="left"> 
+                  <td class="left">
                     <% if dep[:version].to_s.strip.match(/\A\:path/) %>
                       :path
                     <% elsif dep[:version].to_s.strip.match(/\A\:git/) %>
                       :git
                     <% else %>
-                      <%= dep[:version].to_s.strip %> 
+                      <%= dep[:version].to_s.strip %>
                     <% end %>
                   </td>
                   <td class="left"> <%= dep[:license] %> </td>
-                </tr>  
-              <% end %> 
-            <% end %> 
+                </tr>
+              <% end %>
+            <% end %>
           </tbody>
         </table>
       </div>
 
       <% if children && !children.empty? %>
-        <% children.each do |project| %> 
+        <% children.each do |project| %>
           <div>
             <p>
               <b>Project:</b> <%= project.name %> <span class="small">(<%= project.id.to_s %>)</span> <br/>
@@ -134,42 +134,57 @@
               </thead>
               <tbody>
                 <% [:whitelisted, :unknown, :violated].each do |key| %>
-                  <% project.lwl_pdf_list[key].each do |dep| %> 
+                  <% project.lwl_pdf_list[key].each do |dep| %>
                     <tr>
                       <td class="left"> <%= key.to_s %> </td>
-                      <td class="left"> 
-                        <%= dep[:component] %> 
-                        <% if dep[:group_id] %> 
+                      <td class="left">
+                        <%= dep[:component] %>
+                        <% if dep[:group_id] %>
                           <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
-                        <% end %> 
+                        <% end %>
                       </td>
-                      <td class="left"> 
+                      <td class="left">
                         <% if dep[:version].to_s.strip.match(/\A\:path/) %>
                           :path
                         <% elsif dep[:version].to_s.strip.match(/\A\:git/) %>
                           :git
                         <% else %>
-                          <%= dep[:version].to_s.strip %> 
+                          <%= dep[:version].to_s.strip %>
                         <% end %>
                       </td>
                       <td class="left"> <%= dep[:license] %> </td>
-                    </tr>  
-                  <% end %> 
-                <% end %> 
+                    </tr>
+                  <% end %>
+                <% end %>
               </tbody>
             </table>
           </div>
-        <% end %>   
-      <% end %> 
+        <% end %>
+      <% end %>
 
       <p>
-        <b>Whitelist:</b> <%= project.license_whitelist.name %> <span class="small">(<%= project.license_whitelist.id %>)</span></br>
+        <b>License Whitelist:</b> <%= project.license_whitelist.name %> <span class="small">(<%= project.license_whitelist.id %>)</span></br>
         <b>Bill of materials:</b>
       </p>
 
-      <% project.license_whitelist.license_elements.each do |lwle| %> 
-        <div>- <%= lwle.name %> </div>
-      <% end %> 
+      <p>
+        <% project.license_whitelist.license_elements.each do |lwle| %>
+          <div>- <%= lwle.name %> </div>
+        <% end %>
+      </p>
+
+      <% if project.component_whitelist && !project.component_whitelist.components.empty? %>
+        <p>
+          <b>Component Whitelist:</b> <%= project.component_whitelist.name %> <span class="small">(<%= project.component_whitelist.id %>)</span></br>
+          <b>Bill of materials:</b>
+        </p>
+
+        <p>
+          <% project.component_whitelist.components.each do |component| %>
+            <div>- <%= component %> </div>
+          <% end %>
+        </p>
+      <% end %>
 
     </div>
   </body>
