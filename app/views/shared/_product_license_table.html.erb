@@ -60,7 +60,12 @@
         <% end %>
 
         <tr class="<%= sep_class %> <%= whitelist_class %> ">
-          <td style="padding-left: 5px;"><a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %> : <%= dep_version %></a></td>
+          <td style="padding-left: 5px;">
+            <a class="#a dep_link" href="<%= product_url_for_projectdependency(dependency) %>" ><%= dependency.name %> : <%= dep_version %></a>
+            <% if license && license.respond_to?('on_cwl') && license.respond_to?('on_whitelist') && license.on_cwl == true && license.on_whitelist == false %>
+              <i class="fa fa-thumbs-o-up" style="color: blue" title="whitelistted through component whitelist"></i>
+            <% end %>
+          </td>
           <td style="padding-left: 5px;">
             <%= render :partial => "shared/license_name", :locals => {:license => license } %>
           </td>
