@@ -1,6 +1,6 @@
 class User::ProjectsController < ApplicationController
 
-  before_filter :authenticate,  :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export]
+  before_filter :authenticate,  :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export, :lwl_csv_export]
   before_filter :collaborator?, :only   => [:add_collaborator, :save_period, :save_visibility, :save_whitelist, :save_cwl, :update, :update_name, :destroy]
 
 
@@ -86,6 +86,21 @@ class User::ProjectsController < ApplicationController
     project_name = project.name.gsub("/", "-")
     pdf = LwlPdfService.process project, true, true
     send_data pdf, type: 'application/pdf', filename: "#{date_string}_#{project_name}.pdf"
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    flash[:error] = "ERROR: #{e.message}"
+    redirect_to :back
+  end
+
+
+  def lwl_csv_export
+    id      = params[:id]
+    project = ProjectService.find( id )
+    date_string = DateTime.now.strftime("%d_%m_%Y")
+    project_name = project.name.gsub("/", "-")
+    pdf = LwlCsvService.process project, true, true
+    send_data pdf, type: 'text/csv', filename: "#{date_string}_#{project_name}.csv"
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")

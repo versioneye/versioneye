@@ -3,7 +3,8 @@
 
   <% if @project && !@project.license_whitelist_id.to_s.empty? %>
     <div style="margin: 10px 0 7px 0;">
-      <%= link_to 'BoM PDF Export', lwl_export_user_project_path( @project.ids ) %>
+      <%= link_to 'BoM PDF Export', lwl_export_user_project_path( @project.ids ) %> |
+      <%= link_to 'BoM CSV Export', lwl_csv_export_user_project_path( @project.ids ) %>
     </div>
   <% end %>
 
