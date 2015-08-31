@@ -2,7 +2,8 @@
 
 <% if defined?(display_pdf_export) && display_pdf_export && display_pdf_export == true && !project_id.nil? && !project_id.to_s.empty? && !license_whitelist_id.to_s.empty? %>
   <div style="margin: 10px 0 7px 0;">
-    <%= link_to 'BoM PDF Export', lwl_export_user_project_path( project_id ) %>
+    <%= link_to 'BoM PDF Export', lwl_export_user_project_path( project_id ) %> |
+    <%= link_to 'BoM CSV Export', lwl_csv_export_user_project_path( project_id ) %>
   </div>
 <% end %>
 

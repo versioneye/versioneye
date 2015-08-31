@@ -217,6 +217,7 @@ Versioneye::Application.routes.draw do
       member do
         get  'status'
         get  'lwl_export'
+        get  'lwl_csv_export'
         get  'badge'
         get  'visual'
         post 'merge'
