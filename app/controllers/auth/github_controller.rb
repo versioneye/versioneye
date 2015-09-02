@@ -16,15 +16,9 @@ class Auth::GithubController < ApplicationController
     end
 
     user = user_for_github_id( hash_user )
-    if user && user.activated?
+    if user
       login user, nil, token
       update_user hash_user, token, true
-      return
-    end
-
-    if user && !user.activated?
-      flash[:error] = 'Your account is not activated. Did you click the verification link in the email we sent to you?'
-      redirect_to signin_path
       return
     end
 
@@ -35,25 +29,27 @@ class Auth::GithubController < ApplicationController
       render auth_github_new_path and return
     end
 
-    email_available = User.email_valid?(email)
-    email_already_taken = !email_available
+    user = User.find_by_email( email )
+    if user
+      login user
+      return
+    end
 
-    if user.nil? && email_already_taken # than ask for a new email
+    user_email = UserEmail.find_by_email( email )
+    if user_email # than ask for another email
       flash.now[:error] = "The email address is already taken."
       prepare_new_page user, token
       render auth_github_new_path
       return
     end
 
-    if user.nil? && email_available # Than login the user
-      user = new_user( token, email, true )
-      if user.save
-        login user
-      else
-        flash.now[:error] = 'An error occured during saving your data.'
-        init_variables_for_new_page user, email
-        render auth_github_new_path
-      end
+    user = new_user( token, email, true )
+    if user.save
+      login user
+    else
+      flash.now[:error] = 'An error occured during saving your data.'
+      init_variables_for_new_page user, email
+      render auth_github_new_path
     end
   end
 
