@@ -103,7 +103,7 @@ h3.side_header{
 }
 
 .product_page_sm_header{
-  font-size: 20px; 
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -137,8 +137,17 @@ h3.side_header{
 .notifyme {
   height: 60px;
   width: 100%;
-  font-size: 30px; 
-  font-weight: bold; 
+  font-size: 30px;
+  font-weight: bold;
+}
+
+@media(max-width:1000px) {
+  .notifyme {
+    height: 50px;
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+  }
 }
 
 .keyword_tag{
@@ -148,6 +157,6 @@ h3.side_header{
 }
 
 .dep_row {
-  border-left: 0px; 
+  border-left: 0px;
   border-right: 0px;
-} 
+}

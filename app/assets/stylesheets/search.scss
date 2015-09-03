@@ -28,7 +28,7 @@
     min-width: 70px;
     padding: 15px;
     margin-left: -8px;
-    margin-top: 0px;  
+    margin-top: 0px;
   }
 
   & .input-append {
@@ -41,13 +41,13 @@
 
   @media(max-width:767px) {
     & .input-huge {
-      width: 300px;  
-    }  
+      width: 300px;
+    }
   }
   @media(max-width:420px) {
     & .input-huge {
-      width: 200px;  
-    }  
+      width: 200px;
+    }
   }
 
 }
@@ -113,4 +113,21 @@
   border-top: 0px solid #ddd;
 }
 
+.show_lang_link{
+  display: none;
+}
 
+@media(max-width:900px) {
+    .gh_add {
+      display: none;
+    }
+    .ext_search_lang_filter{
+      display: none;
+    }
+    .content_header_def{
+      display: none;
+    }
+    .show_lang_link{
+      display: block;
+    }
+}
