@@ -95,6 +95,11 @@ h6 {
         width: 350px;
     }
 }
+@media(max-width:400px) {
+    .chart-outdated{
+        width: 300px;
+    }
+}
 
 .network-name {
     text-transform: uppercase;
