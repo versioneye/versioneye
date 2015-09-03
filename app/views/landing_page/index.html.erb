@@ -10,7 +10,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                
+
                 <% if signed_in? %>
                   <% if Rails.env.enterprise? && signed_in_admin? %>
                     <%= link_to image_tag("verisoneye-logo-small.png", :style => 'margin-top: -12px;'), settings_emails_path, :rel => "nofollow", :class => "navbar-brand topnav" %>
@@ -19,7 +19,7 @@
                   <% end %>
                 <% else %>
                   <a href="/" class="navbar-brand topnav" >
-                    <%= image_tag "verisoneye-logo-small.png", :style => 'margin-top: -12px;' %> 
+                    <%= image_tag "verisoneye-logo-small.png", :style => 'margin-top: -12px;' %>
                   </a>
                 <% end %>
 
@@ -27,15 +27,15 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    
+
                     <li>
                         <a href="/api" >API</a>
-                    </li>                    
-                    <li>
-                        <a href="http://blog.versioneye.com/" target="versioneye_blog">Blog</a> 
                     </li>
                     <li>
-                        <a href="/faq">FAQs</a> 
+                        <a href="http://blog.versioneye.com/" target="versioneye_blog">Blog</a>
+                    </li>
+                    <li>
+                        <a href="/faq">FAQs</a>
                     </li>
 
                   <% if !Rails.env.enterprise? %>
@@ -51,7 +51,7 @@
                       <% end %>
                     </li>
                   <% end %>
-                  
+
                   <li>
                     <%= form_tag(signin_path, :method => "GET", :style=>"margin: 7px 0 0 7px;") do  %>
                       <button type="submit" class="btn btn-primary" ><%= t(:page_header_signin) %></button>
@@ -91,12 +91,12 @@
     <!-- /.intro-header -->
 
     <div class="content-section-a">
-        <%= render "shared/feature_version" %> 
+        <%= render "shared/feature_version" %>
     </div>
-    
+
 
     <div class="content-section-b">
-        <%= render "shared/feature_license" %> 
+        <%= render "shared/feature_license" %>
     </div>
 
 
@@ -104,11 +104,11 @@
         <%= render "shared/feature_security" %>
     </div>
 
-  
+
     <div class="content-section-b">
         <%= render "shared/feature_package_managers" %>
     </div>
-    
+
 
     <div class="content-section-a">
 
