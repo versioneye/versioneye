@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      
+
       <%= render "shared/header_logo" %>
 
     </div>
@@ -25,14 +25,14 @@
 
       <ul class="nav navbar-nav">
         <li>
-            <a href="http://blog.versioneye.com/" target="versioneye_blog">Blog</a> 
+            <a href="http://blog.versioneye.com/" target="versioneye_blog">Blog</a>
         </li>
         <li>
-            <a href="/faq">FAQs</a> 
+            <a href="/faq">FAQs</a>
         </li>
       </ul>
-      
-      
+
+
       <!-- menu for guest user, not logged in -->
       <% if signed_in? == false %>
         <%= form_tag(signin_path, :method => "GET", :style=>"margin: 0; padding: 0 0 0 10px;", :class=>"navbar-form navbar-right") do  %>
@@ -52,57 +52,57 @@
             <li>
               <%= link_to "Pricing", "/pricing" %>
             </li>
-          </ul>  
+          </ul>
         <% end %>
       <% end %>
 
       <!-- menu for logged-in user -->
       <% if signed_in? %>
         <ul class="nav navbar-nav navbar-right">
-          
-          
+
+
           <li>
             <%= link_to "Notifications", notifications_path %>
           </li>
-          
+
           <li>
             <%= link_to "I follow",  :controller => 'user/packages', :action => "i_follow", :rel => "nofollow" %>
           </li>
-          
+
           <li>
             <a href="<%= user_projects_path %>" title="Projects">
               <i class="fa fa-list-ol"></i>
             </a>
           </li>
-          
+
           <li>
             <a href="<%= user_path( current_user ) %>" class="profile_pic_tiny" title="Profile" >
               <% if Rails.env.enterprise? %>
                 <%= image_tag "profile_icon.png", size: "30" %> <%= username_max_30( current_user.username ) %>
-              <% else %> 
+              <% else %>
                 <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round8", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= username_max_30( current_user.username ) %>
               <% end %>
             </a>
           </li>
-          
+
           <li>
             <a href="/search?q=suggest_a_new_package_to_versioneye" title="Suggest a new package">
               <i class="fa fa-plus"></i>
             </a>
           </li>
-          
+
           <li>
             <a href="https://bitbucket.org/versioneye/versioneye/issues" title="Feedback" id="feedback_link" target="TICKETS">
               <i class="fa fa-comment"></i>
             </a>
           </li>
-          
+
           <li>
             <a href="<%= settings_profile_path %>" title="Settings" >
               <i class="fa fa-cogs"></i>
             </a>
           </li>
-          
+
           <li>
             <a href="<%= signout_path %>" title="Logout" >
               <i class="fa fa-sign-out"></i>
