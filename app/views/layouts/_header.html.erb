@@ -22,24 +22,24 @@
         <button type="submit" class="btn btn-default">Search</button>
       </form>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-            <a href="/api" >API</a>
-        </li>
-        <li>
-            <a href="http://blog.versioneye.com/" target="versioneye_blog">Blog</a>
-        </li>
-        <li>
-            <a href="/faq">FAQs</a>
-        </li>
-        <% if !Rails.env.enterprise? %>
+      <% if signed_in? == false %>
+        <ul class="nav navbar-nav navbar-right">
           <li>
-            <%= link_to "Pricing", "/pricing" %>
+              <a href="/api" >API</a>
           </li>
-        <% end %>
+          <li>
+              <a href="http://blog.versioneye.com/" target="versioneye_blog">Blog</a>
+          </li>
+          <li>
+              <a href="/faq">FAQs</a>
+          </li>
+          <% if !Rails.env.enterprise? %>
+            <li>
+              <%= link_to "Pricing", "/pricing" %>
+            </li>
+          <% end %>
 
-        <!-- menu for guest user, not logged in -->
-        <% if signed_in? == false %>
+          <!-- menu for guest user, not logged in -->
           <% if Settings.instance.show_signup_form == true %>
             <li>
             <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0; padding: 0 0 0 10px;", :class=>"navbar-form navbar-right") do  %>
@@ -56,10 +56,8 @@
               </div>
             <% end %>
           </li>
-        <% end %>
-      </ul>
-
-
+        </ul>
+      <% end %>
 
       <% if signed_in? == true %>
         <ul class="nav navbar-nav navbar-right">
@@ -79,16 +77,6 @@
           </li>
 
           <li>
-            <a href="<%= user_path( current_user ) %>" class="profile_pic_tiny" title="Profile" >
-              <% if Rails.env.enterprise? %>
-                <%= image_tag "profile_icon.png", size: "30" %> <%= username_max_30( current_user.username ) %>
-              <% else %>
-                <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round8", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= username_max_30( current_user.username ) %>
-              <% end %>
-            </a>
-          </li>
-
-          <li>
             <a href="/search?q=suggest_a_new_package_to_versioneye" title="Suggest a new package">
               <i class="fa fa-plus"></i>
             </a>
@@ -97,6 +85,16 @@
           <li>
             <a href="https://bitbucket.org/versioneye/versioneye/issues" title="Feedback" id="feedback_link" target="TICKETS">
               <i class="fa fa-comment"></i>
+            </a>
+          </li>
+
+          <li>
+            <a href="<%= user_path( current_user ) %>" class="profile_pic_tiny" title="Profile" >
+              <% if Rails.env.enterprise? %>
+                <%= image_tag "profile_icon.png", size: "30" %> <%= username_max_30( current_user.username ) %>
+              <% else %>
+                <%= gravatar_image_tag( current_user.email, :alt => current_user.fullname, :class => "round8", :gravatar => { :size => 30, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %> <%= username_max_30( current_user.username ) %>
+              <% end %>
             </a>
           </li>
 
