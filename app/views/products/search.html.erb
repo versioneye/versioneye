@@ -6,7 +6,9 @@
   <%= render 'extended_search' %>
 
   <% if !signed_in? %>
-    <%= render "/shared/github_ad" %>
+    <div class="gh_add" >
+      <%= render "/shared/github_ad" %>
+    </div>
   <% end %>
 
 </div>

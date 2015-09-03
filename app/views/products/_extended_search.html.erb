@@ -22,7 +22,13 @@
         </div>
       </div>
 
-      <%= render "shared/language_checkboxes" %>
+      <div>
+        <a id="show_lang_link" class="show_lang_link" href="" onclick="document.getElementById('ext_search_lang_filter').style.display = 'block'; document.getElementById('show_lang_link').style.display = 'none'; return false;" >Show language filter</a>
+      </div>
+
+      <div class="ext_search_lang_filter" id="ext_search_lang_filter">
+        <%= render "shared/language_checkboxes" %>
+      </div>
 
       <div class="form-group" style = "height: 30px; padding: 10px 0px 20px 0;">
         <div >
