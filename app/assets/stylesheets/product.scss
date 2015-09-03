@@ -25,6 +25,12 @@ h3.side_header{
   }
 }
 
+@media(max-width:767px) {
+  .sidebar {
+    width: 100%;
+  }
+}
+
 .rating_cell{
   width: 170px;
   padding: 5px;
@@ -140,6 +146,7 @@ h3.side_header{
   font-size: 30px;
   font-weight: bold;
 }
+
 
 @media(max-width:1000px) {
   .notifyme {

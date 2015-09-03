@@ -1,5 +1,6 @@
 <nav class="navbar navbar-default" role="navigation">
-  <div class="container">
+  <div class="container topnav">
+
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -8,9 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-
       <%= render "shared/header_logo" %>
-
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -23,43 +22,47 @@
         <button type="submit" class="btn btn-default">Search</button>
       </form>
 
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href="/api" >API</a>
+        </li>
         <li>
             <a href="http://blog.versioneye.com/" target="versioneye_blog">Blog</a>
         </li>
         <li>
             <a href="/faq">FAQs</a>
         </li>
+        <% if !Rails.env.enterprise? %>
+          <li>
+            <%= link_to "Pricing", "/pricing" %>
+          </li>
+        <% end %>
+
+        <!-- menu for guest user, not logged in -->
+        <% if signed_in? == false %>
+          <% if Settings.instance.show_signup_form == true %>
+            <li>
+            <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0; padding: 0 0 0 10px;", :class=>"navbar-form navbar-right") do  %>
+              <div class="form-group">
+                <button type="submit" class="btn btn-success navbar-btn" ><%= t(:page_header_signup) %></button>
+              </div>
+            <% end %>
+            </li>
+          <% end %>
+          <li>
+            <%= form_tag(signin_path, :method => "GET", :style=>"margin: 0; padding: 0 0 0 10px;", :class=>"navbar-form navbar-right") do  %>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary navbar-btn" ><%= t(:page_header_signin) %></button>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
       </ul>
 
 
-      <!-- menu for guest user, not logged in -->
-      <% if signed_in? == false %>
-        <%= form_tag(signin_path, :method => "GET", :style=>"margin: 0; padding: 0 0 0 10px;", :class=>"navbar-form navbar-right") do  %>
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary navbar-btn" ><%= t(:page_header_signin) %></button>
-          </div>
-        <% end %>
-        <% if Settings.instance.show_signup_form == true %>
-          <%= form_tag(signup_path, :method => "GET", :style=>"margin: 0; padding: 0 0 0 10px;", :class=>"navbar-form navbar-right") do  %>
-            <div class="form-group">
-              <button type="submit" class="btn btn-success navbar-btn" ><%= t(:page_header_signup) %></button>
-            </div>
-          <% end %>
-        <% end %>
-        <% if !Rails.env.enterprise? %>
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <%= link_to "Pricing", "/pricing" %>
-            </li>
-          </ul>
-        <% end %>
-      <% end %>
 
-      <!-- menu for logged-in user -->
-      <% if signed_in? %>
+      <% if signed_in? == true %>
         <ul class="nav navbar-nav navbar-right">
-
 
           <li>
             <%= link_to "Notifications", notifications_path %>
