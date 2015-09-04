@@ -162,6 +162,48 @@ class Settings::GlobalsettingsController < ApplicationController
   end
 
 
+  def index_ldap
+    env = Settings.instance.environment
+    Settings.instance.reload_from_db GlobalSetting.new
+    @globalsetting = {}
+    @globalsetting['ldap_host']      = Settings.instance.ldap_host
+    @globalsetting['ldap_port']      = Settings.instance.ldap_port
+    @globalsetting['ldap_base']      = Settings.instance.ldap_base
+    @globalsetting['ldap_filter']    = Settings.instance.ldap_filter
+    @globalsetting['ldap_email']     = Settings.instance.ldap_email
+    @globalsetting['ldap_username']  = Settings.instance.ldap_username
+    @globalsetting['ldap_active']    = Settings.instance.ldap_active
+  end
+
+  def update_ldap
+    env = Settings.instance.environment
+    GlobalSetting.set env, 'ldap_host'     , params[:ldap_host]
+    GlobalSetting.set env, 'ldap_port'     , params[:ldap_port]
+    GlobalSetting.set env, 'ldap_base'     , params[:ldap_base]
+    GlobalSetting.set env, 'ldap_filter'   , params[:ldap_filter]
+    GlobalSetting.set env, 'ldap_email'    , params[:ldap_email]
+    GlobalSetting.set env, 'ldap_username' , params[:ldap_username]
+    GlobalSetting.set env, 'ldap_active'   , params[:ldap_active]
+    flash[:success] = "LDAP Settings changed successfully"
+    redirect_to settings_ldapsettings_path
+  end
+
+  def ldap_auth
+    ldap_entity = LdapService.auth_by params[:ldap_login], params[:ldap_password]
+    if ldap_entity
+      username = ldap_entity.first[Settings.instance.ldap_username].first
+      email    = ldap_entity.first[Settings.instance.ldap_email].first
+      flash[:success] = "Successfully authenticated! Received username '#{username}' and email '#{email}'"
+    else
+      flash[:error] = "Authentification failed!"
+    end
+    redirect_to settings_ldapsettings_path
+  rescue => e
+    flash[:error] = "An error occured."
+    redirect_to settings_ldapsettings_path
+  end
+
+
   def index_mvnrepos
     Settings.instance.reload_from_db GlobalSetting.new
     @globalsetting = {}
