@@ -46,7 +46,7 @@ module UsersHelper
     return nil if code.to_s.empty? || user.nil?
 
     promo = PromoCode.by_name code
-    if promo.nil? || promo.to_s.empty? 
+    if promo.nil? || promo.to_s.empty?
       flash.now[:warn] = 'Sorry. But the promo code you entered does not exist!'
     elsif !promo.is_valid?
       flash.now[:warn] = 'Sorry. But the promo code you entered is not valid anymore!'
@@ -64,8 +64,8 @@ module UsersHelper
     nil
   end
 
-  def username_max_30 username 
-    if username.to_s.length > 30 
+  def username_max_30 username
+    if username.to_s.length > 30
       part = username.to_s[0..28]
       return "#{part}.."
     end
