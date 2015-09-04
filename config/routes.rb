@@ -131,6 +131,10 @@ Versioneye::Application.routes.draw do
     get  'bitbucketsettings'   , :to => 'globalsettings#index_bitbucket'
     post 'bitbucketsettings'   , :to => 'globalsettings#update_bitbucket'
 
+    get  'ldapsettings'   , :to => 'globalsettings#index_ldap'
+    post 'ldapsettings'   , :to => 'globalsettings#update_ldap'
+    post 'ldap_auth'      , :to => 'globalsettings#ldap_auth'
+
     get  'stashsettings'       , :to => 'globalsettings#index_stash'
     post 'stashsettings'       , :to => 'globalsettings#update_stash'
 
