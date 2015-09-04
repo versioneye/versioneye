@@ -5,7 +5,7 @@
       This is a project from
       <a href=<%= path_to_github_branch project %> target="_GITHUB">GitHub <%= project.scm_branch %> branch</a>.
 
-      We parsed this file:
+      This file was parsed:
       <a href=<%= path_to_github_file project %> target="_GITHUB" >
         <%= project.filename %>
       </a>
@@ -13,12 +13,12 @@
       This is a project from
       <a href=<%= path_to_bitbucket_branch project %> target="_BITBUCKET">BitBucket <%= project.scm_branch %> branch</a>.
 
-      <% if project.scm_revision %> 
-        We parsed this file:
+      <% if project.scm_revision %>
+        This file was parsed:
         <a href=<%= path_to_bitbucket_file project %> target="_BITBUCKET" >
           <%= project.filename %>
         </a>
-      <% end %> 
+      <% end %>
     <% elsif project.source.eql? Project::A_SOURCE_STASH %>
       Stash project from <a href=<%= path_to_stash_file( project ) %> target="_STASH" ><%= project.filename %></a> in branch <b><%= project.scm_branch %></b>
       from the repository <b><%= project.scm_fullname %></b>.
