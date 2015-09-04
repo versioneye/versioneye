@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
   def create
     redirect_url = params[:redirect_url]
 
-    user = User.authenticate(params[:session][:email],
+    user = AuthService.auth(params[:session][:email],
                              params[:session][:password])
     if user.nil?
       flash[:error] = 'Invalid email/password combination.'
