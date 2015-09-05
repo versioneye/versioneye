@@ -169,7 +169,7 @@
 
           <div id="licenses" class="tab-pane">
 
-            <% if signed_in? && @project.user && @project.user.id.to_s.eql?( current_user.id.to_s ) %>
+            <% if project_member?( @project, current_user ) %>
               <%= render "user/projects/helpers/license_whitelist_picker" %>
               <%= render "user/projects/helpers/component_whitelist_picker" %>
             <% end %>
