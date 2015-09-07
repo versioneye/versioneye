@@ -1,20 +1,20 @@
-<% tr_class='' %> 
+<% tr_class='' %>
 <% if project.sv_count_sum > 0 %>
   <% tr_class='flash danger' %>
-<% end %> 
+<% end %>
 <tr class="<%= tr_class %>">
     <td>
       <% prog_lang = Product.encode_language(project.language) %>
       <span class="icon_<%= prog_lang %> small on" ></span>
     </td>
     <td>
-      <%= link_to project.name, user_project_path(project, :child => 'summary'), :class => 'searchResultLink' %> 
+      <%= link_to project.name, user_project_path(project, :child => 'summary'), :class => 'searchResultLink' %>
       <% if project.public == false %>
         <span class="fa fa-lock" title="Private VersionEye Project"></span>
-      <% end %> 
+      <% end %>
       <% if project.sv_count_sum > 0 %>
         <span class="fa fa-shield" title="Security Alert!"> <%= project.sv_count_sum %>  </span>
-      <% end %> 
+      <% end %>
       <% if !project.parsing_errors.to_a.empty? %>
         <i class="fa fa-exclamation-triangle" title="Some errors occured by parsing this project."></i>
       <% end %>
