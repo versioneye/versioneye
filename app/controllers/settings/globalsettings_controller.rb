@@ -190,12 +190,15 @@ class Settings::GlobalsettingsController < ApplicationController
 
   def ldap_auth
     ldap_entity = LdapService.auth_by params[:ldap_login], params[:ldap_password]
-    if ldap_entity
+    if ldap_entity && !ldap_entity.is_a?(String)
       username = ldap_entity.first[Settings.instance.ldap_username].first
       email    = ldap_entity.first[Settings.instance.ldap_email].first
       flash[:success] = "Successfully authenticated! Received username '#{username}' and email '#{email}'"
+    elsif ldap_entity && ldap_entity.is_a?(String)
+      flash[:error] = "An error occured! #{ldap_entity}"
     else
-      flash[:error] = "Authentification failed!"
+      response = LdapService.search_code params[:ldap_login]
+      flash[:error] = "Authentification failed! #{response}"
     end
     redirect_to settings_ldapsettings_path
   rescue => e
