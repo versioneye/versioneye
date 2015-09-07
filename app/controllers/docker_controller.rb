@@ -17,62 +17,62 @@ class DockerController < ApplicationController
     def remote_images_hash
       images = {}
 
-      di = DockerImage.by_name("veye/rails_app")
+      di = DockerImage.by_name("versioneye/rails_app")
       version = di.image_version.to_s
-      images["veye/rails_app:#{version}"] = {
+      images["versioneye/rails_app:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '8080/tcp' => [{'HostPort' => '8080'}]},
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
-          'Binds' => ['/mnt/logs:/rails/log'], 
+          'Binds' => ['/mnt/logs:/rails/log'],
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
         'comments' => di.description
       }
 
-      di = DockerImage.by_name("veye/rails_api")
+      di = DockerImage.by_name("versioneye/rails_api")
       version = di.image_version.to_s
-      images["veye/rails_api:#{version}"] = {
+      images["versioneye/rails_api:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '9090/tcp' => [{'HostPort' => '9090'}]},
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
-          'Binds' => ['/mnt/logs:/rails/log'], 
+          'Binds' => ['/mnt/logs:/rails/log'],
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
         'comments' => di.description
       }
 
-      di = DockerImage.by_name("veye/tasks")
+      di = DockerImage.by_name("versioneye/tasks")
       version = di.image_version.to_s
-      images["veye/tasks:#{version}"] = {
+      images["versioneye/tasks:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
-          'Binds' => ['/mnt/tasks/logs:/versioneye-tasks/log'], 
+          'Binds' => ['/mnt/tasks/logs:/versioneye-tasks/log'],
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
         'comments' => di.description
       }
 
-      di = DockerImage.by_name("veye/crawlr")
+      di = DockerImage.by_name("versioneye/crawlr")
       version = di.image_version.to_s
-      images["veye/crawlr:#{version}"] = {
+      images["versioneye/crawlr:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
-          'Binds' => ['/mnt/cocoapods:/mnt/cocoapods'], 
+          'Binds' => ['/mnt/cocoapods:/mnt/cocoapods'],
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
         'comments' => di.description
       }
 
-      di = DockerImage.by_name("veye/crawlj")
+      di = DockerImage.by_name("versioneye/crawlj")
       version = di.image_version.to_s
-      images["veye/crawlj:#{version}"] = {
+      images["versioneye/crawlj:#{version}"] = {
         'container_start_opts' => {
-          'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'], 
-          'Binds' => ['/mnt/logs:/mnt/logs'], 
+          'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
+          'Binds' => ['/mnt/logs:/mnt/logs'],
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
@@ -84,7 +84,7 @@ class DockerController < ApplicationController
       version = di.image_version.to_s
       images["reiz/mongodb:#{version}"] = {
         'container_start_opts' => {
-          'Binds' => ['/mnt/mongodb:/data'], 
+          'Binds' => ['/mnt/mongodb:/data'],
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => false,
@@ -95,7 +95,7 @@ class DockerController < ApplicationController
       version = di.image_version.to_s
       images["reiz/elasticsearch:#{version}"] = {
         'container_start_opts' => {
-          'Binds' => ['/mnt/elasticsearch:/data'], 
+          'Binds' => ['/mnt/elasticsearch:/data'],
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => false,
