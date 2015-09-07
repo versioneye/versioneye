@@ -39,9 +39,34 @@
       </div>
 
       <div class="form-group">
+        <%= label_tag :ldap_username_pattern, "Login pattern", :class => "control-label", :for => "ldap_username_pattern" %>
+        <div class="controls">
+          <%= text_field_tag :ldap_username_pattern, @globalsetting['ldap_username_pattern'], :id => "ldap_username_pattern", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
         <%= label_tag :ldap_filter, "Filter", :class => "control-label", :for => "ldap_filter" %>
         <div class="controls">
           <%= text_field_tag :ldap_filter, @globalsetting['ldap_filter'], :id => "ldap_filter", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag :ldap_auth, "Auth. method", :class => "control-label", :for => "ldap_auth" %>
+        <div class="controls">
+          <%= text_field_tag :ldap_auth, @globalsetting['ldap_auth'], :id => "ldap_auth", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag :ldap_encryption, "Encryption", :class => "control-label", :for => "ldap_encryption" %>
+        <div class="controls">
+          <select name="ldap_encryption"  id="ldap_encryption" class="form-control" >
+            <option value="none"        <%= "selected" if @globalsetting['ldap_encryption'] == 'none'   %> >None</option>
+            <option value="simple_tls"  <%= "selected" if @globalsetting['ldap_encryption'] == 'simple_tls'  %> >simple_tls</option>
+            <option value="start_tls"  <%= "selected" if @globalsetting['ldap_encryption'] == 'start_tls'  %> >start_tls</option>
+          </select>
         </div>
       </div>
 
