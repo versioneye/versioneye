@@ -166,24 +166,30 @@ class Settings::GlobalsettingsController < ApplicationController
     env = Settings.instance.environment
     Settings.instance.reload_from_db GlobalSetting.new
     @globalsetting = {}
-    @globalsetting['ldap_host']      = Settings.instance.ldap_host
-    @globalsetting['ldap_port']      = Settings.instance.ldap_port
-    @globalsetting['ldap_base']      = Settings.instance.ldap_base
-    @globalsetting['ldap_filter']    = Settings.instance.ldap_filter
-    @globalsetting['ldap_email']     = Settings.instance.ldap_email
-    @globalsetting['ldap_username']  = Settings.instance.ldap_username
-    @globalsetting['ldap_active']    = Settings.instance.ldap_active
+    @globalsetting['ldap_host']       = Settings.instance.ldap_host
+    @globalsetting['ldap_port']       = Settings.instance.ldap_port
+    @globalsetting['ldap_base']       = Settings.instance.ldap_base
+    @globalsetting['ldap_filter']     = Settings.instance.ldap_filter
+    @globalsetting['ldap_username_pattern'] = Settings.instance.ldap_username_pattern
+    @globalsetting['ldap_email']      = Settings.instance.ldap_email
+    @globalsetting['ldap_username']   = Settings.instance.ldap_username
+    @globalsetting['ldap_auth']       = Settings.instance.ldap_auth
+    @globalsetting['ldap_encryption'] = Settings.instance.ldap_encryption
+    @globalsetting['ldap_active']     = Settings.instance.ldap_active
   end
 
   def update_ldap
     env = Settings.instance.environment
-    GlobalSetting.set env, 'ldap_host'     , params[:ldap_host]
-    GlobalSetting.set env, 'ldap_port'     , params[:ldap_port]
-    GlobalSetting.set env, 'ldap_base'     , params[:ldap_base]
-    GlobalSetting.set env, 'ldap_filter'   , params[:ldap_filter]
-    GlobalSetting.set env, 'ldap_email'    , params[:ldap_email]
-    GlobalSetting.set env, 'ldap_username' , params[:ldap_username]
-    GlobalSetting.set env, 'ldap_active'   , params[:ldap_active]
+    GlobalSetting.set env, 'ldap_host'      , params[:ldap_host]
+    GlobalSetting.set env, 'ldap_port'      , params[:ldap_port]
+    GlobalSetting.set env, 'ldap_base'      , params[:ldap_base]
+    GlobalSetting.set env, 'ldap_filter'    , params[:ldap_filter]
+    GlobalSetting.set env, 'ldap_username_pattern', params[:ldap_username_pattern]
+    GlobalSetting.set env, 'ldap_email'     , params[:ldap_email]
+    GlobalSetting.set env, 'ldap_username'  , params[:ldap_username]
+    GlobalSetting.set env, 'ldap_auth'      , params[:ldap_auth]
+    GlobalSetting.set env, 'ldap_encryption', params[:ldap_encryption]
+    GlobalSetting.set env, 'ldap_active'    , params[:ldap_active]
     flash[:success] = "LDAP Settings changed successfully"
     redirect_to settings_ldapsettings_path
   end
@@ -196,9 +202,6 @@ class Settings::GlobalsettingsController < ApplicationController
       flash[:success] = "Successfully authenticated! Received username '#{username}' and email '#{email}'"
     elsif ldap_entity && ldap_entity.is_a?(String)
       flash[:error] = "An error occured! #{ldap_entity}"
-    else
-      response = LdapService.search_code params[:ldap_login]
-      flash[:error] = "Authentification failed! #{response}"
     end
     redirect_to settings_ldapsettings_path
   rescue => e

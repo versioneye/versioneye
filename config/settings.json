@@ -71,6 +71,9 @@
     "ldap_base": "dc=versioneye, dc=com",
     "ldap_filter": "(cn=LOGIN)",
     "ldap_email": "mail",
+    "ldap_username_pattern": "LOGIN@versioneye.com",
+    "ldap_auth": "simple",
+    "ldap_encryption": "none",
     "ldap_username": "uid",
     "ldap_active": "false"
   },
@@ -146,6 +149,9 @@
     "ldap_port": "389",
     "ldap_base": "dc=versioneye, dc=com",
     "ldap_filter": "(cn=LOGIN)",
+    "ldap_username_pattern": "LOGIN@versioneye.com",
+    "ldap_auth": "simple",
+    "ldap_encryption": "none",
     "ldap_email": "mail",
     "ldap_username": "uid",
     "ldap_active": "false"
@@ -220,6 +226,9 @@
     "ldap_port": "389",
     "ldap_base": "dc=versioneye, dc=com",
     "ldap_filter": "(cn=LOGIN)",
+    "ldap_username_pattern": "LOGIN@versioneye.com",
+    "ldap_auth": "simple",
+    "ldap_encryption": "none",
     "ldap_email": "mail",
     "ldap_username": "uid",
     "ldap_active": "false"
@@ -290,6 +299,9 @@
     "ldap_port": "389",
     "ldap_base": "dc=versioneye, dc=com",
     "ldap_filter": "(cn=LOGIN)",
+    "ldap_username_pattern": "LOGIN@versioneye.com",
+    "ldap_auth": "simple",
+    "ldap_encryption": "none",
     "ldap_email": "mail",
     "ldap_username": "uid",
     "ldap_active": "false"
