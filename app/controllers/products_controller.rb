@@ -35,7 +35,10 @@ class ProductsController < ApplicationController
     build    = Version.decode_version ( params[:build] )
 
     @product = ProductService.fetch_product lang, prod_key, version
-    return if @product.nil?
+    if @product.nil?
+      render :status => 404
+      return
+    end
 
     # if product language is different from language in param than do a redirect!
     if !@product.nil? && !lang.nil? && lang.to_s.casecmp( @product.language.to_s ) != 0
@@ -124,12 +127,14 @@ class ProductsController < ApplicationController
     reference = ReferenceService.find_by @product.language, prod_key
     if reference.nil?
       @products = paged_products 1, nil, 0
+      render :status => 404
       return
     end
 
     products   = reference.products page
     if products.nil? || products.empty?
       @products = paged_products 1, nil, reference.ref_count
+      render :status => 404
       return
     end
 
