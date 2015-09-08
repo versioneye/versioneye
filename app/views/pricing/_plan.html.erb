@@ -1,7 +1,7 @@
 
-<% plan = Plan.by_name_id( plan_id ) %>
 
-<div class="subscription-item" style="padding-left: 40px;">
+  <% plan = Plan.by_name_id( plan_id ) %>
+
   <% if signed_in? %>
     <% if @plan && @plan.name_id.eql?( plan_id ) %>
       <p class="badge badge-info pull-right" style="font-size: 24px; middle; padding: 10px;">Current</p>
@@ -20,16 +20,7 @@
     <% end %>
   <% else %>
     <form action="/signup" >
-      <button class="btn btn-big pull-right">Sign up for free</button>
+      <button class="btn btn-big btn-success pull-right">Sign up for free</button>
     </form>
   <% end %>
-  <h4> € <%= plan.price %>/Month </h4>
-  <ul class = "subscription">
-    <li>
-      Unlimited public projects
-    </li>
-    <li>
-      <b><%= pluralize(plan.private_projects, 'private project') %></b>
-    </li>
-  </ul>
-</div>
+

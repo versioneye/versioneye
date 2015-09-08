@@ -1,7 +1,7 @@
 <% title 'Pricing' %>
 
 <div class = "col2-left col2-right">
-  <p style="padding-top: 30px; margin-bottom: 45px; font-size: 18px;">
+  <p style="padding-top: 30px; margin-bottom: 5px; font-size: 18px;">
     VersionEye allows you to monitor your open source projects for free!
     We only charge a small fee for monitoring project files in private GitHub/Bitbucket repositories.
     VersionEye has a variety of plans to suit everyone`s needs. <br/>
@@ -10,69 +10,65 @@
   </p>
 </div>
 
-<div class="row well pricing success">
-  <div class="col-md-4 col-xs-12" >
-    <h3 class="success pricing_h" >Trial</h3>
-    <p>
-      Try VersionEye for free!<br/>
-      And try a little bit more for only € 1/month ;-)
-    </p>
-  </div>
-  <div class = "col-md-6 col-xs-12">
-
-    <%= render :partial => 'plan', :locals => { :plan_id => '03_trial_0' } %>
-
-    <hr />
-
-    <%= render :partial => 'plan', :locals => { :plan_id => '03_trial_1' } %>
-
-  </div>
-
+<div class="col2-left col2-right">
+<table class="table table-striped" style="font-size: 18px;">
+  <thead>
+    <tr>
+      <th>Plan</th>
+      <th>Price</th>
+      <th>Private Repositories</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tr>
+    <td>Free</td>
+    <td>€ 0/Month</td>
+    <td>1</td>
+    <td><%= render :partial => 'plan', :locals => { :plan_id => '03_trial_0' } %></td>
+  </tr>
+  <tr>
+    <td>Micro</td>
+    <td>€ 7/Month</td>
+    <td>5</td>
+    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_micro' } %></td>
+  </tr>
+  <tr>
+    <td>Small</td>
+    <td>€ 12/Month</td>
+    <td>10</td>
+    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_small' } %></td>
+  </tr>
+  <tr>
+    <td>Medium</td>
+    <td>€ 22/Month</td>
+    <td>20</td>
+    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_medium' } %></td>
+  </tr>
+  <tr>
+    <td>Large</td>
+    <td>€ 50/Month</td>
+    <td>50</td>
+    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_large' } %></td>
+  </tr>
+  <tr>
+    <td>X-Large</td>
+    <td>€ 100/Month</td>
+    <td>100</td>
+    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_xlarge' } %></td>
+  </tr>
+  <tr>
+    <td>XX-Large</td>
+    <td>€ 250/Month</td>
+    <td>250</td>
+    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_xxlarge' } %></td>
+  </tr>
+</table>
 </div>
 
-<div class="row well pricing " style="background-color: #d9edf7">
-  <div class="col-md-4 col-xs-12" >
-    <h3 class = "pricing_h">Personal</h3>
-    <p>Do the next step with the personal plan to track your personal projects.</p>
-  </div>
-  <div class = "col-md-6 col-xs-12">
-
-    <%= render :partial => 'plan', :locals => { :plan_id => '03_personal_3' } %>
-
-    <hr/>
-
-    <%= render :partial => 'plan', :locals => { :plan_id => '03_personal_6' } %>
-
-    <hr />
-
-    <%= render :partial => 'plan', :locals => { :plan_id => '03_personal_9' } %>
-
-  </div>
-</div>
-
-<div class="row well pricing info">
-  <div class="col-md-4 col-xs-12" >
-    <h3 class = "pricing_h">Business</h3>
-    <p>Be brave and be proffessional! You are a team leader now. Keep your team up-to-date.</p>
-  </div>
-  <div class = "col-md-6 col-xs-12">
-
-    <%= render :partial => 'plan', :locals => { :plan_id => '03_business_25' } %>
-
-    <hr />
-
-    <%= render :partial => 'plan', :locals => { :plan_id => '03_business_50' } %>
-
-    <hr />
-
-    <%= render :partial => 'plan', :locals => { :plan_id => '03_business_100' } %>
-
-  </div>
-</div>
 
 <div class = "col2-left col2-right">
   <p style="margin-bottom: 45px; font-size: 18px;">
-    We're also offering bigger plans and an on-premises version of VersionEye. <br/>
+    We're also offering bigger plans and an on-premises version of VersionEye. <a href="mailto:support@versioneye.com">Contact us</a> if you are interested.<br/>
     More information is available at our <%= link_to 'VersionEye Enterprise', enterprise_path %> page!
   </p>
 </div>

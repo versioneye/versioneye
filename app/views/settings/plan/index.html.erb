@@ -13,11 +13,13 @@
       Open source projects are for free! We only charge a small fee for monitoring project files in private GitHub/Bitbucket repositories.<br/>
       <% if current_user.free_private_projects > 0 %>
         <br/>
-        You can monitor <b><%= current_user.free_private_projects %></b> project files in private repositories, for free! 
+        You can monitor <b><%= current_user.free_private_projects %></b> project files in private repositories, for free!
       <% end %>
     </p>
     <hr />
+
     <%= render "pricing" %>
+
     <% if has_current_plan?( current_user ) %>
       <p>
         <br/>
