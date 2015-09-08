@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 5e407f08a63ba4de378d5b3c3c9d7a02fc71c246
-  tag: v7.27.1
+  revision: 6451f9ef1433f4c6be1c64162d38df159a51f25d
+  tag: v7.27.3
   specs:
-    versioneye-core (7.27.1)
+    versioneye-core (7.27.3)
       actionmailer (~> 4.2.2)
       aws-sdk (~> 2.1.3)
       bundler (~> 1.10.6)
@@ -286,7 +286,7 @@ GEM
     simplecov-html (0.10.0)
     sprockets (3.3.4)
       rack (~> 1.0)
-    sprockets-rails (2.3.2)
+    sprockets-rails (2.3.3)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
