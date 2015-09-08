@@ -24,14 +24,14 @@ class Settings::PlanController < ApplicationController
       update_plan( user, customer, @plan_name_id )
       redirect_to settings_plans_path
     else
-      prepare_update_cc @plan_name_id      
+      prepare_update_cc @plan_name_id
       redirect_to settings_creditcard_path
     end
-  rescue => e 
+  rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
     flash[:error] = "ERROR: #{e.message}"
-    prepare_update_cc @plan_name_id      
+    prepare_update_cc @plan_name_id
     redirect_to settings_creditcard_path
   end
 

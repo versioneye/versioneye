@@ -21,7 +21,7 @@ describe "Payment Process" do
       page.should have_content("I follow")
 
       visit settings_plans_path
-      Plan.count.should eq(8)
+      Plan.count.should eq(7)
       page.should have_content(Plan.free_plan.name)
       page.should have_content(Plan.personal_plan.name)
       page.should have_content(Plan.business_small_plan.name)

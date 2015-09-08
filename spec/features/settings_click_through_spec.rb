@@ -37,7 +37,7 @@ describe "Settings click through" do
       page.should have_content("New E-Mail")
 
       click_link "Plans & Pricing"
-      page.should have_content("Business / Small")
+      page.should have_content("XX-Large")
 
       click_link "Payment History"
       page.should have_content("Payment History")
