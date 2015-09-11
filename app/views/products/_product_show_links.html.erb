@@ -17,13 +17,13 @@
         <a href="<%= key %>" title="<%= value %>" target="new"><i class="fa fa-github" style="font-size: 32px;"></i></a>
       <% elsif key.to_s.match(/bitbucket.org/i) %>
         <a href="<%= key %>" title="<%= value %>" target="new"><i class="fa fa-bitbucket" style="font-size: 32px;"></i></a>
-      <% end %> 
+      <% end %>
     <% end %>
 
     <% hash.each do |key, value| %>
       <% if !key.to_s.match(/github.com/i) && !key.to_s.match(/bitbucket.org/i) %>
-        <br/><a href="<%= key %>" title="<%= value %>" target="new"><%= value %></a> 
-      <% end %> 
+        <br/><a href="<%= key %>" title="<%= value %>" target="new"><%= value %></a>
+      <% end %>
     <% end %>
 
   </div>
