@@ -1,0 +1,31 @@
+<% if @product %>
+  <% scm_changelogs = @product.scm_changelogs %>
+  <% p scm_changelogs.count %>
+  <% if scm_changelogs && !scm_changelogs.empty? %>
+
+    <h2 class="section_header" id='scm_changelogs'>
+      SCM Changelogs <a class="octicon-link" href="#scm_changelogs"><i class="fa fa-link"></i></a>
+    </h2>
+
+    <div style="margin-bottom: 20px;" >
+      <hr/>
+      <% scm_changelogs.each do |entry| %>
+        <div>
+          <b><%= entry.change_date.strftime("%b %d, %Y - %I:%m %p") %> - <%= entry.author %></b> <br/>
+          <%= entry.action %> <b><%= entry.file %></b>
+
+          <% if !entry.revision_base.to_s.empty? %>
+            (revision: <a href="<%= entry.revision_base %>/<%= entry.revision %>" target="github"><%= entry.revision %></a>)
+          <% else %>
+            (revision: <%= entry.revision %>)
+          <% end %>
+
+          <br>
+          <%= entry.message %>
+          <hr/>
+        </div>
+      <% end %>
+    </div>
+
+  <% end %>
+<% end %>
