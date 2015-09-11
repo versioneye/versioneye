@@ -1,9 +1,9 @@
 class PricingController < ApplicationController
 
 
-  def index 
+  def index
     @plan = current_user.plan if signed_in?
-  end 
+  end
 
 
 end
