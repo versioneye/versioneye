@@ -5,10 +5,12 @@ GIT
   specs:
     gravatar_image_tag (1.2.0)
 
-PATH
-  remote: ~/workspace/versioneye/versioneye-core
+GIT
+  remote: git@github.com:versioneye/versioneye-core.git
+  revision: d7e8ed7eb83fc9c2f565817a8efd085e6d3bedcb
+  tag: v7.28.3
   specs:
-    versioneye-core (7.28.2)
+    versioneye-core (7.28.3)
       actionmailer (~> 4.2.2)
       aws-sdk (~> 2.1.3)
       bundler (~> 1.10.6)
