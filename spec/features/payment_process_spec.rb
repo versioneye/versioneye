@@ -23,14 +23,14 @@ describe "Payment Process" do
       visit settings_plans_path
       Plan.count.should eq(7)
       page.should have_content(Plan.free_plan.name)
-      page.should have_content(Plan.personal_plan.name)
-      page.should have_content(Plan.business_small_plan.name)
-      page.should have_content(Plan.business_normal_plan.name)
+      page.should have_content(Plan.small.name)
+      page.should have_content(Plan.medium.name)
+      page.should have_content(Plan.large.name)
 
 
       ### It doesn't save because billing info is missing!
 
-      click_button "#{Plan.personal_plan.name_id}_button"
+      click_button "#{Plan.small.name_id}_button"
       page.should have_content("Credit Card Information")
       page.should have_content("VersionEye doesn't store any Credit Card data")
       fill_in 'cardnumber', :with => "5105 1051 0510 5100"
@@ -62,43 +62,41 @@ describe "Payment Process" do
       user.stripe_token.should_not be_nil
       user.stripe_customer_id.should_not be_nil
       user.plan.should_not be_nil
-      user.plan.name_id.should eql(Plan.personal_plan.name_id)
+      user.plan.name_id.should eql(Plan.small.name_id)
 
 
       ### upgrades the plan to business normal
 
       visit pricing_path
-      Plan.count.should eq(8)
-      page.should have_content("Trial")
-      page.should have_content("Try VersionEye for free!")
-      page.should have_content("Do the next step with the personal plan to track your personal projects.")
-      page.should have_content("Be brave and be proffessional! You are a team leader now. Keep your team up-to-date.")
+      Plan.count.should eq(7)
+      page.should have_content("Free")
+      page.should have_content("VersionEye allows you to monitor your open source projects for free")
 
-      click_button "03_business_50_button"
+      click_button "#{Plan.large.name_id}_button"
       page.should have_content("We updated your plan successfully")
       user = User.find_by_email(user.email)
       user.stripe_token.should_not be_nil
       user.stripe_customer_id.should_not be_nil
       user.plan.should_not be_nil
-      user.plan.name_id.should eql(Plan.business_normal_plan.name_id)
+      user.plan.name_id.should eql(Plan.large.name_id)
 
 
       ### upgrades the plan to business small
 
       visit settings_plans_path
-      Plan.count.should eq(8)
+      Plan.count.should eq(7)
       page.should have_content(Plan.free_plan.name)
-      page.should have_content(Plan.personal_plan.name)
-      page.should have_content(Plan.business_small_plan.name)
-      page.should have_content(Plan.business_normal_plan.name)
+      page.should have_content(Plan.small.name)
+      page.should have_content(Plan.medium.name)
+      page.should have_content(Plan.large.name)
 
-      click_button "#{Plan.business_small_plan.name_id}_button"
+      click_button "#{Plan.medium.name_id}_button"
       page.should have_content("We updated your plan successfully")
       user = User.find_by_email(user.email)
       user.stripe_token.should_not be_nil
       user.stripe_customer_id.should_not be_nil
       user.plan.should_not be_nil
-      user.plan.name_id.should eql(Plan.business_small_plan.name_id)
+      user.plan.name_id.should eql(Plan.medium.name_id)
 
 
       ### shows correct list of invoices for current user
@@ -109,8 +107,7 @@ describe "Payment Process" do
       using_wait_time 10 do
         find_by_id("invoice_table")
         page.should have_content("View receipt")
-        page.should have_content("Personal")
-        page.should have_content("#{Plan.personal_plan.price}.00 EUR")
+        page.should have_content("#{Plan.small.price}.00 EUR")
         # The Business Small plan is the upcoming invoice
       end
 
@@ -125,8 +122,8 @@ describe "Payment Process" do
 
       visit settings_receipt_path( invoice.id )
       page.should have_content("This is a receipt for your VersionEye subscription.")
-      page.should have_content(Plan.personal_plan.name)
-      page.should have_content("#{Plan.personal_plan.price}.00 EUR")
+      page.should have_content(Plan.small.name)
+      page.should have_content("#{Plan.small.price}.00 EUR")
     end
 
   end
