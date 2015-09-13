@@ -1,0 +1,8 @@
+
+<% if Rails.env.enterprise? == false %>
+
+  <% if ( @product && @product.tags && @product.tags.is_a?(Array) && @product.tags.include?('minecraft') ) || params[:id].to_s.eql?('minecraft') %>
+    <%= render "shared/affiliate/getdigital_minecraft" %>
+  <% end %>
+
+<% end %>
