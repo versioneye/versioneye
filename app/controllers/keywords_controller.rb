@@ -1,13 +1,13 @@
 class KeywordsController < ApplicationController
 
 
-  def show 
+  def show
     keyword = params[:id]
     @lang   = get_lang_value( params[:language] )
     query = []
     if @lang.to_s.empty? || @lang.to_s.eql?(",")
       query = Product.where(:tags => keyword)
-    else 
+    else
       languages = get_language_array(@lang)
       query = Product.where(:tags => keyword, :language.in => languages)
     end
