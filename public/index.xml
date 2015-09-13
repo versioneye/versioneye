@@ -1,39 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <sitemap>
-      <loc>https://www.versioneye.com/sitemap-001.xml</loc>
+      <loc>https://www.versioneye.com/sitemap-1.xml</loc>
    </sitemap>
    <sitemap>
-      <loc>https://www.versioneye.com/sitemap-002.xml</loc>
+      <loc>https://www.versioneye.com/sitemap-2.xml</loc>
    </sitemap>
    <sitemap>
-      <loc>https://www.versioneye.com/sitemap-003.xml</loc>
+      <loc>https://www.versioneye.com/sitemap-3.xml</loc>
    </sitemap>
    <sitemap>
-      <loc>https://www.versioneye.com/sitemap-004.xml</loc>
+      <loc>https://www.versioneye.com/sitemap-4.xml</loc>
    </sitemap>
    <sitemap>
-      <loc>https://www.versioneye.com/sitemap-005.xml</loc>
+      <loc>https://www.versioneye.com/sitemap-5.xml</loc>
    </sitemap>
    <sitemap>
-      <loc>https://www.versioneye.com/sitemap-006.xml</loc>
+      <loc>https://www.versioneye.com/sitemap-6.xml</loc>
    </sitemap>
    <sitemap>
-      <loc>https://www.versioneye.com/sitemap-007.xml</loc>
+      <loc>https://www.versioneye.com/sitemap-7.xml</loc>
    </sitemap>
    <sitemap>
-      <loc>https://www.versioneye.com/sitemap-008.xml</loc>
+      <loc>https://www.versioneye.com/sitemap-8.xml</loc>
    </sitemap>
    <sitemap>
-      <loc>https://www.versioneye.com/sitemap-009.xml</loc>
+      <loc>https://www.versioneye.com/sitemap-9.xml</loc>
    </sitemap>
    <sitemap>
-      <loc>https://www.versioneye.com/sitemap-010.xml</loc>
+      <loc>https://www.versioneye.com/sitemap-10.xml</loc>
    </sitemap>
    <sitemap>
-      <loc>https://www.versioneye.com/sitemap-011.xml</loc>
+      <loc>https://www.versioneye.com/sitemap-11.xml</loc>
    </sitemap>
    <sitemap>
-      <loc>https://www.versioneye.com/sitemap-012.xml</loc>
+      <loc>https://www.versioneye.com/sitemap-12.xml</loc>
+   </sitemap>
+   <sitemap>
+      <loc>https://www.versioneye.com/sitemap-13.xml</loc>
+   </sitemap>
+   <sitemap>
+      <loc>https://www.versioneye.com/sitemap-14.xml</loc>
+   </sitemap>
+   <sitemap>
+      <loc>https://www.versioneye.com/sitemap-15.xml</loc>
    </sitemap>
 </sitemapindex>
