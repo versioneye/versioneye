@@ -3,11 +3,11 @@
 
   <div style='margin: 20px 0 40px 0; height: 215px;' >
     <div class='pull-left' >
-      <%= link_to image_tag('versioneye-round-logo.png'), root_path %> 
+      <%= link_to image_tag('versioneye-round-logo.png'), root_path %>
     </div>
     <div class="pull-left enterprise_header">Enterprise</div>
     <div class="pull-left enterprise_subheader">
-      On your own server! Integrated with your private repositories and your continuous integration system! 
+      On your own server! Integrated with your private repositories and your continuous integration system!
     </div>
   </div>
 
@@ -15,13 +15,13 @@
 
 
     <div class="content-section-a">
-        <%= render "shared/feature_version" %> 
+        <%= render "shared/feature_version" %>
     </div>
 
     <div class="content-section-b">
-        <%= render "shared/feature_license" %> 
+        <%= render "shared/feature_license" %>
     </div>
-  
+
     <div class="content-section-a">
         <%= render "shared/feature_security" %>
     </div>
@@ -37,33 +37,33 @@
             <div>
               <%= image_tag 'cites/alexander-greim_75.jpg', :class => "img-rounded" %> <b>Alexander Greim (Director Mobile Engineering @ <a href="https://www.xing.com">XING</a> AG)</b>
             </div>
-          </p> 
-          <p class="lead">
-            Download the full <a href="/docs/XING-Customer-Success-Story.pdf">customer success story with XING</a>. 
           </p>
           <p class="lead">
-            More success stories are coming soon! The other Enterprise clients are bigger than XING and that's why the approval process takes a bit longer for them. 
+            Download the full <a href="/docs/XING-Customer-Success-Story.pdf">customer success story with XING</a>.
+          </p>
+          <p class="lead">
+            More success stories are coming soon! The other Enterprise clients are bigger than XING and that's why the approval process takes a bit longer for them.
           </p>
         </div>
 
       </div>
     </div>
 
-  
+
     <div class="content-section-a">
       <div class="container">
         <h2 >Which repository servers are supported?</h2>
-        <div class="well-white" >  
+        <div class="well-white" >
           <p class="lead">
-            The whole point of VersionEye Enterprise is that it can crawl internal repositories, 
-            such as <a href="http://www.sonatype.com/nexus">Nexus Pro</a>, 
-            <a href="http://www.jfrog.com/open-source/#os-arti">Artifactory Enterprise</a> 
-            and other ones. That way VersionEye gets a complete list of <b>ALL</b> your dependencies! 
-            The open source dependencies AND your private components as well! 
+            The whole point of VersionEye Enterprise is that it can crawl internal repositories,
+            such as <a href="http://www.sonatype.com/nexus">Nexus Pro</a>,
+            <a href="http://www.jfrog.com/open-source/#os-arti">Artifactory Enterprise</a>
+            and other ones. That way VersionEye gets a complete list of <b>ALL</b> your dependencies!
+            The open source dependencies AND your private components as well!
           </p>
           <p class="lead">
-            Currently we support <a href="http://www.sonatype.com/nexus">Nexus Pro</a> (Java), 
-            <a href="http://www.jfrog.com/open-source/#os-arti">Artifactory Enterprise</a> (Java), 
+            Currently we support <a href="http://www.sonatype.com/nexus">Nexus Pro</a> (Java),
+            <a href="http://www.jfrog.com/open-source/#os-arti">Artifactory Enterprise</a> (Java),
             <a href="http://cocoapods.org/">CocoaPods</a> (Objective-C) and <a href="https://github.com/composer/satis">Satis</a> (PHP)!
           </p>
         </div>
@@ -80,26 +80,26 @@
           <h2 >Which Git servers are supported?</h2>
           <div class="well-white" style="margin-bottom: 0px;" >
               <p class="lead">
-                VersionEye Enterprise can be connected with <a href="https://enterprise.github.com/">GitHub Enterprise</a>, 
-                Atlassian <a href="https://www.atlassian.com/software/stash">Stash</a> and <a href="https://bitbucket.org/">Bitbucket</a>. That way it's possible to use the Git servers API as single sign on (OAuth) 
-                for VersionEye Enterprise. <a href="https://about.gitlab.com/">GitLab</a> support is coming soon! 
+                VersionEye Enterprise can be connected with <a href="https://enterprise.github.com/">GitHub Enterprise</a>,
+                Atlassian <a href="https://www.atlassian.com/software/stash">Stash</a> and <a href="https://bitbucket.org/">Bitbucket</a>. That way it's possible to use the Git servers API as single sign on (OAuth)
+                for VersionEye Enterprise. <a href="https://about.gitlab.com/">GitLab</a> support is coming soon!
               </p>
               <p class="lead">
-                <%= image_tag "marketing/login_with_github_wb.png"%> 
-                <%= image_tag "marketing/login_with_bitbucket_wb.png" %> 
+                <%= image_tag "marketing/login_with_github_wb.png"%>
+                <%= image_tag "marketing/login_with_bitbucket_wb.png" %>
                 <%= image_tag "marketing/login_with_stash_wb.png", :style => "width: 262px;" %>
               </p>
               <p class="lead">
-                Simply turn on the switch for project files in Git repositories 
-                which should be monitored by VersionEye! 
+                Simply turn on the switch for project files in Git repositories
+                which should be monitored by VersionEye!
               </p>
           </div>
         </div>
         <p class="lead">
           <%= image_tag "marketing/git_repo_integration.png", :style => "margin-left: 1px;" %>
-        </p> 
+        </p>
         <p class="lead">
-          Turn on the switch and receive daily email notifications 
+          Turn on the switch and receive daily email notifications
           about your dependencies. <br/><b>It was never easier to stay up-to-date!</b>
         </p>
 
@@ -111,25 +111,25 @@
       <%= render "shared/feature_package_managers" %>
     </div>
 
-  
+
     <div class="content-section-b">
       <div class="container">
 
         <h2 >How do I install VersionEye Enterprise?</h2>
         <div class="well-white" >
           <p class="lead">
-            We provide VersionEye Enterprise as a virtual machine image. To be more exact, 
-            we provide a <a href="http://www.vmware.com">VMWare</a> instance. All you need 
-            is a <a href="http://www.vmware.com/products/player">VMWare Player</a> or 
-            <a href="http://www.vmware.com/products/vsphere">VMWare vSphere</a> to start the instance. 
-            After the instance has booted successfully you can open a browser and navigate to the 
-            IP address of the VM instance. On the default HTTP port 80 the VersionEye web 
+            We provide VersionEye Enterprise as a virtual machine image. To be more exact,
+            we provide a <a href="http://www.vmware.com">VMWare</a> instance. All you need
+            is a <a href="http://www.vmware.com/products/player">VMWare Player</a> or
+            <a href="http://www.vmware.com/products/vsphere">VMWare vSphere</a> to start the instance.
+            After the instance has booted successfully you can open a browser and navigate to the
+            IP address of the VM instance. On the default HTTP port 80 the VersionEye web
             application will come up, where you can activate the instance with an valid API key.
           </p>
           <p class="lead">
-            After activation you can login with admin/admin and connect VersionEye 
-            Enterprise with your private SMTP, Repository and Git server. 
-          </p> 
+            After activation you can login with admin/admin and connect VersionEye
+            Enterprise with your private SMTP, Repository and Git server.
+          </p>
           <p class="lead" style="text-align: center;">
             <%= image_tag "marketing/versioneye_settings.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; width: 700px;" %>
           </p>
@@ -143,7 +143,7 @@
         <h2>Which resources are needed for the Enterprise VM?</h2>
         <div class="well-white" >
           <p class="lead">
-            The minimum requirements are: 
+            The minimum requirements are:
             <ul>
               <li>1 CPU 2.0 GHz</li>
               <li>2 GB RAM</li>
@@ -151,8 +151,8 @@
             </ul>
           </p>
           <p class="lead">
-            Depending on your setup and the amount of the components in your private 
-            repositories more resources are required. We recommend to run it with: 
+            Depending on your setup and the amount of the components in your private
+            repositories more resources are required. We recommend to run it with:
             <ul>
               <li>2 CPU 2.5 GHz</li>
               <li>8 GB RAM</li>
@@ -161,34 +161,34 @@
           </p>
         </div>
       </div>
-    </div>  
+    </div>
 
 
     <div class="content-section-b">
       <div class="container">
         <h2 >How to keep the database up-to-date?</h2>
-        <div class="well-white" >  
+        <div class="well-white" >
           <p class="lead">
-            <a href="https://www.versioneye.com">VersionEye.com</a> is monitoring 
-            550K open source projects on a daily basis. The crawlers are running 24/7 to 
-            keep our database in the cloud up-to-date. VersionEye Enterprise can crawl your 
-            private repositories in-house, but then your are still missing all the open 
-            source libraries from the Internet. For sure you don't want to run &amp; 
-            maintain a huge crawling cluster in your company ;-) That's why there is a 
-            sync mechanism between VersionEye Enterprise and VersionEye.com. 
-            The Enterprise VM pulls data from the VersionEye.com API to keep your 
-            local database up-to-date. 
+            <a href="https://www.versioneye.com">VersionEye.com</a> is monitoring
+            550K open source projects on a daily basis. The crawlers are running 24/7 to
+            keep our database in the cloud up-to-date. VersionEye Enterprise can crawl your
+            private repositories in-house, but then your are still missing all the open
+            source libraries from the Internet. For sure you don't want to run &amp;
+            maintain a huge crawling cluster in your company ;-) That's why there is a
+            sync mechanism between VersionEye Enterprise and VersionEye.com.
+            The Enterprise VM pulls data from the VersionEye.com API to keep your
+            local database up-to-date.
           </p>
           <p style="text-align: center;">
             <%= image_tag "marketing/VersionEyeEnterpriseArchitecture.png" %>
           </p>
           <p class="lead">
-            When uploading a pom.xml (or any other project file) to the VersionEye Enterprise VM, 
-            all open source dependencies are displayed as unknown. 
-            But in the background VersionEye Enterprise will resolve all dependencies via the VersionEye API and pull in 
-            the desired data into the local database. Depending on the number of the dependencies 
-            this can take a couple of minutes. Besides that there is a nightly sync, to keep the metadata 
-            for the local dependencies up-to-date. 
+            When uploading a pom.xml (or any other project file) to the VersionEye Enterprise VM,
+            all open source dependencies are displayed as unknown.
+            But in the background VersionEye Enterprise will resolve all dependencies via the VersionEye API and pull in
+            the desired data into the local database. Depending on the number of the dependencies
+            this can take a couple of minutes. Besides that there is a nightly sync, to keep the metadata
+            for the local dependencies up-to-date.
           </p>
         </div>
       </div>
@@ -200,30 +200,30 @@
         <h2 >How are software updates rolled out?</h2>
         <div class="well-white" >
           <p class="lead">
-            VersionEye is running on <a href="https://www.docker.com/">Docker</a>! Currently 
-            the whole software for VersionEye and all the backend systems are distributed 
-            over multiple Docker containers. On Port 9999 we provide a web interface to 
-            manage the Docker containers. 
+            VersionEye is running on <a href="https://www.docker.com/">Docker</a>! Currently
+            the whole software for VersionEye and all the backend systems are distributed
+            over multiple Docker containers. On Port 9999 we provide a web interface to
+            manage the Docker containers.
           </p>
           <p style="text-align: center;">
             <%= image_tag "marketing/versioneye-docker.png", :class => "img-border img-rounded", :style => "border: 1px solid lightgray; " %>
           </p>
           <p class="lead">
-            Updates are provided as new Docker containers. With a single click the current 
-            Docker containers can be downloaded directly into the VM, via a secure SSL 
-            connection! <b>Updating software has never been easier!</b> 
+            Updates are provided as new Docker containers. With a single click the current
+            Docker containers can be downloaded directly into the VM, via a secure SSL
+            connection! <b>Updating software has never been easier!</b>
           </p>
         </div>
       </div>
     </div>
-    
+
 
     <div class="content-section-b">
       <div class="container">
         <h2 >Pricing</h2>
-  <div class="well-white" >  
+  <div class="well-white" >
     <p class="lead">
-      <div class="row"> 
+      <div class="row">
         <div class="col-md-5 col-xs-12 pull-left">
           <table class="table table-striped">
             <tr>
@@ -291,7 +291,7 @@
           <h4>How do you define a project?</h4>
           <p class="lead">
             A project on VersionEye is currently the representation of a project file. For example a pom.xml or a Gemfile.
-            Maven multi module projects are counted as 1 project! 
+            Maven multi module projects are counted as 1 project!
           </p>
           <h4>Updates</h4>
           <p class="lead">
@@ -304,13 +304,13 @@
         </div>
 
       </div>
-      
+
     </p>
-  </div>      
+  </div>
       </div>
     </div>
 
-  
+
 
 
   <div class="content-section-a">
@@ -320,7 +320,7 @@
           <div class="col-md-12">
         <h2 >Interested?</h2>
           <p class="lead">
-            Please fill out the form below if you are interested in VersionEye Enterprise. We will contact you soon. 
+            Please fill out the form below if you are interested in VersionEye Enterprise. We will contact you soon.
           </p>
 
           <p style="padding-top: 15px;">
