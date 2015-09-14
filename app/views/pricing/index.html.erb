@@ -1,16 +1,80 @@
 <% title 'Pricing' %>
 
-<div class = "col2-left col2-right">
+<div class="col2-left col2-right">
   <p style="padding-top: 30px; margin-bottom: 5px; font-size: 18px;">
     VersionEye allows you to monitor your open source projects for free!
     We only charge a small fee for monitoring project files in private GitHub/Bitbucket repositories.
     VersionEye has a variety of plans to suit everyone`s needs. <br/>
     <br/>
-    <b>All of our plans can be cancelled or changed on a monthly base.</b>
+    <b>All of our SaaS plans can be cancelled or changed on a monthly base.</b>
   </p>
 </div>
 
-<div class="col2-left col2-right">
+
+<div class = "col2-left col2-right row">
+  <div class="col-md-4" >
+    <ul class="pricing_ul">
+      <li class="pricing_head">Beginner</li>
+      <li class="pricing_price">€ 7 <span class="pricing_price_sm">/ Month</span></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Open Source Projects:</span> Unlimited</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Private Projects:</span> 5</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Project Updates via API per day: </span> 5</li>
+      <li class="pricing_feature"><%= render :partial => 'plan', :locals => { :plan_id => '04_micro', :alignment => ''  } %></li>
+    </ul>
+  </div>
+  <div class="col-md-4" >
+    <ul class="pricing_ul">
+      <li class="pricing_head pricing_recommend">Freelancer</li>
+      <li class="pricing_price pricing_recommend">€ 22 <span class="pricing_price_sm">/ Month</span></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Open Source Projects:</span> Unlimited</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Private Projects:</span> 20</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Project Updates via API per day: </span> 40</li>
+      <li class="pricing_feature">PDF Export</li>
+      <li class="pricing_feature">CSV Export</li>
+      <li class="pricing_feature"><%= render :partial => 'plan', :locals => { :plan_id => '04_medium', :alignment => '' } %></li>
+    </ul>
+  </div>
+  <div class="col-md-4" >
+    <ul class="pricing_ul">
+      <li class="pricing_head">Proffessional</li>
+      <li class="pricing_price">€ 100 <span class="pricing_price_sm">/ Month</span></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Open Source Projects:</span> Unlimited</li>
+      <li class="pricing_feature">Private Projects: 100</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Project Updates via API per day: </span> 200</li>
+      <li class="pricing_feature">PDF Export</li>
+      <li class="pricing_feature">CSV Export</li>
+      <li class="pricing_feature"><%= render :partial => 'plan', :locals => { :plan_id => '04_xlarge', :alignment => '' } %></li>
+    </ul>
+  </div>
+</div>
+
+<div class = "col2-left col2-right" style="padding-top: 40px;">
+  <p style="margin-bottom: 30px; font-size: 18px;">
+    We're offering bigger plans as well. <a href="mailto:support@versioneye.com">Contact us</a> if you are interested.
+  </p>
+</div>
+
+<div class = "col2-left col2-right row" >
+  <div class="col-md-12" >
+    <ul class="pricing_ul">
+      <li class="pricing_head">Enterprise</li>
+      <li class="pricing_price"><span class="pricing_price_sm">Starting at</span> € 2400 <span class="pricing_price_sm">/ Year</span></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Self hosted behind your firewall:</span> Yes</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">100% privacy:</span> Yes</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">LDAP / AD integration: </span> Yes</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Private SMTP / Exchange server: </span> Yes</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">GitHub Enterprise integration: </span> Yes</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Atlassian Stash integration: </span> Yes</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Atlassian Bitbucket integration: </span> Yes</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Crawling private repositories (Maven / CocoaPods / Satis / NPM and more) : </span> Yes</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">CI integration (Jenkins / Bamboo and more): </span> Yes</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Sofware updates are provided as new Docker images: </span> Yes</li>
+      <li class="pricing_feature"><span class="pricing_light_txt"><a style="font-size: 20px;" href="mailto:support@versioneye.com">contact us</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="col2-left col2-right" style="margin-top: 100px; display: none;">
 <table class="table table-striped" style="font-size: 18px;">
   <thead>
     <tr>
@@ -24,51 +88,43 @@
     <td>Free</td>
     <td>€ 0/Month</td>
     <td>1</td>
-    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_free' } %></td>
+    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_free', :alignment => 'pull-right' } %></td>
   </tr>
   <tr>
     <td>Micro</td>
     <td>€ 7/Month</td>
     <td>5</td>
-    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_micro' } %></td>
+    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_micro', :alignment => 'pull-right' } %></td>
   </tr>
   <tr>
     <td>Small</td>
     <td>€ 12/Month</td>
     <td>10</td>
-    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_small' } %></td>
+    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_small', :alignment => 'pull-right' } %></td>
   </tr>
   <tr>
     <td>Medium</td>
     <td>€ 22/Month</td>
     <td>20</td>
-    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_medium' } %></td>
+    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_medium', :alignment => 'pull-right' } %></td>
   </tr>
   <tr>
     <td>Large</td>
     <td>€ 50/Month</td>
     <td>50</td>
-    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_large' } %></td>
+    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_large', :alignment => 'pull-right' } %></td>
   </tr>
   <tr>
     <td>X-Large</td>
     <td>€ 100/Month</td>
     <td>100</td>
-    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_xlarge' } %></td>
+    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_xlarge', :alignment => 'pull-right' } %></td>
   </tr>
   <tr>
     <td>XX-Large</td>
     <td>€ 250/Month</td>
     <td>250</td>
-    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_xxlarge' } %></td>
+    <td><%= render :partial => 'plan', :locals => { :plan_id => '04_xxlarge', :alignment => 'pull-right' } %></td>
   </tr>
 </table>
-</div>
-
-
-<div class = "col2-left col2-right">
-  <p style="margin-bottom: 45px; font-size: 18px;">
-    We're also offering bigger plans and an on-premises version of VersionEye. <a href="mailto:support@versioneye.com">Contact us</a> if you are interested.<br/>
-    More information is available at our <%= link_to 'VersionEye Enterprise', enterprise_path %> page!
-  </p>
 </div>
