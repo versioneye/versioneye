@@ -127,14 +127,14 @@ class ProductsController < ApplicationController
     reference = ReferenceService.find_by @product.language, prod_key
     if reference.nil?
       @products = paged_products 1, nil, 0
-      render :status => 404
+      render :status => 200
       return
     end
 
     products   = reference.products page
     if products.nil? || products.empty?
       @products = paged_products 1, nil, reference.ref_count
-      render :status => 404
+      render :status => 200
       return
     end
 
