@@ -22,7 +22,7 @@
       <li class="pricing_feature"><%= render :partial => 'plan', :locals => { :plan_id => '04_micro', :alignment => ''  } %></li>
     </ul>
   </div>
-  <div class="col-md-4" >
+  <div class="col-md-4" style="margin-top: -10px;" >
     <ul class="pricing_ul">
       <li class="pricing_head pricing_recommend">Freelancer</li>
       <li class="pricing_price pricing_recommend">€ 22 <span class="pricing_price_sm">/ Month</span></li>
@@ -36,7 +36,7 @@
   </div>
   <div class="col-md-4" >
     <ul class="pricing_ul">
-      <li class="pricing_head">Proffessional</li>
+      <li class="pricing_head">Professional</li>
       <li class="pricing_price">€ 100 <span class="pricing_price_sm">/ Month</span></li>
       <li class="pricing_feature"><span class="pricing_light_txt">Open Source Projects:</span> Unlimited</li>
       <li class="pricing_feature">Private Projects: 100</li>
@@ -59,20 +59,32 @@
     <ul class="pricing_ul">
       <li class="pricing_head">Enterprise</li>
       <li class="pricing_price"><span class="pricing_price_sm">Starting at</span> € 2400 <span class="pricing_price_sm">/ Year</span></li>
-      <li class="pricing_feature"><span class="pricing_light_txt">Self hosted behind your firewall:</span> Yes</li>
-      <li class="pricing_feature"><span class="pricing_light_txt">100% privacy:</span> Yes</li>
-      <li class="pricing_feature"><span class="pricing_light_txt">LDAP / AD integration: </span> Yes</li>
-      <li class="pricing_feature"><span class="pricing_light_txt">Private SMTP / Exchange server: </span> Yes</li>
-      <li class="pricing_feature"><span class="pricing_light_txt">GitHub Enterprise integration: </span> Yes</li>
-      <li class="pricing_feature"><span class="pricing_light_txt">Atlassian Stash integration: </span> Yes</li>
-      <li class="pricing_feature"><span class="pricing_light_txt">Atlassian Bitbucket integration: </span> Yes</li>
-      <li class="pricing_feature"><span class="pricing_light_txt">Crawling private repositories (Maven / CocoaPods / Satis / NPM and more) : </span> Yes</li>
-      <li class="pricing_feature"><span class="pricing_light_txt">CI integration (Jenkins / Bamboo and more): </span> Yes</li>
-      <li class="pricing_feature"><span class="pricing_light_txt">Sofware updates are provided as new Docker images: </span> Yes</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Self hosted behind your firewall:</span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">100% privacy:</span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">LDAP / AD integration: </span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Private SMTP / Exchange server: </span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">GitHub Enterprise integration: </span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Atlassian Stash integration: </span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Atlassian Bitbucket integration: </span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Crawling private repositories (Maven / CocoaPods / Satis / NPM and more) : </span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">CI integration (Jenkins / Bamboo and more): </span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Sofware updates are provided as new Docker images: </span> <i class="fa fa-check" style="color: #2ecc71;"></i></li>
       <li class="pricing_feature"><span class="pricing_light_txt"><a style="font-size: 20px;" href="mailto:support@versioneye.com">contact us</a></li>
     </ul>
   </div>
 </div>
+
+<div class = "col2-left col2-right row" >
+  <div class="col-md-12" >
+    <p class="cite_section">
+      <cite>“Automated version notifications of open source and self developed closed source components by VersionEye Enterprise are very helpful especially to our distributed iOS teams. They help reducing coordination and communication efforts. The VersionEye team always did a great job supporting us with individual features!”</cite><br/>
+      <div style="font-size: 18px; font-family: 'Droid Sans', 'Droid Serif', Helvetica;">
+        <%= image_tag 'cites/alexander-greim_75.jpg', :class => "img-rounded" %> Alexander Greim (Director Mobile Engineering @ <a href="https://www.xing.com">XING</a> AG)
+      </div>
+    </p>
+  </div>
+</div>
+
 
 <div class="col2-left col2-right" style="margin-top: 100px; display: none;">
 <table class="table table-striped" style="font-size: 18px;">
