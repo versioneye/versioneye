@@ -1,0 +1,59 @@
+
+.pricing_ul{
+  border: 2px sold gray;
+  padding: 0;
+}
+
+.pricing_head{
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  background-color: #3498db;
+  text-align: center;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  -webkit-border-radius: 4px 4px 0 0;
+  -moz-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;
+}
+
+.pricing_price{
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  background-color: #ecf0f1;
+  text-align: center;
+  color: #77939A;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.pricing_recommend{
+  font-size: 34px;
+}
+
+.pricing_price_sm{
+  color: #77939A;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.pricing_light_txt{
+  color: #77939A;
+  font-size: 14px;
+  font-weight: none;
+}
+
+.pricing_feature{
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  border-left: 2px solid #ecf0f1;
+  border-right: 2px solid #ecf0f1;
+  border-bottom: 2px solid #ecf0f1;
+  text-align: center;
+  color: #77939A;
+  font-size: 16px;
+  font-weight: bold;
+}
