@@ -40,7 +40,7 @@
 <div class="form-group">
   <%= label_tag :zip_code, "Zip", :class => "control-label", :for => "zip_code" %>
   <div class="controls" >
-    <input type="text" size="20" autocomplete="off" class="round form-control" id="zip_code" name="zip_code" style="width: 40px;" value="<%= @billing_address.zip %>" /> 
+    <input type="text" size="60" autocomplete="off" class="round form-control" id="zip_code" name="zip_code" style="width: 80px;" value="<%= @billing_address.zip %>" />
     <%= render :partial => 'shared/input_error', :locals => {:model => @billing_address, :key => :zip} %>
   </div>
 </div>
