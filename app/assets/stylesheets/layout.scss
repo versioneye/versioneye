@@ -23,6 +23,28 @@
   padding-top: 0px;
 }
 
+@media(max-width:660px) {
+  .col2-left {
+    padding-left: 0px;
+    padding-top: 0px;
+  }
+
+  .col2-right {
+    padding-right: 0px;
+    padding-top: 0px;
+  }
+
+  .col2-left-l {
+    padding-left: 0px;
+    padding-top: 0px;
+  }
+
+  .col2-right-r {
+    padding-right: 0px;
+    padding-top: 0px;
+  }
+}
+
 .l_faq_section {
   padding-bottom: 15px;
 }
