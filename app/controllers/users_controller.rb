@@ -17,10 +17,14 @@ class UsersController < ApplicationController
 
     promo_code = params[:promo_code]
     @user = User.new
-    return if promo_code.to_s.empty?
+    if !promo_code.to_s.empty?
+      @user.promo_code = promo_code
+      cookies.permanent.signed[:promo_code] = promo_code
+    end
 
-    @user.promo_code = promo_code
-    cookies.permanent.signed[:promo_code] = promo_code
+    if !params[:plan].to_s.empty?
+      cookies.permanent.signed[:plan_selected] = params[:plan].to_s
+    end
   end
 
   def created
@@ -53,6 +57,10 @@ class UsersController < ApplicationController
 
     if @user.save
       Thread.new{ @user.send_verification_email }
+      if !cookies.signed[:plan_selected].to_s.empty?
+        sign_in @user
+        redirect_to settings_creditcard_path
+      end
     else
       flash[:error] = "#{t(:general_error)} - #{@user.errors.full_messages.to_sentence}"
       redirect_to signup_path
