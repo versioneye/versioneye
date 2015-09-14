@@ -20,7 +20,8 @@
     <% end %>
   <% else %>
     <form action="/signup" >
-      <button class="btn btn-big btn-success <%= alignment %>">Sign up for free</button>
+      <input type="hidden" name="plan" value="<%=plan_id%>" />
+      <button class="btn btn-big btn-success <%= alignment %>">Sign up for free!</button>
     </form>
   <% end %>
 
