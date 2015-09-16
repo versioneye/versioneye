@@ -25,7 +25,7 @@ describe "Payment Process" do
       page.should have_content(Plan.free_plan.name)
       page.should have_content(Plan.small.name)
       page.should have_content(Plan.medium.name)
-      page.should have_content(Plan.large.name)
+      page.should have_content(Plan.xlarge.name)
 
 
       ### It doesn't save because billing info is missing!
@@ -69,16 +69,20 @@ describe "Payment Process" do
 
       visit pricing_path
       Plan.count.should eq(7)
-      page.should have_content("Free")
       page.should have_content("VersionEye allows you to monitor your open source projects for free")
 
-      click_button "#{Plan.large.name_id}_button"
+      sleep 3
+
+      click_button "#{Plan.xlarge.name_id}_button"
+
+      sleep 3
+
       page.should have_content("We updated your plan successfully")
       user = User.find_by_email(user.email)
       user.stripe_token.should_not be_nil
       user.stripe_customer_id.should_not be_nil
       user.plan.should_not be_nil
-      user.plan.name_id.should eql(Plan.large.name_id)
+      user.plan.name_id.should eql(Plan.xlarge.name_id)
 
 
       ### upgrades the plan to business small
@@ -88,7 +92,7 @@ describe "Payment Process" do
       page.should have_content(Plan.free_plan.name)
       page.should have_content(Plan.small.name)
       page.should have_content(Plan.medium.name)
-      page.should have_content(Plan.large.name)
+      page.should have_content(Plan.xlarge.name)
 
       click_button "#{Plan.medium.name_id}_button"
       page.should have_content("We updated your plan successfully")

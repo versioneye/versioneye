@@ -32,7 +32,7 @@ describe "Signin with GitHub" do
     end
 
     # GitHub Login Form
-    fill_in "Username or Email", :with => Settings.instance.github_user
+    fill_in "Username or email address", :with => Settings.instance.github_user
     fill_in 'Password', :with => Settings.instance.github_pass
     click_button 'Sign in'
 
