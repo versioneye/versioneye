@@ -103,21 +103,21 @@ Versioneye::Application.routes.draw do
 
     get  'license_whitelists'              , :to => 'license_whitelists#index'
     get  'license_whitelists/autocomplete' , :to => 'license_whitelists#autocomplete'
-    get  'license_whitelists/:name'        , :to => 'license_whitelists#show'   , :as => 'license_whitelists_show'
+    get  'license_whitelists/:name'        , :to => 'license_whitelists#show'   , :as => 'license_whitelists_show', :constraints => { :name => /[^\/]+/ }
     post 'license_whitelists/create'       , :to => 'license_whitelists#create'
     post 'license_whitelists/destroy'      , :to => 'license_whitelists#destroy', :as => 'license_whitelists_destroy'
-    post 'license_whitelists/:list/add'    , :to => 'license_whitelists#add'    , :as => 'license_whitelists_add'
-    post 'license_whitelists/:list/update_pessimistic'    , :to => 'license_whitelists#update_pessimistic'    , :as => 'license_whitelists_update_pessimistic'
-    post 'license_whitelists/:list/remove' , :to => 'license_whitelists#remove' , :as => 'license_whitelists_remove'
-    post 'license_whitelists/:list/default', :to => 'license_whitelists#default', :as => 'license_whitelists_default'
+    post 'license_whitelists/:list/add'    , :to => 'license_whitelists#add'    , :as => 'license_whitelists_add', :constraints => { :list => /[^\/]+/ }
+    post 'license_whitelists/:list/update_pessimistic'    , :to => 'license_whitelists#update_pessimistic'    , :as => 'license_whitelists_update_pessimistic', :constraints => { :list => /[^\/]+/ }
+    post 'license_whitelists/:list/remove' , :to => 'license_whitelists#remove' , :as => 'license_whitelists_remove' , :constraints => { :list => /[^\/]+/ }
+    post 'license_whitelists/:list/default', :to => 'license_whitelists#default', :as => 'license_whitelists_default', :constraints => { :list => /[^\/]+/ }
 
     get  'component_whitelists'              , :to => 'component_whitelists#index'
-    get  'component_whitelists/:name'        , :to => 'component_whitelists#show'   , :as => 'component_whitelists_show'
+    get  'component_whitelists/:name'        , :to => 'component_whitelists#show'   , :as => 'component_whitelists_show'   , :constraints => { :name => /[^\/]+/ }
     post 'component_whitelists/create'       , :to => 'component_whitelists#create'
     post 'component_whitelists/destroy'      , :to => 'component_whitelists#destroy', :as => 'component_whitelists_destroy'
-    post 'component_whitelists/:list/add'    , :to => 'component_whitelists#add'    , :as => 'component_whitelists_add'
-    post 'component_whitelists/:list/remove' , :to => 'component_whitelists#remove' , :as => 'component_whitelists_remove'
-    post 'component_whitelists/:list/default', :to => 'component_whitelists#default', :as => 'component_whitelists_default'
+    post 'component_whitelists/:list/add'    , :to => 'component_whitelists#add'    , :as => 'component_whitelists_add'    , :constraints => { :list => /[^\/]+/ }
+    post 'component_whitelists/:list/remove' , :to => 'component_whitelists#remove' , :as => 'component_whitelists_remove' , :constraints => { :list => /[^\/]+/ }
+    post 'component_whitelists/:list/default', :to => 'component_whitelists#default', :as => 'component_whitelists_default', :constraints => { :list => /[^\/]+/ }
 
     get  'globalsettings'      , :to => 'globalsettings#index'
     post 'globalsettings'      , :to => 'globalsettings#update'
