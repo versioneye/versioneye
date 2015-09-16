@@ -183,6 +183,7 @@ class Auth::GithubController < ApplicationController
       cookies.delete(:github_token)
       rpath = user_projects_github_repositories_path
       rpath = user_projects_path if user.projects && !user.projects.empty?
+      rpath = settings_creditcard_path if !cookies.signed[:plan_selected].to_s.empty?
       redirect_back_or( rpath )
     end
 
