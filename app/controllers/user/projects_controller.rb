@@ -2,6 +2,7 @@ class User::ProjectsController < ApplicationController
 
   before_filter :authenticate,  :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export, :lwl_csv_export]
   before_filter :collaborator?, :only   => [:add_collaborator, :save_period, :save_visibility, :save_whitelist, :save_cwl, :update, :update_name, :destroy]
+  before_filter :lwl_export_permission?, :only => [:lwl_export, :lwl_csv_export]
 
 
   def index
@@ -306,7 +307,12 @@ class User::ProjectsController < ApplicationController
     else
       @project.public = false
     end
-    if @project.save
+    user = current_user
+    free_plan = user.plan.nil? || user.plan.price.to_i == 0
+    if @project.public == false && free_plan == true && Rails.env.enterprise? == false
+      flash[:warning] = "To keep your project in private mode you need a paid plane. Please upgrade your subscription."
+      url = settings_plans_path
+    elsif @project.save
       flash[:success] = "We saved your changes."
       Auditlog.add current_user, "Project", @project.ids, "Changed visibility.public from `#{old_visibility}` to `#{@project.public}`"
     else
@@ -393,6 +399,17 @@ class User::ProjectsController < ApplicationController
 
 
   private
+
+
+    def lwl_export_permission?
+      return true if Rails.env.enterprise? == true
+      if current_user.plan.nil? || current_user.plan.price.to_i < 22
+        flash[:warning] = "For the PDF/CSV export you need at least the 'Medium' plan. Please upgrade your subscription."
+        redirect_to settings_plans_path
+        false
+      end
+      return true
+    end
 
 
     def collaborator?
