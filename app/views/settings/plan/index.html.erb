@@ -20,6 +20,15 @@
 
     <%= render "pricing" %>
 
+    <% now = DateTime.now %>
+    <% oct = DateTime.parse "2015-10-01" %>
+    <% if now < oct %>
+      <div style="padding: 30px 0 10px 0; font-size: 18px; font-weight: bold;">
+        Old plans. Only available for this month.
+      </div>
+      <%= render "old_pricing" %>
+    <% end %>
+
     <% if has_current_plan?( current_user ) %>
       <p>
         <br/>
