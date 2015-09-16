@@ -48,6 +48,7 @@ class Auth::BitbucketController < ApplicationController
       user.save
       rpath = user_projects_bitbucket_repositories_path
       rpath = user_projects_path if user.projects && !user.projects.empty?
+      rpath = settings_creditcard_path if !cookies.signed[:plan_selected].to_s.empty?
     else
       flash[:error] = "Your account is no activated. Please check your email account."
       rpath = signin_path
