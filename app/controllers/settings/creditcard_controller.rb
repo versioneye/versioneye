@@ -40,6 +40,7 @@ class Settings::CreditcardController < ApplicationController
 
     if user.save
       flash[:success] = 'Many Thanks. We just updated your plan.'
+      cookies.delete(:plan_selected)
     else
       flash[:error] = "Something went wrong. Please contact the VersionEye team."
       Rails.logger.error "Can't save user - #{user.errors.messages}"
