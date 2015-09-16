@@ -28,7 +28,7 @@
       <a href="<%= project.url%>" target="_URL">URL</a>.
     <% else %>
       This is a project from file upload. Last updated at <span>"<%= project.updated_at.strftime("%b %d, %Y - %H:%M") %>"</span>.
-      <% if !project.version.to_s.empty? %>
+      <% if project.respond_to?(:version) && !project.version.to_s.empty? %>
         (Version: <%= project.version %>)
       <% end %>
     <% end %>
