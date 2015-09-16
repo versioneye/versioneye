@@ -1,0 +1,12 @@
+<div id="signup_ad" class="box" style="text-align: left; padding-top: 30px; padding-right: 20px; position: relative;">
+  <p style="font-size: 16px;">
+    Keep your projects up-to-date and stay ahead of cutting edge technology!
+  </p><br/>
+  <a href='<%= Settings.instance.github_base_url %>/login/oauth/authorize?client_id=<%=Settings.instance.github_client_id%>&amp;scope=<%= get_gh_scope %>' style="margin-right: 5px; margin-bottom: 5px;" >
+    <span class="btn btn-large btn-primary">Login with GitHub</span>
+  </a><br/><br/>
+  <a href='<%= auth_bitbucket_signin_url %>' style="margin-right: 5px;" >
+    <span class="btn btn-large btn-primary">Login with Bitbucket</span>
+  </a></br><br/>
+
+</div>
