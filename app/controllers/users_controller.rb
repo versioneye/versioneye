@@ -56,7 +56,7 @@ class UsersController < ApplicationController
     check_promo_code promo_code, @user
 
     if @user.save
-      Thread.new{ @user.send_verification_email }
+      @user.send_verification_email
       if !cookies.signed[:plan_selected].to_s.empty?
         sign_in @user
         redirect_to settings_creditcard_path
