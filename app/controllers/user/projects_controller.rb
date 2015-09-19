@@ -181,6 +181,11 @@ class User::ProjectsController < ApplicationController
     Rails.cache.delete( @project.id.to_s )
     flash[:success] = "ReUpload was successful."
     redirect_to user_project_path( @project )
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    flash[:error] = "ERROR: #{e.message}"
+    redirect_to user_projects_path
   end
 
 
