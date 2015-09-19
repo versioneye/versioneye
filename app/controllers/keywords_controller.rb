@@ -3,6 +3,7 @@ class KeywordsController < ApplicationController
 
   def show
     keyword = params[:id]
+    keyword = Product.decode_prod_key keyword
     @lang   = get_lang_value( params[:language] )
     query = []
     if @lang.to_s.empty? || @lang.to_s.eql?(",")
