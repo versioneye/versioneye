@@ -97,19 +97,19 @@ class User::GithubReposController < User::ScmReposController
   private
 
 
-    def clear_repo_cache repo 
+    def clear_repo_cache repo
       user  = current_user
       repo_task_key = "github:::#{user.id.to_s}:::#{repo.id.to_s}"
       GitHubService.cache.delete( repo_task_key )
-    rescue => e 
-      Rails.logger.error e.message 
+    rescue => e
+      Rails.logger.error e.message
       Rails.logger.error e.backtrace.join "\n"
     end
 
 
-    def clear_import_cache project 
+    def clear_import_cache project
       key = "github:::#{current_user.username}:::#{project.scm_fullname}:::#{project.filename}:::#{project.scm_branch}"
-      ProjectService.cache.delete key 
+      ProjectService.cache.delete key
     end
 
 
@@ -119,13 +119,13 @@ class User::GithubReposController < User::ScmReposController
       status = ProjectImportService.import_from_github_async current_user, project_name, filename, branch
       if status && status.match(/\Adone_/)
         project_id = status.gsub("done_", "")
-        project = Project.find project_id 
-        project_url = url_for(controller: 'projects', action: "show", id: project.id) 
+        project = Project.find project_id
+        project_url = url_for(controller: 'projects', action: "show", id: project.id)
         status = 'done'
       elsif status && status.match(/\Aerror_/)
         return status.gsub("error_", "")
       end
-      
+
       {
         repo: project_name,
         filename: filename,
@@ -134,8 +134,8 @@ class User::GithubReposController < User::ScmReposController
         project_id: project_id,
         project_url: project_url
       }
-    rescue => e 
-      Rails.logger.error e.message 
+    rescue => e
+      Rails.logger.error e.message
       Rails.logger.error e.backtrace.join "\n"
       "Something went wrong. Please contact the VersionEye Team."
     end
