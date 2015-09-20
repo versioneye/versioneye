@@ -3,6 +3,10 @@ module ProductsHelper
   include ActionView::Helpers::DateHelper
   require 'semverly'
 
+  def alternative_packages lang
+    Product.where(:language => lang).desc(:used_by_count).limit(30)
+  end
+
   def product_page_title( product )
     return product.short_summary if product && !product.short_summary.to_s.strip.empty?
     return 'Track your Open Source Libraries at VersionEye'
@@ -24,11 +28,11 @@ module ProductsHelper
   end
 
   def product_url_for_projectdependency dependency
-    return "" if dependency.nil? || dependency.prod_key.to_s.empty? 
+    return "" if dependency.nil? || dependency.prod_key.to_s.empty?
     return product_url(dependency) if dependency.is_a?(Product)
-    
+
     language = Product.encode_language dependency.language
-    prod_key = Product.encode_prod_key dependency.prod_key 
+    prod_key = Product.encode_prod_key dependency.prod_key
     version  = Version.encode_version dependency.version_requested
     return "/#{language}/#{prod_key}/#{version}"
   end
@@ -63,7 +67,7 @@ module ProductsHelper
 
   def do_parse_search_input( query )
     if query.eql?('Follow your software libraries')
-      query = 'json' 
+      query = 'json'
     end
     query = query.to_s.strip()
     query.downcase
@@ -153,7 +157,7 @@ module ProductsHelper
   end
 
   def update_release_infos( version_obj, product )
-    return nil if version_obj.nil? 
+    return nil if version_obj.nil?
     today = DateTime.now.to_date
     if version_obj.released_at
       diff_release = today - version_obj.released_at.to_date
@@ -270,15 +274,15 @@ module ProductsHelper
     Projectdependency.where(:language => product.language, :prod_key => product.prod_key, :project_id => project_id).first
   end
 
-  def color_for_avg_release_time product 
+  def color_for_avg_release_time product
     art_bg = 'info'
     average_release_time = product[:average_release_time]
     if !average_release_time.nil? && average_release_time > 0
       art_bg = 'success' if average_release_time > 0 && average_release_time <= 31
-      art_bg = 'info'  if average_release_time > 31 && average_release_time <= 62 
-      art_bg = 'warn'  if average_release_time > 62 && average_release_time <= 124 
-      art_bg = 'error' if average_release_time > 124 
-    else 
+      art_bg = 'info'  if average_release_time > 31 && average_release_time <= 62
+      art_bg = 'warn'  if average_release_time > 62 && average_release_time <= 124
+      art_bg = 'error' if average_release_time > 124
+    else
       art_bg = "error"
     end
     art_bg
@@ -286,12 +290,12 @@ module ProductsHelper
 
   def color_for_released_ago product
     rel_bg = ''
-    return rel_bg if product.nil? || product.released_days_ago.to_s.empty? 
-    
+    return rel_bg if product.nil? || product.released_days_ago.to_s.empty?
+
     days_ago = product.released_days_ago
-    rel_bg = 'success' if days_ago < 30  
-    rel_bg = 'info'    if days_ago >= 30 && days_ago <= 180  
-    rel_bg = 'warn'    if days_ago > 180  && days_ago <= 365  
+    rel_bg = 'success' if days_ago < 30
+    rel_bg = 'info'    if days_ago >= 30 && days_ago <= 180
+    rel_bg = 'warn'    if days_ago > 180  && days_ago <= 365
     rel_bg = 'error'   if days_ago > 365
     rel_bg
   end
