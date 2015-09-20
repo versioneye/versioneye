@@ -1,12 +1,33 @@
 
-	<div class="boxHeader">
-		Alternatives
-	</div>
-	<div class="boxContainer" >
-		
-			<div class="ui-widget">
-				<label for="tags">Alternative </label>
-				<input id="tags" type="text" class="round" style="width: 400px;" />
-			</div>
-		
-	</div>
+
+<div class="col-md-3" >
+
+  <% if !signed_in? %>
+    <div class="gh_add" >
+      <%= render "/shared/signup_ad" %>
+    </div>
+  <% end %>
+
+</div>
+
+<div class="col-md-9 col-mx-12" >
+  <div class="content_header_def" >
+    Alternatives
+  </div>
+  <div class="content">
+
+    <div>
+      Either the package or the URL you are looking for has gone. But don't be sad. There are alternatives.
+    </div>
+
+    <div>
+      <% packages = alternative_packages(Product.decode_language( params[:lang] )) %>
+      <% if packages && !packages.empty? %>
+        <%= render :partial => "products/show_search_results",
+               :locals => { :products => packages, :paginate => false, :prefix => "alternatives", :name_limit => 70 }  %>
+      <% end %>
+    </div>
+
+  </div>
+</div>
+
