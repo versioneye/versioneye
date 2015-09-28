@@ -36,7 +36,7 @@ class ProductsController < ApplicationController
 
     @product = ProductService.fetch_product lang, prod_key, version
     if @product.nil?
-      render :status => 410
+      render :status => 200
       return
     end
 
