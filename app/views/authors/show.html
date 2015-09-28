@@ -1,11 +1,11 @@
 
 <% if @author %>
-  
+
   <% title @author.name %>
 
   <div class="row">
     <div class="col-md-3 col-xs-12 pull-left">
-      
+
       <%=  gravatar_image_tag( @author.email, :alt => @author.name, :class => 'round12', :gravatar => { :size => 200, :default => "#{Settings.instance.server_url}/profile_icon.png" }) %><br/>
       <% if !@author.homepage.to_s.empty? %>
         <br/><a href="<%= @author.homepage %>">Homepage</a>
@@ -14,24 +14,24 @@
         <br/><span style="font-weight:bold;">Role:</span> <%= @author.role %>
       <% end %>
 
-      <% if @keywords && !@keywords.empty? %> 
+      <% if @keywords && !@keywords.empty? %>
         <h2 class="section_header"> Keywords </h2>
         <div style="margin-bottom: 20px;" >
           <% @keywords.each do |tag| %>
-            <span class="label label-default keyword_tag"><%= link_to tag, keyword_path(tag) %></span>
+            <span class="label label-default keyword_tag"><%= link_to tag, keyword_path( Product.encode_prod_key(tag) ) %></span>
           <% end %>
         </div>
       <% end %>
 
-    </div>  
+    </div>
     <div class="col-md-8 col-xs-12 pull-left">
-      
+
       <span style="font-weight: bold;"><%= @author.name %></span> contributed code to <%= pluralize( @author.products.count, "software library" ) %>.
 
       <%= render :partial => "products/show_search_results",
              :locals => { :products => @products, :paginate => false, :prefix => "author", :name_limit => 70 }  %>
 
-    </div>  
+    </div>
   </div>
 
 <% end %>
