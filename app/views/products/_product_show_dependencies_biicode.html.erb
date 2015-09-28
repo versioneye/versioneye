@@ -6,8 +6,10 @@
     <div class="col-md-12">
       <h5 class="dep_header">
         <%= pluralize( main_dependencies.count, "Compile dependencies" ) %>
-        <%= render :partial => "shared/dependency_badge", :locals => { :project => @product } %>
       </h5>
+      <div style="display: inline;">
+        <%= render :partial => "shared/dependency_badge", :locals => { :project => @product } %>
+      </div>
     </div>
     <div class="col-md-12" >
       <% if !main_dependencies.empty? %>
