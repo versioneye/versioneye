@@ -40,7 +40,7 @@ describe "Signin with GitHub" do
       click_button "Authorize application"
     end
 
-    page.should have_content("I follow")
+    page.should have_content("Projects")
     User.all.count.should eql(1)
     user = User.first
     user.verification.should be_nil

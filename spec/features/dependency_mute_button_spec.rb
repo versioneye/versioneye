@@ -32,7 +32,7 @@ describe "Mute project dependency", :js => true do
       fill_in 'session[email]',    :with => user.email
       fill_in 'session[password]', :with => user.password
       find('#sign_in_button').click
-      page.should have_content("My Projects")
+      page.should have_content("Projects")
 
       click_link "my_projects"
       page.should have_content(project[:name])
@@ -51,7 +51,6 @@ describe "Mute project dependency", :js => true do
 
       project.reload
       project.dependencies.first[:muted].should be_truthy
-
 
       first(".btn-mute-version").click
       using_wait_time 2 do
