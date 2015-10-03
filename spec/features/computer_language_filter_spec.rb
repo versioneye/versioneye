@@ -45,7 +45,7 @@ describe "Computer Language Filter" do
       fill_in 'session[email]',    :with => user.email
       fill_in 'session[password]', :with => user.password
       find('#sign_in_button').click
-      page.should have_content("I follow")
+      page.should have_content("Projects")
 
       visit "/?ab=b"
       fill_in 'q', :with => "json*"
