@@ -108,8 +108,8 @@ var BranchFile = React.createClass({
     checked = e.target.checked
     if (checked == true ){
       this.setState({import_status: 'running', checked: false});
-      id = e.target.id 
-      thisComponent = this 
+      id = e.target.id
+      thisComponent = this
       fileImportTimeout = setInterval(function(){
         url = "/user/projects/"+ scm +"/" + id.replace(/\//g,':') + "/import";
         $.ajax({
@@ -120,7 +120,7 @@ var BranchFile = React.createClass({
               imported_files.push(data);
               thisComponent.setState({import_status: data.status, checked: true});
               clearInterval( fileImportTimeout )
-            } 
+            }
           }.bind(this),
           error: function(xhr, status, err) {
             var err_msg = xhr.responseText
