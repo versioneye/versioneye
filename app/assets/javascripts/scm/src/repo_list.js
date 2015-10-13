@@ -70,7 +70,6 @@ var RepoList = React.createClass({
   }
 });
 
-
 var ScmRepo = React.createClass({
   render: function() {
     var url = "/user/projects/" + this.props.scm + "/" + this.props.data.fullname + "/show"
