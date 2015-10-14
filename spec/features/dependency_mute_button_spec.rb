@@ -43,6 +43,7 @@ describe "Mute project dependency", :js => true do
       page.should have_css(".mute-off")
       first(".btn-mute-version").click
 
+      # Click mute button in dialog window
       find('#mute_button').click
 
       using_wait_time 4 do
@@ -52,14 +53,14 @@ describe "Mute project dependency", :js => true do
       project.reload
       project.dependencies.first[:muted].should be_truthy
 
+      visit "/user/projects/#{project.ids}"
       first(".btn-mute-version").click
-      using_wait_time 2 do
+      using_wait_time 5 do
         page.should have_css(".mute-off")
       end
 
       project.reload
       project.dependencies.first[:muted].should be_falsey
-
     end
   end
 end
