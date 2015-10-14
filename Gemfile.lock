@@ -196,7 +196,7 @@ GEM
       httparty (~> 0.9)
       persistent_http (< 2)
     psych (2.0.15)
-    puma (2.13.4)
+    puma (2.14.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -272,7 +272,7 @@ GEM
     sawyer (0.6.0)
       addressable (~> 2.3.5)
       faraday (~> 0.8, < 0.10)
-    selenium-webdriver (2.47.1)
+    selenium-webdriver (2.48.1)
       childprocess (~> 0.5)
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
@@ -360,7 +360,7 @@ DEPENDENCIES
   net-ldap (= 0.11)
   oauth (~> 0.4.7)
   psych (~> 2.0.5)
-  puma (~> 2.13.4)
+  puma (~> 2.14.0)
   rails (~> 4.2.2)
   rails-assets-bootstrap (= 3.3.5)!
   rails-assets-font-awesome (= 4.3.0)!
@@ -373,7 +373,7 @@ DEPENDENCIES
   ruby_regex (~> 0.1.0)
   sass
   sass-rails (~> 5.0.3)
-  selenium-webdriver (~> 2.47.1)
+  selenium-webdriver (~> 2.48.1)
   semverly (~> 1.0.0)
   simplecov (~> 0.10.0)
   stripe (~> 1.30.1)

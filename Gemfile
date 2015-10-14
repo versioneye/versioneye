@@ -6,7 +6,7 @@ gem 'jquery-rails'         , '~> 4.0.4'
 gem 'execjs'               , '~> 2.6.0'
 gem 'oauth'                , '~> 0.4.7'
 gem 'twitter_oauth'        , '~> 0.4.94'
-gem 'puma'                 , '~> 2.13.4'
+gem 'puma'                 , '~> 2.14.0'
 gem 'htmlentities'         , '~> 4.3.1'
 gem 'whenever'             , '~> 0.9.2'
 gem 'bourbon'              , '~> 4.2.0'
@@ -52,7 +52,7 @@ group :test do
   gem 'rspec-mocks'       , '~> 3.3.0'
   gem 'capybara'          , '~> 2.5.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
-  gem 'selenium-webdriver', '~> 2.47.1'
+  gem 'selenium-webdriver', '~> 2.48.1'
   gem 'vcr'               , '~> 2.9.2',  :require => false
   gem 'webmock'           , '~> 1.21.0', :require => false
   gem "fakeweb"           , '~> 1.3'
