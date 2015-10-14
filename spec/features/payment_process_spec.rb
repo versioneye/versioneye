@@ -5,7 +5,7 @@ describe "Payment Process" do
   describe "Empty Payment History", :js => true do
     it "shows correct message when there's no history" do
       visit "/settings/payments"
-      have_css "#payment_history", text: "t have any Payment history"
+      have_css "#payment_history", text: "t have any payment history"
     end
   end
 
@@ -105,14 +105,32 @@ describe "Payment Process" do
 
       ### shows correct list of invoices for current user
 
+      receipt = Receipt.new({
+         :type => "private",
+         :name => 'Jack',
+         :street => 'Jack-Street 1',
+         :zip => '59811',
+         :city => 'Mannheim',
+         :country => 'Germany',
+         :receipt_nr => 124,
+         :invoice_id => 'tx_858573',
+         :user => user,
+         :invoice_date => Date.new,
+         :period_start => Date.new,
+         :period_end   => Date.new,
+         :total => 1200,
+         :currency => 'eur',
+         :paid => true,
+         :closed => true,
+        })
+      expect( receipt.save ).to be_truthy
+
       visit settings_payments_path
-      page.should_not have_content('Iniatilizing frontend app..')
       page.all(:css, "#payment_history")
-      using_wait_time 10 do
+      using_wait_time 2 do
         find_by_id("invoice_table")
-        page.should have_content("View receipt")
+        page.should have_content(".pdf")
         page.should have_content("#{Plan.small.price}.00 EUR")
-        # The Business Small plan is the upcoming invoice
       end
 
 
@@ -123,11 +141,7 @@ describe "Payment Process" do
       invoices = customer.invoices
       invoices.count.should eq(1)
       invoice = invoices.first
-
       visit settings_receipt_path( invoice.id )
-      page.should have_content("This is a receipt for your VersionEye subscription.")
-      page.should have_content(Plan.small.name)
-      page.should have_content("#{Plan.small.price}.00 EUR")
     end
 
   end
