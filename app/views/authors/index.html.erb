@@ -2,13 +2,13 @@
 <% if @authors %>
     <div class="row">
       <div class="col-md-3 col-xs-12 pull-left">
-        
+
         Top Authors
 
-      </div>  
+      </div>
       <div class="col-md-8 col-xs-12 pull-left">
-        
-        <% @authors.each_with_index do |author, i| %> 
+
+        <% @authors.each_with_index do |author, i| %>
           <div>
           <%=  link_to gravatar_image_tag(author.email,
                                         :alt => author.name,
@@ -16,10 +16,10 @@
                                         :style => "width: 68px;",
                                         :class => "round12",
                                         :gravatar => {:size => 68,
-                                                      :default => "#{Settings.instance.server_url}/profile_icon.png" }), author_path(author) %> 
-            <% nr = (i + 1) %> 
+                                                      :default => "#{Settings.instance.server_url}/profile_icon.png" }), author_path(author) %>
+            <% nr = (i + 1) %>
             <% nr = nr + ((params[:page].to_i - 1) * 100) if !params[:page].to_s.empty? %>
-            <span class="product_page_sm_header"> <%= nr %>. <%= author.name %></span> - 
+            <span class="product_page_sm_header"> <%= nr %>. <%= author.name %></span> -
             <%= pluralize( author.products_count, "library" ) %>
             </div>
         <% end %>
@@ -28,6 +28,6 @@
           <%= will_paginate @authors %>
         </div>
 
-      </div>  
+      </div>
     </div>
 <% end %>

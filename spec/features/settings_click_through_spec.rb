@@ -41,7 +41,7 @@ describe "Settings click through" do
 
       click_link "Payment History"
       page.should have_content("Payment History")
-      page.should have_content("t have any Payment history")
+      page.should have_content("t have any payment history")
 
       click_link "Billing Address"
       page.should have_content("Edit your billing address")
