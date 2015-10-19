@@ -1,19 +1,38 @@
 
-<% svs = @version.security_vulnerabilities %> 
-<% if svs && !svs.empty?  %> 
-  
-  <h2 class="section_header">Security Vulnerabilities</h2>
-  
-  <div style="margin-bottom: 20px;" >
-    <% svs.each do |sv| %> 
-      <% next if sv.links.nil? || sv.links.empty? %> 
-      <div class="flash error" style="margin-bottom: 2px;" >
-        <% sv.links.keys.each do |key| %>
-          <a href="<%= sv.links[key] %>"><%= key %></a><br/> 
-        <% end %> 
-        Affected versions: <%= sv.affected_versions_string %>
-      </div>
-    <% end %> 
-  </div> 
+<% svs = @version.security_vulnerabilities %>
+<% if svs && !svs.empty?  %>
 
-<% end %> 
+  <h2 class="section_header">Security Vulnerabilities</h2>
+
+  <% svs.each do |sv| %>
+    <% next if sv.nil? %>
+    <div class="security_alert" >
+      <% if @product.language.eql?(Product::A_LANGUAGE_PHP) %>
+        <% next if sv.links.nil? || sv.links.empty? %>
+        <div class="flash error" style="margin-bottom: 2px;" >
+          <% sv.links.keys.each do |key| %>
+            <a href="<%= sv.links[key] %>"><%= key %></a><br/>
+          <% end %>
+          Affected versions: <%= sv.affected_versions_string %>
+        </div>
+      <% elsif @product.language.eql?(Product::A_LANGUAGE_NODEJS) %>
+        <div class="flash error" style="margin-bottom: 2px;" >
+          <span class="label_bold">Title</span>: <%= sv.summary %><br/>
+          <span class="label_bold">Author</span>: <%= sv.author %><br/>
+          <% if !sv.links.empty? %>
+            <span class="label_bold">Links</span>:
+            <% sv.links.keys.each do |key| %>
+              <a href="<%= sv.links[key] %>" target="CVE"><%= key %></a><br/>
+            <% end %>
+          <% end %>
+          <span class="label_bold">Published</span>: <%= sv.publish_date %><br/>
+          <span class="label_bold">Affected versions</span>: <%= sv.affected_versions_string %><br/>
+          <span class="label_bold">Patched versions</span>: <%= sv.patched_versions_string %><br/>
+          <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
+          <%= raw( markdown.render sv.description_md ) %><br/>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+<% end %>

@@ -17,7 +17,7 @@ gem 'stripe'               , '~> 1.30.1'
 gem 'bunny'                , '~> 2.2.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.29.5'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.30.1'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
@@ -25,6 +25,7 @@ gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.gi
 gem 'gravatar_image_tag'    , :git => 'git@github.com:reiz/gravatar_image_tag.git', :branch => 'bugfix/html_escaping'
 
 gem 'net-ldap', '0.11'
+gem 'redcarpet', '3.3.3'
 
 group :development do
   gem 'psych'             , '~> 2.0.5'
@@ -54,7 +55,7 @@ group :test do
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'selenium-webdriver', '~> 2.48.1'
   gem 'vcr'               , '~> 2.9.2',  :require => false
-  gem 'webmock'           , '~> 1.21.0', :require => false
+  gem 'webmock'           , '~> 1.22.0', :require => false
   gem "fakeweb"           , '~> 1.3'
   gem 'database_cleaner'  , '~> 1.4.1'
   gem 'factory_girl'      , '~> 4.5.0'
