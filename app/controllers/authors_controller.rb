@@ -9,6 +9,10 @@ class AuthorsController < ApplicationController
   def show
     name_id = params[:id]
     @author = Author.find_by :name_id => name_id
+    if @author.nil? || @author.empty?
+      render :text => "This page doesn't exist", :status => 404
+      return
+    end
     @products = find_products @author
     @keywords = fill_keywords @products
   end
