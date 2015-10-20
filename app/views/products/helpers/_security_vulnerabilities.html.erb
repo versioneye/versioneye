@@ -30,13 +30,15 @@
           <span class="label_bold">Published</span>: <%= sv.publish_date %><br/>
           <span class="label_bold">Affected versions</span>: <%= sv.affected_versions_string %><br/>
           <span class="label_bold">Patched versions</span>: <%= sv.patched_versions_string %><br/>
-          <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
-          <%= raw( markdown.render sv.description_md ) %><br/>
+          <% if !sv.description_md.to_s.empty? %>
+            <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
+            <%= raw( markdown.render sv.description_md ) %><br/>
+          <% end %>
         </div>
 
       <% elsif @product.language.eql?(Product::A_LANGUAGE_RUBY) %>
         <div class="flash error" style="margin-bottom: 2px;" >
-          <h2><%= sv.summary %></h2>
+          <h2><%= sv.summary.gsub("\n", "") %></h2>
           <div>
             <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
             <%= raw( markdown.render sv.description ) %><br/>

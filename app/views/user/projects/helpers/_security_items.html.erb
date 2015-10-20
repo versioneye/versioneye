@@ -1,30 +1,36 @@
 
-  <% no_security_alerts = true %> 
-  
+  <% no_security_alerts = true %>
+
   <% dependencies.each do |dep| %>
-    <% next if dep.sv_ids.to_a.empty?  %> 
-    <% no_security_alerts = false %> 
-    <div class="alert flash error" style="margin-bottom: 5px;"> 
+    <% next if dep.sv_ids.to_a.empty?  %>
+    <% no_security_alerts = false %>
+    <div class="alert flash error" style="margin-bottom: 5px;">
       <a class="#a dep_link" href="<%= product_version_path( dep.product, dep.version_requested ) %>" >
-        <%= dep.product.name %> : <%= dep.version_requested %> 
+        <%= dep.product.name %> : <%= dep.version_requested %>
       </a>
       <br/><br/>
-      
+
       <% dep.security_vulnerabilities.each do |sv| %>
-        <ul> 
+        <ul >
+          <% if !sv.summary.to_s.empty? && !dep.language.to_s.eql?(Product::A_LANGUAGE_PHP) %>
+            <li><%= sv.summary %></li>
+          <% end %>
           <% sv.links.keys.each do |key| %>
             <% next if key.to_s.empty? %>
             <li><a href="<%= sv.links[key] %>"><%= key %></a></li>
-          <% end %> 
-          <li>Affected versions: <%= sv.affected_versions_string %></li>
+          <% end %>
+          <% if !sv.affected_versions_string.to_s.empty? %>
+            <li>Affected versions: <%= sv.affected_versions_string %></li>
+          <% end %>
         </ul>
+        <hr style="border-bottom: 1px solid white;" />
       <% end %>
 
-    </div>  
+    </div>
   <% end %>
 
-  <% if no_security_alerts == true %> 
+  <% if no_security_alerts == true %>
     <div class="alert falsh success">
-      There are no known security vulnerabilities. 
+      There are no known security vulnerabilities.
     </div>
-  <% end %> 
+  <% end %>
