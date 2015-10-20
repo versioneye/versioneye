@@ -7,6 +7,7 @@
   <% svs.each do |sv| %>
     <% next if sv.nil? %>
     <div class="security_alert" >
+
       <% if @product.language.eql?(Product::A_LANGUAGE_PHP) %>
         <% next if sv.links.nil? || sv.links.empty? %>
         <div class="flash error" style="margin-bottom: 2px;" >
@@ -15,6 +16,7 @@
           <% end %>
           Affected versions: <%= sv.affected_versions_string %>
         </div>
+
       <% elsif @product.language.eql?(Product::A_LANGUAGE_NODEJS) %>
         <div class="flash error" style="margin-bottom: 2px;" >
           <span class="label_bold">Title</span>: <%= sv.summary %><br/>
@@ -31,6 +33,48 @@
           <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
           <%= raw( markdown.render sv.description_md ) %><br/>
         </div>
+
+      <% elsif @product.language.eql?(Product::A_LANGUAGE_RUBY) %>
+        <div class="flash error" style="margin-bottom: 2px;" >
+          <h2><%= sv.summary %></h2>
+          <div>
+            <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
+            <%= raw( markdown.render sv.description ) %><br/>
+          </div>
+          <div>
+            <% if !sv.framework.to_s.empty? %>
+              <span class="label_bold">Framework</span>: <%= sv.framework %><br/>
+            <% end %>
+            <% if !sv.platform.to_s.empty? %>
+              <span class="label_bold">Platform</span>: <%= sv.platform %><br/>
+            <% end %>
+            <% if !sv.osvdb.to_s.empty? %>
+              <span class="label_bold">OSVDB</span>: <%= sv.osvdb %><br/>
+            <% end %>
+            <% if !sv.cve.to_s.empty? %>
+              <span class="label_bold">CVE</span>: <%= sv.cve %><br/>
+            <% end %>
+            <% if !sv.cvss_v2.to_s.empty? %>
+              <span class="label_bold">CVSSv2</span>: <%= sv.cvss_v2 %><br/>
+            <% end %>
+            <% if !sv.links.empty? %>
+              <span class="label_bold">Links</span>:
+              <% sv.links.keys.each do |key| %>
+                <a href="<%= sv.links[key] %>" target="LINK"><%= key %></a><br/>
+              <% end %>
+            <% end %>
+            <% if !sv.publish_date.to_s.empty? %>
+              <span class="label_bold">Published</span>: <%= sv.publish_date %><br/>
+            <% end %>
+            <% if !sv.unaffected_versions_string.to_s.empty? %>
+              <span class="label_bold">Unaffected versions</span>: <%= sv.unaffected_versions_string.to_s.gsub("||", ", ") %><br/>
+            <% end %>
+            <% if !sv.patched_versions_string.to_s.empty? %>
+              <span class="label_bold">Patched versions</span>: <%= sv.patched_versions_string.to_s.gsub("||", ", ") %><br/>
+            <% end %>
+          </div>
+        </div>
+
       <% end %>
     </div>
   <% end %>
