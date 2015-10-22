@@ -1,14 +1,17 @@
 class UsersController < ApplicationController
 
+
   before_filter :authenticate, :only => [:update, :index, :update_permissions]
   before_filter :correct_user, :only => [:update]
   before_filter :admin_user,   :only => [:index, :update_permissions]
   before_filter :set_locale
   before_filter :enterprise_activated?
 
+
   def index
     @users = User.where(:deleted_user => false).asc(:fullname).page(params[:page])
   end
+
 
   def new
     if signed_in?
@@ -27,9 +30,11 @@ class UsersController < ApplicationController
     end
   end
 
+
   def created
     render 'create'
   end
+
 
   def create
     @user = create_user_form params
@@ -66,6 +71,7 @@ class UsersController < ApplicationController
       redirect_to signup_path
     end
   end
+
 
   def create_mobile
     @user = create_user_form params
@@ -114,6 +120,7 @@ class UsersController < ApplicationController
     end
   end
 
+
   def favoritepackages
     @user = User.find_by_username(params[:id])
     return if @user.nil?
@@ -138,6 +145,7 @@ class UsersController < ApplicationController
     end
   end
 
+
   def comments
     @page = "profile"
     @user = User.find_by_username(params[:id])
@@ -149,6 +157,7 @@ class UsersController < ApplicationController
       @count = Versioncomment.count_by_user_id( @user.id )
     end
   end
+
 
   def activate
     verification = params[:verification]
@@ -179,6 +188,7 @@ class UsersController < ApplicationController
     flash.now[:error] = "The activation code could not be found. Maybe your Account is already activated."
   end
 
+
   def users_location
     user = User.find_by_username(params[:id])
     location = user ? user.location : 'Berlin'
@@ -189,8 +199,10 @@ class UsersController < ApplicationController
     end
   end
 
+
   def iforgotmypassword
   end
+
 
   def resetpassword
     email = params[:email]
@@ -204,6 +216,7 @@ class UsersController < ApplicationController
     redirect_to iforgotmypassword_path
   end
 
+
   def show_update_password
     @verification = params[:verification]
     user = User.by_verification(@verification).first
@@ -215,6 +228,7 @@ class UsersController < ApplicationController
     end
     render 'updatepassword'
   end
+
 
   def update_password
     has_failure = false
@@ -248,6 +262,7 @@ class UsersController < ApplicationController
     redirect_to signin_path
   end
 
+
   def autocomplete
     term = params[:term]
     if term.nil?
@@ -256,6 +271,7 @@ class UsersController < ApplicationController
     matched_users = UserService.search(term)
     render json: format_autocompletion( matched_users )
   end
+
 
   # Only for Admins!
   def update_permissions
@@ -277,7 +293,9 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+
   private
+
 
     def create_user_form params
       user = User.new
@@ -288,13 +306,16 @@ class UsersController < ApplicationController
       user
     end
 
+
     def github_source?( source )
       !source.nil? && !source.empty? && source.eql?("github")
     end
 
+
     def bitbucket_source?( source )
       !source.nil? && !source.empty? && source.eql?("bitbucket")
     end
+
 
     def format_autocompletion(matched_users)
       results = []
@@ -313,14 +334,17 @@ class UsersController < ApplicationController
       results
     end
 
+
     def correct_user
       @user = User.find_by_username(params[:id])
       redirect_to(root_path) unless current_user?(@user)
     end
 
+
     def admin_user
       redirect_to(root_path) unless current_user.admin?
     end
+
 
     def check_refer(refer_name, user)
       if refer_name
