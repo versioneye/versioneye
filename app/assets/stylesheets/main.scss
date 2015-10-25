@@ -98,7 +98,7 @@ div.content_no_head {
   font-weight: 200;
   letter-spacing: -1px;
   line-height: 1;
-  color: $text_yellow;
+  color: black;
   text-shadow: 0 1px 0 rgba(0,0,0,.15);
 
 }
@@ -598,7 +598,7 @@ h2 + .row {
   width: 0;
   height: 0;
   vertical-align: top;
-  border-top: 4px solid $text_yellow;
+  border-top: 4px solid black;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
   content: "";
