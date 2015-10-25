@@ -1,22 +1,37 @@
 <% title 'FAQ' %>
 
 <div class="col-md-3 col-xs-0" >
-  .
+  <a href="#why">Why do I need that?</a><br/><br/>
+  <a href="#how_without_github_bitbucket">How can I use VersionEye if my project is not on GitHub/Bitbucket</a><br/><br/>
+  <a href="#scope_issue">Why does VersionEye need writing authorization to my private repositories?</a><br/><br/>
+  <a href="#github_organisations">I can not see my GitHub Organisations!</a><br/><br/>
+  <a href="#trust">Can I trust VersionEye and give them full permission to read my private repositories?</a><br/><br/>
+  <a href="#notifications">How quick do notifications happen?</a><br/><br/>
+  <a href="#migrated_packages">What happens with migrated / moved packages?</a><br/><br/>
 </div>
 
 <div class="col-md-9 col-xs-12" >
 
   <div class="content_header_def" >
-    <h2>Frequently Asked Questions</h2>
+    <h2>
+      Frequently Asked Questions
+    </h2>
   </div>
 
   <div class="content" >
-    <h2>Why do I need that?</h2>
+    <a name="why"></a>
+    <h2>
+      Why do I need that? <a class="octicon-link" href="#why"><i class="fa fa-link"></i></a>
+    </h2>
     <p class="l_faq_section">
       Why are you using a continuous integration system to run your tests? You could start your tests from the command line! Right? The reason why you are using a CI system is automation! And for the same reason you should use a continuous updating tool like VersionEye. VersionEye will never forget to check your project. It will do the job everyday, notify you and it will never get sick or go on vacation. VersionEye is working 24/7 only for you! It keeps you informed and makes you a better developer!
     </p>
 
-    <h2>How can I use VersionEye if my project is not on GitHub/Bitbucket</h2>
+    <a name="how_without_github_bitbucket"></a>
+    <h2>
+      How can I use VersionEye if my project is not on GitHub/Bitbucket
+      <a class="octicon-link" href="#how_without_github_bitbucket"><i class="fa fa-link"></i></a>
+    </h2>
     <p class="l_faq_section">
       The GitHub/Bitbucket integration is by far the most used integration at VersionEye. But there are many other ways to use this service.
     </p>
@@ -39,14 +54,22 @@
       Another way to use VersionEye is through our API. Simply send your project file programatically to our API and we'll send you a JSON object back with all the information you need to know about outdated dependencies. In that way you can integrate our service into your workflow.
     </p>
 
-    <h2>Why does VersionEye need writing authorization to my private repositories?</h2>
+    <a name="scope_issue"></a>
+    <h2>
+      Why does VersionEye need writing authorization to my private repositories?
+      <a class="octicon-link" href="#scope_issue"><i class="fa fa-link"></i></a>
+    </h2>
     <p class="l_faq_section">
       Well, if you sign up with GitHub we only ask for permission to your public repositories. But if you want us to monitor private repositories for you, you have to grant VersionEye access afterwards.<br/>
       Unfortunately, the GitHub API provides only 1 scope to access your private repositories and that includes writing authorization, even though VersionEye doesn't need it. However, we promise you that we don't have any git write operations in our code base. VersionEye will NEVER change your code! We only look in your project root for a project file we can parse. That's all.<br/>
       We hope that GitHub will provide a read-only scope for private repositories in the near future.
     </p>
 
-    <h2>I can not see my GitHub Organisations?</h2>
+    <a name="github_organisations"></a>
+    <h2>
+      I can not see my GitHub Organisations!
+      <a class="octicon-link" href="#github_organisations"><i class="fa fa-link"></i></a>
+    </h2>
     <p class="l_faq_section">
       Through the GitHub API we can only access organisatins where your membership is public. If somebody invites you to an organisation your membership in that organisation is NOT public, by default. Thtat means it will not show up at VersionEye. You have to make your membership in the organisation public to see the repositories of that organisation in VersionEye.
     </p>
@@ -54,14 +77,22 @@
       <%= image_tag "faq/github_orga.png", :style=>"width: 400px;" %>
     </p>
 
-    <h2>Can I trust VersionEye and give them full permission to read my private repositories?</h2>
+    <a name="trust"></a>
+    <h2>
+      Can I trust VersionEye and give them full permission to read my private repositories?
+      <a class="octicon-link" href="#trust"><i class="fa fa-link"></i></a>
+    </h2>
     <p class="l_faq_section">
       Yes! We are based in Germany and you probably already know that the Germans are going crazy for privacy! VersionEye is always respecting your privacy! We are not interested in your code! We don't change it and we don't read it. We are only looking in your project root for a project file we can parse. That's all.<br/>
       Besides, we do this only for the repositories you have choosen. We will never scan ALL your repositories automatically, like some of our competitors. We only scan the repositories and branches you have selected.<br/>
       If you're still suspicious, simply use the file upload, URL feature or the <a href="https://www.versioneye.com/api/">VersionEye API</a> to submit your project files. With those 3 features we don't get any access to your source code. Beside that we have <a href="https://www.versioneye.com/enterprise">VersionEye Enterprise</a>, which you can host on your own hardware.
     </p>
 
-    <h2>How quick do notifications happen?</h2>
+    <a name="notifications"></a>
+    <h2>
+      How quick do notifications happen?
+      <a class="octicon-link" href="#notifications"><i class="fa fa-link"></i></a>
+    </h2>
     <p class="l_faq_section">
       There are 2 kinds of notifications at VersionEye. The <b>follow</b> notifications and the <b>project</b> notifications.
     </p>
@@ -76,11 +107,14 @@
       We try to send out as less emails as possible and as much as necessary!
     </p>
 
-    <h2>What happens with migrated / moved packages?</h2>
+    <a name="migrated_packages"></a>
+    <h2>
+      What happens with migrated / moved packages?
+      <a class="octicon-link" href="#migrated_packages"><i class="fa fa-link"></i></a>
+    </h2>
     <p class="l_faq_section">
       Sometimes a software library is changing his namespace. That is specially a common case in the Java community. For example <a href="https://www.versioneye.com/java/pdfbox:pdfbox/0.7.3">pdfbox:pdfbox:0.7.3</a> moved to <a href="https://www.versioneye.com/java/org.apache.pdfbox:pdfbox/1.8.9">org.apache.pdfbox:pdfbox:1.8.9</a>. Indeed it's the same project. Currently VersionEye is not handling this problem. Might be that in future we make a connection between those migrated libraries, but right now not.
     </p>
-
 
   </div>
 
