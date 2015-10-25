@@ -1,0 +1,114 @@
+<% title 'Documentation' %>
+
+<div class="col-md-3 col-xs-0" >
+  <a href="#setting_up_github">Setting up a GitHub project</a><br/><br/>
+  <a href="#setting_up_bitbucket">Setting up a Bitbucket project</a><br/><br/>
+  <a href="#setting_up_complex_maven_projects">Setting up a complex Maven project</a><br/><br/>
+  <a href="#further_questions">Further Questions</a><br/><br/>
+</div>
+
+<div class="col-md-9 col-xs-12" >
+
+  <div class="content_header_def" >
+    <h2>
+      Documentation
+    </h2>
+  </div>
+
+  <div class="content" >
+    <a name="setting_up_github"></a>
+    <h2>
+      Setting up a GitHub project <a class="octicon-link" href="#setting_up_github"><i class="fa fa-link"></i></a>
+    </h2>
+    <p class="l_faq_section">
+      There are different ways to setup &amp; monitor a project with VersionEye. But
+      the most comfortable way is to use the GitHub integration. Simply
+      <a href="/signin">login to VersionEye</a>
+      with your existing GitHub account and naviate to
+      <a href="/user/projects/github_repositories">"Projects -> Create from GitHub"</a>.
+      Here you will see all your GitHub repositories listed. You can filter
+      down the list by typing in the name of the desired repository.
+
+      <br/>
+      <br/>
+      <%= link_to image_tag("docu/github_repos.png", :style => "width: 100%;"), '/assets/docu/github_repos.png' %>
+      <br/>
+      <br/>
+
+      Simply click on the repository name you would like to monitor.
+      VersionEye will show you all branches and supported project files in that repository.
+      Like in this example below.
+
+      <br/>
+      <br/>
+      <%= link_to image_tag("docu/github_files.png", :style => "width: 100%;"), '/assets/docu/github_files.png' %>
+      <br/>
+      <br/>
+
+      Simply click on the switch directly next to the file you would like to monitor with VersionEye.
+      If you click on a Gemfile, VersionEye will do a lookup for the corresponding Gemfile.lock
+      in that branch and fetch that file as well. Both files will be merged into the same project view.
+      If everything worked out you will see somthing similar to this one.
+
+      <br/>
+      <br/>
+      <%= link_to image_tag("docu/github_files_done.png", :style => "width: 100%;"), '/assets/docu/github_files_done.png' %>
+      <br/>
+      <br/>
+
+      Now you can click on the file name to see more details about the project.
+
+      <br/>
+      <br/>
+      <%= link_to image_tag("docu/ve_project_versions.png", :style => "width: 100%;"), '/assets/docu/ve_project_versions.png' %>
+      <br/>
+      <br/>
+
+      In the example above we can see that 2 dependencies in the Gemfile are out-dated.
+      Above the versions table we can switch to the Gemfile.lock or to a summary view,
+      which shows all the out-dated dependencies combined from both files. Beside the
+      Versions tab there are tabs for Licenses and Security. In the top of the page we
+      can see that 14 out of 60 dependencies are out-dated, 1 has a known security
+      vulnerability and there are 0 license violations. To see more details about the
+      licenses and security issues please click on the corresponding tab.<br/>
+      <br/>
+      By default VersionEye will check your project once a day and send you an email notification
+      if there are out-dated dependencies, license violations or security vulnerabilities for your
+      dependencies.
+    </p>
+
+
+    <a name="setting_up_bitbucket"></a>
+    <h2>
+      Setting up a Bitbucket project <a class="octicon-link" href="#setting_up_bitbucket"><i class="fa fa-link"></i></a>
+    </h2>
+    <p class="l_faq_section">
+      Works the same way as for GitHub.
+    </p>
+
+
+    <a name="setting_up_complex_maven_projects"></a>
+    <h2>
+      Setting up a complex Maven project <a class="octicon-link" href="#setting_up_complex_maven_projects"><i class="fa fa-link"></i></a>
+    </h2>
+    <p class="l_faq_section">
+      <a href="https://maven.apache.org/">Maven</a> is the default build tool for Java projects.
+      Big Maven projects can become complex and usually their dependencies are distributed over
+      several XML files. Currently VersionEye does not resolves this file dependencies via the
+      GitHub/Bitbucket API. Please use the <a href="https://github.com/versioneye/versioneye_maven_plugin">VersionEye Maven Plugin</a>
+      for Maven projects which has more than 1 pom.xml file.
+    </p>
+
+
+    <a name="further_questions"></a>
+    <h2>
+      Futher Questions <a class="octicon-link" href="#further_questions"><i class="fa fa-link"></i></a>
+    </h2>
+    <p class="l_faq_section">
+      You have questions? Please take a look to the <a href="/faq">FAQ</a> page. If you still have questions
+      contact us on <a href="https://twitter.com/versioneye">Twitter</a> or write an email to "support [at] versioneye.com".
+    </p>
+
+  </div>
+
+</div>

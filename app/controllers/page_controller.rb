@@ -88,6 +88,9 @@ class PageController < ApplicationController
   def faq
   end
 
+  def documentation
+  end
+
   def about
   end
 

@@ -299,6 +299,7 @@ Versioneye::Application.routes.draw do
   get   '/about'                ,:to => 'page#about'
   get   '/impressum'            ,:to => 'page#impressum'
   get   '/faq'                  ,:to => 'page#faq'
+  get   '/documentation'        ,:to => 'page#documentation'
   get   '/imprint'              ,:to => 'page#imprint'
   get   '/nutzungsbedingungen'  ,:to => 'page#nutzungsbedingungen'
   get   '/terms'                ,:to => 'page#terms'
