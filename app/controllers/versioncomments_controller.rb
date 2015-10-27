@@ -17,7 +17,7 @@ class VersioncommentsController < ApplicationController
     attach_version(@product, version)
     if @versioncomment.save
       flash[:success] = 'Comment saved!'
-      send_comment_mails(@product, user, @versioncomment)
+      send_to_rob_only(@product, user, @versioncomment)
     else
       flash[:error] = 'Something went wrong'
     end
@@ -38,16 +38,22 @@ class VersioncommentsController < ApplicationController
 
   private
 
-    def send_comment_mails(product, user, comment)
-      return nil if product.users.nil? || product.users.empty?
-      send_to_users = Array.new
-      product.users.each do |follower|
-        if !follower.id.to_s.eql?(user.id.to_s) && follower.deleted_user == false
-          VersioncommentMailer.versioncomment_email(product, follower, user, comment).deliver
-          send_to_users << follower
-        end
-      end
-      send_to_users
+    # def send_comment_mails(product, user, comment)
+    #   return nil if product.users.nil? || product.users.empty?
+
+    #   send_to_users = Array.new
+    #   product.users.each do |follower|
+    #     if !follower.id.to_s.eql?(user.id.to_s) && follower.deleted_user == false
+    #       VersioncommentMailer.versioncomment_email(product, follower, user, comment).deliver
+    #       send_to_users << follower
+    #     end
+    #   end
+    #   send_to_users
+    # end
+
+    def send_to_rob_only(product, user, comment)
+      rob = User.find_by_username "reiz"
+      VersioncommentMailer.versioncomment_email(product, rob, user, comment).deliver
     end
 
 end
