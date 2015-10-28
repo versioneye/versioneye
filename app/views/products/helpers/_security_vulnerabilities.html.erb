@@ -11,8 +11,11 @@
       <% if @product.language.eql?(Product::A_LANGUAGE_PHP) %>
         <% next if sv.links.nil? || sv.links.empty? %>
         <div class="flash error" style="margin-bottom: 2px;" >
+          <% if !sv.summary.to_s.empty? %>
+            <span class="label_bold"><%= sv.summary %></span><br/>
+          <% end %>
           <% sv.links.keys.each do |key| %>
-            <a href="<%= sv.links[key] %>"><%= key %></a><br/>
+            <a href="<%= sv.links[key] %>"><%= sv.links[key] %></a><br/>
           <% end %>
           Affected versions: <%= sv.affected_versions_string %>
         </div>
