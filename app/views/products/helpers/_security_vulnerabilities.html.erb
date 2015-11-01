@@ -33,9 +33,9 @@
           <span class="label_bold">Published</span>: <%= sv.publish_date %><br/>
           <span class="label_bold">Affected versions</span>: <%= sv.affected_versions_string %><br/>
           <span class="label_bold">Patched versions</span>: <%= sv.patched_versions_string %><br/>
-          <% if !sv.description_md.to_s.empty? %>
+          <% if !sv.description.to_s.empty? %>
             <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
-            <%= raw( markdown.render sv.description_md ) %><br/>
+            <%= raw( markdown.render sv.description ) %><br/>
           <% end %>
         </div>
 
