@@ -145,6 +145,8 @@
           </li>
           <% if @project.language.eql?(Product::A_LANGUAGE_PHP) ||
                 @project.language.eql?(Product::A_LANGUAGE_NODEJS) ||
+                @project.language.eql?(Product::A_LANGUAGE_JAVA) ||
+                @project.language.eql?(Product::A_LANGUAGE_PYTHON) ||
                 @project.language.eql?(Product::A_LANGUAGE_RUBY) %>
             <li>
               <a data-target="#security" data-toggle="tab" onclick="page_view('ga_project_security')"><i class = "fa fa-tasks">&nbsp;</i>Security</a>
@@ -184,6 +186,8 @@
 
           <% if @project.language.eql?(Product::A_LANGUAGE_PHP) ||
                 @project.language.eql?(Product::A_LANGUAGE_NODEJS) ||
+                @project.language.eql?(Product::A_LANGUAGE_JAVA) ||
+                @project.language.eql?(Product::A_LANGUAGE_PYTHON) ||
                 @project.language.eql?(Product::A_LANGUAGE_RUBY) %>
             <div id="security" class="tab-pane">
 

@@ -39,6 +39,31 @@
           <% end %>
         </div>
 
+      <% elsif @product.language.eql?(Product::A_LANGUAGE_JAVA) || @product.language.eql?(Product::A_LANGUAGE_PYTHON) %>
+        <div class="flash error" style="margin-bottom: 2px;" >
+          <h2><%= sv.summary %></h2>
+          <% if !sv.description.to_s.empty? %>
+            <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
+            <%= raw( markdown.render sv.description ) %><br/>
+          <% end %>
+          <% if !sv.links.empty? %>
+            <% sv.links.keys.each do |key| %>
+              <a href="<%= sv.links[key] %>" target="LINK"><%= key %></a><br/>
+            <% end %>
+          <% end %>
+          <br/>
+          <% if !sv.cve.to_s.empty? %>
+            <span class="label_bold">CVE</span>: <%= sv.cve %><br/>
+          <% end %>
+          <% if !sv.cvss_v2.to_s.empty? %>
+            <span class="label_bold">CVSSv2</span>: <%= sv.cvss_v2 %><br/>
+          <% end %>
+          <span class="label_bold">Affected versions</span>: <%= sv.affected_versions_string %><br/>
+          <% if !sv.patched_versions_string.to_s.empty? %>
+            <span class="label_bold">Patched versions</span>: <%= sv.patched_versions_string %><br/>
+          <% end %>
+        </div>
+
       <% elsif @product.language.eql?(Product::A_LANGUAGE_RUBY) %>
         <div class="flash error" style="margin-bottom: 2px;" >
           <h2><%= sv.summary.gsub("\n", "") %></h2>
@@ -65,7 +90,7 @@
             <% if !sv.links.empty? %>
               <span class="label_bold">Links</span>:
               <% sv.links.keys.each do |key| %>
-                <a href="<%= sv.links[key] %>" target="LINK"><%= key %></a><br/>
+                <a href="<%= sv.links[key] %>" target="LINK"><%= sv.links[key] %></a><br/>
               <% end %>
             <% end %>
             <% if !sv.publish_date.to_s.empty? %>
