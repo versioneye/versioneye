@@ -66,7 +66,7 @@
 
       <% elsif @product.language.eql?(Product::A_LANGUAGE_RUBY) %>
         <div class="flash error" style="margin-bottom: 2px;" >
-          <h2><%= sv.summary.gsub("\n", "") %></h2>
+          <h2><%= sv.summary.to_s.gsub("\n", "") %></h2>
           <div>
             <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
             <%= raw( markdown.render sv.description ) %><br/>
