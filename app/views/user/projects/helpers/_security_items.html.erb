@@ -17,7 +17,7 @@
           <% end %>
           <% sv.links.keys.each do |key| %>
             <% next if key.to_s.empty? %>
-            <li><a href="<%= sv.links[key] %>"><%= key %></a></li>
+            <li><a href="<%= sv.links[key] %>"><%= sv.links[key] %></a></li>
           <% end %>
           <% if !sv.affected_versions_string.to_s.empty? %>
             <li>Affected versions: <%= sv.affected_versions_string %></li>
