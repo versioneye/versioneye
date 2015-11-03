@@ -27,7 +27,7 @@
           <% if !sv.links.empty? %>
             <span class="label_bold">Links</span>:
             <% sv.links.keys.each do |key| %>
-              <a href="<%= sv.links[key] %>" target="CVE"><%= key %></a><br/>
+              <a href="<%= sv.links[key] %>" target="CVE"><%= sv.links[key] %></a><br/>
             <% end %>
           <% end %>
           <span class="label_bold">Published</span>: <%= sv.publish_date %><br/>
@@ -48,7 +48,7 @@
           <% end %>
           <% if !sv.links.empty? %>
             <% sv.links.keys.each do |key| %>
-              <a href="<%= sv.links[key] %>" target="LINK"><%= key %></a><br/>
+              <a href="<%= sv.links[key] %>" target="LINK"><%= sv.links[key] %></a><br/>
             <% end %>
           <% end %>
           <br/>
