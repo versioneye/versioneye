@@ -85,7 +85,10 @@ class User::ProjectsController < ApplicationController
     flatten      = true if flatten.to_s.empty?
     date_string  = DateTime.now.strftime("%d_%m_%Y")
     project_name = current_user.username
-    pdf = LwlPdfService.process_all current_user.projects, flatten
+    projects = current_user.projects
+    lwl_default_id = LicenseWhitelistService.fetch_default_id current_user
+    lwl = LicenseWhitelist.find lwl_default_id
+    pdf = LwlPdfService.process_all projects, lwl, nil, flatten
     send_data pdf, type: 'application/pdf', filename: "#{date_string}_#{project_name}.pdf"
   rescue => e
     logger.error e.message
