@@ -217,6 +217,8 @@ Versioneye::Application.routes.draw do
 
   namespace :user do
 
+    get  'projects/lwl_export_all'
+
     resources :projects do
       member do
         get  'status'

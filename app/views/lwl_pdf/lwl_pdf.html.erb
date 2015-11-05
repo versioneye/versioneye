@@ -93,7 +93,7 @@
                 <tr>
                   <td class="left"> <%= key.to_s %> </td>
                   <td class="left">
-                    <%= dep[:component] %>
+                    (<%= dep[:language] %>) <%= dep[:component] %>
                     <% if dep[:group_id] %>
                       <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
                     <% end %>
@@ -138,7 +138,7 @@
                     <tr>
                       <td class="left"> <%= key.to_s %> </td>
                       <td class="left">
-                        <%= dep[:component] %>
+                        (<%= dep[:language] %>) <%= dep[:component] %>
                         <% if dep[:group_id] %>
                           <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
                         <% end %>
