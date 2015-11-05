@@ -80,6 +80,21 @@ class User::ProjectsController < ApplicationController
   end
 
 
+  def lwl_export_all
+    flatten      = params[:flatten]
+    flatten      = true if flatten.to_s.empty?
+    date_string  = DateTime.now.strftime("%d_%m_%Y")
+    project_name = current_user.username
+    pdf = LwlPdfService.process_all current_user.projects, flatten
+    send_data pdf, type: 'application/pdf', filename: "#{date_string}_#{project_name}.pdf"
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    flash[:error] = "ERROR: #{e.message}"
+    redirect_to :back
+  end
+
+
   def lwl_export
     id      = params[:id]
     project = ProjectService.find( id )
