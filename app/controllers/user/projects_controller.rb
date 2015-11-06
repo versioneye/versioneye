@@ -81,12 +81,15 @@ class User::ProjectsController < ApplicationController
 
 
   def lwl_export_all
+    username     = params[:username]
     flatten      = params[:flatten]
     flatten      = true if flatten.to_s.empty?
     date_string  = DateTime.now.strftime("%d_%m_%Y")
-    project_name = current_user.username
-    projects = current_user.projects
-    lwl_default_id = LicenseWhitelistService.fetch_default_id current_user
+    user = User.find_by_username username
+    user = current_user if user.nil?
+    project_name = user.username
+    projects = user.projects
+    lwl_default_id = LicenseWhitelistService.fetch_default_id user
     lwl = LicenseWhitelist.find lwl_default_id
     pdf = LwlPdfService.process_all projects, lwl, nil, flatten
     send_data pdf, type: 'application/pdf', filename: "#{date_string}_#{project_name}.pdf"
