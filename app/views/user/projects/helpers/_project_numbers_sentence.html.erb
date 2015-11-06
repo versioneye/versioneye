@@ -7,33 +7,33 @@
   <%= project[:out_number_sum] %> outdated.
 </span>
 
-<% if project[:muted_dependencies_count].to_i > 0 %> 
+<% if project[:muted_dependencies_count].to_i > 0 %>
   <span style="color: orange; font-size: 14px;" >
     <%= project[:muted_dependencies_count] %> muted.
   </span>
-<% end %> 
+<% end %>
 
-<% if !project.is_a?(Hash) && project.muted_dependencies_count.to_i > 0 %> 
+<% if !project.is_a?(Hash) && project.muted_dependencies_count.to_i > 0 %>
   <span style="color: orange; font-size: 14px;" >
     <%= project.muted_dependencies_count %> muted.
   </span>
-<% end %> 
+<% end %>
 
 <span style="color: <%= unknown_color(project)%>; font-size: 14px;" >
   <%= project[:unknown_number_sum] %> unknown.
-</span> 
+</span>
 
-<% if project[:sv_count_sum].to_i > 0 %> 
+<% if project[:sv_count_sum].to_i > 0 %>
   <br/>
   <span style="font-size: 14px; font-weight: bold; color: red;">
     <%= pluralize(project[:sv_count_sum], "known security vulnerability") %>.
-  </span>  
-<% end %> 
+  </span>
+<% end %>
 
 <% show_license_number ||= nil %>
-<% if show_license_number && show_license_number == true && project.license_whitelist_id %> 
+<% if show_license_number && show_license_number == true && project.license_whitelist_id %>
   <br/>
   <span style="color: <%= licenses_red_color(project) %>; font-size: 14px; font-weight: bold;" >
     <%= pluralize( project[:licenses_red_sum], "license whitelist violation") %>.
   </span>
-<% end %> 
+<% end %>
