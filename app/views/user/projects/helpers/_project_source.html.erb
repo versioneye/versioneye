@@ -8,7 +8,7 @@
       This file was parsed:
       <a href=<%= path_to_github_file project %> target="_GITHUB" >
         <%= project.filename %>
-      </a>
+      </a>.
     <% elsif project.source.eql? Project::A_SOURCE_BITBUCKET %>
       This is a project from
       <a href=<%= path_to_bitbucket_branch project %> target="_BITBUCKET">BitBucket <%= project.scm_branch %> branch</a>.
@@ -17,18 +17,18 @@
         This file was parsed:
         <a href=<%= path_to_bitbucket_file project %> target="_BITBUCKET" >
           <%= project.filename %>
-        </a>
+        </a>.
       <% end %>
     <% elsif project.source.eql? Project::A_SOURCE_STASH %>
       Stash project from <a href=<%= path_to_stash_file( project ) %> target="_STASH" ><%= project.filename %></a> in branch <b><%= project.scm_branch %></b>
       from the repository <b><%= project.scm_fullname %></b>.
-
     <% elsif project.source.eql? "url" %>
       This is a project from
       <a href="<%= project.url%>" target="_URL">URL</a>.
     <% else %>
-      This is a project from file upload. Last updated at <span>"<%= project.updated_at.strftime("%b %d, %Y - %H:%M") %>"</span>.
+      This is a project from file upload.
       <% if project.respond_to?(:version) && !project.version.to_s.empty? %>
         (Version: <%= project.version %>)
       <% end %>
     <% end %>
+    Last updated at <span>"<%= project.updated_at.strftime("%b %d, %Y - %H:%M") %>"</span>.
