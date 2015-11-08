@@ -6,7 +6,7 @@ gem 'jquery-rails'         , '~> 4.0.4'
 gem 'execjs'               , '~> 2.6.0'
 gem 'oauth'                , '~> 0.4.7'
 gem 'twitter_oauth'        , '~> 0.4.94'
-gem 'puma'                 , '~> 2.14.0'
+gem 'puma'                 , '~> 2.15.3'
 gem 'htmlentities'         , '~> 4.3.1'
 gem 'whenever'             , '~> 0.9.2'
 gem 'bourbon'              , '~> 4.2.0'
@@ -57,7 +57,7 @@ group :test do
   gem 'vcr'               , '~> 2.9.2',  :require => false
   gem 'webmock'           , '~> 1.22.0', :require => false
   gem "fakeweb"           , '~> 1.3'
-  gem 'database_cleaner'  , '~> 1.4.1'
+  gem 'database_cleaner'  , '~> 1.5.1'
   gem 'factory_girl'      , '~> 4.5.0'
   gem 'factory_girl_rails', '~> 4.5.0'
 end
