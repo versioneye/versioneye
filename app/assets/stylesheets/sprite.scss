@@ -4,6 +4,7 @@
 $sprite_url: "/assets/Sprite.png";
 $c_url: "/assets/c.png";
 $biicode_url: "/assets/biicode.png";
+$chef_url: "/assets/chef.png";
 
 @mixin sprite($x, $y, $width, $height){
   background: url($sprite_url) $x $y no-repeat;
@@ -22,6 +23,14 @@ $biicode_url: "/assets/biicode.png";
 
 @mixin biicode_icon($x, $y, $width, $height){
   background: url($biicode_url) $x $y no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  width: $width;
+  height: $height;
+}
+
+@mixin chef_icon($x, $y, $width, $height){
+  background: url($chef_url) $x $y no-repeat;
   display: inline-block;
   vertical-align: middle;
   width: $width;
@@ -49,6 +58,12 @@ $biicode_url: "/assets/biicode.png";
   &.on { @include biicode_icon($x2, $y2, $width, $height);}
   &:hover { @include biicode_icon($x2, $y2, $width, $height);}
   &:active { @include biicode_icon($x2, $y2, $width, $height);}
+}
+@mixin chef_toggle($x1, $y1, $x2, $y2, $width, $height){
+  @include chef_icon($x1, $y1, $width, $height);
+  &.on { @include chef_icon($x2, $y2, $width, $height);}
+  &:hover { @include chef_icon($x2, $y2, $width, $height);}
+  &:active { @include chef_icon($x2, $y2, $width, $height);}
 }
 
 @mixin sprite_btn($x, $y, $height){
@@ -164,6 +179,13 @@ $biicode_url: "/assets/biicode.png";
 
 
 .icon_biicode_small_container{
+  margin: 0;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+}
+
+.icon_chef_small_container{
   margin: 0;
   width: 30px;
   height: 30px;
@@ -318,6 +340,23 @@ $biicode_url: "/assets/biicode.png";
 }
 .icon_biicode.small.on{
   background: url(/assets/language/biicode_small.png) no-repeat;
+  margin: 0;
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+}
+
+.icon_chef {
+  @include chef_toggle(0px, 0px, 0px, -56px, 56px, 56px);
+}
+.icon_chef_big_container{
+  padding: 0;
+  width: 56px;
+  height: 56px;
+  display: inline-block;
+}
+.icon_chef.small.on{
+  background: url(/assets/language/chef_small.png) no-repeat;
   margin: 0;
   width: 25px;
   height: 25px;
