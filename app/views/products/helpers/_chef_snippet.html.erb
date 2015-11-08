@@ -1,0 +1,78 @@
+
+<a name="code_snippet"></a>
+<h2 class="section_header">
+  Chef <a class="octicon-link" href="#code_snippet"><i class="fa fa-link"></i></a>
+</h2>
+<div class = "well" >
+
+    <h5 class="dep_header">Berkshelf</h5>
+    <div style="margin-bottom: 5px;">
+      <div style="margin-bottom: 0; overflow: auto;" >
+        <pre class="prettyprint"><code>cookbook '<%= @product.name %>', '~> <%= @product.version %>'</code></pre>
+      </div>
+    </div>
+
+    <h5 class="dep_header">Librarian</h5>
+    <div style="margin-bottom: 5px;">
+      <div style="margin-bottom: 0; overflow: auto;" >
+        <pre class="prettyprint"><code>cookbook '<%= @product.name %>', '~> <%= @product.version %>'</code></pre>
+      </div>
+    </div>
+
+    <h5 class="dep_header">Knife</h5>
+    <div style="margin-bottom: 5px;">
+      <div style="margin-bottom: 0; overflow: auto;" >
+        <pre class="prettyprint"><code>knife cookbook site install <%= @product.name %>
+knife cookbook site download <%= @product.name %></code></pre>
+      </div>
+    </div>
+
+    <div >
+      <div style="margin-bottom: 0;">
+        <%= render "products/helpers/notify_me" %>
+      </div>
+    </div>
+
+
+  <% downloads = Versionarchive.archives( @product.language, @product.prod_key, @version.to_s ) %>
+  <% if !downloads.nil? && !downloads.empty? %>
+
+    <div >
+      <hr/>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2">
+        <h5 class="dep_header" style="margin-top: 0;">
+          <%= pluralize(downloads.count, "Download") %>
+        </h5>
+      </div>
+      <div class="col-md-9" >
+        <ul class="download_list" >
+        <% downloads.each do |download|  %>
+          <li >
+            <a title = "Download here." href="<%= download.link %>"><%= download.name %></a>
+          </li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+
+  <% end %>
+
+  <% if @product.repositories && @product.repositories.count > 0  %>
+    <div >
+      <hr/>
+    </div>
+
+    <h5 class="dep_header" style="margin-top: 0;">
+      <%= pluralize(@product.repositories.count, "Repository") %>
+    </h5>
+
+    <% @product.repositories.each do |repo| %>
+      <div><a href="<%= repo[:src] %>" target="new" ><%= repo[:src] %></a> </div>
+    <% end %>
+
+  <% end %>
+
+</div>

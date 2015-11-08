@@ -86,11 +86,11 @@
     <h5 class="dep_header" style="margin-top: 0;">
       <%= pluralize(@product.repositories.count, "Repository") %>
     </h5>
-  
+
     <% @product.repositories.each do |repo| %>
       <div><a href="<%= repo[:src] %>" target="new" ><%= repo[:src] %></a> </div>
     <% end %>
-          
+
   <% end %>
 
 </div>
