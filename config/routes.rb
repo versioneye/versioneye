@@ -101,6 +101,13 @@ Versioneye::Application.routes.draw do
     post 'emailsettings'       , :to => 'emailsettings#update'
     post 'test_email'          , :to => 'emailsettings#test_email'
 
+    get  'teams'               , :to => 'teams#index'
+    post 'teams'               , :to => 'teams#create'
+    get  'teams/:id'           , :to => 'teams#show'   , :as => 'teams_show'
+    post 'teams/:id/add'       , :to => 'teams#add'    , :as => 'teams_add'
+    post 'teams/:id/destroy'   , :to => 'teams#destroy', :as => 'teams_destroy'
+    post 'teams/:id/remove/:username', :to => 'teams#remove', :as => 'teams_remove'
+
     get  'license_whitelists'              , :to => 'license_whitelists#index'
     get  'license_whitelists/autocomplete' , :to => 'license_whitelists#autocomplete'
     get  'license_whitelists/:name'        , :to => 'license_whitelists#show'   , :as => 'license_whitelists_show', :constraints => { :name => /[^\/]+/ }

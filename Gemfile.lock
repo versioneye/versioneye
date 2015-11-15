@@ -5,10 +5,8 @@ GIT
   specs:
     gravatar_image_tag (1.2.0)
 
-GIT
-  remote: git@github.com:versioneye/versioneye-core.git
-  revision: fa7a9b1de63d29471a3ffc9fcf1d6e6b2429a5e3
-  tag: v7.33.0
+PATH
+  remote: ~/workspace/versioneye/versioneye-core
   specs:
     versioneye-core (7.33.0)
       actionmailer (~> 4.2.2)
@@ -100,7 +98,7 @@ GEM
     capybara-firebug (2.1.0)
       capybara (>= 1.0, < 3.0)
       selenium-webdriver
-    childprocess (0.5.7)
+    childprocess (0.5.8)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
     cocoapods-core (0.39.0)
