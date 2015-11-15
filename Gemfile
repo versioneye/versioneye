@@ -4,7 +4,7 @@ gem 'bundler'              , '~> 1.10.5'
 gem 'rails'                , '~> 4.2.2'
 gem 'jquery-rails'         , '~> 4.0.4'
 gem 'execjs'               , '~> 2.6.0'
-gem 'therubyracer'         , '~> 0.12.0'
+gem 'therubyracer'         , '~> 0.12.0', :platforms => :ruby
 gem 'oauth'                , '~> 0.4.7'
 gem 'twitter_oauth'        , '~> 0.4.94'
 gem 'puma'                 , '~> 2.15.3'
