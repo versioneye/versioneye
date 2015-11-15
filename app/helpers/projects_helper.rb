@@ -63,12 +63,11 @@ module ProjectsHelper
 
   def project_member?(project, user)
     return false if project.nil?
-    return false if project.user.nil?
     return false if user.nil?
 
     return true if user.admin == true
     return true if project.user.ids.eql?( user.ids )
-    return true if !project.collaborator( user ).nil?
+    return true if project.is_collaborator?( user )
 
     return false
   end

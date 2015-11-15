@@ -1,3 +1,111 @@
+"MIT"
+"Apache License 1.0"
+"Apache License 2.0"
+"Apache License 1.1"
+"GNU Lesser General Public License v2.1 only"
+"GNU Lesser General Public License v3.0 only"
+"Eclipse Public License 1.0"
+"Mozilla Public License 1.0"
+"Mozilla Public License 2.0"
+"Mozilla Public License 2.0"
+"Do What The F*ck You Want To Public License"
+"The Unlicense"
+"BSD"
+"New BSD"
+"\"BSD 2-clause \"\"Simplified\"\" License\""
+"BSD 2-clause FreeBSD License"
+"\"BSD 3-clause \"\"New\"\" or \"\"Revised\"\" License\""
+"JSON License"
+"Common Public License 1.0"
+"Common Public Attribution License 1.0"
+"zlib License"
+"zlib/libpng License with Acknowledgement"
+"ISC License"
+LGPL-2.1+
+
+"GNU General Public License v2.0 only"
+"GNU General Public License v3.0 only"
+
+
+"Common Development and Distribution License 1.0"
+
+"Boost Software License 1.0"
+"Code Project Open License 1.02"
+"IBM Public License v1.0"
+"Netscape Public License v1.1"
+"Creative Commons Zero v1.0 Universal"
+"Sax Public Domain Notice"
+"Common Development and Distribution License 1.1"
+
+"CDDL+GPL"
+"CDDL+GPLv2 with classpath exception"
+"CDDL + GPLv2 with classpath exception"
+"CDDL-1.1"
+"SAP DEVELOPER LICENSE AGREEMENT"
+
+
+
+Ruby:newrelic:1.23.0
+Ruby:rails_serve_static_assets:0.0.2
+Objective-C:GoogleAnalytics-iOS-SDK:3.12
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+  <feed xml:base="https://www.nuget.org/api/v2/" xmlns="http://www.w3.org/2005/Atom" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <id>https://www.nuget.org/api/v2/Packages</id>
+    <title type="text">Packages</title>
+    <updated>2015-10-15T14:01:06Z</updated>
+    <link rel="self" title="Packages" href="Packages" />
+    <entry>
+      <id>https://www.nuget.org/api/v2/Packages(Id='_Atrico.Lib.CommonAssemblyInfo',Version='1.0.0.0')</id>
+      <category term="NuGetGallery.V2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+      <link rel="edit" title="V2FeedPackage" href="Packages(Id='_Atrico.Lib.CommonAssemblyInfo',Version='1.0.0.0')" />
+      <title type="text">_Atrico.Lib.CommonAssemblyInfo</title>
+      <summary type="text">Common assembly info for Atrico software libraries</summary>
+      <updated>2015-08-11T13:24:03Z</updated>
+      <author>
+        <name>Rob Rimmer</name>
+      </author>
+      <link rel="edit-media" title="V2FeedPackage" href="Packages(Id='_Atrico.Lib.CommonAssemblyInfo',Version='1.0.0.0')/$value" />
+      <content type="application/zip" src="https://www.nuget.org/api/v2/package/_Atrico.Lib.CommonAssemblyInfo/1.0.0" />
+      <m:properties>
+        <d:Version>1.0.0.0</d:Version>
+        <d:NormalizedVersion>1.0.0</d:NormalizedVersion>
+        <d:Copyright>Copyright � Atrico Software 2014</d:Copyright>
+        <d:Created m:type="Edm.DateTime">2014-07-31T19:23:01.403</d:Created>
+        <d:Dependencies></d:Dependencies>
+        <d:Description>Common assembly info for Atrico software libraries</d:Description>
+        <d:DownloadCount m:type="Edm.Int32">1435</d:DownloadCount>
+        <d:GalleryDetailsUrl>https://www.nuget.org/packages/_Atrico.Lib.CommonAssemblyInfo/1.0.0</d:GalleryDetailsUrl>
+        <d:IconUrl>https://avatars0.githubusercontent.com/u/6891048</d:IconUrl>
+        <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+        <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+        <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+        <d:Language m:null="true" />
+        <d:Published m:type="Edm.DateTime">2014-07-31T19:23:01.403</d:Published>
+        <d:PackageHash>zeKXNti2MPxX95suO7kYX70vLCD4Izy5Ce6XzGauAKz8KfZdENbBE9PJgni+PNXAU07WrGwxeB7tQ3paHBYN+g==</d:PackageHash>
+        <d:PackageHashAlgorithm>SHA512</d:PackageHashAlgorithm>
+        <d:PackageSize m:type="Edm.Int64">3425</d:PackageSize>
+        <d:ProjectUrl m:null="true" />
+        <d:ReportAbuseUrl>https://www.nuget.org/package/ReportAbuse/_Atrico.Lib.CommonAssemblyInfo/1.0.0</d:ReportAbuseUrl>
+        <d:ReleaseNotes>1.0.0.0: Initial release</d:ReleaseNotes>
+        <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+        <d:Tags m:null="true" />
+        <d:Title>Atrico.Lib.CommonAssemblyInfo</d:Title>
+        <d:VersionDownloadCount m:type="Edm.Int32">817</d:VersionDownloadCount>
+        <d:MinClientVersion m:null="true" />
+        <d:LastEdited m:type="Edm.DateTime" m:null="true" />
+        <d:LicenseUrl m:null="true" />
+        <d:LicenseNames m:null="true" />
+        <d:LicenseReportUrl m:null="true" />
+      </m:properties>
+    </entry>
+
+
+
+
 
 '<div><img src="/assets/language/{{ language }}.png" alt="{{ language }}" class = "pull-left" style = "height: 2.0em;" /><p><a href = "{{ url }}"><strong>{{ name }}</strong></a> - {{ description }}</p></div>'
 
@@ -5,20 +113,20 @@
 org.raml/raml-parser
 
 
-Stripe::InvalidRequestError (This customer has no attached payment source):
-  app/controllers/settings/plan_controller.rb:37:in `update_plan'
-  app/controllers/settings/plan_controller.rb:24:in `update'
+https://bitbucket.org/api/1.0/oauth/request_token?oauth_version=1.0&oauth_nonce=7f2325b3c36bd49afa0a33044d7c6956&oauth_timestamp=1366243208&oauth_consumer_key=ejbsLekUeyFc58NG6q&oauth_callback=http%3A%2F%2Flocal%3Fdump&oauth_signature_method=HMAC-SHA1&oauth_signature=qZyTwVA48RzmtCHvN9mYWmlmSVU%3D
+
+
+https://github.com/login/oauth/authorize?client_id=50fb47103b8a3f03b2cd&scope=repo,user:email
 
 
 
-
-MongoDB on Docker 
-Deployment with Ansible 
-Amazon EC2 
-Firewall / Security 
-Backups 
-MongoDB as a Service 
-Would I take it again? 
+MongoDB on Docker
+Deployment with Ansible
+Amazon EC2
+Firewall / Security
+Backups
+MongoDB as a Service
+Would I take it again?
 
 
 
@@ -40,14 +148,33 @@ https://github.com/libgit2/rugged
 </script>
 
 
-1. Whitepaper (2 bis 5 Seiten) zum download anbieten gegen email adresse! 
-2. Zielgruppe auswählen. 
-   20 Stunden wöchentlich 
-   12K pro Jahr + 20 Studen die Woche 
-   Testaccount 
+1. Whitepaper (2 bis 5 Seiten) zum download anbieten gegen email adresse!
+2. Zielgruppe auswählen.
+   20 Stunden wöchentlich
+   12K pro Jahr + 20 Studen die Woche
+   Testaccount
 
 
-hook params: #<Hashie::Mash after="e97e1a3eee372199a7510afcab5c47a3d42e4e40" api_key="b7f7c65e66d38f511fb2" base_ref=nil before="90744a24fb573cf68be2c58c3d14c1427d7d49aa" commits=[#<Hashie::Mash added=[] author=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz"> committer=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz"> distinct=true id="11ae99038f968476ca8fc083ffd0acab57e80aeb" message="Ensure that original js files are in public folder" modified=["script/compile_assets.sh"] removed=[] timestamp="2015-07-02T08:12:53+02:00" url="https://github.com/versioneye/versioneye/commit/11ae99038f968476ca8fc083ffd0acab57e80aeb">, #<Hashie::Mash added=[] author=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz"> committer=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz"> distinct=true id="0300eddf5c74e43deaf2d24de81779679b749653" message="Update Gems" modified=["Gemfile.lock"] removed=[] timestamp="2015-07-02T08:16:48+02:00" url="https://github.com/versioneye/versioneye/commit/0300eddf5c74e43deaf2d24de81779679b749653">, #<Hashie::Mash added=["public/assets/libs/bootstrap-maxlength.min.js", "public/assets/libs/bootstrap3.min.js", "public/assets/libs/d3.v3.min.js", "public/assets/libs/d3pie.min.js", "public/assets/libs/hogan-2.0.0.js", "public/assets/libs/jquery.feeds.min.js", "public/assets/libs/moment.min.js", "public/assets/libs/require.js", "public/assets/libs/typeahead.js", "public/assets/libs/typeahead.min.js", "public/assets/libs/underscore-min.js"] author=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz"> committer=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz"> distinct=true id="e97e1a3eee372199a7510afcab5c47a3d42e4e40" message="Add JS original files to public/assets" modified=[] removed=[] timestamp="2015-07-02T08:17:19+02:00" url="https://github.com/versioneye/versioneye/commit/e97e1a3eee372199a7510afcab5c47a3d42e4e40">] compare="https://github.com/versioneye/versioneye/compare/90744a24fb57...e97e1a3eee37" created=false deleted=false forced=false head_commit=#<Hashie::Mash added=["public/assets/libs/bootstrap-maxlength.min.js", "public/assets/libs/bootstrap3.min.js", "public/assets/libs/d3.v3.min.js", "public/assets/libs/d3pie.min.js", "public/assets/libs/hogan-2.0.0.js", "public/assets/libs/jquery.feeds.min.js", "public/assets/libs/moment.min.js", "public/assets/libs/require.js", "public/assets/libs/typeahead.js", "public/assets/libs/typeahead.min.js", "public/assets/libs/underscore-min.js"] author=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz"> committer=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz"> distinct=true id="e97e1a3eee372199a7510afcab5c47a3d42e4e40" message="Add JS original files to public/assets" modified=[] removed=[] timestamp="2015-07-02T08:17:19+02:00" url="https://github.com/versioneye/versioneye/commit/e97e1a3eee372199a7510afcab5c47a3d42e4e40"> organization=#<Hashie::Mash avatar_url="https://avatars.githubusercontent.com/u/3974102?v=3" description="Notification System for Software Libraries" events_url="https://api.github.com/orgs/versioneye/events" id=3974102 login="versioneye" members_url="https://api.github.com/orgs/versioneye/members{/member}" public_members_url="https://api.github.com/orgs/versioneye/public_members{/member}" repos_url="https://api.github.com/orgs/versioneye/repos" url="https://api.github.com/orgs/versioneye"> project_id="52878714632bac28c200006d" pusher=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz"> ref="refs/heads/develop" repository=#<Hashie::Mash archive_url="https://api.github.com/repos/versioneye/versioneye/{archive_format}{/ref}" assignees_url="https://api.github.com/repos/versioneye/versioneye/assignees{/user}" blobs_url="https://api.github.com/repos/versioneye/versioneye/git/blobs{/sha}" branches_url="https://api.github.com/repos/versioneye/versioneye/branches{/branch}" clone_url="https://github.com/versioneye/versioneye.git" collaborators_url="https://api.github.com/repos/versioneye/versioneye/collaborators{/collaborator}" comments_url="https://api.github.com/repos/versioneye/versioneye/comments{/number}" commits_url="https://api.github.com/repos/versioneye/versioneye/commits{/sha}" compare_url="https://api.github.com/repos/versioneye/versioneye/compare/{base}...{head}" contents_url="https://api.github.com/repos/versioneye/versioneye/contents/{+path}" contributors_url="https://api.github.com/repos/versioneye/versioneye/contributors" created_at=1366544082 default_branch="develop" description="VersionEye.com" downloads_url="https://api.github.com/repos/versioneye/versioneye/downloads" events_url="https://api.github.com/repos/versioneye/versioneye/events" fork=false forks=0 forks_count=0 forks_url="https://api.github.com/repos/versioneye/versioneye/forks" full_name="versioneye/versioneye" git_commits_url="https://api.github.com/repos/versioneye/versioneye/git/commits{/sha}" git_refs_url="https://api.github.com/repos/versioneye/versioneye/git/refs{/sha}" git_tags_url="https://api.github.com/repos/versioneye/versioneye/git/tags{/sha}" git_url="git://github.com/versioneye/versioneye.git" has_downloads=true has_issues=true has_pages=false has_wiki=true homepage=nil hooks_url="https://api.github.com/repos/versioneye/versioneye/hooks" html_url="https://github.com/versioneye/versioneye" id=9578544 issue_comment_url="https://api.github.com/repos/versioneye/versioneye/issues/comments{/number}" issue_events_url="https://api.github.com/repos/versioneye/versioneye/issues/events{/number}" issues_url="https://api.github.com/repos/versioneye/versioneye/issues{/number}" keys_url="https://api.github.com/repos/versioneye/versioneye/keys{/key_id}" labels_url="https://api.github.com/repos/versioneye/versioneye/labels{/name}" language="HTML" languages_url="https://api.github.com/repos/versioneye/versioneye/languages" master_branch="develop" merges_url="https://api.github.com/repos/versioneye/versioneye/merges" milestones_url="https://api.github.com/repos/versioneye/versioneye/milestones{/number}" mirror_url=nil name="versioneye" notifications_url="https://api.github.com/repos/versioneye/versioneye/notifications{?since,all,participating}" open_issues=75 open_issues_count=75 organization="versioneye" owner=#<Hashie::Mash email="" name="versioneye"> private=true pulls_url="https://api.github.com/repos/versioneye/versioneye/pulls{/number}" pushed_at=1435817856 releases_url="https://api.github.com/repos/versioneye/versioneye/releases{/id}" size=65812 ssh_url="git@github.com:versioneye/versioneye.git" stargazers=1 stargazers_count=1 stargazers_url="https://api.github.com/repos/versioneye/versioneye/stargazers" statuses_url="https://api.github.com/repos/versioneye/versioneye/statuses/{sha}" subscribers_url="https://api.github.com/repos/versioneye/versioneye/subscribers" subscription_url="https://api.github.com/repos/versioneye/versioneye/subscription" svn_url="https://github.com/versioneye/versioneye" tags_url="https://api.github.com/repos/versioneye/versioneye/tags" teams_url="https://api.github.com/repos/versioneye/versioneye/teams" trees_url="https://api.github.com/repos/versioneye/versioneye/git/trees{/sha}" updated_at="2015-05-08T09:16:47Z" url="https://github.com/versioneye/versioneye" watchers=1 watchers_count=1> route_info=#<Grape::Route:0x007fc69fc892a0 @options={:notes=>"This endpoint is registered as service hook on GitHub. It triggers a project re-parse on each git push. ", :description=>"GitHub Hook", :params=>{"project_id"=>{:required=>true, :type=>"String", :desc=>"Project ID"}}, :prefix=>nil, :version=>"v2", :namespace=>"/github", :method=>"POST", :path=>"/:version/github/hook/:project_id(.:format)", :compiled=>/\A\/(?<version>v2)\/github\/hook\/(?<project_id>[^\/.?]+)(?:\.(?<format>[^\/.?]+))?\Z/}> sender=#<Hashie::Mash avatar_url="https://avatars.githubusercontent.com/u/652130?v=3" events_url="https://api.github.com/users/reiz/events{/privacy}" followers_url="https://api.github.com/users/reiz/followers" following_url="https://api.github.com/users/reiz/following{/other_user}" gists_url="https://api.github.com/users/reiz/gists{/gist_id}" gravatar_id="" html_url="https://github.com/reiz" id=652130 login="reiz" organizations_url="https://api.github.com/users/reiz/orgs" received_events_url="https://api.github.com/users/reiz/received_events" repos_url="https://api.github.com/users/reiz/repos" site_admin=false starred_url="https://api.github.com/users/reiz/starred{/owner}{/repo}" subscriptions_url="https://api.github.com/users/reiz/subscriptions" type="User" url="https://api.github.com/users/reiz">>
+hook params: #<Hashie::Mash after="e97e1a3eee372199a7510afcab5c47a3d42e4e40"
+api_key="b7f7c65e66d38f511fb2"
+base_ref=nil
+before="90744a24fb573cf68be2c58c3d14c1427d7d49aa"
+commits=
+  [#<Hashie::Mash
+    added=[]
+    author=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz">
+    committer=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz">
+    distinct=true
+    id="11ae99038f968476ca8fc083ffd0acab57e80aeb"
+    message="Ensure that original js files are in public folder"
+    modified=["script/compile_assets.sh"]
+    removed=[]
+    timestamp="2015-07-02T08:12:53+02:00"
+    url="https://github.com/versioneye/versioneye/commit/11ae99038f968476ca8fc083ffd0acab57e80aeb"
+  >,
+  #<Hashie::Mash
+    added=[]
+    author=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz"> committer=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz"> distinct=true id="0300eddf5c74e43deaf2d24de81779679b749653" message="Update Gems" modified=["Gemfile.lock"] removed=[] timestamp="2015-07-02T08:16:48+02:00" url="https://github.com/versioneye/versioneye/commit/0300eddf5c74e43deaf2d24de81779679b749653">, #<Hashie::Mash added=["public/assets/libs/bootstrap-maxlength.min.js", "public/assets/libs/bootstrap3.min.js", "public/assets/libs/d3.v3.min.js", "public/assets/libs/d3pie.min.js", "public/assets/libs/hogan-2.0.0.js", "public/assets/libs/jquery.feeds.min.js", "public/assets/libs/moment.min.js", "public/assets/libs/require.js", "public/assets/libs/typeahead.js", "public/assets/libs/typeahead.min.js", "public/assets/libs/underscore-min.js"] author=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz"> committer=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz"> distinct=true id="e97e1a3eee372199a7510afcab5c47a3d42e4e40" message="Add JS original files to public/assets" modified=[] removed=[] timestamp="2015-07-02T08:17:19+02:00" url="https://github.com/versioneye/versioneye/commit/e97e1a3eee372199a7510afcab5c47a3d42e4e40">] compare="https://github.com/versioneye/versioneye/compare/90744a24fb57...e97e1a3eee37" created=false deleted=false forced=false head_commit=#<Hashie::Mash added=["public/assets/libs/bootstrap-maxlength.min.js", "public/assets/libs/bootstrap3.min.js", "public/assets/libs/d3.v3.min.js", "public/assets/libs/d3pie.min.js", "public/assets/libs/hogan-2.0.0.js", "public/assets/libs/jquery.feeds.min.js", "public/assets/libs/moment.min.js", "public/assets/libs/require.js", "public/assets/libs/typeahead.js", "public/assets/libs/typeahead.min.js", "public/assets/libs/underscore-min.js"] author=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz"> committer=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz" username="reiz"> distinct=true id="e97e1a3eee372199a7510afcab5c47a3d42e4e40" message="Add JS original files to public/assets" modified=[] removed=[] timestamp="2015-07-02T08:17:19+02:00" url="https://github.com/versioneye/versioneye/commit/e97e1a3eee372199a7510afcab5c47a3d42e4e40"> organization=#<Hashie::Mash avatar_url="https://avatars.githubusercontent.com/u/3974102?v=3" description="Notification System for Software Libraries" events_url="https://api.github.com/orgs/versioneye/events" id=3974102 login="versioneye" members_url="https://api.github.com/orgs/versioneye/members{/member}" public_members_url="https://api.github.com/orgs/versioneye/public_members{/member}" repos_url="https://api.github.com/orgs/versioneye/repos" url="https://api.github.com/orgs/versioneye"> project_id="52878714632bac28c200006d" pusher=#<Hashie::Mash email="robert.reiz.81@gmail.com" name="reiz"> ref="refs/heads/develop" repository=#<Hashie::Mash archive_url="https://api.github.com/repos/versioneye/versioneye/{archive_format}{/ref}" assignees_url="https://api.github.com/repos/versioneye/versioneye/assignees{/user}" blobs_url="https://api.github.com/repos/versioneye/versioneye/git/blobs{/sha}" branches_url="https://api.github.com/repos/versioneye/versioneye/branches{/branch}" clone_url="https://github.com/versioneye/versioneye.git" collaborators_url="https://api.github.com/repos/versioneye/versioneye/collaborators{/collaborator}" comments_url="https://api.github.com/repos/versioneye/versioneye/comments{/number}" commits_url="https://api.github.com/repos/versioneye/versioneye/commits{/sha}" compare_url="https://api.github.com/repos/versioneye/versioneye/compare/{base}...{head}" contents_url="https://api.github.com/repos/versioneye/versioneye/contents/{+path}" contributors_url="https://api.github.com/repos/versioneye/versioneye/contributors" created_at=1366544082 default_branch="develop" description="VersionEye.com" downloads_url="https://api.github.com/repos/versioneye/versioneye/downloads" events_url="https://api.github.com/repos/versioneye/versioneye/events" fork=false forks=0 forks_count=0 forks_url="https://api.github.com/repos/versioneye/versioneye/forks" full_name="versioneye/versioneye" git_commits_url="https://api.github.com/repos/versioneye/versioneye/git/commits{/sha}" git_refs_url="https://api.github.com/repos/versioneye/versioneye/git/refs{/sha}" git_tags_url="https://api.github.com/repos/versioneye/versioneye/git/tags{/sha}" git_url="git://github.com/versioneye/versioneye.git" has_downloads=true has_issues=true has_pages=false has_wiki=true homepage=nil hooks_url="https://api.github.com/repos/versioneye/versioneye/hooks" html_url="https://github.com/versioneye/versioneye" id=9578544 issue_comment_url="https://api.github.com/repos/versioneye/versioneye/issues/comments{/number}" issue_events_url="https://api.github.com/repos/versioneye/versioneye/issues/events{/number}" issues_url="https://api.github.com/repos/versioneye/versioneye/issues{/number}" keys_url="https://api.github.com/repos/versioneye/versioneye/keys{/key_id}" labels_url="https://api.github.com/repos/versioneye/versioneye/labels{/name}" language="HTML" languages_url="https://api.github.com/repos/versioneye/versioneye/languages" master_branch="develop" merges_url="https://api.github.com/repos/versioneye/versioneye/merges" milestones_url="https://api.github.com/repos/versioneye/versioneye/milestones{/number}" mirror_url=nil name="versioneye" notifications_url="https://api.github.com/repos/versioneye/versioneye/notifications{?since,all,participating}" open_issues=75 open_issues_count=75 organization="versioneye" owner=#<Hashie::Mash email="" name="versioneye"> private=true pulls_url="https://api.github.com/repos/versioneye/versioneye/pulls{/number}" pushed_at=1435817856 releases_url="https://api.github.com/repos/versioneye/versioneye/releases{/id}" size=65812 ssh_url="git@github.com:versioneye/versioneye.git" stargazers=1 stargazers_count=1 stargazers_url="https://api.github.com/repos/versioneye/versioneye/stargazers" statuses_url="https://api.github.com/repos/versioneye/versioneye/statuses/{sha}" subscribers_url="https://api.github.com/repos/versioneye/versioneye/subscribers" subscription_url="https://api.github.com/repos/versioneye/versioneye/subscription" svn_url="https://github.com/versioneye/versioneye" tags_url="https://api.github.com/repos/versioneye/versioneye/tags" teams_url="https://api.github.com/repos/versioneye/versioneye/teams" trees_url="https://api.github.com/repos/versioneye/versioneye/git/trees{/sha}" updated_at="2015-05-08T09:16:47Z" url="https://github.com/versioneye/versioneye" watchers=1 watchers_count=1> route_info=#<Grape::Route:0x007fc69fc892a0 @options={:notes=>"This endpoint is registered as service hook on GitHub. It triggers a project re-parse on each git push. ", :description=>"GitHub Hook", :params=>{"project_id"=>{:required=>true, :type=>"String", :desc=>"Project ID"}}, :prefix=>nil, :version=>"v2", :namespace=>"/github", :method=>"POST", :path=>"/:version/github/hook/:project_id(.:format)", :compiled=>/\A\/(?<version>v2)\/github\/hook\/(?<project_id>[^\/.?]+)(?:\.(?<format>[^\/.?]+))?\Z/}> sender=#<Hashie::Mash avatar_url="https://avatars.githubusercontent.com/u/652130?v=3" events_url="https://api.github.com/users/reiz/events{/privacy}" followers_url="https://api.github.com/users/reiz/followers" following_url="https://api.github.com/users/reiz/following{/other_user}" gists_url="https://api.github.com/users/reiz/gists{/gist_id}" gravatar_id="" html_url="https://github.com/reiz" id=652130 login="reiz" organizations_url="https://api.github.com/users/reiz/orgs" received_events_url="https://api.github.com/users/reiz/received_events" repos_url="https://api.github.com/users/reiz/repos" site_admin=false starred_url="https://api.github.com/users/reiz/starred{/owner}{/repo}" subscriptions_url="https://api.github.com/users/reiz/subscriptions" type="User" url="https://api.github.com/users/reiz">>
 
 
 
