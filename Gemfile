@@ -4,6 +4,7 @@ gem 'bundler'              , '~> 1.10.5'
 gem 'rails'                , '~> 4.2.2'
 gem 'jquery-rails'         , '~> 4.0.4'
 gem 'execjs'               , '~> 2.6.0'
+gem 'therubyracer'         , '~> 0.12.0'
 gem 'oauth'                , '~> 0.4.7'
 gem 'twitter_oauth'        , '~> 0.4.94'
 gem 'puma'                 , '~> 2.15.3'
@@ -36,7 +37,6 @@ group :development do
 end
 
 group :assets do
-  gem 'therubyracer'          , '~> 0.12.0'
   gem 'sass'                  , :require => 'sass'
   gem 'sass-rails'            , '~> 5.0.3'
   gem 'coffee-rails'          , '~> 4.1.0'
