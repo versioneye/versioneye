@@ -32,8 +32,10 @@ describe "search" do
   end
 
   it "show the search with 1 result" do
-    product.versions << Version.new({:version => "1.0"})
+    version = Version.new({:version => "1.0"})
+    product.versions << version
     product.save
+    version.save
 
     results = MongoProduct.find_by_name( "json" )
     results.should_not be_nil
