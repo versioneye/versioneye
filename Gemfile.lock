@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 01a0549702d5a7360e1f94e8d76a7139e07de1fe
-  tag: v7.33.4
+  revision: bb3e83d798930d0ca3eef89b8d938cd1dc7a6d3d
+  tag: v7.33.8
   specs:
-    versioneye-core (7.33.4)
+    versioneye-core (7.33.8)
       actionmailer (~> 4.2.2)
       aws-sdk (~> 2.2.0)
       bundler (~> 1.10.6)
@@ -26,7 +26,7 @@ GIT
       net-ldap (~> 0.12.1)
       nokogiri (~> 1.6.0)
       oauth (~> 0.4.7)
-      octokit (~> 4.1.0)
+      octokit (~> 4.2.0)
       pdfkit (~> 0.8.0)
       persistent_httparty (~> 0.1.0)
       semverly (~> 1.0.0)
@@ -130,7 +130,7 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
-    fakes3 (0.2.1)
+    fakes3 (0.2.2)
       builder
       thor
     fakeweb (1.3.0)
@@ -166,7 +166,7 @@ GEM
       mime-types (>= 1.16, < 3)
     mime-types (2.6.2)
     mini_portile (0.6.2)
-    minitest (5.8.2)
+    minitest (5.8.3)
     mongoid (4.0.2)
       activemodel (~> 4.0)
       moped (~> 2.0.0)
@@ -183,10 +183,10 @@ GEM
     naturalsorter (3.0.11)
     net-ldap (0.12.1)
     netrc (0.11.0)
-    nokogiri (1.6.6.2)
+    nokogiri (1.6.6.3)
       mini_portile (~> 0.6.0)
     oauth (0.4.7)
-    octokit (4.1.1)
+    octokit (4.2.0)
       sawyer (~> 0.6.0, >= 0.5.3)
     optionable (0.2.0)
     origin (2.1.1)
@@ -243,7 +243,7 @@ GEM
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
       rspec-mocks (~> 3.4.0)
-    rspec-core (3.4.0)
+    rspec-core (3.4.1)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
