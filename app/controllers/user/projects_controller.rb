@@ -81,6 +81,8 @@ class User::ProjectsController < ApplicationController
 
 
   def lwl_export_all
+    type         = params[:type].to_s.downcase
+    type         = 'pdf' if type.to_s.empty?
     username     = params[:username]
     username     = current_user.username if username.to_s.empty?
     flatten      = params[:flatten]
@@ -96,8 +98,13 @@ class User::ProjectsController < ApplicationController
     lwl = LicenseWhitelist.find(lwl_default_id) if lwl_default_id
     cwl_default_id = ComponentWhitelistService.fetch_default_id user
     cwl = ComponentWhitelist.find(cwl_default_id) if cwl_default_id
-    pdf = LwlPdfService.process_all projects, lwl, cwl, flatten
-    send_data pdf, type: 'application/pdf', filename: "#{date_string}_#{project_name}.pdf"
+    if type.eql?('pdf')
+      pdf = LwlPdfService.process_all projects, lwl, cwl, flatten
+      send_data pdf, type: 'application/pdf', filename: "#{date_string}_#{project_name}.pdf"
+    else
+      csv = LwlCsvService.process_all projects, lwl, cwl, flatten
+      send_data csv, type: 'text/csv', filename: "#{date_string}_#{project_name}.csv"
+    end
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
@@ -126,8 +133,8 @@ class User::ProjectsController < ApplicationController
     project = ProjectService.find( id )
     date_string = DateTime.now.strftime("%d_%m_%Y")
     project_name = project.name.gsub("/", "-")
-    pdf = LwlCsvService.process project, true, true
-    send_data pdf, type: 'text/csv', filename: "#{date_string}_#{project_name}.csv"
+    csv = LwlCsvService.process project, true, true
+    send_data csv, type: 'text/csv', filename: "#{date_string}_#{project_name}.csv"
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
