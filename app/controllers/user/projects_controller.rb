@@ -82,6 +82,7 @@ class User::ProjectsController < ApplicationController
 
   def lwl_export_all
     username     = params[:username]
+    username     = current_user.username if username.to_s.empty?
     flatten      = params[:flatten]
     flatten      = true if flatten.to_s.empty?
     date_string  = DateTime.now.strftime("%d_%m_%Y")
@@ -89,9 +90,13 @@ class User::ProjectsController < ApplicationController
     user = current_user if user.nil?
     project_name = user.username
     projects = user.projects
+    lwl = nil
+    cwl = nil
     lwl_default_id = LicenseWhitelistService.fetch_default_id user
-    lwl = LicenseWhitelist.find lwl_default_id
-    pdf = LwlPdfService.process_all projects, lwl, nil, flatten
+    lwl = LicenseWhitelist.find(lwl_default_id) if lwl_default_id
+    cwl_default_id = ComponentWhitelistService.fetch_default_id user
+    cwl = ComponentWhitelist.find(cwl_default_id) if cwl_default_id
+    pdf = LwlPdfService.process_all projects, lwl, cwl, flatten
     send_data pdf, type: 'application/pdf', filename: "#{date_string}_#{project_name}.pdf"
   rescue => e
     logger.error e.message
@@ -432,6 +437,7 @@ class User::ProjectsController < ApplicationController
 
 
     def lwl_export_permission?
+      return true
       return true if Rails.env.enterprise? == true
       if current_user.plan.nil? || current_user.plan.price.to_i < 22
         flash[:warning] = "For the PDF/CSV export you need at least the 'Medium' plan. Please upgrade your subscription."
