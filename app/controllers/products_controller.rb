@@ -92,7 +92,9 @@ class ProductsController < ApplicationController
     language = Product.decode_language params[:lang]
     prod_key = Product.decode_prod_key params[:key]
     version  = Version.decode_version  params[:version]
-    key = "#{language}:::#{prod_key}:::#{version}"
+    style    = ''
+    style    = "__#{params[:style]}" if !params[:style].to_s.empty?
+    key = "#{language}:::#{prod_key}:::#{version}#{style}"
     badge = BadgeService.badge_for key
     send_data badge.svg, :type => "image/svg+xml", :disposition => 'inline'
   rescue => e
