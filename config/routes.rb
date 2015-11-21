@@ -56,6 +56,9 @@ Versioneye::Application.routes.draw do
         post   'remove/:username', :to => 'teams#remove', :as => 'remove'
       end
     end
+    member do
+      get 'projects', :to => 'organisations#projects', :as => 'projects'
+    end
   end
 
 
