@@ -164,7 +164,9 @@ module ProductsHelper
       product.released_days_ago = diff_release.to_i
       last_date = Date.today - product.released_days_ago
       product.released_ago_in_words = distance_of_time_in_words(Date.today, last_date)
-      product.released_ago_text = "This artifact was released #{product.released_ago_in_words} ago on #{version_obj.created_at.strftime("%b %d, %Y - %I:%m %p")}"
+      created_at = version_obj.created_at
+      created_at = version_obj.released_at if created_at.nil?
+      product.released_ago_text = "This artifact was released #{product.released_ago_in_words} ago on #{created_at.strftime("%b %d, %Y - %I:%m %p")}"
     else
       version_obj.created_at = DateTime.now if version_obj.created_at.nil?
       diff = today - version_obj.created_at.to_date
