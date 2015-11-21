@@ -48,6 +48,8 @@ Versioneye::Application.routes.draw do
     end
   end
 
+  resources :organisations
+
   resources :authors,  :constraints => { :id => /[^\/]+/}
 
   resources :keywords, :constraints => { :id => /[^\/]+/ }
