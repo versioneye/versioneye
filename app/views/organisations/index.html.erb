@@ -16,7 +16,7 @@
 
     <% @organisations.each do |orga| %>
       <div class="scm_repo">
-        <a href="<%= organisation_path(:id => orga.name) %>"><%= orga.name %></a>
+        <a href="<%= organisation_path(orga) %>"><%= orga.name %></a>
       </div>
     <% end %>
 

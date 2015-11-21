@@ -14,7 +14,7 @@
       <% if signed_in? %>
         <ul class = "nav nav-pills nav-stacked">
           <li><%= link_to 'Profile', organisation_path(@organisation) %></li>
-          <li>Teams</li>
+          <li><%= link_to 'Teams', organisation_teams_path(@organisation) %></li>
           <li>License Whitelists</li>
           <li>Component Whitelists</li>
         </ul>

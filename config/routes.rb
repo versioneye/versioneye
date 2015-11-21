@@ -48,7 +48,16 @@ Versioneye::Application.routes.draw do
     end
   end
 
-  resources :organisations
+  resources :organisations, :param => :name do
+    resources :teams do
+      member do
+        post   'delete'          , :to => 'teams#delete', :as => 'delete'
+        post   'add'             , :to => 'teams#add'   , :as => 'add'
+        post   'remove/:username', :to => 'teams#remove', :as => 'remove'
+      end
+    end
+  end
+
 
   resources :authors,  :constraints => { :id => /[^\/]+/}
 
@@ -102,13 +111,6 @@ Versioneye::Application.routes.draw do
     get  'emailsettings'       , :to => 'emailsettings#index'
     post 'emailsettings'       , :to => 'emailsettings#update'
     post 'test_email'          , :to => 'emailsettings#test_email'
-
-    get  'teams'               , :to => 'teams#index'
-    post 'teams'               , :to => 'teams#create'
-    get  'teams/:id'           , :to => 'teams#show'   , :as => 'teams_show'
-    post 'teams/:id/add'       , :to => 'teams#add'    , :as => 'teams_add'
-    post 'teams/:id/destroy'   , :to => 'teams#destroy', :as => 'teams_destroy'
-    post 'teams/:id/remove/:username', :to => 'teams#remove', :as => 'teams_remove'
 
     get  'license_whitelists'              , :to => 'license_whitelists#index'
     get  'license_whitelists/autocomplete' , :to => 'license_whitelists#autocomplete'
