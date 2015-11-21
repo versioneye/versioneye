@@ -19,11 +19,22 @@ class OrganisationsController < ApplicationController
   end
 
   def update
-
+    @organisation = Organisation.where(:name => params[:id]).first
+    @organisation.name     = params[:organisation][:name]
+    @organisation.company  = params[:organisation][:company]
+    @organisation.location = params[:organisation][:location]
+    @organisation.email    = params[:organisation][:email]
+    @organisation.website  = params[:organisation][:website]
+    @organisation.save
+    flash[:success] = "Organisation saved successfully"
+    redirect_to organisation_path(@organisation)
+  rescue => e
+    flash[:error] = e.message
+    redirect_to :back
   end
 
   def show
-
+    @organisation = Organisation.where(:name => params[:id]).first
   end
 
   def index
