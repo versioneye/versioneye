@@ -41,7 +41,7 @@
               <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
             </td>
             <td>
-              <b><%= member.user.username %></b> (<%= member.user.fullname %>)
+              <b><%= link_to member.user.username, user_path(member.user) %></b> (<%= member.user.fullname %>)
             </td>
           </tr>
           <% end %>
