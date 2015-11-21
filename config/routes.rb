@@ -248,16 +248,9 @@ Versioneye::Application.routes.draw do
         post 'reparse'
         post 'followall'
         post 'update_name'
-        post 'add_collaborator'
         post 'mute_dependency'
         post 'demute_dependency'
       end
-    end
-
-    resources :collaborations do
-      post 'approve'
-      post 'delete'
-      post 'save_period'
     end
 
     resources :github_repos
