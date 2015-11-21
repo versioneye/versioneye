@@ -4,6 +4,7 @@ gem 'bundler'              , '~> 1.10.5'
 gem 'rails'                , '~> 4.2.2'
 gem 'jquery-rails'         , '~> 4.0.4'
 gem 'execjs'               , '~> 2.6.0'
+gem 'therubyracer'         , '~> 0.12.0'
 gem 'oauth'                , '~> 0.4.7'
 gem 'twitter_oauth'        , '~> 0.4.94'
 gem 'puma'                 , '~> 2.15.3'
@@ -17,14 +18,14 @@ gem 'stripe'               , '~> 1.31.0'
 gem 'bunny'                , '~> 2.2.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.33.2'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v7.34.1'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
 # gem 'gravatar_image_tag'    , :git => 'git@github.com:reiz/gravatar_image_tag.git', :tag => 'v1.2.1'
 gem 'gravatar_image_tag'    , :git => 'git@github.com:reiz/gravatar_image_tag.git', :branch => 'bugfix/html_escaping'
 
-gem 'net-ldap', '0.12.0'
+gem 'net-ldap', '0.12.1'
 gem 'redcarpet', '3.3.3'
 
 group :development do
@@ -36,7 +37,6 @@ group :development do
 end
 
 group :assets do
-  gem 'therubyracer'          , '~> 0.12.0'
   gem 'sass'                  , :require => 'sass'
   gem 'sass-rails'            , '~> 5.0.3'
   gem 'coffee-rails'          , '~> 4.1.0'
@@ -48,9 +48,9 @@ end
 group :test do
   gem 'simplecov'         , '~> 0.10.0'
   gem 'turn'              , :require => false
-  gem 'rspec'             , '~> 3.3.0'
-  gem 'rspec-rails'       , '~> 3.3.1'
-  gem 'rspec-mocks'       , '~> 3.3.0'
+  gem 'rspec'             , '~> 3.4.0'
+  gem 'rspec-rails'       , '~> 3.4.0'
+  gem 'rspec-mocks'       , '~> 3.4.0'
   gem 'capybara'          , '~> 2.5.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'selenium-webdriver', '~> 2.48.1'
@@ -61,6 +61,8 @@ group :test do
   gem 'factory_girl'      , '~> 4.5.0'
   gem 'factory_girl_rails', '~> 4.5.0'
 end
+
+# gem "bower-rails", "~> 0.10.0"
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'      , '3.3.5'
