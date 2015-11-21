@@ -19,7 +19,7 @@ class OrganisationsController < ApplicationController
   end
 
   def update
-    @organisation = Organisation.where(:name => params[:id]).first
+    @organisation = Organisation.where(:name => params[:name]).first
     @organisation.name     = params[:organisation][:name]
     @organisation.company  = params[:organisation][:company]
     @organisation.location = params[:organisation][:location]
@@ -34,7 +34,7 @@ class OrganisationsController < ApplicationController
   end
 
   def show
-    @organisation = Organisation.where(:name => params[:id]).first
+    @organisation = Organisation.where(:name => params[:name]).first
   end
 
   def index

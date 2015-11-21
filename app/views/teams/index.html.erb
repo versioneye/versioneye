@@ -1,6 +1,6 @@
 
 <div class="col-md-3" >
-  <%= render 'settings/navi' %>
+  <%= render 'organisations/navi' %>
 </div>
 
 <div class="col-md-9" >
@@ -13,9 +13,9 @@
 
     <p>
       Here you can add/remove users to/from your teams.
-      By assigning a team to one of your projects,
+      By assigning a team to a project,
       all members of the team can see the project details,
-      receive the project notification emails and can't modify/update the project with their own API key.
+      receive the project notification emails and they can modify/update the project with their own API key.
     </p>
 
     <p>
@@ -43,12 +43,12 @@
 
         <tr>
           <td>
-            <%= form_tag( settings_teams_destroy_path(:id => team.ids) , :method => "post", :style => 'margin: 0;') do  %>
+            <%= form_tag( delete_organisation_team_path(@organisation, team) , :method => "post", :style => 'margin: 0;') do  %>
               <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
             <% end %>
           </td>
           <td>
-            <%= link_to team.name, settings_teams_show_path(team) %>
+            <%= link_to team.name, organisation_team_path(@organisation, team) %>
           </td>
         </tr>
 
