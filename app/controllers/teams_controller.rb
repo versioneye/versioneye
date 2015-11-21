@@ -1,15 +1,20 @@
 class TeamsController < ApplicationController
 
   before_filter :authenticate, :load_orga, :auth_org_member
-  before_filter :auth_org_owner, :only => [:create, :add, :remove, :delete]
+  before_filter :auth_org_owner, :only => [:create, :add, :delete]
 
   def index
     @teams = Team.by_organisation( @organisation )
   end
 
   def create
-    @team = Team.find_or_create_by(:organisation_id => @organisation.ids, :name => params[:teams][:name])
-    redirect_to organisation_team_path(@organisation, @team)
+    if OrganisationService.owner?(@organisation, current_user)
+      @team = Team.find_or_create_by(:organisation_id => @organisation.ids, :name => params[:teams][:name])
+      redirect_to organisation_team_path(@organisation, @team)
+    else
+      flash[:error] = "You have no permission to create a Team. Only the owners of the organisation are allowed to do that."
+      redirect_to organisation_teams_path(@organisation)
+    end
   end
 
   def show
@@ -27,9 +32,11 @@ class TeamsController < ApplicationController
     @team = Team.where(:id => params[:id], :organisation_id => @organisation.ids).first
     user = User.find_by_username params[:username]
     if @team.name.eql?( Team::A_OWNERS ) && @team.members.count == 1
-      flash[:error] = "There must be at least 1 users on the #{Team::A_OWNERS} team!"
-    else
+      flash[:error] = "There must be at least 1 user at the #{Team::A_OWNERS} team!"
+    elsif OrganisationService.owner?(@organisation, current_user) || user.username.eql?(current_user.username)
       @team.remove_member user
+    else
+      flash[:error] = "You have not permission to remove this user from the Team. Only the owners of the organisation are allowed to do that."
     end
     redirect_to organisation_team_path(@organisation, @team)
   end
@@ -54,13 +61,16 @@ class TeamsController < ApplicationController
 
     def auth_org_member
       return true if OrganisationService.member?(@organisation, current_user)
-      false
+      flash[:error] = "You are not a member of this organisation. You don't have the permission for this operation."
+      redirect_to organisations_path
+      return false
     end
 
     def auth_org_owner
       return true if OrganisationService.owner?(@organisation, current_user)
       flash[:error] = "You are not in the Owners team. You don't have the permission for this operation."
-      false
+      redirect_to organisation_teams_path(@organisation)
+      return false
     end
 
 end
