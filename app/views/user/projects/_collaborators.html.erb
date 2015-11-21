@@ -16,11 +16,6 @@
   <% end %>
 </div>
 
-<% @project.collaborators.each do |collaborator| %>
-  <div class = "row">
-    <%= render partial: "collaborator", :locals => {collaborator: collaborator} %>
-  </div>
-<% end %>
 
 <script type="text/javascript">
 
