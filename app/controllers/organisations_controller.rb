@@ -1,5 +1,9 @@
 class OrganisationsController < ApplicationController
 
+  before_filter :authenticate
+  before_filter :auth_org_member, :only => [:projects, :show]
+  before_filter :auth_org_owner,  :only => [:update, :delete]
+
   def new
     @organisation = Organisation.new
   end
@@ -19,7 +23,6 @@ class OrganisationsController < ApplicationController
   end
 
   def update
-    @organisation = Organisation.where(:name => params[:name]).first
     @organisation.name     = params[:organisation][:name]
     @organisation.company  = params[:organisation][:company]
     @organisation.location = params[:organisation][:location]
@@ -34,12 +37,37 @@ class OrganisationsController < ApplicationController
   end
 
   def show
-    @organisation = Organisation.where(:name => params[:name]).first
+    # see before_filter auth_org_member
   end
 
   def index
     @organisations = OrganisationService.index current_user
     redirect_to new_organisation_path if @organisations.empty?
   end
+
+  def projects
+    @projects = @organisation.projects
+  end
+
+
+  private
+
+
+    def auth_org_member
+      @organisation = Organisation.where(:name => params[:name]).first
+      return true if OrganisationService.member?(@organisation, current_user)
+      flash[:error] = "You are not a member of this organisation. You don't have the permission for this operation."
+      redirect_to organisations_path
+      return false
+    end
+
+
+    def auth_org_owner
+      @organisation = Organisation.where(:name => params[:name]).first
+      return true if OrganisationService.owner?(@organisation, current_user)
+      flash[:error] = "You are not in the Owners team. You don't have the permission for this operation."
+      redirect_to organisations_path
+      return false
+    end
 
 end

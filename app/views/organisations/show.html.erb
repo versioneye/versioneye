@@ -9,51 +9,53 @@
   </div>
 
   <div class="content" >
-    <%= form_for @organisation do |f| %>
 
-      <div class="form-group">
-        <%= f.label :name, "Namespace", :class => "control-label", :for => "name" %>
-        <div class="controls">
-          <%= f.text_field :name, :id => "name", :class => 'form-control' %>
+      <% disabled_flag = !OrganisationService.owner?(@organisation, current_user) %>
+      <%= form_for @organisation do |f| %>
+
+        <div class="form-group">
+          <%= f.label :name, "Namespace", :class => "control-label", :for => "name" %>
+          <div class="controls">
+            <%= f.text_field :name, :id => "name", :class => 'form-control', :disabled => disabled_flag %>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <%= f.label :company, :class => "control-label", :for => "company" %>
-        <div class="controls">
-          <%= f.text_field :company, :id => "company", :class => 'form-control' %>
+        <div class="form-group">
+          <%= f.label :company, :class => "control-label", :for => "company" %>
+          <div class="controls">
+            <%= f.text_field :company, :id => "company", :class => 'form-control', :disabled => disabled_flag %>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <%= f.label :location, :class => "control-label", :for => "location" %>
-        <div class="controls">
-          <%= f.text_field :location, :id => "location", :class => 'form-control' %>
+        <div class="form-group">
+          <%= f.label :location, :class => "control-label", :for => "location" %>
+          <div class="controls">
+            <%= f.text_field :location, :id => "location", :class => 'form-control', :disabled => disabled_flag %>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <%= f.label :email, :class => "control-label", :for => "email" %>
-        <div class="controls">
-          <%= f.text_field :email, :id => "email", :class => 'form-control' %>
+        <div class="form-group">
+          <%= f.label :email, :class => "control-label", :for => "email" %>
+          <div class="controls">
+            <%= f.text_field :email, :id => "email", :class => 'form-control', :disabled => disabled_flag %>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <%= f.label :website, :class => "control-label", :for => "website" %>
-        <div class="controls">
-          <%= f.text_field :website, :id => "website", :class => 'form-control' %>
+        <div class="form-group">
+          <%= f.label :website, :class => "control-label", :for => "website" %>
+          <div class="controls">
+            <%= f.text_field :website, :id => "website", :class => 'form-control', :disabled => disabled_flag %>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <div class="control-label"></div>
-        <div class="controls">
-          <%= f.submit :class => "btn btn-large btn-primary" %>
+        <div class="form-group">
+          <div class="control-label"></div>
+          <div class="controls">
+            <%= f.submit :class => "btn btn-large btn-primary", :disabled => disabled_flag %>
+          </div>
         </div>
-      </div>
 
-    <% end %>
+      <% end %>
   </div>
 
 </div>
