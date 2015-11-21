@@ -66,8 +66,10 @@ module ProjectsHelper
     return false if user.nil?
 
     return true if user.admin == true
-    return true if project.user.ids.eql?( user.ids )
+    return true if project.user && project.user.ids.eql?( user.ids )
     return true if project.is_collaborator?( user )
+
+    return true if project.organisation && OrganisationService.owner?( project.organisation, current_user )
 
     return false
   end
