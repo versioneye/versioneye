@@ -1,19 +1,21 @@
-class Settings::LicenseWhitelistsController < ApplicationController
+class LicenseWhitelistsController < ApplicationController
 
-  before_filter :authenticate_lwl
+  before_filter :load_orga
+  before_filter :authenticate
+  before_filter :auth_org_owner, :except => [:index, :show]
 
   def index
-    @whitelists = LicenseWhitelistService.index current_user
+    @whitelists = LicenseWhitelistService.index @organisation
   end
 
   def show
-    @license_whitelist = LicenseWhitelistService.fetch_by current_user, params[:name]
+    @license_whitelist = LicenseWhitelistService.fetch_by @organisation, params[:id]
     @license_whitelist.license_elements.sort_by! &:name_substitute
   end
 
   def create
     list_name = params[:license_whitelist][:name]
-    resp = LicenseWhitelistService.create current_user, list_name
+    resp = LicenseWhitelistService.create @organisation, list_name
     if resp
       flash[:success] = "Whitelist #{list_name} was created successfully."
       redirect_to :back
@@ -28,7 +30,7 @@ class Settings::LicenseWhitelistsController < ApplicationController
   end
 
   def destroy
-    license_whitelist = LicenseWhitelist.fetch_by current_user, params[:name]
+    license_whitelist = LicenseWhitelist.fetch_by @organisation, params[:id]
     license_whitelist.destroy
     flash[:success] = "Whitelist deleted successfully."
     redirect_to :back
@@ -39,7 +41,7 @@ class Settings::LicenseWhitelistsController < ApplicationController
   end
 
   def update_pessimistic
-    license_whitelist = LicenseWhitelistService.fetch_by current_user, params[:list]
+    license_whitelist = LicenseWhitelistService.fetch_by @organisation, params[:id]
     ps = params[:pessimistic]
     if ps.to_s.eql?('true')
       license_whitelist.pessimistic_mode = true
@@ -60,11 +62,11 @@ class Settings::LicenseWhitelistsController < ApplicationController
   end
 
   def add
-    resp = LicenseWhitelistService.add current_user, params[:list], params[:license_name]
+    resp = LicenseWhitelistService.add @organisation, params[:id], params[:license_name]
     if resp
-      lwl = LicenseWhitelistService.fetch_by current_user, params[:list]
+      lwl = LicenseWhitelistService.fetch_by @organisation, params[:id]
       le  = LicenseElement.new({:name => params[:license_name]})
-      Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Added \"#{le.name_substitute}\" to \"#{params[:list]}\""
+      Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Added \"#{le.name_substitute}\" to \"#{params[:id]}\""
       flash[:success] = "License added successfully."
     else
       flash[:error] = "An error occured. Not able to add the license to the list."
@@ -77,10 +79,10 @@ class Settings::LicenseWhitelistsController < ApplicationController
   end
 
   def default
-    LicenseWhitelistService.default current_user, params[:list]
+    LicenseWhitelistService.default @organisation, params[:id]
 
-    lwl = LicenseWhitelistService.fetch_by current_user, params[:list]
-    Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Marked \"#{params[:list]}\" to default list."
+    lwl = LicenseWhitelistService.fetch_by @organisation, params[:id]
+    Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Marked \"#{params[:id]}\" to default list."
     flash[:success] = "License Whitelist updated successfully."
 
     redirect_to :back
@@ -91,10 +93,10 @@ class Settings::LicenseWhitelistsController < ApplicationController
   end
 
   def remove
-    resp = LicenseWhitelistService.remove current_user, params[:list], params[:name]
+    resp = LicenseWhitelistService.remove @organisation, params[:id], params[:id]
     if resp
-      lwl = LicenseWhitelistService.fetch_by current_user, params[:list]
-      Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Removed \"#{params[:name]}\" from \"#{params[:list]}\""
+      lwl = LicenseWhitelistService.fetch_by @organisation, params[:id]
+      Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Removed \"#{params[:id]}\" from \"#{params[:id]}\""
       flash[:success] = "License removed successfully."
     else
       flash[:error] = "An error occured. Not able to remove the license from the list."
@@ -116,6 +118,7 @@ class Settings::LicenseWhitelistsController < ApplicationController
   end
 
   private
+
 
     def format_autocompletion(matched_licenses)
       results = []

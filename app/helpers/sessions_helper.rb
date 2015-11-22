@@ -61,15 +61,6 @@ module SessionsHelper
     false
   end
 
-  def authenticate_lwl
-    if Rails.env.enterprise?
-      return true if signed_in_admin? || current_user.fetch_or_create_permissions.lwl == true
-      deny_access
-      return false
-    end
-    authenticate
-  end
-
   def authenticate_cwl
     if Rails.env.enterprise?
       return true if signed_in_admin?

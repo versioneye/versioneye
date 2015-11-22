@@ -1,6 +1,6 @@
 
 <div class="col-md-3" >
-  <%= render 'settings/navi' %>
+  <%= render 'organisations/navi' %>
 </div>
 
 <div class="col-md-9" >
@@ -15,7 +15,7 @@
       Just start typing and add as many licenses to your whitelist as you want.
     </p>
 
-    <%= form_tag(settings_license_whitelists_add_path(:list => @license_whitelist.name), :class => 'form-inline', :style => "padding: 0; margin:0;") do %>
+    <%= form_tag(add_organisation_license_whitelist_path(@organisation.name, :id => @license_whitelist.name), :class => 'form-inline', :style => "padding: 0; margin:0;") do %>
       <div class="form-group input-append">
 
         <input id="license_name" name="license_name" class="typeahead form-control" type="text"  autofocus="autofocus" autocomplete="off" style="margin-top: -6px; width: 450px;" />
@@ -29,7 +29,7 @@
 
     <br/>
 
-    <%= form_tag(settings_license_whitelists_update_pessimistic_path(:list => @license_whitelist.name), :class => 'form-horizontal') do %>
+    <%= form_tag(update_pessimistic_organisation_license_whitelist_path(@organisation.name, :id => @license_whitelist.name), :class => 'form-horizontal') do %>
       <div class="checkbox">
         <label for="pessimistic" style="font-size: 12px;" >
           <%= check_box_tag "pessimistic", true, @license_whitelist.pessimistic_mode, :id => "pessimistic" %>
@@ -51,7 +51,7 @@
       <tbody>
         <% @license_whitelist.license_elements.each do |license| %>
           <% if !license.name.to_s.empty? %>
-            <%= form_tag( settings_license_whitelists_remove_path(:list => @license_whitelist.name), :method => "post") do  %>
+            <%= form_tag( remove_organisation_license_whitelist_path(@organisation.name, :id => @license_whitelist.name), :method => "post") do  %>
             <tr >
               <td >
                 <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
@@ -84,7 +84,7 @@
     jQuery("input#license_name").typeahead({
       name: "contacts",
       remote: {
-        url: "/settings/license_whitelists/autocomplete?term=%QUERY"
+        url: "/organisations/<%= @organisation.name %>/lwl/autocomplete?term=%QUERY"
       },
       engine: Hogan,
       template: [

@@ -1,6 +1,6 @@
 
 <div class="col-md-3" >
-  <%= render 'settings/navi' %>
+  <%= render 'organisations/navi' %>
 </div>
 
 <div class="col-md-9" >
@@ -17,7 +17,7 @@
 
     <p>
       </br>
-      <%= form_for(:license_whitelist, :url => settings_license_whitelists_create_path, :html => {:class => 'form-inline'} ) do |f|  %>
+      <%= form_for(:license_whitelist, :url => organisation_license_whitelists_path, :html => {:class => 'form-inline'} ) do |f|  %>
         <div class="form-group">
           <%= f.label :name, :class => 'control-label' %>
           <%= f.text_field :name, :class => "form-control" %>
@@ -41,14 +41,14 @@
 
           <tr>
             <td>
-              <%= form_tag( settings_license_whitelists_destroy_path , :method => "post", :style => 'margin: 0;') do  %>
+              <%= form_tag( destroy_organisation_license_whitelist_path(@organisation, wlist) , :method => "post", :style => 'margin: 0;') do  %>
                 <input id="name" name="name" type="hidden" value="<%= wlist.name.to_s %>" />
                 <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
               <% end %>
             </td>
             <td>
               <% if wlist.default == false %>
-                <%= form_tag( settings_license_whitelists_default_path(:list => wlist.name.to_s) , :method => "post", :style => 'margin: 0;') do %>
+                <%= form_tag( default_organisation_license_whitelist_path(@organisation.name, :id => wlist.name.to_s) , :method => "post", :style => 'margin: 0;') do %>
                   <button type="submit" class="btn btn-success" >Make Default</button>
                 <% end %>
               <% else %>
@@ -56,7 +56,7 @@
               <% end %>
             </td>
             <td>
-              <%= link_to wlist.name, settings_license_whitelists_show_path(wlist) %>
+              <%= link_to wlist.name, organisation_license_whitelist_path(@organisation, wlist) %>
             </td>
           </tr>
 
