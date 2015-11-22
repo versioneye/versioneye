@@ -15,8 +15,10 @@
         <ul class = "nav nav-pills nav-stacked">
           <li><%= link_to 'Profile', organisation_path(@organisation) %></li>
           <li><%= link_to 'Teams', organisation_teams_path(@organisation) %></li>
-          <li>License Whitelists</li>
-          <li>Component Whitelists</li>
+          <li><%= link_to 'License Whitelists', organisation_license_whitelists_path(@organisation) %></li>
+          <li><%= link_to 'Projects', projects_organisation_path(@organisation) %></li>
+          <!-- <li>License Whitelists</li>
+          <li>Component Whitelists</li> -->
         </ul>
       <% else %>
         <%= render '/shared/signup_ad' %>

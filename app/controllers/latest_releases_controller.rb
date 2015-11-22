@@ -1,7 +1,5 @@
 class LatestReleasesController < ApplicationController
 
-  # caches_action :index
-
   def index
     @supported_languages = Product::A_LANGS_SUPPORTED
     @latest_releases = Newest.balanced_newest(20)

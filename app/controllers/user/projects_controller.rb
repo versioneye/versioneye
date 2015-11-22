@@ -75,7 +75,7 @@ class User::ProjectsController < ApplicationController
     end
     @child   = @project if @child.nil?
     @child   = add_dependency_classes( @child )
-    @whitelists = LicenseWhitelistService.index( current_user ) if current_user
+    @whitelists = LicenseWhitelistService.index( @project.organisation ) if @project.organisation
     @cwls    = ComponentWhitelistService.index( current_user ) if current_user
   end
 
@@ -330,7 +330,6 @@ class User::ProjectsController < ApplicationController
     @project.period = period
     if @project.save
       flash[:success] = "Status saved."
-      update_collaborators @project
       Auditlog.add current_user, "Project", @project.ids, "Changed period from `#{old_period}` to `#{period}`"
     else
       flash[:error] = "Something went wrong. Please try again later."
@@ -389,7 +388,7 @@ class User::ProjectsController < ApplicationController
     id        = params[:id]
     list_name = params[:whitelist]
     old_lwl_name = @project.license_whitelist_name
-    if LicenseWhitelistService.update_project @project, current_user, list_name
+    if LicenseWhitelistService.update_project @project, @project.organisation, list_name
       flash[:success] = "We saved your changes."
       Auditlog.add current_user, "Project", @project.ids, "Changed License Whitelist from `#{old_lwl_name}` to `#{list_name}`"
     else
@@ -531,15 +530,6 @@ class User::ProjectsController < ApplicationController
         hash[dep.prod_key] = element
       end
       hash
-    end
-
-    def update_collaborators project
-      return nil if project.collaborators.nil? || project.collaborators.empty?
-
-      project.collaborators.each do |collaborator|
-        collaborator.period = project.period
-        collaborator.save
-      end
     end
 
 end

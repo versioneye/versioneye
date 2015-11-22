@@ -56,6 +56,17 @@ Versioneye::Application.routes.draw do
         post   'remove/:username', :to => 'teams#remove', :as => 'remove'
       end
     end
+    get 'lwl/autocomplete' , :to => 'license_whitelists#autocomplete'
+    resources :license_whitelists do
+      member do
+        post   'destroy'          , :to => 'license_whitelists#destroy', :as => 'destroy'
+        # get  'license_whitelists/:name'        , :to => 'license_whitelists#show'   , :as => 'license_whitelists_show', :constraints => { :name => /[^\/]+/ }
+        post 'update_pessimistic', :to => 'license_whitelists#update_pessimistic'    , :as => 'update_pessimistic', :constraints => { :list => /[^\/]+/ }
+        post 'add'               , :to => 'license_whitelists#add'    , :as => 'add'    , :constraints => { :list => /[^\/]+/ }
+        post 'remove'            , :to => 'license_whitelists#remove' , :as => 'remove' , :constraints => { :list => /[^\/]+/ }
+        post 'default'           , :to => 'license_whitelists#default', :as => 'default', :constraints => { :list => /[^\/]+/ }
+      end
+    end
     member do
       get 'projects', :to => 'organisations#projects', :as => 'projects'
     end
@@ -114,16 +125,6 @@ Versioneye::Application.routes.draw do
     get  'emailsettings'       , :to => 'emailsettings#index'
     post 'emailsettings'       , :to => 'emailsettings#update'
     post 'test_email'          , :to => 'emailsettings#test_email'
-
-    get  'license_whitelists'              , :to => 'license_whitelists#index'
-    get  'license_whitelists/autocomplete' , :to => 'license_whitelists#autocomplete'
-    get  'license_whitelists/:name'        , :to => 'license_whitelists#show'   , :as => 'license_whitelists_show', :constraints => { :name => /[^\/]+/ }
-    post 'license_whitelists/create'       , :to => 'license_whitelists#create'
-    post 'license_whitelists/destroy'      , :to => 'license_whitelists#destroy', :as => 'license_whitelists_destroy'
-    post 'license_whitelists/:list/add'    , :to => 'license_whitelists#add'    , :as => 'license_whitelists_add', :constraints => { :list => /[^\/]+/ }
-    post 'license_whitelists/:list/update_pessimistic'    , :to => 'license_whitelists#update_pessimistic'    , :as => 'license_whitelists_update_pessimistic', :constraints => { :list => /[^\/]+/ }
-    post 'license_whitelists/:list/remove' , :to => 'license_whitelists#remove' , :as => 'license_whitelists_remove' , :constraints => { :list => /[^\/]+/ }
-    post 'license_whitelists/:list/default', :to => 'license_whitelists#default', :as => 'license_whitelists_default', :constraints => { :list => /[^\/]+/ }
 
     get  'component_whitelists'              , :to => 'component_whitelists#index'
     get  'component_whitelists/:name'        , :to => 'component_whitelists#show'   , :as => 'component_whitelists_show'   , :constraints => { :name => /[^\/]+/ }

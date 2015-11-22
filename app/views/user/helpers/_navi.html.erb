@@ -14,12 +14,6 @@
       <% if signed_in? %>
       <ul class = "nav nav-pills nav-stacked">
         <li><%= link_to 'Projects', user_projects_path, id: 'my_projects', :rel => "nofollow" %></li>
-
-        <% if Rails.env.enterprise? %>
-          <li><%= link_to 'All Public Projects', user_projects_path(:all_public => true), id: 'all_public_projects', :rel => "nofollow" %></li>
-        <% end %>
-
-        <li><%= link_to 'Shared with me', user_collaborations_path, :rel => "nofollow" %></li>
         <li><hr/></li>
         <% if github_enabled? %>
           <li><%= link_to 'Create From GitHub', user_projects_github_repositories_path, :rel => "nofollow" %></li>

@@ -5,10 +5,8 @@ GIT
   specs:
     gravatar_image_tag (1.2.0)
 
-GIT
-  remote: git@github.com:versioneye/versioneye-core.git
-  revision: 2b8385099f3c185f2c411f976ba1ce580a0aaa9a
-  tag: v7.34.1
+PATH
+  remote: ~/workspace/versioneye/versioneye-core
   specs:
     versioneye-core (7.34.1)
       actionmailer (~> 4.2.2)
