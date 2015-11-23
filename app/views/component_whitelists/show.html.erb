@@ -1,6 +1,6 @@
 
 <div class="col-md-3" >
-  <%= render 'settings/navi' %>
+  <%= render 'organisations/navi' %>
 </div>
 
 <div class="col-md-9" >
@@ -33,7 +33,7 @@
     </p>
     <pre>org.apache</pre>
 
-    <%= form_tag(settings_component_whitelists_add_path(:list => @component_whitelist.name), :class => 'form-inline', :style => "padding: 15px 0 0 0; margin:0;") do %>
+    <%= form_tag(add_organisation_component_whitelist_path(@organisation.name, :id => @component_whitelist.name), :class => 'form-inline', :style => "padding: 15px 0 0 0; margin:0;") do %>
       <div class="form-group input-append">
 
         <input id="cwl_key" name="cwl_key" class="typeahead form-control" type="text"  autofocus="autofocus" autocomplete="off" style="width: 450px;" />
@@ -57,7 +57,7 @@
       <tbody>
         <% @component_whitelist.components.each do |component| %>
           <% if !component.to_s.empty? %>
-            <%= form_tag( settings_component_whitelists_remove_path(:list => @component_whitelist.name), :method => "post") do  %>
+            <%= form_tag( remove_organisation_component_whitelist_path(@organisation.name, :id => @component_whitelist.name), :method => "post") do  %>
             <tr >
               <td >
                 <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>

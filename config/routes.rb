@@ -67,6 +67,14 @@ Versioneye::Application.routes.draw do
         post 'default'           , :to => 'license_whitelists#default', :as => 'default', :constraints => { :list => /[^\/]+/ }
       end
     end
+    resources :component_whitelists do
+      member do
+        post 'destroy'           , :to => 'component_whitelists#destroy', :as => 'destroy'
+        post 'add'               , :to => 'component_whitelists#add'    , :as => 'add'    , :constraints => { :list => /[^\/]+/ }
+        post 'remove'            , :to => 'component_whitelists#remove' , :as => 'remove' , :constraints => { :list => /[^\/]+/ }
+        post 'default'           , :to => 'component_whitelists#default', :as => 'default', :constraints => { :list => /[^\/]+/ }
+      end
+    end
     member do
       get 'projects', :to => 'organisations#projects', :as => 'projects'
     end
@@ -125,14 +133,6 @@ Versioneye::Application.routes.draw do
     get  'emailsettings'       , :to => 'emailsettings#index'
     post 'emailsettings'       , :to => 'emailsettings#update'
     post 'test_email'          , :to => 'emailsettings#test_email'
-
-    get  'component_whitelists'              , :to => 'component_whitelists#index'
-    get  'component_whitelists/:name'        , :to => 'component_whitelists#show'   , :as => 'component_whitelists_show'   , :constraints => { :name => /[^\/]+/ }
-    post 'component_whitelists/create'       , :to => 'component_whitelists#create'
-    post 'component_whitelists/destroy'      , :to => 'component_whitelists#destroy', :as => 'component_whitelists_destroy'
-    post 'component_whitelists/:list/add'    , :to => 'component_whitelists#add'    , :as => 'component_whitelists_add'    , :constraints => { :list => /[^\/]+/ }
-    post 'component_whitelists/:list/remove' , :to => 'component_whitelists#remove' , :as => 'component_whitelists_remove' , :constraints => { :list => /[^\/]+/ }
-    post 'component_whitelists/:list/default', :to => 'component_whitelists#default', :as => 'component_whitelists_default', :constraints => { :list => /[^\/]+/ }
 
     get  'globalsettings'      , :to => 'globalsettings#index'
     post 'globalsettings'      , :to => 'globalsettings#update'
