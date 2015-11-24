@@ -30,7 +30,7 @@
       <%= render partial_map[@product.prod_type] %>
     <% end %>
 
-    <% if signed_in? == false %>
+    <% if signed_in? == false && !Settings.instance.environment.eql?('enterprise') %>
       <script type="text/javascript">
         load_dialog_follow('<%= @product.name %>', '<%= @product.prod_key %>', '<%= @product.language %>');
       </script>
