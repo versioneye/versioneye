@@ -25,7 +25,6 @@
             <li><%= link_to 'Notification Center', settings_notifications_path, :rel => "nofollow" %></li>
             <li><%= link_to 'Privacy'            , settings_privacy_path , :rel => "nofollow" %></li>
             <li><%= link_to 'API Key'            , settings_api_path     , :rel => "nofollow" %></li>
-            <li><%= link_to 'Component Whitelists', settings_component_whitelists_path, :rel => "nofollow" %></li>
             <li><%= link_to 'users'              , users_path, :rel => "nofollow" %></li>
             <hr/>
             <li><%= link_to 'Maven Repository'   , settings_mvnrepos_path , :rel => "nofollow" %></li>
@@ -47,10 +46,6 @@
               <li><%= link_to 'Plans & Pricing'    , settings_plans_path   , :rel => "nofollow" %></li>
               <li><%= link_to 'Payment History'    , settings_payments_path, :rel => "nofollow" %></li>
               <li><%= link_to 'Billing Address'    , settings_billing_path , :rel => "nofollow" %></li>
-            <% end %>
-
-            <% if !Rails.env.enterprise? || current_user.fetch_or_create_permissions.lwl == true %>
-              <li><%= link_to 'Component Whitelists', settings_component_whitelists_path, :rel => "nofollow" %></li>
             <% end %>
 
             <li><%= link_to 'Connect'            , settings_connect_path , :rel => "nofollow" %></li>
