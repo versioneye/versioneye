@@ -76,7 +76,7 @@ class User::ProjectsController < ApplicationController
     @child   = @project if @child.nil?
     @child   = add_dependency_classes( @child )
     @whitelists = LicenseWhitelistService.index( @project.organisation ) if @project.organisation
-    @cwls    = ComponentWhitelistService.index( current_user ) if current_user
+    @cwls     = ComponentWhitelistService.index( @project.organisation ) if @project.organisation
   end
 
 
@@ -394,7 +394,7 @@ class User::ProjectsController < ApplicationController
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
-    redirect_to "/user/projects/#{id}#tab-licenses"
+    redirect_to "/user/projects/#{id}#tab-settings"
   rescue => e
     flash[:error] = "An error occured (#{e.message}). Please contact the VersionEye Team."
     Rails.logger.error e.message
@@ -406,13 +406,13 @@ class User::ProjectsController < ApplicationController
     id        = params[:id]
     list_name = params[:whitelist]
     old_lwl_name = @project.component_whitelist_name
-    if ComponentWhitelistService.update_project @project, current_user, list_name
+    if ComponentWhitelistService.update_project @project, @project.organisation, list_name
       flash[:success] = "We saved your changes."
       Auditlog.add current_user, "Project", @project.ids, "Changed Component Whitelist from `#{old_lwl_name}` to `#{list_name}`"
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
-    redirect_to "/user/projects/#{id}#tab-licenses"
+    redirect_to "/user/projects/#{id}#tab-settings"
   rescue => e
     flash[:error] = "An error occured (#{e.message}). Please contact the VersionEye Team."
     Rails.logger.error e.message
