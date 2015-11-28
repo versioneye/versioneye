@@ -247,6 +247,8 @@ Versioneye::Application.routes.draw do
         post 'save_visibility'
         post 'save_whitelist'
         post 'save_cwl'
+        post 'transfer'
+        post 'team'
         post 'transitive_dependencies'
         post 'save_notify_after_api_update'
         post 'reparse'
