@@ -1,7 +1,7 @@
 class User::ProjectsController < ApplicationController
 
   before_filter :authenticate,  :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export, :lwl_csv_export]
-  before_filter :collaborator?, :only   => [:add_collaborator, :save_period, :save_visibility, :save_whitelist, :save_cwl, :update, :update_name, :destroy]
+  before_filter :collaborator?, :only   => [:add_collaborator, :save_period, :save_visibility, :save_whitelist, :save_cwl, :update, :update_name, :destroy, :transfer, :team]
   before_filter :lwl_export_permission?, :only => [:lwl_export, :lwl_csv_export]
 
 
@@ -77,6 +77,9 @@ class User::ProjectsController < ApplicationController
     @child   = add_dependency_classes( @child )
     @whitelists = LicenseWhitelistService.index( @project.organisation ) if @project.organisation
     @cwls     = ComponentWhitelistService.index( @project.organisation ) if @project.organisation
+    if @project.user && @project.user.ids.eql?(current_user.ids)
+      @orgas = OrganisationService.index( current_user, true )
+    end
   end
 
 
@@ -409,6 +412,51 @@ class User::ProjectsController < ApplicationController
     if ComponentWhitelistService.update_project @project, @project.organisation, list_name
       flash[:success] = "We saved your changes."
       Auditlog.add current_user, "Project", @project.ids, "Changed Component Whitelist from `#{old_lwl_name}` to `#{list_name}`"
+    else
+      flash[:error] = "Something went wrong. Please try again later."
+    end
+    redirect_to "/user/projects/#{id}#tab-settings"
+  rescue => e
+    flash[:error] = "An error occured (#{e.message}). Please contact the VersionEye Team."
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
+  end
+
+
+  def transfer
+    id      = params[:id]
+    orga_id = params[:orga_id]
+    organisation = Organisation.find orga_id
+    if @project.user && @project.user.ids.eql?(current_user.ids) &&
+      organisation && OrganisationService.owner?( organisation, current_user )
+      @project.organisation = organisation
+      @project.teams = [organisation.owner_team]
+      if @project.save
+        flash[:success] = "Ownership of the project was transfered to #{organisation.name}."
+        Auditlog.add current_user, "Project", @project.ids, "Ownership was transfered to organisation `#{organisation.name}`."
+      end
+    else
+      flash[:error] = "Something went wrong. Please try again later."
+    end
+    redirect_to "/user/projects/#{id}#tab-settings"
+  rescue => e
+    flash[:error] = "An error occured (#{e.message}). Please contact the VersionEye Team."
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join('\n')
+  end
+
+
+  def team
+    id        = params[:id]
+    team_name = params[:team_name]
+    organisation = @project.organisation
+    if OrganisationService.owner?( organisation, current_user )
+      team = organisation.team_by team_name
+      @project.teams = [team]
+      if @project.save
+        flash[:success] = "Project is assigned to #{team_name}."
+        Auditlog.add current_user, "Project", @project.ids, "Project was assigned to team `#{team_name}`."
+      end
     else
       flash[:error] = "Something went wrong. Please try again later."
     end
