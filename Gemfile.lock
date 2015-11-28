@@ -5,10 +5,12 @@ GIT
   specs:
     gravatar_image_tag (1.2.0)
 
-PATH
-  remote: ~/workspace/versioneye/versioneye-core
+GIT
+  remote: git@github.com:versioneye/versioneye-core.git
+  revision: 53c55e75ed81270ea9ef775b35d5b85741f0b60e
+  tag: v7.34.2
   specs:
-    versioneye-core (7.34.1)
+    versioneye-core (7.34.2)
       actionmailer (~> 4.2.2)
       aws-sdk (~> 2.2.0)
       bundler (~> 1.10.6)
@@ -76,12 +78,12 @@ GEM
     amq-protocol (2.0.0)
     ansi (1.5.0)
     arel (6.0.3)
-    aws-sdk (2.2.1)
-      aws-sdk-resources (= 2.2.1)
-    aws-sdk-core (2.2.1)
+    aws-sdk (2.2.3)
+      aws-sdk-resources (= 2.2.3)
+    aws-sdk-core (2.2.3)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.1)
-      aws-sdk-core (= 2.2.1)
+    aws-sdk-resources (2.2.3)
+      aws-sdk-core (= 2.2.3)
     bourbon (4.2.6)
       sass (~> 3.4)
       thor (~> 0.19)
@@ -162,7 +164,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
-    mime-types (2.6.2)
+    mime-types (2.99)
     mini_portile (0.6.2)
     minitest (5.8.3)
     mongoid (4.0.2)

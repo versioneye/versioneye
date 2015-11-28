@@ -8,7 +8,7 @@
       <h4> <%= proj[:name] %></h4>
     </a>
 
-    <%= render :partial => "user/projects/helpers/security_items", :locals => { :dependencies => proj[:dependencies] } %><br/>
+    <%= render :partial => "user/projects/helpers/security_items", :locals => { :dependencies => proj[:sv] } %><br/>
 
     </br>
   <% end %>
