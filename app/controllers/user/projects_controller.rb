@@ -9,6 +9,7 @@ class User::ProjectsController < ApplicationController
     @project  = Project.new
 
     filter = {}
+    filter[:organisation] = params[:organisation]
     filter[:name]     = params[:name]
     filter[:language] = params[:language]
     filter[:language] = 'ALL' if filter[:language].to_s.empty?
