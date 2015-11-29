@@ -23,8 +23,12 @@ class TeamsController < ApplicationController
 
   def add
     @team = Team.where(:name => params[:id], :organisation_id => @organisation.ids).first
-    user = User.find_by_username params[:username]
-    @team.add_member user
+    added = TeamService.add params[:id], @organisation.ids, params[:username], current_user
+    if added == true
+      flash[:success] = "#{params[:username]} was added to the team."
+    else
+      flash[:error] = "Something went wrong. Please contact the VersionEye team."
+    end
     redirect_to organisation_team_path(@organisation, @team)
   end
 
