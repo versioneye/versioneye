@@ -96,7 +96,7 @@ class LicenseWhitelistsController < ApplicationController
     resp = LicenseWhitelistService.remove @organisation, params[:id], params[:name]
     if resp
       lwl = LicenseWhitelistService.fetch_by @organisation, params[:id]
-      Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Removed \"#{params[:id]}\" from \"#{params[:id]}\""
+      Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Removed \"#{params[:name]}\" from \"#{params[:id]}\""
       flash[:success] = "License removed successfully."
     else
       flash[:error] = "An error occured. Not able to remove the license from the list."
