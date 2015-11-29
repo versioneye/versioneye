@@ -31,7 +31,15 @@
     <p>
       To whitelist all artifacts in the `org.apache` group use this:
     </p>
+    <p>
+      To whitelist non Java components use this pattern:
+    </p>
     <pre>org.apache</pre>
+    <pre>LANGUAGE : PROD_KEY : VERSION</pre>
+    <p>
+      For example:
+    </p>
+    <pre>ruby:rails:4.0.0</pre>
 
     <%= form_tag(add_organisation_component_whitelist_path(@organisation.name, :id => @component_whitelist.name), :class => 'form-inline', :style => "padding: 15px 0 0 0; margin:0;") do %>
       <div class="form-group input-append">
