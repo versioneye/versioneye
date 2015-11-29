@@ -15,12 +15,15 @@
       <form id="form" action="/user/projects" method="GET" class='form-inline' style="padding: 0; margin:0;" >
 
         <div class="form-group" style="padding-bottom: 25px;">
-          <select name="organisation"  id="organisation" class="form-control" >
-            <option value=""  ><%= current_user.fullname %></option>
-            <% OrganisationService.index(current_user).each do |orga| %>
-              <option value="<%= orga.ids %>" <%= "selected" if params[:organisation].to_s.eql?(orga.ids) %> ><%= orga.name %></option>
-            <% end %>
-          </select>
+          <% orgas = OrganisationService.index(current_user) %>
+          <% if orgas && !orgas.empty? %>
+            <select name="organisation"  id="organisation" class="form-control" >
+              <option value=""  ><%= current_user.fullname %></option>
+              <% OrganisationService.index(current_user).each do |orga| %>
+                <option value="<%= orga.ids %>" <%= "selected" if params[:organisation].to_s.eql?(orga.ids) %> ><%= orga.name %></option>
+              <% end %>
+            </select>
+          <% end %>
           <%= text_field_tag :name, params[:name], :id => "name", :class => 'form-control', :placeholder => 'project name' %>
           <select name="language"  id="language" class="form-control" >
             <option value="ALL"  >ALL</option>
@@ -51,9 +54,9 @@
         <thead>
           <tr>
             <th></th>
-            <th><a href="/user/projects?name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=name">Projects</a></th>
-            <th><a href="/user/projects?name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=out_dated">Versions</a></th>
-            <th><a href="/user/projects?name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=license_violations">Licenses</a></th>
+            <th><a href="/user/projects?organisation=<%=params[:organisation]%>&amp;name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=name">Projects</a></th>
+            <th><a href="/user/projects?organisation=<%=params[:organisation]%>&amp;name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=out_dated">Versions</a></th>
+            <th><a href="/user/projects?organisation=<%=params[:organisation]%>&amp;name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=license_violations">Licenses</a></th>
           </tr>
         </thead>
         <%= render partial: "/user/projects/helpers/project" , collection: @projects %>
