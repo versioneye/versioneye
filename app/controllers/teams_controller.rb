@@ -18,18 +18,18 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = Team.where(:id => params[:id], :organisation_id => @organisation.ids).first
+    @team = Team.where(:name => params[:id], :organisation_id => @organisation.ids).first
   end
 
   def add
-    @team = Team.where(:id => params[:id], :organisation_id => @organisation.ids).first
+    @team = Team.where(:name => params[:id], :organisation_id => @organisation.ids).first
     user = User.find_by_username params[:username]
     @team.add_member user
     redirect_to organisation_team_path(@organisation, @team)
   end
 
   def remove
-    @team = Team.where(:id => params[:id], :organisation_id => @organisation.ids).first
+    @team = Team.where(:name => params[:id], :organisation_id => @organisation.ids).first
     user = User.find_by_username params[:username]
     if @team.name.eql?( Team::A_OWNERS ) && @team.members.count == 1
       flash[:error] = "There must be at least 1 user at the #{Team::A_OWNERS} team!"
@@ -42,7 +42,7 @@ class TeamsController < ApplicationController
   end
 
   def delete
-    @team = Team.where(:id => params[:id], :organisation_id => @organisation.ids).first
+    @team = Team.where(:name => params[:id], :organisation_id => @organisation.ids).first
     if @team.name.eql?( Team::A_OWNERS )
       flash[:error] = "The #{Team::A_OWNERS} team can not be deleted!"
     else
