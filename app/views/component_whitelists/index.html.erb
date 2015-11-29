@@ -1,23 +1,25 @@
 
 <div class="col-md-3" >
-  <%= render 'settings/navi' %>
+  <%= render 'organisations/navi' %>
 </div>
 
 <div class="col-md-9" >
 
   <div class="content_header_def" >
-    License Whitelists
+    Component Whitelists
   </div>
 
   <div class="content" >
 
     <p>
-      Create a license whitelist and assign it to your projects to ensure a license policy.
+      With a component whitelist you can whitelist artifacts or whole groupIds. Dependencies who are on a component
+      whitelist are marked green in the license tab, even if they violate the license whitelist or the license
+      is unknown.
     </p>
 
     <p>
       </br>
-      <%= form_for(:license_whitelist, :url => settings_license_whitelists_create_path, :html => {:class => 'form-inline'} ) do |f|  %>
+      <%= form_for(:component_whitelist, :url => organisation_component_whitelists_path, :html => {:class => 'form-inline'} ) do |f|  %>
         <div class="form-group">
           <%= f.label :name, :class => 'control-label' %>
           <%= f.text_field :name, :class => "form-control" %>
@@ -31,8 +33,8 @@
 
     <table>
       <colgroup>
-        <col width="75px;" />
-        <col width="120px;" />
+        <col width="75px;"j />
+        <col width="120px;"j />
         <col width="*" />
       </colgroup>
 
@@ -41,14 +43,14 @@
 
           <tr>
             <td>
-              <%= form_tag( settings_license_whitelists_destroy_path , :method => "post", :style => 'margin: 0;') do  %>
+              <%= form_tag( destroy_organisation_component_whitelist_path(@organisation, wlist) , :method => "post", :style => 'margin: 0;') do  %>
                 <input id="name" name="name" type="hidden" value="<%= wlist.name.to_s %>" />
                 <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
               <% end %>
             </td>
             <td>
               <% if wlist.default == false %>
-                <%= form_tag( settings_license_whitelists_default_path(:list => wlist.name.to_s) , :method => "post", :style => 'margin: 0;') do %>
+                <%= form_tag( default_organisation_component_whitelist_path(@organisation.name, :id => wlist.name.to_s) , :method => "post", :style => 'margin: 0;') do %>
                   <button type="submit" class="btn btn-success" >Make Default</button>
                 <% end %>
               <% else %>
@@ -56,7 +58,7 @@
               <% end %>
             </td>
             <td>
-              <%= link_to wlist.name, settings_license_whitelists_show_path(wlist) %>
+              <%= link_to wlist.name, organisation_component_whitelist_path(@organisation, wlist) %>
             </td>
           </tr>
 

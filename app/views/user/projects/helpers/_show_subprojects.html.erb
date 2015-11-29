@@ -7,13 +7,13 @@
   <% end %>
 
   <div style="padding-bottom: 5px;">
-    <a href="/user/projects/<%= parent_project.id %>?child=summary#tab-<%= tab_id %>">
-      <span class="label label-<%= subproject_label_color summary_selected, parent_project.id %>">Summary</span>
+    <a style="text-decoration: none;" href="/user/projects/<%= parent_project.id %>?child=summary#tab-<%= tab_id %>">
+      <span style="font-size: 16px; line-height: 200%;" class="label label-<%= subproject_label_color( summary_selected, parent_project.id ) %>">Summary</span>
     </a>
-    <a href="/user/projects/<%= parent_project.id %>#tab-<%= tab_id %>"><span class="label label-<%= subproject_label_color selected_id, parent_project.id %>"><%= subproject_name( parent_project ) %></span></span></a>
+    <a style="text-decoration: none;" href="/user/projects/<%= parent_project.id %>#tab-<%= tab_id %>"><span style="font-size: 16px; line-height: 200%;;" class="label label-<%= subproject_label_color( selected_id, parent_project.id ) %>"><%= subproject_name( parent_project ) %></span></span></a>
     <% parent_project.children.each do |project| %>
-      <a href="/user/projects/<%= parent_project.id %>?child=<%= project.id %>#tab-<%= tab_id %>">
-        <span class="label label-<%= subproject_label_color child_project.id, project.id %>"><%= subproject_name(project) %></span>
+      <a style="text-decoration: none;" href="/user/projects/<%= parent_project.id %>?child=<%= project.id %>#tab-<%= tab_id %>">
+        <span style="font-size: 16px; line-height: 200%;;" class="label label-<%= subproject_label_color( child_project.id, project.id ) %>"><%= subproject_name(project) %></span>
       </a>
     <% end %>
   </div>
@@ -23,5 +23,4 @@
         unmerge <%= subproject_name(child_project) %>
       </a>
     </div>
-  <% end %> 
-
+  <% end %>

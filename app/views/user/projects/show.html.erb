@@ -63,9 +63,13 @@
         </div>
       <% end %>
 
-      <% if (current_user.nil? && @project.user) || ( @project.user && current_user && !@project.user.id.to_s.eql?(current_user.id.to_s) ) %>
+      <% if ( @project.organisation ) %>
         <div style="padding-top: 10px;">
-          <b>Created by:</b> <%= link_to @project.user.fullname, user_path(@project.user) %>
+          <b>Organisation:</b> <%= @project.organisation.name %>
+        </div>
+      <% elsif @project.user %>
+        <div style="padding-top: 10px;">
+          <b>Project owner:</b> <%= link_to @project.user.fullname, user_path(@project.user) %>
         </div>
       <% end %>
 
@@ -154,9 +158,6 @@
           <% end %>
           <% if project_member?( @project, current_user ) %>
             <li>
-              <a data-target="#collaborators" data-toggle="tab" onclick="page_view('ga_project_collaborators')"><i class = "fa fa-users">&nbsp;</i>Collaborators</a>
-            </li>
-            <li>
               <a data-target="#settings" data-toggle="tab" onclick="page_view('ga_project_settings')"><i class = "fa fa-cogs">&nbsp;</i>Settings </a>
             </li>
           <% end %>
@@ -172,11 +173,6 @@
           </div>
 
           <div id="licenses" class="tab-pane">
-
-            <% if project_member?( @project, current_user ) %>
-              <%= render "user/projects/helpers/license_whitelist_picker" %>
-              <%= render "user/projects/helpers/component_whitelist_picker" %>
-            <% end %>
 
             <%= render partial: "user/projects/helpers/show_subprojects", locals: {parent_project: @project, child_project: @child, tab_id: 'licenses'} %>
 
@@ -199,10 +195,6 @@
           <% end %>
 
           <% if project_member?( @project, current_user ) %>
-            <div id="collaborators" class="tab-pane" style="min-height: 360px;">
-              <%= render partial: "collaborators" %>
-            </div>
-
             <div id="settings" class="tab-pane">
               <%=  render partial: "project_settings" %>
             </div>

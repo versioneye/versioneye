@@ -63,12 +63,11 @@ module ProjectsHelper
 
   def project_member?(project, user)
     return false if project.nil?
-    return false if project.user.nil?
     return false if user.nil?
 
     return true if user.admin == true
-    return true if project.user.ids.eql?( user.ids )
-    return true if !project.collaborator( user ).nil?
+    return true if project.user && project.user.ids.eql?( user.ids )
+    return true if project.is_collaborator?( user )
 
     return false
   end
@@ -109,10 +108,18 @@ module ProjectsHelper
   end
 
   def merge_to_projects project
+    if project.organisation
+      return merge_to_user_or_orga_projects project, project.organisation.projects
+    else
+      return merge_to_user_or_orga_projects project, current_user.projects
+    end
+  end
+
+  def merge_to_user_or_orga_projects project, projects
     projs = []
     parents = []
     singles = []
-    current_user.projects.each do |pro|
+    projects.each do |pro|
       next if pro.id.to_s.eql?(project.id.to_s)
       next if pro.parent_id
       if pro.children.count > 0

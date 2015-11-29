@@ -50,25 +50,68 @@
     <br/>
 
     <% if @project.parent_id.nil? && @project.children.empty? %>
-    <form action="<%= merge_user_project_path( @project ) %>" method="post" class="form-inline" >
-      <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-      <div>
-        Merge this project as subproject into another project.
-      </div>
-      <div class="form-group">
-        <select name="parent" class="form-control" >
-          <% merge_to_projects(@project).each do |project| %>
-            <option value="<%= project.id %>" >
-              <% if project.has_kids == 1 %>
-                parent:
+      <% projects_to_merge_in = merge_to_projects(@project) %>
+      <% if projects_to_merge_in && !projects_to_merge_in.empty? %>
+        <form action="<%= merge_user_project_path( @project ) %>" method="post" class="form-inline" >
+          <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+          <div>
+            Merge this project as subproject into another project.
+          </div>
+          <div class="form-group">
+            <select name="parent" class="form-control" >
+              <% merge_to_projects(@project).each do |project| %>
+                <option value="<%= project.id %>" >
+                  <% if project.has_kids == 1 %>
+                    parent:
+                  <% end %>
+                  <%= project.name %>
+                </option>
               <% end %>
-              <%= project.name %>
-            </option>
-          <% end %>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary" >Merge</button>
-    </form>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" >Merge</button>
+        </form>
+        <br/>
+      <% end %>
+    <% end %>
+
+    <% if project_member?( @project, current_user ) %>
+      <%= render "user/projects/helpers/license_whitelist_picker" %>
+      <%= render "user/projects/helpers/component_whitelist_picker" %>
+    <% end %>
+
+    <% if @project.user && @project.user.ids.eql?(current_user.ids) && @orgas && !@orgas.empty? %>
+      <form action="<%= transfer_user_project_path(@project) %>" method="post" class="form-inline" >
+        <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+        <div>
+          Transfer ownership to an organisation.
+        </div>
+        <div class="form-group" class="form-control" >
+          <select name="orga_id" class="form-control" >
+            <% @orgas.each do |orga| %>
+              <option value="<%= orga.ids %>" ><%= orga.name %></option>
+            <% end %>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" >Transfer</button>
+      </form>
+    <% end %>
+
+    <% if @project.organisation && OrganisationService.owner?( @project.organisation, current_user ) %>
+      <form action="<%= team_user_project_path(@project) %>" method="post" class="form-inline" >
+        <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+        <div>
+          Assign a team to the project. The team members will receive the email notifications and they are allowed to edit/update this project.
+        </div>
+        <div class="form-group" class="form-control" >
+          <select name="team_name" class="form-control" >
+            <% @project.organisation.teams.each do |team| %>
+              <option value="<%= team.name %>" <%= !@project.teams.empty? && @project.teams.first.name.eql?(team.name)  ? 'selected' : '' %> ><%= team.name %></option>
+            <% end %>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" >Transfer</button>
+      </form>
     <% end %>
 
   </div>

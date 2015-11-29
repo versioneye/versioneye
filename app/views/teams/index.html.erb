@@ -1,0 +1,62 @@
+
+<div class="col-md-3" >
+  <%= render 'organisations/navi' %>
+</div>
+
+<div class="col-md-9" >
+
+  <div class="content_header_def" >
+    Teams at <%= @organisation.name %>
+  </div>
+
+  <div class="content" >
+
+    <p>
+      Here you can add/remove users to/from your teams.
+      By assigning a team to a project,
+      all members of the team can see the project details,
+      receive the project notification emails and they can modify/update the project with their own API key.
+    </p>
+
+    <p>
+      </br>
+      <%= form_for(:teams, :html => {:class => 'form-inline'} ) do |f|  %>
+        <div class="form-group">
+          <%= f.label :name, :class => 'control-label' %>
+          <%= f.text_field :name, :class => "form-control" %>
+          <button id="sign_in_button" type="submit" class="btn btn-big btn-primary" >Create New Team</button>
+        </div>
+      <% end %>
+    </p>
+
+    <br/>
+    <br/>
+
+    <table>
+      <colgroup>
+        <col width="75px;" />
+        <col width="*" />
+      </colgroup>
+
+      <% @teams.each do |team| %>
+        <% next if team.name.to_s.empty? %>
+
+        <tr>
+          <td>
+            <%= form_tag( delete_organisation_team_path(@organisation, team) , :method => "post", :style => 'margin: 0;') do  %>
+              <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to team.name, organisation_team_path(@organisation, team) %>
+          </td>
+        </tr>
+
+      <% end %>
+
+    </table>
+
+  </div>
+
+</div>
+

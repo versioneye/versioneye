@@ -8,5 +8,6 @@ class ApplicationController < ActionController::Base
   include ProjectsHelper
   include RefersHelper
   include PlanHelper
+  include OrganisationHelper
 
 end

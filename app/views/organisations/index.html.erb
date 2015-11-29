@@ -1,0 +1,25 @@
+
+<div class="col-md-3" >
+
+</div>
+<div class="col-md-9">
+
+  <div class="content_header_def" >
+    Organisations
+  </div>
+
+  <div class="content" >
+
+    <div class="scm_repo">
+      <a href="<%= new_organisation_path %>">Create new organisation</a>
+    </div>
+
+    <% @organisations.each do |orga| %>
+      <div class="scm_repo">
+        <a href="<%= organisation_path(orga) %>"><%= orga.name %></a>
+      </div>
+    <% end %>
+
+  </div>
+
+</div>
