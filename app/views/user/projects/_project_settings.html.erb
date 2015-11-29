@@ -95,6 +95,7 @@
         </div>
         <button type="submit" class="btn btn-primary" >Transfer</button>
       </form>
+      <br/>
     <% end %>
 
     <% if @project.organisation && OrganisationService.owner?( @project.organisation, current_user ) %>
