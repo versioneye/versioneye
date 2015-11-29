@@ -93,7 +93,7 @@ class LicenseWhitelistsController < ApplicationController
   end
 
   def remove
-    resp = LicenseWhitelistService.remove @organisation, params[:id], params[:id]
+    resp = LicenseWhitelistService.remove @organisation, params[:id], params[:name]
     if resp
       lwl = LicenseWhitelistService.fetch_by @organisation, params[:id]
       Auditlog.add current_user, 'LicenseWhitelist', lwl.id.to_s, "Removed \"#{params[:id]}\" from \"#{params[:id]}\""
