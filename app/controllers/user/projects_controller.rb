@@ -91,6 +91,8 @@ class User::ProjectsController < ApplicationController
     username     = current_user.username if username.to_s.empty?
     flatten      = params[:flatten]
     flatten      = true if flatten.to_s.empty?
+    orga         = params[:orga]
+    organisation = Organisation.where(:name => orga).first
     date_string  = DateTime.now.strftime("%d_%m_%Y")
     user = User.find_by_username username
     user = current_user if user.nil?
@@ -98,9 +100,9 @@ class User::ProjectsController < ApplicationController
     projects = user.projects
     lwl = nil
     cwl = nil
-    lwl_default_id = LicenseWhitelistService.fetch_default_id user
+    lwl_default_id = LicenseWhitelistService.fetch_default_id organisation
     lwl = LicenseWhitelist.find(lwl_default_id) if lwl_default_id
-    cwl_default_id = ComponentWhitelistService.fetch_default_id user
+    cwl_default_id = ComponentWhitelistService.fetch_default_id organisation
     cwl = ComponentWhitelist.find(cwl_default_id) if cwl_default_id
     if type.eql?('pdf')
       pdf = LwlPdfService.process_all projects, lwl, cwl, flatten
