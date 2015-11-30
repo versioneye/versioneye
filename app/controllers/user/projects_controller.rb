@@ -87,17 +87,13 @@ class User::ProjectsController < ApplicationController
   def lwl_export_all
     type         = params[:type].to_s.downcase
     type         = 'pdf' if type.to_s.empty?
-    username     = params[:username]
-    username     = current_user.username if username.to_s.empty?
     flatten      = params[:flatten]
     flatten      = true if flatten.to_s.empty?
     orga         = params[:orga]
     organisation = Organisation.where(:name => orga).first
+    projects     = organisation.projects
+    project_name = organisation.name
     date_string  = DateTime.now.strftime("%d_%m_%Y")
-    user = User.find_by_username username
-    user = current_user if user.nil?
-    project_name = user.username
-    projects = user.projects
     lwl = nil
     cwl = nil
     lwl_default_id = LicenseWhitelistService.fetch_default_id organisation
