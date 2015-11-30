@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: d4c54f7118cb95ad9ed2511289db23bfeacf3016
-  tag: v8.1.0
+  revision: 33299ac2a2669cbc7c60cdd257ad79e96521f8a0
+  tag: v8.1.4
   specs:
-    versioneye-core (8.1.0)
+    versioneye-core (8.1.4)
       actionmailer (~> 4.2.2)
       aws-sdk (~> 2.2.0)
       bundler (~> 1.10.6)
@@ -165,7 +165,7 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (2.99)
-    mini_portile (0.6.2)
+    mini_portile2 (2.0.0)
     minitest (5.8.3)
     mongoid (4.0.2)
       activemodel (~> 4.0)
@@ -183,8 +183,8 @@ GEM
     naturalsorter (3.0.11)
     net-ldap (0.12.1)
     netrc (0.11.0)
-    nokogiri (1.6.6.4)
-      mini_portile (~> 0.6.0)
+    nokogiri (1.6.7)
+      mini_portile2 (~> 2.0.0.rc2)
     oauth (0.4.7)
     octokit (4.2.0)
       sawyer (~> 0.6.0, >= 0.5.3)
