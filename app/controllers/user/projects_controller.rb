@@ -180,7 +180,7 @@ class User::ProjectsController < ApplicationController
     id    = params[:id]
     style = ''
     style = "__#{params[:style]}" if !params[:style].to_s.empty?
-    key = "#{id}#{style}"
+    key   = "#{id}#{style}"
     badge = BadgeService.badge_for key
     send_data badge.svg, :type => "image/svg+xml", :disposition => 'inline'
   rescue => e
