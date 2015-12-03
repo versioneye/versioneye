@@ -55,5 +55,4 @@ class TeamsController < ApplicationController
     redirect_to organisation_teams_path(@organisation)
   end
 
-
 end
