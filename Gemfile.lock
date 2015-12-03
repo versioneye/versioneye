@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 64486d8448d85a9453631128b85cd29953f2b830
-  tag: v8.1.5
+  revision: 33549f8322833a34c9174618914522b7ded8ab4d
+  tag: v8.2.0
   specs:
-    versioneye-core (8.1.5)
+    versioneye-core (8.2.0)
       actionmailer (~> 4.2.2)
       aws-sdk (~> 2.2.0)
       bundler (~> 1.10.6)
@@ -115,7 +115,7 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     connection_pool (2.2.0)
-    crack (0.4.2)
+    crack (0.4.3)
       safe_yaml (~> 1.0.0)
     dalli (2.7.4)
     database_cleaner (1.5.1)

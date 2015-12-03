@@ -3,36 +3,41 @@
   <% tr_class='flash danger' %>
 <% end %>
 <tr class="<%= tr_class %>">
+  <% if defined?(@select_col) && @select_col == true %>
     <td>
-      <% prog_lang = Product.encode_language(project.language) %>
-      <span class="icon_<%= prog_lang %> small on" ></span>
+      <input type='checkbox' id="p_check_<%= project.ids %>" value="<%= project.ids %>" />
     </td>
-    <td>
-      <%= link_to project.name, user_project_path(project, :child => 'summary'), :class => 'searchResultLink' %>
-      <% if project.public == false %>
-        <span class="fa fa-lock" title="Private VersionEye Project"></span>
-      <% end %>
-      <% if project.sv_count_sum > 0 %>
-        <span class="fa fa-shield" title="Security Alert!"> <%= project.sv_count_sum %>  </span>
-      <% end %>
-      <% if !project.parsing_errors.to_a.empty? %>
-        <i class="fa fa-exclamation-triangle" title="Some errors occured by parsing this project."></i>
-      <% end %>
-    </td>
-    <td>
-      <span style="color: <%= outdated_color(project) %>; font-size: 14px; font-weight: bold;" title="out-dated dependencies" >
-        <%= project.out_number_sum %>
-      </span> /
-      <span title="all dependencies" >
-        <%= project.dep_number_sum %>
-      </span>
-    </td>
-    <td>
-      <span style="color: <%= licenses_red_color(project) %>; font-size: 14px; font-weight: bold;" title="licenses violating the license whitelist">
-        <%= project.licenses_red_sum %>
-      </span> :
-      <span style="color: <%= licenses_unknown_color(project) %>; font-size: 14px; font-weight: bold;" title="unknown licenses">
-        <%= project.licenses_unknown_sum %>
-      </span>
-    </td>
+  <% end %>
+  <td>
+    <% prog_lang = Product.encode_language(project.language) %>
+    <span class="icon_<%= prog_lang %> small on" ></span>
+  </td>
+  <td>
+    <%= link_to project.name, user_project_path(project, :child => 'summary'), :class => 'searchResultLink' %>
+    <% if project.public == false %>
+      <span class="fa fa-lock" title="Private VersionEye Project"></span>
+    <% end %>
+    <% if project.sv_count_sum > 0 %>
+      <span class="fa fa-shield" title="Security Alert!"> <%= project.sv_count_sum %>  </span>
+    <% end %>
+    <% if !project.parsing_errors.to_a.empty? %>
+      <i class="fa fa-exclamation-triangle" title="Some errors occured by parsing this project."></i>
+    <% end %>
+  </td>
+  <td>
+    <span style="color: <%= outdated_color(project) %>; font-size: 14px; font-weight: bold;" title="out-dated dependencies" >
+      <%= project.out_number_sum %>
+    </span> /
+    <span title="all dependencies" >
+      <%= project.dep_number_sum %>
+    </span>
+  </td>
+  <td>
+    <span style="color: <%= licenses_red_color(project) %>; font-size: 14px; font-weight: bold;" title="licenses violating the license whitelist">
+      <%= project.licenses_red_sum %>
+    </span> :
+    <span style="color: <%= licenses_unknown_color(project) %>; font-size: 14px; font-weight: bold;" title="unknown licenses">
+      <%= project.licenses_unknown_sum %>
+    </span>
+  </td>
 </tr>

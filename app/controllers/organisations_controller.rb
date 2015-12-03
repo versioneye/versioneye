@@ -2,7 +2,7 @@ class OrganisationsController < ApplicationController
 
   before_filter :authenticate
   before_filter :auth_org_member, :only => [:projects, :show]
-  before_filter :auth_org_owner,  :only => [:update, :delete]
+  before_filter :auth_org_owner,  :only => [:update, :delete, :assign]
 
   def new
     @organisation = Organisation.new
@@ -47,6 +47,19 @@ class OrganisationsController < ApplicationController
 
   def projects
     @projects = @organisation.projects
+  end
+
+  def assign
+    @team = Team.where(:name => params[:team], :organisation_id => @organisation.ids).first
+    pids = params[:project_ids].split(",")
+    TeamService.assign @organisation.ids, @team.name, pids, current_user
+    flash[:success] = "Projects have been assigned to the teams."
+    redirect_to :back
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    flash[:error] = "ERROR: #{e.message}"
+    redirect_to :back
   end
 
 

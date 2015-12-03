@@ -76,7 +76,8 @@ Versioneye::Application.routes.draw do
       end
     end
     member do
-      get 'projects', :to => 'organisations#projects', :as => 'projects'
+      get  'projects', :to => 'organisations#projects', :as => 'projects'
+      post 'assign'  , :to => 'organisations#assign'  , :as => 'assign'
     end
   end
 

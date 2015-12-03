@@ -12,7 +12,8 @@
     <div id="projects" >
       <table class="table table-striped" style="width: 100%">
         <colgroup>
-          <col width="35px;"j />
+          <col width="30px;" />
+          <col width="35px;" />
           <col width="*" />
           <col width="*" />
           <col width="*" />
@@ -20,14 +21,46 @@
         <thead>
           <tr>
             <th></th>
+            <th></th>
             <th>Projects</th>
             <th>Versions</th>
             <th>Licenses</th>
           </tr>
         </thead>
-        <%= render partial: "/user/projects/helpers/project" , collection: @projects %>
+        <% @select_col = true %>
+        <%= render partial: "/user/projects/helpers/project" , :collection => @projects %>
       </table>
+    </div>
+    <div>
+      Assign selected projects to the selected team:
+      <form action="<%= assign_organisation_path( @organisation ) %>" method="post" class="form-inline" >
+        <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+        <input type="hidden" name="project_ids" id="project_ids" />
+        <select name="team" class="form-control" >
+          <% @organisation.teams.each do |team| %>
+            <option value="<%= team.name %>" %><%= team.name %></option>
+          <% end %>
+        </select>
+        <button type="submit" class="btn btn-primary" onclick="fetch_projects();" >Assign</button>
+      </form>
     </div>
   </div>
 
 </div>
+
+<script type="text/javascript">
+
+  function fetch_projects(){
+    var inputs = document.getElementsByTagName("input");
+    var ids = [];
+    for(var i = 0; i < inputs.length; i++) {
+        if(inputs[i].type == "checkbox" && inputs[i].checked == true ) {
+            console.info( inputs[i].value );
+            ids.push( inputs[i].value )
+        }
+    }
+    var pids = document.getElementById("project_ids");
+    pids.value = ids.join(",");
+  }
+
+</script>
