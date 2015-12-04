@@ -65,7 +65,7 @@
 
       <% if ( @project.organisation ) %>
         <div style="padding-top: 10px;">
-          <b>Organisation:</b> <%= @project.organisation.name %>
+          <b>Organisation:</b> <%= link_to @project.organisation.name, projects_organisation_path( @project.organisation ) %>
         </div>
       <% elsif @project.user %>
         <div style="padding-top: 10px;">
