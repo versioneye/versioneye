@@ -22,9 +22,9 @@
           <tr>
             <th></th>
             <th></th>
-            <th>Projects</th>
-            <th>Versions</th>
-            <th>Licenses</th>
+            <th><a href="/organisations/<%= @organisation.name %>/projects?sort=name">Projects</a></th>
+            <th><a href="/organisations/<%= @organisation.name %>/projects?sort=out_dated">Versions</a></th>
+            <th><a href="/organisations/<%= @organisation.name %>/projects?sort=license_violations">Licenses</a></th>
           </tr>
         </thead>
         <% @select_col = true %>

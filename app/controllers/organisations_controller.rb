@@ -46,7 +46,9 @@ class OrganisationsController < ApplicationController
   end
 
   def projects
-    @projects = @organisation.projects.parents
+    filter = {}
+    filter[:organisation] = @organisation.ids
+    @projects = ProjectService.index current_user, filter, params[:sort]
   end
 
   def assign
