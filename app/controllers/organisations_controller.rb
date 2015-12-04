@@ -46,7 +46,7 @@ class OrganisationsController < ApplicationController
   end
 
   def projects
-    @projects = @organisation.projects
+    @projects = @organisation.projects.parents
   end
 
   def assign
