@@ -15,7 +15,6 @@
       Just start typing and add as many users to your Team as you want.
     </p>
 
-
     <%= form_tag( add_organisation_team_path(@organisation, @team),  class: 'form-group', style: 'vertical-align:top;' ) do %>
       <div class="input-append">
         <input id="collaborator_username" name="username" class="typeahead  form-control" type="text" autofocus="autofocus" autocomplete="off" style="width: 400px; margin-top: -5px; display: inline-block;" />
@@ -49,10 +48,47 @@
       </tbody>
     </table>
 
+    <br/>
+    <br/>
+
+    <div>
+      <% projects = [] %>
+      <% @organisation.projects.each do |project| %>
+        <% project.teams.each do |team| %>
+          <% if team.ids.eql?( @team.ids ) %>
+            <% projects.push project %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% if !projects.empty? %>
+        <h4><%= pluralize( projects.count, "project" ) %> assigned to this team</h4>
+        <% projects.sort! { |a,b| a.name.downcase <=> b.name.downcase } %>
+        <div id="projects" >
+          <table class="table table-striped" style="width: 100%">
+            <colgroup>
+              <col width="35px;" />
+              <col width="*" />
+              <col width="*" />
+              <col width="*" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Projects</th>
+                <th>Versions</th>
+                <th>Licenses</th>
+              </tr>
+            </thead>
+            <%= render partial: "/user/projects/helpers/project" , :collection => projects %>
+          </table>
+        </div>
+      <% end %>
+    </div>
+
   </div>
 
 </div>
-
 
 <script type="text/javascript">
 
