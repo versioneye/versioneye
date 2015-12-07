@@ -1,6 +1,5 @@
 <% if @product %>
   <% scm_changelogs = @product.scm_changelogs %>
-  <% p scm_changelogs.count %>
   <% if scm_changelogs && !scm_changelogs.empty? %>
 
     <a name="scm_changelogs"></a>
@@ -12,17 +11,22 @@
       <hr/>
       <% scm_changelogs.each do |entry| %>
         <div>
-          <b><%= entry.change_date.strftime("%b %d, %Y - %I:%m %p") %> - <%= entry.author %></b> <br/>
+          <b><%= entry.change_date.strftime("%b %d, %Y - %I:%m %p") %> <% if entry.author %>- <%= entry.author %><% end %> </b> <br/>
           <%= entry.action %> <b><%= entry.file %></b>
 
           <% if !entry.revision_base.to_s.empty? %>
             (revision: <a href="<%= entry.revision_base %>/<%= entry.revision %>" target="github"><%= entry.revision %></a>)
-          <% else %>
+          <% elsif entry.revision %>
             (revision: <%= entry.revision %>)
           <% end %>
 
           <br>
-          <%= entry.message %>
+          <% if entry.message_md == false || entry.message_md.nil? %>
+            <%= entry.message %>
+          <% else %>
+            <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
+            <%= raw( markdown.render entry.message ) %><br/>
+          <% end %>
           <hr/>
         </div>
       <% end %>
