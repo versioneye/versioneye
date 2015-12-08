@@ -30,6 +30,11 @@ class TeamsController < ApplicationController
       flash[:error] = "Something went wrong. Please contact the VersionEye team."
     end
     redirect_to organisation_team_path(@organisation, @team)
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    flash[:error] = "ERROR: #{e.message}"
+    redirect_to :back
   end
 
   def remove
