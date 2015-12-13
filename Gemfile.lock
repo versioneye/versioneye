@@ -7,13 +7,13 @@ GIT
 
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 48a2274e0cd53340471efb0fed068f15bcdfb316
-  tag: v8.2.2
+  revision: d5f0ebce9c94dffb56f65d6b2a3de453f2d2b21f
+  tag: v8.2.8
   specs:
-    versioneye-core (8.2.2)
+    versioneye-core (8.2.8)
       actionmailer (~> 4.2.2)
       aws-sdk (~> 2.2.0)
-      bundler (~> 1.10.6)
+      bundler (~> 1.11.0)
       bunny (~> 2.2.0)
       cocoapods-core (~> 0.39.0)
       dalli (~> 2.7.0)
@@ -78,12 +78,12 @@ GEM
     amq-protocol (2.0.0)
     ansi (1.5.0)
     arel (6.0.3)
-    aws-sdk (2.2.4)
-      aws-sdk-resources (= 2.2.4)
-    aws-sdk-core (2.2.4)
+    aws-sdk (2.2.5)
+      aws-sdk-resources (= 2.2.5)
+    aws-sdk-core (2.2.5)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.4)
-      aws-sdk-core (= 2.2.4)
+    aws-sdk-resources (2.2.5)
+      aws-sdk-core (= 2.2.5)
     bourbon (4.2.6)
       sass (~> 3.4)
       thor (~> 0.19)
@@ -265,7 +265,7 @@ GEM
       rake
     rubyzip (1.1.7)
     safe_yaml (1.0.4)
-    sass (3.4.19)
+    sass (3.4.20)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.1)
@@ -281,7 +281,7 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0)
     semverly (1.0.0)
-    simplecov (0.10.0)
+    simplecov (0.11.1)
       docile (~> 1.1.0)
       json (~> 1.8)
       simplecov-html (~> 0.10.0)
@@ -347,7 +347,7 @@ PLATFORMS
 
 DEPENDENCIES
   bourbon (~> 4.2.0)
-  bundler (~> 1.10.5)
+  bundler (~> 1.11.0)
   bunny (~> 2.2.0)
   capybara (~> 2.5.0)
   capybara-firebug (~> 2.1.0)
@@ -381,7 +381,7 @@ DEPENDENCIES
   sass-rails (~> 5.0.3)
   selenium-webdriver (~> 2.48.1)
   semverly (~> 1.0.0)
-  simplecov (~> 0.10.0)
+  simplecov (~> 0.11.1)
   stripe (~> 1.31.0)
   terminal-notifier (~> 1.6.0)
   therubyracer (~> 0.12.0)
@@ -396,4 +396,4 @@ DEPENDENCIES
   yui-compressor (~> 0.12.0)
 
 BUNDLED WITH
-   1.10.6
+   1.11.0

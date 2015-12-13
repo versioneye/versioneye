@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'bundler'              , '~> 1.10.5'
+gem 'bundler'              , '~> 1.11.0'
 gem 'rails'                , '~> 4.2.2'
 gem 'jquery-rails'         , '~> 4.0.4'
 gem 'execjs'               , '~> 2.6.0'
@@ -18,7 +18,7 @@ gem 'stripe'               , '~> 1.31.0'
 gem 'bunny'                , '~> 2.2.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.2.2'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.2.8'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
@@ -46,7 +46,7 @@ group :assets do
 end
 
 group :test do
-  gem 'simplecov'         , '~> 0.10.0'
+  gem 'simplecov'         , '~> 0.11.1'
   gem 'turn'              , :require => false
   gem 'rspec'             , '~> 3.4.0'
   gem 'rspec-rails'       , '~> 3.4.0'
