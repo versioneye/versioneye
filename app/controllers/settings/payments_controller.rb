@@ -1,5 +1,6 @@
 class Settings::PaymentsController < ApplicationController
 
+
   before_filter :authenticate
 
 
@@ -24,5 +25,6 @@ class Settings::PaymentsController < ApplicationController
 
     redirect_to url
   end
+
 
 end
