@@ -23,7 +23,7 @@ class DockerController < ApplicationController
         'container_start_opts' => {
           'PortBindings' => { '8080/tcp' => [{'HostPort' => '8080'}]},
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
-          'Binds' => ['/mnt/logs:/rails/log'],
+          'Binds' => ['/mnt/logs:/app/log'],
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
@@ -36,7 +36,7 @@ class DockerController < ApplicationController
         'container_start_opts' => {
           'PortBindings' => { '9090/tcp' => [{'HostPort' => '9090'}]},
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
-          'Binds' => ['/mnt/logs:/rails/log'],
+          'Binds' => ['/mnt/logs:/app/log'],
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
@@ -48,7 +48,7 @@ class DockerController < ApplicationController
       images["versioneye/tasks:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
-          'Binds' => ['/mnt/tasks/logs:/versioneye-tasks/log'],
+          'Binds' => ['/mnt/tasks/logs:/app/log'],
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
