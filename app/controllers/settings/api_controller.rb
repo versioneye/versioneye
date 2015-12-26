@@ -8,7 +8,7 @@ class Settings::ApiController < ApplicationController
     if @user_api.api_key.nil?
       @user_api.api_key = 'generate new value'
     else
-      @api_calls = ApiCall.by_user(current_user).by_api_key(@user_api.api_key).count
+      @api_calls = ApiCall.where(:user_id => current_user.ids, :api_key => @user_api.api_key).count
     end
   end
 
