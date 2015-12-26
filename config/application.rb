@@ -10,10 +10,6 @@ require "sprockets/railtie" # MongoID # Uncomment this line for Rails 3.1+
 require 'dalli'
 require 'tire'
 
-require "bson"
-require "moped"
-Moped::BSON = BSON
-
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
   Bundler.require *Rails.groups(:assets => %w(development test enterprise))
