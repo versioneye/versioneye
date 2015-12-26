@@ -1,6 +1,6 @@
 production:
   # Configure available database sessions. (required)
-  sessions:
+  clients:
     # Defines the default session. (required)
     default:
       # Defines the name of the default database that Mongoid can connect to.
@@ -10,18 +10,27 @@ production:
       # of host:port pairs. (required)
       hosts:
         - 172.16.148.134:27017
+      options:
+        max_pool_size: 20
+  options:
+    raise_not_found_error: false
+    scope_overwrite_exception: true
 
 test:
-  sessions:
+  clients:
     default:
       database: veye_test
       hosts:
-        - localhost:27017
-
+        - 172.16.148.134:27017
+      options:
+        max_pool_size: 20
+  options:
+    raise_not_found_error: false
+    scope_overwrite_exception: true
 
 development:
-  # Configure available database sessions. (required)
-  sessions:
+  # Configure available database clients. (required)
+  clients:
     # Defines the default session. (required)
     default:
       # Defines the name of the default database that Mongoid can connect to.
@@ -30,14 +39,18 @@ development:
       # Provides the hosts the default session can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
-        - 172.16.148.134:27017
-        # - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
-        # - <%= ENV['MONGO_RS_2_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_2_PORT'] ||= '27017' %>
-        # - <%= ENV['MONGO_RS_3_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_3_PORT'] ||= '27017' %>
+        - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
+        - <%= ENV['MONGO_RS_2_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_2_PORT'] ||= '27017' %>
+        - <%= ENV['MONGO_RS_3_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_3_PORT'] ||= '27017' %>
+      options:
+        max_pool_size: 20
+  options:
+    raise_not_found_error: false
+    scope_overwrite_exception: true
 
 enterprise:
-  # Configure available database sessions. (required)
-  sessions:
+  # Configure available database clients. (required)
+  clients:
     # Defines the default session. (required)
     default:
       # Defines the name of the default database that Mongoid can connect to.
@@ -47,3 +60,8 @@ enterprise:
       # of host:port pairs. (required)
       hosts:
         - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
+      options:
+        max_pool_size: 20
+  options:
+    raise_not_found_error: false
+    scope_overwrite_exception: true
