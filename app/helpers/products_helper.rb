@@ -47,21 +47,21 @@ module ProductsHelper
     return "/#{language}/#{dependency.dep_prod_key_for_url}/#{dependency.version_for_url}"
   end
 
-  def user_follows?(product, user)
+  def user_follows?( product, user )
     return false if user.products.nil? || user.products.empty?
-    return true if user.products.include?(product)
+    return true if user.product_ids.include?( product.id )
     false
   end
 
   def display_follow(product, user)
     return 'block' if user.products.nil? || user.products.empty?
-    return 'none' if user.products.include? product
+    return 'none' if user.product_ids.include?( product.id )
     'block'
   end
 
   def display_unfollow(product, user)
     return 'none' if user.products.nil? || user.products.empty?
-    return 'block' if user.products.include? product
+    return 'block' if user.product_ids.include?( product.id )
     'none'
   end
 
