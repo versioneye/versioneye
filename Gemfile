@@ -28,6 +28,8 @@ gem 'gravatar_image_tag'    , :git => 'git@github.com:reiz/gravatar_image_tag.gi
 gem 'net-ldap', '0.12.1'
 gem 'redcarpet', '3.3.4'
 
+gem 'font-awesome-sass', '~> 4.5.0'
+
 group :development do
   gem 'psych'             , '~> 2.0.5'
   gem 'terminal-notifier' , '~> 1.6.0'
@@ -67,7 +69,6 @@ end
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'      , '3.3.6'
   gem 'rails-assets-jquery'         , '2.1.4'
-  gem 'rails-assets-font-awesome'   , '4.3.0'
   gem 'rails-assets-handlebars'     , '3.0.3'
   gem 'rails-assets-linkifyjs'      , '1.1.7'
 end

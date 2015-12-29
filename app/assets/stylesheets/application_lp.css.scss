@@ -4,8 +4,10 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *
  *= require bootstrap
- *= require font-awesome
 */
+
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
 $gradient_start: #7F0200;
 $gradient_end: #610003;
@@ -20,19 +22,12 @@ $link_visited: #FDFDFD;
 $text_link:  #669acb;
 $text_hover: #a0b8cf;
 
+
 @import "sprite.scss";
 @import "colorschema.scss";
 
-@import "base.scss";
-@import "well.scss";
-@import "search.scss";
-@import "marketing.scss";
-@import "social_media_login.scss";
-@import "header.scss";
-@import "footer.scss";
 @import "landing_page.scss";
-
-@import "layout.scss";
-@import "social-buttons.scss";
-
+@import "search.scss";
+@import "typeahead.js-bootstrap.scss";
+@import "footer.scss";
 @import "enterprise.scss";
