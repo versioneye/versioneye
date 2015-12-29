@@ -26,7 +26,7 @@ gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.gi
 gem 'gravatar_image_tag'    , :git => 'git@github.com:reiz/gravatar_image_tag.git', :branch => 'bugfix/html_escaping'
 
 gem 'net-ldap', '0.12.1'
-gem 'redcarpet', '3.3.3'
+gem 'redcarpet', '3.3.4'
 
 group :development do
   gem 'psych'             , '~> 2.0.5'
