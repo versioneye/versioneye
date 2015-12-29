@@ -3,10 +3,13 @@ class User::ProjectsController < ApplicationController
   before_filter :authenticate,  :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export, :lwl_csv_export]
   before_filter :collaborator?, :only   => [:add_collaborator, :save_period, :save_visibility, :save_whitelist, :save_cwl, :update, :update_name, :destroy, :transfer, :team]
   before_filter :lwl_export_permission?, :only => [:lwl_export, :lwl_csv_export]
+  before_filter :load_orga, :only => [:show]
 
 
   def index
     @project  = Project.new
+
+    cookies.delete(:orga)
 
     filter = {}
     filter[:organisation] = params[:organisation]
@@ -487,6 +490,14 @@ class User::ProjectsController < ApplicationController
 
 
   private
+
+
+    def load_orga
+      orga_id = cookies.signed[:orga]
+      return nil if orga_id.to_s.empty?
+
+      @organisation = Organisation.find orga_id
+    end
 
 
     def lwl_export_permission?

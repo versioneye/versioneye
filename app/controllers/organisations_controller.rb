@@ -49,6 +49,7 @@ class OrganisationsController < ApplicationController
     filter = {}
     filter[:organisation] = @organisation.ids
     @projects = ProjectService.index current_user, filter, params[:sort]
+    cookies.permanent.signed[:orga] = @organisation.ids
   end
 
   def assign
