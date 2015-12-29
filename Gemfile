@@ -69,6 +69,6 @@ end
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'      , '3.3.6'
   gem 'rails-assets-jquery'         , '2.1.4'
-  gem 'rails-assets-handlebars'     , '3.0.3'
+  gem 'rails-assets-handlebars'     , '4.0.5'
   gem 'rails-assets-linkifyjs'      , '1.1.7'
 end
