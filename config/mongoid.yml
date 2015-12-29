@@ -11,7 +11,7 @@ development:
       hosts:
         - 172.16.148.134:27017
       options:
-        max_pool_size: 20
+        max_pool_size: 100
   options:
     raise_not_found_error: false
     scope_overwrite_exception: true
@@ -23,7 +23,7 @@ test:
       hosts:
         - 172.16.148.134:27017
       options:
-        max_pool_size: 20
+        max_pool_size: 100
   options:
     raise_not_found_error: false
     scope_overwrite_exception: true
@@ -43,7 +43,7 @@ production:
         - <%= ENV['MONGO_RS_2_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_2_PORT'] ||= '27017' %>
         - <%= ENV['MONGO_RS_3_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_3_PORT'] ||= '27017' %>
       options:
-        max_pool_size: 20
+        max_pool_size: 100
   options:
     raise_not_found_error: false
     scope_overwrite_exception: true
@@ -61,7 +61,7 @@ enterprise:
       hosts:
         - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
       options:
-        max_pool_size: 20
+        max_pool_size: 100
   options:
     raise_not_found_error: false
     scope_overwrite_exception: true
