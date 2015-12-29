@@ -322,7 +322,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
-    vcr (2.9.3)
+    vcr (3.0.1)
     webmock (1.22.3)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -385,7 +385,7 @@ DEPENDENCIES
   turn
   twitter_oauth (~> 0.4.94)
   uglifier (~> 2.7.0)
-  vcr (~> 2.9.2)
+  vcr (~> 3.0.1)
   versioneye-core!
   webmock (~> 1.22.0)
   whenever (~> 0.9.2)

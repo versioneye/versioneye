@@ -56,7 +56,7 @@ group :test do
   gem 'capybara'          , '~> 2.5.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'selenium-webdriver', '~> 2.48.1'
-  gem 'vcr'               , '~> 2.9.2',  :require => false
+  gem 'vcr'               , '~> 3.0.1',  :require => false
   gem 'webmock'           , '~> 1.22.0', :require => false
   gem "fakeweb"           , '~> 1.3'
   gem 'database_cleaner'  , '~> 1.5.1'
