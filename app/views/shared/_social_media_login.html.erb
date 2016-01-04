@@ -8,7 +8,10 @@
       <% if social_logins_enabled? %>
       <ul class="sml_list" id="sm_list" >
         <% if github_enabled? %>
-          <li class="sml_list_item"><%= render 'shared/login_with_github'   , :btn => 'login' %></li>
+          <li class="sml_list_label">access to private &amp; public repos:</li>
+          <li class="sml_list_item"><%= render 'shared/login_with_github'        , :btn => 'login' %></li>
+          <li class="sml_list_label">access to public repos only:</li>
+          <li class="sml_list_item"><%= render 'shared/login_with_github_public' , :btn => 'login' %></li>
         <% end %>
         <% if stash_enabled? %>
           <li class="sml_list_item"><%= render 'shared/login_with_stash', :btn => 'login' %></li>
