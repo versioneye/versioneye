@@ -48,7 +48,7 @@ class DockerController < ApplicationController
       images["versioneye/tasks:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
-          'Binds' => ['/mnt/tasks/logs:/app/log'],
+          'Binds' => ['/mnt/logs:/app/log'],
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
