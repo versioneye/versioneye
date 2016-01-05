@@ -33,6 +33,7 @@ Versioneye::Application.configure do
 
   # See everything in the log (default is :info)
   config.log_level = :info
+  config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 10, 10.megabytes)
 
   config.i18n.fallbacks = true
 
