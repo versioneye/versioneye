@@ -34,8 +34,11 @@
           <% end %>
         <% else %>
           <a href='<%= Settings.instance.github_base_url %>/login/oauth/authorize?client_id=<%=Settings.instance.github_client_id%>&amp;scope=repo,user:email'  >
-            Connect with GitHub
-          </a>
+            Connect with GitHub (private &amp; public repos)
+          </a> <br/>
+          <a href='<%= Settings.instance.github_base_url %>/login/oauth/authorize?client_id=<%=Settings.instance.github_client_id%>&amp;scope=user:email'  >
+            Connect with GitHub (public repos only)
+          </a> <br/>
         <% end %>
       </div>
     </div>
@@ -46,23 +49,23 @@
         <i class="fa fa-bitbucket"></i>
         <strong>Bitbucket</strong>
       </div>
-       <div  >
-         <% if not @user.bitbucket_token.nil? %>
-           <span style="color: green">Connected</span>
-           <%= link_to "[ disconnect ]",
-           settings_disconnect_path(:service => "bitbucket"),
-           :confirm => "Are you sure?",
-           :class => "meta-text-small" %>
-           <% scopes = current_user.bitbucket_scope %>
-           <% if scopes && !scopes.empty? %>
-           scopes: [<%= scopes %>]
-           <% end %>
-         <% else %>
-           <a href='<%= auth_bitbucket_connect_path %>'  >
-           Connect with Bitbucket
-           </a>
-         <% end %>
-       </div>
+      <div  >
+        <% if not @user.bitbucket_token.nil? %>
+          <span style="color: green">Connected</span>
+          <%= link_to "[ disconnect ]",
+          settings_disconnect_path(:service => "bitbucket"),
+          :confirm => "Are you sure?",
+          :class => "meta-text-small" %>
+          <% scopes = current_user.bitbucket_scope %>
+          <% if scopes && !scopes.empty? %>
+          scopes: [<%= scopes %>]
+          <% end %>
+        <% else %>
+          <a href='<%= auth_bitbucket_connect_path %>'  >
+            Connect with Bitbucket
+          </a>
+        <% end %>
+      </div>
     </div>
 
   </div>
