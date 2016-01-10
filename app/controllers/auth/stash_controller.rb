@@ -37,6 +37,9 @@ class Auth::StashController < ApplicationController
 
     user = User.find_by_stash_slug(user_info[:slug])
     if user.nil?
+      user = User.find_by_email( user_info[:emailAddress] )
+    end
+    if user.nil?
       user = create_new_user user_info, access_token
       if !user.save
         flash[:error] = "An error occured (#{user.errors.full_messages.to_sentence}). Please contact the VersionEye Team."
@@ -50,7 +53,7 @@ class Auth::StashController < ApplicationController
     else
       sign_in user
       rpath = user_projects_stash_repositories_path
-      rpath = user_projects_path(:all_public => true) if Project.where(:public => true, :parent_id => nil).count > 0 
+      rpath = user_projects_path(:all_public => true) if Project.where(:public => true, :parent_id => nil).count > 0
       rpath = user_projects_path if user.projects && !user.projects.empty?
     end
     redirect_back_or rpath and return
