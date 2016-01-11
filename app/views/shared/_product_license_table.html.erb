@@ -30,7 +30,7 @@
       <% dep_version = dependency.version %>
     <% end %>
     <% licenses = dependency.license_caches if dependency.respond_to?( 'license_caches' ) %>
-    <% licenses = dependency.licenses if dependency.respond_to?( 'licenses' ) %>
+    <% licenses = dependency.licenses       if dependency.respond_to?( 'licenses' ) %>
 
     <% if licenses && !licenses.empty? %>
       <% licenses.each do |license| %>
