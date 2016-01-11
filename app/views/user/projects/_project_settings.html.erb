@@ -98,7 +98,7 @@
       <br/>
     <% end %>
 
-    <% if @project.organisation && OrganisationService.owner?( @project.organisation, current_user ) %>
+    <% if @project.organisation && OrganisationService.allowed_to_assign_teams?( @project.organisation, current_user ) %>
       <form action="<%= team_user_project_path(@project) %>" method="post" class="form-inline" >
         <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
         <div>

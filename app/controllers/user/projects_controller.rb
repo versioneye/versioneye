@@ -82,7 +82,7 @@ class User::ProjectsController < ApplicationController
     @whitelists = LicenseWhitelistService.index( @project.organisation ) if @project.organisation
     @cwls     = ComponentWhitelistService.index( @project.organisation ) if @project.organisation
     if @project.user && @project.user.ids.eql?(current_user.ids)
-      @orgas = OrganisationService.index( current_user, true )
+      @orgas = OrganisationService.orgas_allowed_to_transfer( current_user )
     end
   end
 
@@ -430,7 +430,7 @@ class User::ProjectsController < ApplicationController
     orga_id = params[:orga_id]
     organisation = Organisation.find orga_id
     if @project.user && @project.user.ids.eql?(current_user.ids) &&
-      organisation && OrganisationService.owner?( organisation, current_user )
+      organisation && OrganisationService.allowed_to_transfer_projects?( organisation, current_user )
       @project.organisation = organisation
       @project.teams = [organisation.owner_team]
       if @project.save
@@ -452,7 +452,7 @@ class User::ProjectsController < ApplicationController
     id        = params[:id]
     team_name = params[:team_name]
     organisation = @project.organisation
-    if OrganisationService.owner?( organisation, current_user )
+    if OrganisationService.allowed_to_assign_teams?( organisation, current_user )
       team = organisation.team_by team_name
       @project.teams = [team]
       if @project.save

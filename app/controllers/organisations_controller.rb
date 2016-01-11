@@ -1,12 +1,14 @@
 class OrganisationsController < ApplicationController
 
   before_filter :authenticate
-  before_filter :auth_org_member, :only => [:projects, :show]
-  before_filter :auth_org_owner,  :only => [:update, :delete, :assign]
+  before_filter :auth_org_member, :only => [:projects, :show, :assign]
+  before_filter :auth_org_owner,  :only => [:update, :delete]
+
 
   def new
     @organisation = Organisation.new
   end
+
 
   def create
     name = params[:organisation][:name]
@@ -22,12 +24,15 @@ class OrganisationsController < ApplicationController
     redirect_to :back
   end
 
+
   def update
     @organisation.name     = params[:organisation][:name]
     @organisation.company  = params[:organisation][:company]
     @organisation.location = params[:organisation][:location]
     @organisation.email    = params[:organisation][:email]
     @organisation.website  = params[:organisation][:website]
+    @organisation.mattp    = params[:organisation][:mattp]
+    @organisation.matattp  = params[:organisation][:matattp]
     @organisation.save
     flash[:success] = "Organisation saved successfully"
     redirect_to organisation_path(@organisation)
@@ -36,14 +41,17 @@ class OrganisationsController < ApplicationController
     redirect_to :back
   end
 
+
   def show
     # see before_filter auth_org_member
   end
+
 
   def index
     @organisations = OrganisationService.index current_user
     redirect_to new_organisation_path if @organisations.empty?
   end
+
 
   def projects
     filter = {}
@@ -51,6 +59,7 @@ class OrganisationsController < ApplicationController
     @projects = ProjectService.index current_user, filter, params[:sort]
     cookies.permanent.signed[:orga] = @organisation.ids
   end
+
 
   def assign
     @team = Team.where(:name => params[:team], :organisation_id => @organisation.ids).first

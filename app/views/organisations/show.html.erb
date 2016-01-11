@@ -49,6 +49,20 @@
         </div>
 
         <div class="form-group">
+          <%= f.check_box :mattp, :style => "vertical-align: top; margin-right: 5px;", :id => "mattp", :disabled => disabled_flag %>
+          <label for="mattp" style="display: inline; font-size: 12px;">
+            Any member of this organisation is allowed to assign projects to this organisation.
+          </label>
+        </div>
+
+        <div class="form-group">
+          <%= f.check_box :matattp, :style => "vertical-align: top; margin-right: 5px;", :id => "matattp", :disabled => disabled_flag %>
+          <label for="matattp" style="display: inline; font-size: 12px;">
+            Any member of this organisation is allowed to assign teams to the projects.
+          </label>
+        </div>
+
+        <div class="form-group">
           <div class="control-label"></div>
           <div class="controls">
             <%= f.submit :class => "btn btn-large btn-primary", :disabled => disabled_flag %>
