@@ -67,7 +67,7 @@ class User::ProjectsController < ApplicationController
     id       = params[:id]
     child_id = params[:child]
     @project = ProjectService.find( id )
-    if @project.visible_for_user?(current_user) == false
+    if @project.public == false && @project.visible_for_user?(current_user) == false
       flash[:error] = "You have no access to this project!"
       return if !authenticate
       redirect_to(root_path) unless current_user?(@project.user)
@@ -81,7 +81,7 @@ class User::ProjectsController < ApplicationController
     @child   = add_dependency_classes( @child )
     @whitelists = LicenseWhitelistService.index( @project.organisation ) if @project.organisation
     @cwls     = ComponentWhitelistService.index( @project.organisation ) if @project.organisation
-    if @project.user && @project.user.ids.eql?(current_user.ids)
+    if signed_in? && @project.user && @project.user.ids.eql?(current_user.ids)
       @orgas = OrganisationService.orgas_allowed_to_transfer( current_user )
     end
   end
