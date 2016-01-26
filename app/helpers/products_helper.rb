@@ -266,7 +266,7 @@ module ProductsHelper
 
     return true  if current_user.admin == true
     return true if current_user.maintainer.include?("ALL")
-    key = "#{product.language}\:\:#{product.prod_key}"
+    key = "#{product.language}\:\:#{product.prod_key}".downcase
     return true if current_user.maintainer.include?(key)
 
     return false
