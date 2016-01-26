@@ -7,6 +7,8 @@ describe "update credit card information" do
   context "logged in" do
 
     before :each do
+      User.delete_all
+      UserNotificationSetting.delete_all
       post "/sessions", {:session => {:email => user.email, :password => user.password}}, "HTTPS" => "on"
       assert_response 302
       response.should redirect_to( user_packages_i_follow_path )

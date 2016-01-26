@@ -4,6 +4,11 @@ describe "user_email" do
 
   context "add aditional email to user" do
 
+    before :each do
+      User.delete_all
+      UserNotificationSetting.delete_all
+    end
+
     it "signs_up successfully and adds an additional email address to the account" do
       get "/signup", nil, "HTTPS" => "on"
       assert_response :success
