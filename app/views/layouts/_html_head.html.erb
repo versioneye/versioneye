@@ -1,5 +1,8 @@
   <link href="<%= Settings.instance.server_url %>/favicon.ico" rel="shortcut icon"  />
+
+<% if Rails.env.enterprise? != true %>
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Droid+Serif%7CDroid+Serif:bold%7CDroid+Sans%7CDroid+Sans:bold" />
+<% end %>
 
   <!--[if lt IE 8]>
     <meta http-equiv="REFRESH" content="0;url=http://www.versioneye.com/oldbrowser.html" />
@@ -13,7 +16,7 @@
   <% if params[:controller] == 'user/projects' %>
     <script src="/assets/libs/d3.v3.min.js"></script>
     <script src="/assets/libs/d3pie.min.js"></script>
-  <% end %> 
+  <% end %>
 
   <% if current_page?( root_path ) || current_page?( enterprise_path ) %>
 
@@ -38,8 +41,8 @@
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
     <% end %>
 
-    
-    <% if request.original_url.to_s.match(/\/visual_dependencies\z/i) || 
+
+    <% if request.original_url.to_s.match(/\/visual_dependencies\z/i) ||
           request.original_url.to_s.match(/\/visual\z/i)  %>
 
       <%= javascript_include_tag "application_product",     :defer => false, :async => false %>
