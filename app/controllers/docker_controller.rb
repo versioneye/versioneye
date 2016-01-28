@@ -60,7 +60,7 @@ class DockerController < ApplicationController
       images["versioneye/crawlr:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
-          'Binds' => ['/mnt/cocoapods:/mnt/cocoapods'],
+          'Binds' => ['/mnt/cocoapods:/mnt/cocoapods', '/mnt/logs:/app/log'],
           'RestartPolicy' => {'Name' => 'always'}
         },
         'auth' => true,
@@ -70,6 +70,18 @@ class DockerController < ApplicationController
       di = DockerImage.by_name("versioneye/crawlj")
       version = di.image_version.to_s
       images["versioneye/crawlj:#{version}"] = {
+        'container_start_opts' => {
+          'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
+          'Binds' => ['/mnt/logs:/mnt/logs'],
+          'RestartPolicy' => {'Name' => 'always'}
+        },
+        'auth' => true,
+        'comments' => di.description
+      }
+
+      di = DockerImage.by_name("versioneye/crawlj_worker")
+      version = di.image_version.to_s
+      images["versioneye/crawlj_worker:#{version}"] = {
         'container_start_opts' => {
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
           'Binds' => ['/mnt/logs:/mnt/logs'],
