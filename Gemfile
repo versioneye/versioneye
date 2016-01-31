@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'bundler'              , '~> 1.11.0'
 gem 'rails'                , '4.2.5.1'
-gem 'jquery-rails'         , '~> 4.0.4'
+gem 'jquery-rails'         , '~> 4.1.0'
 gem 'execjs'               , '~> 2.6.0'
 gem 'therubyracer'         , '~> 0.12.0'
 gem 'oauth'                , '~> 0.4.7'
@@ -68,7 +68,7 @@ end
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'      , '3.3.6'
-  gem 'rails-assets-jquery'         , '2.1.4'
+  gem 'rails-assets-jquery'         , '2.2.0'
   gem 'rails-assets-handlebars'     , '4.0.5'
   gem 'rails-assets-linkifyjs'      , '1.1.7'
 end
