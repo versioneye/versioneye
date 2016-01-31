@@ -1,31 +1,31 @@
 source 'http://rubygems.org'
 
 gem 'bundler'              , '~> 1.11.0'
-gem 'rails'                , '~> 4.2.2'
+gem 'rails'                , '4.2.5'
 gem 'jquery-rails'         , '~> 4.0.4'
 gem 'execjs'               , '~> 2.6.0'
 gem 'therubyracer'         , '~> 0.12.0'
 gem 'oauth'                , '~> 0.4.7'
 gem 'twitter_oauth'        , '~> 0.4.94'
-gem 'puma'                 , '~> 2.15.3'
+gem 'puma'                 , '~> 2.16.0'
 gem 'htmlentities'         , '~> 4.3.1'
 gem 'whenever'             , '~> 0.9.2'
 gem 'bourbon'              , '~> 4.2.0'
 gem 'ruby_regex'           , '~> 0.1.0'
 gem 'semverly'             , '~> 1.0.0'
 gem 'cocoapods-core'       , '~> 0.39.0'
-gem 'stripe'               , '~> 1.31.0'
+gem 'stripe'               , '~> 1.34.0'
 gem 'bunny'                , '~> 2.2.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.6.11'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.6.12'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
 # gem 'gravatar_image_tag'    , :git => 'git@github.com:reiz/gravatar_image_tag.git', :tag => 'v1.2.1'
 gem 'gravatar_image_tag'    , :git => 'git@github.com:reiz/gravatar_image_tag.git', :branch => 'bugfix/html_escaping'
 
-gem 'net-ldap', '0.12.1'
+gem 'net-ldap', '0.13.0'
 gem 'redcarpet', '3.3.4'
 
 gem 'font-awesome-sass', '~> 4.5.0'
@@ -53,9 +53,9 @@ group :test do
   gem 'rspec'             , '~> 3.4.0'
   gem 'rspec-rails'       , '~> 3.4.0'
   gem 'rspec-mocks'       , '~> 3.4.0'
-  gem 'capybara'          , '~> 2.5.0'
+  gem 'capybara'          , '~> 2.6.2'
   gem 'capybara-firebug'  , '~> 2.1.0'
-  gem 'selenium-webdriver', '~> 2.48.1'
+  gem 'selenium-webdriver', '~> 2.50.0'
   gem 'vcr'               , '~> 3.0.1',  :require => false
   gem 'webmock'           , '~> 1.22.0', :require => false
   gem "fakeweb"           , '~> 1.3'
