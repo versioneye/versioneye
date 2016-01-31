@@ -1,1 +1,0 @@
-function page_view(e){}
