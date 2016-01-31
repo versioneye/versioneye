@@ -18,8 +18,7 @@ Versioneye::Application.configure do
   config.whiny_nils = false
 
   # Compress JavaScripts and CSS
-  config.assets.compress = false
-  config.assets.css_compressor = :yui
+  config.assets.css_compressor = :sass
   config.assets.js_compressor = :uglifier
   config.assets.debug = false
   config.assets.compile = true
