@@ -1,4 +1,5 @@
 
+$text_casual: black;
 
 /* Footer
 -------------------------------------------------- */
@@ -25,14 +26,14 @@
 
   & a {
     font-size: 13px;
-    color: $text_link;
+    color: #669acb;
     text-decoration: none;
 
     & :hover {
-      color: $text_hover;
+      color: #a0b8cf;
     }
     &:visited {
-      color: $text_link;
+      color: #669acb;
     }
   }
 
