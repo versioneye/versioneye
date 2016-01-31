@@ -1,6 +1,4 @@
 
-<% if Rails.env.production? %>
-
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '<%= Settings.instance.ga_account %>']);
   _gaq.push(['_trackPageview']);
@@ -18,11 +16,3 @@
       ga('send', 'pageview', path);
     }
   }
-
-<% else %>
-
-  function page_view(path){
-    // keep this method to prevent JS errors
-  }
-
-<% end %>

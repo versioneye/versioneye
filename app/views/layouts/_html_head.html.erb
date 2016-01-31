@@ -20,6 +20,8 @@
 
   <% if Settings.instance.environment.eql?('production') %>
     <script src="/assets/google.js"></script>
+  <% else %>
+    <script src="/assets/google_empty.js"></script>
   <% end %>
 
   <% if current_page?( root_path ) || current_page?( enterprise_path ) %>
