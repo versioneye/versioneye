@@ -10,8 +10,4 @@
 //= require libs/hogan-2.0.0
 //= require libs/typeahead_0.9.3
 
-<% if Settings.instance.environment.eql?('production') %>
-//= require google
-<% end %>
-
 //= require custom_lp

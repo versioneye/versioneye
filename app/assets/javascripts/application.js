@@ -17,11 +17,6 @@
 
 //= require libs/require
 
-<% if Settings.instance.environment.eql?('production') %>
-//= require google
-//= require gmap
-<% end %>
-
 //= require custom
 //= require custom_update_language
 

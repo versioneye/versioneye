@@ -18,6 +18,10 @@
     <script src="/assets/libs/d3pie.min.js"></script>
   <% end %>
 
+  <% if Settings.instance.environment.eql?('production') %>
+    <script src="/assets/google.js"></script>
+  <% end %>
+
   <% if current_page?( root_path ) || current_page?( enterprise_path ) %>
 
     <%= stylesheet_link_tag "application_lp" %>
@@ -39,6 +43,7 @@
 
     <% if params[:controller] == 'users' %>
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+      <script src="/assets/gmap.js"></script>
     <% end %>
 
 

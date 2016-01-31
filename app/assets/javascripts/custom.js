@@ -1,6 +1,8 @@
 
 jQuery(document).ready(function(){
 
+  console.log(" document loaded !")
+
   if (jQuery("#payment-form").length) {
     jQuery("#payment-form").submit( function(event) {
       var $form = jQuery("#payment-form");
