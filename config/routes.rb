@@ -3,6 +3,7 @@ Versioneye::Application.routes.draw do
   # root :to => "products#index"
   root :to => "landing_page#index"
 
+  get  'docker/update_image' , :to => 'docker#update_image'
   get  'docker/remote_images', :to => 'docker#remote_images'
 
   namespace :auth do

@@ -1,5 +1,21 @@
 class DockerController < ApplicationController
 
+  def update_image
+    updated = false
+    api = Api.where(:api_key => params[:api_key]).first
+    if api && api.update_di == true
+      di = DockerImage.by_name( params[:image] )
+      di.image_version = params[:version]
+      updated = di.save
+    end
+
+    respond_to do |format|
+      format.json {
+        render :json => {'updated': updated}
+      }
+    end
+  end
+
   def remote_images
     images = remote_images_hash
     respond_to do |format|
@@ -22,6 +38,7 @@ class DockerController < ApplicationController
       images["versioneye/rails_app:#{version}"] = {
         'container_start_opts' => {
           'PortBindings' => { '8080/tcp' => [{'HostPort' => '8080'}]},
+          'NetworkSettings' => { 'Ports' => { '8080/tcp' => [{'HostPort' => '8080'}] }  },
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
           'Binds' => ['/mnt/logs:/app/log'],
           'RestartPolicy' => {'Name' => 'always'}
@@ -34,7 +51,8 @@ class DockerController < ApplicationController
       version = di.image_version.to_s
       images["versioneye/rails_api:#{version}"] = {
         'container_start_opts' => {
-          'PortBindings' => { '9090/tcp' => [{'HostPort' => '9090'}]},
+          'PortBindings' => { '9090/tcp' => [{'HostPort' => '9090'}] },
+          'NetworkSettings' => { 'Ports' => { '9090/tcp' => [{'HostPort' => '9090'}] }  },
           'Links' => ['mongodb:db', 'elasticsearch:es', 'memcached:mc', 'rabbitmq:rm'],
           'Binds' => ['/mnt/logs:/app/log'],
           'RestartPolicy' => {'Name' => 'always'}
