@@ -208,7 +208,7 @@ class User::ProjectsController < ApplicationController
   def update
     file = params[:upload]
     if file.nil?
-      flash[:error] = 'Something went wrong. Please contact the VersionEye Team.'
+      flash[:error] = 'Please choose a file for this upload!'
       redirect_to user_projects_path
       return
     end
