@@ -219,7 +219,7 @@ class User::ProjectsController < ApplicationController
       redirect_to user_projects_path
     end
 
-    Rails.cache.delete( @project.id.to_s )
+    remove_badge_from_cache( @project.id.to_s )
     flash[:success] = "ReUpload was successful."
     redirect_to user_project_path( @project )
   rescue => e
@@ -257,6 +257,7 @@ class User::ProjectsController < ApplicationController
     id = params[:id]
     project = Project.find_by_id id
     ProjectUpdateService.update_async project
+    remove_badge_from_cache( id.to_s )
     flash[:success] = "A background process was started to reparse the project. This can take a couple seconds."
     redirect_to user_project_path( project )
   end
@@ -490,6 +491,14 @@ class User::ProjectsController < ApplicationController
 
 
   private
+
+
+    def remove_badge_from_cache id
+      Rails.cache.delete( id )
+      Rails.cache.delete( "#{id}__flat" )
+      Badge.where( :key => id.to_s ).delete
+      Badge.where( :key => "#{id}__flat" ).delete
+    end
 
 
     def load_orga
