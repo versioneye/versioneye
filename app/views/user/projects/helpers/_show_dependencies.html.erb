@@ -1,19 +1,19 @@
 
   <% if @summary  %>
     <% @summary.keys.each do |key| %>
-      <% proj = @summary[key] %> 
+      <% proj = @summary[key] %>
       <a href="/user/projects/<%= @project.id %>?child=<%= proj[:id] %>#tab-<%= tab_id %>">
         <h4> <%= proj[:name] %></h4>
       </a>
       <%= render :partial => "user/projects/helpers/project_numbers_sentence", :locals => { :project => proj } %><br/>
       <% if !proj[:dependencies].empty? %>
         <% add_dependency_classes proj %>
-        <% proj[:dependencies] = proj[:dependencies].sort_by {|dep| dep[:status_rank] } %> 
+        <% proj[:dependencies] = proj[:dependencies].sort_by {|dep| dep[:status_rank] } %>
         <%= render partial: "project_dependency_table", locals: {deps: proj[:dependencies] } %>
-      <% end %> 
+      <% end %>
       </br>
     <% end %>
-  <% elsif @child.dependencies && !@child.dependencies.empty? %> 
+  <% elsif @child.dependencies && !@child.dependencies.empty? %>
     <div class="pull-right">
       <form action="<%= followall_user_project_path(@child) %>" method="post" style="margin: 0;">
         <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
@@ -24,21 +24,20 @@
       <% @child.scopes.each do |scope| %>
         <% deps = @child.dependencies( scope ) %>
         <% if deps && !deps.empty? %>
-          <% deps = deps.sort_by {|dep| dep[:status_rank] } %> 
+          <% deps = deps.sort_by {|dep| dep[:status_rank] } %>
           <div style="padding-top: 15px;">
             <span style="color: gray;"><%= scope %> scope</span>
             <%= render partial: "project_dependency_table", locals: {deps: deps } %>
           </div>
         <% end %>
-      <% end %> 
+      <% end %>
     </div>
-    <% if !@child.language.to_s.eql?(Product::A_LANGUAGE_PYTHON) && !@child.language.to_s.eql?(Product::A_LANGUAGE_R) %> 
+    <% if !@child.language.to_s.eql?(Product::A_LANGUAGE_PYTHON) && !@child.language.to_s.eql?(Product::A_LANGUAGE_R) %>
       <div style="padding-top: 7px;">
         <%= link_to "Visual Dependencies", visual_user_project_path( @child ) %>
       </div>
-    <% end %> 
+    <% end %>
     <%= render partial: "dep_pie_chart", locals: {deps: @child.dependencies } %>
-  <% else %> 
+  <% else %>
     No dependencies available for <b><%= @child.name %></b>
   <% end %>
-  
