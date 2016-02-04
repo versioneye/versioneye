@@ -14,5 +14,9 @@ mv src app/assets/javascripts/scm/
 
 cp app/assets/javascripts/libs/*  public/assets/libs/
 cp app/assets/javascripts/plots/* public/assets/plots/
+cp app/assets/images/*.png public/assets/
+cp app/assets/images/*.jpg public/assets/
+cp app/assets/images/*.gif public/assets/
+cp app/assets/images/language/* public/assets/language/
 
 export RAILS_ENV=development
