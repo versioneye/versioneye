@@ -53,7 +53,7 @@
 
     <div>
       <% projects = [] %>
-      <% @organisation.projects.each do |project| %>
+      <% @organisation.projects.parents.each do |project| %>
         <% project.teams.each do |team| %>
           <% if team.ids.eql?( @team.ids ) %>
             <% projects.push project %>
