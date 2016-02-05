@@ -27,7 +27,7 @@
   <% end %>
 </div>
 
-<% if @version.semver_2 %>
+<% if !@version.semver_2.nil? %>
   <div class="flash success kpi_box" style="margin-bottom: 20px;" >
     This version number (<%= @product.version %>) fits <a href="http://semver.org">semantic versioning 2.0.0</a>!
   </div>
