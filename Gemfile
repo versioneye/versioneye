@@ -14,7 +14,7 @@ gem 'bourbon'              , '~> 4.2.0'
 gem 'ruby_regex'           , '~> 0.1.0'
 gem 'semverly'             , '~> 1.0.0'
 gem 'cocoapods-core'       , '~> 0.39.0'
-gem 'stripe'               , '~> 1.34.0'
+gem 'stripe'               , '~> 1.35.1'
 gem 'bunny'                , '~> 2.2.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
@@ -25,7 +25,7 @@ gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.gi
 # gem 'gravatar_image_tag'    , :git => 'git@github.com:reiz/gravatar_image_tag.git', :tag => 'v1.2.1'
 gem 'gravatar_image_tag'    , :git => 'git@github.com:reiz/gravatar_image_tag.git', :branch => 'bugfix/html_escaping'
 
-gem 'net-ldap', '0.13.0'
+gem 'net-ldap', '0.14.0'
 gem 'redcarpet', '3.3.4'
 
 gem 'font-awesome-sass', '~> 4.5.0'
@@ -53,13 +53,13 @@ group :test do
   gem 'rspec-mocks'       , '~> 3.4.0'
   gem 'capybara'          , '~> 2.6.2'
   gem 'capybara-firebug'  , '~> 2.1.0'
-  gem 'selenium-webdriver', '~> 2.50.0'
+  gem 'selenium-webdriver', '~> 2.51.0'
   gem 'vcr'               , '~> 3.0.1',  :require => false
   gem 'webmock'           , '~> 1.22.0', :require => false
   gem "fakeweb"           , '~> 1.3'
   gem 'database_cleaner'  , '~> 1.5.1'
   gem 'factory_girl'      , '~> 4.5.0'
-  gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'factory_girl_rails', '~> 4.6.0'
 end
 
 # gem "bower-rails", "~> 0.10.0"
