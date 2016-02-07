@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: d76b4b00d679e137b4ec78edac6b1ed52fa92f13
-  tag: v8.6.14
+  revision: 9bc626d15b11569b11ca6e7ee702196ed5e62c78
+  tag: v8.7.8
   specs:
-    versioneye-core (8.6.14)
+    versioneye-core (8.7.8)
       actionmailer (= 4.2.5.1)
       aws-sdk (~> 2.2.0)
       bundler (~> 1.11.0)
@@ -22,7 +22,7 @@ GIT
       json (~> 1.8.0)
       kgio (~> 2.10.0)
       mongoid (~> 5.1.0)
-      naturalsorter (~> 3.0.11)
+      naturalsorter (~> 3.0.13)
       net-ldap (~> 0.13.0)
       nokogiri (~> 1.6.7.1)
       oauth (~> 0.4.7)
@@ -183,7 +183,7 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     nap (1.1.0)
-    naturalsorter (3.0.11)
+    naturalsorter (3.0.13)
     net-ldap (0.13.0)
     netrc (0.11.0)
     nokogiri (1.6.7.2)

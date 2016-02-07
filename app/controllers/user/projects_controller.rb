@@ -432,14 +432,12 @@ class User::ProjectsController < ApplicationController
     organisation = Organisation.find orga_id
     if @project.user && @project.user.ids.eql?(current_user.ids) &&
       organisation && OrganisationService.allowed_to_transfer_projects?( organisation, current_user )
-      @project.organisation = organisation
-      @project.teams = [organisation.owner_team]
-      if @project.save
+      if OrganisationService.transfer( @project, organisation )
         flash[:success] = "Ownership of the project was transfered to #{organisation.name}."
         Auditlog.add current_user, "Project", @project.ids, "Ownership was transfered to organisation `#{organisation.name}`."
       end
     else
-      flash[:error] = "Something went wrong. Please try again later."
+      flash[:error] = "You don't have the permission for this operation!"
     end
     redirect_to "/user/projects/#{id}#tab-settings"
   rescue => e
