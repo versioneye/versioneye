@@ -13,9 +13,9 @@ class User::ProjectsController < ApplicationController
 
     filter = {}
     filter[:organisation] = params[:organisation]
-    filter[:name]     = params[:name]
-    filter[:language] = params[:language]
-    filter[:language] = 'ALL' if filter[:language].to_s.empty?
+    filter[:name]         = params[:name]
+    filter[:language]     = params[:language]
+    filter[:language]     = 'ALL' if filter[:language].to_s.empty?
 
     if Settings.instance.environment.eql?('enterprise') || signed_in_admin?
       default_scope = 'user'
@@ -29,6 +29,20 @@ class User::ProjectsController < ApplicationController
     end
 
     @projects = ProjectService.index current_user, filter, params[:sort]
+    if (@projects.nil? || @projects.empty?) &&
+        params[:organisation].to_s.empty? &&
+        params[:name].to_s.empty? &&
+        params[:language].to_s.empty?
+      orgas = OrganisationService.index( current_user )
+      orgas.each do |orga|
+        next if orga.projects.count == 0
+
+        params[:organisation] = orga.ids
+        filter[:organisation] = orga.ids
+        @projects = ProjectService.index current_user, filter, params[:sort]
+        break
+      end
+    end
   end
 
 
