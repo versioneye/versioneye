@@ -27,8 +27,12 @@ class OrganisationsController < ApplicationController
 
 
   def destroy
-    if OrganisationService.delete @organisation
-      flash[:success] = "Organisation deleted successfully!"
+    if OrganisationService.owner?(@organisation, current_user) || current_user.admin == true
+      if OrganisationService.delete @organisation
+        flash[:success] = "Organisation deleted successfully!"
+      end
+    else 
+      flash[:error] = "You are not allowed to delete organisation #{@organisation}!"
     end
     redirect_to organisations_path
   end
@@ -88,10 +92,8 @@ class OrganisationsController < ApplicationController
 
 
     def auth_org_member
-      return true if current_user.admin == true
-      
       @organisation = Organisation.where(:name => params[:name]).first
-      return true if OrganisationService.member?(@organisation, current_user)
+      return true if OrganisationService.member?(@organisation, current_user) || current_user.admin == true
       
       flash[:error] = "You are not a member of this organisation. You don't have the permission for this operation."
       redirect_to organisations_path
@@ -100,10 +102,8 @@ class OrganisationsController < ApplicationController
 
 
     def auth_org_owner
-      return true if current_user.admin == true
-      
       @organisation = Organisation.where(:name => params[:name]).first
-      return true if OrganisationService.owner?(@organisation, current_user)
+      return true if OrganisationService.owner?(@organisation, current_user) || current_user.admin == true
       
       flash[:error] = "You are not in the Owners team. You don't have the permission for this operation."
       redirect_to organisations_path
