@@ -25,6 +25,11 @@
     <% elsif project.source.eql? "url" %>
       This is a project from
       <a href="<%= project.url%>" target="_URL">URL</a>.
+    <% elsif project.source.eql? Project::A_SOURCE_API %>
+      This project was created via the VersionEye API.
+      <% if project.respond_to?(:version) && !project.version.to_s.empty? %>
+        (Version: <%= project.version %>)
+      <% end %>
     <% else %>
       This is a project from file upload.
       <% if project.respond_to?(:version) && !project.version.to_s.empty? %>
