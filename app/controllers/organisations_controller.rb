@@ -2,7 +2,7 @@ class OrganisationsController < ApplicationController
 
   before_filter :authenticate
   before_filter :auth_org_member, :only => [:projects, :show, :assign]
-  before_filter :auth_org_owner,  :only => [:update, :delete]
+  before_filter :auth_org_owner,  :only => [:update, :delete, :destroy]
 
 
   def new
@@ -22,6 +22,14 @@ class OrganisationsController < ApplicationController
   rescue => e
     flash[:error] = e.message
     redirect_to :back
+  end
+
+
+  def destroy
+    if OrganisationService.delete @organisation
+      flash[:success] = "Organisation deleted successfully!"
+    end
+    redirect_to organisations_path
   end
 
 

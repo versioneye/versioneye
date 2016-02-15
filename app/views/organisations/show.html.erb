@@ -70,6 +70,23 @@
         </div>
 
       <% end %>
+
+      <% if auth_org_owner %>
+        <hr/>
+
+        By deleting this organisation all projects, teams, license whitelists and component whitelists which are attached 
+        to this organisation will be deleted as well! Are you sure you want do that?<br/>
+        <br/>
+
+        <div class="" style="width: 150px;" >
+          <form action="<%= organisation_path(@organisation) %>" method="post" style="padding-top: 5px;">
+            <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+            <input name="_method" type="hidden" value="delete" />
+            <button class="btn btn-danger btn-mini" onClick="return confirmAction()" >Delete this organisation</button>
+          </form>
+        </div>
+      <% end %>
+      
   </div>
 
 </div>
