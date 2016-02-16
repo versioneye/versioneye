@@ -71,10 +71,10 @@
 
       <% end %>
 
-      <% if auth_org_owner %>
+      <% if OrganisationService.owner?(@organisation, current_user) || current_user.admin == true %>
         <hr/>
 
-        By deleting this organisation all projects, teams, license whitelists and component whitelists which are attached 
+        By deleting this organisation all projects, teams, license whitelists and component whitelists which are attached
         to this organisation will be deleted as well! Are you sure you want do that?<br/>
         <br/>
 
@@ -86,7 +86,7 @@
           </form>
         </div>
       <% end %>
-      
+
   </div>
 
 </div>
