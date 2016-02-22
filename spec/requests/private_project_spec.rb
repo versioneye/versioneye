@@ -13,7 +13,6 @@ describe "Private Project" do
     @project = parser.parse("https://s3.amazonaws.com/veye_test_env/composer.json")
     @project.user = @user1
     @project.name = "composer.json"
-    @project.project_key = "composer_hutzi_1"
     @project.save
     @project.save_dependencies
   end
