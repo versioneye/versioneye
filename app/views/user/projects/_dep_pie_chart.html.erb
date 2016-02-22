@@ -2,14 +2,14 @@
 <% uptodate  = 0 %>
 <% unknown   = 0 %>
 
-<% deps.each do |dep| %> 
-  <% outofdate += 1 if dep.outdated == true %> 
-  <% uptodate += 1 if dep.outdated == false %> 
-  <% unknown += 1 if dep.prod_key.nil? %> 
-<% end %> 
+<% deps.each do |dep| %>
+  <% outofdate += 1 if dep.outdated == true %>
+  <% uptodate += 1 if dep.outdated == false %>
+  <% unknown += 1 if dep.prod_key.nil? %>
+<% end %>
 
 <div id='dep_pie' style="text-align: center;">
-</div>  
+</div>
 <script type="text/javascript">
   var pie = new d3pie("dep_pie", {
     header: {

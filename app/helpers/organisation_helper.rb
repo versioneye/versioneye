@@ -24,4 +24,11 @@ module OrganisationHelper
   end
 
 
+  def is_orga_owner? orga, user
+    return true if user.admin == true
+    return true if OrganisationService.owner?(orga, user)
+    return false
+  end
+
+
 end

@@ -18,9 +18,6 @@ class ProjectMigration
       elsif project.project_type.eql? Project::A_TYPE_LEIN
         project.language = Product::A_LANGUAGE_CLOJURE
       end
-      if project.project_key.nil? || project.project_key.empty?
-        project.make_project_key!
-      end
       project.save
     end
   end

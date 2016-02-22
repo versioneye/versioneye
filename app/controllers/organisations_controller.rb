@@ -31,7 +31,7 @@ class OrganisationsController < ApplicationController
       if OrganisationService.delete @organisation
         flash[:success] = "Organisation deleted successfully!"
       end
-    else 
+    else
       flash[:error] = "You are not allowed to delete organisation #{@organisation}!"
     end
     redirect_to organisations_path
@@ -67,8 +67,10 @@ class OrganisationsController < ApplicationController
 
 
   def projects
+    set_team_filter_param
     filter = {}
     filter[:organisation] = @organisation.ids
+    filter[:team] = params[:team]
     @projects = ProjectService.index current_user, filter, params[:sort]
     cookies.permanent.signed[:orga] = @organisation.ids
   end
@@ -91,10 +93,20 @@ class OrganisationsController < ApplicationController
   private
 
 
+    def set_team_filter_param
+      if params[:team].to_s.empty?
+        params[:team] = @organisation.teams_by(current_user).last.ids
+      end
+    rescue => e
+      logger.error e.message
+      logger.error e.backtrace.join("\n")
+    end
+
+
     def auth_org_member
       @organisation = Organisation.where(:name => params[:name]).first
       return true if OrganisationService.member?(@organisation, current_user) || current_user.admin == true
-      
+
       flash[:error] = "You are not a member of this organisation. You don't have the permission for this operation."
       redirect_to organisations_path
       return false
@@ -104,7 +116,7 @@ class OrganisationsController < ApplicationController
     def auth_org_owner
       @organisation = Organisation.where(:name => params[:name]).first
       return true if OrganisationService.owner?(@organisation, current_user) || current_user.admin == true
-      
+
       flash[:error] = "You are not in the Owners team. You don't have the permission for this operation."
       redirect_to organisations_path
       return false

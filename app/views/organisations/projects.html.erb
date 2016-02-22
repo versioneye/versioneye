@@ -9,6 +9,24 @@
   </div>
 
   <div class="content" >
+
+    <div id='projects_filter' >
+      <form id="form" action="<%= projects_organisation_path(@organisation) %>" method="GET" class='form-inline' style="padding: 0; margin:0;" >
+        <div class="form-group" style="padding-bottom: 25px;">
+
+          <%= label_tag :team, 'Team Filter:', :class => 'control-label' %>
+          <select name="team"  id="team" class="form-control" >
+            <option value="all"  >All</option>
+            <% @organisation.teams.each do |team| %>
+              <option value="<%= team.ids %>" <%= "selected" if params[:team].to_s.eql?(team.ids) %> ><%= team.name %></option>
+            <% end %>
+          </select>
+
+          <button type="submit" class="btn btn-primary" >Filter</button>
+        </div>
+      </form>
+    </div>
+
     <div id="projects" >
       <table class="table table-striped" style="width: 100%">
         <colgroup>

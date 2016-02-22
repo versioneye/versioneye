@@ -45,7 +45,9 @@
 
     <table>
       <colgroup>
-        <col width="75px;" />
+        <% if is_orga_owner?(@organisation, current_user) %>
+          <col width="75px;" />
+        <% end %>
         <col width="*" />
       </colgroup>
 
@@ -53,11 +55,13 @@
         <% next if team.name.to_s.empty? %>
 
         <tr>
-          <td>
-            <%= form_tag( delete_organisation_team_path(@organisation, team) , :method => "post", :style => 'margin: 0;') do  %>
-              <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
-            <% end %>
-          </td>
+          <% if is_orga_owner?(@organisation, current_user) %>
+            <td>
+              <%= form_tag( delete_organisation_team_path(@organisation, team) , :method => "post", :style => 'margin: 0;') do  %>
+                <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+              <% end %>
+            </td>
+          <% end %>
           <td>
             <%= link_to team.name, organisation_team_path(@organisation, team) %>
           </td>

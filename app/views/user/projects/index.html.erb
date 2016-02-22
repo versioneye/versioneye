@@ -11,9 +11,9 @@
   </div>
 
   <div class="content" >
+
     <div id='projects_filter' >
       <form id="form" action="/user/projects" method="GET" class='form-inline' style="padding: 0; margin:0;" >
-
         <div class="form-group" style="padding-bottom: 25px;">
           <% orgas = OrganisationService.index(current_user) %>
           <% if orgas && !orgas.empty? %>
@@ -42,9 +42,9 @@
           <% end %>
           <button type="submit" class="btn btn-primary" >Filter</button>
         </div>
-
       </form>
     </div>
+
     <div id="projects" >
       <table class="table table-striped" style="width: 100%">
         <colgroup>
