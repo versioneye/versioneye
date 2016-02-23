@@ -5,7 +5,7 @@ gem 'rails'                , '4.2.5.1'
 gem 'jquery-rails'         , '~> 4.1.0'
 gem 'execjs'               , '~> 2.6.0'
 gem 'therubyracer'         , '~> 0.12.0'
-gem 'oauth'                , '~> 0.4.7'
+gem 'oauth'                , '~> 0.5.0'
 gem 'twitter_oauth'        , '~> 0.4.94'
 gem 'puma'                 , '~> 2.16.0'
 gem 'htmlentities'         , '~> 4.3.1'
@@ -18,7 +18,7 @@ gem 'stripe'               , '~> 1.36.0'
 gem 'bunny'                , '~> 2.2.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.9.3'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.9.7'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
@@ -53,9 +53,9 @@ group :test do
   gem 'rspec-mocks'       , '~> 3.4.0'
   gem 'capybara'          , '~> 2.6.2'
   gem 'capybara-firebug'  , '~> 2.1.0'
-  gem 'selenium-webdriver', '~> 2.51.0'
+  gem 'selenium-webdriver', '~> 2.52.0'
   gem 'vcr'               , '~> 3.0.1',  :require => false
-  gem 'webmock'           , '~> 1.22.0', :require => false
+  gem 'webmock'           , '~> 1.24.0', :require => false
   gem "fakeweb"           , '~> 1.3'
   gem 'database_cleaner'  , '~> 1.5.1'
   gem 'factory_girl'      , '~> 4.5.0'
@@ -66,7 +66,7 @@ end
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'      , '3.3.6'
-  gem 'rails-assets-jquery'         , '2.2.0'
+  gem 'rails-assets-jquery'         , '2.2.1'
   gem 'rails-assets-handlebars'     , '4.0.5'
   gem 'rails-assets-linkifyjs'      , '1.1.7'
 end
