@@ -19,5 +19,6 @@ database:
 
 test:
   override:
+    - cp veye_deploy_rsa ~/.ssh/id_rsa
     - bundle install
     - rspec
