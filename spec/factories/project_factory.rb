@@ -19,7 +19,6 @@ FactoryGirl.define do
           language: project[:language]
         )
         project.projectdependencies = deps
-        project.make_project_key!
       end
     end
   end

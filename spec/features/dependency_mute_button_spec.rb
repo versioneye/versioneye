@@ -21,12 +21,15 @@ describe "Mute project dependency", :js => true do
       dep.outdated = true
       dep.save
 
+      expect( user ).to_not be_nil
+      expect( user.ids ).to_not be_nil
+
       project.update_attributes({user_id: user[:_id].to_s})
       project.reload
       ProjectUpdateService.update( project )
       project.dependencies.count.should eq(1)
       Project.all.count.should eq(1)
-      Project.by_user(user).all.count eq(1)
+      expect( Project.by_user(user).count ).to eq(1)
 
       visit signin_path
       fill_in 'session[email]',    :with => user.email
