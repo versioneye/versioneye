@@ -1,0 +1,12 @@
+
+test:
+  clients:
+    default:
+      database: veye_test
+      hosts:
+        - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
+      options:
+        max_pool_size: 20
+  options:
+    raise_not_found_error: false
+    scope_overwrite_exception: true
