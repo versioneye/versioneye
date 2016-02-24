@@ -20,4 +20,4 @@ database:
 test:
   override:
     - docker build -t versioneye/rails_app:4.6.0 .
-    - docker run --env RAILS_ENV=test --link mongodb:db --link elasticsearch:es --link memcached:mc --link rabbitmq:rm versioneye/rails_api:4.6.0 rspec
+    - docker run --env RAILS_ENV=test --link mongodb:db --link elasticsearch:es --link memcached:mc --link rabbitmq:rm versioneye/rails_app:4.6.0 rspec
