@@ -48,13 +48,14 @@ describe "Signin with Bitbucket" do
     page.has_css? 'button.btn-bitbucket'
     click_button "Login with Bitbucket"
 
-    #when bitbucket asks testuser's credentials
-    within("form.login-form") do
-      fill_in "Username", :with => Settings.instance.bitbucket_username
-      fill_in 'Password', :with => Settings.instance.bitbucket_password
+    # when bitbucket asks testuser's credentials
+    within("form#aid-login-form") do
+      fill_in "username", :with => Settings.instance.bitbucket_username
+      fill_in 'password', :with => Settings.instance.bitbucket_password
       click_button 'Log in'
     end
-    #grant access
+
+    # grant access
     if page.has_css? 'button.aui-button'
       click_button "Grant access"
     end
