@@ -31,16 +31,16 @@ describe "Connect with Bitbucket" do
     click_on "Connect with Bitbucket"
 
     #log in with testuser's credentials
-    find("form.login-form").visible?
-    within("form.login-form") do
-      fill_in "Username", :with => Settings.instance.bitbucket_username
-      fill_in 'Password', :with => Settings.instance.bitbucket_password
+    find_by_id("aid-login-form").visible?
+    within("form#aid-login-form") do
+      fill_in "username", :with => Settings.instance.bitbucket_username
+      fill_in 'password', :with => Settings.instance.bitbucket_password
       click_button 'Log in'
     end
 
     #grant access
-    if page.has_css? 'button.aui-button'
-      click_button "Grant access"
+    if page.has_css? 'button.aui-button-primary'
+      click_button "Log in"
     end
 
     current_path.should == settings_connect_path

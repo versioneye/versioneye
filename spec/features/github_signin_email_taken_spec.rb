@@ -30,7 +30,7 @@ describe "Signin with GitHub" do
     visit signin_path
     page.has_css? 'button.btn-github'
     within("#sm_list") do
-      click_button "Login with GitHub"
+      click_button "Login with GitHub (public)"
     end
 
     # find("#sm_github").click
@@ -73,7 +73,7 @@ describe "Signin with GitHub" do
 
     visit signout_path
     visit signin_path
-    click_button "Login with GitHub"
+    click_button "Login with GitHub (public)"
     page.should have_content("GitHub Repositories")
   end
 

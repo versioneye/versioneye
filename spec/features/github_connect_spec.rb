@@ -32,7 +32,7 @@ describe "Connect with GitHub" do
     end
 
     visit settings_connect_path
-    click_link "Connect with GitHub"
+    click_link "Connect with GitHub (public repos only)"
 
     # GitHub Login Form
     fill_in "Username or email address", :with => Settings.instance.github_user
@@ -44,7 +44,7 @@ describe "Connect with GitHub" do
     end
 
     page.should have_content "Connected"
-    page.should have_content "scopes: repo,user:email"
+    page.should have_content "scopes: public_repo,user:email"
 
     user = User.first
     user.github_token.should_not be_nil
