@@ -1,5 +1,14 @@
 module ProjectsHelper
 
+  def jvm_project? project
+    return false if project.nil? || project.language.to_s.empty?
+
+    project.language.eql?( Product::A_LANGUAGE_JAVA ) ||
+    project.project_type.to_s.eql?(Project::A_TYPE_MAVEN2) ||
+    project.project_type.to_s.eql?(Project::A_TYPE_SBT) ||
+    project.project_type.to_s.eql?(Project::A_TYPE_GRADLE)
+  end
+
   def outdated_color project
     return 'red' if project[:out_number_sum].to_i > 0
     'green'

@@ -141,6 +141,20 @@
 
         <% end %>
 
+        <% if jvm_project?( @project ) %>
+          <div class="flash-container" style="margin-top: 12px;">
+            <div class="alert flash warn">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              For complex JVM projects (parent pom | submodules) it's recommended to use one of this plugins: </br/>
+              <ul>
+                <li><a href="https://github.com/versioneye/versioneye_maven_plugin" target="VMP">VersionEye Maven Plugin</a></li>
+                <li><a href="https://github.com/versioneye/versioneye_sbt_plugin"   target="VSP">VersionEye SBT Plugin</a></li>
+                <li><a href="https://github.com/stempler/gradle-versioneye-plugin"  target="VGP">Gradle VersionEye Plugin</a></li>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+
       </div>
 
       <div style="margin-top: 20px;">
