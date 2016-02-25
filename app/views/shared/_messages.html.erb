@@ -1,13 +1,11 @@
 
-
   <div class="flash-container">
     <% if flash && !flash.empty? %>
       <% flash.each do |key, value| %>
         <div class="alert flash <%= key %>">
-            <button type="button" class="close" data-dismiss="alert">×</button>
+          <button type="button" class="close" data-dismiss="alert">×</button>
           <%= value %>
         </div>
       <% end %>
     <% end %>
   </div>
-
