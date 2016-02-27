@@ -19,6 +19,8 @@ database:
 
 test:
   override:
+    - mkdir ~/versioneye/log
     - cp veye_deploy_rsa ~/.ssh/id_circleci_github
+    - gem install bundler
     - bundle install
-    - rspec
+    - bundle exec rspec
