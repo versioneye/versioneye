@@ -33,21 +33,7 @@ describe "Computer Language Filter" do
       page.should have_content("jsonG")
       page.should have_content("jsonC")
 
-      # find(:xpath, '//button[contains(@id, "button_ruby_json2")]' ).click
-      # using_wait_time 3 do
-      #   page.should have_content("Follow")
-      #   page.should have_content("to get notified about new versions.")
-      # end
-
-      user = UserFactory.create_new
-      Plan.create_defaults
-      visit signin_path
-      fill_in 'session[email]',    :with => user.email
-      fill_in 'session[password]', :with => user.password
-      find('#sign_in_button').click
-      page.should have_content("Projects")
-
-      visit "/?ab=b"
+      visit "/"
       fill_in 'q', :with => "json*"
       click_button "Search"
 
@@ -56,10 +42,6 @@ describe "Computer Language Filter" do
       page.should have_content("json2")
       page.should have_content("jsonG")
       page.should have_content("jsonC")
-
-      # find(:xpath, '//button[contains(@id, "button_ruby_json2")]' ).click
-      # page.should_not have_content("to get notified about new versions.")
-      # page.should     have_content("Unfollow")
 
       find(:xpath, '//label[contains(@for, "Ruby")]' ).click
       click_button "Find"
