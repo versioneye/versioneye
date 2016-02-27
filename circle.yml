@@ -20,6 +20,5 @@ database:
 test:
   override:
     - cp veye_deploy_rsa ~/.ssh/id_circleci_github
-    - chmod go-rwx ~/.ssh/id_rsa && cd ~/.ssh; ssh-agent -s; eval $(ssh-agent); ssh-add id_rsa && ssh-keyscan github.com >> ~/.ssh/known_hosts
     - bundle install
     - rspec
