@@ -12,6 +12,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'webmock'
+require 'selenium-webdriver'
 
 Mongoid.logger.level = Logger::ERROR
 Mongo::Logger.logger.level = Logger::ERROR
