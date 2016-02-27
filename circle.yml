@@ -21,6 +21,8 @@ test:
   override:
     - export RAILS_ENV=test
     - mkdir ~/versioneye/log
+    - mkdir ~/versioneye/tmp
+    - mkdir ~/versioneye/tmp/cache
     - cp veye_deploy_rsa ~/.ssh/id_circleci_github
     - gem install bundler
     - bundle install
