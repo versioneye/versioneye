@@ -13,9 +13,9 @@ describe "Login Area for Admin" do
       visit signin_path
       fill_in 'session[email]',    :with => "admin"
       fill_in 'session[password]', :with => "admin"
-      p "filled in data"
       find('#sign_in_button').click
-      p "click performed"
+
+      page.driver.browser.manage.window.maximize
       page.should have_content("Settings")
       page.should have_content("Email Server Settings")
 
