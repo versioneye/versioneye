@@ -27,6 +27,7 @@ describe "Computer Language Filter" do
       fill_in 'q', :with => "json*"
       click_button "Search"
 
+      page.driver.browser.manage.window.maximize
       page.should have_content("json-test")
       page.should have_content("jsonJ")
       page.should have_content("json2")
