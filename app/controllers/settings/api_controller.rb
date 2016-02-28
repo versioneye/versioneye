@@ -1,9 +1,9 @@
 class Settings::ApiController < ApplicationController
 
-  
+
   before_filter :authenticate
 
-  
+
   def index
     @user_api = Api.find_or_initialize_by(user_id: current_user.id.to_s)
     @api_calls = 0
@@ -14,7 +14,7 @@ class Settings::ApiController < ApplicationController
     end
   end
 
-  
+
   def update
     @user_api = Api.find_or_initialize_by(user_id: current_user.id.to_s)
     @user_api.generate_api_key!
