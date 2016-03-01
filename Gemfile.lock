@@ -7,14 +7,14 @@ GIT
 
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: a9d8ef0e18b25ccf2073927e3668d489416e88c9
-  tag: v8.9.12
+  revision: 624fef883285aa8617ded988e8eb80dcf0e96ea5
+  tag: v8.9.13
   specs:
-    versioneye-core (8.9.12)
+    versioneye-core (8.9.13)
       actionmailer (~> 4.2.5.1)
       aws-sdk (~> 2.2.0)
       bundler (~> 1.11.0)
-      bunny (~> 2.2.0)
+      bunny (~> 2.3.0)
       cocoapods-core (~> 0.39.0)
       dalli (~> 2.7.0)
       etcd (~> 0.3.0)
@@ -89,7 +89,7 @@ GEM
       thor (~> 0.19)
     bson (4.0.3)
     builder (3.2.2)
-    bunny (2.2.2)
+    bunny (2.3.0)
       amq-protocol (>= 2.0.1)
     capybara (2.6.2)
       addressable
@@ -347,7 +347,7 @@ PLATFORMS
 DEPENDENCIES
   bourbon (~> 4.2.0)
   bundler (~> 1.11.2)
-  bunny (~> 2.2.0)
+  bunny (~> 2.3.0)
   capybara (~> 2.6.2)
   capybara-firebug (~> 2.1.0)
   cocoapods-core (~> 0.39.0)
