@@ -8,40 +8,33 @@ class User::ProjectsController < ApplicationController
 
   def index
     @project  = Project.new
-
     cookies.delete(:orga)
+    @all_projects = nil
+    @projects = []
 
-    filter = {}
-    filter[:organisation] = params[:organisation]
-    filter[:name]         = params[:name]
-    filter[:language]     = params[:language]
-    filter[:language]     = 'ALL' if filter[:language].to_s.empty?
-
-    if Settings.instance.environment.eql?('enterprise') || signed_in_admin?
-      default_scope = 'user'
-      default_scope = 'all_public' if current_user.projects.empty?
-
-      filter[:scope]    = params[:scope]
-      filter[:scope]    = 'all_public'  if params[:all_public].to_s.eql?("true")
-      filter[:scope]    = default_scope if filter[:scope].to_s.empty?
-    else
-      filter[:scope] = 'user'
-    end
-
-    @projects = ProjectService.index current_user, filter, params[:sort]
-    if (@projects.nil? || @projects.empty?) &&
-        params[:organisation].to_s.empty? &&
+    if (params[:organisation].to_s.empty? &&
         params[:name].to_s.empty? &&
-        params[:language].to_s.empty?
-      orgas = OrganisationService.index( current_user )
-      orgas.each do |orga|
-        next if orga.projects.count == 0
+        params[:language].to_s.empty? &&
+        params[:scope].to_s.empty?)
+      @all_projects = ProjectService.all_projects current_user
+    else
+      filter = {}
+      filter[:organisation] = params[:organisation]
+      filter[:name]         = params[:name]
+      filter[:language]     = params[:language]
+      filter[:language]     = 'ALL' if filter[:language].to_s.empty?
 
-        params[:organisation] = orga.ids
-        filter[:organisation] = orga.ids
-        @projects = ProjectService.index current_user, filter, params[:sort]
-        break
+      if Settings.instance.environment.eql?('enterprise') || signed_in_admin?
+        default_scope = 'user'
+        default_scope = 'all_public' if current_user.projects.empty?
+
+        filter[:scope]    = params[:scope]
+        filter[:scope]    = 'all_public'  if params[:all_public].to_s.eql?("true")
+        filter[:scope]    = default_scope if filter[:scope].to_s.empty?
+      else
+        filter[:scope] = 'user'
       end
+      @projects = ProjectService.index current_user, filter, params[:sort]
     end
   end
 

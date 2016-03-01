@@ -45,25 +45,58 @@
       </form>
     </div>
 
-    <div id="projects" >
-      <table class="table table-striped" style="width: 100%">
-        <colgroup>
-          <col width="35px;"j />
-          <col width="*" />
-          <col width="*" />
-          <col width="*" />
-        </colgroup>
-        <thead>
-          <tr>
-            <th></th>
-            <th><a href="/user/projects?organisation=<%=params[:organisation]%>&amp;name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=name">Projects</a></th>
-            <th><a href="/user/projects?organisation=<%=params[:organisation]%>&amp;name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=out_dated">Versions</a></th>
-            <th><a href="/user/projects?organisation=<%=params[:organisation]%>&amp;name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=license_violations">Licenses</a></th>
-          </tr>
-        </thead>
-        <%= render partial: "/user/projects/helpers/project" , collection: @projects %>
-      </table>
-    </div>
+    <% if @all_projects && @all_projects.count > 0 %>
+      <% @all_projects.keys.each do |key| %>
+        <% orga = key.split("/")[0] %>
+        <% team = key.split("/")[1] %>
+        <% projects = @all_projects[key] %>
+        <h4>Projects from <%= orga %>
+          <% if !team.to_s.empty? %>
+            / <%= link_to team, organisation_team_path(orga, team) %>
+          <% end %>
+        </h4>
+        <div id="projects" style="padding-bottom: 15px;" >
+          <table class="table table-striped" style="width: 100%">
+            <colgroup>
+              <col width="35px;"j />
+              <col width="*" />
+              <col width="*" />
+              <col width="*" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Projects</th>
+                <th>Versions</th>
+                <th>Licenses</th>
+              </tr>
+            </thead>
+            <%= render partial: "/user/projects/helpers/project" , collection: projects %>
+          </table>
+        </div>
+      <% end %>
+    <% else %>
+      <div id="projects" >
+        <table class="table table-striped" style="width: 100%">
+          <colgroup>
+            <col width="35px;"j />
+            <col width="*" />
+            <col width="*" />
+            <col width="*" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th></th>
+              <th><a href="/user/projects?organisation=<%=params[:organisation]%>&amp;name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=name">Projects</a></th>
+              <th><a href="/user/projects?organisation=<%=params[:organisation]%>&amp;name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=out_dated">Versions</a></th>
+              <th><a href="/user/projects?organisation=<%=params[:organisation]%>&amp;name=<%=params[:name]%>&amp;language=<%= params[:language] %>&amp;scope=<%=params[:scope]%>&amp;sort=license_violations">Licenses</a></th>
+            </tr>
+          </thead>
+          <%= render partial: "/user/projects/helpers/project" , collection: @projects %>
+        </table>
+      </div>
+    <% end %>
+
   </div>
 
 </div>
