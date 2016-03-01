@@ -52,15 +52,7 @@
     <br/>
 
     <div>
-      <% projects = [] %>
-      <% @organisation.projects.parents.each do |project| %>
-        <% project.teams.each do |team| %>
-          <% if team.ids.eql?( @team.ids ) %>
-            <% projects.push project %>
-          <% end %>
-        <% end %>
-      <% end %>
-
+      <% projects = @organisation.projects.parents.where(:team_ids => @team.ids) %>
       <% if !projects.empty? %>
         <h4><%= pluralize( projects.count, "project" ) %> assigned to this team</h4>
         <% projects.sort! { |a,b| a.name.downcase <=> b.name.downcase } %>
