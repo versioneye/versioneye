@@ -1,10 +1,6 @@
-<% if HttpService.fetch_response("http://php-eye.com/badge/#{@product.prod_key}/tested.svg?branch=#{@version.to_s}").code.to_i == 200 %>
-  <a href="http://php-eye.com/package/<%= @product.prod_key %>" target="php_eye">
-    <img id="tested_runtime_badge" src="http://php-eye.com/badge/<%= @product.prod_key %>/tested.svg?branch=<%= @version.to_s %>" alt="Tested Runtime Badge" />
-  </a>
-<% end %>
-<% if HttpService.fetch_response("http://php-eye.com/badge/#{@product.prod_key}/not-tested.svg?branch=#{@version.to_s}").code.to_i == 200 %>
-  <a href="http://php-eye.com/package/<%= @product.prod_key %>" target="php_eye">
-    <img id="not-tested_runtime_badge" src="http://php-eye.com/badge/<%= @product.prod_key %>/not-tested.svg?branch=<%= @version.to_s %>" alt="Not Tested Runtime Badge" />
-  </a>
-<% end %>
+<a href="http://php-eye.com/package/<%= @product.prod_key %>" target="php_eye">
+  <img id="tested_runtime_badge" src="http://php-eye.com/badge/<%= @product.prod_key %>/tested.svg?branch=<%= @version.to_s %>" alt="Tested Runtime Badge" />
+</a>
+<a href="http://php-eye.com/package/<%= @product.prod_key %>" target="php_eye">
+  <img id="not-tested_runtime_badge" src="http://php-eye.com/badge/<%= @product.prod_key %>/not-tested.svg?branch=<%= @version.to_s %>" alt="Not Tested Runtime Badge" />
+</a>
