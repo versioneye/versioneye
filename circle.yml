@@ -26,4 +26,4 @@ test:
     - cp veye_deploy_rsa ~/.ssh/id_circleci_github
     - gem install bundler
     - bundle install
-    - bundle exec rspec
+    - bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml

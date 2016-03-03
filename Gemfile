@@ -51,6 +51,7 @@ group :test do
   gem 'rspec'             , '~> 3.4.0'
   gem 'rspec-rails'       , '~> 3.4.0'
   gem 'rspec-mocks'       , '~> 3.4.0'
+  gem 'rspec_junit_formatter', '0.2.3'
   gem 'capybara'          , '~> 2.6.2'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'selenium-webdriver', '~> 2.52.0'
