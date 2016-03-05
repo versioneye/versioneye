@@ -8,7 +8,8 @@ RUN mkdir -p /root/.ssh; \
     chmod go-rwx /root/.ssh/id_rsa; \
     cd /root/.ssh; ssh-agent -s; eval $(ssh-agent); ssh-add id_rsa; \
     ssh-keyscan github.com >> /root/.ssh/known_hosts; \
-    cd /app/ && bundle install;
+    cd /app/ && bundle install; \
+    rm /root/.ssh/id_rsa;
 
 EXPOSE 8080
 
