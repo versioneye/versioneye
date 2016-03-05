@@ -1,6 +1,6 @@
 port 8080
 threads 1,8
-workers 2
+workers 3
 # preload_app!
 
 on_worker_boot do
