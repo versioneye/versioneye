@@ -7,7 +7,7 @@ gem 'execjs'               , '~> 2.6.0'
 gem 'therubyracer'         , '~> 0.12.0'
 gem 'oauth'                , '~> 0.5.0'
 gem 'twitter_oauth'        , '~> 0.4.94'
-gem 'puma'                 , '~> 3.0.2'
+gem 'puma'                 , '~> 3.1.0'
 gem 'htmlentities'         , '~> 4.3.1'
 gem 'whenever'             , '~> 0.9.2'
 gem 'bourbon'              , '~> 4.2.0'
@@ -18,7 +18,7 @@ gem 'stripe'               , '~> 1.36.0'
 gem 'bunny'                , '~> 2.3.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.11.5'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.11.6'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'

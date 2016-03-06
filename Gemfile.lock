@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: 03440a2ce01b62d444802b3fff845bafe5fc363b
-  tag: v8.11.5
+  revision: da53c0ef4e73553f48de267415942a7d68664bf8
+  tag: v8.11.6
   specs:
-    versioneye-core (8.11.5)
+    versioneye-core (8.11.6)
       actionmailer (~> 4.2.5.1)
       aws-sdk (~> 2.2.0)
       bundler (~> 1.11.0)
@@ -26,7 +26,7 @@ GIT
       net-ldap (~> 0.14.0)
       nokogiri (~> 1.6.7.1)
       oauth (~> 0.5.0)
-      octokit (~> 4.2.0)
+      octokit (~> 4.3.0)
       pdfkit (~> 0.8.0)
       persistent_httparty (~> 0.1.0)
       semverly (~> 1.0.0)
@@ -74,7 +74,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.3.8)
+    addressable (2.4.0)
     amq-protocol (2.0.1)
     ansi (1.5.0)
     arel (6.0.3)
@@ -189,8 +189,8 @@ GEM
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     oauth (0.5.1)
-    octokit (4.2.0)
-      sawyer (~> 0.6.0, >= 0.5.3)
+    octokit (4.3.0)
+      sawyer (~> 0.7.0, >= 0.5.3)
     origin (2.2.0)
     pdfkit (0.8.2)
     persistent_http (1.0.6)
@@ -199,7 +199,7 @@ GEM
       httparty (~> 0.9)
       persistent_http (< 2)
     psych (2.0.17)
-    puma (3.0.2)
+    puma (3.1.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -275,8 +275,8 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    sawyer (0.6.0)
-      addressable (~> 2.3.5)
+    sawyer (0.7.0)
+      addressable (>= 2.3.5, < 2.5)
       faraday (~> 0.8, < 0.10)
     selenium-webdriver (2.52.0)
       childprocess (~> 0.5)
@@ -367,7 +367,7 @@ DEPENDENCIES
   net-ldap (= 0.14.0)
   oauth (~> 0.5.0)
   psych (~> 2.0.5)
-  puma (~> 3.0.2)
+  puma (~> 3.1.0)
   rails (~> 4.2.5.2)
   rails-assets-bootstrap (= 3.3.6)!
   rails-assets-handlebars (= 4.0.5)!
