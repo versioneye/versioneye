@@ -150,7 +150,7 @@ module ProductsHelper
   end
 
   def parse_semver_2 version
-    version.semver_2 = version.to_s.match(/\A\d\.\d\.\d-?.*/)
+    version.semver_2 = version.to_s.match(/\A\d+\.\d+\.\d+-?.*/)
   rescue => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join('\n')
