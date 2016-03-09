@@ -1,5 +1,5 @@
 function init_plots(){
-  require(["/assets/libs/d3.v3.min", "/assets/plots/timebar"],
+  require(["/assets/libs/d3.v3.min.js", "/assets/plots/timebar.js"],
           function(d3, Timebar){
     console.debug("Plot dependencies are now loaded.")
     timebar1 = new Timebar({

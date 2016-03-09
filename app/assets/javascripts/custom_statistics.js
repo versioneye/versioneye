@@ -1,7 +1,7 @@
 function init_plots(){
-  require(["/assets/libs/d3.v3.min",
-           "/assets/plots/horizontalBarChart",
-           "/assets/plots/multiTimeline"],
+  require(["/assets/libs/d3.v3.min.js",
+           "/assets/plots/horizontalBarChart.js",
+           "/assets/plots/multiTimeline.js"],
           function(d3, BarChart, MultiTimeline){
     console.debug("Going to render D3 plots.");
     jQuery("#plot_latest").html("");
