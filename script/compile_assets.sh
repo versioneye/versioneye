@@ -18,5 +18,6 @@ cp app/assets/images/*.png public/assets/
 cp app/assets/images/*.jpg public/assets/
 cp app/assets/images/*.gif public/assets/
 cp app/assets/images/language/* public/assets/language/
+cp app/assets/images/logos/* public/assets/logos/
 
 export RAILS_ENV=development
