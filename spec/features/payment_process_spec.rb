@@ -37,7 +37,7 @@ describe "Payment Process" do
       fill_in 'cvc',        :with => "777"
       fill_in 'month',      :with => "10"
       fill_in 'year',       :with => "2017"
-      click_button 'Save'
+      click_button 'Submit'
 
       sleep 5
 
@@ -55,7 +55,7 @@ describe "Payment Process" do
       fill_in 'cvc',        :with => "777"
       fill_in 'month',      :with => "10"
       fill_in 'year',       :with => "2017"
-      click_button 'Save'
+      click_button 'Submit'
 
       page.should have_content("Many Thanks. We just updated your plan.")
       user = User.find_by_email( user.email )

@@ -29,7 +29,7 @@ describe "Signup from the pricing page" do
     fill_in 'cvc',        :with => "777"
     fill_in 'month',      :with => "10"
     fill_in 'year',       :with => "2017"
-    click_button 'Save'
+    click_button 'Submit'
 
     sleep 5
 
