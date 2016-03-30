@@ -155,6 +155,21 @@ class User::ProjectsController < ApplicationController
   end
 
 
+  def sec_export
+    id      = params[:id]
+    project = ProjectService.find( id )
+    date_string = DateTime.now.strftime("%d_%m_%Y")
+    project_name = project.name.gsub("/", "-")
+    pdf = SecPdfService.process project, false, true
+    send_data pdf, type: 'application/pdf', filename: "#{date_string}_security_#{project_name}.pdf"
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    flash[:error] = "ERROR: #{e.message}"
+    redirect_to :back
+  end
+
+
   def visual
     @project = ProjectService.find( params[:id] )
     render :layout => 'application_visual'

@@ -1,0 +1,199 @@
+<html>
+  <head>
+    <meta name='pdfkit-orientation' content='portrait' />
+
+    <style type="text/css">
+      body {
+        color: #000000;
+        font-family: Courier;
+        font-size: 12px;
+      }
+      body, td, th, input, textarea, select, a {
+        font-size: 12px;
+      }
+      h1{
+        font-family: Courier;
+      }
+      p {
+        margin-top: 0px;
+        margin-bottom: 20px;
+      }
+      #container {
+        width: 700px;
+      }
+      table.list {
+        border-collapse: collapse;
+        width: 100%;
+        border-top: 1px solid #DDDDDD;
+        border-left: 1px solid #DDDDDD;
+        margin-bottom: 20px;
+      }
+      table.list td {
+        border-right: 1px solid #DDDDDD;
+        border-bottom: 1px solid #DDDDDD;
+      }
+      table.list thead td {
+        background-color: #EFEFEF;
+        padding: 0px 5px;
+      }
+      table.list thead td a, .list thead td {
+        text-decoration: none;
+        color: #222222;
+        font-weight: bold;
+      }
+      table.list tbody td a {
+        text-decoration: underline;
+      }
+      table.list tbody td {
+        vertical-align: top;
+        padding: 0px 5px;
+      }
+      table.list .left {
+        text-align: left;
+        padding: 7px;
+      }
+      table.list .right {
+        text-align: right;
+        padding: 7px;
+      }
+      table.list .center {
+        text-align: center;
+        padding: 7px;
+      }
+      .small{
+        font-size: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+
+      <p>
+        <b>Date:</b> <%= DateTime.now.strftime("%d.%m.%Y") %> <br/>
+      </p>
+
+      <div>
+        <p>
+          <b>Project:</b> <%= project.name %> <span class="small">(<%= project.id.to_s %>)</span> <br/>
+          <b>Bill of materials:</b>
+        </p>
+
+        <table class="list">
+          <thead>
+            <tr>
+              <td class="left">Component</td>
+              <td class="left">Version</td>
+              <td class="left">Sec. Status</td>
+            </tr>
+          </thead>
+          <tbody>
+            <% [:vulnerable, :ok].each do |key| %>
+              <% project.sec_pdf_list[key].each do |dep| %>
+                <tr>
+                  <td class="left">
+                    (<%= dep[:language] %>) <%= dep[:component] %>
+                    <% if dep[:group_id] %>
+                      <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
+                    <% end %>
+                  </td>
+                  <td class="left">
+                    <% if dep[:version].to_s.strip.match(/\A\:path/) %>
+                      :path
+                    <% elsif dep[:version].to_s.strip.match(/\A\:git/) %>
+                      :git
+                    <% else %>
+                      <%= dep[:version].to_s.strip %>
+                    <% end %>
+                  </td>
+                  <td class="left"> <%= key.to_s %> </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <% if children && !children.empty? %>
+        <% children.each do |project| %>
+          <div>
+            <p>
+              <b>Project:</b> <%= project.name %> <span class="small">(<%= project.id.to_s %>)</span> <br/>
+              <b>Bill of materials:</b>
+            </p>
+
+            <table class="list">
+              <thead>
+                <tr>
+                  <td class="left">Status</td>
+                  <td class="left">Component</td>
+                  <td class="left">Version</td>
+                </tr>
+              </thead>
+              <tbody>
+                <% [:vulnerable, :ok].each do |key| %>
+                  <% project.sec_pdf_list[key].each do |dep| %>
+                    <tr>
+                      <td class="left"> <%= key.to_s %> </td>
+                      <td class="left">
+                        (<%= dep[:language] %>) <%= dep[:component] %>
+                        <% if dep[:group_id] %>
+                          <br/> <span class='small'>GroupId: <%= dep[:group_id] %></span>
+                        <% end %>
+                      </td>
+                      <td class="left">
+                        <% if dep[:version].to_s.strip.match(/\A\:path/) %>
+                          :path
+                        <% elsif dep[:version].to_s.strip.match(/\A\:git/) %>
+                          :git
+                        <% else %>
+                          <%= dep[:version].to_s.strip %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+      <% end %>
+
+      <% if !project.sec_pdf_list[:vulnerable].to_a.empty? %>
+        <% project.sec_pdf_list[:vulnerable].each do |dep| %>
+          <h3>(<%= dep[:language] %>) <%= dep[:component] %> : <%= dep[:version] %></h3>
+          <% dep[:sv_ids].each do |sv_id| %>
+            <% sv = SecurityVulnerability.find sv_id %>
+            <% if sv %>
+              <div><%= sv.summary %></div>
+              <% sv.links.values.each do |link| %>
+                <div><%= link %></div>
+              <% end %>
+              <hr/>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% if children && !children.empty? %>
+        <% children.each do |project| %>
+          <% if !project.sec_pdf_list[:vulnerable].to_a.empty? %>
+            <% project.sec_pdf_list[:vulnerable].each do |dep| %>
+              <h3>(<%= dep[:language] %>) <%= dep[:component] %> : <%= dep[:version] %></h3>
+              <% dep[:sv_ids].each do |sv_id| %>
+                <% sv = SecurityVulnerability.find sv_id %>
+                <% if sv %>
+                  <div><%= sv.summary %></div>
+                  <% sv.links.values.each do |link| %>
+                    <div><%= link %></div>
+                  <% end %>
+                  <hr/>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+    </div>
+  </body>
+</html>
