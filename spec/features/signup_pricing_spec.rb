@@ -1,4 +1,5 @@
 require 'spec_helper'
+
 describe "Signup from the pricing page" do
 
   let(:user1){FactoryGirl.build(:user, email: "test@versioneye.com")}
