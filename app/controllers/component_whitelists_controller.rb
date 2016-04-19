@@ -2,6 +2,7 @@ class ComponentWhitelistsController < ApplicationController
 
   before_filter :load_orga
   before_filter :authenticate
+  before_filter :auth_org_member
   before_filter :auth_org_owner, :except => [:index, :show]
 
   def index
