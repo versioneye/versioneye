@@ -7,10 +7,11 @@ GIT
 
 GIT
   remote: git@github.com:versioneye/versioneye-core.git
-  revision: b569855f9aef82e822a7aea551e84ef49da8769f
-  tag: v8.14.2
+  revision: 7f80f6aec94b924c90f5a056cbeedaf04893e331
+  branch: master
+  tag: v8.16.10
   specs:
-    versioneye-core (8.14.2)
+    versioneye-core (8.16.10)
       actionmailer (~> 4.2.5.2)
       aws-sdk (~> 2.2.0)
       bundler (~> 1.11.0)
@@ -30,7 +31,7 @@ GIT
       pdfkit (~> 0.8.0)
       persistent_httparty (~> 0.1.0)
       semverly (~> 1.0.0)
-      stripe (~> 1.40.0)
+      stripe (~> 1.41.0)
       tire (~> 0.6.2)
       will_paginate_mongoid (= 2.0.1)
       wkhtmltopdf-binary (~> 0.9.9.1)
@@ -78,16 +79,16 @@ GEM
     amq-protocol (2.0.1)
     ansi (1.5.0)
     arel (6.0.3)
-    aws-sdk (2.2.33)
-      aws-sdk-resources (= 2.2.33)
-    aws-sdk-core (2.2.33)
+    aws-sdk (2.2.35)
+      aws-sdk-resources (= 2.2.35)
+    aws-sdk-core (2.2.35)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.33)
-      aws-sdk-core (= 2.2.33)
-    bourbon (4.2.6)
+    aws-sdk-resources (2.2.35)
+      aws-sdk-core (= 2.2.35)
+    bourbon (4.2.7)
       sass (~> 3.4)
       thor (~> 0.19)
-    bson (4.0.4)
+    bson (4.1.0)
     builder (3.2.2)
     bunny (2.3.1)
       amq-protocol (>= 2.0.1)
@@ -119,7 +120,7 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     dalli (2.7.6)
-    database_cleaner (1.5.1)
+    database_cleaner (1.5.2)
     diff-lcs (1.2.5)
     docile (1.1.5)
     domain_name (0.5.20160310)
@@ -297,7 +298,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    stripe (1.40.0)
+    stripe (1.41.0)
       rest-client (~> 1.4)
     terminal-notifier (1.6.3)
     therubyracer (0.12.2)
@@ -329,7 +330,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.2)
     vcr (3.0.1)
-    webmock (1.24.2)
+    webmock (1.24.3)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -385,7 +386,7 @@ DEPENDENCIES
   selenium-webdriver (~> 2.53.0)
   semverly (~> 1.0.0)
   simplecov (~> 0.11.1)
-  stripe (~> 1.40.0)
+  stripe (~> 1.41.0)
   terminal-notifier (~> 1.6.0)
   therubyracer (~> 0.12.0)
   turn
