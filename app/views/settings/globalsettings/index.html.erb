@@ -99,7 +99,16 @@
         <div class="controls">
           <label for="unique_ga" style="font-size: 12px;" class="checkbox">
             <%= check_box_tag "unique_ga", true, @globalsetting['unique_ga'], :id => "unique_ga" %>
-            Unique GroupId &amp; ArtifactId. This ensures that every Maven based project gets only monitored once from VersionEye. This should avoid dublication. 
+            Unique GroupId &amp; ArtifactId. This ensures that every Maven based project gets only monitored once from VersionEye. This should avoid dublication.
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="controls">
+          <label for="unique_gav" style="font-size: 12px;" class="checkbox">
+            <%= check_box_tag "unique_gav", true, @globalsetting['unique_gav'], :id => "unique_gav" %>
+            Unique GroupId, ArtifactId &amp; Version. This ensures that every Maven based project gets only monitored once from VersionEye. This should avoid dublication.
           </label>
         </div>
       </div>
@@ -108,7 +117,7 @@
         <div class="controls">
           <label for="unique_scm" style="font-size: 12px;" class="checkbox">
             <%= check_box_tag "unique_scm", true, @globalsetting['unique_scm'], :id => "unique_scm" %>
-            Unique SCM projects. This ensures that each project file in SCM (GitHub/Bitbucket/Stash) only gets monitored once from VersionEye. This should avoid dublication. 
+            Unique SCM projects. This ensures that each project file in SCM (GitHub/Bitbucket/Stash) only gets monitored once from VersionEye. This should avoid dublication.
           </label>
         </div>
       </div>

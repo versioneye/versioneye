@@ -13,6 +13,7 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting['show_signup_form'] = Settings.instance.show_signup_form
     @globalsetting['show_login_form'] = Settings.instance.show_login_form
     @globalsetting['unique_ga']  = Settings.instance.projects_unique_ga
+    @globalsetting['unique_gav']  = Settings.instance.projects_unique_gav
     @globalsetting['unique_scm'] = Settings.instance.projects_unique_scm
   end
 
@@ -50,6 +51,12 @@ class Settings::GlobalsettingsController < ApplicationController
       GlobalSetting.set( env, 'projects_unique_ga', "true" )
     else
       GlobalSetting.set( env, 'projects_unique_ga', "false" )
+    end
+
+    if params[:unique_gav] && params[:unique_gav].eql?("true")
+      GlobalSetting.set( env, 'projects_unique_gav', "true" )
+    else
+      GlobalSetting.set( env, 'projects_unique_gav', "false" )
     end
 
     if params[:unique_scm] && params[:unique_scm].eql?("true")
