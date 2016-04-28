@@ -294,17 +294,6 @@ class User::ProjectsController < ApplicationController
   end
 
 
-  def followall
-    id = params[:id]
-    project = Project.find_by_id id
-    project.dependencies.each do |dep|
-      ProductService.follow dep.language, dep.prod_key, current_user
-    end
-    flash[:success] = "You follow now all packages from this project."
-    redirect_to :back
-  end
-
-
   def destroy
     id = params[:id]
     if ProjectService.destroy_by current_user, id

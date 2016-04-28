@@ -18,7 +18,7 @@ gem 'stripe'               , '~> 1.41.0'
 gem 'bunny'                , '~> 2.3.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :branch => 'master', :tag => 'v8.18.0'
+gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :branch => 'master', :tag => 'v8.19.0'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'

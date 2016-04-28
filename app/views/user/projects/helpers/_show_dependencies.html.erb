@@ -14,12 +14,6 @@
       </br>
     <% end %>
   <% elsif @child.dependencies && !@child.dependencies.empty? %>
-    <div class="pull-right">
-      <form action="<%= followall_user_project_path(@child) %>" method="post" style="margin: 0;">
-        <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-        <button class="btn btn-success btn-mini" title="Follow all software packages in this project and receive notifications independently from this project">Follow All</button>
-      </form>
-    </div>
     <div>
       <% @child.scopes.each do |scope| %>
         <% deps = @child.dependencies( scope ) %>

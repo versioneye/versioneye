@@ -33,9 +33,6 @@
     <%= dep.version_current || "UNKNOWN" %>
   </td>
   <td style="padding-right: 5px;">
-    <% if dep.unknown? == false && dep.ext_link.to_s.empty? %>
-        <%= render partial: "shared/product_follow_mini",
-                   locals: {product: product, user: current_user} %>
-    <% end %>
+    <%= dep.licenses_string %>
   </td>
 </tr>
