@@ -19,16 +19,16 @@
         <% else %>
           <span class="meta_prod_description"><%= product.short_summary %></span><br/>
         <% end %>
-        
-        <span class="meta_info" >References:</span> <span class="meta_info_bold"> <%= link_to product.used_by_count, product_references_path( :lang => product.language_esc, :key => product.to_param ) %></span> | 
-        <span class="meta_info" >License:</span> <span class="meta_info_bold"><%= product.license_info %></span> 
+
+        <span class="meta_info" >References:</span> <span class="meta_info_bold"> <%= link_to product.used_by_count, product_references_path( :lang => product.language_esc, :key => product.to_param ) %></span> |
+        <span class="meta_info" >License:</span> <span class="meta_info_bold"><%= product.license_info %></span>
 
         <% update_release_infos( product.version_by_number(product.version), product ) %>
         <% rel_bg = color_for_released_ago product %>
         <div class="flash <%= rel_bg %>">
           <span class="meta_info" >Released:</span> <span class="meta_info_bold" ><%= product.released_ago_in_words %> ago.</span>
         </div>
-        
+
       </div>
 
     </div>
