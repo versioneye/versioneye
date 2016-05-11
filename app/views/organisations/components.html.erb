@@ -16,28 +16,32 @@
       <br/><br/>
     </p>
 
-    <% lang_prods = [] %>
+
     <% comps = @organisation.component_list.sort.to_h %>
     <% comps.keys.each do |key| %>
       <% sp = key.split(':') %>
       <% language = sp[0].to_s.downcase %>
       <% prod_key = sp[1].to_s.gsub('/', ':') %>
-      <% version  = sp[2] %>
-      <% lp = "#{language}:#{prod_key}" %>
+      <% lang_prod = "#{language}:#{prod_key}" %>
+
+      <h4>
+        <span class="icon_<%= language %> on" style="margin-left: -12px;" ></span> <%= link_to "#{prod_key}", "/#{language}/#{prod_key}" %>
+      </h4>
+
+      <% versions = comps[key].keys %>
       <% flash_danger = "" %>
-      <% flash_danger = "alert_header" if lang_prods.include?(lp) %>
-      <% lang_prods << lp if !lang_prods.include?(lp) %>
-      <div >
-        <h4>
-          <span class="icon_<%= language %> on" style="margin-left: -12px;" ></span> <%= link_to "#{prod_key}:#{version}", "/#{language}/#{prod_key}", :class => flash_danger %>
-        </h4>
-        <ul>
-        <% comps[key].each do |val| %>
-          <% sps = val.split(":") %>
+      <% flash_danger = "flash danger" if versions.count > 1 %>
+      <% versions.each do |version| %>
+        <div class="<%= flash_danger %>" >
+          Version <%= version %> is used in this projects:
+          <ul>
+          <% comps[key][version].each do |val| %>
+            <% sps = val.split(":") %>
             <li><%= link_to sps[1], user_project_path(sps[2]), :class => 'searchResultLink' %></li>
-        <% end %>
-        </ul>
-      </div>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
       <hr>
     <% end %>
 
