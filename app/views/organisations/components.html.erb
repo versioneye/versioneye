@@ -18,7 +18,12 @@
     <% comps = @organisation.component_list.sort.to_h %>
     <% comps.keys.each do |key| %>
       <% sp = key.split(':') %>
-      <h4><%= link_to key, "/#{sp[0].to_s.downcase}/#{sp[1]}" %></h4>
+      <% language = sp[0].to_s.downcase %>
+      <% prod_key = sp[1].to_s.gsub('/', ':') %>
+      <% version  = sp[2] %>
+      <h4>
+        <span class="icon_<%= language %> on" style="margin-left: -12px;" ></span> <%= link_to "#{prod_key}:#{version}", "/#{language}/#{prod_key}" %>
+      </h4>
       <ul>
       <% comps[key].each do |val| %>
         <% sps = val.split(":") %>
