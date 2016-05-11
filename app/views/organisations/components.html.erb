@@ -11,25 +11,33 @@
   <div class="content" >
 
     <p>
-      This page lists all components which are used in this organsation and even shows which projects are using them.
+      This page lists all components which are used in this organsation and shows in which projects they are used.
+      Components which are used in multiple versions are marked red.
       <br/><br/>
     </p>
 
+    <% lang_prods = [] %>
     <% comps = @organisation.component_list.sort.to_h %>
     <% comps.keys.each do |key| %>
       <% sp = key.split(':') %>
       <% language = sp[0].to_s.downcase %>
       <% prod_key = sp[1].to_s.gsub('/', ':') %>
       <% version  = sp[2] %>
-      <h4>
-        <span class="icon_<%= language %> on" style="margin-left: -12px;" ></span> <%= link_to "#{prod_key}:#{version}", "/#{language}/#{prod_key}" %>
-      </h4>
-      <ul>
-      <% comps[key].each do |val| %>
-        <% sps = val.split(":") %>
-          <li><%= link_to sps[1], user_project_path(sps[2], :child => 'summary'), :class => 'searchResultLink' %></li>
-      <% end %>
-      </ul>
+      <% lp = "#{language}:#{prod_key}" %>
+      <% flash_danger = "" %>
+      <% flash_danger = "alert_header" if lang_prods.include?(lp) %>
+      <% lang_prods << lp if !lang_prods.include?(lp) %>
+      <div >
+        <h4>
+          <span class="icon_<%= language %> on" style="margin-left: -12px;" ></span> <%= link_to "#{prod_key}:#{version}", "/#{language}/#{prod_key}", :class => flash_danger %>
+        </h4>
+        <ul>
+        <% comps[key].each do |val| %>
+          <% sps = val.split(":") %>
+            <li><%= link_to sps[1], user_project_path(sps[2]), :class => 'searchResultLink' %></li>
+        <% end %>
+        </ul>
+      </div>
       <hr>
     <% end %>
 
