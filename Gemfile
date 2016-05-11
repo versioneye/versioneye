@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'bundler'              , '~> 1.11.2'
+gem 'bundler'              , '~> 1.12.3'
 gem 'rails'                , '~> 4.2.5.2'
 gem 'jquery-rails'         , '~> 4.1.0'
 gem 'execjs'               , '~> 2.6.0'
@@ -14,11 +14,11 @@ gem 'bourbon'              , '~> 4.2.0'
 gem 'ruby_regex'           , '~> 0.1.0'
 gem 'semverly'             , '~> 1.0.0'
 gem 'cocoapods-core'       , '~> 0.39.0'
-gem 'stripe'               , '~> 1.41.0'
+gem 'stripe'               , '~> 1.42.0'
 gem 'bunny'                , '~> 2.3.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'git@github.com:versioneye/versioneye-core.git', :tag => 'v8.19.4'
+gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v8.20.0'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'

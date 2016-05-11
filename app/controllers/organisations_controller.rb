@@ -2,7 +2,7 @@ class OrganisationsController < ApplicationController
 
 
   before_filter :authenticate
-  before_filter :auth_org_member, :only => [:projects, :show, :assign]
+  before_filter :auth_org_member, :only => [:projects, :show, :assign, :components]
   before_filter :auth_org_owner,  :only => [:update, :delete, :destroy]
 
 
@@ -87,6 +87,11 @@ class OrganisationsController < ApplicationController
     logger.error e.backtrace.join("\n")
     flash[:error] = "ERROR: #{e.message}"
     redirect_to :back
+  end
+
+
+  def components
+    
   end
 
 

@@ -1,0 +1,33 @@
+
+<div class="col-md-3" >
+  <%= render "organisations/navi" %>
+</div>
+<div class="col-md-9">
+
+  <div class="content_header_def" >
+    <%= pluralize( @organisation.component_list.count, "component" ) %> used in this organisation (<%= @organisation.name %>)
+  </div>
+
+  <div class="content" >
+
+    <p>
+      This page lists all components which are used in this organsation and even shows which projects are using them.
+      <br/><br/>
+    </p>
+
+    <% comps = @organisation.component_list.sort.to_h %>
+    <% comps.keys.each do |key| %>
+      <% sp = key.split(':') %>
+      <h4><%= link_to key, "/#{sp[0].to_s.downcase}/#{sp[1]}" %></h4>
+      <ul>
+      <% comps[key].each do |val| %>
+        <% sps = val.split(":") %>
+          <li><%= link_to sps[1], user_project_path(sps[2], :child => 'summary'), :class => 'searchResultLink' %></li>
+      <% end %>
+      </ul>
+      <hr>
+    <% end %>
+
+  </div>
+
+</div>

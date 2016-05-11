@@ -6,14 +6,14 @@ GIT
     gravatar_image_tag (1.2.0)
 
 GIT
-  remote: git@github.com:versioneye/versioneye-core.git
-  revision: fb54507decd7dd069a12dc9c2d72085829534a69
-  tag: v8.19.4
+  remote: https://github.com/versioneye/versioneye-core.git
+  revision: fa3ff0e9ac035157b074a58116c93c8096995717
+  tag: v8.20.0
   specs:
-    versioneye-core (8.19.4)
+    versioneye-core (8.20.0)
       actionmailer (~> 4.2.5.2)
-      aws-sdk (~> 2.2.0)
-      bundler (~> 1.11.0)
+      aws-sdk (~> 2.3.0)
+      bundler (~> 1.12.0)
       bunny (~> 2.3.0)
       cocoapods-core (~> 0.39.0)
       dalli (~> 2.7.0)
@@ -30,7 +30,7 @@ GIT
       pdfkit (~> 0.8.0)
       persistent_httparty (~> 0.1.0)
       semverly (~> 1.0.0)
-      stripe (~> 1.41.0)
+      stripe (~> 1.42.0)
       tire (~> 0.6.2)
       will_paginate_mongoid (= 2.0.1)
       wkhtmltopdf-binary (~> 0.9.9.1)
@@ -78,12 +78,12 @@ GEM
     amq-protocol (2.0.1)
     ansi (1.5.0)
     arel (6.0.3)
-    aws-sdk (2.2.37)
-      aws-sdk-resources (= 2.2.37)
-    aws-sdk-core (2.2.37)
+    aws-sdk (2.3.2)
+      aws-sdk-resources (= 2.3.2)
+    aws-sdk-core (2.3.2)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.37)
-      aws-sdk-core (= 2.2.37)
+    aws-sdk-resources (2.3.2)
+      aws-sdk-core (= 2.3.2)
     bourbon (4.2.7)
       sass (~> 3.4)
       thor (~> 0.19)
@@ -115,7 +115,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.10.0)
-    concurrent-ruby (1.0.1)
+    concurrent-ruby (1.0.2)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     dalli (2.7.6)
@@ -181,7 +181,7 @@ GEM
       mongo (~> 2.1)
       origin (~> 2.2)
       tzinfo (>= 0.3.37)
-    multi_json (1.11.3)
+    multi_json (1.12.0)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     nap (1.1.0)
@@ -297,7 +297,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    stripe (1.41.0)
+    stripe (1.42.0)
       rest-client (~> 1.4)
     terminal-notifier (1.6.3)
     therubyracer (0.12.2)
@@ -329,7 +329,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.2)
     vcr (3.0.1)
-    webmock (2.0.0)
+    webmock (2.0.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -349,7 +349,7 @@ PLATFORMS
 
 DEPENDENCIES
   bourbon (~> 4.2.0)
-  bundler (~> 1.11.2)
+  bundler (~> 1.12.3)
   bunny (~> 2.3.0)
   capybara (~> 2.7.0)
   capybara-firebug (~> 2.1.0)
@@ -385,7 +385,7 @@ DEPENDENCIES
   selenium-webdriver (~> 2.53.0)
   semverly (~> 1.0.0)
   simplecov (~> 0.11.1)
-  stripe (~> 1.41.0)
+  stripe (~> 1.42.0)
   terminal-notifier (~> 1.6.0)
   therubyracer (~> 0.12.0)
   turn
@@ -398,4 +398,4 @@ DEPENDENCIES
   will_paginate_mongoid (= 2.0.1)
 
 BUNDLED WITH
-   1.11.2
+   1.12.3
