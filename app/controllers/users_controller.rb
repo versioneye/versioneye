@@ -73,34 +73,6 @@ class UsersController < ApplicationController
   end
 
 
-  def create_mobile
-    @user = create_user_form params
-    if Set['1', 'on', 'true'].include? params[:user][:terms]
-      @user[:terms] = true
-    else
-      @user[:terms] = false
-    end
-
-    @user[:datenerhebung] = @user[:terms]
-
-    if UserService.valid_user?(@user, flash)
-      @user.create_username
-      @user.create_verification
-      if @user.save
-        @user.send_verification_email
-        sign_in @user
-        redirect_to '/lottery/libraries'
-      else
-        flash[:error] = "#{t(:general_error)} - #{@user.errors.full_messages.to_sentence}"
-        redirect_to :back and return
-      end
-    else
-      flash[:error] = t(flash[:error])
-      redirect_to :back
-    end
-  end
-
-
   def show
     @user = User.find_by_username(params[:id])
     if @user

@@ -37,8 +37,6 @@ Versioneye::Application.routes.draw do
   get    '/signin',                :to => 'sessions#new'
   get    '/signout',               :to => 'sessions#destroy'
 
-  post '/users/mobile',            :to => 'users#create_mobile'
-
   get '/users/autocomplete', :to => 'users#autocomplete'
   resources :users, :key => :username do
     member do
@@ -101,14 +99,6 @@ Versioneye::Application.routes.draw do
   post  '/updatepassword'                      , :to => 'users#update_password'
 
   get   '/unsubscribe/:email/:newsletter', :to => 'unsubscribe#unsubscribe'
-
-  resource :lottery do
-    get  '/verify',    :to => "lotteries#show_verification"
-    get  '/signin',    :to => "lotteries#show_signin"
-    get  '/libraries', :to => "lotteries#libraries"
-    post '/follow',    :to => "lotteries#follow"
-    get  '/thankyou',  :to => "lotteries#thankyou"
-  end
 
   get   '/package/latest',                      :to => 'latest_releases#index'
   get   '/package/latest/stats/:timespan',      :to => 'latest_releases#stats'
