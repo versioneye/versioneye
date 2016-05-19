@@ -63,7 +63,11 @@
             </td>
           <% end %>
           <td>
-            <%= link_to team.name, organisation_team_path(@organisation, team) %> <span class="meta_info">(<%= pluralize( @organisation.projects.parents.where(:team_ids => team.ids).count, "project" ) %>)</span>
+            <%= link_to team.name, organisation_team_path(@organisation, team) %>
+            <span class="meta_info">
+              (<%= pluralize( @organisation.projects.parents.where(:team_ids => team.ids).count, "project" ) %>,
+               <%= pluralize( team.members.count, "user" ) %>)
+            </span>
           </td>
         </tr>
 
