@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'bundler'              , '~> 1.12.3'
-gem 'rails'                , '~> 4.2.5.2'
+gem 'rails'                , '~> 4.2.6'
 gem 'jquery-rails'         , '~> 4.1.0'
 gem 'execjs'               , '~> 2.6.0'
 gem 'therubyracer'         , '~> 0.12.0'
@@ -18,7 +18,7 @@ gem 'stripe'               , '~> 1.42.0'
 gem 'bunny'                , '~> 2.3.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v8.20.4'
+gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v8.20.5'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
@@ -55,7 +55,7 @@ group :test do
   gem 'capybara'          , '~> 2.7.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'selenium-webdriver', '~> 2.53.0'
-  gem 'vcr'               , '~> 3.0.1',  :require => false
+  gem 'vcr'               , '3.0.1',  :require => false
   gem 'webmock'           , '~> 2.0.0', :require => false
   gem "fakeweb"           , '~> 1.3'
   gem 'database_cleaner'  , '~> 1.5.1'
