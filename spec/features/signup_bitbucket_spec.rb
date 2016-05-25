@@ -1,6 +1,6 @@
 require 'spec_helper'
 describe "Signup with Bitbucket" do
-  let(:user1){FactoryGirl.build(:user, email: "test@versioneye.com")}
+  let(:user1){FactoryGirl.build(:user, email: "bitbucket@versioneye.com")}
 
   before :each do
     User.all.delete_all
@@ -19,7 +19,7 @@ describe "Signup with Bitbucket" do
     page.has_css? 'button.btn-bitbucket'
     click_button "Login with Bitbucket"
 
-    #log into Bitbucket when required
+    # log into Bitbucket when required
     find_by_id("aid-login-form").visible?
     within("form#aid-login-form") do
       fill_in "username", :with => Settings.instance.bitbucket_username
@@ -32,12 +32,12 @@ describe "Signup with Bitbucket" do
       click_button "Grant access"
     end
 
-    page.should have_content "Almost done. We just need your email address."
-    within("form.form-horizontal") do
-      fill_in "Email", :with => user1[:email]
-      check "terms"
-      click_on "Sign up"
-    end
+    # page.should have_content "Almost done. We just need your email address."
+    # within("form.form-horizontal") do
+    #   fill_in "Email", :with => user1[:email]
+    #   check "terms"
+    #   click_on "Sign up"
+    # end
 
     User.all.count.should eql(1)
     u = User.all.first
@@ -45,6 +45,5 @@ describe "Signup with Bitbucket" do
     u.bitbucket_login.should eql( "veye_test" )
     u.bitbucket_token.should_not be_nil
     u.bitbucket_secret.should_not be_nil
-
   end
 end

@@ -58,7 +58,7 @@ class Auth::BitbucketController < ApplicationController
     end
 
     if !primary_email.to_s.empty?
-      rpath = auth_bitbucket_create_path
+      rpath = auth_bitbucket_created_path
       @user = create_user(primary_email, access_token.token, access_token.secret)
       if @user.save
         @user.send_verification_email
@@ -115,6 +115,9 @@ class Auth::BitbucketController < ApplicationController
       Rails.logger.error @user.errors.full_messages.to_sentence
       redirect_to auth_bitbucket_new_path
     end
+  end
+
+  def created
   end
 
   private
