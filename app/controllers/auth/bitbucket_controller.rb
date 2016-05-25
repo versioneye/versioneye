@@ -41,7 +41,6 @@ class Auth::BitbucketController < ApplicationController
     if user.nil? && !primary_email.to_s.empty?
       user = User.find_by_email( primary_email )
     end
-    p "found user: #{user}"
 
     if user && user.activated?
       sign_in user
