@@ -38,6 +38,13 @@ export BITBUCKET_USER_SECRET=
 
 export GITHUB_CLIENT_ID=
 export GITHUB_CLIENT_SECRET=
+export GITHUB_USER=
+export GITHUB_PASS=
+
+export SMTP_ADDRESS=
+export SMTP_PORT=
+export SMTP_USER=
+export SMTP_PASS=
 
 export RAILS_ENV="development"
 echo "Rails mode: $RAILS_ENV"
