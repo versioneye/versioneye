@@ -27,7 +27,7 @@ de:
     page_header_signin: "Anmeldung"
     helpers:
         label:
-            user:  
+            user:
                 fullname: "Name"
                 username: "Benutzername"
                 email: "E-Mail"
