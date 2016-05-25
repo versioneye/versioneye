@@ -14,7 +14,6 @@ database:
 test:
   override:
     - export RAILS_ENV=test
-    - mkdir ~/versioneye/log
     - mkdir ~/versioneye/tmp
     - mkdir ~/versioneye/tmp/cache
     - gem install bundler
