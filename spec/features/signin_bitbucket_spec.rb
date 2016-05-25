@@ -25,8 +25,8 @@ end
 
 describe "Signin with Bitbucket" do
 
-  let(:user1){FactoryGirl.create(:bitbucket_user,
-                                 bitbucket_id: "versioneye_test")}
+  let(:user){FactoryGirl.create(:bitbucket_user,
+                                 bitbucket_id: Settings.instance.bitbucket_username )}
 
   before :each do
     User.delete_all
@@ -41,7 +41,7 @@ describe "Signin with Bitbucket" do
 
 
   it "signs already existing users in and updates info", js: true do
-    user1.save
+    user.save
     User.all.count.should eql(1)
 
     visit signin_path
@@ -66,7 +66,6 @@ describe "Signin with Bitbucket" do
     u.bitbucket_token.should_not be_nil
     u.bitbucket_secret.should_not be_nil
     u.username.should eql('hans_tanz')
-    u.bitbucket_login.should eql(user1[:bitbucket_id])
-
+    u.bitbucket_login.should eql(user[:bitbucket_id])
   end
 end

@@ -42,7 +42,7 @@ describe "Signup with Bitbucket" do
     User.all.count.should eql(1)
     u = User.all.first
     u.email.should eql(user1[:email])
-    u.bitbucket_login.should eql("versioneye_test")
+    u.bitbucket_login.should eql( "veye_test" )
     u.bitbucket_token.should_not be_nil
     u.bitbucket_secret.should_not be_nil
 

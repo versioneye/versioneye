@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Connect with Bitbucket" do
 
-  let(:user1){FactoryGirl.create(:default_user)}
+  let(:user){FactoryGirl.create(:default_user)}
 
   before :each do
     User.delete_all
@@ -16,12 +16,12 @@ describe "Connect with Bitbucket" do
   end
 
   it "connects Bitbucket account for authorized user", js: true do
-    user1.save
+    user.save
     User.all.count.should eql(1)
 
     visit signin_path
     within("form.form-horizontal") do
-      fill_in "Email", with: user1[:email]
+      fill_in "Email", with: user[:email]
       fill_in "Password", with: 'password'
       click_on "Sign in"
     end
@@ -30,17 +30,18 @@ describe "Connect with Bitbucket" do
     page.has_content? 'Connect with GitHub and others'
     click_on "Connect with Bitbucket"
 
-    #log in with testuser's credentials
+    # log in with testuser's credentials
     find_by_id("aid-login-form").visible?
     within("form#aid-login-form") do
       fill_in "username", :with => Settings.instance.bitbucket_username
       fill_in 'password', :with => Settings.instance.bitbucket_password
+      sleep 5
       click_button 'Log in'
     end
 
-    #grant access
+    # Grant access
     if page.has_css? 'button.aui-button-primary'
-      click_button "Log in"
+      click_button "Grant access"
     end
 
     current_path.should == settings_connect_path
@@ -52,4 +53,5 @@ describe "Connect with Bitbucket" do
     u.bitbucket_secret.should_not be_nil
     u.username.should eql('hanstanz')
   end
+
 end
