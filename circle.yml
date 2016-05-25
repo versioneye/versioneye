@@ -4,14 +4,8 @@ machine:
 
 dependencies:
   override:
-    # - docker pull versioneye/mongodb:3.2.6
     - docker pull reiz/elasticsearch:0.9.1-1
-    # - docker pull reiz/memcached:1.4.14
-    # - docker pull reiz/rabbitmq:3.4.2
-    # - docker run --name mongodb       -d versioneye/mongodb:3.2.6
-    # - docker run --name memcached     -d reiz/memcached:1.4.14
     - docker run --name elasticsearch -p 9200:9200 -d reiz/elasticsearch:0.9.1-1
-    # - docker run --name rabbitmq      -p 5672:5672 -d reiz/rabbitmq:3.4.2
 
 database:
   override:
@@ -23,7 +17,6 @@ test:
     - mkdir ~/versioneye/log
     - mkdir ~/versioneye/tmp
     - mkdir ~/versioneye/tmp/cache
-    - cp veye_deploy_rsa ~/.ssh/id_circleci_github
     - gem install bundler
     - bundle install
     - bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml
