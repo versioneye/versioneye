@@ -15,7 +15,7 @@ FactoryGirl.define do
     version "0.1"
 
     factory :product_with_deps do
-      ignore do
+      transient do
         deps_count 0
       end
 
@@ -30,7 +30,7 @@ FactoryGirl.define do
     end
 
     factory :product_with_versions do
-      ignore do
+      transient do
         versions_count 6
       end
 

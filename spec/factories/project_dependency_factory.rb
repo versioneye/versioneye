@@ -11,7 +11,7 @@ FactoryGirl.define do
     ext_link ""
 
     factory :projectdependency_with_licenses do
-      ignore do
+      transient do
         license_count 1
       end
 

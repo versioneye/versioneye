@@ -7,7 +7,7 @@ FactoryGirl.define do
     language "Ruby"
 
     factory :project_with_deps do
-      ignore do
+      transient do
         deps_count 0
       end
 
