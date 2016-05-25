@@ -7,8 +7,7 @@ capybara-*.html
 .rspec
 /.bundle
 /vendor/bundle
-/log
-/log/*
+/log/*.log
 /pids
 /pids/*
 /tmp/*
