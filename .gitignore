@@ -10,7 +10,6 @@ capybara-*.html
 /log/*.log
 /pids
 /pids/*
-/tmp/*
 /db/*.sqlite3
 /public/system/*
 /coverage/
