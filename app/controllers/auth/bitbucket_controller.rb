@@ -25,7 +25,7 @@ class Auth::BitbucketController < ApplicationController
     unless session.has_key?(:request_token)
       flash[:error] = 'An error occured. Please try again and contact the VersionEye team.'
       session.clear
-      redirect_to signin_path and return
+      redirect_to(signin_path) and return
     end
 
     access_token = fetch_access_token params[:oauth_verifier], params[:oauth_token]
@@ -33,27 +33,48 @@ class Auth::BitbucketController < ApplicationController
 
     if signed_in?
       connect_bitbucket_with_user user_info, access_token
-      redirect_to settings_connect_path and return
+      redirect_to(settings_connect_path) and return
     end
 
+    primary_email = fetch_primary_email user_info, access_token
     user = User.find_by_bitbucket_id(user_info[:username])
+    if user.nil? && !primary_email.to_s.empty?
+      user = User.find_by_email( primary_email )
+    end
+    p "found user: #{user}"
 
-    if user.nil?
-      cookies.permanent.signed[:access_token] = access_token.token
-      cookies.permanent.signed[:access_token_secret] = access_token.secret
-      rpath = auth_bitbucket_new_path(email: session[:email], promo_code: session[:promo_code])
-    elsif user.activated?
+    if user && user.activated?
       sign_in user
       update_user_with user_info, access_token
       user.save
       rpath = user_projects_bitbucket_repositories_path
       rpath = user_projects_path if user.projects && !user.projects.empty?
       rpath = settings_creditcard_path if !cookies.signed[:plan_selected].to_s.empty?
-    else
-      flash[:error] = "Your account is no activated. Please check your email account."
-      rpath = signin_path
+      redirect_to(rpath) and return
     end
-    redirect_back_or rpath
+
+    if user && !user.activated?
+      flash[:error] = "Your account is no activated. Please check your email account."
+      redirect_to(signin_path) and return
+    end
+
+    if !primary_email.to_s.empty?
+      rpath = auth_bitbucket_create_path
+      @user = create_user(primary_email, access_token.token, access_token.secret)
+      if @user.save
+        @user.send_verification_email
+        session.clear
+        redirect_to(rpath) and return
+      else
+        flash[:error] = "An error occured [#{@user.errors.full_messages.to_sentence}]. Please contact the VersionEye team."
+        Rails.logger.error @user.errors.full_messages.to_sentence
+      end
+    end
+
+    cookies.permanent.signed[:access_token] = access_token.token
+    cookies.permanent.signed[:access_token_secret] = access_token.secret
+    rpath = auth_bitbucket_new_path(email: session[:email], promo_code: session[:promo_code])
+    redirect_to(rpath) and return
   end
 
 
@@ -71,7 +92,7 @@ class Auth::BitbucketController < ApplicationController
     @email = params[:email]
     @terms = params[:terms]
     @promo = params[:promo_code]
-    access_token = cookies.signed[:access_token]
+    access_token  = cookies.signed[:access_token]
     access_secret = cookies.signed[:access_token_secret]
 
     unless new_form_valid?( params )
@@ -98,6 +119,22 @@ class Auth::BitbucketController < ApplicationController
   end
 
   private
+
+    def fetch_primary_email user_info, access_token
+      user = User.new
+      user.bitbucket_login  = user_info[:username]
+      user.bitbucket_token  = access_token.token
+      user.bitbucket_secret = access_token.secret
+
+      primary_email = nil
+      emails = Bitbucket.user_emails( user )
+      emails.each do |email|
+        if email[:primary].to_s.eql?('true')
+          primary_email = email[:email]
+        end
+      end
+      primary_email
+    end
 
     def new_form_valid? params
       if @email.to_s.empty?

@@ -66,6 +66,6 @@ describe "Signin with Bitbucket" do
     u.bitbucket_token.should_not be_nil
     u.bitbucket_secret.should_not be_nil
     u.username.should eql('hans_tanz')
-    u.bitbucket_login.should eql(user[:bitbucket_id])
+    u.bitbucket_login.should eql("veye_test")
   end
 end
