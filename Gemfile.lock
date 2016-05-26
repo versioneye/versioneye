@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: d52c40408a442fc7ad3c34149a09758e2fa3708c
-  tag: v8.20.5
+  revision: fdbaf690b028c3bb16a43ae2b0958f971cc549e0
+  tag: v8.20.6
   specs:
-    versioneye-core (8.20.5)
+    versioneye-core (8.20.6)
       actionmailer (~> 4.2.6)
       aws-sdk (~> 2.3.0)
       bundler (~> 1.12.0)
@@ -30,7 +30,7 @@ GIT
       pdfkit (~> 0.8.0)
       persistent_httparty (~> 0.1.0)
       semverly (~> 1.0.0)
-      stripe (~> 1.42.0)
+      stripe (~> 1.43.0)
       tire (~> 0.6.2)
       will_paginate_mongoid (= 2.0.1)
       wkhtmltopdf-binary (~> 0.9.9.1)
@@ -127,7 +127,7 @@ GEM
     erubis (2.7.0)
     etcd (0.3.0)
       mixlib-log
-    execjs (2.6.0)
+    execjs (2.7.0)
     factory_girl (4.7.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.7.0)
@@ -297,7 +297,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    stripe (1.42.0)
+    stripe (1.43.0)
       rest-client (~> 1.4)
     terminal-notifier (1.6.3)
     therubyracer (0.12.2)
@@ -328,7 +328,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
-    vcr (3.0.1)
+    vcr (3.0.3)
     webmock (2.0.3)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -349,14 +349,14 @@ PLATFORMS
 
 DEPENDENCIES
   bourbon (~> 4.2.0)
-  bundler (~> 1.12.3)
+  bundler (~> 1.12.5)
   bunny (~> 2.3.0)
   capybara (~> 2.7.0)
   capybara-firebug (~> 2.1.0)
   cocoapods-core (~> 0.39.0)
   coffee-rails (~> 4.1.0)
   database_cleaner (~> 1.5.1)
-  execjs (~> 2.6.0)
+  execjs (~> 2.7.0)
   factory_girl (~> 4.7.0)
   factory_girl_rails (~> 4.7.0)
   fakes3 (~> 0.2.1)
@@ -385,17 +385,17 @@ DEPENDENCIES
   selenium-webdriver (~> 2.53.0)
   semverly (~> 1.0.0)
   simplecov (~> 0.11.1)
-  stripe (~> 1.42.0)
+  stripe (~> 1.43.0)
   terminal-notifier (~> 1.6.0)
   therubyracer (~> 0.12.0)
   turn
   twitter_oauth (~> 0.4.94)
   uglifier (~> 2.7.0)
-  vcr (= 3.0.1)
+  vcr (= 3.0.3)
   versioneye-core!
   webmock (~> 2.0.0)
   whenever (~> 0.9.2)
   will_paginate_mongoid (= 2.0.1)
 
 BUNDLED WITH
-   1.12.4
+   1.12.5
