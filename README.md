@@ -2,57 +2,74 @@
 
 # VersionEye
 
-This is the source code for the web application <http://www.versioneye.com>.
+This is the source code for the web application [VersionEye](https://www.versioneye.com).
 
-## Git Flow
+## Start the backend services for VersionEye
 
-We are using the git workflow which is described here <http://nvie.com/posts/a-successful-git-branching-model/>!
-That means the master branch is always deployable. For every feature we open a new brach. The naming pattern for branches is like this:
-
-```
-TICKET-ID_MEANINGFULL-SHORT-DESCRIPTION
-```
-
-for example
+This project contains a [docker-compose.yml](docker-compose.yml) file which describes the backend services
+of VersionEye. You can start the backend services like this:
 
 ```
-313_github_singlepage_app
+docker-compose up -d
 ```
 
-Every branch has to be merged in to the `develop` branch as soon it is done.
-Merges from develop to master are like tags and deployments. The master branch must always be stable and deployable!
+That will start:
 
+ - MongoDB
+ - RabbitMQ
+ - ElasticSearch
+ - Memcached
 
-## Tech Stack
+For persistence you should comment in and adjust the mount volumes in [docker-compose.yml](docker-compose.yml)
+for MongoDB and ElasticSearch. If you are not interested in persisting the data on your host you can
+let it untouched.
 
-This is the stack in this project:
-
- * Ruby on Rails
- * MongoDB
- * Memcache
- * ElasticSearch
- * Amazon S3 / SES
-
-To start the application you need Ruby 1.9.3 and a running MongoDB instance.
-
-### MongoDB
-
-You will find downloads and tutorials to MongoDB here: <http://www.mongodb.org/>. To acess MongoDB from Ruby we are using mongoid: <http://mongoid.org>. The configuration to the MongoDB is placed at "config/mongoid.yml". You should create "veye_dev" database in your MongoDB instance, in that way you don't have to customize the mongoid.yml file.
-
-### ElasticSearch
-
-We are using ElasticSearch for better search results. You can find downloads and tutorials to ElasticSearch here: <http://www.elasticsearch.org/>. The connection to the ElasticSearch Server is configured in `config/settings.yml`. If you start the rails console you can re-index the whole MongoDB with:
+Shutting down the backend services works like this:
 
 ```
-EsProduct.reset
-EsProduct.index_all
+docker-compose down
 ```
 
-You can also use the application without ElasticSearch, if that is to much trouble for you. In `ProductService.search` you just have to comment out everything but the last line. That will use MongoDB for search results.
+## Configuration
 
-### Amazon S3
+All important configuration values are read from environment variable. Before you start
+VersioneyeCore.new you should adjust the values in [scripts/set_vars_for_dev.sh](scripts/set_vars_for_dev.sh)
+and load them like this:
 
-For uploading files a connection to Amazon S3 is mandatory. You can find the configuration for Amazon S3 in "config/config.yml". Please add here your "aws_s3_access_key_id" and your "aws_s3_secret_access_key" and don't commit it back! With that all file uploads will work fine.
+```
+source ./scripts/set_vars_for_dev.sh
+```
+
+The most important env. variables are the ones for the backend services, which point to MongoDB, ElasticSearch,
+RabbitMQ and Memcached.
+
+## Install dependencies
+
+If the backend services are all up and running and the environment variables are set correctly
+you can install the dependencies with `bundler`. If `bundler` is not installed on your machine
+run this command to install it:
+
+```
+gem install bundler
+```
+
+Then you can install the dependencies like this:
+
+```
+bundle install
+```
+
+## Rails Server
+
+If the dependencies are installed correctly you can start the Rails server like this:
+
+```
+rails s
+```
+
+Now the application should be available at `http://localhost:3000`.
+
+## Amazon S3
 
 You can use the fake-s3 GEM to simulate S3 offline: <https://github.com/jubos/fake-s3>.
 You can start the fake-s3 service like this:
@@ -61,16 +78,10 @@ You can start the fake-s3 service like this:
 fakes3 -r /tmp -p 4567
 ```
 
-
-### Memcache
-
-For memcache we are using the dalli GEM. It requires at least memcache 1.4. For a little performance boost
-we are using kgio. You can find a quick tutorial to Rails an Memcache on Heroku: <https://devcenter.heroku.com/articles/building-a-rails-3-application-with-the-memcache-addon>.
-
-
 ## React.JS
 
-for autocompiling the JSX files in ReactJS use the `jsx` node package.
+Some parts of VersionEye are implemented in ReactJS.
+For autocompiling the JSX files in ReactJS use the `jsx` node package.
 
 ```
 jsx --watch src/ build/
@@ -82,73 +93,44 @@ jsx --watch src/ build/
 sudo npm install -g react-tools
 ```
 
-
-## Configuration
-
-VersionEye is using many 3rd part services in the Internet. Services like GitHub, Bitbucket, Amazon and so on. All Access Tokens and Access Keys are centralized in `config/settings.yml`. If some keys are missing just add your own and don't commit it back. Inside the application you can access all values over the "Settings" class like this:
-
-```
-Settings.instance.github_client_id
-```
-
 ## Tests
 
-For tests we are using
+The tests for this project are running after each `git push` on [CircleCI](https://circleci.com/gh/versioneye/versioneye)!
+For more details take a look to the [circle.yml](circle.yml) file in the root directory!
 
-* RSpec: <http://rspec.info/>
-* Capybara: <https://github.com/jnicklas/capybara>
-* Selenium-Webdriver: <http://www.versioneye.com/package/selenium-webdriver>
-
-We are using RSpec for all kind of tests! Even for acceptance Tests. In the past we used RSpec togehter with webrat. But because webrat is not maintained anymore we moved to capybara. All new acceptance tests have to be written in capybara and placed in `spec/features`. If JavaScript is required for the test we use selenium as webdriver for capybara.
-
-You can run all tests with the "rspec" command. Before you run the tests you should switch to test environment! You can do that by exporting the RAISL_ENV like this: `export RAILS_ENV=test`.
-
-## Rake
-
-Our rake tasks are organized in `lib/tasks/versioneye.rake`. In this file we have 2 important tasks.
+If the Docker containers for the backend services are running locally, the tests can be executed locally
+with this command:
 
 ```
-rake versioneye:daily_jobs
+./scripts/runtests_local.sh
 ```
 
-This will execute all jobs we have to run daily. For example sending out the daily new version notification emails and so on.
+Make sure that you followed the steps in the configuration section, before you run the tests!
 
-```
-rake versioneye:weekly_jobs
-```
+## Support
 
-This task will execute all jobs we have to run once a week. For example sending out the weekly project notifications.
+For commercial support send a message to `support@versioneye.com`.
 
+## License
 
-## Deployment
+VersionEye-Core is licensed under the MIT license!
 
-The deployment works with [Capistrano](https://www.versioneye.com/ruby/capistrano/3.2.0).
-The main deployment script is placed in:
+Copyright (c) 2016 VersionEye GmbH
 
-```
-config/deploy.rb
-```
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-Specific configurations for the environments are placed in:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-```
-config/environments/*
-```
-
-the deployment scripts work with domain names. They assume that you have configured the IP address to the
-domain `veye_www` locally, for example in `/etc/hosts`. And Capistrano assumes that you can access the
-`veye_www` server without entering a password. You can achieve that by copying your public key to the `veye_www` server.
-
-This command will deploy the HEAD from the master branch to production.
-
-```
-cap production deploy
-```
-
-If something goes wrong you can rollback to the previous deployment like this:
-
-```
-cap production deploy:revert_release
-```
-
-Keep in mind that Capistrano deploys the `master` branch, not the default `development` branch!
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
