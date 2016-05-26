@@ -1,8 +1,33 @@
-[![Dependency Status](https://www.versioneye.com/user/projects/54985cc0818b9377d2000002/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54985cc0818b9377d2000002)
+[![Dependency Status](https://www.versioneye.com/user/projects/57471a39ce8d0e004505f63c/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57471a39ce8d0e004505f63c)
 
 # VersionEye
 
 This is the source code for the web application [VersionEye](https://www.versioneye.com).
+
+## Sponsors
+
+This companies are financially supporting VersionEye. 
+
+<table>
+	<tr>
+		<td>
+			<a href="https://www.jfrog.com/">
+				<img src="app/assets/images/sponsors/jfrog.png" width="100"/>
+			</a>
+		</td>
+		<td>
+			<a href="https://www.xing.com/">
+				<img src="app/assets/images/sponsors/xing.png" width="150"/>
+			</a>
+		</td>
+		<td>
+			<a href="http://www.seeburger.de/">
+				<img src="app/assets/images/sponsors/seeburger.jpg" width="180"/>
+			</a>
+		</td>
+	</tr>
+</table>
+
 
 ## Start the backend services for VersionEye
 
