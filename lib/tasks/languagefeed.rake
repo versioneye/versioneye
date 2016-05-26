@@ -1,5 +1,5 @@
 namespace :languagefeed do
-  desc "initializes collection of languagefeed. 
+  desc "initializes collection of languagefeed.
   PS: it cleans collection before adding. For language name check Product model"
   task :init => :environment do
     newsfeeds = [
