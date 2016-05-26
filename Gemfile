@@ -28,7 +28,7 @@ gem 'gravatar_image_tag'    , :git => 'git@github.com:reiz/gravatar_image_tag.gi
 gem 'net-ldap', '0.14.0'
 gem 'redcarpet', '3.3.4'
 
-gem 'font-awesome-sass', '~> 4.5.0'
+gem 'font-awesome-sass', '~> 4.6.2'
 
 group :development do
   gem 'psych'             , '~> 2.0.5'
