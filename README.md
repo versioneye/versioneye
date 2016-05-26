@@ -11,17 +11,17 @@ This companies are financially supporting VersionEye.
 <table>
 	<tr>
 		<td>
-			<a href="https://www.jfrog.com/">
+			<a href="https://www.jfrog.com/" target="jrog">
 				<img src="app/assets/images/sponsors/jfrog.png" width="100"/>
 			</a>
 		</td>
 		<td>
-			<a href="https://www.xing.com/">
+			<a href="https://www.xing.com/" target="xing">
 				<img src="app/assets/images/sponsors/xing.png" width="150"/>
 			</a>
 		</td>
 		<td>
-			<a href="http://www.seeburger.de/">
+			<a href="http://www.seeburger.de/" target="seeburger">
 				<img src="app/assets/images/sponsors/seeburger.jpg" width="180"/>
 			</a>
 		</td>
