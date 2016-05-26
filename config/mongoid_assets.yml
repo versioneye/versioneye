@@ -9,7 +9,7 @@ production:
       # Provides the hosts the default session can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
-        - 172.16.148.134:27017
+        - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
       options:
         max_pool_size: 20
   options:
@@ -21,7 +21,7 @@ test:
     default:
       database: veye_test
       hosts:
-        - 172.16.148.134:27017
+        - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
       options:
         max_pool_size: 20
   options:
