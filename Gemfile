@@ -34,8 +34,6 @@ group :development do
   gem 'psych'             , '~> 2.0.5'
   gem 'terminal-notifier' , '~> 1.6.0'
   gem 'fakes3'            , '~> 0.2.1'
-  # gem 'debugger'          , '~> 1.6.0'
-  # gem 'irbtools'          , '~> 1.6.1'
 end
 
 group :assets do
@@ -62,8 +60,6 @@ group :test do
   gem 'factory_girl'      , '~> 4.7.0'
   gem 'factory_girl_rails', '~> 4.7.0'
 end
-
-# gem "bower-rails", "~> 0.10.0"
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'      , '3.3.6'
