@@ -136,7 +136,8 @@ var BranchFile = React.createClass({
       }, 1000) // end setInterval() - 1 Second
     } else {
       this.setState({import_status: 'off', checked: false});
-      url = "/user/projects/"+ scm +"/" + this.state.project_id + "/remove";
+      id = e.target.id
+      url = "/user/projects/"+ scm +"/" + id.replace(/\//g,':') + "/remove";
       $.ajax({
         url: url,
         dataType: 'json',
