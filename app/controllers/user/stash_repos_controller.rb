@@ -93,22 +93,49 @@ class User::StashReposController < User::ScmReposController
   end
 
 
+  def remove
+    id = params[:id]
+    result = remove_repo( id )
+    render json: result
+  rescue => e
+    Rails.logger.error "failed to remove: #{e.message}"
+    render text: e.message, status: 503
+  end
+
+
   private
 
 
-    def clear_repo_cache repo 
+    def remove_repo( project_id )
+      stash_path = project_id.split("::")
+      repo_fullname = stash_path[0].gsub(":", "/")
+      branch        = stash_path[1].gsub(":", "/")
+      path          = stash_path[2].gsub(":", "/")
+      project = Project.where( :scm_fullname => repo_fullname, :scm_branch => branch, :s3_filename => path, :source => Project::A_SOURCE_STASH ).first
+      if project.nil?
+        raise "Can't remove project with id: `#{project_id}` - it does not exist. Please refresh the page."
+      end
+      if !project.is_collaborator?( current_user )
+        raise "Can't remove project with id: `#{project_id}` - You are not a collaborator of the project!"
+      end
+      clear_import_cache project
+      ProjectService.destroy project
+    end
+
+
+    def clear_repo_cache repo
       user  = current_user
       repo_task_key = "stash:::#{user.id.to_s}:::#{repo.id.to_s}"
       StashService.cache.delete( repo_task_key )
-    rescue => e 
-      Rails.logger.error e.message 
+    rescue => e
+      Rails.logger.error e.message
       Rails.logger.error e.backtrace.join "\n"
     end
 
 
-    def clear_import_cache project 
+    def clear_import_cache project
       key = "stash:::#{current_user.username}:::#{project.scm_fullname}:::#{project.filename}:::#{project.scm_branch}"
-      ProjectService.cache.delete key 
+      ProjectService.cache.delete key
     end
 
 
@@ -118,8 +145,8 @@ class User::StashReposController < User::ScmReposController
       status = ProjectImportService.import_from_stash_async current_user, project_name, filename, branch
       if status && status.match(/\Adone_/)
         project_id = status.gsub("done_", "")
-        project = Project.find project_id 
-        project_url = url_for(controller: 'projects', action: "show", id: project.id) 
+        project = Project.find project_id
+        project_url = url_for(controller: 'projects', action: "show", id: project.id)
         status = 'done'
       elsif status && status.match(/\Aerror_/)
         return status.gsub("error_", "")

@@ -28,34 +28,7 @@ class User::ScmReposController < ApplicationController
   end
 
 
-  def remove
-    id = params[:id]
-    result = remove_repo( id )
-    render json: result
-  rescue => e
-    Rails.logger.error "failed to remove: #{e.message}"
-    render text: e.message, status: 503
-  end
-
-
   private
-
-
-    def remove_repo( project_id )
-      sps = project_id.split("::")
-      repo_fullname = sps[0].gsub(":", "/")
-      branch = sps[1].gsub(":", "/")
-      path   = sps[2].gsub(":", "/")
-      project = Project.where( :scm_fullname => repo_fullname, :scm_branch => branch, :s3_filename => path ).first
-      if project.nil?
-        raise "Can't remove project with id: `#{project_id}` - it does not exist. Please refresh the page."
-      end
-      if !project.is_collaborator?( current_user )
-        raise "Can't remove project with id: `#{project_id}` - You are not a collaborator of the project!"
-      end
-      clear_import_cache project
-      ProjectService.destroy project
-    end
 
 
     def create_project_info( repo, imported_project )

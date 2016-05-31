@@ -94,7 +94,34 @@ class User::GithubReposController < User::ScmReposController
   end
 
 
+  def remove
+    id = params[:id]
+    result = remove_repo( id )
+    render json: result
+  rescue => e
+    Rails.logger.error "failed to remove: #{e.message}"
+    render text: e.message, status: 503
+  end
+
+
   private
+
+
+    def remove_repo( project_id )
+      github_path = project_id.split("::")
+      repo_fullname = github_path[0].gsub(":", "/")
+      branch        = github_path[1].gsub(":", "/")
+      path          = github_path[2].gsub(":", "/")
+      project = Project.where( :scm_fullname => repo_fullname, :scm_branch => branch, :s3_filename => path, :source => Project::A_SOURCE_GITHUB ).first
+      if project.nil?
+        raise "Can't remove project with id: `#{project_id}` - it does not exist. Please refresh the page."
+      end
+      if !project.is_collaborator?( current_user )
+        raise "Can't remove project with id: `#{project_id}` - You are not a collaborator of the project!"
+      end
+      clear_import_cache project
+      ProjectService.destroy project
+    end
 
 
     def clear_repo_cache repo
