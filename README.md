@@ -62,7 +62,7 @@ VersioneyeCore.new you should adjust the values in [scripts/set_vars_for_dev.sh]
 and load them like this:
 
 ```
-source ./scripts/set_vars_for_dev.sh
+source ./script/set_vars_for_dev.sh
 ```
 
 The most important env. variables are the ones for the backend services, which point to MongoDB, ElasticSearch,
