@@ -27,3 +27,5 @@ versioneye.sublime-project
 versioneye.sublime-workspace
 notes.txt
 script/set_vars_for_dev_reiz.sh
+
+tmp/pids/server.pid
