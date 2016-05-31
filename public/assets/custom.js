@@ -257,7 +257,7 @@ function muteProjectDependency(btn){
   console.debug("Going to mute dependency.");
   showMuteLoader(btn);
 
-  var message = document.getElementById('mute_message').value
+  var message = document.getElementById('mute_message').value 
   var api_url = "/user/projects/" + btn.data('projectId') + "/mute_dependency";
   var dep_data = {
     "dependency_id": btn.data('dependencyId'),
