@@ -86,8 +86,14 @@ jQuery(document).ready(function(){
     jQuery(".btn-mute-version").on("click", toggleProjectDependencyMute);
   }
 
-  jQuery('.user_comment').linkify();
-  jQuery('.versioncomment_reply_section').linkify()
+  jcomment = jQuery('.user_comment')
+  if (jcomment && jcomment.length > 0){
+    jQuery('.user_comment').linkify();
+  }
+  jreply = jQuery('.versioncomment_reply_section')
+  if (jreply && jreply.length > 0){
+    jQuery('.versioncomment_reply_section').linkify()
+  }
 
 }); // end-of-ready
 
@@ -251,7 +257,7 @@ function muteProjectDependency(btn){
   console.debug("Going to mute dependency.");
   showMuteLoader(btn);
 
-  var message = document.getElementById('mute_message').value 
+  var message = document.getElementById('mute_message').value
   var api_url = "/user/projects/" + btn.data('projectId') + "/mute_dependency";
   var dep_data = {
     "dependency_id": btn.data('dependencyId'),
