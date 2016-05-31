@@ -18,7 +18,7 @@
 
         <% if svs && !svs.empty? %>
           <% svs.each do |sv| %>
-            <% sv.affected_versions.to_a.include?( version.to_s ) %>
+            <% if sv.affected_versions.to_a.include?( version.to_s ) %>
               <span class="fa fa-shield" style="font-size: 180px;"></span>
               <% break %>
             <% end %>
