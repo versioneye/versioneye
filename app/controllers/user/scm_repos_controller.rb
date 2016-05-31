@@ -41,8 +41,12 @@ class User::ScmReposController < ApplicationController
   private
 
 
-    def remove_repo(project_id)
-      project = Project.by_id( project_id ).first
+    def remove_repo( project_id )
+      sps = project_id.split("::")
+      repo_fullname = sps[0].gsub(":", "/")
+      branch = sps[1].gsub(":", "/")
+      path   = sps[2].gsub(":", "/")
+      project = Project.where( :scm_fullname => repo_fullname, :scm_branch => branch, :s3_filename => path ).first
       if project.nil?
         raise "Can't remove project with id: `#{project_id}` - it does not exist. Please refresh the page."
       end
@@ -50,7 +54,7 @@ class User::ScmReposController < ApplicationController
         raise "Can't remove project with id: `#{project_id}` - You are not a collaborator of the project!"
       end
       clear_import_cache project
-      ProjectService.destroy_by current_user, project_id
+      ProjectService.destroy project
     end
 
 

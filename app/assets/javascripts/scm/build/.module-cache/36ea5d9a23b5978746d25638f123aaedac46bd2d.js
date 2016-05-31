@@ -4,7 +4,7 @@ var repoFilesInterval = 0;
 var imported_files = [];
 var fileImportTimeout;
 
-var RepoFiles = React.createClass({
+var RepoFiles = React.createClass({displayName: "RepoFiles",
   loadRepoFilesFromServer: function() {
     $.ajax({
       url: this.props.url,
@@ -48,27 +48,27 @@ var RepoFiles = React.createClass({
 
     var scm_branches = branches.map(function (branch) {
       return (
-        <div className="repo-controls span8">
-          <div className="table table-striped">
-            <RepoBranch data={branch} project_files={project_files} repo_fullname={repo_fullname} scm={scm} />
-          </div>
-        </div>
+        React.createElement("div", {className: "repo-controls span8"}, 
+          React.createElement("div", {className: "table table-striped"}, 
+            React.createElement(RepoBranch, {data: branch, project_files: project_files, repo_fullname: repo_fullname, scm: scm})
+          )
+        )
       );
     });
 
     return (
-      <div id="branches" >
+      React.createElement("div", {id: "branches"}, 
 
-        <TaskStatusMessage data={this.state.task_status} repo_fullname={repo_fullname} scm={scm} show_reimport_link="true" />
+        React.createElement(TaskStatusMessage, {data: this.state.task_status, repo_fullname: repo_fullname, scm: scm, show_reimport_link: "true"}), 
 
-        {scm_branches}
+        scm_branches
 
-      </div>
+      )
     );
   }
 });
 
-var RepoBranch = React.createClass({
+var RepoBranch = React.createClass({displayName: "RepoBranch",
   render: function() {
     repo_fullname = this.props.repo_fullname;
     scm = this.props.scm;
@@ -79,7 +79,7 @@ var RepoBranch = React.createClass({
     if (project_files && project_files != "" && project_files[branch]){
       branch_files = project_files[branch].map(function (project_file) {
         return (
-          <BranchFile data={project_file} branch={branch} repo_fullname={repo_fullname} scm={scm} />
+          React.createElement(BranchFile, {data: project_file, branch: branch, repo_fullname: repo_fullname, scm: scm})
         );
       });
     }
@@ -87,22 +87,22 @@ var RepoBranch = React.createClass({
       branch_files = "We couldn't find any supported project files in this branch."
     }
     return (
-      <div>
-        <div className="scm_branch_head" >
-          <p>
-            <i className="fa fa-code-fork"></i> {branch}
-          </p>
-        </div>
-        <div className="scm_branch_files_cell" >
-          {branch_files}
-        </div>
-      </div>
+      React.createElement("div", null, 
+        React.createElement("div", {className: "scm_branch_head"}, 
+          React.createElement("p", null, 
+            React.createElement("i", {className: "fa fa-code-fork"}), " ", branch
+          )
+        ), 
+        React.createElement("div", {className: "scm_branch_files_cell"}, 
+          branch_files
+        )
+      )
     );
   }
 });
 
 
-var BranchFile = React.createClass({
+var BranchFile = React.createClass({displayName: "BranchFile",
   onChange: function( e ) {
     scm = this.props.scm
     checked = e.target.checked
@@ -174,34 +174,32 @@ var BranchFile = React.createClass({
     }
 
     return (
-      <div className="display: block;">
-        <div className="scm_switch_cell" >
-          <div className="onoffswitch">
-              <input type="checkbox"
-                     name="onoffswitch"
-                     checked={this.state.checked}
-                     onChange={this.onChange}
-                     className="onoffswitch-checkbox"
-                     id={uid} />
-              <label className="onoffswitch-label" htmlFor={uid}>
-                  <span className="onoffswitch-inner"></span>
-                  <span className="onoffswitch-switch"></span>
-              </label>
-          </div>
-        </div>
-        <div className="scm_switch_text_cell">
-          <ProjectFile import_status={this.state.import_status} project_id={this.state.project_id} project_url={this.state.project_url} id={uids} name={this.props.data.path}  />
-        </div>
-        <br/>
-        <br/>
-      </div >
+      React.createElement("div", {className: "display: block;"}, 
+        React.createElement("div", {className: "scm_switch_cell"}, 
+          React.createElement("div", {className: "onoffswitch"}, 
+              React.createElement("input", {type: "checkbox", 
+                     name: "onoffswitch", 
+                     checked: this.state.checked, 
+                     onChange: this.onChange, 
+                     className: "onoffswitch-checkbox", 
+                     id: uid}), 
+              React.createElement("label", {className: "onoffswitch-label", htmlFor: uid}, 
+                  React.createElement("span", {className: "onoffswitch-inner"}), 
+                  React.createElement("span", {className: "onoffswitch-switch"})
+              )
+          )
+        ), 
+        React.createElement("div", {className: "scm_switch_text_cell"}, 
+          React.createElement(ProjectFile, {import_status: this.state.import_status, project_id: this.state.project_id, project_url: this.state.project_url, id: uids, name: this.props.data.path})
+        )
+      )
     );
 
   }
 });
 
 
-var ProjectFile = React.createClass({
+var ProjectFile = React.createClass({displayName: "ProjectFile",
   getInitialState: function() {
     return {import_status: '', project_id: '', project_url: ''};
   },
@@ -211,20 +209,20 @@ var ProjectFile = React.createClass({
     this.state.project_id = this.props.project_id;
     if (this.state.import_status == 'running'){
       return (
-        <table className="scm_table">
-          <tr>
-            <td className="scm_td" ><img src="/assets/progress-small.gif" alt="work in progress" /></td>
-            <td className="scm_td" >{this.props.name}</td>
-          </tr>
-        </table>
+        React.createElement("table", {className: "scm_table"}, 
+          React.createElement("tr", null, 
+            React.createElement("td", {className: "scm_td"}, React.createElement("img", {src: "/assets/progress-small.gif", alt: "work in progress"})), 
+            React.createElement("td", {className: "scm_td"}, this.props.name)
+          )
+        )
       );
     } else if (this.state.project_url) {
       return (
-        <a href={this.state.project_url} > {this.props.name} </a>
+        React.createElement("a", {href: this.state.project_url}, " ", this.props.name, " ")
       );
     } else {
       return (
-        <span>{this.props.name}</span>
+        React.createElement("span", null, this.props.name)
       );
     }
   }
