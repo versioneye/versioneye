@@ -42,9 +42,12 @@ class User::ScmReposController < ApplicationController
 
 
     def remove_repo(project_id)
-      project = Project.by_user( current_user ).by_id( project_id ).first
+      project = Project.by_id( project_id ).first
       if project.nil?
         raise "Can't remove project with id: `#{project_id}` - it does not exist. Please refresh the page."
+      end
+      if !project.is_collaborator?( current_user )
+        raise "Can't remove project with id: `#{project_id}` - You are not a collaborator of the project!"
       end
       clear_import_cache project
       ProjectService.destroy_by current_user, project_id
