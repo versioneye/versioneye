@@ -12,12 +12,12 @@ class User::ScmReposController < ApplicationController
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
     response.headers['Last-Modified'] = Time.now.httpdate
 
-    id = params[:id]
+    id  = params[:id]
     sps = id.split("::")
     repo_fullname = sps[0].gsub(":", "/")
     branch = sps[1].gsub(":", "/")
-    path = sps[2].gsub(":", "/")
-    repo = import_repo( repo_fullname, branch, path )
+    path   = sps[2].gsub(":", "/")
+    repo   = import_repo( repo_fullname, branch, path )
     if repo.is_a?(String)
       render text: repo, status: 405 and return
     end

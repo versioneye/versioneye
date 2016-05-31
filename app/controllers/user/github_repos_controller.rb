@@ -114,7 +114,7 @@ class User::GithubReposController < User::ScmReposController
 
 
     def import_repo(project_name, branch, filename)
-      project_id = ''
+      project_id  = ''
       project_url = ''
       status = ProjectImportService.import_from_github_async current_user, project_name, filename, branch
       if status && status.match(/\Adone_/)
