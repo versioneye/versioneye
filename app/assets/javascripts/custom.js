@@ -86,8 +86,14 @@ jQuery(document).ready(function(){
     jQuery(".btn-mute-version").on("click", toggleProjectDependencyMute);
   }
 
-  jQuery('.user_comment').linkify();
-  jQuery('.versioncomment_reply_section').linkify()
+  jcomment = jQuery('.user_comment')
+  if (jcomment && jcomment.length > 0){
+    jQuery('.user_comment').linkify();
+  }
+  jreply = jQuery('.versioncomment_reply_section')
+  if (jreply && jreply.length > 0){
+    jQuery('.versioncomment_reply_section').linkify()
+  }
 
 }); // end-of-ready
 
