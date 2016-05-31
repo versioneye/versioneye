@@ -23,6 +23,11 @@
     <% if !project.parsing_errors.to_a.empty? %>
       <i class="fa fa-exclamation-triangle" title="Some errors occured by parsing this project."></i>
     <% end %>
+    <% if !project.scm_branch.to_s.empty? %>
+      <div style="font-size: 12px;">
+        <%= render :partial => "user/projects/helpers/scm_source_info", :locals => { :project => project } %>
+      </div>
+    <% end %>
     <% if defined?( @organisation ) && @organisation && project.user %>
       <div style="font-size: 12px;">
         Created by: <%= link_to project.user.fullname, user_path(project.user) %>

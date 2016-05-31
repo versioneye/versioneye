@@ -1,0 +1,29 @@
+
+  <% if project.source.eql? Project::A_SOURCE_GITHUB %>
+    Repo
+    <a href=<%= path_to_github_branch project %> target="_GITHUB"><%= project.scm_fullname %></a>
+    at branch
+    <a href=<%= path_to_github_branch project %> target="_GITHUB"><%= project.scm_branch %></a>
+    on
+    <a href=<%= Settings.instance.github_base_url %> target="_GITHUB"><%= project.source %></a>
+  <% elsif project.source.eql? Project::A_SOURCE_BITBUCKET %>
+    Repo
+    <a href=<%= path_to_bitbucket_branch project %> target="_BITBUCKET"><%= project.scm_fullname %></a>
+    at branch
+    <a href=<%= path_to_bitbucket_branch project %> target="_BITBUCKET"><%= project.scm_branch %></a>
+    on
+    <a href=<%= Settings.instance.bitbucket_base_url %> target="_BITBUCKET"><%= project.source %></a>
+  <% elsif project.source.eql? Project::A_SOURCE_STASH %>
+    Repo
+    <a href=<%= path_to_stash_file project %> target="_STASH"><%= project.scm_fullname %></a>
+    at branch
+    <a href=<%= path_to_stash_file project %> target="_STASH"><%= project.scm_branch %></a>
+    on
+    <a href=<%= Settings.instance.stash_base_url %> target="_STASH"><%= project.source %></a>
+  <% elsif project.source.eql? "url" %>
+    Project from <a href="<%= project.url%>" target="_URL">URL</a>
+  <% elsif project.source.eql? Project::A_SOURCE_API %>
+    Project created via the VersionEye API
+  <% else %>
+    Project created through file upload
+  <% end %>
