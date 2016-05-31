@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:reiz/gravatar_image_tag.git
+  remote: https://github.com/reiz/gravatar_image_tag.git
   revision: b39d42534f4f30aa5bb2156b06771ef23f31b15f
   branch: bugfix/html_escaping
   specs:
@@ -7,13 +7,13 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 961db9d39a00d28280daa44829ac118c43f0bb37
-  tag: v8.20.7
+  revision: 148a2de5eadf7adb2ecd3d34b91a7320aa730e79
+  tag: v8.20.10
   specs:
-    versioneye-core (8.20.7)
+    versioneye-core (8.20.10)
       actionmailer (~> 4.2.6)
       aws-sdk (~> 2.3.0)
-      bundler (~> 1.12.0)
+      bundler (~> 1.12.5)
       bunny (~> 2.3.0)
       cocoapods-core (~> 0.39.0)
       dalli (~> 2.7.0)
