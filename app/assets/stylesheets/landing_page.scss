@@ -40,8 +40,8 @@ h6 {
 
 .intro-message {
     position: relative;
-    padding-top: 20%;
-    padding-bottom: 20%;
+    padding-top: 10%;
+    padding-bottom: 10%;
 }
 
 .intro-message > h1 {
@@ -192,4 +192,29 @@ footer {
 
 p.copyright {
     margin: 15px 0 0;
+}
+
+@keyframes slidy {
+    0%   { left: 0%; }
+    20%  { left: 0%; }
+    25%  { left: -100%; }
+    45%  { left: -100%; }
+    50%  { left: -200%; }
+    70%  { left: -200%; }
+    75%  { left: -300%; }
+    85%  { left: -300%; }
+    90%  { left: -400%; }
+    100% { left: -400%; }
+}
+
+div#slider { overflow: hidden; }
+div#slider figure img { width: 20%; float: left; }
+div#slider figure {
+  position: relative;
+  width: 500%;
+  margin: 0;
+  left: 0;
+  text-align: left;
+  font-size: 0;
+  animation: 40s slidy infinite;
 }

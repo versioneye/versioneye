@@ -74,13 +74,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-message">
-                        <h1>Version<span style="color: orange;">Eye</span></h1>
-                        <%= render "/products/helpers/big_search" %>
-                        <p style="text-align: center; font-size: 24px;">
-                            <a href="#version_notifications">
-                             <i class="fa fa-arrow-circle-o-down"></i>
-                            </a>
-                        </p>
+                       <h1>Version<span style="color: orange;">Eye</span></h1>
+                       <h3>notifies you about out-dated dependencies, security vulnerabilities and licesne violations</h3>
                     </div>
                 </div>
             </div>
@@ -90,6 +85,10 @@
 
     </div>
     <!-- /.intro-header -->
+
+    <div class="content-section-b">
+        <%= render "shared/feature_screenshots" %>
+    </div>
 
     <div class="content-section-a">
         <%= render "shared/feature_version" %>
@@ -110,8 +109,12 @@
         <%= render "shared/feature_package_managers" %>
     </div>
 
-
     <div class="content-section-a">
+        <%= render "shared/who_is_using_it" %>
+    </div>
+
+
+    <div class="content-section-b">
 
         <div class="container">
 
