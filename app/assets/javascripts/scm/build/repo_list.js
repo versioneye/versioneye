@@ -58,7 +58,7 @@ var RepoList = React.createClass({displayName: "RepoList",
     return (
       React.createElement("div", null, 
         React.createElement("div", null, 
-          React.createElement("input", {type: "text", id: "filter_input", class: "form-control", value: this.state.text, onChange: this.onChange})
+          React.createElement("input", {type: "text", id: "filter_input", className: "form-control", value: this.state.text, onChange: this.onChange})
         ), 
         React.createElement("div", {className: "scm_meta"}, 
           this.state.list_size, " Repositories - ", React.createElement("a", {href: clear_link}, "Reimport all Repositories")
