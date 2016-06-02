@@ -15,7 +15,7 @@
           <td>Artifacts</td>
           <td><%= @latest_stats[language_key.to_s]["total_artifact"] || 0 %></td>
         </tr>
-      <% end %> 
+      <% end %>
       <tr>
         <td>Package Manager</td>
         <td><%= language[:supported_managers] %></td>
@@ -33,7 +33,7 @@
           <td>Licence </td>
           <td><a href = "<%= language[:licence_url] %>" target = "_blank"><%= language[:licence] %></a></td>
         </tr>
-      <% end %> 
+      <% end %>
       <tr>
         <td>Releases</td>
         <td>
@@ -44,10 +44,10 @@
       <tr>
         <td>Links </td>
         <td>
-          <% if !language[:main_url].to_s.empty? %>    
+          <% if !language[:main_url].to_s.empty? %>
             <a href = "<%= language[:main_url] %>" target = "_blank">Homepage</a><br/>
-          <% end %> 
-          <% if !language[:wiki_url].to_s.empty? %>    
+          <% end %>
+          <% if !language[:wiki_url].to_s.empty? %>
             <a href = "<%= language[:wiki_url] %>" target = "_blank">Wikipedia article</a><br/>
           <% end %>
           <% if !language[:repo_url].to_s.empty? %>
@@ -64,6 +64,12 @@
           <% end %>
           <% if !language[:twitter].to_s.empty? %>
             <a href = "https://twitter.com/<%= language[:twitter].to_s.sub("@", "") %>" target = "_blank"><%= language[:twitter] %></a><br />
+          <% end %>
+          <% if !language[:links].to_a.empty? %>
+            <% language[:links].keys.each do |key| %>
+              <% link = language[:links][key] %>
+              <a href = "<%= link %>" target = "_blank"><%= key %></a><br/>
+            <% end %>
           <% end %>
         </td>
       </tr>
