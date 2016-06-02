@@ -47,8 +47,12 @@
             <%= raw( markdown.render sv.description ) %><br/>
           <% end %>
           <% if !sv.links.empty? %>
+            <% vals = [] %>
             <% sv.links.keys.each do |key| %>
-              <a href="<%= sv.links[key] %>" target="LINK"><%= sv.links[key] %></a><br/>
+              <% val  = sv.links[key] %>
+              <% next if vals.include?(val) %>
+              <% vals << val %>
+              <a href="<%= val %>" target="LINK"><%= val %></a><br/>
             <% end %>
           <% end %>
           <br/>
@@ -58,9 +62,21 @@
           <% if !sv.cvss_v2.to_s.empty? %>
             <span class="label_bold">CVSSv2</span>: <%= sv.cvss_v2 %><br/>
           <% end %>
-          <span class="label_bold">Affected versions</span>: <%= sv.affected_versions_string %><br/>
+          <span class="label_bold">Affected versions</span>:
+            <% avs = sv.affected_versions_string.split(" && ") %>
+            <ul>
+              <% avs.each do |av| %>
+                <li><%= av %></li>
+              <% end %>
+            </ul>
           <% if !sv.patched_versions_string.to_s.empty? %>
-            <span class="label_bold">Patched versions</span>: <%= sv.patched_versions_string %><br/>
+            <span class="label_bold">Patched versions</span>:
+            <% avs = sv.patched_versions_string.split(" && ") %>
+            <ul>
+              <% avs.each do |av| %>
+                <li><%= av %></li>
+              <% end %>
+            </ul>
           <% end %>
         </div>
 
