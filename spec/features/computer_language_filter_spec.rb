@@ -23,9 +23,7 @@ describe "Computer Language Filter" do
   describe "the computer language filter", :js => true do
 
     it "uses the language filter without errors" do
-      visit "/?ab=b"
-      fill_in 'q', :with => "json*"
-      click_button "Search"
+      visit "/search?q=json*"
 
       page.driver.browser.manage.window.maximize
       page.should have_content("json-test")
@@ -34,9 +32,7 @@ describe "Computer Language Filter" do
       page.should have_content("jsonG")
       page.should have_content("jsonC")
 
-      visit "/"
-      fill_in 'q', :with => "json*"
-      click_button "Search"
+      visit "/search?q=json*"
 
       page.should have_content("json-test")
       page.should have_content("jsonJ")
@@ -73,7 +69,6 @@ describe "Computer Language Filter" do
       page.should     have_content("jsonC")
       page.should_not have_content("json2")
       page.should_not have_content("jsonG")
-
     end
 
   end
