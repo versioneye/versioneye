@@ -139,7 +139,7 @@
 
         <% end %>
 
-        <% if jvm_project?( @project ) %>
+        <% if jvm_project?( @project ) && !has_jvm_ve_plugin?( @project ) %>
           <div class="flash-container" style="margin-top: 12px;">
             <div class="alert flash warn">
               <button type="button" class="close" data-dismiss="alert">×</button>

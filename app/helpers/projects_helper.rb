@@ -9,6 +9,18 @@ module ProjectsHelper
     project.project_type.to_s.eql?(Project::A_TYPE_GRADLE)
   end
 
+  def has_jvm_ve_plugin? project
+    return true if project.dependencies.where(:artifact_id => "versioneye-maven-plugin").count > 0
+    return true if project.dependencies.where(:artifact_id => "sbt-versioneye-plugin").count > 0
+    return true if project.dependencies.where(:artifact_id => "gradle-versioneye-plugin").count > 0
+    project.children.each do |child|
+      return true if child.dependencies.where(:artifact_id => "versioneye-maven-plugin").count > 0
+      return true if child.dependencies.where(:artifact_id => "sbt-versioneye-plugin").count > 0
+      return true if child.dependencies.where(:artifact_id => "gradle-versioneye-plugin").count > 0
+    end
+    false
+  end
+
   def outdated_color project
     return 'red' if project[:out_number_sum].to_i > 0
     'green'
