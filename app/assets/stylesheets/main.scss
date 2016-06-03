@@ -766,3 +766,10 @@ img.centered {
 .description{
   padding: 0 0 15px 0;
 }
+
+span.http_method {
+  min-width: 65px;
+}
+span.path {
+  font-family: monospace;
+}
