@@ -6,7 +6,7 @@ This is the source code for the web application [VersionEye](https://www.version
 
 ## Sponsors
 
-This companies are financially supporting VersionEye. 
+This companies are financially supporting VersionEye.
 
 <table>
 	<tr>
@@ -58,7 +58,7 @@ docker-compose down
 ## Configuration
 
 All important configuration values are read from environment variable. Before you start
-VersioneyeCore.new you should adjust the values in [scripts/set_vars_for_dev.sh](scripts/set_vars_for_dev.sh)
+VersioneyeCore.new you should adjust the values in [script/set_vars_for_dev.sh](script/set_vars_for_dev.sh)
 and load them like this:
 
 ```
@@ -127,7 +127,7 @@ If the Docker containers for the backend services are running locally, the tests
 with this command:
 
 ```
-./scripts/runtests_local.sh
+./script/runtests_local.sh
 ```
 
 Make sure that you followed the steps in the configuration section, before you run the tests!
