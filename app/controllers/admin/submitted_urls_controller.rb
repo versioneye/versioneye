@@ -41,7 +41,7 @@ class Admin::SubmittedUrlsController < ApplicationController
         submitted_url.product_resource = new_resource
         submitted_url.save
         flash[:success] = 'Resource was accepted successfully'
-        SubmittedUrlMailer.approved_url_email(submitted_url).deliver
+        SubmittedUrlMailer.approved_url_email(submitted_url).deliver_now
       else
         flash[:error] = new_resource.errors.full_messages.to_sentence
       end
@@ -58,7 +58,7 @@ class Admin::SubmittedUrlsController < ApplicationController
       submitted_url.declined_message = params[:declined_message]
       if submitted_url.save
         flash[:notice] = 'Url is now declined.'
-        SubmittedUrlMailer.declined_url_email(submitted_url).deliver
+        SubmittedUrlMailer.declined_url_email(submitted_url).deliver_now
       else
         flash[:error] - submitted_url.errors.full_messages.to_sentence
       end

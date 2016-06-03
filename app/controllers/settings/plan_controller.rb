@@ -59,7 +59,7 @@ class Settings::PlanController < ApplicationController
       customer.update_subscription( :plan => plan_name_id )
       user.plan = Plan.by_name_id plan_name_id
       if user.save
-        SubscriptionMailer.update_subscription( user ).deliver
+        SubscriptionMailer.update_subscription( user ).deliver_now
         flash[:success] = 'We updated your plan successfully.'
       else
         flash[:error] = 'Something went wrong. Please contact the VersionEye team.'

@@ -55,7 +55,7 @@ class VersioncommentsController < ApplicationController
       rob = User.find_by_username "reiz"
       return nil if rob.nil?
 
-      VersioncommentMailer.versioncomment_email(product, rob, user, comment).deliver
+      VersioncommentMailer.versioncomment_email(product, rob, user, comment).deliver_now
     end
 
 end

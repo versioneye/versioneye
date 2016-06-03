@@ -42,7 +42,7 @@ class VersioncommentrepliesController < ApplicationController
     def send_comment_reply_mails(user, comment)
       comment_user = comment.user
       unless comment_user.username.eql?(user.username)
-        VersioncommentreplyMailer.versioncomment_reply_email(comment_user, user, comment).deliver
+        VersioncommentreplyMailer.versioncomment_reply_email(comment_user, user, comment).deliver_now
       end
     end
 
