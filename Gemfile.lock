@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 53b2823df7e1cd2d1c6f174828b80e8028d51ab7
-  tag: v8.20.15
+  revision: 6524fa7ec708b0296898e59fcf3bf6a9c3390cd8
+  tag: v8.21.1
   specs:
-    versioneye-core (8.20.15)
+    versioneye-core (8.21.1)
       actionmailer (~> 4.2.6)
       aws-sdk (~> 2.3.0)
       bundler (~> 1.12.5)
@@ -24,7 +24,7 @@ GIT
       mongoid (~> 5.1.0)
       naturalsorter (~> 3.0.13)
       net-ldap (~> 0.14.0)
-      nokogiri (~> 1.6.7.1)
+      nokogiri (~> 1.6.8)
       oauth (~> 0.5.0)
       octokit (~> 4.3.0)
       pdfkit (~> 0.8.0)
@@ -78,12 +78,12 @@ GEM
     amq-protocol (2.0.1)
     ansi (1.5.0)
     arel (6.0.3)
-    aws-sdk (2.3.11)
-      aws-sdk-resources (= 2.3.11)
-    aws-sdk-core (2.3.11)
+    aws-sdk (2.3.12)
+      aws-sdk-resources (= 2.3.12)
+    aws-sdk-core (2.3.12)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.3.11)
-      aws-sdk-core (= 2.3.11)
+    aws-sdk-resources (2.3.12)
+      aws-sdk-core (= 2.3.12)
     bourbon (4.2.7)
       sass (~> 3.4)
       thor (~> 0.19)
@@ -171,7 +171,7 @@ GEM
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
     mime-types (2.99.2)
-    mini_portile2 (2.0.0)
+    mini_portile2 (2.1.0)
     minitest (5.9.0)
     mixlib-log (1.6.0)
     mongo (2.2.5)
@@ -188,8 +188,9 @@ GEM
     naturalsorter (3.0.13)
     net-ldap (0.14.0)
     netrc (0.11.0)
-    nokogiri (1.6.7.2)
-      mini_portile2 (~> 2.0.0.rc2)
+    nokogiri (1.6.8)
+      mini_portile2 (~> 2.1.0)
+      pkg-config (~> 1.1.7)
     oauth (0.5.1)
     octokit (4.3.0)
       sawyer (~> 0.7.0, >= 0.5.3)
@@ -200,6 +201,7 @@ GEM
     persistent_httparty (0.1.2)
       httparty (~> 0.9)
       persistent_http (< 2)
+    pkg-config (1.1.7)
     psych (2.0.17)
     puma (3.4.0)
     rack (1.6.4)
