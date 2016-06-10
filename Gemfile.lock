@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 6524fa7ec708b0296898e59fcf3bf6a9c3390cd8
-  tag: v8.21.1
+  revision: b380e5e65873d58b343ee22c966ab0a9ca03f1ca
+  tag: v8.21.2
   specs:
-    versioneye-core (8.21.1)
+    versioneye-core (8.21.2)
       actionmailer (~> 4.2.6)
       aws-sdk (~> 2.3.0)
       bundler (~> 1.12.5)
@@ -78,12 +78,12 @@ GEM
     amq-protocol (2.0.1)
     ansi (1.5.0)
     arel (6.0.3)
-    aws-sdk (2.3.12)
-      aws-sdk-resources (= 2.3.12)
-    aws-sdk-core (2.3.12)
+    aws-sdk (2.3.13)
+      aws-sdk-resources (= 2.3.13)
+    aws-sdk-core (2.3.13)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.3.12)
-      aws-sdk-core (= 2.3.12)
+    aws-sdk-resources (2.3.13)
+      aws-sdk-core (= 2.3.13)
     bourbon (4.2.7)
       sass (~> 3.4)
       thor (~> 0.19)
@@ -282,7 +282,7 @@ GEM
     sawyer (0.7.0)
       addressable (>= 2.3.5, < 2.5)
       faraday (~> 0.8, < 0.10)
-    selenium-webdriver (2.53.0)
+    selenium-webdriver (2.53.1)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
@@ -383,7 +383,7 @@ DEPENDENCIES
   ruby_regex (~> 0.1.0)
   sass
   sass-rails (~> 5.0.3)
-  selenium-webdriver (~> 2.53.0)
+  selenium-webdriver (~> 2.53.1)
   semverly (~> 1.0.0)
   simplecov (~> 0.11.1)
   stripe (~> 1.43.0)

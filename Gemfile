@@ -18,7 +18,7 @@ gem 'stripe'               , '~> 1.43.0'
 gem 'bunny'                , '~> 2.3.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v8.21.1'
+gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v8.21.2'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
@@ -52,7 +52,7 @@ group :test do
   gem 'rspec_junit_formatter', '0.2.3'
   gem 'capybara'          , '~> 2.7.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
-  gem 'selenium-webdriver', '~> 2.53.0'
+  gem 'selenium-webdriver', '~> 2.53.1'
   gem 'vcr'               , '3.0.3',  :require => false
   gem 'webmock'           , '~> 2.1.0', :require => false
   gem "fakeweb"           , '~> 1.3'
