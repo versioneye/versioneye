@@ -10,6 +10,19 @@
   </p>
 </div>
 
+<div class = "col2-left col2-right row" >
+  <div class="col-md-12" >
+    <ul class="pricing_ul">
+      <li class="pricing_head">Free</li>
+      <li class="pricing_price">€ 0 <span class="pricing_price_sm">/ Month</span></li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Collaborators:</span> Unlimited</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Open Source Projects:</span> Unlimited</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Private Projects:</span> 1</li>
+      <li class="pricing_feature"><span class="pricing_light_txt">Project Updates per day via API: </span> 5</li>
+      <li class="pricing_feature"><%= render :partial => 'plan', :locals => { :plan_id => '04_free', :alignment => ''  } %></li>
+    </ul>
+  </div>
+</div>
 
 <div class = "col2-left col2-right row">
   <div class="col-md-4" >
@@ -76,15 +89,3 @@
     </ul>
   </div>
 </div>
-
-<div class = "col2-left col2-right row" >
-  <div class="col-md-12" >
-    <p class="cite_section">
-      <cite>“Automated version notifications of open source and self developed closed source components by VersionEye Enterprise are very helpful especially to our distributed iOS teams. They help reducing coordination and communication efforts. The VersionEye team always did a great job supporting us with individual features!”</cite><br/>
-      <div style="font-size: 18px; font-family: 'Droid Sans', 'Droid Serif', Helvetica;">
-        <%= image_tag 'cites/alexander-greim_75.jpg', :class => "img-rounded" %> Alexander Greim (Director Mobile Engineering @ <a href="https://www.xing.com">XING</a> AG)
-      </div>
-    </p>
-  </div>
-</div>
-
