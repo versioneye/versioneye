@@ -67,7 +67,7 @@ describe "Signin with GitHub" do
     user.stripe_token.should_not be_nil
     user.stripe_customer_id.should_not be_nil
     user.plan.should_not be_nil
-    user.plan.name_id.should eql(Plan.micro.name_id)
+    user.plan.name_id.should eql(Plan.free_plan.name_id)
   end
 
 end
