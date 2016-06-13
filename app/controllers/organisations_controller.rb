@@ -71,7 +71,7 @@ class OrganisationsController < ApplicationController
     filter = {}
     filter[:organisation] = @organisation.ids
     filter[:team]         = params[:team]
-    filter[:language]      = params[:language]
+    filter[:language]     = params[:language]
     @projects = ProjectService.index current_user, filter, params[:sort]
     cookies.permanent.signed[:orga] = @organisation.ids
   end
