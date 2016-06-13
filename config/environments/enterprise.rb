@@ -34,6 +34,8 @@ Versioneye::Application.configure do
   config.log_level = :info
   config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 10, 10.megabytes)
 
+  config.eager_load = true
+
   config.i18n.fallbacks = true
 
   config.active_support.deprecation = :notify

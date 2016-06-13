@@ -35,6 +35,8 @@ Versioneye::Application.configure do
   config.log_level = :debug
   config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 10, 10.megabytes)
 
+  config.eager_load = true
+
   # config.action_mailer.delivery_method       = :postmark # :sendmail
   # config.action_mailer.postmark_settings = { :api_key => Settings.instance.postmark_api_key }
 
