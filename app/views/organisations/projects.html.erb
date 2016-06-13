@@ -56,8 +56,8 @@
       </table>
     </div>
     <div>
-      Assign selected projects to the selected team:
       <form action="<%= assign_organisation_path( @organisation ) %>" method="post" class="form-inline" >
+        Assign selected projects to team:
         <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
         <input type="hidden" name="project_ids" id="project_ids" />
         <select name="team" class="form-control" >
@@ -65,7 +65,13 @@
             <option value="<%= team.name %>" %><%= team.name %></option>
           <% end %>
         </select>
-        <button type="submit" class="btn btn-primary" onclick="fetch_projects();" >Assign</button>
+        <button type="submit" class="btn btn-primary" onclick="fetch_projects('project_ids');" >Assign</button>
+      </form>
+
+      <form action="<%= delete_projects_organisation_path( @organisation ) %>" method="post" class="form-inline" style="margin-top: 3px;" >
+        <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+        <input type="hidden" name="project_delete_ids" id="project_delete_ids" />
+        Delete selected projects: <button type="submit" class="btn btn-danger" onclick="fetch_projects('project_delete_ids'); return confirmAction()" >Delete</button>
       </form>
     </div>
   </div>
@@ -74,7 +80,7 @@
 
 <script type="text/javascript">
 
-  function fetch_projects(){
+  function fetch_projects(pids_element){
     var inputs = document.getElementsByTagName("input");
     var ids = [];
     for(var i = 0; i < inputs.length; i++) {
@@ -83,7 +89,7 @@
             ids.push( inputs[i].value )
         }
     }
-    var pids = document.getElementById("project_ids");
+    var pids = document.getElementById(pids_element);
     pids.value = ids.join(",");
   }
 

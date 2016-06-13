@@ -91,6 +91,22 @@ class OrganisationsController < ApplicationController
   end
 
 
+  def delete_projects
+    pids = params[:project_delete_ids].to_s.split(",")
+    pids.each do |pid|
+      project = Project.find pid
+      ProjectService.destroy project
+    end
+    flash[:success] = "Projects have been deleted."
+    redirect_to :back
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    flash[:error] = "ERROR: #{e.message}"
+    redirect_to :back
+  end
+
+
   def components
 
   end

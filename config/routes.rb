@@ -76,9 +76,10 @@ Versioneye::Application.routes.draw do
       end
     end
     member do
-      get  'components', :to => 'organisations#components', :as => 'components'
-      get  'projects', :to => 'organisations#projects', :as => 'projects'
-      post 'assign'  , :to => 'organisations#assign'  , :as => 'assign'
+      get  'components'     , :to => 'organisations#components'     , :as => 'components'
+      get  'projects'       , :to => 'organisations#projects'       , :as => 'projects'
+      post 'assign'         , :to => 'organisations#assign'         , :as => 'assign'
+      post 'delete_projects', :to => 'organisations#delete_projects', :as => 'delete_projects'
     end
   end
 
