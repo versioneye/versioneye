@@ -70,7 +70,8 @@ class OrganisationsController < ApplicationController
     set_team_filter_param
     filter = {}
     filter[:organisation] = @organisation.ids
-    filter[:team] = params[:team]
+    filter[:team]         = params[:team]
+    filter[:language]      = params[:language]
     @projects = ProjectService.index current_user, filter, params[:sort]
     cookies.permanent.signed[:orga] = @organisation.ids
   end
@@ -91,7 +92,7 @@ class OrganisationsController < ApplicationController
 
 
   def components
-    
+
   end
 
 
