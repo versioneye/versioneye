@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 805aa48dae195932d286e1b7d4146518c0cc8bbd
-  tag: v8.23.0
+  revision: 2f9bf5a3baf94ae9f76d773de49caf8599c6a60f
+  tag: v8.23.1
   specs:
-    versioneye-core (8.23.0)
+    versioneye-core (8.23.1)
       actionmailer (~> 4.2.6)
       aws-sdk (~> 2.3.0)
       bundler (~> 1.12.5)
@@ -282,7 +282,7 @@ GEM
     sawyer (0.7.0)
       addressable (>= 2.3.5, < 2.5)
       faraday (~> 0.8, < 0.10)
-    selenium-webdriver (2.53.1)
+    selenium-webdriver (2.53.2)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
@@ -335,7 +335,7 @@ GEM
       crack (>= 0.3.2)
       hashdiff
     websocket (1.2.3)
-    whenever (0.9.4)
+    whenever (0.9.6)
       chronic (>= 0.6.3)
     will_paginate (3.1.0)
     will_paginate_mongoid (2.0.1)
