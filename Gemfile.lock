@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 2f9bf5a3baf94ae9f76d773de49caf8599c6a60f
-  tag: v8.23.1
+  revision: 312cd85202a84ed699cdfeadb34f288497cc8cc0
+  tag: v8.23.2
   specs:
-    versioneye-core (8.23.1)
+    versioneye-core (8.23.2)
       actionmailer (~> 4.2.6)
       aws-sdk (~> 2.3.0)
       bundler (~> 1.12.5)
@@ -383,7 +383,7 @@ DEPENDENCIES
   ruby_regex (~> 0.1.0)
   sass
   sass-rails (~> 5.0.3)
-  selenium-webdriver (~> 2.53.1)
+  selenium-webdriver (~> 2.53.2)
   semverly (~> 1.0.0)
   simplecov (~> 0.11.1)
   stripe (~> 1.43.0)
@@ -395,7 +395,7 @@ DEPENDENCIES
   vcr (= 3.0.3)
   versioneye-core!
   webmock (~> 2.1.0)
-  whenever (~> 0.9.2)
+  whenever (~> 0.9.5)
   will_paginate_mongoid (= 2.0.1)
 
 BUNDLED WITH
