@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 312cd85202a84ed699cdfeadb34f288497cc8cc0
-  tag: v8.23.2
+  revision: 3f2abceb8cb10fe900ec45b47dbda5d21d7f83b7
+  tag: v8.23.4
   specs:
-    versioneye-core (8.23.2)
+    versioneye-core (8.23.4)
       actionmailer (~> 4.2.6)
       aws-sdk (~> 2.3.0)
       bundler (~> 1.12.5)
@@ -78,12 +78,12 @@ GEM
     amq-protocol (2.0.1)
     ansi (1.5.0)
     arel (6.0.3)
-    aws-sdk (2.3.13)
-      aws-sdk-resources (= 2.3.13)
-    aws-sdk-core (2.3.13)
+    aws-sdk (2.3.14)
+      aws-sdk-resources (= 2.3.14)
+    aws-sdk-core (2.3.14)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.3.13)
-      aws-sdk-core (= 2.3.13)
+    aws-sdk-resources (2.3.14)
+      aws-sdk-core (= 2.3.14)
     bourbon (4.2.7)
       sass (~> 3.4)
       thor (~> 0.19)
@@ -282,7 +282,7 @@ GEM
     sawyer (0.7.0)
       addressable (>= 2.3.5, < 2.5)
       faraday (~> 0.8, < 0.10)
-    selenium-webdriver (2.53.2)
+    selenium-webdriver (2.53.3)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
@@ -335,7 +335,7 @@ GEM
       crack (>= 0.3.2)
       hashdiff
     websocket (1.2.3)
-    whenever (0.9.6)
+    whenever (0.9.7)
       chronic (>= 0.6.3)
     will_paginate (3.1.0)
     will_paginate_mongoid (2.0.1)
@@ -383,7 +383,7 @@ DEPENDENCIES
   ruby_regex (~> 0.1.0)
   sass
   sass-rails (~> 5.0.3)
-  selenium-webdriver (~> 2.53.2)
+  selenium-webdriver (~> 2.53.3)
   semverly (~> 1.0.0)
   simplecov (~> 0.11.1)
   stripe (~> 1.43.0)
@@ -395,7 +395,7 @@ DEPENDENCIES
   vcr (= 3.0.3)
   versioneye-core!
   webmock (~> 2.1.0)
-  whenever (~> 0.9.5)
+  whenever (~> 0.9.6)
   will_paginate_mongoid (= 2.0.1)
 
 BUNDLED WITH

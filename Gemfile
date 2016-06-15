@@ -9,7 +9,7 @@ gem 'oauth'                , '~> 0.5.0'
 gem 'twitter_oauth'        , '~> 0.4.94'
 gem 'puma'                 , '~> 3.4.0'
 gem 'htmlentities'         , '~> 4.3.1'
-gem 'whenever'             , '~> 0.9.5'
+gem 'whenever'             , '~> 0.9.6'
 gem 'bourbon'              , '~> 4.2.0'
 gem 'ruby_regex'           , '~> 0.1.0'
 gem 'semverly'             , '~> 1.0.0'
@@ -18,7 +18,7 @@ gem 'stripe'               , '~> 1.43.0'
 gem 'bunny'                , '~> 2.4.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v8.23.2'
+gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v8.23.4'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
@@ -52,7 +52,7 @@ group :test do
   gem 'rspec_junit_formatter', '0.2.3'
   gem 'capybara'          , '~> 2.7.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
-  gem 'selenium-webdriver', '~> 2.53.2'
+  gem 'selenium-webdriver', '~> 2.53.3'
   gem 'vcr'               , '3.0.3',  :require => false
   gem 'webmock'           , '~> 2.1.0', :require => false
   gem "fakeweb"           , '~> 1.3'
