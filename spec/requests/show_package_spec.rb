@@ -20,8 +20,7 @@ describe "show_package_controller" do
     assert_response :success
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"
-
-    assert_select :tag => "section", :attributes => { :class => "container"}
+    assert_select "section[class=?]", "container"
 
     product.remove
   end
@@ -43,7 +42,7 @@ describe "show_package_controller" do
     get "/ruby/json_g/1.0/visual_dependencies"
     assert_response :success
 
-    assert_select :tag => "h1", :attributes => { :style => "margin-bottom: 5px;"}
+    assert_select "h1[style=?]", "margin-bottom: 5px;"
 
     product.remove
   end
