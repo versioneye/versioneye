@@ -48,8 +48,8 @@ describe "search" do
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"
     assert_select "div#search-results"
-    assert_tag :tag => "div", :attributes => { :class => "row search-item"}, :parent => { :tag => "div" }
-    assert_tag :tag => "a", :attributes => { :class => "searchResultLink"}
+    assert_select :tag => "div", :attributes => { :class => "row search-item"}, :parent => { :tag => "div" }
+    assert_select :tag => "a", :attributes => { :class => "searchResultLink"}
   end
 
   it "shows the search with 2 result" do
@@ -70,8 +70,8 @@ describe "search" do
     assert_select "form[action=?]", "/search"
     assert_select "input[name=?]", "q"
     assert_select "div#search-results"
-    assert_tag :tag => "input", :attributes => { :id => "q", :name => "q", :value => "json", :type => "text" }
-    assert_tag :tag => "div", :attributes => { :class => "row search-item"}, :parent => { :tag => "div" }
-    assert_tag :tag => "a", :attributes => { :class => "searchResultLink"}
+    assert_select :tag => "input", :attributes => { :id => "q", :name => "q", :value => "json", :type => "text" }
+    assert_select :tag => "div", :attributes => { :class => "row search-item"}, :parent => { :tag => "div" }
+    assert_select :tag => "a", :attributes => { :class => "searchResultLink"}
   end
 end

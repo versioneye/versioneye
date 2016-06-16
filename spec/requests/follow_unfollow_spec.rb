@@ -39,7 +39,7 @@ describe "follow and unfollow" do
         p e.backtrace.messages.join(" - ")
       end
       assert_response :success
-      assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-primary", :type => "submit" }
+      assert_select :tag => "button", :attributes => { :class => "btn btn-large btn-primary", :type => "submit" }
 
     end
   end
@@ -68,7 +68,7 @@ describe "follow and unfollow" do
       subscribers.first.email.should eql( user.email )
 
       get "/ruby/json_goba/1.0"
-      assert_tag :tag => "button", :attributes => { :class => "btn btn-large", :type => "submit" }
+      assert_select :tag => "button", :attributes => { :class => "btn btn-large", :type => "submit" }
       response.body.should match(prod_key)
     end
 
@@ -77,7 +77,7 @@ describe "follow and unfollow" do
       post "/package/follow", :product_key => prod_key, :product_lang => prod_lang
       get user_packages_i_follow_path
       assert_response :success
-      assert_tag :tag => "div", :attributes => { :class => "row search-item" }
+      assert_select :tag => "div", :attributes => { :class => "row search-item" }
       response.body.should match(prod_key)
     end
 
@@ -89,7 +89,7 @@ describe "follow and unfollow" do
       response.should redirect_to( "/#{prod_lang.downcase}/#{prod_key}/#{version}" )
 
       get "/ruby/json_goba/1.0"
-      assert_tag :tag => "button", :attributes => { :class => "btn btn-large btn-primary", :type => "submit" }
+      assert_select :tag => "button", :attributes => { :class => "btn btn-large btn-primary", :type => "submit" }
       response.body.should match(prod_key)
 
       prod = Product.fetch_product( prod_lang, prod_key )
