@@ -17,7 +17,13 @@
 
     <%= form_tag( add_organisation_team_path(@organisation, @team),  class: 'form-group', style: 'vertical-align:top;' ) do %>
       <div class="input-append">
-        <input id="collaborator_username" name="username" class="typeahead  form-control" type="text" autofocus="autofocus" autocomplete="off" style="width: 400px; margin-top: -5px; display: inline-block;" />
+        <input id="collaborator_username"
+               name="username"
+               type="text"
+               autofocus="autofocus"
+               autocomplete="off"
+               class="typeahead  form-control"
+               style="width: 400px; margin-top: -5px; display: inline-block;" />
         <button class="btn btn-primary" onclick="preventSubmit('collaborator_username', 'collaborator username')" type="submit" >
           Add Team Member
         </button>

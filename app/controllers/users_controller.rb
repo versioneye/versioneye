@@ -294,7 +294,9 @@ class UsersController < ApplicationController
       return results if matched_users.nil?
 
       matched_users.each_with_index do |user, i|
-        next if user.username.eql?("admino") || user.fullname.eql?("Administrator")
+        next if user.username.eql?("admino")
+        next if user.fullname.eql?("Administrator")
+        next if user.fullname.eql?("Deleted")
         results << {
           value: user[:username],
           fullname: user[:fullname],
