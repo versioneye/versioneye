@@ -11,8 +11,7 @@
   <div class="content" >
 
     <p>
-      This page lists all components which are used in this organsation and shows in which projects they are used.
-      Components which are used in multiple versions are marked red.
+      This page lists all software components/libraries which are used in this organsation and shows in which projects they are used.
       <br/><br/>
     </p>
 
@@ -22,25 +21,50 @@
       <% sp = key.split(':') %>
       <% language = sp[0].to_s.downcase %>
       <% prod_key = sp[1].to_s.gsub('/', ':') %>
+      <% version_current  = sp[2].to_s.gsub('/', ':') %>
       <% lang_prod = "#{language}:#{prod_key}" %>
 
       <h4>
-        <span class="icon_<%= language %> on" style="margin-left: -12px;" ></span> <%= link_to "#{prod_key}", "/#{language}/#{prod_key}" %>
+        <span class="icon_<%= language %> on small" style="margin-left: -12px;" ></span> <%= link_to "#{prod_key}", "/#{language}/#{prod_key}" %>
       </h4>
-
+      <div>
+        Used in:
+      </div>
       <% versions = comps[key].keys %>
-      <% flash_danger = "" %>
-      <% flash_danger = "flash danger" if versions.count > 1 %>
-      <% versions.each do |version| %>
-        <div class="<%= flash_danger %>" >
-          Version <%= version %> is used in this projects:
-          <ul>
-          <% comps[key][version].each do |val| %>
-            <% sps = val.split(":") %>
-            <li><%= link_to sps[1], user_project_path(sps[2]), :class => 'searchResultLink' %></li>
+      <% if !versions.empty? %>
+        <table class="table table-striped">
+          <tr>
+            <th width="50%">Project</th>
+            <th>Version</th>
+            <th>Current</th>
+            <th>License</th>
+          </tr>
+          <% versions.each do |version| %>
+            <% comps[key][version].each do |val| %>
+              <% sps = val.split(":") %>
+              <% project_language = sps[0] %>
+              <% project_name     = sps[1] %>
+              <% project_id       = sps[2] %>
+              <% project_licenses = sps[3] %>
+              <% tr_bg_color = "" %>
+              <% tr_bg_color = "#FCF8E3" if !version_current.empty? && !version_current.eql?(version) %>
+              <tr style="background-color: <%= tr_bg_color %>">
+                <td>
+                  <%= link_to project_name, user_project_path( project_id ), :class => 'searchResultLink' %>
+                </td>
+                <td>
+                  <%= version %>
+                </td>
+                <td>
+                  <%= version_current %>
+                </td>
+                <td>
+                  <%= project_licenses %>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
-          </ul>
-        </div>
+        </table>
       <% end %>
       <hr>
     <% end %>

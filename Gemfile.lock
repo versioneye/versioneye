@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 9da0dffc87a3c54c75cce96c506df1e34c370bf4
-  tag: v8.23.6
+  revision: 3a54d2039b46b3ab6f7a1fa0a436eecf7205c651
+  tag: v8.23.7
   specs:
-    versioneye-core (8.23.6)
+    versioneye-core (8.23.7)
       actionmailer (~> 4.2.6)
       aws-sdk (~> 2.3.0)
       bundler (~> 1.12.5)
@@ -122,7 +122,7 @@ GEM
     database_cleaner (1.5.3)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    domain_name (0.5.20160310)
+    domain_name (0.5.20160615)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     etcd (0.3.0)
