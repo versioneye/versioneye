@@ -499,6 +499,35 @@ class User::ProjectsController < ApplicationController
   end
 
 
+  def mute_security
+    project_id    = params[:project_id]
+    sec_id        = params[:sec_id]
+    mute_message  = params[:mute_message]
+    resp = {"project_id" => project_id, "sec_id" => sec_id, "mute_message" => mute_message }
+    project = Project.find project_id
+    if project.visible_for_user?( current_user )
+      project.mute_security!( sec_id, mute_message )
+      parent_project = project
+      parent_project = project.parent if project.parent_id
+      ProjectService.update_sums( parent_project )
+    end
+    render json: resp
+  end
+
+  def unmute_security
+    project_id = params[:project_id]
+    sec_id     = params[:sec_id]
+    project    = Project.find project_id
+    parent_project = project
+    if project.visible_for_user?( current_user )
+      project.unmute_security!( sec_id )
+      parent_project = project.parent if project.parent_id
+      ProjectService.update_sums( parent_project )
+    end
+    redirect_to "/user/projects/#{parent_project.ids}#tab-security"
+  end
+
+
   private
 
 

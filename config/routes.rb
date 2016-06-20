@@ -224,6 +224,8 @@ Versioneye::Application.routes.draw do
 
   get  '/user/projects/:id/recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
   post '/user/projects/:id/recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
+  post '/user/projects/mute_security'             , :to => 'user/projects#mute_security'
+  post '/user/projects/unmute_security'           , :to => 'user/projects#unmute_security'
 
   namespace :user do
 

@@ -12,6 +12,7 @@
 
       <% dep.security_vulnerabilities.each do |sv| %>
         <ul >
+          <li><%= sv.name_id %></li>
           <% if !sv.summary.to_s.empty? && !dep.language.to_s.eql?(Product::A_LANGUAGE_PHP) %>
             <li><%= sv.summary %></li>
           <% end %>
@@ -21,6 +22,19 @@
           <% end %>
           <% if !sv.affected_versions_string.to_s.empty? %>
             <li>Affected versions: <%= sv.affected_versions_string %></li>
+          <% end %>
+          <% if !dep.project.muted_svs.keys.include?(sv.ids) %>
+            <li><button class="btn btn-xs btn-warning" onclick="load_dialog_mute_security('<%= dep.project.ids %>', '<%= sv.ids %>', '<%= sv.name_id %>'); return false;">Mute this security issue</button></li>
+          <% else %>
+            <li>
+              <b>Muted: <%= dep.project.muted_svs[sv.ids] %></b><br/>
+              <form id="form" action="/user/projects/unmute_security" method="POST">
+                <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+                <input type="hidden" name="project_id" value="<%= dep.project.ids %>">
+                <input type="hidden" name="sec_id" value="<%= sv.ids %>">
+                <button class="btn btn-xs btn-warning" > unmute </button>
+              </form>
+            </li>
           <% end %>
         </ul>
         <hr style="border-bottom: 1px solid white;" />
