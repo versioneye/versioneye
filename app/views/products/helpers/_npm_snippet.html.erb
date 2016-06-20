@@ -6,7 +6,7 @@
     <div >
       <h5 class="dep_header">NPM install</h5>
     </div>
-    <div style="margin-bottom: 0;"><pre class = "prettyprint" style="background-color: #fff; margin-bottom: 0;"><code>npm install <%= @product.name %>@<%= @version.to_s %></code></pre></div>
+    <div style="margin-bottom: 0;"><pre class = "prettyprint" style="background-color: #fff; margin-bottom: 0;"><code>npm install <%= @product.name %>@<%= @version.to_s %><% if @version.prefer_global == true %> -g <% end %></code></pre></div>
   </div>
 
   <div style="margin-bottom: 5px;">
