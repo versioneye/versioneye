@@ -268,9 +268,7 @@ function muteProjectSec(){
   var jqxhr = jQuery.post(api_url, dep_data)
     .done(function(data){
       console.debug(data);
-      // updateColorForPD( data.dependency_id, data.outdated )
-      // btn.removeClass("mute-off").addClass("mute-on");
-      // btn.find("i.dep-icon").removeClass("fa-volume-up").addClass("fa-volume-off");
+      location.reload();
     })
     .fail(function(){console.error("Failed");});
 }
