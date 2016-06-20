@@ -225,13 +225,20 @@ function setCookie(name, value, days){
 }
 
 
-
 function load_dialog_mute( button_id, dependency_name, dependency_version ){
   document.getElementById('mute_button_id').value = id;
   document.getElementById('mute_dependency_name').innerHTML = dependency_name;
   document.getElementById('mute_dependency_version').innerHTML = dependency_version;
   jQuery('#dialog_mute').modal({keyboard : true});
   page_view('ga_mute_dialog='+ dependency_name +'/'+ dependency_version)
+}
+
+function load_dialog_mute_security( project_id, sv_id, sv_name ) {
+  document.getElementById('mute_sec_project_id').value = project_id;
+  document.getElementById('mute_sec_id').value = sv_id;
+  document.getElementById('mute_security_name').innerHTML = sv_name;
+  jQuery('#dialog_mute_security').modal({keyboard : true});
+  page_view('ga_mute_security_dialog='+ project_id +'/'+ sv_id)
 }
 
 function showMuteLoader(btn){
@@ -246,6 +253,28 @@ function hideMuteLoader(btn){
   btn.find("i.dep-icon").removeClass("fa-spinner");
 }
 
+function muteProjectSec(){
+  jQuery('#dialog_mute_security').modal("hide");
+  mute_sec_project_id = document.getElementById('mute_sec_project_id').value
+  mute_sec_id         = document.getElementById('mute_sec_id').value
+
+  var message = document.getElementById('mute_sec_message').value
+  var api_url = "/user/projects/mute_security";
+  var dep_data = {
+    "project_id": mute_sec_project_id,
+    "sec_id": mute_sec_id,
+    "mute_message": message
+  };
+  var jqxhr = jQuery.post(api_url, dep_data)
+    .done(function(data){
+      console.debug(data);
+      // updateColorForPD( data.dependency_id, data.outdated )
+      // btn.removeClass("mute-off").addClass("mute-on");
+      // btn.find("i.dep-icon").removeClass("fa-volume-up").addClass("fa-volume-off");
+    })
+    .fail(function(){console.error("Failed");});
+}
+
 function muteProjectDep(){
   jQuery('#dialog_mute').modal("hide");
   id = document.getElementById('mute_button_id').value
@@ -257,7 +286,7 @@ function muteProjectDependency(btn){
   console.debug("Going to mute dependency.");
   showMuteLoader(btn);
 
-  var message = document.getElementById('mute_message').value 
+  var message = document.getElementById('mute_message').value
   var api_url = "/user/projects/" + btn.data('projectId') + "/mute_dependency";
   var dep_data = {
     "dependency_id": btn.data('dependencyId'),

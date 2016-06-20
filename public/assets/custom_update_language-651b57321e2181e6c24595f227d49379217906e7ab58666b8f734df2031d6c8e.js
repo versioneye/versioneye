@@ -1,0 +1,1 @@
+function update_lang(t){orig_param=t,icon_id="icon_"+orig_param.toLowerCase(),lang=document.getElementById("lang").value;var e=new RegExp("\\b"+t+"\\b","ig");-1==lang.search(e)?lang=lang+","+t:lang=lang.replace(e,""),lang=lang.replace(/[\,]+/,","),lang=lang.replace(/^[\,]+/,""),lang=lang.replace(/[\,]+$/,""),document.getElementById("lang").value=lang}
