@@ -90,6 +90,12 @@ module ProjectsHelper
     return true if project.user && project.user.ids.eql?( user.ids )
     return true if project.is_collaborator?( user )
 
+    parent_project = project.parent
+    if parent_project
+      return true if parent_project.user.ids.eql?( user.ids )
+      return true if parent_project.is_collaborator?( user )
+    end
+
     return false
   end
 
