@@ -16,7 +16,7 @@
     </div>
     <button type="submit" class="btn btn-primary" >Save</button>
     <% if !Rails.env.enterprise? %>
-      <button type="button" onclick="window.location.href='/settings/component_whitelists'" class="btn btn-success" >Manage Component Whitelists</button>
+      <button type="button" onclick="window.location.href='/organisations/<%= @project.organisation.name %>/component_whitelists'" class="btn btn-success" >Manage Component Whitelists</button>
     <% end %>
   </form>
   <br/>
