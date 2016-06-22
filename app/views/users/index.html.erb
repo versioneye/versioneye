@@ -9,7 +9,7 @@
   <div class="col-md-9 col-xs-12">
 
     <div class="content_header_def" >
-      User Management  
+      User Management
     </div>
     <div class="content">
       <% @users.each do |user| %>
@@ -19,20 +19,13 @@
           </div>
 
           <div class="col-md-10">
-            <%= user.fullname %> 
+            <%= user.fullname %>
             <%= form_tag( update_permissions_user_path(user), :method => "post", :class => "form-horizontal") do  %>
 
               <label for="<%=user.username%>_admin" style="font-size: 12px;" class="checkbox">
                 <%= check_box_tag "admin", true, user.admin, :id => "#{user.username}_admin" %>
                 Admin
               </label>
-
-              <% if Rails.env.enterprise? %> 
-                <label for="<%=user.username%>_lwl" style="font-size: 12px;" class="checkbox">
-                  <%= check_box_tag "lwl", true, user.fetch_or_create_permissions.lwl, :id => "#{user.username}_lwl" %>
-                  Manage License Whitelists
-                </label>
-              <% end %> 
 
               <div class="control-group">
                 <div>
@@ -42,10 +35,10 @@
               </div>
 
             <% end %>
-            
+
           </div>
         </div>
-      <% end %>  
+      <% end %>
     </div>
 
     <div class = "pagination pagination-right pagination-mini" >
