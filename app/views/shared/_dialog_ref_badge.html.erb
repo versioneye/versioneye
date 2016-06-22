@@ -52,7 +52,7 @@
         </form>
 
         <script type="text/javascript">
-          image_url = "<%= Settings.instance.server_url %>/<%= @product.language_esc %>/<%= @product.to_param %>/reference_badge.svg?style=flat";
+          image_url = "<%= Settings.instance.server_url %>/<%= @product.language_esc %>/<%= @product.to_param %>/reference_badge.svg?style=flat-square";
           url       = "<%= Settings.instance.server_url %>/<%= @product.language_esc %>/<%= @product.to_param %>/references"
 
           markdown_url = "[![Reference Status](" + image_url + ")](" + url + ")";

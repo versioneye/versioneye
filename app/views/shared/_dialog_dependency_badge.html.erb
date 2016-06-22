@@ -53,14 +53,14 @@
 
         <script type="text/javascript">
           purl = document.URL.split("#")[0].split("?")[0]
-          image_url = purl + "/badge.svg?style=flat";
+          image_url = purl + "/badge.svg?style=flat-square";
           url       = purl
           <% if @product && !@product.version.to_s.empty? %>
-            image_url = "<%= product_version_badge_url(:lang => @product.language_esc, :key => @product.to_param, :version => Version.encode_version(@product.version) ) %>" + "?style=flat";
+            image_url = "<%= product_version_badge_url(:lang => @product.language_esc, :key => @product.to_param, :version => Version.encode_version(@product.version) ) %>" + "?style=flat-square";
             url = "<%= package_version_url(:lang => @product.language_esc, :key => @product.to_param, :version => Version.encode_version(@product.version)) %>";
           <% end %>
           <% if @product && @product.version.to_s.empty? %>
-            image_url = "<%= product_badge_url(:lang => @product.language_esc, :key => @product.to_param ) %>" + "?style=flat";
+            image_url = "<%= product_badge_url(:lang => @product.language_esc, :key => @product.to_param ) %>" + "?style=flat-square";
             url = "<%= products_url( :lang => @product.language_esc, :key => @product.to_param ) %>";
           <% end %>
 
