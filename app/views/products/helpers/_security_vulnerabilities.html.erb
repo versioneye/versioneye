@@ -22,7 +22,7 @@
 
       <% elsif @product.language.eql?(Product::A_LANGUAGE_NODEJS) %>
         <div class="flash error" style="margin-bottom: 2px;" >
-            <span class="label_bold">Title</span>: <span class="label_bold"><%= sv.summary %><br/>
+            <span class="label_bold">Title</span>: <%= sv.summary %><br/>
           <% if !sv.cve.to_s.empty? %>
             <span class="label_bold">CVE</span>: <%= sv.cve %><br/>
           <% end %>
