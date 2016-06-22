@@ -22,23 +22,35 @@
 
       <% elsif @product.language.eql?(Product::A_LANGUAGE_NODEJS) %>
         <div class="flash error" style="margin-bottom: 2px;" >
-          <span class="label_bold">Title</span>: <%= sv.summary %><br/>
-          <span class="label_bold">Author</span>: <%= sv.author %><br/>
-          <% if !sv.links.empty? %>
-            <span class="label_bold">Links</span>:
-            <% sv.links.keys.each do |key| %>
-              <a href="<%= sv.links[key] %>" target="CVE"><%= sv.links[key] %></a><br/>
-            <% end %>
+          <span class="label_bold"><%= sv.summary %><br/>
+          <% if !sv.cve.to_s.empty? %>
+            <span class="label_bold">CVE</span>: <%= sv.cve %><br/>
           <% end %>
-          <span class="label_bold">Published</span>: <%= sv.publish_date %><br/>
+          <% if !sv.cvss_v2.to_s.empty? %>
+            <span class="label_bold">CVSSv2</span>: <%= sv.cvss_v2 %><br/>
+          <% end %>
+          <% if !sv.author.to_s.empty? %>
+            <span class="label_bold">Author</span>: <%= sv.author %><br/>
+          <% end %>
+          <% if !sv.publish_date.to_s.empty? %>
+            <span class="label_bold">Published</span>: <%= sv.publish_date %><br/>
+          <% end %>
           <span class="label_bold">Affected versions</span>: <%= sv.affected_versions_string %><br/>
           <span class="label_bold">Patched versions</span>: <%= sv.patched_versions_string %><br/>
           <% if !sv.description.to_s.empty? %>
             <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
             <%= raw( markdown.render sv.description ) %><br/>
           <% end %>
+          <% if !sv.links.empty? %>
+            <% vals = [] %>
+            <% sv.links.keys.each do |key| %>
+              <% val  = sv.links[key] %>
+              <% next if vals.include?(val) %>
+              <% vals << val %>
+              <a href="<%= val %>" target="LINK"><%= val %></a><br/>
+            <% end %>
+          <% end %>
         </div>
-
       <% elsif @product.language.eql?(Product::A_LANGUAGE_JAVA) || @product.language.eql?(Product::A_LANGUAGE_PYTHON) %>
         <div class="flash error" style="margin-bottom: 2px;" >
           <h2><%= sv.summary %></h2>
