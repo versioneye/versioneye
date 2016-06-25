@@ -1,7 +1,10 @@
-<% title 'Bitbucket Repositories' %>
-
 <div class="col-md-3" >
-  <%= render '/user/helpers/navi' %>
+  <% if @organisation %>
+    <%= render "/organisations/navi" %>
+  <% else %>
+    <% title 'Github Repositories' %>
+    <%= render '/user/helpers/navi' %>
+  <% end %>
 </div>
 
 

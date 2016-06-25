@@ -22,6 +22,12 @@
           <% if github_enabled? %>
             <li><%= link_to ' -- Create From GitHub', user_projects_github_repositories_path, :rel => "nofollow" %></li>
           <% end %>
+          <% if bitbucket_enabled? %>
+            <li><%= link_to ' -- Create From Bitbucket', user_projects_bitbucket_repositories_path, :rel => "nofollow" %></li>
+          <% end %>
+          <% if stash_enabled? %>
+            <li><%= link_to ' -- Create From Stash', user_projects_stash_repositories_path, :rel => "nofollow" %></li>
+          <% end %>
           <li><%= link_to 'Components', components_organisation_path(@organisation) %></li>
         </ul>
       <% else %>
