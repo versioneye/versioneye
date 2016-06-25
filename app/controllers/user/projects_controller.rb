@@ -3,7 +3,7 @@ class User::ProjectsController < ApplicationController
   before_filter :authenticate,  :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export, :lwl_csv_export]
   before_filter :collaborator?, :only   => [:add_collaborator, :save_period, :save_visibility, :save_whitelist, :save_cwl, :update, :update_name, :destroy, :transfer, :team]
   before_filter :lwl_export_permission?, :only => [:lwl_export, :lwl_csv_export]
-  before_filter :load_orga, :only => [:show]
+  before_filter :load_orga, :only => [:show, :new, :create, :upload, :destroy]
 
 
   def index
@@ -299,9 +299,11 @@ class User::ProjectsController < ApplicationController
     if ProjectService.destroy_by current_user, id
       flash[:success] = "Project removed successfully."
     else
-      flash[:success] = "Something went wrong. Please contact the VersionEye Team."
+      flash[:error] = "Something went wrong. Please contact the VersionEye Team."
     end
-    redirect_to user_projects_path
+    rpath = user_projects_path
+    rpath = projects_organisation_path(@organisation) if @organisation
+    redirect_to rpath
   rescue => e
     flash[:error] = "ERROR: #{e.message}"
     redirect_to :back
@@ -314,7 +316,7 @@ class User::ProjectsController < ApplicationController
     if ProjectService.merge(parent_id, child_id, current_user.id)
       flash[:success] = "Project merged successfully."
     else
-      flash[:success] = "Something went wrong. Merge not possible."
+      flash[:error] = "Something went wrong. Merge not possible."
     end
     redirect_to "/user/projects/#{parent_id}"
   rescue => e
@@ -598,7 +600,9 @@ class User::ProjectsController < ApplicationController
     end
 
     def upload_and_store file
-      project = ProjectImportService.import_from_upload file, current_user
+      orga_id = nil
+      orga_id = @organisation.ids if @organisation
+      project = ProjectImportService.import_from_upload file, current_user, false, orga_id
       set_message_for project
       project
     end
@@ -609,9 +613,11 @@ class User::ProjectsController < ApplicationController
         return
       end
 
-      project_name   = project_url.split("/").last
-      project_name   = project_name.split('?')[0]
-      project        = ProjectImportService.import_from_url( project_url, project_name, current_user )
+      orga_id      = nil
+      orga_id      = @organisation.ids if @organisation
+      project_name = project_url.split("/").last
+      project_name = project_name.split('?')[0]
+      project      = ProjectImportService.import_from_url( project_url, project_name, current_user, orga_id )
       set_message_for project
       project
     end

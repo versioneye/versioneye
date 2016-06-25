@@ -1,13 +1,18 @@
-<% title 'Add New Project' %>
 
 <div class="col-md-3" >
-  <%= render '/user/helpers/navi' %>
+  <% if @organisation %>
+    <%= render "/organisations/navi" %>
+  <% else %>
+    <% title 'Add New Project' %>
+    <%= render '/user/helpers/navi' %>
+  <% end %>
 </div>
+
 
 <div class="col-md-9">
 
   <div class="content_header_def" >
-    Create a new project and VersionEye will show you the outdated dependencies.
+    Create a new project from a file upload and VersionEye will show you the outdated dependencies.
   </div>
   <div class="content" >
     <%= render "/user/projects/helpers/create_from_upload" %>

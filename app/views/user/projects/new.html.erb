@@ -1,7 +1,12 @@
-<% title 'Add New Project' %>
+
 
 <div class="col-md-3" >
-  <%= render '/user/helpers/navi' %>
+  <% if @organisation %>
+    <%= render "/organisations/navi" %>
+  <% else %>
+    <% title 'Add New Project' %>
+    <%= render '/user/helpers/navi' %>
+  <% end %>
 </div>
 
 <div class="col-md-9">
