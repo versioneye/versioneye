@@ -19,16 +19,18 @@
           <li><%= link_to 'License Whitelists', organisation_license_whitelists_path(@organisation) %></li>
           <li><%= link_to 'Component Whitelists', organisation_component_whitelists_path(@organisation) %></li>
           <li><%= link_to 'Projects', projects_organisation_path(@organisation) %></li>
-          <% if github_enabled? %>
-            <li><%= link_to ' -- Create From GitHub', user_projects_github_repositories_path, :rel => "nofollow" %></li>
+          <% if OrganisationService.allowed_to_transfer_projects?( organisation, current_user ) %>
+            <% if github_enabled? %>
+              <li><%= link_to ' -- Create From GitHub', user_projects_github_repositories_path, :rel => "nofollow" %></li>
+            <% end %>
+            <% if bitbucket_enabled? %>
+              <li><%= link_to ' -- Create From Bitbucket', user_projects_bitbucket_repositories_path, :rel => "nofollow" %></li>
+            <% end %>
+            <% if stash_enabled? %>
+              <li><%= link_to ' -- Create From Stash', user_projects_stash_repositories_path, :rel => "nofollow" %></li>
+            <% end %>
           <% end %>
-          <% if bitbucket_enabled? %>
-            <li><%= link_to ' -- Create From Bitbucket', user_projects_bitbucket_repositories_path, :rel => "nofollow" %></li>
-          <% end %>
-          <% if stash_enabled? %>
-            <li><%= link_to ' -- Create From Stash', user_projects_stash_repositories_path, :rel => "nofollow" %></li>
-          <% end %>
-          <li><%= link_to 'Components', components_organisation_path(@organisation) %></li>
+          <li><%= link_to 'Inventory', components_organisation_path(@organisation) %></li>
         </ul>
       <% else %>
         <%= render '/shared/signup_ad' %>
