@@ -1,5 +1,6 @@
 class User::ScmReposController < ApplicationController
 
+  before_filter :load_orga, :only => [:index, :show, :import, :init]
 
   def init
     render 'init', layout: 'application'
@@ -29,6 +30,14 @@ class User::ScmReposController < ApplicationController
 
 
   private
+
+
+    def load_orga
+      orga_id = cookies.signed[:orga]
+      return nil if orga_id.to_s.empty?
+
+      @organisation = Organisation.find orga_id
+    end
 
 
     def create_project_info( repo, imported_project )

@@ -19,6 +19,9 @@
           <li><%= link_to 'License Whitelists', organisation_license_whitelists_path(@organisation) %></li>
           <li><%= link_to 'Component Whitelists', organisation_component_whitelists_path(@organisation) %></li>
           <li><%= link_to 'Projects', projects_organisation_path(@organisation) %></li>
+          <% if github_enabled? %>
+            <li><%= link_to ' -- Create From GitHub', user_projects_github_repositories_path, :rel => "nofollow" %></li>
+          <% end %>
           <li><%= link_to 'Components', components_organisation_path(@organisation) %></li>
         </ul>
       <% else %>
