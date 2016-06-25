@@ -106,9 +106,9 @@ class User::ProjectsController < ApplicationController
     date_string  = DateTime.now.strftime("%d_%m_%Y")
     lwl = nil
     cwl = nil
-    lwl_default_id = LicenseWhitelistService.fetch_default_id organisation
+    lwl_default_id = organisation.default_lwl_id
     lwl = LicenseWhitelist.find(lwl_default_id) if lwl_default_id
-    cwl_default_id = ComponentWhitelistService.fetch_default_id organisation
+    cwl_default_id = organisation.default_cwl_id
     cwl = ComponentWhitelist.find(cwl_default_id) if cwl_default_id
     if type.eql?('pdf')
       pdf = LwlPdfService.process_all projects, lwl, cwl, flatten
