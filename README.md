@@ -11,11 +11,6 @@ This companies are financially supporting VersionEye.
 <table>
 	<tr>
 		<td>
-			<a href="https://www.jfrog.com/" target="jrog">
-				<img src="app/assets/images/sponsors/jfrog.png" width="100"/>
-			</a>
-		</td>
-		<td>
 			<a href="https://www.xing.com/" target="xing">
 				<img src="app/assets/images/sponsors/xing.png" width="150"/>
 			</a>
