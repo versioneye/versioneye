@@ -46,11 +46,15 @@
               <% project_name     = sps[1] %>
               <% project_id       = sps[2] %>
               <% project_licenses = sps[3] %>
+              <% project_version  = sps[4] %>
               <% tr_bg_color = "" %>
               <% tr_bg_color = "#FCF8E3" if !version_current.empty? && !version_current.eql?(version) %>
               <tr style="background-color: <%= tr_bg_color %>">
                 <td>
                   <%= link_to project_name, user_project_path( project_id ), :class => 'searchResultLink' %>
+                  <% if !project_version.to_s.empty? %>
+                    : <%= project_version %>
+                  <% end %>
                 </td>
                 <td>
                   <%= version %>
