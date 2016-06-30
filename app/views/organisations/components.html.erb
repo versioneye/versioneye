@@ -11,12 +11,37 @@
   <div class="content" >
 
     <p>
-      This page lists all software components/libraries which are used in this organsation and shows in which projects they are used.
+      This page lists all software components/libraries which are used in this organsation and shows in which projects they are used. With the filter below you can specify which projects should be analysed to compile the inventory/component list.
       <br/><br/>
     </p>
 
+    <div id='projects_filter' >
+      <form id="form" action="<%= components_organisation_path(@organisation) %>" method="GET" class='form-inline' style="padding: 0; margin:0;" >
+        <div class="form-group" style="padding-bottom: 25px;">
 
-    <% comps = @organisation.component_list.sort.to_h %>
+          <label>Projects to be analysed:</label>
+
+          <select name="team"  id="team" class="form-control" >
+            <option value="ALL">All teams</option>
+            <% @organisation.teams.each do |team| %>
+              <option value="<%= team.ids %>" <%= "selected" if params[:team].to_s.eql?(team.ids) %> >Team: <%= team.name %></option>
+            <% end %>
+          </select>
+
+          <select name="language"  id="language" class="form-control" >
+            <option value="ALL">All languages</option>
+            <% @organisation.unique_languages.each do |language| %>
+              <option value="<%= language %>" <%= "selected" if params[:language].to_s.eql?(language.to_s) %> >Language: <%= language %></option>
+            <% end %>
+          </select>
+
+          <button type="submit" class="btn btn-primary" >Filter</button>
+        </div>
+      </form>
+    </div>
+
+
+    <% comps = @organisation.component_list(params['team'], params['language']).sort.to_h %>
     <% comps.keys.each do |key| %>
       <% sp = key.split(':') %>
       <% language = sp[0].to_s.downcase %>
