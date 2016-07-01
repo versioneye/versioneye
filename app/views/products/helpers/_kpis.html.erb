@@ -1,7 +1,7 @@
 
 <div>
 
-  <div class="kpi_box flash info l_margin_bottom_5" >
+  <div class="kpibox flash info l_margin_bottom_5" >
     <b>Current:</b>
     <% if @product.version_newest && !@product.version_newest.to_s.eql?(@product.version.to_s) %>
       <a href="/<%= @product.language_esc %>/<%= @product.to_param %>/<%= @product.version_newest.to_s %>" ><%= @product.version_newest.to_s %></a>
@@ -13,7 +13,7 @@
   <% this_color_class = 'info' %>
   <% this_color_class = 'success' if @version && @version.semver_2 %>
   <% this_color_class = 'error' if @version && @version.semver_2.nil? %>
-  <div class="kpi_box flash <%= this_color_class %>" style="margin-bottom: 5px;">
+  <div class="kpibox flash <%= this_color_class %>" style="margin-bottom: 5px;">
     <div>
       <b>This:</b> <%= @product.version %>
 
@@ -44,7 +44,7 @@
 
   <% days_ago = @product.released_days_ago %>
   <% rel_bg = color_for_released_ago @product %>
-  <div class="kpi_box flash <%= rel_bg %> l_margin_bottom_5"  >
+  <div class="kpibox flash <%= rel_bg %> l_margin_bottom_5"  >
     <b title="<%= @product.released_ago_text %>" >Released:</b>
     <span title="<%= @product.released_ago_text %>">
       <% if @product.released_ago_in_words.nil? %>
@@ -62,7 +62,7 @@
   <% if !average_release_time.nil? && average_release_time > 0 %>
     <% art_text = "In average this dev team is releasing a new version every #{average_release_time} days." %>
   <% end %>
-  <div class="kpi_box flash <%= art_bg %> l_margin_bottom_5">
+  <div class="kpibox flash <%= art_bg %> l_margin_bottom_5">
     <b title="<%= art_text %>" >Avg. Rel. Time:</b>
     <span title="<%= art_text %>">
       <% if average_release_time.nil? || average_release_time == 0 %>
@@ -81,7 +81,7 @@
   <% dep_bg = 'error' if main_dep_count >= 30 %>
   <% scope = Dependency.main_scope(@product.language) %>
   <% title_text = "#{main_dep_count} direct #{scope} dependencies" %>
-  <div class="kpi_box flash <%= dep_bg %>" style="margin-bottom: 5px;">
+  <div class="kpibox flash <%= dep_bg %>" style="margin-bottom: 5px;">
     <b title="<%= title_text %>">Dependencies:</b> <span title="<%= title_text %>"><%= main_dep_count %></span>
   </div>
 
@@ -94,7 +94,7 @@
   <% ref_bg = 'warn'    if references >  0  and references < 10  %>
   <% ref_bg = 'error'   if references == 0 %>
   <% ref_text = "#{references} packages are referencing this project" %>
-  <div class="kpi_box flash <%= ref_bg %> l_margin_bottom_5" >
+  <div class="kpibox flash <%= ref_bg %> l_margin_bottom_5" >
     <%= render :partial => "shared/ref_badge" %>
     <span title="<%= ref_text %>">
       <% if references > 0 %>
@@ -106,7 +106,7 @@
 
 
 <% if Settings.instance.environment.to_s.eql?('enterprise') %>
-  <div class="kpi_box flash info l_margin_bottom_5" >
+  <div class="kpibox flash info l_margin_bottom_5" >
     <b title="<%= @product.project_usage %> projects are referencing this component.">Project Usage:</b>
     <span >
       <% if @product.project_usage > 0 %>
@@ -122,12 +122,12 @@
   <% licenses = @product.licenses %>
   <% license_bg = 'info' %>
   <% license_bg = "error" if !licenses || licenses.empty? %>
-  <div class="kpi_box flash <%= license_bg %> l_margin_bottom_5" >
-    <b title="license">License:</b>
+  <div class="kpibox flash <%= license_bg %> l_margin_bottom_5" >
+    <b title="license_info">License:</b>
     <% if licenses && !licenses.empty? %>
       <% licenses.each do |license| %>
         <% if license.link && !license.link.empty? %>
-          <a href="<%= license.link %>" target="license"><%= license.name_substitute %></a><br/>
+          <a href="<%= license.link %>" target="license_info"><%= license.name_substitute %></a><br/>
         <% else %>
           <%= license.name_substitute %><br/>
         <% end %>
@@ -137,7 +137,7 @@
     <% end %>
   </div>
 
-  <div class="kpi_box flash info l_margin_bottom_5" >
+  <div class="kpibox flash info l_margin_bottom_5" >
     <b title="<%= title_text %>">Language:</b>
     <% if Product::A_LANGS_LANGUAGE_PAGE.include?(@product.language) %>
       <a href="/<%= @product.language_esc %>" title="<%= @product.language_esc %>"><%= @product.language %></a>
