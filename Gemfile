@@ -14,11 +14,11 @@ gem 'bourbon'              , '~> 4.2.0'
 gem 'ruby_regex'           , '~> 0.1.0'
 gem 'semverly'             , '~> 1.0.0'
 gem 'cocoapods-core'       , '~> 0.39.0'
-gem 'stripe'               , '~> 1.43.0'
+gem 'stripe'               , '~> 1.44.0'
 gem 'bunny'                , '~> 2.4.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v8.26.9'
+gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v8.26.10'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
@@ -31,7 +31,7 @@ gem 'redcarpet', '3.3.4'
 gem 'font-awesome-sass', '~> 4.6.2'
 
 group :development do
-  gem 'psych'             , '~> 2.0.5'
+  gem 'psych'             , '~> 2.1.0'
   gem 'terminal-notifier' , '~> 1.6.0'
   gem 'fakes3'            , '~> 0.2.1'
 end
@@ -44,11 +44,11 @@ group :assets do
 end
 
 group :test do
-  gem 'simplecov'         , '~> 0.11.1'
+  gem 'simplecov'         , '~> 0.12.0'
   gem 'turn'              , :require => false
-  gem 'rspec'             , '~> 3.4.0'
-  gem 'rspec-rails'       , '~> 3.4.0'
-  gem 'rspec-mocks'       , '~> 3.4.0'
+  gem 'rspec'             , '~> 3.5.0'
+  gem 'rspec-rails'       , '~> 3.5.0'
+  gem 'rspec-mocks'       , '~> 3.5.0'
   gem 'rspec_junit_formatter', '0.2.3'
   gem 'capybara'          , '~> 2.7.0'
   gem 'capybara-firebug'  , '~> 2.1.0'
@@ -65,5 +65,5 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'      , '3.3.6'
   gem 'rails-assets-jquery'         , '2.2.4'
   gem 'rails-assets-handlebars'     , '4.0.5'
-  gem 'rails-assets-linkifyjs'      , '2.0.3'
+  gem 'rails-assets-linkifyjs'      , '2.0.4'
 end
