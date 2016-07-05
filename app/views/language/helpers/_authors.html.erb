@@ -11,8 +11,8 @@
                                         :style => "width: 68px;",
                                         :class => "round12",
                                         :gravatar => {:size => 68,
-                                                      :default => "#{Settings.instance.server_url}/profile_icon.png" }), author_path(author) %> 
-            <span class="product_page_sm_header"> <%= i + 1 %>. <%= author.name %></span> - 
+                                                      :default => "#{Settings.instance.server_url}/profile_icon.png" }), author_path(author) %>
+            <span class="product_page_sm_header"> <%= i + 1 %>. <%= author.name %></span> -
             <%= pluralize( author.products_count, "library" ) %>
           </div>
         </div>
@@ -22,4 +22,4 @@
   <div style="padding-top: 15px;">
     <%= link_to "See more", authors_path(:language => @lang) %><br/><br/>
   </div>
-<% end %> 
+<% end %>
