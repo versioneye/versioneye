@@ -46,6 +46,7 @@ class OrganisationsController < ApplicationController
     @organisation.website  = params[:organisation][:website]
     @organisation.mattp    = params[:organisation][:mattp]
     @organisation.matattp  = params[:organisation][:matattp]
+    @organisation.matanmtt = params[:organisation][:matanmtt]
     @organisation.save
     flash[:success] = "Organisation saved successfully"
     redirect_to organisation_path(@organisation)

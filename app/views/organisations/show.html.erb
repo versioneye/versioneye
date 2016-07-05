@@ -63,6 +63,13 @@
         </div>
 
         <div class="form-group">
+          <%= f.check_box :matanmtt, :style => "vertical-align: top; margin-right: 5px;", :id => "matanmtt", :disabled => disabled_flag %>
+          <label for="matanmtt" style="display: inline; font-size: 12px;">
+            Any team member can add new members to his/her team without being an owner of the organisaiton.
+          </label>
+        </div>
+
+        <div class="form-group">
           <div class="control-label"></div>
           <div class="controls">
             <%= f.submit :class => "btn btn-large btn-primary", :disabled => disabled_flag %>
