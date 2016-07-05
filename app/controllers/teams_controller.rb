@@ -13,7 +13,7 @@ class TeamsController < ApplicationController
       redirect_to organisation_team_path(@organisation, @team)
     else
       flash[:error] = "You have no permission to create a Team. Only the owners of the organisation are allowed to do that."
-      redirect_to organisation_teams_path(@organisation)
+      redirect_to organisation_teams_path( @organisation )
     end
   end
 
@@ -29,7 +29,7 @@ class TeamsController < ApplicationController
     else
       flash[:error] = "Something went wrong. Please contact the VersionEye team."
     end
-    redirect_to organisation_team_path(@organisation, @team)
+    redirect_to organisation_team_path( @organisation, @team )
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
@@ -47,7 +47,7 @@ class TeamsController < ApplicationController
     else
       flash[:error] = "You have not permission to remove this user from the Team. Only the owners of the organisation are allowed to do that."
     end
-    redirect_to organisation_team_path(@organisation, @team)
+    redirect_to organisation_team_path( @organisation, @team )
   end
 
   def delete
