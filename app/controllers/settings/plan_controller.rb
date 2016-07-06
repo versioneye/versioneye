@@ -44,14 +44,7 @@ class Settings::PlanController < ApplicationController
     end
 
     def update_plan user, customer, plan_name_id
-      if plan_name_id.match(/\A03/).nil? && plan_name_id.match(/\A04/).nil?
-        flash[:error] = "The selected plan doesn't exist anymore."
-        return nil
-      end
-
-      now = DateTime.now
-      oct = DateTime.parse "2015-10-01"
-      if now > oct && plan_name_id.match(/\A03/)
+      if plan_name_id.match(/\A04/).nil?
         flash[:error] = "The selected plan doesn't exist anymore."
         return nil
       end
