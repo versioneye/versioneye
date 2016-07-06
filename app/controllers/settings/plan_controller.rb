@@ -1,6 +1,8 @@
 class Settings::PlanController < ApplicationController
 
+
   before_filter :authenticate
+
 
   def index
     if current_user.plan.nil?
@@ -10,6 +12,7 @@ class Settings::PlanController < ApplicationController
     @plan = current_user.plan
     cookies.permanent.signed[:plan_selected] = @plan.name_id
   end
+
 
   def update
     @plan_name_id = params[:plan]
@@ -35,13 +38,16 @@ class Settings::PlanController < ApplicationController
     redirect_to settings_creditcard_path
   end
 
+
   private
+
 
     def prepare_update_cc plan_name_id
       flash[:info] = 'Please update your Credit Card information.'
       cookies.permanent.signed[:plan_selected] = plan_name_id
       @billing_address = current_user.fetch_or_create_billing_address
     end
+
 
     def update_plan user, customer, plan_name_id
       if plan_name_id.match(/\A04/).nil?
@@ -51,11 +57,18 @@ class Settings::PlanController < ApplicationController
 
       customer.update_subscription( :plan => plan_name_id )
       user.plan = Plan.by_name_id plan_name_id
-      if user.save
-        SubscriptionMailer.update_subscription( user ).deliver_now
-        flash[:success] = 'We updated your plan successfully.'
-      else
+      if user.save != true
         flash[:error] = 'Something went wrong. Please contact the VersionEye team.'
+        return nil
+      end
+
+      SubscriptionMailer.update_subscription( user ).deliver_now
+      flash[:success] = 'We updated your plan successfully.'
+
+      api = user.api
+      if api && user.plan
+        api.rate_limit = user.plan.api_rate_limit
+        api.save
       end
     end
 
