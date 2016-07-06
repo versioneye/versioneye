@@ -5,7 +5,7 @@ class Settings::ApiController < ApplicationController
 
 
   def index
-    @user_api = Api.find_or_initialize_by(user_id: current_user.id.to_s)
+    @user_api = current_user.api
     @api_calls = 0
     if @user_api.api_key.nil?
       @user_api.api_key = 'generate new value'
@@ -16,8 +16,11 @@ class Settings::ApiController < ApplicationController
 
 
   def update
-    @user_api = Api.find_or_initialize_by(user_id: current_user.id.to_s)
+    @user_api = current_user.api
     @user_api.generate_api_key!
+    if current_user.plan
+      @user_api.rate_limit = current_user.plan.api_rate_limit
+    end
 
     unless @user_api.save
       flash[:notice] << @user_api.errors.full_messages.to_sentence
