@@ -2,7 +2,7 @@ class User::ProjectsController < ApplicationController
 
   before_filter :authenticate,  :except => [:show, :badge, :transitive_dependencies, :status, :lwl_export, :lwl_csv_export]
   before_filter :collaborator?, :only   => [:add_collaborator, :save_period, :save_visibility, :save_whitelist, :save_cwl, :update, :update_name, :destroy, :transfer, :team]
-  before_filter :lwl_export_permission?, :only => [:lwl_export, :lwl_csv_export]
+  before_filter :pdf_export_permission?, :only => [:lwl_export, :lwl_csv_export, :sec_export]
   before_filter :load_orga, :only => [:show, :new, :create, :upload, :destroy]
 
 
@@ -549,8 +549,9 @@ class User::ProjectsController < ApplicationController
     end
 
 
-    def lwl_export_permission?
+    def pdf_export_permission?
       return true if Rails.env.enterprise? == true
+
       if current_user.plan.nil? || current_user.plan.price.to_i < 22
         flash[:warning] = "For the PDF/CSV export you need at least the 'Medium' plan. Please upgrade your subscription."
         redirect_to settings_plans_path
