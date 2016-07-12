@@ -526,7 +526,7 @@ class User::ProjectsController < ApplicationController
     render json: resp
   end
 
-  
+
   def unmute_security
     project_id = params[:project_id]
     sec_id     = params[:sec_id]
@@ -603,7 +603,7 @@ class User::ProjectsController < ApplicationController
       "#{lang}_".downcase
     end
 
-    
+
     def fetch_project( params )
       file        = params[:upload]
       project_url = params[:project][:url]  if params[:project]
@@ -612,7 +612,7 @@ class User::ProjectsController < ApplicationController
       nil
     end
 
-    
+
     def upload_and_store file
       orga_id = nil
       orga_id = @organisation.ids if @organisation
@@ -621,7 +621,7 @@ class User::ProjectsController < ApplicationController
       project
     end
 
-    
+
     def fetch_and_store project_url
       if (project_url.match(/\Ahttps\:\/\/github\.com/) && project_url.count("/") == 4) || (project_url.match(/\/\z/))
         flash[:error] = "Please put in the complete URL to the file, not just the directory."
@@ -637,7 +637,7 @@ class User::ProjectsController < ApplicationController
       project
     end
 
-    
+
     def set_message_for( project )
       if project
         flash[:success] = "Project was created successfully."
@@ -646,7 +646,7 @@ class User::ProjectsController < ApplicationController
       end
     end
 
-    
+
     def circle_hash_for_dependencies( project )
       hash = Hash.new
       project.dependencies.each do |dep|
