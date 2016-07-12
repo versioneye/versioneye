@@ -234,6 +234,7 @@ Versioneye::Application.routes.draw do
     resources :projects do
       member do
         get  'status'
+        get  'dependencies_status'
         get  'lwl_export'
         get  'lwl_csv_export'
         get  'sec_export'

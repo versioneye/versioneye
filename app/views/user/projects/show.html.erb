@@ -36,7 +36,7 @@
         <% end %>
       </div>
 
-      <% if project_member?(@project, current_user) %>
+      <% if project_member?( @project, current_user ) %>
 
         <div class="project-inline-editor" style="display:none;">
           <%= form_tag(update_name_user_project_path(@project), :method => "post", :remote => true, :class => "form-inline") do %>
@@ -99,6 +99,9 @@
 
         <div id="project_status" class="flash warn" style="padding-bottom: 5px; margin-bottom: 10px; display: none;" >
           <%= image_tag "progress.gif" %> Project is processed by a background job. This page will reload if the job is done.
+        </div>
+        <div id="dependencies_status" class="flash warn" style="padding-bottom: 5px; margin-bottom: 10px; display: none;" >
+          <%= image_tag "progress.gif" %> Meta information about the project dependencies are currently fetched from the public VersionEye API. <span id="sync_dep_info"></span>
         </div>
 
         <div>
@@ -247,6 +250,9 @@
     checkInterval = 0
     showedProgressBar = false;
 
+    checkIntervalDep = 0
+    showedProgressBarDep = false;
+
     function checkStatus(){
       jQuery.getJSON( "/user/projects/<%= @project.ids %>/status.text", function (data){
         console.info(" first success " + data);
@@ -273,6 +279,33 @@
     }
 
     checkInterval = setInterval(this.checkStatus, 2000);
+
+    function checkStatusDeps(){
+      jQuery.getJSON( "/user/projects/<%= @project.ids %>/dependencies_status.json", function (data){
+        // console.info(" first success " + data);
+      }).done(function( data ) {
+        // console.info(" done " + data)
+      }).fail(function(data) {
+        // console.info(" error " + data );
+      }).always(function(data) {
+        if (data.status === "done" ){
+          console.info(" dep status is done" );
+          clearInterval( checkIntervalDep );
+          console.info(" dep clear interval");
+          document.getElementById('dependencies_status').style.display = "none";
+          if (showedProgressBarDep === true){
+            location.reload();
+          }
+        } else {
+          console.info(" dep sync status is NOT done" );
+          document.getElementById('dependencies_status').style.display = "block";
+          document.getElementById('sync_dep_info').innerHTML = "Currently fetching meta data for " + data.info + ".";
+          showedProgressBarDep = true;
+        }
+      });
+    }
+
+    checkIntervalDep = setInterval(this.checkStatusDeps, 2000);
 
 </script>
 
