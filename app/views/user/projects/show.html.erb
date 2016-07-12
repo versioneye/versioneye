@@ -250,9 +250,6 @@
     checkInterval = 0
     showedProgressBar = false;
 
-    checkIntervalDep = 0
-    showedProgressBarDep = false;
-
     function checkStatus(){
       jQuery.getJSON( "/user/projects/<%= @project.ids %>/status.text", function (data){
         console.info(" first success " + data);
@@ -280,6 +277,10 @@
 
     checkInterval = setInterval(this.checkStatus, 2000);
 
+<% if Rails.env.enterprise? %>
+    checkIntervalDep = 0
+    showedProgressBarDep = false;
+
     function checkStatusDeps(){
       jQuery.getJSON( "/user/projects/<%= @project.ids %>/dependencies_status.json", function (data){
         // console.info(" first success " + data);
@@ -306,6 +307,7 @@
     }
 
     checkIntervalDep = setInterval(this.checkStatusDeps, 2000);
+<% end %>
 
 </script>
 
