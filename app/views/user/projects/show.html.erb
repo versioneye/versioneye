@@ -100,8 +100,15 @@
         <div id="project_status" class="flash warn" style="padding-bottom: 5px; margin-bottom: 10px; display: none;" >
           <%= image_tag "progress.gif" %> Project is processed by a background job. This page will reload if the job is done.
         </div>
-        <div id="dependencies_status" class="flash warn" style="padding-bottom: 5px; margin-bottom: 10px; display: none;" >
-          <%= image_tag "progress.gif" %> Meta information about the project dependencies are currently fetched from the public VersionEye API. <span id="sync_dep_info"></span>
+        <div id="dependencies_status" class="flash warn" style="padding-bottom: 5px; margin-bottom: 10px; display: block;" >
+          <div class="row">
+            <div class="col-md-1">
+              <%= image_tag "progress.gif" %>
+            </div>
+            <div class="col-md-11">
+              Meta information about the project dependencies are currently fetched from the public VersionEye API. <span id="sync_dep_info"></span>
+            </div>
+          </div>
         </div>
 
         <div>
