@@ -65,6 +65,8 @@ class Settings::PlanController < ApplicationController
       SubscriptionMailer.update_subscription( user ).deliver_now
       flash[:success] = 'We updated your plan successfully.'
 
+      cookies.delete(:plan_selected)
+
       api = user.api
       if api && user.plan
         api.rate_limit = user.plan.api_rate_limit
