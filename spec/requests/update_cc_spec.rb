@@ -11,7 +11,8 @@ describe "update credit card information" do
       UserNotificationSetting.delete_all
       post "/sessions", {:session => {:email => user.email, :password => user.password}}, "HTTPS" => "on"
       assert_response 302
-      response.should redirect_to( user_packages_i_follow_path )
+
+      response.should redirect_to( projects_organisation_path( Organisation.first ) )
     end
 
     it "does not update the CC information because stripe token is missing" do

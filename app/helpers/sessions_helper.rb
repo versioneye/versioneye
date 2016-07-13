@@ -98,6 +98,18 @@ module SessionsHelper
     'repo,user:email'
   end
 
+  def get_orga_for_login user
+    orgas = OrganisationService.index(user, true)
+    orgas = OrganisationService.index(user, false) if orgas.nil? || orgas.empty?
+    orga  = if orgas.to_a.empty?
+              OrganisationService.create_new_for(user)
+            else
+              orgas.first
+            end
+    cookies.permanent.signed[:orga] = orga.ids
+    orga
+  end
+
   private
 
     def user_from_remember_token

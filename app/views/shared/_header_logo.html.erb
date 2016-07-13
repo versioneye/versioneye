@@ -1,7 +1,7 @@
 <% if signed_in_admin? %>
   <%= link_to image_tag("verisoneye-logo-small.png", :class => 'logo_small'), settings_globalsettings_path, :rel => "nofollow" %>
 <% elsif signed_in? %>
-  <%= link_to image_tag("verisoneye-logo-small.png", :class => 'logo_small'), user_projects_path, :rel => "nofollow" %>
+  <%= link_to image_tag("verisoneye-logo-small.png", :class => 'logo_small'), organisations_path, :rel => "nofollow" %>
 <% else %>
   <a href="/" >
     <%= image_tag "verisoneye-logo-small.png", :class => 'logo_small' %>

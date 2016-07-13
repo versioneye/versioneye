@@ -3,6 +3,7 @@ class Auth::StashController < ApplicationController
   before_filter :set_locale
   before_filter :enterprise_activated?
 
+
   def signin
     if signed_in?
       flash[:error] = "You are already signed in. If you want to connect with Stash, check your settings!"
@@ -11,6 +12,7 @@ class Auth::StashController < ApplicationController
     connect_with_stash
   end
 
+
   def connect
     if not signed_in?
       flash[:error] = "You have to sign in to be able to connect your Stash account with your VersionEye account."
@@ -18,6 +20,7 @@ class Auth::StashController < ApplicationController
     end
     connect_with_stash
   end
+
 
   def callback
     unless session.has_key?(:request_token)
@@ -52,9 +55,9 @@ class Auth::StashController < ApplicationController
       rpath = signin_path
     else
       sign_in user
+      orga  = get_orga_for_login( user )
       rpath = user_projects_stash_repositories_path
-      rpath = user_projects_path(:all_public => true) if Project.where(:public => true, :parent_id => nil).count > 0
-      rpath = user_projects_path if user.projects && !user.projects.empty?
+      rpath = projects_organisation_path( orga ) if orga.projects && !orga.projects.empty?
     end
     redirect_back_or rpath and return
   end

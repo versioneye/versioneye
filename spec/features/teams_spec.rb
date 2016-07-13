@@ -24,22 +24,22 @@ describe "Teams" do
       fill_in 'session[password]', :with => @user.password
       find('#sign_in_button').click
 
-      expect( Organisation.count ).to eq(0)
+      expect( Organisation.count ).to eq(1)
 
-      visit organisations_path
+      visit new_organisation_path
       fill_in 'organisation[name]', :with => 'test_orga'
       fill_in 'organisation[company]', :with => 'test_orga'
       click_button 'Create Organisation'
 
-      expect( Organisation.count ).to eq(1)
-      expect( Team.count ).to eq(1) # Owner Team
+      expect( Organisation.count ).to eq(2)
+      expect( Team.count ).to eq(2) # Owner Team
 
-      orga = Organisation.first
+      orga = Organisation.where(:name => 'test_orga').first
       visit organisation_teams_path( orga )
       fill_in 'teams[name]', :with => 'test_team'
       click_button 'Create New Team'
 
-      expect( Team.count ).to eq(2)
+      expect( Team.count ).to eq(3)
 
       # Add new team member to new created team
       team = Team.where(:name => "test_team").first
@@ -74,7 +74,7 @@ describe "Teams" do
       visit organisation_teams_path( orga )
       fill_in 'teams[name]', :with => 'test2_team'
       click_button 'Create New Team'
-      expect( Team.count ).to eq(2) # still 2 because user has no permission to create teams.
+      expect( Team.count ).to eq(3) # still 2 because user has no permission to create teams.
 
       visit signout_path
 

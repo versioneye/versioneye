@@ -15,7 +15,7 @@
                   <% if Rails.env.enterprise? && signed_in_admin? %>
                     <%= link_to image_tag("verisoneye-logo-small.png", :style => 'margin-top: -12px;'), settings_emails_path, :rel => "nofollow", :class => "navbar-brand topnav" %>
                   <% else %>
-                    <%= link_to image_tag("verisoneye-logo-small.png", :style => 'margin-top: -12px;'), user_projects_path, :rel => "nofollow", :class => "navbar-brand topnav" %>
+                    <%= link_to image_tag("verisoneye-logo-small.png", :style => 'margin-top: -12px;'), organisations_path, :rel => "nofollow", :class => "navbar-brand topnav" %>
                   <% end %>
                 <% else %>
                   <a href="/" class="navbar-brand topnav" >

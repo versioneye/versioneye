@@ -23,7 +23,7 @@ describe "Private Project" do
 
     post "/sessions", {:session => {:email => @user1.email, :password => "12345"}}, "HTTPS" => "on"
     assert_response 302
-    response.should redirect_to( user_projects_path )
+    response.should redirect_to( projects_organisation_path( Organisation.first ) )
 
     p "GET: /user/projects/#{@project._id.to_s}"
     get "/user/projects/#{@project._id.to_s}"
@@ -39,7 +39,6 @@ describe "Private Project" do
 
     post "/sessions", {:session => {:email => @user2.email, :password => "12345"}}, "HTTPS" => "on"
     assert_response 302
-    response.should redirect_to( user_packages_i_follow_path )
 
     get "/user/projects/#{@project._id.to_s}"
     assert_response 302

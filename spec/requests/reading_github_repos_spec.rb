@@ -35,7 +35,7 @@ describe "Getting data from github_repos_controller" do
    get signin_path, nil, "HTTPS" => "on"
     post sessions_path, {session: {email: user.email, password: "12345"}}, "HTTPS" => "on"
     assert_response 302
-    response.should redirect_to( user_packages_i_follow_path )
+    response.should redirect_to( projects_organisation_path( Organisation.first ) )
     user.save
     repo1.save
     repo2.save

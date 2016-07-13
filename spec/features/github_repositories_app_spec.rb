@@ -59,7 +59,7 @@ describe "frontend APP for importing Github repositories", :js => true do
       fill_in 'session[password]', with: user.password
 
       find('#sign_in_button').click
-      page.should have_content('Packages I follow')
+      page.should have_content('Organisations')
     end
 
     after :each do

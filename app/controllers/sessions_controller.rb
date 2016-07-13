@@ -2,11 +2,14 @@ class SessionsController < ApplicationController
 
   before_filter :enterprise_activated?
 
+
   def new
     if signed_in?
-      redirect_to user_projects_path and return
+      orga  = get_orga_for_login( current_user )
+      redirect_to projects_organisation_path( orga ) and return
     end
   end
+
 
   def create
     redirect_url = params[:redirect_url]
@@ -27,18 +30,20 @@ class SessionsController < ApplicationController
       else
         if redirect_url
           redirect_to redirect_url
-        elsif user.projects.empty?
-          redirect_back_or( user_packages_i_follow_path )
         else
-          redirect_back_or( user_projects_path )
+          orga  = get_orga_for_login( user )
+          rpath = projects_organisation_path( orga )
+          redirect_back_or( rpath )
         end
       end
     end
   end
 
+
   def destroy
     sign_out
     redirect_to root_path
   end
+
 
 end

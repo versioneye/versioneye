@@ -70,7 +70,7 @@ describe "registration" do
 
       post "/sessions", {:session => {:email => user.email, :password => user.password}} , "HTTPS" => "on"
       assert_response 302
-      response.should redirect_to( user_packages_i_follow_path )
+      response.should redirect_to( projects_organisation_path( Organisation.first ) )
 
       get new_user_project_path
       assert_response :success

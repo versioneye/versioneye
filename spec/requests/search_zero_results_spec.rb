@@ -9,7 +9,7 @@ describe "empty_search_result" do
 
     post "/sessions", {:session => {:email => user.email, :password => user.password}}, "HTTPS" => "on"
     assert_response 302
-    response.should redirect_to( user_packages_i_follow_path )
+    response.should redirect_to( projects_organisation_path( Organisation.first ) )
 
     url_string = "http://versioneye.com"
     msg_string = "#1-2-3-test"

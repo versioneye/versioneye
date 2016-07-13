@@ -37,7 +37,10 @@ describe "Mute project dependency", :js => true do
       find('#sign_in_button').click
       page.should have_content("Projects")
 
-      click_link "my_projects"
+      orga = Organisation.first
+      OrganisationService.transfer project, orga
+
+      visit projects_organisation_path(orga)
       page.should have_content(project[:name])
       click_link project[:name]
       page.should have_content("#{project[:name]}")

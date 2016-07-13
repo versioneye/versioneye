@@ -15,7 +15,8 @@ class UsersController < ApplicationController
 
   def new
     if signed_in?
-      redirect_to user_projects_path and return
+      orga  = get_orga_for_login( user )
+      redirect_to projects_organisation_path( orga ) and return
     end
 
     promo_code = params[:promo_code]
@@ -61,6 +62,7 @@ class UsersController < ApplicationController
     check_promo_code promo_code, @user
 
     if @user.save
+      get_orga_for_login( @user ) # Create organisation for new user.
       @user.send_verification_email
       if !cookies.signed[:plan_selected].to_s.empty?
         sign_in @user
