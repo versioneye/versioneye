@@ -1,27 +1,27 @@
 
 <div class="col-md-3" >
-  
+
 </div>
 <div class="col-md-9">
 
   <div class="content_header_def" >
-    Your latest notifications for the software packages you follow directly. 
+    Your latest notifications for the software packages you follow directly.
     <a href="<%= url_for(favoritepackages_user_url(current_user)) %>.rss"><%= image_tag "rss.png", :title => "Subscribe via RSS", :alt => "Subscribe via RSS" %></a>
   </div>
 
   <div class="content" >
     <% if !@notifications.nil? && !@notifications.empty? %>
-      <% @notifications.each do |noti| %> 
+      <% @notifications.each do |noti| %>
         <div class="row search-item" >
           <% product = noti.product %>
-          
+
           <div class="icon56 col-md-1 pull-left">
             <% prog_lang = product.language.to_s.downcase.gsub(/\./, '') %>
             <span class = "icon_<%= prog_lang %> on" ></span>
           </div>
-          
+
           <div class="col-md-11">
-            <a href="<%= product_version_path(product, noti.version_id) %>" class="searchResultLink"><span ><%= product.name %>:<%= noti.version_id %></span></a> 
+            <a href="<%= product_version_path(product, noti.version_id) %>" class="searchResultLink"><span ><%= product.name %>:<%= noti.version_id %></span></a>
             <span class="meta_prod_description">found at <%= noti.created_at.strftime('%b %d, %Y - %I:%m %p') %></span>
             <br/>
             <% if product.prod_type == "Maven2" %>
@@ -32,22 +32,22 @@
             <% else %>
               <span class="meta_prod_description"><%= product.short_summary %></span><br/>
             <% end %>
-            
-            <span class="meta_info" >References:</span> <span class="meta_info_bold"> <%= link_to product.used_by_count, product_references_path( :lang => product.language_esc, :key => product.to_param ) %></span> | 
-            <span class="meta_info" >License:</span> <span class="meta_info_bold"><%= product.license_info %></span> 
+
+            <span class="meta_info" >References:</span> <span class="meta_info_bold"> <%= link_to product.used_by_count, product_references_path( :lang => product.language_esc, :key => product.to_param ) %></span> |
+            <span class="meta_info" >License:</span> <span class="meta_info_bold"><%= product.license_info %></span>
 
             <% update_release_infos( product.version_by_number(product.version), product ) %>
             <% rel_bg = color_for_released_ago product %>
             <div class="flash <%= rel_bg %>">
               <span class="meta_info" >Released:</span> <span class="meta_info_bold" ><%= product.released_ago_in_words %> ago.</span>
             </div>
-            
+
           </div>
 
         </div>
       <% end %>
-    <% else %> 
-      There are no notifications for you. 
+    <% else %>
+      There are no notifications for you.
     <% end %>
   </div>
 
