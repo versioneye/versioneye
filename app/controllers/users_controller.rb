@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
   def new
     if signed_in?
-      orga  = get_orga_for_login( user )
+      orga  = get_orga_for_login( current_user )
       redirect_to projects_organisation_path( orga ) and return
     end
 
