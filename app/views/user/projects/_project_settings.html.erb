@@ -59,7 +59,7 @@
           </div>
           <div class="form-group">
             <select name="parent" class="form-control" >
-              <% merge_to_projects(@project).each do |project| %>
+              <% projects_to_merge_in.each do |project| %>
                 <option value="<%= project.id %>" >
                   <% if project.has_kids == 1 %>
                     parent:

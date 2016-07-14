@@ -136,9 +136,10 @@ module ProjectsHelper
 
   def merge_to_projects project
     if project.organisation
-      return merge_to_user_or_orga_projects project, project.organisation.projects
+      projects = Project.where(:organisation_id => project.organisation.ids, :parent_id => nil)
+      return merge_to_user_or_orga_projects project, projects
     else
-      return merge_to_user_or_orga_projects project, current_user.projects
+      return merge_to_user_or_orga_projects project, current_user.projects.where(:parent_id => nil)
     end
   end
 
@@ -148,7 +149,7 @@ module ProjectsHelper
     singles = []
     projects.each do |pro|
       next if pro.id.to_s.eql?(project.id.to_s)
-      next if pro.parent_id
+
       if pro.children.count > 0
         pro.has_kids = 1
         parents << pro
