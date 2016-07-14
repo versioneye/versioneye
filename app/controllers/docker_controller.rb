@@ -110,7 +110,7 @@ class DockerController < ApplicationController
       }
 
 
-      di = DockerImage.by_name("reiz/mongodb")
+      di = DockerImage.by_name("versioneye/mongodb")
       version = di.image_version.to_s
       images["reiz/mongodb:#{version}"] = {
         'container_start_opts' => {
