@@ -10,7 +10,7 @@
   <div class= "content">
     <%= form_tag(settings_api_path, :class => "form-inline") do %>
       <div class="form-group">
-        <p>
+        <p style="padding-bottom: 12px;">
           This is your API key to access the VersionEye API.
           Please keep it as a secret. <br />
           Don't share it! Don't post it on Facebook!
@@ -21,6 +21,10 @@
           <button type="submit" class="btn btn-primary">Generate new</button>
           <span class = "badge badge-info"> <%= @api_calls %> </span> calls up to now.
         </div>
+        <p style="padding-top: 25px;">
+          With this API key you can do <b><%= @user_api.rate_limit %></b> calls per hour.<br/>
+          If you need more please upgrade your subscription or send a message to <a href="mailto:support@versioneye.com">support@versioneye.com</a>.
+        </p>
       </div>
     <% end %>
   </div>
