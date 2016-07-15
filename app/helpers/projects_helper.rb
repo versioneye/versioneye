@@ -147,17 +147,10 @@ module ProjectsHelper
     projs = []
     parents = []
     singles = []
-    to_much = projects.count > 30 ? true : false
     projects.each do |pro|
       next if pro.id.to_s.eql?(project.id.to_s)
 
-      if to_much
-        pro.has_kids = 0
-        singles << pro
-        next
-      end
-
-      if pro.children.count > 0
+      if pro.child_count.to_i > 0
         pro.has_kids = 1
         parents << pro
       else
