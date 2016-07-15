@@ -1,0 +1,29 @@
+<div class="col-md-3" >
+  <%= render "organisations/navi" %>
+</div>
+
+<div class="col-md-9">
+  <div class= "content_header_def">
+    API Key
+  </div>
+
+  <div class= "content">
+    <%= form_tag(update_apikey_organisation_path, :class => "form-inline") do %>
+      <div class="form-group">
+        <p>
+          This is your API key to access the VersionEye API.
+          Please keep it as a secret. <br />
+          Don't share it! Don't post it on Facebook! <br />
+          <br />
+        </p>
+        <div class= "controls">
+          <%= label_tag :api_key, "API Key", :class => "control-label", :for => "api_key" %>
+          <%= text_field_tag :api_key, @organisation.api.api_key, :readonly => true, :class => 'form-control' %>
+          <button type="submit" class="btn btn-primary">Generate new</button>
+          <span class = "badge badge-info"> <%= @organisation.api.calls_count %> </span> calls up to now.
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+</div>

@@ -80,6 +80,8 @@ Versioneye::Application.routes.draw do
       get  'projects'       , :to => 'organisations#projects'       , :as => 'projects'
       post 'assign'         , :to => 'organisations#assign'         , :as => 'assign'
       post 'delete_projects', :to => 'organisations#delete_projects', :as => 'delete_projects'
+      get  'apikey'         , :to => 'organisations#apikey'         , :as => 'apikey'
+      post 'update_apikey'  , :to => 'organisations#update_apikey'  , :as => 'update_apikey'
     end
   end
 

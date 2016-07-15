@@ -3,7 +3,7 @@ class OrganisationsController < ApplicationController
 
   before_filter :authenticate
   before_filter :auth_org_member, :only => [:projects, :show, :assign, :components]
-  before_filter :auth_org_owner,  :only => [:update, :delete, :destroy]
+  before_filter :auth_org_owner,  :only => [:update, :delete, :destroy, :apikey, :update_apikey]
 
 
   def new
@@ -109,8 +109,25 @@ class OrganisationsController < ApplicationController
   end
 
 
-  def components
+  def components # Inventory
+  end
 
+
+  def apikey
+  end
+
+
+  def update_apikey
+    api = @organisation.api
+    api.generate_api_key!
+    if @organisation.plan
+      api.rate_limit = @organisation.plan.api_rate_limit
+    end
+
+    unless api.save
+      flash[:notice] << api.errors.full_messages.to_sentence
+    end
+    redirect_to :back
   end
 
 

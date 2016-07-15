@@ -58,7 +58,7 @@
     <br/>
 
     <div>
-      <% projects = @organisation.projects.parents.where(:team_ids => @team.ids).any_of({ :temp => false }, { :temp => nil } ) %>
+      <% projects = @organisation.team_projects(@team.ids) %>
       <% if !projects.empty? %>
         <h4><%= pluralize( projects.count, "project" ) %> assigned to this team</h4>
         <% projects.sort! { |a,b| a.name.downcase <=> b.name.downcase } %>

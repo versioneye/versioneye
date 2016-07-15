@@ -235,7 +235,7 @@ class User::ProjectsController < ApplicationController
       return
     end
 
-    @project = ProjectUpdateService.update_from_upload @project, file, current_user, false
+    @project = ProjectUpdateService.update_from_upload @project, file, false
     if @project.nil?
       flash[:error] = 'Something went wrong. Please contact the VersionEye Team.'
       redirect_to user_projects_path

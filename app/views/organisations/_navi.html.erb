@@ -33,6 +33,10 @@
             <li><%= link_to ' -- Create From Upload', user_prjects_upload_path, :rel => "nofollow" %></li>
           <% end %>
           <li><%= link_to 'Inventory', components_organisation_path(@organisation) %></li>
+          <% if is_orga_owner?(@organisation, current_user) %>
+            <li><hr/></li>
+            <li><%= link_to 'API Key', apikey_organisation_path(@organisation) %></li>
+          <% end %>
         </ul>
       <% else %>
         <%= render '/shared/signup_ad' %>
