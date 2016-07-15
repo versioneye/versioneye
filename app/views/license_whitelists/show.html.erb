@@ -43,36 +43,43 @@
 
     <br/>
 
-    <table class="table table-hover" >
-      <colgroup>
-        <col width="80px;"j />
-        <col width="*" />
-      </colgroup>
-      <tbody>
-        <% @license_whitelist.license_elements.each do |license| %>
-          <% if !license.name.to_s.empty? %>
-            <%= form_tag( remove_organisation_license_whitelist_path(@organisation.name, :id => @license_whitelist.name), :method => "post") do  %>
-            <tr >
-              <td >
-                <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
-              </td>
-              <td>
-                <input id="name" name="name" type="hidden" value="<%= license.name.to_s %>" />
-                <%= license.name_substitute %>
-              </td>
-            </tr>
+    <% if @license_whitelist.license_elements && !@license_whitelist.license_elements.empty? %>
+      <h4>Licenses</h4>
+      <table class="table table-hover" >
+        <colgroup>
+          <col width="80px;"j />
+          <col width="*" />
+        </colgroup>
+        <tbody>
+          <% @license_whitelist.license_elements.each do |license| %>
+            <% if !license.name.to_s.empty? %>
+              <%= form_tag( remove_organisation_license_whitelist_path(@organisation.name, :id => @license_whitelist.name), :method => "post") do  %>
+              <tr >
+                <td >
+                  <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+                </td>
+                <td>
+                  <input id="name" name="name" type="hidden" value="<%= license.name.to_s %>" />
+                  <%= license.name_substitute %>
+                </td>
+              </tr>
+              <% end %>
             <% end %>
           <% end %>
-        <% end %>
-      </tbody>
-    </table>
-
-  </div>
-
-  <div class="content" >
-    <% @license_whitelist.auditlogs.each do |audit| %>
-      <%= render :partial => 'shared/auditlog', :locals => {:audit => audit} %>
+        </tbody>
+      </table>
+      <br/><br/>
     <% end %>
+
+    <% if @license_whitelist.auditlogs && !@license_whitelist.auditlogs.empty? %>
+      <h4>Auditlog</h4>
+      <div class="content" >
+        <% @license_whitelist.auditlogs.each do |audit| %>
+          <%= render :partial => 'shared/auditlog', :locals => {:audit => audit} %>
+        <% end %>
+      </div>
+    <% end %>
+
   </div>
 
 </div>

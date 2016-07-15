@@ -54,39 +54,46 @@
     <% end %>
 
     <br/>
-
     <br/>
 
-    <table class="table table-hover" >
-      <colgroup>
-        <col width="80px;"j />
-        <col width="*" />
-      </colgroup>
-      <tbody>
-        <% @component_whitelist.components.each do |component| %>
-          <% if !component.to_s.empty? %>
-            <%= form_tag( remove_organisation_component_whitelist_path(@organisation.name, :id => @component_whitelist.name), :method => "post") do  %>
-            <tr >
-              <td >
-                <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
-              </td>
-              <td>
-                <input id="cwl_key" name="cwl_key" type="hidden" value="<%= component %>" />
-                <%= component %>
-              </td>
-            </tr>
+    <% if @component_whitelist.components && !@component_whitelist.components.empty? %>
+      <h4>Components</h4>
+      <table class="table table-hover" >
+        <colgroup>
+          <col width="80px;"j />
+          <col width="*" />
+        </colgroup>
+        <tbody>
+          <% @component_whitelist.components.each do |component| %>
+            <% if !component.to_s.empty? %>
+              <%= form_tag( remove_organisation_component_whitelist_path(@organisation.name, :id => @component_whitelist.name), :method => "post") do  %>
+              <tr >
+                <td >
+                  <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+                </td>
+                <td>
+                  <input id="cwl_key" name="cwl_key" type="hidden" value="<%= component %>" />
+                  <%= component %>
+                </td>
+              </tr>
+              <% end %>
             <% end %>
           <% end %>
+        </tbody>
+      </table>
+      <br/>
+      <br/>
+    <% end %>
+
+    <% if @component_whitelist.auditlogs && !@component_whitelist.auditlogs.empty? %>
+      <h4>Auditlog</h4>
+      <div class="content">
+        <% @component_whitelist.auditlogs.each do |audit| %>
+          <%= render :partial => 'shared/auditlog', :locals => {:audit => audit} %>
         <% end %>
-      </tbody>
-    </table>
-
-  </div>
-
-  <div class="content" >
-    <% @component_whitelist.auditlogs.each do |audit| %>
-      <%= render :partial => 'shared/auditlog', :locals => {:audit => audit} %>
+      </div>
     <% end %>
   </div>
+
 
 </div>

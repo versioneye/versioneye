@@ -18,6 +18,10 @@
       receive the project notification emails and they can modify/update the project with their own API key.
       Points in team names are not allowed. Please use underscore instead of points.
     </p>
+    <p>
+      The members in the <b>"Owners"</b> team are the owners (admins)
+      of the organisation. They have special permissions which members of other teams don't have.
+    </p>
 
     <p>
       </br>
@@ -64,6 +68,9 @@
           <% end %>
           <td>
             <%= link_to team.name, organisation_team_path(@organisation, team) %>
+            <% if team.name.to_s.eql?('Owners') %>
+              (Admins)
+            <% end %>
             <span class="meta_info">
               (<%= pluralize( @organisation.projects.parents.where(:team_ids => team.ids).count, "project" ) %>,
                <%= pluralize( team.members.count, "user" ) %>)

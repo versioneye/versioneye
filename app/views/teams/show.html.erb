@@ -32,27 +32,30 @@
 
     <br/>
 
-    <table class="table table-hover" >
-      <colgroup>
-        <col width="80px;"j />
-        <col width="*" />
-      </colgroup>
-      <tbody>
-        <% @team.members.each do |member| %>
-          <% next if member.user.nil? %>
-          <%= form_tag( remove_organisation_team_path(@organisation, @team, :username => member.user.username), :method => "post") do  %>
-          <tr >
-            <td >
-              <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
-            </td>
-            <td>
-              <b><%= link_to member.user.username, user_path(member.user) %></b> (<%= member.user.fullname %>)
-            </td>
-          </tr>
+    <% if @team.members && !@team.members.empty? %>
+      <h4>Team Members</h3>
+      <table class="table table-hover" >
+        <colgroup>
+          <col width="80px;"j />
+          <col width="*" />
+        </colgroup>
+        <tbody>
+          <% @team.members.each do |member| %>
+            <% next if member.user.nil? %>
+            <%= form_tag( remove_organisation_team_path(@organisation, @team, :username => member.user.username), :method => "post") do  %>
+            <tr >
+              <td >
+                <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+              </td>
+              <td>
+                <b><%= link_to member.user.username, user_path(member.user) %></b> (<%= member.user.fullname %>)
+              </td>
+            </tr>
+            <% end %>
           <% end %>
-        <% end %>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    <% end %>
 
     <br/>
     <br/>
