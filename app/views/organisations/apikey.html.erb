@@ -11,7 +11,7 @@
     <%= form_tag(update_apikey_organisation_path, :class => "form-inline") do %>
       <div class="form-group">
         <p>
-          This is your API key to access the VersionEye API.
+          This is your API key to access the <a href="/api">VersionEye API</a>.
           Please keep it as a secret. <br />
           Don't share it! Don't post it on Facebook! <br />
           <br />
@@ -22,6 +22,10 @@
           <button type="submit" class="btn btn-primary">Generate new</button>
           <span class = "badge badge-info"> <%= @organisation.api.calls_count %> </span> calls up to now.
         </div>
+        <p style="padding-top: 25px;">
+          With this API key you can do <b><%= @organisation.api.rate_limit %></b> calls per hour.<br/>
+          If you need more please upgrade your subscription or send a message to <a href="mailto:support@versioneye.com">support@versioneye.com</a>.
+        </p>
       </div>
     <% end %>
   </div>
