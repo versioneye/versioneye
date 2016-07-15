@@ -14,18 +14,18 @@ gem 'bourbon'              , '~> 4.2.0'
 gem 'ruby_regex'           , '~> 0.1.0'
 gem 'semverly'             , '~> 1.0.0'
 gem 'cocoapods-core'       , '~> 0.39.0'
-gem 'stripe'               , '~> 1.44.0'
+gem 'stripe'               , '~> 1.48.0'
 gem 'bunny'                , '~> 2.4.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v8.31.1'
+gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v8.32.1'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
 # gem 'gravatar_image_tag'    , :git => 'git@github.com:reiz/gravatar_image_tag.git', :tag => 'v1.2.1'
 gem 'gravatar_image_tag'    , :git => 'https://github.com/reiz/gravatar_image_tag.git', :branch => 'bugfix/html_escaping'
 
-gem 'net-ldap', '0.14.0'
+gem 'net-ldap', '0.15.0'
 gem 'redcarpet', '3.3.4'
 
 gem 'font-awesome-sass', '~> 4.6.2'
@@ -39,7 +39,7 @@ end
 group :assets do
   gem 'sass'                  , :require => 'sass'
   gem 'sass-rails'            , '~> 5.0.3'
-  gem 'coffee-rails'          , '~> 4.1.0'
+  gem 'coffee-rails'          , '~> 4.2.1'
   gem 'uglifier'              , '~> 3.0.0'
 end
 
