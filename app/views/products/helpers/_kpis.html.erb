@@ -140,9 +140,9 @@
   <div class="kpibox flash info l_margin_bottom_5" >
     <b title="<%= title_text %>">Language:</b>
     <% if Product::A_LANGS_LANGUAGE_PAGE.include?(@product.language) %>
-      <a href="/<%= @product.language_esc %>" title="<%= @product.language_esc %>"><%= @product.language %></a>
+      <a href="/<%= @product.language_esc %>" title="<%= @product.language_esc %>"><%= @product.language_label %></a>
     <% else %>
-      <%= @product.language %>
+      <%= @product.language_label %>
     <% end %>
   </div>
 
