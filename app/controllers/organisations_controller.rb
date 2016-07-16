@@ -247,7 +247,8 @@ class OrganisationsController < ApplicationController
 
     # Ensure that the invoice belongs to the current logged in user!
     if invoice && invoice.organisation_id.to_s.eql?( @organisation.ids )
-      url = S3.presigned_url(invoice.filename)
+      presigned_url = S3.presigned_url(invoice.filename)
+      url = presigned_url if !presigned_url.to_s.empty?
     end
 
     redirect_to url
