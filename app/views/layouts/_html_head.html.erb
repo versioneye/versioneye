@@ -80,9 +80,9 @@
 
       <%= javascript_include_tag "application_statistics",  :defer => false, :async => false %>
 
-    <% elsif current_page?( settings_payments_path )   ||
-             current_page?( settings_creditcard_path ) ||
-             current_page?( settings_receipt_path(:invoice_id) )  %>
+    <% elsif defined?(@organisation) && @organisation && !@organisation.name.to_s.empty? && (
+             current_page?( cc_organisation_path(@organisation) )
+             ) %>
 
       <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
       <script type="text/javascript">

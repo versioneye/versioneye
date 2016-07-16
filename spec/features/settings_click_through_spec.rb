@@ -19,9 +19,6 @@ describe "Settings click through" do
       page.should have_content("Profile")
       page.should have_content("Links")
       page.should have_content("E-Mails")
-      page.should have_content("Plans & Pricing")
-      page.should have_content("Billing Address")
-      page.should have_content("Payment History")
       page.should have_content("Connect")
       page.should have_content("Password")
       page.should have_content("Notification Center")
@@ -35,16 +32,6 @@ describe "Settings click through" do
 
       click_link "E-Mails"
       page.should have_content("New E-Mail")
-
-      click_link "Plans & Pricing"
-      page.should have_content("XX-Large")
-
-      click_link "Payment History"
-      page.should have_content("Payment History")
-      page.should have_content("t have any payment history")
-
-      click_link "Billing Address"
-      page.should have_content("Edit your billing address")
 
       click_link "Connect"
       page.should have_content("Connect with GitHub")

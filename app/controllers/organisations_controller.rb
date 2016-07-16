@@ -3,7 +3,12 @@ class OrganisationsController < ApplicationController
 
   before_filter :authenticate
   before_filter :auth_org_member, :only => [:projects, :show, :assign, :components]
-  before_filter :auth_org_owner,  :only => [:update, :delete, :destroy, :apikey, :update_apikey]
+  before_filter :auth_org_owner,  :only => [:update, :delete, :destroy,
+                                            :apikey, :update_apikey,
+                                            :billing_address, :update_billing_address,
+                                            :plan, :update_plan,
+                                            :cc, :update_cc,
+                                            :payment_history, :receipt]
 
 
   def new
@@ -131,7 +136,159 @@ class OrganisationsController < ApplicationController
   end
 
 
+  def billing_address
+    @billing_address = @organisation.fetch_or_create_billing_address
+    @billing_address.errors.messages.clear
+  end
+
+  def update_billing_address
+    @billing_address = @organisation.fetch_or_create_billing_address
+    if @billing_address.update_from_params params
+      flash.now[:success] = "Your billing address was saved successfully."
+    else
+      flash.now[:error] = "An error occured. Please try again."
+    end
+    render "billing_address"
+  end
+
+
+  def cc
+    plan = cookies.signed[:plan_selected]
+    if plan
+      @plan_name_id = plan
+    end
+    @billing_address = @organisation.fetch_or_create_billing_address
+  end
+
+
+  def update_cc
+    billing_address = @organisation.fetch_or_create_billing_address
+    if billing_address.update_from_params( params ) == false
+      flash[:error] = 'Please complete the billing information.'
+      redirect_to cc_organisation_path( @organisation )
+      return
+    end
+
+    plan_name_id = params[:plan]
+    stripe_token = params[:stripeToken]
+    if stripe_token.to_s.empty? || plan_name_id.to_s.empty?
+      flash[:error] = 'Stripe token is missing. Please contact the VersionEye Team.'
+      redirect_to cc_organisation_path( @organisation )
+      return
+    end
+
+    stripe_customer_id = @organisation.stripe_customer_id
+    email = @organisation.fetch_or_create_billing_address.email
+    customer = StripeService.create_or_update_customer stripe_customer_id, stripe_token, plan_name_id, email
+    if customer.nil?
+      flash[:error] = 'Stripe customer is missing. Please contact the VersionEye Team.'
+      redirect_to cc_organisation_path( @organisation )
+      return
+    end
+
+    @organisation.stripe_token = stripe_token
+    @organisation.stripe_customer_id = customer.id
+    @organisation.plan = Plan.by_name_id plan_name_id
+
+    if @organisation.save
+      flash[:success] = 'Many Thanks. We just updated your plan.'
+      cookies.delete(:plan_selected)
+      current_user.update_attribute( :verification, nil )
+    else
+      flash[:error] = "Something went wrong. Please contact the VersionEye team."
+      Rails.logger.error "Can't save user - #{user.errors.messages}"
+    end
+
+    redirect_to plan_organisation_path( @organisation )
+  end
+
+
+  def plan
+    if @organisation.plan.nil?
+      @organisation.plan = Plan.free_plan
+      @organisation.save
+    end
+    @plan = @organisation.plan
+    cookies.permanent.signed[:plan_selected] = @plan.name_id
+  end
+
+
+  def update_plan
+    @plan_name_id = params[:plan]
+    stripe_token  = @organisation.stripe_token
+    customer_id   = @organisation.stripe_customer_id
+    customer      = nil
+    if customer_id && stripe_token
+      customer = StripeService.fetch_customer customer_id
+    end
+    if customer
+      update_plan_for( @organisation, customer, @plan_name_id )
+      redirect_to plan_organisation_path( @organisation )
+    else
+      prepare_update_cc @plan_name_id
+      redirect_to cc_organisation_path( @organisation )
+    end
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    flash[:error] = "ERROR: #{e.message}"
+    prepare_update_cc @plan_name_id
+    redirect_to cc_organisation_path( @organisation )
+  end
+
+
+  def payment_history
+    @invoices = Receipt.by_orga @organisation.ids
+  end
+
+  def receipt
+    invoice = Receipt.by_invoice params['invoice_id']
+    url = '/'
+
+    # Ensure that the invoice belongs to the current logged in user!
+    if invoice && invoice.organisation_id.to_s.eql?( @organisation.ids )
+      url = S3.presigned_url(invoice.filename)
+    end
+
+    redirect_to url
+  end
+
+
   private
+
+
+    def prepare_update_cc plan_name_id
+      flash[:info] = 'Please update your Credit Card information.'
+      cookies.permanent.signed[:plan_selected] = plan_name_id
+      @billing_address = @organisation.fetch_or_create_billing_address
+    end
+
+
+    def update_plan_for organisation, customer, plan_name_id
+      if plan_name_id.match(/\A04/).nil?
+        flash[:error] = "The selected plan doesn't exist anymore."
+        return nil
+      end
+
+      customer.update_subscription( :plan => plan_name_id )
+      organisation.plan = Plan.by_name_id plan_name_id
+      if organisation.save != true
+        flash[:error] = 'Something went wrong. Please contact the VersionEye team.'
+        return nil
+      end
+
+      # TODO refactor this for orga
+      # SubscriptionMailer.update_subscription( user ).deliver_now
+      flash[:success] = 'We updated your plan successfully.'
+
+      cookies.delete(:plan_selected)
+
+      api = organisation.api
+      if api && organisation.plan
+        api.rate_limit = organisation.plan.api_rate_limit
+        api.save
+      end
+    end
 
 
     def set_team_filter_param

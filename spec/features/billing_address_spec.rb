@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Billing Address" do
+describe "Billing address" do
 
   before :each do
     @user = UserFactory.create_new
@@ -15,10 +15,11 @@ describe "Billing Address" do
   describe "update the billing address", :js => true do
 
     it "updates the billing address" do
-      visit settings_profile_path
-      page.should have_content("Billing Address")
+      orga = Organisation.first
+      visit billing_address_organisation_path(orga)
+      page.should have_content("Billing address")
 
-      click_link "Billing Address"
+      click_link "Billing address"
       page.should have_content("Edit your billing address")
 
       fill_in 'name',       :with => "Hans Meier"
@@ -35,6 +36,15 @@ describe "Billing Address" do
       fill_in 'street',     :with => "Johanniterstrasse 17"
       fill_in 'city',       :with => "Mannheim"
       fill_in 'zip_code',   :with => "68111"
+      find('#country').find(:xpath, "option[@value = 'DE']").select_option
+      page.should have_content("An error occured. Please try again.")
+      page.should have_content("is mandatory")
+
+      fill_in 'name',       :with => "Hans Meier"
+      fill_in 'street',     :with => "Johanniterstrasse 17"
+      fill_in 'city',       :with => "Mannheim"
+      fill_in 'zip_code',   :with => "68111"
+      fill_in 'email',      :with => "support@customer.de"
       find('#country').find(:xpath, "option[@value = 'DE']").select_option
       click_button 'Save'
 

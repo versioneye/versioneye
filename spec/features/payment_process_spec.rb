@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe "Payment Process" do
 
-  describe "Empty Payment History", :js => true do
-    it "shows correct message when there's no history" do
-      visit "/settings/payments"
-      have_css "#payment_history", text: "t have any payment history"
-    end
-  end
+  # describe "Empty Payment History", :js => true do
+  #   it "shows correct message when there's no history" do
+  #     visit "/settings/payments"
+  #     have_css "#payment_history", text: "t have any payment history"
+  #   end
+  # end
 
   describe "update credit card information and book a plan", :js => true do
 
@@ -20,7 +20,8 @@ describe "Payment Process" do
       find('#sign_in_button').click
       page.should have_content("Organisations")
 
-      visit settings_plans_path
+      orga = Organisation.first
+      visit plan_organisation_path(orga)
       Plan.count.should eq(7)
       page.should have_content(Plan.free_plan.name)
       page.should have_content(Plan.small.name)
@@ -49,6 +50,7 @@ describe "Payment Process" do
       fill_in 'street',     :with => "Johanniterstrasse 17"
       fill_in 'city',       :with => "Mannheim"
       fill_in 'zip_code',   :with => "68199"
+      fill_in 'email',      :with => "veye@customer.de"
       find('#country').find(:xpath, "option[@value = 'DE']").select_option
 
       fill_in 'cardnumber', :with => "5105 1051 0510 5100"
@@ -58,36 +60,33 @@ describe "Payment Process" do
       click_button 'Submit'
 
       page.should have_content("Many Thanks. We just updated your plan.")
-      user = User.find_by_email( user.email )
-      user.stripe_token.should_not be_nil
-      user.stripe_customer_id.should_not be_nil
-      user.plan.should_not be_nil
-      user.plan.name_id.should eql(Plan.small.name_id)
+      orga = Organisation.first
+      expect( orga.stripe_token ).to_not be_nil
+      expect( orga.stripe_customer_id ).to_not be_nil
+      expect( orga.plan ).to_not be_nil
+      expect( orga.plan.name_id ).to eql(Plan.small.name_id)
 
 
       ### upgrades the plan to business normal
 
-      visit pricing_path
+      visit plan_organisation_path(orga)
       Plan.count.should eq(7)
-      page.should have_content("VersionEye allows you to monitor your open source projects for free")
-
-      sleep 3
 
       click_button "#{Plan.xlarge.name_id}_button"
 
       sleep 3
 
       page.should have_content("We updated your plan successfully")
-      user = User.find_by_email(user.email)
-      user.stripe_token.should_not be_nil
-      user.stripe_customer_id.should_not be_nil
-      user.plan.should_not be_nil
-      user.plan.name_id.should eql(Plan.xlarge.name_id)
+      orga = Organisation.first
+      expect( orga.stripe_token ).to_not be_nil
+      expect( orga.stripe_customer_id ).to_not be_nil
+      expect( orga.plan ).to_not be_nil
+      expect( orga.plan.name_id ).to eql(Plan.xlarge.name_id)
 
 
       ### upgrades the plan to business small
 
-      visit settings_plans_path
+      visit plan_organisation_path(orga)
       Plan.count.should eq(7)
       page.should have_content(Plan.free_plan.name)
       page.should have_content(Plan.small.name)
@@ -96,11 +95,11 @@ describe "Payment Process" do
 
       click_button "#{Plan.medium.name_id}_button"
       page.should have_content("We updated your plan successfully")
-      user = User.find_by_email(user.email)
-      user.stripe_token.should_not be_nil
-      user.stripe_customer_id.should_not be_nil
-      user.plan.should_not be_nil
-      user.plan.name_id.should eql(Plan.medium.name_id)
+      orga = Organisation.first
+      expect( orga.stripe_token ).to_not be_nil
+      expect( orga.stripe_customer_id ).to_not be_nil
+      expect( orga.plan ).to_not be_nil
+      expect( orga.plan.name_id ).to eql(Plan.medium.name_id)
 
 
       ### shows correct list of invoices for current user
@@ -115,6 +114,7 @@ describe "Payment Process" do
          :receipt_nr => 124,
          :invoice_id => 'tx_858573',
          :user => user,
+         :organisation => orga,
          :invoice_date => Date.new,
          :period_start => Date.new,
          :period_end   => Date.new,
@@ -125,7 +125,7 @@ describe "Payment Process" do
         })
       expect( receipt.save ).to be_truthy
 
-      visit settings_payments_path
+      visit payment_history_organisation_path(orga)
       page.all(:css, "#payment_history")
       using_wait_time 2 do
         find_by_id("invoice_table")
@@ -134,14 +134,16 @@ describe "Payment Process" do
       end
 
 
-      ### shows the receipt
+      # ### shows the receipt
 
-      user = User.find_by_email(user.email)
-      customer = StripeService.fetch_customer user.stripe_customer_id
+      customer = StripeService.fetch_customer orga.stripe_customer_id
       invoices = customer.invoices
       invoices.count.should eq(1)
       invoice = invoices.first
-      visit settings_receipt_path( invoice.id )
+      expect( invoice ).to_not be_nil
+      receipt.invoice_id = invoice.id
+      expect( receipt.save ).to be_truthy
+      visit receipt_organisation_path( :name => orga.name, :invoice_id => invoice.id )
     end
 
   end

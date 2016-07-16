@@ -381,7 +381,8 @@ class User::ProjectsController < ApplicationController
     public_projects_count = Project.by_user(user).where(:public => false).count
     if @project.public == false && free_plan == true && Rails.env.enterprise? == false && public_projects_count > 1
       flash[:warning] = "To keep your project in private mode you need a paid plane. Please upgrade your subscription."
-      url = settings_plans_path
+      orga = @project.organisation
+      url = plan_organisation_path(orga) if orga
     elsif @project.save
       flash[:success] = "We saved your changes."
       Auditlog.add current_user, "Project", @project.ids, "Changed visibility.public from `#{old_visibility}` to `#{@project.public}`"
@@ -565,8 +566,11 @@ class User::ProjectsController < ApplicationController
 
       if current_user.plan.nil? || current_user.plan.price.to_i < 22
         flash[:warning] = "For the PDF/CSV export you need at least the 'Medium' plan. Please upgrade your subscription."
-        redirect_to settings_plans_path
-        false
+        id      = params[:id]
+        project = ProjectService.find( id )
+        orga    = project.organisation
+        redirect_to plan_organisation_path(orga)
+        return false
       end
       return true
     end

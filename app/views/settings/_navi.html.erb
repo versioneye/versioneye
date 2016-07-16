@@ -41,13 +41,6 @@
             <li><%= link_to 'Profile'            , settings_profile_path, :rel => "nofollow" %></li>
             <li><%= link_to 'Links'              , settings_links_path  , :rel => "nofollow" %></li>
             <li><%= link_to 'E-Mails'            , settings_emails_path , :rel => "nofollow" %></li>
-
-            <% if !Rails.env.enterprise? %>
-              <li><%= link_to 'Plans & Pricing'    , settings_plans_path   , :rel => "nofollow" %></li>
-              <li><%= link_to 'Payment History'    , settings_payments_path, :rel => "nofollow" %></li>
-              <li><%= link_to 'Billing Address'    , settings_billing_path , :rel => "nofollow" %></li>
-            <% end %>
-
             <li><%= link_to 'Connect'            , settings_connect_path , :rel => "nofollow" %></li>
             <li><%= link_to 'Password'           , settings_password_path, :rel => "nofollow" %></li>
             <li><%= link_to 'Notification Center', settings_notifications_path, :rel => "nofollow" %></li>

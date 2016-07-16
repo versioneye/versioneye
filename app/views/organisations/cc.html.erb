@@ -1,6 +1,5 @@
-
 <div class="col-md-3" >
-  <%= render 'settings/navi' %>
+  <%= render "organisations/navi" %>
 </div>
 
 <div class="col-md-9" >
@@ -21,13 +20,13 @@
 
     <hr />
 
-    <%= form_tag(settings_update_creditcard_path, :method => "post", :class => "form-horizontal", :id => "payment-form") do %>
+    <%= form_tag(update_cc_organisation_path( @organisation ), :method => "post", :class => "form-horizontal", :id => "payment-form") do %>
 
       <input type="hidden" name="plan" id="plan" value="<%= @plan_name_id %>" />
 
       <span class='payment-errors'></span>
 
-      <%= render "settings/billing/billing_fields" %>
+      <%= render "billing_fields" %>
 
       <hr />
 
