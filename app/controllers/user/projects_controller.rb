@@ -564,8 +564,17 @@ class User::ProjectsController < ApplicationController
     def pdf_export_permission?
       return true if Rails.env.enterprise? == true
 
-      if current_user.plan.nil? || current_user.plan.price.to_i < 22
-        flash[:warning] = "For the PDF/CSV export you need at least the 'Medium' plan. Please upgrade your subscription."
+      id      = params[:id]
+      project = ProjectService.find( id )
+      orga    = project.organisation
+      if orga.nil?
+        flash[:warning] = "This feature is only available for projects inside of an organisation."
+        return false
+      end
+
+      plan = orga.plan
+      if plan.nil? || plan.price.to_i < 22
+        flash[:warning] = "For the PDF/CSV export you need a higher plan. Please upgrade your subscription."
         id      = params[:id]
         project = ProjectService.find( id )
         orga    = project.organisation
