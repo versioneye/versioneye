@@ -1,27 +1,4 @@
-
-
-  <% plan = Plan.by_name_id( plan_id ) %>
-
-  <% if signed_in? %>
-    <% if @plan && @plan.name_id.eql?( plan_id ) %>
-      <p class="badge badge-info <%= alignment %>" style="font-size: 16px; middle; padding: 10px;">Current</p>
-    <% else %>
-      <% btn_txt = 'Upgrade' %>
-      <% btn_txt = 'Downgrade' if ( @plan && (@plan.price.to_i > plan.price.to_i) ) %>
-      <% btn_class = 'success' %>
-      <% btn_class = 'danger' if btn_txt.eql?('Downgrade') %>
-      <% btn_size = 'large' %>
-      <% btn_size = 'big' if btn_txt.eql?('Downgrade') %>
-      <form action="/settings/update_plan" method="POST" >
-        <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
-        <input type="hidden" name="plan" value="<%=plan_id%>" />
-        <button id="<%=plan.name_id%>_button" type="submit" class="btn btn-<%= btn_size %> btn-<%= btn_class %> <%= alignment %>" ><%= btn_txt %></button>
-      </form>
-    <% end %>
-  <% else %>
-    <form action="/signup" >
-      <input type="hidden" name="plan" value="<%=plan_id%>" />
-      <button class="btn btn-big btn-success <%= alignment %>">Sign up for free!</button>
-    </form>
-  <% end %>
-
+<form action="/signup" >
+  <input type="hidden" name="plan" value="<%=plan_id%>" />
+  <button class="btn btn-big btn-success <%= alignment %>">Sign up for free!</button>
+</form>

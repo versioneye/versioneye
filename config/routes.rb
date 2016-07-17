@@ -82,6 +82,14 @@ Versioneye::Application.routes.draw do
       post 'delete_projects', :to => 'organisations#delete_projects', :as => 'delete_projects'
       get  'apikey'         , :to => 'organisations#apikey'         , :as => 'apikey'
       post 'update_apikey'  , :to => 'organisations#update_apikey'  , :as => 'update_apikey'
+      get  'plan'           , :to => 'organisations#plan'           , :as => 'plan'
+      post 'update_plan'    , :to => 'organisations#update_plan'    , :as => 'update_plan'
+      get  'cc'             , :to => 'organisations#cc'             , :as => 'cc'
+      post 'update_cc'      , :to => 'organisations#update_cc'      , :as => 'update_cc'
+      get  'billing_address', :to => 'organisations#billing_address', :as => 'billing_address'
+      post 'update_billing_address'  , :to => 'organisations#update_billing_address'  , :as => 'update_billing_address'
+      get  'payment_history', :to => 'organisations#payment_history', :as => 'payment_history'
+      get  'receipt/:invoice_id', :to => 'organisations#receipt', :as => 'receipt'
     end
   end
 
@@ -179,19 +187,6 @@ Versioneye::Application.routes.draw do
 
     get  'delete'              , :to => 'delete#index'
     post 'destroy'             , :to => 'delete#destroy'
-
-    get  'plans'               , :to => 'plan#index'
-    post 'update_plan'         , :to => 'plan#update'
-
-    get  'creditcard'          , :to => 'creditcard#index'
-    post 'update_creditcard'   , :to => 'creditcard#update'
-
-    get  'billing'             , :to => 'billing#index'
-    post 'update_billing'      , :to => 'billing#update'
-    get  'update_billing'      , :to => 'billing#index'
-
-    get  'payments'            , :to => 'payments#index'
-    get  'receipt/:invoice_id' , :to => 'payments#receipt', :as => 'receipt'
 
   end
 

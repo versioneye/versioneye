@@ -46,10 +46,11 @@ describe "Signin with GitHub" do
 
     page.has_content? 'Credit Card Information'
 
-    fill_in 'name'  , :with => 'Hans Tanz'
-    fill_in 'street', :with => 'hanse street 2'
-    fill_in 'zip_code'   , :with => '68199'
-    fill_in 'city'  , :with => 'Mannheim'
+    fill_in 'name'    , :with => 'Hans Tanz'
+    fill_in 'street'  , :with => 'hanse street 2'
+    fill_in 'zip_code', :with => '68199'
+    fill_in 'city'    , :with => 'Mannheim'
+    fill_in 'email'   , :with => 'giti@hubi.com'
     find('#country').find(:xpath, "option[@value = 'DE']").select_option
 
     fill_in 'cardnumber', :with => "5105 1051 0510 5100"
@@ -60,14 +61,17 @@ describe "Signin with GitHub" do
 
     sleep 5
 
-    User.all.count.should eql(1)
+    expect( User.all.count ).to eql(1)
     user = User.first
-    user.verification.should be_nil
-    user.github_scope.should eq("public_repo,user:email")
-    user.stripe_token.should_not be_nil
-    user.stripe_customer_id.should_not be_nil
-    user.plan.should_not be_nil
-    user.plan.name_id.should eql(Plan.free_plan.name_id)
+    expect( user.verification ).to be_nil
+    expect( user.github_scope ).to eq("public_repo,user:email")
+
+    expect( Organisation.count ).to eq(1)
+    orga = Organisation.first
+    expect( orga.stripe_token ).to_not be_nil
+    expect( orga.stripe_customer_id ).to_not be_nil
+    expect( orga.plan ).to_not be_nil
+    expect( orga.plan.name_id ).to eql(Plan.free_plan.name_id)
   end
 
 end

@@ -1,5 +1,5 @@
 <div class="col-md-3" >
-  <%= render 'settings/navi' %>
+  <%= render "organisations/navi" %>
 </div>
 
 <div class="col-md-9" >
@@ -33,7 +33,7 @@
               <% end %>
             </td>
             <td><%= sprintf('%.2f', (invoice.total.to_f / 100) ) %> <%= invoice.currency.upcase %> </td>
-            <td><a href="/settings/receipt/<%= invoice.invoice_id %>"><%= invoice.filename %></a></td>
+            <td><a href="<%= receipt_organisation_path(:name => @organisation.name, :invoice_id => invoice.invoice_id) %>"><%= invoice.filename %></a></td>
           </tr>
         <% end %>
         </tbody>

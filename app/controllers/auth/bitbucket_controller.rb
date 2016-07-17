@@ -49,7 +49,7 @@ class Auth::BitbucketController < ApplicationController
       orga  = get_orga_for_login( user )
       rpath = user_projects_bitbucket_repositories_path
       rpath = projects_organisation_path( orga ) if orga.projects && !orga.projects.empty?
-      rpath = settings_creditcard_path if !cookies.signed[:plan_selected].to_s.empty?
+      rpath = cc_organisation_path( orga ) if !cookies.signed[:plan_selected].to_s.empty?
       redirect_to(rpath) and return
     end
 

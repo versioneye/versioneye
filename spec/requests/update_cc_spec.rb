@@ -16,28 +16,30 @@ describe "update credit card information" do
     end
 
     it "does not update the CC information because stripe token is missing" do
-      get settings_creditcard_path
+      orga = Organisation.first
+      get cc_organisation_path( orga )
       assert_response :success
-      assert_select "form[action=?]", settings_update_creditcard_path
+      assert_select "form[action=?]", update_cc_organisation_path( orga )
 
-      post settings_update_creditcard_path, {:plan => "plan_id",
+      post update_cc_organisation_path( orga ), {:plan => "plan_id",
         :type => BillingAddress::A_TYPE_INDIVIDUAL,
         :name => "Hans", :street => "Joko 1", :zip_code => "12345",
-        :city => "Hambi", :country => "DE"}, "HTTPS" => "on"
-      response.should redirect_to( settings_creditcard_path )
+        :city => "Hambi", :country => "DE", :email => 'sup@ppe.de'}, "HTTPS" => "on"
+      response.should redirect_to( cc_organisation_path(orga) )
       flash[:error].should eql("Stripe token is missing. Please contact the VersionEye Team.")
     end
 
     it "does not update the CC information because stripe customer is missing" do
-      get settings_creditcard_path
+      orga = Organisation.first
+      get cc_organisation_path( orga )
       assert_response :success
-      assert_select "form[action=?]", settings_update_creditcard_path
+      assert_select "form[action=?]", update_cc_organisation_path( orga )
 
-      post settings_update_creditcard_path, {:plan => "plan_id", :stripeToken => "token",
+      post update_cc_organisation_path( orga ), {:plan => "plan_id", :stripeToken => "token",
         :type => BillingAddress::A_TYPE_INDIVIDUAL,
         :name => "Hans", :street => "Joko 1", :zip_code => "12345",
-        :city => "Hambi", :country => "DE"}, "HTTPS" => "on"
-      response.should redirect_to( settings_creditcard_path )
+        :city => "Hambi", :country => "DE", :email => 'sup@ppe.de'}, "HTTPS" => "on"
+      response.should redirect_to( cc_organisation_path(orga) )
       flash[:error].should eql("Stripe customer is missing. Please contact the VersionEye Team.")
     end
 

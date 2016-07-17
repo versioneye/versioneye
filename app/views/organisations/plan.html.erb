@@ -1,5 +1,5 @@
 <div class="col-md-3" >
-  <%= render 'settings/navi' %>
+  <%= render "organisations/navi" %>
 </div>
 
 <div class="col-md-9" >
@@ -11,10 +11,6 @@
   <div class="content" >
     <p>
       Open source projects are for free! We only charge a small fee for monitoring project files in private GitHub/Bitbucket repositories.<br/>
-      <% if current_user.free_private_projects > 0 %>
-        <br/>
-        You can monitor <b><%= current_user.free_private_projects %></b> project files in private repositories, for free!
-      <% end %>
     </p>
     <hr />
 
@@ -23,9 +19,9 @@
     <p>
       Send a message to <a href="mailto:support@versioneye.com">support@versioneye.com</a> if you need higher plans.
     </p>
-    <% if has_current_plan?( current_user ) %>
+    <% if has_orga_current_plan?( @organisation ) %>
       <p>
-        <a href="/settings/creditcard">Update Credit Card</a>
+        <a href="<%= cc_organisation_path(@organisation) %>">Update Credit Card</a>
       </p>
     <% end %>
 

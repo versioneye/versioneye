@@ -1,6 +1,5 @@
-
 <div class="col-md-3" >
-  <%= render 'settings/navi' %>
+  <%= render "organisations/navi" %>
 </div>
 
 <div class="col-md-9" >
@@ -11,7 +10,7 @@
 
   <div class="content" >
 
-    <%= form_tag(settings_update_billing_path, :method => "post", :class => "form-horizontal", :id => "payment-form") do %>
+    <%= form_tag(update_billing_address_organisation_path, :method => "post", :class => "form-horizontal", :id => "payment-form") do %>
 
       <%= render "billing_fields" %>
 
@@ -25,4 +24,5 @@
     <% end %>
 
   </div>
+
 </div>
