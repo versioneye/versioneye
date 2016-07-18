@@ -21,7 +21,7 @@ gem 'will_paginate_mongoid', '2.0.1'
 gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v9.1.2'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
-# gem 'gravatar_image_tag'  , '~> 1.2.0'
+# gem 'gravatar_image_tag'  , '~> 1.2.0' # Not maintained.
 # gem 'gravatar_image_tag'    , :git => 'git@github.com:reiz/gravatar_image_tag.git', :tag => 'v1.2.1'
 gem 'gravatar_image_tag'    , :git => 'https://github.com/reiz/gravatar_image_tag.git', :branch => 'bugfix/html_escaping'
 
