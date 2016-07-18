@@ -380,7 +380,7 @@ class User::ProjectsController < ApplicationController
     free_plan = user.plan.nil? || user.plan.price.to_i == 0
     public_projects_count = Project.by_user(user).where(:public => false).count
     if @project.public == false && free_plan == true && Rails.env.enterprise? == false && public_projects_count > 1
-      flash[:warning] = "To keep your project in private mode you need a paid plane. Please upgrade your subscription."
+      flash[:warning] = "To keep your project in private mode you need a paid plan. Please upgrade your subscription."
       orga = @project.organisation
       url = plan_organisation_path(orga) if orga
     elsif @project.save
