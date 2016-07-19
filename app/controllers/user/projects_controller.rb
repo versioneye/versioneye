@@ -377,12 +377,18 @@ class User::ProjectsController < ApplicationController
       @project.public = false
     end
     user = current_user
+
     free_plan = user.plan.nil? || user.plan.price.to_i == 0
-    public_projects_count = Project.by_user(user).where(:public => false).count
-    if @project.public == false && free_plan == true && Rails.env.enterprise? == false && public_projects_count > 1
+    private_projects_count = Project.by_user(user).where(:public => false).count
+    orga = @project.orga
+    if orga
+      free_plan = orga.plan.nil? || orga.plan.price.to_i == 0 || orga.plan.name_id.eql?(Plan::A_PLAN_FREE)
+      private_projects_count = orga.projects.where(:public => false).count
+    end
+
+    if @project.public == false && free_plan == true && Rails.env.enterprise? == false && private_projects_count > 1
       flash[:warning] = "To keep your project in private mode you need a paid plane. Please upgrade your subscription."
-      orga = @project.organisation
-      url = plan_organisation_path(orga) if orga
+      url = plan_organisation_path( orga ) if orga
     elsif @project.save
       flash[:success] = "We saved your changes."
       Auditlog.add current_user, "Project", @project.ids, "Changed visibility.public from `#{old_visibility}` to `#{@project.public}`"
