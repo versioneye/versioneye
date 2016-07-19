@@ -145,7 +145,7 @@ class User::GithubReposController < User::ScmReposController
       project_url = ''
       orga_id = nil
       orga_id = @organisation.ids if @organisation
-      status = ProjectImportService.import_from_github_async current_user, project_name, filename, branch, orga_id
+      status  = ProjectImportService.import_from_github_async current_user, project_name, filename, branch, orga_id
       if status && status.match(/\Adone_/)
         project_id = status.gsub("done_", "")
         project = Project.find project_id
