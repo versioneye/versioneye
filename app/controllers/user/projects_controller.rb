@@ -380,7 +380,7 @@ class User::ProjectsController < ApplicationController
 
     free_plan = user.plan.nil? || user.plan.price.to_i == 0
     private_projects_count = Project.by_user(user).where(:public => false).count
-    orga = @project.orga
+    orga = @project.organisation
     if orga
       free_plan = orga.plan.nil? || orga.plan.price.to_i == 0 || orga.plan.name_id.eql?(Plan::A_PLAN_FREE)
       private_projects_count = orga.projects.where(:public => false).count
