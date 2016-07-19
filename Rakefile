@@ -14,3 +14,5 @@ namespace :db do
 end
 
 Versioneye::Application.load_tasks
+
+# END 

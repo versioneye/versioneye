@@ -12,3 +12,4 @@ ffmpeg -y -r 60 -f image2pipe -vcodec ppm -i - -vcodec libx264 \
     -preset ultrafast -crf 1 -threads 0 -bf 0 ~/versioneye.avi
 
 echo "Movie is now rendered, check your ~/Movies folder"
+
