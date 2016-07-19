@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: 43e34586b3b4af1c546de31b4b0d5b2022545355
-  tag: v9.1.2
+  revision: 47d8a848610870df89f3d33b0dce3d12174471bc
+  tag: v9.1.3
   specs:
-    versioneye-core (9.1.2)
+    versioneye-core (9.1.3)
       actionmailer (~> 4.2.6)
       aws-sdk (~> 2.3.0)
       bundler (~> 1.12.5)
@@ -155,7 +155,7 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
-    jmespath (1.3.0)
+    jmespath (1.3.1)
     jquery-rails (4.1.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
