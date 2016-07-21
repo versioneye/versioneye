@@ -28,7 +28,7 @@
     <% files = @pr.pr_issues.distinct(:file) %>
     <% files.each do |file| %>
       <h3><%= file %></h3>
-      <table class="dependency_table" >
+      <table class="dependency_table table table-striped" >
         <thead style="height: 30px;">
           <tr>
             <th class="name_col_after_icon">Dependency</th>
@@ -40,7 +40,7 @@
         </thead>
         <tbody>
           <% @pr.pr_issues.where(:file => file).each do |issue| %>
-          <tr class="flash %> dep_row" >
+          <tr class="dep_row" >
             <td style="padding-left: 5px;">
               <span >
                 <% if !issue.prod_key.to_s.empty? %>
@@ -70,7 +70,7 @@
             </td>
             <td style="padding-right: 5px;">
               <% if issue.license.to_s.eql?('UNKNOWN') %>
-                <span style="color: #B94A48"><%= issue.license %></span>
+                <span style="color: red"><%= issue.license %></span>
               <% else %>
                 <%= issue.license %>
               <% end %>
