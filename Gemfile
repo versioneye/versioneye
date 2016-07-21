@@ -30,6 +30,8 @@ gem 'redcarpet', '3.3.4'
 
 gem 'font-awesome-sass', '~> 4.6.2'
 
+gem 'nokogiri', '1.6.7'
+
 group :development do
   gem 'psych'             , '~> 2.1.0'
   gem 'terminal-notifier' , '~> 1.6.0'
