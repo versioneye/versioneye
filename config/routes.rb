@@ -76,6 +76,8 @@ Versioneye::Application.routes.draw do
       end
     end
     member do
+      get  'pullrequests'     , :to => 'pullrequests#index'         , :as => 'pullrequests'
+      get  'pullrequests/:id' , :to => 'pullrequests#show'          , :as => 'show_pullrequest'
       get  'components'     , :to => 'organisations#components'     , :as => 'components'
       get  'projects'       , :to => 'organisations#projects'       , :as => 'projects'
       post 'assign'         , :to => 'organisations#assign'         , :as => 'assign'
@@ -97,6 +99,8 @@ Versioneye::Application.routes.draw do
   resources :authors,  :constraints => { :id => /[^\/]+/}
 
   resources :keywords, :constraints => { :id => /[^\/]+/ }
+
+  resources :pullrequests, :constraints => { :id => /[^\/]+/ }
 
   get  '/enterprise',          :to => 'enterprise#show'
   post '/enterprise',          :to => 'enterprise#create', :as => 'enterprise_create'

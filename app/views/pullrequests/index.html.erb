@@ -1,0 +1,34 @@
+
+<div class="col-md-3" >
+<% if defined?(@organisation) && !@organisation.nil? %>
+  <%= render 'organisations/navi' %>
+<% end %>
+</div>
+
+<div class="col-md-9" >
+
+  <div class="content_header_def" >
+    Pull requests
+  </div>
+
+  <div class="content" >
+
+    <% @prs.each do |pr| %>
+
+      <% status = 'warn' %>
+      <% status = 'success' if pr.status.eql?('success') %>
+      <% status = 'error'   if pr.status.eql?('error') %>
+      <div class="flash <%= status %>" style="margin-bottom: 10px;">
+        Pull <b>#<%= pr.pr_number %></b> on <b><%= pr.scm_fullname %></b> : <b><%= pr.scm_branch %></b>
+        : <b> <%= pr.commit_sha %> </b> <br/>
+        Dependencies with security vulnerabilities: <b><%= pr.security_count %></b><br/>
+        Dependencies with unknown licenses: <b><%= pr.unknown_license_count %></b><br/>
+        <span style='font-size: 10px;'><%= pr.updated_at %></span><br/>
+        <span style='font-size: 10px;'><%= pr.ids %></span><br/>
+      </div>
+
+    <% end %>
+
+  </div>
+
+</div>
