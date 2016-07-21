@@ -19,12 +19,13 @@
       <% status = 'success' if pr.status.eql?('success') %>
       <% status = 'error'   if pr.status.eql?('error') %>
       <div class="flash <%= status %>" style="margin-bottom: 10px;">
-        Pull <b>#<%= pr.pr_number %></b> on <b><%= pr.scm_fullname %></b> : <b><%= pr.scm_branch %></b>
-        : <b> <%= pr.commit_sha %> </b> <br/>
+        <a href="<%= pullrequest_path( pr.ids ) %>">
+          Pull <b>#<%= pr.pr_number %></b> on <b><%= pr.scm_fullname %></b> : <b><%= pr.scm_branch %></b>
+          : <b> <%= pr.commit_sha %> </b>
+        </a><br/>
         Dependencies with security vulnerabilities: <b><%= pr.security_count %></b><br/>
         Dependencies with unknown licenses: <b><%= pr.unknown_license_count %></b><br/>
-        <span style='font-size: 10px;'><%= pr.updated_at %></span><br/>
-        <span style='font-size: 10px;'><%= pr.ids %></span><br/>
+        <span style='font-size: 10px;'><%= pr.updated_at %></span>
       </div>
 
     <% end %>

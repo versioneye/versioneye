@@ -17,8 +17,9 @@
     <% status = 'success' if @pr.status.eql?('success') %>
     <% status = 'error'   if @pr.status.eql?('error') %>
     <div class="flash <%= status %>" style="margin-bottom: 20px;">
-      Pull <b>#<%= @pr.pr_number %></b> on <b><%= @pr.scm_fullname %></b> : <b><%= @pr.scm_branch %></b>
-      : <b> <%= @pr.commit_sha %> </b> <br/>
+      Pull <b><a href="https://github.com/<%= @pr.scm_fullname %>/pull/<%= @pr.pr_number %>" target="github" >#<%= @pr.pr_number %></a></b> on
+      <b><a href="https://github.com/<%= @pr.scm_fullname %>/" target="github" ><%= @pr.scm_fullname %></a></b> : <b><%= @pr.scm_branch %></b>
+      : <b><a href="https://github.com/<%= @pr.scm_fullname %>/pull/<%= @pr.pr_number %>/commits/<%= @pr.commit_sha %>" target="github" ><%= @pr.commit_sha %></a></b> <br/>
       Dependencies with security vulnerabilities: <b><%= @pr.security_count %></b><br/>
       Dependencies with unknown licenses: <b><%= @pr.unknown_license_count %></b><br/>
       <span style='font-size: 10px;'><%= @pr.updated_at %></span><br/>
@@ -67,7 +68,8 @@
               <%= issue.license || "UNKNOWN" %>
             </td>
             <td style="padding-right: 5px;">
-              <%= issue.security_count %>
+              <span class="fa fa-shield" style="font-size: 14px; color: red;"></span>
+              <a href="/<%= issue.language %>/<%= issue.prod_key %>/<%= issue.version_requested %>"><%= issue.security_count %></a>
             </td>
           </tr>
           <% end %>
