@@ -65,11 +65,19 @@
               <%= issue.version_current || "UNKNOWN" %>
             </td>
             <td style="padding-right: 5px;">
-              <%= issue.license || "UNKNOWN" %>
+              <% if issue.license.to_s.eql?('UNKNOWN') %>
+                <span style="color: #B94A48"><%= issue.license %></span>
+              <% else %>
+                <%= issue.license %>
+              <% end %>
             </td>
             <td style="padding-right: 5px;">
-              <span class="fa fa-shield" style="font-size: 14px; color: red;"></span>
-              <a href="/<%= issue.language %>/<%= issue.prod_key %>/<%= issue.version_requested %>"><%= issue.security_count %></a>
+              <% if issue.security_count.to_i > 0 %>
+                <span class="fa fa-shield" style="font-size: 14px; color: red;"></span>
+                <a href="/<%= issue.language %>/<%= issue.prod_key %>/<%= issue.version_requested %>"><%= issue.security_count %></a>
+              <% else %>
+                0
+              <% end %>
             </td>
           </tr>
           <% end %>
