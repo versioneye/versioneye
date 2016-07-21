@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'nokogiri'             , '1.6.7'
 gem 'bundler'              , '~> 1.12.5'
 gem 'rails'                , '~> 4.2.6'
 gem 'jquery-rails'         , '~> 4.1.0'
