@@ -2,10 +2,10 @@
 /* Sprites */
 
 $sprite_url: "/assets/Sprite.png";
-$c_url: "/assets/c.png";
-$biicode_url: "/assets/biicode.png";
-$csharp_url: "/assets/csharp.png";
-$chef_url: "/assets/chef.png";
+$c_url: "/assets/language/c.png";
+$biicode_url: "/assets/language/biicode.png";
+$csharp_url: "/assets/language/csharp.png";
+$chef_url: "/assets/language/chef.png";
 
 @mixin sprite($x, $y, $width, $height){
   background: url($sprite_url) $x $y no-repeat;
