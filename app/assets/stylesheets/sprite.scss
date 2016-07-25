@@ -31,7 +31,7 @@ $chef_url: "/assets/language/chef.png";
 }
 
 @mixin csharp_icon($x, $y, $width, $height){
-  background: url($csharp_url) $x $y no-repeat;
+  background: url($csharp_url) no-repeat;
   display: inline-block;
   vertical-align: middle;
   width: $width;
@@ -369,7 +369,7 @@ $chef_url: "/assets/language/chef.png";
 }
 
 .icon_csharp {
-  @include csharp_toggle(0px, 0px, 0px, -56px, 56px, 56px);
+  @include csharp_toggle(0px, 0px, 0px, 0px, 56px, 56px);
 }
 .icon_csharp_big_container{
   padding: 0;
