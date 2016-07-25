@@ -7,7 +7,16 @@
 <div class="col-md-9">
 
   <div class="content_header_def" >
-    VersionEye is watching <b><%= pluralize( @projects.size, "Project" ) %></b> for you.
+    <% if @all_projects && @all_projects.count > 0 %>
+      <% pcount = 0 %>
+      <% @all_projects.keys.each do |key| %>
+        <% projects = @all_projects[key] %>
+        <% pcount += projects.count if projects %>
+      <% end %>
+      VersionEye is watching <b><%= pluralize( pcount, "Project" ) %></b> for you.
+    <% else %>
+      VersionEye is watching <b><%= pluralize( @projects.size, "Project" ) %></b> for you.
+    <% end %>
   </div>
 
   <div class="content" >
