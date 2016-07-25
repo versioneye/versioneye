@@ -4,6 +4,7 @@
 $sprite_url: "/assets/Sprite.png";
 $c_url: "/assets/c.png";
 $biicode_url: "/assets/biicode.png";
+$csharp_url: "/assets/csharp.png";
 $chef_url: "/assets/chef.png";
 
 @mixin sprite($x, $y, $width, $height){
@@ -23,6 +24,14 @@ $chef_url: "/assets/chef.png";
 
 @mixin biicode_icon($x, $y, $width, $height){
   background: url($biicode_url) $x $y no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  width: $width;
+  height: $height;
+}
+
+@mixin csharp_icon($x, $y, $width, $height){
+  background: url($csharp_url) $x $y no-repeat;
   display: inline-block;
   vertical-align: middle;
   width: $width;
@@ -58,6 +67,12 @@ $chef_url: "/assets/chef.png";
   &.on { @include biicode_icon($x2, $y2, $width, $height);}
   &:hover { @include biicode_icon($x2, $y2, $width, $height);}
   &:active { @include biicode_icon($x2, $y2, $width, $height);}
+}
+@mixin csharp_toggle($x1, $y1, $x2, $y2, $width, $height){
+  @include csharp_icon($x1, $y1, $width, $height);
+  &.on { @include csharp_icon($x2, $y2, $width, $height);}
+  &:hover { @include csharp_icon($x2, $y2, $width, $height);}
+  &:active { @include csharp_icon($x2, $y2, $width, $height);}
 }
 @mixin chef_toggle($x1, $y1, $x2, $y2, $width, $height){
   @include chef_icon($x1, $y1, $width, $height);
@@ -179,6 +194,13 @@ $chef_url: "/assets/chef.png";
 
 
 .icon_biicode_small_container{
+  margin: 0;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+}
+
+.icon_csharp_small_container{
   margin: 0;
   width: 30px;
   height: 30px;
@@ -340,6 +362,23 @@ $chef_url: "/assets/chef.png";
 }
 .icon_biicode.small.on{
   background: url(/assets/language/biicode_small.png) no-repeat;
+  margin: 0;
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+}
+
+.icon_csharp {
+  @include csharp_toggle(0px, 0px, 0px, -56px, 56px, 56px);
+}
+.icon_csharp_big_container{
+  padding: 0;
+  width: 56px;
+  height: 56px;
+  display: inline-block;
+}
+.icon_csharp.small.on{
+  background: url(/assets/language/csharp_small.png) no-repeat;
   margin: 0;
   width: 25px;
   height: 25px;
