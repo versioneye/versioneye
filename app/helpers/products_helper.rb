@@ -91,7 +91,10 @@ module ProductsHelper
                          'javascript' => 'JavaScript',
                          'Javascript' => 'JavaScript',
                          'node.js' =>  'Node.JS',
-                         'nodejs' => 'Node.JS'}
+                         'nodejs' => 'Node.JS',
+                         'CSharp' => 'CSharp',
+                         'Csharp' => 'CSharp',
+                         'csharp' => 'CSharp'}
 
     langs = lang.split(",")
     langs.each do |language|
