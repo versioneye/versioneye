@@ -63,7 +63,7 @@
         <ul class="nav navbar-nav navbar-right">
 
           <li>
-            <%= link_to "Notifications", notifications_path %>
+            <a style="color: #5cb85c" href="/projects/new" role="button">Add Project</a>
           </li>
 
           <li>
@@ -75,8 +75,8 @@
           </li>
 
           <li>
-            <a href="/search?q=suggest_a_new_package_to_versioneye" title="Suggest a new package">
-              <i class="fa fa-plus"></i>
+            <a href="<%= notifications_path %>">
+              <i class="fa fa-globe" aria-hidden="true"></i>
             </a>
           </li>
 

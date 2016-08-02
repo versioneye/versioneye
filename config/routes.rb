@@ -95,6 +95,8 @@ Versioneye::Application.routes.draw do
     end
   end
 
+  get  '/projects/new'  , :to => 'user/projects#init_new'
+  post '/projects/new_f', :to => 'user/projects#init_new_f'
 
   resources :authors,  :constraints => { :id => /[^\/]+/}
 

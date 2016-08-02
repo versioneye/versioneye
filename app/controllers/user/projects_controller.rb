@@ -39,6 +39,30 @@ class User::ProjectsController < ApplicationController
   end
 
 
+  def init_new
+    @organisations = OrganisationService.index current_user, true
+    @organisations = [OrganisationService.create_new_for(current_user)] if @organisations.empty?
+  end
+
+  def init_new_f
+    rpath = '/'
+    cookies.permanent.signed[:orga] = params[:organisation]
+    case params[:source]
+      when 'github'
+        rpath = user_projects_github_repositories_path
+      when 'bitbucket'
+        rpath = user_projects_bitbucket_repositories_path
+      when 'stash'
+        rpath = user_projects_stash_repositories_path
+      when 'url'
+        rpath = new_user_project_path
+      when 'upload'
+        rpath = user_prjects_upload_path
+    end
+    redirect_to rpath
+  end
+
+
   def new
     @project = Project.new
     @project.url = params[:url]

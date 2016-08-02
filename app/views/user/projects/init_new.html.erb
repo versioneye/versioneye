@@ -1,0 +1,36 @@
+<div class="col-md-3" >
+  <% title 'Add New Project' %>
+</div>
+
+<div class="col-md-9">
+
+  <div class="content_header_def" >
+    Add a new project to VersionEye
+  </div>
+  <div class="content" >
+    <form class="form-inline" action="<%= projects_new_f_path %>" accept-charset="UTF-8" method="post">
+      <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+      <div class= "controls">
+
+        <%= label_tag :organisation, "Organisation:", :class => "control-label", :for => "organisation" %>
+        <select name="organisation"  id="organisation" class="form-control" >
+          <% @organisations.each do |orga| %>
+            <option value="<%= orga.ids %>" ><%= orga.name %></option>
+          <% end %>
+        </select>
+
+        <%= label_tag :source, "Source:", :class => "control-label", :for => "source" %>
+        <select name="source"  id="source" class="form-control" style="width: 100px;">
+          <option value="github" >GitHub</option>
+          <option value="bitbucket" >Bitbucket</option>
+          <option value="stash" >Stash</option>
+          <option value="url" >URL</option>
+          <option value="upload" >Upload</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">Continue</button>
+      </div>
+    </form>
+  </div>
+
+</div>
