@@ -22,10 +22,18 @@
       <%= form_for(:component_whitelist, :url => organisation_component_whitelists_path, :html => {:class => 'form-inline'} ) do |f|  %>
         <div class="form-group">
           <%= f.label :name, :class => 'control-label' %>
-          <%= f.text_field :name, :class => "form-control" %>
+          <%= f.text_field :name, :id => "name", :class => "form-control" %>
           <button id="sign_in_button" type="submit" class="btn btn-big btn-primary" >Create New Whitelist</button>
         </div>
       <% end %>
+      <script type="text/javascript">
+        $( "#name" ).keyup(function(e) {
+          if( !/^[a-zA-Z0-9_-]*$/g.test(this.value) ){
+            this.value = ""
+            alert("Special characters are not allowed as input. Please use letters and numbers only.")
+          }
+        });
+      </script>
     </p>
 
     <br/>
