@@ -26,6 +26,8 @@
           <span class="label_bold">Source</span>:
           <% if sv.source.to_s.eql?('snyk') %>
             <a href="https://snyk.io/vuln/<%= sv.name_id %>" ><%= sv.source %></a><br/>
+          <% elsif sv.source.to_s.eql?('nodesecurity') %>
+            <a href="https://nodesecurity.io" ><%= sv.source %></a><br/>
           <% else %>
             <%= sv.source %><br/>
           <% end %>
