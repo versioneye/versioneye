@@ -25,7 +25,7 @@
           <span class="label_bold">Title</span>: <%= sv.summary %><br/>
           <span class="label_bold">Source</span>:
           <% if sv.source.to_s.eql?('snyk') %>
-            <a href="https://snyk.io/vuln/<%= sv.name_id %>" ><%= sv.source %></a>
+            <a href="https://snyk.io/vuln/<%= sv.name_id %>" ><%= sv.source %></a><br/>
           <% else %>
             <%= sv.source %><br/>
           <% end %>
@@ -59,6 +59,7 @@
           <span class="label_bold">Affected versions</span>: <%= sv.affected_versions_string %><br/>
           <span class="label_bold">Patched versions</span>: <%= sv.patched_versions_string %><br/>
           <% if !sv.description.to_s.empty? %>
+            <br/>
             <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
             <%= raw( markdown.render sv.description ) %><br/>
           <% end %>
