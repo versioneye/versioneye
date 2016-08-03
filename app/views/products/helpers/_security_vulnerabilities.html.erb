@@ -22,12 +22,33 @@
 
       <% elsif @product.language.eql?(Product::A_LANGUAGE_NODEJS) %>
         <div class="flash error" style="margin-bottom: 2px;" >
-            <span class="label_bold">Title</span>: <%= sv.summary %><br/>
+          <span class="label_bold">Title</span>: <%= sv.summary %><br/>
+          <span class="label_bold">Source</span>:
+          <% if sv.source.to_s.eql?('snyk') %>
+            <a href="https://snyk.io/vuln/<%= sv.name_id %>" ><%= sv.source %></a>
+          <% else %>
+            <%= sv.source %><br/>
+          <% end %>
+          <% if !sv.severity.to_s.empty? %>
+            <span class="label_bold">Severity</span>: <%= sv.severity %><br/>
+          <% end %>
+          <% if !sv.nsp.to_s.empty? %>
+            <span class="label_bold">NSP</span>: <%= sv.nsp %><br/>
+          <% end %>
           <% if !sv.cve.to_s.empty? %>
-            <span class="label_bold">CVE</span>: <%= sv.cve %><br/>
+            <span class="label_bold">Main CVE</span>: <%= sv.cve %><br/>
+          <% end %>
+          <% if sv.cves && !sv.cves.empty? %>
+            <span class="label_bold">CVEs</span>: <%= sv.cves.join(", ") %><br/>
+          <% end %>
+          <% if sv.cwes && !sv.cwes.empty? %>
+            <span class="label_bold">CWEs</span>: <%= sv.cwes.join(", ") %><br/>
           <% end %>
           <% if !sv.cvss_v2.to_s.empty? %>
             <span class="label_bold">CVSSv2</span>: <%= sv.cvss_v2 %><br/>
+          <% end %>
+          <% if !sv.cvss_v3.to_s.empty? %>
+            <span class="label_bold">CVSSv3</span>: <%= sv.cvss_v3 %><br/>
           <% end %>
           <% if !sv.author.to_s.empty? %>
             <span class="label_bold">Author</span>: <%= sv.author %><br/>
