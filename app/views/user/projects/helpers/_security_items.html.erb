@@ -21,7 +21,10 @@
           <% end %>
           <% if !sv.nsp.to_s.empty? && !sv.source.to_s.eql?("snyk") %>
             <% sec_issue = SecurityVulnerability.where(:nsp => sv.nsp, :source => 'snyk').first %>
-            <li><a href="https://snyk.io/vuln/<%= sec_issue.name_id %>" >Snyk.io</a></li>
+            <% if sec_issue %>
+              <li><%= sec_issue.name_id %></li>
+              <li><a href="https://snyk.io/vuln/<%= sec_issue.name_id %>" >Snyk.io</a></li>
+            <% end %>
           <% end %>
           <% sv.links.keys.each do |key| %>
             <% next if key.to_s.empty? %>
