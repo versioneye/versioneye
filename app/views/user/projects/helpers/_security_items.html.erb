@@ -12,20 +12,24 @@
 
       <% dep.security_vulnerabilities.each do |sv| %>
         <ul >
-          <li><%= sv.name_id %></li>
-          <% if !sv.summary.to_s.empty? && !dep.language.to_s.eql?(Product::A_LANGUAGE_PHP) %>
-            <li><%= sv.summary %></li>
+
+          <% if sv.source.to_s.eql?("snyk") %>
+            <li><a href="https://snyk.io/vuln/<%= sv.name_id %>" ><%= sv.name_id %></a></li>
+          <% else %>
+            <li><%= sv.name_id %></li>
           <% end %>
-          <% if !sv.nsp.to_s.empty? && sv.source.to_s.eql?("snyk") %>
-            <li><a href="https://snyk.io/vuln/<%= sv.name_id %>" >Snyk.io</a></li>
-          <% end %>
+
           <% if !sv.nsp.to_s.empty? && !sv.source.to_s.eql?("snyk") %>
             <% sec_issue = SecurityVulnerability.where(:nsp => sv.nsp, :source => 'snyk').first %>
             <% if sec_issue %>
-              <li><%= sec_issue.name_id %></li>
-              <li><a href="https://snyk.io/vuln/<%= sec_issue.name_id %>" >Snyk.io</a></li>
+              <li><a href="https://snyk.io/vuln/<%= sec_issue.name_id %>" ><%= sec_issue.name_id %></a></li>
             <% end %>
           <% end %>
+
+          <% if !sv.summary.to_s.empty? && !dep.language.to_s.eql?(Product::A_LANGUAGE_PHP) %>
+            <li><%= sv.summary %></li>
+          <% end %>
+
           <% sv.links.keys.each do |key| %>
             <% next if key.to_s.empty? %>
             <li><a href="<%= sv.links[key] %>"><%= sv.links[key] %></a></li>
