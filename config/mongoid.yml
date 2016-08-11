@@ -29,15 +29,9 @@ test:
     scope_overwrite_exception: true
 
 production:
-  # Configure available database clients. (required)
   clients:
-    # Defines the default session. (required)
     default:
-      # Defines the name of the default database that Mongoid can connect to.
-      # (required).
       database: veye_prod
-      # Provides the hosts the default session can connect to. Must be an array
-      # of host:port pairs. (required)
       hosts:
         - <%= ENV['DB_PORT_27017_TCP_ADDR'] ||= 'localhost' %>:<%= ENV['DB_PORT_27017_TCP_PORT'] ||= '27017' %>
         - <%= ENV['MONGO_RS_2_ADDR'] ||= 'localhost' %>:<%= ENV['MONGO_RS_2_PORT'] ||= '27017' %>
