@@ -1,0 +1,58 @@
+
+<div class="col-md-3" >
+  <%= render 'settings/navi' %>
+</div>
+
+<div class="col-md-9" >
+
+  <div class="content_header_def" >
+    Proxy Settings
+  </div>
+
+  <div class="content" >
+
+    <%= form_tag( settings_update_proxy_path, :method => "post", :class => "form-horizontal") do  %>
+
+      <p class="description">
+        Here you can configure your Proxy.
+      </p>
+
+      <div class="form-group">
+        <%= label_tag :proxy_addr, "Proxy Address", :class => "control-label", :for => "proxy_addr" %>
+        <div class="controls">
+          <%= text_field_tag :proxy_addr, @globalsetting['proxy_addr'], :id => "proxy_addr", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag :proxy_port, "Proxy Port", :class => "control-label", :for => "proxy_port" %>
+        <div class="controls">
+          <%= text_field_tag :proxy_port, @globalsetting['proxy_port'], :id => "proxy_port", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag :proxy_user, "Username", :class => "control-label", :for => "proxy_user" %>
+        <div class="controls">
+          <%= text_field_tag :proxy_user, @globalsetting['proxy_user'], :id => "proxy_user", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag :proxy_pass, "Password", :class => "control-label", :for => "proxy_pass" %>
+        <div class="controls">
+          <%= password_field_tag :proxy_pass, @globalsetting['proxy_pass'], :id => "proxy_pass", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="control-label"></div>
+        <div class="controls">
+          <button type="submit" class="btn btn-large btn-primary" >Save</button>
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

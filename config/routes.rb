@@ -130,6 +130,9 @@ Versioneye::Application.routes.draw do
 
   namespace :settings do
 
+    get  'proxy'             , :to => 'proxy#index'
+    post 'update_proxy'      , :to => 'proxy#update'
+
     get  'profile'             , :to => 'profile#index'
     post 'update_profile'      , :to => 'profile#update'
 
