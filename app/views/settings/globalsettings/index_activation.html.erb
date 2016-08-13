@@ -32,6 +32,20 @@
       </div>
 
       <div class="form-group">
+        <%= label_tag :rate_limit, "API Rate Limit", :class => "control-label", :for => "rate_limit" %>
+        <div class="controls">
+          <%= text_field_tag :rate_limit, @globalsetting['rate_limit'], :id => "rate_limit", :readonly => true, :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag :comp_limit, "Comp. Limit", :class => "control-label", :for => "comp_limit" %>
+        <div class="controls">
+          <%= text_field_tag :comp_limit, @globalsetting['comp_limit'], :id => "comp_limit", :readonly => true, :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
         <%= label_tag :activation_date, "Activated at", :class => "control-label", :for => "activation_date" %>
         <div class="controls">
           <%= text_field_tag :activation_date, @globalsetting['activation_date'], :id => "activation_date", :readonly => true, :class => 'form-control' %>
@@ -46,6 +60,10 @@
       </div>
 
     <% end %>
+
+    <p>
+      Currently there are <b><%= Product.count %></b> components in the locale database.
+    </p>
 
   </div>
 </div>

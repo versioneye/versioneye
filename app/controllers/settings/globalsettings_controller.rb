@@ -76,6 +76,8 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting = {}
     @globalsetting['api_key']         = GlobalSetting.get env, 'api_key'
     @globalsetting['e_projects']      = GlobalSetting.get env, 'e_projects'
+    @globalsetting['rate_limit']      = GlobalSetting.get env, 'E_RATE_LIMIT'
+    @globalsetting['comp_limit']      = GlobalSetting.get env, 'E_COMP_LIMIT'
     @globalsetting['activation_date'] = GlobalSetting.get env, 'activation_date'
   end
 
