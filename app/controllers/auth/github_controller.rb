@@ -4,6 +4,7 @@ class Auth::GithubController < ApplicationController
   before_filter :enterprise_activated?
 
   def callback
+    set_ssl_veryfiy
     code      = params['code']
     token     = Github.token code
     hash_user = Github.user token
@@ -202,6 +203,18 @@ class Auth::GithubController < ApplicationController
       end
 
       set_gh_scope scopes
+    end
+
+
+    def set_ssl_veryfiy
+      env        = Settings.instance.environment
+      ssl_verify = GlobalSetting.get( env, 'ssl_verify' )
+      Rails.logger.info "ssl_verify: #{ssl_verify}"
+      if ssl_verify.to_s.eql?('false')
+        Octokit.connection_options[:ssl] = { :verify => false }
+      else
+        Octokit.connection_options[:ssl] = { :verify => true }
+      end
     end
 
 end
