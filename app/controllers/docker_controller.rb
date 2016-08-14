@@ -112,7 +112,7 @@ class DockerController < ApplicationController
 
       di = DockerImage.by_name("versioneye/mongodb")
       version = di.image_version.to_s
-      images["reiz/mongodb:#{version}"] = {
+      images["versioneye/mongodb:#{version}"] = {
         'container_start_opts' => {
           'Binds' => ['/mnt/mongodb:/data'],
           'RestartPolicy' => {'Name' => 'always'}
