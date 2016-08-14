@@ -287,6 +287,7 @@ class OrganisationsController < ApplicationController
       api = organisation.api
       if api && organisation.plan
         api.rate_limit = organisation.plan.api_rate_limit
+        api.comp_limit = organisation.plan.cmp_rate_limit
         api.save
       end
     end
