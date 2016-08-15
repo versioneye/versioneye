@@ -33,7 +33,7 @@ Versioneye::Application.configure do
   # config.logger = GELF::Logger.new("172.16.22.130", 12201, "WAN", { :host => "veye-dev", :facility => "localhost" })
 
   config.log_level = :debug
-  config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 10, 10.megabytes)
+  config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}_app.log", 10, 10.megabytes)
 
   config.eager_load = true
 
