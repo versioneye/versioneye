@@ -44,27 +44,47 @@
               </p>
             </div>
 
-            <form id="activate-form" class="form-horizontal" action="/enterprise/activate" method="POST" style="padding: 0; margin: 0;">
+            <div class="content" >
+              <form id="activate-form" class="form-horizontal" action="/enterprise/activate" method="POST" style="padding: 0; margin: 0;">
 
-              <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+                <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
 
-              <div style="padding-top: 10px" >
-                <label for="api_key" class="control-label">API Key: </label>
-                <input type="text" autocomplete="off" class="form-control" style="width: 300px; display: inline-block;" id="api_key" name="api_key" placeholder="API Key" />
-              </div>
+                <table>
+                  <tr>
+                    <td style="text-align: right; padding-bottom: 5px;"><label for="api_key" class="control-label">API Key: </label></td>
+                    <td style="padding-bottom: 5px; padding-left: 3px;"><input type="text" autocomplete="off" class="form-control" style="width: 300px; display: inline-block;" id="api_key" name="api_key" placeholder="API Key" /></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right; padding-bottom: 5px;"><label for="proxy_addr" class="control-label">Proxy Addr: </label></td>
+                    <td style="padding-bottom: 5px; padding-left: 3px;"><input type="text" autocomplete="off" class="form-control" style="width: 300px; display: inline-block;" id="proxy_addr" name="proxy_addr" placeholder="Proxy Address" /></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right; padding-bottom: 5px;"><label for="proxy_port" class="control-label">Proxy Port: </label></td>
+                    <td style="padding-bottom: 5px; padding-left: 3px;"><input type="text" autocomplete="off" class="form-control" style="width: 300px; display: inline-block;" id="proxy_port" name="proxy_port" placeholder="Proxy Port" /></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right; padding-bottom: 5px;"><label for="proxy_user" class="control-label">Proxy User: </label></td>
+                    <td style="padding-bottom: 5px; padding-left: 3px;"><input type="text" autocomplete="off" class="form-control" style="width: 300px; display: inline-block;" id="proxy_user" name="proxy_user" placeholder="Proxy User" /></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right; padding-bottom: 5px;"><label for="proxy_pass" class="control-label">Proxy Password: </label></td>
+                    <td style="padding-bottom: 5px; padding-left: 3px;"><input type="text" autocomplete="off" class="form-control" style="width: 300px; display: inline-block;" id="proxy_pass" name="proxy_pass" placeholder="Proxy Password" /></td>
+                  </tr>
+                </table>
 
-              <div style="padding-top: 10px" >
-                <label for="agreement" >
-                  <input type="checkbox" id="agreement" name="agreement"  >
-                  I have read the VersionEye Enterprise License Agreement and agree to their validity.
-                </label>
-              </div>
+                <div style="padding-top: 10px" class="form-group" >
+                  <label for="agreement" >
+                    <input type="checkbox" id="agreement" name="agreement"  >
+                    I have read the VersionEye Enterprise License Agreement and agree to their validity.
+                  </label>
+                </div>
 
-              <div style="padding-top: 10px; padding-bottom: 20px;" >
-                <button type="submit" class="btn btn-primary btn-large" id="btn-signup">Activate</button>
-              </div>
+                <div style="padding-top: 10px; padding-bottom: 20px;" >
+                  <button type="submit" class="btn btn-primary btn-large" id="btn-signup">Activate</button>
+                </div>
 
-            </form>
+              </form>
+            </div>
 
           </div>
         </div>
