@@ -17,3 +17,4 @@ curl -XPUT 'http://localhost:9200/product_test/product/_mapping' -d'
         }
     }
 }'
+
