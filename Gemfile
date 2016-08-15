@@ -63,7 +63,7 @@ end
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'      , '3.3.7'
-  gem 'rails-assets-jquery'         , '3.1.0' # 2.2.4
+  gem 'rails-assets-jquery'         , '2.2.4'
   gem 'rails-assets-handlebars'     , '4.0.5'
   gem 'rails-assets-linkifyjs'      , '2.0.5'
 end
