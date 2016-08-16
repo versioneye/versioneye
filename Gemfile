@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 # test
 gem 'bundler'              , '~> 1.12.5'
-gem 'rails'                , '4.2.6'
+gem 'rails'                , '~> 4.2.6'
 gem 'jquery-rails'         , '~> 4.1.0'
 gem 'execjs'               , '~> 2.7.0'
 gem 'therubyracer'         , '~> 0.12.0'
