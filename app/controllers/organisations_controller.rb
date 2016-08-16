@@ -127,6 +127,7 @@ class OrganisationsController < ApplicationController
     api.generate_api_key!
     if @organisation.plan
       api.rate_limit = @organisation.plan.api_rate_limit
+      api.comp_limit = @organisation.plan.cmp_rate_limit
     end
 
     unless api.save
