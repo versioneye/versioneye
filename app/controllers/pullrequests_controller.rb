@@ -7,7 +7,7 @@ class PullrequestsController < ApplicationController
   def index
     @prs = []
     if defined?(@organisation) && !@organisation.nil?
-      @prs = Pullrequest.where(:organisation_ids => @organisation.id).desc(:updated_at)
+      @prs = Pullrequest.where(:organisation_ids => @organisation.ids).desc(:updated_at)
     elsif current_user && current_user.admin == true
       @prs = Pullrequest.all.desc(:updated_at)
     end
