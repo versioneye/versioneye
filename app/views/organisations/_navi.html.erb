@@ -32,6 +32,9 @@
             <li><%= link_to ' -- Create From URL', new_user_project_path, :rel => "nofollow" %></li>
             <li><%= link_to ' -- Create From Upload', user_prjects_upload_path, :rel => "nofollow" %></li>
           <% end %>
+          <% if github_enabled? %>
+            <li><%= link_to 'Pullrequests', pullrequests_organisation_path, :rel => "nofollow" %></li>
+          <% end %>
           <li><%= link_to 'Inventory', components_organisation_path(@organisation) %></li>
           <% if is_orga_owner?(@organisation, current_user) %>
             <li><hr/></li>

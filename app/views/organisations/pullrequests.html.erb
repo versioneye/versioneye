@@ -1,6 +1,8 @@
 
 <div class="col-md-3" >
-
+<% if defined?(@organisation) && !@organisation.nil? %>
+  <%= render 'organisations/navi' %>
+<% end %>
 </div>
 
 <div class="col-md-9" >
@@ -10,7 +12,7 @@
   </div>
 
   <div class="content" >
-    <%= render "pullrequest_content" %>
+    <%= render "/pullrequests/pullrequest_content" %>
   </div>
 
 </div>

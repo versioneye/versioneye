@@ -2,7 +2,7 @@ class OrganisationsController < ApplicationController
 
 
   before_filter :authenticate
-  before_filter :auth_org_member, :only => [:projects, :show, :assign, :components]
+  before_filter :auth_org_member, :only => [:projects, :show, :assign, :components, :pullrequests]
   before_filter :auth_org_owner,  :only => [:update, :delete, :destroy,
                                             :apikey, :update_apikey,
                                             :billing_address, :update_billing_address,
@@ -252,6 +252,11 @@ class OrganisationsController < ApplicationController
     end
 
     redirect_to url
+  end
+
+
+  def pullrequests
+    @prs = Pullrequest.where(:organisation_ids => @organisation.ids).desc(:updated_at)
   end
 
 

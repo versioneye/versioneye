@@ -76,7 +76,7 @@ Versioneye::Application.routes.draw do
       end
     end
     member do
-      get  'pullrequests'     , :to => 'pullrequests#index'         , :as => 'pullrequests'
+      get  'pullrequests'     , :to => 'organisations#pullrequests' , :as => 'pullrequests'
       get  'pullrequests/:id' , :to => 'pullrequests#show'          , :as => 'show_pullrequest'
       get  'components'     , :to => 'organisations#components'     , :as => 'components'
       get  'projects'       , :to => 'organisations#projects'       , :as => 'projects'
