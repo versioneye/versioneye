@@ -4,6 +4,7 @@ jQuery(document).ready(function(){
   console.log(" document loaded !")
 
   if (jQuery("#payment-form").length) {
+    console.debug("peng")
     jQuery("#payment-form").submit( function(event) {
       var $form = jQuery("#payment-form");
       $form.find('button').prop('disabled', true);
@@ -98,9 +99,9 @@ jQuery(document).ready(function(){
 }); // end-of-ready
 
 function stripeResponseHandler(status, response) {
+  console.debug("response: " + response)
   var $form = jQuery("#payment-form");
   if (response.error) {
-    alert( response.error.message )
     // jQuery(".payment-errors").text(response.error.message);
     $form.find('button').prop('disabled', false);
   } else {
