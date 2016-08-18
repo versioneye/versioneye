@@ -73,6 +73,7 @@ describe "Signin with GitHub" do
 
     visit signout_path
     visit signin_path
+    sleep 2
     click_button "Login with GitHub (public)"
     page.should have_content("GitHub Repositories")
   end

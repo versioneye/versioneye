@@ -22,7 +22,7 @@ describe "Payment Process" do
 
       orga = Organisation.first
       visit plan_organisation_path(orga)
-      Plan.count.should eq(7)
+      Plan.count.should eq(8)
       page.should have_content(Plan.free_plan.name)
       page.should have_content(Plan.small.name)
       page.should have_content(Plan.medium.name)
@@ -59,6 +59,8 @@ describe "Payment Process" do
       fill_in 'year',       :with => "2017"
       click_button 'Submit'
 
+      sleep 2
+
       page.should have_content("Many Thanks. We just updated your plan.")
       orga = Organisation.first
       expect( orga.stripe_token ).to_not be_nil
@@ -70,7 +72,7 @@ describe "Payment Process" do
       ### upgrades the plan to business normal
 
       visit plan_organisation_path(orga)
-      Plan.count.should eq(7)
+      Plan.count.should eq(8)
 
       click_button "#{Plan.xlarge.name_id}_button"
 
@@ -87,7 +89,7 @@ describe "Payment Process" do
       ### upgrades the plan to business small
 
       visit plan_organisation_path(orga)
-      Plan.count.should eq(7)
+      Plan.count.should eq(8)
       page.should have_content(Plan.free_plan.name)
       page.should have_content(Plan.small.name)
       page.should have_content(Plan.medium.name)
