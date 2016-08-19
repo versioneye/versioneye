@@ -33,7 +33,7 @@
 
     <% if signed_in? == false && !Settings.instance.environment.eql?('enterprise') %>
       <script type="text/javascript">
-        load_dialog_follow('<%= @product.name %>', '<%= @product.prod_key %>', '<%= @product.language %>');
+        load_dialog_follow_delayed('<%= @product.name %>', '<%= @product.prod_key %>', '<%= @product.language %>');
       </script>
     <% end %>
 
