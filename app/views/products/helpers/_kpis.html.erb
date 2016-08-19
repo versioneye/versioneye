@@ -154,6 +154,9 @@
   </div>
 <% end %>
 
-<div>
-  <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&amp;serve=C6AILKT&amp;placement=versioneyecom" id="_carbonads_js"></script>
-</div>
+
+<% if !Settings.instance.environment.to_s.eql?('enterprise') %>
+  <div>
+    <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&amp;serve=C6AILKT&amp;placement=versioneyecom" id="_carbonads_js"></script>
+  </div>
+<% end %>
