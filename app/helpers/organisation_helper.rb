@@ -30,6 +30,7 @@ module OrganisationHelper
     return false
   end
 
+
   def auth_team_add_del
     @team = Team.where(:name => params[:id], :organisation_id => @organisation.ids).first
     return false if @team.nil?
