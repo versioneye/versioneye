@@ -118,6 +118,13 @@ function confirmAction(){
   }
 }
 
+
+function load_dialog_follow_delayed( product_name, prod_key, prod_lang ){
+  setTimeout(function(){
+    load_dialog_follow( product_name, prod_key, prod_lang );
+  }, 2000);
+}
+
 function load_dialog_follow( product_name, prod_key, prod_lang ){
   document.getElementById('product_to_follow').innerHTML = product_name;
   setCookie( "prod_key" , prod_key,  1 );
