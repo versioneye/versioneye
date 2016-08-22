@@ -72,7 +72,11 @@
               <% if issue.license.to_s.eql?('UNKNOWN') %>
                 <span style="color: red"><%= issue.license %></span>
               <% else %>
-                <%= issue.license %>
+                <% if issue.lwl_violation == true %>
+                  <span style="color: red" title="Violating the license whitelist" ><%= issue.license %></span>
+                <% else %>
+                  <%= issue.license %>
+                <% end %>
               <% end %>
             </td>
             <td style="padding-right: 5px;">
