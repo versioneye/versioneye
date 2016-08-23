@@ -30,7 +30,7 @@ gem 'redcarpet', '3.3.4'
 
 gem 'zopen', '1.0.2'
 
-gem 'font-awesome-sass', '~> 4.6.2'
+gem 'font-awesome-sass', '~> 4.6.1'
 
 group :development do
   gem 'psych'             , '~> 2.1.0'
