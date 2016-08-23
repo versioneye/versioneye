@@ -22,6 +22,7 @@
       : <b><a href="https://github.com/<%= @pr.scm_fullname %>/pull/<%= @pr.pr_number %>/commits/<%= @pr.commit_sha %>" target="github" ><%= @pr.commit_sha %></a></b> <br/>
       Dependencies with security vulnerabilities: <b><%= @pr.security_count %></b><br/>
       Dependencies with unknown licenses: <b><%= @pr.unknown_license_count %></b><br/>
+      Dependencies which violate a license whitelist: <b><%= @pr.lwl_violation_count %></b><br/>
       <span style='font-size: 10px;'><%= @pr.updated_at %></span><br/>
     </div>
 
