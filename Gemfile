@@ -28,7 +28,7 @@ gem 'gravatar_image_tag'  , '~> 1.2.0'
 gem 'net-ldap', '0.15.0'
 gem 'redcarpet', '3.3.4'
 
-gem 'zopen'
+gem 'zopen', '1.0.2'
 
 gem 'font-awesome-sass', '~> 4.6.2'
 
