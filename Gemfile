@@ -26,7 +26,7 @@ gem 'gravatar_image_tag'  , '~> 1.2.0'
 # gem 'gravatar_image_tag'    , :git => 'https://github.com/reiz/gravatar_image_tag.git', :branch => 'bugfix/html_escaping'
 
 gem 'net-ldap', '0.15.0'
-gem 'redcarpet', '3.3.4'
+gem 'redcarpet', '3.3.3'
 
 gem 'zopen', '1.0.2'
 
