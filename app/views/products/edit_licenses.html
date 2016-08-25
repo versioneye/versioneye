@@ -13,7 +13,7 @@
 
     <div class="boxContainer">
       <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/update", :method => "post", :class => "form-horizontal") do  %>
-        
+
         <div class="form-group">
           <%= label_tag(:license, "License Name", :class => "control-label") %>
           <div class="controls">
@@ -59,22 +59,22 @@
           </colgroup>
 
           <% licenses.each do |license| %>
-            <% if !license.name.to_s.empty? %>
-              <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/delete_license", :method => "post") do  %>
-              <tr>
-                <td>
-                  <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
-                </td>
-                <td>
-                  <input id="license_id" name="license_id" type="hidden" value="<%= license._id.to_s %>" />
-                  <% if !license.link.to_s.empty? %>
-                    <a href="<%= license.link %>" target="license"><%= license.name %></a> for version <%= license.version %>
-                  <% else %>
-                    "<%= license.name %>" for version <%= license.version %>
-                  <% end %>
-                </td>
-              </tr>
-              <% end %>
+            <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/delete_license", :method => "post") do  %>
+            <tr>
+              <td>
+                <button type="submit" class="btn btn-danger" onClick="return confirmAction()" >Delete</button>
+              </td>
+              <td>
+                <input id="license_id" name="license_id" type="hidden" value="<%= license._id.to_s %>" />
+                <% name = 'unknown' %>
+                <% name = license.name if !license.name.to_s.empty? %>
+                <% if !license.link.to_s.empty? %>
+                  <a href="<%= license.link %>" target="license"><%= name %></a> for version <%= license.version %>
+                <% else %>
+                  "<%= name %>" for version <%= license.version %>
+                <% end %>
+              </td>
+            </tr>
             <% end %>
           <% end %>
 
