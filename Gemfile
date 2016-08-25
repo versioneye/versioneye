@@ -69,3 +69,5 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-handlebars'     , '4.0.5'
   gem 'rails-assets-linkifyjs'      , '2.0.5'
 end
+
+# END
