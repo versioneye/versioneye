@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: fcffce77c93a440384fce229d13ce95338d598c5
-  tag: v9.8.2
+  revision: 8e4c77aa974d9ad456057581522525c0447d5a22
+  tag: v9.8.3
   specs:
-    versioneye-core (9.8.2)
+    versioneye-core (9.8.3)
       actionmailer (~> 4.2.7)
       aws-sdk (~> 2.4.0)
       bundler (~> 1.12.5)
@@ -18,6 +18,7 @@ GIT
       cocoapods-core (~> 0.39.0)
       dalli (~> 2.7.0)
       etcd (~> 0.3.0)
+      gemnasium-parser (~> 0.1.9)
       httparty (~> 0.13.1)
       mongoid (~> 5.1.0)
       naturalsorter (~> 3.0.14)
@@ -141,6 +142,7 @@ GEM
     font-awesome-sass (4.6.2)
       sass (>= 3.2)
     fuzzy_match (2.0.4)
+    gemnasium-parser (0.1.9)
     gene_pool (1.4.1)
       thread_safe
     globalid (0.3.7)
