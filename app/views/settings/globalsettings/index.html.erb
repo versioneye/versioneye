@@ -123,6 +123,15 @@
       </div>
 
       <div class="form-group">
+        <div class="controls">
+          <label for="orga_creation_admin_only" style="font-size: 12px;" class="checkbox">
+            <%= check_box_tag "orga_creation_admin_only", true, @globalsetting['orga_creation_admin_only'], :id => "orga_creation_admin_only" %>
+            Only admin users can create new organisations.
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
         <div class="control-label"></div>
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>

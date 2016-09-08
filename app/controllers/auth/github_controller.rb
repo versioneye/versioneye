@@ -183,11 +183,21 @@ class Auth::GithubController < ApplicationController
       cookies.delete(:promo_code)
       cookies.delete(:github_token)
 
-      orga  = get_orga_for_login( user )
-      rpath = user_projects_github_repositories_path
-      rpath = projects_organisation_path( orga ) if orga.projects && !orga.projects.empty?
-      rpath = cc_organisation_path( orga ) if !cookies.signed[:plan_selected].to_s.empty?
+      rpath = get_redirect_path( user )
       redirect_back_or( rpath )
+    end
+
+
+    def get_redirect_path user
+      if Settings.instance.orga_creation_admin_only == true && user.admin == false
+        return notifications_path
+      else
+        orga  = get_orga_for_login( user )
+        rpath = user_projects_github_repositories_path
+        rpath = projects_organisation_path( orga ) if orga.projects && !orga.projects.empty?
+        rpath = cc_organisation_path( orga ) if !cookies.signed[:plan_selected].to_s.empty?
+        return rpath
+      end
     end
 
 

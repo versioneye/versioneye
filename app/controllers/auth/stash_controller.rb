@@ -55,14 +55,23 @@ class Auth::StashController < ApplicationController
       rpath = signin_path
     else
       sign_in user
-      orga  = get_orga_for_login( user )
-      rpath = user_projects_stash_repositories_path
-      rpath = projects_organisation_path( orga ) if orga.projects && !orga.projects.empty?
+      rpath = get_redirect_path( user )
     end
     redirect_back_or rpath and return
   end
 
   private
+
+    def get_redirect_path user
+      if Settings.instance.orga_creation_admin_only == true && user.admin == false
+        return notifications_path
+      else
+        orga  = get_orga_for_login( user )
+        rpath = user_projects_stash_repositories_path
+        rpath = projects_organisation_path( orga ) if orga.projects && !orga.projects.empty?
+        return rpath
+      end
+    end
 
     def init_request_token
       @consumer = Stash.init_oauth_client

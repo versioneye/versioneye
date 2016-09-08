@@ -15,6 +15,7 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting['unique_ga']  = Settings.instance.projects_unique_ga
     @globalsetting['unique_gav']  = Settings.instance.projects_unique_gav
     @globalsetting['unique_scm'] = Settings.instance.projects_unique_scm
+    @globalsetting['orga_creation_admin_only'] = Settings.instance.orga_creation_admin_only
   end
 
   def update
@@ -63,6 +64,12 @@ class Settings::GlobalsettingsController < ApplicationController
       GlobalSetting.set( env, 'projects_unique_scm', "true" )
     else
       GlobalSetting.set( env, 'projects_unique_scm', "false" )
+    end
+
+    if params[:orga_creation_admin_only] && params[:orga_creation_admin_only].eql?("true")
+      GlobalSetting.set( env, 'orga_creation_admin_only', "true" )
+    else
+      GlobalSetting.set( env, 'orga_creation_admin_only', "false" )
     end
 
     Settings.instance.reload_from_db GlobalSetting.new

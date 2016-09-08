@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
     redirect_url = params[:redirect_url]
 
     user = AuthService.auth(params[:session][:email],
-                             params[:session][:password])
+                            params[:session][:password])
     if user.nil?
       flash[:error] = 'Invalid email/password combination.'
       @title = 'Sign in'
@@ -31,8 +31,7 @@ class SessionsController < ApplicationController
         if redirect_url
           redirect_to redirect_url
         else
-          orga  = get_orga_for_login( user )
-          rpath = projects_organisation_path( orga )
+          rpath = get_redirect_path( user )
           redirect_back_or( rpath )
         end
       end
@@ -44,6 +43,20 @@ class SessionsController < ApplicationController
     sign_out
     redirect_to root_path
   end
+
+
+  private
+
+
+    def get_redirect_path user
+      if Settings.instance.orga_creation_admin_only == true && user.admin == false
+        return notifications_path
+      else
+        orga  = get_orga_for_login( user )
+        rpath = projects_organisation_path( orga )
+        return rpath
+      end
+    end
 
 
 end
