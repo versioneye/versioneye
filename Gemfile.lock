@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: beeea82682bfc7291cca992f7d2d39c9c07f86db
-  tag: v9.8.9
+  revision: 28c0ea323abb17b8691e1337cec2397450a0c5c0
+  tag: v9.9.0
   specs:
-    versioneye-core (9.8.9)
+    versioneye-core (9.9.0)
       actionmailer (~> 4.2.7)
       aws-sdk (~> 2.5.8)
       bundler (~> 1.12.5)
@@ -77,12 +77,12 @@ GEM
     amq-protocol (2.0.1)
     ansi (1.5.0)
     arel (6.0.3)
-    aws-sdk (2.5.10)
-      aws-sdk-resources (= 2.5.10)
-    aws-sdk-core (2.5.10)
+    aws-sdk (2.5.11)
+      aws-sdk-resources (= 2.5.11)
+    aws-sdk-core (2.5.11)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.5.10)
-      aws-sdk-core (= 2.5.10)
+    aws-sdk-resources (2.5.11)
+      aws-sdk-core (= 2.5.11)
     bourbon (4.2.7)
       sass (~> 3.4)
       thor (~> 0.19)
@@ -166,7 +166,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
-    mime-types (2.99.2)
+    mime-types (2.99.3)
     mini_portile2 (2.1.0)
     minitest (5.9.0)
     mixlib-log (1.7.1)
