@@ -18,7 +18,7 @@ class Auth::GithubController < ApplicationController
 
     user = user_for_github_id( hash_user )
     if user
-      login user, nil, token
+      login user, token
       update_user hash_user, token, true
       return
     end
@@ -58,7 +58,6 @@ class Auth::GithubController < ApplicationController
   def create
     @email = params[:email]
     @terms = params[:terms]
-    @promo = params[:promo_code]
 
     token = cookies.signed[:github_token]
     if token == nil || token.empty?
@@ -76,7 +75,7 @@ class Auth::GithubController < ApplicationController
     user.create_verification
     if user.save
       user.send_verification_email
-      login user, @promo
+      login user
       return
     end
 
@@ -109,7 +108,6 @@ class Auth::GithubController < ApplicationController
       @user = User.new({:email => email}) if user.nil?
       @email = email
       @terms = false
-      @promo = cookies.signed[:promo_code]
     end
 
 
@@ -174,13 +172,11 @@ class Auth::GithubController < ApplicationController
     end
 
 
-    def login user, promo = nil, token = nil
+    def login user, token = nil
       sign_in( user )
       update_scope(user, user.github_token)
       user.github_token = token if token
       user.save
-      check_promo_code promo, user
-      cookies.delete(:promo_code)
       cookies.delete(:github_token)
 
       rpath = get_redirect_path( user )

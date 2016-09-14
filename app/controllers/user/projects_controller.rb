@@ -402,7 +402,7 @@ class User::ProjectsController < ApplicationController
     end
     user = current_user
 
-    free_plan = user.plan.nil? || user.plan.price.to_i == 0
+    free_plan = true
     private_projects_count = Project.by_user(user).where(:public => false).count
     orga = @project.organisation
     if orga

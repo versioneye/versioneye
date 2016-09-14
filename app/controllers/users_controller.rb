@@ -19,13 +19,7 @@ class UsersController < ApplicationController
       redirect_to projects_organisation_path( orga ) and return
     end
 
-    promo_code = params[:promo_code]
     @user = User.new
-    if !promo_code.to_s.empty?
-      @user.promo_code = promo_code
-      cookies.permanent.signed[:promo_code] = promo_code
-    end
-
     if !params[:plan].to_s.empty?
       cookies.permanent.signed[:plan_selected] = params[:plan].to_s
     end
@@ -57,9 +51,6 @@ class UsersController < ApplicationController
 
     refer_name = cookies.signed[:veye_refer]
     check_refer refer_name, @user
-
-    promo_code = params[:user][:promo_code]
-    check_promo_code promo_code, @user
 
     if @user.save
       orga = get_orga_for_login( @user ) # Create organisation for new user.
@@ -276,7 +267,6 @@ class UsersController < ApplicationController
       user.fullname   = params[:user][:fullname]
       user.email      = params[:user][:email]
       user.password   = params[:user][:password]
-      user.promo_code = params[:user][:promo_code]
       user
     end
 

@@ -1,8 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'bundler'              , '~> 1.12.5'
 gem 'rails'                , '~> 4.2.6'
-gem 'jquery-rails'         , '~> 4.1.0'
+gem 'jquery-rails'         , '~> 4.2.1'
 gem 'execjs'               , '~> 2.7.0'
 gem 'therubyracer'         , '~> 0.12.0'
 gem 'oauth'                , '~> 0.5.0'
@@ -17,7 +16,7 @@ gem 'cocoapods-core'       , '~> 0.39.0'
 gem 'bunny'                , '~> 2.5.0'
 gem 'will_paginate_mongoid', '2.0.1'
 
-gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v9.9.0'
+gem 'versioneye-core'    , :git => 'https://github.com/versioneye/versioneye-core.git', :tag => 'v10.0.1'
 # gem 'versioneye-core'    , :path => "~/workspace/versioneye/versioneye-core"
 
 # gem 'gravatar_image_tag'  , '~> 1.2.0'
@@ -49,7 +48,7 @@ group :test do
   gem 'rspec-rails'       , '~> 3.5.0'
   gem 'rspec-mocks'       , '~> 3.5.0'
   gem 'rspec_junit_formatter', '0.2.3'
-  gem 'capybara'          , '~> 2.7.0'
+  gem 'capybara'          , '~> 2.8.1'
   gem 'capybara-firebug'  , '~> 2.1.0'
   gem 'selenium-webdriver', '~> 2.53.3'
   gem 'vcr'               , '3.0.3',  :require => false
@@ -64,5 +63,5 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'      , '3.3.7'
   gem 'rails-assets-jquery'         , '2.2.4'
   gem 'rails-assets-handlebars'     , '4.0.5'
-  gem 'rails-assets-linkifyjs'      , '2.0.5'
+  gem 'rails-assets-linkifyjs'      , '2.1.0'
 end

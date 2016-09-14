@@ -73,7 +73,7 @@ class Auth::BitbucketController < ApplicationController
 
     cookies.permanent.signed[:access_token] = access_token.token
     cookies.permanent.signed[:access_token_secret] = access_token.secret
-    rpath = auth_bitbucket_new_path(email: session[:email], promo_code: session[:promo_code])
+    rpath = auth_bitbucket_new_path(email: session[:email])
     redirect_to(rpath) and return
   end
 
@@ -91,7 +91,6 @@ class Auth::BitbucketController < ApplicationController
   def create
     @email = params[:email]
     @terms = params[:terms]
-    @promo = params[:promo_code]
     access_token  = cookies.signed[:access_token]
     access_secret = cookies.signed[:access_token_secret]
 
@@ -109,7 +108,6 @@ class Auth::BitbucketController < ApplicationController
     @user = create_user(@email, access_token, access_secret)
     if @user.save
       @user.send_verification_email
-      check_promo_code @promo, @user
       session.clear
     else
       flash[:error] = "An error occured. Please contact the VersionEye team."
@@ -182,7 +180,6 @@ class Auth::BitbucketController < ApplicationController
     def init_variables_for_new_page
       @user = User.new email: session[:email]
       @terms = false
-      @promo = session[:promo_code]
     end
 
     def connect_with_bitbucket

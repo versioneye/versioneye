@@ -17,15 +17,6 @@
       </div>
     </div>
 
-    <% if Settings.instance.show_promocode %>
-      <div class="form-group">
-          <%= label_tag :promo_code, "Promo code", :class => "control-label", :for => "promo_code" %>
-        <div class="controls">
-          <%= text_field_tag :promo_code, @promo, :id => "promo_code", :class => "form-control", :placeholder => "optional" %>
-        </div>
-      </div>
-    <% end %>
-
     <div class="form-group">
       <div class="controls">
         <%= check_box_tag :terms, "1", false, :style => "vertical-align: top; margin-right: 5px;", :id => "terms" %>

@@ -42,28 +42,6 @@ module UsersHelper
     true
   end
 
-  def check_promo_code( code, user )
-    return nil if code.to_s.empty? || user.nil?
-
-    promo = PromoCode.by_name code
-    if promo.nil? || promo.to_s.empty?
-      flash.now[:warn] = 'Sorry. But the promo code you entered does not exist!'
-    elsif !promo.is_valid?
-      flash.now[:warn] = 'Sorry. But the promo code you entered is not valid anymore!'
-    else
-      promo.redeem!
-      user.free_private_projects = promo.free_private_projects
-      user.promo_code = code
-      user.save
-      plu = pluralize(promo.free_private_projects, 'private project')
-      flash.now[:success] = "Congrats. Because of the promo code you can monitor #{plu} for free!"
-    end
-  rescue => e
-    logger.error "ERROR in check_promo_code: #{e.message}"
-    logger.error e.backtrace.join "\n"
-    nil
-  end
-
   def username_max_30 username
     if username.to_s.length > 30
       part = username.to_s[0..28]
