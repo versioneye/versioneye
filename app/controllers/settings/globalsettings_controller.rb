@@ -109,7 +109,6 @@ class Settings::GlobalsettingsController < ApplicationController
     end
     @globalsetting = {}
     @globalsetting['api_key']         = GlobalSetting.get env, 'api_key'
-    @globalsetting['e_projects']      = GlobalSetting.get env, 'e_projects'
     @globalsetting['activation_date'] = GlobalSetting.get env, 'activation_date'
     redirect_to settings_activation_path
   end

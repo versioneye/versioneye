@@ -25,13 +25,6 @@
       </div>
 
       <div class="form-group">
-        <%= label_tag :e_projects, "Max Projects", :class => "control-label", :for => "e_projects" %>
-        <div class="controls">
-          <%= text_field_tag :e_projects, @globalsetting['e_projects'], :id => "e_projects", :readonly => true, :class => 'form-control' %>
-        </div>
-      </div>
-
-      <div class="form-group">
         <%= label_tag :rate_limit, "API Rate Limit", :class => "control-label", :for => "rate_limit" %>
         <div class="controls">
           <%= text_field_tag :rate_limit, @globalsetting['rate_limit'], :id => "rate_limit", :readonly => true, :class => 'form-control' %>
