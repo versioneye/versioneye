@@ -226,7 +226,7 @@ Versioneye::Application.routes.draw do
   get '/user/projects/stash/:id/import'            , :to => 'user/stash_repos#import',     :constraints => { :id => /[^\/]+/ }
   get '/user/projects/stash/:id/remove'            , :to => 'user/stash_repos#remove',     :constraints => { :id => /[^\/]+/ }
 
-  get '/user/prjects/upload', :to => 'user/projects#upload'
+  get '/user/projects/upload', :to => 'user/projects#upload'
 
   get  '/user/projects/:id/recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
   post '/user/projects/:id/recursive_dependencies', :to => 'dependency_wheel#project_recursive_dependencies'
