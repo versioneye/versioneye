@@ -57,7 +57,7 @@ class User::ProjectsController < ApplicationController
       when 'url'
         rpath = new_user_project_path
       when 'upload'
-        rpath = user_prjects_upload_path
+        rpath = user_projects_upload_path
     end
     redirect_to rpath
   end
