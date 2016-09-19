@@ -13,7 +13,58 @@
         <td></td>
       </tr>
     </thead>
-    <% @plans = Plan.current_plans() %>
+    <% @plans = Plan.current_plans().where(:period => 'monthly') %>
+    <% @plans.each do |plan| %>
+    <tr>
+      <td><%= plan.name %></td>
+      <td>€ <%= plan.price %></td>
+      <td><%= plan.private_projects %></td>
+      <td><%= plan.api_rate_limit %></td>
+      <td>
+        <% if plan.price.to_i > 20 %>
+          PDF/CSV Reports
+        <% end %>
+      </td>
+      <td>
+        <% if @plan && @plan.name_id.eql?( plan.name_id ) %>
+          <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
+        <% else %>
+          <% btn_txt = 'Upgrade' %>
+          <% btn_txt = 'Downgrade' if ( @plan && ( @plan.price.to_i > plan.price.to_i ) )  %>
+          <% btn_class = 'success' %>
+          <% btn_class = 'danger' if btn_txt.eql?('Downgrade') %>
+          <% btn_style = 'font-size: 17px;' %>
+          <% btn_style = '' if btn_txt.eql?('Downgrade') %>
+          <form action="<%= update_plan_organisation_path( @organisation ) %>" method="POST" >
+            <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+            <input  type="hidden" name="plan" value="<%= plan.name_id %>" />
+            <button type="submit" class="btn btn-<%= btn_class %>" style="<%= btn_style %>" id="<%= plan.name_id %>_button" ><%=btn_txt%></button>
+          </form>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+
+  <div style="padding: 10px 0 20px 0; font-weight: normal;">
+    Get 2 private projects on top of the normal offering by paying yearly.
+  </div>
+
+  <table class="table table-striped">
+    <thead style="font-weight: bold;">
+      <tr>
+        <td>Plan</td>
+        <td>Price / Yearly</td>
+        <td>Private Projects</td>
+        <td>
+          API calls per hour &amp;<br/>
+          components to sync
+        </td>
+        <td>AddOns</td>
+        <td></td>
+      </tr>
+    </thead>
+    <% @plans = Plan.current_plans().where(:period => 'yearly') %>
     <% @plans.each do |plan| %>
     <tr>
       <td><%= plan.name %></td>
