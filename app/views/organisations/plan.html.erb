@@ -19,7 +19,7 @@
     <p>
       Send a message to <a href="mailto:support@versioneye.com">support@versioneye.com</a> if you need higher plans.
     </p>
-    <% if has_orga_current_plan?( @organisation ) %>
+    <% if is_orga_owner?(@organisation, current_user) %>
       <p>
         <a href="<%= cc_organisation_path(@organisation) %>">Update Credit Card</a>
       </p>
