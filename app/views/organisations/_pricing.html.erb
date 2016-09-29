@@ -29,20 +29,12 @@
         <% if @plan && @plan.name_id.eql?( plan.name_id ) %>
           <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
         <% else %>
-          <% btn_txt = 'Upgrade' %>
-          <% if @plan && @plan.period.to_s.eql?('yearly') %>
-            <% btn_txt = 'Downgrade'  %>
-          <% elsif @plan && @plan.period.to_s.eql?('monthly') && (@plan.price.to_i > plan.price.to_i) ) %>
-            <% btn_txt = 'Downgrade'  %>
-          <% end %>
-          <% btn_class = 'success' %>
-          <% btn_class = 'danger' if btn_txt.eql?('Downgrade') %>
+          <% btn_txt = 'Book it' %>
           <% btn_style = 'font-size: 17px;' %>
-          <% btn_style = '' if btn_txt.eql?('Downgrade') %>
           <form action="<%= update_plan_organisation_path( @organisation ) %>" method="POST" >
             <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
             <input  type="hidden" name="plan" value="<%= plan.name_id %>" />
-            <button type="submit" class="btn btn-<%= btn_class %>" style="<%= btn_style %>" id="<%= plan.name_id %>_button" ><%=btn_txt%></button>
+            <button type="submit" class="btn btn-info" style="<%= btn_style %>" id="<%= plan.name_id %>_button" ><%=btn_txt%></button>
           </form>
         <% end %>
       </td>
@@ -84,18 +76,12 @@
         <% if @plan && @plan.name_id.eql?( plan.name_id ) %>
           <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
         <% else %>
-          <% btn_txt = 'Upgrade' %>
-          <% if @plan && @plan.period.to_s.eql?('yearly') && (@plan.price.to_i > plan.price.to_i) ) %>
-            <% btn_txt = 'Downgrade'  %>
-          <% end %>
-          <% btn_class = 'success' %>
-          <% btn_class = 'danger' if btn_txt.eql?('Downgrade') %>
+          <% btn_txt = 'Book it' %>
           <% btn_style = 'font-size: 17px;' %>
-          <% btn_style = '' if btn_txt.eql?('Downgrade') %>
           <form action="<%= update_plan_organisation_path( @organisation ) %>" method="POST" >
             <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
             <input  type="hidden" name="plan" value="<%= plan.name_id %>" />
-            <button type="submit" class="btn btn-<%= btn_class %>" style="<%= btn_style %>" id="<%= plan.name_id %>_button" ><%=btn_txt%></button>
+            <button type="submit" class="btn btn-info" style="<%= btn_style %>" id="<%= plan.name_id %>_button" ><%=btn_txt%></button>
           </form>
         <% end %>
       </td>
