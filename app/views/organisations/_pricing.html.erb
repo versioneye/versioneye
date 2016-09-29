@@ -4,7 +4,7 @@
       <tr>
         <td>Plan</td>
         <td>Price / Month</td>
-        <td>Private Projects</td>
+        <td>Projects</td>
         <td>
           API calls per hour &amp;<br/>
           components to sync
@@ -30,7 +30,11 @@
           <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
         <% else %>
           <% btn_txt = 'Upgrade' %>
-          <% btn_txt = 'Downgrade' if ( @plan && ( @plan.price.to_i > plan.price.to_i ) )  %>
+          <% if @plan && @plan.period.to_s.eql?('yearly') %>
+            <% btn_txt = 'Downgrade'  %>
+          <% elsif @plan && @plan.period.to_s.eql?('monthly') && (@plan.price.to_i > plan.price.to_i) ) %>
+            <% btn_txt = 'Downgrade'  %>
+          <% end %>
           <% btn_class = 'success' %>
           <% btn_class = 'danger' if btn_txt.eql?('Downgrade') %>
           <% btn_style = 'font-size: 17px;' %>
@@ -47,7 +51,7 @@
   </table>
 
   <div style="padding: 10px 0 20px 0; font-weight: normal;">
-    Get 2 private projects on top of the normal offering by paying yearly.
+    Get 2 projects on top of the normal offering by paying yearly.
   </div>
 
   <table class="table table-striped">
@@ -55,7 +59,7 @@
       <tr>
         <td>Plan</td>
         <td>Price / Yearly</td>
-        <td>Private Projects</td>
+        <td>Projects</td>
         <td>
           API calls per hour &amp;<br/>
           components to sync
@@ -81,7 +85,9 @@
           <p class="badge badge-info" style="font-size: 16px; middle; padding: 7px;">Current</p>
         <% else %>
           <% btn_txt = 'Upgrade' %>
-          <% btn_txt = 'Downgrade' if ( @plan && ( @plan.price.to_i > plan.price.to_i ) )  %>
+          <% if @plan && @plan.period.to_s.eql?('yearly') && (@plan.price.to_i > plan.price.to_i) ) %>
+            <% btn_txt = 'Downgrade'  %>
+          <% end %>
           <% btn_class = 'success' %>
           <% btn_class = 'danger' if btn_txt.eql?('Downgrade') %>
           <% btn_style = 'font-size: 17px;' %>
