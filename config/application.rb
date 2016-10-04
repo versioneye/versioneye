@@ -84,7 +84,7 @@ module Versioneye
     Author.send         :include, WillPaginateMongoid::MongoidPaginator
 
     PDFKit.configure do |config|
-      config.default_options[:ignore_load_errors] = true
+      # config.default_options[:ignore_load_errors] = true
       config.wkhtmltopdf ='/usr/local/bundle/bin/wkhtmltopdf'
     end
 
