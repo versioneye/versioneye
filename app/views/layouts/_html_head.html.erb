@@ -2,6 +2,20 @@
 
 <% if Rails.env.enterprise? != true %>
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Droid+Serif%7CDroid+Serif:bold%7CDroid+Sans%7CDroid+Sans:bold" />
+
+  <script type="text/javascript">
+   var googletag = googletag || {};
+   googletag.cmd = googletag.cmd || [];
+   (function() {
+     var gads = document.createElement('script');
+     gads.async = true;
+     gads.type = 'text/javascript';
+     var useSSL = 'https:' == document.location.protocol;
+     gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+     var node =document.getElementsByTagName('script')[0];
+     node.parentNode.insertBefore(gads, node);
+    })();
+  </script>
 <% end %>
 
   <!--[if lt IE 8]>
