@@ -1,6 +1,16 @@
 <% if @product.twitter_name && !@product.twitter_name.empty? %>
-<div class="box content">
-  <a href="https://twitter.com/<%= @product.twitter_name %>" class="twitter-follow-button" data-show-count="false" data-size="large">Follow <%= @product.twitter_name %></a>
-  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-</div>
+  <div class="box content">
+    <a href="https://twitter.com/<%= @product.twitter_name %>" class="twitter-follow-button" data-show-count="false" data-size="large">Follow <%= @product.twitter_name %></a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  </div>
+<% end %>
+
+<% if !Settings.instance.environment.to_s.eql?('enterprise') %>
+  <div id='div-gpt-ad-1407836165464-0'>
+    <script type='text/javascript'>
+      googletag.cmd.push(function() {
+        googletag.pubads().display('/53015287/versioneye.com_d_160x600_1', [160, 600], 'div-gpt-ad-1407836165464-0');
+      });
+    </script>
+  </div>
 <% end %>
