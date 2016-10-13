@@ -45,7 +45,7 @@
             <td style="padding-left: 5px;">
               <span >
                 <% if !issue.prod_key.to_s.empty? %>
-                  <a href="/<%= issue.language %>/<%= issue.prod_key %>/<%= issue.version_requested %>"><%= issue.name %></a>
+                  <a href="/<%= issue.language %>/<%= Product.encode_prod_key(issue.prod_key) %>/<%= Version.encode_version(issue.version_requested) %>"><%= issue.name %></a>
                 <% else %>
                   <%= issue.name %>
                 <% end %>
