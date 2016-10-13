@@ -12,9 +12,7 @@
   <div class="content" >
 
     <p>
-      With a component whitelist you can whitelist artifacts or whole groupIds. Dependencies who are on a component
-      whitelist are marked green in the license tab, even if they violate the license whitelist or the license
-      is unknown.
+      <%= render partial: 'explain' %>
     </p>
     <p>
       To whitelist a certain artifact put it on the component whitelist with this pattern:
@@ -40,6 +38,10 @@
       For example:
     </p>
     <pre>ruby:rails:4.0.0</pre>
+    <p>
+      Or for example this for a CSS bower dependency:
+    </p>
+    <pre>css:team-sass/breakpoint-sass</pre>
 
     <%= form_tag(add_organisation_component_whitelist_path(@organisation.name, :id => @component_whitelist.name), :class => 'form-inline', :style => "padding: 15px 0 0 0; margin:0;") do %>
       <div class="form-group input-append">
