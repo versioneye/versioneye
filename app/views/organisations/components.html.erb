@@ -65,10 +65,10 @@
             <th>License</th>
           </tr>
           <% versions.each do |version_val| %>
-            <% vvals = version_val.split(":") %>
+            <% vvals = version_val.split("::") %>
             <% prod_key = vvals[0].to_s.downcase %>
             <% version  = vvals[1].to_s.downcase %>
-            <% license  = vvals[2].to_s.downcase %>
+            <% license  = vvals[2].to_s %>
             <% comps[key][version_val].each do |val| %>
               <% sps = val.split(":") %>
               <% project_language = sps[0] %>
