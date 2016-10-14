@@ -64,14 +64,17 @@
             <th>Current</th>
             <th>License</th>
           </tr>
-          <% versions.each do |version| %>
-            <% comps[key][version].each do |val| %>
+          <% versions.each do |version_val| %>
+            <% vvals = version_val.split(":") %>
+            <% prod_key = vvals[0].to_s.downcase %>
+            <% version  = vvals[1].to_s.downcase %>
+            <% license  = vvals[2].to_s.downcase %>
+            <% comps[key][version_val].each do |val| %>
               <% sps = val.split(":") %>
               <% project_language = sps[0] %>
               <% project_name     = sps[1] %>
               <% project_id       = sps[2] %>
-              <% project_licenses = sps[3] %>
-              <% project_version  = sps[4] %>
+              <% project_version  = sps[3] %>
               <% tr_bg_color = "" %>
               <% tr_bg_color = "#FCF8E3" if !version_current.empty? && !version_current.eql?(version) %>
               <tr style="background-color: <%= tr_bg_color %>">
@@ -88,7 +91,7 @@
                   <%= version_current %>
                 </td>
                 <td>
-                  <%= project_licenses %>
+                  <%= license %>
                 </td>
               </tr>
             <% end %>
