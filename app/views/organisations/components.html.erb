@@ -35,13 +35,20 @@
             <% end %>
           </select>
 
+          <select name="version"  id="version" class="form-control" >
+            <option value="ALL">All versions</option>
+            <% @organisation.unique_versions.each do |version| %>
+              <option value="<%= version %>" <%= "selected" if params[:version].to_s.eql?(version.to_s) %> >Version: <%= version %></option>
+            <% end %>
+          </select>
+
           <button type="submit" class="btn btn-primary" >Filter</button>
         </div>
       </form>
     </div>
 
 
-    <% comps = @organisation.component_list(params['team'], params['language']).sort.to_h %>
+    <% comps = @organisation.component_list(params['team'], params['language'], params['version']).sort.to_h %>
     <% comps.keys.each do |key| %>
       <% sp = key.split(':') %>
       <% language = sp[0].to_s.downcase %>
