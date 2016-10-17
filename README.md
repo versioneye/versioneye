@@ -1,4 +1,4 @@
-[![Dependency Status](https://www.versioneye.com/user/projects/579104e351500e0049407f03/badge.svg?style=flat)](https://www.versioneye.com/user/projects/579104e351500e0049407f03)
+[![Dependency Status](https://www.versioneye.com/user/projects/5804d939c3e52800500d68db/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5804d939c3e52800500d68db)
 
 # VersionEye
 
