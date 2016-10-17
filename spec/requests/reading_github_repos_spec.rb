@@ -26,6 +26,7 @@ describe "Getting data from github_repos_controller" do
               }
 
   before :each do
+    Plan.create_defaults
     GithubRepo.delete_all
     FakeWeb.allow_net_connect = false
     FakeWeb.register_uri(:get, %r|https://api\.github\.com/user|,

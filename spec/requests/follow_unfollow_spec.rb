@@ -26,8 +26,6 @@ describe "follow and unfollow" do
   context "logged out" do
     it "fetches product page successfully" do
       init_product
-      p Product.count
-      p Product.first.to_s
 
       Rails.cache.clear
       LanguageService.cache.delete "distinct_languages"
@@ -46,6 +44,7 @@ describe "follow and unfollow" do
   context "logged in" do
 
     before :each do
+      Plan.create_defaults
       Rails.cache.clear
       LanguageService.cache.delete "distinct_languages"
 

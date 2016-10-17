@@ -5,6 +5,9 @@ describe "Create Project from URL" do
   before(:each) do
     @user1 = UserFactory.create_new(100, true)
     @user1.save
+    Plan.create_defaults
+    orga = OrganisationService.create_new_for( @user1 )
+    expect( orga.save ).to be_truthy
   end
 
   it "create a project from URL" do

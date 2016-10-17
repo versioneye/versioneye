@@ -12,6 +12,14 @@ describe "Mute project dependency", :js => true do
 
   context "mute project dependency" do
     it "mutes&unmutes project dependency when authorized user clicks on mute-button" do
+
+      Plan.create_defaults
+      orga = OrganisationService.create_new_for( user )
+      expect( orga.save ).to be_truthy
+
+      project.organisation = orga
+      expect(project.save).to be_truthy
+
       project[:name].should eql("spec_project_1")
       project.dependencies.first.save
       dep = project.dependencies.first
@@ -19,7 +27,7 @@ describe "Mute project dependency", :js => true do
       dep.version_requested = '0.0'
       dep.version_current = '0.1'
       dep.outdated = true
-      dep.save
+      expect( dep.save ).to be_truthy
 
       expect( user ).to_not be_nil
       expect( user.ids ).to_not be_nil
@@ -37,10 +45,9 @@ describe "Mute project dependency", :js => true do
       find('#sign_in_button').click
       page.should have_content("Projects")
 
-      orga = Organisation.first
       OrganisationService.transfer project, orga
 
-      visit projects_organisation_path(orga)
+      visit projects_organisation_path(orga.name)
       page.should have_content(project[:name])
       click_link project[:name]
       page.should have_content("#{project[:name]}")

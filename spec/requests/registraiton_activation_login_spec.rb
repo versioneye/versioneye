@@ -58,6 +58,7 @@ describe "registration" do
     end
 
     it "activates successfully and login successfully" do
+      Plan.create_defaults
       user.verification = "asgasfg"
       user.save
       get "/users/activate/email/#{user.verification}", nil, "HTTPS" => "on"

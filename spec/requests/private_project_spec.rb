@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "Private Project" do
 
   before(:each) do
+    Plan.create_defaults
     @user1 = UserFactory.create_new(100, true)
     @user1.save
 

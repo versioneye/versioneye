@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "empty_search_result" do
 
   it "submits query with empty results" do
+    Plan.create_defaults
     get root_path
 
     user = FactoryGirl.create(:default_user)

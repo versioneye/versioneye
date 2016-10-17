@@ -18,22 +18,22 @@ describe "Payment Process" do
       fill_in 'session[email]',    :with => user.email
       fill_in 'session[password]', :with => user.password
       find('#sign_in_button').click
-      page.should have_content("Organisations")
+      expect( page ).to have_content("Organisations")
 
       orga = Organisation.first
       visit plan_organisation_path(orga)
-      Plan.count.should eq(8)
-      page.should have_content(Plan.free_plan.name)
-      page.should have_content(Plan.small.name)
-      page.should have_content(Plan.medium.name)
-      page.should have_content(Plan.xlarge.name)
+      expect( Plan.count ).to eq(15)
+      expect( page ).to have_content(Plan.free_plan.name)
+      expect( page ).to have_content(Plan.small.name)
+      expect( page ).to have_content(Plan.medium.name)
+      expect( page ).to have_content(Plan.xlarge.name)
 
 
       ### It doesn't save because billing info is missing!
 
       click_button "#{Plan.small.name_id}_button"
-      page.should have_content("Credit Card Information")
-      page.should have_content("VersionEye doesn't store any Credit Card data")
+      expect( page ).to have_content("Credit Card Information")
+      expect( page ).to have_content("VersionEye doesn't store any Credit Card data")
       fill_in 'cardnumber', :with => "5105 1051 0510 5100"
       fill_in 'cvc',        :with => "777"
       fill_in 'month',      :with => "10"
@@ -42,7 +42,7 @@ describe "Payment Process" do
 
       sleep 5
 
-      page.should have_content("Please complete the billing information")
+      expect( page ).to have_content("Please complete the billing information")
 
       ### Now it will save becasue billing info is complete
 
@@ -61,7 +61,7 @@ describe "Payment Process" do
 
       sleep 2
 
-      page.should have_content("Many Thanks. We just updated your plan.")
+      expect( page ).to have_content("Many Thanks. We just updated your plan.")
       orga = Organisation.first
       expect( orga.stripe_token ).to_not be_nil
       expect( orga.stripe_customer_id ).to_not be_nil
@@ -72,13 +72,13 @@ describe "Payment Process" do
       ### upgrades the plan to business normal
 
       visit plan_organisation_path(orga)
-      Plan.count.should eq(8)
+      expect( Plan.count ).to eq(15)
 
       click_button "#{Plan.xlarge.name_id}_button"
 
       sleep 3
 
-      page.should have_content("We updated your plan successfully")
+      expect( page ).to have_content("We updated your plan successfully")
       orga = Organisation.first
       expect( orga.stripe_token ).to_not be_nil
       expect( orga.stripe_customer_id ).to_not be_nil
@@ -89,14 +89,14 @@ describe "Payment Process" do
       ### upgrades the plan to business small
 
       visit plan_organisation_path(orga)
-      Plan.count.should eq(8)
-      page.should have_content(Plan.free_plan.name)
-      page.should have_content(Plan.small.name)
-      page.should have_content(Plan.medium.name)
-      page.should have_content(Plan.xlarge.name)
+      expect( Plan.count ).to eq(15)
+      expect( page ).to have_content(Plan.free_plan.name)
+      expect( page ).to have_content(Plan.small.name)
+      expect( page ).to have_content(Plan.medium.name)
+      expect( page ).to have_content(Plan.xlarge.name)
 
       click_button "#{Plan.medium.name_id}_button"
-      page.should have_content("We updated your plan successfully")
+      expect( page ).to have_content("We updated your plan successfully")
       orga = Organisation.first
       expect( orga.stripe_token ).to_not be_nil
       expect( orga.stripe_customer_id ).to_not be_nil
@@ -117,6 +117,7 @@ describe "Payment Process" do
          :invoice_id => 'tx_858573',
          :user => user,
          :organisation => orga,
+         :plan => orga.plan,
          :invoice_date => Date.new,
          :period_start => Date.new,
          :period_end   => Date.new,
@@ -131,8 +132,8 @@ describe "Payment Process" do
       page.all(:css, "#payment_history")
       using_wait_time 2 do
         find_by_id("invoice_table")
-        page.should have_content(".pdf")
-        page.should have_content("#{Plan.small.price}.00 EUR")
+        expect( page ).to have_content(".pdf")
+        expect( page ).to have_content("#{Plan.small.price}.00 EUR")
       end
 
 
@@ -140,7 +141,7 @@ describe "Payment Process" do
 
       customer = StripeService.fetch_customer orga.stripe_customer_id
       invoices = customer.invoices
-      invoices.count.should eq(1)
+      expect( invoices.count ).to eq(1)
       invoice = invoices.first
       expect( invoice ).to_not be_nil
       receipt.invoice_id = invoice.id
