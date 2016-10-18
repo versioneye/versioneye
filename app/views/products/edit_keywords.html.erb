@@ -17,7 +17,7 @@
 
     <div class="boxContainer">
       <%= form_tag("/#{@product.language_esc}/#{@product.to_param}/add_keyword", :method => "post", :class => "form-horizontal") do  %>
-        
+
         <div class="form-group">
           <%= label_tag(:license, "Keyword", :class => "control-label") %>
           <div class="controls">
