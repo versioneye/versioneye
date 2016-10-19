@@ -19,7 +19,7 @@
       <form id="form" action="<%= components_organisation_path(@organisation) %>" method="GET" class='form-inline' style="padding: 0; margin:0;" >
         <div class="form-group" style="padding-bottom: 25px;">
 
-          <label>Projects to be analysed:</label>
+          <label>Projects filter:</label>
 
           <select name="team"  id="team" class="form-control" >
             <option value="ALL">All teams</option>
@@ -42,6 +42,11 @@
             <% end %>
           </select>
 
+          <select name="duplicates"  id="version" class="form-control" >
+            <option value="all_components"  <%= "selected" if params[:duplicates].to_s.eql?('all_components')  %> >All components</option>
+            <option value="duplicates_only" <%= "selected" if params[:duplicates].to_s.eql?('duplicates_only') %> >Only duplicates</option>
+          </select>
+
           <button type="submit" class="btn btn-primary" >Filter</button>
         </div>
       </form>
@@ -50,6 +55,7 @@
 
     <% comps = @organisation.component_list(params['team'], params['language'], params['version']).sort.to_h %>
     <% comps.keys.each do |key| %>
+      <% next if params[:duplicates].to_s.eql?('duplicates_only') && comps[key].keys.count < 2 %>
       <% sp = key.split(':') %>
       <% language = sp[0].to_s.downcase %>
       <% prod_key = sp[1].to_s.gsub('/', ':') %>
