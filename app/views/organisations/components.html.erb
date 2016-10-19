@@ -91,9 +91,11 @@
                   <% if !val[:project_version].to_s.empty? %>
                     : <%= val[:project_version] %>
                   <% end %>
-                  <div style="font-size: 12px;">
-                    Team: <%= link_to val[:project_teams], organisation_team_path(:organisation_name => @organisation.name, :id => val[:project_teams]) %>
-                  </div>
+                  <% if !val[:project_teams].to_s.empty? %>
+                    <div style="font-size: 12px;">
+                      Team: <%= link_to val[:project_teams], organisation_team_path(:organisation_name => @organisation.name, :id => val[:project_teams]) %>
+                    </div>
+                  <% end %>
                 </td>
                 <td>
                   <%= version %>
