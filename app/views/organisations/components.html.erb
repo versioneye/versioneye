@@ -83,19 +83,17 @@
             <% version  = vvals[1].to_s.downcase %>
             <% license  = vvals[2].to_s %>
             <% comps[key][version_val].each do |val| %>
-              <% sps = val.split(":") %>
-              <% project_language = sps[0] %>
-              <% project_name     = sps[1] %>
-              <% project_id       = sps[2] %>
-              <% project_version  = sps[3] %>
               <% tr_bg_color = "" %>
               <% tr_bg_color = "#FCF8E3" if !version_current.empty? && !version_current.eql?(version) %>
               <tr style="background-color: <%= tr_bg_color %>">
                 <td>
-                  <%= link_to project_name, user_project_path( project_id ), :class => 'searchResultLink' %>
-                  <% if !project_version.to_s.empty? %>
-                    : <%= project_version %>
+                  <%= link_to val[:project_name], user_project_path( val[:project_id] ), :class => 'searchResultLink' %>
+                  <% if !val[:project_version].to_s.empty? %>
+                    : <%= val[:project_version] %>
                   <% end %>
+                  <div style="font-size: 12px;">
+                    Team: <%= link_to val[:project_teams], organisation_team_path(@organisation, val[:project_teams]) %>
+                  </div>
                 </td>
                 <td>
                   <%= version %>
