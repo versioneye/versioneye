@@ -92,7 +92,7 @@
                     : <%= val[:project_version] %>
                   <% end %>
                   <div style="font-size: 12px;">
-                    Team: <%= link_to val[:project_teams], organisation_team_path(@organisation.name, val[:project_teams]) %>
+                    Team: <%= link_to val[:project_teams], organisation_team_path(:organisation_name => @organisation.name, :name => val[:project_teams]) %>
                   </div>
                 </td>
                 <td>
