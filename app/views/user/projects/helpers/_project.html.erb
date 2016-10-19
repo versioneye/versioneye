@@ -33,12 +33,12 @@
     <% end %>
     <% if defined?( @organisation ) && @organisation %>
       <div style="font-size: 12px;">
-        <% if project.user %>
-          Created by: <%= link_to project.user.fullname, user_path(project.user) %> 
-        <% end %>
         <% if project.teams && !project.teams.empty? %>
           <% team = project.teams.first %>
           Team: <%= link_to team.name, organisation_team_path(@organisation, team) %> 
+        <% end %>
+        <% if project.user %>
+          Created by: <%= link_to project.user.fullname, user_path(project.user) %> 
         <% end %>
       </div>
     <% end %>
