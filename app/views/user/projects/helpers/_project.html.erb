@@ -31,12 +31,14 @@
         <%= render :partial => "user/projects/helpers/scm_source_info", :locals => { :project => project } %>
       </div>
     <% end %>
-    <% if defined?( @organisation ) && @organisation && project.user %>
+    <% if defined?( @organisation ) && @organisation %>
       <div style="font-size: 12px;">
-        Created by: <%= link_to project.user.fullname, user_path(project.user) %>
+        <% if project.user %>
+          Created by: <%= link_to project.user.fullname, user_path(project.user) %> 
+        <% end %>
         <% if project.teams && !project.teams.empty? %>
           <% team = project.teams.first %>
-          Team: <%= link_to team.name, organisation_team_path(@organisation, team) %>
+          Team: <%= link_to team.name, organisation_team_path(@organisation, team) %> 
         <% end %>
       </div>
     <% end %>
