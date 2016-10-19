@@ -54,7 +54,15 @@
     </div>
 
 
-    <% comps = @organisation.component_list(params['team'], params['language'], params['version'], params['duplicates']).sort.to_h %>
+    <% pteam = params['team'] %>
+    <% pteam = 'ALL' if pteam.to_s.empty? %>
+    <% planguage = params['language'] %>
+    <% planguage = 'ALL' if planguage.to_s.empty? %>
+    <% pversion = params['version'] %>
+    <% pversion = 'ALL' if pversion.to_s.empty? %>
+    <% pduplicates = params['duplicates'] %>
+    <% pduplicates = 'ALL' if pduplicates.to_s.empty? %>
+    <% comps = @organisation.component_list(pteam, planguage, pversion, pduplicates).sort.to_h %>
     <% comps.keys.each do |key| %>
       <% sp = key.split(':') %>
       <% language = sp[0].to_s.downcase %>
