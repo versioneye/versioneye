@@ -243,6 +243,10 @@ class Settings::GlobalsettingsController < ApplicationController
     @globalsetting['mvn_repo_1_user']     = Settings.instance.mvn_repo_1_user
     @globalsetting['mvn_repo_1_password'] = Settings.instance.mvn_repo_1_password
     @globalsetting['mvn_repo_1_schedule'] = Settings.instance.mvn_repo_1_schedule
+    @globalsetting['mvn_art_ignore_keys'] = Settings.instance.mvn_art_ignore_keys
+    @globalsetting['mvn_art_ignore_remote_repos']  = Settings.instance.mvn_art_ignore_remote_repos
+    @globalsetting['mvn_art_ignore_local_repos']   = Settings.instance.mvn_art_ignore_local_repos
+    @globalsetting['mvn_art_ignore_virtual_repos'] = Settings.instance.mvn_art_ignore_virtual_repos
   end
 
   def update_mvnrepos
@@ -255,7 +259,25 @@ class Settings::GlobalsettingsController < ApplicationController
     GlobalSetting.set( env, 'mvn_repo_1_type', params[:mvn_repo_1_type] )
     GlobalSetting.set( env, 'mvn_repo_1_user', params[:mvn_repo_1_user] )
     GlobalSetting.set( env, 'mvn_repo_1_password', params[:mvn_repo_1_password] )
-    GlobalSetting.set( env, 'mvn_repo_1_schedule', params[:mvn_repo_1_schedule] )
+    GlobalSetting.set( env, 'mvn_art_ignore_keys', params[:mvn_art_ignore_keys] )
+
+    if params[:mvn_art_ignore_remote_repos].to_s.eql?('true')
+      GlobalSetting.set( env, 'mvn_art_ignore_remote_repos', true )
+    else
+      GlobalSetting.set( env, 'mvn_art_ignore_remote_repos', false )
+    end
+
+    if params[:mvn_art_ignore_local_repos].to_s.eql?('true')
+      GlobalSetting.set( env, 'mvn_art_ignore_local_repos', true )
+    else
+      GlobalSetting.set( env, 'mvn_art_ignore_local_repos', false )
+    end
+
+    if params[:mvn_art_ignore_virtual_repos].to_s.eql?('true')
+      GlobalSetting.set( env, 'mvn_art_ignore_virtual_repos', true )
+    else
+      GlobalSetting.set( env, 'mvn_art_ignore_virtual_repos', false )
+    end
 
     Settings.instance.reload_from_db GlobalSetting.new
 

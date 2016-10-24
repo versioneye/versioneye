@@ -14,9 +14,16 @@
     <%= form_tag( settings_mvnrepos_path, :method => "post", :class => "form-horizontal") do  %>
 
       <p class="description">
-        <a href="http://maven.apache.org">Maven</a> is a Package Manager and Repository Server for Java. <br/>
+        <a href="http://maven.apache.org">Maven</a> is a Package Manager and Repository Server for Java.
         Configure here the coordinates of your private Maven Repository Server.
       </p>
+
+      <% if @globalsetting['mvn_repo_1_type'] == 'maven_index' %>
+        <div class="flash info" style="margin-bottom: 30px">
+          You can specify multiple repositories for the Maven index crawler by seperating them through a semicolon character.
+          For example: "http://192.168.0.19/repo1;http://192.168.0.19/repo2".
+        </div>
+      <% end %>
 
       <div class="form-group">
         <%= label_tag :mvn_repo_1, "MVN URL", :class => "control-label", :for => "mvn_repo_1" %>
@@ -31,10 +38,44 @@
           <select name="mvn_repo_1_type"  id="mvn_repo_1_type" class = 'form-control' >
             <option value="artifactory" <%= "selected" if @globalsetting['mvn_repo_1_type'] == 'artifactory' %> >Artifactory API (JFrog)</option>
             <option value="maven_index" <%= "selected" if @globalsetting['mvn_repo_1_type'] == 'maven_index' %> >Maven Index</option>
-            <option value="html" <%= "selected" if @globalsetting['mvn_repo_1_type'] == 'html' %> >HTML (Maven directory structure)</option>
+            <option value="html"        <%= "selected" if @globalsetting['mvn_repo_1_type'] == 'html' %> >HTML (Maven directory structure)</option>
           </select>
         </div>
       </div>
+
+      <% if @globalsetting['mvn_repo_1_type'] == 'artifactory' %>
+        <div class="form-group">
+          <div class="controls">Comma sperated list of repository keys which should excluded from crawling.</div>
+          <%= label_tag :mvn_art_ignore_keys, "Ignore Keys", :class => "control-label", :for => "mvn_art_ignore_keys" %>
+          <div class="controls">
+            <%= text_field_tag :mvn_art_ignore_keys, @globalsetting['mvn_art_ignore_keys'], :id => "mvn_art_ignore_keys", :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="controls">
+            <label for="mvn_art_ignore_remote_repos" style="font-size: 12px;" class="checkbox">
+              <%= check_box_tag "mvn_art_ignore_remote_repos", true, @globalsetting['mvn_art_ignore_remote_repos'], :id => "mvn_art_ignore_remote_repos" %>
+              Ignore repositories with type REMOTE
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="controls">
+            <label for="mvn_art_ignore_local_repos" style="font-size: 12px;" class="checkbox">
+              <%= check_box_tag "mvn_art_ignore_local_repos", true, @globalsetting['mvn_art_ignore_local_repos'], :id => "mvn_art_ignore_local_repos" %>
+              Ignore repositories with type LOCAL
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="controls">
+            <label for="mvn_art_ignore_virtual_repos" style="font-size: 12px;" class="checkbox">
+              <%= check_box_tag "mvn_art_ignore_virtual_repos", true, @globalsetting['mvn_art_ignore_virtual_repos'], :id => "mvn_art_ignore_virtual_repos" %>
+              Ignore repositories with type VIRTUAL
+            </label>
+          </div>
+        </div>
+      <% end %>
 
       <hr/>
       <p>
@@ -54,22 +95,7 @@
           <%= password_field_tag :mvn_repo_1_password, @globalsetting['mvn_repo_1_password'], :id => "mvn_repo_1_password", :class => 'form-control' %>
         </div>
       </div>
-
-
       <hr/>
-
-      <p class="description">
-        At which time should this be crawled? Use a <a href="https://en.wikipedia.org/wiki/Cron#CRON_expression" target="_Cron">cron expression</a>. For example <b>10 1 * * *</b> for every day at 1:10 AM.
-        If the field is empty it will not be crawled.
-      </p>
-
-      <div class="form-group">
-        <%= label_tag :mvn_repo_1_schedule, "Schedule", :class => "control-label", :for => "mvn_repo_1_schedule" %>
-        <div class="controls">
-          <%= text_field_tag :mvn_repo_1_schedule, @globalsetting['mvn_repo_1_schedule'], :id => "mvn_repo_1_schedule", :class => 'form-control' %>
-        </div>
-      </div>
-
 
       <div class="form-group">
         <div class="control-label"></div>
