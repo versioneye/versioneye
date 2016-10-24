@@ -46,7 +46,7 @@
       <% if @globalsetting['mvn_repo_1_type'] == 'artifactory' %>
         <div class="form-group">
           <div class="controls">Comma sperated list of repository keys which should excluded from crawling.</div>
-          <%= label_tag :mvn_art_ignore_keys, "Ignore Keys", :class => "control-label", :for => "mvn_art_ignore_keys" %>
+          <%= label_tag :mvn_art_ignore_keys, "Ignore Repos", :class => "control-label", :for => "mvn_art_ignore_keys" %>
           <div class="controls">
             <%= text_field_tag :mvn_art_ignore_keys, @globalsetting['mvn_art_ignore_keys'], :id => "mvn_art_ignore_keys", :class => 'form-control' %>
           </div>
@@ -102,6 +102,12 @@
         <div class="controls">
           <button type="submit" class="btn btn-large btn-primary" >Save</button>
         </div>
+      </div>
+
+      <hr/>
+
+      <div>
+        Read <a href="https://github.com/versioneye/ops_contrib/blob/master/README.md#configure-cron-jobs-for-crawling">here</a> how the crawlers are triggered and configured via Cron.
       </div>
 
     <% end %>
