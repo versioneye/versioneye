@@ -15,7 +15,8 @@
       This organisation is currently using the <span style="font-weight: bold"><%= @organisation.plan.name %><span> plan which allows to monitor <span style="font-weight: bold"><%= pluralize(@organisation.plan.private_projects, 'private project' %><span>.
       <% if projects_remain.to_i < 1 %>
         Currently there are <span style="font-weight: bold"><%= pluralize(private_project_count, 'private project' %><span> in this organisation and the limits are reached. Upgrade to a higher plan if more private projects are needed.<br/>
-      <% else %>
+      <% end %>
+      <% if projects_remain.to_i > 0 %>
         Currently there are <span style="font-weight: bold"><%= pluralize(private_project_count, 'private project' %><span> in this organisation and <span style="font-weight: bold"><%= pluralize(projects_remain, 'more private project' %><span> can be monitored.<br/>
       <% end %>
     </p>
@@ -24,7 +25,7 @@
       We only charge a small fee for monitoring project files in GitHub/Bitbucket repositories.<br/>
     </p>
     <hr />
-
+<% if projects_remain.to_i < 1 %><% if projects_remain.to_i < 1 %>
     <%= render "pricing" %>
 
     <p>
