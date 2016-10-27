@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/versioneye/versioneye-core.git
-  revision: e89f9542e03c82f02f41a4c4f2e8d4014cc3bc77
-  tag: v10.3.19
+  revision: f070827f1697279d817c01ec78073911c0678e27
+  tag: v10.3.20
   specs:
-    versioneye-core (10.3.19)
+    versioneye-core (10.3.20)
       actionmailer (~> 5.0.0.1)
       aws-sdk (~> 2.6.2)
       bundler (~> 1.13.0)
@@ -25,11 +25,11 @@ GIT
       net-ldap (~> 0.15.0)
       nokogiri (~> 1.6.8)
       oauth (~> 0.5.0)
-      octokit (~> 4.3.0)
+      octokit (~> 4.4.1)
       pdfkit (~> 0.8.2)
       persistent_httparty (~> 0.1.0)
       semverly (~> 1.0.0)
-      stripe (~> 1.55.0)
+      stripe (~> 1.56.0)
       tire (~> 0.6.2)
       will_paginate_mongoid (= 2.0.1)
       wkhtmltopdf-binary (~> 0.12.3)
@@ -123,7 +123,7 @@ GEM
     database_cleaner (1.5.3)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    domain_name (0.5.20160826)
+    domain_name (0.5.20161021)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     etcd (0.3.0)
@@ -189,7 +189,7 @@ GEM
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     oauth (0.5.1)
-    octokit (4.3.0)
+    octokit (4.4.1)
       sawyer (~> 0.7.0, >= 0.5.3)
     pdfkit (0.8.2)
     persistent_http (1.0.6)
@@ -293,7 +293,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    stripe (1.55.1)
+    stripe (1.56.0)
       rest-client (>= 1.4, < 4.0)
     terminal-notifier (1.7.1)
     therubyracer (0.12.2)
