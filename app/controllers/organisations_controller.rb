@@ -214,25 +214,28 @@ class OrganisationsController < ApplicationController
   end
 
 
-  def update_plan
+   def update_plan
     @plan_name_id = params[:plan]
     stripe_token  = @organisation.stripe_token
     customer_id   = @organisation.stripe_customer_id
     customer      = nil
+    Rails.logger.info "update_plan for #{@organisation.name} - #{@plan_name_id}"
     if customer_id && stripe_token
       customer = StripeService.fetch_customer customer_id
     end
     if customer
+      Rails.logger.info "update_plan for #{@organisation.name} - #{@plan_name_id} - stripe customer exist already, just update plan."
       update_plan_for( @organisation, customer, @plan_name_id )
       redirect_to plan_organisation_path( @organisation )
     else
+      Rails.logger.info "update_plan for #{@organisation.name} - #{@plan_name_id} - stripe customer does not exit, ask for CC data first."
       prepare_update_cc @plan_name_id
       redirect_to cc_organisation_path( @organisation )
     end
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
-    flash[:error] = "ERROR: #{e.message}"
+    flash[:error] = "ERROR in update_plan: #{e.message}"
     prepare_update_cc @plan_name_id
     redirect_to cc_organisation_path( @organisation )
   end
