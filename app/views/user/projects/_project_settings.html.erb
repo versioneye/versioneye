@@ -20,13 +20,12 @@
     <form action="<%= save_visibility_user_project_path(@project) %>" method="post" class="form-inline" >
       <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
       <div>
-        All projects are public by default. Everybody who knows the URL to the project can see the dependencies and the licenses of the project.
-        By setting it to private only you and your collaborators can see this project!
+        Visibility of the project
       </div>
       <div class="form-group">
         <select name="visibility" class="form-control" >
-          <option value="private"  <%= "selected" if !@project.public %> >Private</option>
-          <option value="public"   <%= "selected" if  @project.public %> >Public</option>
+          <option value="private"  <%= "selected" if !@project.public %> >Only visible to project collaborators</option>
+          <option value="public"   <%= "selected" if  @project.public %> >Visible to everybody who knows the project URL</option>
         </select>
       </div>
       <button type="submit" class="btn btn-primary" >Save</button>

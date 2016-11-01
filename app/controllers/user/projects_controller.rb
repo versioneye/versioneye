@@ -409,7 +409,7 @@ class User::ProjectsController < ApplicationController
     end
 
     if @project.public == false && free_plan == true && Rails.env.enterprise? == false
-      flash[:warning] = "To keep your project in private mode you need a paid plan. Please upgrade your subscription."
+      flash[:warning] = "To keep your project visible only for collaborators you need a paid plan. Please upgrade your subscription."
       url = plan_organisation_path( orga ) if orga
     elsif @project.save
       flash[:success] = "We saved your changes."
