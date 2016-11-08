@@ -46,6 +46,7 @@ class Auth::StashController < ApplicationController
       user = create_new_user user_info, access_token
       if !user.save
         flash[:error] = "An error occured (#{user.errors.full_messages.to_sentence}). Please contact the VersionEye Team."
+        Rails.logger.error "ERROR in StashController.callback: (#{user.errors.full_messages.to_sentence}). user_info: #{user_info}"
         redirect_to signin_path and return
       end
     end
