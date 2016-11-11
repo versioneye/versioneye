@@ -1,17 +1,5 @@
 <% if (@product.description && !@product.description.empty?) || (@product.description_manual && !@product.description_manual.empty?) %>
 
-  <% if !Settings.instance.environment.to_s.eql?('enterprise') %>
-    <p>
-      <div id='div-gpt-ad-1407836245189-0'>
-        <script type='text/javascript'>
-          googletag.cmd.push(function() {
-            googletag.pubads().display('/53015287/versioneye.com_d_728x90_1', [728, 90], 'div-gpt-ad-1407836245189-0');
-          });
-        </script>
-      </div>
-    </p>
-  <% end %>
-
   <a name="description"></a>
   <h2 class="section_header">
     Description <a class="octicon-link" href="#description"><i class="fa fa-link"></i></a>
