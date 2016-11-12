@@ -6,7 +6,9 @@
     </h3>
   </div>
   <div class="box content scrollable-box" style = "min-height: 1em; max-height: 14em;" >
-    <% @product.sorted_versions.each do |version|  %>
+    <% versions = @product.sorted_versions %>
+    <% versions = [] if versions.nil? %>
+    <% versions[0..100].each do |version|  %>
 
       <div>
         <% if VersionTagRecognizer.release?(version.to_s) %>
